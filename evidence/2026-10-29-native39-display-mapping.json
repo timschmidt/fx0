@@ -37,6 +37,17 @@
     "ATOS": "Privileged-read queries in active32-bit context0, bounded1ms wait; no table/configuration change",
     "scope": "Mapping/data/register/translation proof only; not actual MDP fetch,stream-routing or visible-pixel proof"
   },
-  "touch": "RMI reset owns GPIO16 high. New native capture running; no owner-confirmed gesture result yet. Earlier pre-DRM observation saved as incomplete.",
-  "persistent_writes": "None; Nura root mounted ro,noload for diagnostic modules/Python"
+  "touch": "RMI reset owns GPIO16 high. Native capture has reported events; no owner-confirmed gesture result. Earlier pre-DRM observation saved incomplete.",
+  "persistent_writes": "None; Nura root mounted ro,noload for diagnostic modules/Python",
+  "touch_event_snapshot": {
+    "bytes": 832,
+    "events": 52,
+    "duration_seconds": 0.016518,
+    "tracking_starts": 5,
+    "tracking_ends": 5,
+    "GPIO17_and_F12_irq_count": 2,
+    "owner_gestures_confirmed": false,
+    "classification": "Input event flow observed; physical correspondence and ghost/noise behavior unqualified",
+    "raw_capture": "Private; indefinite capture remains open"
+  }
 }

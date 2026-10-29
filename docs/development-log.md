@@ -410,3 +410,9 @@ are changed. These results narrow mapping faults but do not prove actual pixel
 fetch, stream routing or visible output. Temporary helpers are unloaded. Native
 scanout and a new touch capture stay open; the original CRTC-shutdown reset cause,
 proper runtime PM and all remaining hardware acceptance work stay unresolved.
+
+A later capture check finds832bytes/52native input events with five tracking
+starts/releases and two GPIO17/F12 interrupts. Raw events are saved privately
+and capture remains open. No owner gestures are confirmed, so this establishes
+event flow while physical correspondence and ghost/noise behavior remain
+unqualified; it is not a completed touch acceptance test.

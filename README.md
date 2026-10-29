@@ -37,7 +37,7 @@ visible pixels remain unconfirmed. A corrected timed DSI pattern test restores
 its registers and preserves USB/panel communication, with increased error-worker
 activity during generation. The earlier pre-DRM gesture capture was saved as
 incomplete; a new native touch capture is open. The RMI driver owns reset GPIO16,
-but maintained touch functionality remains unqualified. The original kernel in
+and native input event flow is now observed; controlled touch functionality remains unqualified. The original kernel in
 RAM displays correct RGB bars and records touch events. Earlier native display
 shutdown and installed-native Nura reset causes remain unresolved.
 
