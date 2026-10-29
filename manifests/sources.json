@@ -74,7 +74,7 @@
       "url": "https://github.com/timschmidt/fx0-linux",
       "branch": "integration/fx0-iommu",
       "commit": "341246daef4844c69d8638813bcedfcea35f96f1",
-      "status": "Kernel 39 with upstream-proposed touch reset support and cleanup builds and passes targeted schema checks; RAM image 23 prepared, not booted. Phone remains on kernel 35 with runtime power held active, valid DCS replies and unconfirmed pixels/touch."
+      "status": "Kernel39 with proposed reset GPIO support builds, passes targeted checks and boots from RAM. In-tree RMI owns/deasserts GPIO16; pre-DRM owner gesture capture remains pending. Native display and default runtime-power sequencing are unqualified."
     },
     {
       "name": "linux-wireless-preparation",
@@ -97,6 +97,14 @@
       "branch": "integration/fx0-storage",
       "commit": "ee280ac7aa25df6e8da0745d1764cd39c4dc147a",
       "status": "Defines boot image byte offset without enabling flashing; positive/negative fixtures validated, all existing dint diagnostics match baseline"
+    },
+    {
+      "name": "lk2nd-rawboot-preparation",
+      "url": "https://github.com/timschmidt/fx0-lk2nd",
+      "branch": "integration/fx0-rawboot",
+      "commit": "b106e16d0f3fc0e11c55aa58e4c617b89a0e3ef5",
+      "base_commit": "dbb7b5e5c91f2100ae2e57d8958752ad9945cfc3",
+      "status": "Optional extlinux exclusion builds for default, disabled and forced-fastboot-disabled-search configurations. Actual-image host offset updater readback passes; no phone flash or raw-image boot test."
     }
   ]
 }

@@ -1,0 +1,72 @@
+{
+  "kind": "Fully unmounted development-state recovery checkpoint; not original untouched stock",
+  "complete": true,
+  "kernel_release": "6.18.59-00039-g341246daef48",
+  "all_emmc_filesystems_unmounted": true,
+  "loop_devices_detached": true,
+  "user_area_bytes": 15758000128,
+  "boot_area_bytes_each": 4194304,
+  "independent_cache_cleared_device_reads": 2,
+  "independent_host_filesystems": 2,
+  "host_formats": [
+    "Raw images on Disk B",
+    "Zstd images on separate host filesystem; complete decompression and SHA-256 verified"
+  ],
+  "host_data_readbacks_match": true,
+  "cid_csd_ext_csd_preserved_privately_on_both": true,
+  "boot_read_only_protection_preserved": true,
+  "hardware_rpmb": "No authenticated-area read, key, provisioning, OTP or permanent lock operations attempted",
+  "initial_failed_transfer": "Unframed raw boot0 TCP stream stalled at4192128of4194304bytes. Device remained responsive through ping/ACM and later TCP. No MMC error/reset logged. All boot-area captures completed with two cache-cleared framed base64 reads each. Cause unproven; initial attempt is not a passing read.",
+  "original_range_audit": {
+    "snapshot_kind": "development state; not untouched original stock",
+    "original_critical_partitions_matching": [
+      "DDR",
+      "aboot",
+      "abootb",
+      "encrypt",
+      "factory",
+      "fota",
+      "fsc",
+      "fsg",
+      "modem",
+      "rct",
+      "recovery",
+      "rpm",
+      "rpmb",
+      "sbl1",
+      "sbl1b",
+      "sdi",
+      "sdib",
+      "ssd",
+      "tz",
+      "tzb"
+    ],
+    "expected_modified_critical_partitions": [
+      "boot",
+      "laf"
+    ],
+    "original_system_matches": true,
+    "other_changed_partitions": [
+      "drm",
+      "misc",
+      "modemst1",
+      "modemst2",
+      "mpt",
+      "persist",
+      "sns"
+    ]
+  },
+  "boot_control_audit": {
+    "original_and_current_standard_bcb_command_fields_empty": true,
+    "known_wipe_update_tokens_found_in_misc": false,
+    "cache_matches_audited_older_snapshot": true,
+    "cache_recovery_command_script_paths": "Not found in read-only debugfs inspection",
+    "current_misc_changed_vs_older_snapshot": "One 4 KiB block at offset7MiB; attribution unproven; both versions retained"
+  },
+  "limits": [
+    "Original userdata is unavailable; factory initialization/restoration rehearsal remains open",
+    "Retaining complete backup sources does not establish a working factory-stock restore",
+    "Native display/touch and final storage layout remain unqualified",
+    "No repartition or stock-recovery boot performed during this checkpoint"
+  ]
+}

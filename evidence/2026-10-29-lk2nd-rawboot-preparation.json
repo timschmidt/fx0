@@ -1,0 +1,48 @@
+{
+  "repository": "https://github.com/timschmidt/fx0-lk2nd",
+  "branch": "integration/fx0-rawboot",
+  "source_commit": "b106e16d0f3fc0e11c55aa58e4c617b89a0e3ef5",
+  "upstream_main_checked": "fd380ac637d1af38598e3f3c5321d4c962b96315",
+  "feature": "LK2ND_EXTLINUX=0 excludes filesystem discovery/boot; default1 preserves behavior; values other than0/1 rejected at build time",
+  "build_validation": "All three Fx0 MSM8226 configurations build; symbol checks confirm filesystem boot omitted only when disabled and fastboot/Android boot remain; bundled QCDT has one entry; invalid value rejected before compilation.",
+  "artifacts": {
+    "disabled": {
+      "bytes": 258064,
+      "sha256": "3224c6504b34f7c5a84836cc5262d5e0f664b06f0b6386640ca08f75c8096b3f",
+      "android_boot_symbols": true,
+      "extlinux_boot_symbols": false,
+      "qcdt_entries": 1
+    },
+    "default": {
+      "bytes": 286736,
+      "sha256": "104b3f7c91662b6b0b0b77a49195c653f6a6a9968c0f5aa438b4578173285a6f",
+      "android_boot_symbols": true,
+      "extlinux_boot_symbols": true,
+      "qcdt_entries": 1
+    },
+    "disabled_forced_fastboot": {
+      "bytes": 258064,
+      "sha256": "95b5caf50bcf838befc719935ae7f725608b25f41409d44019301a9bdf66533a",
+      "android_boot_symbols": true,
+      "extlinux_boot_symbols": false,
+      "qcdt_entries": 1
+    }
+  },
+  "hardware_status": "Not flashed or booted; currently installed forced-fastboot prefix unchanged. Key/cold recovery and actual raw-image boot remain open.",
+  "host_actual_image_test": {
+    "scope": "Host regular-file updater test and boot partition preview only; no phone write or hardware boot",
+    "partition_bytes": 33554432,
+    "reserved_prefix_bytes": 524288,
+    "linux_image_bytes": 6197248,
+    "remaining_tail_bytes": 26832896,
+    "source_commit_lk2nd": "b106e16d0f3fc0e11c55aa58e4c617b89a0e3ef5",
+    "source_commit_updater": "ed400ec340303f246c9da82177908746bdb0529e",
+    "image23_sha256": "ae58d99e8c9945c9fb661de5d0659c774a0594bcc41d94ac741d5bc1988791c9",
+    "new_forced_fastboot_lk2nd_sha256": "95b5caf50bcf838befc719935ae7f725608b25f41409d44019301a9bdf66533a",
+    "prefix_preserved_by_updater": true,
+    "complete_payload_readback_matches": true,
+    "trailing_bytes_preserved": true,
+    "partition_size_preserved": true
+  },
+  "submission_status": "Prepared public source; no upstream PR/mail sent; final DCO/submission review and hardware qualification remain open."
+}

@@ -14,7 +14,7 @@
   ],
   "after_replay": "DCS0a timed out (-110); subsequent reads fail(-22), video-done and command-DMA timeouts. This follows a combined reset/replay operation; attribution is not isolated.",
   "display_recovery": "fbdev blank4/0 did not trigger a native power cycle while independent DRM master held scanout. After stopping the pattern owner, a fresh master issued real CRTC disable; USB was lost and device returned to lk2nd fastboot. Stream ends at bridge post-disable/PLL-lock message; reset cause unproven.",
-  "recovery": "Retained ramoops console/raw and lk2nd logs retrieved privately, then image23/kernel39 booted successfully through fastboot boot.",
+  "recovery": "Retained ramoops console/raw retrieved privately, then image23/kernel39 booted successfully through fastboot boot. The OEM log request staged a payload, but its get_staged download was omitted before boot; no complete lk2nd-log payload is claimed.",
   "touch_qualification": "Zero evdev bytes immediately before the reset. No owner-confirmed post-reset gestures were completed before automatic device reset; not a completed negative gesture test.",
   "functional_fix_claimed": false,
   "artifacts": {
