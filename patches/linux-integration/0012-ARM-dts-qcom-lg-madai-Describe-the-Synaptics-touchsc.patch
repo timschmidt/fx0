@@ -1,0 +1,74 @@
+From c7e7c55d5ef10753429b68ce68db0888113018aa Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 07:02:23 -0400
+Subject: [PATCH 12/13] ARM: dts: qcom: lg-madai: Describe the Synaptics
+ touchscreen
+
+Wire the stock S3320 on BLSP1 QUP5 with its PM8226 L28/L6 supplies,
+GPIO17 interrupt and reset description. Mainline RMI4 probes the
+physical PLG430 controller with firmware 1769098. Coordinate and suspend
+qualification remain pending.
+---
+ .../boot/dts/qcom/qcom-msm8926-lg-madai.dts   | 35 +++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index 01fbab965..2177d5b57 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -7,6 +7,7 @@
+ 
+ #include "qcom-msm8226.dtsi"
+ #include "pm8226.dtsi"
++#include <dt-bindings/gpio/gpio.h>
+ 
+ /delete-node/ &smem_region;
+ 
+@@ -95,6 +96,12 @@ pm8226_l20: l20 {
+ 			regulator-min-microvolt = <3075000>;
+ 			regulator-max-microvolt = <3075000>;
+ 		};
++
++		pm8226_l28: l28 {
++			regulator-min-microvolt = <3100000>;
++			regulator-max-microvolt = <3100000>;
++			regulator-allow-set-load;
++		};
+ 	};
+ };
+ 
+@@ -133,3 +140,31 @@ &usb_hs_phy {
+ 	v1p8-supply = <&pm8226_l10>;
+ 	v3p3-supply = <&pm8226_l20>;
+ };
++
++&blsp1_i2c5 {
++	status = "okay";
++
++	touchscreen@20 {
++		compatible = "syna,rmi4-i2c";
++		reg = <0x20>;
++		interrupt-parent = <&tlmm>;
++		interrupts = <17 IRQ_TYPE_EDGE_FALLING>;
++		reset-gpios = <&tlmm 16 GPIO_ACTIVE_LOW>;
++		vdd-supply = <&pm8226_l28>;
++		vio-supply = <&pm8226_l6>;
++		syna,startup-delay-ms = <60>;
++		syna,reset-delay-ms = <10>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		rmi4-f01@1 {
++			reg = <0x01>;
++			syna,nosleep-mode = <1>;
++		};
++
++		rmi4-f12@12 {
++			reg = <0x12>;
++			syna,sensor-type = <1>;
++		};
++	};
++};
+-- 
+2.56.0
+

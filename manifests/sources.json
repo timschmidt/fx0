@@ -51,8 +51,8 @@
       "name": "linux",
       "url": "https://github.com/timschmidt/fx0-linux",
       "branch": "integration/fx0-lts",
-      "commit": "b7575530db2d756ba1ad3e6e5757d3ac00494f1c",
-      "status": "Four-CPU boot, USB NCM/ACM, two 1 GiB reads and fresh 32 MiB write/readback verified; regulator-load fix resolves initial write timeout; full Nura deployment and reliability pending"
+      "commit": "9ff315ebc274426f5630265c074c67b44c554f7d",
+      "status": "Initial Nura boot/storage verified on kernel 11; native kernel 16 clean-build passes but MDP5 fails without IOMMU; RAM diagnostics recovered; touchscreen probes without physical events"
     },
     {
       "name": "lk2nd",
@@ -66,8 +66,8 @@
       "url": "https://github.com/timschmidt/fx0-pmaports",
       "branch": "integration/fx0-v26.06",
       "base_commit": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
-      "status": "Exact-source native clean and signed envkernel package builds pass; installed Nura boots and initial SSH works; full hardware/update/reliability qualification incomplete",
-      "commit": "7dd403600d1bbdbacdd484197a6d8dae03e8296a"
+      "status": "Signed native-display envkernel APK, required kconfig and exact-source clean native build pass; native boot/hardware qualification failed and under investigation",
+      "commit": "ae3b33c21fc37a2d25bf22eed6ae52a80164e885"
     }
   ]
 }

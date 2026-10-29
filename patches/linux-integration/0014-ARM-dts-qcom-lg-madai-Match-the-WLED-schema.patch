@@ -1,0 +1,30 @@
+From 9ff315ebc274426f5630265c074c67b44c554f7d Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 07:05:23 -0400
+Subject: [PATCH] ARM: dts: qcom: lg-madai: Match the WLED schema
+
+Use the WLED node naming accepted by the SPMI PMIC binding and supply
+the required backlight label before physical display testing.
+---
+ arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index 6e32dcf48..3a672c868 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -217,9 +217,10 @@ &mdss_dsi0_phy {
+ };
+ 
+ &pm8226_1 {
+-	pm8226_wled: backlight@d800 {
++	pm8226_wled: wled@d800 {
+ 		compatible = "qcom,pm8941-wled";
+ 		reg = <0xd800>;
++		label = "backlight";
+ 		qcom,cs-out;
+ 		qcom,current-limit = <20>;
+ 		qcom,current-boost-limit = <805>;
+-- 
+2.56.0
+

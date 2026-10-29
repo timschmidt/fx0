@@ -1,0 +1,102 @@
+From 141f281f0c6ac24b8635946f87e559bdf34c7fa6 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 07:02:23 -0400
+Subject: [PATCH 13/13] ARM: dts: qcom: lg-madai: Connect the native DSI
+ display and WLED
+
+Enable MSM8226 MDSS/DSI with the measured production revision power
+GPIOs, stock 3.1/1.8/1.2 V supplies and the JDI panel. Describe the
+PM8226 WLED3 peripheral with the stock single-string 20 mA limit, 805 mA
+boost limit, 800 kHz switching and 35 V OVP settings. Start at reduced
+brightness. Physical DRM/backlight tests remain pending.
+---
+ .../boot/dts/qcom/qcom-msm8926-lg-madai.dts   | 62 +++++++++++++++++++
+ 1 file changed, 62 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index 2177d5b57..6e32dcf48 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -73,6 +73,12 @@ &rpm_requests {
+ 	regulators {
+ 		compatible = "qcom,rpm-pm8226-regulators";
+ 
++		pm8226_l4: l4 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-allow-set-load;
++		};
++
+ 		pm8226_l6: l6 {
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+@@ -80,6 +86,12 @@ pm8226_l6: l6 {
+ 			regulator-allow-set-load;
+ 		};
+ 
++		pm8226_l8: l8 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-allow-set-load;
++		};
++
+ 		pm8226_l10: l10 {
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+@@ -168,3 +180,53 @@ rmi4-f12@12 {
+ 		};
+ 	};
+ };
++
++&mdss {
++	status = "okay";
++};
++
++&mdss_dsi0 {
++	vdd-supply = <&pm8226_l28>;
++	vdda-supply = <&pm8226_l4>;
++	vddio-supply = <&pm8226_l8>;
++
++	panel@0 {
++		compatible = "lg,fx0-panel";
++		reg = <0>;
++		vdd-supply = <&pm8226_l28>;
++		reset-gpios = <&tlmm 25 GPIO_ACTIVE_LOW>;
++		io-enable-gpios = <&tlmm 113 GPIO_ACTIVE_HIGH>;
++		positive-enable-gpios = <&tlmm 111 GPIO_ACTIVE_HIGH>;
++		negative-enable-gpios = <&tlmm 112 GPIO_ACTIVE_HIGH>;
++		backlight = <&pm8226_wled>;
++
++		port {
++			panel_in: endpoint {
++				remote-endpoint = <&mdss_dsi0_out>;
++			};
++		};
++	};
++};
++
++&mdss_dsi0_out {
++	remote-endpoint = <&panel_in>;
++};
++
++&mdss_dsi0_phy {
++	vddio-supply = <&pm8226_l8>;
++};
++
++&pm8226_1 {
++	pm8226_wled: backlight@d800 {
++		compatible = "qcom,pm8941-wled";
++		reg = <0xd800>;
++		qcom,cs-out;
++		qcom,current-limit = <20>;
++		qcom,current-boost-limit = <805>;
++		qcom,switching-freq = <800>;
++		qcom,ovp = <35>;
++		qcom,num-strings = <1>;
++		qcom,enabled-strings = <0>;
++		default-brightness = <512>;
++	};
++};
+-- 
+2.56.0
+

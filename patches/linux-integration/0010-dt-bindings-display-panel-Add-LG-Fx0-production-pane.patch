@@ -1,0 +1,100 @@
+From dc2430e91f814477ccfaf22077a468235b30b096 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 07:02:23 -0400
+Subject: [PATCH 10/13] dt-bindings: display: panel: Add LG Fx0 production
+ panel
+
+Describe the four-lane JDI in-cell panel used by production LG Fx0
+boards. The panel has separate IO-switch and positive/negative bias
+enables, with a 3.1 V main supply and a PMIC backlight.
+---
+ .../bindings/display/panel/lg,fx0-panel.yaml  | 59 +++++++++++++++++++
+ MAINTAINERS                                   |  6 ++
+ 2 files changed, 65 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml
+
+diff --git a/Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml b/Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml
+new file mode 100644
+index 000000000..8395b7be5
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml
+@@ -0,0 +1,59 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/panel/lg,fx0-panel.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: LG Fx0 JDI 720x1280 in-cell panel
++
++maintainers:
++  - Timothy Schmidt <timschmidt@gmail.com>
++
++description:
++  Four-lane RGB888 DSI video-mode JDI panel used by production LG Fx0
++  handsets. The IO switch and the positive and negative display bias
++  enables are individually controlled, in that order, before reset.
++
++allOf:
++  - $ref: panel-common.yaml#
++
++properties:
++  compatible:
++    const: lg,fx0-panel
++
++  reg:
++    maxItems: 1
++
++  vdd-supply:
++    description: Main 3.1 V analogue supply.
++
++  reset-gpios:
++    maxItems: 1
++
++  io-enable-gpios:
++    maxItems: 1
++    description: Active-high enable for the panel IO supply switch.
++
++  positive-enable-gpios:
++    maxItems: 1
++    description: Active-high enable for the positive display bias.
++
++  negative-enable-gpios:
++    maxItems: 1
++    description: Active-high enable for the negative display bias.
++
++  backlight: true
++  port: true
++
++required:
++  - compatible
++  - reg
++  - vdd-supply
++  - reset-gpios
++  - io-enable-gpios
++  - positive-enable-gpios
++  - negative-enable-gpios
++  - backlight
++  - port
++
++additionalProperties: false
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f5ea85882..0e745ffe3 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -14162,6 +14162,12 @@ S:	Maintained
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/hid/hid.git
+ F:	drivers/hid/hid-letsketch.c
+ 
++LG FX0 DISPLAY PANEL
++M:	Timothy Schmidt <timschmidt@gmail.com>
++L:	dri-devel@lists.freedesktop.org
++S:	Maintained
++F:	Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml
++
+ LG LAPTOP EXTRAS
+ M:	Matan Ziv-Av <matan@svgalib.org>
+ L:	platform-driver-x86@vger.kernel.org
+-- 
+2.56.0
+
