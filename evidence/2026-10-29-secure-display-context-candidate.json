@@ -1,0 +1,60 @@
+{
+  "source_commit": "abe11294089af215e9613de912d4a6e4628356de",
+  "branch": "integration/fx0-iommu",
+  "repository": "https://github.com/timschmidt/fx0-linux",
+  "kernel_release": "6.18.59-00035-gabe11294089a",
+  "build": "zImage, modules and Fx0 DTB passed; targeted IOMMU DTB schema check passed",
+  "diagnostic_image": {
+    "file": "fx0-linux-diagnostic-20.img",
+    "bytes": 6197248,
+    "sha256": "4a960e39af5fda9075f8c014702187b3361936df5e1851614c7800f2dc854266",
+    "ramdisk_bytes": 626583,
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap console=tty0 lk2nd.pass-simplefb=autorefresh"
+  },
+  "artifacts": {
+    "zimage": {
+      "sha256": "9fac5842509e47837096ce179af1c7c7bbf1156ae0b4cd9f52f777c29293f8e6",
+      "bytes": 5538304
+    },
+    "dtb": {
+      "sha256": "542907f28258ca9a0331bdea35c4916f7e6e5b885a2a4d215d2fa6215e92ff4c",
+      "bytes": 29637
+    },
+    "config": {
+      "sha256": "c8f98fb5e1c544dcc40ea2fc33267150c2facb80f39da4b3d0604ff29fb62d78",
+      "bytes": 192362
+    },
+    "modules_archive": {
+      "sha256": "69cf9e26fab4398ccddcd7bfa28a7be5481a0b093df90bf352c10895a2a8e1ff",
+      "bytes": 11147937
+    }
+  },
+  "changes_since_kernel_32": [
+    "MSM8226 per-lane PHY CFG4 values match stock",
+    "RMI4 default 100 ms post-reset wait and NOSLEEP enabled in DT",
+    "Stock secure display IOMMU contexts trigger successful 90112-byte global secure page-table initialization"
+  ],
+  "native_display": "Native DRM requires temporary forced-active MDSS/IOMMU runtime power. Owner initially reports text, blue, fade to black with backlight on. No passing physical result yet.",
+  "context_readback": {
+    "micro_mmu_control": "0x00000008",
+    "ns_sctlr": "0x00001063",
+    "ns_fault_status": "0x00000000",
+    "interpretation": "Translation enabled, halt request clear, no recorded context fault; this alone does not validate all DMA mappings."
+  },
+  "dcs_readback": {
+    "initial": {
+      "0x0a": "0x0c",
+      "0x0c": "0x77",
+      "0xda": "0x00",
+      "0xdb": "0x00",
+      "0xdc": "0x00"
+    },
+    "exact_stock_packet_replay": "Valid replies remain, power mode stays 0x0c.",
+    "stock_clock_lane_control_then_exact_replay": "Clearing forced-HS clock bit to the stock value and replaying changes power mode to 0x1c; physical pixel result pending.",
+    "scope": "Temporary signed external diagnostic module; valid one-byte replies on kernel 35 supersede the earlier zero-byte/invalid-response result only for this candidate."
+  },
+  "touch": "Probe and NOSLEEP control 0x04 confirmed. Owner test of this new startup sequence pending; indefinite evdev capture remains running.",
+  "power": "Configured USB descriptor and runtime input request both 500 mA; charger reports Good/Fast/Charging in this sample. Automatic negotiation and full policy qualification remain open.",
+  "installed_default": "Unqualified kernel 16 remains in the installed Nura root; this kernel 35 test is RAM-only, with installed filesystem mounted read-only/unreplayed.",
+  "qualification": "Experimental; not a default Nura or upstream-submission-ready pass. No new kernel-35 envkernel APK is claimed."
+}

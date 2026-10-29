@@ -1,0 +1,54 @@
+{
+  "bytes": 9625600,
+  "sha256": "35ee134fc723023c56111783ab8450bc716c03342e50bf6ac27e71bf568c7d3f",
+  "kernel_sha256": "1630754f8649f9cbbdf6814a1a567a28bcf59818813b123cea803db15200c518",
+  "qcdt_sha256": "ae2da078324565a0bbf934103f6c6c6c69b22bedcd1f6316bcd202ed956810a9",
+  "stock_kernel_and_qcdt_preserved": true,
+  "initramfs_lz4_roundtrip_matches": true,
+  "purpose": "original-kernel RAM-only hardware baseline, not Nura endpoint or factory restore rehearsal",
+  "automatic_return_seconds": 120,
+  "kernel_release": "3.4.0-gf0d2a47",
+  "usb": "RNDIS networking and root diagnostic TCP/HTTP verified; host descriptor 500 mA",
+  "mounted_storage": "only rootfs/proc/sysfs/tmpfs/devpts/debugfs; no eMMC filesystem mounted",
+  "display": "owner confirms red/green/blue bars at brightness 128/255 and after driver powerdown/unblank cycle",
+  "touch": {
+    "bytes": 66864,
+    "events": 4179,
+    "absolute_codes": {
+      "57": 66,
+      "53": 793,
+      "54": 728,
+      "58": 821,
+      "50": 131,
+      "51": 129,
+      "52": 149,
+      "47": 749
+    },
+    "x_range": [
+      20,
+      703
+    ],
+    "y_range": [
+      14,
+      1280
+    ],
+    "maximum_active_slots": 3
+  },
+  "touch_scope": "bounded stock event test only; maximum tracked slots includes possible palm classification and is not a precision/ghost-touch qualification",
+  "charging": {
+    "status": "Charging",
+    "health": "Good",
+    "temperature_deci_celsius": 313,
+    "capacity_percent_reported": 27,
+    "voltage_microvolts": 3839644,
+    "current_microamps": -259790
+  },
+  "display_clocks_hz": {
+    "dsi_vco": 421021289,
+    "pixel": 70170214,
+    "byte": 52627661,
+    "escape": 19200000
+  },
+  "stock_restore_rehearsal": "not performed; this was the original kernel/QCDT with a replacement diagnostic initramfs",
+  "nura_endpoint": "historical kernel baseline only; maintained Nura/all-hardware qualification remains open"
+}

@@ -73,8 +73,8 @@
       "name": "linux-display-iommu-experimental",
       "url": "https://github.com/timschmidt/fx0-linux",
       "branch": "integration/fx0-iommu",
-      "commit": "6c99f06487157c3bf8f1ed58e22125fba3266fce",
-      "status": "Kernel, modules, signed envkernel APK and schemas pass; runtime-forced MDSS/IOMMU permit native scanout, but physical pixels remain black and DCS reads invalid; default power transition resets; not qualified for default Nura boot"
+      "commit": "abe11294089af215e9613de912d4a6e4628356de",
+      "status": "Kernel 35 and signed modules build; secure page tables initialize; native DRM runs with runtime power held active. DCS replies now valid, clock-lane correction changes power mode to 0x1c; physical display/touch acceptance pending. The retained envkernel APK is older kernel 32."
     }
   ]
 }
