@@ -718,3 +718,49 @@ installed kernel package and boot configuration are unchanged. Next is the
 installed boot/module backup and trigger/DTB audit before persistent r1 update.
 This remains a temporary workaround; intermittent driver startup, suspend and
 all remaining hardware/recovery/storage acceptance gates remain open.
+
+
+### Native r1 installed and booted from eMMC
+
+The pre-update boot, old modules and configuration archives were copied to the
+host and independently verified on Disk B. The exact old dated APK is preserved,
+and raw boot/GPT fingerprints were captured. The r1 dry run changes only the
+kernel package, reporting a semantic downgrade from the earlier dated build;
+its tested source is newer. The APK is trusted without signature overrides.
+
+Persistent configuration installs the tested initial-hold prefix and cleanup,
+adds Fx0 panel/backlight/input modules to mkinitfs, selects the single Fx0 DTB,
+and explicitly disables raw flash-on-update. Existing command-line generation
+preserves the tested parameters. A detached launcher exited before mutations;
+a supervised systemd job is used. The live RAM module mount is busy, so a
+separate bind preserves its active mappings while lazy detachment exposes the
+underlying ext4 module path. Only the unexecuted package stage is resumed.
+Normal APK/kmod/mkinitfs/boot-deploy processing succeeds. Old native16 boot files,
+modules and a fallback entry remain available; that entry is not yet rehearsed.
+
+Readback verifies the kernel and DTB against the native APK, initramfs source
+bytes/module ABI/size and explicit extlinux paths. The 11,955,740-byte initramfs
+has no RAM-module overlay hook and fits below the inherited framebuffer.
+Raw boot SHA256 and both complete GPT copies match their pre-update values.
+
+A normal systemd reboot returns to lk2nd; retained logs are saved and fastboot
+continue boots the installed filesystem. A changed boot ID confirms a fresh
+native 6.18.59 boot. SSH works, msmdrmfb is active, taint is 0, the module tree is
+on persistent ext4, and all four display controls are auto after initial holds
+are released. No failed units are reported; time synchronization still waits
+without upstream networking. The owner completes the requested screen/gesture
+test. It records 2,468 events, 252 frames, 23 matched contact starts/releases,
+max 2 contacts, X19–719/Y0–1278,zero SYN_DROPPED and no remaining contacts.
+
+This is one installed boot with temporary initial-power policy. It is not
+unattended/cold/repeated startup, full suspend, complete UI/hardware or final
+recovery acceptance. Current evidence is in 2026-10-29-native-r1-installed-boot.json.
+
+
+Reverse USB internet now works through the selected host connection. The original
+host and phone profiles are saved privately; the host USB profile shares its
+existing upstream link, and the phone's USB profile gains gateway/DNS with a low
+route priority. HTTPS and trusted repository-index updates pass. The upgrade dry
+run reports no pending packages, and the existing local-kernel checksum pin
+retains the tested r1 build. NTP synchronizes and no boot jobs remain. No Wi-Fi,
+SIM or modem functionality is inferred from this development network path.

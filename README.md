@@ -39,16 +39,18 @@ repeated startup. Full orientation,accuracy,noise,suspend and reliability remain
 open. The stock kernel in RAM also displays correct bars and records touch.
 See [display-power evidence](evidence/2026-10-29-display-power-kernel44-build.json).
 
-A fresh native Nura r1 kernel APK verifies against the installed trusted keys
-and boots from RAM using its own modules. With initial display power holds,
-it completes a five-second off/on, restores automatic PM and displays
-owner-confirmed RGB. It is not installed yet and does not contain the newer
-experimental initialization candidates. A regenerated Nura initramfs with temporary initial display holds and complete
-matching modules now reaches systemd, SSH and an owner-confirmed readable
-console from RAM. Holds are released after DRM binding; all four display
-controls are auto and kernel taint is0. This workaround does not resolve
-intermittent driver startup. The persistent package update and full graphical
-interface remain unqualified. See [native RAM boot evidence](evidence/2026-10-29-native-nura-ram-initfs.json).
+The signed native Nura r1 kernel APK is now installed and has booted from eMMC
+through lk2nd's filesystem path. SSH and the native console work, kernel taint
+is 0, and the on-disk module tree matches the kernel. A temporary initramfs
+wrapper holds initial display power, then releases both holds after DRM binds;
+all four display controls are automatic. This does not fix intermittent startup
+without the workaround. An installed-system gesture test records 2,468 events,
+23 matched contact starts/releases, two simultaneous contacts and no dropped
+events. The raw boot partition and both GPT copies are unchanged; pre-update
+boot/modules/configuration and the old APK are verified on two host filesystems.
+See [installed r1 evidence](evidence/2026-10-29-native-r1-installed-boot.json).
+The full graphical interface, default unattended boot and final update/recovery
+qualification remain open.
 
 Native CCI now reads the separate camera EEPROM: a short read and two full 64 KiB
 reads match the independent GPIO capture. Verified private copies exist on two

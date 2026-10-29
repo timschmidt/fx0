@@ -40,7 +40,9 @@ confirms a readable login/text console. At the observed systemd check there
 are no failed units; time synchronization remains pending without an upstream
 network. This is one boot with a workaround, not startup/suspend qualification.
 Normal Nura startup writes mutable root state even though the boot image was
-loaded from RAM. The installed kernel package/boot configuration are unchanged.
+loaded from RAM. Those RAM trials left the installed kernel package and boot configuration
+unchanged. The subsequent persistent installation is recorded in
+[installed evidence](../../evidence/2026-10-29-native-r1-installed-boot.json).
 
 ## Reproduction inputs
 

@@ -137,3 +137,43 @@ overlap the inherited framebuffer because LK overrides the load address.
 Deduplicated XZ image36 stays below it and reaches a physically confirmed
 readable console and SSH with taint 0 and automatic display PM. Evidence and
 hashes are in [the RAM-initramfs record](../evidence/2026-10-29-native-nura-ram-initfs.json).
+
+
+### Persistent native r1 development installation
+
+The native r1 package now boots from the installed eMMC filesystem, with its
+matching modules on ext4 and a temporary initial display-power workaround.
+[Installed evidence](../evidence/2026-10-29-native-r1-installed-boot.json) records
+one fresh boot, authenticated SSH, taint 0 and the physical two-contact test.
+It does not close repeated/cold/default boot, full suspend or hardware acceptance.
+
+Before updating, archive the existing boot files, kernel modules/release metadata,
+configuration and package state; retain the exact old APK on two off-device
+filesystems. Fingerprint raw boot and both GPTs. Configure the tested prefix
+at `/usr/local/libexec/fx0-init`, map the original init to `/init.fx0-original`
+and the prefix to `/init`, and include the panel/backlight/input modules. Install
+only the display cleanup hook; the RAM-module overlay hook is unnecessary for
+an installed matching kernel. The development override selects
+`deviceinfo_dtb="qcom-msm8926-lg-madai"` and explicitly sets
+`deviceinfo_flash_kernel_on_update="false"`. Preserve tested command-line
+fragments and normal fstab-derived root/boot discovery.
+
+When installing from the RAM-test environment, ensure APK writes to the real
+module filesystem. Live libkmod mappings can keep the temporary module mount
+busy. In this test a separate RAM bind retained those mappings, then lazy
+detachment exposed ext4 for the package install. No on-disk filesystem was
+forcibly unmounted. Use a supervised process for the update: the earlier detached
+SSH/sudo launcher exited before starting, while a systemd transient service
+completed normal APK and trigger processing. Inspect completion state and logs
+before retrying any stage. The old dated development version sorts above r1;
+the explicit trusted APK installation is a package-version downgrade while
+advancing the tested source.
+
+Keep old boot files in a subdirectory outside the `vmlinuz*` selection glob,
+retain their module release, and add an explicit fallback entry. Verify the new
+kernel and Fx0 DTB against the signed APK, inspect initramfs bytes/module ABI and
+load-slot fit, and confirm raw boot/GPT fingerprints are unchanged. Reboot through
+lk2nd and verify a changed boot ID and persistent module filesystem. The selected
+`fastboot continue` path is tested here; default unattended boot and fallback
+selection still need qualification. The device's final update and consolidated
+storage path remain separate acceptance work.

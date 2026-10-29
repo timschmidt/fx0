@@ -147,3 +147,11 @@ encoder and probe-registration checks. Four instrumented starts fail/pass/pass/
 fail, with no retained value markers in either failure. The normal error path
 may never be reached, or its trace may not survive; real fault arguments remain
 unknown. See [recorder limits](../diagnostics/abort-value-trace/README.md).
+
+
+Native r1 now also boots from the installed eMMC filesystem with its matching
+on-disk modules and the temporary initial-power prefix. SSH, native console and
+two-contact input are tested; all display controls return to auto and taint is 0.
+This permits broader hardware/userspace work while the first-read startup defect
+remains unresolved. It is not evidence that the bounded C6 candidates or the
+userspace workaround are ready as an upstream kernel fix.
