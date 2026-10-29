@@ -1,0 +1,18 @@
+{
+  "stock_boot_report": "WCN v2.0 RadioPhy vIris_TSMC_3.0 with 48MHz XO",
+  "firmware_location": "original read-only modem filesystem: image/wcnss.mdt and split b00/b01/b02/b04/b06/b07/b08/b09 segments",
+  "firmware_memory": "loadable segments start at 0x0d200000 and fit inside the reserved 10 MiB WCNSS region",
+  "nv_location": "stock system symlink points to /persist/WCNSS_qcom_wlan_nv.bin; both original and current persist snapshots retained privately",
+  "supplies_from_stock_source": {
+    "pronto_vddmx": "L3",
+    "pronto_vddcx": "S1",
+    "pronto_vddpx": "L6",
+    "iris_vddxo": "L10",
+    "iris_vddrfa": "L24",
+    "iris_vddpa": "L16",
+    "iris_vdddig": "L24"
+  },
+  "unresolved_supply_profile": "stock RFA and digital share L24; vendor digital range 1.225\u20131.8 V overlaps RFA 1.3 V; recovered WCN3660A profile uses fixed 1.8 V digital and would conflict if copied unchanged. Verify actual regulator state and chip variant before activation.",
+  "physical_wireless_test": "not enabled; no scan/association/Bluetooth pass",
+  "redistribution": "firmware and calibration retained privately; no blob redistribution permission assumed"
+}

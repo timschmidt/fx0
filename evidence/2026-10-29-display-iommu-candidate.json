@@ -1,0 +1,41 @@
+{
+  "source_commit": "6c99f06487157c3bf8f1ed58e22125fba3266fce",
+  "branch": "integration/fx0-iommu",
+  "repository": "https://github.com/timschmidt/fx0-linux",
+  "kernel_release": "6.18.59-00032-g6c99f0648715",
+  "build": "zImage, modules and Fx0 DTB passed",
+  "binding_check": "passed",
+  "dtb_iommu_schema_check": "passed without diagnostics",
+  "checkpatch": "zero errors; imported dependency warnings and three new commit-description warnings remain for submission cleanup",
+  "physical_result": "pending; RAM image prepared; not installed as default",
+  "artifacts": {
+    "zimage": {
+      "sha256": "e0fb7fbf5d2d7e50317571b3f50c408025c68d37d35899861323bb31a2dccccb",
+      "bytes": 5534208
+    },
+    "dtb": {
+      "sha256": "11e922d5d57e3add5e39d366e8c3b67974db97dab1f23d91f3b96c28751929f8",
+      "bytes": 29465
+    },
+    "config": {
+      "sha256": "c8f98fb5e1c544dcc40ea2fc33267150c2facb80f39da4b3d0604ff29fb62d78",
+      "bytes": 192362
+    },
+    "modules_archive": {
+      "sha256": "d9a078af498193afc38ace76764c14ae159b3526de18d4987018abdbbd642487",
+      "bytes": 11147631
+    }
+  },
+  "diagnostic_image": {
+    "file": "fx0-linux-diagnostic-17.img",
+    "bytes": 6193152,
+    "sha256": "797664c291d2a7dfc1664495d84d5e30ee575b0f93c345ee6c696193fc675357",
+    "ramdisk_bytes": 626583,
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap console=tty0 lk2nd.pass-simplefb=autorefresh"
+  },
+  "upstream_dependencies": [
+    "https://lore.landau.one/lkml/20260809-msm8974-iommu-upstream-v1-0-87f5cd492560%40oss.qualcomm.com/",
+    "https://lore.landau.one/lkml/20260730-fix-qcom-smmu-v2-3-18e0daf2d836%40oss.qualcomm.com/",
+    "https://lore.landau.one/lkml/20260809-msm8974-mmcc-fix-v1-1-50f2dcf18d2e%40oss.qualcomm.com/"
+  ]
+}

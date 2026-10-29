@@ -29,7 +29,7 @@ make -C src/lk2nd \
   LK2ND_FORCE_FASTBOOT=1 lk2nd-msm8226 -j8
 ```
 
-Use the DTB **basename**. Including the `msm8226/` directory in `LK2ND_DTBS` silently filters out the board and can still produce an unusable image. Verify that `qcdt.img` contains one entry and that its embedded `/lk2nd` compatible is `lg,madai`. The explicit `APPSBOOTHEADER_DIR` avoids a legacy relative-output assumption when the build output is absolute. Forced fastboot was used for initial diagnostics. A separate build with `LK2ND_FORCE_FASTBOOT=0` is now installed and automatic Nura warm boot is verified. Full cold/key recovery qualification remains pending.
+Use the DTB **basename**. Including the `msm8226/` directory in `LK2ND_DTBS` silently filters out the board and can still produce an unusable image. Verify that `qcdt.img` contains one entry and that its embedded `/lk2nd` compatible is `lg,madai`. The explicit `APPSBOOTHEADER_DIR` avoids a legacy relative-output assumption when the build output is absolute. Forced fastboot was used for initial diagnostics. A separate build with `LK2ND_FORCE_FASTBOOT=0` was installed and automatic Nura warm boot verified. Native display investigation temporarily reinstalls the verified forced-fastboot prefix so failures return to the menu. Full cold/key recovery qualification remains pending.
 
 ## Nura rootfs
 
@@ -69,3 +69,9 @@ The maintained Nura package is developed in the public pmaports fork on `integra
 Use `pmbootstrap install --no-split` for the generic MSM8226 image containing the ext2 boot and root subpartitions. A development command-line drop-in at `/etc/kernel-cmdline.d/50-fx0-development.conf` requests inherited framebuffer, ramoops and warm reboot support. Verify the generated extlinux configuration contains the Fx0 DTB search path and correct root/boot UUIDs. The combined image must fit entirely within the independently reverified `userdata` partition before any deployment.
 
 The installed console development system now uses the `postmarketos-base-nosplash` provider after a Plymouth crash. Keep the four development command-line entries shown above; the trial `clk_ignore_unused` and `pd_ignore_unused` flags did not restore visible display and have been removed. The owner still sees a blank screen despite working SSH. Final native display support remains required.
+
+## Experimental display IOMMU build
+
+The native panel candidate on `integration/fx0-lts` fails at the maintained MDP5 IOMMU requirement. The separate public `integration/fx0-iommu` branch, pinned by `evidence/2026-10-29-display-iommu-candidate.json`, carries the upstream QSMMU dependencies plus MSM8226-specific configuration/wiring. Its kernel/module build and targeted schema checks pass; it has not yet passed physical scanout or a Nura package boot. Keep the previous diagnostic artifacts frozen.
+
+Use a separate full source worktree/output to preserve the verified baseline. Starting from this repository's diagnostic config, enable `CONFIG_QCOM_IOMMU=y` with the kernel `scripts/config` tool and run `olddefconfig`, then build `zImage modules qcom/qcom-msm8926-lg-madai.dtb` with `ARCH=arm LLVM=1`. Record the resulting exact source/config/artifact hashes. For controlled testing, generate a RAM diagnostic with `--return-after 180`; load matching signed modules only after USB log capture is established. The image generator now advertises 500 mA using ConfigFS's milliamps unit; it does not itself implement charger-current negotiation.

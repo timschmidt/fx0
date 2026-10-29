@@ -34,7 +34,8 @@ echo 'Nura Fx0 development' > strings/0x409/manufacturer
 echo 'Fx0 Linux diagnostic' > strings/0x409/product
 mkdir -p configs/c.1/strings/0x409
 echo 'NCM networking and serial diagnostics' > configs/c.1/strings/0x409/configuration
-echo 250 > configs/c.1/MaxPower
+# ConfigFS uses milliamps; the USB descriptor encodes this in 2 mA units.
+echo 500 > configs/c.1/MaxPower
 mkdir -p functions/ncm.usb0 functions/acm.usb0
 echo 02:46:58:30:00:01 > functions/ncm.usb0/dev_addr
 echo 02:46:58:30:00:02 > functions/ncm.usb0/host_addr

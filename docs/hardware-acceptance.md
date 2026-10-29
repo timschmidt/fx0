@@ -19,9 +19,9 @@ For each result record the exact image hash, source revisions, package manifest,
 | microSD | Card detect, read/write, filesystem integrity, suspend behavior, safe removal where supported | Unverified |
 | USB device mode | Reliable enumeration, debug networking, reconnect, supported user-facing profiles, charging interaction | Partial: NCM/ACM configured, HTTP and root serial shell verified; full reconnect/power qualification pending |
 | USB host or OTG | Establish product support, then peripheral enumeration, power/role switching, disconnect and resume | Unverified |
-| Display | Actual panel/revision; DRM ownership; correct colors/timings; blank/unblank; orientation; no retained-logo false pass | Failed on installed candidate: screen blank; inherited framebuffer/getty exist, native panel/power ownership unimplemented |
+| Display | Actual panel/revision; DRM ownership; correct colors/timings; blank/unblank; orientation; no retained-logo false pass | Failed candidate: MDP5 removes simpledrm then rejects missing IOMMU; native panel/scanout unqualified |
 | Backlight | Correct controller; useful brightness range; off state; dimming and resume without flicker or stuck output | Unverified |
-| Touchscreen | Actual controller/revision; full-area coordinates, multitouch, edge behavior, orientation and suspend/wake | Unverified |
+| Touchscreen | Actual controller/revision; full-area coordinates, multitouch, edge behavior, orientation and suspend/wake | Failed physical test: Synaptics PLG430 probes as RMI4 F01/F12, but owner swipes/taps/two fingers produce no events or interrupts |
 | Physical buttons | Power, volume up/down, home, long presses, recovery combinations and wake where supported | Unverified |
 | Graphics acceleration | Actual Freedreno renderer; rendering correctness, compositor stability, load and memory-pressure behavior | Unverified |
 | Wi-Fi | Supported bands; scan, authentication, DHCP/DNS, sustained transfer, stable MAC, reconnect and resume | Unverified |

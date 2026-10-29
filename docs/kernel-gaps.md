@@ -4,7 +4,7 @@
 
 The initial maintained target is Linux 6.18.59 LTS, pinned to [`1253a6aa5d104312bf0992afacc15220ae35bdf9`](https://github.com/gregkh/linux/commit/1253a6aa5d104312bf0992afacc15220ae35bdf9). The recovered Fx0 UART/USB description compiles against it. A separate binding patch documents the `lg,madai`, `qcom,msm8926`, `qcom,msm8226` tuple.
 
-The original source subset covered DTB compilation only. Full Linux/module builds and schema checks have since succeeded, and the owner observed Linux diagnostic userspace on the inherited framebuffer. USB diagnostic enumeration remains unresolved. See the newer image/schema records in `evidence/` and the development log; the [earlier DTB record](../evidence/2026-10-29-maintained-device-tree-build.json) retains its original narrower scope.
+The original source subset covered DTB compilation only. Full Linux/module builds and schema checks have since succeeded, and the owner observed Linux diagnostic userspace on the inherited framebuffer. USB NCM/ACM diagnostics and initial installed Nura networking now work; reliability qualification remains open. See the newer image/schema records in `evidence/` and the development log; the [earlier DTB record](../evidence/2026-10-29-maintained-device-tree-build.json) retains its original narrower scope.
 
 ## Shared SoC support to carry forward
 
@@ -28,7 +28,7 @@ The [source assessment record](../evidence/2026-10-29-maintained-kernel-gaps.jso
 
 The first two images reached diagnostic userspace but exposed no host USB interface. Recovered Fx0 PHY initialization used the downstream value/absolute-address format; the current driver/binding expects offset/value pairs. The stock settings translate to the existing SoC sequence. A separate driver issue uses offset zero as a sentinel, skipping that valid entire sequence; an explicit count fix is prepared and compiled. It remains present in the current upstream file inspected during bringup.
 
-The third image inherits the correct SoC sequence, carries the count fix, describes verified L10/L20 supplies, and selects peripheral mode matching the stock DTS. The framebuffer now reports UDC state, deferred probes and recent USB messages. Physical enumeration is still pending. Do not treat these source fixes as proof that the actual USB failure is solved.
+The third image inherits the correct SoC sequence, carries the count fix, describes verified L10/L20 supplies, and selects peripheral mode matching the stock DTS. The framebuffer now reports UDC state, deferred probes and recent USB messages. Those source-only candidates were followed by physical SMEM/extcon fixes and verified NCM/ACM enumeration; see the later findings below. Sustained reconnect/power qualification remains open.
 
 ## Recovered wireless patch dependencies
 
@@ -52,3 +52,13 @@ The Fx0's SMEM is at 0x0fa00000, not the inherited 0x03000000. Stock DT, the fir
 Preserve the complete stock memory holes: 0x08000000–0x0f500000 and 0x0fa00000–0x0ff00000. Reserving only SMEM and selected remote processors was insufficient under memory pressure. The extra four MiB after SMEM must remain unavailable to the allocator. With the full holes reserved, two 1 GiB reads match; broader memory/thermal/soak testing remains open.
 
 The stock charging code uses the LGE thermistor conversion table and software derating. Generic SMBB normal comparator limits report Overheat near a stock-table estimate of 34 °C. The extended-range flag explicitly requires external voltage/current policy, so enabling that flag alone is not a valid completion. Port and test the actual policy and battery reporting.
+
+## Native display IOMMU dependency
+
+Controlled loading on kernel `6.18.59-00016-g9ff315ebc274` establishes that MDP5 removes simpledrm, identifies display hardware v1.1, then fails with `no IOMMU, bailing out`. WLED probes and the panel module loads, but native panel attachment consequently returns -ENODEV. This is a shared SoC/IOMMU dependency; schema success alone did not reveal it. The controlled RAM kernel remains responsive after that failure. Repeated normal Nura starts are independently recorded in persistent journals; their reset cause is still unproven.
+
+The [upstream MSM8974 QSMMU series](https://lore.landau.one/lkml/20260809-msm8974-iommu-upstream-v1-9-87f5cd492560%40oss.qualcomm.com/T/) describes the same DRM_GPUVM requirement, short-descriptor tables, secured global configuration and context restoration. Its dependency is the [ARM32 DMA-domain detach fix](https://lore.landau.one/lkml/20260730-fix-qcom-smmu-v2-3-18e0daf2d836%40oss.qualcomm.com/). Evaluate these with MSM8226-specific prefetch values and clock/power behavior; do not substitute the MSM8974 tuning table. An isolated integration candidate is building, with targeted binding and DTB validation passed. Hardware mapping/scanout and suspend remain unqualified.
+
+Read-only stock inspection now finds split `image/wcnss.mdt` firmware on the original modem filesystem. Its loadable addresses start at 0x0d200000 and fit the reserved 10 MiB region. The retained stock boot log explicitly reports WCN v2.0 / Iris_TSMC_3.0 with a 48 MHz XO. Stock NV is a symlink into persist, so preserve and use calibration rather than substituting a generic NV blob.
+
+There is an unresolved supply-profile mismatch: compiled stock DT and vendor source give IRIS RFA and digital the same supplier, while vendor digital voltage range 1.225–1.8 V can coexist with RFA at 1.3 V. The recovered WCN3660A mainline profile instead fixes digital at 1.8 V. Do not enable that profile unchanged against shared L24. Confirm the physical variant and stock regulator state, then prepare the appropriate shared-driver/binding adaptation. Wireless firmware startup remains untested.
