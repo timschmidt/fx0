@@ -54,7 +54,7 @@ For each result record the exact image hash, source revisions, package manifest,
 | Rear camera | Identify sensor/calibration; correct media graph, stills, exposure, orientation/color, reopen and resume | Stock ID0x8179 confirmed; static library geometry decoded; stock capture and maintained driver/capture pipeline unverified |
 | Front camera | Identify sensor/calibration; stills, orientation/color, switching, reopen and resume | Stock ID0x0132 confirmed; static library geometry decoded; stock capture and maintained driver/capture pipeline unverified |
 | Lens control | Establish actuator and capabilities; autofocus/manual controls where fitted; repeatability | Source candidate only; actual part/control/calibration unverified |
-| Optical stabilization | Establish actual OIS module; preserve coefficients, qualify stabilization/control/resume where fitted | Production source candidate; EEPROM maker/coverage and physical functionality unverified |
+| Optical stabilization | Establish actual OIS module; preserve coefficients, qualify stabilization/control/resume where fitted | EEPROM maker0x01 selects old LGIT path; three matching bank0 reads backed up privately; capacity/other banks, coefficient validity and physical controller/functionality unverified |
 | Camera flash and torch | Verify supported hardware modes, control, exposure synchronization, limits and off state | Unverified |
 | Video capture | Supported front/rear modes, sustained capture, frame integrity, audio synchronization and playback | Unverified |
 | Video codec hardware | Identify exposed encode/decode blocks; supported formats, actual acceleration, load and stability | Unverified |

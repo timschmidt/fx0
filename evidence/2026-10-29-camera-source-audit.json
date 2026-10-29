@@ -1,5 +1,5 @@
 {
-  "purpose": "Camera identification/source audit and read-only calibration-capture preparation; no capture-driver pass",
+  "purpose": "Camera identification/source audit, stock-reader preparation and linked live EEPROM capture; no capture-driver pass",
   "vendor_source_commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
   "linux_target_commit": "341246daef4844c69d8638813bcedfcea35f96f1",
   "stock_kernel": "3.4.0-gf0d2a47",
@@ -220,11 +220,12 @@
   "calibration": {
     "original_configured_read_bytes": 2304,
     "expanded_diagnostic_read_bytes": 2560,
-    "physical_eeprom_capacity": "Unverified; neither length is claimed as complete physical capacity",
-    "ois": "Candidate identity unverified; maker byte0700, LGIT calibration starts0900 and fields extend through at least0940, outside original cached range",
-    "positive_capture_performed": false,
+    "physical_eeprom_capacity": "Unverified; three matching65536-byte bank0 word-address reads alias every8192 bytes; other banks/security spaces unverified",
+    "ois": "Maker0700=01 selects old LGIT path; coefficient range0900-09ff captured privately, actual controller and validity unverified",
+    "positive_capture_performed": true,
     "cache_behavior": "Stock READ_CAL_DATA frees cached calibration; capture to RAM once per boot and obtain independent probe reads across stock-kernel boots",
-    "programming_or_recalibration_operations": "None issued"
+    "programming_or_recalibration_operations": "None issued",
+    "positive_capture_method": "Temporary GPIO I2C, not stock-cache reader; see 2026-10-29-camera-eeprom-capture.json"
   },
   "reader": {
     "source": "scripts/stock_camera_eeprom_reader.c",
@@ -260,5 +261,5 @@
     "Already expanded map rejected before output creation",
     "No image boot or flash performed"
   ],
-  "current_phone": "RAM kernel39 with in-tree touch reset driver; pre-DRM owner gesture capture stays open. Only negative reader guards executed, no camera power/probe/capture change."
+  "current_phone": "RAM kernel39; native DRM not loaded, owner pre-DRM gesture capture remains open. Camera GPIO readback restored, temporary modules unloaded, expected out-of-tree taint4096; eMMC unmounted."
 }

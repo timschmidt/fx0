@@ -292,3 +292,32 @@ A new static ELF/C inspector decodes the actual stock sensor-library register-se
 Camera EEPROM is separate from eMMC. The original driver caches0x900 bytes, while candidate LGIT OIS calibration extends beyond0x900 through at least0x0940. Prepared a freestanding ARM32 reader with exact-release/subdevice/name/size guards, using only query/size/read ioctls. Actual vendor-header ARM32 ABI and register-setting-prefix checks pass; both final reader variants compile with Wall/Wextra/Werror. Current kernel39 executes both wrong-release/status78 and wrong-path/status64 negative cases without camera access. Positive EEPROM reads remain pending. The read consumes the driver cache, so capture to RAM first and compare independent stock-kernel boots.
 
 Prepared an expanded stock RAM diagnostic with only the configured read length changed0x900to0xa00 and the Android checksum updated:21 bytes differ. Kernel, initramfs, all QCDT matches and other DT bytes stay identical. Independent fdtget confirms the map; wrong-hash/already-expanded inputs are rejected without output. The image is unbooted and 0xa00 is reviewed-range coverage, not proof of full EEPROM capacity. No EEPROM programming, camera/OIS initialization, calibration, stream or phone reboot occurred. Added explicit remaining calibration/OIS gates to the plan and acceptance matrix.
+
+### Live camera EEPROM preservation without interrupting touch capture
+
+Read the separate camera EEPROM on kernel 39 with a temporary signed GPIO
+I2C diagnostic while native CCI stays disabled. Preflight requires exclusive
+input GPIO29/30 and input-low GPIO64; capture uses open-drain lines, enables
+only the source-described camera I/O supply and sends address-pointer plus
+repeated-start reads to fixed 7-bit 0x50. No EEPROM data programming, OIS
+initialization/recalibration, sensor streaming, eMMC write or reboot occurred.
+
+An initial 2560-byte read and three independent 65536-byte reads agree. Each
+full read recreates the buffer and cycles I/O power; the final read tests the
+exact public source including its CCI-disabled guard. Copies on both host
+filesystems were fsynced and checked after discarding host file cache. Data
+repeats every 8192 bytes across the full 16-bit word-address space; physical
+capacity and other bank/security-space coverage remain unproven. Maker 0700=01
+selects the vendor's old LGIT OIS path, and 0900–09ff contains non-erased data.
+The actual OIS controller and coefficient validity remain unqualified. The
+stock driver's CRC helper checks paired map entries; the board's single-entry
+map provides no checksum partner, so it cannot establish a CRC pass.
+
+The adapter and GPIO claims are released after each read; final readback
+confirms GPIO29/30 inputs and GPIO64 input-low, with touch GPIO16/17 unchanged. Both
+modules are unloaded. Kernel taint 4096 is expected from a signed external
+module; no signature/version enforcement was bypassed. The pre-DRM touch
+capture remains open awaiting confirmed owner gestures. Published only source,
+procedure and sanitized evidence; calibration and capture hashes remain private.
+The separate stock-cache reader and expanded stock RAM image are still
+positive-test/unbooted fallback preparation, respectively.

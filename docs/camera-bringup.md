@@ -74,9 +74,40 @@ python3 scripts/inspect_camera_modes.py --c-source /private/imx179-reference.c \
 
 Keep original libraries and calibration private. Publishing this decoded geometry does not authorize redistributing proprietary libraries or automatically copying their complete tables into a public driver.
 
-## Calibration capture preparation
+## Calibration capture and coverage
 
-An eMMC backup does not contain this separate EEPROM. Its configured camera range is 0x0000–0x08ff. The vendor OIS implementation reads the maker byte at 0x0700, while LGIT variants reference calibration starting at 0x0900 and fields through at least 0x0940. The original 0x900-byte cached read therefore cannot establish coverage of all those fields. Physical capacity and the installed module variant still require identification.
+A signed [temporary GPIO diagnostic](../diagnostics/camera-eeprom-read/README.md)
+now reads the separate camera EEPROM on RAM kernel 39 without rebooting or
+changing the open touch capture. Native CCI remains disabled. The diagnostic
+uses open-drain SDA29/SCL30 and the production EEPROM's I/O enable GPIO64;
+its only write is the EEPROM address pointer before a repeated-start read.
+It does not program data, initialize OIS or run calibration.
+
+Three independent 65536-byte reads match, including a final read using the
+exact published source with its CCI-disabled guard. Each read cycles the I/O
+enable and starts with a fresh module buffer. Verified private copies are saved
+on two host filesystems. The complete 16-bit word-address space at 7-bit 0x50
+repeats every 8192 bytes; this is observed aliasing, not proof of physical capacity
+or coverage of other slave banks/security areas. The first 2560 bytes also match
+an earlier shorter capture. Maker byte 0x0700 is 0x01, selecting the vendor's old
+LGIT path; the 0x0900–0x09ff range contains non-erased data. Actual controller
+identity/functionality and coefficient validity remain unverified.
+
+After each read the adapter and GPIO claims are released, SDA/SCL return to
+inputs, and GPIO64 returns low/input. Final GPIO readback confirms those states
+and the touch reset/IRQ state is unchanged. Both diagnostic modules are now
+unloaded. The signed external diagnostic sets expected kernel taint 4096;
+no signature/version checks were forced. eMMC filesystems remain unmounted.
+No sensor streaming, OIS initialization or nonvolatile programming occurred.
+
+The vendor CRC helper verifies pairs of data/checksum map entries. This board's
+single-entry map supplies no checksum partner, so its helper cannot establish a
+CRC pass. Keep the matching captures and reconcile any actual module-specific
+integrity format rather than reporting an absent check as successful.
+
+### Original-kernel fallback preparation
+
+An eMMC backup does not contain this separate EEPROM. Its configured camera range is 0x0000–0x08ff. The vendor OIS implementation reads the maker byte at 0x0700, while LGIT variants reference calibration starting at 0x0900 and fields through at least 0x0940. The original 0x900-byte cached read therefore cannot establish coverage of all those fields. Physical capacity, additional address spaces and actual OIS controller identity still require identification.
 
 The [stock reader](../scripts/stock_camera_eeprom_reader.c) is a freestanding ARM32 executable for the verified `3.4.0-gf0d2a47` RAM kernel. It checks kernel release, subdevice sysfs name, EEPROM name and the exact compiled cache length. It issues only the stock information/size/read commands. The read consumes the kernel driver's cached copy, so capture to a RAM file first, retain that file until transferred and checked, and obtain independent hardware reads on separate stock-kernel boots. The reader does not program EEPROM or invoke OIS initialization/calibration.
 
@@ -88,7 +119,7 @@ clang --target=armv7a-linux-gnueabi -march=armv7-a -marm -Os \
   scripts/stock_camera_eeprom_reader.c -o /private/fx0-camera-eeprom-reader
 ```
 
-Default `FX0_EEPROM_BYTES=0x900` matches the original map; 0xa00 matches the expanded diagnostic. Each rejects the other map size before consuming the cache. The ARM32 structure/ioctl encoding was separately checked against declarations extracted from the pinned vendor header. Both executables run on kernel39 and reject its release with status78, and reject an eMMC path with status64, without opening a camera device. **A positive stock-kernel EEPROM capture has not been performed.**
+Default `FX0_EEPROM_BYTES=0x900` matches the original map; 0xa00 matches the expanded diagnostic. Each rejects the other map size before consuming the cache. The ARM32 structure/ioctl encoding was separately checked against declarations extracted from the pinned vendor header. Both executables run on kernel 39 and reject its release with status78, and reject an eMMC path with status64, without opening a camera device. **A positive stock-kernel EEPROM capture has not been performed.**
 
 The [host image preparation helper](../scripts/prepare_stock_camera_capture.py) accepts the verified original RAM diagnostic, checks its SHA-256 and Android payload checksum, and expands only this EEPROM read length. It preserves all four Fx0 QCDT matches, kernel, initramfs and other DT bytes. The generated image differs at 21 bytes: one changed read-length byte and the 20-byte Android payload checksum. Independent `fdtget` confirms the new map. Wrong-hash and already-expanded inputs are rejected before creating output.
 
@@ -99,12 +130,12 @@ python3 scripts/prepare_stock_camera_capture.py --input /private/stock-ram.img \
 
 This expands a diagnostic read to 0x0000–0x09ff, covering the reviewed calibration addresses; it does not establish full physical EEPROM capacity. The image remains unbooted and must only be RAM-booted after completing the current touch observation. No new stock image has been flashed.
 
-For the future capture, verify the selected Fx0 identity and image hashes, keep eMMC filesystems unmounted, identify the `msm_eeprom` subdevice, and run the matching reader to a private RAM file. Check exact length/status before transfer. Hash and verify copies on two host filesystems, repeat with a fresh stock-kernel boot and compare, then reconcile CRC, module identity, all required calibration ranges and physical capacity. Keep calibration and full logs private. Source paths used for this audit include [the EEPROM driver](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/camera_v2/sensor/eeprom/msm_eeprom.c) and [OIS selection](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/camera_v2/sensor/ois/msm_ois.c).
+For a future independent stock-cache comparison, verify the selected Fx0 identity and image hashes, keep eMMC filesystems unmounted, identify the `msm_eeprom` subdevice, and run the matching reader to a private RAM file. Check exact length/status before transfer. Hash and verify copies on two host filesystems, repeat with a fresh stock-kernel boot and compare, then reconcile CRC, module identity, all required calibration ranges and physical capacity. Keep calibration and full logs private. Source paths used for this audit include [the EEPROM driver](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/camera_v2/sensor/eeprom/msm_eeprom.c) and [OIS selection](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/camera_v2/sensor/ois/msm_ois.c).
 
 ## Implementation and physical test order
 
 1. Complete the current touch observation. Preserve its event capture before another kernel boot.
-2. Capture and reconcile camera calibration as above; identify actuator/OIS variant without invoking EEPROM programming or recalibration.
+2. Reconcile the captured calibration, address-space coverage and any actual integrity format; identify actuator/OIS variant without invoking EEPROM programming or recalibration. The separate positive stock-cache reader path remains optional independent comparison work.
 3. Qualify maintained CCI and production power/reset/clock sequencing with sensor-ID reads and balanced unwind. Confirm shared GPIO64 ownership, rail constraints and actual MCLK. Keep capture DMA disabled for this step.
 4. Add focused MSM8226 CAMSS binding/resource and hardware-operation changes plus its correct camera IOMMU support. Build/schema-check them separately; establish powered register access, reset completion and fault reporting before capture.
 5. Exercise a sensor-independent CSID test pattern through ISPIF/VFE RDI to memory. Verify frame geometry, byte order, buffer completion, repeated start/stop and DMA under load. Distinguish this from a sensor capture pass.

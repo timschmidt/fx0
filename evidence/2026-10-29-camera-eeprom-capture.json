@@ -1,0 +1,60 @@
+{
+  "purpose": "Live private camera EEPROM preservation with a temporary signed GPIO diagnostic; no camera/OIS functionality claim",
+  "kernel": "6.18.59-00039-g341246daef48",
+  "kernel_source": "341246daef4844c69d8638813bcedfcea35f96f1",
+  "diagnostic_source": "diagnostics/camera-eeprom-read/fx0_eeprom_read.c",
+  "diagnostic_source_sha256": "9264e92d8c6f0bbcad843dfd41d392bd5f0a87606249a365f82e84c8f4128cb1",
+  "tested_published_module_sha256": "6f8e40a7fc444e4bbd07e83a29f12e219ae91b992f7667dfd408c9f320b9ccc3",
+  "cci": "Native controller disabled; final published diagnostic refuses enabled/missing MSM8226 CCI node",
+  "bus": {
+    "sda_gpio": 29,
+    "scl_gpio": 30,
+    "io_enable_gpio": 64,
+    "address_7bit": "0x50",
+    "word_address_bytes": 2,
+    "read_chunk_bytes": 32,
+    "method": "Open-drain GPIO I2C, address-pointer write and repeated-start read only"
+  },
+  "preflight_without_capture": "Passed; no I2C transfer",
+  "capture": {
+    "short_read_bytes": 2560,
+    "independent_full_reads": 3,
+    "full_read_bytes_each": 65536,
+    "address_range_each": "0x0000-0xffff",
+    "all_full_reads_match": true,
+    "matches_short_prefix": true,
+    "final_read_uses_exact_published_source": true,
+    "independent_read_state": "GPIO64 cycled and module buffer recreated for each read",
+    "host_filesystems": 2,
+    "private_copies_verified": true,
+    "raw_calibration_or_identifiers_published": false
+  },
+  "interpretation": {
+    "smallest_observed_power_of_two_alias_period_bytes": 8192,
+    "physical_capacity": "Not established by aliasing alone",
+    "other_bank_security_address_coverage": "Not established; only 7-bit0x50 read",
+    "ois_maker_selector": "0x01 selects vendor old LGIT path",
+    "extended_0x900_through_0x9ff": "Contains non-erased data; exact coefficients kept private",
+    "ois_controller_presence_identity_function": "Not established by EEPROM selector",
+    "integrity": "No module-specific pass established; stock single-entry read map has no data/checksum entry pair for its generic CRC helper"
+  },
+  "cleanup": {
+    "diagnostic_and_i2c_algo_bit_unloaded": true,
+    "gpio29_30": "Inputs, function0, no pull",
+    "gpio64": "Input-low, function0, pull-down",
+    "gpio16": "RMI-owned output-high, unchanged",
+    "gpio17": "Input-high with pull-up, unchanged",
+    "pre_drm_touch_capture": "Remains open; no new owner gesture completion",
+    "emmc_filesystems": "All unmounted; no storage write",
+    "kernel_taint": 4096,
+    "taint_explanation": "Signed external diagnostic; no forced signature or version checks"
+  },
+  "nonvolatile_programming": false,
+  "ois_initialization_or_recalibration": false,
+  "sensor_streaming": false,
+  "positive_stock_cache_reader_test": "Still pending; this is a different capture path",
+  "source_checks": {
+    "build": "Exact kernel39 ABI W=1 modules build passes",
+    "checkpatch": "0 errors,5 warnings:4 declaration blank lines and conservative msleep10 delay; temporary diagnostic, not upstream driver"
+  }
+}
