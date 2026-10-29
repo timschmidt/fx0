@@ -118,7 +118,11 @@ def main():
     for name in ('kernel', 'dtb', 'busybox', 'output'):
         p.add_argument('--' + name, type=Path, required=True)
     p.add_argument('--simplefb', action='store_true', help='Use lk2nd inherited framebuffer for diagnostic console; requires built-in simpledrm')
+    p.add_argument('--return-after', type=int, default=0, metavar='SECONDS', help='Return to lk2nd using a warm reboot for persistent-log retrieval (0 disables)')
+    p.add_argument('--usb-debug', action='store_true', help='Enable dynamic USB/PHY probe logging')
     a = p.parse_args()
+    if a.return_after and not 30 <= a.return_after <= 3600:
+        p.error('--return-after must be zero or 30–3600 seconds')
     busybox = a.busybox.read_bytes()
     if busybox[:6] != b'\x7fELF\x01\x01' or struct.unpack_from('<H', busybox, 18)[0] != 40:
         p.error('BusyBox must be a little-endian ARM ELF32 executable')
@@ -126,12 +130,17 @@ def main():
     phsize, phnum = struct.unpack_from('<HH', busybox, 42)
     if any(struct.unpack_from('<I', busybox, phoff + i * phsize)[0] == 3 for i in range(phnum)):
         p.error('BusyBox must be static (no PT_INTERP)')
+    init = INIT
+    if a.return_after:
+        init = init.replace("echo 'Fx0 RAM diagnostic init started'", "echo 'Fx0 RAM diagnostic init started'\n(sleep " + str(a.return_after) + "; echo 'Returning to lk2nd for diagnostic retrieval'; sync; reboot -f) &")
     entries = [(d, stat.S_IFDIR | 0o755, b'') for d in ('bin', 'dev', 'proc', 'sys', 'tmp', 'www')]
-    entries += [('bin/busybox', stat.S_IFREG | 0o755, busybox), ('bin/sh', stat.S_IFLNK | 0o777, b'busybox'), ('init', stat.S_IFREG | 0o755, INIT.encode())]
+    entries += [('bin/busybox', stat.S_IFREG | 0o755, busybox), ('bin/sh', stat.S_IFLNK | 0o777, b'busybox'), ('init', stat.S_IFREG | 0o755, init.encode())]
     ramdisk = gzip.compress(archive(entries), mtime=0)
-    cmdline = 'console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 lk2nd.pass-ramoops=zap'
+    cmdline = 'console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap'
     if a.simplefb:
         cmdline += ' console=tty0 lk2nd.pass-simplefb=autorefresh'
+    if a.usb_debug:
+        cmdline += ' dyndbg="file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p"'
     data = make_image(a.kernel.read_bytes(), a.dtb.read_bytes(), ramdisk, cmdline)
     with a.output.open('xb') as f:
         f.write(data)

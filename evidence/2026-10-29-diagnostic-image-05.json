@@ -1,0 +1,11 @@
+{
+  "file": "fx0-linux-diagnostic-05.img",
+  "bytes": 6174720,
+  "sha256": "8a90baf82346ee320abb497eeb6c9b3f524237c046385145c42a6fe03b7df940",
+  "ramdisk_bytes": 626280,
+  "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap console=tty0 lk2nd.pass-simplefb=autorefresh dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\"",
+  "source_commit": "0120a28ce18e07365b87f98cb9c80f0fd67304d8",
+  "physical_result": "not booted",
+  "power_key_builtin": true,
+  "kernel_sha256": "def3c3e765db6fdc393ce2cbfd1fba6b608fd28a5b3b35aed370c0e814b6b554"
+}

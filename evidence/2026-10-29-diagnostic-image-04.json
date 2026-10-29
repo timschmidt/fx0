@@ -1,0 +1,10 @@
+{
+  "file": "fx0-linux-diagnostic-04.img",
+  "bytes": 6170624,
+  "sha256": "19a352482676095452f43299b5e1b5bbf407ab697e8017ee235b8509c9946a0c",
+  "ramdisk_bytes": 626280,
+  "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap console=tty0 lk2nd.pass-simplefb=autorefresh dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\"",
+  "source_commit": "0120a28ce18e07365b87f98cb9c80f0fd67304d8",
+  "physical_result": "not booted",
+  "superseded_reason": "Warm-reset power-key notifier was modular and absent from the standalone initramfs; image 05 builds it in."
+}
