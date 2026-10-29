@@ -65,7 +65,7 @@ For each result record the exact image hash, source revisions, package manifest,
 | Network modes | Bands and modes supported by this device/network; airplane mode; VoLTE/IMS only if supported | Blocked for network qualification |
 | UI integration | Keyboard, rotation, lock/unlock, notifications, camera/audio selection and console recovery | Unverified |
 | Updates | Current packages; kernel actually changes after update; DTB/initramfs deployment; recovery to known-good image | Partial: repository refresh and upgrade check current, initramfs/boot-file regeneration and subsequent boot pass; kernel replacement/recovery/final-layout update tests pending |
-| Final storage layout | Full restoration coverage/rehearsal before repartition; one maximum-capacity native root and minimum justified extra partitions; external SD removable | Planned: mandatory section 2.1 of bringup plan; current nested userdata installation is transitional |
+| Final storage layout | Full restoration coverage/rehearsal before repartition; one maximum-capacity native root and minimum justified extra partitions; external SD removable | In progress: host-only 14.30 GiB ext4/GPT preview and offset-aware updater source checks pass; factory-stock rehearsal, minimum retained-partition audit and all physical migration/update/recovery tests remain open |
 
 ## Reliability qualification
 

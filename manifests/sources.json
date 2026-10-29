@@ -82,6 +82,21 @@
       "branch": "integration/fx0-wireless",
       "commit": "9da98becd8c7461177e2411aa5c21f6f5cb03d1d",
       "status": "Recovered shared driver/SoC dependencies and schema correction compile and validate with wireless disabled; board voltage mismatch, radio identification and all hardware tests remain open."
+    },
+    {
+      "name": "boot-deploy-offset-preparation",
+      "url": "https://github.com/timschmidt/fx0-boot-deploy",
+      "branch": "integration/fx0-boot-offset",
+      "commit": "ed400ec340303f246c9da82177908746bdb0529e",
+      "base_commit": "a50452a054233c2d7bf6142cbc332c94c79cc18f",
+      "status": "Project CI passes for offset-preserving Android image writes; not installed, no physical update/interruption test or upstream submission"
+    },
+    {
+      "name": "pmaports-storage-preparation",
+      "url": "https://github.com/timschmidt/fx0-pmaports",
+      "branch": "integration/fx0-storage",
+      "commit": "ee280ac7aa25df6e8da0745d1764cd39c4dc147a",
+      "status": "Defines boot image byte offset without enabling flashing; positive/negative fixtures validated, all existing dint diagnostics match baseline"
     }
   ]
 }

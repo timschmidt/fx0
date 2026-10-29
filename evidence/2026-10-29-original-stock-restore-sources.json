@@ -1,0 +1,20 @@
+{
+  "purpose": "Original stock restore sources on two host filesystems; not untouched full stock/userdata backup",
+  "critical_images": 29,
+  "system_images": 1,
+  "gpt_files": 2,
+  "copies_on_independent_host_filesystems": true,
+  "all_hashes_match": true,
+  "original_userdata_available": false,
+  "verification": "Expected lengths and original manifest SHA-256 values match both host copies; destination copy fsynced and file cache discarded before rehash",
+  "coverage_limit": "Original userdata was not captured before authorized development writes; complete factory-stock restoration still depends on qualifying stock initialization and preserved hardware state.",
+  "recovery_source_inspection": {
+    "boot_ramdisk_cpio_bytes": 3195648,
+    "recovery_ramdisk_cpio_bytes": 3936768,
+    "images_checked_against_original_manifest": true,
+    "default_properties": "Both original boot and recovery specify ro.secure=1, ro.debuggable=1 and persist.sys.usb.config=adb",
+    "recovery_adb": "Original init.rc enables USB and starts adbd when ro.debuggable=1; runtime recovery login/root access still untested",
+    "fstab": "Stock recovery maps system/cache/userdata by original partition labels; recovery SD path is external mmcblk1p1. Normal stock boot maps internal SD as FAT partition 38.",
+    "factory_restore_rehearsal": "Not performed; no recovery boot or wipe initiated by this source audit."
+  }
+}

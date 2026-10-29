@@ -1,0 +1,50 @@
+{
+  "purpose": "host-only conservative layout preview; not a completed minimum-partition audit or device installation",
+  "device_bytes": 15758000128,
+  "sector_bytes": 512,
+  "partitions_retained_at_original_offsets": 34,
+  "root": {
+    "partition_number": 35,
+    "label": "nura-root",
+    "start_sector": 786432,
+    "end_sector": 30777310,
+    "partition_bytes": 15355330048,
+    "filesystem_bytes": 15355326464,
+    "unused_partition_tail_bytes": 3584,
+    "filesystem_features": "modern ext4 defaults plus 64bit and metadata_csum; extents retained",
+    "empty_filesystem_sha256": "42563cbe6bf638d24d252c7a7b6b74f068c772c57de007186af174cfe0868d74",
+    "reserved_blocks_percent": 1,
+    "reserve_rationale": "About 146 MiB remains available to root for system recovery when ordinary users exhaust their allocation; avoids the default 5 percent reservation on this small device."
+  },
+  "boot_strategy_candidate": {
+    "partition": "existing boot partition",
+    "reserved_prefix_bytes": 524288,
+    "available_android_image_bytes": 33030144,
+    "extra_boot_filesystem_partitions": 0,
+    "status": "requires actual automatic boot, offset-aware updater, interrupted-update recovery and image-fit qualification"
+  },
+  "verified": [
+    "Primary and backup GPT header/array CRCs agree before and after",
+    "All retained partition entries remain byte-identical",
+    "All bytes from LBA34 to proposed root start preserved",
+    "sgdisk reports no structural problems; stock-format and final-sector cautions recorded separately",
+    "Fresh ext4 e2fsck -fn returns zero",
+    "Filesystem copied into GPT image and full embedded readback hash matches"
+  ],
+  "limitations": [
+    "First 34 partitions retained conservatively; necessity and potential additional reclamation not fully audited",
+    "Factory-stock restore rehearsal still required",
+    "Snapshot consistency checkpoint with all eMMC filesystems unmounted still required",
+    "No Nura files deployed in this empty filesystem",
+    "No phone partition table, filesystem or boot image written",
+    "GPT table capacity/boot-chain compatibility and reserve sizing still require final device qualification"
+  ],
+  "gpt_verifier_cautions": [
+    "Original 40-entry table capacity retained for this preview: below the GPT specification minimum; evaluate 128 entries with boot-chain compatibility before finalizing",
+    "Original gaps around primary/backup metadata retained",
+    "Root ends at the last usable sector; end is not on a 1024-sector boundary; filesystem leaves 3584 bytes in its final partial block"
+  ],
+  "raw_device_writes_performed": false,
+  "original_gpt_entry_capacity": 40,
+  "preview_gpt_entry_capacity": 40
+}

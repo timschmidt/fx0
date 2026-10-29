@@ -1,0 +1,33 @@
+{
+  "repository": "https://github.com/timschmidt/fx0-boot-deploy",
+  "upstream": "https://gitlab.postmarketos.org/postmarketOS/boot-deploy",
+  "upstream_base": "a50452a054233c2d7bf6142cbc332c94c79cc18f",
+  "upstream_tag": "0.25.0",
+  "branch": "integration/fx0-boot-offset",
+  "source_commit": "ed400ec340303f246c9da82177908746bdb0529e",
+  "feature": "deviceinfo_flash_bootimg_offset: canonical decimal byte offset for on-device Android boot image writes",
+  "validation": {
+    "environment": "Alpine 3.24 rootless container",
+    "project_ci": ".ci/run.sh passes: editorconfig, ShellCheck, existing and new unit tests",
+    "new_regressions": [
+      "Real regular-file write preserves 512 KiB prefix and suffix",
+      "Rejects non-sector-aligned, negative, hex, leading-zero, fractional and oversized integer offsets without altering target",
+      "Rejects image that fits the physical partition but overflows the remaining tail without altering target",
+      "Accepts exact-tail-sized image while preserving prefix and target length",
+      "Unset offset retains existing write-at-zero behavior"
+    ]
+  },
+  "pmaports_schema": {
+    "repository": "https://github.com/timschmidt/fx0-pmaports",
+    "branch": "integration/fx0-storage",
+    "source_commit": "ee280ac7aa25df6e8da0745d1764cd39c4dc147a",
+    "dint_version": "0.2.1",
+    "positive_fixture": "524288 accepted without warnings after removing existing fixture-only reference/default-value warnings",
+    "negative_fixture": "-512 rejected by integer interval",
+    "existing_files": "All 296 files: candidate and baseline outputs identical, 305 pre-existing warnings; xargs/dint exits nonzero because of warnings",
+    "full_pmaports_ci": "Not a clean full CI result; this was schema validation and regression comparison"
+  },
+  "phone_installation": "Not installed or enabled; installed boot-deploy remains 0.23.0 and generic qcom-msm8226 profile still uses filesystem boot",
+  "physical_update_and_interruption_tests": "Pending",
+  "upstream_submission": "Not submitted; maintainer-tree rebase, final source/test review and contributor DCO remain open"
+}
