@@ -416,3 +416,18 @@ starts/releases and two GPIO17/F12 interrupts. Raw events are saved privately
 and capture remains open. No owner gestures are confirmed, so this establishes
 event flow while physical correspondence and ghost/noise behavior remain
 unqualified; it is not a completed touch acceptance test.
+
+
+### First confirmed native visible RGB and controlled multitouch
+
+The owner confirms RGB bars visible on the unchanged image25/source39 native
+scanout after the timed pattern ended. Recorded a new byte offset before asking
+for swipe/corner/two-finger movement; the owner replied Done. Excluding832old
+bytes, the test contains73,760bytes/4,610events,12tracking starts and12releases,
+maximum two concurrent contacts, X0–689/Y0–1275. GPIO17/F12 IRQ count increases
+from2to441. Reset16 remains high and fb0 blank remains0. This establishes basic
+visible scanout and controlled native multitouch, not full edge accuracy,rotation,
+noise,installed-system,power or reliability acceptance. The combined tested
+source includes IOMMU/secure contexts, PHY lane handling, non-continuous clock
+mode and RMI reset support; no single-change cause is isolated by this result.
+Saved exact conditions and raw captures privately before further power tests.

@@ -29,17 +29,17 @@ Linux 6.18.59 LTS now boots on the Fx0 with all four CPUs online, a framebuffer 
 
 lk2nd is installed and its filesystem boot path now starts Nura v26.06 from userdata. The verified initial maintained kernel is `6.18.59-00011-gb7575530db2d`; SSH works, all four CPUs are online, root expanded to 3.4 GiB within userdata, and the firewall is active. The image write passed complete device and host readback, with both outer GPT copies unchanged. Normal lk2nd was verified to start that Nura build automatically on warm reboot, and a fresh installed-filesystem test file survives with a matching cache-cleared host readback.
 
-The running RAM diagnostic uses kernel 39 with the camera-control DT. Native DRM
-reaches 720×1280 scanout with explicit unblanking and temporary MDSS/IOMMU power
-holds. A fresh RGB framebuffer has matching software samples, hardware IOMMU
-translations and DMA0 source/current-address state. Panel reads return 1c/77;
-visible pixels remain unconfirmed. A corrected timed DSI pattern test restores
-its registers and preserves USB/panel communication, with increased error-worker
-activity during generation. The earlier pre-DRM gesture capture was saved as
-incomplete; a new native touch capture is open. The RMI driver owns reset GPIO16,
-and native input event flow is now observed; controlled touch functionality remains unqualified. The original kernel in
-RAM displays correct RGB bars and records touch events. Earlier native display
-shutdown and installed-native Nura reset causes remain unresolved.
+The running RAM diagnostic uses kernel 39 with the camera-control DT. The owner
+confirms fresh RGB bars on native720×1280 DRM scanout. A controlled swipe/corner/
+two-finger test records4,610new events,12contacts with matching releases and two
+simultaneous contacts. The RMI driver owns reset GPIO16. Framebuffer samples,
+hardware IOMMU queries, DMA address state and panel reads agree. Temporary
+MDSS/IOMMU power holds and explicit unblanking remain; full power,orientation,
+accuracy and reliability acceptance is still open. The earlier unconfirmed
+pre-DRM capture was saved as incomplete. Timed DSI pattern restoration passes
+register/USB checks, while its fixed-red physical interval was not observed.
+Earlier native shutdown and installed-native Nura reset causes remain unresolved.
+The original kernel in RAM also displays correct bars and records touch events.
 
 Native CCI now reads the separate camera EEPROM: a short read and two full 64 KiB
 reads match the independent GPIO capture. Verified private copies exist on two

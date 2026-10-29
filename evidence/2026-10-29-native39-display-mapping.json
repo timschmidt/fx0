@@ -1,5 +1,5 @@
 {
-  "purpose": "Native39 scanout and diagnostic mapping/TPG execution; no physical pixel qualification",
+  "purpose": "Native39 visible RGB scanout, controlled touch, mapping and TPG execution; power/reliability acceptance remains open",
   "kernel": "6.18.59-00039-g341246daef48",
   "DT_source": "8cfcb0fedcd91c324553872591831ecd5ffaffb4",
   "sources_sha256": {
@@ -14,7 +14,8 @@
     "fb_blank": 0,
     "brightness": "Half requested maximum",
     "fresh_buffer": "Opaque RGB bars,XR24,pitch2944,3768320bytes,fb56",
-    "DCS_before_pattern": "Power1c,pixel format77,ID bytes00,read lengths1; no manual replay/clock override on this boot"
+    "DCS_before_pattern": "Power1c,pixel format77,ID bytes00,read lengths1; no manual replay/clock override on this boot",
+    "owner_visual_confirmation": "Owner reports RGB bars visible on this running native39 diagnostic after TPG timeout restoration"
   },
   "TPG": {
     "prepared_helper_bug": "Old stock test writes physical180; maintained host map identifies clock-pre extension. Removed that write before active use. Earlier helper had only been preflighted, with no writes.",
@@ -23,7 +24,7 @@
     "after_timer": "Helper unloaded; USB alive and DCS1c/77 valid,blank0",
     "during_pattern": "More frequent DSI error-worker status5/4; no pixel result inferred",
     "active_unload_before_timeout": "Not tested",
-    "owner_visual_response": "Pending; no physical success/failure claimed"
+    "owner_visual_response": "Owner later confirms returned framebuffer RGB bars; timed fixed-red interval itself not confirmed"
   },
   "mapping": {
     "software_samples": 12,
@@ -37,7 +38,7 @@
     "ATOS": "Privileged-read queries in active32-bit context0, bounded1ms wait; no table/configuration change",
     "scope": "Mapping/data/register/translation proof only; not actual MDP fetch,stream-routing or visible-pixel proof"
   },
-  "touch": "RMI reset owns GPIO16 high. Native capture has reported events; no owner-confirmed gesture result. Earlier pre-DRM observation saved incomplete.",
+  "touch": "Owner-confirmed swipe/corner/two-finger test captured on native39 with visible RGB bars; basic input flow and multitouch pass, full power/rotation/noise acceptance remains open.",
   "persistent_writes": "None; Nura root mounted ro,noload for diagnostic modules/Python",
   "touch_event_snapshot": {
     "bytes": 832,
@@ -49,5 +50,24 @@
     "owner_gestures_confirmed": false,
     "classification": "Input event flow observed; physical correspondence and ghost/noise behavior unqualified",
     "raw_capture": "Private; indefinite capture remains open"
+  },
+  "controlled_touch": {
+    "confirmed_actions": "Swipe,corners,two-finger movement; owner replied Done",
+    "preexisting_capture_bytes_excluded": 832,
+    "new_event_bytes": 73760,
+    "new_events": 4610,
+    "x_range": [
+      0,
+      689
+    ],
+    "y_range": [
+      0,
+      1275
+    ],
+    "max_concurrent_contacts": 2,
+    "tracking_starts": 12,
+    "tracking_ends": 12,
+    "GPIO17_F12_irq_after_test": 441,
+    "scope": "Basic controlled gesture and two-contact reporting; no claim of complete panel-boundary accuracy,latency,suspend/resume,rotation or long-term ghost/noise qualification"
   }
 }
