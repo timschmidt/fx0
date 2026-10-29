@@ -1,0 +1,40 @@
+From b7575530db2d756ba1ad3e6e5757d3ac00494f1c Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 05:48:51 -0400
+Subject: [PATCH] ARM: dts: qcom: lg-madai: Allow eMMC regulator load votes
+
+Permit SDHC1 to apply its requested loads to the PM8226 L6 and L17
+regulators. Without DRMS permission, regulator_set_load() records the
+consumer demand but does not send it to RPM, leaving L17 in idle mode.
+
+On the Fx0, 512 KiB writes then time out and trigger cache-flush and
+recovery errors, even when limited to 50 MHz. Allowing the regulator
+load votes changes L17 to normal mode and permits an 8 MiB write with
+a cache-cleared matching readback at 200 MHz HS200.
+---
+ arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index 79b4901cd..01fbab965 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -76,6 +76,7 @@ pm8226_l6: l6 {
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 			regulator-always-on;
++			regulator-allow-set-load;
+ 		};
+ 
+ 		pm8226_l10: l10 {
+@@ -87,6 +88,7 @@ pm8226_l17: l17 {
+ 			regulator-min-microvolt = <2950000>;
+ 			regulator-max-microvolt = <2950000>;
+ 			regulator-always-on;
++			regulator-allow-set-load;
+ 		};
+ 
+ 		pm8226_l20: l20 {
+-- 
+2.56.0
+

@@ -6,6 +6,11 @@
   "module_signatures_preserved": true,
   "temporary_signing_key_copy_removed": true,
   "kconfig_check": "passed; preference-only messages remain",
-  "normal_clean_package_build": "pending",
-  "nura_image_deployment": "First userdata write failed; see nura-write-failure evidence"
+  "normal_clean_package_build": {
+    "source_commit": "52334e9f84c3e2425819f1ea20aa18eb42453e82",
+    "result": "passed",
+    "version": "6.18.59-r0",
+    "elapsed_seconds": 761
+  },
+  "nura_image_deployment": "Prior image written with corrected RAM kernel and full host readback verified; image itself awaiting regulator-load DTB update before boot"
 }

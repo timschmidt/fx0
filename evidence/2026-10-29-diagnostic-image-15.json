@@ -1,0 +1,16 @@
+{
+  "file": "fx0-linux-diagnostic-15.img",
+  "bytes": 6174720,
+  "sha256": "f3acc4bccdc6d9854ad3f2cb2e44c7d89a9f62099d877b4749fa1bbbd7ba2b6c",
+  "ramdisk_bytes": 626493,
+  "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap console=tty0 lk2nd.pass-simplefb=autorefresh",
+  "source_commit": "b7575530db2d756ba1ad3e6e5757d3ac00494f1c",
+  "kernel_release": "6.18.59-00011-gb7575530db2d",
+  "warm_persistence_test": {
+    "bytes": 33554432,
+    "offset_in_userdata": 2147483648,
+    "cache_cleared_before_original_readback": true,
+    "sha256": "adba081d8f6003d2a62d34c7ad31b9b92e64be1b25d9679f88728a3fe0dd28e7",
+    "matches_after_warm_reboot": true
+  }
+}
