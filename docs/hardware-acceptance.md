@@ -19,9 +19,9 @@ For each result record the exact image hash, source revisions, package manifest,
 | microSD | Card detect, read/write, filesystem integrity, suspend behavior, safe removal where supported | Unverified |
 | USB device mode | Reliable enumeration, debug networking, reconnect, supported user-facing profiles, charging interaction | Partial: NCM/ACM configured, HTTP and root serial shell verified; full reconnect/power qualification pending |
 | USB host or OTG | Establish product support, then peripheral enumeration, power/role switching, disconnect and resume | Unverified |
-| Display | Actual panel/revision; DRM ownership; correct colors/timings; blank/unblank; orientation; no retained-logo false pass | Failed candidate: MDP5 removes simpledrm then rejects missing IOMMU; native panel/scanout unqualified |
-| Backlight | Correct controller; useful brightness range; off state; dimming and resume without flicker or stuck output | Unverified |
-| Touchscreen | Actual controller/revision; full-area coordinates, multitouch, edge behavior, orientation and suspend/wake | Failed physical test: Synaptics PLG430 probes as RMI4 F01/F12, but owner swipes/taps/two fingers produce no events or interrupts |
+| Display | Actual panel/revision; DRM ownership; correct colors/timings; blank/unblank; orientation; no retained-logo false pass | Stock RAM baseline: owner confirms RGB bars after full powerdown/unblank. Mainline kernel 35: native DRM with temporary runtime-power workaround, valid panel replies, physical pixels unqualified |
+| Backlight | Correct controller; useful brightness range; off state; dimming and resume without flicker or stuck output | Partial stock baseline: visible at half brightness; mainline backlight lit with hardware fault status zero. Full range/off/resume unqualified |
+| Touchscreen | Actual controller/revision; full-area coordinates, multitouch, edge behavior, orientation and suspend/wake | Stock RAM baseline: 4,179 input events during owner gestures. Mainline: PLG430 probes, earlier gestures yielded no events/IRQs; kernel 35 startup-delay/NOSLEEP retest pending |
 | Physical buttons | Power, volume up/down, home, long presses, recovery combinations and wake where supported | Unverified |
 | Graphics acceleration | Actual Freedreno renderer; rendering correctness, compositor stability, load and memory-pressure behavior | Unverified |
 | Wi-Fi | Supported bands; scan, authentication, DHCP/DNS, sustained transfer, stable MAC, reconnect and resume | Unverified |
