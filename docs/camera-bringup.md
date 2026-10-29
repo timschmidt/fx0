@@ -147,6 +147,41 @@ This expands a diagnostic read to 0x0000–0x09ff, covering the reviewed calibra
 
 For a future independent stock-cache comparison, verify the selected Fx0 identity and image hashes, keep eMMC filesystems unmounted, identify the `msm_eeprom` subdevice, and run the matching reader to a private RAM file. Check exact length/status before transfer. Hash and verify copies on two host filesystems, repeat with a fresh stock-kernel boot and compare, then reconcile CRC, module identity, all required calibration ranges and physical capacity. Keep calibration and full logs private. Source paths used for this audit include [the EEPROM driver](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/camera_v2/sensor/eeprom/msm_eeprom.c) and [OIS selection](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/camera_v2/sensor/ois/msm_ois.c).
 
+## Native CCI and shared I/O preparation
+
+The public [camera branch](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-camera)
+at `8cfcb0fedcd91c324553872591831ecd5ffaffb4` describes GPIO64 as a shared
+fixed 1.8 V regulator, enables the existing MSM8226 CCI controller and explicitly
+sets its source to 19.2 MHz. That rate matches the vendor request and maintained
+CCI timing counts. No sensor, assumed EEPROM part/capacity, CAMSS or camera DMA
+binding is added. The board DT builds and passes targeted CCI/fixed-regulator
+schema validation. Checkpatch passes with sign-off checking disabled; contributor
+certification remains necessary before submission.
+
+The [native reader](../diagnostics/camera-cci-read/README.md) reserves address
+0x50 temporarily and uses eight-byte reads within the native driver's twelve-byte
+read limit. It gets the shared regulator through the regulator API and refuses
+an already enabled supply. Default preflight performs no transfer or power enable;
+capture requires an explicit option. The exact-kernel39 signed module builds
+with W=1, passes checkpatch, and rejects the currently disabled CCI node before
+hardware access. No positive native transfer or power/PM pass is claimed.
+
+RAM image25 combines the new camera DT with the byte-identical compiled kernel39,
+image23 initramfs and command line; its Android payload ID was independently
+checked. Kernel and DT source commits are recorded separately in
+[the preparation evidence](../evidence/2026-10-29-camera-native-cci-preparation.json).
+It is unbooted. Preserve the existing pre-DRM touch test first. Then qualify CCI
+probe/reset, a short read matching the independent GPIO capture, full repeated
+reads, regulator cleanup, runtime suspend/clock gating and reopen. A permanent
+read-only NVMEM binding needs adequate part/protocol evidence afterward.
+
+Sensor-driver timing still needs explicit reconciliation. The historical
+AtomISP code hardcodes a 19.2 MHz input, while the Tegra driver requests 24 MHz.
+Do not transfer their link/pixel-rate values between those configurations.
+Read/verify the actual sensor clock-divider and lane settings during controlled
+sensor-ID power qualification before advertising rates in a maintained V4L2 driver.
+The full-resolution stock modes, controls and actual camera output remain in scope.
+
 ## Implementation and physical test order
 
 1. Complete the current touch observation. Preserve its event capture before another kernel boot.

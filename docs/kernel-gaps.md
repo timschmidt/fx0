@@ -87,3 +87,10 @@ it to compare controller-generated pixels with a newly allocated framebuffer.
 This can narrow the display-link versus MDP/DMA investigation; it does not
 establish that either path works. Active guards, physical output, timeout and
 unload restoration still require qualification. See [the preparation evidence](../evidence/2026-10-29-dsi-pattern-preparation.json).
+
+
+Native camera control preparation now exists on the separate
+[camera branch](camera-bringup.md#native-cci-and-shared-io-preparation): shared
+I/O regulation, CCI enable/clock description and a guarded native read diagnostic.
+The DT and diagnostic build/checks pass, but its RAM image is unbooted and no
+positive native transfer, sensor streaming or CAMSS result is claimed.

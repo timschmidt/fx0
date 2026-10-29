@@ -118,6 +118,14 @@
       "commit": "b106e16d0f3fc0e11c55aa58e4c617b89a0e3ef5",
       "base_commit": "dbb7b5e5c91f2100ae2e57d8958752ad9945cfc3",
       "status": "Optional extlinux exclusion builds for default, disabled and forced-fastboot-disabled-search configurations. Actual-image host offset updater readback passes; no phone flash or raw-image boot test."
+    },
+    {
+      "name": "linux-camera-preparation",
+      "url": "https://github.com/timschmidt/fx0-linux",
+      "branch": "integration/fx0-camera",
+      "commit": "8cfcb0fedcd91c324553872591831ecd5ffaffb4",
+      "base_commit": "341246daef4844c69d8638813bcedfcea35f96f1",
+      "status": "Shared camera I/O regulator, native CCI enable and19.2MHz clock prepared; DT build/targeted schemas pass. Image25 reuses compiled39 kernel/initramfs and is unbooted. Native reader builds and disabled-CCI guard passes; positive transfers, power/runtime-PM and sensors/CAMSS remain unqualified."
     }
   ]
 }

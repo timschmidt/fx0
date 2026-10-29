@@ -1,0 +1,42 @@
+{
+  "file": "fx0-linux-diagnostic-25.img",
+  "bytes": 6197248,
+  "sha256": "b9975c882e63be87e8a8436cce54635b799d0c26a61d678fee6758a42386f042",
+  "kernel_release": "6.18.59-00039-g341246daef48",
+  "kernel_source": "341246daef4844c69d8638813bcedfcea35f96f1",
+  "kernel_sha256": "33307fa5af006907b60abfd6b67f0eea3fcd47b238c5f29a88288bd5bb1e2de2",
+  "dt_source": "8cfcb0fedcd91c324553872591831ecd5ffaffb4",
+  "dt_sha256": "c4aa307c71acf13a3c5ccd01979d9542e14673c3a5a8e1b708d29237b04de506",
+  "baseline_image_sha256": "ae58d99e8c9945c9fb661de5d0659c774a0594bcc41d94ac741d5bc1988791c9",
+  "kernel_initramfs_commandline_preserved": true,
+  "android_payload_id_independently_checked": true,
+  "booted": false,
+  "scope": "Prepared RAM image: compiled kernel39 and image23 initramfs unchanged; camera DT with shared I/O supply and CCI19.2MHz; no boot or flash",
+  "purpose": "Prepare native CCI transfer/regulator qualification against independently captured camera calibration",
+  "branch": "https://github.com/timschmidt/fx0-linux/tree/integration/fx0-camera",
+  "dt_changes": [
+    "Shared GPIO64 fixed1.8V regulator cam_io_1v8, no always-on consumer",
+    "Enable existing MSM8226 CCI master0/pins29/30",
+    "Set CCI source to19.2MHz matching timing data and stock driver"
+  ],
+  "board_checks": {
+    "dtb_build": "Pass",
+    "targeted_schema": "Kbuild CHECK_DTBS plus direct dt-validate against CCI and fixed-regulator schemas pass without diagnostics",
+    "checkpatch": "0errors0warnings with --no-signoff; ordinary check reports missing Signed-off-by, author certification still pending",
+    "full_kernel_rebuild": "Not performed/needed for this DT-only candidate; existing compiled39 kernel retained"
+  },
+  "native_reader": {
+    "source": "diagnostics/camera-cci-read/fx0_cci_eeprom.c",
+    "source_sha256": "0b5196f9041af3553f2ccf23a7ae5f88cd8c4a91031158ccd29480aaf61f927e",
+    "module_bytes": 195169,
+    "module_sha256": "153c900670f1eeba0985fbed132bba5f570e5717b1da7f91c8aea838eaa8b5d4",
+    "build": "Exact39 W=1 passes; checkpatch0errors0warnings",
+    "negative_runtime": "Signed final module returns ENODEV for current disabled CCI before adapter/regulator/hardware access",
+    "capture": "Explicit only; eight-byte reads at0x50 using native adapter and shared fixed regulator; default preflight no transfer/power enable",
+    "positive_runtime": "Not performed; native controller reset/reads, regulator cleanup and autosuspend remain unverified"
+  },
+  "phone_state": "Current39 touch capture unchanged/open; eMMC remains unmounted; no native CCI enable, sensor initialization or reboot performed",
+  "part_capacity_or_manufacturer_binding_added": false,
+  "sensor_streaming_or_camss_enabled": false,
+  "factory_restore_or_repartition_performed": false
+}

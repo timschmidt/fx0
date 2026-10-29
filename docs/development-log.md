@@ -340,3 +340,28 @@ preflight, timeout and unload restoration remain untested. No native takeover,
 reboot or persistent phone write occurred. This diagnostic is intended to compare
 DSI-generated pixels against framebuffer DMA after the existing touch test;
 it is not a display fix or physical qualification.
+
+
+### Prepare native camera CCI and shared supply qualification
+
+The current kernel39/touch observation remains running and all eMMC filesystems
+remain unmounted. Added a public camera branch based on source39 with a shared
+GPIO64 fixed1.8V camera I/O regulator, existing CCI enable and explicit19.2MHz
+CCI source. Kept sensor/capture-engine nodes and an assumed EEPROM capacity/
+manufacturer binding out of this stage. DT compilation and targeted Kbuild/direct
+schema validation pass; checkpatch with --no-signoff is clean. Ordinary checkpatch
+reports absent Signed-off-by, so contributor certification remains pending.
+
+Prepared a native-adapter calibration reader using fixed0x50, two-byte pointer/
+eight-byte read pairs within CCI v1 limits, a temporary dummy client to reserve the
+address, real regulator lookup, initial-disabled/voltage checks and checked supply
+unwind. W=1/checkpatch pass. Signed final module on current39 rejects disabled CCI
+before adapter/regulator/hardware access; the owner touch capture remains open.
+Native probe/reset, positive reads, cleanup and runtime suspend are untested.
+
+Unbooted RAM image25 preserves the compiled39 kernel and image23 ramdisk/command
+line, replacing only the DT. Parsed output checks and independent Android payload
+ID recomputation pass. Public evidence distinguishes kernel source39 from camera
+DT source8cfcb0fed. No image was booted or flashed. Sensor timing review identifies
+AtomISP's hardcoded19.2MHz versus Tegra's requested24MHz input; actual divider/lane
+readback and output qualification are required before publishing sensor rates.
