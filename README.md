@@ -18,6 +18,7 @@ The device is available for development and flashing. No personal data needs to 
 | [Image builds](docs/building.md) | Full diagnostic kernel/lk2nd recipes and rootfs preparation |
 | [Development patches](patches/README.md) | Initial Linux and lk2nd candidates with reproducible DTB checks |
 | [Development log](docs/development-log.md) | Observed device/host state, completed checks, and the next executable work |
+| [Camera work](docs/camera-bringup.md) | Confirmed sensor IDs, production wiring, capture-engine gaps and calibration capture preparation |
 | [Kernel gaps](docs/kernel-gaps.md) | Maintained-kernel target and missing shared SoC/camera infrastructure |
 
 ## Current state

@@ -21,7 +21,7 @@ For each result record the exact image hash, source revisions, package manifest,
 | USB host or OTG | Establish product support, then peripheral enumeration, power/role switching, disconnect and resume | Unverified |
 | Display | Actual panel/revision; DRM ownership; correct colors/timings; blank/unblank; orientation; no retained-logo false pass | Stock RAM baseline: owner confirms RGB bars after full powerdown/unblank. Mainline kernel 35: native DRM with temporary runtime-power workaround, valid panel replies, physical pixels unqualified |
 | Backlight | Correct controller; useful brightness range; off state; dimming and resume without flicker or stuck output | Partial stock baseline: visible at half brightness; mainline backlight lit with hardware fault status zero. Full range/off/resume unqualified |
-| Touchscreen | Actual controller/revision; full-area coordinates, multitouch, edge behavior, orientation and suspend/wake | Stock RAM baseline: 4,179 input events during owner gestures. Mainline: PLG430 probes, earlier gestures yielded no events/IRQs; kernel 35 startup-delay/NOSLEEP retest pending |
+| Touchscreen | Actual controller/revision; full-area coordinates, multitouch, edge behavior, orientation and suspend/wake | Stock RAM baseline: 4,179 input events during owner gestures. Mainline: PLG430 probes, earlier gestures yielded no events/IRQs; kernel39 now owns/deasserts reset GPIO16; pre-DRM gesture capture pending |
 | Physical buttons | Power, volume up/down, home, long presses, recovery combinations and wake where supported | Unverified |
 | Graphics acceleration | Actual Freedreno renderer; rendering correctness, compositor stability, load and memory-pressure behavior | Unverified |
 | Wi-Fi | Supported bands; scan, authentication, DHCP/DNS, sustained transfer, stable MAC, reconnect and resume | Unverified |
@@ -51,9 +51,10 @@ For each result record the exact image hash, source revisions, package manifest,
 | Other sensors | Inventory every additional sensor; define raw-data and user-facing tests before closure | Unverified |
 | Vibration | Correct actuator, duration/intensity as exposed, notifications and resume | Unverified |
 | LEDs and button lighting | Identify each channel; brightness/color, notifications, off state and resume | Unverified |
-| Rear camera | Identify sensor/calibration; correct media graph, stills, exposure, orientation/color, reopen and resume | Unverified |
-| Front camera | Identify sensor/calibration; stills, orientation/color, switching, reopen and resume | Unverified |
-| Lens control | Establish actuator and capabilities; autofocus/manual controls where fitted; repeatability | Unverified |
+| Rear camera | Identify sensor/calibration; correct media graph, stills, exposure, orientation/color, reopen and resume | Stock ID0x8179 confirmed; static library geometry decoded; stock capture and maintained driver/capture pipeline unverified |
+| Front camera | Identify sensor/calibration; stills, orientation/color, switching, reopen and resume | Stock ID0x0132 confirmed; static library geometry decoded; stock capture and maintained driver/capture pipeline unverified |
+| Lens control | Establish actuator and capabilities; autofocus/manual controls where fitted; repeatability | Source candidate only; actual part/control/calibration unverified |
+| Optical stabilization | Establish actual OIS module; preserve coefficients, qualify stabilization/control/resume where fitted | Production source candidate; EEPROM maker/coverage and physical functionality unverified |
 | Camera flash and torch | Verify supported hardware modes, control, exposure synchronization, limits and off state | Unverified |
 | Video capture | Supported front/rear modes, sustained capture, frame integrity, audio synchronization and playback | Unverified |
 | Video codec hardware | Identify exposed encode/decode blocks; supported formats, actual acceleration, load and stability | Unverified |

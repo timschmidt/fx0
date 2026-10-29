@@ -1,0 +1,116 @@
+# Fx0 camera implementation work
+
+The saved original-kernel RAM log confirms rear ID **0x8179** and front ID **0x0132**, with both sensor probes succeeding on production revision 7. This proves identification under the original driver. Neither stock image capture nor maintained-kernel camera operation has passed.
+
+The implementation has separate sensor, capture-engine, calibration and userspace dependencies. A successful CCI probe will not establish a working CSI/VFE pipeline. Camera work must not replace the current touch observation or require rebooting it before the owner finishes.
+
+## Production board wiring
+
+The [pinned board source](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/boot/dts/msm8226-madai/msm8226-madai-camera.dtsi), matching original DTB and selected vendor power arrays describe the following. Voltages here are source constraints, not new electrical measurements.
+
+| Item | Production source description |
+| --- | --- |
+| Rear sensor | IMX179, CCI master 0; downstream address 0x20 becomes Linux 7-bit address 0x10; 16-bit ID at register 0x0002 |
+| Front sensor | IMX132, CCI master 0; downstream address 0x6c becomes Linux address 0x36; ID at register 0x0000 |
+| Rear power | L26 digital 1.2 V; GPIO110 enables analogue 2.8 V; GPIO64 enables I/O 1.8 V; GPIO65 is VCM/standby control |
+| Rear reset/clock | Active-low reset GPIO114; MCLK on GPIO26 |
+| Front power | L5 digital 1.2 V; L15 analogue 2.8 V; shared I/O enable GPIO64 |
+| Front reset/clock | Active-low reset GPIO28; MCLK on GPIO27; declared standby GPIO31 is not toggled by the selected production power array |
+| Camera EEPROM | Downstream 0xa0 becomes Linux 0x50; word-addressed, configured read starts at zero and covers 0x900 bytes |
+| Lens-control candidate | Downstream actuator 0x18 becomes 0x0c; exact part and functional control remain unverified |
+| OIS candidate | Downstream 0x7c becomes 0x3e; Madai-specific power sequence uses GPIO63 for OIS enable and GPIO0 for OIS reset; exact installed controller remains unverified |
+
+The vendor transport explicitly shifts the downstream addresses right by one. Do not use the 8-bit addresses as mainline `reg` values. The front `cam_vio-supply` reference to L5 is marked dummy; its actual selected power sequence uses GPIO64 for I/O. Do not describe the front I/O rail as 1.2 V from that dummy reference.
+
+Production rear power uses the Madai-specific array in [imx179.c](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/camera_v2/sensor/imx179.c), including OIS reset/enable ordering. Production front power uses the non-rev0 array in [imx132.c](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/camera_v2/sensor/imx132.c). Preserve shared regulator ownership and establish which OIS dependencies are actually needed before translating those sequences into independent drivers.
+
+The rear source selects CSIPHY0/CSID0, lane assignment 0x4320 and mask 0x1f. The front selects CSIPHY1/CSID0 and mask 0x03. The inspected two-phase PHY implementation has physical clock lane 1; the corresponding candidate physical data-lane positions are rear 0/2/3/4 and front 0. Verify this translation, lane polarities and actual link frequencies before streaming. Do not copy another board's lane numbering or assume both sensors can stream simultaneously through the selected routing.
+
+## Capture-engine dependencies
+
+The [stock SoC description](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/boot/dts/msm8226-camera.dtsi) gives these resources. SPI values are the device-tree SPI numbers, not dynamically allocated Linux IRQ numbers.
+
+| Block | Physical resource | DT SPI |
+| --- | --- | ---: |
+| CCI | 0xfda0c000, size 0x1000 | 50 |
+| CSIPHY0/1 | 0xfda0ac00 / 0xfda0b000, size 0x200 each | 78 / 79 |
+| CSID0/1 | 0xfda08000 / 0xfda08400, size 0x100 each | 51 / 52 |
+| ISPIF | 0xfda0a000, size 0x500; clock mux at 0xfda00020 | 55 |
+| VFE 4.0 | 0xfda10000, size 0x1000 | 57 |
+| VFE VBIF | 0xfda40000, size 0x200 | — |
+| VFE IOMMU | 0xfda44000, size 0x10000 | Global 62; contexts 65 |
+
+The selected vendor `madai_defconfig` enables **CSI 3.0 headers**, not the source tree's alternative CSI 2.2 headers. Several inspected CSI 3.0 register offsets match the maintained CSID 4.1 implementation; that is a source comparison, not a hardware compatibility result. A VFE 4.0 compatible name does not select the CSI header generation.
+
+The vendor VFE implementation has explicit MSM8226 versions 0x20000013/0x20010014, dedicated VBIF initialization and buffer allocation policy. The maintained target provides VFE 4.1 operations and no MSM8226 CAMSS match. Audit the complete reset, interrupts, write-master, RDI, buffer, bus/QoS and clock behavior before deciding which code can be shared.
+
+The camera IOMMU is separate from the display IOMMU. Stock contexts at 0xfda4c000/0xfda4d000/0xfda4e000 are labelled vfe0/vfe1/cpp with SIDs 0/1/2. The MSM8226-specific prefetch settings differ from the display settings. Camera DMA must not reuse the display tuning table by compatible-name substitution. Power domains, required interface/alternate-core clocks, secure/global setup, DMA mappings and fault handling need their own implementation and tests.
+
+At inspected mainline commit `c339f4010dea8b0d754f84ace70cd1b089878ef8`, the [CAMSS match/resource file](https://github.com/torvalds/linux/blob/c339f4010dea8b0d754f84ace70cd1b089878ef8/drivers/media/platform/qcom/camss/camss.c) has no `msm8226-camss` match, and the [I2C driver Makefile](https://github.com/torvalds/linux/blob/c339f4010dea8b0d754f84ace70cd1b089878ef8/drivers/media/i2c/Makefile) has no dedicated IMX179/IMX132 entry. The local 6.18.59 target also lacks those dedicated sensor drivers. This checked scope does not assert that no external work exists.
+
+## Register-setting evidence
+
+Static inspection of the original system's sensor libraries finds these geometries. It does not execute the libraries, prove a setting is reachable, identify a working frame rate, or qualify physical output.
+
+| Sensor | Register geometry | Frame lines | Line length |
+| --- | --- | ---: | ---: |
+| Rear | 3280×2464 | 2537 | 3440 |
+| Rear | 1640×1232 | 2537 | 3440 |
+| Rear | 3280×1848 | 2537 | 3440 |
+| Front | 1976×1200 | 1280 | 2248 |
+
+The libraries contain duplicate geometry settings. Do not interpret the number of decoded descriptors as a count of advertised camera modes. Cropping, Bayer order, embedded/optically black regions, pixel/link clocks, exposure and gain relationships still need verification.
+
+The primary Tegra source at `6acf95d4100e2f31a130d84a1de9bb7753e4b8f5` supplies GPLv2 [IMX179](https://android.googlesource.com/kernel/tegra/+/6acf95d4100e2f31a130d84a1de9bb7753e4b8f5/drivers/media/platform/tegra/imx179.c) and [IMX132](https://android.googlesource.com/kernel/tegra/+/6acf95d4100e2f31a130d84a1de9bb7753e4b8f5/drivers/media/platform/tegra/imx132.c) register-table references. Their old misc-device API is not a mainline V4L2 sensor implementation. Keep attribution/licensing when using legitimate code. Notably, the IMX132 table named `mode_1920x1080` writes 1976×1144 geometry; an upstream sensor driver must describe the actual output rather than assuming the array label is the output size.
+
+The reproducible [mode inspector](../scripts/inspect_camera_modes.py) reads ARM32 relocation-backed register-setting descriptors or numeric C arrays and reports geometry without executing code:
+
+```sh
+python3 scripts/inspect_camera_modes.py --elf /private/libmmcamera_imx179.so \
+  --elf /private/libmmcamera_imx132.so
+python3 scripts/inspect_camera_modes.py --c-source /private/imx179-reference.c \
+  --c-source /private/imx132-reference.c
+```
+
+Keep original libraries and calibration private. Publishing this decoded geometry does not authorize redistributing proprietary libraries or automatically copying their complete tables into a public driver.
+
+## Calibration capture preparation
+
+An eMMC backup does not contain this separate EEPROM. Its configured camera range is 0x0000–0x08ff. The vendor OIS implementation reads the maker byte at 0x0700, while LGIT variants reference calibration starting at 0x0900 and fields through at least 0x0940. The original 0x900-byte cached read therefore cannot establish coverage of all those fields. Physical capacity and the installed module variant still require identification.
+
+The [stock reader](../scripts/stock_camera_eeprom_reader.c) is a freestanding ARM32 executable for the verified `3.4.0-gf0d2a47` RAM kernel. It checks kernel release, subdevice sysfs name, EEPROM name and the exact compiled cache length. It issues only the stock information/size/read commands. The read consumes the kernel driver's cached copy, so capture to a RAM file first, retain that file until transferred and checked, and obtain independent hardware reads on separate stock-kernel boots. The reader does not program EEPROM or invoke OIS initialization/calibration.
+
+```sh
+clang --target=armv7a-linux-gnueabi -march=armv7-a -marm -Os \
+  -ffreestanding -fno-builtin -fno-stack-protector -fno-pie -nostdlib \
+  -fuse-ld=lld -Wl,-e,_start -Wl,--build-id=none -static \
+  -Wall -Wextra -Werror -DFX0_EEPROM_BYTES=0xa00 \
+  scripts/stock_camera_eeprom_reader.c -o /private/fx0-camera-eeprom-reader
+```
+
+Default `FX0_EEPROM_BYTES=0x900` matches the original map; 0xa00 matches the expanded diagnostic. Each rejects the other map size before consuming the cache. The ARM32 structure/ioctl encoding was separately checked against declarations extracted from the pinned vendor header. Both executables run on kernel39 and reject its release with status78, and reject an eMMC path with status64, without opening a camera device. **A positive stock-kernel EEPROM capture has not been performed.**
+
+The [host image preparation helper](../scripts/prepare_stock_camera_capture.py) accepts the verified original RAM diagnostic, checks its SHA-256 and Android payload checksum, and expands only this EEPROM read length. It preserves all four Fx0 QCDT matches, kernel, initramfs and other DT bytes. The generated image differs at 21 bytes: one changed read-length byte and the 20-byte Android payload checksum. Independent `fdtget` confirms the new map. Wrong-hash and already-expanded inputs are rejected before creating output.
+
+```sh
+python3 scripts/prepare_stock_camera_capture.py --input /private/stock-ram.img \
+  --sha256 INPUT_SHA256 --output /private/stock-camera-ram.img
+```
+
+This expands a diagnostic read to 0x0000–0x09ff, covering the reviewed calibration addresses; it does not establish full physical EEPROM capacity. The image remains unbooted and must only be RAM-booted after completing the current touch observation. No new stock image has been flashed.
+
+For the future capture, verify the selected Fx0 identity and image hashes, keep eMMC filesystems unmounted, identify the `msm_eeprom` subdevice, and run the matching reader to a private RAM file. Check exact length/status before transfer. Hash and verify copies on two host filesystems, repeat with a fresh stock-kernel boot and compare, then reconcile CRC, module identity, all required calibration ranges and physical capacity. Keep calibration and full logs private. Source paths used for this audit include [the EEPROM driver](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/camera_v2/sensor/eeprom/msm_eeprom.c) and [OIS selection](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/camera_v2/sensor/ois/msm_ois.c).
+
+## Implementation and physical test order
+
+1. Complete the current touch observation. Preserve its event capture before another kernel boot.
+2. Capture and reconcile camera calibration as above; identify actuator/OIS variant without invoking EEPROM programming or recalibration.
+3. Qualify maintained CCI and production power/reset/clock sequencing with sensor-ID reads and balanced unwind. Confirm shared GPIO64 ownership, rail constraints and actual MCLK. Keep capture DMA disabled for this step.
+4. Add focused MSM8226 CAMSS binding/resource and hardware-operation changes plus its correct camera IOMMU support. Build/schema-check them separately; establish powered register access, reset completion and fault reporting before capture.
+5. Exercise a sensor-independent CSID test pattern through ISPIF/VFE RDI to memory. Verify frame geometry, byte order, buffer completion, repeated start/stop and DMA under load. Distinguish this from a sensor capture pass.
+6. Implement current V4L2 IMX179/IMX132 drivers and bindings with checked pixel/link rates, actual output/crop, exposure/gain/blanking controls and runtime PM. Validate modes against this unit rather than substituting a nearby Sony sensor.
+7. Capture real rear/front RAW frames, verify Bayer order/orientation/crop, exposure/gain, timing, integrity and switching. Test reopen, error unwind, suspend/resume and charging/load combinations.
+8. Implement the actual lens/OIS control where present and preserve factory coefficients. Qualify autofocus/manual controls, stabilization behavior and flash/torch independently.
+9. Complete libcamera/Nura integration, processing/tuning, stills/video, user-facing selection and sustained capture. Re-run final acceptance on the maintained installed image and prepare focused upstream series with measured hardware evidence.
+
+No capture-driver or sensor-driver functionality is claimed from this audit or its build/negative-guard tests. See [the sanitized evidence](../evidence/2026-10-29-camera-source-audit.json) for exact inputs, artifacts and remaining gates.

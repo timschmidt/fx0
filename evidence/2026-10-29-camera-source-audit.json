@@ -1,0 +1,264 @@
+{
+  "purpose": "Camera identification/source audit and read-only calibration-capture preparation; no capture-driver pass",
+  "vendor_source_commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+  "linux_target_commit": "341246daef4844c69d8638813bcedfcea35f96f1",
+  "stock_kernel": "3.4.0-gf0d2a47",
+  "stock_evidence": "Saved original-kernel RAM boot log: production revision7, rear ID8179 at register0002 and front ID0132 at register0000, both probes succeed",
+  "image_capture_qualified": false,
+  "production_source": {
+    "sensor_addresses_7bit": {
+      "rear": "0x10",
+      "front": "0x36",
+      "eeprom": "0x50",
+      "actuator_candidate": "0x0c",
+      "ois_candidate": "0x3e"
+    },
+    "rear": {
+      "digital": "L26 1.2V",
+      "analog_enable_gpio": 110,
+      "io_enable_gpio": 64,
+      "reset_gpio": 114,
+      "mclk_gpio": 26,
+      "csiphy": 0,
+      "csid": 0,
+      "lane_assignment": "0x4320",
+      "lane_mask": "0x1f"
+    },
+    "front": {
+      "digital": "L5 1.2V",
+      "analog": "L15 2.8V",
+      "io_enable_gpio": 64,
+      "reset_gpio": 28,
+      "mclk_gpio": 27,
+      "declared_standby_gpio_not_toggled_in_selected_array": 31,
+      "csiphy": 1,
+      "csid": 0,
+      "lane_mask": "0x03"
+    },
+    "csi_header_selection": "madai_defconfig selects CSI3.0, not alternative CSI2.2",
+    "vfe": "4.0, explicit MSM8226 versions20000013/20010014; no target CAMSS match",
+    "camera_iommu": "Separate fda44000 block, vfe0/vfe1/cpp contexts and MSM8226 camera-specific prefetch settings required"
+  },
+  "inspected_mainline": {
+    "commit": "c339f4010dea8b0d754f84ace70cd1b089878ef8",
+    "files": [
+      {
+        "path": "drivers/media/i2c/Makefile",
+        "bytes": 7246,
+        "sha256": "208e3661fb8ad6740f17bae402e8b623fb4ea2a50135936588186e33f6cfb43f",
+        "imx179_token_present": false,
+        "imx132_token_present": false,
+        "msm8226_camss_token_present": false,
+        "url": "https://raw.githubusercontent.com/torvalds/linux/c339f4010dea8b0d754f84ace70cd1b089878ef8/drivers/media/i2c/Makefile"
+      },
+      {
+        "path": "drivers/media/platform/qcom/camss/camss.c",
+        "bytes": 139990,
+        "sha256": "3596fe10601c5b4799a3e9072b92b177bca278ec27819673d48047444809f2a2",
+        "imx179_token_present": false,
+        "imx132_token_present": false,
+        "msm8226_camss_token_present": false,
+        "url": "https://raw.githubusercontent.com/torvalds/linux/c339f4010dea8b0d754f84ace70cd1b089878ef8/drivers/media/platform/qcom/camss/camss.c"
+      }
+    ]
+  },
+  "static_geometry": {
+    "scope": "Static register values only; no execution, hardware access or capture qualification",
+    "inputs": [
+      {
+        "input": "libmmcamera_imx179.so",
+        "bytes": 12300,
+        "sha256": "a3a657f77c3ac8abbebe2ffcf499630684e41f0005cb022ab49718bcda3cbc21",
+        "method": "ARM32 register-setting descriptors",
+        "register_settings_with_geometry": [
+          {
+            "register_count": 62,
+            "width": 3280,
+            "height": 2464,
+            "frame_lines": 2537,
+            "line_length_pixels": 3440,
+            "coarse_exposure_lines": 2533,
+            "crop_x_start": 0,
+            "crop_y_start": 0,
+            "crop_x_end": 3279,
+            "crop_y_end": 2463,
+            "setting_delay_ms": 0
+          },
+          {
+            "register_count": 62,
+            "width": 1640,
+            "height": 1232,
+            "frame_lines": 2537,
+            "line_length_pixels": 3440,
+            "coarse_exposure_lines": 2533,
+            "crop_x_start": 0,
+            "crop_y_start": 0,
+            "crop_x_end": 3279,
+            "crop_y_end": 2463,
+            "setting_delay_ms": 0
+          },
+          {
+            "register_count": 60,
+            "width": 3280,
+            "height": 1848,
+            "frame_lines": 2537,
+            "line_length_pixels": 3440,
+            "coarse_exposure_lines": 2533,
+            "crop_x_start": 0,
+            "crop_y_start": 308,
+            "crop_x_end": 3279,
+            "crop_y_end": 2155,
+            "setting_delay_ms": 0
+          },
+          {
+            "register_count": 62,
+            "width": 3280,
+            "height": 2464,
+            "frame_lines": 2537,
+            "line_length_pixels": 3440,
+            "coarse_exposure_lines": 2533,
+            "crop_x_start": 0,
+            "crop_y_start": 0,
+            "crop_x_end": 3279,
+            "crop_y_end": 2463,
+            "setting_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "input": "libmmcamera_imx132.so",
+        "bytes": 7664,
+        "sha256": "94be98461ef7aeee3e0db3ef6ec3ade8fde7bc9d4ef367b2f8103f5c942ce052",
+        "method": "ARM32 register-setting descriptors",
+        "register_settings_with_geometry": [
+          {
+            "register_count": 78,
+            "width": 1976,
+            "height": 1200,
+            "frame_lines": 1280,
+            "line_length_pixels": 2248,
+            "crop_x_start": 0,
+            "crop_y_start": 0,
+            "crop_x_end": 1975,
+            "crop_y_end": 1199,
+            "setting_delay_ms": 0
+          },
+          {
+            "register_count": 78,
+            "width": 1976,
+            "height": 1200,
+            "frame_lines": 1280,
+            "line_length_pixels": 2248,
+            "crop_x_start": 0,
+            "crop_y_start": 0,
+            "crop_x_end": 1975,
+            "crop_y_end": 1199,
+            "setting_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "input": "imx179-tegra.c",
+        "bytes": 24222,
+        "sha256": "3c75fe787dafce4ab69f4cc86438dae9146af7f6043fef9e1725eab50aadedff",
+        "method": "numeric C register arrays",
+        "register_settings_with_geometry": [
+          {
+            "register_count": 62,
+            "width": 3280,
+            "height": 2464,
+            "frame_lines": 2507,
+            "line_length_pixels": 3440,
+            "coarse_exposure_lines": 2503,
+            "crop_x_start": 0,
+            "crop_y_start": 0,
+            "crop_x_end": 3279,
+            "crop_y_end": 2463,
+            "array_name": "mode_3280x2464",
+            "array_label_matches_register_geometry": true
+          }
+        ]
+      },
+      {
+        "input": "imx132-tegra.c",
+        "bytes": 24360,
+        "sha256": "6fc24bdf131ae5f2bbb8550d7891e7ea8f1e8cd0f876d41816dc3ec14627dc4a",
+        "method": "numeric C register arrays",
+        "register_settings_with_geometry": [
+          {
+            "register_count": 94,
+            "width": 1976,
+            "height": 1144,
+            "frame_lines": 1170,
+            "line_length_pixels": 2248,
+            "coarse_exposure_lines": 1075,
+            "crop_x_start": 0,
+            "crop_y_start": 28,
+            "crop_x_end": 1975,
+            "crop_y_end": 1171,
+            "array_name": "mode_1920x1080",
+            "array_label_matches_register_geometry": false
+          },
+          {
+            "register_count": 94,
+            "width": 1976,
+            "height": 1200,
+            "frame_lines": 1226,
+            "line_length_pixels": 2248,
+            "coarse_exposure_lines": 1075,
+            "crop_x_start": 0,
+            "crop_y_start": 0,
+            "crop_x_end": 1975,
+            "crop_y_end": 1199,
+            "array_name": "mode_1976x1200",
+            "array_label_matches_register_geometry": true
+          }
+        ]
+      }
+    ]
+  },
+  "calibration": {
+    "original_configured_read_bytes": 2304,
+    "expanded_diagnostic_read_bytes": 2560,
+    "physical_eeprom_capacity": "Unverified; neither length is claimed as complete physical capacity",
+    "ois": "Candidate identity unverified; maker byte0700, LGIT calibration starts0900 and fields extend through at least0940, outside original cached range",
+    "positive_capture_performed": false,
+    "cache_behavior": "Stock READ_CAL_DATA frees cached calibration; capture to RAM once per boot and obtain independent probe reads across stock-kernel boots",
+    "programming_or_recalibration_operations": "None issued"
+  },
+  "reader": {
+    "source": "scripts/stock_camera_eeprom_reader.c",
+    "format": "Freestanding static ARM32 EABI ELF, no PT_INTERP or libc dependency",
+    "build": "Both capture-length variants compile with Wall/Wextra/Werror",
+    "abi": "Actual vendor declarations extracted and compiled for ARM32: config40bytes, unionoffset8, ioctlc02856c8; register-setting descriptor prefix separately checked including LGE extension",
+    "negative_runtime_tests": "Both final binaries on current kernel39: wrong release exits78; eMMC path exits64; no stdout, camera node or ioctl access",
+    "positive_stock_kernel_test": "Pending",
+    "artifacts": {
+      "0x900": {
+        "bytes": 3120,
+        "sha256": "7e9e6225366147718d49b6ca57eac4852d54fa3868a3f74e8e17d9118da47649"
+      },
+      "0xa00": {
+        "bytes": 3120,
+        "sha256": "71fc22d64486266fdc16882c3c1b1012b11e96392072475ccd39bfc990f0d9bc"
+      }
+    }
+  },
+  "expanded_image": {
+    "file": "fx0-stock-camera-ram-02.img",
+    "bytes": 9625600,
+    "sha256": "c8d2baa8659b6e6e8d97837362ff7295e15d2fd25915c7cd7ca63b1e39c565a6",
+    "input_sha256": "35ee134fc723023c56111783ab8450bc716c03342e50bf6ac27e71bf568c7d3f",
+    "changed_bytes": 21,
+    "change": "EEPROM read-map length 0x900 -> 0xa00 and Android payload checksum only",
+    "kernel_initramfs_other_dt_bytes_preserved": true,
+    "scope": "Unbooted RAM diagnostic preparation; no flash, EEPROM programming or capacity proof"
+  },
+  "expanded_image_validation": [
+    "Independent fdtget reads a00 0 2 0 1 0",
+    "Wrong input SHA rejected before output creation",
+    "Already expanded map rejected before output creation",
+    "No image boot or flash performed"
+  ],
+  "current_phone": "RAM kernel39 with in-tree touch reset driver; pre-DRM owner gesture capture stays open. Only negative reader guards executed, no camera power/probe/capture change."
+}
