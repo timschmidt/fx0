@@ -1,20 +1,30 @@
 {
-  "source_commit": "52334e9f84c3e2425819f1ea20aa18eb42453e82",
-  "kernel_release": "6.18.59-00010-g52334e9f84c3",
-  "zimage_sha256": "b8fb3b72bbf1951f2b6b1ae08995e30947dc2f139e63be886aadb8cc7d0eaaed",
-  "dtb_sha256": "460bddf140ebdb5a2582fa5e591fbb9127a8a2f33a4da894da17025141fcae19",
-  "config_sha256": "124a5aaa4d758e36577e62642e6585741944095abc95b06ce74be76511dedab0",
+  "source_commit": "b7575530db2d756ba1ad3e6e5757d3ac00494f1c",
+  "kernel_release": "6.18.59-00011-gb7575530db2d",
+  "zimage_sha256": "be34bfbaf9b3679e99f651d66070c9a8cc2ae8144cf752fd71b10cf761702b31",
+  "dtb_sha256": "a560706a903513ffbc43fdd7a04ee2469def3237f1ad2c00711e27fba5600893",
+  "config_sha256": "51d3f33137fa6a6b62b778d10b9dd329a5b2b2fd2300f2906dedcccbc4e4a07d",
   "compiled_dtb_count": 63,
-  "memory_pressure_read_test": {
-    "bytes_per_read": 1073741824,
-    "matching_independent_reads": 2,
-    "caches_cleared_before_reads": true,
-    "offline_backup_verified": true
-  },
-  "limits": "Broader stress/soak, storage writes, suspend and final-system acceptance remain pending.",
-  "nura_config_variant": {
-    "zimage_sha256": "58bac1c59ed075414391146d905a16acc3589ccb03b3dff858feecbcf71d5d72",
-    "config_sha256": "51d3f33137fa6a6b62b778d10b9dd329a5b2b2fd2300f2906dedcccbc4e4a07d",
-    "required_kconfig_check": "passed after restoring legacy xtables dependency gate and modules"
+  "physical_verification": "Installed Nura first boot and automatic warm boot, full Nura image writes/readbacks, root-filesystem persistence; full hardware/reliability incomplete",
+  "native_clean_package_build": "Passed for this exact source, 6.18.59-r0",
+  "prior_build": {
+    "source_commit": "52334e9f84c3e2425819f1ea20aa18eb42453e82",
+    "kernel_release": "6.18.59-00010-g52334e9f84c3",
+    "zimage_sha256": "b8fb3b72bbf1951f2b6b1ae08995e30947dc2f139e63be886aadb8cc7d0eaaed",
+    "dtb_sha256": "460bddf140ebdb5a2582fa5e591fbb9127a8a2f33a4da894da17025141fcae19",
+    "config_sha256": "124a5aaa4d758e36577e62642e6585741944095abc95b06ce74be76511dedab0",
+    "compiled_dtb_count": 63,
+    "memory_pressure_read_test": {
+      "bytes_per_read": 1073741824,
+      "matching_independent_reads": 2,
+      "caches_cleared_before_reads": true,
+      "offline_backup_verified": true
+    },
+    "limits": "Broader stress/soak, storage writes, suspend and final-system acceptance remain pending.",
+    "nura_config_variant": {
+      "zimage_sha256": "58bac1c59ed075414391146d905a16acc3589ccb03b3dff858feecbcf71d5d72",
+      "config_sha256": "51d3f33137fa6a6b62b778d10b9dd329a5b2b2fd2300f2906dedcccbc4e4a07d",
+      "required_kconfig_check": "passed after restoring legacy xtables dependency gate and modules"
+    }
   }
 }

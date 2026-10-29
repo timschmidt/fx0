@@ -1,0 +1,31 @@
+{
+  "image_sha256": "3e7c0d5b0532330019dc3ccdc1d63d6a50e8e3df29e6069d3d1d03bc4bc83b39",
+  "kernel_release": "6.18.59-00011-gb7575530db2d",
+  "source_commit": "b7575530db2d756ba1ad3e6e5757d3ac00494f1c",
+  "os_version": "v26.06 (stable files retain postmarketOS branding)",
+  "boot_path": "installed lk2nd filesystem scan via fastboot continue",
+  "root": "ext4 /dev/loop0p2 backed by userdata /dev/mmcblk0p37",
+  "root_size_gib_approx": 3.4,
+  "ssh_key_login": true,
+  "sudo_development_credential": true,
+  "cpus_online": "0-3",
+  "initial_failed_systemd_units": 0,
+  "nftables_active": true,
+  "display": "Owner reports blank; fb0/getty exist, Plymouth segfault, tty switch/unblank did not fix",
+  "charging": "Overheat/discharging; thermal policy unresolved",
+  "frequency_steps_khz": [
+    300000,
+    384000,
+    600000,
+    787200
+  ],
+  "thermal_readings_c": [
+    44,
+    45
+  ],
+  "limits": "Initial headless boot only; broad hardware and reliability acceptance incomplete",
+  "followup_automatic_boot_and_file_persistence": true,
+  "outer_gpt_unchanged_after_root_expansion": true,
+  "update_check": "Signed repository refresh and apk upgrade completed; no upgrades pending",
+  "display_followup": "Still blank after disabling splash, tty switch, unblank, and trial ignore-unused clock/domain flags; mdss remained off"
+}

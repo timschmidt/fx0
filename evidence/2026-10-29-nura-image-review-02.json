@@ -1,0 +1,50 @@
+{
+  "bytes": 1201668096,
+  "sha256": "3e7c0d5b0532330019dc3ccdc1d63d6a50e8e3df29e6069d3d1d03bc4bc83b39",
+  "mbr_partitions": [
+    {
+      "type": 131,
+      "start_sector": 2048,
+      "sectors": 997376
+    },
+    {
+      "type": 131,
+      "start_sector": 999424,
+      "sectors": 1347584
+    }
+  ],
+  "filesystem_checks": {
+    "1": {
+      "exit": 0,
+      "summary": [
+        "Pass 5: Checking group summary information",
+        "pmOS_boot: 99/124440 files (83.8% non-contiguous), 58188/498688 blocks",
+        "e2fsck 1.47.3 (8-Jul-2025)"
+      ]
+    },
+    "2": {
+      "exit": 0,
+      "summary": [
+        "Pass 5: Checking group summary information",
+        "pmOS_root: 10557/84288 files (0.0% non-contiguous), 128822/168448 blocks",
+        "e2fsck 1.47.3 (8-Jul-2025)"
+      ]
+    }
+  },
+  "kernel_release": "6.18.59-00011-gb7575530db2d",
+  "os_release": "PRETTY_NAME=\"postmarketOS v26.06\"\nNAME=\"postmarketOS\"\nVERSION_ID=\"v26.06\"\nVERSION=\"v26.06\"\nID=\"postmarketos\"\nID_LIKE=\"alpine\"\nHOME_URL=\"https://www.postmarketos.org/\"\nSUPPORT_URL=\"https://gitlab.postmarketos.org/postmarketOS\"\nBUG_REPORT_URL=\"https://gitlab.postmarketos.org/postmarketOS/pmaports/issues\"\nLOGO=\"postmarketos-logo\"\nANSI_COLOR=\"0;32\"\n",
+  "extlinux_config": "timeout 1\ndefault postmarketOS\nmenu title boot prev kernel\n\nlabel postmarketOS\n\tkernel /vmlinuz\n\tfdtdir /\n\tinitrd /initramfs\n\tappend quiet splash plymouth.ignore-serial-consoles plymouth.prefer-fbcon earlycon console=ttyMSM0,115200 msm.allow_vram_carveout=1 cma=256m msm.vram=192m console=tty0 lk2nd.pass-simplefb=autorefresh lk2nd.pass-ramoops reboot=w pmos_boot_uuid=56e78f32-b1e4-4657-b17a-20b38489b8d6 pmos_root_uuid=3a052ba6-6796-43cf-bf72-49e246c9d8e3 pmos_rootfsopts=defaults\n",
+  "subpartition_uuids": {
+    "boot": "56e78f32-b1e4-4657-b17a-20b38489b8d6",
+    "root": "3a052ba6-6796-43cf-bf72-49e246c9d8e3"
+  },
+  "firmware_hole_verified": "fb00000 400000",
+  "device_written": true,
+  "image_file": "nura-fx0-v26.06-6.18.59-devel-02.img",
+  "source_commit": "b7575530db2d756ba1ad3e6e5757d3ac00494f1c",
+  "emmc_regulator_load_properties_verified": [
+    "pm8226_l6",
+    "pm8226_l17"
+  ],
+  "deployment_status": "Full write/device and host readback verified; persistent Nura boot and SSH succeeded"
+}

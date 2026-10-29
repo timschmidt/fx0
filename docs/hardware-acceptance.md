@@ -12,14 +12,14 @@ For each result record the exact image hash, source revisions, package manifest,
 
 | Function | Required identification and functional evidence | Initial status |
 | --- | --- | --- |
-| Boot and recovery | Stock and lk2nd entry; correct Fx0 DTB; cold/warm boot; recovery and original-boot restoration procedure | Partial: stock fastboot/RAM boot, installed lk2nd warm reset, and stock-root restore write/read verified; full qualification pending |
-| CPU and memory | All four cores; expected usable RAM after reservations; stable stress run; frequency scaling and idle | Partial: four CPUs online and approximately 1.35 GiB usable RAM; stress, scaling and idle pending |
+| Boot and recovery | Stock and lk2nd entry; correct Fx0 DTB; cold/warm boot; recovery and original-boot restoration procedure | Partial: stock fastboot/RAM boot, installed lk2nd warm reset, and stock-root restore write/read verified; automatic Nura warm boot verified; cold/key/final recovery qualification pending |
+| CPU and memory | All four cores; expected usable RAM after reservations; stable stress run; frequency scaling and idle | Partial: four CPUs online, initial scaling at 300–787.2 MHz and thermal readings; complete frequency/idle/stress qualification pending |
 | Firmware handoff | Correct memory reservations, firmware ownership and remote-processor startup; no corruption or restart loops | Unverified |
-| eMMC | Correct layout/capacity; sustained reads/writes in the test filesystem; persistence and clean shutdown | Partial: all 39 partitions and two matching 1 GiB reads; regulator-load fix permits fresh 32 MiB random-data write/cache-cleared readback hash without MMC errors; persistence and soak pending |
+| eMMC | Correct layout/capacity; sustained reads/writes in the test filesystem; persistence and clean shutdown | Partial: all 39 partitions and two matching 1 GiB reads; regulator-load fix permits fresh 32 MiB random-data write/cache-cleared readback hash without MMC errors; fresh 8 MiB root-filesystem pattern survives automatic reboot; full soak pending |
 | microSD | Card detect, read/write, filesystem integrity, suspend behavior, safe removal where supported | Unverified |
 | USB device mode | Reliable enumeration, debug networking, reconnect, supported user-facing profiles, charging interaction | Partial: NCM/ACM configured, HTTP and root serial shell verified; full reconnect/power qualification pending |
 | USB host or OTG | Establish product support, then peripheral enumeration, power/role switching, disconnect and resume | Unverified |
-| Display | Actual panel/revision; DRM ownership; correct colors/timings; blank/unblank; orientation; no retained-logo false pass | Unverified |
+| Display | Actual panel/revision; DRM ownership; correct colors/timings; blank/unblank; orientation; no retained-logo false pass | Failed on installed candidate: screen blank; inherited framebuffer/getty exist, native panel/power ownership unimplemented |
 | Backlight | Correct controller; useful brightness range; off state; dimming and resume without flicker or stuck output | Unverified |
 | Touchscreen | Actual controller/revision; full-area coordinates, multitouch, edge behavior, orientation and suspend/wake | Unverified |
 | Physical buttons | Power, volume up/down, home, long presses, recovery combinations and wake where supported | Unverified |
@@ -64,7 +64,8 @@ For each result record the exact image hash, source revisions, package manifest,
 | Voice calls | Incoming/outgoing, DTMF, earpiece/mic, speakerphone, headset, Bluetooth, proximity, suspend wake | Blocked without SIM/network |
 | Network modes | Bands and modes supported by this device/network; airplane mode; VoLTE/IMS only if supported | Blocked for network qualification |
 | UI integration | Keyboard, rotation, lock/unlock, notifications, camera/audio selection and console recovery | Unverified |
-| Updates | Current packages; kernel actually changes after update; DTB/initramfs deployment; recovery to known-good image | Unverified |
+| Updates | Current packages; kernel actually changes after update; DTB/initramfs deployment; recovery to known-good image | Partial: repository refresh and upgrade check current, initramfs/boot-file regeneration and subsequent boot pass; kernel replacement/recovery/final-layout update tests pending |
+| Final storage layout | Full restoration coverage/rehearsal before repartition; one maximum-capacity native root and minimum justified extra partitions; external SD removable | Planned: mandatory section 2.1 of bringup plan; current nested userdata installation is transitional |
 
 ## Reliability qualification
 
