@@ -75,6 +75,13 @@
       "branch": "integration/fx0-iommu",
       "commit": "abe11294089af215e9613de912d4a6e4628356de",
       "status": "Kernel 35 and signed modules build; secure page tables initialize; native DRM runs with runtime power held active. DCS replies now valid, clock-lane correction changes power mode to 0x1c; physical display/touch acceptance pending. The retained envkernel APK is older kernel 32."
+    },
+    {
+      "name": "linux-wireless-preparation",
+      "url": "https://github.com/timschmidt/fx0-linux",
+      "branch": "integration/fx0-wireless",
+      "commit": "9da98becd8c7461177e2411aa5c21f6f5cb03d1d",
+      "status": "Recovered shared driver/SoC dependencies and schema correction compile and validate with wireless disabled; board voltage mismatch, radio identification and all hardware tests remain open."
     }
   ]
 }

@@ -1,0 +1,49 @@
+{
+  "repository": "https://github.com/timschmidt/fx0-linux",
+  "branch": "integration/fx0-wireless",
+  "source_commit": "9da98becd8c7461177e2411aa5c21f6f5cb03d1d",
+  "base_commit": "51190c24d336111f84835fa7f30603aafd856e5f",
+  "recovered_commits": [
+    {
+      "original": "2b383aec7100c4a6a418dec2830c0b8e4831be3c",
+      "integration": "a34fb8cbee9c6426a0d38a9f2b534ce77bd9ad37"
+    },
+    {
+      "original": "5a913a2171d19ed8f40b2060cfb68ef782cd3e8d",
+      "integration": "169c3e0bd5b412de9ae8ce37161989bb86b8dcaf"
+    },
+    {
+      "original": "79400b6f70016fbd41c9c79a1ff3f6beefca0330",
+      "integration": "4f5f90ef6c51bf2a48452e2e6956f81081b565c4"
+    },
+    {
+      "original": "a7a188d31f0597f5f667a2c448ea87bbfdf737fa",
+      "integration": "29534c6797b6d0323518e13957d4c5922da0ee8a"
+    }
+  ],
+  "additional_commit": "9da98becd8c7461177e2411aa5c21f6f5cb03d1d",
+  "authorship": "Original authors, co-development and sign-offs retained. New schema correction has no fabricated DCO sign-off.",
+  "validation": {
+    "compiled_objects": [
+      "drivers/remoteproc/qcom_wcnss_iris.o",
+      "drivers/net/wireless/ath/wcn36xx/main.o"
+    ],
+    "compiled_dtbs": [
+      "qcom-msm8926-lg-madai",
+      "qcom-msm8926-htc-memul",
+      "qcom-apq8026-samsung-milletwifi"
+    ],
+    "binding": "passes with dtschema 2026.9 after bounding the stop-state phandle entry",
+    "fx0_dtb_targeted_schema": "passes for disabled node; does not validate an enabled board supply configuration",
+    "checkpatch": "five patches individually checked with --no-signoff: zero errors and warnings",
+    "full_kernel_build": "not performed for this wireless branch"
+  },
+  "fx0_pronto_status": "disabled",
+  "hardware_status": "No image from this branch booted, remoteproc not enabled, no scan/association/Bluetooth test.",
+  "remaining_dependencies": [
+    "Resolve confirmed shared L24 RFA/digital rail versus recovered fixed-1.8-V digital profile",
+    "Confirm exact radio variant and complete board supply/oscillator description",
+    "Use privately retained firmware and device calibration, then validate startup and wireless functions"
+  ],
+  "firmware_redistribution": "No binary or calibration data added to public repository."
+}
