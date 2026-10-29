@@ -1,0 +1,19 @@
+{
+  "purpose": "RAM-only fault-value diagnostic, not a functional fix",
+  "source": "476e36e72527b4115b656117634fb17a4b6e77dc",
+  "source_sha256": "1cf5ad65fd35a8f58087b9e5bd4b0fb72364acf4fbc799bf9c0adbb59b21e203",
+  "modules": {
+    "full44_sha256": "9b20483c140698070734d5cd8bd6625eebb716d80c9d52a58e16533e8aa36e41",
+    "pmdebug1_sha256": "db088be380be972ff9dcfa8ce5abdb146287b96af00c167e041f3b9159908132"
+  },
+  "build": "Both matching ARM LLVM W=1 builds pass without compiler warnings; signatures accepted on their respective kernels",
+  "selftest": "Known RAM read succeeds, NULL address safely rejected, synthetic frame values decode exactly on full44. do_bad registration/unload pass; no real fault deliberately induced.",
+  "pmdebug1_runs": [
+    "First startup resets; raw retained trace ends at initial version read, no abort-value marker.",
+    "Second startup completes.",
+    "Third startup completes.",
+    "Fourth startup resets; retained value-marker stream absent."
+  ],
+  "limitation": "No real abort arguments captured. Absence of markers does not exclude a fault or prove handler execution.",
+  "checkpatch": "0 errors,1 warning: diagnostic error print uses %px. Its logs and retained addresses must remain private."
+}

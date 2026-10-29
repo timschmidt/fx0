@@ -63,7 +63,7 @@
     "lockup_detectors": "No retained soft-lockup or hung-task report. Does not prove neither condition occurred.",
     "taint": "External diagnostic MSM marked out-of-tree; native packaged module test remains taint0."
   },
-  "next_candidate": "Diagnostic image31 with unfiltered persistent function tracing and direct MSM text-base capture; no further functional patch assumed.",
+  "next_candidate": "Validate a temporary initial-power-hold wrapper in a RAM boot of native Nura; continue investigating the first DSI version read separately.",
   "persistent_device_writes": "None in these experiments; root ro,noload. No eMMC/GPT or calibration writes.",
   "optional_core_mmss_query_clock": {
     "module_sha256": "afd4dcc253aca77e8d699293914b88bdd80005bdebe618841b3c4986c9dec35d",
@@ -92,7 +92,82 @@
   "escape_clock_candidate": {
     "change": "Add optional core/escape clock during version query along with other query bus clocks.",
     "module_sha256": "d0bbb71ddc072e3795846364e0c728a7f0f39b076abfcaa9df8aa779f65849f7",
-    "verified_so_far": "Two startups and two five-second cycles complete. Sequence interrupted by delayed fastboot return after software reboot; current repeats in progress.",
-    "qualification": "Experimental; no source fix promoted and no owner physical pass specific to this candidate."
+    "verified_so_far": "Three startups and three five-second cycles pass; fourth startup resets. Escape clock alone is not a sufficient fix.",
+    "qualification": "Not sufficient; no source/package promoted. No candidate-specific owner visual pass."
+  },
+  "read_site_diagnostic": {
+    "module_sha256": "eebbdc727eb8accb195c9dfbfdc9548d0ad8c6b38ae18c3d34f3c3f82d193eea",
+    "booted": true,
+    "result": "First startup fails and returns to fastboot. Raw custom-layout ramoops captured and decoded.",
+    "trace_sequence": [
+      "DSI iface clock enable returns through unlock/preemption update",
+      "dsi_version_read_initial entry: existing read at controller base+0x1f0",
+      "Immediate next recorded entry do_DataAbort from ARM exception path",
+      "Error reporting follows printk console flush into framebuffer drawing"
+    ],
+    "inference": "The first unshifted version read or its post-read barrier raises an ARM data abort. Full fault-status/address/PC report is not yet retained.",
+    "log_capture_change": "Detach the inherited framebuffer VT console before probing, leaving its driver and scanout alone, so the error report can reach pstore without framebuffer rendering.",
+    "console_detached_runs": "Two starts succeed; third fails. Only-ramoops-console variant passes once and fails once. No full fault report retained."
+  },
+  "console_detached_result": "Two startups succeed; third resets with retained trace again ending at initial read. No complete ARM fault report. UART remained a kernel console in these runs.",
+  "pstore_only_kernel_console": {
+    "image": {
+      "image": "fx0-linux-diagnostic-32.img",
+      "sha256": "1d1f182d0d7f6267fde0abe2561f473ea6ff05f62db212b3eb89c83e0df115ee",
+      "bytes": 6221824,
+      "kernel_ramdisk_DTB_equal_image31": true,
+      "change": "Remove early/serial/VT kernel console parameters; select ramoops only. Separate helper detaches inherited framebuffer VT driver before probing."
+    },
+    "verification": "/proc/consoles contains ramoops only; inherited VT framebuffer driver detached before module load.",
+    "result": "First startup succeeds; second resets at initial read, still without complete fault report. Raw captured and decoded."
+  },
+  "read_only_power_snapshot": {
+    "build": "Exact pmdebug1 ABI, W=1 passes; reads only six documented MMCC power/clock registers, reports runtime PM counters before first version read.",
+    "module_sha256": "6935fd341657379eb701d4e044535e93395f8740b66241f117ad4a93d452213c",
+    "results": "Five startups complete. No failure yet for comparison; no owner physical confirmation specific to these runs.",
+    "successful_common_state": {
+      "child_runtime_status": "active",
+      "child_usage": 1,
+      "parent_runtime_status": "active",
+      "parent_usage": 4,
+      "parent_active_children": 2,
+      "GDSCR": "a0282000",
+      "AHB_CBCR": "20008001",
+      "AXI_CBCR": "00004ff1",
+      "MISC_AHB_CBCR": "80008000"
+    },
+    "successful_variation": "MDP CBCR can be00006ff1 or80006ff0; ESC CBCR can be00000001 or80000000. MDP/escape can be gated when the version read succeeds.",
+    "limits": "Snapshot adds ioremap, MMCC reads, printk, iounmap and a write barrier. Five successes do not identify which effect changes the race or prove reliable startup."
+  },
+  "USB_transport_recovery": {
+    "observation": "Normal software reboot can enumerate selected lk2nd but getvar product times out.",
+    "verified_recovery": "USBDEVFS_RESET on exactly the selected physical USB port, VID/PID and private serial restored getvar product immediately without a phone reset.",
+    "scope": "Transport recovery only; no flash/eMMC write. Local closure helpers try this once after bounded failed reads and revalidate lk2nd product before staged log retrieval. Final bootloader/host reliability still open."
+  },
+  "isolated_ordering_and_delay": {
+    "wmb": {
+      "module_sha256": "d5d3fce19b193e58a4ea111e6d3fce1ebb91c1e0fabf8bb917e8b311573421e9",
+      "result": "Two starts/cycles pass; third startup resets."
+    },
+    "udelay_100us": {
+      "module_sha256": "c3fd8693003463b21eff9dfccc9ce1fa681e1a9d27d3c94ccb6c059d813db990",
+      "result": "First startup resets."
+    },
+    "mb": {
+      "module_sha256": "c46828ee25a1e6bf00d6d5ea127357416ddb28f6f32f950783e0867c6ef93cd6",
+      "result": "Three starts/cycles pass; fourth startup resets."
+    },
+    "conclusion": "None sufficient; no source/package promoted. No owner visual confirmation specific to these runs."
+  },
+  "retained_abort_values": {
+    "diagnostic": "diagnostics/abort-value-trace",
+    "full44_selftest": "Exact four synthetic values and end markers recovered from live trace. Known RAM read succeeds; invalid address rejected safely. do_bad probe registers and unloads. No deliberate hardware fault.",
+    "pmdebug1_starts": [
+      "reset at initial read; no retained value markers",
+      "startup completes",
+      "startup completes",
+      "reset at initial read; no retained value markers"
+    ],
+    "qualification": "Real abort argument capture remains open. Absence of markers does not exclude a fault or prove the handler ran."
   }
 }

@@ -594,3 +594,64 @@ the third startup. A follow-up enabling mdp_core,bus and core_mmss before the
 version read resets on its first startup. Neither is a sufficient fix. These
 private candidates are not promoted. The persistent trace is being broadened to
 include all function paths and capture the loaded MSM text address directly.
+
+
+The escape-clock query variant passes three starts/cycles and resets on its
+fourth startup; it is insufficient. The prepared version-read diagnostic then
+boots and captures dsi_version_read_initial immediately followed by do_DataAbort.
+The read uses the existing unshifted version offset0x1f0. Error reporting proceeds
+through printk into inherited framebuffer drawing before the full report reaches
+retained console storage. Detaching that VT framebuffer console before probing
+is now being tested for fault capture; the first two such starts succeed.
+No missing-clock or unsupported-register fix is claimed.
+
+
+### Retained-only logging, power snapshot and USB recovery
+
+Detaching the inherited framebuffer VT console allows two starts and then a
+third failure; its retained trace still ends at the initial version read and
+no complete fault report survives. Image32 keeps the exact diagnostic kernel,
+DTB and ramdisk but selects only ramoops as a kernel console. Runtime
+/proc/consoles verifies that UART and tty0 are absent. Its first startup passes
+and second fails at the same read, again without the full report. Console
+removal does not fix the fault.
+
+A read-only diagnostic maps MMCC and snapshots six documented power/clock
+registers immediately before the first version read, together with runtime PM
+counters. Five startups succeed. Successful cases include MDP/escape gated,
+so those clocks are not unconditionally required for this read. The diagnostic
+also adds mapping,logging,unmapping and a barrier; isolated ordering/timing tests
+are now in progress rather than treating the snapshot as a fix.
+
+Normal software reboot can leave the selected lk2nd USB device enumerated but
+unresponsive. USBDEVFS_RESET on the exact selected port/VID/PID/private serial
+restores getvar product immediately and preserves retained RAM. Local closure
+helpers now attempt one such reset after bounded failed reads, then revalidate
+product before log retrieval. No flash/eMMC operation is involved.
+
+
+### Ordering experiments and abort-value recorder
+
+Isolating the power snapshot's barrier does not yield a startup fix. A write
+barrier passes two starts/cycles then resets on the third. A100us delay fails
+its first startup. A full barrier passes three starts/cycles and resets on the
+fourth. These private candidates are not promoted or installed.
+
+A board/release-guarded diagnostic probes ARM do_bad and encodes fault arguments
+as named functions in the existing retained trace, without display accesses or
+storage writes. Both exact-ABI W=1 module builds pass. On full44, its known-RAM
+read succeeds, an invalid address is safely rejected, and all four synthetic
+frame values plus end markers decode exactly. Probe registration/unload pass.
+This validates the encoder, not a real exception. Four later pmdebug1 starts
+fail/pass/pass/fail. Both failures stop at the initial version read and preserve
+no abort-value markers. Full real argument capture remains open. The decoder's
+three host protocol tests pass, covering interleaved CPU streams, truncation,
+wrapped rings, symbol bounds and invalid headers.
+
+All543 selected session/artifact files in the next checkpoint were copied to
+Disk B and SHA256 verified. Raw logs, addresses, identifiers and keys remain
+private. Root has remained ro,noload throughout these experiments; the installed
+native16 kernel, r1 installation status and GPT are unchanged. The next breadth
+step is a RAM-only Nura initramfs with explicit temporary initial display power
+holds, releasing automatic PM after native DRM binding. This is a development
+workaround and does not satisfy the kernel startup or suspend acceptance gates.

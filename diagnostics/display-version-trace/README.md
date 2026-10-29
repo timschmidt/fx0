@@ -7,9 +7,13 @@ the last entered read wrapper after a reset. An entry alone does not prove that
 the read returned or that its instruction caused the reset.
 
 This is a diagnostic, not a production fix. It builds with W=1 against the
-separate pmdebug1 kernel and its matching modules/certificate. The unmodified
-candidate has failed at the version-query path; this diagnostic itself has not
-yet been booted. Do not load it into another kernel build or force signatures.
+separate pmdebug1 kernel and its matching modules/certificate. One failed start
+captures entry into the first unshifted version read followed by `do_DataAbort`.
+Console-detached and ramoops-only-console boots still fail intermittently,
+without retaining complete status/address/PC. The separate
+[abort-value diagnostic](../abort-value-trace/README.md) attempts to preserve
+those values as function names. No functional fix is claimed. Do not load these
+modules into another kernel build or force signatures.
 
 Use the configuration and retained-RAM layout described in
 [building](../../docs/building.md). Capture the loaded module `.text` address

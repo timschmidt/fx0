@@ -117,3 +117,33 @@ further cycles complete with MDSS/IOMMU power/control auto and no temporary
 supply/PLL helper. Transient MDP error04000000 during repeated enable, system
 suspend, reliability and installed-Nura qualification remain open. See
 [power-transition evidence](../evidence/2026-10-29-native39-display-power-transitions.json).
+
+
+## Current native package and startup fault
+
+The exported native r1 APK now boots from RAM with its own signed modules,
+USB, RMI probe and owner-confirmed RGB after a five-second display off/on.
+Initial MDSS/IOMMU references are still needed for that baseline. They are
+released before the cycle, and all four display devices suspend automatically
+while off. The installed Nura system has not yet received this package.
+
+Repeated C6 startup without userspace holds remains intermittent. Persistent
+per-CPU traces now identify the first DSI version read at unshifted offset0x1f0;
+one run enters do_DataAbort immediately afterward. Other runs stop there without
+a complete exception report. Added core,MMSS and escape-clock variants do not
+eliminate resets. Five runs with a read-only pre-read power snapshot succeed,
+including cases with MDP/escape clocks gated. Barrier-only and delay-only
+diagnostics are being compared; none is promoted as a final fix. See the
+[current evidence](../evidence/2026-10-29-display-start-persistent-trace.json).
+
+Separately, an identity-checked USB bus reset restores lk2nd commands when
+software reboot leaves it enumerated but unresponsive. This is a verified host
+transport workaround; final reboot/update/recovery reliability remains open.
+
+
+Isolated write/full barriers and100us delay also fail on repeat or first startup;
+none is promoted. A RAM-only ARM fault-value recorder passes its synthetic
+encoder and probe-registration checks. Four instrumented starts fail/pass/pass/
+fail, with no retained value markers in either failure. The normal error path
+may never be reached, or its trace may not survive; real fault arguments remain
+unknown. See [recorder limits](../diagnostics/abort-value-trace/README.md).
