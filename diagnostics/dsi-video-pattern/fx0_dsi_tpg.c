@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
- * Temporary test based on mdss_dsi_video_test_pattern() in LG's madai kernel.
+ * Fixed-color selection based on LG madai; video mode needs no command trigger.
  * Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
  * Copyright (c) 2026 Timothy Schmidt
  */
@@ -17,7 +17,6 @@
 #define HOST_CTRL 0x004
 #define TPG_CTRL 0x15c
 #define TPG_VALUE 0x164
-#define TPG_TRIGGER 0x180
 #define TPG_VIDEO_FIXED 0x21
 
 static bool apply;
@@ -50,14 +49,13 @@ static void restore(void)
 	}
 }
 
-static void trigger(struct work_struct *work)
+static void watch_video(struct work_struct *work)
 {
 	if (time_after_eq(jiffies, deadline) ||
 	    (readl(registers + HOST_CTRL) & 3) != 3) {
 		restore();
 		return;
 	}
-	writel(1, registers + TPG_TRIGGER);
 	schedule_delayed_work(&tick, msecs_to_jiffies(20));
 }
 
@@ -91,7 +89,7 @@ static int __init tpg_init(void)
 	ret = of_address_to_resource(host_device->of_node, 0, &resource);
 	if (ret)
 		goto put_host_module;
-	if (resource.start != 0xfd922800 || resource_size(&resource) < 0x184) {
+	if (resource.start != 0xfd922800 || resource_size(&resource) < 0x168) {
 		ret = -ENODEV;
 		goto put_host_module;
 	}
@@ -102,7 +100,7 @@ static int __init tpg_init(void)
 		goto put_host_module;
 	}
 	held = true;
-	registers = ioremap(resource.start, 0x184);
+	registers = ioremap(resource.start, 0x168);
 	if (!registers) {
 		ret = -ENOMEM;
 		goto release;
@@ -121,7 +119,7 @@ static int __init tpg_init(void)
 	}
 	pr_info("Fx0 DSI TPG preflight: version=%08x host=%08x generator=%08x apply=%d\n",
 		version, control, saved_control, apply);
-	INIT_DELAYED_WORK(&tick, trigger);
+	INIT_DELAYED_WORK(&tick, watch_video);
 	if (apply) {
 		writel(color, registers + TPG_VALUE);
 		writel(TPG_VIDEO_FIXED, registers + TPG_CTRL);

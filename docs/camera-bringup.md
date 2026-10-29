@@ -2,7 +2,7 @@
 
 The saved original-kernel RAM log confirms rear ID **0x8179** and front ID **0x0132**, with both sensor probes succeeding on production revision 7. This proves identification under the original driver. Neither stock image capture nor maintained-kernel camera operation has passed.
 
-The implementation has separate sensor, capture-engine, calibration and userspace dependencies. A successful CCI probe will not establish a working CSI/VFE pipeline. Camera work must not replace the current touch observation or require rebooting it before the owner finishes.
+The implementation has separate sensor, capture-engine, calibration and userspace dependencies. A successful CCI probe will not establish a working CSI/VFE pipeline. The earlier pre-DRM touch observation was saved as incomplete before advancing independent native CCI work; it had no confirmed gestures and is not a completed negative touch result.
 
 ## Production board wiring
 
@@ -163,16 +163,16 @@ The [native reader](../diagnostics/camera-cci-read/README.md) reserves address
 read limit. It gets the shared regulator through the regulator API and refuses
 an already enabled supply. Default preflight performs no transfer or power enable;
 capture requires an explicit option. The exact-kernel39 signed module builds
-with W=1, passes checkpatch, and rejects the currently disabled CCI node before
-hardware access. No positive native transfer or power/PM pass is claimed.
+with W=1, passes checkpatch, and rejected the earlier disabled CCI node before
+hardware access. Native qualification has since passed: a2560-byte read and two independent65536-byte reads match every byte of the separate GPIO capture, with verified copies on two host filesystems. GPIO64 returns low after each read. CCI suspends before/between/after full reads, resumes for the second, and its source/core/AHB clock counts return to zero. Error unwind, controller unbind and system suspend remain unqualified; see [the runtime evidence](../evidence/2026-10-29-camera-native-cci-qualification.json).
 
 RAM image25 combines the new camera DT with the byte-identical compiled kernel39,
 image23 initramfs and command line; its Android payload ID was independently
 checked. Kernel and DT source commits are recorded separately in
 [the preparation evidence](../evidence/2026-10-29-camera-native-cci-preparation.json).
-It is unbooted. Preserve the existing pre-DRM touch test first. Then qualify CCI
-probe/reset, a short read matching the independent GPIO capture, full repeated
-reads, regulator cleanup, runtime suspend/clock gating and reopen. A permanent
+It has now booted from RAM after the incomplete touch test was saved. Native
+probe/reset, matching repeated reads and successful supply/runtime-PM cleanup
+are qualified to the scope above. A permanent
 read-only NVMEM binding needs adequate part/protocol evidence afterward.
 
 Sensor-driver timing still needs explicit reconciliation. The historical
@@ -184,7 +184,7 @@ The full-resolution stock modes, controls and actual camera output remain in sco
 
 ## Implementation and physical test order
 
-1. Complete the current touch observation. Preserve its event capture before another kernel boot.
+1. Repeat controlled touch observation and preserve its completion conditions. The earlier pre-DRM capture was saved as incomplete; a new native-display capture is open.
 2. Reconcile the captured calibration, address-space coverage and any actual integrity format; identify actuator/OIS variant without invoking EEPROM programming or recalibration. The separate positive stock-cache reader path remains optional independent comparison work.
 3. Qualify maintained CCI and production power/reset/clock sequencing with sensor-ID reads and balanced unwind. Confirm shared GPIO64 ownership, rail constraints and actual MCLK. Keep capture DMA disabled for this step.
 4. Add focused MSM8226 CAMSS binding/resource and hardware-operation changes plus its correct camera IOMMU support. Build/schema-check them separately; establish powered register access, reset completion and fault reporting before capture.

@@ -1,0 +1,53 @@
+{
+  "purpose": "First native CCI/reset/transfer and shared-regulator/runtime-PM qualification, compared with independent GPIO captures",
+  "image": "fx0-linux-diagnostic-25.img",
+  "image_sha256": "b9975c882e63be87e8a8436cce54635b799d0c26a61d678fee6758a42386f042",
+  "kernel": "6.18.59-00039-g341246daef48",
+  "kernel_source": "341246daef4844c69d8638813bcedfcea35f96f1",
+  "dt_source": "8cfcb0fedcd91c324553872591831ecd5ffaffb4",
+  "boot": "RAM boot through selected-device fastboot; unchanged eMMC layout and installed Nura payload",
+  "preflight": {
+    "controller": "Maintained i2c_qcom_cci module binds and registers master0, adapter1 Qualcomm-CCI",
+    "initial_supply": "Fixed regulator owns GPIO64 output-low; preflight keeps it low",
+    "source_clock_hz": 19200000,
+    "reported_voltage_microvolt": 1800000,
+    "pins": "GPIO29/30 function1 CCI, no pull",
+    "active_preflight_no_transfer": "Pass"
+  },
+  "reads": {
+    "short_bytes": 2560,
+    "short_matches_independent_GPIO": true,
+    "independent_full_reads": 2,
+    "bytes_each_full": 65536,
+    "address_7bit": "0x50",
+    "word_address_range": "0x0000-0xffff",
+    "chunk_bytes": 8,
+    "all_native_bytes_match_independent_GPIO": true,
+    "private_copies_host_filesystems": 2,
+    "fsync_and_cache_discarded_host_readback": "Pass"
+  },
+  "power_and_resume": {
+    "supply_gpio64_low_after_each": true,
+    "native_reader_unloaded_after_each": true,
+    "runtime_suspended_before_each_full_read": true,
+    "second_full_read_after_runtime_resume": "Matches all bytes",
+    "final_runtime_status": "suspended",
+    "final_CCI_source_core_AHB_top_AHB_enable_prepare_counts": "All zero; configured source rate still19.2MHz",
+    "controller_irq_total": 33409,
+    "charging": "Charging,Good"
+  },
+  "capture_limits": {
+    "capacity_or_other_slave_bank_coverage": "Not established; observed8KiB aliasing across bank0 word addresses",
+    "calibration_integrity_or_OIS_function": "Not established by matching data",
+    "NVMEM_part_binding": "Not selected",
+    "sensor_ID_streaming_CAMSS_DMA": "Not exercised",
+    "controller_unbind_error_recovery_system_suspend": "Not qualified"
+  },
+  "old_touch_test": {
+    "saved_event_bytes": 0,
+    "owner_confirmed_gestures": false,
+    "classification": "Incomplete, not a completed negative gesture test",
+    "ended_before_native_CCI_boot": "Saved events, GPIO/IRQ/module/mount state and dmesg privately before reboot"
+  },
+  "writes": "No EEPROM data programming, OIS calibration, GPT/partition flash or installed-root write. Later display diagnostics mount Nura root ro,noload."
+}

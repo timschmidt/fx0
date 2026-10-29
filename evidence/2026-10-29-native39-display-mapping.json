@@ -1,0 +1,42 @@
+{
+  "purpose": "Native39 scanout and diagnostic mapping/TPG execution; no physical pixel qualification",
+  "kernel": "6.18.59-00039-g341246daef48",
+  "DT_source": "8cfcb0fedcd91c324553872591831ecd5ffaffb4",
+  "sources_sha256": {
+    "diagnostics/dsi-video-pattern/fx0_dsi_tpg.c": "0f70c5adf6dca58fab6ec657c6e237961711246c466f0ebd5db3ec2e2b512b1f",
+    "diagnostics/display-mapping/fx0_hw_translate.c": "8a68b9dd07226fde5cf066aa3e3fc058e9f076a2df632bf592babfb2fb1aa01f",
+    "diagnostics/display-mapping/fx0_scanout_map.c": "59339f034541bd38af1f45c89cbd10356b7f20a3aa5cae903a3d3a475176c17f"
+  },
+  "native_scanout": {
+    "runtime_workaround": "MDSS and display IOMMU power/control=on before driver load; proper PM remains unresolved",
+    "module_order": "RMI reset driver before DRM; load qcom_wled to satisfy panel backlight dependency",
+    "mode": "720x1280",
+    "fb_blank": 0,
+    "brightness": "Half requested maximum",
+    "fresh_buffer": "Opaque RGB bars,XR24,pitch2944,3768320bytes,fb56",
+    "DCS_before_pattern": "Power1c,pixel format77,ID bytes00,read lengths1; no manual replay/clock override on this boot"
+  },
+  "TPG": {
+    "prepared_helper_bug": "Old stock test writes physical180; maintained host map identifies clock-pre extension. Removed that write before active use. Earlier helper had only been preflighted, with no writes.",
+    "corrected_active_test": "Fixed red request,120seconds; native video uses no command trigger",
+    "timer": "Returned generator control and value to0; KMS readback also shows clock-pre extension0",
+    "after_timer": "Helper unloaded; USB alive and DCS1c/77 valid,blank0",
+    "during_pattern": "More frequent DSI error-worker status5/4; no pixel result inferred",
+    "active_unload_before_timeout": "Not tested",
+    "owner_visual_response": "Pending; no physical success/failure claimed"
+  },
+  "mapping": {
+    "software_samples": 12,
+    "software_samples_match_expected_RGB": 12,
+    "DMA0_source_register": "0x0039a000",
+    "DMA0_latched_current_source": "0x0039a000",
+    "DMA0_size": "720x1280",
+    "DMA0_stride_bytes": 2944,
+    "hardware_ATOS_queries": 3,
+    "hardware_ATOS_matches_software": 3,
+    "ATOS": "Privileged-read queries in active32-bit context0, bounded1ms wait; no table/configuration change",
+    "scope": "Mapping/data/register/translation proof only; not actual MDP fetch,stream-routing or visible-pixel proof"
+  },
+  "touch": "RMI reset owns GPIO16 high. New native capture running; no owner-confirmed gesture result yet. Earlier pre-DRM observation saved as incomplete.",
+  "persistent_writes": "None; Nura root mounted ro,noload for diagnostic modules/Python"
+}

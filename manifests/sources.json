@@ -125,7 +125,7 @@
       "branch": "integration/fx0-camera",
       "commit": "8cfcb0fedcd91c324553872591831ecd5ffaffb4",
       "base_commit": "341246daef4844c69d8638813bcedfcea35f96f1",
-      "status": "Shared camera I/O regulator, native CCI enable and19.2MHz clock prepared; DT build/targeted schemas pass. Image25 reuses compiled39 kernel/initramfs and is unbooted. Native reader builds and disabled-CCI guard passes; positive transfers, power/runtime-PM and sensors/CAMSS remain unqualified."
+      "status": "Camera-DT image25 RAM booted on compiled39 kernel. Native CCI probe/reset,preflight,2560-byte and two65536-byte reads match independent GPIO capture; shared supply and CCI runtime suspend/resume/clock gating pass for these reads. Controller unbind,error/system-PM,sensor streaming and CAMSS remain unqualified."
     }
   ]
 }

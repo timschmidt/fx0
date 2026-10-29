@@ -69,7 +69,7 @@ The inspected 6.18.59 transport and mainline at `c339f4010dea8b0d754f84ace70cd1b
 
 Current dtschema also exposed a malformed maintainer address in the LTS RMI binding. Carrying the existing upstream `c75afcb4a8e7` metadata correction resolves that validation diagnostic. This is an upstream backport dependency, not a new Fx0 driver contribution.
 
-Stock production code separately enables in-cell scanning through generic-long `EC 29` and `B0 03` panel packets after touch power changes. Its RAM baseline log confirms the notifier sequence. A signed module built against the exact running kernel 35 transmitted those packets successfully, with valid DCS replies at power 0x1c/pixel format 0x77 before the later reset/replay experiment. This is transport evidence, not a physical touch/display pass. The current kernel-39 gesture capture stays open awaiting confirmed owner interaction; no permanent panel sequencing change has been claimed from these experiments.
+Stock production code separately enables in-cell scanning through generic-long `EC 29` and `B0 03` panel packets after touch power changes. Its RAM baseline log confirms the notifier sequence. A signed module built against the exact running kernel 35 transmitted those packets successfully, with valid DCS replies at power 0x1c/pixel format 0x77 before the later reset/replay experiment. This is transport evidence, not a physical touch/display pass. That pre-DRM kernel39 capture was later saved as incomplete before image25; a new native capture is open. No permanent panel sequencing change has been claimed from those live experiments.
 
 A separate live kernel-35 diagnostic uses the RMI suspend/reset-handler/resume interfaces around a GPIO pulse and the stock in-cell commands. Controller configuration returns successfully, but subsequent combined panel replay loses DCS replies. fbdev blanking does not perform the intended power cycle while a separate DRM master owns scanout; issuing a real CRTC disable subsequently loses USB and returns to fastboot. Streamed and retained logs are preserved privately. Neither reset-pulse causality nor the shutdown reset cause is established. See the [sanitized experiment record](../evidence/2026-10-29-live-touch-reset-diagnostic.json).
 
@@ -92,5 +92,16 @@ unload restoration still require qualification. See [the preparation evidence](.
 Native camera control preparation now exists on the separate
 [camera branch](camera-bringup.md#native-cci-and-shared-io-preparation): shared
 I/O regulation, CCI enable/clock description and a guarded native read diagnostic.
-The DT and diagnostic build/checks pass, but its RAM image is unbooted and no
-positive native transfer, sensor streaming or CAMSS result is claimed.
+The camera-DT RAM image now boots; native preflight, a short read and two full
+reads match the independent GPIO capture. Shared supply and CCI runtime suspend/
+resume succeed for these reads. Sensor streaming, CAMSS and error/system-PM
+qualification remain open. See [runtime evidence](../evidence/2026-10-29-camera-native-cci-qualification.json).
+
+
+On the same native39 boot, a new opaque RGB framebuffer has matching software
+mappings/data at12 samples and matching hardware IOMMU translations at3 pages.
+DMA0 source/current source, size and stride match it. The corrected timed DSI
+pattern helper restores its registers and preserves DCS/USB operation, but no
+owner visual response has arrived; error-worker activity rises during the test.
+This narrows mapping faults without proving actual fetch or visible pixels.
+See [the native39 evidence](../evidence/2026-10-29-native39-display-mapping.json).

@@ -365,3 +365,48 @@ ID recomputation pass. Public evidence distinguishes kernel source39 from camera
 DT source8cfcb0fed. No image was booted or flashed. Sensor timing review identifies
 AtomISP's hardcoded19.2MHz versus Tegra's requested24MHz input; actual divider/lane
 readback and output qualification are required before publishing sensor rates.
+
+### Native camera control qualification and native39 display mapping
+
+Saved the old pre-DRM source39 observation, events, IRQ/GPIO/module/mount state
+and dmesg privately before ending it as incomplete:0bytes without confirmed
+owner gestures is not a negative physical touch test. Advanced independent CCI
+work by RAM-booting image25. Verified its identity/DT, paused the new generated
+return parent102 and configured the negotiated500mA diagnostic limit. No flash
+or partition change occurred.
+
+Native i2c_qcom_cci binds and registers Qualcomm-CCI adapter1; its controller
+reset completes. A preflight leaves the fixed GPIO64 supply low. A2560-byte read
+and two independent65536-byte reads match every byte of the independent GPIO
+capture. Verified private copies on both host filesystems are fsynced and
+cache-discarded/rehashed. The supply returns low after each read, and CCI resumes
+between reads then returns to runtime suspend with source/core/AHB clock counts0.
+The final controller IRQ count is33409. Part/capacity/other-bank/integrity and
+sensor/CAMSS qualification remain separate; no EEPROM data program or OIS command.
+
+Mounted Nura root ro,noload and loaded exact39 RMI, panel, MSM and WLED modules
+with the known MDSS/IOMMU runtime-power holds. WLED must be loaded explicitly in
+this RAM environment to satisfy the panel supplier. Native DRM binds at720x1280;
+explicitly unblanked fb0 and requested half brightness. Fresh DRM allocation56
+holds opaque RGB bars. Without manual replay/clock override, DCS reads1c/77 and
+one-byte ID reads return00. The non-continuous-clock source change is present;
+this is transport/state evidence, not visible-pixel qualification.
+
+Before active use, corrected the prepared TPG helper: the inherited stock loop
+writes physical180, which the maintained host map defines as clock-pre extension.
+The original helper had only run preflight, with no writes. Video generation
+needs no command trigger. Corrected source builds/checkpatches and runs a120-second
+fixed-red request. Error-worker flags5/4 become frequent during generation.
+Timer restoration leaves control/color0 and clock-pre extension0 in the KMS
+readback; subsequent DCS1c/77 and USB remain valid. No visual reply has arrived,
+so the physical result is unqualified. Active unload before timeout is untested.
+
+Read-only DMA0 inspection finds source/current source0039a000,720x1280 and
+stride2944, matching the held framebuffer. Software IOMMU mappings contain the
+expected RGB values at12 sampled positions, including separate physical pages.
+Bounded privileged-read hardware ATOS queries in active context0 match the
+software walk for first, next and final pages,3/3. No translation tables/configuration
+are changed. These results narrow mapping faults but do not prove actual pixel
+fetch, stream routing or visible output. Temporary helpers are unloaded. Native
+scanout and a new touch capture stay open; the original CRTC-shutdown reset cause,
+proper runtime PM and all remaining hardware acceptance work stay unresolved.

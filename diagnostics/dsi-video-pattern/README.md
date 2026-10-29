@@ -6,29 +6,36 @@ IOMMU. It follows the fixed-color video pattern sequence in the pinned
 [stock driver](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/video/msm/mdss/mdss_dsi_host.c).
 It is a development diagnostic, not an upstream display-driver fix.
 
-**Current validation:** exact kernel39 W=1 build and checkpatch pass. A trusted,
-signed module on that running kernel correctly returns ENODEV before MMIO
-because native DSI has not been loaded. The active preflight, color output,
-automatic restoration and restoration on unload have **not** been tested.
-Do not claim a physical display pass from this preparation.
+**Current validation:** exact kernel 39 W=1 build/checkpatch, disabled-host guard
+and active preflight pass. The corrected published helper ran a 120-second
+fixed-color test and restored generator control/color to 0 afterward; DCS power
+and pixel-format reads still return 1c/77. Hardware register snapshots confirm
+clock-pre extension remains 0. No owner visual response has arrived, so no
+physical pattern/display pass is claimed. DSI error-worker flags 5/4 became more
+frequent during generation. Active unload before timeout remains untested.
 
 The module requires `lg,madai`, a registered Fx0 DSI panel, the expected host
-resource at0xfd922800 and host version0x10000002. It refuses to wake an inactive
+resource at 0xfd922800 and host version 0x10000002. It refuses to wake an inactive
 host, requires the controller and video-mode enable bits, and refuses an
 already enabled pattern generator. It pins the host's module and holds its
 runtime-PM reference. The default `apply=0` only reads registers after those
-guards. With `apply=1`, it requests a solid color and triggers every20ms as in
-the stock routine; the physical color mapping remains to be qualified.
+guards. With `apply=1`, it enables a solid-color video pattern; delayed work
+checks the timeout/video state every 20 ms. Video mode needs no command trigger;
+the physical color mapping remains to be qualified.
 
 The physical offsets include the host's four-byte shift: generator control
-0x15c, initial color0x164 and trigger0x180. These are not addresses to copy to
-other SoCs or host generations. The default color is0xff0000, and the default
-interval is60 seconds; accepted intervals are1–120 seconds. Delayed work stops
+0x15c and initial color 0x164. The old stock test routine also writes 0x180,
+but the maintained host map identifies that offset as clock-pre extension.
+That write was removed before the first active test. These are not addresses to copy to
+other SoCs or host generations. The default color is 0xff0000, and the default
+interval is 60 seconds; accepted intervals are 1–120 seconds. Delayed work stops
 and restores the saved generator control/color registers at the deadline or
 when video is disabled. Unload synchronizes with that work and also restores.
 Do not unbind drivers, change modes or cycle panel power during a test.
 
-Before using it, finish and preserve the existing pre-DRM touch capture. Bring
+Before using it, preserve any existing touch observation with its completion
+status. The earlier pre-DRM test was saved as incomplete, without confirmed
+gestures, before the camera-DT RAM boot. Bring
 up native video using the documented diagnostic power holds, explicitly unblank
 fb0, preserve kernel logs and confirm the active mode and panel replies. Keep
 that boot stable and use one pattern operation at a time. This module does not
