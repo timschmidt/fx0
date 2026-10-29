@@ -1,0 +1,22 @@
+{
+  "purpose": "Prepare guarded DSI-generated video pattern to isolate display-link output from framebuffer DMA",
+  "kernel": "6.18.59-00039-g341246daef48",
+  "source": "diagnostics/dsi-video-pattern/fx0_dsi_tpg.c",
+  "source_sha256": "0134127b70e3689b34c1e9eba00b880cc7ecd87083283b5318314326ca2ba5c9",
+  "module_bytes": 120233,
+  "module_sha256": "20972af4d6fd5557011cd46cf3b27daac3c50ea029b47b3f4ce137cb81d2518d",
+  "reference": "Vendor03aba4427a7666d57b5ae06d375e259ea337f351, mdss_dsi_host.c:mdss_dsi_video_test_pattern",
+  "checks": {
+    "build": "W=1 exact running ABI passes",
+    "checkpatch": "0 errors,0 warnings",
+    "signature": "Canonical trusted signing key; insmod reaches module init, no force flags",
+    "runtime_negative": "Final published source returns ENODEV before MMIO when native DSI device is absent",
+    "touch_capture": "Still open,0bytes, owner completion pending; not a completed negative gesture test"
+  },
+  "active_test_performed": false,
+  "physical_pattern_visible": null,
+  "timeout_and_unload_restoration_qualified": false,
+  "next_gate": "Complete/preserve pre-DRM touch capture, then native39 takeover, explicit unblank, active preflight, observed timed pattern and restoration verification",
+  "persistent_changes": "None; no flash, partition or phone filesystem write",
+  "native_display_or_touch_fix_claimed": false
+}

@@ -76,3 +76,14 @@ A separate live kernel-35 diagnostic uses the RMI suspend/reset-handler/resume i
 ## Camera source and calibration findings
 
 The [camera work record](camera-bringup.md) pins the actual stock IDs and production source wiring. The selected vendor configuration uses CSI3.0 headers and VFE4.0; resource/register similarities to newer CAMSS variants need complete review before reuse. The camera IOMMU has its own contexts, clocks/power and prefetch table. Current mainline match/Makefile inspection and the LTS tree still lack the dedicated pieces identified in the audit. Two diagnostic tools now decode settings and prepare calibration capture, with compile/ABI/negative guards checked. A temporary GPIO reader has since captured every16-bit word address at0x50 three times with matching private copies on two host filesystems. Observed8KiB aliasing does not establish physical capacity/other-bank coverage; calibration integrity and all sensor streaming remain unqualified.
+
+
+## Prepared display-link isolation test
+
+The [timed DSI video-pattern diagnostic](../diagnostics/dsi-video-pattern/README.md)
+builds against kernel39 and rejects the missing native DSI device before MMIO.
+Its active path has not been run. After preserving the open touch capture, use
+it to compare controller-generated pixels with a newly allocated framebuffer.
+This can narrow the display-link versus MDP/DMA investigation; it does not
+establish that either path works. Active guards, physical output, timeout and
+unload restoration still require qualification. See [the preparation evidence](../evidence/2026-10-29-dsi-pattern-preparation.json).

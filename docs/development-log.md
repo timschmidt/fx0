@@ -321,3 +321,22 @@ capture remains open awaiting confirmed owner gestures. Published only source,
 procedure and sanitized evidence; calibration and capture hashes remain private.
 The separate stock-cache reader and expanded stock RAM image are still
 positive-test/unbooted fallback preparation, respectively.
+
+
+### Prepare timed DSI pattern isolation without native takeover
+
+Compared the stock host routine and maintained register definitions and prepared
+an exact-kernel39 signed diagnostic for controller-generated fixed-color video.
+The physical generator offsets include the host's four-byte shift. Guards
+require the selected Fx0, registered panel/active host, expected resource/version,
+active video and an unused generator. Default preflight has no register writes;
+explicit apply requests a bounded pattern with delayed restoration. The source
+pins the host module/runtime-PM reference and synchronizes unload with its work.
+
+W=1 build and checkpatch pass. Final published source is signed with the running
+trusted key; insmod returns ENODEV before MMIO because native DSI is absent.
+The owner touch capture remains open and unchanged. Active pattern output,
+preflight, timeout and unload restoration remain untested. No native takeover,
+reboot or persistent phone write occurred. This diagnostic is intended to compare
+DSI-generated pixels against framebuffer DMA after the existing touch test;
+it is not a display fix or physical qualification.
