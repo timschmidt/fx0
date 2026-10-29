@@ -1,0 +1,52 @@
+{
+  "time": "2026-10-29T07:37:35.628671+00:00",
+  "tools": {
+    "adb": "/usr/bin/adb",
+    "fastboot": "/usr/bin/fastboot",
+    "pmbootstrap": "/usr/bin/pmbootstrap",
+    "git": "/usr/bin/git"
+  },
+  "usb_device_nodes": true,
+  "lg_devices": [
+    {
+      "port": "1-8",
+      "vendor": "1004",
+      "product": "6341",
+      "model": "LGL25",
+      "interfaces": [
+        {
+          "bInterfaceClass": "02",
+          "bInterfaceSubClass": "02",
+          "bInterfaceProtocol": "01",
+          "adb": false
+        },
+        {
+          "bInterfaceClass": "0a",
+          "bInterfaceSubClass": "00",
+          "bInterfaceProtocol": "00",
+          "adb": false
+        },
+        {
+          "bInterfaceClass": "ff",
+          "bInterfaceSubClass": "ff",
+          "bInterfaceProtocol": "ff",
+          "adb": false
+        },
+        {
+          "bInterfaceClass": "08",
+          "bInterfaceSubClass": "06",
+          "bInterfaceProtocol": "50",
+          "adb": false
+        },
+        {
+          "bInterfaceClass": "ff",
+          "bInterfaceSubClass": "42",
+          "bInterfaceProtocol": "01",
+          "adb": true
+        }
+      ]
+    }
+  ],
+  "free_bytes": 23581732864,
+  "git_worktree": true
+}

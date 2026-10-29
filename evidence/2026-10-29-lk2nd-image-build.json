@@ -1,0 +1,21 @@
+{
+  "source": "https://github.com/msm8916-mainline/lk2nd",
+  "base_commit": "fd380ac637d1af38598e3f3c5321d4c962b96315",
+  "patch": "patches/lk2nd/0001-select-fx0-linux-device-tree.patch",
+  "artifact": {
+    "file": "lk2nd.img",
+    "bytes": 286736,
+    "sha256": "a3d4ac8860051209796268504e4f266293ea864493ffda5b4c2fd81cd4d349c0"
+  },
+  "build_variables": {
+    "TOOLCHAIN_PREFIX": "arm-none-eabi-",
+    "LK2ND_DTBS": "msm8926-lg-madai.dtb",
+    "LK2ND_VERSION": "fx0-fd380ac6",
+    "LK2ND_FORCE_FASTBOOT": "1",
+    "BOOTLOADER_OUT": "/tmp/fx0-lk2nd",
+    "APPSBOOTHEADER_DIR": "/tmp/fx0-lk2nd/build-lk2nd-msm8226"
+  },
+  "compiler": "arm-none-eabi-gcc (Fedora 15.2.0-1.fc43) 15.2.0",
+  "qcdt_entries": 1,
+  "physical_boot_tested": false
+}

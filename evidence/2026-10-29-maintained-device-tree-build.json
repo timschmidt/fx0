@@ -1,0 +1,52 @@
+{
+  "scope": "DTC compilation and patch application only; not schema, kernel, bootloader image, or physical-device qualification",
+  "sources": {
+    "linux": {
+      "repository": "msm8226-mainline/linux",
+      "commit": "57a693c8bfc6ba8dd9f737b10b8fff2c6d3484c8"
+    },
+    "lk2nd": {
+      "repository": "msm8916-mainline/lk2nd",
+      "commit": "fd380ac637d1af38598e3f3c5321d4c962b96315"
+    },
+    "linux-stable": {
+      "repository": "gregkh/linux",
+      "commit": "1253a6aa5d104312bf0992afacc15220ae35bdf9"
+    }
+  },
+  "linux_source": "linux-stable",
+  "results": [
+    {
+      "file": "msm8226-baseline.dtb",
+      "sha256": "f53a5161d8ab6473ae6c4444772bd9a8163375ac7499710a7134d1bbdb76b620",
+      "bytes": 26075,
+      "warnings": 4
+    },
+    {
+      "file": "qcom-msm8926-lg-madai.dtb",
+      "sha256": "8b0505a1e9ddb60277c04bfd9fa5718377d6cda8fb688665c66a83abebad04c0",
+      "bytes": 26266,
+      "warnings": 4
+    },
+    {
+      "file": "lk2nd-msm8926-lg-madai.dtb",
+      "sha256": "36f0fcd2ec64dd6869ec8628b4a18b818323a239864c1da38d1dfef0383c278b",
+      "bytes": 763,
+      "warnings": 0
+    }
+  ],
+  "new_linux_warnings": [],
+  "patches": {
+    "patches/linux-stable/0001-document-lg-fx0-compatible.patch": "d86288b5d259bdc8541303a31329d1af355e5c9667a56ee5b98d85b4b86eca68",
+    "patches/linux-stable/0002-restore-fx0-uart-usb-device-tree.patch": "518faa17b9287131e2c9ef9418054e46fa7927d68bae027a2eb41ebcb1e14418",
+    "patches/lk2nd/0001-select-fx0-linux-device-tree.patch": "738ead2e8aa6a6d865603c1d6f33f40fef154cba242978bcb41af2eece2501bd"
+  },
+  "date": "2026-10-29",
+  "toolchain": {
+    "gcc": "gcc (GCC) 15.3.1 20260722 (Red Hat 15.3.1-1)",
+    "bison": "bison (GNU Bison) 3.8.2",
+    "flex": "flex 2.6.4",
+    "dtc": "Version: DTC 1.7.0-gbcd02b52"
+  },
+  "binding_checks": "YAML parsing and expected compatible tuple checked; full dt_binding_check/dtbs_check pending (dtschema unavailable)."
+}

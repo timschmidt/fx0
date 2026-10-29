@@ -1,0 +1,332 @@
+{
+  "schema": 1,
+  "sources": {
+    "linux": {
+      "repository": "msm8226-mainline/linux",
+      "commit": "57a693c8bfc6ba8dd9f737b10b8fff2c6d3484c8"
+    },
+    "lk2nd": {
+      "repository": "msm8916-mainline/lk2nd",
+      "commit": "fd380ac637d1af38598e3f3c5321d4c962b96315"
+    },
+    "linux-stable": {
+      "repository": "gregkh/linux",
+      "commit": "1253a6aa5d104312bf0992afacc15220ae35bdf9"
+    }
+  },
+  "files": [
+    {
+      "source": "linux",
+      "path": "scripts/dtc/checks.c",
+      "git_blob": "6e06aeab5503f78c8a969f8d1d0e96be7b91749e"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/data.c",
+      "git_blob": "14734233ad8b7ebd38c3e62442b81aae66601806"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/dtc-lexer.l",
+      "git_blob": "de60a70b6bdbcb5ae4336ea4171ad6f645e91b36"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/dtc-parser.y",
+      "git_blob": "4d5eece526243460203157464e3cd75f781e50e7"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/dtc.c",
+      "git_blob": "0655c2e2c3624e7b91dcfb7c2ff44f7b576a0f99"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/dtc.h",
+      "git_blob": "4c4aaca1fc417c9d93e904e64b2c40216ee1b093"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/flattree.c",
+      "git_blob": "1bcd8089c5b98b1e4aa0e36fc0ff69473568798c"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/fstree.c",
+      "git_blob": "0f9a534bacdbe0631e78b49ca76a1a002128b378"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/livetree.c",
+      "git_blob": "49f723002f855764452b30b5a979b6096730a33b"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/srcpos.c",
+      "git_blob": "8e4d18a90b472eb7a68cce6fd5637463415ec4b0"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/srcpos.h",
+      "git_blob": "4318d7ad34d91d2ada1a5d7f92d2c84148fec366"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/treesource.c",
+      "git_blob": "ae15839ba6a588b25037a5f109c2bfe427605a0b"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/util.c",
+      "git_blob": "507f0120cd13ebe9a16f449ec14b8758e3b61fb0"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/util.h",
+      "git_blob": "b448cd79efd3d00d42ef34502b5c0b98e21fbde1"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/version_gen.h",
+      "git_blob": "bf81ce593685ced4c580b364ae277bb42006f832"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/libfdt/fdt.h",
+      "git_blob": "0c91aa7f67b5b7d75d94cef2c61e8f7ec2c973c0"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/libfdt/libfdt.h",
+      "git_blob": "2d409d8e829b3b052a14ab36cab9037935f1c65f"
+    },
+    {
+      "source": "linux",
+      "path": "scripts/dtc/libfdt/libfdt_env.h",
+      "git_blob": "73b6d40450aca51d94245be59490f6ee3454241d"
+    },
+    {
+      "source": "linux",
+      "path": "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi",
+      "git_blob": "9fb54708056c5c022390bbd8d77a6bc2b6f4f8f6"
+    },
+    {
+      "source": "linux",
+      "path": "arch/arm/boot/dts/qcom/Makefile",
+      "git_blob": "30d5dbb739fe0535adaebe6b942b2037f9ddca88"
+    },
+    {
+      "source": "linux",
+      "path": "arch/arm/boot/dts/qcom/pm8226.dtsi",
+      "git_blob": "41b66d15fbb709253a9466506d161eb739c0502f"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/interrupt-controller/arm-gic.h",
+      "git_blob": "887f53363e8a633ba85c8a459313c37b71a729a5"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/clock/qcom,dsi-phy-28nm.h",
+      "git_blob": "ab94d58377a1c6aae740bef75c866e8ce5d93260"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/clock/qcom,gcc-msm8974.h",
+      "git_blob": "5c10570988e0644e0ee762108ca6c2861cae3a7e"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/clock/qcom,mmcc-msm8974.h",
+      "git_blob": "743ee60632eb8aea0fa5347da142ebf22d205bc4"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/clock/qcom,rpmcc.h",
+      "git_blob": "1477a75e7f6d7b87b941ee2ec849b80407ca1958"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/gpio/gpio.h",
+      "git_blob": "b5d531237448241f1870e7d8d4cf1a6411877562"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/power/qcom-rpmpd.h",
+      "git_blob": "d9b7bac309537cbfd2488e7d4fe21d195c919ef5"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/reset/qcom,gcc-msm8974.h",
+      "git_blob": "23777e5ca4eb00d6940324b0988a9174f7483761"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/thermal/thermal.h",
+      "git_blob": "bc7babb1a67cd4910f3bc9c54eefff2a574591b7"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/iio/qcom,spmi-vadc.h",
+      "git_blob": "ef07ecd4d5857b1131f371b4637d3120167f619b"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/input/linux-event-codes.h",
+      "git_blob": "693bbcd2670a41ce72418214217c613d8ad52037",
+      "symlink": "../../uapi/linux/input-event-codes.h"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/interrupt-controller/irq.h",
+      "git_blob": "9e3d183e138191fe5227cb5ffc5ff52d81036b15"
+    },
+    {
+      "source": "linux",
+      "path": "include/dt-bindings/spmi/spmi.h",
+      "git_blob": "ad4a43481de4f6a47cd3f622ffa1ab7e93d28dd3"
+    },
+    {
+      "source": "lk2nd",
+      "path": "lk2nd/device/dts/msm8226/msm8926-lg-madai.dts",
+      "git_blob": "1ea0a0ee62b20aa32882553c26a415750fbf5a26"
+    },
+    {
+      "source": "lk2nd",
+      "path": "lk2nd/device/dts/skeleton32.dtsi",
+      "git_blob": "f9daac2269c2d84edc938e4cc4f3c7c3e3e6d0b5"
+    },
+    {
+      "source": "lk2nd",
+      "path": "lk2nd/device/dts/lk2nd.dtsi",
+      "git_blob": "7b81484d0c665dd25a75bbe8ec6e728f70ceec5c"
+    },
+    {
+      "source": "lk2nd",
+      "path": "lk2nd/include/dt-bindings/arm/qcom,ids.h",
+      "git_blob": "759201772006fa8d40d39a4f869af6cf4b141b2b"
+    },
+    {
+      "source": "lk2nd",
+      "path": "lk2nd/include/dt-bindings/lk2nd/gpio.h",
+      "git_blob": "363fda8d8ba03e4be49d21c1e3e07cbbb46374a3"
+    },
+    {
+      "source": "lk2nd",
+      "path": "lk2nd/include/dt-bindings/lk2nd/key-codes.h",
+      "git_blob": "fab4e29b8272057f5b6e4b88ad9a66e07bbe0438",
+      "symlink": "../../../../include/dev/key-codes.h"
+    },
+    {
+      "source": "lk2nd",
+      "path": "lk2nd/include/dt-bindings/lk2nd/sdhc.h",
+      "git_blob": "55f434efff66a84641f657acad0f4a9b13d1e339"
+    },
+    {
+      "source": "linux",
+      "path": "include/uapi/linux/input-event-codes.h",
+      "git_blob": "3b2524e4b667d1e7cc02ff5cb674e7c2ac069a66"
+    },
+    {
+      "source": "lk2nd",
+      "path": "include/dev/key-codes.h",
+      "git_blob": "eb521141f4f672b9af3ed2cdfffa5b0dad4409c5"
+    },
+    {
+      "source": "linux-stable",
+      "path": "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi",
+      "git_blob": "51a7a3fb36d88eeb8dbccefbab672aceb1e46428"
+    },
+    {
+      "source": "linux-stable",
+      "path": "arch/arm/boot/dts/qcom/pm8226.dtsi",
+      "git_blob": "2fd4f135ed84c8b28435f7f48400e61f51224647"
+    },
+    {
+      "source": "linux-stable",
+      "path": "arch/arm/boot/dts/qcom/Makefile",
+      "git_blob": "c7873dcef1547b1e51e1f93293433d7b6b94cded"
+    },
+    {
+      "source": "linux-stable",
+      "path": "Documentation/devicetree/bindings/arm/qcom.yaml",
+      "git_blob": "18b5ed044f9fcc4d12f4e3baa001099b6e154af7"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/interrupt-controller/arm-gic.h",
+      "git_blob": "887f53363e8a633ba85c8a459313c37b71a729a5"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/clock/qcom,dsi-phy-28nm.h",
+      "git_blob": "ab94d58377a1c6aae740bef75c866e8ce5d93260"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/clock/qcom,gcc-msm8974.h",
+      "git_blob": "5c10570988e0644e0ee762108ca6c2861cae3a7e"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/clock/qcom,mmcc-msm8974.h",
+      "git_blob": "743ee60632eb8aea0fa5347da142ebf22d205bc4"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/clock/qcom,rpmcc.h",
+      "git_blob": "1477a75e7f6d7b87b941ee2ec849b80407ca1958"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/gpio/gpio.h",
+      "git_blob": "b5d531237448241f1870e7d8d4cf1a6411877562"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/power/qcom-rpmpd.h",
+      "git_blob": "4371ac941f29d9657b6573f4934658f100726224"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/reset/qcom,gcc-msm8974.h",
+      "git_blob": "23777e5ca4eb00d6940324b0988a9174f7483761"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/thermal/thermal.h",
+      "git_blob": "bc7babb1a67cd4910f3bc9c54eefff2a574591b7"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/iio/qcom,spmi-vadc.h",
+      "git_blob": "ef07ecd4d5857b1131f371b4637d3120167f619b"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/input/linux-event-codes.h",
+      "git_blob": "693bbcd2670a41ce72418214217c613d8ad52037",
+      "symlink": "../../uapi/linux/input-event-codes.h"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/interrupt-controller/irq.h",
+      "git_blob": "9e3d183e138191fe5227cb5ffc5ff52d81036b15"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/spmi/spmi.h",
+      "git_blob": "ad4a43481de4f6a47cd3f622ffa1ab7e93d28dd3"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/uapi/linux/input-event-codes.h",
+      "git_blob": "30f3c9eaafaad9c357e6e5e400cfa27079bfe910"
+    },
+    {
+      "source": "linux-stable",
+      "path": "include/dt-bindings/power/qcom,rpmhpd.h",
+      "git_blob": "269b73ff866a8f0357d0e3e8396f6ab55e21da77"
+    }
+  ]
+}

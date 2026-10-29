@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "research_date": "2026-10-29",
+  "sources": [
+    {
+      "name": "lk2nd",
+      "commit": "fd380ac637d1af38598e3f3c5321d4c962b96315",
+      "remote": "https://github.com/msm8916-mainline/lk2nd.git",
+      "status": "development baseline; not hardware qualified"
+    },
+    {
+      "name": "linux-msm8226",
+      "commit": "57a693c8bfc6ba8dd9f737b10b8fff2c6d3484c8",
+      "remote": "https://github.com/msm8226-mainline/linux.git",
+      "status": "development baseline; not hardware qualified"
+    },
+    {
+      "name": "historical-linux",
+      "commit": "17429c77ef96df09f6bbf21360d0f6a235463d1c",
+      "remote": "https://github.com/omasanori/linux.git",
+      "status": "reference only"
+    },
+    {
+      "name": "linux-stable",
+      "remote": "https://github.com/gregkh/linux.git",
+      "tag": "v6.18.59",
+      "commit": "1253a6aa5d104312bf0992afacc15220ae35bdf9",
+      "status": "maintained kernel target; DTS validation only, not hardware qualified"
+    },
+    {
+      "name": "pmbootstrap",
+      "remote": "https://gitlab.postmarketos.org/postmarketOS/pmbootstrap.git",
+      "commit": "46ee403e4680002ce42dc2645adf9b08557270e9",
+      "version": "3.12.1"
+    },
+    {
+      "name": "pmaports-stable",
+      "remote": "https://gitlab.postmarketos.org/postmarketOS/pmaports.git",
+      "commit": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
+      "branch": "v26.06"
+    },
+    {
+      "name": "vendor-linux",
+      "remote": "https://github.com/peremen/android-kernel-lg-madai.git",
+      "commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+      "status": "stock hardware reference only"
+    }
+  ],
+  "development_repositories": [
+    {
+      "name": "linux",
+      "url": "https://github.com/timschmidt/fx0-linux",
+      "branch": "integration/fx0-lts",
+      "commit": "3bfdc9d2da6a39a44e2d581f306c2804b79e1263",
+      "status": "initial UART/USB, physical testing pending"
+    },
+    {
+      "name": "lk2nd",
+      "url": "https://github.com/timschmidt/fx0-lk2nd",
+      "branch": "integration/fx0",
+      "commit": "dbb7b5e5c91f2100ae2e57d8958752ad9945cfc3",
+      "status": "DTB selection, physical testing pending"
+    }
+  ]
+}

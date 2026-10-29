@@ -1,0 +1,45 @@
+{
+  "scope": "DTC compilation and patch application only; not schema, kernel, bootloader image, or physical-device qualification",
+  "sources": {
+    "linux": {
+      "repository": "msm8226-mainline/linux",
+      "commit": "57a693c8bfc6ba8dd9f737b10b8fff2c6d3484c8"
+    },
+    "lk2nd": {
+      "repository": "msm8916-mainline/lk2nd",
+      "commit": "fd380ac637d1af38598e3f3c5321d4c962b96315"
+    }
+  },
+  "results": [
+    {
+      "file": "msm8226-baseline.dtb",
+      "sha256": "e9923f5ccd76908b841361a591939d3e2644608eda1c9939bc0b5733b753c7b2",
+      "bytes": 27520,
+      "warnings": 4
+    },
+    {
+      "file": "qcom-msm8926-lg-madai.dtb",
+      "sha256": "d8fe3002209e68fd7e0dc7d7b7a0cea323fca93cf49ef96e2078dc2917a1211f",
+      "bytes": 27711,
+      "warnings": 4
+    },
+    {
+      "file": "lk2nd-msm8926-lg-madai.dtb",
+      "sha256": "36f0fcd2ec64dd6869ec8628b4a18b818323a239864c1da38d1dfef0383c278b",
+      "bytes": 763,
+      "warnings": 0
+    }
+  ],
+  "new_linux_warnings": [],
+  "patches": {
+    "patches/linux/0001-restore-fx0-uart-usb-device-tree.patch": "81df979c9b0532fa2be4ccfceacebd80f9ee8d51c6cd23d32290f18f054019e3",
+    "patches/lk2nd/0001-select-fx0-linux-device-tree.patch": "738ead2e8aa6a6d865603c1d6f33f40fef154cba242978bcb41af2eece2501bd"
+  },
+  "toolchain": {
+    "gcc": "gcc (GCC) 15.3.1 20260722 (Red Hat 15.3.1-1)",
+    "bison": "bison (GNU Bison) 3.8.2",
+    "flex": "flex 2.6.4",
+    "dtc": "Version: DTC 1.7.0-gbcd02b52"
+  },
+  "date": "2026-10-29"
+}

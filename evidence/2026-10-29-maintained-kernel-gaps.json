@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-29",
+  "kernel": {
+    "repository": "gregkh/linux",
+    "tag": "v6.18.59",
+    "commit": "1253a6aa5d104312bf0992afacc15220ae35bdf9"
+  },
+  "reference": {
+    "repository": "msm8226-mainline/linux",
+    "commit": "57a693c8bfc6ba8dd9f737b10b8fff2c6d3484c8"
+  },
+  "observations": [
+    {
+      "component": "WCNSS",
+      "scope": "qcom-msm8226.dtsi source comparison",
+      "reference_definitions": [
+        "wcnss_region",
+        "smp2p-wcnss",
+        "pronto: remoteproc@fb204000"
+      ],
+      "maintained_tree": "Definitions absent; transfer and validate applicable shared SoC support before wireless board enablement."
+    },
+    {
+      "component": "CAMSS",
+      "file": "drivers/media/platform/qcom/camss/camss.c",
+      "git_blob": "c1148f6ad6b2654ef4306d8468fc316270a7d9d2",
+      "msm8226_compatible_present": false,
+      "msm8916_compatible_present": true,
+      "limit": "A compatible-table inspection is not a complete camera/ISP driver audit or a physical sensor inventory."
+    },
+    {
+      "component": "board compatible",
+      "file": "Documentation/devicetree/bindings/arm/qcom.yaml",
+      "base_git_blob": "18b5ed044f9fcc4d12f4e3baa001099b6e154af7",
+      "work": "Separate candidate adds lg,madai to the MSM8926/MSM8226 tuple."
+    }
+  ],
+  "qualification": "Source assessment only. Hardware identity, required firmware, full kernel builds, schemas and physical operation remain unverified."
+}

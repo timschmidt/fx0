@@ -1,0 +1,34 @@
+# Original device contents and material specific to this physical unit.
+/local/
+/backups/
+/private/
+/firmware-local/
+/logs/raw/
+
+# Independent upstream source checkouts and generated artifacts.
+/src/
+/worktrees/
+/build/
+/out/
+/dist/
+/downloads/
+/cache/
+/artifacts/
+/exports/
+
+# Host credentials and configuration.
+/.aws/
+/.codex/
+/.agents/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Common temporary files.
+__pycache__/
+*.pyc
+*.swp
+*.tmp
+*~
