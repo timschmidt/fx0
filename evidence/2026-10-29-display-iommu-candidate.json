@@ -7,7 +7,7 @@
   "binding_check": "passed",
   "dtb_iommu_schema_check": "passed without diagnostics",
   "checkpatch": "zero errors; imported dependency warnings and three new commit-description warnings remain for submission cleanup",
-  "physical_result": "pending; RAM image prepared; not installed as default",
+  "physical_result": "Default RAM test loses USB during DSI PLL initialization and returns to forced-fastboot; clk_ignore_unused/pd_ignore_unused trial also fails. Forcing MDSS and display-IOMMU runtime power active before loading MSM permits native DRM/DSI/fbcon and frame interrupts, but owner still sees black with backlight lit, including after framebuffer RGB bars and 50% requested brightness.",
   "artifacts": {
     "zimage": {
       "sha256": "e0fb7fbf5d2d7e50317571b3f50c408025c68d37d35899861323bb31a2dccccb",
@@ -37,5 +37,16 @@
     "https://lore.landau.one/lkml/20260809-msm8974-iommu-upstream-v1-0-87f5cd492560%40oss.qualcomm.com/",
     "https://lore.landau.one/lkml/20260730-fix-qcom-smmu-v2-3-18e0daf2d836%40oss.qualcomm.com/",
     "https://lore.landau.one/lkml/20260809-msm8974-mmcc-fix-v1-1-50f2dcf18d2e%40oss.qualcomm.com/"
-  ]
+  ],
+  "envkernel_apk": {
+    "file": "linux-postmarketos-qcom-msm8226-6.18.59_p20261029080836-r0.apk",
+    "bytes": 17421480,
+    "sha256": "d05b40cf6d2ce24f976d3e4bd27d4d41c7f2b8eb2c47afe7d8b2a132cd0c0224",
+    "source_commit": "6c99f06487157c3bf8f1ed58e22125fba3266fce",
+    "kernel_release": "6.18.59-00032-g6c99f0648715"
+  },
+  "panel_status_reads": "DCS 0x0a/0x0c/0xda/0xdb/0xdc return zero bytes/invalid response; no valid power or ID status received",
+  "exact_packet_replay": "temporary signed diagnostic module replays original long/short packet types; TX succeeds but subsequent reads still return no valid response",
+  "taint": "0 before the external diagnostic module; 4096 (out-of-tree module) afterwards",
+  "power_workaround": "temporary runtime controls only; not a finished suspend/power-management fix"
 }
