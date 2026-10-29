@@ -80,5 +80,19 @@
     "module_sha256": "f7ccfb217be9d986e32934bd33cc98daba332ec4b267ee0d9f61373c70e27b50",
     "result": "First startup resets during early child creation; retained logs captured; no repeat runs.",
     "qualification": "Not sufficient; not promoted."
+  },
+  "unfiltered_persistent_trace": {
+    "result": "Second diagnostic boot resets; raw per-CPU rings decode successfully.",
+    "MSM_text_base": "Captured directly from module sysfs before failure; symbol offsets match exact diagnostic module. Actual addresses kept private.",
+    "last_probing_CPU_path": "msm_dsi_host_init -> query bus clock prepare/enable -> iface prepare/enable. Last recorded callback returns through clk_enable unlock and preemption-count update; next inlined source path reads DSI version registers.",
+    "other_CPUs": "Two recorded idle paths; another was performing ordinary page-table/highmem work.",
+    "limitation": "This does not identify which of the three possible version reads stalls, or prove the faulting instruction. A separate private diagnostic adds distinct noinline wrappers for those existing reads.",
+    "trace_overhead": "Unfiltered recording has high overhead and also records persistent-buffer helper calls; do not treat timings as normal runtime."
+  },
+  "escape_clock_candidate": {
+    "change": "Add optional core/escape clock during version query along with other query bus clocks.",
+    "module_sha256": "d0bbb71ddc072e3795846364e0c728a7f0f39b076abfcaa9df8aa779f65849f7",
+    "verified_so_far": "Two startups and two five-second cycles complete. Sequence interrupted by delayed fastboot return after software reboot; current repeats in progress.",
+    "qualification": "Experimental; no source fix promoted and no owner physical pass specific to this candidate."
   }
 }

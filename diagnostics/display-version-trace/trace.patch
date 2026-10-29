@@ -1,0 +1,57 @@
+Subject: [DIAGNOSTIC] drm/msm/dsi: distinguish version reads in function traces
+
+Wrap the three existing DSI version-register reads in separate noinline
+functions so persistent traces identify the entered read. Keep the original
+offsets and order. This is a RAM diagnostic, not a proposed functional fix.
+
+---
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -36,6 +36,22 @@
+ 
+ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc);
+ 
++/* RAM diagnostic: distinct traceable calls around existing version reads. */
++static noinline u32 dsi_version_read_initial(const void __iomem *base)
++{
++	return readl(base + REG_DSI_VERSION);
++}
++
++static noinline u32 dsi_version_read_shifted(const void __iomem *base)
++{
++	return readl(base + DSI_6G_REG_SHIFT + REG_DSI_VERSION);
++}
++
++static noinline u32 dsi_version_read_hardware(const void __iomem *base)
++{
++	return readl(base + REG_DSI_6G_HW_VERSION);
++}
++
+ static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
+ {
+ 	u32 ver;
+@@ -54,7 +70,7 @@
+ 	 * scratch register which we never touch)
+ 	 */
+ 
+-	ver = readl(base + REG_DSI_VERSION);
++	ver = dsi_version_read_initial(base);
+ 	if (ver) {
+ 		/* older dsi host, there is no register shift */
+ 		ver = FIELD(ver, DSI_VERSION_MAJOR);
+@@ -72,12 +88,12 @@
+ 		 * registers are shifted down, read DSI_VERSION again with
+ 		 * the shifted offset
+ 		 */
+-		ver = readl(base + DSI_6G_REG_SHIFT + REG_DSI_VERSION);
++		ver = dsi_version_read_shifted(base);
+ 		ver = FIELD(ver, DSI_VERSION_MAJOR);
+ 		if (ver == MSM_DSI_VER_MAJOR_6G) {
+ 			/* 6G version */
+ 			*major = ver;
+-			*minor = readl(base + REG_DSI_6G_HW_VERSION);
++			*minor = dsi_version_read_hardware(base);
+ 			return 0;
+ 		} else {
+ 			return -EINVAL;
