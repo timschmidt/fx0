@@ -1,0 +1,14 @@
+{
+  "dtschema": "2026.9",
+  "yamllint_installed": true,
+  "binding_command": "make ARCH=arm LLVM=1 dt_binding_check DT_SCHEMA_FILES=arm/qcom.yaml",
+  "binding_exit_code": 0,
+  "targeted_dtbs_check_exit_code": 0,
+  "all_schema_validation": {
+    "baseline_lines": 4,
+    "fx0_lines": 0,
+    "normalized_output_identical": false,
+    "limits": "The synthetic SoC-only baseline omits required root model/compatible. The Fx0 board has no dt-validate diagnostics against 5,252 processed schemas; this does not prove hardware operation.",
+    "processed_schema_count": 5252
+  }
+}

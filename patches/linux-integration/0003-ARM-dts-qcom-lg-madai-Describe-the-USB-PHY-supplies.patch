@@ -1,0 +1,52 @@
+From 0120a28ce18e07365b87f98cb9c80f0fd67304d8 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 03:59:29 -0400
+Subject: [PATCH] ARM: dts: qcom: lg-madai: Describe the USB PHY supplies
+
+The stock Fx0 tree connects the USB PHY to PM8226 L10 at 1.8 V and
+L20 at 3.075 V. Describe those RPM regulators and their consumers.
+Select peripheral mode, matching the stock board's USB mode setting.
+
+This provides explicit supply control instead of dummy regulators for
+the initial device-mode diagnostics. Host/OTG capability and charging
+policy remain separate qualification work.
+---
+ .../boot/dts/qcom/qcom-msm8926-lg-madai.dts   | 21 +++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index 1cbd183a8..bca75092c 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -26,7 +26,28 @@ &blsp1_uart3 {
+ 	status = "okay";
+ };
+ 
++&rpm_requests {
++	regulators {
++		compatible = "qcom,rpm-pm8226-regulators";
++
++		pm8226_l10: l10 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++		};
++
++		pm8226_l20: l20 {
++			regulator-min-microvolt = <3075000>;
++			regulator-max-microvolt = <3075000>;
++		};
++	};
++};
++
+ &usb {
++	dr_mode = "peripheral";
+ 	status = "okay";
+ };
+ 
++&usb_hs_phy {
++	v1p8-supply = <&pm8226_l10>;
++	v3p3-supply = <&pm8226_l20>;
++};
+-- 
+2.56.0
+

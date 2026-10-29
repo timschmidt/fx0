@@ -85,6 +85,8 @@ Published development history and ready-to-send material meet the submission-pre
 
 ## Provisioned development repositories
 
+- [Coordination repository](https://github.com/timschmidt/fx0), branch `main`: reviewed plans, tools, pinned sources and sanitized evidence.
+
 - [Linux development fork](https://github.com/timschmidt/fx0-linux), branch `integration/fx0-lts`: maintained Linux 6.18.59 with initial binding and UART/USB board commits. Physical boot qualification remains pending.
 - [lk2nd development fork](https://github.com/timschmidt/fx0-lk2nd), branch `integration/fx0`: Fx0 DTB selection. Diagnostic image builds; physical handoff qualification remains pending.
 

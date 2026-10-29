@@ -12,8 +12,8 @@ For each result record the exact image hash, source revisions, package manifest,
 
 | Function | Required identification and functional evidence | Initial status |
 | --- | --- | --- |
-| Boot and recovery | Stock and lk2nd entry; correct Fx0 DTB; cold/warm boot; recovery and original-boot restoration procedure | Unverified |
-| CPU and memory | All four cores; expected usable RAM after reservations; stable stress run; frequency scaling and idle | Unverified |
+| Boot and recovery | Stock and lk2nd entry; correct Fx0 DTB; cold/warm boot; recovery and original-boot restoration procedure | Partial: stock fastboot/RAM boot, installed lk2nd warm reset, and stock-root restore write/read verified; full qualification pending |
+| CPU and memory | All four cores; expected usable RAM after reservations; stable stress run; frequency scaling and idle | Partial: Linux framebuffer console and diagnostic userspace observed; quantitative checks pending |
 | Firmware handoff | Correct memory reservations, firmware ownership and remote-processor startup; no corruption or restart loops | Unverified |
 | eMMC | Correct layout/capacity; sustained reads/writes in the test filesystem; persistence and clean shutdown | Unverified |
 | microSD | Card detect, read/write, filesystem integrity, suspend behavior, safe removal where supported | Unverified |

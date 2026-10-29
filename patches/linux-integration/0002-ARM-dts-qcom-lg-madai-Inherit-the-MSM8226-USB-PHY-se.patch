@@ -1,0 +1,31 @@
+From 8692198066593cbe439d57a2a744da903f273000 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 03:57:44 -0400
+Subject: [PATCH 2/2] ARM: dts: qcom: lg-madai: Inherit the MSM8226 USB PHY
+ sequence
+
+The recovered override copied the downstream value/absolute-address
+ordering. The current binding expects offset/value pairs relative to
+ULPI_EXT_VENDOR_SPECIFIC instead.
+
+The stock Fx0 settings translate exactly to the existing SoC sequence,
+so inherit it. Its first zero offset also needs the PHY driver
+sequence-count fix to execute all four writes.
+---
+ arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index 763d9dec8..1cbd183a8 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -30,6 +30,3 @@ &usb {
+ 	status = "okay";
+ };
+ 
+-&usb_hs_phy {
+-	qcom,init-seq = /bits/ 8 <0x44 0x80 0x68 0x81 0x24 0x82 0x13 0x83>;
+-};
+-- 
+2.56.0
+

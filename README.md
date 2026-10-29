@@ -9,10 +9,12 @@ The device is available for development and flashing. No personal data needs to 
 | Document | Purpose |
 | --- | --- |
 | [Bringup plan](docs/bringup-plan.md) | Ordered implementation steps, dependencies, recovery requirements, and completion criteria |
+| [Stock hardware](docs/stock-hardware.md) | Physical inventory and implications for board support |
 | [Hardware acceptance](docs/hardware-acceptance.md) | Full hardware inventory and tests required before declaring completion |
 | [Upstream development](docs/upstream-development.md) | Public repository structure, patch ownership, validation, and submission preparation |
 | [Research](docs/research.md) | Source references, recovered work, and facts that need physical confirmation |
 | [Device operations](docs/device-operations.md) | Read-only inventory, verified partition backups, and helper usage |
+| [Image builds](docs/building.md) | Full diagnostic kernel/lk2nd recipes and rootfs preparation |
 | [Development patches](patches/README.md) | Initial Linux and lk2nd candidates with reproducible DTB checks |
 | [Development log](docs/development-log.md) | Observed device/host state, completed checks, and the next executable work |
 | [Kernel gaps](docs/kernel-gaps.md) | Maintained-kernel target and missing shared SoC/camera infrastructure |
@@ -21,7 +23,7 @@ The device is available for development and flashing. No personal data needs to 
 
 Implementation started October 29, 2026. Host USB, network, build tools, and Git access are available. The stock phone has been inventoried through root ADB. All 29 selected critical partitions have independently matching rereads, verified copies on Disk B, and a verified recovery copy on the phone's internal SD storage. GPT metadata is also preserved privately.
 
-The inventory/backup helper passes 12 failure-oriented tests, including the stock KitKat ADB fallback. Linux 6.18.59 LTS board DTBs compile without adding warnings over the SoC baseline; the full kernel build is in progress. A complete Fx0-only lk2nd diagnostic image has been built and its embedded DTB selection inspected. Physical lk2nd/Linux boot and all Nura hardware qualification remain open. Raw device logs and images remain private.
+The inventory/backup helper passes 12 failure-oriented tests, including the stock KitKat ADB fallback. Linux 6.18.59 LTS board DTBs compile without adding warnings over the SoC baseline; the full kernel and module build has succeeded. The Fx0-only lk2nd image has booted in RAM and from the installed boot partition, detecting the board correctly. Linux has reached its framebuffer console and diagnostic userspace. USB diagnostics and the remaining Nura hardware qualification remain open. Raw device logs and images remain private.
 
 Persistent build and backup storage is `/run/media/tim/Disk B/fx0`, accessed by build tools through the space-free bind mount `/tmp/fx0-storage`. Re-establish that mount after a host reboot. Keep development documentation and scripts in this repository.
 
