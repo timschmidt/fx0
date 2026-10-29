@@ -49,10 +49,10 @@ echo "$udc" > UDC
 ip link set usb0 up
 ip address add 172.16.42.1/24 dev usb0
 cd /
-httpd -f -p 172.16.42.1:80 -h /www &
+nc -lk -s 172.16.42.1 -p 80 -e /bin/serve-http &
 (
     while :; do
-        setsid sh -c 'exec </dev/ttyGS0 >/dev/ttyGS0 2>&1; stty sane; exec cttyhack sh'
+        getty -L -n -l /bin/sh 115200 ttyGS0 vt100
         sleep 1
     done
 ) &
@@ -78,6 +78,24 @@ while :; do
     sleep 10
 done
 '''
+
+
+HTTP = r"""#!/bin/sh
+root=${FX0_DIAG_ROOT:-/www}
+IFS= read -r request || exit
+set -- $request
+case "$2" in
+    /dmesg.txt) file="$root/dmesg.txt" ;;
+    /status.txt) file="$root/status.txt" ;;
+    *) printf 'HTTP/1.0 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n'; exit ;;
+esac
+while IFS= read -r header; do
+    case "$header" in ''|"$(printf '\r')") break ;; esac
+done
+size=$(wc -c <"$file")
+printf 'HTTP/1.0 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %s\r\nConnection: close\r\n\r\n' "$size"
+cat "$file"
+"""
 
 
 def archive(entries):
@@ -134,7 +152,7 @@ def main():
     if a.return_after:
         init = init.replace("echo 'Fx0 RAM diagnostic init started'", "echo 'Fx0 RAM diagnostic init started'\n(sleep " + str(a.return_after) + "; echo 'Returning to lk2nd for diagnostic retrieval'; sync; reboot -f) &")
     entries = [(d, stat.S_IFDIR | 0o755, b'') for d in ('bin', 'dev', 'proc', 'sys', 'tmp', 'www')]
-    entries += [('bin/busybox', stat.S_IFREG | 0o755, busybox), ('bin/sh', stat.S_IFLNK | 0o777, b'busybox'), ('init', stat.S_IFREG | 0o755, init.encode())]
+    entries += [('bin/busybox', stat.S_IFREG | 0o755, busybox), ('bin/sh', stat.S_IFLNK | 0o777, b'busybox'), ('bin/serve-http', stat.S_IFREG | 0o755, HTTP.encode()), ('init', stat.S_IFREG | 0o755, init.encode())]
     ramdisk = gzip.compress(archive(entries), mtime=0)
     cmdline = 'console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap'
     if a.simplefb:

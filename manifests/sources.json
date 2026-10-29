@@ -51,8 +51,8 @@
       "name": "linux",
       "url": "https://github.com/timschmidt/fx0-linux",
       "branch": "integration/fx0-lts",
-      "commit": "0120a28ce18e07365b87f98cb9c80f0fd67304d8",
-      "status": "Linux diagnostic userspace observed on framebuffer; USB qualification in progress"
+      "commit": "52334e9f84c3e2425819f1ea20aa18eb42453e82",
+      "status": "Four-CPU boot, USB networking/ACM and two matching 1 GiB eMMC reads verified; first userdata write failed with cache-flush timeout; reliability incomplete"
     },
     {
       "name": "lk2nd",
@@ -60,6 +60,14 @@
       "branch": "integration/fx0",
       "commit": "dbb7b5e5c91f2100ae2e57d8958752ad9945cfc3",
       "status": "RAM boot and installed warm boot detect Fx0; Linux file selection and complete key/cold boot qualification pending"
+    },
+    {
+      "name": "pmaports",
+      "url": "https://github.com/timschmidt/fx0-pmaports",
+      "branch": "integration/fx0-v26.06",
+      "base_commit": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
+      "status": "Signed envkernel APK and image checks passed; native clean build and device installation pending storage write investigation",
+      "commit": "34c00e177a1f1afc3f3e6b1ac3e1a1ba4f6d117f"
     }
   ]
 }

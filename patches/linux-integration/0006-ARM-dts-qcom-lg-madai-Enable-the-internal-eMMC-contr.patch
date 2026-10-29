@@ -1,0 +1,68 @@
+From f989c8036d7a737f74806c1ddab6e5b68f617a46 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 04:23:56 -0400
+Subject: [PATCH 6/8] ARM: dts: qcom: lg-madai: Enable the internal eMMC
+ controller
+
+Describe SDHC1 as an 8-bit nonremovable device with the stock L17
+2.95 V and L6 1.8 V supplies. Keep these rails enabled, as specified
+by the stock board policy, and enable its HS200/DDR 1.8 V modes.
+
+The stock tree and lk2nd establish the wiring and HS200 capability.
+Initial Linux testing will enumerate and read storage without mounting
+or formatting a filesystem; sustained I/O qualification follows later.
+---
+ .../boot/dts/qcom/qcom-msm8926-lg-madai.dts   | 25 +++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index 8c2145c1e..f9f5cb6fd 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -39,11 +39,23 @@ &rpm_requests {
+ 	regulators {
+ 		compatible = "qcom,rpm-pm8226-regulators";
+ 
++		pm8226_l6: l6 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-always-on;
++		};
++
+ 		pm8226_l10: l10 {
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 		};
+ 
++		pm8226_l17: l17 {
++			regulator-min-microvolt = <2950000>;
++			regulator-max-microvolt = <2950000>;
++			regulator-always-on;
++		};
++
+ 		pm8226_l20: l20 {
+ 			regulator-min-microvolt = <3075000>;
+ 			regulator-max-microvolt = <3075000>;
+@@ -51,6 +63,19 @@ pm8226_l20: l20 {
+ 	};
+ };
+ 
++&sdhc_1 {
++	vmmc-supply = <&pm8226_l17>;
++	vqmmc-supply = <&pm8226_l6>;
++
++	bus-width = <8>;
++	non-removable;
++	max-frequency = <200000000>;
++	mmc-hs200-1_8v;
++	mmc-ddr-1_8v;
++
++	status = "okay";
++};
++
+ &smbb {
+ 	qcom,fast-charge-safe-current = <1500000>;
+ 	qcom,fast-charge-current-limit = <1200000>;
+-- 
+2.56.0
+

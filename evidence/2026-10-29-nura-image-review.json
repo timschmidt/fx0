@@ -1,0 +1,45 @@
+{
+  "bytes": 1201668096,
+  "sha256": "874af997da361076201d7b74cabf3751429ffaf8586dfa4cbdacbe63ee9720d3",
+  "mbr_partitions": [
+    {
+      "type": 131,
+      "start_sector": 2048,
+      "sectors": 997376
+    },
+    {
+      "type": 131,
+      "start_sector": 999424,
+      "sectors": 1347584
+    }
+  ],
+  "filesystem_checks": {
+    "1": {
+      "exit": 0,
+      "summary": [
+        "Pass 5: Checking group summary information",
+        "pmOS_boot: 99/124440 files (83.8% non-contiguous), 58189/498688 blocks",
+        "e2fsck 1.47.3 (8-Jul-2025)"
+      ]
+    },
+    "2": {
+      "exit": 0,
+      "summary": [
+        "Pass 5: Checking group summary information",
+        "pmOS_root: 10557/84288 files (0.0% non-contiguous), 128821/168448 blocks",
+        "e2fsck 1.47.3 (8-Jul-2025)"
+      ]
+    }
+  },
+  "kernel_release": "6.18.59-00010-g52334e9f84c3",
+  "os_release": "PRETTY_NAME=\"postmarketOS v26.06\"\nNAME=\"postmarketOS\"\nVERSION_ID=\"v26.06\"\nVERSION=\"v26.06\"\nID=\"postmarketos\"\nID_LIKE=\"alpine\"\nHOME_URL=\"https://www.postmarketos.org/\"\nSUPPORT_URL=\"https://gitlab.postmarketos.org/postmarketOS\"\nBUG_REPORT_URL=\"https://gitlab.postmarketos.org/postmarketOS/pmaports/issues\"\nLOGO=\"postmarketos-logo\"\nANSI_COLOR=\"0;32\"\n",
+  "extlinux_config": "timeout 1\ndefault postmarketOS\nmenu title boot prev kernel\n\nlabel postmarketOS\n\tkernel /vmlinuz\n\tfdtdir /\n\tinitrd /initramfs\n\tappend quiet splash plymouth.ignore-serial-consoles plymouth.prefer-fbcon earlycon console=ttyMSM0,115200 msm.allow_vram_carveout=1 cma=256m msm.vram=192m console=tty0 lk2nd.pass-simplefb=autorefresh lk2nd.pass-ramoops reboot=w pmos_boot_uuid=d39a6646-e8f3-4605-a7e0-68627a3eeebe pmos_root_uuid=92d52400-d9cd-460b-ab82-508c87e11ab5 pmos_rootfsopts=defaults\n",
+  "subpartition_uuids": {
+    "boot": "d39a6646-e8f3-4605-a7e0-68627a3eeebe",
+    "root": "92d52400-d9cd-460b-ab82-508c87e11ab5"
+  },
+  "firmware_hole_verified": "fb00000 400000",
+  "device_written": false,
+  "image_file": "nura-fx0-v26.06-6.18.59-devel-01.img",
+  "deployment_status": "First userdata write failed; partition partially overwritten, full readback not performed, persistent boot not attempted"
+}

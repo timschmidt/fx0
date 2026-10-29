@@ -21,15 +21,13 @@ The device is available for development and flashing. No personal data needs to 
 
 ## Current state
 
-Implementation started October 29, 2026. Host USB, network, build tools, and Git access are available. The stock phone has been inventoried through root ADB. All 29 selected critical partitions have independently matching rereads, verified copies on Disk B, and a verified recovery copy on the phone's internal SD storage. GPT metadata is also preserved privately.
+Implementation started October 29, 2026. Stock firmware inventory, 29 critical partition backups, recovery copies, GPT metadata, and a separately verified 1 GiB original-system backup are preserved privately. Development and backups use `/run/media/tim/Disk B/fx0` through the space-free bind mount `/tmp/fx0-storage`; re-establish that mount after a host reboot.
 
-The inventory/backup helper passes 12 failure-oriented tests, including the stock KitKat ADB fallback. Linux 6.18.59 LTS board DTBs compile without adding warnings over the SoC baseline; the full kernel and module build has succeeded. The Fx0-only lk2nd image has booted in RAM and from the installed boot partition, detecting the board correctly. Linux has reached its framebuffer console and diagnostic userspace. USB diagnostics and the remaining Nura hardware qualification remain open. Raw device logs and images remain private.
+Linux 6.18.59 LTS now boots on the Fx0 with all four CPUs online, a framebuffer console, USB NCM networking and an ACM root shell. eMMC enumerates all 39 partitions at 200 MHz in 8-bit HS200 mode. Two complete 1 GiB system-partition reads match the verified backup after correcting the stock firmware memory exclusions. The first userdata image write failed with cache-flush and recovery errors; storage writes remain under investigation. The helper's 12 failure-oriented tests pass, and current kernel/DTB/module and schema checks are recorded under `evidence/`.
 
-Persistent build and backup storage is `/run/media/tim/Disk B/fx0`, accessed by build tools through the space-free bind mount `/tmp/fx0-storage`. Re-establish that mount after a host reboot. Keep development documentation and scripts in this repository.
+lk2nd is installed as the secondary boot image and supports repeatable fastboot entry and RAM boots. The Nura v26.06 console image passes filesystem, maintained-kernel package and required configuration checks. Its first write to userdata failed; userdata must be treated as partially overwritten, and no installed Nura boot is established. Charger temperature policy, native display/touch, wireless, audio, sensors, both cameras, cellular and the remaining acceptance work stay open. No SIM is available.
 
-An archived vendor-kernel port, a minimal earlier mainline device tree, and lk2nd recognition exist. These provide a starting point; they do not establish complete current Nura support. See the research document for the exact sources and their limits.
-
-Start with phase 0 of the bringup plan: establish host access, version control, original-system inventory, backups, and recovery. Shell access and a Wi-Fi handheld are intermediate milestones. Cameras, cellular, power management, and the remaining hardware stay in scope through final acceptance.
+Continue with phase 2 of the [bringup plan](docs/bringup-plan.md). Current source pins are in [the manifest](manifests/sources.json), and [full image recipes](docs/building.md) use the public integration branches. The source-subset DTB scripts retain the original dated minimal candidate for historical reproduction; it lacks the later physical bringup fixes.
 
 ## Local and public material
 

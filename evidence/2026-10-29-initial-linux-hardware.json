@@ -1,0 +1,17 @@
+{
+  "source_commit": "52334e9f84c3e2425819f1ea20aa18eb42453e82",
+  "basic_results": {
+    "cpu_online": "0-3",
+    "usb_network": "NCM, configured; HTTP status/dmesg retrieved",
+    "usb_serial": "ACM root shell verified",
+    "emmc": "all 39 partitions; 200 MHz, 8-bit, HS200, 1.8 V",
+    "small_emmc_read": "two reads matched independent original backup",
+    "memory": "1.5 GiB physical; about 1.35 GiB usable after required reservations",
+    "sustained_read": "two 1 GiB reads matched, with cache clearing and offline backup verification"
+  },
+  "open_failures": [
+    "Earlier large-read resets stopped after preserving both complete stock memory holes; broader memory/storage stress remains open.",
+    "Charger reported Overheat/discharging; owner reports battery near room temperature. Temperature sensing/threshold configuration is unqualified."
+  ],
+  "nura_rootfs_installed": false
+}

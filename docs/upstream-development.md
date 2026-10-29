@@ -91,3 +91,5 @@ Published development history and ready-to-send material meet the submission-pre
 - [lk2nd development fork](https://github.com/timschmidt/fx0-lk2nd), branch `integration/fx0`: Fx0 DTB selection. Diagnostic image builds; physical handoff qualification remains pending.
 
 These are development branches, not submission-ready or fully functional releases. Upstream patch sending and PR creation have not occurred.
+
+- [Nura pmaports development fork](https://github.com/timschmidt/fx0-pmaports), branch `integration/fx0-v26.06`: maintained-kernel package/configuration integration. This is an Fx0 development branch; the shared MSM8226 upgrade is not proposed upstream until its external dependencies and regressions are qualified.

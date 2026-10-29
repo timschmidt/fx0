@@ -13,11 +13,11 @@ For each result record the exact image hash, source revisions, package manifest,
 | Function | Required identification and functional evidence | Initial status |
 | --- | --- | --- |
 | Boot and recovery | Stock and lk2nd entry; correct Fx0 DTB; cold/warm boot; recovery and original-boot restoration procedure | Partial: stock fastboot/RAM boot, installed lk2nd warm reset, and stock-root restore write/read verified; full qualification pending |
-| CPU and memory | All four cores; expected usable RAM after reservations; stable stress run; frequency scaling and idle | Partial: Linux framebuffer console and diagnostic userspace observed; quantitative checks pending |
+| CPU and memory | All four cores; expected usable RAM after reservations; stable stress run; frequency scaling and idle | Partial: four CPUs online and approximately 1.35 GiB usable RAM; stress, scaling and idle pending |
 | Firmware handoff | Correct memory reservations, firmware ownership and remote-processor startup; no corruption or restart loops | Unverified |
-| eMMC | Correct layout/capacity; sustained reads/writes in the test filesystem; persistence and clean shutdown | Unverified |
+| eMMC | Correct layout/capacity; sustained reads/writes in the test filesystem; persistence and clean shutdown | Failed write qualification: all 39 partitions and two matching 1 GiB reads verified; userdata writes hit cache-flush timeout at both 200 and 50 MHz; recovery investigation active |
 | microSD | Card detect, read/write, filesystem integrity, suspend behavior, safe removal where supported | Unverified |
-| USB device mode | Reliable enumeration, debug networking, reconnect, supported user-facing profiles, charging interaction | Unverified |
+| USB device mode | Reliable enumeration, debug networking, reconnect, supported user-facing profiles, charging interaction | Partial: NCM/ACM configured, HTTP and root serial shell verified; full reconnect/power qualification pending |
 | USB host or OTG | Establish product support, then peripheral enumeration, power/role switching, disconnect and resume | Unverified |
 | Display | Actual panel/revision; DRM ownership; correct colors/timings; blank/unblank; orientation; no retained-logo false pass | Unverified |
 | Backlight | Correct controller; useful brightness range; off state; dimming and resume without flicker or stuck output | Unverified |

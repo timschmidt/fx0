@@ -44,3 +44,11 @@ The shared reference branch is still `qcom-msm8226-6.16.y` at `57a693c8bfc6ba8dd
 The later `bec415715639199854739bb4cc1c8e847a0f9c8b` fixup touches a Sony board only. Do not transplant it into the Fx0. The shared tree also contains an explicitly marked HTC firmware-loader hack; inspect that context before assuming all firmware images load correctly. Preserve the original authors/sign-offs when recovering legitimate commits and keep any new adaptation distinct.
 
 Next, review the complete dependency set against current upstream, validate the live Fx0 carveout and firmware type, extract this unit's firmware privately, and describe its supplies/48 MHz oscillator. A shared compatible name is not sufficient to identify this unit's exact radio variant. Keep remoteproc disabled until those prerequisites pass; compare wireless behavior and schema results on the maintained branch after enabling it. These dependencies have been researched, not enabled on this phone.
+
+## Physical dependency and memory fixes
+
+The Fx0's SMEM is at 0x0fa00000, not the inherited 0x03000000. Stock DT, the firmware pointer and read-only header checks agree. Correcting it permits RPM/clocks to initialize. USB additionally needs the board's PMIC VBUS/extcon wiring, after which NCM/ACM enumeration works.
+
+Preserve the complete stock memory holes: 0x08000000–0x0f500000 and 0x0fa00000–0x0ff00000. Reserving only SMEM and selected remote processors was insufficient under memory pressure. The extra four MiB after SMEM must remain unavailable to the allocator. With the full holes reserved, two 1 GiB reads match; broader memory/thermal/soak testing remains open.
+
+The stock charging code uses the LGE thermistor conversion table and software derating. Generic SMBB normal comparator limits report Overheat near a stock-table estimate of 34 °C. The extended-range flag explicitly requires external voltage/current policy, so enabling that flag alone is not a valid completion. Port and test the actual policy and battery reporting.

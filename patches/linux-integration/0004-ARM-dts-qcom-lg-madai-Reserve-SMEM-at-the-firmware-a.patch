@@ -1,0 +1,48 @@
+From 0b14f2b4a562635c7a30a4019453419ec8a9dd77 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 04:14:42 -0400
+Subject: [PATCH 4/8] ARM: dts: qcom: lg-madai: Reserve SMEM at the firmware
+ address
+
+The Fx0 boot firmware places SMEM at 0x0fa00000. Inheriting the
+MSM8226 default at 0x03000000 makes qcom-smem reject an uninitialized
+header, so RPM, its clocks and the USB controller cannot probe.
+
+Replace the default reservation with the stock 1 MiB region. The
+stock device tree and lk2nd's dynamic SMEM pointer agree on the base.
+Read-only hardware checks find initialized=1 and SBL version 0xb0000
+there, while the default region contains zeros.
+---
+ arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index bca75092c..3eebd899b 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -8,6 +8,8 @@
+ #include "qcom-msm8226.dtsi"
+ #include "pm8226.dtsi"
+ 
++/delete-node/ &smem_region;
++
+ / {
+ 	model = "LG Fx0";
+ 	compatible = "lg,madai", "qcom,msm8926", "qcom,msm8226";
+@@ -20,6 +22,13 @@ aliases {
+ 	chosen {
+ 		stdout-path = "serial0";
+ 	};
++
++	reserved-memory {
++		smem_region: smem@fa00000 {
++			reg = <0x0fa00000 0x100000>;
++			no-map;
++		};
++	};
+ };
+ 
+ &blsp1_uart3 {
+-- 
+2.56.0
+

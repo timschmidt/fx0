@@ -1,0 +1,9 @@
+{
+  "image": "fx0-linux-diagnostic-12.img",
+  "sha256": "81e7ef61cdd71ffe9aa28c43663acbbd65bdd1850352104bc62148a61a0a0977",
+  "dtb_sha256": "1f4e14110431aec9aa055b003e49146b71ac68c01a8f49a5f104105cba7a6d06",
+  "source_commit": "52334e9f84c3e2425819f1ea20aa18eb42453e82",
+  "temporary_dtb_override": "max-frequency=50000000; remove explicit mmc-hs200-1_8v and mmc-ddr-1_8v; SDHCI still selects HS200 from hardware capabilities",
+  "result": "RAM boot, 1 MiB read succeeds; identical prefix write fails with cache-flush timeout at 50 MHz both with runtime PM auto and forced on",
+  "kernel_source_change_committed": false
+}

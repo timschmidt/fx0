@@ -17,6 +17,12 @@ Completion requires all of the following:
 
 Upstream acceptance and merge timing are controlled by maintainers. The project can finish with submission-ready changes that have not yet been merged. The absence of a SIM leaves cellular tests pending and therefore prevents claiming the full hardware objective complete. A feature can be marked absent only with device evidence; difficulty implementing it is not grounds to remove it from scope.
 
+## Implementation checkpoint on October 29, 2026
+
+Phase 0 has verified stock backups and a tested original-image write/read path, installed lk2nd and public repositories. Phase 1 has reached maintained Linux diagnostic userspace, four CPUs, inherited framebuffer, USB NCM/ACM, and 200 MHz HS200 eMMC reads. Both complete stock firmware memory exclusions are required; after fixing them, two 1 GiB reads match the original-system backup. These are initial tests, not final reliability acceptance.
+
+Phase 2 is active: the Nura v26.06 image contains the maintained kernel and passes offline filesystem, package and required configuration checks. Its first userdata write failed with eMMC cache-flush/recovery errors; userdata is partially overwritten, no verified deployment exists and no installed Nura boot is established. Storage write recovery precedes further installation work. Charger temperature policy is unresolved despite useful raw ADC readings. All later hardware, reliability/update and upstream-submission phases remain in scope. No SIM is available for cellular acceptance.
+
 ## Technical baseline
 
 As researched on October 29, 2026, Nura is the renamed postmarketOS project and its latest stable release is v26.06. The Fx0 uses MSM8926 and the `armv7` architecture. The old `lg-madai` package uses Linux 3.4 and is archived in the inspected October 2026 pmaports snapshot. Nura also provides a generic `qcom-msm8226` package and shared APQ8026/MSM8226/MSM8926 kernel.

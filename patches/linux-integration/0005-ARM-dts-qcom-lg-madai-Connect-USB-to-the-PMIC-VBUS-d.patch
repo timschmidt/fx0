@@ -1,0 +1,51 @@
+From 2998cfb561ea1dceae4cd1cfbdcf0c0e30d3de0a Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 04:21:00 -0400
+Subject: [PATCH 5/8] ARM: dts: qcom: lg-madai: Connect USB to the PMIC VBUS
+ detector
+
+The stock board uses PMIC-controlled USB VBUS detection. Connect the
+controller and PHY to the SMBB extcon provider so the driver applies
+the external session-valid override when the cable is present.
+
+Enable SMBB with the stock current and voltage limits from this unit's
+device tree. The default hardware temperature comparators remain
+active. This is initial USB/charging integration; thermal behavior,
+termination, external OVP control and battery reporting need testing.
+---
+ arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index 3eebd899b..8c2145c1e 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -51,12 +51,25 @@ pm8226_l20: l20 {
+ 	};
+ };
+ 
++&smbb {
++	qcom,fast-charge-safe-current = <1500000>;
++	qcom,fast-charge-current-limit = <1200000>;
++	qcom,fast-charge-safe-voltage = <4380000>;
++	qcom,fast-charge-high-threshold-voltage = <4350000>;
++	qcom,auto-recharge-threshold-voltage = <4280000>;
++	qcom,minimum-input-voltage = <4350000>;
++
++	status = "okay";
++};
++
+ &usb {
++	extcon = <&smbb>;
+ 	dr_mode = "peripheral";
+ 	status = "okay";
+ };
+ 
+ &usb_hs_phy {
++	extcon = <&smbb>;
+ 	v1p8-supply = <&pm8226_l10>;
+ 	v3p3-supply = <&pm8226_l20>;
+ };
+-- 
+2.56.0
+

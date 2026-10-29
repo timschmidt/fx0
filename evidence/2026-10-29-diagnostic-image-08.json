@@ -1,0 +1,8 @@
+{
+  "file": "fx0-linux-diagnostic-08.img",
+  "bytes": 6174720,
+  "sha256": "4e1ce3105e0b3e3b445bf4877d5c42e0bed04c45b38fb06a3028d59fe7955c60",
+  "ramdisk_bytes": 626493,
+  "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap console=tty0 lk2nd.pass-simplefb=autorefresh dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\"",
+  "physical_result": "HS200/eMMC enumeration and small reads pass; large read reset at about 690 MiB"
+}

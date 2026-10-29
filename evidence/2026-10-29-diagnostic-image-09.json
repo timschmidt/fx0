@@ -1,0 +1,10 @@
+{
+  "file": "fx0-linux-diagnostic-09.img",
+  "bytes": 6174720,
+  "sha256": "445829c4c8696113ce41ae8013e8d658e21ce098490ceea66dc02f9ed3d4cd21",
+  "ramdisk_bytes": 626493,
+  "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap console=tty0 lk2nd.pass-simplefb=autorefresh dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\"",
+  "physical_result": "MPSS/MBA/WCNSS reserved; large read still reset at about 588 MiB",
+  "kernel_source_commit": "f989c8036d7a737f74806c1ddab6e5b68f617a46",
+  "dtb_source": "Incremental board reservation changes, subsequently committed as 997b1a449"
+}

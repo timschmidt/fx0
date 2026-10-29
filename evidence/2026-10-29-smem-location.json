@@ -1,0 +1,26 @@
+{
+  "method": "Read-only lk2nd oem debug readl",
+  "firmware_dynamic_smem_pointer": "0x0fa00000",
+  "stock_dt_region": {
+    "address": "0x0fa00000",
+    "bytes": 1048576
+  },
+  "default_region": {
+    "address": "0x03000000",
+    "initialized": 0,
+    "sbl_version": "0x00000000"
+  },
+  "firmware_region": {
+    "address": "0x0fa00000",
+    "initialized": 1,
+    "reserved": 0,
+    "sbl_version": "0x000b0000"
+  },
+  "observed_dependency_failures": [
+    "qcom-smem returned -22",
+    "RPM SMD edge registration deferred",
+    "RPM clock provider unavailable",
+    "ci_hdrc.0 deferred, no UDC or usb0"
+  ],
+  "result": "Board reservation corrected; next physical boot pending."
+}

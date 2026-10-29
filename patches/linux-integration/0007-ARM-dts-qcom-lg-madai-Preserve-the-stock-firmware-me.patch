@@ -1,0 +1,60 @@
+From 997b1a4497ba24c2d921c27ee8276def9d545002 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 04:50:08 -0400
+Subject: [PATCH 7/8] ARM: dts: qcom: lg-madai: Preserve the stock firmware
+ memory holes
+
+The stock board excludes 0x08000000-0x0f500000 and
+0x0fa00000-0x0ff00000 from the kernel allocator. Reserve MPSS, MBA
+and WCNSS alongside the existing ADSP area, and keep the additional
+4 MiB after the 1 MiB SMEM region unavailable to Linux.
+
+Without these exclusions a large system-partition read reset the unit
+without a Linux panic. Reserving MPSS/MBA/WCNSS alone still reset it.
+With both complete stock exclusions in place, two 1 GiB reads completed
+and matched SHA-256, including a cache-cleared independent reread.
+Remoteproc startup remains disabled.
+---
+ .../boot/dts/qcom/qcom-msm8926-lg-madai.dts   | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index f9f5cb6fd..a3c8b7f02 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -24,6 +24,17 @@ chosen {
+ 	};
+ 
+ 	reserved-memory {
++		fx0_wcnss_mem: wcnss@d200000 {
++			reg = <0x0d200000 0xa00000>;
++			no-map;
++		};
++
++		/* Stock firmware excludes 5 MiB here; the first MiB is SMEM. */
++		reserved@fb00000 {
++			reg = <0x0fb00000 0x400000>;
++			no-map;
++		};
++
+ 		smem_region: smem@fa00000 {
+ 			reg = <0x0fa00000 0x100000>;
+ 			no-map;
+@@ -35,6 +46,14 @@ &blsp1_uart3 {
+ 	status = "okay";
+ };
+ 
++&mba_region {
++	status = "okay";
++};
++
++&mpss_region {
++	status = "okay";
++};
++
+ &rpm_requests {
+ 	regulators {
+ 		compatible = "qcom,rpm-pm8226-regulators";
+-- 
+2.56.0
+

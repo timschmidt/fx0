@@ -4,13 +4,13 @@ These images are development diagnostics. UART/USB are the only board functions 
 
 ## Maintained Linux
 
-Use the exact source commit in `evidence/2026-10-29-linux-image-build.json` from the [development fork](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-lts). The recorded initial build used Fedora Clang 21.1.8 and GNU make, plus the usual Linux host dependencies. The committed diagnostic configuration was derived from Nura's shared MSM8226 configuration, updated with Linux 6.18.59 `olddefconfig`, and enabled built-in configfs NCM/ACM USB diagnostics.
+Use the current exact source commit in `manifests/sources.json` and `evidence/2026-10-29-current-kernel-build.json` from the [development fork](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-lts). The recorded initial build used Fedora Clang 21.1.8 and GNU make, plus the usual Linux host dependencies. The current `simplefb` diagnostic configuration was derived from Nura's shared MSM8226 configuration, updated with Linux 6.18.59 `olddefconfig`, and enabled built-in configfs NCM/ACM USB diagnostics.
 
 ```sh
 mkdir -p /tmp/fx0-storage/build/linux-6.18.59
-cp configs/linux-6.18.59-fx0-diagnostic.armv7 /tmp/fx0-storage/build/linux-6.18.59/.config
+cp configs/linux-6.18.59-fx0-diagnostic-simplefb.armv7 /tmp/fx0-storage/build/linux-6.18.59/.config
 make -C src/linux-stable O=/tmp/fx0-storage/build/linux-6.18.59 ARCH=arm LLVM=1 olddefconfig
-make -C src/linux-stable O=/tmp/fx0-storage/build/linux-6.18.59 ARCH=arm LLVM=1 -j8 zImage qcom/qcom-msm8926-lg-madai.dtb modules
+make -C src/linux-stable O=/tmp/fx0-storage/build/linux-6.18.59 ARCH=arm LLVM=1 -j8 zImage dtbs modules
 ```
 
 The original build output lived at `/tmp/fx0-linux-lts`, then moved to Disk B after completion, retaining that old path as a symlink. Build timestamps and embedded host identity affect byte reproducibility; retain the exact artifacts/hashes used for each physical test rather than claiming independently identical binaries. No kernel module signing keys are published.
@@ -54,6 +54,16 @@ Use `--simplefb` only with built-in simpledrm. It requests lk2nd's inherited fra
 
 The initial image was independently unpacked with host `cpio`, checked for Android header alignment, and its init script checked with `sh -n`. Each boot record must identify the exact generated image hash; subsequent source builds overwrite the shared kernel output.
 
-For automatic persistent-log capture, build `INPUT_PM8941_PWRKEY=y` into the standalone kernel (the shared configuration normally makes it a module). Apply `configs/diagnostic-warmreset.fragment` with the kernel configuration tools and rebuild. `--return-after 90 --usb-debug` generates a diagnostic init that requests a warm reboot after 90 seconds, with verbose USB probe logging and `reboot=w`. The intended next step is lk2nd `oem ramoops console` followed by `get_staged`; successful RAM retention must be verified on this boot chain. This automated path is prepared but not yet qualified.
+For automatic persistent-log capture, build `INPUT_PM8941_PWRKEY=y` into the standalone kernel (the shared configuration normally makes it a module). Apply `configs/diagnostic-warmreset.fragment` with the kernel configuration tools and rebuild. `--return-after 90 --usb-debug` generates a diagnostic init that requests a warm reboot after 90 seconds, with verbose USB probe logging and `reboot=w`. The intended next step is lk2nd `oem ramoops console` followed by `get_staged`; successful RAM retention must be verified on this boot chain. Warm reboot and complete console/raw ramoops retrieval are now physically verified.
 
 The initial rootfs contains 399 packages on Alpine 3.24.3, including systemd 261. The stable OS branding files still say postmarketOS v26.06. Its exact package/repository manifest is recorded in `evidence/2026-10-29-nura-rootfs-packages.json`. This is an isolated chroot artifact, not an on-device installation claim.
+
+The Linux source and output now live together at `/tmp/fx0-storage/src/linux-stable` and its `.output` directory, with `src/linux-stable` and the original output aliases retained as symlinks. This layout supports pmbootstrap `build --envkernel` packaging. The source move caused one full rebuild because recorded compiler paths changed; keep the canonical layout stable for subsequent incremental work.
+
+For current physical images, use the pinned integration branch. The original `patches/linux-stable` source-subset candidate is a historical DTB check and lacks the SMEM, VBUS, storage and firmware-hole fixes. Apply the ordered `patches/linux-integration` followups in a full source checkout when reproducing those changes manually.
+
+The maintained Nura package is developed in the public pmaports fork on `integration/fx0-v26.06`. Its source archive pins the Linux integration commit and records SHA-512 alongside the updated configuration. For a normal native package build, use `pmbootstrap build linux-postmarketos-qcom-msm8226`; complete a clean build before final submission readiness. The initial development APK uses `build --envkernel` to package the verified host build. On this glibc host, that path needed an Alpine-built signing helper and a temporary private signing-key copy readable by the chroot's `pmos` UID (12345). The host helper was restored and the temporary key copy removed after packaging. The original key's permissions were preserved.
+
+`pmbootstrap kconfig check linux-postmarketos-qcom-msm8226` now passes. Linux 6.18's explicit legacy xtables gate and dependent modules had to be enabled after olddefconfig migration; those are required by the current Nura checks. Remaining preference messages for built-in USB gadget support and modular optional filesystems are informational.
+
+Use `pmbootstrap install --no-split` for the generic MSM8226 image containing the ext2 boot and root subpartitions. A development command-line drop-in at `/etc/kernel-cmdline.d/50-fx0-development.conf` requests inherited framebuffer, ramoops and warm reboot support. Verify the generated extlinux configuration contains the Fx0 DTB search path and correct root/boot UUIDs. The combined image must fit entirely within the independently reverified `userdata` partition before any deployment.

@@ -1,0 +1,10 @@
+{
+  "file": "fx0-linux-diagnostic-10.img",
+  "bytes": 6174720,
+  "sha256": "4aa0f128ff179d89ddcc26c749041ade72ea4f1b0b1a8eb4ed8aac465e11973b",
+  "ramdisk_bytes": 626493,
+  "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap console=tty0 lk2nd.pass-simplefb=autorefresh dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\"",
+  "physical_result": "Complete stock firmware holes reserved; two 1 GiB cache-cleared reads matched and backup verified",
+  "kernel_source_commit": "f989c8036d7a737f74806c1ddab6e5b68f617a46",
+  "dtb_source": "Incremental board reservation changes, subsequently committed as 997b1a449"
+}

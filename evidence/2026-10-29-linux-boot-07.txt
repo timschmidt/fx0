@@ -1,0 +1,207 @@
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 6.18.59-00007-g2998cfb561ea (build-host) (clang version 21.1.8 (Fedora 21.1.8-6.fc43), LLD 21.1.8) #7 SMP PREEMPT Thu Oct 29 04:21:12 EDT 2026
+[    0.000000] CPU: ARMv7 Processor [410fc073] revision 3 (ARMv7), cr=10c5387d
+[    0.000000] CPU: div instructions available: patching division code
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] OF: fdt: Machine model: LG Fx0
+[    0.000000] earlycon: msm_serial_dm0 at MMIO 0xf991f000 (options '')
+[    0.000000] printk: legacy bootconsole [msm_serial_dm0] enabled
+[    0.000000] printk: debug: ignoring loglevel setting.
+[    0.000000] Memory policy: Data cache writealloc
+[    0.000000] efi: UEFI not found.
+[    0.000000] cma: Reserved 32 MiB at 0x5e000000
+[    0.000000] Zone ranges:
+[    0.000000]   Normal   [mem 0x0000000000000000-0x000000002fffffff]
+[    0.000000]   HighMem  [mem 0x0000000030000000-0x000000005fffffff]
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000000000000-0x00000000031fffff]
+[    0.000000]   node   0: [mem 0x0000000003200000-0x00000000034a2fff]
+[    0.000000]   node   0: [mem 0x00000000034a3000-0x000000000dbfffff]
+[    0.000000]   node   0: [mem 0x000000000dc00000-0x000000000f4fffff]
+[    0.000000]   node   0: [mem 0x000000000f500000-0x000000000f9fffff]
+[    0.000000]   node   0: [mem 0x000000000fa00000-0x000000000fafffff]
+[    0.000000]   node   0: [mem 0x000000000fb00000-0x000000005fffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000000000000-0x000000005fffffff]
+[    0.000000] OF: reserved mem: 0x2ff80000..0x2fffffff (512 KiB) map non-reusable ramoops@2ff80000
+[    0.000000] OF: reserved mem: 0x03200000..0x034a2fff (2700 KiB) nomap non-reusable cont-splash@03200000
+[    0.000000] OF: reserved mem: 0x0dc00000..0x0f4fffff (25600 KiB) nomap non-reusable adsp@dc00000
+[    0.000000] OF: reserved mem: 0x0fa00000..0x0fafffff (1024 KiB) nomap non-reusable smem@fa00000
+[    0.000000] percpu: Embedded 19 pages/cpu s46476 r8192 d23156 u77824
+[    0.000000] pcpu-alloc: s46476 r8192 d23156 u77824 alloc=19*4096
+[    0.000000] pcpu-alloc: [0] 0 [0] 1 [0] 2 [0] 3
+[    0.000000] Kernel command line: console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap console=tty0 lk2nd.pass-simplefb=autorefresh dyndbg="file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p"
+[    0.000000] printk: log buffer data + meta data: 131072 + 409600 = 540672 bytes
+[    0.000000] Dentry cache hash table entries: 131072 (order: 7, 524288 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 393216
+[    0.000000] mem auto-init: stack:all(zero), heap alloc:off, heap free:off
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[    0.000000] ftrace: allocating 40023 entries in 118 pages
+[    0.000000] ftrace: allocated 118 pages with 5 groups
+[    0.000000] rcu: Preemptible hierarchical RCU implementation.
+[    0.000000] 	Trampoline variant of Tasks RCU enabled.
+[    0.000000] 	Rude variant of Tasks RCU enabled.
+[    0.000000] 	Tracing variant of Tasks RCU enabled.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 10 jiffies.
+[    0.000000] RCU Tasks: Setting shift to 2 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=4.
+[    0.000000] RCU Tasks Rude: Setting shift to 2 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=4.
+[    0.000000] RCU Tasks Trace: Setting shift to 2 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=4.
+[    0.000000] NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
+[    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000000] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.000000] arch_timer: cp15 timer running at 19.20MHz (virt).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    0.000002] sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+[    0.010672] Switching to timer-based delay loop, resolution 52ns
+[    0.019002] Console: colour dummy device 80x30
+[    0.024914] printk: legacy console [tty0] enabled
+[    0.029173] printk: legacy bootconsole [msm_serial_dm0] disabled
+[    0.033977] Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=192000)
+[    0.034032] CPU: Testing write buffer coherency: ok
+[    0.034132] pid_max: default: 32768 minimum: 301
+[    0.034305] LSM: initializing lsm=lockdown,capability,yama,bpf
+[    0.034397] Yama: becoming mindful.
+[    0.034477] LSM support for eBPF active
+[    0.034647] Mount-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+[    0.034698] Mountpoint-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+[    0.036406] /cpus/cpu@0 missing clock-frequency property
+[    0.036477] /cpus/cpu@1 missing clock-frequency property
+[    0.036531] /cpus/cpu@2 missing clock-frequency property
+[    0.036586] /cpus/cpu@3 missing clock-frequency property
+[    0.036626] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
+[    0.036797] qcom_scm: convention: smc legacy
+[    0.039144] Setting up static identity map for 0x100000 - 0x100064
+[    0.039487] rcu: Hierarchical SRCU implementation.
+[    0.039520] rcu: 	Max phase no-delay instances is 1000.
+[    0.040095] Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+[    0.042922] EFI services will not be available.
+[    0.043422] smp: Bringing up secondary CPUs ...
+[    0.044921] CPU1: thread -1, cpu 1, socket 0, mpidr 80000001
+[    0.046718] CPU2: thread -1, cpu 2, socket 0, mpidr 80000002
+[    0.048376] CPU3: thread -1, cpu 3, socket 0, mpidr 80000003
+[    0.048741] smp: Brought up 1 node, 4 CPUs
+[    0.048838] SMP: Total of 4 processors activated (153.60 BogoMIPS).
+[    0.048874] CPU: All CPU(s) started in SVC mode.
+[    0.050257] Memory: 1470252K/1572864K available (12288K kernel code, 1274K rwdata, 4084K rodata, 1024K init, 289K bss, 65508K reserved, 32768K cma-reserved, 753664K highmem)
+[    0.051094] devtmpfs: initialized
+[    0.064925] VFP support v0.3: implementor 41 architecture 2 part 30 variant 7 rev 3
+[    0.065995] posixtimers hash table entries: 2048 (order: 2, 16384 bytes, linear)
+[    0.066131] futex hash table entries: 1024 (65536 bytes on 1 NUMA nodes, total 64 KiB, linear).
+[    0.067325] pinctrl core: initialized pinctrl subsystem
+[    0.069055] DMI not present or invalid.
+[    0.070113] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.073084] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.075331] thermal_sys: Registered thermal governor 'step_wise'
+[    0.075435] cpuidle: using governor menu
+[    0.076252] hw-breakpoint: found 5 (+1 reserved) breakpoint and 4 watchpoint registers.
+[    0.076302] hw-breakpoint: maximum watchpoint size is 8 bytes.
+[    0.078203] pstore: Using crash dump compression: deflate
+[    0.078254] printk: legacy console [ramoops-1] enabled
+[    0.079060] pstore: Registered ramoops as persistent store backend
+[    0.079101] ramoops: using 0x80000@0x2ff80000, ecc: 0
+[    0.087532] /soc/usb@f9a55000: Fixed dependency cycle(s) with /soc/usb@f9a55000/ulpi/phy
+[    0.087672] /soc/usb@f9a55000/ulpi/phy: Fixed dependency cycle(s) with /soc/usb@f9a55000
+[    0.094852] /soc/usb@f9a55000: Fixed dependency cycle(s) with /soc/usb@f9a55000/ulpi/phy
+[    0.094989] /soc/usb@f9a55000/ulpi/phy: Fixed dependency cycle(s) with /soc/usb@f9a55000
+[    0.107194] kprobes: kprobe jump-optimization is enabled. All kprobes are optimized if possible.
+[    0.113028] SCSI subsystem initialized
+[    0.113397] libata version 3.00 loaded.
+[    0.113915] usbcore: registered new interface driver usbfs
+[    0.114041] usbcore: registered new interface driver hub
+[    0.114144] usbcore: registered new device driver usb
+[    0.115972] Advanced Linux Sound Architecture Driver Initialized.
+[    0.118077] clocksource: Switched to clocksource arch_sys_counter
+[    0.263375] VFS: Disk quotas dquot_6.6.0
+[    0.263463] VFS: Dquot-cache hash table entries: 1024 (order 0, 4096 bytes)
+[    0.284445] NET: Registered PF_INET protocol family
+[    0.284828] IP idents hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.287669] tcp_listen_portaddr_hash hash table entries: 512 (order: 0, 4096 bytes, linear)
+[    0.287755] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.287913] TCP established hash table entries: 8192 (order: 3, 32768 bytes, linear)
+[    0.288101] TCP bind hash table entries: 8192 (order: 5, 131072 bytes, linear)
+[    0.288415] TCP: Hash tables configured (established 8192 bind 8192)
+[    0.288605] UDP hash table entries: 512 (order: 3, 28672 bytes, linear)
+[    0.288716] UDP-Lite hash table entries: 512 (order: 3, 28672 bytes, linear)
+[    0.289022] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.291345] Initialise system trusted keyrings
+[    0.291987] Trying to unpack rootfs image as initramfs...
+[    0.298332] workingset: timestamp_bits=14 max_order=19 bucket_order=5
+[    0.299432] Key type asymmetric registered
+[    0.299490] Asymmetric key parser 'x509' registered
+[    0.299640] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 247)
+[    0.300032] io scheduler mq-deadline registered
+[    0.300084] io scheduler kyber registered
+[    0.313234] msm_serial f991f000.serial: msm_serial: detected port #0
+[    0.313411] msm_serial f991f000.serial: uartclk = 7372800
+[    0.314071] f991f000.serial: ttyMSM0 at MMIO 0xf991f000 (irq = 30, base_baud = 460800) is a MSM
+[    0.314203] msm_serial: console setup on port #0
+[    0.314329] printk: legacy console [ttyMSM0] enabled
+[    0.329029] Freeing initrd memory: 612K
+[    0.340441] msm_serial: driver initialized
+[    1.198425] simple-framebuffer 3200000.framebuffer: [drm] preferring "memory-region" over "reg" property
+[    1.203078] [drm] Initialized simpledrm 1.0.0 for 3200000.framebuffer on minor 0
+[    1.300343] Console: switching to colour frame buffer device 90x80
+[    1.375568] simple-framebuffer 3200000.framebuffer: [drm] fb0: simpledrmdrmfb frame buffer device
+[    1.402689] brd: module loaded
+[    1.415800] loop: module loaded
+[    1.417473] zram: Added device: zram0
+[    1.419231] SCSI Media Changer driver v0.25
+[    1.422920] spmi_pmic_arb fc4cf000.spmi: PMIC arbiter version v1 (0x20000002)
+[    1.440072] SLIP: version 0.8.4-NET3.019-NEWTTY (dynamic channels, max=256) (6 bit encapsulation enabled).
+[    1.441170] CSLIP: code copyright 1989 Regents of the University of California.
+[    1.451930] usbcore: registered new interface driver cdc_acm
+[    1.456882] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    1.468420] rtc-pm8xxx fc4cf000.spmi:pm8226@0:rtc@6000: registered as rtc0
+[    1.470755] rtc-pm8xxx fc4cf000.spmi:pm8226@0:rtc@6000: setting system clock to 1970-01-01T03:51:12 UTC (13872)
+[    1.477810] i2c_dev: i2c /dev entries driver
+[    1.490511] input: pm8941_pwrkey as /devices/platform/soc/fc4cf000.spmi/spmi-0/0-00/fc4cf000.spmi:pm8226@0:pon@800/fc4cf000.spmi:pm8226@0:pon@800:pwrkey/input/input0
+[    1.493028] qcom-smbb fc4cf000.spmi:pm8226@0:charger@1000: Initializing SMBB rev 1
+[    1.518543] device-mapper: ioctl: 4.50.0-ioctl (2025-04-28) initialised: dm-devel@lists.linux.dev
+[    1.520905] sdhci: Secure Digital Host Controller Interface driver
+[    1.527555] sdhci: Copyright(c) Pierre Ossman
+[    1.533456] sdhci-pltfm: SDHCI platform and OF driver helper
+[    1.538959] clocksource: arch_mmio_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    1.543628] arch-timer-mmio f9020000.timer: mmio timer running at 19.20MHz (virt)
+[    1.555536] hid: raw HID events driver (C) Jiri Kosina
+[    1.562179] usbcore: registered new interface driver usbhid
+[    1.567023] usbhid: USB HID core driver
+[    1.573925] hw perfevents: enabled with armv7_cortex_a7 PMU driver, 5 (8000000f) counters available
+[    1.580699] NET: Registered PF_PACKET protocol family
+[    1.585458] Key type dns_resolver registered
+[    1.591025] Registering SWP/SWPB emulation handler
+[    1.614087] Loading compiled-in X.509 certificates
+[    1.664372] qcom-smsm smsm: mbox_request_channel: can't parse "mboxes" property
+[    1.665540] qcom-smsm smsm: mbox_request_channel: can't parse "mboxes" property
+[    1.673744] msm_hsusb f9a55000.usb: ci_hdrc_msm_probe
+[    1.691328] ci_hdrc ci_hdrc.0: revision: 10, lpm: 0; cap: f10e7100 op: f10e7140
+[    1.698983] msm_hsusb f9a55000.usb: Failed to create device link (0x180) with supplier remoteproc:smd-edge:rpm-requests:clock-controller for /soc/usb@f9a55000/ulpi/phy
+[    1.700752] msm_hsusb f9a55000.usb: Failed to create device link (0x180) with supplier remoteproc for /soc/usb@f9a55000/ulpi/phy
+[    1.715487] ci_hdrc ci_hdrc.0: revision: 10, lpm: 0; cap: f10f1100 op: f10f1140
+[    1.728386] ci_hdrc ci_hdrc.0: revision: 10, lpm: 0; cap: f10f7100 op: f10f7140
+[    1.735104] clk: Disabling unused clocks
+[    1.735591] msm_hsusb f9a55000.usb: Failed to create device link (0x180) with supplier remoteproc:smd-edge:rpm-requests:clock-controller for /soc/usb@f9a55000/ulpi/phy
+[    1.741037] PM: genpd: Disabling unused power domains
+[    1.838562] l10: Bringing 0uV into 1800000-1800000uV
+[    1.852234] ocmem fdd00000.sram: 2 ports, 1 regions, 2 macros, not interleaved
+[    1.852507] ci_hdrc ci_hdrc.0: revision: 10, lpm: 0; cap: f10f9100 op: f10f9140
+[    2.015875] ALSA device list:
+[    2.016848] l20: Bringing 0uV into 3075000-3075000uV
+[    2.067508]   No soundcards found.
+[    2.109910] ci_hdrc ci_hdrc.0: revision: 10, lpm: 0; cap: f1213100 op: f1213140
+[    2.207296] ci_hdrc ci_hdrc.0: It is OTG capable controller
+[    2.252930] Freeing unused kernel image (initmem) memory: 1024K
+[    2.297577] Run /init as init process
+[    2.302598] msm_hsusb f9a55000.usb: unknown ci_hdrc event
+[    2.348193]   with arguments:
+[    2.438172]     /init
+[    2.485026]   with environment:
+[    2.528338]     HOME=/
+[    2.574515]     TERM=linux
+[    2.671911] Fx0 RAM diagnostic init started
+[    2.744589] configfs-gadget.fx0 gadget.0: HOST MAC 02:46:58:30:00:02
+[    2.787383] configfs-gadget.fx0 gadget.0: MAC 02:46:58:30:00:01
+[    2.833515] msm_hsusb f9a55000.usb: CI_HDRC_CONTROLLER_RESET_EVENT received
+[    2.879017] l20: voltage operation not allowed
+[    2.926014] msm_hsusb f9a55000.usb: unknown ci_hdrc event
+[   13.288250] gcc-msm8974 fc400000.clock-controller: sync_state() pending due to f9bff000.rng

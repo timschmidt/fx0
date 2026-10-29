@@ -1,0 +1,17 @@
+{
+  "owner_observation": "Battery not noticeably above room temperature",
+  "readings": {
+    "battery_thermistor_raw": 31124,
+    "gnd_reference_raw": 24724,
+    "vdd_reference_raw": 43008,
+    "thermistor_estimate_mv": 630.06,
+    "temperature_estimate_using_stock_lge_table_c": 34.29,
+    "pmic_die_c": 42.092,
+    "vph_power_uv": 3774390,
+    "pmic_battery_temperature_status_hex": "40",
+    "pmic_battery_temperature_control_hex": "81",
+    "reported_health": "Overheat"
+  },
+  "interpretation": "Generic comparator threshold is near 35 percent of the 1.8 V reference. The stock board uses a software charging-temperature policy with its own thermistor map. Do not broaden thresholds without implementing and validating the necessary current/voltage/temperature policy.",
+  "charging_qualified": false
+}
