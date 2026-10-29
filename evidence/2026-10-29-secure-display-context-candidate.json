@@ -51,10 +51,24 @@
     },
     "exact_stock_packet_replay": "Valid replies remain, power mode stays 0x0c.",
     "stock_clock_lane_control_then_exact_replay": "Clearing forced-HS clock bit to the stock value and replaying changes power mode to 0x1c; physical pixel result pending.",
-    "scope": "Temporary signed external diagnostic module; valid one-byte replies on kernel 35 supersede the earlier zero-byte/invalid-response result only for this candidate."
+    "scope": "Temporary signed external diagnostic module; valid one-byte replies on kernel 35 supersede the earlier zero-byte/invalid-response result only for this candidate.",
+    "interpretation_limit": "A later audit found fbdev blank=4. It was explicitly set to 0 and power remained 0x1c. Clock-lane causality needs a fresh controlled boot; earlier mmap bars tests did not explicitly unblank after KD_GRAPHICS."
   },
   "touch": "Probe and NOSLEEP control 0x04 confirmed. Owner test of this new startup sequence pending; indefinite evdev capture remains running.",
   "power": "Configured USB descriptor and runtime input request both 500 mA; charger reports Good/Fast/Charging in this sample. Automatic negotiation and full policy qualification remain open.",
   "installed_default": "Unqualified kernel 16 remains in the installed Nura root; this kernel 35 test is RAM-only, with installed filesystem mounted read-only/unreplayed.",
-  "qualification": "Experimental; not a default Nura or upstream-submission-ready pass. No new kernel-35 envkernel APK is claimed."
+  "qualification": "Experimental; not a default Nura or upstream-submission-ready pass. No new kernel-35 envkernel APK is claimed.",
+  "independent_scanout_test": "A fresh XR24 DRM dumb buffer is allocated, filled with RGB bars and selected as the active 720x1280 framebuffer. DRM state confirms the new non-stolen GEM object mapped at a distinct IOVA and a completed vblank. Descriptor stays open and fbdev blank is 0. Physical result pending.",
+  "prepared_next_candidate": {
+    "source_commit": "51190c24d",
+    "kernel_release": "6.18.59-00036-g51190c24d",
+    "image": {
+      "file": "fx0-linux-diagnostic-21.img",
+      "bytes": 6193152,
+      "sha256": "438111fe7d98ffb0007e2287b90984b90a2baa81e798c1620a9bda5c1a1c403e",
+      "ramdisk_bytes": 626583,
+      "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap console=tty0 lk2nd.pass-simplefb=autorefresh"
+    },
+    "status": "built and checkpatch clean; not booted; adds non-continuous clock mode based on stock register state"
+  }
 }
