@@ -36,7 +36,15 @@
     "ois_maker_selector": "0x01 selects vendor old LGIT path",
     "extended_0x900_through_0x9ff": "Contains non-erased data; exact coefficients kept private",
     "ois_controller_presence_identity_function": "Not established by EEPROM selector",
-    "integrity": "No module-specific pass established; stock single-entry read map has no data/checksum entry pair for its generic CRC helper"
+    "integrity": "No module-specific pass established; stock single-entry read map has no data/checksum entry pair for its generic CRC helper",
+    "selected_old_lgit_field_coverage": {
+      "old_lgit_E2pRed_fields": 17,
+      "highest_exclusive_end": "0x940",
+      "all_in_captured_first_8k": true,
+      "all_outside_original_0x900_cache": true,
+      "CRC_or_operational_validity_established": false
+    },
+    "consumer_byte_order": "E2pRed reads byte addresses ascending but writes destination descending; little-endian ARM integers decode EEPROM multi-byte fields big-endian"
   },
   "cleanup": {
     "diagnostic_and_i2c_algo_bit_unloaded": true,

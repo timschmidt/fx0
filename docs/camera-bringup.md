@@ -63,6 +63,16 @@ The libraries contain duplicate geometry settings. Do not interpret the number o
 
 The primary Tegra source at `6acf95d4100e2f31a130d84a1de9bb7753e4b8f5` supplies GPLv2 [IMX179](https://android.googlesource.com/kernel/tegra/+/6acf95d4100e2f31a130d84a1de9bb7753e4b8f5/drivers/media/platform/tegra/imx179.c) and [IMX132](https://android.googlesource.com/kernel/tegra/+/6acf95d4100e2f31a130d84a1de9bb7753e4b8f5/drivers/media/platform/tegra/imx132.c) register-table references. Their old misc-device API is not a mainline V4L2 sensor implementation. Keep attribution/licensing when using legitimate code. Notably, the IMX132 table named `mode_1920x1080` writes 1976×1144 geometry; an upstream sensor driver must describe the actual output rather than assuming the array label is the output size.
 
+A further GPLv2 reference is the historical upstream AtomISP IMX driver at
+Linux v4.14 commit `bebc6082da0a9f5d47a1ea2edc099bf671058bd4`. Its
+[IMX132 definitions](https://github.com/torvalds/linux/blob/bebc6082da0a9f5d47a1ea2edc099bf671058bd4/drivers/staging/media/atomisp/i2c/imx/imx132.h)
+and [driver](https://github.com/torvalds/linux/blob/bebc6082da0a9f5d47a1ea2edc099bf671058bd4/drivers/staging/media/atomisp/i2c/imx/imx.c)
+provide lane-selection and exposure/gain references. The driver programs
+register 0x3301 from the actual lane count and has IMX132 gain behavior dependent
+on that count. Its AtomISP platform dependencies and old API need replacement;
+this is historical source for review, not current Fx0 camera support. Preserve
+attribution and verify board clock/lane assumptions before reuse.
+
 The reproducible [mode inspector](../scripts/inspect_camera_modes.py) reads ARM32 relocation-backed register-setting descriptors or numeric C arrays and reports geometry without executing code:
 
 ```sh
@@ -91,7 +101,12 @@ repeats every 8192 bytes; this is observed aliasing, not proof of physical capac
 or coverage of other slave banks/security areas. The first 2560 bytes also match
 an earlier shorter capture. Maker byte 0x0700 is 0x01, selecting the vendor's old
 LGIT path; the 0x0900–0x09ff range contains non-erased data. Actual controller
-identity/functionality and coefficient validity remain unverified.
+identity/functionality and coefficient validity remain unverified. All 17
+`E2pRed` fields used by the selected old LGIT initialization fit within the
+captured first 8 KiB, ending at exclusive offset 0x0940; all lie outside the
+original 0x900-byte cache. That consumer reads ascending byte addresses into a
+reversed destination, so multi-byte fields decode big-endian on little-endian
+ARM. This establishes range and byte-order coverage, not coefficient validity.
 
 After each read the adapter and GPIO claims are released, SDA/SCL return to
 inputs, and GPIO64 returns low/input. Final GPIO readback confirms those states
