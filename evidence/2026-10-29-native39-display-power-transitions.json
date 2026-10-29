@@ -36,7 +36,7 @@
   ],
   "recovery": "Failed cycles recovered to selected lk2nd fastboot; retained console,full raw ramoops and staged lk2nd logs downloaded. Current RAM image26 has four successful cycles; backlight0 during known charger comparator investigation.",
   "persistent_writes": "None; Nura root ro,noload. No GPT/partition flash,EEPROM programming or stock restoration during tests.",
-  "current_qualification": "Visible initial scanout and first full off/on return established on26. Three additional ioctls complete in automatic PM; full installed-system,suspend and reliability remain open.",
+  "current_qualification": "Visible initial scanout and full off/on return established on26. Five cycles complete,four automatic PM; all four display devices suspend during5second off. Controlled post-cycle multitouch passes basic reporting. Full installed-system,suspend and reliability remain open.",
   "first_trace": {
     "build": "W=1 external MSM, exact39 ABI, trusted signature, logging only; fixed-order panel module",
     "result": "PLL save, host ctrl-disable, pinctrl sleep, link clocks, runtime put and bulk-supply disable return. Retained console ends at before phy-disable. No complete CRTC off ioctl.",
@@ -87,9 +87,45 @@
     "schema": "Targeted processed camera/regulator schema validation passes with no diagnostics",
     "checkpatch": "0errors0warnings --no-signoff; author certification not added",
     "runtime_modules": "Original MSM39 archive; fixed-order panel signed exact39 module; no temporary supply/clock hold modules or traceMSM",
-    "cycles_completed": 4,
-    "cycles_with_MDSS_and_IOMMU_control_auto": 3,
-    "physical_result": "Owner confirms initial26 RGB and bars return after first cycle. Later three-cycle visual question pending when backlight set0 for thermal check.",
-    "remaining_display_issue": "Transient MDP error04000000 appears during repeated enable; full PM/noise/reliability acceptance remains open."
+    "cycles_completed": 5,
+    "cycles_with_MDSS_and_IOMMU_control_auto": 4,
+    "physical_result": "Owner confirms initial26 RGB, bars return after first cycle, and RGB visible after fifth cycle with brightness explicitly restored tohalf. Intervening black-screen reply overlapped intentional brightness0 and is not a cycle-failure verdict.",
+    "remaining_display_issue": "Transient MDP error04000000 during enable and one RMI IRQ-read -6 near fifth cycle. Controlled subsequent touch reports normally; full PM/noise/reliability acceptance remains open.",
+    "last_off_interval_seconds": 5,
+    "off_runtime_status": {
+      "MDSS": "suspended",
+      "IOMMU": "suspended",
+      "DSI_host": "suspended",
+      "DSI_PHY": "suspended"
+    },
+    "off_supply_state": "L8 usecount1 remains enabled at1.8V; both DSI vddio consumers0. L4 usecount0; touch retains L28 vote1.",
+    "post_cycle_touch": {
+      "kernel": "6.18.59-00039-g341246daef48",
+      "RAM_image": 26,
+      "condition": "After five complete CRTC off/on cycles, four with MDSS/IOMMU control auto; last off interval5seconds suspends all four display devices. Half brightness, owner confirms RGB return.",
+      "owner_gestures": "Done: swipe,corners,two fingers",
+      "start_offset": 0,
+      "bytes": 31488,
+      "events": 1968,
+      "tracking_starts": 27,
+      "tracking_ends": 27,
+      "max_simultaneous_contacts": 2,
+      "x_range": [
+        24,
+        719
+      ],
+      "y_range": [
+        3,
+        1277
+      ],
+      "syn_dropped": 0,
+      "active_contacts_at_end": 0
+    }
+  },
+  "charging_observation": {
+    "status": "Overheat/Discharging with generic SMBB policy; known thermistor/comparator gap remains",
+    "owner_physical_temperature": "Near room temperature",
+    "mitigation": "Backlight temporarily0 during measurement; unchanged thresholds and limits",
+    "policy_qualification": "Still incomplete"
   }
 }

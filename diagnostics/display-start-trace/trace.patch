@@ -1,0 +1,123 @@
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -214,15 +214,21 @@
+ 		goto exit;
+ 	}
+ 
++	pr_info("Fx0 init trace: before config runtime-get\n");
+ 	pm_runtime_get_sync(dev);
+-
++	pr_info("Fx0 init trace: after config runtime-get\n");
++
++	pr_info("Fx0 init trace: before config ahb-enable\n");
+ 	ret = clk_prepare_enable(ahb_clk);
++	pr_info("Fx0 init trace: after config ahb-enable\n");
+ 	if (ret) {
+ 		dev_err_probe(dev, ret, "%s: unable to enable ahb_clk\n", __func__);
+ 		goto runtime_put;
+ 	}
+ 
++	pr_info("Fx0 init trace: before config read-version\n");
+ 	ret = dsi_get_version(msm_host->ctrl_base, &major, &minor);
++	pr_info("Fx0 init trace: after config read-version\n");
+ 	if (ret) {
+ 		dev_err_probe(dev, ret, "%s: Invalid version\n", __func__);
+ 		goto disable_clks;
+@@ -233,9 +239,13 @@
+ 	DBG("%s: Version %x:%x\n", __func__, major, minor);
+ 
+ disable_clks:
++	pr_info("Fx0 init trace: before config ahb-disable\n");
+ 	clk_disable_unprepare(ahb_clk);
++	pr_info("Fx0 init trace: after config ahb-disable\n");
+ runtime_put:
++	pr_info("Fx0 init trace: before config runtime-put\n");
+ 	pm_runtime_put_sync(dev);
++	pr_info("Fx0 init trace: after config runtime-put\n");
+ exit:
+ 	return cfg_hnd;
+ }
+@@ -2003,7 +2013,9 @@
+ 
+ 	pm_runtime_enable(&pdev->dev);
+ 
++	pr_info("Fx0 init trace: before host get-config\n");
+ 	msm_host->cfg_hnd = dsi_get_config(msm_host);
++	pr_info("Fx0 init trace: after host get-config\n");
+ 	if (!msm_host->cfg_hnd)
+ 		return dev_err_probe(&pdev->dev, -EINVAL,
+ 				     "%s: get config failed\n", __func__);
+@@ -2019,13 +2031,17 @@
+ 	msm_host->ctrl_base += cfg->io_offset;
+ 	msm_host->ctrl_size -= cfg->io_offset;
+ 
++	pr_info("Fx0 init trace: before host supply-get\n");
+ 	ret = devm_regulator_bulk_get_const(&pdev->dev, cfg->num_regulators,
+ 					    cfg->regulator_data,
+ 					    &msm_host->supplies);
++	pr_info("Fx0 init trace: after host supply-get\n");
+ 	if (ret)
+ 		return ret;
+ 
++	pr_info("Fx0 init trace: before host clock-init\n");
+ 	ret = dsi_clk_init(msm_host);
++	pr_info("Fx0 init trace: after host clock-init\n");
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret, "%s: unable to initialize dsi clks\n", __func__);
+ 
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -692,14 +692,18 @@
+ 		return dev_err_probe(dev, ret, "Unable to get iface clk\n");
+ 
+ 	if (phy->cfg->ops.pll_init) {
+-		ret = phy->cfg->ops.pll_init(phy);
++		pr_info("Fx0 init trace: before PHY pll-init\n");
++	ret = phy->cfg->ops.pll_init(phy);
++	pr_info("Fx0 init trace: after PHY pll-init\n");
+ 		if (ret)
+ 			return dev_err_probe(dev, ret,
+ 					     "PLL init failed; need separate clk driver\n");
+ 	}
+ 
++	pr_info("Fx0 init trace: before PHY clock-provider\n");
+ 	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get,
+ 				     phy->provided_clocks);
++	pr_info("Fx0 init trace: after PHY clock-provider\n");
+ 	if (ret)
+ 		return dev_err_probe(dev, ret,
+ 				     "Failed to register clk provider\n");
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -819,7 +819,9 @@
+ 	if (!mdp5_kms)
+ 		return -ENOMEM;
+ 
++	pr_info("Fx0 init trace: before MDP probe-start\n");
+ 	ret = mdp5_setup_interconnect(pdev);
++	pr_info("Fx0 init trace: after MDP probe-start\n");
+ 	if (ret)
+ 		return ret;
+ 
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -504,7 +504,9 @@
+ 	struct device *dev = &pdev->dev;
+ 	int ret;
+ 
++	pr_info("Fx0 init trace: before MDSS init\n");
+ 	mdss = msm_mdss_init(pdev, is_mdp5);
++	pr_info("Fx0 init trace: after MDSS init\n");
+ 	if (IS_ERR(mdss))
+ 		return PTR_ERR(mdss);
+ 
+@@ -516,7 +518,9 @@
+ 	 * Populate the children devices, find the MDP5/DPU node, and then add
+ 	 * the interfaces to our components list.
+ 	 */
++	pr_info("Fx0 init trace: before MDSS populate-children\n");
+ 	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
++	pr_info("Fx0 init trace: after MDSS populate-children\n");
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "failed to populate children devices\n");
+ 		msm_mdss_destroy(mdss);

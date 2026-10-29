@@ -79,8 +79,8 @@
       "url": "https://github.com/timschmidt/fx0-pmaports",
       "branch": "integration/fx0-v26.06",
       "base_commit": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
-      "status": "Signed native-display envkernel APK, required kconfig and exact-source clean native build pass; native boot/hardware qualification failed and under investigation",
-      "commit": "ae3b33c21fc37a2d25bf22eed6ae52a80164e885"
+      "status": "Prepared r1 with source476e36e72 and IOMMU config; required kconfig passes. User-run native fresh package build succeeds and signed APK exported; PKGINFO commit=-dirty because build launched before equivalent recipe commit. Package signature/runtime/install verification pending.",
+      "commit": "0b5e319349b4e361d1c5366c42a730fdb1a1bd64"
     },
     {
       "name": "linux-display-iommu-experimental",
@@ -134,6 +134,14 @@
       "commit": "476e36e72527b4115b656117634fb17a4b6e77dc",
       "base_commit": "8cfcb0fedcd91c324553872591831ecd5ffaffb4",
       "status": "Panel DCS ordering plus shared CPU-PLL L8 always-on fix. Exact39 RAM image26 with original MSM and fixed panel module: owner-confirmed RGB before/after first full CRTC cycle; three further cycles complete with MDSS/IOMMU control auto. No temporary supply/clock hold module. Transient MDP error04000000 observed during repeated enable; full PM,reliability and installed Nura qualification remain open."
+    },
+    {
+      "name": "linux-display-start",
+      "url": "https://github.com/timschmidt/fx0-linux",
+      "branch": "integration/fx0-display-start",
+      "commit": "c6ca8a0b04d1ce4bbd3d0cde7d079e532dd36b43",
+      "base_commit": "476e36e72527b4115b656117634fb17a4b6e77dc",
+      "status": "Bounded MDSS population PM reference and optional DSI bus-clock query reference. W=1/checkpatch pass; clean exact44 module starts without userspace holds and5s off/on passes, but repeat startup resets intermittently. Not a complete default-PM fix; not in exported r1 Nura APK."
     }
   ]
 }

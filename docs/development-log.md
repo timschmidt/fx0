@@ -469,3 +469,93 @@ raw31266; recorded VADC calibration channels and turned backlight0. This matches
 the previously identified generic-comparator/stock-thermistor-policy gap. No
 threshold change or protection bypass. Charging and battery reporting remain
 unqualified.
+
+
+A fifth cycle holds the display off for five seconds with all four devices in
+automatic PM. MDSS,IOMMU,DSI host and PHY all report suspended. L8 remains at
+usecount1 while both DSI vddio consumers drop to0; L4 drops to0 and touch retains
+its L28 vote. Restored half brightness explicitly; owner confirms visible RGB.
+Controlled post-cycle gestures record31,488bytes/1,968events,27starts/releases,
+max2contacts,X24–719/Y3–1277,no SYN_DROPPED or active contacts left. One transient
+RMI IRQ-read -6 occurred during enable; subsequent reporting works. Owner reports
+near-room battery temperature. The earlier three-cycle black-screen reply
+overlapped intentional backlight0 and cannot qualify that visual interval.
+
+Prepared the Nura kernel r1 recipe at source476e36e72, with a verified downloaded
+source archive and the tested IOMMU configuration. Required kconfig checks pass
+using a fresh unprivileged work directory. Existing package/build chroots are
+root-owned and sudo currently requires a password; standard native packaging
+needs the prepared root helper. Host kernel44 build and RAM qualification can
+continue without that access.
+
+
+### Full display kernel44 and native package
+
+Full source476e36e72527b4115b656117634fb17a4b6e77dc compiles as kernel44 with
+no build diagnostics. Matching stripped/signed modules and RAM image27 are
+prepared. Kbuild regenerates the copied signing PEM because its x509.genkey
+dependency is newer; recorded the resulting44 certificate and verified its
+matching PEM. The canonical39 trust/key is unchanged. Kernel44 accepts its own
+modules without force options and remains untainted.
+
+Initial DRM load without either power hold resets during MDSS child population.
+With the known initial holds, native DRM binds; after releasing both, a5second
+off/on cycle completes with all4display devices suspended whileoff. The owner
+confirms visible RGB afterward. Separate initial boots show IOMMU-only and
+MDSS-only holds each suffice, narrowing the startup issue to a shared resource.
+No actual register/clock cause is proven.
+
+A separate DT-only image28 connects the existing MMCC MDSS_RESET line, following
+the analogous upstream MSM8916/39 description. Compiled DT differs only by the
+reset phandle and passes schema checks. It still resets at the same early stage;
+the experimental reset branch remains unpublished. A signed, logging-only MSM
+module localizes the reset inside of_platform_populate(), before child probe
+trace points. Function-graph capture records power-domain transitions there. A
+bounded runtime-PM reference around child population is being tested separately.
+All failed-test console/raw ramoops/bootloader payloads were downloaded before
+new boots. Firmware/root filesystems remain unchanged and read-only.
+
+The owner runs the prepared standard native package build successfully, then
+exports its signed armv7 r1 APK and public signing key from the root-only work
+directory. Package source/config checksums match published recipe0b5e31934. Its
+PKGINFO commit is -dirty: build launched with the prepared changes atop ae3b33c21,
+committed while building. This is recorded explicitly; no clean-Git provenance
+is claimed. Native package signature/runtime/install checks remain pending.
+Private logs/checkpoints and the APK are copied to Disk B as well as the host
+workspace.
+
+
+### Bounded initial-resource candidates and repeated-startup failure
+
+Taking a bounded MDSS runtime reference around child population progresses to
+the asynchronous DSI version-register read, where the trace stops after AHB
+enable. An additional bus-clock reference around the version query permits
+startup with all display devices in automatic PM and no userspace holds. A
+five-second off/on succeeds, all4devices suspend whileoff, and the owner confirms
+RGB. Bus-clock-only without the population reference still resets during child
+creation.
+
+Published separate focused candidates ad82d2775 and c6ca8a0b0, with trace logging
+removed. Exact44 W=1 compilation and individual checkpatch runs pass. The clean
+module's first startup and5second cycle pass, but its next startup resets after
+MDP probe begins. A subsequent startup succeeds. This is intermittent and remains
+unresolved; no final PM qualification or installed-system promotion. Initial
+clock-event collection used the old power event group, so only system-PM events
+were enabled and no startup trace was recorded. Actual available events are in
+clk and rpm; corrected collection records a successful off/on baseline and is
+being applied to a new startup. Raw traces stay private.
+
+The exported native r1 APK verifies successfully with installed Nura apk-tools
+3.0.8 and its existing trusted keys. This does not install it or add the two newer
+initial-resource candidates; the root remains read-only.
+
+
+Correct clk/rpm tracing captures a further startup reset after MDSS suspend and
+resume; recorded AHB/AXI/vsync enable calls return. A DT-only image29 supplies the
+binding-supported fourth MDSS core clock and a private module manages it. W=1
+and schema checks pass. The trace confirms core prepare/enable,off and re-enable,
+but startup still resets. This is not a sufficient fix and the display-core
+experiment is unpublished. Next trace also includes clock-parent events, which
+run during device setup before the host's probe. The precise fault instruction
+remains unknown. No new native package revision is being promoted while this
+intermittent startup remains.

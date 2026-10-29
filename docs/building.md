@@ -85,11 +85,23 @@ For a future controlled raw-image test, the forced-fastboot variant permits expl
 
 ## Display power candidate
 
-The latest RAM-tested display source is `integration/fx0-display-power` at
-`476e36e72527b4115b656117634fb17a4b6e77dc`. It includes the camera DT on top of
-compiled39, panel shutdown ordering and the shared CPU-PLL L8 supply fix.
-Image26 deliberately retains the compiled39 kernel/initramfs and changes only
-the DTB; it loads the exact39 signed panel candidate and original MSM module.
-It is not an installed Nura update. One complete CRTC off/on visibly passes;
-three additional cycles complete with automatic MDSS/IOMMU PM. Full kernel44
-build/package/boot qualification follows separately.
+The display-power branch at `476e36e72527b4115b656117634fb17a4b6e77dc` includes
+camera DT, panel shutdown ordering and the shared CPU-PLL L8 supply fix. Image26
+retains compiled39 and changes only the DTB; image27 contains the full kernel44
+build and matching modules. Both have visible scanout and complete off/on tests.
+Kernel44 still needs an initial power reference with its original MSM module.
+
+The newer `integration/fx0-display-start` branch at
+`c6ca8a0b04d1ce4bbd3d0cde7d079e532dd36b43` takes a bounded parent PM reference
+for child creation and an optional DSI bus-clock reference for version queries.
+Exact44 external-module W=1 and individual checkpatch checks pass. Its clean
+module starts and cycles successfully in some tests, but repeated startup is
+intermittent. Keep it experimental and record each boot outcome.
+
+A fresh native r1 APK from source476e36e72 is exported and verifies with the
+installed Nura trusted keys. Its build began with the prepared recipe changes
+before their equivalent commit0b5e31934; PKGINFO says -dirty and this is recorded.
+It has not been installed. Preserve the working kernel/module archives: kernel44
+regenerated its signing key during build and has a different trust certificate
+from39. Load matching modules with the actual trusted key; never force versions
+or signatures. See the current build/package evidence for exact hashes.

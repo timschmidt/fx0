@@ -24,6 +24,15 @@ Phase 0 has verified selected original-partition/GPT backups and a tested origin
 
 Phase 2 has reached an installed Nura v26.06 console system on the maintained kernel, verified full-image write/readback, SSH login and root expansion confined to userdata. Required kconfig checks pass, and the exact latest-source native clean kernel package build passes. The installed screen is blank and Plymouth crashed, although framebuffer/getty devices exist. Normal lk2nd automatic warm boot, package repository refresh/upgrade check and installed-filesystem persistence now pass. Final storage migration, charging policy, all later hardware and reliability/submission phases remain in scope. No SIM is available for cellular acceptance.
 
+Native display progress: maintained kernel44 now produces owner-confirmed RGB
+from a fresh framebuffer and completes a5second off/on cycle with automatic
+display PM after initial startup holds. Native39 also passes controlled
+post-cycle multitouch. L8 must remain powered for the shared CPU PLL, and panel
+off commands must precede host shutdown. Initial DRM loading without a temporary
+power reference still resets; transient enable errors, installed-Nura display,
+full suspend and reliability remain open. A native r1 kernel APK is built and
+exported; it has not been installed. See the current display-power evidence.
+
 ## Technical baseline
 
 As researched on October 29, 2026, Nura is the renamed postmarketOS project and its latest stable release is v26.06. The Fx0 uses MSM8926 and the `armv7` architecture. The old `lg-madai` package uses Linux 3.4 and is archived in the inspected October 2026 pmaports snapshot. Nura also provides a generic `qcom-msm8226` package and shared APQ8026/MSM8226/MSM8926 kernel.

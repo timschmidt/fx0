@@ -1,0 +1,60 @@
+{
+  "source": "476e36e72527b4115b656117634fb17a4b6e77dc",
+  "kernel_release": "6.18.59-00044-g476e36e72527",
+  "build": "ARCH=arm LLVM=1 -j8 zImage modules Fx0 DTB; exit0, no build diagnostics",
+  "artifacts": {
+    "arch/arm/boot/zImage": "cc4966c676500b0a5f73e52f4074cd6b84257d1bb9941af219af493fdf1bc64a",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb": "6bf76d073d357108bf2382e279fa43b9e9e5ba6375d32fdbbc5641f872c997da",
+    ".config": "c8f98fb5e1c544dcc40ea2fc33267150c2facb80f39da4b3d0604ff29fb62d78",
+    "Module.symvers": "0ea1e0b5d924979f5884109a6cb4de2195b172be5d3037a97f332077c1874f34"
+  },
+  "module_signing_certificate_sha256": "504347c86a813569c96233a9a61e8efe6dd8ee99a964133af199ea05d5ba9ebb",
+  "signing_note": "Kbuild regenerated the copied PEM because x509.genkey was newer. New44 has its own generated signing certificate; modules44 use it. The39 canonical key/cert are unchanged. Never use39 modules for44.",
+  "module_install": "Stripped and signed matching modules staged on host; exit0",
+  "Nura_recipe": "6.18.59-r1; source archive/config checksum and required kconfig pass",
+  "booted": true,
+  "RAM_image": {
+    "file": "fx0-linux-diagnostic-27.img",
+    "bytes": 6193152,
+    "sha256": "41cad505880a98d7ebd7a4cc9ffba57a31f1d7d8fa0ca70ab04b09cdadd5e986",
+    "source": "476e36e72527b4115b656117634fb17a4b6e77dc",
+    "kernel_release": "6.18.59-00044-g476e36e72527",
+    "same_ramdisk_commandline_as26": true,
+    "same_DT_as26": true,
+    "Android_payload_ID_independently_verified": true,
+    "module_archive_sha256": "708812e8a0ba093310745a0b7d7f68f622ac1ab7199c071a1ebfd2624ac7dc06",
+    "module_archive_bytes": 11148197,
+    "booted": true
+  },
+  "runtime": {
+    "initial_no_power_holds": "Reset during DRM loading before scanout; retained console,raw ramoops and lk log saved",
+    "startup_with_MDSS_and_IOMMU_holds": "Complete native DRM bind and framebuffer allocation; matching44 modules load without forced signatures/versions; taint0",
+    "after_takeover": "Both controls set auto;5second full CRTC off/on completes. MDSS,IOMMU,DSI host and PHY report suspended whileoff. Owner confirms RGB at half brightness afterward.",
+    "remaining": "Default initial-load PM reset,transient MDP error04000000 and RMI IRQ read -6; no full reliability,installed-system or suspend qualification"
+  },
+  "initial_loading_isolation": {
+    "stock_MSM_no_holds": "Reset during MDSS child population",
+    "IOMMU_hold_only": "Driver binds; framebuffer allocation completes",
+    "MDSS_hold_only": "Driver binds; framebuffer allocation completes",
+    "MDSS_reset_DT": "No fix; reset at same early stage",
+    "trace_module": "Stops inside of_platform_populate before child-probe markers; function graph records power-domain transitions",
+    "population_PM_guard_only": "Passes population and MDP probe; async DSI probe stops at version read after AHB enable",
+    "DSI_config_bus_clock_only": "Still resets during population",
+    "both_bounded_guards_with_trace": "Initial DRM bind and fresh RGB allocation with all four controls auto;5second off/on completes,all four devices suspended whileoff; owner confirms RGB afterward",
+    "clean_two_change_module": {
+      "source": "c6ca8a0b04d1ce4bbd3d0cde7d079e532dd36b43",
+      "MDSS_commit": "ad82d27759f5a243c1d6b7b2a7421e7f32f25e5e",
+      "MSM_module_sha256": "612da144d37725fcb75ccc64c436d7a2a70b9d89d8628a27294c36431aeaf01c",
+      "build": "W=1 passes; both individual commits checkpatch0errors0warnings --no-signoff; contributor certification not added",
+      "initial_runs": [
+        "clean01: DRM starts and5s off/on completes with all4controls auto and suspended whileoff",
+        "clean02: startup resets after MDP probe begins; full retained payloads retrieved",
+        "clean-events01: DRM starts; configured system-PM events give no initial trace (wrong event group); corrected clk/rpm events subsequently record successful5s off/on baseline"
+      ],
+      "result": "INCOMPLETE: repeated initialization is intermittent. Do not promote as a resolved default-PM or installed-system fix.",
+      "next_capture": "Real clk/rpm trace events before startup, to local/native44-start-clean-events-02/power-event-stream.txt"
+    },
+    "corrected_clock_RPM_trace": "Captures another reset after parent MDSS completes a suspend/resume. All recorded AHB/AXI/vsync enable operations complete before stream stops. No precise fault instruction established.",
+    "explicit_MDSS_core_clock": "Image29 adds fourth binding-supported core clock; clean module manages it. Build/schema pass. Clock trace confirms core prepare/enable/disable/re-enable, yet startup still resets. Not a sufficient fix; unpublished candidate."
+  }
+}
