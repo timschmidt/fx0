@@ -1,0 +1,30 @@
+{
+  "running_source": "abe11294089af215e9613de912d4a6e4628356de",
+  "running_kernel": "6.18.59-00035-gabe11294089a",
+  "scope": "RAM-only live diagnostic, installed root read-only/unreplayed; no persistent partition writes",
+  "module_build": "Exact kernel35 source/ABI; canonical trusted certificate; insmod accepted without force options; W=1 build passed.",
+  "first_attempt": "Conservative suspended-state guard returned EBUSY before claiming GPIO or pulsing reset. Transport runtime PM is unsupported; guard corrected to check status only when runtime PM is enabled. Panel commands replayed in cleanup.",
+  "reset_sequence": [
+    "Exact stock generic-long B004, EC09",
+    "RMI driver suspend(false) succeeds",
+    "GPIO16 asserted raw low, request 10ms sleep, deassert raw high, request 60ms startup sleep",
+    "RMI reset handler and resume(false) both succeed",
+    "F01 control04/mask77/status00; event node/capture preserved",
+    "Exact stock initialization packets, display-on/sleep-out and EC29/B003 replay transmitted"
+  ],
+  "after_replay": "DCS0a timed out (-110); subsequent reads fail(-22), video-done and command-DMA timeouts. This follows a combined reset/replay operation; attribution is not isolated.",
+  "display_recovery": "fbdev blank4/0 did not trigger a native power cycle while independent DRM master held scanout. After stopping the pattern owner, a fresh master issued real CRTC disable; USB was lost and device returned to lk2nd fastboot. Stream ends at bridge post-disable/PLL-lock message; reset cause unproven.",
+  "recovery": "Retained ramoops console/raw and lk2nd logs retrieved privately, then image23/kernel39 booted successfully through fastboot boot.",
+  "touch_qualification": "Zero evdev bytes immediately before the reset. No owner-confirmed post-reset gestures were completed before automatic device reset; not a completed negative gesture test.",
+  "functional_fix_claimed": false,
+  "artifacts": {
+    "touch_reset_live35.ko": {
+      "bytes": 205169,
+      "sha256": "b4d6e729b617f7bd33d5165c7df2778506fa82ad77a4d6a54d86a66fce42cfac"
+    },
+    "panel_touch_disable35.ko": {
+      "bytes": 115409,
+      "sha256": "df65ed326f01a99c1c4d470514c920786d3acabba822b6a5bd758ee68059af87"
+    }
+  }
+}
