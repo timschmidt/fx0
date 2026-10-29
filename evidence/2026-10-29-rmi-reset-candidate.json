@@ -1,0 +1,72 @@
+{
+  "repository": "https://github.com/timschmidt/fx0-linux",
+  "branch": "integration/fx0-iommu",
+  "source_commit": "341246daef4844c69d8638813bcedfcea35f96f1",
+  "kernel_release": "6.18.59-00039-g341246daef48",
+  "changes": [
+    {
+      "commit": "ff0d3662b8048c5017505770a776be149655a951",
+      "author": "Roman Vivchar",
+      "purpose": "Import original proposed RMI I2C reset GPIO support, preserving author/sign-off",
+      "source": "https://lore.landau.one/lkml/20260912-rmi4-reset-v1-1-4a3fc8856830@protonmail.com/"
+    },
+    {
+      "commit": "7297314a644fb1f7116b8c2e42817bc4108570fe",
+      "purpose": "Assert optional reset before regulator cleanup and document the descriptor"
+    },
+    {
+      "commit": "341246daef4844c69d8638813bcedfcea35f96f1",
+      "upstream_commit": "c75afcb4a8e708747534d8b88a1bcd912cdf9223",
+      "author": "Rob Herring (Arm)",
+      "purpose": "Carry existing upstream binding-email corrections required by current schema validation"
+    }
+  ],
+  "inspected_mainline": {
+    "upstream_master_commit": "c339f4010dea8b0d754f84ace70cd1b089878ef8",
+    "file_sha256": "4009295ffe947250df24fd32c8204af6ac53fc58fe971f316a94f6e2153eabe9",
+    "file_has_reset_gpio": false,
+    "file_has_gpiod": false
+  },
+  "validation": {
+    "full_build": "zImage, modules and Fx0 DTB passed",
+    "driver_w1": "Changed RMI driver compiles with W=1; same driver bytes after metadata-only backport",
+    "driver_source_sha256": "276f2265722d6cb128772101fc03e85f52c595550bf0fa7f59bba8f6c8b5e05b",
+    "binding": "RMI binding examples pass without diagnostics after upstream email correction",
+    "targeted_fx0_dtb": "RMI schema check passes without diagnostics",
+    "checkpatch": "All three commits individually pass --no-signoff with zero errors/warnings"
+  },
+  "diagnostic_image": {
+    "file": "fx0-linux-diagnostic-23.img",
+    "bytes": 6197248,
+    "sha256": "ae58d99e8c9945c9fb661de5d0659c774a0594bcc41d94ac741d5bc1988791c9",
+    "ramdisk_bytes": 626583,
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap console=tty0 lk2nd.pass-simplefb=autorefresh"
+  },
+  "artifacts": {
+    "zimage": {
+      "bytes": 5538304,
+      "sha256": "33307fa5af006907b60abfd6b67f0eea3fcd47b238c5f29a88288bd5bb1e2de2"
+    },
+    "dtb": {
+      "bytes": 29637,
+      "sha256": "542907f28258ca9a0331bdea35c4916f7e6e5b885a2a4d215d2fa6215e92ff4c"
+    },
+    "config": {
+      "bytes": 192362,
+      "sha256": "c8f98fb5e1c544dcc40ea2fc33267150c2facb80f39da4b3d0604ff29fb62d78"
+    },
+    "modules_archive": {
+      "bytes": 123448079,
+      "sha256": "31df373b6cacda0128b1525b142d509752473c852f2452e5ad05dec3407644e9"
+    }
+  },
+  "phone_test": "Not booted or installed; phone remains on RAM kernel 35",
+  "open_qualification": [
+    "Physical touch gestures, coordinates and multitouch",
+    "Boot-time reset/display ordering",
+    "Suspend/resume and error paths",
+    "Default native display runtime-power sequencing",
+    "Normal Nura packaging and physical boot/update tests",
+    "Final upstream review/DCO for new adaptation"
+  ]
+}

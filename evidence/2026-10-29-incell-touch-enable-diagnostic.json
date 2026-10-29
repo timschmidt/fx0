@@ -1,0 +1,23 @@
+{
+  "running_kernel": "6.18.59-00035-gabe11294089a",
+  "kernel_source_commit": "abe11294089af215e9613de912d4a6e4628356de",
+  "operation": "Apply stock lge,tp-controller-enable sequence through signed diagnostic module: generic long EC29 then B003",
+  "stock_source": "drivers/video/msm/mdss/mdss_dsi.c, mdss_dsi_panel.c and msm8226-madai-panel.dtsi",
+  "source_evidence": "Original-kernel RAM log records lge_display_tp_on_cmds sent; production revisions receive the enable notifier",
+  "module_abi": "Built against a clean worktree of the exact running kernel source; vermagic unchanged, no force options",
+  "signature": "Signed with canonical key after checking its certificate matches running kernel trust; insmod accepted it",
+  "host_tx_results": [
+    8,
+    8
+  ],
+  "readback": {
+    "DCS_power_mode": "0x1c",
+    "DCS_pixel_format": "0x77",
+    "response": "Valid one-byte replies remain; power mode unchanged"
+  },
+  "diagnostic_errors": "Existing dsi_err_worker status=5 messages accompany DCS reads before and after this operation; not attributed to the touch-enable packets",
+  "touch_capture": "Remains open; zero bytes immediately before and after. Owner gesture completion has not been confirmed, so no completed negative test is claimed.",
+  "display_capture": "Fresh DRM dumb RGB buffer remains selected with blank=0; physical observation pending",
+  "persistent_storage_writes": false,
+  "physical_fix_claimed": false
+}
