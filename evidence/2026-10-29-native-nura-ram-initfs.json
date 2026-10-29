@@ -1,0 +1,77 @@
+{
+  "purpose": "Native Nura boot from RAM while kernel startup remains unresolved",
+  "native_package_source": "476e36e72527b4115b656117634fb17a4b6e77dc",
+  "native_release": "6.18.59",
+  "temporary_workaround": "Set initial MDSS/IOMMU control on before original init; release auto in cleanup only if native msmdrmfb exists. Not a production/kernel fix.",
+  "generation": "mkinitfs2.11/boot-deploy0.23 in read-only-root chroot with RAM configs/metadata, matching native modules and explicit tmpfs boot/tmp. flash-on-update disabled; normal free-space checks pass.",
+  "image33": {
+    "purpose": "RAM boot of native r1 kernel and regenerated native Nura initramfs with temporary initial display holds; installed kernel unchanged",
+    "image_file": "fx0-native-nura-initfs-33.img",
+    "image_bytes": 17473536,
+    "image_sha256": "decbde04fa8d3ff8ef6e59db19059e672e9eac83f35f7f77b93e14a5a2ac3e89",
+    "initramfs_sha256": "1a7758de6610c7285f67b1c7c718d63d86748f4d691783af90a2245800d44930",
+    "source": "476e36e72527b4115b656117634fb17a4b6e77dc",
+    "APK_sha256": "0ca7a2e3f1b3504cbf46a5fbd430895305adf2fb4286018828996291615dd633",
+    "inspected": true,
+    "booted": true
+  },
+  "image33_observed": "Boot command accepted; Nura18d1:d001 USB NCM enumerates and host configures172.16.42.2. SSH refused throughout observation. No reachable TCP23/80/2323. Display, root mount and hook execution not established.",
+  "image34_prepared": {
+    "purpose": "RAM Nura boot with debug shell before root discovery, temporary initial display holds and complete native r1 module overlay after switch_root",
+    "image_file": "fx0-native-nura-initfs-34.img",
+    "image_sha256": "30df9ca37022755a7380c2a3fdf20f0f3036d57fa91c3473e44b2dc92648f110",
+    "image_bytes": 28571648,
+    "ramdisk_sha256": "6dfebd47afd8707e78e86273c5efd7c251af4d3bc40d8931df770fdf21528dad",
+    "module_overlay_entries": 596,
+    "host_depmod": "34.2; standard metadata generation only, module payloads unchanged",
+    "booted": true,
+    "archive_members": 2,
+    "complete_module_tree_files_verified": 438,
+    "all_hook_bytes_and_executable_modes_verified": true
+  },
+  "image34_scope": "Full native module overlay and debug shell booted; large gzip initrd overlap found and corrected in image36. Do not reuse34/35 with inherited framebuffer.",
+  "installed_state": "Old kernel package/boot configuration retained. No GPT or package write. Actual Nura boot may write normal mutable root state.",
+  "owner_observation_image33": "Screen reports Arbitrary Executable File Formats File System Automount Point unsupported and Emergency mode. This confirms systemd/emergency-console progress; exact framebuffer driver, PM release and error cause not yet inspected.",
+  "image34_observed": "Debug shell reaches native msmdrmfb, initial holds on; taint512 from simpledrm memremap warning. Large initrd overlaps inherited framebuffer; not qualified.",
+  "image35_header_relocation_attempt": {
+    "image": {
+      "purpose": "RAM Nura boot with debug shell before root discovery, temporary initial display holds and complete native r1 module overlay after switch_root",
+      "image_file": "fx0-native-nura-initfs-35.img",
+      "image_sha256": "061d9755b0c5f6a6adf3866d183f855087cbf69efda37c6f381744e489d973a8",
+      "image_bytes": 28571648,
+      "ramdisk_sha256": "6dfebd47afd8707e78e86273c5efd7c251af4d3bc40d8931df770fdf21528dad",
+      "module_overlay_entries": 596,
+      "host_depmod": "34.2; standard metadata generation only, module payloads unchanged",
+      "booted": true,
+      "archive_members": 2,
+      "complete_module_tree_files_verified": 438,
+      "all_hook_bytes_and_executable_modes_verified": true,
+      "ramdisk_load_address": "0x04000000",
+      "change_from34": "Only Android header ramdisk load-address field changed, moving initrd clear of inherited framebuffer"
+    },
+    "observed": "Same warning; live chosen initrd-start remains0x02000000 despite header0x04000000. LK source overrides header addresses. Not a fix."
+  },
+  "image36": {
+    "image_file": "fx0-native-nura-initfs-36.img",
+    "image_bytes": 23336960,
+    "image_sha256": "2c99ba2199bd0a1c9216131b1aae02da0b3b4d206ba61511ddca331429d6f3b1",
+    "ramdisk_sha256": "9defa0531301f8dd75af47610fdae3361e8c90b64dfbcf83fb196a92e64131c9",
+    "ramdisk_bytes": 17819112,
+    "compression": "XZ, CRC32, preset6; native CONFIG_RD_XZ=y",
+    "actual_lk_ramdisk_load_start": "0x02000000",
+    "expected_lk_ramdisk_load_end": "0x30fe5e8",
+    "inherited_framebuffer_start": "0x03200000",
+    "archive_members_verified": 2,
+    "native_module_tree_files_verified": 438,
+    "identical_module_files_omitted_from_append": 36,
+    "booted": true
+  },
+  "image36_observed": {
+    "debug": "Native msmdrmfb, taint0, actual chosen initrd-end0x030fe5e8, no framebuffer reservation failure.",
+    "systemd": "SSH works; full matching native module tmpfs overlay mounted; initial holds released; MDSS,IOMMU,DSI,PHY controls all auto. No failed units in observed check; time-sync jobs pending without upstream network.",
+    "owner": "Readable login/text console physically confirmed.",
+    "limits": "One RAM boot with temporary power workaround; not repeated startup, full suspend, UI or installed-package acceptance."
+  },
+  "image_helper_validation": "Overlap rejected at forced LK load address; three placement tests pass; existing small diagnostic30 reproduces byte-for-byte.",
+  "next": "Back up current installed boot/kernel/module state, audit package triggers/DTB selection, then prepare persistent r1 install with fallback and temporary init workaround. Kernel startup fault remains open."
+}

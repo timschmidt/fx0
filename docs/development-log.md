@@ -655,3 +655,66 @@ native16 kernel, r1 installation status and GPT are unchanged. The next breadth
 step is a RAM-only Nura initramfs with explicit temporary initial display power
 holds, releasing automatic PM after native DRM binding. This is a development
 workaround and does not satisfy the kernel startup or suspend acceptance gates.
+
+
+### Native Nura initramfs RAM boot preparation
+
+A native initramfs was regenerated with mkinitfs2.11/boot-deploy0.23 from the
+installed Nura root mounted read-only, binding RAM copies of configuration,
+release metadata and native modules. Explicit tmpfs boot/tmp mounts resolve
+BusyBox df rejecting a plain diagnostic-rootfs bind. Ordinary boot-deploy
+free-space checks pass with flashing disabled. Archive inspection verifies the
+wrapper/original init, cleanup hook, native ABI and Fx0 panel/backlight/input
+modules. The wrapper holds MDSS/IOMMU before udev and requests auto only after
+native framebuffer binding. It is temporary development policy, not a kernel fix.
+
+Image33 is accepted by lk2nd and exposes Nura USB NCM networking. SSH remains
+refused throughout observation and no other diagnostic shell is exposed. This
+does not establish framebuffer/hook success or root-mount progress. The installed
+kernel package and boot configuration were not replaced; normal Nura startup may
+have written mutable root state. A physical return to lk2nd is requested so
+retained logs can be captured before the next boot.
+
+Image34 is prepared with a pre-root-discovery PMOS debug shell and a complete
+matching native module tree. A cleanup hook moves a tmpfs copy of those modules
+over the target root's existing directory for this RAM boot. It avoids mixing the
+new kernel with older installed modules without replacing that package. Two
+concatenated archive members, every native module-tree file and all hook bytes/
+executable modes were inspected. Image34 is not yet booted. Missing root modules
+are a known test-environment limitation, not a proven explanation for image33.
+See evidence/2026-10-29-native-nura-ram-initfs.json and the native-display-boot-hold
+diagnostic guide for exact inputs, hashes and remaining checks.
+
+
+The owner subsequently reports visible systemd emergency-console text and an
+unsupported Arbitrary Executable File Formats File System Automount Point.
+This establishes later boot progress than USB alone. It does not identify the
+framebuffer driver or prove missing matching modules caused emergency mode.
+The prepared complete-module overlay and debug shell will permit checking both.
+
+
+### Native Nura console and SSH confirmed
+
+Image34 reaches the PMOS debug shell with msmdrmfb bound and the intended
+initial holds active. Its complete-module ramdisk is too large for lk2nd's
+forced 32 MiB load slot and overlaps the inherited framebuffer, producing a
+reservation failure and simpledrm memremap warning. Image35 changes only the
+header address, but the live chosen initrd-start remains32 MiB: this LK target
+ignores header addresses. Both runs were closed with retained logs preserved.
+
+Image36 omits 36 identical module files from the appended newc member and uses
+XZ/CRC32 across both members. All 438 native module-tree file and all hooks
+were verified. Its 17,819,112-byte ramdisk ends below the inherited framebuffer;
+the debug shell confirms the actual end, msmdrmfb and taint 0. The image helper
+now rejects overlaps at LK's actual forced address. Three host placement tests
+pass, and the existing small native diagnostic30 reproduces byte-for-byte.
+
+Continuing image36 reaches Nura/systemd and SSH. The complete native module
+tree is mounted from tmpfs after switch_root, the cleanup hook releases both
+initial holds, all four display controls are auto, and taint stays0. The owner
+confirms readable login/text output. No failed units are observed, while
+systemd time synchronization waits without upstream networking. The old
+installed kernel package and boot configuration are unchanged. Next is the
+installed boot/module backup and trigger/DTB audit before persistent r1 update.
+This remains a temporary workaround; intermittent driver startup, suspend and
+all remaining hardware/recovery/storage acceptance gates remain open.

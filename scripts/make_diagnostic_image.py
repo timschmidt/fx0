@@ -121,6 +121,13 @@ def make_image(kernel, dtb, ramdisk, cmdline):
     if len(command) >= 512:
         raise ValueError('Diagnostic command line must fit legacy header')
     payload = kernel + dtb
+    # This lk2nd target overrides the header's ramdisk address to 32 MiB.
+    # Never let an inherited framebuffer alias a larger initramfs load.
+    if 0x8000 + len(payload) > 0x02000000 or len(ramdisk) > 0x06000000:
+        raise ValueError('Kernel/ramdisk do not fit the measured first RAM bank')
+    if any(word.split('=', 1)[0] == 'lk2nd.pass-simplefb' for word in cmdline.split()):
+        if 0x02000000 + len(ramdisk) > 0x03200000:
+            raise ValueError('Ramdisk overlaps inherited Fx0 framebuffer at forced lk2nd load address')
     page = 2048
     digest = hashlib.sha1()
     for data in (payload, ramdisk, b''):

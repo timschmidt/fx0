@@ -1,0 +1,16 @@
+#!/bin/busybox ash
+# SPDX-License-Identifier: MIT
+# Temporary Fx0 development workaround; the kernel startup fault remains open.
+/bin/busybox mount -t sysfs -o nodev,noexec,nosuid sysfs /sys || exit 1
+if /bin/busybox grep -Fq 'lg,madai' /sys/firmware/devicetree/base/compatible; then
+    for dev in fd900000.display-subsystem fd928000.iommu; do
+        control="/sys/bus/platform/devices/$dev/power/control"
+        if [ ! -w "$control" ]; then
+            echo "Fx0 initial display hold unavailable: $dev" >&2
+            exit 1
+        fi
+        echo on >"$control" || exit 1
+    done
+fi
+/bin/busybox umount /sys || exit 1
+exec /init.fx0-original

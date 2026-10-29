@@ -123,3 +123,17 @@ requires omitting `lk2nd.pass-ramoops`, whose DT hook overrides sizes. Retrieve
 lk2nd's ordinary console command assumes its original layout. Do not use the
 diagnostic configuration as a production package. The exact source and artifact
 hashes are in the persistent-trace evidence.
+
+
+### Native package initramfs RAM test
+
+The [temporary native Nura RAM-boot guide](../diagnostics/native-display-boot-hold/README.md)
+describes regenerating the normal initramfs using the native r1 kernel/module
+set, keeping output and configuration changes in RAM. It includes an initial
+display-power workaround and a complete matching-module overlay for testing
+against the older installed root. These are development helpers, not qualified
+startup or suspend fixes. Image33 reaches emergency mode without SSH. Large full-module images34/35
+overlap the inherited framebuffer because LK overrides the load address.
+Deduplicated XZ image36 stays below it and reaches a physically confirmed
+readable console and SSH with taint 0 and automatic display PM. Evidence and
+hashes are in [the RAM-initramfs record](../evidence/2026-10-29-native-nura-ram-initfs.json).
