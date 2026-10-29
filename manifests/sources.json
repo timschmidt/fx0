@@ -126,6 +126,14 @@
       "commit": "8cfcb0fedcd91c324553872591831ecd5ffaffb4",
       "base_commit": "341246daef4844c69d8638813bcedfcea35f96f1",
       "status": "Camera-DT image25 RAM booted on compiled39 kernel. Native CCI probe/reset,preflight,2560-byte and two65536-byte reads match independent GPIO capture; shared supply and CCI runtime suspend/resume/clock gating pass for these reads. Controller unbind,error/system-PM,sensor streaming and CAMSS remain unqualified."
+    },
+    {
+      "name": "linux-display-power",
+      "url": "https://github.com/timschmidt/fx0-linux",
+      "branch": "integration/fx0-display-power",
+      "commit": "476e36e72527b4115b656117634fb17a4b6e77dc",
+      "base_commit": "8cfcb0fedcd91c324553872591831ecd5ffaffb4",
+      "status": "Panel DCS ordering plus shared CPU-PLL L8 always-on fix. Exact39 RAM image26 with original MSM and fixed panel module: owner-confirmed RGB before/after first full CRTC cycle; three further cycles complete with MDSS/IOMMU control auto. No temporary supply/clock hold module. Transient MDP error04000000 observed during repeated enable; full PM,reliability and installed Nura qualification remain open."
     }
   ]
 }

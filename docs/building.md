@@ -81,3 +81,15 @@ Use a separate full source worktree/output to preserve the verified baseline. St
 The separate public lk2nd branch `integration/fx0-rawboot` at `b106e16d0f3fc0e11c55aa58e4c617b89a0e3ef5` adds `LK2ND_EXTLINUX=0`. Use the existing MSM8226 recipe with that option and a separate output directory to omit filesystem discovery. Default `1` retains the existing path. Both configurations and a disabled-search/forced-fastboot diagnostic configuration build; invalid values are rejected. Check `evidence/2026-10-29-lk2nd-rawboot-preparation.json` for the exact artifacts. These are host-built preparation images and have not been flashed.
 
 For a future controlled raw-image test, the forced-fastboot variant permits explicitly selecting `fastboot continue` while automatic diagnostic reboots return to the menu. Its virtual boot partition still starts at the existing 512 KiB offset. Validate that handoff, offset writes/readback and physical key/cold recovery before enabling a normal raw-image configuration. A host regular-file test with the actual RAM image validates updater byte preservation only.
+
+
+## Display power candidate
+
+The latest RAM-tested display source is `integration/fx0-display-power` at
+`476e36e72527b4115b656117634fb17a4b6e77dc`. It includes the camera DT on top of
+compiled39, panel shutdown ordering and the shared CPU-PLL L8 supply fix.
+Image26 deliberately retains the compiled39 kernel/initramfs and changes only
+the DTB; it loads the exact39 signed panel candidate and original MSM module.
+It is not an installed Nura update. One complete CRTC off/on visibly passes;
+three additional cycles complete with automatic MDSS/IOMMU PM. Full kernel44
+build/package/boot qualification follows separately.

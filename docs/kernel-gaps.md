@@ -105,3 +105,15 @@ pattern helper restores its registers and preserves DCS/USB operation, but no
 owner visual response has arrived; error-worker activity rises during the test.
 This narrows mapping faults without proving actual fetch or visible pixels.
 See [the native39 evidence](../evidence/2026-10-29-native39-display-mapping.json).
+
+
+The owner subsequently confirms visible native39 RGB and controlled two-contact
+input. Display shutdown then reproducibly resets at the final PHY vddio release.
+Stock sources show that RPM L8 also supplies the CPU PLL, whose native supply
+vote is absent. The display-power branch keeps L8 enabled and moves panel off
+commands into disable(). RAM image26 uses the original MSM39 module and the
+fixed-order panel; visible RGB returns after a complete CRTC off/on cycle. Three
+further cycles complete with MDSS/IOMMU power/control auto and no temporary
+supply/PLL helper. Transient MDP error04000000 during repeated enable, system
+suspend, reliability and installed-Nura qualification remain open. See
+[power-transition evidence](../evidence/2026-10-29-native39-display-power-transitions.json).

@@ -1,0 +1,95 @@
+{
+  "purpose": "Reproduce native39 shutdown reset and isolate panel-command ordering from later host/PLL teardown",
+  "working_baseline": {
+    "image": "fx0-linux-diagnostic-25.img",
+    "kernel": "6.18.59-00039-g341246daef48",
+    "kernel_source": "341246daef4844c69d8638813bcedfcea35f96f1",
+    "DT_source": "8cfcb0fedcd91c324553872591831ecd5ffaffb4",
+    "owner_RGB_and_controlled_touch": "Confirmed before power tests; evidence2026-10-29-native39-display-mapping.json"
+  },
+  "method": "Duplicate the live DRM-master descriptor with pidfd_getfd; hold framebuffer56 and original pixel owner; explicit CRTC off/on using same buffer, without closing its owner",
+  "baseline_cycle": {
+    "result": "Reset into selected lk2nd fastboot before ioctl completes",
+    "retained_console_tail": "DCS display-off times out(-110) waiting for video completion",
+    "console_raw_ramoops_lk_log_payloads": "All requested and downloaded before next boot"
+  },
+  "panel_order_change": {
+    "branch": "https://github.com/timschmidt/fx0-linux/tree/integration/fx0-display-power",
+    "commit": "9723635946c45921e78e4e03c32eb1c29ca7f574",
+    "source_sha256": "546e94c9e41ff01d89943a52ffcaef263ea0104159ff336f45bb37e5f428fbde",
+    "change": "Send display-off/sleep-in in disable(); unprepare() handles GPIO/supply power-down",
+    "test_build": "External panel module against exact39 ABI, W=1,canonical trusted signature,no force flags; core kernel and camera DT unchanged",
+    "checkpatch": "0errors0warnings with --no-signoff; contributor certification remains pending",
+    "DCS_command_result": "Off commands complete without the previous video-completion timeout",
+    "whole_cycle_result": "Still resets during later host/PLL shutdown; last detailed trace reaches PLL save/unprepare region; exact failing operation not isolated"
+  },
+  "diagnostic_holds": [
+    {
+      "extra_reference": "DSI vdda supply only, through existing host DT phandle to RPM L4",
+      "result": "Cycle still resets; not a sufficient workaround"
+    },
+    {
+      "extra_reference": "DSI vdda plus byte-PLL clock reference",
+      "result": "Cycle still resets; not a sufficient workaround",
+      "clock_counts": "Byte output prepare/enable count1->2, VCO count remains2; before/after host and PHY runtime_status active"
+    }
+  ],
+  "recovery": "Failed cycles recovered to selected lk2nd fastboot; retained console,full raw ramoops and staged lk2nd logs downloaded. Current RAM image26 has four successful cycles; backlight0 during known charger comparator investigation.",
+  "persistent_writes": "None; Nura root ro,noload. No GPT/partition flash,EEPROM programming or stock restoration during tests.",
+  "current_qualification": "Visible initial scanout and first full off/on return established on26. Three additional ioctls complete in automatic PM; full installed-system,suspend and reliability remain open.",
+  "first_trace": {
+    "build": "W=1 external MSM, exact39 ABI, trusted signature, logging only; fixed-order panel module",
+    "result": "PLL save, host ctrl-disable, pinctrl sleep, link clocks, runtime put and bulk-supply disable return. Retained console ends at before phy-disable. No complete CRTC off ioctl.",
+    "inference": "Failure lies after host power-off returns; prior PLL-last-line suspicion not supported. Exact PHY teardown operation still pending.",
+    "retained_payload_sizes": {
+      "console": 63798,
+      "raw": 524288,
+      "lk_log": 1641
+    },
+    "dependency_load_note": "Initial module insertion rejected unresolved symbols because modprobe without -a loaded only its first dependency. Corrected to -a; successfully inserted without forcing versions."
+  },
+  "second_trace": {
+    "result": "PHY control0 write, internal regulator disable and write barrier all return; retained console ends at before phy-supplies-disable (vddio RPM L8).",
+    "retained_payload_sizes": {
+      "console": 58364,
+      "raw": 524288,
+      "lk_log": 1635
+    },
+    "source_lead": "Stock rpm-regulator-ldoa8 also provides vdd_sr2_pll; stock a7sspll uses that regulator. Native DTS has no corresponding PLL supply vote. Additional L8-reference test pending."
+  },
+  "L8_diagnostic_reference": {
+    "result": "Extra vddio L8 reference allows CRTC off and on ioctls to return without reset, using traceMSM and fixed panel ordering. Extra vdda/bytePLL modules absent.",
+    "physical_result": "Question reply overlapped next RAM boot; not treated as a clear post-cycle visual pass."
+  },
+  "L8_DT_fix": {
+    "commit": "476e36e72527b4115b656117634fb17a4b6e77dc",
+    "change": "regulator-always-on for RPM L8; also supplies CPU PLL; no native PLL supply vote currently described",
+    "stock_source": "https://github.com/peremen/android-kernel-lg-madai/tree/03aba4427a7666d57b5ae06d375e259ea337f351",
+    "stock_paths": [
+      "arch/arm/boot/dts/msm8226-regulator.dtsi: rpm-regulator-ldoa8/vdd_sr2_pll",
+      "arch/arm/mach-msm/clock-8226.c: a7sspll vdd_sr2_pll"
+    ],
+    "image": {
+      "file": "fx0-linux-diagnostic-26.img",
+      "bytes": 6197248,
+      "sha256": "899600cac394c02ea8ef26cc5c6a7ccd0382d4dd90388f8502504acddaf7b788",
+      "kernel_release": "6.18.59-00039-g341246daef48",
+      "kernel_source": "341246daef4844c69d8638813bcedfcea35f96f1",
+      "DT_base_source": "9723635946c45921e78e4e03c32eb1c29ca7f574",
+      "DT_change": "L8 regulator-always-on: also supplies CPU PLL",
+      "DT_sha256": "6bf76d073d357108bf2382e279fa43b9e9e5ba6375d32fdbbc5641f872c997da",
+      "kernel_ramdisk_commandline_preserved": true,
+      "android_payload_id_independently_checked": true,
+      "booted": true
+    },
+    "compiled_DTB_difference": "Only regulator-always-on added to l8 after sorted DTB decoding",
+    "DTC": "Three inherited warnings: duplicate efuse unit addresses twice and single-child graph address cells; no added warning",
+    "schema": "Targeted processed camera/regulator schema validation passes with no diagnostics",
+    "checkpatch": "0errors0warnings --no-signoff; author certification not added",
+    "runtime_modules": "Original MSM39 archive; fixed-order panel signed exact39 module; no temporary supply/clock hold modules or traceMSM",
+    "cycles_completed": 4,
+    "cycles_with_MDSS_and_IOMMU_control_auto": 3,
+    "physical_result": "Owner confirms initial26 RGB and bars return after first cycle. Later three-cycle visual question pending when backlight set0 for thermal check.",
+    "remaining_display_issue": "Transient MDP error04000000 appears during repeated enable; full PM/noise/reliability acceptance remains open."
+  }
+}

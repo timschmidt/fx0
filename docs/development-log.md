@@ -431,3 +431,41 @@ noise,installed-system,power or reliability acceptance. The combined tested
 source includes IOMMU/secure contexts, PHY lane handling, non-continuous clock
 mode and RMI reset support; no single-change cause is isolated by this result.
 Saved exact conditions and raw captures privately before further power tests.
+
+### Native display power transition isolation
+
+A controlled CRTC off/on using a duplicate of the live DRM-master descriptor
+resets before the off ioctl completes. The pixel owner and framebuffer remain
+held, avoiding an owner-close or buffer-release confound. Original panel shutdown
+reports a video-completion timeout. Sending display-off/sleep-in in disable()
+instead of unprepare() removes that timeout, but does not resolve the reset.
+The panel-only change is published on integration/fx0-display-power; W=1 module
+build and checkpatch pass. It is not a complete display-power fix.
+
+Extra references to DSI vdda, and then vdda plus the byte PLL, do not prevent the
+reset. An exact-ABI signed diagnostic MSM module adds logging without changing
+shutdown behavior. Its first run shows PLL save, host/link clocks, runtime put
+and host regulator shutdown returning; retained console ends before PHY disable.
+The earlier last PLL log line did not establish the fault. Complete retained
+console, raw ramoops and staged bootloader logs are saved privately before each
+new boot. Installed Nura remains read-only during these RAM tests. Default PM,
+power cycling and installed-system native display are still unqualified.
+
+
+The finer trace reaches PHY control0, internal-regulator shutdown and the write
+barrier, then stops at the final PHY vddio supply disable. Stock L8 also supplies
+vdd_sr2_pll for a7sspll. An additional L8 reference allows the complete off/on
+cycle. Added regulator-always-on for this shared CPU supply in commit476e36e72;
+the native CPU PLL currently has no matching supply vote. Image26 preserves the
+compiled39 kernel/ramdisk/cmdline and differs only by that DT property. It passes
+targeted schemas and checkpatch. With original MSM and fixed panel ordering,
+the owner confirms RGB before and after a complete cycle. Three further cycles
+complete with MDSS/IOMMU power/control auto and no extra supply/PLL module.
+Transient MDP error04000000 occurs during repeated enable, so this is not full
+reliability acceptance. Full source44 kernel build started separately.
+
+SMBB again reports Overheat/Discharging with CPU43C,PMIC41.7C and battery-therm
+raw31266; recorded VADC calibration channels and turned backlight0. This matches
+the previously identified generic-comparator/stock-thermistor-policy gap. No
+threshold change or protection bypass. Charging and battery reporting remain
+unqualified.
