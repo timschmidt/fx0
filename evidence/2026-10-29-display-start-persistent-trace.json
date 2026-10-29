@@ -1,0 +1,84 @@
+{
+  "purpose": "Narrow intermittent startup resets after c6ca bounded PM and bus-clock candidates",
+  "baseline_kernel": "6.18.59-00044-g476e36e72527",
+  "baseline_candidate_source": "c6ca8a0b04d1ce4bbd3d0cde7d079e532dd36b43",
+  "physical_observation_scope": "Latest owner RGB reply confirms native r1 APK RAM test after five-second cycle; not every intermediate startup candidate.",
+  "clock_parent_trace": "Failed startup captured without any clk_set_parent event. Does not establish a parent-assignment fault.",
+  "IOMMU_graph_trace": "SCM restore calls return; no qcom_iommu_fault entry captured before reset. Absence from a USB stream does not exclude later execution.",
+  "IOMMU_instruction_probes": {
+    "successful_run": "Starts, five-second off/on completes, all four devices auto/suspended while off.",
+    "failed_repeat": "Instrumented clock enable, SCM restore and all 18 BFB writes complete; context loop reaches return0 before later MDSS power transitions.",
+    "limitation": "No exact reset instruction established by those probes."
+  },
+  "bounded_PHY_probe_reference": {
+    "change": "Hold PHY runtime reference across PLL clock and provider registration; balanced success/error puts.",
+    "build": "Exact44 external MSM W=1 passes. Private experimental module.",
+    "first_start_and_cycle": "Pass, all four devices suspended during five-second off. No owner physical confirmation for this particular candidate.",
+    "repeat_start": "Reset; sequence stopped, retained logs captured.",
+    "conclusion": "Not sufficient; not promoted or installed."
+  },
+  "diagnostic_kernel": {
+    "kernel_release": "6.18.59-fx0-pmdebug1-00044-g476e36e72527",
+    "kernel_source": "476e36e72527b4115b656117634fb17a4b6e77dc",
+    "MSM_candidate_source": "c6ca8a0b04d1ce4bbd3d0cde7d079e532dd36b43",
+    "diagnostic_config": [
+      "PSTORE_FTRACE",
+      "SOFTLOCKUP_DETECTOR",
+      "DETECT_HUNG_TASK",
+      "DEBUG_ATOMIC_SLEEP"
+    ],
+    "ramoops": {
+      "base": "0x2ff80000",
+      "bytes": 524288,
+      "dump_bytes": 131072,
+      "record_bytes": 8192,
+      "console_bytes": 131072,
+      "ftrace_bytes": 262144,
+      "ftrace_per_cpu": true,
+      "nr_cpus": 4,
+      "LK_DT_override_disabled": true
+    },
+    "image": {
+      "file": "fx0-linux-diagnostic-31.img",
+      "bytes": 6221824,
+      "sha256": "c7e3cf8439f9329b42f9437a4d5841e8761ab5d5d49c5815d2561ebfee34ce9f"
+    },
+    "modules": {
+      "file": "fx0-display-debug-modules-01.tar.gz",
+      "bytes": 11202273,
+      "sha256": "c06f8028a233b718cba36baadcb208a428201d0ec5a2fc1e3de7a9158b0b4804"
+    },
+    "MSM_module_sha256": "4164daa4cc4d337cdb5f9db8381261b8dff866f6252233f85ca19d772bbce0fd",
+    "config_sha256": "8655b297f38fd3113cfb961412bf73b57e264c13bb63d61c99254bec13ab58be",
+    "signing_cert_sha256": "504347c86a813569c96233a9a61e8efe6dd8ee99a964133af199ea05d5ba9ebb",
+    "booted": true,
+    "result": "Reset during candidate startup; full raw retained RAM decoded successfully."
+  },
+  "persistent_trace_result": {
+    "booted": true,
+    "result": "Startup reset; full raw 512KiB ramoops captured before next boot, decoded as diagnostic layout.",
+    "trace": "Per-CPU retained function records continue after clock-enable calls from the DSI version-query path. Call-return offsets match optional bus and iface prepare/enable pairs in exact MSM binary.",
+    "module_base": "Inferred consistently from four matching caller offsets; no claim of direct .text sysfs capture in this run.",
+    "inference": "Next source path is DSI_VERSION MMIO. Test missing normal bus clocks before changing locking behavior. A final function-call record alone does not prove the exact faulting instruction.",
+    "lockup_detectors": "No retained soft-lockup or hung-task report. Does not prove neither condition occurred.",
+    "taint": "External diagnostic MSM marked out-of-tree; native packaged module test remains taint0."
+  },
+  "next_candidate": "Diagnostic image31 with unfiltered persistent function tracing and direct MSM text-base capture; no further functional patch assumed.",
+  "persistent_device_writes": "None in these experiments; root ro,noload. No eMMC/GPT or calibration writes.",
+  "optional_core_mmss_query_clock": {
+    "module_sha256": "afd4dcc253aca77e8d699293914b88bdd80005bdebe618841b3c4986c9dec35d",
+    "results": [
+      "First startup and five-second cycle pass after waiting for pattern owner readiness; initial test-helper pidfd_getfd call was premature.",
+      "Second startup and five-second cycle pass.",
+      "Third startup resets; retained logs captured; no fourth run."
+    ],
+    "qualification": "Insufficient. No owner visual pass for these particular runs. Private prototype; no upstream fix claimed."
+  },
+  "complete_optional_query_bus_set": {
+    "clocks": "mdp_core,bus,core_mmss plus mandatory iface",
+    "build": "W=1 passes with balanced temporary handles",
+    "module_sha256": "f7ccfb217be9d986e32934bd33cc98daba332ec4b267ee0d9f61373c70e27b50",
+    "result": "First startup resets during early child creation; retained logs captured; no repeat runs.",
+    "qualification": "Not sufficient; not promoted."
+  }
+}

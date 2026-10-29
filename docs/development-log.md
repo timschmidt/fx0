@@ -559,3 +559,38 @@ experiment is unpublished. Next trace also includes clock-parent events, which
 run during device setup before the host's probe. The precise fault instruction
 remains unknown. No new native package revision is being promoted while this
 intermittent startup remains.
+
+
+### Native r1 runtime and persistent startup trace
+
+The exported native r1 kernel and its own signed modules now boot from RAM.
+Their initial MDSS/IOMMU holds permit native DRM binding. After restoring auto,
+a five-second off/on completes with all four display devices suspended while off;
+the owner confirms RGB afterward. Directly unpacking the APK skipped the normal
+kmod installation trigger and exposed empty dependency indexes. Running target
+kmod34.2 depmod generates the correct dependencies and loads RMI without taint.
+The actual installed kmod trigger performs this step on normal package installs.
+No installed Nura filesystem has been modified.
+
+The clock-parent trace captures no parent-setting calls before a failed startup.
+IOMMU graph and instruction-probe runs show successful SCM restore and BFB/context
+work before a later reset. A bounded PHY reference across PLL/provider creation
+passes once and resets on repeat; it is not a fix.
+
+A separate diagnostic kernel adds persistent function tracing, soft-lockup and
+hung-task detection, plus atomic-sleep debugging. Its distinct release prevents
+module confusion. A diagnostic DT partitions the same reserved 512KiB into
+128KiB crash records,128KiB console and256KiB per-CPU function tracing, disabling
+lk2nd's fixed-layout DT override. Full raw retained RAM survives a failed startup
+and decodes successfully. The final recorded clock callers match the DSI version
+query's prepare/enable pairs, immediately before its register-read path. This
+narrows the next test to other normal DSI bus clocks; the exact fault instruction
+is not yet proven. No lockup-detector report is retained. Full details and limits
+are in evidence/2026-10-29-display-start-persistent-trace.json.
+
+
+Adding core_mmss to the query clock set passes two starts/cycles and resets on
+the third startup. A follow-up enabling mdp_core,bus and core_mmss before the
+version read resets on its first startup. Neither is a sufficient fix. These
+private candidates are not promoted. The persistent trace is being broadened to
+include all function paths and capture the loaded MSM text address directly.

@@ -105,3 +105,21 @@ It has not been installed. Preserve the working kernel/module archives: kernel44
 regenerated its signing key during build and has a different trust certificate
 from39. Load matching modules with the actual trusted key; never force versions
 or signatures. See the current build/package evidence for exact hashes.
+
+The r1 APK now also passes a RAM diagnostic boot using its own kernel and modules:
+USB, RMI probe, native DRM and a five-second off/on, followed by owner-confirmed
+RGB. Initial MDSS/IOMMU holds were used and released before the cycle. Direct
+archive extraction bypasses APK triggers, so regenerate module indexes with the
+target's kmod before loading modules. The normal installed kmod trigger does
+this automatically. This is not an installed-system or hold-free startup pass.
+
+For persistent startup diagnostics, apply
+`configs/diagnostic-display-pm-debug.fragment` to a separate output tree and
+build its own matching module set. The tested diagnostic layout reserves the
+same 512KiB at 0x2ff80000, split into128KiB crash records (8KiB each),128KiB
+console and256KiB function trace with `flags=1` for per-CPU records. This layout
+requires omitting `lk2nd.pass-ramoops`, whose DT hook overrides sizes. Retrieve
+`oem ramoops raw` before any subsequent boot and decode using these sizes;
+lk2nd's ordinary console command assumes its original layout. Do not use the
+diagnostic configuration as a production package. The exact source and artifact
+hashes are in the persistent-trace evidence.

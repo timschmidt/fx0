@@ -39,17 +39,20 @@ repeated startup. Full orientation,accuracy,noise,suspend and reliability remain
 open. The stock kernel in RAM also displays correct bars and records touch.
 See [display-power evidence](evidence/2026-10-29-display-power-kernel44-build.json).
 
-A fresh native Nura r1 kernel APK is built and its signature verifies against the
-installed system's trusted keys. It is not installed yet and does not contain
-the newer experimental initialization candidates. Installed-native Nura and the
-full graphical interface remain unqualified.
+A fresh native Nura r1 kernel APK verifies against the installed trusted keys
+and boots from RAM using its own modules. With initial display power holds,
+it completes a five-second off/on, restores automatic PM and displays
+owner-confirmed RGB. It is not installed yet and does not contain the newer
+experimental initialization candidates. Installed-native Nura and the full
+graphical interface remain unqualified.
 
 Native CCI now reads the separate camera EEPROM: a short read and two full 64 KiB
 reads match the independent GPIO capture. Verified private copies exist on two
 host filesystems. The shared supply returns low, and CCI runtime suspend/resume
 and clock gating pass for these reads. This does not qualify sensor streaming,
-CAMSS, calibration validity or OIS operation. Charging is currently Good/Charging;
-full charging policy, automatic USB current negotiation, native display/touch,
+CAMSS, calibration validity or OIS operation. The generic charger comparator
+can report Overheat near room temperature; charging policy remains unqualified.
+Automatic USB current negotiation, full native display/touch qualification,
 wireless, audio, sensors, both cameras, cellular, update/recovery and reliability
 acceptance remain open. Plymouth stays disabled after its initial crash. No SIM
 is available.
