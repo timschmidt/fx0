@@ -1,0 +1,54 @@
+{
+  "purpose": "Native Wayland console and board-level touch orientation validation",
+  "date": "2026-10-29",
+  "installed_kernel": "linux-postmarketos-qcom-msm8226-6.18.59-r1",
+  "kernel_source": "476e36e72527b4115b656117634fb17a4b6e77dc",
+  "candidate_DTB_source": "87d953b4a0ce9594a6a438579c1d2a489faaa00b",
+  "r2_recipe": "f50eb689393d4022958b64ec89e162436f0b9527",
+  "software": {
+    "interface": "Controlled TinyDM/Sway terminal and wvkbd; full Sxmo not yet started",
+    "renderer": "Pixman software; GPU disabled",
+    "output": "Native DSI-1 720x1280 at 60 Hz, scale 1.5",
+    "kernel_taint": 0,
+    "owner_visible_terminal_keyboard": true,
+    "screenshot": "2026-10-29-native-wayland-console.png"
+  },
+  "orientation": {
+    "initial_symptom": "Tapping opposite the keyboard produces keystrokes",
+    "raw_events": 1432,
+    "libinput_touch_records": 382,
+    "IRQ_before": 431,
+    "IRQ_after": 694,
+    "runtime_both_axis_inversion_owner_confirmed": true,
+    "candidate_change": [
+      "touchscreen-inverted-x",
+      "touchscreen-inverted-y"
+    ],
+    "candidate_location": "RMI Function12 board DT node",
+    "candidate_DTB_sha256": "892d6c3d2a6b563536cb858699cb9917bdbc6631a7b529aa3d65800a08fc7dc0",
+    "semantic_DTB_difference": "Only two standard inversion booleans",
+    "DTB_build": "W=1 passes with three pre-existing warnings",
+    "RMI_schema": "Pass, no diagnostics",
+    "checkpatch": "0 errors, 0 warnings",
+    "RAM_boot_candidate": true,
+    "both_live_properties_present": true,
+    "compositor_calibration": [
+      1,
+      0,
+      0,
+      0,
+      1,
+      0
+    ],
+    "owner_confirms_correct_taps_on_DT_candidate": true,
+    "persistent_r2_installed": false
+  },
+  "remaining": [
+    "Native r2 package build/install/installed boot",
+    "Full Sxmo UI",
+    "GPU acceleration",
+    "Startup without initial power holds",
+    "Cold/repeated/unattended boot, suspend and reliability",
+    "Full hardware, recovery, final storage and upstream qualification"
+  ]
+}

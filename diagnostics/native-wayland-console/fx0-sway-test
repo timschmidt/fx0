@@ -1,0 +1,6 @@
+#!/bin/sh
+export WLR_RENDERER=pixman
+export WLR_DRM_DEVICES=/dev/dri/by-path/platform-fd900100.display-controller-card
+export WLR_BACKENDS=drm,libinput
+export LIBSEAT_BACKEND=logind
+exec sway -d -c /etc/sway/fx0-console.conf

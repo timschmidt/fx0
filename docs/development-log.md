@@ -764,3 +764,27 @@ route priority. HTTPS and trusted repository-index updates pass. The upgrade dry
 run reports no pending packages, and the existing local-kernel checksum pin
 retains the tested r1 build. NTP synchronizes and no boot jobs remain. No Wi-Fi,
 SIM or modem functionality is inferred from this development network path.
+
+
+### Native Wayland console and touch orientation
+
+Sxmo's packaged dependencies install through reverse USB internet. A controlled
+TinyDM/Sway session uses native DRM and Pixman, with a foot terminal and wvkbd.
+The owner confirms both are visible. This is a software-rendered console test;
+the full Sxmo session and GPU are not yet qualified. Kernel taint stays 0.
+
+The apparent loss of keyboard taps is a coordinate orientation problem. Concurrent
+raw/libinput records contain 1,432/382 events and the interrupt count increases
+431 to 694. A Y-only calibration helps; the owner identifies the remaining X
+inversion. Both inversions make taps match keys. Source 87d953b4 adds the two
+standard touchscreen inversion booleans to the board's RMI Function12 node. Its
+DTB passes build/schema/checkpatch checks, with only three existing DT warnings.
+The semantic DTB difference is exactly those booleans. A RAM boot with native r1
+kernel/modules verifies both live properties, identity compositor calibration,
+and owner-confirmed correct keys on both sides. The signed r2 recipe is committed
+and published at f50eb6893; configuration checks pass. Package build/install and
+an installed boot are still required for persistent correction.
+
+The test fixture and inspected generic-prompt screenshot are public under
+diagnostics/native-wayland-console and evidence/2026-10-29-native-wayland-console.*.
+Full logs, input captures and boot data remain private.

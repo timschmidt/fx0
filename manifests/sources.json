@@ -79,8 +79,8 @@
       "url": "https://github.com/timschmidt/fx0-pmaports",
       "branch": "integration/fx0-v26.06",
       "base_commit": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
-      "status": "Prepared r1 with source476e36e72 and IOMMU config; required kconfig passes. User-run native fresh package build succeeds and signed APK exported; PKGINFO commit=-dirty because build launched before equivalent recipe commit. Package signature/runtime/install verification pending.",
-      "commit": "0b5e319349b4e361d1c5366c42a730fdb1a1bd64"
+      "status": "Native 6.18.59-r2 recipe for physically validated DT orientation; source archive and kconfig verified, build/install pending. Native r1 installed and booted.",
+      "commit": "f50eb689393d4022958b64ec89e162436f0b9527"
     },
     {
       "name": "linux-display-iommu-experimental",
@@ -142,6 +142,13 @@
       "commit": "c6ca8a0b04d1ce4bbd3d0cde7d079e532dd36b43",
       "base_commit": "476e36e72527b4115b656117634fb17a4b6e77dc",
       "status": "Bounded MDSS population PM reference and optional DSI bus-clock query reference. W=1/checkpatch pass; clean exact44 module starts without userspace holds and5s off/on passes, but repeat startup resets intermittently. Not a complete default-PM fix; not in exported r1 Nura APK."
+    },
+    {
+      "name": "linux-touch-orientation",
+      "url": "https://github.com/timschmidt/fx0-linux",
+      "branch": "integration/fx0-touch-orientation",
+      "commit": "87d953b4a0ce9594a6a438579c1d2a489faaa00b",
+      "status": "Two standard RMI-F12 axis inversions; DTB/schema/checkpatch pass; RAM boot with native r1 and identity compositor calibration physically confirmed. r2 package persistence pending."
     }
   ]
 }
