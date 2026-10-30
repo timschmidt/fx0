@@ -401,6 +401,36 @@ close the firmware interval before probe. Keep the conservative hardware BTC
 window and installed r4 package. Reinitialization is required after a latched
 control fault; managed cleanup is best effort if the bus remains unavailable.
 
+### Early firmware gate
+
+A separate opt-in lk2nd candidate now verifies charge inhibition before native
+charger probe. Its SPMI transactions have bounded status polling and checked
+errors. On the exact Fx0/PM8226 target it clears charge enable, verifies the
+whole control byte, selects conservative/enabled BTC=0x81 while charging is off,
+then verifies BTC. It preserves forced-battery and unrelated bits and leaves the
+thermistor reference alone. A proposed empty handoff property is published only
+after success. FDT failure changes no hardware; uncertain PMIC operations cause
+an inhibition retry and abort boot rather than claiming a successful handoff.
+
+The initial RAM run physically establishes charge control=0x00 with no native
+charger probe, but sees inherited BTC=0x82. That fails the diagnostic's narrow-
+window assertion. The precise boot stage or reset mechanism restoring 0x82 was
+not traced. The revised firmware, using the same diagnostic kernel/initramfs,
+passes with control=0x00, BTC=0x81 and reference=0xc0. No eMMC filesystem is
+mounted, and automatic reboot returns to original firmware/r4 with taint zero,
+normal services and matching bootloader-prefix/GPT readbacks in both runs.
+
+There are 2,048 complete SPMI MMIO cases and 307 actual gate/libfdt/bus-fault
+cases under ASan/UBSan. The existing 128 profile cases/all 155 OCV points still
+pass; firmware builds with one existing linker RWX warning and no new-source
+diagnostics. These are RAM prototypes with proposed properties, not accepted DT
+bindings or a complete charging implementation. The native driver is deliberately
+disabled in this diagnostic; real supplier deferral, a Linux handoff check and
+the managed profile/sensor/thermal worker remain to connect. Existing drivers
+can re-enable charging after normal setup. See the
+[protocol and diagnostic](../diagnostics/lk2nd-charge-gate/README.md) and
+[qualified evidence](../evidence/2026-10-30-firmware-charge-gate.json).
+
 ## Implementation sequence
 
 1. Preserve exact current boot files, modules, package, configurations, raw boot

@@ -1480,3 +1480,50 @@ those comparisons. No persistent kernel/firmware install or repartition occurs.
 Early firmware gating, profile/sensor authorization, thermal hysteresis/derating,
 stale inputs, suspend, pack replacement and actual charging/gauge qualification
 remain open. See [evidence](../evidence/2026-10-30-smbb-charge-guard.json).
+
+## October 30: early firmware charge inhibition
+
+An isolated lk2nd branch adds opt-in charge inhibition before native driver
+dependencies can defer probe. The existing checked SPMI APIs are suitable for
+error propagation, but their shared command polling is unbounded. Bounded
+1,000-poll waits now return a nonzero error rather than waiting forever. Two
+compiled SPMI layouts pass 2,048 complete transfer/delay/error cases. This does
+not retrofit old byte/void APIs that discard errors or measure physical timing.
+
+The GPL gate validates the exact Fx0, sole charger node, PM8226 SID/address and
+runtime PMIC model before writes. Its aligned FDT clone completes fallible tree
+operations before PMIC access. It clears and verifies only charge enable,
+preserving forced-battery mode; a proposed handoff marker is published only on
+success. Error recovery attempts inhibition again but still aborts the boot.
+Current aboot asserts on DT-update errors; a hard bus failure may need manual
+reset and cannot be described as verified physical inhibition.
+
+The first RAM firmware a154a55 successfully hands off control 0x00 before any
+native charger probe, with a deliberately disabled native charger and a read-only
+initramfs observer. It nevertheless fails the diagnostic's expected BTC 0x81
+assertion: inherited BTC is 0x82 and reference 0xc0. The exact boot stage or reset
+mechanism restoring 0x82 is untraced. Source comments and public records distinguish
+that observation from an attribution to first-stage firmware.
+
+The revised gate at dbdb98a verifies inhibition first, then selects and verifies
+BTC mask0x83/value0x81 without changing unrelated bits or the reference. Its 307
+actual libfdt/SPMI/fault/rollback cases pass ASan/UBSan. Full GCC15.2 builds have
+one existing linker RWX LOAD warning and no new-source diagnostics. The existing
+128 profile cases and all 155 source OCV values still pass. A later commit changes
+only an explanatory comment; the exact physically tested commit/image remain
+separate in the manifest.
+
+The same observer image boots under the revised RAM firmware and records the
+marker, no native charger supply, control 0x00, BTC 0x81 and reference 0xc0. It mounts
+no eMMC filesystem, marks available block devices read-only and reboots
+automatically. The RAM observer has taint 12288. Both runs retain their exact
+images, logs and outcomes, then return to original firmware/r4 build5 with
+taint 0, normal UPower/Sxmo, automatic display controls and matching bootloader/
+GPT readbacks. No firmware is flashed or package replaced.
+
+The properties are a development protocol proposal, not accepted bindings.
+Actual fw_devlink supplier deferral and the Linux handoff/profile/sensor/thermal
+worker remain unconnected; an older native driver can re-enable charging after
+normal setup. The disabled-driver test does not qualify that later interval,
+runtime removal, suspend, current accuracy or SOC. See
+[early-gate evidence](../evidence/2026-10-30-firmware-charge-gate.json).

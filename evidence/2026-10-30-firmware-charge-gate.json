@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-30",
+  "repository": "https://github.com/timschmidt/fx0-lk2nd",
+  "branch": "integration/fx0-charge-gate",
+  "physically_qualified_source_commit": "dbdb98a3d8d1d0091088619814eefa91f3d7e334",
+  "firmware_version": "next-dbdb98a-20261030",
+  "firmware_image_sha256": "b66d365c60f8e0faead1e61c5b0d4d9f8f4a11b396082bfb69bc4af140abc4af",
+  "firmware_image_bytes": 315408,
+  "diagnostic_image_sha256": "3e533310ee2645c0942d45ee7c32fcd6b5518fee0e18a9e4ac255e98fe2e0376",
+  "first_run": {
+    "source_commit": "a154a5575e66ffb305e639232b3256a8ec1c9dde",
+    "charge_control": "0x00",
+    "inherited_BTC": "0x82",
+    "reference": "0xc0",
+    "result": "Inhibition verified; expected narrow-window assertion failed.",
+    "exact_boot_stage_or_reset_writer_traced": false,
+    "normal_r4_return_verified": true
+  },
+  "host": {
+    "complete_SPMI_transfer_cases": 2048,
+    "gate_libfdt_bus_fault_cases": 307,
+    "ASan_UBSan": "PASS",
+    "existing_battery_profile_cases": 128,
+    "all155_vendor_OCV_points_regression": "PASS",
+    "full_GCC15_2_firmware_build": "PASS; no new-source diagnostics, one linker RWX LOAD warning",
+    "physical_SPMI_timeout_timing_measured": false
+  },
+  "qualified_RAM_run": {
+    "native_charger_driver": "disabled for isolation",
+    "firmware_marker": "present",
+    "charge_control": "0x00",
+    "BTC": "0x81 conservative/enabled",
+    "reference": "0xc0 unchanged",
+    "real_fw_devlink_supplier_deferral_tested": false,
+    "eMMC_filesystem_mounted": false,
+    "automatic_return": true,
+    "RAM_observer_kernel_taint": 12288
+  },
+  "normal_return": {
+    "installed_r4_build": 5,
+    "original_firmware": "fx0-fd380ac6",
+    "kernel_taint": 0,
+    "four_display_controls_auto": true,
+    "UPower_and_tinydm_active": true,
+    "bootloader_prefix_and_both_GPTs_identical": true,
+    "whole_eMMC_identity_claimed": false,
+    "physical_UI_retest_claimed": false
+  },
+  "scope": [
+    "Firmware opt-in/marker properties are proposed, not accepted upstream bindings.",
+    "Linux profile/sensor/thermal worker and handoff validation remain unconnected.",
+    "An older driver can re-enable charging after normal setup; this marker is not a complete policy.",
+    "Permanent bus failure may prevent inhibition; DT update error currently asserts in aboot.",
+    "No persistent firmware/kernel install, gauge reset, factory restoration or repartition.",
+    "No charging-current accuracy, SOC, runtime removal, suspend or whole-hardware qualification."
+  ]
+}

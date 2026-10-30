@@ -1,0 +1,53 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+/bin/busybox --install -s /bin
+export PATH=/bin
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t devtmpfs devtmpfs /dev
+mount -t debugfs debugfs /sys/kernel/debug
+exec </dev/console >/dev/console 2>&1
+log() { echo "<6>fx0-charge-gate: $*" >/dev/kmsg; }
+fail() { log "FAIL $*"; failed=1; }
+failed=0
+# Independent timer also runs if the main observation command stalls.
+(sleep 90; log 'TIMEOUT returning to installed lk2nd'; reboot -f) &
+guard=$!
+log 'RAM diagnostic started; no eMMC filesystem will be mounted'
+sleep 3
+for device in /dev/mmcblk*; do
+    test ! -b "$device" || blockdev --setro "$device" || fail block-readonly
+done
+version=/sys/firmware/devicetree/base/chosen/lk2nd,version
+test -f "$version" && log "firmware $(tr -d '\000' <"$version")"
+set -- $(find /sys/firmware/devicetree/base -name 'qcom,boot-charge-inhibited')
+if test "$#" = 1 && test -f "$1" && test ! -s "$1"; then
+    log 'firmware inhibition marker present'
+else
+    fail missing-or-ambiguous-marker
+fi
+test ! -e /sys/class/power_supply/smbb-bif || fail native-charger-probed
+log 'native charger supply absent (diagnostic DT keeps it disabled)'
+if insmod /fx0-btc-reference.ko force_on=0; then
+    records=/sys/kernel/debug/fx0-btc-reference/registers
+    control=$(awk '$1=="1049" {print $2}' "$records")
+    btc=$(awk '$1=="1249" {print $2}' "$records")
+    reference=$(awk '$1=="124a" {print $2}' "$records")
+    log "control=$control BTC=$btc reference=$reference"
+    if test -n "$control" && test "$((0x$control & 128))" = 0; then
+        log 'verified charge-enable clear before any native charger probe'
+    else
+        fail charge-enable-not-clear
+    fi
+    test "$btc" = 81 || fail unexpected-BTC-window
+    rmmod fx0_btc_reference || fail observer-unload
+else
+    fail observer-load
+fi
+log "taint=$(cat /proc/sys/kernel/tainted)"
+if test "$failed" = 0; then log 'PASS early firmware gate'; fi
+sleep 5
+kill "$guard"
+log 'returning to installed lk2nd'
+reboot -f
+while :; do sleep 10; done

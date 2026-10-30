@@ -59,8 +59,15 @@ The next charger-control foundation now has verified writes, separate setup/
 user/fault restrictions, host fault/concurrency tests and three RAM device
 cycles. This does not qualify actual charging response: IADC was unchanged
 across those cycles. Complete temperature/profile/stale-sample/suspend policy
-and the early firmware gate before changing the hardware comparator window.
+and connect the early firmware gate before changing the hardware comparator window.
 See [the detailed battery work](battery-bringup.md#verified-control-foundation).
+
+An opt-in RAM firmware now verifies inhibition and conservative BTC before an
+intentionally disabled native charger can probe. Its first run discovers an
+inherited 0x82 window; the revised gate explicitly narrows to 0x81 while charging
+is off. Actual fw_devlink supplier deferral, Linux handoff validation and the
+complete thermal worker remain to implement/qualify. This diagnostic does not
+enable charging or install firmware persistently.
 
 ## Technical baseline
 

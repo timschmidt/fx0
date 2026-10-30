@@ -76,9 +76,11 @@ readbacks. See [handoff evidence](evidence/2026-10-30-battery-profile-handoff.js
 
 A further RAM candidate verifies charger control writes, serializes limit and
 enable changes, and prevents user auto from clearing an I/O fault. Host fault/
-concurrency tests and three physical control cycles pass. Thermal policy and
-the early firmware charge gate remain open; the conservative temperature window
-is unchanged. See [the control foundation](diagnostics/smbb-charge-guard/README.md).
+concurrency tests and three physical control cycles pass. An opt-in RAM firmware
+gate now inhibits charging and verifies conservative BTC before any native
+charger probe. Its Linux handoff/profile/sensor/thermal policy is not connected
+yet. See [the control foundation](diagnostics/smbb-charge-guard/README.md) and
+[early-gate evidence](evidence/2026-10-30-firmware-charge-gate.json).
 
 Stock inventory, 29 critical partition backups, GPT metadata and a separately
 verified 1 GiB original-system image are private. A complete **development-state**
