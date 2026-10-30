@@ -1313,3 +1313,47 @@ Cleanup restores 100 mA. New installed r4 identity/taint 0 is observed, then a
 later SSH command times out. An idempotent bounded finalizer verifies the same
 boot, restores UPower/Sxmo and checks all four display controls remain auto.
 No additional reboot is used for that recovery and no integration code changes.
+
+## October 30: isolate the comparator window
+
+A staged native comparison keeps the signed r4 IADC and removes BMS/thermal
+consumers. Swapping VADC or reading battery voltage preserves charging. Reading
+the thermistor exposes the hardware HOT flag and reduces live current near zero.
+Reference mode is already forced (`0xc0`); repeating the stock awake request does
+not help. Switching the mux back to battery voltage does not clear the trip.
+Five minutes with the backlight off changes inferred temperature by less than
+1°C, insufficient to exclude comparator hysteresis.
+
+The original stock kernel then reproduces HOT at a reported 31.6°C when its
+25%/80% comparator range is temporarily tightened to native's 35%/70% range.
+Restoring stock's range clears HOT and charging resumes. Stock supply health
+remains Good during the raw hardware trip; the source uses LG software-policy
+health. A DT `btc-disabled` flag is also insufficient to infer runtime state:
+the enabled factory-pseudo-battery build path enables the comparator in normal
+mode, matching observed `0x82`. This comparison points to range/profile and
+missing native software-policy work, rather than a proven VADC conversion bug.
+Do not introduce an unproven reference/mux fix or widen native hardware limits
+alone. Every test restores normal installed r4 with taint zero.
+
+## October 30: standard native charge-control actuator
+
+The separate kernel commit 05bec5027 exposes auto/inhibit-charge while preserving
+forced-battery mode and other charger control bits. Its actual helper/property/
+status tests pass 1,051 ASan/UBSan cases; strict checkpatch has zero diagnostics.
+A full ARM LLVM22 W=1 kernel build passes, all 14,228 shared module symbol CRCs
+match, and the patch applies to pinned current upstream SMBB source.
+
+The full kernel boots from RAM with original r4 DTB/initramfs and a verified GNU
+build ID. Three inhibit/resume cycles pass with USB online, unchanged limits,
+Not charging while inhibited, and live IADC about 249 → 18.4 → 230–290 mA.
+The residual reading is not proof of electrically measured zero current. Invalid
+modes are rejected without a control change. Cleanup restores the actual initial
+100 mA budget and original mode. Normal installed r4 returns automatically with
+taint zero, active UPower/Sxmo and all four display controls auto. No persistent
+package change, wider BTC setting, gauge reset or upstream communication occurs.
+
+Source review finds that current upstream Charger Manager needs sensor-failure
+handling and an appropriate power-supply actuator before reuse here. No complete
+native thermal policy has yet been enabled. Temperature accuracy, sensor faults,
+thermal hysteresis/derating, charging across suspend and current/gauge accuracy
+remain qualification gates.

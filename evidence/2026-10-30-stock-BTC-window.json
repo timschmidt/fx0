@@ -1,0 +1,254 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Reproduce native BTC window on original stock kernel with its software temperature policy",
+  "stock_kernel": "3.4.0 factory kernel/QCDT loaded from RAM",
+  "disk_filesystems_mounted": false,
+  "original_BTC": "0x82: comparator enabled,25%/80%",
+  "temporarily_tightened_BTC": "0x81: comparator enabled,35%/70% matches native",
+  "restored_BTC": "0x82 verified",
+  "raw_BAT_TEMP_status": "0x80 normal ->0x40 HOT after tightening ->0x80 after restoration",
+  "stock_reported_temperature_deciC": [
+    316,
+    316,
+    316,
+    316,
+    316,
+    321,
+    316
+  ],
+  "result": "Stock hardware repeats HOT and near-zero current under native window at reported31.6C. Restoring stock window clears hardwareHOT and charging resumes. This is not a native VADC-specific failure.",
+  "current_sign": "Stock negative charging; normalized export is positive charging",
+  "sample_atomicity": "Sequential register/supply reads,not a joint latch",
+  "stock_health_observation": "Supply health remainsGood even when raw comparator saysHOT; do not use it alone to infer hardware protection state",
+  "source_caveat": "Madai DT contains btc-disabled, but CONFIG_LGE_PM_FACTORY_PSEUDO_BATTERY=y source path explicitly enables comparator in normal(non-pseudo)mode. Runtime0x82 resolves actual state; exact binary/source correspondence unestablished.",
+  "guards": "Present,Good and reported0..35C preflight; only tighten hardware window; restore original only while present and reported0..35C; otherwise leave tighter mode; preserve debugfs selectors",
+  "samples": [
+    {
+      "stage": "original-before",
+      "registers": {
+        "0x1010": 33,
+        "0x1049": 128,
+        "0x1209": 128,
+        "0x1210": 7,
+        "0x1249": 130,
+        "0x124a": 192,
+        "0x3140": 3,
+        "0x3146": 0,
+        "0x3148": 48,
+        "0x3150": 0,
+        "0x3151": 2,
+        "0x315a": 0,
+        "0x315b": 0
+      },
+      "supplies": {
+        "battery/present": 1,
+        "battery/status": "Charging",
+        "battery/health": "Good",
+        "battery/temp": 316,
+        "battery/current_now": -76071,
+        "battery/voltage_now": 4305874,
+        "bms/status": "Charging",
+        "bms/current_now": -132942
+      },
+      "uptime_s": 30.43,
+      "charging_current_uA_normalized": 76071
+    },
+    {
+      "stage": "original-after",
+      "registers": {
+        "0x1010": 33,
+        "0x1049": 128,
+        "0x1209": 128,
+        "0x1210": 7,
+        "0x1249": 130,
+        "0x124a": 192,
+        "0x3140": 3,
+        "0x3146": 0,
+        "0x3148": 2,
+        "0x3150": 0,
+        "0x3151": 0,
+        "0x315a": 0,
+        "0x315b": 0
+      },
+      "supplies": {
+        "battery/present": 1,
+        "battery/status": "Charging",
+        "battery/health": "Good",
+        "battery/temp": 316,
+        "battery/current_now": -114198,
+        "battery/voltage_now": 4307644,
+        "bms/status": "Charging",
+        "bms/current_now": -141132
+      },
+      "uptime_s": 32.49,
+      "charging_current_uA_normalized": 114198
+    },
+    {
+      "stage": "native-tightened-0",
+      "registers": {
+        "0x1010": 33,
+        "0x1049": 128,
+        "0x1209": 128,
+        "0x1210": 7,
+        "0x1249": 129,
+        "0x124a": 192,
+        "0x3140": 3,
+        "0x3146": 0,
+        "0x3148": 8,
+        "0x3150": 0,
+        "0x3151": 0,
+        "0x315a": 0,
+        "0x315b": 0
+      },
+      "supplies": {
+        "battery/present": 1,
+        "battery/status": "Charging",
+        "battery/health": "Good",
+        "battery/temp": 316,
+        "battery/current_now": -76617,
+        "battery/voltage_now": 4306465,
+        "bms/status": "Charging",
+        "bms/current_now": -76708
+      },
+      "uptime_s": 32.56,
+      "charging_current_uA_normalized": 76617
+    },
+    {
+      "stage": "native-tightened-2",
+      "registers": {
+        "0x1010": 32,
+        "0x1049": 128,
+        "0x1209": 64,
+        "0x1210": 5,
+        "0x1249": 129,
+        "0x124a": 192,
+        "0x3140": 3,
+        "0x3146": 0,
+        "0x3148": 48,
+        "0x3150": 0,
+        "0x3151": 2,
+        "0x315a": 0,
+        "0x315b": 0
+      },
+      "supplies": {
+        "battery/present": 1,
+        "battery/status": "Charging",
+        "battery/health": "Good",
+        "battery/temp": 316,
+        "battery/current_now": 959,
+        "battery/voltage_now": 4291432,
+        "bms/status": "Full",
+        "bms/current_now": 959
+      },
+      "uptime_s": 34.63,
+      "charging_current_uA_normalized": -959
+    },
+    {
+      "stage": "native-tightened-5",
+      "registers": {
+        "0x1010": 32,
+        "0x1049": 128,
+        "0x1209": 64,
+        "0x1210": 1,
+        "0x1249": 129,
+        "0x124a": 192,
+        "0x3140": 3,
+        "0x3146": 0,
+        "0x3148": 8,
+        "0x3150": 0,
+        "0x3151": 0,
+        "0x315a": 0,
+        "0x315b": 0
+      },
+      "supplies": {
+        "battery/present": 1,
+        "battery/status": "Charging",
+        "battery/health": "Good",
+        "battery/temp": 316,
+        "battery/current_now": 479,
+        "battery/voltage_now": 4307053,
+        "bms/status": "Full",
+        "bms/current_now": 479
+      },
+      "uptime_s": 37.69,
+      "charging_current_uA_normalized": -479
+    },
+    {
+      "stage": "original-restored-2",
+      "registers": {
+        "0x1010": 32,
+        "0x1049": 128,
+        "0x1209": 128,
+        "0x1210": 7,
+        "0x1249": 130,
+        "0x124a": 192,
+        "0x3140": 3,
+        "0x3146": 128,
+        "0x3148": 48,
+        "0x3150": 0,
+        "0x3151": 0,
+        "0x315a": 0,
+        "0x315b": 0
+      },
+      "supplies": {
+        "battery/present": 1,
+        "battery/status": "Charging",
+        "battery/health": "Good",
+        "battery/temp": 321,
+        "battery/current_now": 2456,
+        "battery/voltage_now": 4237795,
+        "bms/status": "Charging",
+        "bms/current_now": 2456
+      },
+      "uptime_s": 39.78,
+      "charging_current_uA_normalized": -2456
+    },
+    {
+      "stage": "original-restored-5",
+      "registers": {
+        "0x1010": 33,
+        "0x1049": 128,
+        "0x1209": 128,
+        "0x1210": 7,
+        "0x1249": 130,
+        "0x124a": 192,
+        "0x3140": 3,
+        "0x3146": 0,
+        "0x3148": 48,
+        "0x3150": 0,
+        "0x3151": 2,
+        "0x315a": 0,
+        "0x315b": 0
+      },
+      "supplies": {
+        "battery/present": 1,
+        "battery/status": "Charging",
+        "battery/health": "Good",
+        "battery/temp": 316,
+        "battery/current_now": -150414,
+        "battery/voltage_now": 4304401,
+        "bms/status": "Charging",
+        "bms/current_now": -150414
+      },
+      "uptime_s": 42.87,
+      "charging_current_uA_normalized": 150414
+    }
+  ],
+  "return": {
+    "normal_installed_r4_boot": true,
+    "new_boot_id_verified_privately": true,
+    "kernel_release": "6.18.59",
+    "kernel_build": 5,
+    "kernel_taint": 0,
+    "diagnostic_modules_absent": true,
+    "packaged_ADC_modules_restored": true,
+    "display": "msmdrmfb",
+    "four_display_controls_auto": true,
+    "upower_and_tinydm_active": true,
+    "charger_thresholds_changed": false,
+    "physical_UI_retest_claimed": false,
+    "post_boot_transient_retries": 0
+  },
+  "next": "Implement standard charging inhibition and native fault-aware thermal policy with suspend/wake handling before adopting wider stock window; keep native conservative settings until qualified",
+  "absolute_electrical_accuracy": "Unverified"
+}

@@ -215,6 +215,36 @@ See [recalibration-only evidence](../evidence/2026-10-30-bms-recalibration-only.
 
 ## Native battery temperature
 
+**Known integration limitation:** the native 35%/70% BTC comparator window
+produces hardware HOT at a stock-reported 31.6°C on this unit. The original
+stock kernel reproduces it when temporarily given the same tighter settings;
+restoring stock's 25%/80% window clears HOT and charging resumes. This is not a
+native VADC-specific conversion failure. Stock combines that wider window with
+LG software temperature policy. Native must implement that policy, sensor-fault
+handling, charging inhibition, hysteresis and suspend/wake protection before
+adopting the wider window. Successful measurement conversion alone does not
+qualify charging integration.
+
+| Original stock-kernel setting | Reported temperature | Raw comparator | Charging current, normalized positive |
+| --- | --- | --- | --- |
+| Stock `0x82`, 25%/80% | 31.6°C | Normal `0x80` | About 76–114 mA |
+| Temporarily tightened `0x81`, 35%/70% | 31.6°C | HOT `0x40` by 2 seconds | About zero |
+| Restored stock `0x82` | 31.6–32.1°C | Normal `0x80` | About 150 mA by 5 seconds |
+
+Stock's supply `health` remains Good during the tightened-window hardware trip;
+the matching source reports LG software-policy health. Raw status is therefore
+necessary for this comparison. The DT's `btc-disabled` property alone also does
+not establish runtime disablement: the factory-pseudo-battery build path enables
+the comparator in normal mode, consistent with observed `0x82`.
+See [stock-window evidence](../evidence/2026-10-30-stock-BTC-window.json).
+
+Earlier isolation confirms that an isolated thermistor read can expose the
+native trip with no BMS/thermal consumer. Reference mode is already forced
+`0xc0`; requesting it again does not help. Switching the mux back to battery
+voltage also does not clear the trip. Five minutes with the backlight off changes
+the inferred temperature by less than 1°C, insufficient to rule out hysteresis.
+No reference-mode or VADC mux cleanup fix is justified by these experiments.
+
 The experimental
 [temperature branch](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-battery-temperature)
 adds a binding allowance for the generic ADC thermal driver's existing IIO
@@ -239,6 +269,43 @@ open/short discrimination, independent accuracy, software thermal policy,
 hysteresis, charging inhibition and suspend/wake protection remain open.
 See [temperature evidence](../evidence/2026-10-30-battery-temperature.json) and
 the [host check](../diagnostics/battery-thermistor/README.md).
+
+## Standard charge inhibition
+
+The separate [charge-control branch](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-charge-control)
+adds `auto` and `inhibit-charge` through the standard `charge_behaviour` API.
+It changes only charge enable, preserving USB power, forced-battery mode and
+all other control bits. This supplies an actuator for future temperature policy;
+it does not implement that policy or widen hardware protection limits.
+
+A full candidate ARM kernel boots from RAM with the original r4 DTB/initramfs.
+The running GNU build ID matches, and all 14,228 shared module symbol CRCs match
+the prepared module build. Three inhibit/resume cycles pass: USB stays online,
+status becomes Not charging, charge enable clears, and live IADC falls from
+249 mA to 18.4 mA before returning to 230–290 mA on resumption. Independent
+electrical accuracy and zero-current qualification remain open. Unsupported
+modes are rejected without changing control. Cleanup restores the observed
+initial 100 mA input budget; reset behavior must be measured for each boot.
+
+The actual helper/callback suite passes 1,051 sanitizer cases, including all
+initial control bytes and register errors. The full LLVM22 W=1 build and strict
+checkpatch pass. The patch applies to pinned current upstream SMBB source; a
+full current-upstream build is still required. Installed r4 remains unchanged
+and returns with taint zero, native framebuffer and active UPower/Sxmo. See
+[control evidence](../evidence/2026-10-30-smbb-charge-control.json) and
+[reproduction instructions](../diagnostics/smbb-charge-control/README.md).
+
+The pinned upstream [Charger Manager](https://github.com/torvalds/linux/blob/d89e1d186ec9271bf78e62771779e9fc03bf0fc3/drivers/power/supply/charger-manager.c)
+already has temperature limits, hysteresis and suspend alarm monitoring, but
+cannot be adopted unchanged. Its thermal-check function returns success when
+temperature acquisition fails; its enable path controls charger regulators,
+not a power-supply `charge_behaviour` actuator. Initialization also permits
+thermal setup failure to disable measurement. A suitable native policy must
+inhibit charging until a valid sample, keep sensor/actuator failures inhibited,
+preserve user inhibition independently of thermal inhibition, verify hardware
+readback, and cover supplier removal, boot, shutdown and suspend. A periodic
+userspace read loop alone does not satisfy those requirements. No replacement
+policy or wider comparator configuration has yet been enabled.
 
 ## Implementation sequence
 

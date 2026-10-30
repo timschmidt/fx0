@@ -1,5 +1,13 @@
 # Fx0 battery temperature
 
+**Do not promote this integration yet.** The native comparator window produces
+HOT at a stock-reported 31.6°C, reproduced on the original kernel with the same
+tighter settings. Restoring stock's wider window clears HOT. Stock also supplies
+LG software temperature policy; native needs its own complete policy/fault/PM
+handling before widening the hardware range. Measurement conversion and supplier
+lifetime pass, but charging integration remains incomplete. See
+[stock-window evidence](../../evidence/2026-10-30-stock-BTC-window.json).
+
 The experimental
 [temperature branch](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-battery-temperature)
 adds the generic ADC thermal binding's optional zero-cell IIO output and a

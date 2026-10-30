@@ -1,0 +1,335 @@
+{
+  "date": "2026-10-30",
+  "kernel_commit": "05bec5027f57dd80ae7edc38dcab225fb8327b81",
+  "kernel_base": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+  "kernel_release": "6.18.59",
+  "kernel_GNU_build_id": "192ef1e5e8d3af8bbc0f026d3ad5610d20374f48",
+  "RAM_image_sha256": "f97d570227c78219fd6fd2771b1f68aab9ba98106f6fedcab063a294ea29d82d",
+  "boot": "Full candidate kernel from RAM; original r4 DTB/initramfs and installed root retained",
+  "shared_module_symbol_CRCs": {
+    "compared": 14228,
+    "changed": 0
+  },
+  "module_signature_caveat": "Old r4 modules and a new build trust key; unsigned-module taint allowed in RAM, out-of-tree observer adds diagnostic taint; no enforcement bypass",
+  "host_actual_helper_cases_ASan_UBSan": 1051,
+  "full_ARM_LLVM22_W1_build": "PASS; no SMBB diagnostics",
+  "checkpatch": "0 errors, 0 warnings, 0 checks",
+  "patch_applies_to_upstream_commit": "d89e1d186ec9271bf78e62771779e9fc03bf0fc3",
+  "full_current_upstream_build": false,
+  "controls": "Only charge-enable changes; forced-battery off, USB online, BTC/reference and current/voltage limits preserved",
+  "current": "Unmodified r4 IADC code; positive charging; independent electrical accuracy unverified",
+  "thermistor_or_BMS_consumer_loaded": false,
+  "samples": [
+    {
+      "stage": "auto-before",
+      "boottime_ns": 54153835862,
+      "mode": "auto",
+      "status": "Charging",
+      "health": "Good",
+      "manual_IADC_uA": 249100,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 128,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "inhibited-0-0",
+      "boottime_ns": 56164598465,
+      "mode": "inhibit-charge",
+      "status": "Not charging",
+      "health": "Good",
+      "manual_IADC_uA": 18400,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 0,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "inhibited-0-1",
+      "boottime_ns": 58174382163,
+      "mode": "inhibit-charge",
+      "status": "Not charging",
+      "health": "Good",
+      "manual_IADC_uA": 18400,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 0,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "inhibited-0-2",
+      "boottime_ns": 60185561120,
+      "mode": "inhibit-charge",
+      "status": "Not charging",
+      "health": "Good",
+      "manual_IADC_uA": 18400,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 0,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "resumed-0-0",
+      "boottime_ns": 62205900130,
+      "mode": "auto",
+      "status": "Charging",
+      "health": "Good",
+      "manual_IADC_uA": 276500,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 128,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "resumed-0-1",
+      "boottime_ns": 64222546119,
+      "mode": "auto",
+      "status": "Charging",
+      "health": "Good",
+      "manual_IADC_uA": 274200,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 128,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "resumed-0-2",
+      "boottime_ns": 66241687316,
+      "mode": "auto",
+      "status": "Charging",
+      "health": "Good",
+      "manual_IADC_uA": 274800,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 128,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "inhibited-1-0",
+      "boottime_ns": 68263289346,
+      "mode": "inhibit-charge",
+      "status": "Not charging",
+      "health": "Good",
+      "manual_IADC_uA": 18400,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 0,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "inhibited-1-1",
+      "boottime_ns": 70281819606,
+      "mode": "inhibit-charge",
+      "status": "Not charging",
+      "health": "Good",
+      "manual_IADC_uA": 18400,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 0,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "inhibited-1-2",
+      "boottime_ns": 72300541584,
+      "mode": "inhibit-charge",
+      "status": "Not charging",
+      "health": "Good",
+      "manual_IADC_uA": 18400,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 0,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "resumed-1-0",
+      "boottime_ns": 74322642781,
+      "mode": "auto",
+      "status": "Charging",
+      "health": "Good",
+      "manual_IADC_uA": 229500,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 128,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "resumed-1-1",
+      "boottime_ns": 76345232676,
+      "mode": "auto",
+      "status": "Charging",
+      "health": "Good",
+      "manual_IADC_uA": 289900,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 128,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "resumed-1-2",
+      "boottime_ns": 78364431269,
+      "mode": "auto",
+      "status": "Charging",
+      "health": "Good",
+      "manual_IADC_uA": 279800,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 128,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "inhibited-2-0",
+      "boottime_ns": 80392261217,
+      "mode": "inhibit-charge",
+      "status": "Not charging",
+      "health": "Good",
+      "manual_IADC_uA": 18400,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 0,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "inhibited-2-1",
+      "boottime_ns": 82412299966,
+      "mode": "inhibit-charge",
+      "status": "Not charging",
+      "health": "Good",
+      "manual_IADC_uA": 18400,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 0,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "inhibited-2-2",
+      "boottime_ns": 84432329653,
+      "mode": "inhibit-charge",
+      "status": "Not charging",
+      "health": "Good",
+      "manual_IADC_uA": 18400,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 0,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "resumed-2-0",
+      "boottime_ns": 86454521214,
+      "mode": "auto",
+      "status": "Charging",
+      "health": "Good",
+      "manual_IADC_uA": 288800,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 128,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "resumed-2-1",
+      "boottime_ns": 88475436995,
+      "mode": "auto",
+      "status": "Charging",
+      "health": "Good",
+      "manual_IADC_uA": 289400,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 128,
+        "1249": 129,
+        "124a": 192
+      }
+    },
+    {
+      "stage": "resumed-2-2",
+      "boottime_ns": 90495406004,
+      "mode": "auto",
+      "status": "Charging",
+      "health": "Good",
+      "manual_IADC_uA": 285400,
+      "USB_online": 1,
+      "input_limit_uA": 500000,
+      "registers": {
+        "1049": 128,
+        "1249": 129,
+        "124a": 192
+      }
+    }
+  ],
+  "unsupported_modes_rejected": [
+    "force-discharge",
+    "inhibit-charge-awake",
+    "invalid"
+  ],
+  "cleanup": {
+    "original_mode_restored": "auto",
+    "input_limit_restored_uA": 100000,
+    "control_and_thresholds_restored": true
+  },
+  "normal_return": {
+    "normal_installed_r4_boot": true,
+    "new_boot_id_verified_privately": true,
+    "kernel_taint": 0,
+    "diagnostic_modules_absent": true,
+    "four_display_controls_auto": true,
+    "upower_and_tinydm_active": true,
+    "physical_UI_retest_claimed": false
+  },
+  "not_qualified": [
+    "absolute current accuracy or electrically measured zero current",
+    "thermal policy or wider BTC window",
+    "suspend/wake",
+    "unplug/replug",
+    "persistent package integration"
+  ]
+}
