@@ -22,4 +22,4 @@ def with_provenance(command,*args,**kwargs):
  return original(command,*args,**kwargs)
 pmb.chroot.user=with_provenance
 sys.argv=['/pmbootstrap/pmbootstrap.py',*sys.argv[2:]]
-pmb.main()
+raise SystemExit(pmb.main())

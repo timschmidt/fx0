@@ -23,3 +23,18 @@ Root UUID, command-line or file-path changes require an explicit menu update.
 This policy is for the current development filesystem boot; final partition
 consolidation and the offset-aware raw boot updater remain separate acceptance
 work. No repartition is implied by this fixture.
+
+The first physical rehearsal is recorded in
+[recovery evidence](../../evidence/2026-10-29-native-recovery-rehearsal.json).
+Native16 reaches systemd but does not reach SSH and returns to lk2nd. Treat that
+entry as **unqualified**, despite intact files/modules. A RAM image assembled
+from the exact r3 kernel/DTB/initramfs reaches SSH, permits restoring the original
+menu bytes, and is followed by another installed-r3 boot. That rescue still uses
+the existing matching root/module tree; independent rescue and factory-stock
+restoration remain open.
+
+A subsequent [standalone rescue](../standalone-rescue/README.md) removes that
+root/module dependency. Its frozen r3 entry passes a normal filesystem boot
+after the r4 module update, plus a bounded boot-only menu repair with no root
+mount. See [the measured result](../../evidence/2026-10-30-standalone-rescue.json).
+Package/root rollback and factory-stock restoration remain separate tests.

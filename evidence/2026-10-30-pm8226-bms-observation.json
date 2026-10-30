@@ -1,0 +1,37 @@
+{
+  "purpose": "Initial bounded read-only PM8226 non-VM BMS1 observation",
+  "running_package": "6.18.59-r3",
+  "diagnostic_module": {
+    "sha256": "e9a89ba02be27d374d4498f6bf4d203ded6e39a60a3a36036d5e0fd87cb48de9",
+    "bytes": 103456,
+    "unsigned_external_module": true,
+    "register_operations": "46 whitelisted bytes in 16 regmap_bulk_read calls, no writes",
+    "output_hold_used": false,
+    "counters_atomic": false,
+    "unloaded": true
+  },
+  "BMS1": {
+    "base": "0x4000",
+    "type": 13,
+    "subtype": 1,
+    "digital_major_revision": 2
+  },
+  "IADC_companion": {
+    "base": "0x3800",
+    "type": 8,
+    "subtype": 5,
+    "digital_major_revision": 4
+  },
+  "register_windows": 16,
+  "register_bytes": 46,
+  "voltage_VSENSE_and_counter_bytes_present": true,
+  "output_hold_changed": false,
+  "counter_reads_atomic": false,
+  "capacity_or_absolute_accuracy_claimed": false,
+  "charger_policy_changed": false,
+  "taint_during_diagnostic": 12288,
+  "module_unloaded": true,
+  "subsequent_standalone_rescue_taint": 0,
+  "private_results": "local/pm8226-bms-readonly-test-01",
+  "scope": "Presence/identity and readable output only; coherent snapshots, calibration, trends, native driver and power-supply integration remain open"
+}

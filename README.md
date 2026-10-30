@@ -18,70 +18,78 @@ The device is available for development and flashing. No personal data needs to 
 | [Image builds](docs/building.md) | Full diagnostic kernel/lk2nd recipes and rootfs preparation |
 | [Development patches](patches/README.md) | Initial Linux and lk2nd candidates with reproducible DTB checks |
 | [Development log](docs/development-log.md) | Observed device/host state, completed checks, and the next executable work |
+| [Battery work](docs/battery-bringup.md) | Stock pack/profile evidence, current sensing, native BMS and charging sequence |
 | [Camera work](docs/camera-bringup.md) | Confirmed sensor IDs, wiring, capture-engine gaps and verified private EEPROM readbacks |
 | [Kernel gaps](docs/kernel-gaps.md) | Maintained-kernel target and missing shared SoC/camera infrastructure |
 
 ## Current state
 
-Implementation started October 29, 2026. Stock firmware inventory, 29 critical partition backups, recovery copies, GPT metadata, and a separately verified 1 GiB original-system backup are preserved privately. A complete development-state snapshot of the 15,758,000,128-byte eMMC user area and both 4 MiB boot areas now passes two independent device reads and verified copies on two host filesystems with every eMMC filesystem unmounted. Factory-stock restoration remains to be demonstrated. Development and backups use `/run/media/tim/Disk B/fx0` through the space-free bind mount `/tmp/fx0-storage`; re-establish that mount after a host reboot.
+Nura v26.06 now boots from eMMC through lk2nd with the signed native
+`linux-postmarketos-qcom-msm8226-6.18.59-r4` package, matching persistent modules,
+SSH, native 720×1280 DRM and a Sxmo terminal/keyboard using Pixman. Kernel taint
+is 0. The installed r3 physical test confirms typing, both keyboard gestures,
+and matched Home/VolumeDown/VolumeUp input; r4 retains that exact DTB. Its new
+IADC correction passes actual-function regression tests and signed native
+conversion-log checks. Current source/artifact pins and limits are recorded in
+[the manifest](manifests/sources.json) and
+[r4 evidence](evidence/2026-10-30-native-r4-installed-boot.json).
 
-Linux 6.18.59 LTS now boots on the Fx0 with all four CPUs online, a framebuffer console, USB NCM networking and an ACM root shell. eMMC enumerates all 39 partitions at 200 MHz in 8-bit HS200 mode. Two complete 1 GiB system-partition reads match the verified backup after correcting the stock firmware memory exclusions. The first userdata image write failed; permitting the eMMC regulator load votes subsequently allowed a fresh 32 MiB write and matching cache-cleared readback without errors. A full image write and independent readback subsequently passed; sustained storage/USB qualification remains pending. The helper's 12 failure-oriented tests pass, and current kernel/DTB/module and schema checks are recorded under `evidence/`.
+A frozen, self-contained r3 rescue now boots from its saved filesystem entry
+after the r4 module update, with 22 embedded signed modules, no installed-root
+mount, all 42 exposed internal eMMC block nodes read-only, and taint 0. A bounded
+boot-only repair restores the normal menu and returns storage to read-only;
+raw boot and GPT readbacks match. The earlier native16 fallback fails startup
+acceptance and remains unqualified. See
+[recovery results](evidence/2026-10-30-standalone-rescue.json).
+Independent package/root rollback and factory-stock restoration still require
+rehearsal; this result does not close those gates.
 
-lk2nd is installed and its filesystem boot path now starts Nura v26.06 from userdata. The verified initial maintained kernel is `6.18.59-00011-gb7575530db2d`; SSH works, all four CPUs are online, root expanded to 3.4 GiB within userdata, and the firewall is active. The image write passed complete device and host readback, with both outer GPT copies unchanged. Normal lk2nd was verified to start that Nura build automatically on warm reboot, and a fresh installed-filesystem test file survives with a matching cache-cleared host readback.
+Initial display loading still needs a temporary initramfs power hold; it releases
+after DRM binds and all four display controls become automatic. Controlled native
+display off/on and touch tests pass, but startup without the workaround, full
+suspend and reliability remain open. The Fx0 gesture profile is physically
+confirmed on r3. GPU acceleration is disabled; software rendering and development
+idle/suspend restrictions remain in use. UPower r3 avoids the observed incomplete-
+battery NaN/false shutdown, with 90 configured Linux tests passing. Battery capacity
+is still unknown. The generic charger alternates Charging/Good and
+Discharging/Overheat near room temperature; no safety thresholds are bypassed.
+The native non-VM BMS is identified and readable, but coherent fuel-gauge data,
+board calibration, thermistor policy and automatic USB current negotiation remain
+open. See [battery work](docs/battery-bringup.md).
 
-Native RAM tests on kernels39 and44 now produce owner-confirmed RGB at720×1280.
-Controlled native two-finger input works, including after display power cycles.
-Panel shutdown ordering and the shared CPU-PLL L8 supply fix allow complete
-five-second off/on cycles, with the display devices suspended whileoff. Initial
-DRM loading still has an intermittent resource/probe failure: two bounded PM/
-clock candidates sometimes start without userspace holds but have not passed
-repeated startup. Full orientation,accuracy,noise,suspend and reliability remain
-open. The stock kernel in RAM also displays correct bars and records touch.
-See [display-power evidence](evidence/2026-10-29-display-power-kernel44-build.json).
+Stock inventory, 29 critical partition backups, GPT metadata and a separately
+verified 1 GiB original-system image are private. A complete **development-state**
+snapshot of the 15,758,000,128-byte eMMC user area and both 4 MiB boot areas passes
+two independent device reads and verified copies on two host filesystems, with
+all eMMC filesystems unmounted. Original userdata was not captured before its
+authorized Nura overwrite; an untouched full stock image is not claimed. Exact
+pre-r4 boot/modules/configuration and the r3 APK also have verified two-filesystem
+rollback copies. Development and backups use `/run/media/tim/Disk B/fx0` through
+`/tmp/fx0-storage`; re-establish that bind mount after a host reboot.
 
-The signed native Nura r1 kernel APK is now installed and has booted from eMMC
-through lk2nd's filesystem path. SSH and the native console work, kernel taint
-is 0, and the on-disk module tree matches the kernel. A temporary initramfs
-wrapper holds initial display power, then releases both holds after DRM binds;
-all four display controls are automatic. This does not fix intermittent startup
-without the workaround. An installed-system gesture test records 2,468 events,
-23 matched contact starts/releases, two simultaneous contacts and no dropped
-events. The raw boot partition and both GPT copies are unchanged; pre-update
-boot/modules/configuration and the old APK are verified on two host filesystems.
-See [installed r1 evidence](evidence/2026-10-29-native-r1-installed-boot.json).
-A native Wayland terminal and on-screen keyboard now work with Pixman software
-rendering. Both touch axes need inversion; the board-DT correction is physically
-confirmed in a RAM boot with identity compositor calibration. The signed r2 package is installed,
-boots from eMMC and passes the same physical display/keyboard test. See [GUI and touch evidence](evidence/2026-10-29-native-wayland-console.json).
-Native r3 now adds the GPIO buttons: a prior RAM test records three matched
-presses/releases for each Home and volume key. The signed package boots from
-eMMC with the matching DTB and correct embedded recipe revision. Its installed
-physical test confirms typing, keyboard gestures and one matched press/release
-for each GPIO button.
+All four CPUs and eMMC HS200 are operational in development tests. Earlier full
+image write/readback and selected storage/USB tests pass, with sustained I/O still
+open. Native CCI EEPROM reads match two complete private 64 KiB captures; this does
+not qualify camera streaming, CAMSS, OIS or calibration validity. Wi-Fi/Bluetooth,
+audio, sensors, cameras, NFC/haptics, cellular/GNSS, SD/OTG and the remaining
+[hardware acceptance matrix](docs/hardware-acceptance.md) need further work.
+No SIM is available for final cellular network acceptance. No unattended/cold
+startup, full suspend or final reliability qualification is claimed.
 
-The full Sxmo session supports typing and menu gestures. UPower r3 fixes the
-observed NaN/false shutdown when the charger exposes no charge information;
-90 configured Linux tests and native operation pass. Battery capacity remains
-unknown and charging remains unqualified. Measured gesture traces identify
-edge/distance/angle defaults that need an Fx0 profile; the tuned profile passes
-synthetic trace replay and the installed physical test. A supported manual extlinux
-menu now survives two initramfs regenerations and a kernel update. GPU, fallback
-rehearsal, default unattended boot and final update/recovery qualification remain open.
+The host-only storage preview combines adjacent Android payload partitions into
+one approximately 14.30 GiB modern ext4 root. GPT/filesystem checks and embedded
+readback pass. The proposed raw-boot updater preserves lk2nd's prefix and may
+avoid a separate boot filesystem; its source CI passes, while physical final-
+layout boot/update/recovery and the minimum retained-partition audit remain open.
+**No repartitioning has occurred.** The [plan](docs/bringup-plan.md), section 2.1,
+requires complete restoration coverage and demonstrated factory-stock rollback
+before that migration. External SD will remain ordinary removable Linux media.
 
-Native CCI now reads the separate camera EEPROM: a short read and two full 64 KiB
-reads match the independent GPIO capture. Verified private copies exist on two
-host filesystems. The shared supply returns low, and CCI runtime suspend/resume
-and clock gating pass for these reads. This does not qualify sensor streaming,
-CAMSS, calibration validity or OIS operation. The generic charger comparator
-can report Overheat near room temperature; charging policy remains unqualified.
-Automatic USB current negotiation, full native display/touch qualification,
-wireless, audio, sensors, both cameras, cellular, update/recovery and reliability
-acceptance remain open. Plymouth stays disabled after its initial crash. No SIM
-is available.
-
-A host-only storage preview combines the five adjacent Android payload partitions into one approximately 14.30 GiB modern ext4 root while conservatively retaining earlier firmware/provisioning offsets. Its GPT CRCs, filesystem check and complete embedded-filesystem readback pass. A proposed updater preserves lk2nd’s prefix in the existing boot partition, potentially avoiding a separate boot filesystem; source CI passes, but physical boot/update/recovery and the minimum-partition audit remain pending. No device repartitioning has occurred.
-
-Continue the open bringup work in the [plan](docs/bringup-plan.md). Its required section 2.1 adds verified complete restoration coverage, demonstrated factory-stock rollback, and migration to one large native root filesystem with only necessary extra partitions. External SD remains ordinary removable Linux media. Current source pins are in [the manifest](manifests/sources.json), and [full image recipes](docs/building.md) use the public integration branches. The source-subset DTB scripts retain the original dated minimal candidate for historical reproduction; it lacks the later physical bringup fixes.
+Public source, recipe and diagnostic changes are being committed for eventual
+upstream review. PR/email submission, final series qualification and personal DCO
+certification remain separate unfinished work. Current recipes are in
+[the build guide](docs/building.md); the dated minimal DTB fixture is retained
+for historical reproduction and lacks the later physical bringup fixes.
 
 ## Local and public material
 

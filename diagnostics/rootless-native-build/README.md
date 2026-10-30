@@ -35,8 +35,9 @@ python3 /pmb-repro EXPECTED_RECIPE_COMMIT --as-root \
 Here `/pmb-repro` is a read-only mount of the Python wrapper. Match the disposable
 clone's ownership to abuild's UID12345 during the build and restore ownership on
 exit. Verify the source archive against the recipe checksum before use. Export
-only the signed APKs, manifests and public signing keys; retain private package
-and module keys in the private work directory. Inspect package version/architecture,
+only the signed APKs, manifests and public signing keys; keep the package key private. Generated module keys stay in the private build
+tree and may be cleaned with it; do not assume a later diagnostic module can be
+signed with a retained matching key. Inspect package version/architecture,
 recipe metadata, expected DTB, native kernel release and module contents after
 export. Verify direct signatures and a normal package dry run before installation.
 
@@ -44,3 +45,13 @@ The kernel and UPower builds completed without another host sudo step. This
 workflow is a tested development setup, not upstream pmbootstrap user-namespace
 support or a guarantee of identical bytes with different signing inputs. Source,
 recipe and artifact hashes plus actual device tests remain required.
+
+A new clone also needs the official upstream remote URL and the pinned
+`origin/main` reference used to read `channels.cfg` (plus the selected stable
+channel reference). A local clone of a development clone does not automatically
+preserve those remote-tracking refs. Copy verified refs/objects or fetch them
+explicitly; do not substitute the development branch for upstream main.
+Use a private network namespace as in the tested default Podman/pasta setup.
+Host-network mode prevents the ordinary `/sys` bind in this user-namespace
+configuration. The wrapper propagates pmbootstrap's return status, so setup
+failures stop before export rather than falling through to package inspection.

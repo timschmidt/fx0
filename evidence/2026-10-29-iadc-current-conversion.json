@@ -1,0 +1,55 @@
+{
+  "source_commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+  "candidate_module_sha256": "a4380aaf9856a38bd4d779b02eeaa421c5e5e5dcda27bed585b79f5babc91225",
+  "baseline": {
+    "kernel_package": "6.18.59-r3",
+    "raw_current": [
+      40,
+      36
+    ],
+    "scale_mA": 0.001,
+    "sample_below_offset_wrap_confirmed": true
+  },
+  "host_regression": {
+    "actual_read_raw_function": true,
+    "conversion_vectors": 13,
+    "channels": 2,
+    "IIO_scale_checked": true,
+    "UBSan": true,
+    "unchanged_driver_fails": true,
+    "candidate_passes": true,
+    "published_wrap_examples": "Synthetic calibration/sample inputs; unit traces verified privately"
+  },
+  "build": {
+    "compiler": "Alpine Clang22.1.3",
+    "running_config_difference": "LOCALVERSION_AUTO disabled for exact release string",
+    "W1_module": true,
+    "checkpatch_errors": 0,
+    "checkpatch_warnings": 0,
+    "common_import_CRCs_match": 34,
+    "new_import": "div64_s64 matches the seed symbol table"
+  },
+  "native_diagnostic": {
+    "RAM_only_module": true,
+    "unsigned_out_of_tree": true,
+    "taint": 12288,
+    "negative_current_uA_min": -276821,
+    "negative_current_uA_max": -213589,
+    "three_external_channel_conversions_verified": true,
+    "stock_driver_restored": true,
+    "stock_module_sha256": "e3d6797fb4c4957ea33fca8b31728f3225f8725ed12bd60802bcf0fa5ef5ccc4",
+    "persistent_kernel_package_changed": false,
+    "charging_thresholds_changed": false,
+    "normal_installed_r3_reboot_taint": 0,
+    "logged_samples": 6,
+    "raw_unit_calibration_and_samples": "Kept private; published regression uses synthetic values"
+  },
+  "remaining": [
+    "Board-specific sense resistor and thermal calibration",
+    "Battery current direction and physical accuracy",
+    "Native BMS/capacity reporting and charging qualification"
+  ],
+  "upstream_submission": "Not submitted; no fabricated DCO or Tested-by",
+  "signed_native_package": "6.18.59-r4",
+  "signed_native_package_evidence": "2026-10-30-native-r4-installed-boot.json"
+}

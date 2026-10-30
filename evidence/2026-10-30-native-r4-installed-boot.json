@@ -1,0 +1,78 @@
+{
+  "package": "linux-postmarketos-qcom-msm8226-6.18.59-r4.apk",
+  "bytes": 17708659,
+  "sha256": "1e804c4aa43120e76db3310150d9e212ee23bd65fea836f9b67021b3d9e35d3c",
+  "source": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+  "recipe": "84d622573bed26e397e80469a18e617569b7622d",
+  "verified_recipe_provenance_passed_before_build": true,
+  "embedded_recipe_commit_matches": true,
+  "metadata_commit_clean": true,
+  "DTB_matches_physically_tested_RAM_buttons_candidate": true,
+  "DTB_sha256": "1aea62450c71185ada8bd036e665523a0342338a243bba3e667701e3a95b250f",
+  "kernel_sha256": "eae8000a18364810a946768df9de74d73cd0c8ead75e736bb1cd4e7c3e54d289",
+  "module_files": 424,
+  "purpose": "Signed native r4 IADC correction, successful independent fallback repair and normal eMMC boot",
+  "installation": {
+    "package_install_success": true,
+    "package_version": "6.18.59-r4",
+    "native_kernel_DTB_match_exact_APK": true,
+    "fallback_boot_files_match_preupdate": true,
+    "old_module_release_retained": true,
+    "new_module_filesystem": "ext4",
+    "both_GPTs_byte_identical": true,
+    "raw_boot_partition_sha256_unchanged": true,
+    "initramfs_bytes": 11955684,
+    "initramfs_sha256": "48bd5e933a8872d07a087e25e9486b034a91d39bbd7cf77639f7747af1ea3558",
+    "initramfs_prefix_original_cleanup_bytes_verified": true,
+    "initramfs_contains_only_native_ABI": true,
+    "RAM_overlay_hook_absent": true,
+    "explicit_Fx0_DTB_and_native16_fallback_entry": true,
+    "installed_filesystem_boot_tested": true,
+    "standalone_rescue_entry_preserved": true
+  },
+  "native_boot": {
+    "method": "Normal reboot from standalone rescue, selected lk2nd retained-log capture and continue; no RAM boot for r4",
+    "kernel_build": 5,
+    "kernel_release": "6.18.59",
+    "taint": 0,
+    "framebuffer": "msmdrmfb",
+    "modules_on_persistent_ext4": true,
+    "display_controls_auto_after_initial_holds_release": true,
+    "UPower_and_Sxmo_active": true,
+    "profile_distance_edge_angle": [
+      60,
+      120,
+      25
+    ],
+    "source_version_attribute": "Not emitted by this configuration; inappropriate initial assertion replaced by kernel-build/module-signature/native-conversion checks in same boot",
+    "physical_input_scope": "Latest owner input confirmation on r3; exact same DTB retained, no new physical r4 input claim"
+  },
+  "current_sensing": {
+    "kernel_build": 5,
+    "kernel_release": "6.18.59",
+    "installed_package": "6.18.59-r4",
+    "native_signed_IADC_conversion_logs": 12,
+    "voltage_conversion_logs_match": true,
+    "six_external_current_conversions_match": true,
+    "kernel_taint": 0,
+    "UPower_and_Sxmo_active": true,
+    "input_limit_after_configured_USB_uA": 500000,
+    "scope": "Sensed current and formula/sample integration; physical accuracy, current direction, board resistor/thermal compensation, gauge capacity and charging qualification remain open"
+  },
+  "charging_observation": {
+    "initial_input_limit_uA": 500000,
+    "requested_configured_limit_uA": 500000,
+    "state_transition_observed": "Charging/Good to Discharging/Overheat during sampling",
+    "protection_thresholds_changed": false,
+    "qualification": "Still open; no causal improvement attributed to this repeated limit request"
+  },
+  "independent_recovery_evidence": "2026-10-30-standalone-rescue.json",
+  "remaining": [
+    "Native BMS/capacity and battery/charger qualification",
+    "Physical accuracy and current direction; board resistor/thermal compensation",
+    "Startup without display holds and GPU acceleration",
+    "Remaining hardware and reliability matrix",
+    "Factory-stock restoration before final partition migration",
+    "Final upstream review/submission/DCO preparation"
+  ]
+}

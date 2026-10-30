@@ -1,0 +1,46 @@
+{
+  "purpose": "Independent development rescue and filesystem-entry boot-menu repair across a kernel package update",
+  "RAM_test": {
+    "purpose": "Self-contained r3 kernel/DTB/embedded modules and pre-root rescue shell; no installed root dependencies",
+    "source": "d80fe99314eb2499c9e04e32468ea5eafbc9e758",
+    "file": "fx0-standalone-rescue-r3-01.img",
+    "bytes": 17473536,
+    "sha256": "4c5cae28e161b3be27975a72056600a5977381a0d47ff027dd40a952ab775833",
+    "initramfs_bytes": 11956658,
+    "initramfs_sha256": "bde6c0ebfc9c27492de546e8b3c6666c452336035c5b9725f1958e727fbda026",
+    "base_initramfs_sha256": "da0f9133a912f1f00054e26dbd2ab3170178b8540281e298202f5e69bb6f2dbc",
+    "replacement_init_2nd_sha256": "f9956f2fcc18f770dedafa4c8511d3cb349d733c4d6d6a894731c49e47b55753",
+    "root_UUID_tokens_removed": true,
+    "native_module_payloads_unchanged": true,
+    "boot_tested": true,
+    "standalone_USB_network_shell": true,
+    "kernel_taint": 0,
+    "internal_block_devices_read_only": 42,
+    "disk_filesystems_mounted": 0,
+    "embedded_module_count": 22,
+    "raw_boot_and_GPT_readback_matches": true
+  },
+  "filesystem_test": {
+    "filesystem_rescue_boot": true,
+    "fastboot_boot_used": false,
+    "rescue_kernel_build": 4,
+    "installed_module_package": "6.18.59-r4",
+    "rescue_taint": 0,
+    "initial_disk_mounts": 0,
+    "internal_RO_nodes_before_and_after": 42,
+    "read_only_boot_menu_identity_check": true,
+    "bounded_boot_only_menu_repair": true,
+    "normal_menu_sha256": "580ea839919e7653ccc0b567ece0ec8d4d641a243aeff7edb977d042f046d8b4",
+    "raw_boot_and_GPT_readback_unchanged": true,
+    "normal_r4_boot_tested": true
+  },
+  "frozen_payload": "Native r3 kernel/DTB and22 original embedded modules, replacement second-stage rescue script",
+  "only_persistent_repair": "Restore the normal extlinux menu on the existing boot filesystem; no root mount or GPT/raw boot write",
+  "constraints": [
+    "Temporary initial display power holds retained in rescue",
+    "Host modem probing corrupted serial capture; network console independently verified",
+    "Installed-root/package rollback not rehearsed by this test",
+    "Factory-stock restoration and final layout remain open"
+  ],
+  "private_artifacts": "local/standalone-rescue-r3-boot-01 and local/standalone-rescue-r3-filesystem-boot-01; verified second host-filesystem checkpoints"
+}

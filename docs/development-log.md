@@ -830,7 +830,7 @@ open. Readback verifies the new kernel/DTB and initramfs, unchanged raw boot/GPT
 and preserved old fallback files.
 
 Normal reboot, log capture and selected lk2nd continue boot r2 from eMMC. A new
-boot ID, both live DT axis flags, persistent ext4 modules, msmdrmfb, taint0 and
+boot ID, both live DT axis flags, persistent ext4 modules, msmdrmfb, taint 0 and
 automatic controls for all four display devices are verified. The minimal Wayland
 console starts while full Sxmo/UPower stay stopped. The owner confirms the visible text/keyboard and correct taps on both sides in
 this installed boot.
@@ -912,7 +912,7 @@ It preserves the managed menu, copies the new DTB, retains native16 files/module
 and produces a11,955,671-byte matched-ABI initramfs. Raw boot and both GPTs remain
 unchanged. Normal reboot/log capture/lk2nd continue boots r3 from eMMC with a new
 boot ID, GPIO node, both touch flags, native framebuffer, real ext4 modules and
-taint0. Full Sxmo/UPower start; the combined physical input retest is pending.
+taint 0. Full Sxmo/UPower start; the combined physical input retest is pending.
 
 ### Physical gesture data and measured-trace replay
 
@@ -939,3 +939,111 @@ recognizer tracing is removed, and the running60px/120px/25-degree settings are
 verified unchanged. Full idle/suspend/audio/modem policy stays restricted while
 those components remain unqualified. Public development fixtures now document the
 Fx0 profile, checked rootless recipe identity and managed extlinux menu.
+
+### Saved fallback rehearsal and recovery to r3
+
+The saved native16 entry was selected through a temporary managed-menu default.
+It reaches systemd with its expected kernel release and exposes USB networking,
+but SSH is not observed before an automatic return to lk2nd. The persistent
+journal stops during early systemd startup; retained console data is insufficient
+to identify the failure. This is a failed recovery acceptance test, not a
+qualified fallback. The original boot files/modules remain preserved.
+
+An image assembled from the exact installed-r3 kernel, DTB and initramfs is then
+RAM-booted and reaches SSH with taint 0. It permits restoring the original menu
+byte-for-byte. A subsequent normal filesystem boot returns to installed r3,
+msmdrmfb and persistent matching modules, followed by active Sxmo and UPower.
+The initial observation window missed the rescue's later SSH availability; no
+second rescue boot was needed. Raw boot and both GPT fingerprints remain
+unchanged. The successful rescue depends on the current root/module tree;
+independent recovery, native16 diagnosis and factory-stock restoration remain
+open. See evidence/2026-10-29-native-recovery-rehearsal.json.
+
+### IADC signed current and unit correction
+
+The running r3 IADC reports raw 40/36 at scale 0.001 mA. Its diagnostic log shows
+samples below offset wrapping through an unsigned 16-bit intermediate. Source
+review also finds a missing factor of one million when converting microvolts
+and microohms to the microamps expected by the IIO scale. The same code remains
+in the reviewed upstream driver. A dedicated Linux branch through
+5c3efd4c7fa8a8d2bec768d826b5daac57a45e76 corrects both and rejects int overflow.
+
+The standalone fixture compiles the actual read_raw function with only hardware
+and IIO plumbing mocked. Thirteen vectors on each channel plus the unchanged
+scale pass under undefined-behavior sanitization; the original driver fails.
+A W=1 ARM module build with Alpine Clang 22.1.3 passes, all 34 common imported CRCs
+match the packaged module, and patch-only checkpatch reports zero errors/warnings.
+
+A brief unsigned external-module RAM test records negative sensed current around
+214–298 mA across two sample sets. Six logged conversions are retained; the
+three external-channel calculations match exactly. These results use the
+original board/default resistor configuration and do not establish calibrated
+battery current or charging direction. The module is restored immediately to
+the original packaged driver, whose persistent file hash is unchanged. Temporary
+diagnostic taint 12288 clears on the next normal installed-r3 boot (taint 0).
+Sxmo and UPower are restarted. USB enumeration is checked before restoring the
+previously used 500 mA input limit; automatic current negotiation remains open.
+No battery voltage/current safety threshold is changed. Signed package integration,
+stock resistor/temperature compensation, BMS and charging qualification remain
+next steps. See evidence/2026-10-29-iadc-current-conversion.json.
+
+### Non-VM PM8226 BMS identity and output observed
+
+A bounded read-only module performs 16 regmap reads totaling 46 bytes without
+setting output hold, resetting counters or changing charging policy. It confirms
+BMS1 type 0x0d/subtype 1 (digital major 2) at 0x4000 and companion IADC
+type 0x08/subtype 5 (major 4) at 0x3800. Voltage, VSENSE and counter bytes are present.
+These unlatched multi-byte observations are not coherent counter samples and do
+not establish capacity or absolute accuracy. The module is unloaded immediately;
+its temporary unsigned/external taint 12288 clears on the subsequent standalone
+rescue boot. W=1 module compilation and checkpatch pass. The native non-VM BMS
+driver remains to be implemented. See evidence/2026-10-30-pm8226-bms-observation.json
+and docs/battery-bringup.md for the implementation sequence and stock references.
+
+### Independent rescue survives the signed r4 update
+
+A frozen r3 initramfs with a replacement second-stage script embeds all 22
+original signed modules, removes root UUID arguments, and stops before root
+lookup/mount/switch_root. Its first RAM boot reaches the development USB network
+shell with taint 0, zero disk mounts and all 42 exposed internal block devices RO.
+Direct raw boot and GPT readback hashes match. Host modem probing corrupts the
+serial trace; independently framed network commands provide the verified data.
+
+The signed native r4 package builds in 11m14s with the expected clean recipe
+commit. Direct trusted signature and normal upgrade dry-run pass, followed by
+an actual r3-to-r4 package transaction. Readbacks match the exact APK kernel/DTB;
+all 22 initramfs module payloads match the APK. The managed menu and frozen rescue
+files survive unchanged, and raw boot/GPT comparisons pass.
+
+A normal filesystem reboot then selects the frozen r3 rescue entry, despite
+persistent modules now belonging to r4 with a different signing key. It again
+reaches the independent shell with taint 0, no disk mounts and 42 internal RO
+nodes. A bounded repair validates the boot menu through a read-only loop/mount,
+then restores the normal menu through a temporary-file/rename on a boot-only
+writable mount. It unmounts/detaches and restores every RO flag. Raw boot and both
+GPTs still match. No root mount or factory restoration occurs. The subsequent
+normal installed-r4 boot passes, with sensing and Sxmo results recorded below. See
+evidence/2026-10-30-standalone-rescue.json.
+
+### Installed r4 native sensing and Sxmo
+
+Normal filesystem startup reaches the r4 kernel build 5, its new trusted module
+set, msmdrmfb and persistent ext4 modules with taint 0. An initial verification
+asks for a srcversion sysfs attribute this configuration does not emit; the
+assertion is corrected and the same boot is validated through kernel build,
+packaged module signature and native conversion logs. No extra reboot is needed.
+The installed APK database confirms 6.18.59-r4 plus UPower 99991.91.0-r3.
+
+Twelve logged voltage conversions and six external-channel current conversions
+match the corrected arithmetic. This warm boot already retains 500 mA; repeating
+that configured input request is not evidence of improvement. The charger changes
+Charging/Good to Discharging/Overheat during sampling, with the external IADC
+later reporting 22.3 mA. Absolute accuracy, direction, sensor freshness and board
+compensation remain unqualified. No charge/temperature threshold is changed.
+
+Full Sxmo, terminal and keyboard are restored. The running recognizer is verified
+at 60px distance, 120px edge band and 25-degree tolerance with verbose tracing off;
+a reviewed Wayland screenshot shows the expected UI. Physical input was last
+confirmed on r3 with the same DTB. The display startup workaround, idle/suspend
+restrictions and software rendering remain. Native BMS/thermal/charging work is
+next; see evidence/2026-10-30-native-r4-installed-boot.json.

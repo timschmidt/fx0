@@ -64,8 +64,8 @@
       "name": "linux",
       "url": "https://github.com/timschmidt/fx0-linux",
       "branch": "integration/fx0-lts",
-      "commit": "d80fe99314eb2499c9e04e32468ea5eafbc9e758",
-      "status": "Current tested native r3 source: installed eMMC boot, display/typing/gesture and GPIO input sample pass with temporary initial display holds and Pixman. Battery/fuel/charging and remaining hardware/reliability work open."
+      "commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+      "status": "Current tested native r4 source: signed IADC units/sign conversion checks, eMMC boot, native DRM/Sxmo and taint0. Physical UI/input last confirmed r3 with identical DTB; display startup holds, BMS/charging and remaining hardware open."
     },
     {
       "name": "lk2nd",
@@ -79,8 +79,8 @@
       "url": "https://github.com/timschmidt/fx0-pmaports",
       "branch": "integration/fx0-v26.06",
       "base_commit": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
-      "status": "Current tested kernel r3 plus UPower r3 recipes. Signed native r3 boots from eMMC, combined physical input test passes; checked kernel recipe metadata. UPower avoids incomplete-charge NaN; hardware gauge/charging and final recovery remain open.",
-      "commit": "0a7b0e9fa85fc1c4c32b112a5bcc562f516a23bb"
+      "status": "Current tested kernel r4 plus UPower r3 recipes: clean embedded kernel recipe metadata, trusted upgrade and eMMC boot; independent frozen-r3 filesystem rescue/boot-menu repair pass. Factory restoration and final layout remain open.",
+      "commit": "84d622573bed26e397e80469a18e617569b7622d"
     },
     {
       "name": "linux-display-iommu-experimental",
@@ -170,6 +170,20 @@
       "branch": "integration/fx0-native-updates",
       "commit": "0a7b0e9fa85fc1c4c32b112a5bcc562f516a23bb",
       "status": "Signed kernel r3 and UPower r3 installed; kernel boots from eMMC and combined physical typing/keyboard gestures/GPIO input test passes. Recovery and remaining hardware/reliability gates open."
+    },
+    {
+      "name": "linux-iadc",
+      "url": "https://github.com/timschmidt/fx0-linux",
+      "branch": "integration/fx0-iadc",
+      "commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+      "status": "Host actual-function regressions, unsigned RAM diagnostics and signed native r4 conversion checks pass; maintained integration promoted. Board calibration/accuracy, BMS and charging remain open."
+    },
+    {
+      "name": "pmaports-iadc",
+      "url": "https://github.com/timschmidt/fx0-pmaports",
+      "branch": "integration/fx0-iadc",
+      "commit": "84d622573bed26e397e80469a18e617569b7622d",
+      "status": "Signed native r4 package built, installed trusted and booted from eMMC with native sensing/Sxmo and taint0; independent frozen-r3 rescue survives upgrade. Physical final hardware/reliability gates open."
     }
   ]
 }

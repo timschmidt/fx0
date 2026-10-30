@@ -1,0 +1,46 @@
+{
+  "purpose": "Test the preserved filesystem fallback and recover to the installed native r3 system",
+  "local_date": "2026-10-29",
+  "installed_package": "6.18.59-r3",
+  "installed_source": "d80fe99314eb2499c9e04e32468ea5eafbc9e758",
+  "native16": {
+    "release": "6.18.59-00016-g9ff315ebc274",
+    "method": "Temporarily select the preserved extlinux label, normal reboot, selected lk2nd continue",
+    "reached_systemd": true,
+    "matching_release_confirmed_in_persistent_journal": true,
+    "USB_networking_observed": true,
+    "SSH_observed": false,
+    "automatic_return_to_lk2nd_observed": true,
+    "retained_console_sufficient_to_identify_failure": false,
+    "status": "Failed recovery acceptance: startup incomplete, cause unresolved",
+    "scope": "Saved files and a retained module release alone did not establish a usable fallback"
+  },
+  "r3_RAM_rescue": {
+    "image_bytes": 17471488,
+    "image_sha256": "88e530e2211e61e181723fb2c3eebd03a338bc7ec1c4c5739f1d2d077ad79f77",
+    "components": "Exact installed-r3 kernel, DTB and initramfs",
+    "SSH": true,
+    "taint": 0,
+    "original_managed_menu_restored_byte_for_byte": true,
+    "menu_sha256": "8efdc7eba94310742be305d90eaf9faa678e2eb4409bb96853826e633cb47a89",
+    "scope": "Fastboot RAM loading with the existing matching root/module tree; not a standalone factory restoration environment"
+  },
+  "return_to_installed_r3": {
+    "method": "Normal reboot and lk2nd continue, not fastboot boot",
+    "new_boot_ID": true,
+    "release": "6.18.59",
+    "taint": 0,
+    "native_framebuffer": "msmdrmfb",
+    "modules_on_persistent_ext4": true,
+    "display_controls_auto_after_initial_holds_release": true,
+    "Sxmo_and_UPower_active": true,
+    "physical_UI_retest_after_this_return": false
+  },
+  "raw_boot_and_both_GPT_fingerprints_unchanged": true,
+  "public_artifacts": "Reviewed results only; full journals, boot IDs, command lines and images remain private",
+  "remaining": [
+    "Replace or repair the native16 fallback and rehearse independently of the installed module tree",
+    "Qualify unattended/cold startup and remove the initial display power workaround",
+    "Demonstrate factory-stock restoration before final storage consolidation"
+  ]
+}
