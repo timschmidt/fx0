@@ -1,0 +1,45 @@
+From b9dba8b0ccd678210984b8dc8c36a9f7f3d78645 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 30 Oct 2026 12:28:46 -0400
+Subject: [PATCH] dt-bindings: power: supply: smbb: allow monitored-battery
+
+The power-supply core reads constant battery characteristics when SMBB
+registers its battery interface with the device firmware node. Permit the
+standard monitored-battery reference and include the common supply schema.
+
+This allows firmware to describe an identified removable pack without
+fixing its characteristics into the board DTS. With a RAM-only firmware
+handoff, the existing LG Fx0 kernel exposes the supplied design capacity
+and charge voltage and retains all five stock OCV tables. No gauge state
+of charge or thermal-policy acceptance is implied.
+
+Modified binding documentation and targeted generated DTB validation pass.
+---
+ .../bindings/power/supply/qcom,pm8941-charger.yaml           | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml b/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml
+index cbac55d3c..ca4fb7fa0 100644
+--- a/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml
++++ b/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml
+@@ -9,6 +9,9 @@ title: Qualcomm Switch-Mode Battery Charger and Boost
+ maintainers:
+   - Sebastian Reichel <sre@kernel.org>
+ 
++allOf:
++  - $ref: power-supply.yaml#
++
+ properties:
+   compatible:
+     enum:
+@@ -18,6 +21,8 @@ properties:
+   reg:
+     maxItems: 1
+ 
++  monitored-battery: true
++
+   interrupts:
+     items:
+       - description: charge done
+
+base-commit: f0f400459bf6a037e70768de623fff3f8920b8bb

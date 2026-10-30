@@ -48,6 +48,13 @@ Current/capacity accuracy and automatic USB budgeting remain open. See
 and upstream-submission phases remain in scope; no SIM is available for final
 cellular acceptance.
 
+Runtime pack-profile handoff now passes through RAM firmware and installed r4,
+including all 155 source OCV points and standard design attributes. The firmware
+is not installed persistently, and no state-of-charge estimate or usable UPower
+battery interface is qualified by that result. Charger-local policy with strict
+profile/sensor initialization is the selected architecture; the legacy Charger
+Manager will not be expanded for this port.
+
 ## Technical baseline
 
 As researched on October 29, 2026, Nura is the renamed postmarketOS project and its latest stable release is v26.06. The Fx0 uses MSM8926 and the `armv7` architecture. The old `lg-madai` package uses Linux 3.4 and is archived in the inspected October 2026 pmaports snapshot. Nura also provides a generic `qcom-msm8226` package and shared APQ8026/MSM8226/MSM8926 kernel.

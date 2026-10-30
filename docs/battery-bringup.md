@@ -318,6 +318,56 @@ independent inhibition semantics remain unresolved. These fixes therefore do
 not yet select or qualify a complete policy. See
 [regression evidence](../evidence/2026-10-30-charger-manager-thermal.json).
 
+## Selected native-policy architecture
+
+Use charger-local policy in SMBB with managed IIO temperature/voltage suppliers,
+firmware-selected battery characteristics and separate user, thermal and suspend
+inhibition. The upstream Charger Manager binding explicitly marks it legacy and
+discourages new users. Its generic fault fixes remain independent submissions;
+do not expand that legacy binding for this new port.
+
+The original bootloader supplies `ISL6296_L`; the vendor maps it to TOCAD Madai.
+The native command line currently filters that Android parameter. Experimental
+lk2nd code now generates standard battery data at boot for that exact known
+selection, keeping replaceable-pack characteristics out of the Linux board DTS.
+Unknown or ambiguous types get no assumed fallback. This is boot-time profile
+selection; direct authentication and pack-replacement detection remain open.
+The ISL6296 [manufacturer datasheet](https://www.renesas.com/en/document/dst/isl6296-datasheet)
+describes XSD communication. Its name alone is not evidence of a Dallas w1 bus
+or physical verification of the pack's authentication silicon.
+
+The next implementation must close these contracts before charging integration:
+
+1. Inhibit charging before unresolved profile/sensor dependencies can defer
+   native probe. Coordinate an explicit firmware-to-kernel handoff for the new
+   policy; a late probe callback alone cannot protect the earlier interval.
+2. Require a valid identified profile and fresh temperature/voltage samples.
+   Reject failed, missing, stale and out-of-range inputs. Preserve USB system
+   power while battery charging is inhibited.
+3. Serialize user, thermal, fault and suspend votes around charger-enable and
+   limit updates. A user request for auto must not override a thermal stop.
+   Confirm writes, propagate errors and retain fault inhibition after uncertain
+   bus transactions. Keep the already-tested charge-only actuator semantics.
+4. Implement pack-specific temperature, current and voltage behavior with
+   hysteresis. Do not misuse battery operating-temperature fields as charging
+   limits or omit the stock warm-voltage/current behavior. Widen hardware BTC
+   only after these controls and fault paths are qualified together.
+5. Quiesce work and verify charging inhibited before sensor suppliers suspend.
+   Fail suspend if the actuator cannot be made safe. Resume requires fresh
+   validation. Event-driven or alarm-monitored charging during sleep can follow
+   only with independent wake/protection qualification.
+6. Invalidate profile authorization on battery removal; re-establish identity
+   before allowing a replacement to charge. Qualify boot, provider removal,
+   unplug/replug, termination, shutdown and power-off charging as separate cases.
+
+These are implementation gates, not completed capabilities. The first handoff
+firmware exposed a workspace-alignment bug hidden by the host allocator; a
+stronger regression reproduces it and the corrected firmware reaches installed
+R4 with a generated profile. A bounded UPower probe also exposed a test readiness
+race and a client failure under masked activation. Complete handoff/daemon
+validation separately from the remaining policy and gauge work. See the
+[handoff diagnostic](../diagnostics/lk2nd-battery-handoff/README.md).
+
 ## Implementation sequence
 
 1. Preserve exact current boot files, modules, package, configurations, raw boot

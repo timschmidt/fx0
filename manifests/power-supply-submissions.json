@@ -26,6 +26,16 @@
       "full_kernel_build": false,
       "compiler_errors": 0,
       "compiler_warnings": 0
+    },
+    {
+      "name": "battery-info",
+      "base": "f0f400459bf6a037e70768de623fff3f8920b8bb",
+      "head": "b9dba8b0ccd678210984b8dc8c36a9f7f3d78645",
+      "changes": "Binding only; no kernel C change",
+      "documentation_schema": "PASS; zero diagnostics with regulator dependency",
+      "targeted_generated_DTB_schema": "PASS; zero diagnostics",
+      "runtime": "Existing r4 kernel accepts selected data from RAM firmware",
+      "full_kernel_build": false
     }
   ],
   "RAM_hardware_test_base": "6.18.59 r4 plus charge-control patch; current maintainer branch is not booted on Fx0",
@@ -33,6 +43,6 @@
   "upstream_communication_sent": false,
   "author_signoff_added": false,
   "draft_mail_checkpatch": "Missing Signed-off-by; intentionally pending author certification",
-  "strict_style_checkpatch": "--no-signoff: 0 errors, 0 warnings, 0 checks for all three patches",
+  "strict_style_checkpatch": "Source/style checks omit pending author sign-off; validate each exported draft separately",
   "submission_checks_complete": false
 }

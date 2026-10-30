@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Select removable-pack characteristics in firmware and verify existing kernel consumption",
+  "firmware_source_commit": "b4a9930da462d7adc0375b7d67f6d4d445ec0140",
+  "firmware_version": "next-b4a9930-20261030",
+  "RAM_firmware_image_sha256": "db4f62f79b0c047878f55e385a6bcd491484443ab6fcf0da906d786f8277c9c8",
+  "RAM_firmware_image_bytes": 313360,
+  "GCC": "15.2.0",
+  "firmware_build": "Full build passes; one linker RWX LOAD warning; no new-source compiler diagnostics",
+  "firmware_debug_configuration": "Force fastboot at startup; installed filesystem r4 boot follows explicit continue",
+  "first_stage_battery_type": "ISL6296_L, exactly one argument; boot-time selection, not live authentication",
+  "Linux_kernel": "Installed signed 6.18.59-r4 build5; no package or module changes",
+  "kernel_taint": 0,
+  "profile": {
+    "rated_charge_full_design_uAh": 2370000,
+    "constant_charge_voltage_max_uV": 4350000,
+    "ocv_temperatures_C": [
+      -20,
+      0,
+      25,
+      40,
+      60
+    ],
+    "matched_consumers": [
+      "smbb"
+    ],
+    "capacity_property_absent": true
+  },
+  "all155_vendor_source_OCV_points_verified_in_running_kernel": true,
+  "OCV_table_sha256": {
+    "0": "12b06fb425965cbe62b7f68c13e4e0b44c623ac02edae66d5b723a893828f068",
+    "1": "d9c5747c70cc3884e75683c1b0e07bf0d454d7ae3f6858a9be990b43793f19f2",
+    "2": "8511813141d4fe7026a2f5993ca9a7f6a9980dc49d7b5aad8393bea8fdea86ef",
+    "3": "22a551475d30dd29239fc3c7947ab499256dce10262912b1728249eae6ef20d7",
+    "4": "aaa0dd2d199b90aba870e1acd95ee5f8e1bc421da58f1a834070ce0c3c1cfbc3"
+  },
+  "source_provenance": "Vendor03aba4427a7666d57b5ae06d375e259ea337f351, TOCAD_MADAI_Final.c; rated2370mAh from KDDI, distinct from nominal2440 and measured FCC",
+  "host_actual_selector_FDT_fault_cases_ASan_UBSan": 128,
+  "old_unaligned_workspace_failure_reproduced": true,
+  "original_failure_address_or_return_code_captured_on_device": false,
+  "schema": "Modified docs and generated R4/BMS DTBs pass with complete regulator dependency; baseline schemas reject monitored-battery",
+  "prototype_BMS_consumer": "Host/FDT-schema qualification only; not loaded in physical run",
+  "charger_observation": {
+    "status": "Discharging",
+    "health": "Good",
+    "current_max_uA": 1200000,
+    "voltage_max_uV": 4350000,
+    "original_input_budget_uA": 500000,
+    "development_input_budget_uA": 500000
+  },
+  "configured_charger_current_and_voltage_limits_match_before": true,
+  "extended_BTC_requested_by_change": false,
+  "UPower_probe": {
+    "ordinary_unit_temporarily_masked": true,
+    "transient_Type": "dbus",
+    "runtime_limit_s": 10,
+    "stop_timeout_s": 1,
+    "installed_critical_action_delay_s": 20,
+    "actual_NameHasOwner_checked": true,
+    "DisplayDevice": {
+      "Percentage": "d 0",
+      "WarningLevel": "u 1",
+      "State": "u 0",
+      "IsPresent": "b false"
+    },
+    "usable_battery_interface_qualified": false,
+    "note": "DisplayDevice not present and state unknown; percentage0 is not battery SOC. No usable BIF battery object was observed."
+  },
+  "normal_return": {
+    "normal_installed_r4_boot": true,
+    "new_boot_id_verified_privately": true,
+    "kernel_taint": 0,
+    "four_display_controls_auto": true,
+    "upower_and_tinydm_active": true,
+    "physical_UI_retest_claimed": false
+  },
+  "storage_and_cleanup": {
+    "installed_bootloader_prefix_unchanged": true,
+    "primary_GPT_unchanged": true,
+    "backup_GPT_unchanged": true,
+    "profile_absent_after_original_firmware_return": true,
+    "new_charge_full_design_attribute_absent": true,
+    "development_budget_restored_uA": 500000
+  },
+  "two_independent_host_backup_filesystems": true,
+  "installed_firmware_updated": false,
+  "whole_eMMC_unchanged_claimed": false,
+  "factory_stock_rehearsal_claimed": false,
+  "prior_runs": [
+    {
+      "run": "01",
+      "source": "47a77fa",
+      "result": "Pack recognized; returned to original fastboot before Linux SSH. Four-byte allocation defect independently reproduced; exact physical failing address not captured. Original firmware/r4/storage restored."
+    },
+    {
+      "run": "02",
+      "source": "b4a9930",
+      "result": "Aligned firmware boots r4 with profile. Probe mistook activatable bus name for owned name; masked activation triggers upower CLI SIGSEGV. Original firmware/r4/storage restored; complete native table-hash check not claimed for this run."
+    }
+  ],
+  "not_qualified": [
+    "battery capacity or absolute sensor accuracy",
+    "charging thermal policy or broader BTC window",
+    "learned FCC and current/counter discrepancy",
+    "live authentication and replacement",
+    "automatic boot of a non-debug firmware build",
+    "persistent firmware deployment",
+    "UPower CLI error handling after failed activation",
+    "suspend and full hardware acceptance"
+  ]
+}

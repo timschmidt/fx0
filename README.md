@@ -67,6 +67,13 @@ window's HOT trip around 31.6°C; complete native temperature/fault/suspend poli
 is still required. Separate generic Charger Manager fault fixes pass host/ARM
 checks but are not loaded on the phone. See [battery work](docs/battery-bringup.md).
 
+An experimental RAM firmware now passes boot-time selection of the stock
+removable pack and hands all 155 vendor-source OCV points to the installed r4
+kernel through standard battery data. Design-capacity/charge-voltage attributes
+are verified; current capacity and a usable battery UI remain unavailable.
+The original firmware is restored afterward with matching bootloader/GPT
+readbacks. See [handoff evidence](evidence/2026-10-30-battery-profile-handoff.json).
+
 Stock inventory, 29 critical partition backups, GPT metadata and a separately
 verified 1 GiB original-system image are private. A complete **development-state**
 snapshot of the 15,758,000,128-byte eMMC user area and both 4 MiB boot areas passes

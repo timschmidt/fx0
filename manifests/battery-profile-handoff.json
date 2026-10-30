@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-30",
+  "firmware": {
+    "repository": "https://github.com/timschmidt/fx0-lk2nd",
+    "branch": "integration/fx0-battery-handoff",
+    "commit": "b4a9930da462d7adc0375b7d67f6d4d445ec0140",
+    "RAM_image_sha256": "db4f62f79b0c047878f55e385a6bcd491484443ab6fcf0da906d786f8277c9c8",
+    "source_C_sha256": "f9277f2db15de79260e95753636705c90dedfb583e60c373209084868fe88a16",
+    "OCV_header_sha256": "44d6a3200e128c188c8d4971577237f0e9d12aaae9570d2b09a524fb9c51434c",
+    "GCC": "15.2.0",
+    "configuration": "lk2nd-msm8226, GPL=1, LK2ND_FORCE_FASTBOOT=1, default filesystem discovery",
+    "installed": false
+  },
+  "kernel_binding_integration": {
+    "repository": "https://github.com/timschmidt/fx0-linux",
+    "branch": "integration/fx0-battery-profile",
+    "commit": "4aca0782c97e1285e58a356b810fbeb650ac1afd",
+    "scope": "SMBB and experimental BMS standard monitored-battery references"
+  },
+  "SMBB_binding_submission": {
+    "repository": "https://git.kernel.org/pub/scm/linux/kernel/git/sre/linux-power-supply.git",
+    "base_branch": "for-next",
+    "base_commit": "f0f400459bf6a037e70768de623fff3f8920b8bb",
+    "public_branch": "submission/fx0-smbb-battery-info",
+    "commit": "b9dba8b0ccd678210984b8dc8c36a9f7f3d78645",
+    "sent": false,
+    "signoff_added": false
+  },
+  "runtime": "Installed 6.18.59-r4 build5 from eMMC, temporary RAM firmware only; normal firmware restored",
+  "profile_source": "https://github.com/peremen/android-kernel-lg-madai/tree/03aba4427a7666d57b5ae06d375e259ea337f351",
+  "full_hardware_acceptance": false
+}

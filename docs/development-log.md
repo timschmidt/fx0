@@ -1390,3 +1390,52 @@ After all RAM diagnostics return, normal r4 is observed Charging/Good with a
 500 mA input budget matched to the configured host USB interface, live IADC
 about +281 mA, taint zero and active UPower/Sxmo. No thermistor read or broader
 hardware comparator setting is used for that development-budget restoration.
+
+## October 30: runtime battery-profile handoff
+
+The first-stage bootloader supplies exactly one ISL6296_L type argument, matching
+the stock vendor's TOCAD Madai selection; native Linux filters that argument.
+New GPL lk2nd code generates standard battery data and charger/BMS references
+for the known selection, without putting a replaceable pack into the Linux board
+DTS. It preserves all 155 vendor OCV points, five temperatures and percentages,
+and distinguishes KDDI's rated 2370 mAh from vendor nominal/measured FCC. Unknown
+or duplicate types select no assumed fallback. No PMIC writes or new charging
+temperature limits are added.
+
+The first RAM firmware recognizes the pack but returns to original fastboot
+before Linux SSH. Its ordinary malloc workspace is a real defect: LK ARM32
+guarantees pointer alignment, whereas libfdt requires eight bytes. A stronger host
+allocator regression reproduces FDT_ERR_ALIGNMENT. The corrected source requests
+memalign(8); 128 real-libfdt selector/data/rollback cases pass ASan/UBSan and all
+vendor values match. The exact initial physical failing address was not captured.
+Full GCC15.2 firmware builds pass with no new-source diagnostics and one linker
+RWX LOAD warning.
+
+The aligned firmware boots installed r4 with the profile. A separate bounded
+UPower probe initially mistakes an activatable name for an owned name; masked
+activation triggers a CLI SIGSEGV. Correct ownership checking, a Type=dbus
+transient and direct D-Bus calls fix the test readiness race. CLI failure handling
+after unavailable activation remains an open userspace issue. The final RAM run
+verifies all 155 OCV points in the kernel, rated 2,370,000 µAh and charge 4,350,000 µV,
+unchanged configured charger limits, and no kernel capacity attribute. UPower's
+DisplayDevice is absent/stateUnknown with warningNone; this is not a usable
+battery interface or a valid state-of-charge estimate.
+
+Each run returns to original firmware/r4 with taint zero and matching readbacks
+of the installed bootloader prefix and both GPT regions. The test-owned UPower
+mask is removed, normal UPower/Sxmo return, and the configured 500 mA development
+budget is restored. No firmware is flashed or package upgraded. Core results,
+failed attempts and raw logs remain separately captured; unit data stay private.
+
+SMBB and experimental BMS bindings now allow the standard reference. Documentation
+and generated R4/BMS DTBs pass with complete dependencies; baseline schemas reject
+the new references. A separate SMBB binding draft is based directly on the
+power-supply maintainer's pinned for-next and passes its own documentation/DTB
+checks. It joins the existing two independent draft series; nothing is mailed.
+
+Charger-local policy with managed IIO suppliers and independent inhibition is the
+selected next implementation. The legacy Charger Manager binding discourages
+new users, so its generic fault fixes remain independent contributions. Early
+profile/sensor gating, faults, warm current/voltage behavior, suspend protection,
+gauge accuracy, capacity, replacement and the rest of hardware acceptance remain
+open. See [profile evidence](../evidence/2026-10-30-battery-profile-handoff.json).

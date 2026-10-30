@@ -1,6 +1,6 @@
 # Power-supply draft submissions
 
-Two independent draft series target Sebastian Reichel's
+Three independent draft series target Sebastian Reichel's
 [power-supply tree](https://git.kernel.org/pub/scm/linux/kernel/git/sre/linux-power-supply.git),
 `for-next` pinned on October 30, 2026 to
 `f0f400459bf6a037e70768de623fff3f8920b8bb` (7.3-rc1). Each applies directly to
@@ -38,6 +38,16 @@ strict checkpatch pass without diagnostics. The LTS module also builds, but
 Charger Manager is not enabled on the phone. Probe-time sensor requirements,
 actuator errors and complete policy qualification remain separate work. See
 [regression evidence](../../evidence/2026-10-30-charger-manager-thermal.json).
+
+## Battery description binding
+
+The third [binding-only series](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-smbb-battery-info)
+permits SMBB's standard `monitored-battery` reference. The existing supply core
+already reads the selected constant data. Modified documentation and a generated
+device DTB pass on the maintainer tree with all referenced schemas available.
+The existing r4 kernel also consumes firmware-selected data on the phone. This
+adds no gauge estimator or charging policy. See
+[handoff evidence](../../evidence/2026-10-30-battery-profile-handoff.json).
 
 ## Reproduce and review
 
