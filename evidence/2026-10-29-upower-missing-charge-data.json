@@ -1,0 +1,31 @@
+{
+  "purpose": "UPower charger-only battery interface regression candidate",
+  "upstream": "UPower 1.91.0",
+  "Nura_installed_version": "99991.91.0-r2",
+  "candidate_Nura_version": "99991.91.0-r3",
+  "pmaports_commit": "fc7aceb404d1a7d60c188791ff9f074a051c58c9",
+  "pmaports_branch": "integration/fx0-upower",
+  "physical_trigger": "smbb-bif reports Battery/present/status/health/design minimum without capacity or energy/charge readings",
+  "baseline_test": {
+    "unmodified_C_backend": true,
+    "new_fixture_reproduces": "GLib rejects NaN percentage; strict test daemon exits before startup"
+  },
+  "candidate": "Reject battery-type interfaces lacking every consumed charge-information attribute before constructing either backend. Attribute presence keeps legitimate zero readings eligible.",
+  "tests": {
+    "focused": 6,
+    "critical_action": 2,
+    "full_configured_Linux_suite": 90,
+    "failures": 0,
+    "build": "Rootless Alpine 3.24 container, iDevice disabled; mocked sysfs and D-Bus, no physical power actions",
+    "pristine_patch_application_check": true
+  },
+  "native_package_build": "In progress in separate rootless pmbootstrap work; not installed",
+  "device_state": "Installed UPower unchanged and inactive. Matched native r2 plus RAM GPIO-button DT running; minimal Wayland active.",
+  "limits": [
+    "No native BMS/fuel-gauge implementation",
+    "No inferred or fabricated state-of-charge value",
+    "No charging or thermal policy qualification",
+    "Does not address other malformed combinations of partially present measurements",
+    "No on-device candidate qualification or upstream submission yet"
+  ]
+}

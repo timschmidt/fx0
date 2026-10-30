@@ -841,3 +841,27 @@ and sleep bias disabled. W=1 DTB, GPIO-keys schema and checkpatch pass. Source
 d80fe9931 is published on integration/fx0-buttons. Its RAM test image uses the
 matched r2 kernel and initramfs. Physical button and wake tests are still pending;
 the installed r2 DTB does not include this candidate.
+
+
+### UPower missing-charge regression and rootless validation
+
+The source archive for installed UPower1.91.0 matches the Nura recipe SHA512.
+A UMockdev fixture reproducing smbb-bif's Battery/present/status/health/design
+minimum fields, with no charge information, makes the unchanged backend reject
+a NaN percentage and exit under strict test settings. The private journal had
+already established the resulting physical system power-off request.
+
+A candidate checks attribute presence before constructing either battery backend,
+skipping interfaces without any consumed capacity/energy/charge field. This keeps
+legitimate zero readings eligible and provides no invented capacity. Six focused
+tests and two critical-action tests pass; all90 tests in the configured Linux
+build also pass. Tests run with mocked sysfs/D-Bus in a rootless Alpine3.24
+container, with iDevice support disabled. No physical power action is used.
+The patch applies cleanly to pristine source.
+
+The r3 UPower recipe is published at fc7aceb404 on integration/fx0-upower. A separate
+rootless pmbootstrap build is being prepared, with a disposable source clone and
+new work directory. The original root-owned pmbootstrap work and signing keys
+are untouched. Native package installation and physical qualification are still
+pending; the phone's installed UPower remains unchanged/inactive. Native BMS,
+correct charging/thermal policy and the full Sxmo acceptance gates remain open.

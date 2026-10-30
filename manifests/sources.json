@@ -156,6 +156,13 @@
       "branch": "integration/fx0-buttons",
       "commit": "d80fe99314eb2499c9e04e32468ea5eafbc9e758",
       "status": "Stock GPIO wiring/default/sleep pulls described; W=1 DTB, schema and checkpatch pass. RAM image ready, physical events/wake pending. Not in installed r2."
+    },
+    {
+      "name": "pmaports-upower",
+      "url": "https://github.com/timschmidt/fx0-pmaports",
+      "branch": "integration/fx0-upower",
+      "commit": "fc7aceb404d1a7d60c188791ff9f074a051c58c9",
+      "status": "UPower r3 candidate rejects battery interfaces with no charge information. Unchanged backend reproduces NaN with fixture; 90 configured Linux tests pass in rootless container, including critical policy. Native package build and device validation pending."
     }
   ]
 }
