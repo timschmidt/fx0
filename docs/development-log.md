@@ -1720,3 +1720,14 @@ Association/traffic need an owner-designated test network. Pairing, MAC source,
 suspend, packaging and submission material remain. See
 [wireless work](wireless-bringup.md) and
 [evidence](../evidence/2026-10-30-wcnss-first-start.json).
+
+The regulator fix is now prepared against remoteproc `for-next` 7.3-rc1
+(`23d0516587f8`), where the bug is unchanged. Before writing it, the kernel's
+coding-assistants, generated-content, submitting-patches, coding-style,
+development-process, threat-model and stable-rules documents were read in full.
+The patch has `Fixes: 3dbc90b9c22e`, `Cc: stable` and `Assisted-by`. It has no
+Signed-off-by, which is for the owner to add after review. The model fails 6 of
+10 cases on the base and passes 10 of 10 fixed. ARM/arm64 W=1 object builds are
+clean, and `git am` reproduces the branch. The changelog states MSM8974,
+MSM8916 and MSM8939 impact, and the notes say exactly what was and was not
+tested. Nothing was sent. See [remoteproc draft](../submissions/remoteproc/README.md).

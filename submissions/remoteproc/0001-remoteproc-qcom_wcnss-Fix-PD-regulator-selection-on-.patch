@@ -1,0 +1,86 @@
+From 44a445091d296a34ac4676878e92e5976efb69d0 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 30 Oct 2026 18:25:17 -0400
+Subject: [PATCH] remoteproc: qcom_wcnss: Fix PD regulator selection on Pronto
+ v1/v2
+
+Commit 3dbc90b9c22e ("remoteproc: qcom_wcnss: Fix handling the lack of
+PD regulators in v3") identifies Pronto v3 by comparing the number of
+power domain names with the number of non-PD regulators. Pronto v1 and
+v2 also list two power domain names ("cx", "mx") and one non-PD
+regulator ("vddpx"), so they take the v3 branch as well.
+wcnss_init_regulators() then requests only the first entry of their
+vregs table, vddcx, whatever power domains were attached:
+
+ - with only CX attached (MSM8974), vddmx and vddpx are never requested
+   and a dummy vddcx is used instead
+ - with CX and MX attached (MSM8916, MSM8939), vddpx is never requested
+ - with no domains (old device trees), vddmx and vddpx are never
+   requested
+
+The remote processor still boots when these rails happen to be enabled
+by someone else, so the problem is easy to miss. On an MSM8226 board
+with CX as the only power domain, the driver logs
+
+  qcom-wcnss-pil fb204000.remoteproc: supply vddcx not found, using dummy regulator
+
+and the described MX and PX regulators have no WCNSS consumer.
+
+Pronto v3 is the only variant whose table has no PD regulators. Test
+num_pd_vregs directly instead of comparing the two counts.
+
+Fixes: 3dbc90b9c22e ("remoteproc: qcom_wcnss: Fix handling the lack of PD regulators in v3")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-5-5
+---
+Testing:
+ - LG Fx0 (MSM8926, Pronto v2, CX as the only power domain) on 6.18.59,
+   which carries the stable backport of 3dbc90b9c22e: before the fix, the
+   Pronto device's only regulator supplier is the dummy vddcx and the
+   RPM L3/L6 regulators have no WCNSS consumer. With this change applied
+   to that kernel, the device consumes L3 as vddmx (1.2875 V vote) and L6
+   as vddpx, firmware boots, and a stop/start cycle re-registers Wi-Fi.
+ - A host model that extracts every wcnss_data table and the branch
+   condition from the source: this base fails 6 of 10 table/attached-PD
+   combinations (all Pronto v1/v2), the fixed code passes all 10,
+   including the Pronto v3 and Riva cases.
+ - W=1 LLVM builds of drivers/remoteproc/qcom_wcnss.o for ARM
+   (multi_v7_defconfig) and arm64 (defconfig) on this base: no warnings.
+Not tested: a kernel built from this maintainer tree on hardware, and
+MSM8974, MSM8916 or MSM8939 boards; their behaviour is inferred from
+their device trees.
+
+ drivers/remoteproc/qcom_wcnss.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index c856a92af..fe64b568b 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -445,19 +445,15 @@ static int wcnss_init_regulators(struct qcom_wcnss *wcnss,
+ {
+ 	const struct wcnss_vreg_info *info = data->vregs;
+ 	struct regulator_bulk_data *bulk;
+-	size_t i, possible_pds = 0, num_vregs = data->num_vregs;
++	size_t i, num_vregs = data->num_vregs;
+ 	int ret;
+ 
+-	for (i = 0; i < WCNSS_MAX_PDS; i++)
+-		if (data->pd_names[i])
+-			possible_pds++;
+-
+ 	/*
+ 	 * If attaching the power domains suceeded we can skip requesting
+ 	 * the regulators for the power domains. For old device trees we need to
+ 	 * reserve extra space to manage them through the regulator interface.
+ 	 */
+-	if (possible_pds >= num_vregs) {
++	if (!data->num_pd_vregs) {
+ 		/* Do nothing if vregs do not include PD regulators (pronto-v3) */
+ 	} else if (wcnss->num_pds) {
+ 		info += wcnss->num_pds;
+
+base-commit: 23d0516587f896f5f16a47c97ddb41d28e6289ff
+-- 
+2.56.0
+

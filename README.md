@@ -102,7 +102,9 @@ firmware and NV. It scans 2.4/5 GHz and brings up a Bluetooth controller. A
 stable-kernel Pronto regulator regression and an MSM8226 interrupt-trigger defect
 that broke WCNSS restart are fixed and verified on the phone. The installed r4
 system is unchanged. Association, pairing, MAC source and suspend remain open;
-see [wireless work](docs/wireless-bringup.md).
+see [wireless work](docs/wireless-bringup.md). The regulator fix is prepared
+for the remoteproc maintainer tree but not sent; see the
+[remoteproc draft](submissions/remoteproc/README.md).
 
 Stock inventory, 29 critical partition backups, GPT metadata and a separately
 verified 1 GiB original-system image are private. A complete **development-state**

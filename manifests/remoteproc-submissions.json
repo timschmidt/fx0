@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-30",
+  "maintainer_repository": "https://git.kernel.org/pub/scm/linux/kernel/git/remoteproc/linux.git",
+  "maintainer_branch": "for-next",
+  "base_commit": "23d0516587f896f5f16a47c97ddb41d28e6289ff",
+  "base_version": "7.3-rc1",
+  "compiler": "clang version 21.1.8 (Fedora 21.1.8-6.fc43)",
+  "series": [
+    {
+      "name": "wcnss-pd-regulators",
+      "base": "23d0516587f896f5f16a47c97ddb41d28e6289ff",
+      "head": "44a445091d296a34ac4676878e92e5976efb69d0",
+      "branch": "submission/fx0-wcnss-pd-regulators",
+      "patch_file": "submissions/remoteproc/0001-remoteproc-qcom_wcnss-Fix-PD-regulator-selection-on-.patch",
+      "patch_sha256": "9b8cfa285f31769b454332048a939b088b7a73b6bd86abd0d0dd946c0d5f7916",
+      "fixes": "3dbc90b9c22ea96e37bf55f6011e63b5123ec668",
+      "builds": [
+        {
+          "arch": "arm",
+          "config": "multi_v7_defconfig",
+          "config_sha256": "fe87f2f8504331ce9cfd126e2dd2118712e2ce5797f9e7f3e9c53ba5cf65ba2f",
+          "object_sha256": "70a2aa7bad7969d36c2093f79d7c3309ed740efb26552d909e64b984b7d17cbd",
+          "W1_object_build": "PASS",
+          "compiler_errors": 0,
+          "compiler_warnings": 0
+        },
+        {
+          "arch": "arm64",
+          "config": "defconfig",
+          "config_sha256": "b93ded8130451f35c3485f691391d9be4f9e77f011e31503d0d62f174a9a1476",
+          "object_sha256": "6dbd3a72f45df6125b4111304b62993935600461084cbea6ff74624f9d2b6c90",
+          "W1_object_build": "PASS",
+          "compiler_errors": 0,
+          "compiler_warnings": 0
+        }
+      ],
+      "full_kernel_build": false,
+      "git_am_reproduces_tree": true,
+      "model_cases": {
+        "base_failures": 6,
+        "fixed_failures": 0,
+        "total": 10
+      },
+      "maintainer_tree_kernel_booted": false,
+      "physical_test_on": "6.18.59 Fx0 with the same change",
+      "signed_off_by_present": false,
+      "sent": false
+    }
+  ]
+}

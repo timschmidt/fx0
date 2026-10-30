@@ -122,8 +122,10 @@ BD_ADDR record whose vendor is not evident. Full addresses stay private.
 4. Describe the TLMM sleep state, then test WCNSS across real system suspend.
    Check hotspot capability.
 5. Package the kernel change into a signed Nura build and boot it from eMMC.
-6. Prepare the regulator and DXE trigger fixes for remoteproc/Qualcomm DT
-   maintainers against current mainline. Add the matching MSM8974 trigger
+6. The regulator fix is prepared for the remoteproc tree with its checks and is
+   awaiting owner review and sign-off; see the
+   [remoteproc draft](../submissions/remoteproc/README.md). Fold the DXE
+   trigger fix into the MSM8226 WCNSS node series once that series is prepared. Add the matching MSM8974 trigger
    change only with a test there or as an explicitly untested suggestion.
    Replace the expected L24 warning with a clean profile.
 
