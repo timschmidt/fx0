@@ -1298,3 +1298,18 @@ MDP5 bit26 is INTF1 underrun. The BPF LSM is active but kernel BTF is absent;
 its relation to the systemd warning needs direct verification. The audit records
 remaining messaging/device-link, display and kernel-configuration work without
 publishing the photograph or claiming complete hardware acceptance.
+
+## October 30: reference conversion comparison
+
+The corrected input-only comparison runs base/cached/base arms at 100 then
+500 mA, followed by an unchanged-base reload at 500 mA. The initial and read-time
+thermistor guard is 630 mV and no synthetic CPU load runs. Background readings
+settle near zero in every arm, including the unchanged base; the earlier large
+frozen-current symptom does not recur after the first reprobe. This does not
+establish cached references as a fix. The separate diagnostic patch and hashes
+are retained for review. Initial sense/calibration/counter sequencing and a
+first-probe transition remain the next targets; independent accuracy is open.
+Cleanup restores 100 mA. New installed r4 identity/taint 0 is observed, then a
+later SSH command times out. An idempotent bounded finalizer verifies the same
+boot, restores UPower/Sxmo and checks all four display controls remain auto.
+No additional reboot is used for that recovery and no integration code changes.

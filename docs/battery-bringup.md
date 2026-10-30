@@ -203,9 +203,14 @@ Full-triggered counter reset. With USB input temporarily set to 500 mA, live
 IADC remains zero while background current stays around -220 mA and the relative
 counter continues integrating discharge. A single successful calibration does
 not correct the discrepancy. The original 100 mA input limit is restored and
-normal installed r4 returns. Fresh reference conversions on every native poll,
-versus stock's cached references, remain a separate hypothesis: its first
-comparison aborts at the initial thermistor guard before either test arm runs.
+normal installed r4 returns. A subsequent fresh/cached-reference comparison runs
+both variants with a final unchanged-driver reload control. After the first
+reprobe, both variants settle within about 7.3 mA of zero at 500 mA input; the
+unchanged driver also behaves near zero. The large frozen-current symptom is
+not reproduced by those arms, so cached references are not established as a fix.
+Capture the first-probe transition before reinitialization and examine initial
+sense/calibration/counter ordering. The diagnostic source remains separate from
+integration; see [reference-cache evidence](../evidence/2026-10-30-bms-reference-cache.json).
 See [recalibration-only evidence](../evidence/2026-10-30-bms-recalibration-only.json).
 
 ## Native battery temperature

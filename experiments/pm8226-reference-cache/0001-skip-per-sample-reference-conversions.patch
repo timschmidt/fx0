@@ -1,0 +1,13 @@
+--- a/drivers/power/supply/qcom_pm8226_bms.c
++++ b/drivers/power/supply/qcom_pm8226_bms.c
+@@ -353,9 +353,7 @@
+ 							    &bms->current_ua, 1000);
+ 	if (ret)
+ 		goto average_error;
+-	ret = bms_refresh_calibration(bms);
+-	if (ret)
+-		goto average_error;
++	/* Diagnostic: use references cached at provider calibration only. */
+ 	ret = bms_snapshot(bms, &output);
+ 	if (ret)
+ 		goto average_error;
