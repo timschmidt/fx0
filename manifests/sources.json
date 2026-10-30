@@ -64,8 +64,8 @@
       "name": "linux",
       "url": "https://github.com/timschmidt/fx0-linux",
       "branch": "integration/fx0-lts",
-      "commit": "9ff315ebc274426f5630265c074c67b44c554f7d",
-      "status": "Initial Nura boot/storage verified on kernel 11; native kernel 16 clean-build passes but MDP5 fails without IOMMU; RAM diagnostics recovered; touchscreen probes without physical events"
+      "commit": "d80fe99314eb2499c9e04e32468ea5eafbc9e758",
+      "status": "Current tested native r3 source: installed eMMC boot, display/typing/gesture and GPIO input sample pass with temporary initial display holds and Pixman. Battery/fuel/charging and remaining hardware/reliability work open."
     },
     {
       "name": "lk2nd",
@@ -79,8 +79,8 @@
       "url": "https://github.com/timschmidt/fx0-pmaports",
       "branch": "integration/fx0-v26.06",
       "base_commit": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
-      "status": "Signed native r2 built, installed and booted from eMMC; both live axis flags, taint0, native console/ext4 modules verified. Minimal UI physical check passes; embedded recipe metadata -dirty limitation recorded externally.",
-      "commit": "f50eb689393d4022958b64ec89e162436f0b9527"
+      "status": "Current tested kernel r3 plus UPower r3 recipes. Signed native r3 boots from eMMC, combined physical input test passes; checked kernel recipe metadata. UPower avoids incomplete-charge NaN; hardware gauge/charging and final recovery remain open.",
+      "commit": "0a7b0e9fa85fc1c4c32b112a5bcc562f516a23bb"
     },
     {
       "name": "linux-display-iommu-experimental",
@@ -155,14 +155,21 @@
       "url": "https://github.com/timschmidt/fx0-linux",
       "branch": "integration/fx0-buttons",
       "commit": "d80fe99314eb2499c9e04e32468ea5eafbc9e758",
-      "status": "Stock GPIO wiring/default/sleep pulls described; W=1 DTB, schema and checkpatch pass. RAM image ready, physical events/wake pending. Not in installed r2."
+      "status": "Initial RAM Home/VolumeDown/VolumeUp each3 matched pairs; installed r3 test each1 matched pair, no drops/stuck input. Wake, long presses and final UI actions remain open."
     },
     {
       "name": "pmaports-upower",
       "url": "https://github.com/timschmidt/fx0-pmaports",
       "branch": "integration/fx0-upower",
       "commit": "fc7aceb404d1a7d60c188791ff9f074a051c58c9",
-      "status": "UPower r3 candidate rejects battery interfaces with no charge information. Unchanged backend reproduces NaN with fixture; 90 configured Linux tests pass in rootless container, including critical policy. Native package build and device validation pending."
+      "status": "UPower r3 signed armv7 package installed; normal signatures and native unknown-battery/no-warning behavior verified. 90 configured Linux tests pass. Native fuel/charging work and final policy acceptance remain open."
+    },
+    {
+      "name": "pmaports-native-updates",
+      "url": "https://github.com/timschmidt/fx0-pmaports",
+      "branch": "integration/fx0-native-updates",
+      "commit": "0a7b0e9fa85fc1c4c32b112a5bcc562f516a23bb",
+      "status": "Signed kernel r3 and UPower r3 installed; kernel boots from eMMC and combined physical typing/keyboard gestures/GPIO input test passes. Recovery and remaining hardware/reliability gates open."
     }
   ]
 }

@@ -1,0 +1,61 @@
+{
+  "package": "linux-postmarketos-qcom-msm8226-6.18.59-r3.apk",
+  "bytes": 17706985,
+  "sha256": "de5001a00a6b4c90c49060f5291818a7e55188a1dce1dd96760d63aca01efb04",
+  "source": "d80fe99314eb2499c9e04e32468ea5eafbc9e758",
+  "recipe": "0a7b0e9fa85fc1c4c32b112a5bcc562f516a23bb",
+  "verified_recipe_provenance_passed_before_build": true,
+  "embedded_recipe_commit_matches": true,
+  "metadata_commit_clean": true,
+  "DTB_matches_physically_tested_RAM_buttons_candidate": true,
+  "DTB_sha256": "1aea62450c71185ada8bd036e665523a0342338a243bba3e667701e3a95b250f",
+  "kernel_sha256": "89189320143d0c9d52c45a88ac94570018635c8c24af3cbd02131ef82ddbbe90",
+  "module_files": 424,
+  "purpose": "Native r3 GPIO button package, checked recipe provenance and eMMC boot",
+  "verification": {
+    "package_install_success": true,
+    "package_version": "6.18.59-r3",
+    "native_kernel_DTB_match_exact_APK": true,
+    "fallback_boot_files_match_preupdate": true,
+    "old_module_release_retained": true,
+    "new_module_filesystem": "ext4",
+    "both_GPTs_byte_identical": true,
+    "raw_boot_partition_sha256_unchanged": true,
+    "initramfs_bytes": 11955671,
+    "initramfs_sha256": "da0f9133a912f1f00054e26dbd2ab3170178b8540281e298202f5e69bb6f2dbc",
+    "initramfs_prefix_original_cleanup_bytes_verified": true,
+    "initramfs_contains_only_native_ABI": true,
+    "RAM_overlay_hook_absent": true,
+    "explicit_Fx0_DTB_and_native16_fallback_entry": true,
+    "installed_filesystem_boot_tested": true
+  },
+  "boot": {
+    "method": "Normal reboot, retained-log capture and selected lk2nd fastboot continue; no RAM boot for this installed test",
+    "new_boot_ID": true,
+    "both_touch_axis_flags_and_GPIO_home_node": true,
+    "kernel_release": "6.18.59",
+    "taint": 0,
+    "framebuffer": "msmdrmfb",
+    "module_filesystem": "Persistent ext4",
+    "display_controls": "MDSS/IOMMU/DSI/PHY all auto after initial holds release",
+    "full_Sxmo_and_UPower_running": true,
+    "physical_combined_input_retest": "Owner confirms visible terminal/keyboard, typing and both bottom-edge gestures; all three GPIO keys recorded matched press/release",
+    "physical_input_evidence": "2026-10-29-native-r3-input.json"
+  },
+  "managed_menu": {
+    "supported_deviceinfo_generate_extlinux_config": false,
+    "two_normal_mkinitfs_regenerations_preserve_menu_bytes": true,
+    "kernel_r3_APK_upgrade_preserves_menu_bytes": true,
+    "new_DT_B_matches_RAM_candidate_even_with_manual_menu": true,
+    "native16_files_and_modules_retained": true,
+    "physical_fallback_rehearsal": false,
+    "root_UUID_or_cmdline_changes_require_explicit_menu_update": true
+  },
+  "open": [
+    "Physical fallback rehearsal and default unattended/cold/repeated boot",
+    "Initial display-power workaround removal",
+    "Full suspend, charging/fuel gauge and remaining hardware",
+    "Factory-stock restoration rehearsal and minimum-partition migration",
+    "Final upstream qualification/submission"
+  ]
+}

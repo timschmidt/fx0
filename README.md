@@ -53,11 +53,20 @@ A native Wayland terminal and on-screen keyboard now work with Pixman software
 rendering. Both touch axes need inversion; the board-DT correction is physically
 confirmed in a RAM boot with identity compositor calibration. The signed r2 package is installed,
 boots from eMMC and passes the same physical display/keyboard test. See [GUI and touch evidence](evidence/2026-10-29-native-wayland-console.json).
-The first full Sxmo session supports typing and menu gestures, but bottom-edge
-keyboard gestures remain open. Missing fuel-gauge telemetry makes UPower log NaN
-percentages and request a normal shutdown; the full session is held stopped while
-that defect is addressed. GPU, default unattended boot and final update/recovery
-qualification remain open.
+Native r3 now adds the GPIO buttons: a prior RAM test records three matched
+presses/releases for each Home and volume key. The signed package boots from
+eMMC with the matching DTB and correct embedded recipe revision. Its installed
+physical test confirms typing, keyboard gestures and one matched press/release
+for each GPIO button.
+
+The full Sxmo session supports typing and menu gestures. UPower r3 fixes the
+observed NaN/false shutdown when the charger exposes no charge information;
+90 configured Linux tests and native operation pass. Battery capacity remains
+unknown and charging remains unqualified. Measured gesture traces identify
+edge/distance/angle defaults that need an Fx0 profile; the tuned profile passes
+synthetic trace replay and the installed physical test. A supported manual extlinux
+menu now survives two initramfs regenerations and a kernel update. GPU, fallback
+rehearsal, default unattended boot and final update/recovery qualification remain open.
 
 Native CCI now reads the separate camera EEPROM: a short read and two full 64 KiB
 reads match the independent GPIO capture. Verified private copies exist on two

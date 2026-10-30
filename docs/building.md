@@ -201,3 +201,32 @@ An eMMC filesystem boot through selected lk2nd continue reaches SSH, msmdrmfb,
 real ext4 modules, both live inversion flags and taint0. Minimal Wayland is used
 for the installed touch check while the separate UPower/battery defect is open.
 See the r2 installed-boot evidence for exact hashes and remaining gates.
+
+
+### Rootless native r3 and retained recovery menu
+
+The tested v26.06 integration now points to0a7b0e9fa and Linuxd80fe993. Both the
+canonical Linux/pmaports integration branches are fast-forwarded to these tested
+revisions. Rootless Podman builds UPower armv7 through qemu-only and the kernel
+through LLVM cross-native compilation without host sudo. Private container device
+bindings, fresh work initialization and `--lax` are documented in
+[the build fixture](../diagnostics/rootless-native-build/README.md).
+
+The checked wrapper supplies the verified clean recipe snapshot and timestamp
+to abuild before signing. Native kernel r3 embeds the exact0a7b0e9fa commit; older
+artifacts keep their honest `-dirty` metadata and external provenance. The native
+r3 DTB matches the physically tested RAM button candidate. Normal trusted upgrade,
+boot-file/ABI/load-slot verification and eMMC boot pass. The installed owner test
+confirms typing and keyboard gestures, and raw events confirm all three GPIO keys.
+
+Current filesystem boot now uses a supported managed extlinux menu, documented
+[here](../diagnostics/managed-extlinux/README.md). Disabling menu generation still
+allows DTB/initramfs updates. Two normal regenerations and the actual r3 kernel
+upgrade preserve the menu; the new DTB is copied and verified. Root UUID or command
+line changes require explicit menu updates. A physical fallback rehearsal and the
+final storage/raw-boot update design remain separate gates.
+
+The [Fx0 Sxmo profile](../diagnostics/sxmo-fx0-profile/README.md) uses measured
+gesture thresholds and observed input identifiers. It retains software rendering
+and the current restricted idle/suspend/audio/modem test policy. This milestone
+does not complete remaining hardware, power, cold-boot or reliability qualification.

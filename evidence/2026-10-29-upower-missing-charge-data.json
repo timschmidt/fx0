@@ -19,13 +19,15 @@
     "build": "Rootless Alpine 3.24 container, iDevice disabled; mocked sysfs and D-Bus, no physical power actions",
     "pristine_patch_application_check": true
   },
-  "native_package_build": "In progress in separate rootless pmbootstrap work; not installed",
-  "device_state": "Installed UPower unchanged and inactive. Matched native r2 plus RAM GPIO-button DT running; minimal Wayland active.",
+  "native_package_build": "Complete: signed armv7 core plus noarch lang/systemd, three direct signatures verified; trusted install completed",
+  "device_state": "UPower r3 installed. Native daemon reports unknown/missing battery and no warning instead of false critical state; remains active through full Sxmo use. Native r3 kernel also boots and restarts UPower/Sxmo.",
   "limits": [
     "No native BMS/fuel-gauge implementation",
     "No inferred or fabricated state-of-charge value",
     "No charging or thermal policy qualification",
     "Does not address other malformed combinations of partially present measurements",
-    "No on-device candidate qualification or upstream submission yet"
-  ]
+    "No upstream submission yet; hardware fuel/charging and extended policy acceptance remain open"
+  ],
+  "native_daemon_sha256": "c34126ccb5df93493a03405441353f4ef11b184627f9bf55fba9e81a6a4e6e10",
+  "package_metadata": "UPower APK retains -dirty recipe metadata; external recipe/source/patch/APK hashes retained. The subsequently built kernel r3 uses checked pre-build abuild provenance and has the correct embedded commit."
 }

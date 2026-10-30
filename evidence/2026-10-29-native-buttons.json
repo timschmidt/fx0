@@ -1,0 +1,37 @@
+{
+  "purpose": "RAM native GPIO button physical mapping and release test",
+  "source": "d80fe99314eb2499c9e04e32468ea5eafbc9e758",
+  "base_kernel_package": "6.18.59-r2",
+  "owner_sequence": "Each button once first, then each twice",
+  "bytes": 576,
+  "events": 36,
+  "SYN_REPORT": 18,
+  "SYN_DROPPED": 0,
+  "buttons": {
+    "Home": {
+      "linux_code": 102,
+      "press": 3,
+      "release": 3,
+      "repeat": 0
+    },
+    "Volume Down": {
+      "linux_code": 114,
+      "press": 3,
+      "release": 3,
+      "repeat": 0
+    },
+    "Volume Up": {
+      "linux_code": 115,
+      "press": 3,
+      "release": 3,
+      "repeat": 0
+    }
+  },
+  "remaining_pressed_keys": [],
+  "errors": [],
+  "kernel_taint": 0,
+  "wake_tested": false,
+  "persistent_button_DTB_installed": true,
+  "scope": "Initial RAM test plus subsequent installed r3 test: each key also records one matched press/release on r3. Wake/long presses remain open.",
+  "installed_r3_eMMC_physical_retest": true
+}

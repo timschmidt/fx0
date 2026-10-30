@@ -1,0 +1,32 @@
+{
+  "purpose": "Measured physical gesture mismatch and Fx0 profile tuning",
+  "physical_before_tuning": {
+    "contacts": 52,
+    "events": 2254,
+    "frames": 337,
+    "SYN_DROPPED": 0,
+    "remaining_contacts": 0,
+    "X_updates": 222,
+    "Y_updates": 254,
+    "contact_durations": "All below 200 ms; not the 800 ms recognizer timeout",
+    "default_constraints": "125px travel; 50px edge band; 15 degree axis tolerance",
+    "observation": "Long swipes stop outside the narrow edge band; near-edge contacts travel less than the distance threshold. Several otherwise vertical trajectories slant about20 degrees."
+  },
+  "profile": {
+    "SXMO_LISGD_THRESHOLD": 60,
+    "LISGD_EDGE_SIZE": 2.4,
+    "effective_edge_pixels": 120,
+    "device_hook_lisgd_angle_degrees": 25,
+    "timeout_changed": false,
+    "compositor_calibration": "Identity; board DT handles both axis inversions"
+  },
+  "trace_replay": {
+    "kind": "Synthetic EVDEV replay of measured physical trajectories/timings; not a physical acceptance result",
+    "default_down_up": "Keyboard remains visible after both; reproduces failure",
+    "distance_edge_tuned_down_up": "Keyboard closes then reopens",
+    "slanted_trace_with_angle_tuning": "Closes then reopens on installed r3"
+  },
+  "physical_after_tuning": "Owner confirms typing and both keyboard close/open gestures on installed native r3; nine real touch contacts, no drops/stuck contacts. Independent GPIO capture confirms all three buttons.",
+  "UI_scope": "Pixman, full Sxmo test session, audio/modem/idle/suspend still disabled",
+  "verbose_tracing": "Removed after the physical test; running recognizer retains60px/120px/25degree settings"
+}

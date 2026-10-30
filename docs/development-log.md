@@ -865,3 +865,77 @@ new work directory. The original root-owned pmbootstrap work and signing keys
 are untouched. Native package installation and physical qualification are still
 pending; the phone's installed UPower remains unchanged/inactive. Native BMS,
 correct charging/thermal policy and the full Sxmo acceptance gates remain open.
+
+
+### GPIO mapping, UPower native install, and update-safe development menu
+
+The owner presses each button once, then twice. The RAM d80 capture contains
+three presses and three releases for each Home102/VolumeDown114/VolumeUp115,
+18 frames and no dropped/stuck/repeat events. Its36 raw events are preserved
+privately and independently verified on both host filesystems. Wake and long
+presses are not tested.
+
+The rootless UPower build completes for armv7 using qemu-only compilation. Core
+and noarch lang/systemd APKs pass direct signature checks with the new development
+public key, and the trusted dry run selects exactly three upgrades. Before the
+update, old package files/configuration/database and repository archives are
+backed up on both host filesystems;23 payload files match the downloaded archives.
+Those old archives use a local build signer absent from the phone's standalone
+key list, while normal repository trust uses the authenticated index. No untrusted
+install override is used. The exact file snapshot provides offline rollback.
+
+Native UPower r3 installation succeeds and its daemon matches the build. It skips
+the unsupported charger battery interface, reports unknown/missing battery and no
+warning, and stays active through full Sxmo testing. This does not provide capacity
+or qualify charger/thermal behavior. A missing USB type property is still reported.
+
+Normal package processing regenerates boot files again. Existing supported
+`deviceinfo_generate_extlinux_config=false` lets us retain a managed menu with
+stable versionless kernel/initrd/DTB paths while normal DTB copying continues.
+The saved native16 entry is restored once. Two normal mkinitfs runs preserve the
+menu byte-for-byte. Root UUID/cmdline changes now require an explicit menu update;
+this development policy does not replace final boot-layout/recovery qualification.
+
+### Native r3 package and installed boot
+
+The r3 recipe at0a7b0e9fa packages d80 and passes configuration checks. Rootless
+LLVM cross-native compilation succeeds. A checked wrapper verifies the clean
+recipe snapshot and passes its commit/SOURCE_DATE_EPOCH to abuild before signing,
+avoiding the copied-APKBUILD path lookup problem behind earlier `-dirty` metadata.
+The signed r3 APK embeds the expected commit and its DTB exactly matches the
+physically tested RAM candidate. Signing inputs stay private; this metadata check
+is not a claim of byte-identical builds with different signing keys.
+
+Pre-r3 boot/modules/configuration/tuned Sxmo profile/world/keys and the exact r2 APK
+are verified on two host filesystems. The trusted one-package upgrade succeeds.
+It preserves the managed menu, copies the new DTB, retains native16 files/modules
+and produces a11,955,671-byte matched-ABI initramfs. Raw boot and both GPTs remain
+unchanged. Normal reboot/log capture/lk2nd continue boots r3 from eMMC with a new
+boot ID, GPIO node, both touch flags, native framebuffer, real ext4 modules and
+taint0. Full Sxmo/UPower start; the combined physical input retest is pending.
+
+### Physical gesture data and measured-trace replay
+
+The physical attempt records52 contacts,337 frames and2,254 events, with continuous
+X/Y updates and no drops/stuck contacts. Durations are below200ms, so the800ms
+timeout is not responsible. Under defaults, long motions stop outside the50px
+edge band and near-edge motions are shorter than125px. Some paths also slant
+about20 degrees from vertical.
+
+A replay of two measured trajectories reproduces the failure with the default
+profile. Fx0 settings60px distance and a120px band make that replay close/reopen
+the keyboard. A device hook allows25-degree slant; a further replay including
+a measured slanted trajectory also passes on installed r3. These are synthetic
+replays, not physical acceptance. The initial tuned replay aborts before injection
+because the keyboard was already closed; after explicitly reopening, the test
+passes. Temporary recognizer/debug logging remains until the installed physical
+test is complete. See the gesture-profile evidence for the distinction.
+
+
+The installed r3 owner test passes typing and both keyboard gestures. Independent
+recording contains one press/release for each GPIO key and475 touch events across
+72 frames/nine contacts, with no drops or stuck states. Taint remains0. Verbose
+recognizer tracing is removed, and the running60px/120px/25-degree settings are
+verified unchanged. Full idle/suspend/audio/modem policy stays restricted while
+those components remain unqualified. Public development fixtures now document the
+Fx0 profile, checked rootless recipe identity and managed extlinux menu.
