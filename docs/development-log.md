@@ -1248,3 +1248,24 @@ A normal eMMC boot restores installed r4 build5/taint0 with no BMS prototype,
 active UPower/Sxmo, all4display controlsauto and a reviewed private terminal/
 keyboard screenshot. Physical UI retest is not claimed. No repartition, package
 upgrade or upstream communication occurs. See current observation evidence.
+
+## October 30: stock charge-only stop and calibration trace
+
+Two bounded stock RAM captures use the verified factory `bms/charge` endpoint.
+Charge-enable readback is `0x80 → 0x00 → 0x80`, with forced-battery mode off.
+BATFET opens, manual current becomes zero and background current settles near
+zero. Stock reports Full and resets its counter. Targeted dynamic debug in the
+second capture confirms charging-ended/Full messages, IADC calibration/trim
+writes and EOC handling. Source inspection explains the Full-triggered reset
+and open-BATFET calibration path; exact binary/source identity remains unknown.
+Do not transfer the SOC reset into native merely to hide a current discrepancy.
+
+The capture script restores charge control, permissions, debug selectors and
+selected print flags. It does not mount disk filesystems or change charger
+limits. Both supervised runs return automatically to installed r4/taint0.
+Preceding attempts abort before charge writes when debugfs selector readback
+fails; using `echo` for selector writes succeeds. The underlying syscall-level
+reason has not been established. Raw calibration and logs stay private; the
+public exporter has six checks for values, sign, privacy and incomplete input.
+Independent electrical accuracy remains unverified without measurement equipment.
+See [stock charge-only evidence](../evidence/2026-10-30-stock-charge-only.json).

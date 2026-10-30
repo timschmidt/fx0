@@ -1,0 +1,468 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Stock RAM charge-only stop/restart and targeted calibration/reset trace",
+  "installed_package_unchanged": true,
+  "stock_restoration_rehearsal": false,
+  "disk_filesystems_mounted": false,
+  "charge_control": "Stock factory bms/charge API; CHG_CTRL bit7 1->0->1, force-battery bit0 stays0",
+  "charger_thresholds_changed": false,
+  "absolute_current_accuracy": "Unverified; no independent measurement fixture currently available",
+  "source_reference": {
+    "repository": "https://github.com/peremen/android-kernel-lg-madai",
+    "commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+    "exact_binary_correspondence": "Not established"
+  },
+  "captures": [
+    {
+      "name": "stock-charge-only-06",
+      "debug": false,
+      "script_sha256": "dcd4c6df778d3c074f46764764f940299cfb48772be87ba353a257c2964c3885",
+      "stock_current_sign": "negative charging; manual IADC positive charging",
+      "raw_register_atomicity": "VSENSE/BATFET reads are not a latched joint snapshot",
+      "samples": [
+        {
+          "tag": "charging-before-0",
+          "uptime_s": 30.51,
+          "charge_enabled": true,
+          "force_battery": false,
+          "BATFET_closed_snapshot": true,
+          "VSENSE_raw_signed": -160,
+          "trim_changed_since_previous": null,
+          "battery_status": "Charging",
+          "battery_health": "Good",
+          "battery_voltage_now": 4289284,
+          "battery_current_now": -115927,
+          "battery_temp": 313,
+          "bms_status": "Charging",
+          "bms_current_now": -92541,
+          "bms_charge_counter": -1168,
+          "bms_charge_counter_shadow": -1168,
+          "manual_IADC_uA": 154736
+        },
+        {
+          "tag": "charging-before-2",
+          "uptime_s": 32.63,
+          "charge_enabled": true,
+          "force_battery": false,
+          "BATFET_closed_snapshot": true,
+          "VSENSE_raw_signed": -141,
+          "trim_changed_since_previous": false,
+          "battery_status": "Charging",
+          "battery_health": "Good",
+          "battery_voltage_now": 4291348,
+          "battery_current_now": -138403,
+          "battery_temp": 313,
+          "bms_status": "Charging",
+          "bms_current_now": -115927,
+          "bms_charge_counter": -1251,
+          "bms_charge_counter_shadow": -1251,
+          "manual_IADC_uA": 152047
+        },
+        {
+          "tag": "stopped-0",
+          "uptime_s": 32.75,
+          "charge_enabled": false,
+          "force_battery": false,
+          "BATFET_closed_snapshot": false,
+          "VSENSE_raw_signed": 13,
+          "trim_changed_since_previous": false,
+          "battery_status": "Full",
+          "battery_health": "Good",
+          "battery_voltage_now": 4270720,
+          "battery_current_now": 454,
+          "battery_temp": 314,
+          "bms_status": "Charging",
+          "bms_current_now": 0,
+          "bms_charge_counter": 0,
+          "bms_charge_counter_shadow": 0,
+          "manual_IADC_uA": 0
+        },
+        {
+          "tag": "stopped-1",
+          "uptime_s": 34.01,
+          "charge_enabled": false,
+          "force_battery": false,
+          "BATFET_closed_snapshot": false,
+          "VSENSE_raw_signed": -5,
+          "trim_changed_since_previous": true,
+          "battery_status": "Full",
+          "battery_health": "Good",
+          "battery_voltage_now": 4268953,
+          "battery_current_now": -2593,
+          "battery_temp": 314,
+          "bms_status": "Full",
+          "bms_current_now": -2593,
+          "bms_charge_counter": 0,
+          "bms_charge_counter_shadow": 0,
+          "manual_IADC_uA": 0
+        },
+        {
+          "tag": "stopped-5",
+          "uptime_s": 38.14,
+          "charge_enabled": false,
+          "force_battery": false,
+          "BATFET_closed_snapshot": false,
+          "VSENSE_raw_signed": -5,
+          "trim_changed_since_previous": false,
+          "battery_status": "Full",
+          "battery_health": "Good",
+          "battery_voltage_now": 4268953,
+          "battery_current_now": -2593,
+          "battery_temp": 315,
+          "bms_status": "Full",
+          "bms_current_now": -3072,
+          "bms_charge_counter": -3,
+          "bms_charge_counter_shadow": -3,
+          "manual_IADC_uA": 0
+        },
+        {
+          "tag": "stopped-15",
+          "uptime_s": 48.27,
+          "charge_enabled": false,
+          "force_battery": false,
+          "BATFET_closed_snapshot": false,
+          "VSENSE_raw_signed": -4,
+          "trim_changed_since_previous": true,
+          "battery_status": "Full",
+          "battery_health": "Good",
+          "battery_voltage_now": 4268068,
+          "battery_current_now": -1536,
+          "battery_temp": 315,
+          "bms_status": "Full",
+          "bms_current_now": -479,
+          "bms_charge_counter": -7,
+          "bms_charge_counter_shadow": -7,
+          "manual_IADC_uA": 0
+        },
+        {
+          "tag": "stopped-25",
+          "uptime_s": 58.4,
+          "charge_enabled": false,
+          "force_battery": false,
+          "BATFET_closed_snapshot": false,
+          "VSENSE_raw_signed": -3,
+          "trim_changed_since_previous": false,
+          "battery_status": "Full",
+          "battery_health": "Good",
+          "battery_voltage_now": 4268659,
+          "battery_current_now": -1536,
+          "battery_temp": 315,
+          "bms_status": "Full",
+          "bms_current_now": -1536,
+          "bms_charge_counter": -11,
+          "bms_charge_counter_shadow": -11,
+          "manual_IADC_uA": 0
+        },
+        {
+          "tag": "restarted-2",
+          "uptime_s": 60.55,
+          "charge_enabled": true,
+          "force_battery": false,
+          "BATFET_closed_snapshot": true,
+          "VSENSE_raw_signed": -159,
+          "trim_changed_since_previous": false,
+          "battery_status": "Charging",
+          "battery_health": "Good",
+          "battery_voltage_now": 4291054,
+          "battery_current_now": -115107,
+          "battery_temp": 313,
+          "bms_status": "Charging",
+          "bms_current_now": -88719,
+          "bms_charge_counter": -94,
+          "bms_charge_counter_shadow": -94,
+          "manual_IADC_uA": 163860
+        },
+        {
+          "tag": "restarted-5",
+          "uptime_s": 63.68,
+          "charge_enabled": true,
+          "force_battery": false,
+          "BATFET_closed_snapshot": true,
+          "VSENSE_raw_signed": -159,
+          "trim_changed_since_previous": false,
+          "battery_status": "Charging",
+          "battery_health": "Good",
+          "battery_voltage_now": 4291348,
+          "battery_current_now": -116108,
+          "battery_temp": 313,
+          "bms_status": "Charging",
+          "bms_current_now": -99821,
+          "bms_charge_counter": -222,
+          "bms_charge_counter_shadow": -221,
+          "manual_IADC_uA": 162804
+        }
+      ]
+    },
+    {
+      "name": "stock-charge-only-07",
+      "debug": true,
+      "script_sha256": "9fafe517ddc96fb0df3821840a5b9dd7adf50890d9534230117a778634ee67ce",
+      "stock_current_sign": "negative charging; manual IADC positive charging",
+      "raw_register_atomicity": "VSENSE/BATFET reads are not a latched joint snapshot",
+      "samples": [
+        {
+          "tag": "charging-before-0",
+          "uptime_s": 30.95,
+          "charge_enabled": true,
+          "force_battery": false,
+          "BATFET_closed_snapshot": true,
+          "VSENSE_raw_signed": -152,
+          "trim_changed_since_previous": null,
+          "battery_status": "Charging",
+          "battery_health": "Good",
+          "battery_voltage_now": 4261585,
+          "battery_current_now": -145409,
+          "battery_temp": 310,
+          "bms_status": "Charging",
+          "bms_current_now": -115381,
+          "bms_charge_counter": -1195,
+          "bms_charge_counter_shadow": -1194,
+          "manual_IADC_uA": 157329
+        },
+        {
+          "tag": "charging-before-2",
+          "uptime_s": 33.07,
+          "charge_enabled": true,
+          "force_battery": false,
+          "BATFET_closed_snapshot": true,
+          "VSENSE_raw_signed": -156,
+          "trim_changed_since_previous": false,
+          "battery_status": "Charging",
+          "battery_health": "Good",
+          "battery_voltage_now": 4263058,
+          "battery_current_now": -136218,
+          "battery_temp": 310,
+          "bms_status": "Charging",
+          "bms_current_now": -108829,
+          "bms_charge_counter": -1281,
+          "bms_charge_counter_shadow": -1280,
+          "manual_IADC_uA": 159442
+        },
+        {
+          "tag": "stopped-0",
+          "uptime_s": 33.2,
+          "charge_enabled": false,
+          "force_battery": false,
+          "BATFET_closed_snapshot": false,
+          "VSENSE_raw_signed": 9,
+          "trim_changed_since_previous": false,
+          "battery_status": "Full",
+          "battery_health": "Good",
+          "battery_voltage_now": 4242136,
+          "battery_current_now": -1455,
+          "battery_temp": 311,
+          "bms_status": "Charging",
+          "bms_current_now": -909,
+          "bms_charge_counter": 0,
+          "bms_charge_counter_shadow": 0,
+          "manual_IADC_uA": 0
+        },
+        {
+          "tag": "stopped-1",
+          "uptime_s": 34.37,
+          "charge_enabled": false,
+          "force_battery": false,
+          "BATFET_closed_snapshot": false,
+          "VSENSE_raw_signed": 0,
+          "trim_changed_since_previous": true,
+          "battery_status": "Full",
+          "battery_health": "Good",
+          "battery_voltage_now": 4241254,
+          "battery_current_now": 0,
+          "battery_temp": 311,
+          "bms_status": "Full",
+          "bms_current_now": 0,
+          "bms_charge_counter": 0,
+          "bms_charge_counter_shadow": 0,
+          "manual_IADC_uA": 0
+        },
+        {
+          "tag": "stopped-5",
+          "uptime_s": 38.52,
+          "charge_enabled": false,
+          "force_battery": false,
+          "BATFET_closed_snapshot": false,
+          "VSENSE_raw_signed": 0,
+          "trim_changed_since_previous": false,
+          "battery_status": "Full",
+          "battery_health": "Good",
+          "battery_voltage_now": 4240369,
+          "battery_current_now": 0,
+          "battery_temp": 311,
+          "bms_status": "Full",
+          "bms_current_now": 0,
+          "bms_charge_counter": 0,
+          "bms_charge_counter_shadow": 0,
+          "manual_IADC_uA": 0
+        },
+        {
+          "tag": "stopped-15",
+          "uptime_s": 48.64,
+          "charge_enabled": false,
+          "force_battery": false,
+          "BATFET_closed_snapshot": false,
+          "VSENSE_raw_signed": -4,
+          "trim_changed_since_previous": true,
+          "battery_status": "Full",
+          "battery_health": "Good",
+          "battery_voltage_now": 4240369,
+          "battery_current_now": -2016,
+          "battery_temp": 312,
+          "bms_status": "Full",
+          "bms_current_now": -2016,
+          "bms_charge_counter": -4,
+          "bms_charge_counter_shadow": -4,
+          "manual_IADC_uA": 0
+        },
+        {
+          "tag": "stopped-25",
+          "uptime_s": 58.77,
+          "charge_enabled": false,
+          "force_battery": false,
+          "BATFET_closed_snapshot": false,
+          "VSENSE_raw_signed": -3,
+          "trim_changed_since_previous": false,
+          "battery_status": "Full",
+          "battery_health": "Good",
+          "battery_voltage_now": 4240369,
+          "battery_current_now": -1536,
+          "battery_temp": 312,
+          "bms_status": "Full",
+          "bms_current_now": -1536,
+          "bms_charge_counter": -11,
+          "bms_charge_counter_shadow": -11,
+          "manual_IADC_uA": 0
+        },
+        {
+          "tag": "restarted-2",
+          "uptime_s": 60.92,
+          "charge_enabled": true,
+          "force_battery": false,
+          "BATFET_closed_snapshot": true,
+          "VSENSE_raw_signed": -174,
+          "trim_changed_since_previous": false,
+          "battery_status": "Charging",
+          "battery_health": "Good",
+          "battery_voltage_now": 4263058,
+          "battery_current_now": -148321,
+          "battery_temp": 310,
+          "bms_status": "Charging",
+          "bms_current_now": -110649,
+          "bms_charge_counter": -94,
+          "bms_charge_counter_shadow": -94,
+          "manual_IADC_uA": 165206
+        },
+        {
+          "tag": "restarted-5",
+          "uptime_s": 64.05,
+          "charge_enabled": true,
+          "force_battery": false,
+          "BATFET_closed_snapshot": true,
+          "VSENSE_raw_signed": -160,
+          "trim_changed_since_previous": false,
+          "battery_status": "Charging",
+          "battery_health": "Good",
+          "battery_voltage_now": 4263943,
+          "battery_current_now": -150869,
+          "battery_temp": 310,
+          "bms_status": "Charging",
+          "bms_current_now": -123843,
+          "bms_charge_counter": -224,
+          "bms_charge_counter_shadow": -224,
+          "manual_IADC_uA": 164149
+        }
+      ]
+    }
+  ],
+  "targeted_debug": {
+    "selected_callsites": 19,
+    "events": [
+      {
+        "uptime_s": 30.96536,
+        "event": "sample",
+        "tag": "charging-before-0"
+      },
+      {
+        "uptime_s": 33.085583,
+        "event": "sample",
+        "tag": "charging-before-2"
+      },
+      {
+        "uptime_s": 33.216667,
+        "event": "stock_charging_ended"
+      },
+      {
+        "uptime_s": 33.217188,
+        "event": "sample",
+        "tag": "stopped-0"
+      },
+      {
+        "uptime_s": 33.230117,
+        "event": "stock_reports_full"
+      },
+      {
+        "uptime_s": 33.249968,
+        "event": "IADC_calibration_result"
+      },
+      {
+        "uptime_s": 33.250008,
+        "event": "IADC_trim_write"
+      },
+      {
+        "uptime_s": 33.255448,
+        "event": "stock_EOC_counter_reset_path"
+      },
+      {
+        "uptime_s": 33.443118,
+        "event": "IADC_calibration_result"
+      },
+      {
+        "uptime_s": 33.443153,
+        "event": "IADC_trim_write"
+      },
+      {
+        "uptime_s": 34.384324,
+        "event": "sample",
+        "tag": "stopped-1"
+      },
+      {
+        "uptime_s": 38.53278,
+        "event": "sample",
+        "tag": "stopped-5"
+      },
+      {
+        "uptime_s": 41.072583,
+        "event": "IADC_calibration_result"
+      },
+      {
+        "uptime_s": 41.072618,
+        "event": "IADC_trim_write"
+      },
+      {
+        "uptime_s": 48.660176,
+        "event": "sample",
+        "tag": "stopped-15"
+      },
+      {
+        "uptime_s": 58.788233,
+        "event": "sample",
+        "tag": "stopped-25"
+      },
+      {
+        "uptime_s": 60.935346,
+        "event": "sample",
+        "tag": "restarted-2"
+      },
+      {
+        "uptime_s": 64.068492,
+        "event": "sample",
+        "tag": "restarted-5"
+      }
+    ]
+  },
+  "interpretation": {
+    "observed": "Stock reports Full after charge-only stop; runtime logs execute EOC handling and IADC calibration/trim writes. Background current falls near0 and counters reset.",
+    "source_supported_inference": "The matching source marks done_charging on Full, then clears both counters in read_soc_params_raw; recalculate_soc calibrates when cached BATFET is open. Runtime messages support those paths but do not provide a full function-call trace.",
+    "not_inferred": "No proof of external accuracy, correct aged-pack capacity, or a validated native fix. Do not emulate a Full SOC reset merely to hide a native current mismatch."
+  }
+}

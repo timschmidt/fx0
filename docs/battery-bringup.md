@@ -86,6 +86,27 @@ snapshot reads never reset them. See [calibration/epoch evidence](../evidence/20
 
 ## Initial native measurement prototype
 
+The later stock charge-only comparison now has two successful RAM captures.
+The factory `bms/charge` API clears only charge enable, leaving forced-battery
+mode off; register readbacks verify `0x80 → 0x00 → 0x80`. BATFET opens during
+the stop, manual IADC becomes zero, and background readings settle within about
+3 mA of zero. Both stock counter properties reset. Charging restarts, and health
+remains Good at approximately 31°C. Charger voltage/current/thermal limits and
+disk filesystems are untouched by the diagnostic script.
+
+Targeted stock debug output confirms a Charging-to-Full transition, IADC
+calibration/trim writes and the EOC path in `read_soc_params_raw()` shortly after
+stopping. In the pinned vendor source, Full sets `done_charging`, whose EOC path
+clears both counters; SOC recalculation also recalibrates while cached BATFET is
+open. These runtime messages support that source interpretation without proving
+every call relationship or exact source/binary identity. A stock counter reset
+is therefore not evidence that native should reset on every charging stop.
+The next controlled native experiment isolates recalibration while retaining
+the relative counter. Absolute current accuracy still requires independent
+measurement; the owner has no current fixture or oscilloscope available.
+See [stock transition evidence](../evidence/2026-10-30-stock-charge-only.json) and
+the [reproducible diagnostic](../diagnostics/pm8226-bms-stock-stop/README.md).
+
 Candidate
 [`35743f1984fc7b9863224856dca0aa148e832be5`](https://github.com/timschmidt/fx0-linux/commit/35743f1984fc7b9863224856dca0aa148e832be5)
 adds provider-owned calibration, a binding, the actual non-VM BMS driver and Fx0
