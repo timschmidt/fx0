@@ -1269,3 +1269,32 @@ reason has not been established. Raw calibration and logs stay private; the
 public exporter has six checks for values, sign, privacy and incomplete input.
 Independent electrical accuracy remains unverified without measurement equipment.
 See [stock charge-only evidence](../evidence/2026-10-30-stock-charge-only.json).
+
+## October 30: native temperature and calibration isolation
+
+Provider-only recalibration does not resolve the background current discrepancy.
+The live reading stays zero while background current/counter indicate discharge.
+Input current is restored from the temporary 500 mA baseline to its original
+100 mA. A subsequent fresh/cached-reference comparison aborts at the initial
+thermistor guard without running either arm. Both return to installed r4.
+
+The temperature branch adds the generic ADC thermal binding's optional IIO
+provider reference and 83 attributed stock LG thermistor points in a separate
+GPL-2.0-only include. ARM module/DTB builds, binding documentation and targeted
+compiled-DTB schemas pass. The actual interpolation passes 1,803 inputs plus
+passthrough under sanitizers; the actual BMS getter suite grows to 37 cases.
+RAM reads agree around 32.6–32.7°C through IIO, thermal and BMS interfaces.
+Three provider-removal cycles remove BMS safely and recover it after explicit
+consumer reprobe. The first test's stronger automatic-rebind expectation fails;
+the corrected test uses the same image and the established explicit reprobe.
+No charging policy or limits change. Normal installed r4 returns with taint 0,
+native framebuffer and active UPower/Sxmo. Independent sensor accuracy, thermal
+fault/policy/suspend behavior and package integration remain open.
+
+The owner's console photograph matches the running r4 boot warnings. Source
+inspection identifies QUP's non-DMA fallback, optional WLED OVP handling and the
+USB PHY preferred-voltage fallback; both L20 rails report 3.075 V enabled.
+MDP5 bit26 is INTF1 underrun. The BPF LSM is active but kernel BTF is absent;
+its relation to the systemd warning needs direct verification. The audit records
+remaining messaging/device-link, display and kernel-configuration work without
+publishing the photograph or claiming complete hardware acceptance.

@@ -188,14 +188,52 @@ from the integration candidate. A single raw BATFET sample cannot be treated as
 a proven stable isolation indication in these conditions.
 
 The [failed experiment patches](../experiments/pm8226-batfet-irq/README.md) retain
-the exact tested source. Private stock comparison captures show charging with
-BATFET reported closed, while native USB-idle captures report it open; those
-different operating states do not establish causality or a matched charging-stop
-comparison. Continue with a controlled stock charger-disable test through its
-supported API, raw charger/BMS status and sampling analysis, pack temperature
-and profile integration, and independent electrical measurements when available.
+the exact tested source. Initial stock comparison captures showed charging with
+BATFET reported closed, while native USB-idle captures reported it open; those
+different operating states alone did not establish causality. The subsequent
+stock charge-only test above adds a controlled open-BATFET comparison and runtime
+calibration/reset messages. Continue by isolating native recalibration effects,
+pack temperature/profile integration and independent electrical measurements
+when available.
 Keep the background counter discrepancy, absolute accuracy and final gauge policy
 open. See [current observation evidence](../evidence/2026-10-30-bms-current-observations.json).
+
+The provider-only recalibration test now separates that operation from stock's
+Full-triggered counter reset. With USB input temporarily set to 500 mA, live
+IADC remains zero while background current stays around -220 mA and the relative
+counter continues integrating discharge. A single successful calibration does
+not correct the discrepancy. The original 100 mA input limit is restored and
+normal installed r4 returns. Fresh reference conversions on every native poll,
+versus stock's cached references, remain a separate hypothesis: its first
+comparison aborts at the initial thermistor guard before either test arm runs.
+See [recalibration-only evidence](../evidence/2026-10-30-bms-recalibration-only.json).
+
+## Native battery temperature
+
+The experimental
+[temperature branch](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-battery-temperature)
+adds a binding allowance for the generic ADC thermal driver's existing IIO
+temperature output, plus a GPL-2.0-only board include containing the attributed
+LG thermistor lookup data. It exposes standard millivolt VADC input as thermal
+and IIO milliCelsius, and as the BMS optional deciCelsius `temp` property.
+It does not select a capacity profile or change charger temperature limits.
+
+The exact RAM image reports approximately 32.6–32.7°C consistently across all
+three interfaces. Three temperature-supplier unbind/rebind cycles remove the BMS
+before its provider disappears and restore it after explicit consumer reprobe.
+Automatic consumer rebinding is not claimed. The interpolation check executes
+the actual generic-driver function for 1,803 inputs under sanitizers and verifies
+all 83 LG table entries/units. The BMS getter check now passes 37 cases including
+negative temperature and independent temperature errors. The module and DTB
+build, modified binding and targeted compiled-DTB schemas pass.
+
+Installed r4 remains unchanged and is restored with taint 0 and active Sxmo.
+The next package will need the generic ADC thermal module/configuration after
+qualification. Generic interpolation clamps out-of-table input to endpoints;
+open/short discrimination, independent accuracy, software thermal policy,
+hysteresis, charging inhibition and suspend/wake protection remain open.
+See [temperature evidence](../evidence/2026-10-30-battery-temperature.json) and
+the [host check](../diagnostics/battery-thermistor/README.md).
 
 ## Implementation sequence
 

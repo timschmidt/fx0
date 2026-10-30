@@ -1,0 +1,196 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Native original-pack thermistor temperature through standard IIO, thermal and BMS interfaces",
+  "overall": "RAM measurement and three explicit supplier-reprobe cycles pass; no charging-policy or absolute-accuracy qualification",
+  "source": {
+    "repository": "https://github.com/timschmidt/fx0-linux",
+    "branch": "integration/fx0-battery-temperature",
+    "binding_commit": "fdbaf40ccf4be36e8a364aac50110a893d4291cb",
+    "board_commit": "ccbb87f6817c645e53c52c605a1c6d2e4aa87f1b",
+    "BMS_base": "31061619c6a1ec6579b07ecbd3303614899d116b",
+    "vendor_table": "03aba4427a7666d57b5ae06d375e259ea337f351",
+    "current_upstream_audit": "d89e1d186ec9271bf78e62771779e9fc03bf0fc3",
+    "table_points": 83,
+    "temperature_units": "LG deciC multiplied100 -> thermal/IIO milliC; BMS deciC",
+    "voltage_units": "standard IIO millivolts",
+    "license": "GPL-2.0-only lookup include preserves Linux Foundation attribution"
+  },
+  "RAM": {
+    "kernel_source": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+    "kernel_sha256": "eae8000a18364810a946768df9de74d73cd0c8ead75e736bb1cd4e7c3e54d289",
+    "initrd_sha256": "48bd5e933a8872d07a087e25e9486b034a91d39bbd7cf77639f7747af1ea3558",
+    "DTB_sha256": "75e17b92e10a573ca97bfc3ff3ac016cbc91451796728af927ef7ce722756564",
+    "image_sha256": "6769ccbe572248cbec9b012065eee2e061aa6783e5a296ddf0dba821aefc8599",
+    "image_bytes": 17475584,
+    "kernel_and_embedded_modules_unchanged_r4": true,
+    "new_board_BMS_node_and_IIO_references": true,
+    "command_line_sha256": "aff3b047047c6c3454a8f3652ccc80101afa104fcd69664ea9e90805708dc597",
+    "candidate_modules_not_yet_loaded": false,
+    "persistent_boot_files_changed": false,
+    "purpose": "Generic ADC thermal sensor plus optional native BMS TEMP; no charger policy changes"
+  },
+  "modules": {
+    "iadc": {
+      "bytes": 146988,
+      "sha256": "f6e971629ef417b5e22510a938f485be5417a0d19cdc063c535b2a5004950fde"
+    },
+    "vadc": {
+      "bytes": 156932,
+      "sha256": "d9d6d5a9fb729b07353b496eca9efc25f5fa1cad834c841f3f18b305845b9571"
+    },
+    "thermal": {
+      "bytes": 125368,
+      "sha256": "e2ea974ccca327c5f3be853bb882bc53052f6fbb5da6b8c66c983f3d7250156b"
+    },
+    "bms": {
+      "bytes": 156488,
+      "sha256": "19989a1b752bdba6a13d38a900896063992d4db73f2ceec7c2266693c9632de7"
+    }
+  },
+  "checks": {
+    "generic_ADC_module_ARM_LLVM22_W1": "PASS",
+    "board_DTB_build": "PASS with 3 existing DTC warnings in common SoC nodes",
+    "modified_binding_dt_doc_validate": "PASS",
+    "compiled_DTB_targeted_schema_validation": "PASS zero diagnostics with thermal-sensor, thermal-zones, generic-adc and power-supply dependencies",
+    "host_actual_interpolation_inputs_ASan_UBSan": 1803,
+    "host_no_lookup_passthrough": "PASS",
+    "host_actual_BMS_getter_cases_ASan_UBSan": 37,
+    "board_checkpatch": "0 errors, 1 generic MAINTAINERS warning; existing Qualcomm DTS directory patterns cover new file",
+    "full_upstream_dt_binding_check_run": false
+  },
+  "runtime": {
+    "kernel": "6.18.59 r4 build5",
+    "unsigned_module_taint": 12288,
+    "samples_and_events": [
+      {
+        "stage": "initial",
+        "boottime_ns": 61147166831,
+        "thermistor_mV": 646,
+        "lookup_mC": 32700,
+        "IIO_mC": 32700,
+        "thermal_mC": 32700,
+        "BMS_deciC": 327,
+        "health": "Overheat"
+      },
+      {
+        "stage": "initial",
+        "boottime_ns": 63177974474,
+        "thermistor_mV": 647,
+        "lookup_mC": 32600,
+        "IIO_mC": 32600,
+        "thermal_mC": 32600,
+        "BMS_deciC": 326,
+        "health": "Overheat"
+      },
+      {
+        "stage": "initial",
+        "boottime_ns": 65213274035,
+        "thermistor_mV": 646,
+        "lookup_mC": 32700,
+        "IIO_mC": 32700,
+        "thermal_mC": 32700,
+        "BMS_deciC": 327,
+        "health": "Overheat"
+      },
+      {
+        "stage": "initial",
+        "boottime_ns": 67256161920,
+        "thermistor_mV": 646,
+        "lookup_mC": 32700,
+        "IIO_mC": 32600,
+        "thermal_mC": 32600,
+        "BMS_deciC": 326,
+        "health": "Overheat"
+      },
+      {
+        "stage": "supplier-unbound",
+        "cycle": 0,
+        "BMS_removed": true
+      },
+      {
+        "stage": "consumer-reprobe",
+        "cycle": 0,
+        "automatic": false
+      },
+      {
+        "stage": "rebound-0",
+        "boottime_ns": 74420513167,
+        "thermistor_mV": 647,
+        "lookup_mC": 32600,
+        "IIO_mC": 32600,
+        "thermal_mC": 32600,
+        "BMS_deciC": 326,
+        "health": "Overheat"
+      },
+      {
+        "stage": "supplier-unbound",
+        "cycle": 1,
+        "BMS_removed": true
+      },
+      {
+        "stage": "consumer-reprobe",
+        "cycle": 1,
+        "automatic": false
+      },
+      {
+        "stage": "rebound-1",
+        "boottime_ns": 79527753877,
+        "thermistor_mV": 647,
+        "lookup_mC": 32600,
+        "IIO_mC": 32600,
+        "thermal_mC": 32600,
+        "BMS_deciC": 326,
+        "health": "Overheat"
+      },
+      {
+        "stage": "supplier-unbound",
+        "cycle": 2,
+        "BMS_removed": true
+      },
+      {
+        "stage": "consumer-reprobe",
+        "cycle": 2,
+        "automatic": false
+      },
+      {
+        "stage": "rebound-2",
+        "boottime_ns": 84632299164,
+        "thermistor_mV": 647,
+        "lookup_mC": 32600,
+        "IIO_mC": 32600,
+        "thermal_mC": 32600,
+        "BMS_deciC": 326,
+        "health": "Overheat"
+      }
+    ],
+    "automatic_consumer_rebind_claimed": false,
+    "explicit_drivers_probe_used": true,
+    "supplier_cycles_completed": 3,
+    "original_charger_thresholds_unchanged": true,
+    "USB_input_limit_changed": false
+  },
+  "return": {
+    "normal_installed_r4_boot": true,
+    "new_boot_id_verified_privately": true,
+    "kernel_release": "6.18.59",
+    "kernel_build": 5,
+    "kernel_taint": 0,
+    "diagnostic_modules_absent": true,
+    "packaged_ADC_modules_restored": true,
+    "display": "msmdrmfb",
+    "four_display_controls_auto": true,
+    "upower_and_tinydm_active": true,
+    "charger_thresholds_changed": false,
+    "physical_UI_retest_claimed": false
+  },
+  "remaining": [
+    "Independent temperature accuracy",
+    "Out-of-table open/short discrimination; interpolation clamps to endpoints",
+    "Pack/profile and capacity selection",
+    "Software charge policy, inhibition, derating and hysteresis",
+    "Suspend/wake thermal protection",
+    "Background BMS current/counter discrepancy",
+    "Native package/config integration after qualification"
+  ],
+  "upstream_submission": "Experimental public commits only; no upstream communication or invented DCO"
+}

@@ -29,6 +29,12 @@ background BMS VSENSE value. The new property check requires this revision or
 later. Their absolute electrical accuracy and the different sampling behavior
 remain unqualified.
 
+The battery-temperature work extends this same actual-getter check to 37 cases,
+including negative/zero/positive deciCelsius and an independent temperature
+error. The separate [thermistor check](../battery-thermistor/README.md) exercises
+the actual conversion and unit/table handoff; getter checks alone do not qualify
+temperature conversion or physical accuracy.
+
 Mock register behavior cannot qualify the physical analog path. RAM testing finds
 an unresolved USB-idle discrepancy: BMS reports about +155 mA while
 manual IADC reports zero, and its relative counter also integrates that suspect

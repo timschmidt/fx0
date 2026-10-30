@@ -1,0 +1,106 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Isolate provider-owned recalibration from stock Full-triggered counter reset",
+  "source": "31061619c6a1ec6579b07ecbd3303614899d116b",
+  "RAM_kernel": "installedr4 build5 with verifiedBMSDTB01, unsignedcandidate05modules",
+  "kernel_taint": 12288,
+  "temporary_USB_input_limit_uA": 500000,
+  "original_USB_input_limit_restored_uA": 100000,
+  "BMS_counter_reset_during_response": false,
+  "provider_calibration_completed": true,
+  "result": "Recalibration alone did not resolve the background current/counter discrepancy; no integration source change",
+  "absolute_electrical_accuracy": "Unverified",
+  "groups": {
+    "before-calibration": {
+      "samples": 6,
+      "live_current_uA": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "background_current_uA": [
+        -220878,
+        -220809,
+        -221155,
+        -220947,
+        -220740,
+        -220464
+      ],
+      "charge_counter_uAh": [
+        -399,
+        -524,
+        -648,
+        -772,
+        -876,
+        -1020
+      ],
+      "counter_delta_uAh": -621,
+      "interval_s": 10.115038733,
+      "counter_average_uA": -221017.4,
+      "thermistor_mV": [
+        652.0,
+        652.0,
+        652.0,
+        652.0,
+        652.0,
+        652.0
+      ]
+    },
+    "after-calibration": {
+      "samples": 6,
+      "live_current_uA": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "background_current_uA": [
+        -220189,
+        -221085,
+        -220740,
+        -220878,
+        -221016,
+        -108526
+      ],
+      "charge_counter_uAh": [
+        -1268,
+        -1392,
+        -1494,
+        -1640,
+        -1765,
+        -1871
+      ],
+      "counter_delta_uAh": -603,
+      "interval_s": 10.125503853,
+      "counter_average_uA": -214389.3,
+      "thermistor_mV": [
+        652.0,
+        652.0,
+        651.0,
+        652.0,
+        651.0,
+        651.0
+      ]
+    }
+  },
+  "return": {
+    "normal_installed_r4_boot": true,
+    "new_boot_id_verified_privately": true,
+    "kernel_release": "6.18.59",
+    "kernel_build": 5,
+    "kernel_taint": 0,
+    "diagnostic_modules_absent": true,
+    "packaged_ADC_modules_restored": true,
+    "display": "msmdrmfb",
+    "four_display_controls_auto": true,
+    "upower_and_tinydm_active": true,
+    "charger_thresholds_changed": false,
+    "physical_UI_retest_claimed": false
+  },
+  "return_note": "First post-boot SSH command timed out; bounded retry and final restoration helper passed without another reboot."
+}

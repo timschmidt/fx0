@@ -1,5 +1,25 @@
 # Fx0 maintained kernel gaps
 
+## Installed r4 console warnings
+
+The owner's October 30 photograph matches the installed r4 build5 kernel log.
+Text is physically readable, SSH works, and UPower/Sxmo are active. These narrow
+observations do not qualify suspend or every subsystem implicated by a warning.
+The photograph stays private; selected messages and source findings are recorded
+in [console evidence](../evidence/2026-10-30-tty-warning-audit.json).
+
+| Message | Current finding and remaining work |
+| --- | --- |
+| CPU `missing clock-frequency property` | ARM topology's legacy capacity calculation skips nodes without this property. Do not add guessed frequencies to suppress it; audit CPU capacity/OPP/cpufreq support separately. |
+| I2C `tx channel not available` | QUP probe falls back to non-DMA transfers for this error. Touch works through that path; DMA wiring/performance remain to assess. |
+| SMSM cannot parse `mboxes` | The common DTS contains a null host entry and the driver tries mailbox then legacy syscon IPC. Capture per-host use/binding before deciding whether any required messaging route is missing. |
+| USB supplier device-link failures | USB networking works, but inferred supplier ordering/cycles and suspend behavior remain unqualified. |
+| WLED `IRQ ovp not found` | The driver explicitly treats this IRQ as optional and disables automatic string detection. Missing IRQ logging does not mean the backlight probe failed. |
+| `no GPU device was found` | GPU support is disabled; the working Sxmo session uses software rendering. Hardware acceleration remains required. |
+| MDP5 `errors: 04000000` | The MDP5 register definition identifies bit26 as INTF1 underrun. Observed at startup; investigate display initialization/bandwidth and monitor recurrence. Readable output does not establish a complete fix. |
+| L20 `voltage operation not allowed` | Both observed L20 regulators are enabled at the DTS-fixed 3.075 V. USB PHY code first requests 3.3 V, then accepts 3.05–3.3 V through `regulator_set_voltage_triplet()`. This is consistent with a failed preferred request followed by fallback; the emitting callsite is not traced. |
+| systemd `bpf-restrict-fs` failure | The running kernel has the BPF LSM active but no `/sys/kernel/btf/vmlinux`. Check kernel BTF/package configuration and capture the verifier failure before claiming causality or a fix. |
+
 ## Maintained source target
 
 The initial maintained target is Linux 6.18.59 LTS, pinned to [`1253a6aa5d104312bf0992afacc15220ae35bdf9`](https://github.com/gregkh/linux/commit/1253a6aa5d104312bf0992afacc15220ae35bdf9). The recovered Fx0 UART/USB description compiles against it. A separate binding patch documents the `lg,madai`, `qcom,msm8926`, `qcom,msm8226` tuple.

@@ -68,6 +68,13 @@ int main(void)
  assert(bms_get_property(&p,POWER_SUPPLY_PROP_CHARGE_COUNTER,&v)==0 && v.intval==-123);count++;
  b.charge_error=-ENODATA;
  assert(bms_get_property(&p,POWER_SUPPLY_PROP_CHARGE_COUNTER,&v)==-ENODATA);count++;
+ const int temperatures[]={-100,0,313};
+ for(unsigned int i=0;i<3;i++) {
+  b.temperature_decic=temperatures[i];b.temperature_error=0;
+  assert(bms_get_property(&p,POWER_SUPPLY_PROP_TEMP,&v)==0 && v.intval==temperatures[i]);count++;
+ }
+ b.temperature_error=-ENODEV;
+ assert(bms_get_property(&p,POWER_SUPPLY_PROP_TEMP,&v)==-ENODEV);count++;
  assert(samples==0);
  now=NSEC_PER_SEC+101;
  assert(bms_get_property(&p,POWER_SUPPLY_PROP_CURRENT_NOW,&v)==0 && samples==1);count++;

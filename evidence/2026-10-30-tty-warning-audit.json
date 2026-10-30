@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-30",
+  "system": "installedr4 build5 kernel6.18.59, taint0",
+  "physical_observation": "Owner photograph shows readable native console boot messages outsideGUI",
+  "photograph_published": false,
+  "warnings": [
+    "[    0.002665] /cpus/cpu@0 missing clock-frequency property",
+    "[    0.002741] /cpus/cpu@1 missing clock-frequency property",
+    "[    0.002794] /cpus/cpu@2 missing clock-frequency property",
+    "[    0.002847] /cpus/cpu@3 missing clock-frequency property",
+    "                tx channel not available",
+    "[    0.951762] qcom-smsm smsm: mbox_request_channel: can't parse \"mboxes\" property",
+    "[    0.952454] qcom-smsm smsm: mbox_request_channel: can't parse \"mboxes\" property",
+    "[    1.002039] msm_hsusb f9a55000.usb: Failed to create device link (0x180) with supplier remoteproc:smd-edge:rpm-requests:clock-controller for /soc/usb@f9a55000/ulpi/phy",
+    "[    1.004665] msm_hsusb f9a55000.usb: Failed to create device link (0x180) with supplier remoteproc for /soc/usb@f9a55000/ulpi/phy",
+    "[    1.036187] msm_hsusb f9a55000.usb: Failed to create device link (0x180) with supplier remoteproc:smd-edge:rpm-requests:clock-controller for /soc/usb@f9a55000/ulpi/phy",
+    "[    3.714882] qcom,wled fc4cf000.spmi:pm8226@1:wled@d800: error -ENXIO: IRQ ovp not found",
+    "[    4.288149] msm_mdp fd900100.display-controller: no GPU device was found",
+    "[    4.671574] [drm:mdp5_irq_error_handler [msm]] *ERROR* errors: 04000000",
+    "[    4.814383] l20: voltage operation not allowed",
+    "[   10.433683] systemd[1]: bpf-restrict-fs: Failed to load BPF object: No such process",
+    "[   46.103107] l20: voltage operation not allowed"
+  ],
+  "runtime": {
+    "SSH": true,
+    "upower": "active",
+    "tinydm": "active",
+    "L20_observed_rails": 2,
+    "L20_microvolts": 3075000,
+    "L20_state": "enabled",
+    "active_LSMs": [
+      "lockdown",
+      "capability",
+      "yama",
+      "bpf"
+    ],
+    "kernel_vmlinux_BTF_present": false
+  },
+  "source": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76 installedkernel; same relevant code in31061619c candidate",
+  "scope": "Warnings triaged against source; no hardware-completion or suspend claim. USB link failure and BPF cause remain unproven; L20 callsite inferred, not traced."
+}
