@@ -90,6 +90,12 @@ backport, preserving real empty-battery handling. Native CLI/services and the
 regenerated boot artifacts pass verification; no capacity estimate is supplied.
 See [UPower review drafts](submissions/upower/README.md).
 
+Sensor bringup has located the original registry and validated its static
+bus/address/IRQ data. A guarded native trial successfully shuts down ADSP but
+refuses to clock low bus lines; it obtains no chip ID. Normal r4/UPower r4 is
+restored. Supply/pin mapping, raw sensors and DMP operation/wake remain open;
+see [sensor bringup](docs/sensor-bringup.md).
+
 Stock inventory, 29 critical partition backups, GPT metadata and a separately
 verified 1 GiB original-system image are private. A complete **development-state**
 snapshot of the 15,758,000,128-byte eMMC user area and both 4 MiB boot areas passes

@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-30",
+  "scope": "Stock sensor ownership investigation and guarded native identity preparation; no raw/DMP/wake pass.",
+  "source": {
+    "diagnostic_root_commit": "0c93e6285fa2980e45e8b000103fa1bfa257f9db",
+    "canonical_kernel_commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+    "vendor_kernel_commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+    "sns_reg_map_commit": "4d238e5f0baba3fb77456fe2bffbf8e8f18a71a0",
+    "libssc_inspected_commit": "033e2a32095c024d6dbdfb1d4ae1db4a94be32f1"
+  },
+  "stock": {
+    "registry_location": "sns partition /cal/sns.reg",
+    "registry_bytes": 13056,
+    "complete_registry_and_unit_calibration_public": false,
+    "two_filesystem_private_capture_verified": true,
+    "shared_static_registry_keys_matched": 72,
+    "registry_group": 2690,
+    "registry_group_bytes": 256,
+    "topology": {
+      "accelerometer": {
+        "bus": 2,
+        "gpio1": 69,
+        "gpio2": 65535,
+        "address": 104
+      },
+      "gyroscope": {
+        "bus": 2,
+        "gpio1": 69,
+        "gpio2": 65535,
+        "address": 104
+      },
+      "magnetometer": {
+        "bus": 2,
+        "gpio1": 66,
+        "gpio2": 65535,
+        "address": 12
+      }
+    },
+    "default_accel_gyro_driver_name": "MPU6500",
+    "actual_silicon_identity_verified": false,
+    "SENSOR_transport": "Vendor kernel maps smd_sns_adsp to SMD_APPS_QDSP SENSOR; daemon names the same device."
+  },
+  "host": {
+    "actual_DT_and_ID_helper_ASan_UBSan_cases": 800,
+    "registry_boundary_selector_output_isolation_cases": 270,
+    "ARM_LLVM22_W1": "PASS",
+    "import_CRCs_checked_against_canonical_build": 37,
+    "whole_module_lifecycle_simulated": false
+  },
+  "device": {
+    "read_only_preflight": "PASS",
+    "GPIO6_7_control_before": "0x00000000 each",
+    "GPIO6_7_IO_before": "0x00000000 each",
+    "ADSP_PAS1_shutdown_return": 0,
+    "idle_high_requirement": "FAILED: both released lines low",
+    "kernel_capture_result": -16,
+    "I2C_adapter_registered": false,
+    "I2C_transaction_attempted": false,
+    "MPU_reset_or_configuration_write": false,
+    "sensor_supply_changed": false,
+    "IRQ69_changed": false,
+    "original_GPIO_control_output_restoration": "PASS",
+    "ID_or_raw_sensor_samples_obtained": false,
+    "cause_of_low_lines": "Unresolved: supply/pin mapping/wiring requires stock runtime comparison."
+  },
+  "supervision": {
+    "synchronous_oneshot_launch_returned_error_before_result_collection": true,
+    "original_supervisor_exit": 1,
+    "previous_boot_journal_recovered": true,
+    "hardware_trial_repeated": false,
+    "future_controller_uses_no_block_and_pre_return_capture": true,
+    "revised_controller_hardware_tested": false
+  },
+  "normal_return": {
+    "fresh_r4_taint0": true,
+    "UPower_r4_retained": true,
+    "normal_services_and_display_auto": true,
+    "no_diagnostic_module_or_remoteproc": true,
+    "bootloader_and_GPT_unchanged": true,
+    "physical_UI_retest_claimed": false
+  },
+  "remaining": [
+    "Confirm physical bus/pin mapping and exact supply votes against working stock sensor operation.",
+    "Identify actual MPU/revision and qualify raw sensors.",
+    "Implement/qualify matching DMP firmware execution and outputs.",
+    "Qualify actual DMP interrupt system wake, retained events/negative controls, >=20 consecutive wakes and battery standby.",
+    "Resolve old SENSOR/SMGR protocol compatibility rather than assume modern libssc/QRTR suffices."
+  ]
+}

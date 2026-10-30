@@ -269,6 +269,12 @@ Conservative power configuration starts during phase 1. This phase qualifies the
 
 The owner identifies the IMU as an MPU-6515M. Treat that as the target part, with the installed silicon revision and board wiring still to be confirmed. **Access to its Digital Motion Processor (DMP), including waking the application processor from system suspend on a DMP interrupt, is required for completion.** Raw accelerometer/gyroscope support alone does not satisfy this requirement.
 
+The [sensor work record](sensor-bringup.md) now locates the original registry and
+validates its static bus/address/IRQ configuration. A native diagnostic verifies
+ADSP shutdown and pin restoration, but refuses to clock low bus lines. Confirm
+supplies and bus/pin mapping from a working stock runtime baseline before another
+AP transfer; no chip identity or DMP pass is claimed.
+
 1. Establish the hardware path from stock runtime evidence: chip identity/WHO_AM_I and revision, bus/address, supplies, reset, interrupt routing/polarity/latching, mounting matrix and ownership by the application processor or a sensor DSP. Resolve bus ownership before probing; do not access a bus concurrently with remote firmware. Verify that Linux's MPU6515 variant describes this silicon, including any significance of the M suffix. Record the exact source and firmware revisions used.
 2. Capture a stock baseline for raw acceleration/angular rate and available DMP operation, including interrupt behavior during suspend. Identify the matching DMP firmware, configuration, packet formats and supported algorithms. Preserve extraction instructions, hashes and licensing/provenance; keep per-unit calibration private. Publish firmware only when redistribution rights permit it, otherwise provide a reproducible extraction/loading path from the device's preserved stock material.
 3. Reuse and extend the maintained IIO `inv_mpu6050` family driver where appropriate. Qualify raw accelerometer, gyroscope and available temperature data first: axes/mounting, scale/range/rates, bias/calibration, timestamps, triggered buffers, FIFO overflow recovery and resume. Existing `invensense,mpu6515` matching is a starting point, not evidence that DMP access works.

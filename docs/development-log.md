@@ -1631,3 +1631,51 @@ No reboot or new charging/SOC acceptance is claimed. The daemon is byte-identica
 to r3; installed runtime changes concern the CLI and correct package provenance.
 Current-upstream drafts remain unsent. See
 [UPower evidence](../evidence/2026-10-30-upower-telemetry-r4.json).
+
+## October 30: original sensor registry and guarded ID trial
+
+The native inventory has no active remote processors and only touch/CCI I2C
+adapters. Stock source's sensors_adsp driver supplies timing/OCMEM support;
+its DT node does not identify the MPU. Original system inspection finds the
+sensor HAL, sensor1/registry libraries, daemon and defaults file. The daemon
+names `/sns/cal/sns.reg`, found in the backed-up sns partition at `/cal/sns.reg`;
+persist has only sensors_settings. The registry is preserved privately with
+source files and independent-filesystem copies.
+
+The pinned sns-reg map decodes a 256-byte group 2690 at 0x1700. All 72 shared
+static keys match stock defaults after correct field-width masking. Accel/gyro
+select bus 2/address 0x68/GPIO69; the defaults call the driver MPU6500. Magnetometer
+selects 0x0c/GPIO66 and is named HSCD008. These are configuration facts, not
+physical chip identification. The new inspector emits only wiring/comparison
+data, rejects mismatched/unresolved defaults, and passes 270 boundary/selector/
+output-isolation cases without printing calibration or driver UUIDs.
+
+Vendor source maps smd_sns_adsp to SENSOR on SMD_APPS_QDSP. Modern libssc uses
+QMI_SERVICE_SSC/Protobuf. The proposed QRTR/SMGR IIO path still needs compatibility
+review against this old firmware/transport; software fusion cannot substitute
+for the owner's explicit on-chip DMP requirement.
+
+A fixed-register GPIO ID diagnostic passes 800 actual DT/message/identity cases
+under ASan/UBSan and ARM W=1 compilation against canonical r4. Its 37 imports match
+the build's symbol CRCs. Exact source/module and current boot/transport recovery
+inputs are verified on two filesystems before upload. The physical read-only
+preflight passes and reports GPIO6/7 control/IO zero. Capture successfully calls
+ADSP PAS1 shutdown before requesting pins. Both released lines remain low, so it
+returns -EBUSY before adapter registration or any I2C transfer. Original control/
+output readbacks match; no sensor rail, reset, configuration or IRQ69 is changed.
+
+Synchronous oneshot launch returns the module's refusal before the supervisor
+saves its terminal result. The existing recovery path still completes. The exact
+previous-boot kernel/unit journals recover PAS success and idle-low refusal;
+the read is not repeated. Future supervision uses no-block plus explicit result
+polling and pre-return capture; that revision is not hardware-retested. Original
+failed logs and the controller as used remain separate.
+
+Fresh normal r4/UPower r4 returns with taint 0, native framebuffer, active services,
+all four display controls auto, no diagnostic/remoteproc and matching bootloader/
+GPT readbacks. This adds a real userspace-update return boot; no physical UI
+retest, chip ID, raw sample, DMP or suspend-wake pass is claimed. Low lines do not
+identify the cause. Next, obtain a bounded stock runtime baseline with original
+system/modem read-only and sensor registry/state copied to RAM, then verify
+physical pin mapping and exact regulator votes before further native transfers.
+See [sensor evidence](../evidence/2026-10-30-sensor-ownership-and-id.json).

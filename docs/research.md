@@ -44,6 +44,11 @@ proof that the node is active, or verification of the DMP interrupt route.
 requires separate raw-data, DMP execution/output and actual DMP-event suspend-wake
 evidence. These remain unverified acceptance gates.
 
+The later [sensor work record](sensor-bringup.md) finds the original registry in
+the `sns` partition, validates 72 static topology keys and records a guarded
+native identity trial. ADSP shutdown succeeds, but low bus lines stop the trial
+before any I2C transaction. Silicon identity, raw data and DMP/wake remain open.
+
 ## Existing operating system work
 
 | Source | Established finding | Development use |
