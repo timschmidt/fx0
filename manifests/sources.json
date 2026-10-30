@@ -104,6 +104,14 @@
       "status": "Recovered shared driver/SoC dependencies and schema correction compile and validate with wireless disabled; board voltage mismatch, radio identification and all hardware tests remain open."
     },
     {
+      "name": "linux-wireless-r4",
+      "url": "https://github.com/timschmidt/fx0-linux",
+      "branch": "integration/fx0-wireless-r4",
+      "commit": "b2512c53f0355e2e9bb07c43759974f7895c466f",
+      "base_commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+      "status": "Recovered WCNSS series on the exact r4 source plus Fx0 board, Pronto v1/v2 regulator-selection fix and MSM8226 DXE trigger fix. RAM tests: firmware start, dual-band scan, Bluetooth discovery, fixed MX/PX consumers and WCNSS restart re-registration. Association/traffic, pairing, suspend, MAC source and packaging remain open."
+    },
+    {
       "name": "boot-deploy-offset-preparation",
       "url": "https://github.com/timschmidt/fx0-boot-deploy",
       "branch": "integration/fx0-boot-offset",

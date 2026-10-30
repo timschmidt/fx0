@@ -86,6 +86,13 @@ without rebooting or changing the kernel/firmware. This retains the channel's
 userspace base; whole-system currency and capacity/charging acceptance remain
 open. See [UPower drafts and validation](../submissions/upower/README.md).
 
+Phase 4 has started. A RAM DTB on the r4 source starts WCNSS with stock-matching
+firmware from the original partitions. It scans both bands and brings up a
+Bluetooth controller. Two shared defects found here are fixed on the branch: the
+6.18.59 Pronto v1/v2 regulator selection and the MSM8226 DXE interrupt trigger
+that broke WCNSS restart. Association, traffic, pairing, MAC source, suspend and
+an installed package remain open. See [wireless work](wireless-bringup.md).
+
 ## Technical baseline
 
 As researched on October 29, 2026, Nura is the renamed postmarketOS project and its latest stable release is v26.06. The Fx0 uses MSM8926 and the `armv7` architecture. The old `lg-madai` package uses Linux 3.4 and is archived in the inspected October 2026 pmaports snapshot. Nura also provides a generic `qcom-msm8226` package and shared APQ8026/MSM8226/MSM8926 kernel.

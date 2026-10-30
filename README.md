@@ -21,6 +21,7 @@ The device is available for development and flashing. No personal data needs to 
 | [Battery work](docs/battery-bringup.md) | Stock pack/profile evidence, current sensing, native BMS and charging sequence |
 | [Camera work](docs/camera-bringup.md) | Confirmed sensor IDs, wiring, capture-engine gaps and verified private EEPROM readbacks |
 | [Kernel gaps](docs/kernel-gaps.md) | Maintained-kernel target and missing shared SoC/camera infrastructure |
+| [Wireless work](docs/wireless-bringup.md) | WCNSS supplies, firmware start, Wi-Fi/Bluetooth results and upstream fixes |
 
 ## Current state
 
@@ -96,6 +97,13 @@ refuses to clock low bus lines; it obtains no chip ID. Normal r4/UPower r4 is
 restored. Supply/pin mapping, raw sensors and DMP operation/wake remain open;
 see [sensor bringup](docs/sensor-bringup.md).
 
+A RAM-booted wireless DTB on the r4 source starts WCNSS with the device's own
+firmware and NV. It scans 2.4/5 GHz and brings up a Bluetooth controller. A
+stable-kernel Pronto regulator regression and an MSM8226 interrupt-trigger defect
+that broke WCNSS restart are fixed and verified on the phone. The installed r4
+system is unchanged. Association, pairing, MAC source and suspend remain open;
+see [wireless work](docs/wireless-bringup.md).
+
 Stock inventory, 29 critical partition backups, GPT metadata and a separately
 verified 1 GiB original-system image are private. A complete **development-state**
 snapshot of the 15,758,000,128-byte eMMC user area and both 4 MiB boot areas passes
@@ -109,8 +117,8 @@ rollback copies. Development and backups use `/run/media/tim/Disk B/fx0` through
 All four CPUs and eMMC HS200 are operational in development tests. Earlier full
 image write/readback and selected storage/USB tests pass, with sustained I/O still
 open. Native CCI EEPROM reads match two complete private 64 KiB captures; this does
-not qualify camera streaming, CAMSS, OIS or calibration validity. Wi-Fi/Bluetooth,
-audio, sensors, cameras, NFC/haptics, cellular/GNSS, SD/OTG and the remaining
+not qualify camera streaming, CAMSS, OIS or calibration validity. Wi-Fi/Bluetooth
+qualification, audio, sensors, cameras, NFC/haptics, cellular/GNSS, SD/OTG and the remaining
 [hardware acceptance matrix](docs/hardware-acceptance.md) need further work.
 No SIM is available for final cellular network acceptance. No unattended/cold
 startup, full suspend or final reliability qualification is claimed.

@@ -83,6 +83,13 @@ Read-only stock inspection now finds split `image/wcnss.mdt` firmware on the ori
 
 There is an unresolved supply-profile mismatch: compiled stock DT and vendor source give IRIS RFA and digital the same supplier, while vendor digital voltage range 1.225–1.8 V can coexist with RFA at 1.3 V. The recovered WCN3660A mainline profile instead fixes digital at 1.8 V. Do not enable that profile unchanged against shared L24. Confirm the physical variant and stock regulator state, then prepare the appropriate shared-driver/binding adaptation. Wireless firmware startup remains untested.
 
+Resolved for the first native start: stock limits L24 to 1.30–1.35 V and L16 to
+3.0–3.35 V. The mainline `qcom,wcn3660` profile therefore gives the stock 1.3 V
+digital/RFA and 3.0 V PA operating points. WCN3660A maps to the 3.3 V WCN3680 PA
+profile and is not used. Firmware now starts from RAM. The same work exposed and
+fixed a 6.18.59 Pronto v1/v2 regulator-selection regression and the MSM8226 DXE
+interrupt trigger. See [wireless work](wireless-bringup.md).
+
 ## Touch reset and in-cell scanning
 
 The inspected 6.18.59 transport and mainline at `c339f4010dea8b0d754f84ace70cd1b089878ef8` do not consume the documented reset GPIO. The Fx0 describes active-low GPIO16, with a stock 10 ms reset pulse and 60 ms boot wait. Earlier live deassertion alone did not exercise a reset pulse. The experimental branch now carries Roman Vivchar's [proposed reset support](https://lore.landau.one/lkml/20260912-rmi4-reset-v1-1-4a3fc8856830@protonmail.com/) with original authorship/sign-off, followed by reset assertion during regulator cleanup. Kernel 39 builds, passes targeted checks and boots from RAM on Fx0. Its RMI transport probes the controller and owns GPIO16, deasserted raw high. Gesture capture starts before native DRM takeover to separate reset handling from the display path. Physical gestures, reset/display ordering and suspend/resume remain open.

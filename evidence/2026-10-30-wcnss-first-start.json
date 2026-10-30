@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-30",
+  "scope": "First native WCNSS start from RAM, Pronto regulator-selection fix and DXE trigger fix; no association, traffic, pairing, suspend or packaging pass.",
+  "source": {
+    "branch": "integration/fx0-wireless-r4",
+    "base_r4_commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+    "board_commit": "a82efa848",
+    "regulator_fix_commit": "61c60256c94a",
+    "dxe_trigger_fix_commit": "b2512c53f0355e2e9bb07c43759974f7895c466f",
+    "recovered_commits_with_original_authors": 5,
+    "vendor_kernel_commit": "03aba4427a7666d57b5ae06d375e259ea337f351"
+  },
+  "board": {
+    "supplies": {"vddmx": "L3 0.75-1.3375 V", "vddpx": "L6 1.8 V", "iris_vddxo": "L10 1.8 V", "iris_vddpa": "L16 3.0-3.35 V", "iris_vddrfa_and_vdddig": "L24 shared 1.30-1.35 V"},
+    "iris_compatible": "qcom,wcn3660",
+    "wcn3660a_rejected_reason": "Maps to the WCN3680 profile and would request PA 3.3 V instead of stock 2.9-3.0 V",
+    "wlan_5wire_pins": "TLMM40-44 function wlan, 6 mA, pull-down (stock active)",
+    "stock_sleep_pin_state_described": false,
+    "expected_ignored_warning": "l24: unsupportable voltage range: 1300000-1225000uV",
+    "dtbs_check_dtschema_2026_9": "PASS, no diagnostics",
+    "checkpatch_strict_code_findings": 0,
+    "checkpatch_trailer_findings": "Co-Authored-By form and stable-clone unknown Fixes id; adjust at submission"
+  },
+  "firmware": {
+    "mechanism": "Installed msm-firmware-loader 1.8.0-r2 from original modem/persist partitions mounted read-only",
+    "firmware_published_or_packaged": false,
+    "wcnss_mdt_sha256": "e9ee11525f0db9c10434a58099a9f9829855befddd922a948dc1ec755247e6a9",
+    "nv_bytes": 29816,
+    "nv_payload_matches_stock_download_size": true,
+    "loader_messages": ["tmpfs mount point missing before mkdir", "dirname missing operand without DT firmware-name"]
+  },
+  "ram_boot_01": {
+    "image_sha256": "199dc858fbc2ce5aab33082ef08a29426a143a97a3f114f4b1361b55d2797920",
+    "kernel_sha256": "eae8000a18364810a946768df9de74d73cd0c8ead75e736bb1cd4e7c3e54d289",
+    "initramfs_sha256": "48bd5e933a8872d07a087e25e9486b034a91d39bbd7cf77639f7747af1ea3558",
+    "dtb_sha256": "81ef7d1adca238c97e2090e721c694425b511fcadcafb55f4166403f4f461f2c",
+    "dtb_differences_from_installed": "L3/L16/L24, WCNSS SMP2P, wlan pin state and Pronto node only",
+    "remoteproc_state": "running",
+    "wcnss_ctrl_version": "1.5 1.2",
+    "wlan_firmware": "WCN v2.0 RadioPhy vIris_TSMC_3.0 with 48MHz XO, CRM CNSS-PR-1-4-1-c3-00062, API 1.5.1.2",
+    "matches_retained_stock_log": true,
+    "interfaces": ["phy0/wlan0", "hci0"],
+    "rfkill_blocked": false,
+    "taint": 0,
+    "scan_bss_count": 20,
+    "scan_channels": [1, 3, 6, 11, 36, 44],
+    "bluetooth": {"manufacturer": "0x001d Qualcomm", "hci_version": 6, "roles": ["central", "peripheral"], "devices_discovered_12s": 2},
+    "pronto_regulator_suppliers": ["dummy vddcx only"],
+    "rpm_L3_L6_wcnss_consumer": false
+  },
+  "regulator_fix": {
+    "defect": "6.18.59 backport of mainline 3dbc90b9c22e routes Pronto v1/v2 into the Pronto v3 branch; only vddcx is requested",
+    "upstream_fix_found": false,
+    "host_model_cases": 10,
+    "unfixed_failures": 6,
+    "fixed_failures": 0,
+    "module_sha256": "fb3cfed552866be3607e262442182957c05609fb837ea849573147d46bc29035",
+    "module_vermagic_matches": true,
+    "import_crcs_checked": 73,
+    "import_crc_differences": 0,
+    "device_consumers_after_fix": {"L3": "vddmx at 1.2875 V vote", "L6": "vddpx"},
+    "dummy_vddcx_after_fix": false,
+    "unsigned_diagnostic_module_taint": 8192
+  },
+  "restart": {
+    "ram_boot_01_restart_without_dt_fix": "Firmware up; wcn36xx failed: irq type mismatch for hwirq-177, IRQ tx not found",
+    "cause": "Driver requests IRQF_TRIGGER_HIGH; MSM8226 DT declared edge rising",
+    "ram_boot_02_image_sha256": "25a697f3821b4a9721ae333271e4565cffca3ace7a1c1bddbd7c861c0c5dfe5a",
+    "ram_boot_02_dtb_sha256": "4e0c77de1a3696b8a36d3dcf3440a46f94fba2877202796e11937c15907ea568",
+    "ram_boot_02_restart_with_both_fixes": "PASS: firmware restarted, phy re-registered, scan found channels 1/3/6/11/36/44",
+    "pmic_L16_readback_while_active": "3.3 V, within stock 3.0-3.35 V; Pronto firmware votes during operation"
+  },
+  "mac": {
+    "current_source": "lk2nd serial-derived locally administered DT local-mac-address",
+    "nv_slot0": "LG Electronics OUI; slots 1-3 consecutive generic placeholders",
+    "stock_runtime_mac_observed": false,
+    "values_public": false
+  },
+  "return": {
+    "installed_r4_build": 5,
+    "taint": 0,
+    "framebuffer": "msmdrmfb",
+    "display_controls": "auto x4",
+    "upower_and_tinydm_active_after_documented_gate": true,
+    "persistent_boot_files_changed": false
+  },
+  "open": ["Association, DHCP/DNS, sustained traffic, reconnect", "Factory MAC/BD_ADDR source", "Bluetooth pairing, HID, audio", "Coexistence", "TLMM sleep state and real suspend", "Hotspot capability", "Signed package and installed boot", "Upstream submission preparation"]
+}

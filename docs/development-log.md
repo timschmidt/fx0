@@ -1679,3 +1679,44 @@ identify the cause. Next, obtain a bounded stock runtime baseline with original
 system/modem read-only and sensor registry/state copied to RAM, then verify
 physical pin mapping and exact regulator votes before further native transfers.
 See [sensor evidence](../evidence/2026-10-30-sensor-ownership-and-id.json).
+
+## October 30: first native WCNSS start and two shared fixes
+
+The recovered WCNSS series now sits on the exact r4 source as
+`integration/fx0-wireless-r4`, with original authors retained. Stock board data
+resolves the earlier L24 question: L24 is limited to 1.30–1.35 V and L16 to
+3.0–3.35 V. The mainline WCN3660 Iris profile thus gives the stock 1.3 V
+RFA/digital and 3.0 V PA points. WCN3660A would request 3.3 V PA and is not used.
+TLMM40–44 use the stock active 5-wire setting. The installed
+msm-firmware-loader already exposes the original partitions' `wcnss.mdt` and the
+calibrated persist NV, so nothing is packaged or published. The new DTB passes
+dtschema 2026.9 without diagnostics.
+
+A RAM boot of the installed r4 kernel/initramfs/command line with only that DTB
+starts Pronto. It reports `WCN v2.0 RadioPhy vIris_TSMC_3.0 with 48MHz XO` and
+CRM `CNSS-PR-1-4-1-c3-00062`, matching the retained stock log. `wlan0` scans 20
+BSSes on 2.4 GHz channels 1–11 and 5 GHz channels 36/44. `hci0` is a Qualcomm
+HCI v6 controller and discovers nearby devices. Taint stays 0.
+
+Pronto's only regulator supplier is a dummy `vddcx`. The 6.18.59 backport of
+mainline `3dbc90b9c22e` routes Pronto v1/v2 tables into its v3 branch, so MX/PX
+are never requested. A source-extracting host model fails six of ten unfixed
+cases and passes all ten with the fix. A module from an exported tree, with
+matching vermagic and 73 matching import CRCs, makes Pronto consume L3 `vddmx`
+and L6 `vddpx` on the phone.
+
+That restart then exposes a second defect. wcn36xx forces level-high DXE
+interrupts while the MSM8226 node declares rising edge, so a re-probe fails with
+an IRQ type mismatch. A separate level-high SoC fix lets the second RAM DTB
+restart WCNSS with the fixed module and re-register Wi-Fi/Bluetooth with a
+working dual-band scan. The PMIC readback shows L16 at 3.3 V while active; the
+firmware's own RPM vote, within stock limits, explains this.
+
+The current `02:00:…` addresses are lk2nd serial-derived. NV slot 0 holds an
+LG OUI address, but no stock runtime reading confirms which address stock used.
+Values stay private. The phone returns to installed r4 with build 5, taint 0,
+native framebuffer, automatic display controls and the documented UI start.
+Association/traffic need an owner-designated test network. Pairing, MAC source,
+suspend, packaging and submission material remain. See
+[wireless work](wireless-bringup.md) and
+[evidence](../evidence/2026-10-30-wcnss-first-start.json).
