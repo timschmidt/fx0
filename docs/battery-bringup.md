@@ -479,6 +479,39 @@ USB negotiation, termination, live identity and fuel-gauge accuracy remain open.
 See the [implementation diagnostic](../diagnostics/smbb-charging-policy/README.md)
 and [reviewed evidence](../evidence/2026-10-30-smbb-native-policy.json).
 
+### UPower design-only reporting and CLI recovery
+
+The incomplete-battery guard is now ported to current UPower master pinned at
+`91ec33a7214362e65d1dc5bbae347f3c61153200` (1.91.5), with charger-only,
+design-only and design-plus-measurements/lifetime-counter regressions. All three
+fail on unchanged master, which exposes a battery and enters a false critical
+warning. The guard fixes them while a genuine zero remaining-charge fixture
+still receives normal low-battery handling. Attribute presence alone does not
+solve ENODATA or all malformed partial telemetry; those remain acceptance work.
+
+The CLI failure is already fixed upstream by Kate Hsuan's `78466b1690be`. A new
+mock-service test injects a real EnumerateDevices D-Bus error into five modes.
+Unmodified 1.91.0 crashes in enumerate/monitor/monitor-detail; dump and battery
+already check the result. The accepted fix and lifetime prerequisites are
+backported with original authorship. Current-master and 1.91.0 suites pass all
+103 and 94 configured tests respectively, including existing critical actions.
+These are host UMockdev/D-Bus tests, not physical power actions.
+
+Signed ARM UPower `99991.91.0-r4` is installed after trusted offline simulation
+and two-filesystem r3 rollback/config/database backups. Its checked recipe is
+passed to abuild before signing, correcting extra-repo `-dirty` metadata. Exact
+packaged CLI/daemon bytes, native enumeration/dump/battery modes, active services,
+unknown/absent display battery with no warning and removed temporary mask pass
+on the same kernel boot with taint zero. The daemon is byte-identical to r3;
+expanded tests add coverage without changing that installed guard's behavior.
+
+Normal APK triggers regenerate initramfs/DTB. Readback verifies the exact signed
+kernel/DTB and all 22 included module files, original display prefix/cleanup,
+memory fit, unchanged managed menu/frozen rescue/raw boot and both GPTs. No new
+reboot, physical UI, current/SOC or complete-system currency claim is made.
+See [review drafts](../submissions/upower/README.md) and
+[native evidence](../evidence/2026-10-30-upower-telemetry-r4.json).
+
 ## Implementation sequence
 
 1. Preserve exact current boot files, modules, package, configurations, raw boot

@@ -1584,3 +1584,50 @@ deadline, real system suspend, termination, live identity, USB negotiation and
 broader hardware acceptance remain open. These proposed bindings and RAM tests
 are not a completed production charging solution. See
 [native policy evidence](../evidence/2026-10-30-smbb-native-policy.json).
+
+## October 30: UPower review regressions and installed r4
+
+Current UPower master is pinned at `91ec33a` (version 1.91.5). Its existing `78466b1`
+already fixes the CLI NULL device-list paths. New mock-service coverage injects
+a real EnumerateDevices error in enumerate, monitor, monitor-detail, dump and
+battery modes. Old 1.91.0 reproduces SIGSEGV in the first three; all five exit 1
+with the accepted backport. Original authorship and cleanup prerequisites are
+preserved; no new upstream CLI C fix is claimed.
+
+Charger-only, design-only and design-plus-measurements/lifetime-counter fixtures
+all expose false empty/critical battery state on unchanged current master. The
+existing Nura guard ports cleanly and rejects them. A genuine zero remaining-
+charge control remains present with a normal low-battery warning. All 103
+configured current-master tests and all 94 backport tests pass, including existing
+critical actions. Black 24.10 passes; final current formatting preserves the
+tested AST. These tests use host UMockdev/isolated D-Bus and do not exercise
+physical power actions, ARM error injection or every malformed measurement.
+
+The Nura r4 recipe replaces its earlier guard patch with expanded tests and the
+accepted CLI backports. All six new patches apply without offsets/fuzz; the
+unchanged Nura history-timing patch retains a seven-line offset. Applied runtime
+and test files match validated source. The recipe is committed and pushed.
+
+The rootless package clone initially lacks the required upstream remote and
+channel refs; those are restored from the existing pinned clone. A signed ARM
+build completes but retains extra-repo -dirty metadata. It is not installed.
+A separate rebuild passes a verified clean recipe/epoch to abuild before signing
+and checks the embedded commit. Both candidates and failed setup logs remain
+separate. The final ARM ELF/package identities and signatures pass validation.
+
+Trusted r3 rollback APKs and package/config/database snapshots are verified on
+two filesystems; 23 installed payload files match. The offline dry run selects
+exactly the three expected upgrades. Native r4 installation succeeds with a
+temporary owned service mask, which is removed before restart. Read-only
+verification corrects scalar D-Bus JSON handling and selects the exact four PM
+paths, then resumes on the same boot. CLI/daemon bytes match the package,
+enumeration/dump/battery modes succeed, UPower/tinydm are active, taint is zero
+and all four display controls are auto. No physical UI retest is claimed.
+
+APK triggers regenerate boot files. The exact signed r4 kernel/DTB and 22 module
+files, original prefix/init/cleanup, absent RAM overlay and initramfs memory fit
+are verified. Managed menu, frozen rescue, raw boot and both GPTs are unchanged.
+No reboot or new charging/SOC acceptance is claimed. The daemon is byte-identical
+to r3; installed runtime changes concern the CLI and correct package provenance.
+Current-upstream drafts remain unsent. See
+[UPower evidence](../evidence/2026-10-30-upower-telemetry-r4.json).

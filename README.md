@@ -84,6 +84,12 @@ or unbound. User inhibition and explicit supplier recovery pass; actual thermal
 boundaries, system suspend, watchdog protection and charging accuracy remain open.
 Installed r4 is unchanged. See [native policy evidence](evidence/2026-10-30-smbb-native-policy.json).
 
+UPower `99991.91.0-r4` is now installed with the accepted upstream CLI error fix.
+Its expanded incomplete-battery tests pass on current upstream and the Nura
+backport, preserving real empty-battery handling. Native CLI/services and the
+regenerated boot artifacts pass verification; no capacity estimate is supplied.
+See [UPower review drafts](submissions/upower/README.md).
+
 Stock inventory, 29 critical partition backups, GPT metadata and a separately
 verified 1 GiB original-system image are private. A complete **development-state**
 snapshot of the 15,758,000,128-byte eMMC user area and both 4 MiB boot areas passes

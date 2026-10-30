@@ -1,0 +1,64 @@
+From 741bbab358fdb33859fcdb3dd044a5a169d0eb65 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 30 Oct 2026 15:48:15 -0400
+Subject: [PATCH] tests: cover CLI device enumeration errors
+
+Return a real D-Bus error from EnumerateDevices and check enumerate, monitor, monitor-detail, dump and battery modes. Each must exit with failure rather than dereferencing NULL or remaining in the monitor loop. The library warning remains nonfatal so the caller error path is exercised.
+
+This regression covers the fix already upstream in 78466b1690be12f11666abbd500cc49d85c15fa9.
+---
+ src/linux/integration-test.py | 38 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/src/linux/integration-test.py b/src/linux/integration-test.py
+index 66a62cd..9fb8820 100755
+--- a/src/linux/integration-test.py
++++ b/src/linux/integration-test.py
+@@ -630,6 +630,44 @@ class Tests(dbusmock.DBusTestCase):
+             self.get_dbus_dev_property(bat0_up, "State"), UP_DEVICE_STATE_CHARGING
+         )
+ 
++    def test_tool_device_enumeration_failure(self):
++        """A failed EnumerateDevices call must not crash or start monitoring."""
++        mock_process, mock = self.spawn_server_template(
++            "upower", stdout=subprocess.DEVNULL
++        )
++        self.addCleanup(self.stop_process, mock_process)
++        mock.AddMethod(
++            UP,
++            "EnumerateDevices",
++            "",
++            "ao",
++            "raise dbus.exceptions.DBusException("
++            "'injected enumeration failure', "
++            "name='org.freedesktop.DBus.Error.Failed')",
++            dbus_interface=dbusmock.MOCK_IFACE,
++        )
++        env = os.environ.copy()
++        # The library warns about the expected D-Bus error. Check that callers
++        # handle its NULL result, while retaining fatal critical diagnostics.
++        env["G_DEBUG"] = "fatal-criticals"
++        for option in [
++            "--enumerate",
++            "--monitor",
++            "--monitor-detail",
++            "--dump",
++            "--battery",
++        ]:
++            with self.subTest(option=option):
++                result = subprocess.run(
++                    [self.upower_path, option],
++                    env=env,
++                    capture_output=True,
++                    text=True,
++                    timeout=5,
++                )
++                self.assertIn("injected enumeration failure", result.stderr)
++                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
++
+     def test_battery_ac(self):
+         """properties with dynamic battery/AC"""
+ 
+-- 
+2.56.0
+

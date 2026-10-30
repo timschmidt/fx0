@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-30",
+  "current_upstream_base": "91ec33a7214362e65d1dc5bbae347f3c61153200",
+  "current_upstream_version": "1.91.5",
+  "current_draft_head": "d8e650c3180db30b4c7df59caadefae9c2ff2866",
+  "Nura_backport_source_head": "1ddb4275a13932db1a64d8549182947066c57fb0",
+  "Nura_recipe_commit": "10e2498b80f9bebcef7b0bea312188dc7cb5e8e2",
+  "installed_UPower_version": "99991.91.0-r4",
+  "CLI_fix_already_upstream": "78466b1690be12f11666abbd500cc49d85c15fa9",
+  "host": {
+    "unmodified_current_master_incomplete_battery_failures": [
+      "Tests.test_battery_with_design_information_only",
+      "Tests.test_battery_with_measurements_but_no_charge_information",
+      "Tests.test_battery_without_charge_information"
+    ],
+    "unmodified_1_91_0_CLI_SIGSEGV_modes": [
+      "--enumerate",
+      "--monitor",
+      "--monitor-detail"
+    ],
+    "patched_CLI_error_modes_checked": 5,
+    "current_master_configured_suite_pass": 103,
+    "Nura_1_91_0_configured_suite_pass": 94,
+    "failures": 0,
+    "genuine_zero_remaining_charge_control": "PASS",
+    "iDevice_disabled": true,
+    "hardware": "x86_64 UMockdev and isolated D-Bus",
+    "Black": "24.10.0 PASS; current final formatting preserves tested AST",
+    "ASan_instrumentation_claimed": false
+  },
+  "package": {
+    "architecture": "armv7; noarch language/systemd",
+    "signed_qemu_only_native_build": true,
+    "checked_recipe_passed_to_abuild_before_signing": true,
+    "embedded_recipe_commit_verified": true,
+    "direct_device_trust_verification": true,
+    "trust_override_used": false,
+    "exactly_three_offline_package_upgrades": true,
+    "six_new_patches_apply_without_offsets_or_fuzz": true,
+    "unchanged_Nura_timing_patch_offset_lines": 7,
+    "first_build_missing_remote_and_channel_refs_corrected": true,
+    "earlier_dirty_metadata_candidate_not_installed": true
+  },
+  "rollback": {
+    "trusted_r3_APKs_preserved": true,
+    "matching_payload_files": 23,
+    "config_and_package_DB_archived": true,
+    "two_independent_filesystems_verified": true
+  },
+  "device": {
+    "installed_version": "99991.91.0-r4",
+    "three_expected_packages_updated": true,
+    "native_CLI_enumerate_dump_battery": true,
+    "native_DBus_error_injection_claimed": false,
+    "exact_packaged_CLI_and_daemon_hashes": true,
+    "same_kernel_boot": true,
+    "kernel_taint": 0,
+    "UPower_and_tinydm_active": true,
+    "temporary_mask_removed": true,
+    "four_display_controls_auto": true,
+    "unknown_absent_display_battery_no_warning": true,
+    "measured_SOC_claimed": false,
+    "new_physical_UI_test_claimed": false
+  },
+  "boot_after_APK_trigger": {
+    "initramfs_regenerated_by_normal_APK_triggers": true,
+    "kernel_and_DTB_equal_installed_r4_package": true,
+    "initramfs_prefix_original_cleanup_exact": true,
+    "only_matching_kernel_ABI_modules": true,
+    "matching_signed_module_files": 22,
+    "RAM_overlay_hook_absent": true,
+    "initramfs_below_inherited_framebuffer": true,
+    "initramfs_bytes": 11955684,
+    "initramfs_sha256": "48bd5e933a8872d07a087e25e9486b034a91d39bbd7cf77639f7747af1ea3558",
+    "managed_extlinux_menu_unchanged": true,
+    "frozen_rescue_files_unchanged": true,
+    "raw_boot_partition_hash_unchanged": true,
+    "both_GPTs_byte_identical": true,
+    "new_reboot_qualification_claimed": false
+  },
+  "runtime_daemon_identical_to_installed_r3": true,
+  "scope": [
+    "CLI C fix is an upstream backport, not a newly discovered upstream defect.",
+    "Expanded incomplete-battery regression/guard is ported to current upstream for review.",
+    "Installed Nura keeps its 1.91.0 channel base; no complete-system currency claim.",
+    "No native error injection, new physical UI test, reboot or charging/SOC accuracy qualification.",
+    "No upstream submission or invented author certification."
+  ]
+}

@@ -78,6 +78,14 @@ physical thermal boundaries, charging accuracy and complete power acceptance
 remain open. No new firmware/kernel package is installed. See
 [native policy evidence](../evidence/2026-10-30-smbb-native-policy.json).
 
+UPower `99991.91.0-r4` now carries the existing upstream CLI error fix and expanded
+incomplete-battery tests. Current upstream passes 103 configured tests and the
+Nura 1.91.0 backport passes 94, including genuine zero-charge handling. Signed
+native installation, CLI/service state and regenerated boot files are verified
+without rebooting or changing the kernel/firmware. This retains the channel's
+userspace base; whole-system currency and capacity/charging acceptance remain
+open. See [UPower drafts and validation](../submissions/upower/README.md).
+
 ## Technical baseline
 
 As researched on October 29, 2026, Nura is the renamed postmarketOS project and its latest stable release is v26.06. The Fx0 uses MSM8926 and the `armv7` architecture. The old `lg-madai` package uses Linux 3.4 and is archived in the inspected October 2026 pmaports snapshot. Nura also provides a generic `qcom-msm8226` package and shared APQ8026/MSM8226/MSM8926 kernel.

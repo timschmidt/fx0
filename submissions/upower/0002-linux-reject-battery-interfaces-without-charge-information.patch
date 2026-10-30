@@ -1,0 +1,148 @@
+From d8e650c3180db30b4c7df59caadefae9c2ff2866 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 30 Oct 2026 15:48:15 -0400
+Subject: [PATCH] linux: reject battery interfaces without charge information
+
+A charger or measurement-only BMS interface can expose Battery, presence, status, design data, voltage and current without remaining charge. Do not report the missing measurement as an empty system battery and trigger a critical power action.
+
+Check for the charge-information attributes consumed by either backend before constructing a system battery. Keep legitimate zero readings eligible by testing attribute presence. Cover charger-only, design-only and measurement-plus-design interfaces, plus a genuine empty battery control. This ports the existing Fx0 Nura guard to current upstream; it does not implement a fuel gauge or all malformed partial telemetry combinations.
+---
+ src/linux/integration-test.py  | 95 ++++++++++++++++++++++++++++++++++
+ src/linux/up-enumerator-udev.c | 15 ++++++
+ 2 files changed, 110 insertions(+)
+
+diff --git a/src/linux/integration-test.py b/src/linux/integration-test.py
+index 9fb8820..e349b22 100755
+--- a/src/linux/integration-test.py
++++ b/src/linux/integration-test.py
+@@ -630,6 +630,101 @@ class Tests(dbusmock.DBusTestCase):
+             self.get_dbus_dev_property(bat0_up, "State"), UP_DEVICE_STATE_CHARGING
+         )
+ 
++    def _assert_battery_without_charge_information(self, attributes):
++        self.testbed.add_device(
++            "power_supply",
++            "incomplete-battery",
++            None,
++            ["type", "Battery", "present", "1", "status", "Discharging"] + attributes,
++            [],
++        )
++        self.start_daemon()
++        self.assertEqual(self.proxy.EnumerateDevices(), [])
++        self.assertEqual(self.get_dbus_display_property("IsPresent"), False)
++        self.assertEqual(
++            self.get_dbus_display_property("State"), UP_DEVICE_STATE_UNKNOWN
++        )
++        self.assertEqual(
++            self.get_dbus_display_property("WarningLevel"), UP_DEVICE_LEVEL_NONE
++        )
++        self.assertEqual(self.get_dbus_property("OnBattery"), False)
++
++    def test_battery_without_charge_information(self):
++        """A charger-only interface cannot supply a state of charge."""
++        self._assert_battery_without_charge_information(
++            ["health", "Good", "voltage_min_design", "3000000"]
++        )
++
++    def test_battery_with_design_information_only(self):
++        """Design capacity and voltage do not report remaining charge."""
++        self._assert_battery_without_charge_information(
++            [
++                "charge_full_design",
++                "2370000",
++                "voltage_min_design",
++                "3800000",
++                "voltage_max_design",
++                "4350000",
++            ]
++        )
++
++    def test_battery_with_measurements_but_no_charge_information(self):
++        """A lifetime counter and live measurements are not remaining charge."""
++        self._assert_battery_without_charge_information(
++            [
++                "charge_full_design",
++                "2370000",
++                "voltage_min_design",
++                "3800000",
++                "voltage_max_design",
++                "4350000",
++                "voltage_now",
++                "4287000",
++                "current_now",
++                "22200",
++                "current_avg",
++                "-10000",
++                "charge_counter",
++                "123456",
++                "temp",
++                "308",
++            ]
++        )
++
++    def test_battery_with_zero_remaining_charge(self):
++        """A real zero charge reading still identifies an empty battery."""
++        self.testbed.add_device(
++            "power_supply",
++            "BAT0",
++            None,
++            [
++                "type",
++                "Battery",
++                "present",
++                "1",
++                "status",
++                "Discharging",
++                "charge_full",
++                "2370000",
++                "charge_now",
++                "0",
++                "charge_full_design",
++                "2370000",
++                "voltage_now",
++                "3800000",
++            ],
++            [],
++        )
++        self.start_daemon()
++        devices = self.proxy.EnumerateDevices()
++        self.assertEqual(len(devices), 1)
++        self.assertEqual(self.get_dbus_dev_property(devices[0], "IsPresent"), True)
++        self.assertEqual(self.get_dbus_dev_property(devices[0], "Percentage"), 0.0)
++        self.assertEqual(self.get_dbus_display_property("IsPresent"), True)
++        self.assertGreaterEqual(
++            self.get_dbus_display_property("WarningLevel"), UP_DEVICE_LEVEL_CRITICAL
++        )
++
+     def test_tool_device_enumeration_failure(self):
+         """A failed EnumerateDevices call must not crash or start monitoring."""
+         mock_process, mock = self.spawn_server_template(
+diff --git a/src/linux/up-enumerator-udev.c b/src/linux/up-enumerator-udev.c
+index e1b0456..505f25e 100644
+--- a/src/linux/up-enumerator-udev.c
++++ b/src/linux/up-enumerator-udev.c
+@@ -110,6 +110,21 @@ device_new (UpEnumeratorUdev *self, GUdevDevice *native)
+ 	subsys = g_udev_device_get_subsystem (native);
+ 	if (g_strcmp0 (subsys, "power_supply") == 0) {
+ 		UpDevice *device;
++		const gchar *type = g_udev_device_get_sysfs_attr (native, "type");
++
++		/* Some charger interfaces are labelled Battery but cannot report
++		 * charge. Do not turn missing measurements into an empty battery.
++		 * Check attribute presence so a valid zero reading is retained.
++		 */
++		if (type && g_ascii_strcasecmp (type, "battery") == 0 &&
++		    !g_udev_device_has_sysfs_attr_uncached (native, "capacity") &&
++		    !g_udev_device_has_sysfs_attr_uncached (native, "capacity_level") &&
++		    !g_udev_device_has_sysfs_attr_uncached (native, "energy_now") &&
++		    !g_udev_device_has_sysfs_attr_uncached (native, "energy_avg") &&
++		    !g_udev_device_has_sysfs_attr_uncached (native, "charge_now")) {
++			g_debug ("Ignoring battery interface without charge information");
++			return NULL;
++		}
+ 
+ 		device = g_initable_new (UP_TYPE_DEVICE_SUPPLY_BATTERY, NULL, NULL,
+ 		                       "daemon", daemon,
+-- 
+2.56.0
+
