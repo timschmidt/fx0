@@ -1527,3 +1527,60 @@ worker remain unconnected; an older native driver can re-enable charging after
 normal setup. The disabled-driver test does not qualify that later interval,
 runtime removal, suspend, current accuracy or SOC. See
 [early-gate evidence](../evidence/2026-10-30-firmware-charge-gate.json).
+
+## October 30: managed native charging policy
+
+The Linux integration now validates the firmware marker and actual charge-off/
+conservative BTC state. A separate policy child waits for managed IIO suppliers
+while SMBB keeps USB/extcon bound and charging inhibited. Firmware generates the
+runtime TOCAD Madai policy identity only for the existing known selection and
+explicit opt-in. This remains boot-time selection, not direct pack authentication.
+
+The worker converts all 83 stock thermistor points without endpoint clamping and
+implements the original LG V1_8 normal/reduced/stop rules, including 450 mA warm
+current, the 4.0 V cutoff and recovery hysteresis. Independent user, thermal,
+sample, handoff, pack, suspend and I/O-fault restrictions combine under the
+actuator mutex. User caps cannot exceed active thermal/board ceilings. Every
+enable checks sample age, and an independent age worker also inhibits stale
+operation. Observed pack identity loss survives parent reprobe until reboot;
+the prototype policy is built in. Quiesce verifies inhibition and cancels both
+jobs before supplier suspend/removal; resume waits for fresh data.
+
+Actual-source sanitizer tests pass 21,496 model/stock-comparison cases, 2,604
+policy cases (including 2,500 concurrent requests), 6,242 existing control cases,
+41 firmware policy-identity/FDT rollback cases and 84 voltage ABI cases. ARM W=1
+driver/module checks, the complete kernel and static/generated-runtime DT
+validation pass. Strict style checks omit DCO and the generic new-file notice;
+subsystem MAINTAINERS patterns already cover the files. No sign-off is invented.
+
+The dependency check catches installed r4 VADC's raw-code interface before the
+first prepared candidate is booted. The branch carries the previously tested
+processed-voltage and millivolt-precision patches, builds matching modules, and
+prepares a separate candidate. The rejected preparation remains captured as
+unbooted. An initial module build targets the read-only source by mistake;
+correct in-tree output targets then build successfully without diagnostics.
+
+The qualified RAM run verifies the kernel notes and runtime-profile firmware,
+keeps charging off with the ADC absent, and proves real USB HTTP packets during
+that deferral. Module load binds the policy automatically with readings around
+30.8 C/4.287 V. The user inhibit request remains effective while sampling runs;
+auto releases only that vote. Managed supplier unbind stops/removes the policy
+and inhibits charging while the parent and USB HTTP stay available. Rebind needs
+explicit drivers_probe; automatic recovery from forced unbind is not claimed.
+Fresh operation then returns. BTC remains 0x81 and reference 0xc0 throughout;
+diagnostic taint is 12288. No eMMC filesystem is mounted.
+
+USB interface rename creates duplicate temporary host profile names within one
+second. Both profiles are successfully deleted, but the extra deletion fails and
+stops the final return before continuing original lk2nd. Actual profile absence
+is verified; the same return resumes without repeating hardware testing. Names
+now use finer uniqueness and cleanup tolerates duplicate/already-deleted names;
+that idempotence regression passes. Original firmware/r4 returns with taint zero,
+active normal services, automatic display controls and matching bootloader/GPT
+readbacks. No temporary host profile remains and no firmware/APK is installed.
+
+Current accuracy/SOC, physical thermal boundaries, a hard hardware-watchdog
+deadline, real system suspend, termination, live identity, USB negotiation and
+broader hardware acceptance remain open. These proposed bindings and RAM tests
+are not a completed production charging solution. See
+[native policy evidence](../evidence/2026-10-30-smbb-native-policy.json).

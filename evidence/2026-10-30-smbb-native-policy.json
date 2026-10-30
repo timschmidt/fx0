@@ -1,0 +1,127 @@
+{
+  "date": "2026-10-30",
+  "kernel_branch": "integration/fx0-charging-policy",
+  "kernel_commit": "2457eebe0bb67bcb5eccee7916650629cc4e9bf0",
+  "firmware_branch": "integration/fx0-policy-profile",
+  "firmware_commit": "2ce757408f364ec6f1197b1d5d0be4128a309b1e",
+  "firmware_version": "next-2ce7574-20261030",
+  "kernel_GNU_build_id": "91fa4518560bf3745b1634c3ef321c622e423042",
+  "RAM_diagnostic_sha256": "fbe1f63c472c411189a533fc382c0898ebe7fe4fe041d09fb28c7bacc426a0a7",
+  "RAM_firmware_sha256": "20775e2f7ba7dee2b8cecf36e9c9aab22b38536fe3eb321f7cca7336759df482",
+  "host": {
+    "model_stock_comparison_cases": 21496,
+    "policy_cases": 2604,
+    "legacy_control_cases": 6242,
+    "concurrent_requests_included": 4500,
+    "runtime_firmware_identity_cases": 41,
+    "VADC_ABI_cases": 84,
+    "ASan_UBSan": "PASS",
+    "ARM_driver_W1": "PASS",
+    "ARM_ADC_modules_W1": "PASS",
+    "full_ARM_zImage": "PASS",
+    "static_and_runtime_DTB_schema_diagnostics": 0,
+    "shared_builtin_symbol_CRCs_compared": 11666,
+    "changed_shared_symbol_CRCs": 0
+  },
+  "device": {
+    "snapshots": {
+      "provider-missing": {
+        "mode": "inhibit-charge",
+        "charge_control": "0x00"
+      },
+      "provider-missing-USB-online": {
+        "mode": "inhibit-charge",
+        "charge_control": "0x00"
+      },
+      "provider-bound": {
+        "mode": "auto",
+        "charge_control": "0x80"
+      },
+      "user-inhibit": {
+        "mode": "inhibit-charge",
+        "charge_control": "0x00"
+      },
+      "user-auto": {
+        "mode": "auto",
+        "charge_control": "0x80"
+      },
+      "provider-unbound": {
+        "mode": "inhibit-charge",
+        "charge_control": "0x00"
+      },
+      "provider-rebound": {
+        "mode": "auto",
+        "charge_control": "0x80"
+      }
+    },
+    "reported_readings": {
+      "provider-bound": {
+        "votes": 0,
+        "state": 0,
+        "temperature_decic": 308,
+        "voltage_uV": 4286679,
+        "age_ms": 53
+      },
+      "user-inhibit": {
+        "votes": 2,
+        "state": 0,
+        "temperature_decic": 308,
+        "voltage_uV": 4286385,
+        "age_ms": 48
+      },
+      "user-auto": {
+        "votes": 0,
+        "state": 0,
+        "temperature_decic": 308,
+        "voltage_uV": 4286091,
+        "age_ms": 46
+      },
+      "provider-rebound": {
+        "votes": 0,
+        "state": 0,
+        "temperature_decic": 308,
+        "voltage_uV": 4287141,
+        "age_ms": 53
+      }
+    },
+    "USB_HTTP_stages_observed": [
+      "provider-missing",
+      "provider-bound",
+      "user-inhibit",
+      "provider-unbound",
+      "provider-rebound"
+    ],
+    "initial_missing_provider_auto_probe": true,
+    "forced_unbind_auto_reprobe": false,
+    "forced_unbind_explicit_drivers_probe_used": true,
+    "BTC": "0x81 conservative/enabled",
+    "reference": "0xc0 unchanged",
+    "RAM_taint": 12288,
+    "eMMC_filesystem_mounted": false,
+    "charging_current_or_SOC_qualified": false,
+    "absolute_sensor_accuracy_qualified": false
+  },
+  "host_cleanup": {
+    "duplicate_profile_names_caused_redundant_delete_failure": true,
+    "hardware_test_repeated": false,
+    "same_return_resumed": true,
+    "all_temporary_profiles_absent": true,
+    "idempotence_regression": "PASS"
+  },
+  "normal_return": {
+    "installed_r4_build": 5,
+    "taint": 0,
+    "normal_services_active": true,
+    "four_display_controls_auto": true,
+    "bootloader_prefix_and_both_GPTs_identical": true,
+    "whole_eMMC_identity_claimed": false,
+    "physical_UI_retest_claimed": false
+  },
+  "scope": [
+    "RAM integration prototype; no permanent firmware/kernel installation or accepted binding ABI.",
+    "Initial prepared candidate with old raw-code ADC modules was never booted.",
+    "Real system suspend, hardware-watchdog deadline, physical thermal boundaries and termination remain unqualified.",
+    "Direct pack authentication and unobserved replacement remain open; observed loss is latched until reboot.",
+    "No factory restoration/repartition, current accuracy, capacity estimator or whole-hardware completion."
+  ]
+}

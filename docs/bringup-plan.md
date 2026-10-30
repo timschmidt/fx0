@@ -65,9 +65,18 @@ See [the detailed battery work](battery-bringup.md#verified-control-foundation).
 An opt-in RAM firmware now verifies inhibition and conservative BTC before an
 intentionally disabled native charger can probe. Its first run discovers an
 inherited 0x82 window; the revised gate explicitly narrows to 0x81 while charging
-is off. Actual fw_devlink supplier deferral, Linux handoff validation and the
-complete thermal worker remain to implement/qualify. This diagnostic does not
-enable charging or install firmware persistently.
+is off. That earlier diagnostic does not enable charging or install firmware
+persistently.
+
+A later RAM integration now validates the handoff and runs a policy child with
+managed raw thermistor/voltage inputs, the stock LG state transitions, independent
+restrictions and stale-data inhibition. Real supplier deferral and forced unbind
+leave the parent USB/extcon available; HTTP packets verify that separation. Fresh
+policy operation returns after explicit `drivers_probe` following supplier rebind.
+Host fault/quiesce tests pass, but real system suspend, hardware-watchdog timing,
+physical thermal boundaries, charging accuracy and complete power acceptance
+remain open. No new firmware/kernel package is installed. See
+[native policy evidence](../evidence/2026-10-30-smbb-native-policy.json).
 
 ## Technical baseline
 

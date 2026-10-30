@@ -1,0 +1,30 @@
+{
+  "linux_repository": "https://github.com/timschmidt/fx0-linux",
+  "linux_branch": "integration/fx0-charging-policy",
+  "linux_commit": "2457eebe0bb67bcb5eccee7916650629cc4e9bf0",
+  "firmware_repository": "https://github.com/timschmidt/fx0-lk2nd",
+  "firmware_branch": "integration/fx0-policy-profile",
+  "firmware_commit": "2ce757408f364ec6f1197b1d5d0be4128a309b1e",
+  "firmware_version": "next-2ce7574-20261030",
+  "required_configuration": {
+    "CHARGER_QCOM_SMBB": "y",
+    "CHARGER_QCOM_SMBB_POLICY": "y",
+    "IIO": "y"
+  },
+  "provider_prerequisites": [
+    "93b772a1c",
+    "2457eebe0"
+  ],
+  "runtime_module_sha256": {
+    "observer": "8cca63cb5d893e21c255173551a071330486feb532a68aefdc050f1181b326d3",
+    "vadc": "8c644a04b4985d1fcd9d622e9946a95a71b13554c1b6767cc6949de107bf2f3c",
+    "common": "40efd186bb7da1607947c0b7631d0aafc06ba6726ef36d80c0e2babe61e01cb4"
+  },
+  "kernel_GNU_build_id": "91fa4518560bf3745b1634c3ef321c622e423042",
+  "diagnostic_image_sha256": "fbe1f63c472c411189a533fc382c0898ebe7fe4fe041d09fb28c7bacc426a0a7",
+  "module_taint_scope": "RAM-only unsigned/out-of-tree modules, taint12288; installed r4 returns taint0.",
+  "protocol": "experimental proposed bindings; not accepted upstream ABI",
+  "hardware_watchdog_or_system_suspend_qualified": false,
+  "permanent_package_or_firmware_install": false,
+  "upstream_submission_sent": false
+}

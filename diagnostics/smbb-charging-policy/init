@@ -1,0 +1,149 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+/bin/busybox --install -s /bin
+export PATH=/bin
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t devtmpfs devtmpfs /dev
+mount -t debugfs debugfs /sys/kernel/debug
+mount -t configfs configfs /sys/kernel/config
+mkdir -p /www
+exec </dev/console >/dev/console 2>&1
+log() { echo "<6>fx0-policy: $*" >/dev/kmsg; }
+fail() { log "FAIL $*"; failed=1; }
+failed=0
+(sleep 180; log 'TIMEOUT returning to installed lk2nd'; reboot -f) &
+guard=$!
+log 'RAM policy diagnostic started; eMMC filesystems remain unmounted'
+sleep 3
+for device in /dev/mmcblk*; do
+    test ! -b "$device" || blockdev --setro "$device" || fail block-readonly
+done
+log "kernel_notes_sha256=$(sha256sum /sys/kernel/notes | cut -d ' ' -f 1)"
+version=/sys/firmware/devicetree/base/chosen/lk2nd,version
+test ! -e "$version" || log "firmware=$(tr -d '\000' <"$version")"
+for attempt in $(seq 1 20); do
+    test -e /sys/class/power_supply/smbb-bif/charge_behaviour && break
+    sleep 1
+done
+test -e /sys/class/power_supply/smbb-bif/charge_behaviour || fail missing-parent
+test ! -d /sys/module/qcom_spmi_vadc || fail provider-loaded-too-early
+test ! -e /sys/kernel/debug/qcom-smbb-policy/status || fail policy-bound-too-early
+if ! insmod /modules/fx0-btc-reference.ko force_on=0; then fail observer-load; fi
+mode() {
+    value=$(cat /sys/class/power_supply/smbb-bif/charge_behaviour)
+    case "$value" in *'[auto]'*) echo auto;; *'[inhibit-charge]'*) echo inhibit-charge;; *) echo unknown;; esac
+}
+snapshot() {
+    stage=$1
+    control=$(awk '$1=="1049" {print $2}' /sys/kernel/debug/fx0-btc-reference/registers)
+    btc=$(awk '$1=="1249" {print $2}' /sys/kernel/debug/fx0-btc-reference/registers)
+    ref=$(awk '$1=="124a" {print $2}' /sys/kernel/debug/fx0-btc-reference/registers)
+    log "$stage mode=$(mode) control=$control BTC=$btc reference=$ref"
+    if test -e /sys/kernel/debug/qcom-smbb-policy/status; then
+        log "$stage $(cat /sys/kernel/debug/qcom-smbb-policy/status)"
+    fi
+    test "$btc" = 81 || fail nonconservative-window
+    echo "$stage $(mode) $control $btc" >/www/status.txt
+}
+snapshot provider-missing
+test "$(mode)" = inhibit-charge || fail missing-provider-enabled-charge
+
+# Keep USB/extcon alive through policy deferral; no shell or write endpoint.
+cd /sys/kernel/config/usb_gadget
+mkdir policy
+cd policy
+echo 0x1d6b >idVendor
+echo 0x0104 >idProduct
+mkdir -p strings/0x409 configs/c.1/strings/0x409
+echo fx0-policy-diagnostic >strings/0x409/serialnumber
+echo 'Fx0 policy diagnostic' >strings/0x409/product
+echo 'Nura development' >strings/0x409/manufacturer
+echo 'NCM diagnostic' >configs/c.1/strings/0x409/configuration
+echo 500 >configs/c.1/MaxPower
+mkdir functions/ncm.usb0
+echo 02:46:58:30:00:01 >functions/ncm.usb0/dev_addr
+echo 02:46:58:30:00:02 >functions/ncm.usb0/host_addr
+ln -s functions/ncm.usb0 configs/c.1/
+for attempt in $(seq 1 20); do
+    udc=$(ls /sys/class/udc | head -n 1)
+    test -n "$udc" && break
+    sleep 1
+done
+test -n "$udc" || fail missing-UDC
+echo "$udc" >UDC || fail UDC-bind
+ip link set usb0 up || fail usb-link
+ip address add 172.16.42.1/24 dev usb0 || fail usb-address
+cd /
+nc -lk -s 172.16.42.1 -p 80 -e /bin/serve-http &
+server=$!
+log 'USB diagnostic online while policy provider is absent'
+sleep 12
+snapshot provider-missing-USB-online
+test "$(mode)" = inhibit-charge || fail missing-provider-enabled-charge
+test "$(cat /sys/class/udc/*/state)" = configured || fail USB-not-configured-before-provider
+insmod /modules/qcom-vadc-common.ko || fail common-load
+insmod /modules/qcom-spmi-vadc.ko || fail VADC-load
+wait_policy() {
+    for attempt in $(seq 1 15); do
+        if test -e /sys/kernel/debug/qcom-smbb-policy/status; then
+            value=$(cat /sys/kernel/debug/qcom-smbb-policy/status)
+            case "$value" in *'error=0 '*) return 0;; esac
+        fi
+        sleep 1
+    done
+    return 1
+}
+check_fresh_votes() {
+    value=$(cat /sys/kernel/debug/qcom-smbb-policy/status)
+    votes=$(echo "$value" | sed -n 's/.*votes=0x\([0-9a-f]*\).*/\1/p')
+    # Only the real thermal/voltage stop may remain after a fresh sample.
+    if test -z "$votes" || test "$((0x$votes & ~32))" != 0; then
+        fail unexpected-fresh-policy-restriction
+    fi
+}
+wait_policy || fail initial-policy-not-fresh
+check_fresh_votes
+snapshot provider-bound
+echo inhibit-charge >/sys/class/power_supply/smbb-bif/charge_behaviour || fail user-inhibit
+sleep 2
+test "$(mode)" = inhibit-charge || fail policy-overrode-user
+snapshot user-inhibit
+echo auto >/sys/class/power_supply/smbb-bif/charge_behaviour || fail user-auto
+sleep 2
+snapshot user-auto
+
+# Managed consumer teardown must finish before the IIO supplier disappears.
+supplier=
+for entry in /sys/bus/platform/drivers/qcom-spmi-vadc/*; do
+    if test -L "$entry" && test -d "$entry/of_node"; then
+        test -z "$supplier" || fail ambiguous-supplier
+        supplier=${entry##*/}
+    fi
+done
+test -n "$supplier" || fail supplier-not-found
+echo "$supplier" >/sys/bus/platform/drivers/qcom-spmi-vadc/unbind || fail supplier-unbind
+snapshot provider-unbound
+test "$(mode)" = inhibit-charge || fail unbound-provider-enabled-charge
+test ! -e /sys/kernel/debug/qcom-smbb-policy/status || fail consumer-not-removed
+test -e /sys/class/power_supply/smbb-bif/charge_behaviour || fail parent-removed
+sleep 5
+echo "$supplier" >/sys/bus/platform/drivers/qcom-spmi-vadc/bind || fail supplier-bind
+sleep 3
+if test ! -e /sys/kernel/debug/qcom-smbb-policy/status; then
+    log 'explicit policy drivers_probe needed after supplier rebind'
+    for entry in /sys/bus/platform/devices/*charge-policy; do
+        test ! -d "$entry/of_node" || echo "${entry##*/}" >/sys/bus/platform/drivers_probe
+    done
+fi
+wait_policy || fail rebound-policy-not-fresh
+check_fresh_votes
+snapshot provider-rebound
+test "$(cat /sys/class/udc/*/state)" = configured || fail USB-not-configured
+log "taint=$(cat /proc/sys/kernel/tainted)"
+if test "$failed" = 0; then log 'PASS deferred policy, user restriction and managed supplier cycle'; fi
+sleep 5
+kill "$server" "$guard"
+log 'returning to installed lk2nd'
+reboot -f
+while :; do sleep 10; done

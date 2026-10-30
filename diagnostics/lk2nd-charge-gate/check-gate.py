@@ -11,9 +11,11 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('source', type=Path)
 parser.add_argument('--dtb-in', type=Path)
 parser.add_argument('--dtb-out', type=Path)
+parser.add_argument('--apply', action='store_true', help='apply the real gate with fault-free fake PMIC instead of preparing a disabled-driver DTB')
 args = parser.parse_args()
 assert bool(args.dtb_in) == bool(args.dtb_out)
 assert not args.dtb_out or not args.dtb_out.exists()
+assert not args.apply or args.dtb_in
 source = args.source.resolve()
 boot_enum = re.search(r'enum boot_type \{.*?\n\};', (source/'app/aboot/boot.h').read_text(), re.S)[0]
 stubs = r'''
@@ -88,16 +90,21 @@ static bool marker(const void *dtb)
 {int n=fdt_node_offset_by_compatible(dtb,-1,"qcom,pm8226-charger");assert(n>=0);int size;const void *p=fdt_getprop(dtb,n,MADAI_CHARGE_HANDOFF,&size);return p && !size;}
 int main(int argc,char **argv)
 {
- if(argc==3) {
+ if(argc==3 || argc==4) {
   FILE *input=fopen(argv[1],"rb");assert(input);assert(!fseek(input,0,SEEK_END));long size=ftell(input);assert(size>0 && size<1024*1024);rewind(input);
   void *data=malloc(size+8192);assert(data);assert(fread(data,1,size,input)==(size_t)size);fclose(input);
   assert(!fdt_open_into(data,data,size+8192));int n=fdt_node_offset_by_compatible(data,-1,"qcom,pm8226-charger");assert(n>=0);
-  assert(!fdt_setprop(data,n,MADAI_CHARGE_CONTROL,NULL,0));
-  /* Deliberately no native charger probe: qualify firmware's early interval. */
-  assert(!fdt_setprop_string(data,n,"status","disabled"));
-  assert(!marker(data));assert(!fdt_pack(data));FILE *output=fopen(argv[2],"wb");assert(output);
+  if(argc==4) {
+   assert(!strcmp(argv[3],"apply"));pmic_type=0x51;pmic_subtype=4;control=0x80;btc=0x82;
+   assert(!madai_charge_gate_update_dt(data,"ignored",0));assert(marker(data) && control==0 && btc==0x81);
+  } else {
+   assert(!fdt_setprop(data,n,MADAI_CHARGE_CONTROL,NULL,0));
+   /* Deliberately no native charger probe: qualify firmware's early interval. */
+   assert(!fdt_setprop_string(data,n,"status","disabled"));assert(!marker(data));
+  }
+  assert(!fdt_pack(data));FILE *output=fopen(argv[2],"wb");assert(output);
   assert(fwrite(data,1,fdt_totalsize(data),output)==(size_t)fdt_totalsize(data));assert(!fclose(output));free(data);
-  puts("Prepared private opt-in/no-probe diagnostic DTB; no handoff marker forged");return 0;
+  puts(argc==4?"Applied actual firmware gate with fake PMIC for schema fixture":"Prepared private opt-in/no-probe diagnostic DTB; no handoff marker forged");return 0;
  }
  assert(argc==1);
  for(unsigned int byte=0;byte<256;byte++) {
@@ -173,4 +180,4 @@ with tempfile.TemporaryDirectory(prefix='fx0-charge-gate-') as directory:
                     '-fsanitize=address,undefined', '-fno-sanitize-recover=all', '-I', str(root),
                     str(path), '-lfdt', '-Wl,--wrap=fdt_setprop', '-Wl,--wrap=fdt_open_into',
                     '-o', str(binary)], check=True)
-    subprocess.run([str(binary), *([str(args.dtb_in), str(args.dtb_out)] if args.dtb_in else [])], check=True)
+    subprocess.run([str(binary), *([str(args.dtb_in), str(args.dtb_out), *(['apply'] if args.apply else [])] if args.dtb_in else [])], check=True)

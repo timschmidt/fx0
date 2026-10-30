@@ -78,9 +78,11 @@ A further RAM candidate verifies charger control writes, serializes limit and
 enable changes, and prevents user auto from clearing an I/O fault. Host fault/
 concurrency tests and three physical control cycles pass. An opt-in RAM firmware
 gate now inhibits charging and verifies conservative BTC before any native
-charger probe. Its Linux handoff/profile/sensor/thermal policy is not connected
-yet. See [the control foundation](diagnostics/smbb-charge-guard/README.md) and
-[early-gate evidence](evidence/2026-10-30-firmware-charge-gate.json).
+charger probe. A further RAM-tested Linux policy validates that handoff, requires
+fresh runtime-profile/ADC data and preserves USB while its ADC supplier is absent
+or unbound. User inhibition and explicit supplier recovery pass; actual thermal
+boundaries, system suspend, watchdog protection and charging accuracy remain open.
+Installed r4 is unchanged. See [native policy evidence](evidence/2026-10-30-smbb-native-policy.json).
 
 Stock inventory, 29 critical partition backups, GPT metadata and a separately
 verified 1 GiB original-system image are private. A complete **development-state**

@@ -431,6 +431,54 @@ can re-enable charging after normal setup. See the
 [protocol and diagnostic](../diagnostics/lk2nd-charge-gate/README.md) and
 [qualified evidence](../evidence/2026-10-30-firmware-charge-gate.json).
 
+### Native managed policy integration
+
+The `integration/fx0-charging-policy` Linux branch now connects the firmware gate
+to an optional, built-in policy child. SMBB validates both the marker and actual
+inhibited/conservative hardware state, keeps independent restrictions, and
+registers USB/extcon while the policy waits for managed IIO suppliers. Firmware
+supplies the runtime `tocad-madai` selection only for the known stock type and
+explicit opt-in; no pack model is authored in the board DTS. Unknown profile,
+invalid handoff or unavailable data keeps charging inhibited.
+
+The policy directly converts raw thermistor voltage with the 83 stock points,
+rejecting endpoints/open/short rather than clamping. Its LG V1_8 normal/reduced/
+stop transitions match the original functions, including 450 mA warm current,
+4.0 V cutoff and recovery hysteresis. Initial/fault recovery starts stopped.
+User caps cannot override thermal or board ceilings. Every enable checks sample
+expiry; a separate age worker also inhibits stale operation. Observed pack loss
+is latched until reboot, including across parent reprobe. Suspend quiesce verifies
+inhibition and cancels work before supplier suspend; resume requires fresh data.
+These callback/source checks are not real system-suspend qualification.
+
+Host ASan/UBSan checks pass 21,496 model cases, 2,604 policy cases (2,500 concurrent
+requests), 6,242 existing control cases, 41 runtime-profile/FDT rollback cases and
+84 VADC ABI cases. The processed-voltage and precision prerequisites are carried
+explicitly: installed r4's raw-code VADC module cannot supply this interface. The
+initial prepared candidate was never booted after this dependency was identified.
+The complete kernel, W=1 driver/ADC module checks and static/runtime DT validation
+pass; no shared built-in symbol CRC changes are found.
+
+The isolated RAM run verifies the exact kernel notes and firmware version, real
+policy deferral without the ADC, and fresh binding after module load. It reports
+about 30.8 C and 4.287 V and keeps the user inhibit vote while sampling continues.
+Managed supplier unbind stops the policy and charging, while actual USB HTTP
+packets and the parent interface remain available. Supplier rebind needs explicit
+`drivers_probe`; automatic recovery from forced unbind is not claimed. Fresh
+operation then returns with BTC 0x81 and reference 0xc0 throughout. Diagnostic taint
+is 12288; actual current/accuracy/SOC are not qualified by these observations.
+
+Duplicate host network-profile names during interface rename caused an extra
+delete to stop the controller's final return step after both profiles were
+already removed. Cleanup was verified and made idempotent, and the same return
+resumed without repeating the hardware test. Original firmware/r4 returns with
+taint 0, active normal services, automatic display controls and matching bootloader/
+GPT readbacks; no temporary host profiles remain. The new policy is not installed
+permanently. Real physical thermal/fault/PM acceptance, hardware-watchdog timing,
+USB negotiation, termination, live identity and fuel-gauge accuracy remain open.
+See the [implementation diagnostic](../diagnostics/smbb-charging-policy/README.md)
+and [reviewed evidence](../evidence/2026-10-30-smbb-native-policy.json).
+
 ## Implementation sequence
 
 1. Preserve exact current boot files, modules, package, configurations, raw boot
