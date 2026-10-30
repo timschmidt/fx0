@@ -1,0 +1,50 @@
+From 66f23ece70171825817b5569ce6482ae2604cf68 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 30 Oct 2026 10:35:37 -0400
+Subject: [PATCH 1/2] power: supply: charger-manager: keep thermal stops ahead
+ of duration limits
+
+When a temperature check requests a stop, cm_get_target_status() can still
+return CHARGING if check_charging_duration() expires. If the charger was
+already enabled, try_charger_enable() treats that target as redundant and
+returns before checking emergency_stop, leaving the regulator enabled.
+
+Return NOT_CHARGING directly for a thermal stop. Charge/discharge duration
+limits must not override battery temperature protection. Normal duration
+and full-charge handling remain in the non-thermal path.
+
+A host regression executing the actual decision and regulator functions
+reproduces an enabled regulator above the maximum temperature with an
+expired charging duration before this change.
+---
+ drivers/power/supply/charger-manager.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/drivers/power/supply/charger-manager.c b/drivers/power/supply/charger-manager.c
+index 8e8c51094..3d95f914e 100644
+--- a/drivers/power/supply/charger-manager.c
++++ b/drivers/power/supply/charger-manager.c
+@@ -572,12 +572,8 @@ static int cm_get_target_status(struct charger_manager *cm)
+ 	if (!is_ext_pwr_online(cm))
+ 		return POWER_SUPPLY_STATUS_DISCHARGING;
+ 
+-	if (cm_check_thermal_status(cm)) {
+-		/* Check if discharging duration exceeds limit. */
+-		if (check_charging_duration(cm))
+-			goto charging_ok;
++	if (cm_check_thermal_status(cm))
+ 		return POWER_SUPPLY_STATUS_NOT_CHARGING;
+-	}
+ 
+ 	switch (cm->battery_status) {
+ 	case POWER_SUPPLY_STATUS_CHARGING:
+@@ -593,7 +589,6 @@ static int cm_get_target_status(struct charger_manager *cm)
+ 		break;
+ 	}
+ 
+-charging_ok:
+ 	/* Charging is allowed. */
+ 	return POWER_SUPPLY_STATUS_CHARGING;
+ }
+
+base-commit: f0f400459bf6a037e70768de623fff3f8920b8bb

@@ -61,7 +61,11 @@ BMS current/counter data and the required forced restart writes. The installed
 r4 package is unchanged. Calibrated fuel-gauge reporting, thermistor
 protection and automatic USB current negotiation remain open. Stock uses software
 charging limits in addition to extended hardware comparators; those hardware
-limits are not enabled by themselves. See [battery work](docs/battery-bringup.md).
+limits are not enabled by themselves. RAM thermistor conversion and three
+standard charge-inhibit/resume cycles now pass. Stock reproduces the native
+window's HOT trip around 31.6°C; complete native temperature/fault/suspend policy
+is still required. Separate generic Charger Manager fault fixes pass host/ARM
+checks but are not loaded on the phone. See [battery work](docs/battery-bringup.md).
 
 Stock inventory, 29 critical partition backups, GPT metadata and a separately
 verified 1 GiB original-system image are private. A complete **development-state**

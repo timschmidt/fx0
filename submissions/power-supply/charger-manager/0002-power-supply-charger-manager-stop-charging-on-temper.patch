@@ -1,0 +1,75 @@
+From 96bacecdada392c8db9a758316f957969d0ec255 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 30 Oct 2026 10:37:42 -0400
+Subject: [PATCH 2/2] power: supply: charger-manager: stop charging on
+ temperature read errors
+
+A failed runtime temperature read currently returns a safe thermal status.
+If charging is already enabled, monitoring leaves the charger enabled even
+though its configured temperature input is unavailable.
+
+Retain the read error in emergency_stop and return it so monitoring stops
+charging and other enable requests remain blocked. Report health Unknown
+until a fresh valid sample clears the existing hysteresis window. Preserve
+legacy configurations with battery temperature monitoring disabled.
+
+Together with the thermal-stop precedence fix, the actual decision,
+regulator and health callbacks pass 8,330 host cases under ASan/UBSan.
+These include read faults, expired charging/discharging durations, prior
+hot/cold/fault states, hysteresis recovery and unmonitored configurations.
+Probe-time sensor setup and charger-actuator error handling are separate
+issues; this does not establish a complete Fx0 thermal policy.
+---
+ drivers/power/supply/charger-manager.c | 15 ++++++++-------
+ include/linux/power/charger-manager.h  |  2 +-
+ 2 files changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/power/supply/charger-manager.c b/drivers/power/supply/charger-manager.c
+index 3d95f914e..492b12790 100644
+--- a/drivers/power/supply/charger-manager.c
++++ b/drivers/power/supply/charger-manager.c
+@@ -532,15 +532,14 @@ static int cm_check_thermal_status(struct charger_manager *cm)
+ 	int temp, upper_limit, lower_limit;
+ 	int ret = 0;
+ 
++	if (!desc->measure_battery_temp)
++		return 0;
++
+ 	ret = cm_get_battery_temperature(cm, &temp);
+ 	if (ret) {
+-		/* FIXME:
+-		 * No information of battery temperature might
+-		 * occur hazardous result. We have to handle it
+-		 * depending on battery type.
+-		 */
+ 		dev_err(cm->dev, "Failed to get battery temperature\n");
+-		return 0;
++		cm->emergency_stop = ret;
++		return ret;
+ 	}
+ 
+ 	upper_limit = desc->temp_max;
+@@ -721,7 +720,9 @@ static int charger_get_property(struct power_supply *psy,
+ 		val->intval = cm->battery_status;
+ 		break;
+ 	case POWER_SUPPLY_PROP_HEALTH:
+-		if (cm->emergency_stop == CM_BATT_OVERHEAT)
++		if (cm->emergency_stop < 0)
++			val->intval = POWER_SUPPLY_HEALTH_UNKNOWN;
++		else if (cm->emergency_stop == CM_BATT_OVERHEAT)
+ 			val->intval = POWER_SUPPLY_HEALTH_OVERHEAT;
+ 		else if (cm->emergency_stop == CM_BATT_COLD)
+ 			val->intval = POWER_SUPPLY_HEALTH_COLD;
+diff --git a/include/linux/power/charger-manager.h b/include/linux/power/charger-manager.h
+index 45e228b35..c5e8c428d 100644
+--- a/include/linux/power/charger-manager.h
++++ b/include/linux/power/charger-manager.h
+@@ -205,7 +205,7 @@ struct charger_desc {
+  * @tzd_batt : thermal zone device for battery
+  * @charger_enabled: the state of charger
+  * @emergency_stop:
+- *	When setting true, stop charging
++ *	Nonzero to stop charging: a thermal status or temperature-read error
+  * @psy_name_buf: the name of power-supply-class for charger manager
+  * @charger_psy: power_supply for charger manager
+  * @status_save_ext_pwr_inserted:

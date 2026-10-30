@@ -307,6 +307,17 @@ readback, and cover supplier removal, boot, shutdown and suspend. A periodic
 userspace read loop alone does not satisfy those requirements. No replacement
 policy or wider comparator configuration has yet been enabled.
 
+Two isolated [Charger Manager prerequisite fixes](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-charger-manager)
+now make runtime temperature-read errors inhibit monitored charging and prevent
+duration expiry from overriding thermal stops. Actual decision, duration,
+regulator and property callbacks reproduce both original failures; the patched
+LTS and pinned current-upstream source pass 8,330 sanitizer cases. The LTS ARM
+module and strict style checks pass. The module is not loaded on the Fx0.
+Probe-time sensor failure can still disable monitoring, and actuator error and
+independent inhibition semantics remain unresolved. These fixes therefore do
+not yet select or qualify a complete policy. See
+[regression evidence](../evidence/2026-10-30-charger-manager-thermal.json).
+
 ## Implementation sequence
 
 1. Preserve exact current boot files, modules, package, configurations, raw boot

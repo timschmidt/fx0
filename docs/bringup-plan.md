@@ -2,7 +2,7 @@
 
 ## Objective and completion
 
-Develop in `/home/tim/Documents/GitHub/fx0` and publish the resulting development history in repositories intended for upstream contribution. The endpoint is a fully updated Nura installation on the physical LG Fx0 LGL25, all hardware qualified, and complete patch series ready for Nura, Linux, lk2nd, and any affected userspace projects.
+Develop in this repository's workspace and publish the resulting development history in repositories intended for upstream contribution. The endpoint is a fully updated Nura installation on the physical LG Fx0 LGL25, all hardware qualified, and complete patch series ready for Nura, Linux, lk2nd, and any affected userspace projects.
 
 The owner permits flashing and development against the device. No personal data requires preservation. Keep firmware, calibration, and recovery backups because they are needed to operate and restore the hardware. No SIM is available at the planning baseline; this prevents final cellular qualification but does not prevent the rest of the work.
 
@@ -18,20 +18,35 @@ Completion requires all of the following:
 
 Upstream acceptance and merge timing are controlled by maintainers. The project can finish with submission-ready changes that have not yet been merged. The absence of a SIM leaves cellular tests pending and therefore prevents claiming the full hardware objective complete. A feature can be marked absent only with device evidence; difficulty implementing it is not grounds to remove it from scope.
 
-## Implementation checkpoint on October 29, 2026
+## Implementation checkpoint on October 30, 2026
 
 Phase 0 has verified selected original-partition/GPT backups and a tested original-image write/read path, installed lk2nd and public repositories. Complete factory-stock restoration coverage and rehearsal remain required by section 2.1. Phase 1 has reached maintained Linux diagnostic userspace, four CPUs, inherited framebuffer, USB NCM/ACM, and 200 MHz HS200 eMMC reads. Both complete stock firmware memory exclusions are required; after fixing them, two 1 GiB reads match the original-system backup. These are initial tests, not final reliability acceptance.
 
-Phase 2 has reached an installed Nura v26.06 console system on the maintained kernel, verified full-image write/readback, SSH login and root expansion confined to userdata. Required kconfig checks pass, and the exact latest-source native clean kernel package build passes. The installed screen is blank and Plymouth crashed, although framebuffer/getty devices exist. Normal lk2nd automatic warm boot, package repository refresh/upgrade check and installed-filesystem persistence now pass. Final storage migration, charging policy, all later hardware and reliability/submission phases remain in scope. No SIM is available for cellular acceptance.
+Phase 2 now runs installed Nura v26.06 with the signed 6.18.59-r4 kernel,
+matching modules, SSH, native 720×1280 DRM and a Sxmo terminal/keyboard using
+software rendering. The installed r3 physical test confirms typing, keyboard
+gestures and Home/Volume buttons; r4 retains that DTB. Taint is zero after normal
+boots. Full-image write/readback, root expansion within userdata, repository
+refresh, filesystem persistence and a self-contained filesystem rescue have
+passed their documented tests. Package/root rollback and factory-stock rehearsal
+remain open. The final partition layout has not been applied.
 
-Native display progress: maintained kernel44 now produces owner-confirmed RGB
-from a fresh framebuffer and completes a5second off/on cycle with automatic
-display PM after initial startup holds. Native39 also passes controlled
-post-cycle multitouch. L8 must remain powered for the shared CPU PLL, and panel
-off commands must precede host shutdown. Initial DRM loading without a temporary
-power reference still resets; transient enable errors, installed-Nura display,
-full suspend and reliability remain open. A native r1 kernel APK is built and
-exported; it has not been installed. See the current display-power evidence.
+Display startup still uses temporary power holds, released after binding so all
+four display controls become automatic. Controlled RGB/off-on/touch tests pass;
+startup without the workaround, the observed INTF1 underrun, full suspend and
+reliability remain open. The owner's later console photograph confirms readable
+text outside the GUI. See the [warning audit](kernel-gaps.md).
+
+Power work has signed IADC corrections, experimental BMS/thermistor measurements
+and a RAM-tested standard charge-inhibit actuator. The original stock kernel
+reproduces a hardware HOT trip around 31.6°C under native's comparator window;
+stock uses a wider window plus LG software policy. Native still needs complete
+temperature/fault/suspend protection before adopting that wider range. Generic
+Charger Manager prerequisites have host/ARM tests but are not enabled on device.
+Current/capacity accuracy and automatic USB budgeting remain open. See
+[battery bringup](battery-bringup.md). The later hardware, storage, reliability
+and upstream-submission phases remain in scope; no SIM is available for final
+cellular acceptance.
 
 ## Technical baseline
 
@@ -195,9 +210,10 @@ Conservative power configuration starts during phase 1. This phase qualifies the
 
 1. Map PMIC, charger, battery sensing, thermistors, fuel gauge, USB current detection, external protection, and power-key functions. Use verified battery specifications and board revision when configuring limits.
 2. Validate readings against independent measurements where available. Check charging, charge termination, unplug/replug, low-battery behavior, thermal response, shutdown, and powered-off charging behavior supported by the device.
-3. Enable and validate CPU frequency scaling, idle states, thermal throttling, and all CPU cores. Measure behavior under CPU, GPU, network, and camera load.
-4. Implement suspend and wake sources. Test each driver across suspend, including display, touch, USB, wireless, audio, sensors, and modem.
-5. Measure unplugged idle and suspend consumption. Record battery condition and compare with the stock baseline or a justified measured target. USB-powered testing cannot establish standby behavior.
+3. Implement native battery temperature policy before widening the hardware comparator range. Require valid sensor input at boot and after resume; inhibit charging on missing, stale, open/short or failed input. Cover pack-specific current/voltage limits, hysteresis, independent user inhibition, actuator errors and supplier removal. Prove protection while suspended or inhibit charging before suspend. Timer expiry must not override thermal stops. Retain the [stock comparison and current prerequisites](battery-bringup.md) as the starting evidence.
+4. Enable and validate CPU frequency scaling, idle states, thermal throttling, and all CPU cores. Measure behavior under CPU, GPU, network, and camera load.
+5. Implement suspend and wake sources. Test each driver across suspend, including display, touch, USB, wireless, audio, sensors, and modem.
+6. Measure unplugged idle and suspend consumption. Record battery condition and compare with the stock baseline or a justified measured target. USB-powered testing cannot establish standby behavior.
 
 **Exit:** stable charge/discharge operation, credible battery reporting, thermal control, functional suspend/wake, and measured power consumption without unexplained awake loops.
 

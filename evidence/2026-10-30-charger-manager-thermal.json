@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-30",
+  "scope": "Host and ARM compile qualification of generic Charger Manager thermal-stop prerequisites",
+  "source_base": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+  "source_head": "2c69c385210882147a41bd4e73eb69dc85fdbfa0",
+  "branch": "integration/fx0-charger-manager",
+  "upstream_reference": "d89e1d186ec9271bf78e62771779e9fc03bf0fc3",
+  "original_failures_reproduced": [
+    "Runtime temperature read error leaves already-enabled charger enabled",
+    "Expired charging duration overrides a hot-temperature stop while redundant enable skips emergency_stop"
+  ],
+  "patched_actual_function_cases_ASan_UBSan": 8330,
+  "tested_functions": [
+    "try_charger_enable",
+    "check_charging_duration",
+    "cm_check_thermal_status",
+    "cm_get_target_status",
+    "_cm_monitor",
+    "charger_get_property"
+  ],
+  "substituted_inputs": "Sensor I/O, time, regulator operations and external supply/full inputs",
+  "checks": "Boundary temperatures; read errors; old hot/cold/fault states; enabled/disabled chargers; prior status; duration expiry; health Unknown on faults; hysteresis recovery; unmonitored compatibility; external-power removal",
+  "patches_apply_to_pinned_upstream": true,
+  "patched_upstream_actual_function_cases_ASan_UBSan": 8330,
+  "full_upstream_kernel_build": false,
+  "LTS_ARM_LLVM22_W1_module_build": "PASS; no diagnostics",
+  "strict_checkpatch": "0 errors, 0 warnings, 0 checks",
+  "module_loaded_on_phone": false,
+  "installed_package_changed": false,
+  "hardware_BTC_window_changed": false,
+  "upstream_submission_sent": false,
+  "remaining_before_Fx0_policy": [
+    "Require a valid temperature provider at initialization and handle supplier removal",
+    "Select a suitable charger actuator and report actuator failures truthfully",
+    "Preserve independent user and thermal inhibition",
+    "Sensor open/short and stale/error handling",
+    "Pack-specific temperature/current/voltage limits and hysteresis",
+    "Boot, suspend/resume, shutdown and wake protection",
+    "Physical thermal qualification"
+  ],
+  "maintainer_tree_base": "f0f400459bf6a037e70768de623fff3f8920b8bb",
+  "maintainer_tree_head": "96bacecdada392c8db9a758316f957969d0ec255",
+  "maintainer_tree_ARM_W1_object_build": "PASS; zero warnings/errors; multi_v7_defconfig with CHARGER_MANAGER=m"
+}

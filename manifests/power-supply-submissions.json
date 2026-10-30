@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-30",
+  "maintainer_repository": "https://git.kernel.org/pub/scm/linux/kernel/git/sre/linux-power-supply.git",
+  "maintainer_branch": "for-next",
+  "base_commit": "f0f400459bf6a037e70768de623fff3f8920b8bb",
+  "base_version": "7.3-rc1",
+  "series": [
+    {
+      "name": "charger-manager",
+      "base": "f0f400459bf6a037e70768de623fff3f8920b8bb",
+      "head": "96bacecdada392c8db9a758316f957969d0ec255",
+      "config_sha256": "1e81c9c78b49e412c88ec8369d89c45a6aff33b95580474bcf431f0e51e0933d",
+      "object_sha256": "a40c1da10a86289bbaf17f28c9dac60a06d6baabc0fb05f72d6fdfd632959b73",
+      "ARM_LLVM22_W1_object_build": "PASS",
+      "full_kernel_build": false,
+      "compiler_errors": 0,
+      "compiler_warnings": 0
+    },
+    {
+      "name": "charge-control",
+      "base": "f0f400459bf6a037e70768de623fff3f8920b8bb",
+      "head": "15203afaa722c329dea3473675642fe01dfd0ee1",
+      "config_sha256": "e3729db675a2a036bf1071e95b7e9a31b91765e684648ccfcaf90d9b3eacebce",
+      "object_sha256": "78c7e9fcaf657124baa4440be1bf4d38cd88eff340e254aa0c8ed72e96d05212",
+      "ARM_LLVM22_W1_object_build": "PASS",
+      "full_kernel_build": false,
+      "compiler_errors": 0,
+      "compiler_warnings": 0
+    }
+  ],
+  "RAM_hardware_test_base": "6.18.59 r4 plus charge-control patch; current maintainer branch is not booted on Fx0",
+  "installed_package_changed": false,
+  "upstream_communication_sent": false,
+  "author_signoff_added": false,
+  "draft_mail_checkpatch": "Missing Signed-off-by; intentionally pending author certification",
+  "strict_style_checkpatch": "--no-signoff: 0 errors, 0 warnings, 0 checks for all three patches",
+  "submission_checks_complete": false
+}

@@ -47,3 +47,8 @@ while inhibited and 230–290 mA after resuming. These are live IADC readings wi
 positive charging; inhibition is not a claim of electrically measured zero
 current. Independent accuracy, thermal policy, unplug/replug and suspend tests
 remain open. See [the hardware evidence](../../evidence/2026-10-30-smbb-charge-control.json).
+
+A separate submission branch now applies directly to the power-supply
+maintainer's `for-next` at `f0f400459bf6a037e70768de623fff3f8920b8bb`.
+Its 1,051 host cases and ARM W=1 object build pass without warnings. See
+[draft patches and validation limits](../../submissions/power-supply/README.md).

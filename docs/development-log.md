@@ -1357,3 +1357,36 @@ handling and an appropriate power-supply actuator before reuse here. No complete
 native thermal policy has yet been enabled. Temperature accuracy, sensor faults,
 thermal hysteresis/derating, charging across suspend and current/gauge accuracy
 remain qualification gates.
+
+## October 30: Charger Manager fault prerequisites
+
+Actual upstream decision/regulator functions reproduce two hazards: an enabled
+charger remains enabled after a temperature-read error, and an expired duration
+can bypass a hot-temperature stop through the redundant-enable shortcut. Two
+separate experimental commits prevent duration override and make runtime sensor
+errors inhibit monitored charging with health Unknown. Existing unmonitored
+configurations remain compatible. The actual thermal/duration/target/monitor/
+regulator/property functions pass 8,330 ASan/UBSan cases, including boundary and
+fault recovery. Both patches apply to pinned current upstream and its patched
+file passes the same suite. The LTS module builds for ARM LLVM22 W=1 with no
+diagnostics, and strict checkpatch is clean.
+
+The module is not loaded on the phone. Probe-time strict sensor requirements,
+actuator failures, independent inhibition and suspend protection remain necessary
+before choosing Charger Manager for the Fx0. Installed r4 and hardware comparator
+limits are unchanged; no upstream submission is sent.
+
+Separate submission branches now base directly on the actual power-supply
+maintainer's for-next f0f400459bf6a037e70768de623fff3f8920b8bb (7.3-rc1),
+rather than carrying the LTS/Fx0 integration history. Both host suites pass on
+those branches. Both changed drivers compile as ARM LLVM22 W=1 objects from
+multi_v7_defconfig plus their dependencies, with zero warnings/errors. These
+are current-tree object checks, not full current-kernel boots or module links.
+The two independent draft patch series and exact hashes are exported under
+submissions/power-supply and manifests/power-supply-submissions.json. Author
+sign-off and final submission review remain; nothing is sent to maintainers.
+
+After all RAM diagnostics return, normal r4 is observed Charging/Good with a
+500 mA input budget matched to the configured host USB interface, live IADC
+about +281 mA, taint zero and active UPower/Sxmo. No thermistor read or broader
+hardware comparator setting is used for that development-budget restoration.
