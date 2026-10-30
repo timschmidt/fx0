@@ -1,0 +1,109 @@
+{
+  "date": "2026-10-30",
+  "purpose": "IIO preparation for a native PM8226 non-VM BMS",
+  "linux_repository": "https://github.com/timschmidt/fx0-linux",
+  "branch": "integration/fx0-bms",
+  "base_commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+  "commits": {
+    "binding": "bfa8116859f1ff2ae6e19a69a381f42b4a8ee762",
+    "IADC": "46f08956923b0eb7f9a5ea63d39ae6f36d84a77a",
+    "VADC": "0280620f6a7bd1fdd0d304a3cd4341618cf5588b"
+  },
+  "IADC_hardware": {
+    "module_sha256": "f6bc053446f83833265dfda94c70f65706c605e6d116498f86cb31489e1553df",
+    "module_bytes": 139688,
+    "samples": 3,
+    "raw_reference_channels": [
+      3,
+      5,
+      6
+    ],
+    "all_raw_codes_u16": true,
+    "gain_above_both_zero_references": true,
+    "reference_scale_attributes_absent": true,
+    "existing_current_channels_and_scale_preserved": true,
+    "packaged_driver_restored": true,
+    "persistent_package_changed": false,
+    "charger_thresholds_changed": false,
+    "kernel_taint_expected_until_reboot": 12288,
+    "scope": "Raw reference conversion and sysfs ABI; physical current accuracy, consumer phandle routing and BMS calibration are not qualified."
+  },
+  "VADC_hardware": {
+    "module_sha256": "acbd99676e9367caf17aca25365e27235550582fe8cec6bfe326114edf004c21",
+    "module_bytes": 156840,
+    "samples": 3,
+    "VBAT_SNS_processed_values_uV": [
+      3941583,
+      3943347,
+      3944520
+    ],
+    "BAT_THERM_processed_values_mV": [
+      660,
+      660,
+      661
+    ],
+    "units": "Existing SCALE_DEFAULT convention: absolute calibration yields microvolts; ratiometric calibration yields millivolts. Consumers must account for that difference.",
+    "packaged_driver_restored": true,
+    "persistent_package_changed": false,
+    "charger_thresholds_changed": false,
+    "kernel_taint_expected_until_reboot": 12288,
+    "scope": "Both new processed attributes and existing raw reads work. Values are plausible, not externally calibrated voltage/temperature qualification."
+  },
+  "checks": {
+    "IADC_current_regression": "13 vectors on both channels plus unchanged scale; UBSan pass",
+    "IADC_reference_regression": "23 actual-function raw/scale/translation cases; ASan/UBSan pass",
+    "ARM_module_builds": "AlpineClang22.1.3 W=1 pass for both modules",
+    "binding_validation": "dt-doc-validate pass",
+    "checkpatch": "Each of three focused diffs:0errors/0warnings"
+  },
+  "temperature_model_observation": "660\u2013661mV corresponds approximately31.3C using the stock LG table. This is a model estimate, not physical temperature accuracy qualification.",
+  "installed_source_and_package_unchanged": true,
+  "candidate_packaging_or_firmware_consumer_test_claimed": false,
+  "final_native_boot": {
+    "normal_installed_r4_boot": true,
+    "new_boot_id_verified_privately": true,
+    "kernel_release": "6.18.59",
+    "kernel_build": 5,
+    "kernel_taint": 0,
+    "diagnostic_modules_absent": true,
+    "packaged_ADC_modules_restored": true,
+    "display": "msmdrmfb",
+    "four_display_controls_auto": true,
+    "upower_and_tinydm_active": true,
+    "charger_thresholds_changed": false,
+    "physical_UI_retest_claimed": false
+  },
+  "remaining": [
+    "IIO consumer routing with actual firmware references",
+    "Resolve standard IIO processed-voltage ABI/consumer units before upstream freeze",
+    "Reference/offset calibration ownership and periodic update",
+    "Board10.8mOhm/manual versus11.4mOhm/charging compensation",
+    "Native BMS configuration, counter conversion, valid OCV and identified profile",
+    "Temperature protection and USB input negotiation",
+    "Final subsystem rebase, broader regression coverage and personal DCO certification"
+  ],
+  "upstream_submissions_sent": false,
+  "final_configured_USB_runtime": {
+    "before_uA": 100000,
+    "configured_max_power_mA": 500,
+    "samples": [
+      {
+        "USB_input_limit_uA": 500000,
+        "status": "Charging",
+        "health": "Good"
+      },
+      {
+        "USB_input_limit_uA": 500000,
+        "status": "Charging",
+        "health": "Good"
+      },
+      {
+        "USB_input_limit_uA": 500000,
+        "status": "Charging",
+        "health": "Good"
+      }
+    ],
+    "automatic_negotiation_implemented": false,
+    "charger_voltage_current_and_temperature_thresholds_changed": false
+  }
+}

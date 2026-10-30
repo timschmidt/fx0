@@ -1,0 +1,148 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Coherent BMS1 outputs, stock comparison and charging-policy audit",
+  "native_package": "linux-postmarketos-qcom-msm8226-6.18.59-r4",
+  "vendor_reference": {
+    "url": "https://github.com/peremen/android-kernel-lg-madai",
+    "commit": "03aba4427a7666d57b5ae06d375e259ea337f351"
+  },
+  "snapshot_diagnostic": {
+    "source": "diagnostics/pm8226-bms-snapshot/fx0-pm8226-bms-snapshot.c",
+    "module_sha256": [
+      "2fce8912346e057c7a8a585f56be3e49df73220e838fa1082f5edc8473035af2",
+      "4cdb0afaa7db4e287b81575aeffefaa1f2f2654424a9827583dac914f2899e85"
+    ],
+    "sample_sets": 2,
+    "samples_per_set": 3,
+    "capture_time_ns_range": [
+      191619,
+      201564
+    ],
+    "output_hold_verified_and_restored": true,
+    "independent_control_readback_pass": true,
+    "counter_and_shadow_change": true,
+    "counters_reset": false,
+    "charger_registers_written": false,
+    "host_tests": "Actual helpers: success, 30 single-operation faults, 4 ownership/consistency/permanent-failure cases, 9 signed36-bit vectors; ASan/UBSan pass",
+    "build": "ARM Alpine Clang22.1.3 W=1 and source checkpatch0 errors/0warnings",
+    "qualification": "Output latch consistency and time variation only; raw values are not calibrated charge or capacity"
+  },
+  "stock_RAM_baseline": {
+    "stock_image_sha256": "35ee134fc723023c56111783ab8450bc716c03342e50bf6ac27e71bf568c7d3f",
+    "stock_kernel_and_QCDT_unchanged": true,
+    "samples": 3,
+    "register_reads": "Whitelisted BMS/IADC control and calibration fields; debugfs address/count selector writes only, no data writes",
+    "disk_filesystems_mounted": false,
+    "unit_identity_verified_privately": true,
+    "automatic_return_seconds": 120,
+    "scope": "Stock RAM hardware baseline, not factory restoration; stock kernel may initialize volatile PMIC/gauge state",
+    "battery_status": [
+      "Charging",
+      "Charging",
+      "Charging"
+    ],
+    "battery_health": [
+      "Good",
+      "Good",
+      "Good"
+    ],
+    "temperature_deciC": [
+      310,
+      310,
+      310
+    ],
+    "capacity_percent": [
+      76,
+      76,
+      76
+    ],
+    "voltage_uV_range": [
+      4064449,
+      4065922
+    ],
+    "BMS_current_uA_range": [
+      -96363,
+      -93269
+    ],
+    "BMS_charge_counter_uAh": [
+      -1219,
+      -1430,
+      -1640
+    ],
+    "current_direction_observation": "Vendor BMS/battery current is negative while Charging; manual IADC current is positive in the same stock window. Do not assign a native sign convention without validation."
+  },
+  "configuration_comparison": {
+    "native_companion_channel_and_sense": [
+      0,
+      0
+    ],
+    "stock_companion_channel_and_sense": [
+      1,
+      2
+    ],
+    "native_BTC_control": 129,
+    "stock_BTC_control": 130,
+    "conversion_ADC_and_BMS_companion_trim_banks_equal_within_each_mode": true,
+    "trim_values_change_between_stock_and_native": true,
+    "caveat": "Matching readbacks do not prove a mirror address accepts protected calibration writes. Per-unit values remain private."
+  },
+  "temperature_policy": {
+    "vendor_table": "drivers/hwmon/qpnp-adc-common.c: CONFIG_LGE_PM_CHARGING_TEMP_SCENARIO adcmap_btm_threshold",
+    "software_policy": "arch/arm/mach-msm/lge/lge_charging_scenario.c; madai config selects V1_8",
+    "stock_software_stop_below_C": -10,
+    "stock_software_stop_above_C": 55,
+    "additional_policy": "Current reduction/voltage-dependent stop above45C; V1_8 uses52C transition and hysteresis. Full policy implementation and tests remain open.",
+    "nominal_comparator_model": "At1.8V and using the LG table, normal35%/70% is approximately34.3C/-5.4C; extended25%/80% approximately62.8C/-15.9C. These are model estimates, not measured hardware trip points.",
+    "extended_range_enabled_in_native": false,
+    "reason": "Extended hardware limits alone do not preserve the stock software charging envelope. Native sensor/fault, inhibit/derating and wake/resume behavior must be qualified first."
+  },
+  "limitations": [
+    "Stock RAM execution is not a factory restoration rehearsal.",
+    "No calibrated native BMS, capacity, current direction/absolute accuracy or charger thermal qualification.",
+    "Second capture completed and unloaded its module; its final service-active assertion initially failed because the normal UI start gate was closed. UI was subsequently started; samples were not repeated to hide that failure.",
+    "Unsigned diagnostic taint12288 is transient; final normal installed-r4 reboot verifies taint0."
+  ],
+  "final_native_boot": {
+    "normal_installed_r4_boot": true,
+    "new_boot_id_verified_privately": true,
+    "kernel_release": "6.18.59",
+    "kernel_build": 5,
+    "kernel_taint": 0,
+    "diagnostic_modules_absent": true,
+    "packaged_ADC_modules_restored": true,
+    "display": "msmdrmfb",
+    "four_display_controls_auto": true,
+    "upower_and_tinydm_active": true,
+    "charger_thresholds_changed": false,
+    "physical_UI_retest_claimed": false
+  },
+  "private_evidence": [
+    "local/pm8226-bms-snapshot-test-01",
+    "local/pm8226-bms-snapshot-test-02",
+    "local/stock-bms-baseline-01",
+    "local/native47-r4-after-bms-diagnostics-01"
+  ],
+  "final_configured_USB_runtime": {
+    "before_uA": 100000,
+    "configured_max_power_mA": 500,
+    "samples": [
+      {
+        "USB_input_limit_uA": 500000,
+        "status": "Charging",
+        "health": "Good"
+      },
+      {
+        "USB_input_limit_uA": 500000,
+        "status": "Charging",
+        "health": "Good"
+      },
+      {
+        "USB_input_limit_uA": 500000,
+        "status": "Charging",
+        "health": "Good"
+      }
+    ],
+    "automatic_negotiation_implemented": false,
+    "charger_voltage_current_and_temperature_thresholds_changed": false
+  }
+}

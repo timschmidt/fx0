@@ -17,6 +17,43 @@ The board DTS uses 4.35 V maximum, 3.40 V cutoff and effective sense resistances
 of 10.8 mΩ, or 11.4 mΩ while charging. The separate IADC node also uses 10.8 mΩ.
 These are source references to validate, not proof of an aged pack's accuracy.
 
+The original stock kernel has now been booted from RAM with its unchanged QCDT
+and a small diagnostic initramfs, without mounting disk filesystems. Its gauge
+reports Charging/Good, 31°C and 76% during the three-sample comparison. This is a
+stock baseline, not a native capacity result or a factory restoration rehearsal.
+The stock kernel initializes volatile PMIC/gauge state, so comparisons across
+that boot must account for initialization effects.
+
+Native coherent output capture now passes: two three-sample sets show changing
+latched counters, matching repeated reads and independently verified release of
+the output hold. The companion sense configuration differs from stock, and trim
+values also change. Readback equality between conversion-ADC and companion trim
+banks does not establish that both addresses accept protected writes. Calibration
+ownership and the supported write path remain to be resolved.
+
+Three focused commits on
+[integration/fx0-bms](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-bms)
+add IADC raw calibration references and calibrated VADC battery/thermistor voltage
+reads. Each passes a W=1 ARM module build and a brief RAM-only hardware test;
+the installed r4 package is unchanged. The existing VADC scaling path returns
+microvolts for absolute calibration and millivolts for ratiometric calibration.
+The measured thermistor input is 660–661 mV, approximately 31.3°C under the vendor
+LG table; physical temperature accuracy is not yet qualified. A generic ADC
+thermal consumer must use lookup values in the actual input units.
+Resolve standard IIO processed-voltage ABI units before freezing the upstream
+series; preserving this legacy scaling is a development result, not final ABI
+qualification.
+
+Stock uses extended hardware comparator limits plus the LG software temperature
+policy. At a nominal 1.8 V reference, the LG table maps the normal 35%/70% limits
+to approximately 34.3°C/-5.4°C and extended 25%/80% to 62.8°C/-15.9°C. These are
+model estimates, not measured trip points. Stock software stops below -10°C or
+above 55°C and also applies current reduction, voltage-dependent stopping and
+hysteresis. The madai configuration selects its V1_8 variant, including a 52°C
+transition. Enabling extended hardware range alone would omit those protections;
+native comparator settings remain conservative until the software policy and
+sensor-fault/wake behavior are implemented and tested.
+
 ## Implementation sequence
 
 1. Preserve exact current boot files, modules, package, configurations, raw boot
@@ -30,8 +67,9 @@ These are source references to validate, not proof of an aged pack's accuracy.
 3. Observe BMS1 identity and a bounded register list without writes. PM8226 uses
    the non-VM BMS1 at 0x4000 (type 0x0d/subtype 1), with an IADC companion at 0x3800
    and a separate conversion ADC at 0x3600. Do not claim PM8916 VM compatibility.
-   The read-only diagnostic deliberately does not latch output: multi-byte
-   counter data is not an atomic measurement and cannot establish state of charge.
+   The initial read-only diagnostic deliberately does not latch output. A later
+   focused diagnostic validates coherent output hold/release without counter
+   resets or charger writes; neither diagnostic establishes state of charge.
 4. Implement a focused native BMS driver and binding after comparing those
    observations with the stock implementation. Use regmap and IIO consumers,
    check the peripheral revision, and handle absent/invalid calibration with
@@ -51,6 +89,10 @@ These are source references to validate, not proof of an aged pack's accuracy.
    attributes and ENODATA through UPower before enabling a new battery interface;
    attribute presence alone does not establish a valid measurement. The existing UPower incomplete-
    interface fix remains useful while telemetry is incomplete.
+   The upstream battery binding reserves fixed battery nodes for hardware whose
+   battery cannot be replaced by another type. The Fx0 has a removable pack:
+   identify its profile at runtime or through a suitable firmware handoff, rather
+   than placing an unconditional stock-pack model in the upstream board DTS.
 7. Convert the actual LG thermistor table and stock temperature policy into a
    maintained implementation. Compare readings through warming/cooling and check
    fault/open/short behavior. Qualify charger temperature boundaries, hysteresis,
@@ -76,3 +118,8 @@ These are source references to validate, not proof of an aged pack's accuracy.
 The first IADC correction and the recovery rehearsal are recorded separately in
 [evidence](../evidence/2026-10-29-iadc-current-conversion.json) and
 [recovery results](../evidence/2026-10-29-native-recovery-rehearsal.json).
+Later [coherent/stock comparison](../evidence/2026-10-30-bms-coherent-stock-comparison.json)
+and [ADC reference evidence](../evidence/2026-10-30-battery-adc-references.json) record
+the current development results. The signed installed r4 kernel is restored after
+the unsigned module tests; normal eMMC boot, taint 0, native framebuffer and active
+Sxmo/UPower pass. Native fuel-gauge and charging qualification remain unfinished.

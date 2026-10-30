@@ -184,6 +184,14 @@
       "branch": "integration/fx0-iadc",
       "commit": "84d622573bed26e397e80469a18e617569b7622d",
       "status": "Signed native r4 package built, installed trusted and booted from eMMC with native sensing/Sxmo and taint0; independent frozen-r3 rescue survives upgrade. Physical final hardware/reliability gates open."
+    },
+    {
+      "name": "linux-bms-preparation",
+      "url": "https://github.com/timschmidt/fx0-linux",
+      "branch": "integration/fx0-bms",
+      "base_commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+      "commit": "0280620f6a7bd1fdd0d304a3cd4341618cf5588b",
+      "status": "IADC raw references and VADC battery/thermistor voltage paths compile and pass RAM-only sysfs sampling; actual-function reference/current regressions and binding validation pass. Not packaged or promoted to installed r4. IIO consumer routing, BMS calibration/capacity and charging remain open."
     }
   ]
 }

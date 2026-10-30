@@ -1047,3 +1047,60 @@ a reviewed Wayland screenshot shows the expected UI. Physical input was last
 confirmed on r3 with the same DTB. The display startup workaround, idle/suspend
 restrictions and software rendering remain. Native BMS/thermal/charging work is
 next; see evidence/2026-10-30-native-r4-installed-boot.json.
+
+### Coherent BMS output and stock comparison
+
+A focused BMS1 diagnostic now sets/verifies the output-hold bit, reads the fixed
+output list twice, decodes signed 36-bit counters, and restores/verifies hold on
+every exit. Actual-helper tests cover 30 single-operation faults, four ownership/
+consistency/permanent-failure cases and nine decoder vectors under ASan/UBSan.
+W=1 ARM compilation and source checkpatch pass. Two native three-sample sets show
+changing counters and restored control, without counter resets or charger writes.
+The second capture's final active-service assertion fails because the UI gate is
+closed after reboot; capture and unload succeeded. UI is subsequently restored.
+
+The original stock kernel/QCDT is RAM-booted with the existing diagnostic initramfs
+and its return timer. No disk filesystem is mounted. Three samples report
+Charging/Good, 31°C and 76%, providing a stock baseline rather than native capacity.
+The stock companion-IADC channel/sense setup is 1/2, versus native 0/0. Trim banks
+match each other within each mode but differ between modes; those private values
+do not prove mirror-address write support. Stock BMS current is negative while
+charging, while its manually sampled IADC is positive. Native direction and
+absolute current accuracy still need qualification.
+
+Stock BTC control uses extended hardware limits, but the madai V1_8 software
+charging scenario adds stop/derating/hysteresis. The vendor thermistor table maps
+the nominal extended comparator voltages to limits outside the stock software
+-10°C/55°C stop envelope. Native extended range remains disabled until a real
+sensor/fault and charging-control implementation preserves that protection.
+This stock RAM run is not the factory restoration rehearsal required by the
+storage-consolidation plan.
+
+### IIO battery reference and voltage preparation
+
+The separate Linux integration/fx0-bms branch at0280620f6 adds three focused
+commits: binding descriptions for gain/zero references, raw IADC reference
+channels with hardware-number translation, and VADC scaling for battery and
+thermistor voltage. Three RAM-only sample sets pass for each ADC module. The
+reference fixture checks 23 actual-function cases with ASan/UBSan; the prior
+13 current vectors on both channels still pass. Both W=1 ARM module builds,
+binding document validation and each patch's checkpatch pass.
+
+The VADC samples yield about3.94V battery voltage and660–661mV thermistor voltage,
+approximately31.3°C under the vendor table. These are plausible/model-based
+observations, not external accuracy qualification. The existing SCALE_DEFAULT
+path returns microvolts for absolute calibration and millivolts for ratiometric
+calibration. That difference is explicitly recorded; processed-voltage ABI/consumer
+units must be resolved before freezing an upstream series. Per-unit calibration
+stays private. Firmware consumer routing, native BMS configuration/calibration,
+counter-to-charge conversion and profile identification remain open.
+
+Each test restores its packaged ADC module. A subsequent normal installed-r4
+reboot clears unsigned diagnostic taint to0, reaches msmdrmfb, leaves all four
+display controls automatic and starts Sxmo/UPower. USB input returns to100mA;
+after verifying online/configured state and the sole500mA gadget configuration,
+the prior500mA development limit is restored and read back. This is supervised
+runtime configuration, not automatic negotiation. No charger voltage/current/
+temperature thresholds change. Installed r4 and its canonical source remain
+unchanged; the new IIO branch is public but not packaged or submitted upstream.
+See the coherent-stock-comparison and battery-adc-references evidence files.

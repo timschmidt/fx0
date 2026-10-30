@@ -53,9 +53,12 @@ idle/suspend restrictions remain in use. UPower r3 avoids the observed incomplet
 battery NaN/false shutdown, with 90 configured Linux tests passing. Battery capacity
 is still unknown. The generic charger alternates Charging/Good and
 Discharging/Overheat near room temperature; no safety thresholds are bypassed.
-The native non-VM BMS is identified and readable, but coherent fuel-gauge data,
-board calibration, thermistor policy and automatic USB current negotiation remain
-open. See [battery work](docs/battery-bringup.md).
+The native non-VM BMS now has verified coherent output capture and a stock-kernel
+RAM baseline. Separate IIO reference/voltage patches pass brief RAM hardware tests;
+the installed r4 package is unchanged. Calibrated fuel-gauge reporting, thermistor
+protection and automatic USB current negotiation remain open. Stock uses software
+charging limits in addition to extended hardware comparators; those hardware
+limits are not enabled by themselves. See [battery work](docs/battery-bringup.md).
 
 Stock inventory, 29 critical partition backups, GPT metadata and a separately
 verified 1 GiB original-system image are private. A complete **development-state**

@@ -20,13 +20,15 @@ typedef int32_t s32;
 typedef long long s64;
 typedef uint16_t u16;
 #define IADC_REF_GAIN_MICRO_VOLTS 17857
+#define IIO_VOLTAGE 0
+#define IIO_CURRENT 1
 #define IIO_CHAN_INFO_RAW 0
 #define IIO_CHAN_INFO_SCALE 1
 #define IIO_VAL_INT 1
 #define IIO_VAL_INT_PLUS_MICRO 2
 struct iadc_chip { int lock; int dev; u16 offset[2]; u16 gain; uint32_t rsense[2]; };
-struct iio_dev { struct iadc_chip *chip; };
-struct iio_chan_spec { int channel; };
+struct iio_chan_spec { int channel; int type; };
+struct iio_dev { struct iadc_chip *chip; const struct iio_chan_spec *channels; int num_channels; };
 static u16 injected_sample;
 #define iio_priv(d) ((d)->chip)
 #define mutex_lock(p) ((void)(p))
@@ -76,8 +78,8 @@ def main():
             failures++;
         }}''')
     main_c = '''int main(void) {
-    struct iadc_chip c = {0}; struct iio_dev d = {&c};
-    struct iio_chan_spec channel = {0};
+    struct iadc_chip c = {0}; struct iio_dev d = {.chip = &c};
+    struct iio_chan_spec channel = {.channel = 0, .type = IIO_CURRENT};
     int value, value2, result, failures = 0;
     for (channel.channel = 0; channel.channel < 2; channel.channel++) {
     ''' + '\n'.join(checks) + '''

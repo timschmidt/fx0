@@ -31,7 +31,7 @@ For each result record the exact image hash, source revisions, package manifest,
 | GNSS | Outdoor cold/warm fix; position/time sanity; acquisition logs; assisted and standalone behavior as exposed | Unverified |
 | NFC | Actual controller and antenna path; tag reading and supported transfer modes; suspend/restart | Unverified |
 | FM radio | Establish product exposure first; if present, tune/receive, antenna/audio routing and resume | Unverified |
-| Battery sensing | Battery type, voltage, current, temperature, capacity trends and low-battery reporting | Voltage/supply observations; IADC sign/unit correction now runs in signed native r4 with logged conversions checked; physical accuracy and calibration remain open. No native fuel gauge/capacity. UPower r3 avoids the incomplete charger interface NaN/false power-off; it reports battery missing/unknown. Native sensing and charging policy remain open |
+| Battery sensing | Battery type, voltage, current, temperature, capacity trends and low-battery reporting | Signed native r4 IADC sign/unit checks pass. Coherent BMS capture, stock RAM baseline and RAM-only IIO reference/voltage patches pass; installed r4 is unchanged. Calibration, native gauge/capacity, physical accuracy and thermal policy remain open. UPower r3 avoids incomplete-interface NaN/false shutdown and reports battery missing/unknown |
 | Charging | Correct input/charge limits; plug/unplug, termination, temperature response, power-off charging as supported | Unverified |
 | Thermal management | Sensors and trip behavior; sustained CPU/GPU/media loads; throttling and recovery | Unverified |
 | Suspend and wake | Verified sleep state; measured unplugged consumption; buttons, RTC and supported event wake sources | Unverified |
