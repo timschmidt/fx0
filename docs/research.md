@@ -16,6 +16,30 @@ The [vendor kernel](https://github.com/peremen/android-kernel-lg-madai) contains
 
 The [panel source](https://github.com/peremen/android-kernel-lg-madai/blob/main/arch/arm/boot/dts/msm8226-madai/msm8226-madai-panel.dtsi) describes JDI panel configuration. The [touch source](https://github.com/peremen/android-kernel-lg-madai/blob/main/arch/arm/boot/dts/msm8226-madai/msm8226-madai-input.dtsi) includes Synaptics S3320 and earlier S7020 configurations. The [power source](https://github.com/peremen/android-kernel-lg-madai/blob/main/arch/arm/boot/dts/msm8226-madai/msm8226-madai-pm.dtsi) includes revision-specific supplies and charger settings. These are hardware leads, not confirmation of the installed components or safe settings for a replacement battery.
 
+## MPU-6515M and DMP follow-up (October 30, 2026)
+
+The owner identifies the IMU as MPU-6515M and requires DMP access and DMP
+interrupt wake. Physical identification, the M suffix, bus ownership and interrupt
+routing remain to be verified. The pinned Linux 6.18.59
+[`inv_mpu6050` family](https://github.com/gregkh/linux/tree/1253a6aa5d104312bf0992afacc15220ae35bdf9/drivers/iio/imu/inv_mpu6050)
+matches MPU6515 over I²C/SPI and defines WHO_AM_I 0x74. This directory audit
+finds raw-sensor support but no DMP firmware-loading/execution interface; a
+matching device ID does not establish DMP functionality.
+
+The historical InvenSense
+[`inv_mpu6515` driver and README](https://android.googlesource.com/kernel/msm/+/04a77e80d63a6b792970c8567447f70d76ac7be4/drivers/iio/imu/inv_mpu6515/)
+provide a primary implementation reference for DMP firmware, FIFO/events and
+suspend handling. The repository commit is pinned in the source manifest; the
+README Git blob is `0963954a844106b3cd1c61d1268b899d320d9aab`.
+It is historical platform code, not proof of this unit's wiring, firmware
+compatibility, redistribution rights or an acceptable modern upstream ABI.
+The checked-out Fx0 vendor sensor DTS is empty and its tree does not contain
+that IIO driver, so it does not resolve the physical control path.
+
+[Plan section 6.1](bringup-plan.md#61-mpu-6515m-dmp-access-and-interrupt-wake)
+requires separate raw-data, DMP execution/output and actual DMP-event suspend-wake
+evidence. These remain unverified acceptance gates.
+
 ## Existing operating system work
 
 | Source | Established finding | Development use |

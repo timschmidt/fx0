@@ -57,6 +57,13 @@
       "tag": "v4.14",
       "commit": "bebc6082da0a9f5d47a1ea2edc099bf671058bd4",
       "status": "Historical GPLv2 AtomISP sensor reference only; platform API and lane/clock assumptions require review, no Fx0 hardware qualification"
+    },
+    {
+      "name": "sensor-dmp-downstream-reference",
+      "remote": "https://android.googlesource.com/kernel/msm",
+      "commit": "04a77e80d63a6b792970c8567447f70d76ac7be4",
+      "path": "drivers/iio/imu/inv_mpu6515",
+      "status": "Historical InvenSense DMP firmware/FIFO/event and suspend implementation reference; MPU-6515M identity, wiring, firmware compatibility/rights and physical DMP interrupt wake remain unverified"
     }
   ],
   "development_repositories": [

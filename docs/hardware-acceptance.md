@@ -34,7 +34,7 @@ For each result record the exact image hash, source revisions, package manifest,
 | Battery sensing | Battery type, voltage, current, temperature, capacity trends and low-battery reporting | Signed r4 IADC arithmetic, coherent BMS capture and stock baseline pass. RAM tests cover IIO units, protected trim, input/load response and a forced counter restart; provisional BMS/manual current agree near0.2A discharge. Provider ownership, native gauge/capacity, external accuracy and thermal policy remain open. Installed r4 is unchanged; UPower reports battery missing/unknown |
 | Charging | Correct input/charge limits; plug/unplug, termination, temperature response, power-off charging as supported | Unverified |
 | Thermal management | Sensors and trip behavior; sustained CPU/GPU/media loads; throttling and recovery | Unverified |
-| Suspend and wake | Verified sleep state; measured unplugged consumption; buttons, RTC and supported event wake sources | Unverified |
+| Suspend and wake | Verified sleep state; measured unplugged consumption; buttons, RTC and required MPU-6515M DMP interrupt wake, plus other supported event wake sources | Unverified |
 | Clock and RTC | Correct timekeeping, time synchronization, suspend continuity and alarm behavior as supported | Unverified |
 | Power-off and restart | Clean shutdown, restart, low-battery handling and repeatable subsequent boot | Unverified |
 | Speaker | Playback, volume, amplifier behavior, supported rates, no persistent distortion and suspend recovery | Unverified |
@@ -43,8 +43,10 @@ For each result record the exact image hash, source revisions, package manifest,
 | Headset jack | Insert/remove detection, headphone playback, headset microphone/buttons where exposed and route transitions | Unverified |
 | Bluetooth audio | Supported playback/call profiles, route switching, reconnect, recording and suspend behavior | Unverified |
 | Audio policy | Correct ALSA UCM/PipeWire routing across media, calls, speakerphone, headset and Bluetooth | Unverified |
-| Accelerometer | Identify sensor; axes/mounting, movement, screen rotation and resume | Unverified |
-| Gyroscope | Establish presence; angular-rate response, axes, calibration and resume | Unverified |
+| Accelerometer | Owner-reported MPU-6515M: confirm silicon/wiring; axes/mounting, movement, buffered data, screen rotation and resume | Unverified |
+| Gyroscope | Owner-reported MPU-6515M: confirm silicon/wiring; angular-rate response, axes, buffered data, calibration and resume | Unverified |
+| MPU-6515M DMP access | Matching firmware provenance/loading/execution; decoded FIFO outputs/events through a documented Linux ABI; raw/DMP switching, overflow/reset/reload recovery and userspace example | Required, unverified; upstream MPU6515 raw support does not establish DMP support |
+| MPU-6515M DMP interrupt wake | Real system suspend; physical DMP event wakes AP through verified routing; retained event and IRQ/wake-source evidence, masked-event control, at least 20 consecutive cycles, no storms and measured battery standby | Required, unverified; ordinary data-ready or raw motion wake alone is insufficient; see [plan section 6.1](bringup-plan.md#61-mpu-6515m-dmp-access-and-interrupt-wake) |
 | Magnetometer | Establish presence; heading response, axes, calibration and resume | Unverified |
 | Ambient light | Raw sensor response, brightness integration, sensible transitions and resume | Unverified |
 | Proximity | Near/far response; screen behavior during calls; wake and resume as supported | Unverified |
@@ -70,7 +72,7 @@ For each result record the exact image hash, source revisions, package manifest,
 
 ## Reliability qualification
 
-Initial project targets are 20 cold boots, 20 warm reboots, 50 suspend/resume cycles, a 24-hour mixed-use soak, and overnight unplugged standby. Record counts and failures, not just a final boolean. Re-run affected tests after changes to shared regulators, memory reservations, firmware, USB, audio, or power management.
+Initial project targets are 20 cold boots, 20 warm reboots, 50 suspend/resume cycles (including at least 20 consecutive DMP interrupt wakes), a 24-hour mixed-use soak, and overnight unplugged standby with DMP wake armed. Record counts and failures, not just a final boolean. Re-run affected tests after changes to shared regulators, memory reservations, firmware, USB, audio, or power management.
 
 Measure idle memory, available storage, suspend power, thermal behavior, and representative interactive latency. Establish numerical power and performance targets after stock and early Nura measurements; do not invent battery-life claims from the nominal capacity.
 
