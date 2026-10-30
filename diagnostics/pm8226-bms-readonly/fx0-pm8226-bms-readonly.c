@@ -14,11 +14,17 @@ struct bms_window {
 };
 
 static const struct bms_window windows[] = {
+	{ 0x1010, 1 }, /* Charger real-time status */
+	{ 0x1209, 1 }, /* Battery-temperature comparator status */
+	{ 0x1210, 1 }, /* Battery-interface status, including BATFET */
 	{ 0x4008, 1 }, /* BMS1_STATUS1 */
 	{ 0x4040, 1 }, /* BMS1_MODE_CTL */
 	{ 0x4042, 1 }, /* BMS1_CC_DATA_CTL */
+	{ 0x4043, 1 }, /* BMS1_CC_CLEAR_CTL: readback alone is not pulse proof */
 	{ 0x4044, 1 }, /* BMS1_TOL_CTL */
 	{ 0x4048, 5 }, /* OCV use limits and control */
+	{ 0x405a, 1 }, /* S1 sample delay */
+	{ 0x4061, 1 }, /* S2 sample averaging */
 	{ 0x4080, 4 }, /* OCV/VSENSE for resistance */
 	{ 0x408a, 5 }, /* CC: not held, not an atomic observation */
 	{ 0x4090, 2 }, /* Last good OCV */

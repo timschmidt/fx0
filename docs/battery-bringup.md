@@ -84,7 +84,7 @@ behavior, rollback and bus faults. Counter contents are intentionally reset only
 in that explicit configuration-epoch test; they cannot be restored. Routine
 snapshot reads never reset them. See [calibration/epoch evidence](../evidence/2026-10-30-bms-calibration-epoch.json).
 
-## Native measurement prototype
+## Initial native measurement prototype
 
 Candidate
 [`35743f1984fc7b9863224856dca0aa148e832be5`](https://github.com/timschmidt/fx0-linux/commit/35743f1984fc7b9863224856dca0aa148e832be5)
@@ -109,8 +109,9 @@ cases under ASan/UBSan. ARM LLVM22 W=1 module builds, checkpatch and targeted
 binding/DTB checks pass. These do not replace full upstream binding checks,
 subsystem ABI review or physical accuracy measurements.
 
-**Unresolved transition failure:** after charging stops under the unchanged
-conservative comparator, manual IADC current becomes zero while BMS current
+**Unresolved transition discrepancy:** when the charger reports
+Discharging/Overheat under the unchanged conservative comparator, manual IADC
+current becomes zero while BMS current
 remains about +155 mA and the relative counter continues accumulating that
 suspect value. Recalibration does not resolve it. This observation does not
 establish whether the cause is stale sampling, analog coupling, BATFET state or
@@ -132,6 +133,48 @@ evidence privately and reject suspect gauge data during further development.
 Complete pack identification, temperature/fault handling, compensation and
 capacity work before claiming fuel-gauge or charging acceptance. See the
 [native prototype evidence](../evidence/2026-10-30-native-bms-prototype.json).
+
+## Distinct current sources and rejected BATFET IRQ experiment
+
+Candidate
+[`31061619c6a1ec6579b07ecbd3303614899d116b`](https://github.com/timschmidt/fx0-linux/commit/31061619c6a1ec6579b07ecbd3303614899d116b)
+reports the live IADC sample as `current_now` and the BMS background VSENSE
+measurement as `current_avg`. Errors are independent; a failed BMS snapshot
+does not overwrite a successful IADC reading. This makes the discrepancy
+observable without silently choosing one source as electrical ground truth.
+Both values use µA with positive charging. Neither is independently validated
+with current-measurement equipment.
+
+The exact unsigned module passes a RAM bind and bounded 500/100/500 mA response
+test. In the initial USB-idle window, live/manual current becomes 0 while the BMS
+average remains about 212 mA and its counter accumulates. Under 100 mA input and a
+bounded CPU load, both readings become negative, about 0.2 A discharge. Returning
+to 500 mA yields live 0 and background about 1.5–2.1 mA. This is functional response
+evidence, not proof of absolute accuracy or trustworthy whole-cycle integration.
+Thirty-three actual-getter cases verify routing, independent errors, status
+fallback and caching under ASan/UBSan. W=1 ARM/checkpatch and UPower checks pass;
+capacity remains unavailable and the installed signed r4 package is unchanged.
+
+A separate attempted guard used the instantaneous BATFET status and a both-edge
+IRQ. Its test exceeded the 100-events/second guard and the driver was unloaded.
+A controlled variant with automatic polling disabled and no IRQ-triggered refresh
+still generates 13,616 interrupts in 2.0025 seconds (about 6,799/second), with edge
+mode and both polarities read back enabled. No IADC current-debug entries or
+external calibration commits occur in the next three seconds. Thus IRQ refresh
+and periodic BMS sampling are not necessary causes of that observed flood; its
+electrical/controller cause is unresolved. The guard and IRQ changes are removed
+from the integration candidate. A single raw BATFET sample cannot be treated as
+a proven stable isolation indication in these conditions.
+
+The [failed experiment patches](../experiments/pm8226-batfet-irq/README.md) retain
+the exact tested source. Private stock comparison captures show charging with
+BATFET reported closed, while native USB-idle captures report it open; those
+different operating states do not establish causality or a matched charging-stop
+comparison. Continue with a controlled stock charger-disable test through its
+supported API, raw charger/BMS status and sampling analysis, pack temperature
+and profile integration, and independent electrical measurements when available.
+Keep the background counter discrepancy, absolute accuracy and final gauge policy
+open. See [current observation evidence](../evidence/2026-10-30-bms-current-observations.json).
 
 ## Implementation sequence
 

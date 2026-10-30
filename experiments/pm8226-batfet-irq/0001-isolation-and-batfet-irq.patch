@@ -1,0 +1,218 @@
+diff --git a/Documentation/devicetree/bindings/power/supply/qcom,pm8226-bms.yaml b/Documentation/devicetree/bindings/power/supply/qcom,pm8226-bms.yaml
+index 9d33e9e19..715927d16 100644
+--- a/Documentation/devicetree/bindings/power/supply/qcom,pm8226-bms.yaml
++++ b/Documentation/devicetree/bindings/power/supply/qcom,pm8226-bms.yaml
+@@ -26,13 +26,17 @@ properties:
+     items:
+       - description: BMS peripheral base in the SPMI register map
+       - description: Companion IADC peripheral base
+-      - description: Battery presence status register
++      - description: Shared battery-interface peripheral base (read-only status)
+ 
+   reg-names:
+     items:
+       - const: bms
+       - const: iadc
+-      - const: battery-present
++      - const: battery-interface
++
++  interrupts:
++    maxItems: 1
++    description: Battery FET connection state change, both edges
+ 
+   io-channels:
+     minItems: 4
+@@ -62,6 +66,7 @@ required:
+   - compatible
+   - reg
+   - reg-names
++  - interrupts
+   - io-channels
+   - io-channel-names
+   - shunt-resistor-micro-ohms
+@@ -70,14 +75,18 @@ additionalProperties: false
+ 
+ examples:
+   - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++
+     pmic {
+         #address-cells = <1>;
+         #size-cells = <0>;
+ 
+         battery@4000 {
+             compatible = "qcom,pm8226-bms";
+-            reg = <0x4000>, <0x3800>, <0x1208>;
+-            reg-names = "bms", "iadc", "battery-present";
++            reg = <0x4000>, <0x3800>, <0x1200>;
++            reg-names = "bms", "iadc", "battery-interface";
++            interrupt-parent = <&spmi_bus>;
++            interrupts = <0 0x12 2 IRQ_TYPE_EDGE_BOTH>;
+             io-channels = <&iadc 1>, <&iadc 3>, <&iadc 5>, <&vadc 6>;
+             io-channel-names = "current", "gain", "offset", "voltage";
+             shunt-resistor-micro-ohms = <10800>;
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index 7e3c221b7..060c11752 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -313,8 +313,9 @@ &pm8226_iadc {
+ &pm8226_0 {
+ 	battery@4000 {
+ 		compatible = "qcom,pm8226-bms";
+-		reg = <0x4000>, <0x3800>, <0x1208>;
+-		reg-names = "bms", "iadc", "battery-present";
++		reg = <0x4000>, <0x3800>, <0x1200>;
++		reg-names = "bms", "iadc", "battery-interface";
++		interrupts = <0 0x12 2 IRQ_TYPE_EDGE_BOTH>;
+ 		io-channels = <&pm8226_iadc 1>, <&pm8226_iadc 3>,
+ 			      <&pm8226_iadc 5>, <&pm8226_vadc VADC_VBAT_SNS>;
+ 		io-channel-names = "current", "gain", "offset", "voltage";
+diff --git a/drivers/power/supply/qcom_pm8226_bms.c b/drivers/power/supply/qcom_pm8226_bms.c
+index adf3ebbbc..82d88be2d 100644
+--- a/drivers/power/supply/qcom_pm8226_bms.c
++++ b/drivers/power/supply/qcom_pm8226_bms.c
+@@ -3,6 +3,7 @@
+ #include <linux/delay.h>
+ #include <linux/iio/consumer.h>
+ #include <linux/iio/iio.h>
++#include <linux/interrupt.h>
+ #include <linux/ktime.h>
+ #include <linux/math64.h>
+ #include <linux/module.h>
+@@ -22,6 +23,10 @@
+ #define BMS_POLL_MS 5000
+ #define BMS_CALIBRATE_NS (300ULL * NSEC_PER_SEC)
+ #define BMS_COUNTER_MAX_AGE_NS (1800ULL * NSEC_PER_SEC)
++/* Read-only registers in the shared battery-interface peripheral. */
++#define BAT_IF_PRESENT 0x08
++#define BAT_IF_RT_STATUS 0x10
++#define BAT_IF_FET_CLOSED BIT(2)
+ /* 542535/100000 uV/code, ideal gain 3291, 56 ticks at 32764 Hz. */
+ #define BMS_CURRENT_NUMERATOR (542535LL * 3291 * 10)
+ #define BMS_CHARGE_NUMERATOR (542535ULL * 3291 * 56 * 10 / 3600)
+@@ -41,7 +46,7 @@ struct bms_outputs {
+ struct pm8226_bms {
+ 	struct device *dev;
+ 	struct regmap *regmap;
+-	u16 base, iadc_base, present_reg;
++	u16 base, iadc_base, bat_if_base;
+ 	struct iio_channel *sense_channel, *gain, *offset, *voltage, *temperature;
+ 	struct mutex lock;
+ 	struct delayed_work work;
+@@ -54,6 +59,7 @@ struct pm8226_bms {
+ 	u64 last_sample_ns, last_counter_ns, last_calibration_ns;
+ 	int voltage_uv, current_ua, temperature_decic;
+ 	int present_error, voltage_error, current_error, temperature_error, charge_error;
++	int batfet_irq;
+ 	bool present, configured, calibration_valid;
+ };
+ 
+@@ -321,11 +327,12 @@ static void bms_sample(struct pm8226_bms *bms)
+ {
+ 	struct bms_outputs output;
+ 	u64 now = ktime_get_boottime_ns();
+-	unsigned int present;
++	unsigned int present, bat_if_status;
+ 	bool rebase;
+ 	int ret;
+ 
+-	bms->present_error = regmap_read(bms->regmap, bms->present_reg, &present);
++	bms->present_error = regmap_read(bms->regmap, bms->bat_if_base + BAT_IF_PRESENT,
++					&present);
+ 	if (bms->present_error)
+ 		goto absent;
+ 	bms->present = !!(present & BIT(7));
+@@ -352,6 +359,17 @@ static void bms_sample(struct pm8226_bms *bms)
+ 	ret = bms_refresh_calibration(bms);
+ 	if (ret)
+ 		goto current_error;
++	ret = regmap_read(bms->regmap, bms->bat_if_base + BAT_IF_RT_STATUS, &bat_if_status);
++	if (ret)
++		goto current_error;
++	if (!(bat_if_status & BAT_IF_FET_CLOSED)) {
++		/* The BMS average/counter may retain a pre-isolation sample. */
++		bms->current_error = iio_read_channel_processed_scale(bms->sense_channel,
++								    &bms->current_ua, 1000);
++		bms->charge_error = -ENODATA;
++		bms->counter.initialized = false;
++		goto periodic_calibration;
++	}
+ 	ret = bms_snapshot(bms, &output);
+ 	if (ret)
+ 		goto current_error;
+@@ -366,6 +384,7 @@ static void bms_sample(struct pm8226_bms *bms)
+ 	if (rebase && !bms->charge_error)
+ 		bms->charge_error = -ENODATA;
+ 	bms->last_counter_ns = now;
++periodic_calibration:
+ 	if (ktime_get_boottime_ns() - bms->last_calibration_ns >= BMS_CALIBRATE_NS) {
+ 		ret = bms_calibrate(bms);
+ 		if (ret)
+@@ -466,6 +485,20 @@ static void bms_stop(void *data)
+ 	cancel_delayed_work_sync(&bms->work);
+ }
+ 
++static irqreturn_t bms_batfet_irq(int irq, void *data)
++{
++	struct pm8226_bms *bms = data;
++
++	/* Invalidate even a brief isolation interval between periodic samples. */
++	mutex_lock(&bms->lock);
++	bms->counter.initialized = false;
++	bms->charge_error = -ENODATA;
++	bms->last_sample_ns = 0;
++	mod_delayed_work(system_freezable_wq, &bms->work, msecs_to_jiffies(20));
++	mutex_unlock(&bms->lock);
++	return IRQ_HANDLED;
++}
++
+ static int bms_link_channel(struct device *dev, struct iio_channel *channel)
+ {
+ 	struct device *supplier = channel->indio_dev->dev.parent;
+@@ -498,11 +531,11 @@ static int bms_probe(struct platform_device *pdev)
+ 	ret = device_property_read_u32_array(dev, "reg", address, ARRAY_SIZE(address));
+ 	if (ret)
+ 		return ret;
+-	if (address[0] > 0xff00 || address[1] > 0xff00 || address[2] > U16_MAX)
++	if (address[0] > 0xff00 || address[1] > 0xff00 || address[2] > U16_MAX - BAT_IF_RT_STATUS)
+ 		return -EINVAL;
+ 	bms->base = address[0];
+ 	bms->iadc_base = address[1];
+-	bms->present_reg = address[2];
++	bms->bat_if_base = address[2];
+ 	ret = device_property_read_u32(dev, "shunt-resistor-micro-ohms", &bms->rsense);
+ 	if (ret || !bms->rsense)
+ 		return -EINVAL;
+@@ -565,6 +598,9 @@ static int bms_probe(struct platform_device *pdev)
+ 			calibration_found = true;
+ 	if (!calibration_found)
+ 		return dev_err_probe(dev, -EOPNOTSUPP, "IADC calibration unavailable\n");
++	bms->batfet_irq = platform_get_irq(pdev, 0);
++	if (bms->batfet_irq < 0)
++		return bms->batfet_irq;
+ 	bms_sample(bms);
+ 	if (bms->present_error || (bms->present && !bms->configured))
+ 		return dev_err_probe(dev, bms->present_error ?: bms->current_error,
+@@ -584,13 +620,21 @@ static int bms_probe(struct platform_device *pdev)
+ 	ret = devm_add_action_or_reset(dev, bms_stop, bms);
+ 	if (ret)
+ 		return ret;
++	/* Managed teardown releases the IRQ before stopping work and the supply. */
++	ret = devm_request_threaded_irq(dev, bms->batfet_irq, NULL, bms_batfet_irq,
++					IRQF_ONESHOT, dev_name(dev), bms);
++	if (ret)
++		return dev_err_probe(dev, ret, "BATFET interrupt unavailable\n");
+ 	queue_delayed_work(system_freezable_wq, &bms->work, msecs_to_jiffies(BMS_POLL_MS));
+ 	return 0;
+ }
+ 
+ static void bms_shutdown(struct platform_device *pdev)
+ {
+-	bms_stop(platform_get_drvdata(pdev));
++	struct pm8226_bms *bms = platform_get_drvdata(pdev);
++
++	disable_irq(bms->batfet_irq);
++	bms_stop(bms);
+ }
+ 
+ static const struct of_device_id bms_match[] = {

@@ -1205,3 +1205,46 @@ now checks for active units before retiring them. The subsequent reboot request
 succeeds and lk2nd continues the installed r4. Final boot/UI verification is
 recorded in evidence/2026-10-30-native-bms-prototype.json after it completes.
 No repartition, package upgrade, upstream mail or submission occurs.
+
+## October 30: current sources and BATFET IRQ experiment
+
+Linux31061619c separates live IADC CURRENT_NOW from the background BMS
+CURRENT_AVG and fixes initialization error reporting now that their errors are
+independent. The exact source builds with ARM LLVM22 W=1/checkpatch0/0;33 actual
+getter cases pass sanitizers. A new RAM boot and bounded500/100/500mA test show
+charging, discharge and return-to-USB responses. During USB idle, IADC reaches0
+while background current/counter still indicate about212mA. Under load both
+respond around-0.2A, and afterward IADC0/background1.5–2.1mA. UPower remains finite
+and leaves capacity unknown. Electrical correctness of either source is not
+established by their shared-hardware agreement or disagreement.
+
+A proposed instantaneous BATFET guard encounters cached/raw state disagreement.
+Adding a both-edge BATFET IRQ exceeds the100-events/second test guard. The driver
+is unloaded. An exact controlled variant disables periodic polling and IRQ
+refresh, yet records13616 interrupts in2.0025seconds (~6799/s), with edge/high/low
+configuration read back enabled and no IADC current-debug/calibration events in
+the next3seconds. No ADC conversion phase is attempted after the rate guard.
+The electrical/controller cause remains unresolved. The observer is unloaded;
+these guard/IRQ changes are rejected and retained as reproducible source patches
+under experiments/pm8226-batfet-irq. Only the current-source distinction is pushed
+to integration/fx0-bms. Canonical r4 and its package remain unchanged.
+
+The owner reports no current-measurement fixture or oscilloscope available.
+Continue source/stock analysis while leaving independent electrical accuracy
+unverified. The full vendor source is now checked out at the pinned03aba4427
+revision on Disk B. Its normal charging_enabled setter also forces operation
+on battery, so that control cannot reproduce a USB-bypass stop. The factory
+charge attribute instead routes to charge-only chg_status_set; runtime existence
+and behavior must be verified before using it. No stock charge-control write
+has yet been performed.
+
+Stock DT inspection finds qcom,msm-adsp-sensors and no direct MPU6515 compatible;
+the complete vendor tree supplies sensors_adsp.c but no MPU6515 driver match.
+This is a topology lead, not chip identity or proof of DMP use. DMP access and
+DMP-generated system wake remain required; DSP software fusion alone does not
+satisfy on-chip DMP execution.
+
+A normal eMMC boot restores installed r4 build5/taint0 with no BMS prototype,
+active UPower/Sxmo, all4display controlsauto and a reviewed private terminal/
+keyboard screenshot. Physical UI retest is not claimed. No repartition, package
+upgrade or upstream communication occurs. See current observation evidence.

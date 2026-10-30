@@ -1,11 +1,12 @@
 # Bounded PM8226 BMS1 observation
 
-This development module reads 46 bytes through 16 fixed `regmap_bulk_read` calls.
+This development module reads 52 bytes through 22 fixed `regmap_bulk_read` calls.
 It discovers the existing PM8226 IADC platform device to obtain its parent's
 regmap, verifies BMS type 0x0d/subtype 1 at 0x4000, and reads only the listed
-BMS/output/companion windows. There are no register writes, module parameters,
+BMS/output/companion, charger real-time status, BATFET/temperature status and sample
+delay/averaging windows. There are no register writes, module parameters,
 new platform bindings or counter resets. The register definitions come from the
-pinned vendor `drivers/power/qpnp-bms.c`.
+pinned vendor `drivers/power/qpnp-bms.c` and `drivers/power/qpnp-charger.c`.
 
 Build against the matching ARM kernel configuration, generated headers and
 symbol table with:
@@ -15,7 +16,7 @@ make -C /path/to/linux O=/path/to/matching-build ARCH=arm LLVM=1 W=1 \
   M="$PWD/diagnostics/pm8226-bms-readonly" modules
 ```
 
-The tested diagnostic build uses Alpine Clang 22.1.3, r3's configuration except
+The tested diagnostic build uses Alpine Clang 22.1.3, the shared r3/r4 configuration except
 release-suffix generation, and the previously validated matching symbol seed.
 W=1 and checkpatch pass. The module is loaded briefly from RAM and immediately
 unloaded. It is unsigned and external, so its expected kernel taint is 12288;

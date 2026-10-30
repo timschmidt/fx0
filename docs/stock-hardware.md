@@ -10,7 +10,7 @@ These observations belong to the development unit inventoried on October 29, 202
 | Display | 720×1280, 24-bit continuous framebuffer inherited from stock | Inherited simpledrm is diagnostic; native DSI panel/reset/backlight qualification is separate |
 | Touch | Stock log identifies Synaptics S3320; DT enables its board path | Translate the actual supplies/interrupt/reset and validate upstream RMI4 function support |
 | Audio | WCD9302 Tapan SLIM codec and stock jack/button inputs | Needs SLIMbus/DSP firmware, board routing, ALSA and UCM qualification |
-| IMU | Owner identifies MPU-6515M; installed revision, bus ownership and interrupt wiring not yet independently verified | Confirm identity/topology, then qualify raw IIO data, actual DMP execution/output and DMP interrupt wake from system suspend; all three are required |
+| IMU | Owner identifies MPU-6515M; preserved stock DT has `qcom,msm-adsp-sensors` but no direct MPU6515 compatible. Installed revision, ownership and IRQ wiring remain unverified | Investigate the ADSP sensor path before attempting AP bus access; then qualify raw IIO data, actual DMP execution/output and DMP interrupt system wake. The ADSP node alone does not establish which chip it controls |
 | Rear camera | IMX179 in stock probing and DT; EEPROM/actuator path present | Determine supported sensor driver and MSM8926 ISP pipeline; preserve calibration |
 | Front camera | IMX132 in stock probing and DT | Sensor/CSI/ISP and camera switching remain required |
 | WLAN subsystem | Stock WCNSS load range 0x0d200000–0x0d74f000; Iris TSMC 3.0, 48 MHz XO | Validate exact carveout and remoteproc before firmware start; port missing LTS WCNSS support |

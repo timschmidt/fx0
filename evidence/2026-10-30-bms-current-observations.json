@@ -1,0 +1,249 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Separate live IADC current from background BMS average; test and reject a BATFET IRQ guard",
+  "overall": "Experimental current observability improved; absolute accuracy, background-counter discrepancy, temperature/profile/capacity and final gauge policy remain open",
+  "current_source": {
+    "repository": "https://github.com/timschmidt/fx0-linux",
+    "branch": "integration/fx0-bms",
+    "commit": "31061619c6a1ec6579b07ecbd3303614899d116b",
+    "prior_prototype": "35743f1984fc7b9863224856dca0aa148e832be5",
+    "driver_sha256": "336c70a9fff01bcfd1a724e56f36212c4ed4913b0bd916d7537f7a82328c103c",
+    "current_now": "IIO processed current, scaled1000 from standard milliamps to microamps; normal sample-cache refresh applies",
+    "current_avg": "Background BMS VSENSE conversion, separate value/error",
+    "initialization_error": "BMS configuration/charge error is used because the independent IADC read may succeed",
+    "raw_BATFET_IRQ_or_isolation_guard_included": false,
+    "packaged_or_promoted": false
+  },
+  "tested_RAM": {
+    "image": "d1a9d3f0ec7c8e2eecb8913ea1a69ed8c0140d5afb75ed2c8d76da6d020fab97",
+    "kernel_source": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+    "kernel": "6.18.59 installed r4 build5",
+    "module_manifest": {
+      "iadc": {
+        "bytes": 146988,
+        "sha256": "f6e971629ef417b5e22510a938f485be5417a0d19cdc063c535b2a5004950fde"
+      },
+      "vadc": {
+        "bytes": 156932,
+        "sha256": "d9d6d5a9fb729b07353b496eca9efc25f5fa1cad834c841f3f18b305845b9571"
+      },
+      "bms": {
+        "bytes": 156488,
+        "sha256": "19989a1b752bdba6a13d38a900896063992d4db73f2ceec7c2266693c9632de7"
+      }
+    },
+    "unsigned_module_taint": 12288,
+    "original_DTB_with_battery_present_register_0x1208": true,
+    "no_BATFET_interrupt_property_or_named_handler": true,
+    "persistent_package_boot_files_changed": false
+  },
+  "checks": {
+    "ARM_LLVM22_W1": "PASS",
+    "checkpatch": "0 errors,0 warnings,622lines",
+    "new_actual_getter_ASan_UBSan_cases": 33,
+    "unchanged_math_cases_from_prior_revision": 20033,
+    "unchanged_BMS_IO_fault_cases": 70,
+    "unchanged_provider_calibration_cases": 34,
+    "unchanged_IADC_reference_cache_cases": 27,
+    "unchanged_helper_source_byte_comparison": "PASS against35743f198 for math,snapshot/restart and sense/configuration functions",
+    "UPower": "Active; finite values and no critical warning in snapshot; incomplete measurement-only interface ignored, no capacity invented"
+  },
+  "bounded_response": {
+    "input_budgets_mA": [
+      500,
+      100,
+      500
+    ],
+    "CPU_load": "One sha256sum worker with RuntimeMaxSec18",
+    "thermistor_guard": "initial>=645mV,abort below630mV",
+    "phases": [
+      {
+        "stage": "500mA-idle",
+        "samples": 4,
+        "current_now_uA": [
+          205000,
+          0,
+          0,
+          0
+        ],
+        "current_avg_uA": [
+          203409,
+          212350,
+          211819,
+          211951
+        ],
+        "manual_IADC_uA": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "charge_delta_uAh": 553,
+        "interval_s": 9.066538,
+        "counter_average_current_uA": 219576.6,
+        "thermistor_mV": [
+          658.0,
+          658.0,
+          658.0,
+          658.0
+        ],
+        "charger_reported_status": [
+          "Discharging"
+        ],
+        "charger_reported_health": [
+          "Overheat"
+        ]
+      },
+      {
+        "stage": "100mA-load",
+        "samples": 6,
+        "current_now_uA": [
+          -198796,
+          -211666,
+          -203888,
+          -199814,
+          -208055,
+          -249351
+        ],
+        "current_avg_uA": [
+          -207106,
+          -206393,
+          -217774,
+          -221155,
+          -258008,
+          -220740
+        ],
+        "manual_IADC_uA": [
+          -204444,
+          -232870,
+          -243703,
+          -234351,
+          -208611,
+          -213240
+        ],
+        "charge_delta_uAh": -871,
+        "interval_s": 15.089037,
+        "counter_average_current_uA": -207806.5,
+        "thermistor_mV": [
+          656.0,
+          656.0,
+          655.0,
+          655.0,
+          655.0,
+          655.0
+        ],
+        "charger_reported_status": [
+          "Discharging"
+        ],
+        "charger_reported_health": [
+          "Overheat"
+        ]
+      },
+      {
+        "stage": "500mA-recovered",
+        "samples": 4,
+        "current_now_uA": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "current_avg_uA": [
+          1548,
+          1550,
+          2066,
+          1549
+        ],
+        "manual_IADC_uA": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "charge_delta_uAh": 5,
+        "interval_s": 9.091467,
+        "counter_average_current_uA": 1979.9,
+        "thermistor_mV": [
+          658.0,
+          658.0,
+          658.0,
+          659.0
+        ],
+        "charger_reported_status": [
+          "Discharging"
+        ],
+        "charger_reported_health": [
+          "Overheat"
+        ]
+      }
+    ],
+    "restored_input_budget_uA": 500000,
+    "charger_V_I_temperature_thresholds_changed": false,
+    "interpretation": "Both current sources respond under discharge; source measurements and counter share hardware/calibration and do not establish independent electrical accuracy."
+  },
+  "BATFET_investigation": {
+    "read_only_observer": "52 bytes/22 fixed reads, including charger RT,battery temperature/BATFET status and sample controls; no register writes or IRQ request",
+    "native_precomparison": "10 USB-idle sets with raw BATFET reported open and manual/BMS near0; a later65-set discharge-to-USB-bypass run does not reproduce the large steady discrepancy",
+    "stock_comparison": "Six RAM-stock sets report Charging/Good and BATFET closed; no disk filesystems mounted. Operating state differs from native idle, so this is not a matched charging-stop comparison.",
+    "guarded_polling_attempt": "Counter unavailable/live-current branch test encounters raw FET state versus cached-property disagreement; no successful guard qualification claimed",
+    "IRQ_refresh_attempt": "100-events/second guard aborts; BMS IRQ/work/supply unloaded",
+    "controlled_observer": [
+      {
+        "stage": "no-poll-no-refresh-baseline",
+        "events": 13616,
+        "seconds": 2.0025003740000784,
+        "events_per_second": 6799.499354300478
+      },
+      {
+        "stage": "IRQ-register-readback",
+        "FET_RT": false,
+        "edge_mode": true,
+        "high_polarity": true,
+        "low_polarity": true
+      },
+      {
+        "stage": "cleanup",
+        "observer_unloaded": true
+      }
+    ],
+    "controlled_variant_module": {
+      "sha256": "b742b9391ccde4f526711f22ca26a93b08293733374dc485a5e1956cbfbf8c1a",
+      "bytes": 159288,
+      "source_sha256": "0a7cf5fc7dd89d0735c65bef67feabc9098c7f819ab8a0304b877eb7001147a6",
+      "diagnostic_variant": "IRQ acknowledge only, both workqueue polling sites disabled, IRQ configuration readback added",
+      "unloaded": true
+    },
+    "IADC_current_debug_entries_next3s_after_observer_probe": 0,
+    "external_calibration_commits_next3s": 0,
+    "conclusion": "Automatic BMS polling and IRQ-triggered refresh are not necessary causes of the observed high rate. Electrical/controller cause remains unknown. Single raw-FET classification and this IRQ design are excluded from integration.",
+    "source_review": "experiments/pm8226-batfet-irq/README.md",
+    "exact_experiment_sources_reconstructed_from_patches": true
+  },
+  "stock_control_API_audit": {
+    "charging_enabled_0": "Vendor setter both disables charging and forces operation on battery; cannot alone reproduce USB-powered idle isolation.",
+    "charge_only_candidate": "Full pinned power_supply_sysfs.c maps factory bms/charge to at_chg_status_store -> chg_status_set(0); BMS factory property list exposes it. No force-run-on-battery. Runtime presence/writability and controlled stop/restart still untested.",
+    "control_write_performed": false
+  },
+  "limits": [
+    "Independent current measurement was not performed; do not label either source electrical ground truth.",
+    "A background/current disagreement and counter trend do not alone establish its physical cause.",
+    "Current API response passes; complete gauge/capacity, temperature/charger policy and whole-cycle integration acceptance remain open.",
+    "No raw BATFET IRQ or isolation guard is shipped.",
+    "No repartition or upstream submission occurred."
+  ],
+  "return_to_installed_r4": {
+    "normal_installed_r4_boot": true,
+    "new_boot_id_verified_privately": true,
+    "kernel_release": "6.18.59",
+    "kernel_build": 5,
+    "kernel_taint": 0,
+    "diagnostic_modules_absent": true,
+    "packaged_ADC_modules_restored": true,
+    "display": "msmdrmfb",
+    "four_display_controls_auto": true,
+    "upower_and_tinydm_active": true,
+    "charger_thresholds_changed": false,
+    "physical_UI_retest_claimed": false,
+    "reviewed_private_terminal_keyboard_screenshot": true
+  }
+}

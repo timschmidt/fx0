@@ -197,8 +197,8 @@
       "url": "https://github.com/timschmidt/fx0-linux",
       "branch": "integration/fx0-bms",
       "base_commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
-      "commit": "35743f1984fc7b9863224856dca0aa148e832be5",
-      "status": "Experimental native BMS/provider/binding/DT in RAM: firmware IIO lookup, supplier unbind/rebind, periodic calibration and discharge response pass. Idle charging-stop current/counter mismatch remains; do not promote. Installed signed r4 unchanged. Capacity, temperature/profile, accuracy and final ABI remain open."
+      "commit": "31061619c6a1ec6579b07ecbd3303614899d116b",
+      "status": "Experimental native BMS with separate IADC CURRENT_NOW and BMS CURRENT_AVG: firmware lookup, provider lifetime, periodic calibration,33getter cases and bounded RAM response pass. Raw BATFET guard/IRQ experiments rejected (~6799IRQ/s with polling/refresh disabled). Background-counter discrepancy, accuracy, temperature/profile/capacity remain open. Installed signed r4 unchanged."
     }
   ]
 }

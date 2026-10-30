@@ -34,7 +34,11 @@ README Git blob is `0963954a844106b3cd1c61d1268b899d320d9aab`.
 It is historical platform code, not proof of this unit's wiring, firmware
 compatibility, redistribution rights or an acceptable modern upstream ABI.
 The checked-out Fx0 vendor sensor DTS is empty and its tree does not contain
-that IIO driver, so it does not resolve the physical control path.
+that IIO driver, so it does not resolve the physical control path. Inspection of
+the privately preserved stock boot DT finds `qcom,msm-adsp-sensors` and no direct
+MPU6515 compatible. Investigate ADSP sensor ownership/transport before AP bus
+access. This node is a topology lead, not identification of the connected IMU,
+proof that the node is active, or verification of the DMP interrupt route.
 
 [Plan section 6.1](bringup-plan.md#61-mpu-6515m-dmp-access-and-interrupt-wake)
 requires separate raw-data, DMP execution/output and actual DMP-event suspend-wake
