@@ -51,9 +51,12 @@ boot/modules/configuration and the old APK are verified on two host filesystems.
 See [installed r1 evidence](evidence/2026-10-29-native-r1-installed-boot.json).
 A native Wayland terminal and on-screen keyboard now work with Pixman software
 rendering. Both touch axes need inversion; the board-DT correction is physically
-confirmed in a RAM boot with identity compositor calibration. A signed r2 package
-is being prepared to make it persistent. See [GUI and touch evidence](evidence/2026-10-29-native-wayland-console.json).
-The full Sxmo interface, GPU, default unattended boot and final update/recovery
+confirmed in a RAM boot with identity compositor calibration. The signed r2 package is installed,
+boots from eMMC and passes the same physical display/keyboard test. See [GUI and touch evidence](evidence/2026-10-29-native-wayland-console.json).
+The first full Sxmo session supports typing and menu gestures, but bottom-edge
+keyboard gestures remain open. Missing fuel-gauge telemetry makes UPower log NaN
+percentages and request a normal shutdown; the full session is held stopped while
+that defect is addressed. GPU, default unattended boot and final update/recovery
 qualification remain open.
 
 Native CCI now reads the separate camera EEPROM: a short read and two full 64 KiB

@@ -788,3 +788,56 @@ an installed boot are still required for persistent correction.
 The test fixture and inspected generic-prompt screenshot are public under
 diagnostics/native-wayland-console and evidence/2026-10-29-native-wayland-console.*.
 Full logs, input captures and boot data remain private.
+
+
+### First full Sxmo session and incomplete battery telemetry
+
+The packaged Sxmo session starts through normal TinyDM with Pixman, scale1.5,
+idle/suspend disabled and unsupported audio/modem integration disabled for this
+test. The owner confirms typing, touch and horizontal gestures opening menus.
+Bottom-edge keyboard open/close does not pass; gesture diagnosis remains open.
+The expected missing lg,madai device-profile notice remains visible.
+
+The system then returns to lk2nd. Retained console bytes are corrupted; raw
+ramoops and LK logs are saved privately. Recovery uses the already verified
+DT87 RAM image and leaves the UI first-start gate closed. The persistent journal
+identifies a normal power-off requested by upowerd at21:02:09. UPower repeatedly
+rejects a NaN percentage before requesting shutdown. The only battery-class
+supply is smbb-bif: present/status/health/design minimum exist, but capacity,
+voltage_now and charge/energy measurements are absent. Native fuel-gauge and
+charging policy are still unimplemented. This establishes a userspace-triggered
+shutdown; it does not prove the battery was physically empty or qualify its
+state of charge. Do not bypass thermal or low-voltage protections to hide it.
+
+Before r2, boot files, native r1 modules, configuration, exact signed r1 APK and
+raw boot/GPT fingerprints are backed up and verified on both host filesystems.
+Both GPT copies and raw boot still match their earlier fingerprints. The r2
+source builds in the existing root-owned pmbootstrap chroot; package export
+is automatic when that build finishes.
+
+
+### Native r2 installed filesystem boot
+
+The signed r2 build completes and exports automatically. Its DTB exactly matches
+the physically confirmed RAM orientation candidate. Abuild still embeds `-dirty`
+for the recipe commit despite the clean committed host tree; external hashes and
+that limitation are retained. Trusted verification and a one-package upgrade dry
+run pass. Normal APK/kmod/mkinitfs/boot-deploy processing succeeds. A final wrapper
+assertion fails because the manual native16 fallback entry is absent; old boot
+files/modules remain. Restoring only the saved entry repairs the postcheck without
+repeating the package transaction. Generator support and fallback rehearsal remain
+open. Readback verifies the new kernel/DTB and initramfs, unchanged raw boot/GPTs
+and preserved old fallback files.
+
+Normal reboot, log capture and selected lk2nd continue boot r2 from eMMC. A new
+boot ID, both live DT axis flags, persistent ext4 modules, msmdrmfb, taint0 and
+automatic controls for all four display devices are verified. The minimal Wayland
+console starts while full Sxmo/UPower stay stopped. The owner confirms the visible text/keyboard and correct taps on both sides in
+this installed boot.
+
+Separately, a GPIO-button DT candidate follows the stock source and GPIO inventory:
+volume down/home/volume up on106/107/108, active low, 15ms debounce, default pull-up
+and sleep bias disabled. W=1 DTB, GPIO-keys schema and checkpatch pass. Source
+d80fe9931 is published on integration/fx0-buttons. Its RAM test image uses the
+matched r2 kernel and initramfs. Physical button and wake tests are still pending;
+the installed r2 DTB does not include this candidate.

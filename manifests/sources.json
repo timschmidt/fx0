@@ -79,7 +79,7 @@
       "url": "https://github.com/timschmidt/fx0-pmaports",
       "branch": "integration/fx0-v26.06",
       "base_commit": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
-      "status": "Native 6.18.59-r2 recipe for physically validated DT orientation; source archive and kconfig verified, build/install pending. Native r1 installed and booted.",
+      "status": "Signed native r2 built, installed and booted from eMMC; both live axis flags, taint0, native console/ext4 modules verified. Minimal UI physical check passes; embedded recipe metadata -dirty limitation recorded externally.",
       "commit": "f50eb689393d4022958b64ec89e162436f0b9527"
     },
     {
@@ -148,7 +148,14 @@
       "url": "https://github.com/timschmidt/fx0-linux",
       "branch": "integration/fx0-touch-orientation",
       "commit": "87d953b4a0ce9594a6a438579c1d2a489faaa00b",
-      "status": "Two standard RMI-F12 axis inversions; DTB/schema/checkpatch pass; RAM boot with native r1 and identity compositor calibration physically confirmed. r2 package persistence pending."
+      "status": "DT/schema/checkpatch and RAM physical input pass; native r2 signed package installed and eMMC boot verifies both live inversion properties. Physical installed display/keyboard/tap check passes."
+    },
+    {
+      "name": "linux-buttons",
+      "url": "https://github.com/timschmidt/fx0-linux",
+      "branch": "integration/fx0-buttons",
+      "commit": "d80fe99314eb2499c9e04e32468ea5eafbc9e758",
+      "status": "Stock GPIO wiring/default/sleep pulls described; W=1 DTB, schema and checkpatch pass. RAM image ready, physical events/wake pending. Not in installed r2."
     }
   ]
 }

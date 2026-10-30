@@ -68,7 +68,8 @@ differs semantically only by those two booleans. Its source is
 `87d953b4a0ce9594a6a438579c1d2a489faaa00b`, based on the tested476 integration.
 A RAM boot loads both properties with taint0 and restarts this session with
 identity compositor calibration. The owner confirms taps still match the
-displayed keys, including both keyboard sides. Do not combine the temporary matrix with the DTB
+displayed keys, including both keyboard sides. The same correction is now in the
+signed native r2 APK; an eMMC boot passes the physical text/keyboard/tap check. Do not combine the temporary matrix with the DTB
 inversions: that would apply the same correction twice.
 
 The full Sxmo session, GPU, default unattended boot, repeated/cold boot, suspend,

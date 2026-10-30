@@ -177,3 +177,27 @@ lk2nd and verify a changed boot ID and persistent module filesystem. The selecte
 `fastboot continue` path is tested here; default unattended boot and fallback
 selection still need qualification. The device's final update and consolidated
 storage path remain separate acceptance work.
+
+
+### Native r2 touch orientation update
+
+The r2 recipe at f50eb6893 uses Linux87d953b4, adding only the standard X/Y
+inversion properties to RMI Function12. DTB build/schema/checkpatch and Nura
+kconfig checks pass. The signed native APK's DTB matches the physically tested
+RAM candidate byte-for-byte. Its embedded abuild recipe commit still reads
+`-dirty` despite a clean committed host recipe; record this limitation alongside
+the external source/archive/recipe/APK hashes. Do not rewrite signed metadata.
+
+The trusted APK dry run selects one upgrade, r1 to r2. Normal installation and
+mkinitfs/boot-deploy complete. The final wrapper check catches the missing manual
+fallback label. Restore that preserved label only, rather than repeat the upgrade.
+The current generator replaces extlinux.conf and does not preserve manually added
+entries; update-safe fallback generation and a physical rehearsal remain required.
+Saved old boot files/module tree alone do not complete update/recovery acceptance.
+
+Readback verifies r2 kernel/DTB, matching-ABI initramfs, preserved initial-hold
+hooks and a safe 11,955,718-byte ramdisk. Raw boot and both GPT copies are unchanged.
+An eMMC filesystem boot through selected lk2nd continue reaches SSH, msmdrmfb,
+real ext4 modules, both live inversion flags and taint0. Minimal Wayland is used
+for the installed touch check while the separate UPower/battery defect is open.
+See the r2 installed-boot evidence for exact hashes and remaining gates.

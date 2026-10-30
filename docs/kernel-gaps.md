@@ -51,7 +51,7 @@ The Fx0's SMEM is at 0x0fa00000, not the inherited 0x03000000. Stock DT, the fir
 
 Preserve the complete stock memory holes: 0x08000000–0x0f500000 and 0x0fa00000–0x0ff00000. Reserving only SMEM and selected remote processors was insufficient under memory pressure. The extra four MiB after SMEM must remain unavailable to the allocator. With the full holes reserved, two 1 GiB reads match; broader memory/thermal/soak testing remains open.
 
-The stock charging code uses the LGE thermistor conversion table and software derating. Generic SMBB normal comparator limits report Overheat near a stock-table estimate of 34 °C. The extended-range flag explicitly requires external voltage/current policy, so enabling that flag alone is not a valid completion. Port and test the actual policy and battery reporting.
+The stock charging code uses the LGE thermistor conversion table and software derating. Generic SMBB normal comparator limits report Overheat near a stock-table estimate of 34 °C. The extended-range flag explicitly requires external voltage/current policy, so enabling that flag alone is not a valid completion. Port and test the actual policy and battery reporting. The first full Sxmo session also exposes missing fuel-gauge telemetry: smbb-bif has no capacity/voltage_now/charge/energy fields; UPower logs NaN percentages and requests a normal power-off. Native BMS support and correct handling of unavailable telemetry are prerequisites for reliable full UI operation. This failure is not evidence of a kernel panic or a measured empty battery.
 
 ## Native display IOMMU dependency
 

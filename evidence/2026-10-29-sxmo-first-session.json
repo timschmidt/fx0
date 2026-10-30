@@ -1,0 +1,46 @@
+{
+  "purpose": "First full Sxmo session and shutdown diagnosis",
+  "kernel": "Native r1 with RAM DT87 orientation candidate",
+  "renderer": "Pixman",
+  "owner_results": {
+    "typing_and_touch": true,
+    "horizontal_menu_gestures": true,
+    "bottom_edge_keyboard_open_close": false
+  },
+  "controls": {
+    "idle_disabled": true,
+    "suspend_disabled": true,
+    "audio_modem_UI_disabled_for_first_test": true,
+    "first_start_gate_retained": true
+  },
+  "shutdown": {
+    "normal_systemd_poweroff": true,
+    "requester": "upowerd",
+    "journal_time_local": "2026-10-29 21:02:09",
+    "preceding_error": "NaN percentage rejected repeatedly",
+    "charger_battery_supply": "smbb-bif",
+    "telemetry_absent": [
+      "capacity",
+      "voltage_now",
+      "charge_now/full",
+      "energy_now/full"
+    ],
+    "retained_console_corrupted": true,
+    "raw_retained_data_saved_private": true,
+    "battery_empty_not_established": true,
+    "kernel_panic_not_established": true
+  },
+  "recovery": {
+    "known_DT87_RAM_image_booted": true,
+    "SSH_recovered": true,
+    "native_framebuffer": "msmdrmfb",
+    "kernel_taint": 0,
+    "UI_held_stopped": true
+  },
+  "open": [
+    "Native battery/fuel-gauge support and charging policy",
+    "UPower unavailable-telemetry handling",
+    "Bottom-edge gestures",
+    "Fx0 Sxmo profile and complete interface qualification"
+  ]
+}
