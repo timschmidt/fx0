@@ -1166,3 +1166,42 @@ native non-VM BMS driver/binding with actual IIO firmware references, safe charg
 conversion and supplier lifetime handling. Stock-pack thermal/profile and charger
 policy follow; no native capacity or completed all-hardware bringup is claimed.
 See evidence/2026-10-30-bms-calibration-epoch.json.
+
+## October 30: required MPU-6515M DMP wake and native BMS prototype
+
+The owner requires MPU-6515M driver support, DMP access and DMP interrupt wake.
+Plan section6.1 and separate hardware acceptance rows now require verified
+silicon/topology, firmware provenance/execution/FIFO output, real system suspend,
+a causally identified retained DMP event, at least20 consecutive DMP wakes and
+battery standby/false-wake evidence. Raw IIO support alone is insufficient.
+Linux6.18.59 has MPU6515 matching/raw support but no DMP loader in the audited
+directory. A pinned historical InvenSense implementation is a reference, not
+proof of this unit's wiring or firmware compatibility. These gates are unverified.
+
+Four Linux candidate commits implement provider-owned protected calibration,
+a native non-VM BMS binding/driver and Fx0 IIO firmware references. The source
+is published at35743f198 on integration/fx0-bms; installed r4 remains unchanged.
+The original r4 kernel/initramfs RAM-boots with the new DTB and unsigned modules
+(taint12288). Native power_supply registration, actual firmware-channel lookup,
+provider unbind/consumer teardown/rebind, periodic calibration and bounded
+discharge response pass. The driver supplies a relative counter, not capacity.
+UPower remains finite and ignores this incomplete interface without a false
+critical warning. Host tests pass20033 math,70 BMS I/O fault,34 calibration and
+27 reference/cache cases under sanitizers; ARM W=1 and targeted schema checks pass.
+
+A required longer observation finds an idle transition failure: after the
+charger's conservative overheat indication, manual current is0 while BMS current
+and counter accumulation still indicate about+155mA. Recalibration does not fix
+it. A bounded100mA input/single-core load yields about-0.21A on BMS and manual
+IADC, with counter-derived average-208.6mA; restoring500mA returns both near0.
+No kernel warnings or charger threshold changes. Stale sampling, analog coupling,
+BATFET state and missing transition configuration are hypotheses, not findings.
+This failure prevents promotion and current/counter acceptance. Next capture
+BATFET/charger/BMS freshness around a matched charging stop and compare stock.
+
+The first reboot request was blocked by the temporary validation inhibitor.
+Stopping an already-expired transient unit also returned an error; the helper
+now checks for active units before retiring them. The subsequent reboot request
+succeeds and lk2nd continues the installed r4. Final boot/UI verification is
+recorded in evidence/2026-10-30-native-bms-prototype.json after it completes.
+No repartition, package upgrade, upstream mail or submission occurs.

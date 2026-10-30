@@ -11,9 +11,11 @@ EXTRA = r'''
 struct fwnode_reference_args { int nargs; uint64_t args[2]; };
 '''
 MAIN = r'''
+static struct iadc_chip *cache_target;
+static void change_cache(void) { cache_target->gain=40000;cache_target->offset[1]=0; }
 int main(void)
 {
-    struct iadc_chip c = {0};
+    struct iadc_chip c = {.calibration_valid=true};
     const struct iio_chan_spec channels[] = {
         {.channel=0,.type=IIO_CURRENT}, {.channel=1,.type=IIO_CURRENT},
         {.channel=3,.type=IIO_VOLTAGE}, {.channel=5,.type=IIO_VOLTAGE},
@@ -51,7 +53,19 @@ int main(void)
         if (iadc_fwnode_xlate(&d,&spec)!=-EINVAL) return 5;
         cases++;
     }
-    printf("%d raw-reference/scale/translation cases pass\n",cases);
+    c.gain=47857;c.offset[1]=30000;c.rsense[1]=10000;
+    injected_sample=31000;cache_target=&c;unlock_hook=change_cache;
+    if (iadc_read_raw(&d,&channels[1],&value,&value2,IIO_CHAN_INFO_RAW)!=IIO_VAL_INT || value!=100000) return 6;
+    unlock_hook=NULL;cases++;
+    c.calibration_valid=false;
+    for (int i=0;i<2;i++) {
+        if (iadc_read_raw(&d,&channels[i],&value,&value2,IIO_CHAN_INFO_RAW)!=-EIO) return 7;
+        cases++;
+    }
+    injected_sample=32000;
+    if (iadc_read_raw(&d,&channels[2],&value,&value2,IIO_CHAN_INFO_RAW)!=IIO_VAL_INT || value!=32000) return 8;
+    cases++;
+    printf("%d raw-reference/scale/translation/cache/invalid-state cases pass\n",cases);
     return 0;
 }
 '''

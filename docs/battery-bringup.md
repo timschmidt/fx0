@@ -29,7 +29,8 @@ latched counters, matching repeated reads and independently verified release of
 the output hold. The companion sense configuration differs from stock, and trim
 values also change. Readback equality between conversion-ADC and companion trim
 banks does not establish that both addresses accept protected writes. Calibration
-ownership and the supported write path remain to be resolved.
+ownership and the supported write path were unresolved at that diagnostic stage;
+the native prototype below implements provider-owned writes at the primary IADC.
 
 Three focused commits on
 [integration/fx0-bms](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-bms)
@@ -44,7 +45,8 @@ The follow-up deec41b85 corrects the two new battery inputs to standard IIO
 millivolts, using a fractional value for absolute calibration. A consumer scaling
 by 1000 retains microvolt precision. Its 84 actual-callback/core-conversion cases
 and RAM reads pass; legacy channels retain their previous interfaces. Firmware
-consumer lookup and external voltage accuracy remain unqualified.
+consumer lookup was not exercised by those diagnostics; the native prototype
+below now verifies it. External voltage accuracy remains unqualified.
 
 Stock uses extended hardware comparator limits plus the LG software temperature
 policy. At a nominal 1.8 V reference, the LG table maps the normal 35%/70% limits
@@ -81,6 +83,55 @@ stopped counter state is not established. The 238 actual-helper cases include re
 behavior, rollback and bus faults. Counter contents are intentionally reset only
 in that explicit configuration-epoch test; they cannot be restored. Routine
 snapshot reads never reset them. See [calibration/epoch evidence](../evidence/2026-10-30-bms-calibration-epoch.json).
+
+## Native measurement prototype
+
+Candidate
+[`35743f1984fc7b9863224856dca0aa148e832be5`](https://github.com/timschmidt/fx0-linux/commit/35743f1984fc7b9863224856dca0aa148e832be5)
+adds provider-owned calibration, a binding, the actual non-VM BMS driver and Fx0
+firmware references as four focused commits. It is RAM-tested with the installed
+r4 kernel/initramfs and unsigned candidate modules; test taint is 12288. The
+installed package and boot files are unchanged. This is experimental source,
+not a promoted package or a submission-ready gauge.
+
+The driver registers `pm8226-bms`, reads voltage/current and a relative charge
+counter through actual firmware-resolved IIO channels, and uses managed supplier
+links. Unbinding the IADC provider removes the consumer before releasing provider
+resources; rebinding recovers the consumer and starts a new counter epoch. A
+five-minute periodic calibration runs successfully. Optional temperature is
+implemented but not wired or physically tested; capacity and remaining charge
+are deliberately absent. UPower remains finite with no critical warning and
+continues to treat this measurement-only interface as incomplete.
+
+The host checks cover 20,033 arithmetic cases, 70 actual BMS I/O-helper fault
+cases, 34 actual provider calibration/rollback cases and 27 reference/cache
+cases under ASan/UBSan. ARM LLVM22 W=1 module builds, checkpatch and targeted
+binding/DTB checks pass. These do not replace full upstream binding checks,
+subsystem ABI review or physical accuracy measurements.
+
+**Unresolved transition failure:** after charging stops under the unchanged
+conservative comparator, manual IADC current becomes zero while BMS current
+remains about +155 mA and the relative counter continues accumulating that
+suspect value. Recalibration does not resolve it. This observation does not
+establish whether the cause is stale sampling, analog coupling, BATFET state or
+another missing configuration/transition requirement.
+
+A subsequent bounded 100 mA input-budget/single-core load produces BMS current
+about -190 to -222 mA versus manual IADC about -185 to -212 mA. The counter-derived
+average is -208.6 mA. Restoring 500 mA input returns manual current to zero and
+BMS current to about -0.5 to -1.0 mA. No kernel warning occurs, and no charger
+voltage/current/temperature threshold changes. This qualifies discharge response
+and exposes a charging-stop defect; it does not qualify general current accuracy
+or reliable accumulated charge. Keep this driver outside the installed package
+until the discrepancy is understood and the affected transition tests pass.
+
+Next, record BATFET/charger state alongside BMS sample freshness around an actual
+charging stop, compare the stock driver's behavior under matching conditions,
+and determine the required PM8226 sampling/transition handling. Preserve raw
+evidence privately and reject suspect gauge data during further development.
+Complete pack identification, temperature/fault handling, compensation and
+capacity work before claiming fuel-gauge or charging acceptance. See the
+[native prototype evidence](../evidence/2026-10-30-native-bms-prototype.json).
 
 ## Implementation sequence
 

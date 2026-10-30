@@ -1,0 +1,199 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Native non-VM PM8226 BMS prototype, provider ownership, firmware routing and functional limits",
+  "overall": "EXPERIMENTAL; idle charging-stop discrepancy prevents promotion and acceptance",
+  "source": {
+    "repository": "https://github.com/timschmidt/fx0-linux",
+    "branch": "integration/fx0-bms",
+    "base": "deec41b8592e4c484c26bd3d9784a60e4ee11dae",
+    "commit": "35743f1984fc7b9863224856dca0aa148e832be5",
+    "provider_commit": "fb2fe9085cc1b48a1ab5e55dbb10cddd7a5e9508",
+    "binding_commit": "1ad59a598473f2cb03d92ca4c9e38c46b50c6ccb",
+    "driver_commit": "d362e9bee0bbb573621521e0c17ba5a939756c4e",
+    "native_driver_sha256": "b44c4b8c319b0a2beb201146c1ee85e4c43ffca679af23fb375c915b043add2d"
+  },
+  "RAM_test": {
+    "kernel": "6.18.59 installed r4 build5",
+    "kernel_source": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+    "candidate_DTB_sha256": "b63db5a41e7c80097e5834359c2599f790541451e128064a92efcce35d62924e",
+    "image_sha256": "d1a9d3f0ec7c8e2eecb8913ea1a69ed8c0140d5afb75ed2c8d76da6d020fab97",
+    "image_bytes": 17475584,
+    "candidate_modules": {
+      "iadc": {
+        "bytes": 146988,
+        "sha256": "f6e971629ef417b5e22510a938f485be5417a0d19cdc063c535b2a5004950fde"
+      },
+      "vadc": {
+        "bytes": 156932,
+        "sha256": "d9d6d5a9fb729b07353b496eca9efc25f5fa1cad834c841f3f18b305845b9571"
+      },
+      "bms": {
+        "bytes": 156284,
+        "sha256": "2fa4b3f96b7a9d4eb6eebc2eacf1c89307b43b436e80990ad238d9cf121618c8"
+      }
+    },
+    "kernel_taint_after_unsigned_modules": 12288,
+    "persistent_package_or_boot_image_changed": false,
+    "native_temperature_wired": false,
+    "fake_capacity_or_charge_now": false
+  },
+  "host_checks": {
+    "ARM_LLVM": "22.1.3 W=1 external module builds PASS",
+    "math_actual_function_cases": 20033,
+    "native_IO_actual_helper_cases": 70,
+    "provider_transaction_actual_helper_cases": 34,
+    "IADC_reference_cache_cases": 27,
+    "ASan_UBSan": "PASS",
+    "checkpatch": "IADC patch and native BMS C file: 0 errors, 0 warnings",
+    "binding_document_validation": "PASS",
+    "compiled_DTB_targeted_validation": "PASS with common power-supply schema included",
+    "full_upstream_dt_binding_check": "NOT RUN"
+  },
+  "physical_checks": {
+    "firmware_IIO_consumer_resolution": "PASS",
+    "native_power_supply_registration": "PASS",
+    "provider_unbind_unbinds_consumer_first": "PASS",
+    "provider_rebind_recovers_consumer": "PASS with a new driver/counter epoch",
+    "sys_calibration_noop_and_invalid_request": "PASS",
+    "calibration_commit_boot_seconds": [
+      265.172266,
+      567.613767,
+      870.002338,
+      959.216723,
+      1261.592019,
+      1283.189675
+    ],
+    "periodic_calibration": "Observed five-minute worker calibration before and after supplier rebind",
+    "UPower": "Active, finite values and no critical warning; measurement-only battery is ignored because capacity/remaining-charge data are absent",
+    "kernel_WARNING_BUG_Oops_panic_lines": 0
+  },
+  "bounded_response_test": {
+    "CPU_load": "One sha256sum worker with RuntimeMaxSec18; input budgets500/100/500mA",
+    "guard": "Thermistor initial >=645mV and abort below630mV; original conservative charger protections unchanged",
+    "initial_Good_only_attempt": "Stopped before CPU load when charger reported Overheat; supplier lifetime test had already passed",
+    "repeat": "Allows the existing conservative Overheat indication while enforcing the independent thermistor-voltage bound; does not alter charger thresholds",
+    "phases": [
+      {
+        "stage": "500mA-idle",
+        "sample_count": 4,
+        "BMS_current_uA": [
+          154941,
+          155183,
+          154989,
+          155135
+        ],
+        "manual_IADC_current_uA": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "counter_delta_uAh": 390,
+        "interval_s": 9.058731,
+        "counter_average_current_uA": 154988.6,
+        "thermistor_voltage_mV": [
+          649.0,
+          649.0,
+          650.0,
+          650.0
+        ],
+        "charger_health": [
+          "Overheat"
+        ]
+      },
+      {
+        "stage": "100mA-load",
+        "sample_count": 6,
+        "BMS_current_uA": [
+          -222430,
+          -204906,
+          -207235,
+          -205231,
+          -207623,
+          -190180
+        ],
+        "manual_IADC_current_uA": [
+          -204537,
+          -203518,
+          -200370,
+          -212314,
+          -205555,
+          -184907
+        ],
+        "counter_delta_uAh": -874,
+        "interval_s": 15.08369,
+        "counter_average_current_uA": -208596.2,
+        "thermistor_voltage_mV": [
+          648.0,
+          648.0,
+          648.0,
+          648.0,
+          648.0,
+          648.0
+        ],
+        "charger_health": [
+          "Overheat"
+        ]
+      },
+      {
+        "stage": "500mA-recovered",
+        "sample_count": 4,
+        "BMS_current_uA": [
+          -1034,
+          -1034,
+          -1033,
+          -516
+        ],
+        "manual_IADC_current_uA": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "counter_delta_uAh": -2,
+        "interval_s": 9.07362,
+        "counter_average_current_uA": -793.5,
+        "thermistor_voltage_mV": [
+          650.0,
+          651.0,
+          651.0,
+          651.0
+        ],
+        "charger_health": [
+          "Overheat"
+        ]
+      }
+    ],
+    "input_budget_restored_uA": 500000,
+    "voltage_current_temperature_charge_thresholds_changed": false
+  },
+  "open_failure": {
+    "idle_charging_stop": "BMS about+155mA and counter accumulation while manual IADC is0; recalibration does not resolve. Input/load transition restores agreement.",
+    "cause": "NOT ESTABLISHED; possible sampling/transition/analog/BATFET effects require diagnosis",
+    "impact": "Current accuracy and accumulated-charge validity are not accepted. No signed package promotion.",
+    "next": "Capture BATFET/charger and BMS freshness around a matched charging stop; compare stock behavior before implementing verified transition handling."
+  },
+  "limits": [
+    "Shared sense/calibration means agreement is not independent absolute-accuracy evidence.",
+    "Relative counter is a new driver/pack epoch, not remaining battery charge or capacity.",
+    "Long unsampled intervals, counter reset/OCV transitions, thermal faults, compensation, pack profile and system suspend remain unqualified.",
+    "No upstream submission or personal DCO certification performed."
+  ],
+  "restored_installed_r4": {
+    "normal_installed_r4_boot": true,
+    "new_boot_id_verified_privately": true,
+    "kernel_release": "6.18.59",
+    "kernel_build": 5,
+    "kernel_taint": 0,
+    "diagnostic_modules_absent": true,
+    "packaged_ADC_modules_restored": true,
+    "display": "msmdrmfb",
+    "four_display_controls_auto": true,
+    "upower_and_tinydm_active": true,
+    "charger_thresholds_changed": false,
+    "physical_UI_retest_claimed": false,
+    "reviewed_private_terminal_keyboard_screenshot": true,
+    "configured_USB_input_budget_uA": 500000,
+    "charger_health": "Good"
+  }
+}

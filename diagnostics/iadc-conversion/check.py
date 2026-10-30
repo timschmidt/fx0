@@ -13,6 +13,7 @@ import tempfile
 
 STUBS = r'''
 #include <stdint.h>
+#include <stdbool.h>
 #include <limits.h>
 #include <errno.h>
 #include <stdio.h>
@@ -26,13 +27,14 @@ typedef uint16_t u16;
 #define IIO_CHAN_INFO_SCALE 1
 #define IIO_VAL_INT 1
 #define IIO_VAL_INT_PLUS_MICRO 2
-struct iadc_chip { int lock; int dev; u16 offset[2]; u16 gain; uint32_t rsense[2]; };
+struct iadc_chip { int lock; int dev; u16 offset[2]; u16 gain; uint32_t rsense[2]; bool calibration_valid; };
 struct iio_chan_spec { int channel; int type; };
 struct iio_dev { struct iadc_chip *chip; const struct iio_chan_spec *channels; int num_channels; };
 static u16 injected_sample;
 #define iio_priv(d) ((d)->chip)
 #define mutex_lock(p) ((void)(p))
-#define mutex_unlock(p) ((void)(p))
+static void (*unlock_hook)(void);
+#define mutex_unlock(p) do { (void)(p); if (unlock_hook) unlock_hook(); } while (0)
 #define dev_dbg(...) ((void)0)
 static int iadc_do_conversion(struct iadc_chip *chip, int channel, u16 *sample)
 { (void)chip; (void)channel; *sample = injected_sample; return 0; }
@@ -78,7 +80,7 @@ def main():
             failures++;
         }}''')
     main_c = '''int main(void) {
-    struct iadc_chip c = {0}; struct iio_dev d = {.chip = &c};
+    struct iadc_chip c = {.calibration_valid=true}; struct iio_dev d = {.chip = &c};
     struct iio_chan_spec channel = {.channel = 0, .type = IIO_CURRENT};
     int value, value2, result, failures = 0;
     for (channel.channel = 0; channel.channel < 2; channel.channel++) {
