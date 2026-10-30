@@ -1439,3 +1439,44 @@ new users, so its generic fault fixes remain independent contributions. Early
 profile/sensor gating, faults, warm current/voltage behavior, suspend protection,
 gauge accuracy, capacity, replacement and the rest of hardware acceptance remain
 open. See [profile evidence](../evidence/2026-10-30-battery-profile-handoff.json).
+
+## October 30: verified charger-control foundation
+
+The separate Linux `integration/fx0-charge-guard` branch adds a charger mutex,
+independent setup/user/fault restrictions, readback of enable/limit writes and a
+managed inhibition attempt after later probe failures or removal. A failed bus
+operation can follow an effective write; the recovery therefore forces another
+charge-only write and verifies it while retaining the original error and fault.
+User auto cannot clear the fault. Cached limits remain unavailable until
+reinitialization after a control fault, rather than returning an untrusted old
+value. Persistent bus failure can still prevent physical inhibition.
+
+At source `25d7524a6fbb3008c7c72be53f1cd5c38ecc2d68`, 6,242 actual-function
+ASan/UBSan cases pass, including 2,000 concurrent requests. Five deliberately
+broken implementations fail assertions. The complete ARM driver object passes
+W=1 and the full zImage builds without diagnostics. Strict no-signoff style
+checks report zero errors/warnings/checks; no new DCO certification or upstream
+submission is claimed. The branch is published separately from the installed
+package and submission branches.
+
+Two-filesystem preflight preserves exact original boot files, bootloader prefix,
+GPT regions and RAM candidate. The candidate boots with verified GNU build ID
+e6323421f4d4023f2a3376c2d1a07fdf14a3c134 and original r4 DTB/initramfs. Three
+inhibit/resume cycles, six unchanged limit writes, three unsupported mode strings
+and two negative limits pass with USB online and the actual 500 mA budget
+unchanged. BTC remains 0x81; forced-battery and reference settings are preserved.
+The RAM observer is used with force_on=0, and taint is explicitly 12288.
+
+Inhibited status is Not charging, whereas auto remains Discharging/Good. Live
+IADC stays 22.2 mA in both states. This qualifies control-register/API behavior,
+not a charging-current response, electrical accuracy or state of charge. No
+bus error is injected on hardware. Full probe-error/cleanup execution is not
+covered by the extracted helper tests.
+
+The controller retains reset logs and returns to installed r4 build5 with taint
+zero, active UPower/Sxmo and all four display controls automatic. Bootloader
+prefix and both GPT copies are byte-identical; ordinary OS writes are outside
+those comparisons. No persistent kernel/firmware install or repartition occurs.
+Early firmware gating, profile/sensor authorization, thermal hysteresis/derating,
+stale inputs, suspend, pack replacement and actual charging/gauge qualification
+remain open. See [evidence](../evidence/2026-10-30-smbb-charge-guard.json).

@@ -55,6 +55,13 @@ battery interface is qualified by that result. Charger-local policy with strict
 profile/sensor initialization is the selected architecture; the legacy Charger
 Manager will not be expanded for this port.
 
+The next charger-control foundation now has verified writes, separate setup/
+user/fault restrictions, host fault/concurrency tests and three RAM device
+cycles. This does not qualify actual charging response: IADC was unchanged
+across those cycles. Complete temperature/profile/stale-sample/suspend policy
+and the early firmware gate before changing the hardware comparator window.
+See [the detailed battery work](battery-bringup.md#verified-control-foundation).
+
 ## Technical baseline
 
 As researched on October 29, 2026, Nura is the renamed postmarketOS project and its latest stable release is v26.06. The Fx0 uses MSM8926 and the `armv7` architecture. The old `lg-madai` package uses Linux 3.4 and is archived in the inspected October 2026 pmaports snapshot. Nura also provides a generic `qcom-msm8226` package and shared APQ8026/MSM8226/MSM8926 kernel.

@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-30",
+  "source_branch": "integration/fx0-charge-guard",
+  "source_commit": "25d7524a6fbb3008c7c72be53f1cd5c38ecc2d68",
+  "source_base": "05bec5027f57dd80ae7edc38dcab225fb8327b81",
+  "driver_sha256": "6c04c727acbae21b1930641fbe7f4ab6718a08f110f1185a4d571afd21e8d492",
+  "RAM_image_sha256": "898ba0af5ff1b668917f58979ccc3242a67d88019680eb981be02e77f5deb93b",
+  "RAM_kernel_GNU_build_id": "e6323421f4d4023f2a3376c2d1a07fdf14a3c134",
+  "original_r4_DTB_and_initramfs": true,
+  "host": {
+    "actual_function_cases": 6242,
+    "concurrent_requests_included": 2000,
+    "ASan_UBSan": "PASS",
+    "negative_controls_rejected": 5,
+    "ARM_W1_driver_object": "PASS, zero diagnostics",
+    "full_ARM_zImage": "PASS, zero diagnostics",
+    "checkpatch_strict_no_signoff": "zero errors/warnings/checks",
+    "shared_builtin_symbol_CRCs_compared": 11666,
+    "changed_shared_symbol_CRCs": 0
+  },
+  "device": {
+    "three_inhibit_resume_cycles": true,
+    "six_unchanged_limit_writes_verified": true,
+    "unsupported_modes_rejected": 3,
+    "negative_limits_rejected": 2,
+    "original_mode_input_budget_and_BTC_preserved": true,
+    "no_fault_injection_on_device": true,
+    "samples": 19,
+    "conservative_BTC_register": "0x81",
+    "input_budget_unchanged_uA": 500000,
+    "observed_statuses": [
+      "Discharging",
+      "Not charging"
+    ],
+    "observed_health": [
+      "Good"
+    ],
+    "live_IADC_range_uA": [
+      22200,
+      22200
+    ],
+    "charging_current_response_qualified": false,
+    "taint_after_RAM_only_observer": 12288,
+    "IADC_accuracy_qualified": false
+  },
+  "normal_return": {
+    "installed_r4_build": 5,
+    "kernel_taint": 0,
+    "UPower_and_tinydm_active": true,
+    "four_display_controls_auto": true,
+    "bootloader_prefix_and_both_GPT_captures_identical": true,
+    "new_physical_UI_confirmation_claimed": false
+  },
+  "scope": [
+    "Host tests exercise helpers and battery callbacks, not complete probe or devm cleanup.",
+    "No bus fault was injected on the phone; persistent failure may prevent inhibition.",
+    "Fault restrictions need reinitialization. User auto cannot clear them.",
+    "No thermal/sample/profile/suspend policy or early firmware gate is implemented.",
+    "No BTC widening, permanent kernel/firmware install, stock restoration or repartition.",
+    "Normal OS writes mean no whole-eMMC identity claim. No current-accuracy or SOC claim."
+  ]
+}

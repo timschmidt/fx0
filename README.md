@@ -74,6 +74,12 @@ are verified; current capacity and a usable battery UI remain unavailable.
 The original firmware is restored afterward with matching bootloader/GPT
 readbacks. See [handoff evidence](evidence/2026-10-30-battery-profile-handoff.json).
 
+A further RAM candidate verifies charger control writes, serializes limit and
+enable changes, and prevents user auto from clearing an I/O fault. Host fault/
+concurrency tests and three physical control cycles pass. Thermal policy and
+the early firmware charge gate remain open; the conservative temperature window
+is unchanged. See [the control foundation](diagnostics/smbb-charge-guard/README.md).
+
 Stock inventory, 29 critical partition backups, GPT metadata and a separately
 verified 1 GiB original-system image are private. A complete **development-state**
 snapshot of the 15,758,000,128-byte eMMC user area and both 4 MiB boot areas passes

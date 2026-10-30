@@ -368,6 +368,39 @@ race and a client failure under masked activation. Complete handoff/daemon
 validation separately from the remaining policy and gauge work. See the
 [handoff diagnostic](../diagnostics/lk2nd-battery-handoff/README.md).
 
+### Verified control foundation
+
+The separate `integration/fx0-charge-guard` candidate holds charging off during
+native probe setup, serializes enable and battery-limit changes, and preserves
+independent initialization, user and latched I/O-fault votes. A user request for
+`auto` releases only the user vote. Enable and limit writes require readback;
+failed transactions trigger a separate inhibition attempt and do not publish a
+new cached limit. Limit getters reject the untrusted cache while a control fault
+is latched. The original error remains visible. Permanent bus loss can
+prevent that recovery, so a software vote is not proof of electrical inhibition.
+
+Its 6,242 actual-function ASan/UBSan cases include 2,000 concurrent requests,
+all initial control bytes/vote combinations, errors before/after writes, dropped
+writes, readback mismatch and limit rounding/clamping. Five deliberately broken
+variants fail the regression. The complete ARM driver object builds with W=1
+without diagnostics, and the full ARM zImage builds without diagnostics. RAM
+boot verifies the exact kernel build ID. Three inhibit/resume cycles, six
+unchanged limit writes and invalid mode/limit rejection pass with USB online,
+the actual 500 mA budget unchanged and BTC still 0x81. Inhibition reports
+`Not charging`; automatic mode reports `Discharging/Good`. Live IADC remains
+22.2 mA in both states, so this is a control-register/API pass, not a physical
+charging-current response qualification. See the
+[control diagnostic](../diagnostics/smbb-charge-guard/README.md) and
+[completed evidence](../evidence/2026-10-30-smbb-charge-guard.json). Installed r4
+returns with taint zero, UPower/Sxmo active, all four display controls automatic,
+and matching bootloader-prefix/GPT readbacks. Normal OS writes are not covered
+by those narrow comparisons.
+
+This candidate does not yet implement thermal/sample/profile/suspend votes or
+close the firmware interval before probe. Keep the conservative hardware BTC
+window and installed r4 package. Reinitialization is required after a latched
+control fault; managed cleanup is best effort if the bus remains unavailable.
+
 ## Implementation sequence
 
 1. Preserve exact current boot files, modules, package, configurations, raw boot
