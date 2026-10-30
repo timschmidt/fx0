@@ -35,14 +35,16 @@ Three focused commits on
 [integration/fx0-bms](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-bms)
 add IADC raw calibration references and calibrated VADC battery/thermistor voltage
 reads. Each passes a W=1 ARM module build and a brief RAM-only hardware test;
-the installed r4 package is unchanged. The existing VADC scaling path returns
+the installed r4 package is unchanged. The initial VADC patch retained
 microvolts for absolute calibration and millivolts for ratiometric calibration.
 The measured thermistor input is 660–661 mV, approximately 31.3°C under the vendor
 LG table; physical temperature accuracy is not yet qualified. A generic ADC
 thermal consumer must use lookup values in the actual input units.
-Resolve standard IIO processed-voltage ABI units before freezing the upstream
-series; preserving this legacy scaling is a development result, not final ABI
-qualification.
+The follow-up deec41b85 corrects the two new battery inputs to standard IIO
+millivolts, using a fractional value for absolute calibration. A consumer scaling
+by 1000 retains microvolt precision. Its 84 actual-callback/core-conversion cases
+and RAM reads pass; legacy channels retain their previous interfaces. Firmware
+consumer lookup and external voltage accuracy remain unqualified.
 
 Stock uses extended hardware comparator limits plus the LG software temperature
 policy. At a nominal 1.8 V reference, the LG table maps the normal 35%/70% limits
@@ -53,6 +55,32 @@ hysteresis. The madai configuration selects its V1_8 variant, including a 52°C
 transition. Enabling extended hardware range alone would omit those protections;
 native comparator settings remain conservative until the software policy and
 sensor-fault/wake behavior are implemented and tested.
+
+The subsequent configuration experiment proves the stock protected trim-write
+path at 0x3600. An attempted write at the apparent 0x3800 mirror fails, and the
+original controls/trim are restored exactly. Sense-only and trim-only phases
+separate their effects. A 2 ms conversion-delay experiment does not resolve the
+observed near-zero manual current and is not promoted. Under a configured
+500 mA USB supply, that near-zero battery current can reflect the supply powering
+the system; an actual input-budget/load transition is needed to test response.
+
+With USB temporarily limited to 100 mA and a bounded single-core load, battery
+voltage drops about 30 mV, manual IADC reports roughly -0.20 to -0.24 A and BMS
+VSENSE/counter increments respond with the opposite sign. The input limit returns
+to 500 mA afterward. Provisional BMS conversion and resistor-adjusted manual IADC
+agree around -0.2 A during that discharge window. They share calibration and sense
+hardware, so agreement is not external accuracy qualification. Charging/idle
+accuracy, compensation and capacity remain open.
+
+The stock counter restart after sense reconfiguration is also tested explicitly.
+Counters stay flat through the attempted restart with optimized regmap updates,
+despite zero control readback. Forced assertion/deassertion writes produce a new
+epoch with both counters advancing under load. Source inspection and a regression
+model identify how optimized deassertion can be skipped; the cause of the initial
+stopped counter state is not established. The 238 actual-helper cases include read-zero command
+behavior, rollback and bus faults. Counter contents are intentionally reset only
+in that explicit configuration-epoch test; they cannot be restored. Routine
+snapshot reads never reset them. See [calibration/epoch evidence](../evidence/2026-10-30-bms-calibration-epoch.json).
 
 ## Implementation sequence
 
@@ -76,11 +104,19 @@ sensor-fault/wake behavior are implemented and tested.
    errors. Serialize coherent snapshots using the documented output-hold bit;
    restore the previous control state even when a read fails. Do not clear
    coulomb counters merely to obtain telemetry.
+   Keep protected trim writes inside the IADC provider, serialized with conversions
+   and its software calibration cache. The BMS mirror is not a working write path.
+   Test supplier removal and consumer lifetime before freezing the interface.
 5. Validate signed 36-bit counter decoding, rollover and charge conversion with
    independent vectors and stock observations. Check raw battery voltage against
    calibrated VADC references, and establish the current direction relative to
    actual charging/discharging. Audit the board's effective resistance and vendor
    compensation rather than keeping the mainline external-channel 10 mΩ default.
+   Invert the measured BMS VSENSE/counter direction to the native positive-charging
+   convention, and keep CURRENT_NOW in µA and relative CHARGE_COUNTER in µAh.
+   Check 64-bit intermediate overflow, invalid gain and ambiguous counter rollover.
+   If configuration requires a counter restart, use forced command writes and
+   verify subsequent counting; zero command-register readback is insufficient.
 6. Expose real voltage, current, temperature and counter data through power_supply.
    Add capacity estimation only with an identified profile, valid initial OCV,
    appropriate rest/temperature handling and counter integration. Distinguish

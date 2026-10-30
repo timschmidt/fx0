@@ -1,0 +1,243 @@
+{
+  "date": "2026-10-30",
+  "purpose": "Battery voltage units, calibration write ownership, controlled load response and counter epoch qualification",
+  "installed_package_unchanged": "linux-postmarketos-qcom-msm8226-6.18.59-r4",
+  "linux_candidate": {
+    "repository": "https://github.com/timschmidt/fx0-linux",
+    "branch": "integration/fx0-bms",
+    "commit": "deec41b8592e4c484c26bd3d9784a60e4ee11dae",
+    "unit_fix_commit": "deec41b8592e4c484c26bd3d9784a60e4ee11dae",
+    "packaged": false
+  },
+  "voltage_units": {
+    "battery_inputs": "Standard IIO millivolts; absolute values use FRACTIONAL/1000, ratiometric values already millivolts",
+    "microvolt_precision": "iio_read_channel_processed_scale(...,1000) preserves absolute measurement precision",
+    "legacy_processed_and_raw_interfaces_changed": false,
+    "actual_callback_and_IIO_core_cases": 84,
+    "ASan_UBSan": "PASS",
+    "pre_fix_driver": "FAIL expected",
+    "ARM_W1_build": "PASS",
+    "RAM_sysfs_sampling": "PASS",
+    "firmware_consumer_routing": "NOT TESTED"
+  },
+  "configuration_diagnostic": {
+    "source": "diagnostics/pm8226-bms-configure/fx0-pm8226-bms-configure.c",
+    "source_sha256": "7a4c80a5daf05a5e45bcc86361557030a23f2d3841253b41c61595d6cfe1ee15",
+    "tested_final_modules": {
+      "iadc": {
+        "sha256": "f6bc053446f83833265dfda94c70f65706c605e6d116498f86cb31489e1553df",
+        "bytes": 139688
+      },
+      "vadc": {
+        "sha256": "d9d6d5a9fb729b07353b496eca9efc25f5fa1cad834c841f3f18b305845b9571",
+        "bytes": 156932
+      },
+      "snapshot": {
+        "sha256": "4cdb0afaa7db4e287b81575aeffefaa1f2f2654424a9827583dac914f2899e85",
+        "bytes": 155256
+      },
+      "configure": {
+        "sha256": "52459da383269f477a50d643023ff5522d54c8f7492165052563a49bddf2d519",
+        "bytes": 164848
+      }
+    },
+    "actual_helper_cases": 238,
+    "ASan_UBSan": "PASS",
+    "ARM_W1_build": "PASS",
+    "direct_IIO_read_API_used": true,
+    "firmware_IIO_lookup_tested": false,
+    "protected_trim_primary_0x3600": "PASS with changed trim and matching primary/companion readbacks",
+    "mirror_0x3800_write": "FAIL I/O error; exact original configuration restored; failed stage was not bus-traced",
+    "settings_restored_after_every_phase": true,
+    "charger_voltage_current_temperature_thresholds_changed": false,
+    "firmware_flash_or_calibration_storage_written": false
+  },
+  "isolated_experiments": {
+    "sense_only": "Manual IADC stayed about17.9mA in the observed USB-powered idle window",
+    "trim_only": "Manual IADC moved near0.5mA",
+    "sense_and_trim": "Manual IADC near0mA; refreshing cache alone did not explain the observed low current",
+    "added_2ms_conversion_delay": "No useful change; diagnostic-only hypothesis rejected, not in Linux candidate",
+    "scope": "These USB-powered observations do not establish absolute current; supply can carry system load."
+  },
+  "bounded_load": {
+    "source_budget_mA": [
+      500,
+      100,
+      500
+    ],
+    "CPU_load": "One sha256sum worker, systemd RuntimeMaxSec18 and CPUAccounting; approximately18CPU-seconds observed",
+    "safety_guard": "Stop load if thermistor voltage falls below630mV; charger protections unchanged",
+    "runtime_input_budget_restored": true,
+    "load_at_500mA": "Manual near0 battery current, no BMS sense transition observed; does not establish sensor failure",
+    "load_at_100mA": "Manual current responds around-0.20..-0.24A; independent battery voltage falls about30mV; BMS sense and counters respond with opposite sign",
+    "derived_final_samples": {
+      "sense_resistance_uohm": 10800,
+      "BMS_sign_inverted_to_positive_charging": true,
+      "source": "Vendor CC/VSENSE gain/time conversion; compensation omitted",
+      "samples": [
+        {
+          "stage": "configured-100mA-load",
+          "BMS_current_converted_uA": -212045,
+          "manual_IADC_resistor_adjusted_uA": -214815
+        },
+        {
+          "stage": "configured-100mA-load",
+          "BMS_current_converted_uA": -214442,
+          "manual_IADC_resistor_adjusted_uA": -210741,
+          "BMS_counter_average_uA": -213325
+        },
+        {
+          "stage": "configured-100mA-load",
+          "BMS_current_converted_uA": -211513,
+          "manual_IADC_resistor_adjusted_uA": -214352,
+          "BMS_counter_average_uA": -213340
+        },
+        {
+          "stage": "configured-100mA-load",
+          "BMS_current_converted_uA": -211912,
+          "manual_IADC_resistor_adjusted_uA": -213796,
+          "BMS_counter_average_uA": -218270
+        },
+        {
+          "stage": "configured-100mA-load",
+          "BMS_current_converted_uA": -212668,
+          "manual_IADC_resistor_adjusted_uA": -201389,
+          "BMS_counter_average_uA": -214798
+        },
+        {
+          "stage": "configured-100mA-load",
+          "BMS_current_converted_uA": -189740,
+          "manual_IADC_resistor_adjusted_uA": -196759,
+          "BMS_counter_average_uA": -213505
+        }
+      ],
+      "scope": "Load response and provisional conversion consistency only; no external accuracy or capacity qualification"
+    },
+    "qualification": "Cross-path load response and provisional conversion consistency. Both current paths share calibration/sense hardware; not external accuracy, idle/charging accuracy, temperature compensation or capacity qualification."
+  },
+  "counter_epoch": {
+    "requested_only_by_explicit_reset_epoch_option": true,
+    "volatile_counters_intentionally_reset": true,
+    "counter_contents_restorable": false,
+    "ordinary_snapshot_reads_reset_counters": false,
+    "sequence": "Assert clear bits7/6 at0x4043, wait100us, force deassertion; bounded retry and readback",
+    "optimized_update_attempt": "FAIL acceptance: counters already flat before, and remain flat through restart and load despite zero command readback",
+    "initial_stopped_state_cause": "NOT ESTABLISHED",
+    "regmap_skip_inference": "Source inspection and the read-zero command model show an optimized update can skip deassertion. No bus-write trace was captured. Forced writes recover counting on hardware.",
+    "forced_writes": "PASS: main and shadow counters change during configured idle, 100mA load and afterward",
+    "final_hardware_summary": {
+      "reset_epoch": true,
+      "counter_clear_readback_zero": true,
+      "idle-before": {
+        "IADC1_uA": [
+          21700,
+          21700,
+          21700,
+          21700
+        ],
+        "CC_first": 0,
+        "CC_last": 0,
+        "CC_changed": false,
+        "shadow_changed": false,
+        "VSENSE_distinct": 1
+      },
+      "configured-idle": {
+        "IADC1_uA": [
+          -3900,
+          -3900,
+          -3900,
+          -3900
+        ],
+        "CC_first": 0,
+        "CC_last": -29657,
+        "CC_changed": true,
+        "shadow_changed": true,
+        "VSENSE_distinct": 2
+      },
+      "configured-100mA-load": {
+        "IADC1_uA": [
+          -232000,
+          -227600,
+          -231500,
+          -230900,
+          -217500,
+          -212500
+        ],
+        "CC_first": 680155,
+        "CC_last": 4459160,
+        "CC_changed": true,
+        "shadow_changed": true,
+        "VSENSE_distinct": 4
+      },
+      "configured-after-load": {
+        "IADC1_uA": [
+          -3900,
+          -3900,
+          -3900,
+          -3900
+        ],
+        "CC_first": 4507306,
+        "CC_last": 4486212,
+        "CC_changed": true,
+        "shadow_changed": true,
+        "VSENSE_distinct": 2
+      }
+    },
+    "host_negative_regression": "Replacing forced epoch writes with optimized updates fails the latched-disable regression"
+  },
+  "current_convention": "BMS VSENSE/CC have opposite sign to manual IADC during the established discharge window. Invert for positive-charging CURRENT_NOW and matching relative charge integration.",
+  "final_native_boot": {
+    "normal_installed_r4_boot": true,
+    "new_boot_id_verified_privately": true,
+    "kernel_release": "6.18.59",
+    "kernel_build": 5,
+    "kernel_taint": 0,
+    "diagnostic_modules_absent": true,
+    "packaged_ADC_modules_restored": true,
+    "display": "msmdrmfb",
+    "four_display_controls_auto": true,
+    "upower_and_tinydm_active": true,
+    "charger_thresholds_changed": false,
+    "physical_UI_retest_claimed": false
+  },
+  "remaining": [
+    "Implement provider-owned, serialized calibration transaction and protect supplier/consumer lifetime",
+    "Implement native non-VM BMS driver/binding with real IIO firmware references",
+    "64-bit charge conversion, signed36-bit rollover/epoch handling and error tests",
+    "Generic ADC thermal path for the stock pack, runtime profile identification and charging guard/derating/hysteresis",
+    "USB configured/suspended/disconnected input negotiation",
+    "Capacity/OCV/profile, external accuracy and complete power/reliability acceptance"
+  ],
+  "upstream_submissions_sent": false,
+  "private_results": [
+    "local/bms-configuration-test-01",
+    "local/bms-configuration-test-02",
+    "local/bms-configuration-test-03",
+    "local/bms-configuration-test-04",
+    "local/bms-configuration-test-05",
+    "local/bms-configuration-test-06",
+    "local/bms-configuration-test-07",
+    "local/native47-r4-after-bms-diagnostics-02"
+  ],
+  "final_configured_USB_runtime": {
+    "samples": [
+      {
+        "input_limit_uA": 500000,
+        "status": "Charging",
+        "health": "Good"
+      },
+      {
+        "input_limit_uA": 500000,
+        "status": "Charging",
+        "health": "Good"
+      },
+      {
+        "input_limit_uA": 500000,
+        "status": "Charging",
+        "health": "Good"
+      }
+    ],
+    "automatic_negotiation_implemented": false
+  },
+  "source_as_built_matches_public_diagnostic": true
+}

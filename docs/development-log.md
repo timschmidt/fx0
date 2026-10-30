@@ -1104,3 +1104,65 @@ runtime configuration, not automatic negotiation. No charger voltage/current/
 temperature thresholds change. Installed r4 and its canonical source remain
 unchanged; the new IIO branch is public but not packaged or submitted upstream.
 See the coherent-stock-comparison and battery-adc-references evidence files.
+
+### Battery input units and calibration write ownership
+
+Linux deec41b85 corrects the two new battery voltage inputs to IIO millivolts.
+Absolute values use FRACTIONAL/1000 so a consumer can recover microvolt precision;
+ratiometric values already have millivolt units. The actual callback and IIO
+multiplication pass84 ASan/UBSan cases, while the earlier version fails. W=1 ARM
+compilation, patch checkpatch and RAM reads pass. Existing processed/raw interfaces
+are preserved; firmware consumer routing remains open.
+
+A separate bounded experiment saves the BMS sense controls and both mirrored
+trim readbacks, then applies the stock external-sense configuration and a measured
+zero reference through protected primary-IADC writes. The primary0x3600 path
+changes trim and passes readback; the attempted0x3800 mirror write fails with I/O
+error and exact original settings are restored. The failing bus transaction was
+not traced, so the precise failure stage is not claimed. The production driver
+must keep trim writes inside the IADC provider, serialized with conversions and
+its calibration cache. A mirror read is insufficient evidence of a writable API.
+
+Sense-only leaves the observed idle manual current about17.9mA; trim-only moves it
+near0.5mA, and both changes near0mA. Reloading the ADC cache does not explain the
+small current. An added2ms conversion delay also makes no useful change and is
+rejected as an integration patch. Each phase restores settings and packaged ADC
+modules. These observations alone do not establish a sensor failure: USB can
+power system load without appreciable battery current.
+
+### Controlled input-budget/load response and counter epoch
+
+A single sha256sum worker runs under an18-second systemd limit with CPU accounting
+and a conservative thermistor-voltage stop guard. At500mA input, manual battery
+current remains near0 and BMS sense does not transition. Repeating with100mA input
+produces roughly-0.20..-0.24A manual current, an approximately30mV battery voltage
+drop, changing BMS VSENSE and reversed counter direction. Restoring500mA returns
+manual current near0. No charger voltage/current/temperature threshold changes.
+
+The documented stock100us clear pulse is tested as an explicit new-source epoch,
+rather than as part of ordinary telemetry reads. Counters are already flat before
+the optimized-update attempt and remain flat afterward, despite a zero command
+readback. A forced-write helper recovers both main and shadow counting under load.
+Source inspection and a read-zero command model identify how optimized deassertion
+can be skipped; no bus-write trace or cause for the initial stopped state is
+claimed. The final238-case actual-helper fixture covers this regression, protected
+writes, isolation modes, rollback, ownership and transient/permanent bus faults.
+The optimized helper fails that regression. W=1 ARM/checkpatch pass.
+
+In the final18-second load window, the provisional BMS VSENSE conversion is about
+-190..-214mA after sign inversion, resistor-adjusted manual IADC about-197..-215mA,
+and counter-derived averages about-213..-218mA. They share calibration and sense
+hardware, and samples are sequential: this qualifies response and provisional
+conversion consistency, not external accuracy or idle/charging compensation.
+Current and charge-counter conversion need the BMS direction inverted to align
+with positive charging. Counter contents are intentionally lost in the explicit
+epoch tests; control/trim settings are restored, not historical counter values.
+
+A normal installed-r4 reboot again returns to kernelbuild5, taint0, msmdrmfb and
+active Sxmo/UPower. The configured500mA development limit and terminal/keyboard are
+restored. The new source remains a separate un-packaged candidate; no upstream
+messages are sent. The next implementation is provider-owned calibration plus the
+native non-VM BMS driver/binding with actual IIO firmware references, safe charge
+conversion and supplier lifetime handling. Stock-pack thermal/profile and charger
+policy follow; no native capacity or completed all-hardware bringup is claimed.
+See evidence/2026-10-30-bms-calibration-epoch.json.

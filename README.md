@@ -55,7 +55,10 @@ is still unknown. The generic charger alternates Charging/Good and
 Discharging/Overheat near room temperature; no safety thresholds are bypassed.
 The native non-VM BMS now has verified coherent output capture and a stock-kernel
 RAM baseline. Separate IIO reference/voltage patches pass brief RAM hardware tests;
-the installed r4 package is unchanged. Calibrated fuel-gauge reporting, thermistor
+the new battery voltage inputs also pass standard millivolt/consumer-precision
+checks. Protected trim and source-epoch experiments establish load-responsive
+BMS current/counter data and the required forced restart writes. The installed
+r4 package is unchanged. Calibrated fuel-gauge reporting, thermistor
 protection and automatic USB current negotiation remain open. Stock uses software
 charging limits in addition to extended hardware comparators; those hardware
 limits are not enabled by themselves. See [battery work](docs/battery-bringup.md).
