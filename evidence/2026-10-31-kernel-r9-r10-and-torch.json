@@ -60,5 +60,14 @@
       "fx0-sensor-off.raw n 63448 mean 67.4 p50 67 p99 74 max 79",
       "fx0-sensor-on.raw n 63448 mean 365.6 p50 294 p99 1023 max 1023"
     ]
+  },
+  "r11": {
+    "package": "linux-postmarketos-qcom-msm8226-6.18.59-r11",
+    "source": "fx0-linux cbfe7bb0e361 (r10 + leds-qcom-flash-v1 + PM8226 flash node + Fx0 torch)",
+    "recipe": "fx0-pmaports 338a837da (CONFIG_LEDS_CLASS_FLASH=m, CONFIG_LEDS_QCOM_FLASH_V1=m; config regenerated with olddefconfig)",
+    "apk_sha256": "e944794cde713c17041a4359c7ef9961ba4ade26f2ba97b0f290a6fcd346c315",
+    "ram_boot_first": "r11 kernel+DTB with r11's torch module: white:torch registered, full brightness programs LED current 0x0f, enable 0xe0, strobe 0xc0, torch switch 0x00",
+    "installed": "boots unattended in 70 s, taint 0, no failed units, eMMC mmcblk0 / SD mmcblk1, torch/IMU/magnetometer modules autoload, sway starts",
+    "sxmo": "sxmo_flashtoggle.sh run as the normal user switches white:torch to 16 and back to 0 (Sxmo already looks for white:torch)"
   }
 }

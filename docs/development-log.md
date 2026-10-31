@@ -2049,3 +2049,7 @@ The flash LED works as a torch. A new driver for the PM8226's
 first-generation flash block lights it at up to 200 mA without the 5 V boost.
 The rear camera, next to the LED, sees the scene brighten from a mean of 67
 to 366 (black level 64).
+
+Kernel r11 adds the torch to the installed system. Sxmo's flashlight toggle
+already looks for `white:torch`, so it switches the LED on and off unchanged.
+r11 was RAM-booted before installing and boots unattended with taint 0.
