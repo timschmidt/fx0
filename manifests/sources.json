@@ -86,8 +86,8 @@
       "url": "https://github.com/timschmidt/fx0-pmaports",
       "branch": "integration/fx0-v26.06",
       "base_commit": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
-      "status": "Current installed kernel r7 recipe (r6 plus ADSP, GPU IOMMU/GPU, devfreq config), built rootless with verified provenance, signed with the trusted local key; trusted r6->r7 upgrade, readbacks and eMMC boot with taint 0 pass.",
-      "commit": "68600046ae970267fbf800c2fbb333de302ba683"
+      "status": "Installed kernel r7 recipe (68600046ae97) plus boot-deploy 0.23.0-r1 with the backported boot-image offset patch (efd370169caf); both built rootless with verified provenance and signed with the trusted local key; installed on the phone.",
+      "commit": "efd370169caf7919fca40515103368764f112702"
     },
     {
       "name": "linux-display-iommu-experimental",
@@ -125,7 +125,15 @@
       "branch": "integration/fx0-boot-offset",
       "commit": "ed400ec340303f246c9da82177908746bdb0529e",
       "base_commit": "a50452a054233c2d7bf6142cbc332c94c79cc18f",
-      "status": "Project CI passes for offset-preserving Android image writes; not installed, no physical update/interruption test or upstream submission"
+      "status": "0.25.0-based upstream candidate; behaviour qualified on the phone through the 0.23 backport; not submitted upstream"
+    },
+    {
+      "name": "boot-deploy-offset-0.23",
+      "url": "https://github.com/timschmidt/fx0-boot-deploy",
+      "branch": "integration/fx0-boot-offset-0.23",
+      "commit": "b9a4eab23731815e5cf08747008515d7adf2d413",
+      "base_commit": "0.23.0",
+      "status": "Backport of the offset change to the Nura v26.06 release; packaged as boot-deploy-0.23.0-r1 and installed. On-device mkinitfs update preserves the lk2nd prefix and the resulting image boots; interruption and key-entry recovery pending; no upstream submission"
     },
     {
       "name": "pmaports-storage-preparation",
