@@ -68,6 +68,9 @@ Retain device-specific firmware extraction and loading procedures so another own
 
 ## Submission readiness checklist
 
+The per-change inventory, with targets, prepared material and dependencies, is in
+[upstream status](upstream-status.md).
+
 - [ ] Public repository URLs, contributor identity, and maintenance contact are recorded.
 - [ ] Tested source manifests identify exact bases and artifacts.
 - [ ] All required hardware acceptance entries pass on the final image.
