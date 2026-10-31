@@ -25,13 +25,15 @@
     "pairing prompts unanswered by auto-registered interactive agents"
   ],
   "open": [
-    "WLAN/BT coexistence and RF-path sharing (BT dead with WLAN off or on 5 GHz; supervision timeout under load on 2.4 GHz)",
+    "connection setup with an independent peer",
     "RFCOMM data transfer",
     "HID and audio profiles",
+    "whether Iris rail state with WLAN off affects Bluetooth",
+    "whether prima's BTC CFG block (sent at start, absent from wcn36xx's WCN3660 table) matters; clean test pending",
     "address source (.bt_nv.bin)",
     "resume"
   ],
-  "next": "(1) Find how stock keeps Iris powered for Bluetooth with WLAN off (stock BT/wcnss vote path) and implement an equivalent. (2) Implement or test the BTC configuration prima sends, then retest Bluetooth on 5 GHz and under load on 2.4 GHz.",
+  "next": "Repeat with an independent peer (headset, keyboard or another phone). Retest the host after restarting its Bluetooth service, with owner consent. Then retest the BTC CFG block with the module installed cleanly (no radio-off swap).",
   "tooling_installed_on_phone": {
     "packages": [
       "bluez-btmon-5.86-r2",
@@ -46,12 +48,29 @@
     "wifi_radio_off": "every phone Create Connection fails with Connection Accept Timeout Exceeded (0x10); no pairing",
     "wifi_on_5GHz_ch36": "host inquiry never finds the phone in 45 s; phone connections time out; no pairing"
   },
-  "interpretation": "Two distinct defects. (1) With the WLAN radio off, the Iris PA and RFA/digital rails are off, so Bluetooth has no RF power. Something must keep Iris powered while Bluetooth is in use. (2) With WLAN on 5 GHz the rails stay on but Bluetooth cannot inquire or page, which points to RF-path/coexistence configuration. Prima sends a BTC configuration (WDA_BTC_SET_CFG, execution mode default 0); wcn36xx sends only BTC CFG timing items and no BTC configuration message.",
+  "interpretation": "Inquiry works in both directions. Connection setup currently fails in both directions with this single host, after initially working. Persistence across a phone reboot points at host-side state (stack or adapter after repeated pair/remove cycles, or the host's own combo radio), but phone-side causes are not excluded. An independent Bluetooth peer is required to separate them. Iris rails L16/L24 switch off with the WLAN radio off (observed); the effect of that on Bluetooth is unproven.",
   "stock_reference": "Stock WCNSS_qcom_cfg.ini sets no BTC overrides, so firmware defaults from WCNSS_cfg.dat (extracted privately) applied; wcn36xx sends its own BTC CFG table. Comparing the two is the next step.",
   "iris_rails_by_wlan_state": {
     "wlan_connected_5GHz": "L16 enabled 3.3 V, L24 enabled",
     "wlan_up_disconnected": "L16 enabled 3.3 V, L24 enabled",
     "wlan_radio_off": "L16 disabled, L24 disabled",
     "note": "PMIC SPMI readback; Linux drops its Iris votes after WCNSS handover (by design), so the RF supplies follow the Pronto firmware's WLAN-side votes"
+  },
+  "retracted": {
+    "claims": [
+      "Bluetooth depends on WLAN being up on 2.4 GHz",
+      "Bluetooth is dead with WLAN on 5 GHz",
+      "stopping WLAN kills Bluetooth",
+      "coexistence air time causes the failures",
+      "prima sends a separate BTC configuration message (its WDA_BTC_SET_CFG handler is a no-op)"
+    ],
+    "reason": "Single runs were confounded. The only fully successful run was the only one where the host first contacted the phone. A clean-boot 2.4 GHz baseline, a host-first 5 GHz run and a WLAN-idle run all fail the same way. A plain unpaired phone-to-host l2ping, which passed 10/10 in five early runs, now fails even after a clean phone reboot."
+  },
+  "clean_runs": {
+    "clean_boot_wifi_2_4GHz": "host inquiry finds the phone in 4 s; phone Create Connection 3x Connection Accept Timeout (0x10)",
+    "host_first_wifi_5GHz": "inquiry finds the phone in 4 s; host page produces no Connect Request at the phone; phone connections 3x 0x10",
+    "wifi_radio_on_disconnected": "inquiry 6 s; same connection failures",
+    "unpaired_l2ping_after_clean_reboot": "Can't connect: Operation timed out",
+    "experimental_wcn36xx_with_prima_BTC_block": "loaded via unsigned module swap after a radio-off; that run is confounded and inconclusive; not installed"
   }
 }

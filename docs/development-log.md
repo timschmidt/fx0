@@ -1801,3 +1801,12 @@ antenna-sharing configuration problem, not a transport fault. Stock
 `WCNSS_cfg.dat` (extracted privately) are the comparison point for wcn36xx's
 BTC table. Pairings were removed and the Wi-Fi band setting restored after
 each run.
+
+Correction: the WLAN-state explanation for the Bluetooth failures is withdrawn.
+Clean-boot runs at 2.4 GHz, a host-first 5 GHz run and a WLAN-idle run fail in
+the same way, with connection timeouts in both directions. A plain unpaired
+phone-to-host `l2ping`, which passed 10/10 early in the session, now fails even
+after a clean phone reboot. The earlier single runs, and my reading of prima's
+BTC message, were wrong. Host-side state is a likely confound. Separating it
+needs an independent Bluetooth peer. The experimental wcn36xx BTC module was
+only loaded by a swap and is not installed.

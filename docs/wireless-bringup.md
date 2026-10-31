@@ -173,30 +173,33 @@ and the pairing was then removed from both sides. Results on installed r6:
 | After bonding | `l2ping` gets 4 replies, then the link resets; a 4 MiB RFCOMM transfer resets on the host and stalls on the phone |
 | Phone kernel log | No Bluetooth, SMD or WCNSS errors |
 
-HCI traces captured with `btmon` correct two of these first readings. The
-owner approved installing `bluez-btmon` and `bluez-deprecated` on the phone.
-Paging works: the phone accepts the host's connection request. Host-initiated
-pairing failed only because the scripted phone agent did not answer the MITM
-numeric comparison. The remaining failures depend on the WLAN state:
+HCI traces captured with `btmon` correct parts of the first readings. The owner
+approved installing `bluez-btmon` and `bluez-deprecated` on the phone. In one run
+the phone accepted the host's page. That run also completed phone-initiated
+pairing with a 16-byte encryption key, then an RFCOMM transfer hit supervision
+timeout after about 20 KB.
 
-| WLAN state during test | Bluetooth result |
-| --- | --- |
-| Up on 2.4 GHz channel 11 | Inquiry, paging, pairing and 16-byte-key encryption work; an RFCOMM transfer moves about 20 KB, then the link hits supervision timeout (0x08) |
-| Up on 5 GHz channel 36 | The phone is not found by inquiry, and its connection attempts time out |
-| Radio off | Every phone connection attempt ends with Connection Accept Timeout (0x10) |
+Later runs varied the WLAN state: radio off, 2.4 GHz, 5 GHz, and radio on but
+disconnected. At first these seemed to show Bluetooth depending on WLAN, but the
+interpretation was confounded and is withdrawn. The only fully successful run
+was the only one in which the host contacted the phone first. A clean-boot
+2.4 GHz baseline, a host-first 5 GHz run and a WLAN-idle run all fail the same
+way. Inquiry works, but connections time out in both directions (phone side:
+Connection Accept Timeout 0x10). A plain unpaired phone-to-host `l2ping`, which
+passed 10/10 in five early runs, now fails even after a clean phone reboot.
 
-PMIC readback separates two defects. With the WLAN radio off, the Iris PA (L16)
-and RFA/digital (L24) rails are disabled. Linux drops its Iris votes after the
-WCNSS handover, and the firmware drops its own when WLAN stops, so Bluetooth has
-no RF power. With WLAN on 5 GHz both rails stay on, yet Bluetooth still cannot
-inquire or page. On 2.4 GHz it works but loses links under load. The 5 GHz and load failures point to coexistence or RF-path configuration in
-the wcn36xx path, not the btqcomsmd transport. Prima sends a BTC configuration
-message at startup (`WDA_BTC_SET_CFG`, default execution mode 0); wcn36xx sends
-none, only some BTC CFG timing items. Stock
-`WCNSS_qcom_cfg.ini` overrides no BTC settings, so stock used the firmware
-defaults in `WCNSS_cfg.dat`, which is kept privately. wcn36xx sends its own BTC
-table. Comparing the two is the next step. See
-[Bluetooth evidence](../evidence/2026-10-30-bluetooth-host-pairing.json).
+That points at host-side state, such as the host stack or adapter after repeated
+pair/remove cycles or the host's own combo radio. Phone-side causes are not
+excluded. An independent Bluetooth peer is needed to separate them. Two
+observations remain open questions:
+
+- The Iris PA (L16) and RFA/digital (L24) rails switch off when the WLAN radio
+  is off. Whether that affects Bluetooth is unproven.
+- Prima sends a block of BTC CFG items at start that wcn36xx's WCN3660 table
+  omits. Its separate `WDA_BTC_SET_CFG` handler is a no-op. One test with those
+  items was confounded and is inconclusive.
+
+See [Bluetooth evidence](../evidence/2026-10-30-bluetooth-host-pairing.json).
 
 ## MAC addresses
 
@@ -216,9 +219,9 @@ BD_ADDR record whose vendor is not evident. Full addresses stay private.
    suspend/resume once system suspend is qualified.
 2. Decide the MAC source after a stock runtime reading, then implement it without
    publishing the per-unit values.
-3. Keep Iris powered while Bluetooth is in use with WLAN off, following the
-   stock vote path. Implement or test prima's BTC configuration for 5 GHz and
-   load. Then retest RFCOMM, HID and audio profiles.
+3. Repeat Bluetooth connection tests with an independent peer. Then test
+   whether the Iris rail state with WLAN off and prima's BTC CFG items affect
+   Bluetooth, and retest RFCOMM, HID and audio profiles.
 4. Describe the TLMM sleep state, then test WCNSS across real system suspend.
    Check hotspot capability.
 5. Upstream submission is gated on owner approval. The regulator fix is
