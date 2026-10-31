@@ -286,8 +286,12 @@ See [evidence](../evidence/2026-10-31-imx179-first-stream.json).
   programs and mainline did not. Programming it gives complete
   3280×2464 frames in most buffers.
 - **Remaining gaps** start on 64 KiB boundaries: whole cache lines of
-  level-2 table entries look empty to the IOMMU. The test under way
-  invalidates the context after each mapping.
+  level-2 table entries look empty to the IOMMU. Invalidating the context
+  after each mapping did not help. The failing addresses repeat across boots
+  and follow particular allocation chunks; still open.
+- **First image.** A complete buffer holds a recognisable, in-focus RAW10
+  RGGB image (preview kept private). The scene was dark: values reach only
+  12 above the black level of 64 at full exposure and no gain.
 
 See [evidence](../evidence/2026-10-31-camss-iommu-capture.json).
 

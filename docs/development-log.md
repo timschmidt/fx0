@@ -2019,3 +2019,9 @@ CAMSS without an IOMMU. The VFE then writes past the first page of each
 scattered buffer into unrelated memory. A full-size run crashed the kernel
 on test-pattern bytes, and the phone rebooted itself into the installed
 system. CAMSS must run behind the VFE IOMMU.
+
+The rear camera produced its first real image on mainline: a complete
+3280x2464 RAW10 frame through the VFE IOMMU, after mapping the IOMMU's stream
+IDs and programming the RDI frame geometry. Some buffers still lose 64 KiB
+regions to IOMMU translation faults; a TLB invalidate after mapping did not
+change that.

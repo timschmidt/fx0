@@ -159,6 +159,13 @@
       "              total        used        free      shared  buff/cache   available",
       "Mem:           1378         128        1109          15         141         939",
       "12288"
-    ]
+    ],
+    "post_map_invalidate": "negative: a context invalidate (TLBIASID) after every map left the gaps at the same IOVAs (ram-probes-cam-20C); experiment dropped. Fault IOVAs repeat across boots; gap starts match 64 KiB chunk boundaries of the videobuf2-dma-sg allocation, so the failing ranges follow particular allocation chunks"
+  },
+  "first_image": {
+    "run": "ram-probes-cam-21D: buffer 0 frame 4 (complete, 3280x2464 RAW10 RGGB)",
+    "content": "a recognisable, in-focus close scene (preview kept private, not committed)",
+    "levels": "10-bit values 62-76, black level 64, channel means R 66.5 Gr 66.2 Gb 66.2 B 64.8: a dark scene at maximum exposure (2503 lines) and analogue gain 0",
+    "controls": "exposure 1-2503, vertical blanking 43-63071, analogue gain 0-224, link 324 MHz, pixel rate 259.2 MHz, test patterns"
   }
 }
