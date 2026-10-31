@@ -126,6 +126,9 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   the NGD starts only on an ADSP power-up event, and this ADSP is already
   running when the module loads, so the test restarted the ADSP once
   ([evidence](../evidence/2026-10-31-slimbus-tapan-enumeration.json)).
+  **Fixed:** `qcom-ngd-ctrl` now also schedules the bring-up at probe. With the
+  ADSP left running, the bus registers and the codec identifies 3 s after the
+  module loads.
 
 - **Codec MCLK source.** The vendor machine driver takes the 9.6 MHz Tapan
   MCLK as `osr_clk`. Vendor `clock-8226.c` maps that to `div_clk1`, the RPM

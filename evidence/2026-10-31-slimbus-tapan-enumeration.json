@@ -34,8 +34,16 @@
   "result": "codec identified: major ID 0x0103 (Tapan), minor 0x0001, version 0x21; WCD9302 vs WCD9306 is decided by QFUSE in the vendor driver and is not read yet",
   "installed_system": "unchanged; returned to r8 with taint 0",
   "open": [
-    "start the NGD without an ADSP restart (probe-time up work or SSR replay)",
     "codec MCLK (9.6 MHz), QFUSE variant check, ASoC component, SLIMbus ports and AFE",
     "machine driver and first playback"
-  ]
+  ],
+  "no_restart_fix": {
+    "commit": "fx0-linux integration/fx0-slimbus a75f77cab2d5 (qcom-ngd-ctrl schedules the NGD bring-up once at probe; the worker waits for the QMI service)",
+    "test": "RAM boot of installed r13 with a DTB adding the SLIMbus SoC and codec nodes; modules loaded with the ADSP left running, no restart",
+    "result": [
+      "qcom,slim-ngd-ctrl fe12f000.slimbus: SLIM SAT: Rcvd master capability",
+      "wcd9306-slim 217:e0:1:0: WCD9306 family codec, minor ID 0x0001, version 0x21",
+      "qcom,slim-ngd-ctrl fe12f000.slimbus: SLIM controller Registered"
+    ]
+  }
 }
