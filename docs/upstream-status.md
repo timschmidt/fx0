@@ -19,6 +19,7 @@ patches, a README with checks and recipients, and hardware evidence.
 | UPower CLI test and battery-interface check | UPower | [submissions/upower](../submissions/upower/README.md) |
 | lk2nd Fx0 DTB selection, `LK2ND_EXTLINUX`, `LK2ND_PON_REBOOT_MODE` | lk2nd `main` (GitHub PR) | [submissions/lk2nd](../submissions/lk2nd/README.md) |
 | boot-deploy `deviceinfo_flash_bootimg_offset` | boot-deploy `main` (GitLab MR) | [submissions/boot-deploy](../submissions/boot-deploy/README.md) |
+| qcom-spmi-iadc current sign and units (`5c3efd4c7fa8`) | IIO `togreg` | [submissions/iio](../submissions/iio/README.md) |
 
 ## Already in mainline (backports)
 
@@ -45,7 +46,6 @@ Ordered roughly by how independent they are.
 
 | Change | Target | Waits for |
 | --- | --- | --- |
-| `5c3efd4c7fa8` iio: qcom-spmi-iadc current sign and units | IIO | Nothing; standalone fix |
 | `c7b37b2f2132` phy: qcom-usb-hs initialization at vendor offset zero | PHY | Nothing; standalone fix |
 | `d260404eef69` dt-bindings: wcnss stop-state specifier bound | remoteproc bindings | Nothing |
 | `b2512c53f035` msm8226 WCNSS DXE level interrupts | qcom arm32 DTS | Dudziak's MSM8226 WCNSS node |

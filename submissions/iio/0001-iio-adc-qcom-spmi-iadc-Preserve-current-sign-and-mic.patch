@@ -1,0 +1,78 @@
+From 60e3273b655b3b27aceb66b055b40c65cc312090 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 23:51:28 -0400
+Subject: [PATCH] iio: adc: qcom-spmi-iadc: Preserve current sign and microamp
+ units
+
+Samples below the zero-current reference wrap through the unsigned u16
+vsense_raw intermediate, so negative current is reported as a small
+positive value. Use a signed difference.
+
+The calibrated voltage is in microvolts and the sense resistor in
+microohms, so their quotient is in amps, while the channel's IIO scale
+of 0.001 mA expects a raw microamp value. Multiply by 1000000 before the
+division, using signed 64-bit arithmetic, and return -ERANGE for results
+outside the int range that read_raw can return.
+
+On an LG Fx0 (PM8226) the driver reported 40 and 36 for samples below the
+offset. With this change it reports negative current, and the logged
+sample and calibration values match the corrected arithmetic.
+
+This change was developed with an AI coding assistant (Claude Opus 5.5),
+which found the wrap and the unit error while comparing driver output with
+the calibration log, and wrote the fix and this message. A host fixture
+compiles the driver's iadc_read_raw() with the hardware and IIO access
+replaced, and runs 13 vectors per channel: zero, both signs, a non-default
+resistor, recorded Fx0 codes and int overflow. Built with clang and
+-fsanitize=undefined, it fails on the unmodified driver and passes with
+this change. Not tested on PMICs other than PM8226.
+
+Fixes: ce0694841ea6 ("iio: iadc: Qualcomm SPMI PMIC current ADC driver")
+Assisted-by: LLM
+---
+ drivers/iio/adc/qcom-spmi-iadc.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/iio/adc/qcom-spmi-iadc.c b/drivers/iio/adc/qcom-spmi-iadc.c
+index 0ec3a0c4b1de..c83d08baffd7 100644
+--- a/drivers/iio/adc/qcom-spmi-iadc.c
++++ b/drivers/iio/adc/qcom-spmi-iadc.c
+@@ -10,6 +10,7 @@
+ #include <linux/iio/iio.h>
+ #include <linux/interrupt.h>
+ #include <linux/kernel.h>
++#include <linux/math64.h>
+ #include <linux/mutex.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -311,8 +312,9 @@ static int iadc_read_raw(struct iio_dev *indio_dev,
+ 			 int *val, int *val2, long mask)
+ {
+ 	struct iadc_chip *iadc = iio_priv(indio_dev);
+-	s32 isense_ua, vsense_uv;
+-	u16 adc_raw, vsense_raw;
++	s64 isense_ua;
++	s32 vsense_uv, vsense_raw;
++	u16 adc_raw;
+ 	int ret;
+ 
+ 	switch (mask) {
+@@ -328,9 +330,13 @@ static int iadc_read_raw(struct iio_dev *indio_dev,
+ 		vsense_uv = vsense_raw * IADC_REF_GAIN_MICRO_VOLTS;
+ 		vsense_uv /= (s32)iadc->gain - iadc->offset[chan->channel];
+ 
+-		isense_ua = vsense_uv / iadc->rsense[chan->channel];
++		/* Convert microvolts / microohms to microamps. */
++		isense_ua = div64_s64((s64)vsense_uv * 1000000,
++				      iadc->rsense[chan->channel]);
++		if (isense_ua < INT_MIN || isense_ua > INT_MAX)
++			return -ERANGE;
+ 
+-		dev_dbg(iadc->dev, "off %d gain %d adc %d %duV I %duA\n",
++		dev_dbg(iadc->dev, "off %d gain %d adc %d %duV I %llduA\n",
+ 			iadc->offset[chan->channel], iadc->gain,
+ 			adc_raw, vsense_uv, isense_ua);
+ 
+-- 
+2.56.0
+
