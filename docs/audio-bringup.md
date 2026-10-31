@@ -144,6 +144,13 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
      register sequences.
   3. A machine driver, reusing the `apq8096`-style SLIMbus card glue.
 
+  Board details from LG's `msm8226-lge-sound.dtsi` (`sound-9302`): the
+  speaker supply comes from an external boost converter enabled by **GPIO60**
+  (`qcom,cdc-boost-spkr-gpios`). LG's `CONFIG_SND_SPK_BOOST` toggles it from
+  the speaker DAC event. The 9.6 MHz codec MCLK leaves the PMIC on **PM8226
+  GPIO1** (`qcom,cdc-mclk-gpios`). In mainline these become a GPIO-switched
+  speaker supply on the codec and a clock-out pin state for PM8226 GPIO1.
+
   **Step 1 done (2026-10-31):** on an audio probe kernel, all four QDSP6
   services bind on this ADSP (core, AFE, ASM, ADM). The AFE DAIs, including
   `SLIMBUS_0_RX`, and the routing component register
