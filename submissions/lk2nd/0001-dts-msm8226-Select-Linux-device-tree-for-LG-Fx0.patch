@@ -1,0 +1,33 @@
+From 0d3a8b98c8a0dd08e3727ebed7f5bce9adb484a0 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 03:38:40 -0400
+Subject: [PATCH 1/3] dts: msm8226: Select Linux device tree for LG Fx0
+
+Replace the unfinished DTB selection with the basename of the Linux board
+description, qcom-msm8926-lg-madai.
+
+Tested on the LG Fx0 (MSM8926): the stock bootloader hands off to lk2nd,
+the board is detected as lg,madai with its GPIO volume keys, and lk2nd boots
+Linux from both extlinux and the Android image path.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ lk2nd/device/dts/msm8226/msm8926-lg-madai.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lk2nd/device/dts/msm8226/msm8926-lg-madai.dts b/lk2nd/device/dts/msm8226/msm8926-lg-madai.dts
+index 1ea0a0e..8b7b34f 100644
+--- a/lk2nd/device/dts/msm8226/msm8926-lg-madai.dts
++++ b/lk2nd/device/dts/msm8226/msm8926-lg-madai.dts
+@@ -12,7 +12,7 @@
+ 	model = "LG Fx0";
+ 	compatible = "lg,madai";
+ 
+-	// FIXME: lk2nd,dtb-files = "...";
++	lk2nd,dtb-files = "msm8926-lg-madai";
+ 
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+-- 
+2.56.0
+

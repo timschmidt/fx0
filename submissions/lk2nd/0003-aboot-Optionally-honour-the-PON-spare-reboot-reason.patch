@@ -1,0 +1,104 @@
+From 8fbf21a4fd2dd6bd682edc24e83c22a04cb3b927 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 31 Oct 2026 03:14:26 -0400
+Subject: [PATCH 3/3] aboot: Optionally honour the PON spare reboot reason
+
+On the LG Fx0 the stock bootloader consumes the IMEM restart reason before
+lk2nd runs, so 'reboot bootloader' from Linux never reaches lk2nd fastboot.
+Linux qcom-pon reboot-mode can also store the reason in the PMIC PON
+SOFT_RB_SPARE register, which the stock bootloader leaves intact.
+
+Add LK2ND_PON_REBOOT_MODE=1 to read and scrub that register when the IMEM
+reason is empty, mapping 1 to recovery and 2 to fastboot like
+check_hard_reboot_mode(). The default stays 0.
+
+Tested on the LG Fx0 (MSM8926) with mode-bootloader = <2> on the Linux PON
+node: 'reboot bootloader' reaches lk2nd fastboot, the register reads back 0
+afterwards, and plain reboots boot normally.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ Documentation/boot.md |  5 +++++
+ app/aboot/aboot.c     | 24 ++++++++++++++++++++++++
+ lk2nd/project/base.mk | 10 ++++++++++
+ 3 files changed, 39 insertions(+)
+
+diff --git a/Documentation/boot.md b/Documentation/boot.md
+index fcac51a..eca6930 100644
+--- a/Documentation/boot.md
++++ b/Documentation/boot.md
+@@ -15,6 +15,11 @@ search described below. Disabling it also excludes filesystem boot support from
+ the image; fastboot boot remains available. Install a valid Android boot image at
+ the required offset before selecting this configuration.
+ 
++If the stock bootloader consumes the IMEM restart reason before lk2nd runs,
++build with `LK2ND_PON_REBOOT_MODE=1` and describe the matching reboot modes on
++the Linux PON node (`mode-recovery = <1>`, `mode-bootloader = <2>`). lk2nd then
++also honours the reason stored in the PMIC PON spare register and clears it.
++
+ ## Fastboot boot
+ 
+ lk2nd provides a fastboot interface and allows one to boot an OS via USB. Same as
+diff --git a/app/aboot/aboot.c b/app/aboot/aboot.c
+index b44a5c2..847ee57 100644
+--- a/app/aboot/aboot.c
++++ b/app/aboot/aboot.c
+@@ -79,6 +79,10 @@
+ #endif
+ 
+ #include <reboot.h>
++#if LK2ND_PON_REBOOT_MODE
++#include <pm8x41_hw.h>
++#define LK2ND_PON_SOFT_RB_SPARE 0x88f
++#endif
+ #include "image_verify.h"
+ #include "recovery.h"
+ #include "boot.h"
+@@ -5606,6 +5610,26 @@ void aboot_init(const struct app_descriptor *app)
+ 	reboot_mode = check_hard_reboot_mode();
+ #else
+ 	reboot_mode = check_reboot_mode();
++#endif
++#if LK2ND_PON_REBOOT_MODE
++	/*
++	 * Some stock bootloaders consume the IMEM restart reason before lk2nd
++	 * runs. Also accept the reason Linux qcom-pon reboot-mode stores in
++	 * PON SOFT_RB_SPARE bits 7:2, and scrub it like check_hard_reboot_mode().
++	 */
++	if (reboot_mode == 0) {
++		uint8_t spare = pm8x41_reg_read(LK2ND_PON_SOFT_RB_SPARE);
++
++		pm8x41_reg_write(LK2ND_PON_SOFT_RB_SPARE, spare & 0x03);
++		switch ((spare & 0xfc) >> 2) {
++		case 0x01:
++			reboot_mode = RECOVERY_MODE;
++			break;
++		case 0x02:
++			reboot_mode = FASTBOOT_MODE;
++			break;
++		}
++	}
+ #endif
+ 	if (reboot_mode == RECOVERY_MODE)
+ 	{
+diff --git a/lk2nd/project/base.mk b/lk2nd/project/base.mk
+index 5e65f23..4757bf5 100644
+--- a/lk2nd/project/base.mk
++++ b/lk2nd/project/base.mk
+@@ -86,3 +86,13 @@ endif
+ else ifneq ($(LK2ND_EXTLINUX), 0)
+ $(error LK2ND_EXTLINUX must be 0 or 1)
+ endif
++
++# Also read the reboot reason from the PMIC PON spare register, as written by
++# Linux qcom-pon reboot-mode. Useful when the stock bootloader consumes the
++# IMEM restart reason before lk2nd runs.
++LK2ND_PON_REBOOT_MODE ?= 0
++ifeq ($(LK2ND_PON_REBOOT_MODE), 1)
++DEFINES += LK2ND_PON_REBOOT_MODE=1
++else ifneq ($(LK2ND_PON_REBOOT_MODE), 0)
++$(error LK2ND_PON_REBOOT_MODE must be 0 or 1)
++endif
+-- 
+2.56.0
+

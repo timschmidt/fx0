@@ -1,0 +1,59 @@
+From 0010058af359b499c4a0a2cd3d26da56ce87a77a Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 12:16:11 -0400
+Subject: [PATCH 2/3] boot: Allow excluding extlinux filesystem discovery
+
+Provide LK2ND_EXTLINUX=0 for installations that boot Android-format images
+from the boot partition and use removable filesystems only as ordinary media.
+Keep the existing filesystem boot behaviour as the default and reject invalid
+option values.
+
+Tested on the LG Fx0 (MSM8926): with LK2ND_EXTLINUX=0 lk2nd boots the Linux
+Android image at the 512 KiB boot-partition offset on warm and cold starts,
+Volume Down still enters fastboot, and fastboot boot/continue work.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ Documentation/boot.md | 6 ++++++
+ lk2nd/project/base.mk | 8 +++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/boot.md b/Documentation/boot.md
+index 4e32fc4..fcac51a 100644
+--- a/Documentation/boot.md
++++ b/Documentation/boot.md
+@@ -9,6 +9,12 @@ boot image stored at 512k offset from the start of the `boot` partition (in lk2n
+ or withoug the offset (for lk1st). The offset is required so the next stage image
+ doesn't overwrite the lk2nd itself.
+ 
++To skip filesystem discovery and boot directly from this Android image path,
++build with `LK2ND_EXTLINUX=0`. The default is `1`, which enables the filesystem
++search described below. Disabling it also excludes filesystem boot support from
++the image; fastboot boot remains available. Install a valid Android boot image at
++the required offset before selecting this configuration.
++
+ ## Fastboot boot
+ 
+ lk2nd provides a fastboot interface and allows one to boot an OS via USB. Same as
+diff --git a/lk2nd/project/base.mk b/lk2nd/project/base.mk
+index 1e3eaf1..5e65f23 100644
+--- a/lk2nd/project/base.mk
++++ b/lk2nd/project/base.mk
+@@ -76,7 +76,13 @@ DEFINES := $(filter-out CHECK_BAT_VOLTAGE=1, $(DEFINES))
+ 
+ include $(if $(filter msm8660 msm8960, $(TARGET)), lk2nd/project/msm8x60-late.mk)
+ 
+-# Enable extlinux boot module for all targets with eMMC/UFS
++# Enable extlinux boot by default on targets with eMMC/UFS.
++# It can be disabled when booting only Android-format images.
++LK2ND_EXTLINUX ?= 1
++ifeq ($(LK2ND_EXTLINUX), 1)
+ ifeq ($(EMMC_BOOT), 1)
+ MODULES += lk2nd/boot
+ endif
++else ifneq ($(LK2ND_EXTLINUX), 0)
++$(error LK2ND_EXTLINUX must be 0 or 1)
++endif
+-- 
+2.56.0
+
