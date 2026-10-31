@@ -200,9 +200,19 @@ clocks are not a blocker. Three pieces remain:
    table) and the VFE GDSC. The vendor gives this instance no secure ID, so it
    is OS-managed like the GPU instance. The driver builds with W=1, and the
    binding and Fx0 DTB schema checks are clean. Not hardware-tested.
-2. **MSM8226 CAMSS resources and binding.** A resource table modelled on
-   `csiphy_res_8x16`/`csid_res_8x16`/`ispif_res_8x16`/`vfe_res_8x16`, using
-   MSM8226 clock rates and a `qcom,msm8226-camss` binding.
+2. **MSM8226 CAMSS resources and binding (drafted).** fx0-linux
+   `integration/fx0-camss` (`0d9976327548`, `f8a7ccc43396`, `8203cfa85fce`)
+   adds `qcom,msm8226-camss`. The vendor description puts every block at the
+   same offset within the camera block as MSM8916 (CSIPHY0 `+0xac00`, CSID
+   `+0x8000`, ISPIF `+0xa000`, VFE `+0x10000`, clock muxes `+0x20`/`+0x30`),
+   with the same interrupts (SPI 78/79/51/52/55/57). The vendor clock tables
+   give MSM8226 no counterpart to MSM8916's separate CAMSS AHB clock, so the
+   binding has 18 clocks and the resource tables drop `ahb` and its rate slot.
+   CAMSS looks clocks up by name only for CSI, VFE and PHY-timer rates, so
+   this is safe. The VFE uses the MSM8226 rates (37.5–400 MHz) and the 4.1
+   operations under the MSM8916 version, so no version-dependent path changes.
+   `camss.o` builds with ARM LLVM W=1, and the binding and Fx0 DTB schema
+   checks are clean. The CAMSS node stays disabled.
 3. **VFE 4.0 against the 4.1 operations.** The vendor driver has
    MSM8226-specific VFE versions and VBIF setup. Audit reset, interrupts,
    write masters, RDI and bus/QoS before reusing `vfe_ops_4_1`.
