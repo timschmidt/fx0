@@ -1,0 +1,96 @@
+From fa8bc1003836131bc9c835fe5d9632e1cc5055a0 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 31 Oct 2026 03:56:19 -0400
+Subject: [PATCH] phy: qcom-usb-hs: Apply init sequences that start at offset
+ zero
+
+The qcom,init-seq property lists vendor-register offset/value pairs, and
+offset zero is valid. The driver terminates its copy of the sequence with
+a zero-address sentinel, so a sequence whose first offset is zero is
+skipped entirely. The MSM8226, MSM8916 and MSM8939 SoC descriptions all
+start their sequences at offset zero, so none of them is applied today.
+
+Store the number of pairs instead of a sentinel, annotate the flexible
+array with __counted_by(), and reject a property with an incomplete pair.
+
+With this change the MSM8916 and MSM8939 sequences take effect for the
+first time on every board using those SoC descriptions. They were written
+for those SoCs, but they have never been exercised by this driver.
+
+An equivalent change on v6.18 (before the flexible-array conversion) runs
+on an LG Fx0 (MSM8926, using the MSM8226 description): USB device mode
+(NCM and ACM) works with the sequence applied, across many warm and cold
+boots. This version is build-tested only. Not tested on MSM8916 or
+MSM8939 hardware.
+
+This change was developed with an AI coding assistant (Claude Opus 5.5)
+during LG Fx0 bring-up. The assistant found the problem, wrote the change
+and this message, and ran the tests described above.
+
+Fixes: e2427b09ba92 ("phy: Add support for Qualcomm's USB HS phy")
+Assisted-by: LLM
+---
+ drivers/phy/qualcomm/phy-qcom-usb-hs.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/phy/qualcomm/phy-qcom-usb-hs.c b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
+index 928a982a8a76..778641d35e73 100644
+--- a/drivers/phy/qualcomm/phy-qcom-usb-hs.c
++++ b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
+@@ -36,7 +36,8 @@ struct qcom_usb_hs_phy {
+ 	struct reset_control *reset;
+ 	struct extcon_dev *vbus_edev;
+ 	struct notifier_block vbus_notify;
+-	struct ulpi_seq init_seq[];
++	unsigned int num_init_seq;
++	struct ulpi_seq init_seq[] __counted_by(num_init_seq);
+ };
+ 
+ static int qcom_usb_hs_phy_set_mode(struct phy *phy,
+@@ -110,6 +111,7 @@ static int qcom_usb_hs_phy_power_on(struct phy *phy)
+ 	struct qcom_usb_hs_phy *uphy = phy_get_drvdata(phy);
+ 	struct ulpi *ulpi = uphy->ulpi;
+ 	const struct ulpi_seq *seq;
++	unsigned int i;
+ 	int ret, state;
+ 
+ 	ret = clk_prepare_enable(uphy->ref_clk);
+@@ -141,7 +143,8 @@ static int qcom_usb_hs_phy_power_on(struct phy *phy)
+ 	if (ret)
+ 		goto err_3p3;
+ 
+-	for (seq = uphy->init_seq; seq->addr; seq++) {
++	for (i = 0; i < uphy->num_init_seq; i++) {
++		seq = &uphy->init_seq[i];
+ 		ret = ulpi_write(ulpi, ULPI_EXT_VENDOR_SPECIFIC + seq->addr,
+ 				 seq->val);
+ 		if (ret)
+@@ -212,10 +215,15 @@ static int qcom_usb_hs_phy_probe(struct ulpi *ulpi)
+ 	size = of_property_count_u8_elems(ulpi->dev.of_node, "qcom,init-seq");
+ 	if (size < 0)
+ 		size = 0;
++	if (size % sizeof(struct ulpi_seq))
++		return -EINVAL;
+ 
+-	uphy = devm_kzalloc(&ulpi->dev, struct_size(uphy, init_seq, (size / 2) + 1), GFP_KERNEL);
++	uphy = devm_kzalloc(&ulpi->dev,
++			    struct_size(uphy, init_seq, size / sizeof(struct ulpi_seq)),
++			    GFP_KERNEL);
+ 	if (!uphy)
+ 		return -ENOMEM;
++	uphy->num_init_seq = size / sizeof(struct ulpi_seq);
+ 	ulpi_set_drvdata(ulpi, uphy);
+ 	uphy->ulpi = ulpi;
+ 
+@@ -223,8 +231,6 @@ static int qcom_usb_hs_phy_probe(struct ulpi *ulpi)
+ 					(u8 *)uphy->init_seq, size);
+ 	if (ret && size)
+ 		return ret;
+-	/* NUL terminate */
+-	uphy->init_seq[size / 2].addr = uphy->init_seq[size / 2].val = 0;
+ 
+ 	uphy->ref_clk = clk = devm_clk_get(&ulpi->dev, "ref");
+ 	if (IS_ERR(clk))
+-- 
+2.56.0
+
