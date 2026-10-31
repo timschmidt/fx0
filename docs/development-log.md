@@ -1961,3 +1961,10 @@ Nura booted unattended in 44 s and the initramfs grew ext4 to the whole
 partition. With a 1% reserve, 12.67 GB is free (1.4 GB before). Wi-Fi,
 Bluetooth, remoteprocs, firmware lookup, the GPU session and audio work, and
 the owner confirmed the display.
+
+All 20 unattended warm reboots on the final layout passed: 69–72 s to SSH,
+running, taint 0, no failed units, Wi-Fi and both remoteprocs up, root on
+nura-root. For remote fastboot entry, a test DTB with PON reboot modes showed
+that the PMIC spare register keeps the bootloader reason (0x08) across the LG
+bootloader. lk2nd now has an optional reader for it, and kernel r8 adds the
+modes to the Fx0 DT.

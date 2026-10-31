@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-31",
+  "scope": "Plan phase 9 warm-boot repetitions on the final layout (production lk2nd, raw boot image, nura-root)",
+  "cycles": 20,
+  "passed": 20,
+  "criteria": "new boot ID; systemd running; taint 0; no failed units; Wi-Fi connected; both remoteprocs running; root /dev/mmcblk0p35",
+  "reboot_to_ssh_seconds": {
+    "min": 69,
+    "median": 71,
+    "max": 72
+  },
+  "script": "local harness; one JSON line per cycle, stop on first failure",
+  "pon_spare_measurement": {
+    "purpose": "find a remote fastboot entry path that survives the stock LG bootloader",
+    "method": "booted a test DTB adding mode-bootloader=<2>/mode-recovery=<1> to the qcom,pm8916-pon node, then systemctl reboot --reboot-argument=bootloader",
+    "SOFT_RB_SPARE_0x88f": {
+      "before": "0x00",
+      "after_normal_boot": "0x00",
+      "after_reboot_bootloader": "0x08"
+    },
+    "conclusion": "LG aboot and the current lk2nd leave the PON spare register intact; the normal image was restored afterwards",
+    "follow_up": "fx0-lk2nd integration/fx0-pon-reboot 079eebe (LK2ND_PON_REBOOT_MODE=1) and fx0-linux 7e5f8f6b2250 + 962a378204d6 (PON label and Fx0 reboot modes), kernel r8 recipe fb4bdd049ad7; control build of b106e16 reproduces the installed lk2nd sha256 3224c650... exactly"
+  },
+  "open": [
+    "20 cold boots need the owner's power key",
+    "install kernel r8 and the PON-aware lk2nd, then verify remote reboot-to-bootloader"
+  ]
+}
