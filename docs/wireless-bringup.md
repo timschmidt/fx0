@@ -150,8 +150,12 @@ Results on the signed r6 kernel, taint 0, without module swaps:
 | Radio off/on | Reconnects |
 | Kernel log | No wcn36xx, SMD or WARNING errors |
 
-NetworkManager chose 5 GHz, and the same network is visible on 2.4 GHz channel
-11. A 2.4 GHz association has not been forced and tested separately. The
+NetworkManager chose 5 GHz. A forced 2.4 GHz association on channel 11 (signal
+73) gets DHCP and downloads 25 MB at 40.6 Mbit/s. Its first 20 gateway pings,
+taken right after association, lost 3 and averaged 332 ms. Repeats of 30 pings
+returned all of them, at 12.3 ms average with default power save and 1.8 ms with
+power save disabled. The cause of the early loss is unexplained. The profile is
+restored to automatic band and default power save. The
 network name and credentials are kept only in ignored local files and in the
 phone's root-only NetworkManager profile.
 
@@ -169,8 +173,8 @@ BD_ADDR record whose vendor is not evident. Full addresses stay private.
 
 ## Next steps
 
-1. Force a 2.4 GHz association, run an overnight soak, and test suspend/resume
-   once system suspend is qualified.
+1. Run an overnight soak, explain the transient early 2.4 GHz loss, and test
+   suspend/resume once system suspend is qualified.
 2. Decide the MAC source after a stock runtime reading, then implement it without
    publishing the per-unit values.
 3. Pair a Bluetooth device. Then test transfer, HID and audio profiles, and

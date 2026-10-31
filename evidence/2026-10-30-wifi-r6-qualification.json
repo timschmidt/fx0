@@ -152,12 +152,24 @@
   "mac": "NetworkManager applies Nura's default wifi.cloned-mac-address=stable on connection; hardware MAC source (lk2nd serial-derived vs NV factory) still open",
   "open": [
     "Bluetooth pairing/transfer/HID/audio",
-    "2.4 GHz association test (5 GHz chosen by NM)",
     "resume and real suspend",
     "hotspot",
     "coexistence",
     "overnight soak",
     "factory MAC policy",
-    "upstream submission (owner approval required)"
-  ]
+    "upstream submission (owner approval required)",
+    "Explain the transient 2.4 GHz loss right after association"
+  ],
+  "wifi_2_4GHz_installed_r6": {
+    "forced_band": "bg",
+    "channel": 11,
+    "security": "WPA2",
+    "signal": 73,
+    "dhcp_ipv4": true,
+    "download_25MB_Mbit_s": 40.6,
+    "first_ping_20": "17/20, avg 332 ms, max 1053 ms (immediately after association)",
+    "repeat_ping_30_default_powersave": "30/30, avg 12.3 ms",
+    "repeat_ping_30_powersave_disabled": "30/30, avg 1.8 ms",
+    "profile_restored": "band auto, powersave default"
+  }
 }
