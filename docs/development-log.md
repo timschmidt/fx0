@@ -1936,3 +1936,9 @@ The production-candidate lk2nd (no extlinux, no forced fastboot) honours
 Volume Down: chain-loaded with the key held, it stayed in fastboot, and
 `fastboot continue` booted the raw image. Its log confirms Fx0 detection and
 the GPIO key overrides. The owner confirmed the menu responds to the key.
+
+The production lk2nd is installed: no extlinux and no forced fastboot. The Fx0
+now boots Nura unattended from the boot-deploy raw image, after a warm reboot or
+a cold power-key start. Volume Down at power-on (no LG reset prompt) and
+`systemctl reboot --reboot-argument=bootloader` both reach lk2nd fastboot. The
+positional `systemctl reboot bootloader` form fails on systemd 261.

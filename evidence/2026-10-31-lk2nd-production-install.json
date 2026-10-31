@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-31",
+  "scope": "Production-candidate lk2nd installed as the Fx0 boot-partition prefix; boot and recovery entry qualified with the owner present",
+  "installed": {
+    "lk2nd": "fx0-lk2nd integration/fx0-rawboot b106e16 built with LK2ND_EXTLINUX=0 and without LK2ND_FORCE_FASTBOOT (version string fx0-rawboot-prep)",
+    "sha256": "3224c6504b34f7c5a84836cc5262d5e0f664b06f0b6386640ca08f75c8096b3f",
+    "bytes": 258064,
+    "replaces": "forced-fastboot development build a3d4ac88... (fx0-fd380ac6); differs by the single extlinux-option commit",
+    "method": "installed lk2nd fastboot 'flash lk2nd' (0x80000 partition window)",
+    "readback": "prefix equals the candidate; raw boot image and every byte after 512 KiB unchanged; 496 bytes of block padding after the image changed (past the header-declared image and trailer)"
+  },
+  "results": {
+    "unattended_boot": "fastboot reboot -> stock aboot -> new lk2nd -> raw boot-deploy image -> Nura running in 82 s with taint 0, no fastboot stop",
+    "reboot_to_bootloader": "systemctl reboot --reboot-argument=bootloader (systemd 261 rejects the positional form) -> lk2nd fastboot in 27 s via the IMEM restart reason; fastboot continue -> Nura",
+    "cold_power_key_boot": "owner: power off, USB unplugged, Power -> Nura/Sxmo by itself; PON reason 0x80 (KPDPWR), no warm-reset reason, taint 0, running",
+    "cold_volume_down_entry": "owner: Volume Down + Power from off -> lk2nd fastboot menu, no LG factory-reset prompt; LG passed lge.bootreason=0xffffffff; log has no forced-fastboot line; fastboot continue -> Nura taint 0",
+    "stock_fallback": "power-off + Volume Up + USB -> stock fastboot remains (LAF cleared), exercised in the factory-stock rehearsal"
+  },
+  "consequences": [
+    "lk2nd no longer reads extlinux: the extlinux menu, its fallback-native16 entry and the filesystem rescue entry are not reachable; the standalone rescue stays available by fastboot boot",
+    "boot-deploy's raw image is now the only boot path; an interrupted update is recovered with Volume Down entry and fastboot flash/boot of a known-good image",
+    "host test scripts must request the bootloader explicitly instead of relying on forced fastboot"
+  ],
+  "open": [
+    "20 cold and 20 warm boots (phase 9 reliability)",
+    "drop obsolete msm.allow_vram_carveout/msm.vram from the command line",
+    "native-root selection after repartitioning"
+  ]
+}
