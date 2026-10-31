@@ -1,4 +1,4 @@
-From c581fef801d698c611798139c400c9d8a0e594c9 Mon Sep 17 00:00:00 2001
+From 3fba4b1b5fdb3cfc1514dc0dcdac8863b37ee028 Mon Sep 17 00:00:00 2001
 From: Timothy Schmidt <timschmidt@gmail.com>
 Date: Sat, 31 Oct 2026 03:59:24 -0400
 Subject: [PATCH 2/2] drm/panel: Add LG Fx0 JDI in-cell panel driver
@@ -10,17 +10,19 @@ this board ("madai").
 
 As in the stock driver, display-on is sent before sleep-out, reset runs
 after the DSI host reaches LP11, and the clock lane may enter LP11
-between transfers (MIPI_DSI_CLOCK_NON_CONTINUOUS): with the clock lane
-forced to HS the panel never leaves sleep (power mode 0x0c instead of
-0x1c). Display-off and sleep-in are sent from disable(), while video is
-still running; sending them from unprepare() times out waiting for video
-completion after the CRTC has stopped. The rails are sequenced
+between transfers (MIPI_DSI_CLOCK_NON_CONTINUOUS), matching the stock
+lane policy. Display-off and sleep-in are sent from disable(), while
+video is still running; sending them from unprepare() times out waiting
+for video completion after the CRTC has stopped. The rails are sequenced
 explicitly in prepare() and unprepare(), and the boot GPIO state is
 preserved at probe so a display left on by the bootloader keeps working.
 
 Tested on an LG Fx0 with the MSM8226 MDP5/DSI: the panel comes up from
 the kernel, runs a Sway/Sxmo session on Freedreno for hours, and the
-owner confirmed a correct image and working touch. Limitation: a full
+owner confirmed a correct image and working touch. The first working
+image came from several changes made together (IOMMU contexts, PHY lane
+setup, this clock-lane policy and touch reset); which of them the panel
+strictly needs was not isolated. Limitation: a full
 display power cycle (panel off and on again) is not yet reliable on this
 board, because the DSI host/PLL shutdown later resets the device; that
 is outside this driver.

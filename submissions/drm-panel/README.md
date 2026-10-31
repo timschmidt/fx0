@@ -5,12 +5,13 @@ based on `drm-misc-next` at `a1e63ab695ad76850ab9787b9eb6aab695dc2965` (fetched
 October 31, 2026). **Not sent:** mailing it needs the owner's approval and
 Signed-off-by.
 
-The [submission branch](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-lg-fx0-panel-v2)
-is `ded6c4ed0ac0`. It replaces the first push (`submission/fx0-lg-fx0-panel`,
+The [submission branch](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-lg-fx0-panel-v3)
+is `3fba4b1b5fdb`. It replaces the first push (`submission/fx0-lg-fx0-panel`,
 `c581fef801d6`), whose driver message claimed the clock-lane flag alone moved
 the panel out of sleep. The bring-up log shows that claim was confounded by
 an fbdev blank state, and the first working image came from several changes
-together, so the message now says so.
+together, so the message now says so. (`-v2` had the same correction with one
+over-long changelog line.)
 
 1. [dt-bindings: display: panel: Add LG Fx0 production panel](0001-dt-bindings-display-panel-Add-LG-Fx0-production-pane.patch)
 2. [drm/panel: Add LG Fx0 JDI in-cell panel driver](0002-drm-panel-Add-LG-Fx0-JDI-in-cell-panel-driver.patch).
