@@ -213,6 +213,12 @@ clocks are not a blocker. Three pieces remain:
    operations under the MSM8916 version, so no version-dependent path changes.
    `camss.o` builds with ARM LLVM W=1, and the binding and Fx0 DTB schema
    checks are clean. The CAMSS node stays disabled.
+2a. **32-bit DMA (drafted).** Mainline `VIDEO_QCOM_CAMSS` depends on
+   `ARCH_QCOM && IOMMU_DMA`, which 32-bit ARM does not provide; it uses
+   `ARM_DMA_USE_IOMMU`, which r8 has. So CAMSS could not be enabled for
+   MSM8226 at all outside compile tests. `3a68ec4c8322` accepts either. Whether
+   CAMSS's DMA works through the ARM IOMMU mapping is checked by the
+   test-pattern run.
 3. **VFE 4.0 against the 4.1 operations.** The vendor driver has
    MSM8226-specific VFE versions and VBIF setup. Audit reset, interrupts,
    write masters, RDI and bus/QoS before reusing `vfe_ops_4_1`.
