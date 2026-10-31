@@ -15,8 +15,8 @@ One) and PX on MSM8916/MSM8939. The bug is also in 6.18.59 stable, where the Fx0
 found it. The [patch](0001-remoteproc-qcom_wcnss-Fix-PD-regulator-selection-on-.patch)
 tests whether a table has PD regulators, rather than comparing counts.
 
-The [submission branch](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-wcnss-pd-regulators)
-is `44a445091d29`. Checks on the maintainer base:
+The [submission branch](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-wcnss-pd-regulators-v2)
+is `5ca0cbcef677`. Checks on the maintainer base:
 
 - The [source-extracting model](../../diagnostics/wcnss-regulators/README.md)
   fails 6 of 10 cases on the base and passes all 10 with the fix.
@@ -46,3 +46,14 @@ The MSM8226 DXE interrupt-trigger fix belongs in the MSM8226 WCNSS node series.
 That node is not in mainline yet, so the fix should be folded into that series
 when it is prepared. MSM8974 declares the same rising-edge specifier upstream,
 but this project cannot test it.
+
+## AI-assistance disclosure
+
+On October 31, 2026 the commit messages were updated to follow
+`Documentation/process/coding-assistants.rst` and `generated-content.rst` in the
+target tree: a paragraph stating that Claude Opus 5.5 found the problem, wrote
+the change and the message and ran the tests, plus an `Assisted-by: LLM`
+trailer. The earlier form, `Assisted-by: Claude:claude-opus-5-5`, does not
+match the documented format. The code is unchanged (identical trees). The
+rewritten commits are on the `-v2` branches; the original branches remain
+as published.

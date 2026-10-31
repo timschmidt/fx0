@@ -1,4 +1,4 @@
-From 15203afaa722c329dea3473675642fe01dfd0ee1 Mon Sep 17 00:00:00 2001
+From 8a6cddd181fadc058741688cb8b62793dd338031 Mon Sep 17 00:00:00 2001
 From: Timothy Schmidt <timschmidt@gmail.com>
 Date: Fri, 30 Oct 2026 10:29:21 -0400
 Subject: [PATCH] power: supply: smbb: expose automatic and inhibited charging
@@ -17,12 +17,18 @@ Three RAM-only inhibit/resume cycles on an LG Fx0 preserve USB online,
 forced-battery mode and charger limits. ARM LLVM W=1 builds and 1,051
 host helper/property/status/fault cases under ASan/UBSan pass. Independent
 current accuracy and charging thermal-policy qualification remain open.
+
+This change was developed with an AI coding assistant (Claude Opus 5.5)
+during LG Fx0 bring-up. The assistant found the problem, wrote the change
+and this message, and ran the tests described above.
+
+Assisted-by: LLM
 ---
  drivers/power/supply/qcom_smbb.c | 70 ++++++++++++++++++++++++++++----
  1 file changed, 61 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/power/supply/qcom_smbb.c b/drivers/power/supply/qcom_smbb.c
-index f33aab961..3f0016181 100644
+index f33aab9619c4..3f00161818b2 100644
 --- a/drivers/power/supply/qcom_smbb.c
 +++ b/drivers/power/supply/qcom_smbb.c
 @@ -587,13 +587,46 @@ static int smbb_charger_writable_property(struct power_supply *psy,
@@ -147,5 +153,6 @@ index f33aab961..3f0016181 100644
  	.properties = smbb_battery_properties,
  	.num_properties = ARRAY_SIZE(smbb_battery_properties),
  	.get_property = smbb_battery_get_property,
+-- 
+2.56.0
 
-base-commit: f0f400459bf6a037e70768de623fff3f8920b8bb

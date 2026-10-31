@@ -1,4 +1,4 @@
-From 96bacecdada392c8db9a758316f957969d0ec255 Mon Sep 17 00:00:00 2001
+From d7d2ac9351003204ab37348e3cc9c5d4862e69f4 Mon Sep 17 00:00:00 2001
 From: Timothy Schmidt <timschmidt@gmail.com>
 Date: Fri, 30 Oct 2026 10:37:42 -0400
 Subject: [PATCH 2/2] power: supply: charger-manager: stop charging on
@@ -19,13 +19,19 @@ These include read faults, expired charging/discharging durations, prior
 hot/cold/fault states, hysteresis recovery and unmonitored configurations.
 Probe-time sensor setup and charger-actuator error handling are separate
 issues; this does not establish a complete Fx0 thermal policy.
+
+This change was developed with an AI coding assistant (Claude Opus 5.5)
+during LG Fx0 bring-up. The assistant found the problem, wrote the change
+and this message, and ran the tests described above.
+
+Assisted-by: LLM
 ---
  drivers/power/supply/charger-manager.c | 15 ++++++++-------
  include/linux/power/charger-manager.h  |  2 +-
  2 files changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/power/supply/charger-manager.c b/drivers/power/supply/charger-manager.c
-index 3d95f914e..492b12790 100644
+index 3d95f914e849..492b12790065 100644
 --- a/drivers/power/supply/charger-manager.c
 +++ b/drivers/power/supply/charger-manager.c
 @@ -532,15 +532,14 @@ static int cm_check_thermal_status(struct charger_manager *cm)
@@ -61,7 +67,7 @@ index 3d95f914e..492b12790 100644
  		else if (cm->emergency_stop == CM_BATT_COLD)
  			val->intval = POWER_SUPPLY_HEALTH_COLD;
 diff --git a/include/linux/power/charger-manager.h b/include/linux/power/charger-manager.h
-index 45e228b35..c5e8c428d 100644
+index 45e228b353ea..c5e8c428da31 100644
 --- a/include/linux/power/charger-manager.h
 +++ b/include/linux/power/charger-manager.h
 @@ -205,7 +205,7 @@ struct charger_desc {
@@ -73,3 +79,6 @@ index 45e228b35..c5e8c428d 100644
   * @psy_name_buf: the name of power-supply-class for charger manager
   * @charger_psy: power_supply for charger manager
   * @status_save_ext_pwr_inserted:
+-- 
+2.56.0
+

@@ -1,4 +1,4 @@
-From 66f23ece70171825817b5569ce6482ae2604cf68 Mon Sep 17 00:00:00 2001
+From 3627a3b726b6a017491c062df3c1c13fef0d54b8 Mon Sep 17 00:00:00 2001
 From: Timothy Schmidt <timschmidt@gmail.com>
 Date: Fri, 30 Oct 2026 10:35:37 -0400
 Subject: [PATCH 1/2] power: supply: charger-manager: keep thermal stops ahead
@@ -16,12 +16,18 @@ and full-charge handling remain in the non-thermal path.
 A host regression executing the actual decision and regulator functions
 reproduces an enabled regulator above the maximum temperature with an
 expired charging duration before this change.
+
+This change was developed with an AI coding assistant (Claude Opus 5.5)
+during LG Fx0 bring-up. The assistant found the problem, wrote the change
+and this message, and ran the tests described above.
+
+Assisted-by: LLM
 ---
  drivers/power/supply/charger-manager.c | 7 +------
  1 file changed, 1 insertion(+), 6 deletions(-)
 
 diff --git a/drivers/power/supply/charger-manager.c b/drivers/power/supply/charger-manager.c
-index 8e8c51094..3d95f914e 100644
+index 8e8c5109401a..3d95f914e849 100644
 --- a/drivers/power/supply/charger-manager.c
 +++ b/drivers/power/supply/charger-manager.c
 @@ -572,12 +572,8 @@ static int cm_get_target_status(struct charger_manager *cm)
@@ -46,5 +52,6 @@ index 8e8c51094..3d95f914e 100644
  	/* Charging is allowed. */
  	return POWER_SUPPLY_STATUS_CHARGING;
  }
+-- 
+2.56.0
 
-base-commit: f0f400459bf6a037e70768de623fff3f8920b8bb

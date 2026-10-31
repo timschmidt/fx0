@@ -1,4 +1,4 @@
-From b639287c3b628bd5aafc750ebb0e8b1133fe66e2 Mon Sep 17 00:00:00 2001
+From ba6579a3d0edf3c8a8af30fcb434ea6e2cc5a3f8 Mon Sep 17 00:00:00 2001
 From: Timothy Schmidt <timschmidt@gmail.com>
 Date: Fri, 30 Oct 2026 19:40:25 -0400
 Subject: [PATCH] wifi: cfg80211: flush deferred scan done message on interface
@@ -31,33 +31,19 @@ until the driver module is reloaded.
 Queue scan_done_wk when the message is deferred, so that it is
 delivered regardless of when the driver completes the stale request.
 
+This change was developed with an AI coding assistant (Claude Opus 5.5)
+during LG Fx0 bring-up. The assistant found the problem, wrote the change
+and this message, and ran the tests described above.
+
 Fixes: dab68a74e90b ("wifi: cfg80211: don't free driver-owned scan requests")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
+Assisted-by: LLM
 ---
-Testing:
- - LG Fx0 (MSM8926, wcn36xx with firmware scan offload) on 6.18.59, which
-   carries the stable backport of dab68a74e90b, with NetworkManager and
-   wpa_supplicant. Ten connect / scan / disconnect / scan cycles with the
-   unmodified cfg80211: scanning is blocked from the first disconnect
-   onwards, nl80211 returns -EBUSY and the request never reaches
-   rdev_scan (no rdev_scan or drv_hw_scan tracepoint fires). Same ten
-   cycles with this change applied to that kernel: all cycles connect,
-   every scan completes, and wpa_supplicant reports no scan failures.
-   Association, DHCP, DNS, five reconnects and a 250 MB transfer pass.
- - cfg80211 KUnit suite on UML on this base: 57/57 pass (it does not
-   cover this path).
- - W=1 LLVM builds of net/wireless/scan.o for x86_64 (defconfig) and ARM
-   (multi_v7_defconfig) on this base: no warnings.
-Not tested: a kernel built from this tree on hardware, other drivers,
-and P2P device interfaces (cfg80211_stop_p2p_device() takes the same
-deferred path).
-
  net/wireless/scan.c | 14 +++++++++++---
  1 file changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index d35c826c4..aacb909e9 100644
+index d35c826c4b1a..aacb909e9b6b 100644
 --- a/net/wireless/scan.c
 +++ b/net/wireless/scan.c
 @@ -1194,10 +1194,18 @@ void ___cfg80211_scan_done(struct cfg80211_registered_device *rdev,
@@ -82,8 +68,6 @@ index d35c826c4..aacb909e9 100644
  }
  
  void __cfg80211_scan_done(struct wiphy *wiphy, struct wiphy_work *wk)
-
-base-commit: 25e73f1d6868c759c8eb56cad4e411692c5341b4
 -- 
 2.56.0
 

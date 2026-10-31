@@ -15,7 +15,7 @@ inhibition preserves the USB power path, forced-battery mode and other control
 bits. Online healthy inhibited charging reports Not charging. Unsupported modes
 and register failures return errors.
 
-The [submission branch](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-charge-control)
+The [submission branch](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-charge-control-v2)
 passes 1,051 actual helper/property/status/fault cases under ASan/UBSan and an
 ARM LLVM22 W=1 object build on the maintainer tree, with no warnings. Its LTS
 counterpart also passes a full kernel build and three RAM-only inhibit/resume
@@ -30,7 +30,7 @@ monitored charging on runtime temperature-read errors. Health becomes Unknown
 until a valid sample clears the existing hysteresis. Legacy configurations with
 temperature monitoring disabled retain their behavior.
 
-The [submission branch](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-charger-manager)
+The [submission branch](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-charger-manager-v2)
 passes 8,330 cases executing the actual decision, regulator and property
 functions under ASan/UBSan. The two original failures reproduce on unmodified
 upstream code. ARM LLVM22 W=1 object compilation on the maintainer tree and
@@ -41,7 +41,7 @@ actuator errors and complete policy qualification remain separate work. See
 
 ## Battery description binding
 
-The third [binding-only series](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-smbb-battery-info)
+The third [binding-only series](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-smbb-battery-info-v2)
 permits SMBB's standard `monitored-battery` reference. The existing supply core
 already reads the selected constant data. Modified documentation and a generated
 device DTB pass on the maintainer tree with all referenced schemas available.
@@ -71,3 +71,14 @@ the strict source/style pass uses `--no-signoff` and has zero other diagnostics.
 Author sign-off, final recipient/base review and broader configuration checks
 remain before submission. Source-review readiness does not establish complete
 Fx0 charging protection or close the all-hardware bringup goal.
+
+## AI-assistance disclosure
+
+On October 31, 2026 the commit messages were updated to follow
+`Documentation/process/coding-assistants.rst` and `generated-content.rst` in the
+target tree: a paragraph stating that Claude Opus 5.5 found the problem, wrote
+the change and the message and ran the tests, plus an `Assisted-by: LLM`
+trailer. The earlier form, `Assisted-by: Claude:claude-opus-5-5`, does not
+match the documented format. The code is unchanged (identical trees). The
+rewritten commits are on the `-v2` branches; the original branches remain
+as published.

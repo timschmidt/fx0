@@ -7,7 +7,10 @@ userspace. Nothing has been sent; sending needs the owner's approval
 ([gate](upstream-development.md#submission-readiness-checklist)).
 
 "Prepared" means a focused branch on the current maintainer base, exported
-patches, a README with checks and recipients, and hardware evidence.
+patches, a README with checks and recipients, and hardware evidence. Kernel
+patches also carry the AI-assistance disclosure and `Assisted-by: LLM`
+trailer required by the target tree's `Documentation/process/coding-assistants.rst`,
+and no Signed-off-by, which the owner adds before sending.
 
 ## Prepared, not sent
 

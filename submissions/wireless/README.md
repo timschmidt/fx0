@@ -18,8 +18,8 @@ NetworkManager reconnection triggers this.
 
 The [patch](0001-wifi-cfg80211-flush-deferred-scan-done-message-on-in.patch)
 queues `scan_done_wk` whenever the message is parked. The
-[submission branch](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-cfg80211-scan-msg)
-is `b639287c3b62`. Checks on the maintainer base:
+[submission branch](https://github.com/timschmidt/fx0-linux/tree/submission/fx0-cfg80211-scan-msg-v2)
+is `ba6579a3d0ed`. Checks on the maintainer base:
 
 - Strict checkpatch reports only the missing Signed-off-by (left for the owner)
   and a `Fixes` id unknown to the shallow fetch, confirmed in mainline.
@@ -45,3 +45,14 @@ See the [diagnostic](../../diagnostics/wcnss-scan-busy/README.md) and
 The patch states these limits below `---`. It carries `Assisted-by` and
 `Cc: stable` under the kernel's coding-assistants and stable rules. Under the
 threat model this is a functional regression, not a vulnerability.
+
+## AI-assistance disclosure
+
+On October 31, 2026 the commit messages were updated to follow
+`Documentation/process/coding-assistants.rst` and `generated-content.rst` in the
+target tree: a paragraph stating that Claude Opus 5.5 found the problem, wrote
+the change and the message and ran the tests, plus an `Assisted-by: LLM`
+trailer. The earlier form, `Assisted-by: Claude:claude-opus-5-5`, does not
+match the documented format. The code is unchanged (identical trees). The
+rewritten commits are on the `-v2` branches; the original branches remain
+as published.
