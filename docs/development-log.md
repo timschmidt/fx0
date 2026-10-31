@@ -2034,3 +2034,13 @@ so its DT node carries a 10 ms enable delay. `inv_mpu6050` probes at boot, and
 running the PM8226 vibrator at the vendor's 2.4 V shows up clearly in the
 accelerometer and gyro. (A host reboot unmounted Disk B, which holds the work
 trees behind /tmp/fx0-storage; nothing was lost.)
+
+Kernel r9, then r10, are installed. r9 adds the microSD slot, the motion
+sensors and the vibrator, plus the ak8974 magnetometer driver. Its kernel
+and DTB were RAM-booted before installing. With the SD slot live the card
+became mmcblk0 and the eMMC mmcblk1. Nothing broke, since root mounts by UUID
+and boot-deploy uses partition names, but r10 pins the order with mmc
+aliases. Both boot unattended with taint 0. A first torch driver for the
+PM8226 flash block programs its registers as the vendor does, with no
+faults. Battery current can't show the LED, because enabling the flash
+module pauses USB charging; light output still needs checking.

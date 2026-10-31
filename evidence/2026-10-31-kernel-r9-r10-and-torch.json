@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-31",
+  "scope": "Kernel packages r9 and r10 installed; first torch driver test (RAM boot)",
+  "r9": {
+    "package": "linux-postmarketos-qcom-msm8226-6.18.59-r9",
+    "source": "fx0-linux 209fa63907fe (r8 + microSD + motion sensors/vibrator + LVS1 ramp)",
+    "recipe": "fx0-pmaports 268e2bb0e (+CONFIG_AK8974=m)",
+    "apk_sha256": "e61aff5b0ff4d4f38dd33566ac46a38592f86013fe8bfdf651c9f489f10e0f22",
+    "ram_boot_first": "r9 kernel+DTB RAM-booted with the installed initramfs: microSD, mpu6515, hscdtd008a (r9 ak8974), vibrator all present before installing",
+    "installed": "boots unattended in 69 s, taint 0, no failed units, sway starts; all sensor modules autoload",
+    "finding": "with the SD slot enabled the SD card became mmcblk0 and the eMMC mmcblk1 (root by UUID, boot-deploy and firmware by partition label were unaffected)"
+  },
+  "r10": {
+    "package": "linux-postmarketos-qcom-msm8226-6.18.59-r10",
+    "source": "fx0-linux 7e05825f60c2 (r9 + mmc0/mmc1 aliases)",
+    "recipe": "fx0-pmaports 3fbe75aa4",
+    "apk_sha256": "4e927b995e1bc9be7987bbec8088b2e89c0b4aa3bb1385ead1bb4c9049154aee",
+    "alias_ram_test": "r9 kernel + alias DTB: eMMC mmcblk0, SD mmcblk1",
+    "installed": "boots in 69 s, taint 0, no failed units, eMMC mmcblk0 (root mmcblk0p35), SD mmcblk1, sensors present, sway starts"
+  },
+  "rollback": "host copies of the previous boot.img/vmlinuz/initramfs/DTB/config (local/before-native-r9, local/before-native-r10, private) and on-phone /var/lib/fx0-fallback/before-native-r9 and -r10",
+  "torch_driver_test": {
+    "driver": "fx0-linux integration/fx0-torch 1d9596b8706a leds-qcom-flash-v1 (module, RAM boot)",
+    "led": "white:torch, max_brightness 16 (12.5 mA steps)",
+    "registers": "LED currents 0x00/0x07/0x0f at levels 1/8/16, enable 0xe0, strobe 0xc0, torch switch 0x00 while on; enable 0x00, strobe 0x00, torch 0x03 after off; status registers 0xd308-0xd30a stay 0",
+    "battery_current": "switches from about +255 mA (charging) to about -300 mA whenever the module is enabled, at any level: enabling the flash module appears to pause USB charging, masking the LED's own current",
+    "light_output": "not yet confirmed; next check is the rear camera with torch off and on",
+    "run": [
+      "[   46.722752] leds_qcom_flash_v1: loading out-of-tree module taints kernel.",
+      "[   46.722806] leds_qcom_flash_v1: module verification failed: signature and/or required key missing - tainting kernel",
+      "mmc0::",
+      "mmc1::",
+      "white:torch",
+      "led /sys/class/leds/white:torch max 16",
+      "== off",
+      "current_mA 255.2 sd 42.2",
+      "  regs: d308: 00 d309: 00 d30a: 00 d341: 00 d342: 00 d343: 00 d346: 00 d347: 00 d3e4: 03 ",
+      "== level 1 (12.5 mA)",
+      "current_mA -374.1 sd 62.8",
+      "  regs: d308: 00 d309: 00 d30a: 00 d341: 0f d342: 00 d343: 00 d346: e0 d347: c0 d3e4: 00 ",
+      "== level 8 (100 mA)",
+      "current_mA -296.9 sd 40.2",
+      "  regs: d308: 00 d309: 00 d30a: 00 d341: 0f d342: 07 d343: 07 d346: e0 d347: c0 d3e4: 00 ",
+      "== level 16 (200 mA)",
+      "current_mA -285.1 sd 34.5",
+      "  regs: d308: 00 d309: 00 d30a: 00 d341: 0f d342: 0f d343: 0f d346: e0 d347: c0 d3e4: 00 ",
+      "== off again",
+      "current_mA 276.7 sd 36.1",
+      "  regs: d308: 00 d309: 00 d30a: 00 d341: 0f d342: 0f d343: 0f d346: 00 d347: 00 d3e4: 03 ",
+      "[    7.077591] [pmOS-rd]: Unable to resize root partition: failed to find qualifying partition",
+      "[   46.722752] leds_qcom_flash_v1: loading out-of-tree module taints kernel.",
+      "[   46.722806] leds_qcom_flash_v1: module verification failed: signature and/or required key missing - tainting kernel",
+      "12288"
+    ]
+  }
+}
