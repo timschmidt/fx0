@@ -151,6 +151,26 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   GPIO1** (`qcom,cdc-mclk-gpios`). In mainline these become a GPIO-switched
   speaker supply on the codec and a clock-out pin state for PM8226 GPIO1.
 
+  Vendor sequences for the component port (`wcd9306.c`, `wcd9xxx-resmgr.c`):
+  - **Bandgap (audio mode):** `BIAS_CENTRAL_BG_CTL` (0x101) |= 0x80, |= 0x04,
+    |= 0x01; wait 1 ms; clear 0x80.
+  - **Clock block on external MCLK** (RC oscillator off):
+    1. `CLK_BUFF_EN1` (0x108): clear 0x08, then set bits 0x0c to 0x04, then
+       set 0x01; wait 1 ms.
+    2. `CLK_BUFF_EN2` (0x109): clear 0x02, then set 0x04.
+    3. `CDC_CLK_MCLK_CTL` (0x311) |= 0x01; wait 50 µs.
+  - **Interpolator:** pulse its bit in `CDC_CLK_RX_RESET_CTL` before power-up,
+    then rewrite its digital gain register.
+  - **Speaker:**
+    - `SPK DAC` switch: `SPKR_DRV_DAC_CTL` bit 2.
+    - `SPK PA`: `SPKR_DRV_EN` bit 7.
+    - Version 1.0 parts clear `SPKR_DRV_DBG_PWRSTG` 0x24 while the speaker
+      supply is on, and restore it afterwards.
+    - LG switches the boost (GPIO60) with the DAC.
+  - **SLIMbus:** RX ports start at 16, as on WCD9335, with the same port
+    configuration layout, so the DAI channel map, `slim_stream_*` handling
+    and port setup can follow `wcd9335`.
+
   **Step 1 done (2026-10-31):** on an audio probe kernel, all four QDSP6
   services bind on this ADSP (core, AFE, ASM, ADM). The AFE DAIs, including
   `SLIMBUS_0_RX`, and the routing component register
