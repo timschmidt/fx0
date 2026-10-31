@@ -83,6 +83,17 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   registers below 0x100, MBHC, IIR/ANC coefficients, digital gains, HPH
   status) are code and will be translated by hand in the driver.
 
+- **First codec driver.** fx0-linux `integration/fx0-tapan` adds
+  `sound/soc/codecs/wcd9306.c`, a SLIMbus driver for `slim217,e0`. The vendor
+  elemental address `[00 01 E0 00 17 02]` gives product 0x00e0, device index
+  1. The driver enables the static supplies (VDD-H, VDD-PX, VDD-CX), pulses
+  reset for 20 ms each way as the vendor core does, reads the chip ID over a
+  cached regmap built from the generated tables (major ID 0x0103), and runs
+  the vendor bring-up writes (LEAKAGE_CTL and CDC_CTL). It builds with ARM
+  LLVM W=1 and passes strict checkpatch. It is untested: it needs the MSM8226
+  SLIMbus NGD controller to work first, and it has no ASoC component, MCLK,
+  charge pump, MBHC or binding yet.
+
 ## Work required
 
 1. Done: the ADSP starts and its QMI services are listed. Still to check: APR
