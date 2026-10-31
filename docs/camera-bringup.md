@@ -238,15 +238,36 @@ IMX179 and IMX132 have no mainline drivers yet.
 
 ## First capture through mainline CAMSS (2026-10-31)
 
-On a RAM-booted r8 with the probe DTB, `qcom,msm8226-camss` probed through the
-new VFE IOMMU using 32-bit ARM IOMMU DMA, and created every CSIPHY, CSID,
+On a RAM-booted r8 with the probe DTB, `qcom,msm8226-camss` probed and
+created every CSIPHY, CSID,
 ISPIF and VFE0 RDI entity. With the CSID0 test pattern ("Incrementing") routed
 CSID0 → ISPIF0 → VFE0 RDI0 at SGRBG8 1280×720, five frames streamed:
 4,608,000 bytes, exactly 5 × 1280 × 720, starting `00 01 02 …`. So the MSM8226
-CSID, ISPIF, VFE RDI write path and camera IOMMU work with the reused 4.1
-operations for this path. The VFE pixel path, CSIPHY and sensors remain. The
+CSID, ISPIF and VFE RDI write path work with the reused 4.1 operations.
+**Correction:** r8 has no driver for the new VFE IOMMU compatible, so CAMSS ran
+without an IOMMU, using direct DMA after a deferred-probe timeout. When the
+VFE IOMMU does attach, captures complete but stay all zero; that configuration
+is not working yet. The VFE pixel path, CSIPHY and sensors remain. The
 CSID sink pad must be set as well as its source. See
 [evidence](../evidence/2026-10-31-ram-probes-apr-camss.json).
+
+## Rear IMX179 streaming (2026-10-31)
+
+A new mainline-style `imx179` driver (Tegra GPL register table; 3280×2464
+RAW10, 4 lanes at 324 MHz, 30 fps) reads chip ID **0x8179**, the value LG's
+description expects, once the MCLK is right. Getting there exposed a mainline
+clock bug: `mmcc-msm8974`'s MCLK RCGs lack `.mnd_width`, so a 24 MHz request
+gave 120 MHz. Declaring the 8-bit M/N counter, as the vendor driver does, fixes
+it. Through CSIPHY0 data lanes 0/2/3/4, the sensor's colour bars arrive (data
+starts at 0xff), and live frames sit at the black level with varying data.
+Open:
+
+- Frames contain data only in their first rows (live: 574 of 2464). This
+  looks like a VFE write-bandwidth or AXI clock limit.
+- The VFE IOMMU zeroes captures, as above.
+- Image content, exposure and gain need checking.
+
+See [evidence](../evidence/2026-10-31-imx179-first-stream.json).
 
 ## Implementation and physical test order
 

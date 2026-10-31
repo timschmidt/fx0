@@ -1987,3 +1987,11 @@ installed system. On a RAM-booted r8 with the probe DTB:
   CSID test-pattern frames (4,608,000 bytes, incrementing data) through ISPIF
   and VFE RDI0. Mainline CAMSS needed its Kconfig widened to accept 32-bit
   ARM IOMMU DMA.
+
+The rear IMX179 streams on mainline. A new sensor driver reads chip ID 0x8179
+once the MCLK is right. That needed a fix in mainline `mmcc-msm8974`, whose
+MCLK RCGs lacked an M/N width and produced 120 MHz instead of 24 MHz. Sensor
+colour bars and live RAW10 frames pass through CSIPHY0 lanes 0/2/3/4. Frames
+hold data only in their first rows, which looks like VFE bandwidth.
+Correction: the earlier "first capture through the VFE IOMMU" ran without the
+IOMMU (r8 lacked its driver). With the IOMMU attached, captures are all zero.

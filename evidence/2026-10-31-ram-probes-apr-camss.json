@@ -21,7 +21,7 @@
     "protocol_match": "the vendor MSM8226 qdsp6v2 driver and mainline q6afe/q6asm/q6adm use the same command opcodes (AFE_PORT_CMD_DEVICE_START 0x100E5, ADM_CMD_DEVICE_OPEN_V5 0x10326, ASM_STREAM_CMD_OPEN_WRITE_V3/READ_V3 0x10DB3/0x10DB4); mainline q6adm records the ADM API version without branching on it"
   },
   "camss": {
-    "probe": "qcom,msm8226-camss probed through qcom,msm8226-vfe-iommu with 32-bit ARM IOMMU DMA (after a 'deferred probe timeout, ignoring dependency' message); entities msm_csiphy0/1, msm_csid0/1, msm_ispif0/1, msm_vfe0_rdi0/1/2 with video0/1/2",
+    "probe": "qcom,msm8226-camss probed on the RAM-booted r8 kernel. CORRECTION (later the same day): r8 has no driver for qcom,msm8226-vfe-iommu, so the VFE IOMMU never probed; CAMSS continued after 'deferred probe timeout, ignoring dependency' WITHOUT an IOMMU, using direct DMA. The first capture therefore did not exercise the camera IOMMU.",
     "tpg_capture": {
       "pipeline": "msm_csid0:1 -> msm_ispif0:0, msm_ispif0:1 -> msm_vfe0_rdi0:0; SGRBG8_1X8 1280x720 on csid0 pads 0 and 1, ispif0 and rdi0; video0 GRBG 1280x720 (multiplanar)",
       "test_pattern": "1 (Incrementing)",
@@ -35,7 +35,8 @@
       "pgAA packed: video format stayed at default; -EPIPE",
       "8-bit with only csid source pad set: -EPIPE (csid sink pad still default)",
       "8-bit with csid sink and source pads set: 5 frames captured"
-    ]
+    ],
+    "correction": "When the VFE IOMMU does attach (probe kernel with the qcom_iommu VFE configuration), every capture completes but the buffers stay all zero: the VFE IOMMU configuration is not working yet."
   },
   "cleanup": "every run rebooted back to the installed r8 (taint 0, running); 24 h system soak restarted 06:06:39 after keeping the first 130 clean minutes",
   "open": [

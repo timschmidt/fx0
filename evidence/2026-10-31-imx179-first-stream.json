@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-31",
+  "scope": "Rear IMX179 on mainline: new sensor driver, MMCC MCLK fix, CAMSS without IOMMU (probe kernel = r8 + fixes, RAM boot; installed system unchanged)",
+  "mclk": {
+    "finding": "mmcc-msm8974 mclk0-3 RCGs lack .mnd_width, so the 24 MHz entry (GPLL0/5 x 1/5) yields 120 MHz; the vendor driver programs these RCGs with M/N",
+    "fix": "fx0-linux da66f6c0bdf6 adds .mnd_width = 8 to mclk0-3_clk_src (also present upstream in qcom for-next)",
+    "result": "sensor receives 24 MHz"
+  },
+  "sensor": {
+    "id": "0x8179 at register 0x0002 over CCI (matches the vendor slave-id <0x20 0x0002 0x8179>)",
+    "driver": "fx0-linux integration/fx0-camss drivers/media/i2c/imx179.c (3280x2464 RAW10, 4 lanes, 324 MHz link, 30 fps; Tegra GPL register table)",
+    "lanes": "CSIPHY0 data-lanes <0 2 3 4> (vendor assignment 0x4320) deliver frames",
+    "colour_bars": "captured data begins 0xff (white first bar)",
+    "live": "captured data at black level 0x10 (10-bit 64) with varying low bits; image content not yet verified"
+  },
+  "camss_without_iommu": {
+    "tpg": "CSID test pattern data at 8-bit and 10-bit packed, 1280x720 and 3280x2464",
+    "truncation": "each frame contains data only in its first rows (live 3280x2464: 574 of 2464 rows; TPG 720p 8-bit about half the rows), suggesting a VFE write-bandwidth or AXI clock limit"
+  },
+  "vfe_iommu": "with the VFE IOMMU attached, captures complete but the buffers stay all zero; the qcom,msm8226-vfe-iommu configuration does not translate correctly yet",
+  "open": [
+    "VFE AXI/bus clock rate and full-frame capture",
+    "VFE IOMMU configuration",
+    "verify image content (debayer/stride), exposure and gain mapping",
+    "front IMX132"
+  ]
+}
