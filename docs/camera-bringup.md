@@ -317,6 +317,17 @@ Needed:
 - Torch first (`brightness` up to 200 mA). Flash strobe and its safety timer
   come after.
 
+**Torch works (2026-10-31).** `leds-qcom-flash-v1` (fx0-linux
+`integration/fx0-torch`) registers `white:torch` with 16 steps up to 200 mA.
+It follows the vendor sequence: unlock, torch switch, both channel currents,
+max current, module enable, torch strobe outputs. It raises no fault status. The
+rear camera confirms the light: a complete frame's mean rises from 67 to 366
+(black level 64) and its brightest pixels saturate. Torch mode runs from the
+battery rail; the boost was not used. While the module is enabled, the
+battery stops charging from USB and discharges, so battery current cannot
+measure the LED. The driver still needs a binding, packaging and a decision
+on the boost.
+
 ## Implementation and physical test order
 
 1. Repeat controlled touch observation and preserve its completion conditions. The earlier pre-DRM capture was saved as incomplete; a new native-display capture is open.

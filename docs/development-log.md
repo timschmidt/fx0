@@ -2044,3 +2044,8 @@ aliases. Both boot unattended with taint 0. A first torch driver for the
 PM8226 flash block programs its registers as the vendor does, with no
 faults. Battery current can't show the LED, because enabling the flash
 module pauses USB charging; light output still needs checking.
+
+The flash LED works as a torch. A new driver for the PM8226's
+first-generation flash block lights it at up to 200 mA without the 5 V boost.
+The rear camera, next to the LED, sees the scene brighten from a mean of 67
+to 366 (black level 64).

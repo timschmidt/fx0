@@ -24,7 +24,7 @@
     "led": "white:torch, max_brightness 16 (12.5 mA steps)",
     "registers": "LED currents 0x00/0x07/0x0f at levels 1/8/16, enable 0xe0, strobe 0xc0, torch switch 0x00 while on; enable 0x00, strobe 0x00, torch 0x03 after off; status registers 0xd308-0xd30a stay 0",
     "battery_current": "switches from about +255 mA (charging) to about -300 mA whenever the module is enabled, at any level: enabling the flash module appears to pause USB charging, masking the LED's own current",
-    "light_output": "not yet confirmed; next check is the rear camera with torch off and on",
+    "light_output": "confirmed with the rear IMX179 (RAM boot of the camera probe kernel + torch module): complete 3280x2464 RAW10 frame, 10-bit levels with black level 64 \u2014 torch off mean 67.4, p50 67, p99 74, max 79; torch at 200 mA mean 365.6, p50 294, p99 1023, max 1023. The LED lights from the battery rail without the 5 V boost.",
     "run": [
       "[   46.722752] leds_qcom_flash_v1: loading out-of-tree module taints kernel.",
       "[   46.722806] leds_qcom_flash_v1: module verification failed: signature and/or required key missing - tainting kernel",
@@ -51,6 +51,14 @@
       "[   46.722752] leds_qcom_flash_v1: loading out-of-tree module taints kernel.",
       "[   46.722806] leds_qcom_flash_v1: module verification failed: signature and/or required key missing - tainting kernel",
       "12288"
+    ],
+    "camera_run": [
+      "sensor-off iommu_faults 2",
+      "sensor-off frames 6",
+      "sensor-on iommu_faults 2",
+      "sensor-on frames 6",
+      "fx0-sensor-off.raw n 63448 mean 67.4 p50 67 p99 74 max 79",
+      "fx0-sensor-on.raw n 63448 mean 365.6 p50 294 p99 1023 max 1023"
     ]
   }
 }
