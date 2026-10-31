@@ -83,9 +83,9 @@ See [evidence](../evidence/2026-10-31-lk2nd-key-entry.json).
 
 **Installed, 2026-10-31.** That lk2nd is now the installed prefix. The phone boots
 Nura unattended from the boot-deploy raw image on warm and cold (power key)
-starts. A Volume Down cold start and `systemctl reboot
---reboot-argument=bootloader` both reach lk2nd fastboot. No LG reset prompt
-appeared. The extlinux menu is no longer used; the rescue image stays available
+starts. A Volume Down cold start reaches lk2nd fastboot, with no LG reset
+prompt. A host-requested `reboot --reboot-argument=bootloader` does not: LG
+aboot consumes the IMEM restart reason before lk2nd reads it. The extlinux menu is no longer used; the rescue image stays available
 through `fastboot boot`. Items 1, 3, 4 and 5 above pass for the current userdata
 installation; item 2 (native root) waits for the repartition. See
 [evidence](../evidence/2026-10-31-lk2nd-production-install.json).

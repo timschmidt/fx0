@@ -11,7 +11,7 @@
   },
   "results": {
     "unattended_boot": "fastboot reboot -> stock aboot -> new lk2nd -> raw boot-deploy image -> Nura running in 82 s with taint 0, no fastboot stop",
-    "reboot_to_bootloader": "systemctl reboot --reboot-argument=bootloader (systemd 261 rejects the positional form) -> lk2nd fastboot in 27 s via the IMEM restart reason; fastboot continue -> Nura",
+    "reboot_to_bootloader": "NOT working (corrected): a repeat 'systemctl reboot --reboot-argument=bootloader' with no key held rebooted straight into Nura. The single earlier stop in fastboot after 27 s was most likely the owner still holding Volume Down from the previous step. LG aboot runs first and passes lge.bootreason=0x0, consistent with it consuming the IMEM restart reason before lk2nd reads it. Remote fastboot entry therefore needs Volume Down (or a future lk2nd/aboot hand-off of the reason).",
     "cold_power_key_boot": "owner: power off, USB unplugged, Power -> Nura/Sxmo by itself; PON reason 0x80 (KPDPWR), no warm-reset reason, taint 0, running",
     "cold_volume_down_entry": "owner: Volume Down + Power from off -> lk2nd fastboot menu, no LG factory-reset prompt; LG passed lge.bootreason=0xffffffff; log has no forced-fastboot line; fastboot continue -> Nura taint 0",
     "stock_fallback": "power-off + Volume Up + USB -> stock fastboot remains (LAF cleared), exercised in the factory-stock rehearsal"
@@ -22,6 +22,7 @@
     "host test scripts must request the bootloader explicitly instead of relying on forced fastboot"
   ],
   "open": [
+    "host-triggered fastboot entry: LG aboot consumes the IMEM restart reason; investigate the PON spare register or an lk2nd hand-off",
     "20 cold and 20 warm boots (phase 9 reliability)",
     "native-root selection after repartitioning"
   ],

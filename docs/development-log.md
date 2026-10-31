@@ -1939,9 +1939,11 @@ the GPIO key overrides. The owner confirmed the menu responds to the key.
 
 The production lk2nd is installed: no extlinux and no forced fastboot. The Fx0
 now boots Nura unattended from the boot-deploy raw image, after a warm reboot or
-a cold power-key start. Volume Down at power-on (no LG reset prompt) and
-`systemctl reboot --reboot-argument=bootloader` both reach lk2nd fastboot. The
-positional `systemctl reboot bootloader` form fails on systemd 261.
+a cold power-key start. Volume Down at power-on (no LG reset prompt) reaches lk2nd fastboot.
+`systemctl reboot --reboot-argument=bootloader` does not; the one apparent
+success was a key still held from the previous step, and LG aboot consumes the
+IMEM restart reason. The positional `systemctl reboot bootloader` form fails on
+systemd 261.
 
 The owner decided to keep the original 40-entry GPT capacity for the final
 layout instead of testing a 128-entry table. SBL1 parses the GPT before any code
