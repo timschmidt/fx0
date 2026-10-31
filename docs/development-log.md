@@ -1924,3 +1924,10 @@ lk2nd wrote a 17.5 MB r7 Android image at its 512 KiB offset, and a RAM-booted
 lk2nd without extlinux support booted Nura r7 from it (marker in
 `/proc/cmdline`). The prefix was intact and the payload read back
 byte-identical. Normal boots still use extlinux.
+
+boot-deploy now updates the raw boot image on the phone. The offset change was
+backported to 0.23.0 and built as a signed `boot-deploy-0.23.0-r1`;
+`/etc/deviceinfo` enables an Android image at offset 524288. `mkinitfs` wrote it
+with the lk2nd prefix and all other bytes unchanged. The image matches the
+installed kernel, DTB, initramfs and extlinux command line, and the
+extlinux-disabled lk2nd booted it.

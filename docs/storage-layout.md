@@ -56,6 +56,17 @@ still use extlinux. This qualifies item 1's fit and boot from the real offset.
 The on-device updater, interrupted-update recovery, an installed raw-preferring
 lk2nd and cold/key recovery remain. See [evidence](../evidence/2026-10-31-rawboot-first-boot.json).
 
+**On-device updates, 2026-10-31.** The offset change was backported to boot-deploy
+0.23.0 and built as a signed `boot-deploy-0.23.0-r1`, installed with
+`mkbootimg-osm0sis`. `/etc/deviceinfo` now generates an Android image and
+flashes it at offset 524288. A `mkinitfs` run wrote it with the lk2nd prefix,
+padding and trailing bytes unchanged. The payload equals `/boot/boot.img`
+(`vmlinuz`+DTB, current initramfs, extlinux-identical command line). The
+extlinux-disabled lk2nd booted it. Extlinux remains the installed lk2nd's path
+and the fallback. See [evidence](../evidence/2026-10-31-boot-deploy-offset-updates.json).
+Remaining: interrupted-update and key-entry recovery, then a raw-preferring
+installed lk2nd.
+
 If the raw-image route cannot meet boot/update/recovery requirements, evaluate a small separate boot filesystem. Size it from actual kernel, DTB, initramfs, fallback and update requirements. Do not reduce the entire root filesystem's integrity features just to satisfy the current ext2 reader.
 
 ## Retained space audit

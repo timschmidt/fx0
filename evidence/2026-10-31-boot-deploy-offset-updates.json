@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-31",
+  "scope": "On-device offset-aware boot-image updates with boot-deploy on installed Nura r7",
+  "package": {
+    "name": "boot-deploy-0.23.0-r1",
+    "sha256": "d97538996ea56432f48202f1722f356b85b7dbe1b97f16c958e05c67ce0294a3",
+    "source": "fx0-boot-deploy integration/fx0-boot-offset-0.23 (backport of the 0.25.0-based offset change to 0.23.0; only the test-list hunk needed manual resolution)",
+    "recipe": "fx0-pmaports integration/fx0-v26.06 efd370169caf7919fca40515103368764f112702",
+    "signed_by": "pmos@local-6ae3f5f3, apk verify OK on the phone",
+    "tests": "full 0.23.0 suite plus test_flash_bootimg_offset pass in Alpine 3.22 (pmbootstrap skips check() for this cross build)"
+  },
+  "also_installed": "mkbootimg-osm0sis-2021.08.06-r1",
+  "deviceinfo_overrides": {
+    "deviceinfo_flash_kernel_on_update": "true",
+    "deviceinfo_generate_bootimg": "true",
+    "deviceinfo_flash_bootimg_offset": "524288",
+    "deviceinfo_append_dtb": "true",
+    "deviceinfo_flash_pagesize": "2048",
+    "deviceinfo_flash_offset_base": "0x00000000",
+    "deviceinfo_flash_offset_kernel": "0x00008000",
+    "deviceinfo_flash_offset_ramdisk": "0x02000000",
+    "deviceinfo_flash_offset_second": "0x00f00000",
+    "deviceinfo_flash_offset_tags": "0x01e00000",
+    "unchanged": "deviceinfo_dtb=qcom-msm8926-lg-madai, deviceinfo_generate_extlinux_config=false (managed menu with rescue entries)"
+  },
+  "update_run": {
+    "command": "mkinitfs",
+    "log": "Preserving 524288 bytes before the boot image; 17483776 bytes written",
+    "boot_img_sha256": "e3a67fb743003c8c3d516459a159befd3c55c49cde1471b895c7a26c6748c8ce"
+  },
+  "verification": {
+    "lk2nd_prefix_unchanged": true,
+    "bytes_to_512KiB_unchanged": true,
+    "payload_equals_boot_img": true,
+    "kernel_payload_equals_vmlinuz_plus_dtb": true,
+    "ramdisk_equals_boot_initramfs": true,
+    "cmdline_equals_extlinux_default": true,
+    "bytes_after_image_unchanged": true
+  },
+  "boot": "RAM-booted LK2ND_EXTLINUX=0 lk2nd (can only boot the offset image) booted the boot-deploy image: new boot ID, taint 0, systemd running, Wi-Fi connected; a normal reboot then used extlinux as before",
+  "rollback": "/etc/deviceinfo.fx0-before-rawboot on the phone; prior boot partition and initramfs copies kept privately",
+  "open": [
+    "interrupted-update behaviour: the write is in place, so the installed extlinux path is the fallback today; with a raw-preferring lk2nd the fallback is key-entry fastboot, which needs a physical test",
+    "install a raw-preferring lk2nd only after cold/key fastboot entry is proven",
+    "native root selection after repartitioning"
+  ]
+}
