@@ -130,7 +130,12 @@ accelerometer's in-plane noise from about 35 to 5,000–9,000 counts, and the
 gyro responds as well. See [evidence](../evidence/2026-10-31-imu-vibrator.json).
 
 Still open:
-- At rest the acceleration magnitude is 0.91 g instead of 1 g.
+- At rest the acceleration magnitude is 0.90–0.91 g instead of 1 g. The chip
+  is at ±2 g (`ACCEL_CONFIG` 0x00, `ACCEL_CONFIG2` 0x00) and its factory
+  offset registers are populated, so this is a sensitivity error of about 10%,
+  beyond normal tolerance. The stock ADSP path applied per-device calibration
+  from the private `sns.reg`; its accelerometer scale entries are the next
+  thing to compare.
 - Mounting matrices.
 - `CONFIG_AK8974` in the kernel package.
 - Suspend and IRQ wake.
