@@ -185,9 +185,14 @@ numeric comparison. The remaining failures depend on the WLAN state:
 | Up on 5 GHz channel 36 | The phone is not found by inquiry, and its connection attempts time out |
 | Radio off | Every phone connection attempt ends with Connection Accept Timeout (0x10) |
 
-Bluetooth therefore gets the shared radio only while WLAN is up on 2.4 GHz, and
-then loses it under load. This points to WLAN/BT coexistence or antenna-sharing
-configuration in the wcn36xx path, not the btqcomsmd transport. Stock
+PMIC readback separates two defects. With the WLAN radio off, the Iris PA (L16)
+and RFA/digital (L24) rails are disabled. Linux drops its Iris votes after the
+WCNSS handover, and the firmware drops its own when WLAN stops, so Bluetooth has
+no RF power. With WLAN on 5 GHz both rails stay on, yet Bluetooth still cannot
+inquire or page. On 2.4 GHz it works but loses links under load. The 5 GHz and load failures point to coexistence or RF-path configuration in
+the wcn36xx path, not the btqcomsmd transport. Prima sends a BTC configuration
+message at startup (`WDA_BTC_SET_CFG`, default execution mode 0); wcn36xx sends
+none, only some BTC CFG timing items. Stock
 `WCNSS_qcom_cfg.ini` overrides no BTC settings, so stock used the firmware
 defaults in `WCNSS_cfg.dat`, which is kept privately. wcn36xx sends its own BTC
 table. Comparing the two is the next step. See
@@ -211,10 +216,9 @@ BD_ADDR record whose vendor is not evident. Full addresses stay private.
    suspend/resume once system suspend is qualified.
 2. Decide the MAC source after a stock runtime reading, then implement it without
    publishing the per-unit values.
-3. Decode stock `WCNSS_cfg.dat` BTC/antenna items, compare them with the
-   wcn36xx CFG tables, and fix the WLAN/BT coexistence so that Bluetooth works
-   with WLAN off, on 5 GHz and under load. Then test RFCOMM, HID and audio
-   profiles.
+3. Keep Iris powered while Bluetooth is in use with WLAN off, following the
+   stock vote path. Implement or test prima's BTC configuration for 5 GHz and
+   load. Then retest RFCOMM, HID and audio profiles.
 4. Describe the TLMM sleep state, then test WCNSS across real system suspend.
    Check hotspot capability.
 5. Upstream submission is gated on owner approval. The regulator fix is

@@ -31,7 +31,7 @@
     "address source (.bt_nv.bin)",
     "resume"
   ],
-  "next": "Decode stock WCNSS_cfg.dat BTC/antenna items, compare with the wcn36xx CFG tables, and test the stock values",
+  "next": "(1) Find how stock keeps Iris powered for Bluetooth with WLAN off (stock BT/wcnss vote path) and implement an equivalent. (2) Implement or test the BTC configuration prima sends, then retest Bluetooth on 5 GHz and under load on 2.4 GHz.",
   "tooling_installed_on_phone": {
     "packages": [
       "bluez-btmon-5.86-r2",
@@ -46,6 +46,12 @@
     "wifi_radio_off": "every phone Create Connection fails with Connection Accept Timeout Exceeded (0x10); no pairing",
     "wifi_on_5GHz_ch36": "host inquiry never finds the phone in 45 s; phone connections time out; no pairing"
   },
-  "interpretation": "Bluetooth gets the shared radio only while WLAN is up on 2.4 GHz, and then loses links under load. Stopping wcn36xx or moving WLAN to 5 GHz leaves Bluetooth without a usable RF path. This indicates a WLAN/BT coexistence or antenna-sharing configuration problem in the wcn36xx path, not a btqcomsmd transport failure.",
-  "stock_reference": "Stock WCNSS_qcom_cfg.ini sets no BTC overrides, so firmware defaults from WCNSS_cfg.dat (extracted privately) applied; wcn36xx sends its own BTC CFG table. Comparing the two is the next step."
+  "interpretation": "Two distinct defects. (1) With the WLAN radio off, the Iris PA and RFA/digital rails are off, so Bluetooth has no RF power. Something must keep Iris powered while Bluetooth is in use. (2) With WLAN on 5 GHz the rails stay on but Bluetooth cannot inquire or page, which points to RF-path/coexistence configuration. Prima sends a BTC configuration (WDA_BTC_SET_CFG, execution mode default 0); wcn36xx sends only BTC CFG timing items and no BTC configuration message.",
+  "stock_reference": "Stock WCNSS_qcom_cfg.ini sets no BTC overrides, so firmware defaults from WCNSS_cfg.dat (extracted privately) applied; wcn36xx sends its own BTC CFG table. Comparing the two is the next step.",
+  "iris_rails_by_wlan_state": {
+    "wlan_connected_5GHz": "L16 enabled 3.3 V, L24 enabled",
+    "wlan_up_disconnected": "L16 enabled 3.3 V, L24 enabled",
+    "wlan_radio_off": "L16 disabled, L24 disabled",
+    "note": "PMIC SPMI readback; Linux drops its Iris votes after WCNSS handover (by design), so the RF supplies follow the Pronto firmware's WLAN-side votes"
+  }
 }
