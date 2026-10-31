@@ -222,6 +222,20 @@ The third connection was reset by the peer, so the rail state does not disable
 Bluetooth, but this case needs repetition in soak testing. See
 [peer evidence](../evidence/2026-10-30-bluetooth-independent-peer.json).
 
+## Hotspot
+
+wcn36xx offers AP mode. A NetworkManager hotspot with default settings fails:
+wpa_supplicant logs `key setting validation failed` and cannot initialise the
+AP interface. The driver advertises only WEP40, WEP104, TKIP and CCMP-128, with
+no BIP/CMAC cipher, so management-frame protection cannot work. Yet the default
+PMF setting makes wpa_supplicant attempt a key that cfg80211 rejects.
+
+With `wifi-sec.pmf disable`, a WPA2-CCMP hotspot starts on 2.4 GHz channel 6,
+and the development host sees its beacon (signal 89). A client association,
+forwarding and power test needs a second Wi-Fi client. Nura's hotspot defaults
+need PMF disabled on wcn36xx, or wpa_supplicant should skip PMF when BIP is
+missing. See [hotspot evidence](../evidence/2026-10-30-wifi-hotspot.json).
+
 ## MAC addresses
 
 When connected, NetworkManager applies Nura's default stable cloned MAC per

@@ -1825,3 +1825,9 @@ With the WLAN radio off, pairing to the independent peer still bonds and two of
 three 4 MiB RFCOMM transfers pass; the third connection was reset by the peer.
 Bluetooth does not require WLAN, despite the Iris rails reading off in that
 state.
+
+The Wi-Fi hotspot starts and beacons on installed r6 (WPA2-CCMP, 2.4 GHz ch6,
+seen by the host). This works only with `wifi-sec.pmf disable`: wcn36xx
+advertises no BIP cipher, so NetworkManager's default hotspot fails with
+`key setting validation failed`. Client association needs a second Wi-Fi
+client. `iw` was installed on the phone for this.

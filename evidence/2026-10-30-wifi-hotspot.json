@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-30",
+  "scope": "Wi-Fi access-point mode on installed signed r6. Start and beacon only; no client association, forwarding or power test.",
+  "tooling": "iw 6.17 installed on the phone (owner approved tooling)",
+  "interface_modes": [
+    "IBSS",
+    "managed",
+    "AP",
+    "AP/VLAN",
+    "monitor"
+  ],
+  "supported_ciphers": [
+    "WEP40",
+    "WEP104",
+    "TKIP",
+    "CCMP-128"
+  ],
+  "attempt_default_pmf": {
+    "result": "failed",
+    "log": [
+      "nl80211: kernel reports: key setting validation failed",
+      "Interface initialization failed",
+      "Failed to initialize AP interface"
+    ],
+    "cause": "wcn36xx advertises no BIP/CMAC cipher; with NetworkManager's default PMF setting, wpa_supplicant's AP setup attempts a key cfg80211 rejects"
+  },
+  "attempt_pmf_disabled": {
+    "result": "AP up",
+    "band_channel": "2.4 GHz channel 6, 20 MHz",
+    "security": "WPA2-PSK CCMP",
+    "host_scan": "seen, WPA2, signal 89",
+    "stations": 0
+  },
+  "cleanup": "hotspot profile deleted; phone reconnected to the owner's network",
+  "open": [
+    "client association, DHCP/NAT forwarding and throughput (needs a second Wi-Fi client)",
+    "power behaviour",
+    "default hotspot settings: Nura/Sxmo needs PMF disabled on wcn36xx, or wpa_supplicant should skip PMF when the driver lacks BIP"
+  ]
+}
