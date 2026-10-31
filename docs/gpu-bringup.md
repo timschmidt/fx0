@@ -64,4 +64,7 @@ test. The owner confirms the GPU-rendered session displays normally and that tou
 3. Qualify GPU power collapse, runtime PM and resume together with the display
    IOMMU, then package it and remove the obsolete carveout parameters.
 
-
+The obsolete `msm.allow_vram_carveout=1 msm.vram=192m` workaround is gone from
+the command line. An `/etc/kernel-cmdline.d` override of the device package's
+fragment drops it. After an unattended reboot the GPU session, display and
+touch behave normally (owner-confirmed) and memory use is unchanged.

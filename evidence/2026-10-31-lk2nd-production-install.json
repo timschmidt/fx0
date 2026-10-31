@@ -23,7 +23,10 @@
   ],
   "open": [
     "20 cold and 20 warm boots (phase 9 reliability)",
-    "drop obsolete msm.allow_vram_carveout/msm.vram from the command line",
     "native-root selection after repartitioning"
-  ]
+  ],
+  "cmdline_cleanup": {
+    "change": "/etc/kernel-cmdline.d/50-device-qcom-msm8226.conf overrides the device package fragment with earlycon, console=ttyMSM0,115200 and cma=256m, dropping msm.allow_vram_carveout=1 and msm.vram=192m (obsolete since the r7 GPU IOMMU)",
+    "result": "mkinitfs rewrote the raw image at the offset; unattended reboot in 72 s; command line has neither parameter; taint 0; no display/GPU errors; GLES2 Sxmo session active on the render node; memory unchanged; owner: display and touch normal"
+  }
 }
