@@ -191,9 +191,15 @@ clock those resources name: top/ISPIF AHB, CSI0/1 AHB/core/PHY/pixel/RDI, the
 CSIPHY timers, CSI_VFE0, VFE0 with its AHB/AXI clocks, and the VFE GDSC. So
 clocks are not a blocker. Three pieces remain:
 
-1. **Camera IOMMU.** The VFE IOMMU at `0xfda44000` needs a `qcom_iommu`
-   instance, configured from the stock values like the display and GPU
-   instances already added for this SoC.
+1. **Camera IOMMU (drafted).** fx0-linux `integration/fx0-camss`
+   (`e5ffe165fcc1`, `c8d85e764975`, `df3ff68984d8`) adds
+   `qcom,msm8226-vfe-iommu`. Its configuration takes the BFB values from the
+   MSM8226 vendor `vfe_iommu` override, with halt and context restore. The DTS
+   node (disabled) has the VFE0/VFE1/CPP contexts at `0xfda4c000`, the VFE
+   AHB/AXI and CAMSS top AHB clocks (`iface`/`bus`/`tbu`, from the vendor clock
+   table) and the VFE GDSC. The vendor gives this instance no secure ID, so it
+   is OS-managed like the GPU instance. The driver builds with W=1, and the
+   binding and Fx0 DTB schema checks are clean. Not hardware-tested.
 2. **MSM8226 CAMSS resources and binding.** A resource table modelled on
    `csiphy_res_8x16`/`csid_res_8x16`/`ispif_res_8x16`/`vfe_res_8x16`, using
    MSM8226 clock rates and a `qcom,msm8226-camss` binding.
