@@ -73,5 +73,23 @@
     "exposure/gain control and image quality",
     "front IMX132",
     "flash strobe sync"
-  ]
+  ],
+  "libcamera": {
+    "version": "libcamera 99990.7.1-r0 (Nura), libcamera-tools added",
+    "detection": "cam -l lists 'imx179' (/base/soc/cci@fda0c000/i2c-bus@0/camera@10) via the simple pipeline handler with the soft IPA",
+    "warnings": [
+      "no IMX179 CameraSensorHelper: soft IPA cannot convert analogue gain",
+      "imx179.yaml tuning missing: uncalibrated.yaml used",
+      "sensor does not report a crop rectangle (get_selection)",
+      "no sensor delays in static properties"
+    ],
+    "capture": "cam -c1 -C8: GPU software ISP (EGL, Mesa 26.1.6 Freedreno) produces 3272x2464 RGB frames; sensor streams at 30 fps, the ISP delivers about 1 fps at full resolution",
+    "image": "dark scene: mean RGB about 39/255, max 47 at maximum exposure and no gain",
+    "next": [
+      "libcamera CameraSensorHelper for imx179 (Sony 256/(256-code) gain) so AGC can use analogue gain",
+      "get_selection crop rectangles in the imx179 driver",
+      "a binned or cropped lower-resolution mode for preview",
+      "tuning file"
+    ]
+  }
 }

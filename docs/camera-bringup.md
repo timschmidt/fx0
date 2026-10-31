@@ -314,9 +314,19 @@ It idles at 100 MHz and rises to 266.67 MHz while the VFE is powered.
 
 r13 is installed. The camera modules load at boot, and full-resolution
 captures complete without IOMMU faults
-([evidence](../evidence/2026-10-31-rear-camera-installed.json)). Next come
-libcamera with its software ISP, exposure and gain control, and the front
-IMX132.
+([evidence](../evidence/2026-10-31-rear-camera-installed.json)).
+
+libcamera works on top of it. Its simple pipeline handler finds the IMX179,
+and the GPU-accelerated software ISP (EGL on Freedreno) produces 3272×2464 RGB
+frames: the sensor streams at 30 fps, the ISP keeps up at about 1 fps at full
+resolution. Images are dark, because the soft IPA has no IMX179 sensor helper
+and so cannot use analogue gain.
+
+Next:
+- a libcamera sensor helper for the IMX179 (Sony's 256/(256−code) gain);
+- crop rectangles (`get_selection`) in the driver;
+- a smaller binned mode for preview;
+- the front IMX132.
 
 ## Flash and torch
 
