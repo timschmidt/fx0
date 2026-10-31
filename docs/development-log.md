@@ -1831,3 +1831,12 @@ seen by the host). This works only with `wifi-sec.pmf disable`: wcn36xx
 advertises no BIP cipher, so NetworkManager's default hotspot fails with
 `key setting validation failed`. Client association needs a second Wi-Fi
 client. `iw` was installed on the phone for this.
+
+While an 8-hour Wi-Fi soak runs on the phone, a host-only partition reference
+audit covers section 2.1 step 5. The stock SBL1 contains the unique type GUIDs
+of SDI, DDR, aboot, RPM, TZ, modemst1/2, fsg and fsc. aboot and TZ name the
+backup boot chain and most LG entries. Stock init mounts persist, drm, sns and
+mpt. Keeping all 34 leading entries at original offsets is justified entry by
+entry; only system, cache, userdata, sdcard and grow are reclaimed. This does
+not replace the stock-restoration rehearsal. See
+[partition audit](partition-audit.md).

@@ -48,7 +48,9 @@ The matching [pmaports schema branch](https://github.com/timschmidt/fx0-pmaports
 
 If the raw-image route cannot meet boot/update/recovery requirements, evaluate a small separate boot filesystem. Size it from actual kernel, DTB, initramfs, fallback and update requirements. Do not reduce the entire root filesystem's integrity features just to satisfy the current ext2 reader.
 
-## Retained space still needs an audit
+## Retained space audit
+
+The [partition reference audit](partition-audit.md) records loader, stock-init and kernel references for every entry. It supports keeping all 34 leading entries at their original offsets: nine are located by unique type GUID in SBL1, and the rest are named by aboot, TZ or stock init. The six without a unique reference gain nothing if removed. The table below keeps its investigation-stage wording.
 
 Keeping the first 34 partitions preserves existing offsets while the large contiguous region is tested. It does not prove that 34 extra entries are necessary in the final layout.
 

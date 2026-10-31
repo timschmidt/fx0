@@ -1,0 +1,640 @@
+{
+  "date": "2026-10-30",
+  "gpt_sha256": "61e22be276a8cc040605a4b330bffeb56ee159791b5308b910055a01cd6afc15",
+  "loaders_scanned": [
+    "aboot",
+    "rpm",
+    "sbl1",
+    "sdi",
+    "tz"
+  ],
+  "ramdisk_text_files_scanned": 45,
+  "entries": [
+    {
+      "index": 1,
+      "name": "modem",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 16384,
+      "last_lba": 147455,
+      "bytes": 67108864,
+      "loader_name_refs": [
+        "aboot",
+        "sbl1"
+      ],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [
+        "boot:init.target.rc"
+      ],
+      "type_guid_unique": false
+    },
+    {
+      "index": 2,
+      "name": "sbl1",
+      "type_guid": "dea0ba2c-cbdd-4805-b4f9-f428251c3e98",
+      "first_lba": 147456,
+      "last_lba": 149503,
+      "bytes": 1048576,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 3,
+      "name": "sdi",
+      "type_guid": "d4e0d938-b7fa-48c1-9d21-bc5ed5c4b203",
+      "first_lba": 149504,
+      "last_lba": 150527,
+      "bytes": 524288,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 4,
+      "name": "DDR",
+      "type_guid": "20a0c19c-286a-42fa-9ce7-f64c3226a794",
+      "first_lba": 163840,
+      "last_lba": 164863,
+      "bytes": 524288,
+      "loader_name_refs": [
+        "aboot",
+        "sbl1",
+        "tz"
+      ],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 5,
+      "name": "aboot",
+      "type_guid": "400ffdcd-22e0-47e7-9a23-f16ed9382388",
+      "first_lba": 180224,
+      "last_lba": 184319,
+      "bytes": 2097152,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 6,
+      "name": "rpm",
+      "type_guid": "098df793-d712-413d-9d4e-89d711772228",
+      "first_lba": 184320,
+      "last_lba": 186367,
+      "bytes": 1048576,
+      "loader_name_refs": [
+        "aboot",
+        "rpm",
+        "sbl1"
+      ],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 7,
+      "name": "tz",
+      "type_guid": "a053aa7f-40b8-4b1c-ba08-2f68ac71a4f4",
+      "first_lba": 186368,
+      "last_lba": 188415,
+      "bytes": 1048576,
+      "loader_name_refs": [
+        "aboot",
+        "sbl1",
+        "tz"
+      ],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 8,
+      "name": "pad",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 188416,
+      "last_lba": 192511,
+      "bytes": 2097152,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": false
+    },
+    {
+      "index": 9,
+      "name": "sbl1b",
+      "type_guid": "55a1b4ad-f28c-40ba-9189-1da9ea95cbcf",
+      "first_lba": 192512,
+      "last_lba": 194559,
+      "bytes": 1048576,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 10,
+      "name": "rpmb",
+      "type_guid": "f1fc4c90-0705-4830-adbd-291e78bd2e2a",
+      "first_lba": 194560,
+      "last_lba": 196607,
+      "bytes": 1048576,
+      "loader_name_refs": [
+        "aboot",
+        "tz"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 11,
+      "name": "tzb",
+      "type_guid": "80f07c88-5c6d-48d3-8ea6-b984f7edd622",
+      "first_lba": 196608,
+      "last_lba": 198655,
+      "bytes": 1048576,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 12,
+      "name": "sdib",
+      "type_guid": "ab96fcf3-55af-4b93-88df-a8c3fd6cbb6f",
+      "first_lba": 198656,
+      "last_lba": 199679,
+      "bytes": 524288,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 13,
+      "name": "abootb",
+      "type_guid": "0b8202fa-26a5-468f-b356-952d5ec60cec",
+      "first_lba": 199680,
+      "last_lba": 203775,
+      "bytes": 2097152,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 14,
+      "name": "persist",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 212992,
+      "last_lba": 278527,
+      "bytes": 33554432,
+      "loader_name_refs": [
+        "aboot",
+        "tz"
+      ],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [
+        "boot:init.target.rc"
+      ],
+      "type_guid_unique": false
+    },
+    {
+      "index": 15,
+      "name": "boot",
+      "type_guid": "20117f86-e985-4357-b9ee-374bc1d8487d",
+      "first_lba": 278528,
+      "last_lba": 344063,
+      "bytes": 33554432,
+      "loader_name_refs": [
+        "aboot",
+        "sbl1",
+        "tz"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [
+        "recovery:etc/recovery.fstab"
+      ],
+      "type_guid_unique": false
+    },
+    {
+      "index": 16,
+      "name": "recovery",
+      "type_guid": "20117f86-e985-4357-b9ee-374bc1d8487d",
+      "first_lba": 344064,
+      "last_lba": 409599,
+      "bytes": 33554432,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [
+        "recovery:etc/recovery.fstab"
+      ],
+      "type_guid_unique": false
+    },
+    {
+      "index": 17,
+      "name": "modemst1",
+      "type_guid": "ebbeadaf-22c9-e33b-8f5d-0e81686a68cb",
+      "first_lba": 409600,
+      "last_lba": 415743,
+      "bytes": 3145728,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 18,
+      "name": "modemst2",
+      "type_guid": "0a288b1f-22c9-e33b-8f5d-0e81686a68cb",
+      "first_lba": 415744,
+      "last_lba": 421887,
+      "bytes": 3145728,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 19,
+      "name": "pad1",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 421888,
+      "last_lba": 425983,
+      "bytes": 2097152,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": false
+    },
+    {
+      "index": 20,
+      "name": "fsg",
+      "type_guid": "638ff8e2-22c9-e33b-8f5d-0e81686a68cb",
+      "first_lba": 425984,
+      "last_lba": 432127,
+      "bytes": 3145728,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 21,
+      "name": "fsc",
+      "type_guid": "57b90a16-22c9-e33b-8f5d-0e81686a68cb",
+      "first_lba": 432128,
+      "last_lba": 433151,
+      "bytes": 524288,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 22,
+      "name": "ssd",
+      "type_guid": "2c86e742-745e-4fdd-bfd8-b6a7ac638772",
+      "first_lba": 433152,
+      "last_lba": 434175,
+      "bytes": 524288,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 23,
+      "name": "pad2",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 434176,
+      "last_lba": 438271,
+      "bytes": 2097152,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": false
+    },
+    {
+      "index": 24,
+      "name": "encrypt",
+      "type_guid": "323ef595-af7a-4afa-8060-97be72841bb9",
+      "first_lba": 438272,
+      "last_lba": 439295,
+      "bytes": 524288,
+      "loader_name_refs": [
+        "tz"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 25,
+      "name": "rct",
+      "type_guid": "6cd30554-5f5d-40ef-82fe-1092359f92ee",
+      "first_lba": 439296,
+      "last_lba": 440319,
+      "bytes": 524288,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": false
+    },
+    {
+      "index": 26,
+      "name": "misc",
+      "type_guid": "6cd30554-5f5d-40ef-82fe-1092359f92ee",
+      "first_lba": 442368,
+      "last_lba": 475135,
+      "bytes": 16777216,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [
+        "boot:fstab.madai",
+        "recovery:etc/recovery.fstab",
+        "recovery:fstab.madai"
+      ],
+      "type_guid_unique": false
+    },
+    {
+      "index": 27,
+      "name": "laf",
+      "type_guid": "98523ec6-90fe-4c67-b50a-0fc59ed6f56d",
+      "first_lba": 475136,
+      "last_lba": 540671,
+      "bytes": 33554432,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 28,
+      "name": "factory",
+      "type_guid": "20117f86-e985-4357-b9ee-374bc1d8487d",
+      "first_lba": 540672,
+      "last_lba": 606207,
+      "bytes": 33554432,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": false
+    },
+    {
+      "index": 29,
+      "name": "fota",
+      "type_guid": "86a7cb80-84e1-408c-99ab-694f1a410fc7",
+      "first_lba": 606208,
+      "last_lba": 671743,
+      "bytes": 33554432,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": true
+    },
+    {
+      "index": 30,
+      "name": "drm",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 671744,
+      "last_lba": 688127,
+      "bytes": 8388608,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [
+        "boot:init.madai.rc",
+        "boot:init.target.rc"
+      ],
+      "type_guid_unique": false
+    },
+    {
+      "index": 31,
+      "name": "pad3",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 688128,
+      "last_lba": 692223,
+      "bytes": 2097152,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": false
+    },
+    {
+      "index": 32,
+      "name": "sns",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 692224,
+      "last_lba": 708607,
+      "bytes": 8388608,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [
+        "boot:init.madai.rc",
+        "boot:init.target.rc"
+      ],
+      "type_guid_unique": false
+    },
+    {
+      "index": 33,
+      "name": "pad4",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 708608,
+      "last_lba": 712703,
+      "bytes": 2097152,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": false
+    },
+    {
+      "index": 34,
+      "name": "mpt",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 720896,
+      "last_lba": 786431,
+      "bytes": 33554432,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [
+        "boot:init.madai.rc",
+        "boot:init.target.rc"
+      ],
+      "type_guid_unique": false
+    },
+    {
+      "index": 35,
+      "name": "system",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 786432,
+      "last_lba": 2883583,
+      "bytes": 1073741824,
+      "loader_name_refs": [
+        "aboot",
+        "rpm"
+      ],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [
+        "boot:fota.fstab",
+        "boot:fstab.madai",
+        "boot:lgdms.fota_update.rc",
+        "recovery:etc/recovery.fstab",
+        "recovery:fota.fstab",
+        "recovery:fstab.madai",
+        "recovery:lgdms.fota_update.rc"
+      ],
+      "type_guid_unique": false
+    },
+    {
+      "index": 36,
+      "name": "cache",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 2883584,
+      "last_lba": 4317183,
+      "bytes": 734003200,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [
+        "boot:fota.fstab",
+        "boot:init.madai.rc",
+        "boot:init.target.rc",
+        "boot:lgdms.fota_update.rc",
+        "recovery:etc/recovery.fstab",
+        "recovery:fota.fstab",
+        "recovery:lgdms.fota_update.rc"
+      ],
+      "type_guid_unique": false
+    },
+    {
+      "index": 37,
+      "name": "userdata",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 4317184,
+      "last_lba": 12705791,
+      "bytes": 4294967296,
+      "loader_name_refs": [
+        "aboot"
+      ],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [
+        "boot:fstab.madai",
+        "boot:init.madai.rc",
+        "boot:init.target.rc",
+        "recovery:etc/recovery.fstab",
+        "recovery:fstab.madai"
+      ],
+      "type_guid_unique": false
+    },
+    {
+      "index": 38,
+      "name": "sdcard",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 12705792,
+      "last_lba": 30507007,
+      "bytes": 9114222592,
+      "loader_name_refs": [
+        "sbl1"
+      ],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [
+        "boot:fstab.madai",
+        "recovery:fstab.madai"
+      ],
+      "type_guid_unique": false
+    },
+    {
+      "index": 39,
+      "name": "grow",
+      "type_guid": "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7",
+      "first_lba": 30507008,
+      "last_lba": 30777310,
+      "bytes": 138395136,
+      "loader_name_refs": [],
+      "loader_type_guid_refs": [
+        "sbl1"
+      ],
+      "stock_ramdisk_refs": [],
+      "type_guid_unique": false
+    }
+  ],
+  "retained_entries": 34,
+  "retained_bytes": 369623040
+}
