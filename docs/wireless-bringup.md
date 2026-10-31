@@ -236,6 +236,17 @@ forwarding and power test needs a second Wi-Fi client. Nura's hotspot defaults
 need PMF disabled on wcn36xx, or wpa_supplicant should skip PMF when BIP is
 missing. See [hotspot evidence](../evidence/2026-10-30-wifi-hotspot.json).
 
+## Preliminary soak
+
+A one-hour soak on installed r6 logged 62 samples, shortened from a planned
+8 hours to free the phone for other tests. Every sample was connected on 5 GHz
+channel 36 (signal 63–70), with 5/5 gateway pings and working DNS. Seven 25 MB
+downloads completed at 44.8–62.3 Mbit/s. The kernel journal has no wcn36xx or
+WARNING lines, wpa_supplicant logged no scan failures or disconnects, and taint
+stayed 0. The phone was USB-connected. The plan's 24-hour mixed soak and an
+overnight unplugged standby test remain. See
+[soak evidence](../evidence/2026-10-30-wifi-soak-1h.json).
+
 ## MAC addresses
 
 When connected, NetworkManager applies Nura's default stable cloned MAC per
