@@ -60,7 +60,7 @@ Ordered roughly by how independent they are.
 | --- | --- | --- |
 | `b2512c53f035` msm8226 WCNSS DXE level interrupts | Review comment on Dudziak's MSM8226 WCNSS node (mainline has no node yet) | Owner approval to reply on that series |
 | `7297314a644f` Input: rmi4 assert reset before releasing supplies | input | Vivchar's reset-GPIO patch |
-| `a434ee44e3df` drm/msm/dsi/phy per-lane configuration on MSM8226 | drm/msm | Nothing; needs a non-Fx0 MSM8226 regression test |
+| `a434ee44e3df` drm/msm/dsi/phy per-lane CFG4 on MSM8226 | drm/msm | Evidence that it is needed: applying it alone did not fix the display, and the first working image combined several changes. Run an on/off A/B on the Fx0 (after the soak). Downstream MSM8974 and MSM8226 both use CFG4 0/5/a/f, so if it is needed, ask whether it should apply to the whole 28nm PHY |
 | MSM8226 display and GPU IOMMU bindings and configuration (`32fd8a21c5a3`, `b506b8cd827d`, `ca397d0f4501`, `60fa2a06552b`) | iommu | Baryshkov's MSM8974 series |
 | MSM8226 SoC DTS: display IOMMU and secured contexts, GPU IOMMU, CCI clock rate, PON label (`6c99f0648715`, `abe11294089a`, `dad2d15ff6ba`, `8cfcb0fedcd9`, `7e5f8f6b2250`) | qcom arm32 DTS | IOMMU bindings above |
 | LG Fx0 board: binding `933d3593e3ab` and the `lg-madai` DTS commits (UART/USB through PON reboot modes) | qcom arm32 DTS | Squash into a board series; staged so a first version needs only mainline features (UART, USB, eMMC, buttons, PMIC), with display, Wi-Fi, ADSP and GPU following their dependencies |
