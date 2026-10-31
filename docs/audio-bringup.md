@@ -49,6 +49,29 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
 **Sensor Manager** (QMI 256) with other sensor services. See
 [ADSP evidence](../evidence/2026-10-30-adsp-start.json).
 
+## Read-only findings on r8 (2026-10-31)
+
+- **APR transport is present.** The ADSP's SMD edge exposes `apr`,
+  `apr_audio_svc` and `apr_apps2`, but the kernel has `CONFIG_QCOM_APR` off, so
+  nothing binds them. Mainline binds `qcom,apr-v2` on these channels for
+  MSM8916/8939/8953/8996, and `q6core` asks the DSP for its framework and
+  per-service API versions.
+- **Probe prepared.** fx0-linux `integration/fx0-apr-probe` (`f3227f6cc153`)
+  adds an APR node with only `q6core` under the MSM8226 ADSP edge, enabled on
+  the Fx0. Modules for the running r8 are built in Alpine 3.24 with the same
+  clang 22.1.3, using r8's config plus `QCOM_APR=m`. Full QDSP6 would force
+  built-in compress/topology changes, so `q6core` is built as an external
+  module. The test needs a RAM boot with the probe DTB and waits for the soak
+  to finish.
+- **NGD layout question.** The vendor driver reads the NGD version only
+  after the ADSP powers the controller through QMI service 769. Any non-zero
+  version selects its "V2" layout, which places this controller's NGD
+  (cell-index 1) at offset 0x1000, the same as mainline `qcom-ngd-ctrl`'s
+  v1.5.0 data. A zero version would put it at 0x800 with a different per-EE
+  layout that mainline lacks. Do not read the register directly: without
+  the QMI power vote the access may hang. The test is to bind `qcom-ngd-ctrl`
+  (which makes the vote) or to read the version after it.
+
 ## Work required
 
 1. Done: the ADSP starts and its QMI services are listed. Still to check: APR
