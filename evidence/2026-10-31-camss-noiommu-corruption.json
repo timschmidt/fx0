@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-31",
+  "scope": "CAMSS variant A: probe zImage (MCLK fix, VFE stream IDs), no VFE IOMMU, MMSS AXI clock assigned 266.67 MHz; RAM boot",
+  "result": "during the CSID test-pattern captures the kernel faulted reading address 0x07060504, then repeatedly at 0xa3a2a5a0; userspace degraded, the session manager segfaulted and the phone rebooted itself (panic=60) into the installed system",
+  "cause": "VFE DMA without an IOMMU into videobuf2-dma-sg buffers: the VFE writes linearly from the first scatter-gather segment, overwriting memory beyond it; the faulting addresses are test-pattern bytes",
+  "filesystem_check": "after the crash: no EXT4 errors in any affected boot, root filesystem state clean; apk-tools 3.0.8 'apk audit --system' found no content change (no U entries). 7413 entries are 'x' only: identical hash, extra security.selinux=unlabeled_t xattr, most likely from copying the root through the Fedora host during repartitioning; unrelated to the crash",
+  "consequence": "never run CAMSS without the VFE IOMMU on this kernel; earlier no-IOMMU captures (ram-probes-cam-13/14) also wrote outside their buffers",
+  "cleanup": "strip the stray security.selinux xattrs from the root filesystem (cosmetic; this kernel does not use SELinux)"
+}

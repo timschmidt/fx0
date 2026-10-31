@@ -262,8 +262,13 @@ it. Through CSIPHY0 data lanes 0/2/3/4, the sensor's colour bars arrive (data
 starts at 0xff), and live frames sit at the black level with varying data.
 Open:
 
-- Frames contain data only in their first rows (live: 574 of 2464). This
-  looks like a VFE write-bandwidth or AXI clock limit.
+- Frames contain data only in their first rows (live: 574 of 2464).
+  **Corrected:** this is not bandwidth. Without an IOMMU the VFE writes each
+  frame linearly from the first page of a scattered `videobuf2-dma-sg`
+  buffer. Only the contiguous start lands in the buffer; the rest overwrites
+  unrelated memory. A full-size no-IOMMU run crashed the kernel on test-pattern
+  bytes ([evidence](../evidence/2026-10-31-camss-noiommu-corruption.json)).
+  CAMSS here must run behind the VFE IOMMU.
 - The VFE IOMMU zeroes captures, as above.
 - Image content, exposure and gain need checking.
 

@@ -2013,3 +2013,9 @@ bus after an ADSP restart, and the Tapan codec enumerated. The new
 `wcd9306` driver identified the codec once register access used the 0x800
 SLIMbus offset: major 0x0103, minor 0x0001, version 0x21. The owner
 deferred the 24-hour soak; it is stopped.
+
+Correction to the camera notes: the "truncated" frames came from running
+CAMSS without an IOMMU. The VFE then writes past the first page of each
+scattered buffer into unrelated memory. A full-size run crashed the kernel
+on test-pattern bytes, and the phone rebooted itself into the installed
+system. CAMSS must run behind the VFE IOMMU.

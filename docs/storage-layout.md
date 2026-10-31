@@ -170,3 +170,10 @@ See [rehearsal evidence](../evidence/2026-10-31-factory-stock-rehearsal.json).
 Repeat it from the consolidated layout after migration.
 
 Next qualify the raw-image boot and update path while the original GPT is still intact. Only after those checks, the retained-partition audit, stable power and final host-image validation pass should the phone receive the new layout. Verify both GPT copies, retained data, filesystems, boot, updates and recovery again after migration. Test external SD detection, mount/unmount and removal independently, including normal boot with no card inserted.
+
+**Stray SELinux labels (found 2026-10-31).** `apk audit --system` reports
+7,413 package files as attribute-only changes. Their contents match the
+package hashes, but they carry `security.selinux="unlabeled_t"`, most likely
+added when the root was copied through the Fedora host during
+repartitioning. This kernel does not use SELinux, so the labels are harmless.
+They should still be stripped before the final installation is qualified.

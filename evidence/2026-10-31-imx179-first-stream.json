@@ -15,11 +15,12 @@
   },
   "camss_without_iommu": {
     "tpg": "CSID test pattern data at 8-bit and 10-bit packed, 1280x720 and 3280x2464",
-    "truncation": "each frame contains data only in its first rows (live 3280x2464: 574 of 2464 rows; TPG 720p 8-bit about half the rows), suggesting a VFE write-bandwidth or AXI clock limit"
+    "truncation": "data only in the first rows: the physically contiguous start of a scattered buffer (see correction), not a bandwidth limit",
+    "correction": "2026-10-31 later: the 'truncation' was not bandwidth. Without an IOMMU, videobuf2-dma-sg buffers are scattered pages, and the VFE writes each frame linearly from the first segment's address. Only the physically contiguous start of the buffer receives data; the rest of the frame overwrites unrelated memory. A later no-IOMMU run with full-size frames crashed the kernel on a pointer made of CSID test-pattern bytes (0x07060504). No-IOMMU captures are unsafe: CAMSS on MSM8226 needs the VFE IOMMU (or contiguous buffers)."
   },
   "vfe_iommu": "with the VFE IOMMU attached, captures complete but the buffers stay all zero; the qcom,msm8226-vfe-iommu configuration does not translate correctly yet",
   "open": [
-    "VFE AXI/bus clock rate and full-frame capture",
+    "get the VFE IOMMU translating (stream IDs added in fx0-linux 2a23e9b8eabd; untested)",
     "VFE IOMMU configuration",
     "verify image content (debayer/stride), exposure and gain mapping",
     "front IMX132"
