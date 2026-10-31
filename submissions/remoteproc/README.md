@@ -37,7 +37,8 @@ these limits below `---`.
 The patch carries `Assisted-by` under the kernel's
 coding-assistants rules. It has no Signed-off-by: only the owner can certify
 the DCO, after reviewing the change. Under the threat model this is an ordinary
-functional regression, not a vulnerability. Nothing has been sent.
+functional regression, not a vulnerability. Nothing has been sent, and
+upstream submission waits for the owner's explicit approval.
 
 ## Not yet submittable
 

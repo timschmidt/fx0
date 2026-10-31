@@ -26,10 +26,14 @@ The device is available for development and flashing. No personal data needs to 
 ## Current state
 
 Nura v26.06 now boots from eMMC through lk2nd with the signed native
-`linux-postmarketos-qcom-msm8226-6.18.59-r4` package, matching persistent modules,
+`linux-postmarketos-qcom-msm8226-6.18.59-r6` package, matching persistent modules,
 SSH, native 720×1280 DRM and a Sxmo terminal/keyboard using Pixman. Kernel taint
-is 0. The installed r3 physical test confirms typing, both keyboard gestures,
-and matched Home/VolumeDown/VolumeUp input; r4 retains that exact DTB. Its new
+is 0. r6 adds WCNSS Wi-Fi/Bluetooth, which now passes association, DHCP/DNS,
+traffic and reconnect tests on the installed system; see
+[wireless work](docs/wireless-bringup.md). The installed r3 physical test confirms
+typing, both keyboard gestures, and matched Home/VolumeDown/VolumeUp input. r4
+retains that exact DTB; r6 changes only the WCNSS nodes and was not physically
+re-tested for input. Its new
 IADC correction passes actual-function regression tests and signed native
 conversion-log checks. Current source/artifact pins and limits are recorded in
 [the manifest](manifests/sources.json) and

@@ -1,17 +1,16 @@
 # Building Fx0 diagnostic images
 
-Current checkpoint: signed native **6.18.59-r4**, Linux source
-`5c3efd4c7fa8a8d2bec768d826b5daac57a45e76`, pmaports recipe
-`84d622573bed26e397e80469a18e617569b7622d`. Trusted package upgrade, exact
-kernel/DTB/initramfs-module readbacks, independent filesystem rescue/boot-menu
-repair and subsequent normal eMMC boot pass. The r4 kernel runs signed IADC
-conversion checks and Sxmo with taint 0. The historical builds below retain their
-original scope. Use a fresh output directory for a new build; older `.output`
-links may intentionally retain earlier configurations, signing keys and objects.
-See [r4 evidence](../evidence/2026-10-30-native-r4-installed-boot.json) and the
-[standalone rescue](../diagnostics/standalone-rescue/README.md). Factory restoration,
-final layout and remaining hardware qualification are still open.
-
+Current checkpoint: signed native **6.18.59-r6**, Linux source
+`34c341b9039342611d3ca644a9aa9593bdad1c89` (`integration/fx0-wireless-r4`: r4
+plus WCNSS and three fixes), pmaports recipe
+`a725b57f80b5b0089bf82db35c6bb4cdfdb85715`. The rootless container build needs
+`python3` in its package list. The same rollback checkpoint, trusted dry run,
+supervised install, exact readbacks and installed boot pass, with taint 0 and
+Wi-Fi qualified; see
+[r6 evidence](../evidence/2026-10-30-wifi-r6-qualification.json). The r4 record
+below keeps its scope, and the rescue procedure is in
+[standalone rescue](../diagnostics/standalone-rescue/README.md). Factory
+restoration, final layout and remaining hardware qualification are still open.
 
 These images are development diagnostics. UART/USB are the only board functions described initially. A successful build does not establish physical boot or Nura hardware acceptance.
 

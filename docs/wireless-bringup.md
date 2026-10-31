@@ -2,9 +2,11 @@
 
 The plan's [phase 4](bringup-plan.md#phase-4-establish-wireless-connectivity)
 requires scanning, association, DHCP/DNS, sustained traffic, reconnect, resume,
-a correctly derived MAC, Bluetooth pairing/HID/audio and coexistence. This
-record covers the first native WCNSS start and the supply fix it exposed. It
-does not qualify association, traffic, Bluetooth pairing or suspend.
+a correctly derived MAC, Bluetooth pairing/HID/audio and coexistence. Signed
+Nura package **6.18.59-r6** now carries WCNSS support and three fixes on the
+installed system. Wi-Fi association, DHCP/DNS, traffic, reconnect and radio
+toggling pass on an owner-designated WPA2 network. Bluetooth pairing, suspend/
+resume, hotspot, coexistence, soak and the factory-MAC policy remain open.
 
 ## Board description
 
@@ -100,9 +102,63 @@ votes 3.0 V. The Pronto firmware makes its own RPM vote during operation,
 within the stock 3.0–3.35 V limit. The Linux Iris profile governs only the boot
 handover.
 
+## Installed packages
+
+Signed r5 (`4eebb215c` recipe, source `b2512c53f`) installs the board and the
+two WCNSS fixes through the same pre-install rollback checkpoint, trusted dry
+run, supervised `apk add`, readback and installed-boot checks as r4. The
+packaged DTB is byte-identical to the RAM-tested one. It is signed with the key
+the phone already trusts. On r5, WCNSS runs with the fixed MX/PX consumers,
+taint is 0, and the display and UI checks pass.
+
+The build container needs `python3` added to the documented package list; the
+r4 launch command had not been recorded. Two of the first r5 boot-script checks
+were wrong: `apk info -v` prints descriptions, and the phone has no `zstd`.
+They were replaced by `apk list -I` and comparison of installed `.ko.zst`
+hashes with the APK. r6 adds the cfg80211 fix below and boots as build 7 with
+taint 0. Its loaded `qcom_wcnss_pil` and `cfg80211` match the APK, and a
+disassembly check confirms the fix is in the packaged module.
+
+## Scan blocked after reconnect
+
+On r5 the first connection works. After NetworkManager cycles the interface
+during a scan, every scan returns `-EBUSY`, and wpa_supplicant cannot find the
+network again. The cycle can come from applying Nura's default
+`wifi.cloned-mac-address=stable` on activation, or from deleting or
+reactivating a profile. Tracing shows the requests never reach the driver.
+cfg80211 rejects them because the interface-down path parked a scan-done
+message that mainline `dab68a74e90b` no longer flushes. The
+[scan diagnostic](../diagnostics/wcnss-scan-busy/README.md) records the
+localisation, controls and fix. Over 10 identical cycles, the unfixed module
+stops scanning from the first disconnect. The fixed module and the installed r6
+both pass all 10, with no wpa_supplicant scan failures.
+
+## Wi-Fi qualification on installed r6
+
+Results on the signed r6 kernel, taint 0, without module swaps:
+
+| Check | Result |
+| --- | --- |
+| Association | WPA2, 5 GHz channel 36, 270 Mbit/s link, signal 69, 5.6 s |
+| Addressing | DHCPv4 and IPv6 configured |
+| DNS | Query sent from `wlan0` to the Wi-Fi resolver answered |
+| Gateway | 20/20 pings, about 10.8 ms average |
+| Download | Three 25 MB transfers at 62, 54 and 48 Mbit/s |
+| Upload | 30 MB at 57 Mbit/s |
+| Sustained (r5 with fixed module) | 10 × 25 MB in 36 s, mean 55.6 Mbit/s, all complete |
+| Reconnect | 5/5 in 4.0–5.6 s, each with 3/3 gateway replies |
+| Radio off/on | Reconnects |
+| Kernel log | No wcn36xx, SMD or WARNING errors |
+
+NetworkManager chose 5 GHz, and the same network is visible on 2.4 GHz channel
+11. A 2.4 GHz association has not been forced and tested separately. The
+network name and credentials are kept only in ignored local files and in the
+phone's root-only NetworkManager profile.
+
 ## MAC addresses
 
-`wlan0` and `hci0` currently use `02:00:…` addresses. lk2nd derives these
+When connected, NetworkManager applies Nura's default stable cloned MAC per
+connection. The underlying `wlan0` and `hci0` hardware addresses are `02:00:…`. lk2nd derives these
 locally administered values from the serial number and injects them as DT
 `local-mac-address`. They are stable, but they are not factory addresses. The
 preserved NV slot 0 holds an LG Electronics OUI address. Slots 1–3 are
@@ -113,20 +169,21 @@ BD_ADDR record whose vendor is not evident. Full addresses stay private.
 
 ## Next steps
 
-1. Associate with an owner-designated test network. Then qualify DHCP/DNS,
-   sustained traffic, reconnect and both bands.
+1. Force a 2.4 GHz association, run an overnight soak, and test suspend/resume
+   once system suspend is qualified.
 2. Decide the MAC source after a stock runtime reading, then implement it without
    publishing the per-unit values.
 3. Pair a Bluetooth device. Then test transfer, HID and audio profiles, and
    coexistence under Wi-Fi traffic.
 4. Describe the TLMM sleep state, then test WCNSS across real system suspend.
    Check hotspot capability.
-5. Package the kernel change into a signed Nura build and boot it from eMMC.
-6. The regulator fix is prepared for the remoteproc tree with its checks and is
-   awaiting owner review and sign-off; see the
-   [remoteproc draft](../submissions/remoteproc/README.md). Fold the DXE
+5. Upstream submission is gated on owner approval. The regulator fix is
+   prepared for remoteproc ([draft](../submissions/remoteproc/README.md)) and
+   the cfg80211 fix for wireless ([draft](../submissions/wireless/README.md)).
+   Both lack Signed-off-by and have not been sent. Fold the DXE
    trigger fix into the MSM8226 WCNSS node series once that series is prepared. Add the matching MSM8974 trigger
    change only with a test there or as an explicitly untested suggestion.
    Replace the expected L24 warning with a clean profile.
 
-Evidence: [first start, fixes and return](../evidence/2026-10-30-wcnss-first-start.json).
+Evidence: [first start, fixes and return](../evidence/2026-10-30-wcnss-first-start.json)
+and [installed r5/r6 and Wi-Fi qualification](../evidence/2026-10-30-wifi-r6-qualification.json).

@@ -86,12 +86,16 @@ without rebooting or changing the kernel/firmware. This retains the channel's
 userspace base; whole-system currency and capacity/charging acceptance remain
 open. See [UPower drafts and validation](../submissions/upower/README.md).
 
-Phase 4 has started. A RAM DTB on the r4 source starts WCNSS with stock-matching
-firmware from the original partitions. It scans both bands and brings up a
-Bluetooth controller. Two shared defects found here are fixed on the branch: the
-6.18.59 Pronto v1/v2 regulator selection and the MSM8226 DXE interrupt trigger
-that broke WCNSS restart. Association, traffic, pairing, MAC source, suspend and
-an installed package remain open. See [wireless work](wireless-bringup.md).
+Phase 4 now runs on the installed signed 6.18.59-r6 kernel. WCNSS starts
+stock-matching firmware from the original partitions. Wi-Fi association,
+DHCP/DNS, sustained traffic, reconnect and radio toggling pass on an
+owner-designated WPA2 network with taint 0. Bluetooth discovery works. Three
+shared defects found here are fixed in r6: the Pronto v1/v2 regulator
+selection, the MSM8226 DXE interrupt trigger and a cfg80211 scan-done
+regression that blocked scanning after reconnect. Upstream drafts exist but are
+not sent; submission needs the owner's approval. Bluetooth pairing, MAC policy,
+suspend/resume, hotspot, coexistence and soak remain open. See
+[wireless work](wireless-bringup.md).
 
 ## Technical baseline
 

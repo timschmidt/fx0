@@ -1731,3 +1731,46 @@ Signed-off-by, which is for the owner to add after review. The model fails 6 of
 clean, and `git am` reproduces the branch. The changelog states MSM8974,
 MSM8916 and MSM8939 impact, and the notes say exactly what was and was not
 tested. Nothing was sent. See [remoteproc draft](../submissions/remoteproc/README.md).
+
+## October 30: installed WCNSS kernels and a cfg80211 scan-block fix
+
+The owner approved installing the wireless kernel and supplied a test network.
+The network credentials are kept only in ignored local files and the phone's
+root-only NetworkManager profile. Signed r5 (recipe `4eebb215c`) went through
+the established sequence: verified two-filesystem rollback checkpoint, trusted
+dry run, supervised install, exact readbacks and installed boot. The packaged
+DTB is byte-identical to the RAM-tested one. WCNSS runs on eMMC boot with the
+fixed L3/L6 consumers and taint 0. The rootless build container needed
+`python3` added; the r4 launch command had never been recorded. Two of my r5
+boot checks were wrong (`apk info -v` and an on-device `zstd`) and were replaced
+by `apk list -I` and APK `.ko.zst` hashes.
+
+The first association worked: 20/20 gateway pings. Every later scan then
+failed with `-EBUSY`. Tracing put the block in cfg80211: no `rdev_scan`
+or `drv_hw_scan` events, and no wcn36xx activity. Mainline
+`dab68a74e90b`, also in 6.18.59, stopped flushing the scan-done message
+parked when an interface goes down mid-scan, if the driver still owns the
+request. NetworkManager's stable cloned MAC triggers that interface cycle on
+reconnection. The fix queues `scan_done_wk` when the message is parked.
+
+A first control run was invalid: after `cfg80211` reload, wpa_supplicant fell
+back to Wireless Extensions. It is kept privately, and the test now restarts
+wpa_supplicant. In the valid control, the unfixed module blocks from the first
+disconnect. The fixed module, and then the installed signed r6
+(recipe `a725b57f8`, source `34c341b90`), pass 10/10 connect/scan/disconnect
+cycles with no wpa_supplicant scan failures.
+
+A disassembly check confirms the fix is in the packaged `cfg80211`. On r6 with
+taint 0, the test associates with WPA2 on 5 GHz channel 36 at a 270 Mbit/s link.
+DHCPv4/IPv6 and DNS over `wlan0` work, and 20/20 gateway pings return. Downloads
+reach 48–62 Mbit/s and the upload 57 Mbit/s. 250 MB sustained transfer
+completes on the fixed r5 module. 5/5 reconnects pass, radio off/on reconnects,
+and no kernel errors appear. The phone stays connected with autoconnect.
+
+The cfg80211 fix is prepared against wireless `main` 7.3-rc7. The model and
+checks are W=1 x86_64/ARM builds, KUnit 57/57 on UML, `git am` and checkpatch.
+It is not sent. The owner has asked that all upstream submission wait for
+explicit approval; pushing to the owner's GitHub forks is fine. Forced 2.4 GHz,
+Bluetooth pairing, MAC policy, suspend, hotspot and soak remain open. See
+[wireless work](wireless-bringup.md) and
+[evidence](../evidence/2026-10-30-wifi-r6-qualification.json).

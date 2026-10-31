@@ -1,0 +1,163 @@
+{
+  "date": "2026-10-30",
+  "scope": "Signed installed r5/r6 WCNSS kernels, cfg80211 scan-block regression and fix, Wi-Fi qualification on an owner-designated WPA2 network. No Bluetooth pairing, suspend, hotspot or long soak pass.",
+  "packages": {
+    "r5": {
+      "package": "linux-postmarketos-qcom-msm8226-6.18.59-r5.apk",
+      "bytes": 17742429,
+      "sha256": "f0ba6db5d6bee2b6705adf94eec36ca85fd791c864a1afd15ccd4c2a963fe2ef",
+      "source": "b2512c53f0355e2e9bb07c43759974f7895c466f",
+      "recipe": "4eebb215c28fd78f60b93dc6749632df2ea8bbf3",
+      "signing_key": "pmos@local-6ae3f5f3.rsa.pub (trusted for r4)",
+      "DTB_byte_identical_to_RAM_tested": true,
+      "DTB_sha256": "4e0c77de1a3696b8a36d3dcf3440a46f94fba2877202796e11937c15907ea568",
+      "kernel_sha256": "aa8ee70cf56b67e557f43a51fcf117c84a0b7997441802c10c01129e2656e17a",
+      "module_files": 424
+    },
+    "r6": {
+      "package": "linux-postmarketos-qcom-msm8226-6.18.59-r6.apk",
+      "bytes": 17739875,
+      "sha256": "5d3eb36e22271f491cbb702c25c355861dc4666755f0697e8bd347a5f9d971ba",
+      "source": "34c341b9039342611d3ca644a9aa9593bdad1c89",
+      "recipe": "a725b57f80b5b0089bf82db35c6bb4cdfdb85715",
+      "signing_key": "pmos@local-6ae3f5f3.rsa.pub (trusted for r4)",
+      "DTB_byte_identical_to_RAM_tested": true,
+      "DTB_sha256": "4e0c77de1a3696b8a36d3dcf3440a46f94fba2877202796e11937c15907ea568",
+      "kernel_sha256": "2b50d3e086c48f911877afc5c8ffdbdd20de4fba87b92b5e45224efb977cea0f",
+      "module_files": 424,
+      "cfg80211_contains_fix": "___cfg80211_scan_done disassembly: r5 0, r6 1 wiphy_work_queue call"
+    }
+  },
+  "build": {
+    "method": "rootless Podman Alpine 3.24, pinned pmbootstrap, recipe-provenance wrapper",
+    "recipes": {
+      "r5": "4eebb215c28fd78f60b93dc6749632df2ea8bbf3",
+      "r6": "a725b57f80b5b0089bf82db35c6bb4cdfdb85715"
+    },
+    "r4_build_environment_note": "container launch command was not recorded for r4; python3 had to be added to the documented package list"
+  },
+  "installs": {
+    "r5": {
+      "rollback_checkpoint_two_filesystems": true,
+      "trusted_dry_run": "6.18.59-r4 -> 6.18.59-r5",
+      "boot": "build 6, taint 0, WCNSS running, L3 vddmx/L6 vddpx consumers, phy0+hci0"
+    },
+    "r6": {
+      "rollback_checkpoint_two_filesystems": true,
+      "trusted_dry_run": "6.18.59-r5 -> 6.18.59-r6",
+      "filesystem_verification": {
+        "package_install_success": true,
+        "package_version": "6.18.59-r6",
+        "native_kernel_DTB_match_exact_APK": true,
+        "fallback_boot_files_match_preupdate": true,
+        "old_module_release_retained": true,
+        "new_module_filesystem": "ext4",
+        "both_GPTs_byte_identical": true,
+        "raw_boot_partition_sha256_unchanged": true,
+        "initramfs_bytes": 11955636,
+        "initramfs_sha256": "e20dd039783d5a925308f3be48e056afa400e1f10d94d36768306086476a3cf3",
+        "initramfs_prefix_original_cleanup_bytes_verified": true,
+        "initramfs_contains_only_native_ABI": true,
+        "RAM_overlay_hook_absent": true,
+        "explicit_Fx0_DTB_and_native16_fallback_entry": true,
+        "installed_filesystem_boot_tested": false,
+        "standalone_rescue_entry_preserved": true
+      },
+      "boot": "build 7, taint 0, packaged kernel/DTB, display auto x4, WCNSS running with MX/PX consumers, phy0+hci0, loaded qcom_wcnss_pil/cfg80211 match APK"
+    }
+  },
+  "r5_boot_script_errors": "apk info -v and on-device zstd hash checks were wrong; replaced by apk list -I and APK .ko.zst hashes",
+  "scan_block": {
+    "symptom": "after an interface cycle mid-scan, nl80211 TRIGGER_SCAN returns EBUSY indefinitely; wpa_supplicant SCAN-FAILED ret=-16; reconnect fails",
+    "localisation": "wcn36xx dynamic debug shows no driver activity; cfg80211:rdev_scan and mac80211:drv_hw_scan do not fire; wcn36xx reload clears it",
+    "cause": "mainline dab68a74e90b leaves rdev->scan_msg unsent when the driver completes a stale request",
+    "fix_commit": "34c341b9039342611d3ca644a9aa9593bdad1c89",
+    "control_packaged_cfg80211": {
+      "cycles": 10,
+      "connected": 2,
+      "final_scan_completed": 1
+    },
+    "fixed_module_on_r5": {
+      "cycles": 10,
+      "connected": 10,
+      "final_scan_completed": 10,
+      "wpa_supplicant_scan_failed": 0
+    },
+    "installed_r6": {
+      "cycles": 10,
+      "connected": 10,
+      "final_scan_completed": 10,
+      "wpa_supplicant_scan_failed": 0,
+      "wext_fallback": 0
+    },
+    "invalid_control_kept_private": "first control lacked wpa_supplicant restart after cfg80211 reload; WEXT fallback"
+  },
+  "wifi_qualification_installed_r6": {
+    "connect_ms": 5584,
+    "state": "100 (connected)",
+    "channel": 36,
+    "freq": "5180 MHz",
+    "rate": "270 Mbit/s",
+    "signal": 69,
+    "security": "WPA2",
+    "dhcp_ipv4": true,
+    "ipv6": true,
+    "gateway_ping": "20 packets transmitted, 20 packets received, 0% packet loss",
+    "gateway_rtt": "0.858/10.843/15.923",
+    "dns_via_wlan0": "answers 1 rcode 0 id_match True",
+    "upload": {
+      "Mbit_s": 57.34,
+      "bytes": 30000000
+    },
+    "reconnects": [
+      {
+        "ms": 3971,
+        "gateway_replies": 3
+      },
+      {
+        "ms": 5633,
+        "gateway_replies": 3
+      },
+      {
+        "ms": 5411,
+        "gateway_replies": 3
+      },
+      {
+        "ms": 5419,
+        "gateway_replies": 3
+      },
+      {
+        "ms": 5480,
+        "gateway_replies": 3
+      }
+    ],
+    "radio_off_on_state": "100 (connected)",
+    "kernel_errors": [],
+    "taint": "0",
+    "downloads_Mbit_s": [
+      61.58,
+      53.87,
+      48.33
+    ],
+    "download_bytes_each": 25000000
+  },
+  "sustained_download_r5_fixed_module": {
+    "sustained_runs": 10,
+    "all_http_200_full_size": true,
+    "total_bytes": 250000000,
+    "elapsed_s": 36,
+    "mean_Mbit_s": 55.6
+  },
+  "network_identity_public": false,
+  "mac": "NetworkManager applies Nura's default wifi.cloned-mac-address=stable on connection; hardware MAC source (lk2nd serial-derived vs NV factory) still open",
+  "open": [
+    "Bluetooth pairing/transfer/HID/audio",
+    "2.4 GHz association test (5 GHz chosen by NM)",
+    "resume and real suspend",
+    "hotspot",
+    "coexistence",
+    "overnight soak",
+    "factory MAC policy",
+    "upstream submission (owner approval required)"
+  ]
+}

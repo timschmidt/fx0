@@ -72,7 +72,7 @@
       "url": "https://github.com/timschmidt/fx0-linux",
       "branch": "integration/fx0-lts",
       "commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
-      "status": "Current tested native r4 source: signed IADC units/sign conversion checks, eMMC boot, native DRM/Sxmo and taint0. Physical UI/input last confirmed r3 with identical DTB; display startup holds, BMS/charging and remaining hardware open."
+      "status": "r4 base. The installed r6 source is linux-wireless-r4 (this base plus WCNSS and fixes)."
     },
     {
       "name": "lk2nd",
@@ -86,8 +86,8 @@
       "url": "https://github.com/timschmidt/fx0-pmaports",
       "branch": "integration/fx0-v26.06",
       "base_commit": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
-      "status": "Current tested kernel r4 plus UPower r3 recipes: clean embedded kernel recipe metadata, trusted upgrade and eMMC boot; independent frozen-r3 filesystem rescue/boot-menu repair pass. Factory restoration and final layout remain open.",
-      "commit": "84d622573bed26e397e80469a18e617569b7622d"
+      "status": "Current installed kernel r6 recipe (WCNSS plus fixes), built rootless with verified recipe provenance and signed with the trusted local key. Trusted upgrade r5->r6, exact readbacks and eMMC boot with taint 0 pass. The UPower r4 recipe is on integration/fx0-upower-r4. Factory restoration and final layout remain open.",
+      "commit": "a725b57f80b5b0089bf82db35c6bb4cdfdb85715"
     },
     {
       "name": "linux-display-iommu-experimental",
@@ -107,9 +107,9 @@
       "name": "linux-wireless-r4",
       "url": "https://github.com/timschmidt/fx0-linux",
       "branch": "integration/fx0-wireless-r4",
-      "commit": "b2512c53f0355e2e9bb07c43759974f7895c466f",
+      "commit": "34c341b9039342611d3ca644a9aa9593bdad1c89",
       "base_commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
-      "status": "Recovered WCNSS series on the exact r4 source plus Fx0 board, Pronto v1/v2 regulator-selection fix and MSM8226 DXE trigger fix. RAM tests: firmware start, dual-band scan, Bluetooth discovery, fixed MX/PX consumers and WCNSS restart re-registration. Association/traffic, pairing, suspend, MAC source and packaging remain open."
+      "status": "Installed signed r6 source: WCNSS board, Pronto regulator fix, DXE trigger fix, cfg80211 scan-done fix. Wi-Fi association/DHCP/DNS/traffic/reconnect pass on installed r6 with taint 0. Bluetooth pairing, suspend, hotspot, soak and MAC policy open."
     },
     {
       "name": "boot-deploy-offset-preparation",

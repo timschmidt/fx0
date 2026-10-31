@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-30",
+  "maintainer_repository": "https://git.kernel.org/pub/scm/linux/kernel/git/wireless/wireless.git",
+  "maintainer_branch": "main",
+  "base_commit": "25e73f1d6868c759c8eb56cad4e411692c5341b4",
+  "base_version": "7.3-rc7",
+  "compiler": "clang version 21.1.8 (Fedora 21.1.8-6.fc43)",
+  "series": [
+    {
+      "name": "cfg80211-scan-msg",
+      "head": "b639287c3b628bd5aafc750ebb0e8b1133fe66e2",
+      "branch": "submission/fx0-cfg80211-scan-msg",
+      "patch_file": "submissions/wireless/0001-wifi-cfg80211-flush-deferred-scan-done-message-on-in.patch",
+      "patch_sha256": "e6f92aa84d82c9b85c0f4f6f016350c8387af7b9b8560fa4c9763406c7b0151c",
+      "fixes": "dab68a74e90b8e07f08ed9deaa5884857a3cfe89",
+      "builds": [
+        {
+          "arch": "x86_64",
+          "config": "defconfig",
+          "config_sha256": "7637275fd916377483713e2794ed66e39eb5e2a73be9eaf34bb7d43b8a8a5ab8",
+          "object_sha256": "4b2578c47c91240e553bee403610c0fb3ccd5ada62310577eefb9ed97d1d4415",
+          "W1_object_build": "PASS",
+          "compiler_warnings": 0
+        },
+        {
+          "arch": "arm",
+          "config": "multi_v7_defconfig",
+          "config_sha256": "aef581cccfbd40c6ce74d01d05a0b1e3fdf7eb8e32224d38081538de3c2b88e3",
+          "object_sha256": "7ae5a2731f0d519ccec2d246eeb6f2fb5827dc4315731d66cb14a3e95b29ea41",
+          "W1_object_build": "PASS",
+          "compiler_warnings": 0
+        }
+      ],
+      "kunit": {
+        "suite": "CFG80211_KUNIT_TEST on UML",
+        "passed": 57,
+        "total": 57
+      },
+      "git_am_reproduces_tree": true,
+      "maintainer_tree_kernel_booted": false,
+      "physical_test_on": "6.18.59 Fx0 (fixed module and signed r6 package)",
+      "signed_off_by_present": false,
+      "sent": false,
+      "upstream_submission_requires_owner_approval": true
+    }
+  ]
+}
