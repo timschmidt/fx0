@@ -301,6 +301,23 @@ See [evidence](../evidence/2026-10-31-imx179-first-stream.json).
 
 See [evidence](../evidence/2026-10-31-camss-iommu-capture.json).
 
+## Rear camera in the installed kernel (2026-10-31)
+
+Kernel r12 packaged the camera stack: CAMSS for MSM8226, the VFE IOMMU, the
+IMX179 driver and the Fx0 board description. Its RAM test exposed one more
+limit, which the earlier experiments had hidden by overriding the AXI clock:
+at the default 100 MHz multimedia AXI clock, every full-size frame stops
+after about 46% of its lines. The vendor raised that clock through bus
+bandwidth votes. Mainline MSM8226 has no interconnect description, so r13
+lets CAMSS scale the VFE AXI clock, as newer SoCs do with `camnoc_axi`.
+It idles at 100 MHz and rises to 266.67 MHz while the VFE is powered.
+
+r13 is installed. The camera modules load at boot, and full-resolution
+captures complete without IOMMU faults
+([evidence](../evidence/2026-10-31-rear-camera-installed.json)). Next come
+libcamera with its software ISP, exposure and gain control, and the front
+IMX132.
+
 ## Flash and torch
 
 The owner wants the flash LED usable as a torch. The vendor drives it from

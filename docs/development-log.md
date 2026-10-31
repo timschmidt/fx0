@@ -2060,3 +2060,8 @@ addresses were never mapped. On 32-bit ARM, the IOMMU DMA layer splits a
 buffer into separately placed chunks of at most 64 KiB unless the device
 allows longer segments, and CAMSS assumed one contiguous range. With the
 maximum segment size raised, every full-size frame arrives complete.
+
+The rear camera is in the installed kernel (r13). Packaging it exposed a
+bus-clock limit: at the default 100 MHz multimedia AXI clock only 46% of
+each full-size frame arrives. CAMSS now raises that clock to 266.67 MHz
+while the camera runs, and full frames complete on a normal boot.

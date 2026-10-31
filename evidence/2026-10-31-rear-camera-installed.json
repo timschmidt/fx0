@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-31",
+  "scope": "Rear camera in the installed kernel: r12 (camera stack) RAM test, AXI clock finding, r13 installed",
+  "r12": {
+    "source": "fx0-linux d1d8b274a007 (r11 + 15 CAMSS/IMX179/IOMMU/MMCC commits + Fx0 rear camera DT, TLMM blocks merged)",
+    "recipe": "fx0-pmaports 6c78c0b86 (media core, V4L2 helpers, VIDEO_QCOM_CAMSS=m, VIDEO_IMX179=m only)",
+    "ram_test": "without the earlier AXI clock override every 3280x2464 frame stops at about 1140 of 2464 rows (not page-aligned, no IOMMU faults): the 100 MHz MMSS AXI clock is too slow",
+    "run": [
+      "#13-postmarketos-qcom-msm8226 SMP PREEMP",
+      "[    0.103411] iommu: Default domain type: Translated",
+      "[    1.103671] platform fda0ac00.camss: Adding to iommu group 0",
+      "[   15.191741] mmcc-msm8974 fd8c0000.clock-controller: sync_state() pending due to fda0ac00.camss",
+      "100000000",
+      "vid /dev/video0 sensor 'imx179 2-0010' /dev/v4l-subdev9",
+      "0-000c 0-0068 1-0020 2-0010 i2c-0 i2c-1 i2c-2 i2c-3 ",
+      "links",
+      "formats",
+      "<<<<<<<<",
+      "iommu faults 0",
+      "sensor-live frames 8",
+      "  0 ([(1, 1142), (0, 1322)], [('0x477900', '0x9a4d00', 2304, 3328, 1325)])",
+      "  1 ([(1, 1143), (0, 1321)], [('0x478e60', '0x9a4d00', 3680, 3328, 1323)])",
+      "  2 ([(1, 1136), (0, 1328)], [('0x472380', '0x9a4d00', 896, 3328, 1330)])",
+      "  3 ([(1, 1140), (0, 1324)], [('0x4763a0', '0x9a4d00', 928, 3328, 1326)])",
+      "  4 ([(1, 1142), (0, 1322)], [('0x477900', '0x9a4d00', 2304, 3328, 1325)])",
+      "  5 ([(1, 1143), (0, 1321)], [('0x478e60', '0x9a4d00', 3680, 3328, 1323)])",
+      "  6 ([(1, 1142), (0, 1322)], [('0x477900', '0x9a4d00', 2304, 3328, 1325)])",
+      "  7 ([(1, 1140), (0, 1324)], [('0x4763a0', '0x9a4d00', 928, 3328, 1326)])",
+      "hscdtd008a fc4cf000.spmi:pm8226@0:adc@3600 mpu6515 fc4cf000.spmi:pm8226@0:adc@3100 ",
+      "mmc0:: mmc1:: white:torch ",
+      "8192"
+    ]
+  },
+  "axi_fix": {
+    "commits": "fx0-linux integration/fx0-camss 114cc7ee33de (mmcc: CLK_SET_RATE_PARENT on camss_vfe_vfe_axi_clk) and 8c81b6d328cc (camss: rate-scale vfe_axi like camnoc_axi; MSM8226 table 266.67 MHz)",
+    "behaviour": "MMSS AXI idles at 100 MHz and rises to 266.67 MHz when the VFE powers on; no other platform has a non-zero vfe_axi table"
+  },
+  "r13": {
+    "package": "linux-postmarketos-qcom-msm8226-6.18.59-r13",
+    "source": "fx0-linux d1f8047db385 (r12 + AXI fix)",
+    "recipe": "fx0-pmaports (pkgrel 13)",
+    "ram_test": [
+      "#14-postmarketos-qcom-msm8226 SMP PREEMP",
+      "[    0.104422] iommu: Default domain type: Translated",
+      "[    1.096078] platform fda0ac00.camss: Adding to iommu group 0",
+      "[   15.832202] mmcc-msm8974 fd8c0000.clock-controller: sync_state() pending due to fda0ac00.camss",
+      "100000000",
+      "vid /dev/video0 sensor 'imx179 3-0010' /dev/v4l-subdev9",
+      "0-000c 0-0068 1-0020 3-0010 i2c-0 i2c-1 i2c-2 i2c-3 ",
+      "links",
+      "formats",
+      "axi during stream 266666666 vfe_axi 266666666",
+      "<<<<<<<<",
+      "iommu faults 0",
+      "sensor-live frames 8",
+      "  0 ([(1, 2464)], [])",
+      "  1 ([(1, 2464)], [])",
+      "  2 ([(1, 2464)], [])",
+      "  3 ([(1, 2464)], [])",
+      "  4 ([(1, 2464)], [])",
+      "  5 ([(1, 2464)], [])",
+      "  6 ([(1, 2464)], [])",
+      "  7 ([(1, 2464)], [])",
+      "hscdtd008a mpu6515 fc4cf000.spmi:pm8226@0:adc@3100 fc4cf000.spmi:pm8226@0:adc@3600 ",
+      "mmc0:: mmc1:: white:torch ",
+      "8192"
+    ],
+    "installed": "boots unattended in 69 s, taint 0, no failed units, sway starts; qcom_camss/imx179 and media modules load at boot; AXI idle 100 MHz; 4-frame 3280x2464 RAW10 capture = 40,449,024 bytes, no IOMMU faults"
+  },
+  "note": "the sensor's I2C bus number depends on which other buses are enabled (1-0010, 2-0010, 3-0010); look the entity up by name pattern",
+  "open": [
+    "libcamera/software ISP and a camera app",
+    "exposure/gain control and image quality",
+    "front IMX132",
+    "flash strobe sync"
+  ]
+}
