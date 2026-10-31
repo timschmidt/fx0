@@ -37,8 +37,15 @@ it today.
 
 1. Remove the display holds and the UI gate once the kernel startup fault is
    fixed, using the reboot harness to show unattended starts.
-2. Package the first table as a device package, `device-lg-madai`, in the
-   fx0-pmaports branch. Include the deviceinfo schema entry for
-   `deviceinfo_flash_bootimg_offset`.
+2. Package the first table as a device package. **Drafted:** `device-lg-madai`
+   on fx0-pmaports `integration/fx0-device` (`c87f356c5d2a`), with the schema
+   entry for `deviceinfo_flash_bootimg_offset`. It is built and signed
+   (`device-lg-madai-1-r0`, sha256 `cbf35443…`) but not installed. Swapping it
+   for `device-qcom-msm8226` must happen in one transaction because both ship
+   `/etc/machine-info`. Also check whether the plain
+   `/usr/share/deviceinfo/deviceinfo` file on the phone comes from the generic
+   package. The Sxmo profile goes to sxmo-utils instead
+   ([draft](../submissions/sxmo-utils/README.md)), which ships all device
+   profiles. The session wrapper settings remain to be packaged.
 3. Reinstall from scratch with that package and the final layout, then rerun
    the boot, Wi-Fi, Bluetooth, display, audio-service and soak checks.

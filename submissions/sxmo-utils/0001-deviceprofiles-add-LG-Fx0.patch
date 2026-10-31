@@ -1,0 +1,38 @@
+From 11c2d01404513f639aec64b942f05b659a2a8884 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 31 Oct 2026 04:12:17 -0400
+Subject: [PATCH] deviceprofiles: add LG Fx0
+
+The LG Fx0 (lg,madai, MSM8926) runs mainline-based postmarketOS with a
+720x1280 panel. Its power key is the PM8226 PON key and the volume keys
+are GPIO keys. A scale of 1.5 and the lisgd threshold and edge size were
+chosen by testing gestures on the device.
+
+This profile was written with an AI coding assistant (Claude Opus 5.5)
+from settings tested on the device.
+---
+ .../deviceprofiles/sxmo_deviceprofile_lg,madai.sh    | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+ create mode 100755 scripts/deviceprofiles/sxmo_deviceprofile_lg,madai.sh
+
+diff --git a/scripts/deviceprofiles/sxmo_deviceprofile_lg,madai.sh b/scripts/deviceprofiles/sxmo_deviceprofile_lg,madai.sh
+new file mode 100755
+index 0000000..9da2114
+--- /dev/null
++++ b/scripts/deviceprofiles/sxmo_deviceprofile_lg,madai.sh
+@@ -0,0 +1,12 @@
++#!/bin/sh
++# LG Fx0
++
++export SXMO_POWER_BUTTON="0:0:pm8941_pwrkey"
++export SXMO_VOLUME_BUTTON="1:1:gpio-keys"
++
++export SXMO_SWAY_SCALE="1.5"
++
++# Measured on the 720x1280 panel: a 60 px swipe and a wider edge band
++# make gestures register reliably.
++export SXMO_LISGD_THRESHOLD="60"
++export LISGD_EDGE_SIZE="2.4"
+-- 
+2.56.0
+
