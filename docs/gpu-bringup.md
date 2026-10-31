@@ -42,6 +42,17 @@ filesystem is not mounted yet, but loads on first use: PM4 330043, PFP 330020.
 GPU devfreq does not initialise. The owner has not yet confirmed the picture
 physically. See [GPU evidence](../evidence/2026-10-30-gpu-freedreno.json).
 
+## Compositor on the GPU
+
+The Sxmo session wrapper now selects wlroots' GLES2 renderer instead of
+Pixman; the Pixman version stays on the phone as `fx0-sxmo-test.pixman`. On
+installed r7, Sway holds the GPU render node and maps Mesa gallium, with no GPU
+faults. Sway's RSS grows from 44 to 55 MB and system use from 134 to 167 MB of
+1378 MB. A `grim` capture shows the lock screen, wallpaper, clock and status
+bar correctly. Devfreq stayed at 450 MHz with no transitions during this short
+test. The owner's physical check of rendering and input is pending. See
+[compositor evidence](../evidence/2026-10-30-gles2-compositor.json).
+
 ## Work required
 
 1. Done in RAM: GPU IOMMU, probe, firmware and `kmscube`. Physical

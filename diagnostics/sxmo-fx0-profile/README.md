@@ -20,7 +20,7 @@ reproduces failure with defaults and passes with these settings. A subsequent
 physical installed test confirms both keyboard gestures. The compositor uses
 identity calibration; the board DT applies both required axis inversions.
 
-The wrapper selects Pixman and the stable native DRM by-path node. Audio/modem
+The wrapper selects the wlroots GLES2 renderer (Freedreno, from kernel r7) and the stable native DRM by-path node. Before r7 it selected Pixman; the installed phone keeps that version as `fx0-sxmo-test.pixman` for rollback. Audio/modem
 integration remains disabled during this development test. The `unlock` state
 restriction and the user's `sxmo.noidle`/`sxmo.nosuspend` cache files retain the
 current no-idle/no-suspend policy. The TinyDM first-start gate also remains.

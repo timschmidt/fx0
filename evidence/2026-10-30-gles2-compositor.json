@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-30",
+  "scope": "Sxmo/Sway session switched from Pixman to the wlroots GLES2 renderer on installed signed r7",
+  "change": "/usr/local/libexec/fx0-sxmo-test WLR_RENDERER pixman -> gles2 (backup fx0-sxmo-test.pixman on the phone; repo copy updated)",
+  "result": {
+    "session": "tinydm active, sway running",
+    "render_node_fds": 6,
+    "mesa": "libgallium-26.1.6 mapped by sway",
+    "gpu_faults_hangs": 0,
+    "sway_rss_kib": {
+      "pixman": 43968,
+      "gles2": 54944
+    },
+    "system_used_mib": {
+      "pixman": 134,
+      "gles2": 167
+    },
+    "screenshot": "grim 720x1279: Sxmo lock screen, wallpaper, clock and status bar correct (software-side capture)"
+  },
+  "restart_note": "systemctl restart tinydm fails under the development drop-in (SIGTERM exit 143 triggers OnFailure and cancels the start); use reset-failed then start",
+  "devfreq": "0 transitions, held at 450 MHz during the test; simple_ondemand scaling under load not yet observed",
+  "open": [
+    "owner physical check of touch, keyboard and rendering",
+    "GPU devfreq scaling under load",
+    "memory over a long session",
+    "compositor restart/lock-unlock/rotation on GLES2",
+    "suspend"
+  ]
+}

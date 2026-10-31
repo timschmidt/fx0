@@ -1880,3 +1880,10 @@ taint 0, the ADSP running, freedreno FD305, simple-ondemand at 19–450 MHz,
 Wi-Fi and Bluetooth, and the UI active. My first verification check matched
 the GPU's harmless dummy-vddcx notice and was narrowed. See
 [r7 evidence](../evidence/2026-10-30-native-r7-gpu-adsp.json).
+
+The Sxmo session now composites on Freedreno: the wrapper's `WLR_RENDERER` is
+gles2, with the Pixman copy kept for rollback. Sway uses the render node and
+Mesa gallium with no GPU faults, using about 11 MB more RSS. A screenshot of
+the lock screen is correct. `systemctl restart tinydm` is cancelled by the
+development drop-in, so use reset-failed and then start. The owner's physical
+check is pending.
