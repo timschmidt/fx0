@@ -16,6 +16,8 @@ The device is available for development and flashing. No personal data needs to 
 | [Stock hardware](docs/stock-hardware.md) | Physical inventory and implications for board support |
 | [Hardware acceptance](docs/hardware-acceptance.md) | Full hardware inventory and tests required before declaring completion |
 | [Upstream development](docs/upstream-development.md) | Public repository structure, patch ownership, validation, and submission preparation |
+| [Upstream status](docs/upstream-status.md) | Every downstream change, its target tree, prepared material and dependencies |
+| [Nura integration](docs/nura-integration.md) | Fx0 overrides on the installed system: device-package content versus development fixtures |
 | [Research](docs/research.md) | Source references, recovered work, and facts that need physical confirmation |
 | [Device operations](docs/device-operations.md) | Read-only inventory, verified partition backups, and helper usage |
 | [Image builds](docs/building.md) | Full diagnostic kernel/lk2nd recipes and rootfs preparation |
@@ -28,126 +30,36 @@ The device is available for development and flashing. No personal data needs to 
 
 ## Current state
 
-Nura v26.06 now boots from eMMC through lk2nd with the signed native
-`linux-postmarketos-qcom-msm8226-6.18.59-r7` package, matching persistent modules,
-SSH, native 720×1280 DRM and a Sxmo terminal/keyboard using Pixman. Kernel taint
-is 0. r6 adds WCNSS Wi-Fi/Bluetooth, which passes association, DHCP/DNS, traffic
-and reconnect tests on the installed system; see
-[wireless work](docs/wireless-bringup.md). r7 adds the ADSP and accelerated
-graphics: freedreno FD305 with GLES 3.0 and devfreq through a new MSM8226 GPU
-IOMMU; see [GPU work](docs/gpu-bringup.md). The installed r3 physical test confirms
-typing, both keyboard gestures, and matched Home/VolumeDown/VolumeUp input. r4
-retains that exact DTB; r6 changes only the WCNSS nodes and was not physically
-re-tested for input. Its new
-IADC correction passes actual-function regression tests and signed native
-conversion-log checks. Current source/artifact pins and limits are recorded in
-[the manifest](manifests/sources.json) and
-[r4 evidence](evidence/2026-10-30-native-r4-installed-boot.json).
+As of 2026-10-31 the Fx0 runs Nura v26.06 as an ordinary Linux system:
 
-A frozen, self-contained r3 rescue now boots from its saved filesystem entry
-after the r4 module update, with 22 embedded signed modules, no installed-root
-mount, all 42 exposed internal eMMC block nodes read-only, and taint 0. A bounded
-boot-only repair restores the normal menu and returns storage to read-only;
-raw boot and GPT readbacks match. The earlier native16 fallback fails startup
-acceptance and remains unqualified. See
-[recovery results](evidence/2026-10-30-standalone-rescue.json).
-Independent package/root rollback and factory-stock restoration still require
-rehearsal; this result does not close those gates.
+- **Storage:** final layout. Partitions 1–34 (boot chain, firmware, calibration)
+  are unchanged, and the former Android system/cache/userdata/internal-SD/grow
+  space is one 14.3 GiB native ext4 root with 12.67 GB free. The factory-stock
+  restoration was rehearsed first, and a verified whole-eMMC snapshot predates
+  the change. See [storage](docs/storage-layout.md).
+- **Boot:** a production lk2nd boots the kernel image stored after it in the
+  boot partition, unattended from power-on or reboot. Volume Down at power-on,
+  or `systemctl reboot --reboot-argument=bootloader`, enters lk2nd fastboot.
+  `mkinitfs` updates the image in place (boot-deploy 0.23.0-r1). Twenty
+  consecutive warm reboots pass.
+- **Kernel:** signed `linux-postmarketos-qcom-msm8226-6.18.59-r8`, taint 0.
+- **Working:** native display and touch; a GLES2 Sxmo session on Freedreno
+  (Adreno 305, devfreq); Wi-Fi including a 1-hour soak and hotspot (PMF off);
+  Bluetooth pairing, RFCOMM and A2DP headphones with AVRCP play/pause; USB
+  network gadget; buttons; the ADSP firmware with its sensor and SLIMbus
+  services. See the [hardware acceptance matrix](docs/hardware-acceptance.md).
+- **Open:** audio codec (no mainline WCD9302 driver), sensors, cameras,
+  cellular (no SIM), suspend and power, battery fuel gauge and charging policy,
+  Bluetooth headset calls and keyboard, microSD, 20 cold boots, rollback from
+  the consolidated layout, and the 24-hour soak (running). Some development
+  fixtures remain; see [Nura integration](docs/nura-integration.md).
+- **Upstream:** prepared, unsent drafts for remoteproc, wireless, power-supply,
+  IIO, PHY, DRM panel, UPower, lk2nd and boot-deploy. Sending waits for the
+  owner's approval and Signed-off-by. See [upstream status](docs/upstream-status.md).
 
-Initial display loading still needs a temporary initramfs power hold; it releases
-after DRM binds and all four display controls become automatic. Controlled native
-display off/on and touch tests pass, but startup without the workaround, full
-suspend and reliability remain open. The Fx0 gesture profile is physically
-confirmed on r3. GPU acceleration is disabled; software rendering and development
-idle/suspend restrictions remain in use. UPower r3 avoids the observed incomplete-
-battery NaN/false shutdown, with 90 configured Linux tests passing. Battery capacity
-is still unknown. The generic charger alternates Charging/Good and
-Discharging/Overheat near room temperature; no safety thresholds are bypassed.
-The native non-VM BMS now has verified coherent output capture and a stock-kernel
-RAM baseline. Separate IIO reference/voltage patches pass brief RAM hardware tests;
-the new battery voltage inputs also pass standard millivolt/consumer-precision
-checks. Protected trim and source-epoch experiments establish load-responsive
-BMS current/counter data and the required forced restart writes. The installed
-r4 package is unchanged. Calibrated fuel-gauge reporting, thermistor
-protection and automatic USB current negotiation remain open. Stock uses software
-charging limits in addition to extended hardware comparators; those hardware
-limits are not enabled by themselves. RAM thermistor conversion and three
-standard charge-inhibit/resume cycles now pass. Stock reproduces the native
-window's HOT trip around 31.6°C; complete native temperature/fault/suspend policy
-is still required. Separate generic Charger Manager fault fixes pass host/ARM
-checks but are not loaded on the phone. See [battery work](docs/battery-bringup.md).
-
-An experimental RAM firmware now passes boot-time selection of the stock
-removable pack and hands all 155 vendor-source OCV points to the installed r4
-kernel through standard battery data. Design-capacity/charge-voltage attributes
-are verified; current capacity and a usable battery UI remain unavailable.
-The original firmware is restored afterward with matching bootloader/GPT
-readbacks. See [handoff evidence](evidence/2026-10-30-battery-profile-handoff.json).
-
-A further RAM candidate verifies charger control writes, serializes limit and
-enable changes, and prevents user auto from clearing an I/O fault. Host fault/
-concurrency tests and three physical control cycles pass. An opt-in RAM firmware
-gate now inhibits charging and verifies conservative BTC before any native
-charger probe. A further RAM-tested Linux policy validates that handoff, requires
-fresh runtime-profile/ADC data and preserves USB while its ADC supplier is absent
-or unbound. User inhibition and explicit supplier recovery pass; actual thermal
-boundaries, system suspend, watchdog protection and charging accuracy remain open.
-Installed r4 is unchanged. See [native policy evidence](evidence/2026-10-30-smbb-native-policy.json).
-
-UPower `99991.91.0-r4` is now installed with the accepted upstream CLI error fix.
-Its expanded incomplete-battery tests pass on current upstream and the Nura
-backport, preserving real empty-battery handling. Native CLI/services and the
-regenerated boot artifacts pass verification; no capacity estimate is supplied.
-See [UPower review drafts](submissions/upower/README.md).
-
-Sensor bringup has located the original registry and validated its static
-bus/address/IRQ data. A guarded native trial successfully shuts down ADSP but
-refuses to clock low bus lines; it obtains no chip ID. Normal r4/UPower r4 is
-restored. Supply/pin mapping, raw sensors and DMP operation/wake remain open;
-see [sensor bringup](docs/sensor-bringup.md).
-
-A RAM-booted wireless DTB on the r4 source starts WCNSS with the device's own
-firmware and NV. It scans 2.4/5 GHz and brings up a Bluetooth controller. A
-stable-kernel Pronto regulator regression and an MSM8226 interrupt-trigger defect
-that broke WCNSS restart are fixed and verified on the phone. The installed r4
-system is unchanged. Association, pairing, MAC source and suspend remain open;
-see [wireless work](docs/wireless-bringup.md). The regulator fix is prepared
-for the remoteproc maintainer tree but not sent; see the
-[remoteproc draft](submissions/remoteproc/README.md).
-
-Stock inventory, 29 critical partition backups, GPT metadata and a separately
-verified 1 GiB original-system image are private. A complete **development-state**
-snapshot of the 15,758,000,128-byte eMMC user area and both 4 MiB boot areas passes
-two independent device reads and verified copies on two host filesystems, with
-all eMMC filesystems unmounted. Original userdata was not captured before its
-authorized Nura overwrite; an untouched full stock image is not claimed. Exact
-pre-r4 boot/modules/configuration and the r3 APK also have verified two-filesystem
-rollback copies. Development and backups use `/run/media/tim/Disk B/fx0` through
-`/tmp/fx0-storage`; re-establish that bind mount after a host reboot.
-
-All four CPUs and eMMC HS200 are operational in development tests. Earlier full
-image write/readback and selected storage/USB tests pass, with sustained I/O still
-open. Native CCI EEPROM reads match two complete private 64 KiB captures; this does
-not qualify camera streaming, CAMSS, OIS or calibration validity. Wi-Fi/Bluetooth
-qualification, audio, sensors, cameras, NFC/haptics, cellular/GNSS, SD/OTG and the remaining
-[hardware acceptance matrix](docs/hardware-acceptance.md) need further work.
-No SIM is available for final cellular network acceptance. No unattended/cold
-startup, full suspend or final reliability qualification is claimed.
-
-The host-only storage preview combines adjacent Android payload partitions into
-one approximately 14.30 GiB modern ext4 root. GPT/filesystem checks and embedded
-readback pass. The proposed raw-boot updater preserves lk2nd's prefix and may
-avoid a separate boot filesystem; its source CI passes, while physical final-
-layout boot/update/recovery and the minimum retained-partition audit remain open.
-**No repartitioning has occurred.** The [plan](docs/bringup-plan.md), section 2.1,
-requires complete restoration coverage and demonstrated factory-stock rollback
-before that migration. External SD will remain ordinary removable Linux media.
-
-Public source, recipe and diagnostic changes are being committed for eventual
-upstream review. PR/email submission, final series qualification and personal DCO
-certification remain separate unfinished work. Current recipes are in
-[the build guide](docs/building.md); the dated minimal DTB fixture is retained
-for historical reproduction and lacks the later physical bringup fixes.
+Development and backups use `/run/media/tim/Disk B/fx0` through
+`/tmp/fx0-storage`; re-establish that bind mount after a host reboot. The
+[development log](docs/development-log.md) has the full history.
 
 ## Local and public material
 
