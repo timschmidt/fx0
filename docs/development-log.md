@@ -2053,3 +2053,10 @@ to 366 (black level 64).
 Kernel r11 adds the torch to the installed system. Sxmo's flashlight toggle
 already looks for `white:torch`, so it switches the LED on and off unchanged.
 r11 was RAM-booted before installing and boots unattended with taint 0.
+
+The camera's missing regions are fixed. A fault-time diagnostic compared the
+IOMMU's hardware walk with the kernel's page table: both said the faulting
+addresses were never mapped. On 32-bit ARM, the IOMMU DMA layer splits a
+buffer into separately placed chunks of at most 64 KiB unless the device
+allows longer segments, and CAMSS assumed one contiguous range. With the
+maximum segment size raised, every full-size frame arrives complete.

@@ -287,8 +287,14 @@ See [evidence](../evidence/2026-10-31-imx179-first-stream.json).
   3280×2464 frames in most buffers.
 - **Remaining gaps** start on 64 KiB boundaries: whole cache lines of
   level-2 table entries look empty to the IOMMU. Invalidating the context
-  after each mapping did not help. The failing addresses repeat across boots
-  and follow particular allocation chunks; still open.
+  after each mapping did not help. **Resolved:** a fault-time diagnostic showed
+  the software page table itself had nothing mapped at the faulting
+  addresses. CAMSS assumes each buffer is one contiguous DMA range, which
+  arm64 guarantees. 32-bit ARM's IOMMU mapping only merges scatterlist chunks
+  up to the device's maximum segment size (64 KiB by default) and gives each
+  chunk its own range, so the VFE wrote past the first chunk. Raising the
+  maximum segment size, and rejecting buffers that still split, makes every
+  3280×2464 frame complete, with no IOMMU faults.
 - **First image.** A complete buffer holds a recognisable, in-focus RAW10
   RGGB image (preview kept private). The scene was dark: values reach only
   12 above the black level of 64 at full exposure and no gain.
