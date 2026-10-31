@@ -144,6 +144,12 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
      register sequences.
   3. A machine driver, reusing the `apq8096`-style SLIMbus card glue.
 
+  **Step 1 done (2026-10-31):** on an audio probe kernel, all four QDSP6
+  services bind on this ADSP (core, AFE, ASM, ADM). The AFE DAIs, including
+  `SLIMBUS_0_RX`, and the routing component register
+  ([evidence](../evidence/2026-10-31-qdsp6-probe.json)). QDSP6 makes ASoC
+  compress and topology support built-in, so it needs a kernel package.
+
 - **Codec MCLK source.** The vendor machine driver takes the 9.6 MHz Tapan
   MCLK as `osr_clk`. Vendor `clock-8226.c` maps that to `div_clk1`, the RPM
   XO buffer with ID 11 (the PMIC divider output). Mainline `clk-smd-rpm`

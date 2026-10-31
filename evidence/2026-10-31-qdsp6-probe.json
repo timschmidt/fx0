@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-31",
+  "scope": "Mainline QDSP6 (APR, q6core, q6afe, q6asm, q6adm, q6routing) on the MSM8226 ADSP: audio probe kernel (fx0-linux integration/fx0-audio 68ac6144c11a, r13 config + QCOM_APR, SND_SOC_QCOM, SND_SOC_QDSP6, SLIMbus, WCD9306) RAM-booted with the installed initramfs",
+  "dt": "qcom-msm8226.dtsi APR node: q6core service@3, q6afe service@4 with q6afedai, q6asm service@7 with q6asmdai (no IOMMU), q6adm service@8 with q6routing",
+  "load": [
+    "qmi_helpers: loaded",
+    "qcom_pdr_msg: loaded",
+    "pdr_interface: loaded",
+    "apr: loaded",
+    "snd-q6dsp-common: loaded",
+    "q6core: loaded",
+    "q6afe: loaded",
+    "q6afe-dai: loaded",
+    "q6asm: loaded",
+    "q6asm-dai: FAILED",
+    "q6adm: loaded",
+    "q6routing: loaded",
+    "aprsvc:service:4:3 aprsvc:service:4:4 aprsvc:service:4:7 aprsvc:service:4:8 ",
+    "aprsvc:service:4:3 -> qcom-q6core",
+    "aprsvc:service:4:4 -> qcom-q6afe",
+    "aprsvc:service:4:7 -> qcom-q6asm",
+    "aprsvc:service:4:8 -> qcom-q6adm",
+    "fe200000.remoteproc:smd-edge:apr:service@8:routing",
+    "fe200000.remoteproc:smd-edge:apr:service@4:dais",
+    "snd-soc-dummy",
+    "snd-soc-dummy",
+    "dais: 137",
+    "SLIMBUS_0_RX",
+    "PRI_MI2S_RX",
+    "8192",
+    ""
+  ],
+  "result": "all four APR services bind (qcom-q6core, qcom-q6afe, qcom-q6asm, qcom-q6adm); ASoC registers the q6afe DAI component (137 DAIs including SLIMBUS_0_RX) and q6routing. q6asm-dai failed only on load order (needs q6routing symbols loaded first).",
+  "config_note": "SND_SOC_QCOM must be enabled for QDSP6; SND_SOC_COMPRESS and SND_SOC_TOPOLOGY become built-in, so QDSP6 needs a kernel package, not just modules",
+  "next": [
+    "load q6asm-dai after q6routing",
+    "wcd9306 ASoC component: SLIMbus RX DAI + channel map, MCLK/bandgap, RX3 -> SPK path",
+    "machine driver (SND_SOC_APQ8096 did not get enabled; check its dependencies)"
+  ]
+}
