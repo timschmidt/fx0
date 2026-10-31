@@ -274,6 +274,23 @@ Open:
 
 See [evidence](../evidence/2026-10-31-imx179-first-stream.json).
 
+## CAMSS behind the VFE IOMMU (2026-10-31)
+
+- **Stream IDs.** The VFE SMMU is OS-managed, so `qcom_iommu` must program
+  its stream-match table. With VFE0/VFE1/CPP mapped to context banks 0/1/2,
+  captures translate through the IOMMU, and 720p test-pattern frames arrive
+  complete without touching other memory.
+- **Frame geometry.** Larger frames stopped part way, per buffer and
+  repeatably. MSM8226's VFE 4.0 bounds a frame-based write master by
+  `WR_BUFFER_CFG` (words per line, height, burst), which the vendor driver
+  programs and mainline did not. Programming it gives complete
+  3280×2464 frames in most buffers.
+- **Remaining gaps** start on 64 KiB boundaries: whole cache lines of
+  level-2 table entries look empty to the IOMMU. The test under way
+  invalidates the context after each mapping.
+
+See [evidence](../evidence/2026-10-31-camss-iommu-capture.json).
+
 ## Implementation and physical test order
 
 1. Repeat controlled touch observation and preserve its completion conditions. The earlier pre-DRM capture was saved as incomplete; a new native-display capture is open.
