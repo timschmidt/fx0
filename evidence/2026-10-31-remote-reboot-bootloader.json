@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-31",
+  "scope": "Remote reboot-to-bootloader on the Fx0 through the PMIC PON spare register",
+  "kernel": {
+    "package": "linux-postmarketos-qcom-msm8226-6.18.59-r8",
+    "sha256": "59e97c9ff60282f5a8aade983663d108bda4090710132ffc6bd5089f386f2b1e",
+    "source": "fx0-linux 962a378204d6 (7e5f8f6b2250 labels the pm8226 PON node; 962a378204d6 adds mode-recovery=<1>, mode-bootloader=<2> for the Fx0)",
+    "recipe": "fx0-pmaports fb4bdd049ad7",
+    "build": "rootless pmbootstrap with recipe provenance, signed with pmos@local-6ae3f5f3; DTB carries the modes; dtbs_check reported nothing for the PON node",
+    "installed": "apk verify OK; mkinitfs rewrote the raw image (partition payload equals /boot/boot.img); boot #9, taint 0, systemd running, no failed units, Wi-Fi and both remoteprocs up"
+  },
+  "lk2nd": {
+    "source": "fx0-lk2nd integration/fx0-pon-reboot 079eebe on b106e16: LK2ND_PON_REBOOT_MODE=1 reads PON SOFT_RB_SPARE (0x88f) when the IMEM reason is empty, maps 1->recovery and 2->fastboot, and scrubs bits 7:2",
+    "build": "LK2ND_EXTLINUX=0 LK2ND_PON_REBOOT_MODE=1 LK2ND_VERSION=fx0-pon-reboot; 258064 bytes, sha256 1a2a587eeb893f4f...; control build of b106e16 with the same toolchain reproduced the previously installed 3224c650... exactly",
+    "install": "written from Linux at boot-partition offset 0 with fsync; readback equals the image; raw boot image unchanged; previous 512 KiB prefix saved on the phone"
+  },
+  "results": {
+    "first_boot_with_stale_0x08": [
+      "fastboot",
+      27,
+      "lk2nd:version: fx0-pon-reboot"
+    ],
+    "first_boot_with_stale_0x08_after": [
+      "running",
+      "0",
+      "088f:",
+      "00"
+    ],
+    "reboot_bootloader": [
+      "fastboot",
+      29,
+      "lk2nd:version: fx0-pon-reboot"
+    ],
+    "reboot_bootloader_after": [
+      "running",
+      "0",
+      "088f:",
+      "00"
+    ],
+    "plain_reboot": [
+      "nura",
+      71
+    ],
+    "plain_reboot_after": [
+      "running",
+      "0",
+      "088f:",
+      "00"
+    ]
+  },
+  "summary": "remote 'systemctl reboot --reboot-argument=bootloader' reaches lk2nd fastboot in ~29 s without keys; plain reboots boot Nura unattended; the register is scrubbed each time"
+}

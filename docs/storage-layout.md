@@ -84,8 +84,11 @@ See [evidence](../evidence/2026-10-31-lk2nd-key-entry.json).
 **Installed, 2026-10-31.** That lk2nd is now the installed prefix. The phone boots
 Nura unattended from the boot-deploy raw image on warm and cold (power key)
 starts. A Volume Down cold start reaches lk2nd fastboot, with no LG reset
-prompt. A host-requested `reboot --reboot-argument=bootloader` does not: LG
-aboot consumes the IMEM restart reason before lk2nd reads it. The extlinux menu is no longer used; the rescue image stays available
+prompt. LG aboot consumes the IMEM restart reason, so kernel r8 also
+stores reboot modes in the PMIC PON spare register, and a PON-aware lk2nd
+(`LK2ND_PON_REBOOT_MODE=1`) reads it. `systemctl reboot
+--reboot-argument=bootloader` now reaches fastboot remotely. See [remote
+bootloader evidence](../evidence/2026-10-31-remote-reboot-bootloader.json). The extlinux menu is no longer used; the rescue image stays available
 through `fastboot boot`. Items 1, 3, 4 and 5 above pass for the current userdata
 installation; item 2 (native root) waits for the repartition. See
 [evidence](../evidence/2026-10-31-lk2nd-production-install.json).

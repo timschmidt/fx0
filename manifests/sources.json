@@ -86,8 +86,8 @@
       "url": "https://github.com/timschmidt/fx0-pmaports",
       "branch": "integration/fx0-v26.06",
       "base_commit": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
-      "status": "Installed kernel r7 recipe (68600046ae97) plus boot-deploy 0.23.0-r1 with the backported boot-image offset patch (efd370169caf); both built rootless with verified provenance and signed with the trusted local key; installed on the phone.",
-      "commit": "efd370169caf7919fca40515103368764f112702"
+      "status": "Installed kernel r8 recipe (r7 plus Fx0 PON reboot modes) and boot-deploy 0.23.0-r1; built rootless with verified provenance, signed with the trusted local key, installed.",
+      "commit": "fb4bdd049ad76570a1da03e5364ed1ad372159af"
     },
     {
       "name": "linux-display-iommu-experimental",
@@ -115,9 +115,9 @@
       "name": "linux-gpu",
       "url": "https://github.com/timschmidt/fx0-linux",
       "branch": "integration/fx0-gpu",
-      "commit": "4598182e1708f22a7e58c45e4479d15dc80b5f68",
+      "commit": "962a378204d641b1af66b0bcf27c84c52d278815",
       "base_commit": "34c341b9039342611d3ca644a9aa9593bdad1c89",
-      "status": "Installed signed r7 source: ADSP enable, MSM8226 GPU IOMMU binding/driver/DT, Fx0 GPU enable. Freedreno FD305 GLES 3.0, kmscube 60 fps and devfreq pass; compositor on GPU, firmware-at-first-bind and power management open."
+      "status": "Installed r8 source: r7 plus PON label and Fx0 reboot modes"
     },
     {
       "name": "boot-deploy-offset-preparation",
@@ -223,6 +223,14 @@
       "base_commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
       "commit": "31061619c6a1ec6579b07ecbd3303614899d116b",
       "status": "Experimental native BMS with separate IADC CURRENT_NOW and BMS CURRENT_AVG: firmware lookup, provider lifetime, periodic calibration,33getter cases and bounded RAM response pass. Raw BATFET guard/IRQ experiments rejected (~6799IRQ/s with polling/refresh disabled). Background-counter discrepancy, accuracy, temperature/profile/capacity remain open. Installed signed r4 unchanged."
+    },
+    {
+      "name": "lk2nd-pon-reboot",
+      "url": "https://github.com/timschmidt/fx0-lk2nd",
+      "branch": "integration/fx0-pon-reboot",
+      "commit": "079eebe745de650df02e92fd9ca8d9fec5110c56",
+      "base_commit": "b106e16d0f3fc0e11c55aa58e4c617b89a0e3ef5",
+      "status": "Installed prefix (LK2ND_EXTLINUX=0, LK2ND_PON_REBOOT_MODE=1); remote reboot-to-bootloader verified; not submitted upstream"
     }
   ]
 }

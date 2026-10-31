@@ -1968,3 +1968,9 @@ nura-root. For remote fastboot entry, a test DTB with PON reboot modes showed
 that the PMIC spare register keeps the bootloader reason (0x08) across the LG
 bootloader. lk2nd now has an optional reader for it, and kernel r8 adds the
 modes to the Fx0 DT.
+
+Remote fastboot entry works again. Kernel r8 records `reboot bootloader` in
+the PMIC PON spare register, which the LG bootloader leaves alone, and the
+installed lk2nd now reads and clears it. `systemctl reboot
+--reboot-argument=bootloader` reaches lk2nd fastboot in about 29 s with no key;
+plain reboots boot Nura unattended.
