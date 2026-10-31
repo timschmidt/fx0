@@ -223,6 +223,15 @@ clocks are not a blocker. Three pieces remain:
    MSM8226-specific VFE versions and VBIF setup. Audit reset, interrupts,
    write masters, RDI and bus/QoS before reusing `vfe_ops_4_1`.
 
+A probe build is ready: fx0-linux `integration/fx0-ram-probes` (APR q6core
+probe plus the CAMSS branch, with CAMSS and the VFE IOMMU enabled on the Fx0)
+on r8's configuration with only module additions (media core, V4L2,
+videobuf2, CAMSS, APR). The built-in differences are menu switches and options
+that only affect those modules, so all 17 test modules carry r8's `vermagic`
+and load into the running kernel. The probe DTB differs from r8's only by the
+three enabled nodes (plus phandle renumbering). The test boots r8 from RAM
+with that DTB and does not change the installed system.
+
 The first hardware milestone needs no sensor driver: CSID's test-pattern
 generator can feed the VFE through RDI, so capture can be tested even though
 IMX179 and IMX132 have no mainline drivers yet.
