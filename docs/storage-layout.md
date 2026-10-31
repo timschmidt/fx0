@@ -101,6 +101,24 @@ Before booting original recovery, inspect retained boot-control and recovery com
 
 ## Next physical sequence
 
-Keep the current installation until the stock restoration rehearsal passes. The fully unmounted development checkpoint now passes independent device reads and two-host readback verification; see [its evidence](../evidence/2026-10-29-unmounted-development-checkpoint.json). Before restoration, recheck snapshot/device identity and reconcile original versus current provisioning. Rehearse factory-stock initialization using preserved stock data, verify stock operation without a SIM, and restore the development state.
+The factory-stock restoration rehearsal passed on 2026-10-31.
+
+1. From the RAM rescue, a fresh whole-eMMC snapshot of the r7 state was
+   verified on two host filesystems.
+2. The partitions that differed from stock (boot and seven runtime-modified
+   partitions) were rewritten from the original images and hash-checked on the
+   device.
+3. A `--wipe_data` request in the misc boot-control block made stock recovery
+   recreate userdata and cache. Firefox OS then booted to its first-run wizard,
+   with display, touch and keys working and stock storage and firmware visible.
+4. The original LAF was restored from stock root ADB, and LG download mode
+   worked.
+5. LAF was cleared again. The return went through stock fastboot, a RAM-booted
+   lk2nd and the RAM rescue.
+6. The snapshot was written back and verified by a full readback hash. Nura r7
+   booted normally.
+
+See [rehearsal evidence](../evidence/2026-10-31-factory-stock-rehearsal.json).
+Repeat it from the consolidated layout after migration.
 
 Next qualify the raw-image boot and update path while the original GPT is still intact. Only after those checks, the retained-partition audit, stable power and final host-image validation pass should the phone receive the new layout. Verify both GPT copies, retained data, filesystems, boot, updates and recovery again after migration. Test external SD detection, mount/unmount and removal independently, including normal boot with no card inserted.

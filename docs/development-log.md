@@ -1899,3 +1899,22 @@ The Sxmo wrapper no longer sets `SXMO_NO_AUDIO`. On systemd, Sxmo leaves
 PipeWire to socket activation, and its sound monitor activates PipeWire and
 WirePlumber. After a clean r7 reboot, all three audio services are active
 without manual steps.
+
+### Factory-stock restoration rehearsal
+
+The rehearsal ran with the owner present:
+
+1. A fresh whole-eMMC snapshot of the r7 state was taken from the RAM rescue.
+   The rescue now opens a raw shell with BusyBox `tcpsvd`.
+2. It confirmed that only boot, LAF and seven runtime-modified partitions
+   differed from stock. Those were rewritten from the originals, and a
+   `--wipe_data` boot-control request made stock recovery recreate userdata and
+   cache. Firefox OS booted to its first-run wizard and the owner found
+   display, touch and keys normal.
+3. With the original LAF, LG download mode worked. LAF was cleared again.
+4. The return went through stock fastboot, a RAM-booted lk2nd and the RAM
+   rescue. The verified snapshot was written back (826 s) and its full readback
+   matched. Nura r7 booted with Wi-Fi, GPU session and audio services.
+
+Stock's own first boot changes one byte of system: the ext4 unsigned-hash flag.
+`adb reboot recovery` powers the stock phone off rather than entering recovery.

@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-31",
+  "scope": "Factory-stock restoration rehearsal (bringup-plan section 2.1 step 4) and return to installed Nura r7",
+  "pre_rehearsal_snapshot": {
+    "environment": "standalone r3 RAM rescue (no eMMC mounts, all 42 internal nodes read-only, taint 0); raw shell via BusyBox tcpsvd",
+    "files": [
+      {
+        "block": "mmcblk0",
+        "bytes": 15758000128,
+        "sha256": "e640c47b3511890923a34ff086b211ff4367ddf67a3d3e6ae9658ff42d4b693e"
+      },
+      {
+        "block": "mmcblk0boot0",
+        "bytes": 4194304,
+        "sha256": "bb9f8df61474d25e71fa00722318cd387396ca1736605e1248821cc0de3d3af8"
+      },
+      {
+        "block": "mmcblk0boot1",
+        "bytes": 4194304,
+        "sha256": "bb9f8df61474d25e71fa00722318cd387396ca1736605e1248821cc0de3d3af8"
+      }
+    ],
+    "verification": "two cache-cleared device reads; raw copy on Disk B and zstd copy on a separate host filesystem, both verified by full SHA-256",
+    "capture_minutes": 16
+  },
+  "comparison_before_writes": {
+    "gpt_primary_and_backup": "original",
+    "original_partitions": [
+      "DDR",
+      "aboot",
+      "abootb",
+      "encrypt",
+      "factory",
+      "fota",
+      "fsc",
+      "fsg",
+      "modem",
+      "rct",
+      "recovery",
+      "rpm",
+      "rpmb",
+      "sbl1",
+      "sbl1b",
+      "sdi",
+      "sdib",
+      "ssd",
+      "system",
+      "tz",
+      "tzb"
+    ],
+    "differing": {
+      "boot": "lk2nd + Nura",
+      "laf": "all zero (cleared for stock fastboot)",
+      "runtime_modified": [
+        "drm",
+        "misc",
+        "modemst1",
+        "modemst2",
+        "mpt",
+        "persist",
+        "sns"
+      ]
+    }
+  },
+  "stock_restore": {
+    "writes_from_rescue": "boot, drm, misc, modemst1, modemst2, mpt, persist, sns written from the verified original images; each cache-dropped device SHA-256 matches the original",
+    "initialization": "Android bootloader message in misc set to boot-recovery with 'recovery --wipe_data' (original BCB fields verified empty first). Stock aboot honoured it; stock recovery log: Command \"recovery\" \"--wipe_data\", Formatting /data, Formatting /cache. Recovery cleared the BCB afterwards.",
+    "laf": "original LAF written from stock root ADB; device readback SHA-256 matches the original",
+    "final_stock_state": "GPT primary/backup, boot chain, boot, recovery, LAF, modem, fsg and the remaining critical partitions byte-identical to originals. system differs by one byte: ext4 s_flags 0x0 -> 0x2 (unsigned directory hash flag set by the stock kernel on first mount). drm, misc, modemst1, modemst2, mpt, persist and sns rewritten by the running stock OS (the same set previously seen changing)."
+  },
+  "stock_checks": {
+    "boot": "Firefox OS first-run wizard after wipe (Android 4.4.2 base KVT49L, model LGL25)",
+    "owner_display_touch_keys": "normal",
+    "storage": "system ext4 ro; fresh userdata 3.9 GB and cache ext4; modem firmware vfat at /firmware (91 images); drm at /persist-lg; internal SD vfat at /storage/sdcard (8.5 GB, empty)",
+    "firmware_runtime": "stock kernel log shows WCNSS, ADSP, modem, MDSS display and Synaptics touch activity",
+    "usb": "stock composite ACM + vendor + mass storage; ADB appears after enabling Developer > Debugging via USB and is suspended while the lock screen is shown; adb root works (ro.debuggable=1)",
+    "recovery_entry": "misc boot-control route works; 'adb reboot recovery' powers the phone off without running recovery",
+    "download_mode": "with original LAF, power-off + Volume Up + USB enters LG download mode (owner saw the screen; USB product 'LGE Android Phone', ACM + vendor interface)",
+    "sim": "none"
+  },
+  "return": {
+    "laf_cleared": "stock root ADB, verified 32 MiB zeros",
+    "chain": "power-off + Volume Up + USB -> stock fastboot (product MADAI) -> fastboot boot of the installed lk2nd image (sha256 a3d4ac88..., byte-identical to the boot-partition copy) -> lk2nd fastboot (lk2nd-msm8226) -> fastboot boot of the standalone rescue",
+    "restore": "15,758,000,128 bytes written in 826 s (18.2 MB/s); full cache-dropped readback SHA-256 equals the pre-rehearsal snapshot; both boot areas match; all nodes read-only afterwards",
+    "nura_after": "installed signed 6.18.59-r7, taint 0, systemd running with no failed units, Wi-Fi connected, ADSP and WCNSS remoteprocs running, GLES2 Sxmo session and PipeWire/WirePlumber active"
+  },
+  "limits": [
+    "Original userdata was never captured; stock userdata/cache were recreated by stock recovery, which is the stock initialization path",
+    "Internal SD content as originally shipped is unknown; stock mounted the (empty) vfat volume",
+    "Recovery ADB was not exercised because 'adb reboot recovery' powers off on this firmware",
+    "Restoration from the final consolidated layout must be repeated after repartitioning (plan 2.1 step 9)"
+  ]
+}
