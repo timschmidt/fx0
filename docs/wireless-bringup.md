@@ -214,7 +214,12 @@ matching SHA-256, at about 1.2 Mbit/s, while WLAN is associated on 5 GHz.
 Bonded `l2ping` gets 4 replies before the peer closes the idle, profile-less
 link. The phone's Bluetooth controller, pairing, encryption, reconnection with
 the stored key and data transfer therefore work. The pairing was removed on
-both sides; the owner's existing peer pairings were untouched. See
+both sides; the owner's existing peer pairings were untouched.
+
+With the WLAN radio off, when the PMIC showed the Iris rails off, pairing still
+bonds and two of three 4 MiB RFCOMM transfers complete with matching SHA-256.
+The third connection was reset by the peer, so the rail state does not disable
+Bluetooth, but this case needs repetition in soak testing. See
 [peer evidence](../evidence/2026-10-30-bluetooth-independent-peer.json).
 
 ## MAC addresses
@@ -235,9 +240,8 @@ BD_ADDR record whose vendor is not evident. Full addresses stay private.
    suspend/resume once system suspend is qualified.
 2. Decide the MAC source after a stock runtime reading, then implement it without
    publishing the per-unit values.
-3. Test HID and audio profiles with a peripheral in pairing mode. Check whether
-   Bluetooth still works with the WLAN radio off (Iris rails off), and decide
-   the Bluetooth address source.
+3. Test HID and audio profiles with a peripheral in pairing mode, repeat the
+   WLAN-off RFCOMM case, and decide the Bluetooth address source.
 4. Describe the TLMM sleep state, then test WCNSS across real system suspend.
    Check hotspot capability.
 5. Upstream submission is gated on owner approval. The regulator fix is

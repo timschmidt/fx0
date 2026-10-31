@@ -1820,3 +1820,8 @@ with WLAN on 5 GHz. The earlier failures came from peer acceptance policy and
 my pairing harness, not from the phone. The pairing was removed; the phone has
 0 bonds and the owner's existing peer pairings are untouched. HID/audio
 profiles, address source and resume remain.
+
+With the WLAN radio off, pairing to the independent peer still bonds and two of
+three 4 MiB RFCOMM transfers pass; the third connection was reset by the peer.
+Bluetooth does not require WLAN, despite the Iris rails reading off in that
+state.

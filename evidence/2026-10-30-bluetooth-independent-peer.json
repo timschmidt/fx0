@@ -47,6 +47,36 @@
     "HID and audio profiles (need a peripheral in pairing mode)",
     "Bluetooth address source (.bt_nv.bin)",
     "resume",
-    "whether Iris rail state with WLAN off affects Bluetooth"
-  ]
+    "one of three RFCOMM connections reset with the WLAN radio off; repeat in soak testing"
+  ],
+  "wifi_radio_off_run": {
+    "wifi_radio": "disabled",
+    "warm_l2ping": "3 sent, 3 received, 0% loss",
+    "pairing": [
+      {
+        "attempt": 0,
+        "pairing_successful": true,
+        "bonded": true
+      }
+    ],
+    "rfcomm": [
+      "rfcomm 0 26.97 True",
+      "rfcomm 1 25.84 True",
+      "rfcomm error 2 [Errno 104] Connection reset by peer"
+    ],
+    "host_received": [
+      {
+        "connection": 0,
+        "bytes": 4194304,
+        "seconds": 26.04
+      },
+      {
+        "connection": 1,
+        "bytes": 4194304,
+        "seconds": 25.81
+      }
+    ],
+    "phone_bonds_after": "0",
+    "phone_removed_from_peer": true
+  }
 }
