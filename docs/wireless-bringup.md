@@ -173,11 +173,25 @@ and the pairing was then removed from both sides. Results on installed r6:
 | After bonding | `l2ping` gets 4 replies, then the link resets; a 4 MiB RFCOMM transfer resets on the host and stalls on the phone |
 | Phone kernel log | No Bluetooth, SMD or WCNSS errors |
 
-Outgoing connections and pairing work. Incoming connections, the stability of
-an encrypted bonded link and data transfer do not yet. A headset reconnecting
-to the phone needs incoming connections. The next step is HCI tracing on the
-phone (`btmon` is not installed) during paging, encryption setup and the drop.
-See [Bluetooth evidence](../evidence/2026-10-30-bluetooth-host-pairing.json).
+HCI traces captured with `btmon` correct two of these first readings. The
+owner approved installing `bluez-btmon` and `bluez-deprecated` on the phone.
+Paging works: the phone accepts the host's connection request. Host-initiated
+pairing failed only because the scripted phone agent did not answer the MITM
+numeric comparison. The remaining failures depend on the WLAN state:
+
+| WLAN state during test | Bluetooth result |
+| --- | --- |
+| Up on 2.4 GHz channel 11 | Inquiry, paging, pairing and 16-byte-key encryption work; an RFCOMM transfer moves about 20 KB, then the link hits supervision timeout (0x08) |
+| Up on 5 GHz channel 36 | The phone is not found by inquiry, and its connection attempts time out |
+| Radio off | Every phone connection attempt ends with Connection Accept Timeout (0x10) |
+
+Bluetooth therefore gets the shared radio only while WLAN is up on 2.4 GHz, and
+then loses it under load. This points to WLAN/BT coexistence or antenna-sharing
+configuration in the wcn36xx path, not the btqcomsmd transport. Stock
+`WCNSS_qcom_cfg.ini` overrides no BTC settings, so stock used the firmware
+defaults in `WCNSS_cfg.dat`, which is kept privately. wcn36xx sends its own BTC
+table. Comparing the two is the next step. See
+[Bluetooth evidence](../evidence/2026-10-30-bluetooth-host-pairing.json).
 
 ## MAC addresses
 
@@ -197,9 +211,10 @@ BD_ADDR record whose vendor is not evident. Full addresses stay private.
    suspend/resume once system suspend is qualified.
 2. Decide the MAC source after a stock runtime reading, then implement it without
    publishing the per-unit values.
-3. Trace and fix Bluetooth incoming connections and the bonded-link drop, then
-   test RFCOMM transfer, HID and audio profiles, and coexistence under Wi-Fi
-   traffic.
+3. Decode stock `WCNSS_cfg.dat` BTC/antenna items, compare them with the
+   wcn36xx CFG tables, and fix the WLAN/BT coexistence so that Bluetooth works
+   with WLAN off, on 5 GHz and under load. Then test RFCOMM, HID and audio
+   profiles.
 4. Describe the TLMM sleep state, then test WCNSS across real system suspend.
    Check hotspot capability.
 5. Upstream submission is gated on owner approval. The regulator fix is

@@ -1786,3 +1786,18 @@ confirmed, and prompts went unanswered. They are kept privately and described
 in the evidence. Both sides are restored: the phone has 0 bonds and is neither
 discoverable nor pairable, and the host is back to its original 9 bonds. HCI
 tracing is next. See [Bluetooth evidence](../evidence/2026-10-30-bluetooth-host-pairing.json).
+
+With owner approval, `bluez-btmon` and `bluez-deprecated` 5.86-r2 were
+installed on the phone, and paired sessions were traced. The traces correct
+the first Bluetooth reading: paging works, and host-initiated pairing failed
+only because my scripted agent did not answer the MITM confirmation. With WLAN
+up on 2.4 GHz, pairing and 16-byte-key encryption succeed. A bonded RFCOMM
+transfer then dies with link supervision timeout after about 20 KB. With the
+WLAN radio off, every phone connection gets Connection Accept Timeout. With
+WLAN on 5 GHz, the phone is neither found nor able to connect. Bluetooth thus
+depends on WLAN holding the shared radio on 2.4 GHz: a coexistence or
+antenna-sharing configuration problem, not a transport fault. Stock
+`WCNSS_qcom_cfg.ini` has no BTC overrides, so the firmware defaults in
+`WCNSS_cfg.dat` (extracted privately) are the comparison point for wcn36xx's
+BTC table. Pairings were removed and the Wi-Fi band setting restored after
+each run.

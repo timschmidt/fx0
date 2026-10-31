@@ -25,13 +25,27 @@
     "pairing prompts unanswered by auto-registered interactive agents"
   ],
   "open": [
-    "incoming connections to the phone (page scan)",
-    "intermittent inquiry response",
-    "bonded link drops within seconds",
+    "WLAN/BT coexistence and RF-path sharing (BT dead with WLAN off or on 5 GHz; supervision timeout under load on 2.4 GHz)",
     "RFCOMM data transfer",
     "HID and audio profiles",
     "address source (.bt_nv.bin)",
     "resume"
   ],
-  "next": "capture HCI traces on the phone (btmon is not installed) during page, encryption setup and the bonded-link drop"
+  "next": "Decode stock WCNSS_cfg.dat BTC/antenna items, compare with the wcn36xx CFG tables, and test the stock values",
+  "tooling_installed_on_phone": {
+    "packages": [
+      "bluez-btmon-5.86-r2",
+      "bluez-deprecated-5.86-r2"
+    ],
+    "approval": "owner: install whatever tooling you need"
+  },
+  "hci_traces": {
+    "host_initiated_wifi_2_4GHz": "Connect Request received and accepted (paging works); SSP IO capability exchange with MITM-required dedicated bonding; the phone's scripted NoInputNoOutput agent never answered the numeric comparison, so the host ended the link after 24 s (0x13). Earlier ConnectionAttemptFailed and missed inquiries are intermittent.",
+    "phone_initiated_wifi_2_4GHz": "Link key notification, encryption on, 16-byte key; SDP exchanged",
+    "bonded_rfcomm_wifi_2_4GHz": "authentication with stored key and encryption succeed, about 20 KB transferred, then Disconnect Complete: Connection Timeout (0x08), i.e. link supervision timeout",
+    "wifi_radio_off": "every phone Create Connection fails with Connection Accept Timeout Exceeded (0x10); no pairing",
+    "wifi_on_5GHz_ch36": "host inquiry never finds the phone in 45 s; phone connections time out; no pairing"
+  },
+  "interpretation": "Bluetooth gets the shared radio only while WLAN is up on 2.4 GHz, and then loses links under load. Stopping wcn36xx or moving WLAN to 5 GHz leaves Bluetooth without a usable RF path. This indicates a WLAN/BT coexistence or antenna-sharing configuration problem in the wcn36xx path, not a btqcomsmd transport failure.",
+  "stock_reference": "Stock WCNSS_qcom_cfg.ini sets no BTC overrides, so firmware defaults from WCNSS_cfg.dat (extracted privately) applied; wcn36xx sends its own BTC CFG table. Comparing the two is the next step."
 }
