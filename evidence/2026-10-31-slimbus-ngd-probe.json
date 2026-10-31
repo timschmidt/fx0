@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-31",
+  "scope": "MSM8226 SLIMbus NGD read after the QMI power vote (diagnostics/slimbus-ngd-probe) on the installed r8 kernel, owner present",
+  "log": [
+    "fx0_slimprobe: service at node 5 port 3",
+    "fx0_slimprobe: msg 0x20 result 0 error 0",
+    "fx0_slimprobe: msg 0x21 result 0 error 0",
+    "fx0_slimprobe: ctrl word 0x01010000 (version 0x0101)",
+    "fx0_slimprobe: status @0x804 0x0030070c @0x1004 0x0000040c",
+    "fx0_slimprobe: msg 0x21 result 0 error 0"
+  ],
+  "interpretation": {
+    "qmi": "ADSP SLIMbus QMI service 0x301 at node 5 port 3; select-instance (master mode) and power active/inactive all succeeded",
+    "version": "control word 0x01010000: version 0x0101 (non-zero, so the vendor driver uses its V2 NGD layout)",
+    "ngd_offset": "vendor NGD_BASE_V2 for cell-index 1 = 0x1000, the same as mainline qcom-ngd-ctrl v1.5.0 (id 1 x offset 0x1000); the 0x804 read is the unused V1 location",
+    "ngd_status": "0x0000040c at 0x1004: NGD_LADDR (bit 1) clear, so no logical address yet (expected before enumeration); vendor message-queue pipe index (status & 0xfc) >> 2 = 3",
+    "dmas": "apps RX message queue = BAM pipe 3, TX = pipe 4 (vendor init_tx_msgq adds 1): dmas = <&slimbam 3>, <&slimbam 4>, dma-names = \"rx\", \"tx\""
+  },
+  "safety": "no hang; ADSP stayed running; probe unloaded; kernel tainted only by the unsigned out-of-tree modules (cleared on reboot)",
+  "next": "MSM8226 slim_msm/slimbam DT nodes with qcom,slim-ngd-v1.5.0 (or an MSM8226 compatible falling back to it), then bind qcom-ngd-ctrl and enumerate the Tapan codec"
+}

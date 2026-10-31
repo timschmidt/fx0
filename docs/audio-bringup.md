@@ -106,6 +106,16 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   the layout question and the `dmas` values before the controller node is
   written.
 
+- **SLIMbus NGD measured (2026-10-31).** With the owner present, the probe
+  ran on the installed r8 without a hang. The ADSP's QMI SLIMbus service
+  accepted the select-instance and power votes. The controller reports
+  version **0x0101**. Because it is non-zero, the vendor driver uses its V2
+  layout, which places the NGD at **0x1000**, as mainline `qcom-ngd-ctrl`
+  v1.5.0 does. `NGD_STATUS` there reads 0x40c: no logical address yet, and
+  the message-queue pipe field gives **RX = BAM pipe 3, TX = pipe 4**. So the
+  controller node needs `dmas = <&slimbam 3>, <&slimbam 4>`
+  ([evidence](../evidence/2026-10-31-slimbus-ngd-probe.json)).
+
 - **APR works and matches mainline (2026-10-31).** On the probe RAM boot,
   `qcom,apr-v2` bound on `apr_audio_svc`, the DSP reported ready, and it
   returned API versions for core (0x40000), AFE (0x200000), ASM (0x70002), ADM
@@ -119,9 +129,8 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
 1. Done: the ADSP starts and its QMI services are listed. Still to check: APR
    service versions. The sensor path depends on the same ADSP
    decision. Check whether audio and an AP-owned IMU can coexist.
-2. Read the MSM8226 NGD version register. Check the ADSP QMI SLIMbus service
-   against `qcom-ngd-ctrl`, and add a compatible only if the protocol really
-   matches.
+2. Done: NGD version 0x0101, NGD at 0x1000, pipes 3/4. The QMI select and
+   power messages match `qcom-ngd-ctrl`. Next, bind it with an MSM8226 node.
 3. Check QDSP6 APR/AFE/ASM/ADM protocol versions against this ADSP firmware
    before reusing the generic drivers.
 4. Write a Tapan codec driver: register map and defaults, supplies, MCLK,

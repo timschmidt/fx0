@@ -2001,3 +2001,8 @@ card detect on GPIO37). On a RAM boot the owner's 8 GB card was detected at
 50 MHz high-speed, formatted, written and verified, unmounted cleanly, and
 hot-removed and reinserted with its data intact. It is not yet in the
 installed kernel.
+
+The SLIMbus question is settled. After a QMI power vote, the MSM8226 controller
+reports version 0x0101. Its NGD sits at 0x1000, the mainline v1.5.0 layout,
+and its message queues use BAM pipes 3 (RX) and 4 (TX). The probe ran on
+the installed kernel with the owner present and did not hang.
