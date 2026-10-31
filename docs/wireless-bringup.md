@@ -222,6 +222,22 @@ The third connection was reset by the peer, so the rail state does not disable
 Bluetooth, but this case needs repetition in soak testing. See
 [peer evidence](../evidence/2026-10-30-bluetooth-independent-peer.json).
 
+### Bluetooth audio
+
+With the owner's JLab Studio headphones, discovery needed a 35-second BR/EDR
+inquiry. Pairing bonded and the headphones advertised an A2DP sink. The first
+profile connection failed (`br-connection-unknown`) because the Sxmo session
+wrapper sets `SXMO_NO_AUDIO=1` and WirePlumber was not running. With
+PipeWire, WirePlumber and pipewire-pulse started for the user, the headphones
+connect as a 48 kHz stereo PipeWire sink. A left-then-right test tone played
+correctly, as the owner confirmed by ear. Play/pause arrives through the
+`JLab Studio (AVRCP)` input device. Volume buttons produce no key events, as
+expected with AVRCP absolute volume. The pairing was removed afterwards.
+
+The session should start the audio services so this works without manual
+steps. Headset call audio (HFP) and a Bluetooth keyboard remain. See
+[evidence](../evidence/2026-10-30-owner-checks-bt-audio.json).
+
 ## Hotspot
 
 wcn36xx offers AP mode. A NetworkManager hotspot with default settings fails:

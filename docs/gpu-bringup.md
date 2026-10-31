@@ -50,7 +50,7 @@ installed r7, Sway holds the GPU render node and maps Mesa gallium, with no GPU
 faults. Sway's RSS grows from 44 to 55 MB and system use from 134 to 167 MB of
 1378 MB. A `grim` capture shows the lock screen, wallpaper, clock and status
 bar correctly. Devfreq stayed at 450 MHz with no transitions during this short
-test. The owner's physical check of rendering and input is pending. See
+test. The owner confirms the GPU-rendered session displays normally and that touch and keyboard input stay responsive. Under a vsync-bound `kmscube` load devfreq held 450 MHz with no transitions; downscaling has not been observed. See
 [compositor evidence](../evidence/2026-10-30-gles2-compositor.json).
 
 ## Work required

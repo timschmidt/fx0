@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-30",
+  "scope": "Owner-present checks on installed signed r7 with the GLES2 Sxmo session; Bluetooth A2DP/AVRCP with the owner's JLab Studio headphones (pairing removed afterwards)",
+  "owner_observations": {
+    "display_gles2": "looks normal (no flicker, tearing or corruption)",
+    "touch_and_keyboard": "responsive",
+    "a2dp_tone": "low 440 Hz in the left ear then high 880 Hz in the right ear, clean"
+  },
+  "bluetooth_audio": {
+    "discovery": "found by a 35 s BR/EDR inquiry (not within 22 s)",
+    "pairing": "success; paired, bonded, trusted; Audio Sink UUID",
+    "first_connect": "failed br-connection-unknown because WirePlumber was not running in the Sxmo session (SXMO_NO_AUDIO=1 wrapper)",
+    "after_starting_pipewire_wireplumber_pipewire_pulse": "Connection successful; sink bluez_output s16le 2ch 48000 Hz",
+    "playback": "paplay rc 0, owner confirmed",
+    "avrcp": "input device 'JLab Studio (AVRCP)'; KEY_PLAYCD press/release captured; volume buttons produced no key events (expected with AVRCP absolute volume)",
+    "cleanup": "pairing removed; phone has 0 bonds, not discoverable or pairable"
+  },
+  "gpu_devfreq_under_load": {
+    "kmscube": "1199 frames in 20.07 s (59.7 fps)",
+    "cur_freq_samples": "450 MHz throughout",
+    "transitions": 0,
+    "note": "no downscaling observed; vsync-bound load holds the top frequency"
+  },
+  "open": [
+    "Sxmo session should start PipeWire/WirePlumber for Bluetooth audio (wrapper sets SXMO_NO_AUDIO=1)",
+    "HFP/HSP call audio and headset microphone (needs telephony audio stack)",
+    "Bluetooth HID keyboard",
+    "GPU devfreq downscaling verification"
+  ]
+}

@@ -1887,3 +1887,10 @@ Mesa gallium with no GPU faults, using about 11 MB more RSS. A screenshot of
 the lock screen is correct. `systemctl restart tinydm` is cancelled by the
 development drop-in, so use reset-failed and then start. The owner's physical
 check is pending.
+
+With the owner present: the GLES2 Sxmo session looks normal and touch/keyboard
+stay responsive on the GPU renderer. With the owner's JLab Studio headphones,
+Bluetooth A2DP plays correct left/right tones (confirmed by ear) once
+PipeWire/WirePlumber run. The Sxmo wrapper's `SXMO_NO_AUDIO=1` had left them
+stopped. AVRCP play/pause events arrive. The pairing was removed afterwards.
+GPU devfreq held 450 MHz under a vsync-bound load.
