@@ -1853,3 +1853,11 @@ verifies and, behind strict guards, applies the single-root GPT. Its 8
 synthetic-GPT tests pass. The real target generated from the original GPT
 passes `sgdisk -v` with the known table-size and alignment cautions. Nothing was
 written to the phone; the restoration rehearsal remains the prerequisite.
+
+GPU assessment (source-only): mainline describes the MSM8226 Adreno 305 node,
+and Nura already installs its a330 firmware. 6.18 removed the VRAM carveout
+fallback, so the GPU needs its IOMMU (stock `kgsl_iommu`, msm-smmu-v1 at
+0xfdb10000) described the way the display IOMMU was. The obsolete
+`msm.allow_vram_carveout`/`msm.vram` command-line parameters should be removed
+when packaging. ADSP enablement is committed (`6fb0c0cae80b`) and its RAM test
+is prepared to run after the Wi-Fi soak. See [GPU assessment](gpu-bringup.md).

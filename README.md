@@ -12,6 +12,7 @@ The device is available for development and flashing. No personal data needs to 
 | [Storage consolidation](docs/storage-layout.md) | Measured root layout, boot-image update preparation and remaining restoration gates |
 | [Partition audit](docs/partition-audit.md) | Reference evidence and reason for every retained GPT entry |
 | [Audio assessment](docs/audio-bringup.md) | Stock WCD9302/SLIMbus/ADSP design, mainline gaps and ordered audio work |
+| [GPU assessment](docs/gpu-bringup.md) | Adreno 305 node, firmware, missing GPU IOMMU and acceleration steps |
 | [Stock hardware](docs/stock-hardware.md) | Physical inventory and implications for board support |
 | [Hardware acceptance](docs/hardware-acceptance.md) | Full hardware inventory and tests required before declaring completion |
 | [Upstream development](docs/upstream-development.md) | Public repository structure, patch ownership, validation, and submission preparation |
