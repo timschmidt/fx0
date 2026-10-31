@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-31",
+  "scope": "External microSD on the LG Fx0 (owner-inserted 8 GB SDHC card, wiping approved), RAM-booted installed r8 kernel with an Fx0 DTB adding only the SDHC2 slot (fx0-linux integration/fx0-sdcard)",
+  "dt": "sdhc_2 enabled with vmmc L18 2.95 V, vqmmc L21 1.8-2.95 V, cd-gpios GPIO37 active-low with pull-up, bus-width 4 (vendor description)",
+  "detection": "'Got CD GPIO'; mmc1: new high speed SDHC card; mmcblk1 SMI 7.50 GiB; ios 50 MHz, sd high-speed, 4-bit, 3.30 V",
+  "filesystem": "wipefs, GPT with one basic-data partition, mkfs.vfat FAT32 label FX0TEST, mounted with uid/gid of the user",
+  "data": "64 MiB random file written and read back after dropping caches: SHA-256 match; about 4 MB/s write including sync, 20 MB/s read; the normal user can write",
+  "removal": "unmounted cleanly; owner pulled and reinserted the card: kernel logged 'mmc1: card 59b4 removed' then redetected it 20 s later; filesystem and file hash intact after reinsertion",
+  "installed_system": "unchanged (RAM boot); returned to r8 with taint 0; soak restarted 07:36",
+  "open": [
+    "ship the slot in a kernel package and test boot with and without a card",
+    "UHS/1.8 V signalling (this card ran at 3.3 V high-speed)",
+    "desktop automount (udisks) policy"
+  ]
+}

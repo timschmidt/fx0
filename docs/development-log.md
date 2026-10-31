@@ -1995,3 +1995,9 @@ colour bars and live RAW10 frames pass through CSIPHY0 lanes 0/2/3/4. Frames
 hold data only in their first rows, which looks like VFE bandwidth.
 Correction: the earlier "first capture through the VFE IOMMU" ran without the
 IOMMU (r8 lacked its driver). With the IOMMU attached, captures are all zero.
+
+The microSD slot works with a small DT addition (SDHC2, L18/L21 supplies,
+card detect on GPIO37). On a RAM boot the owner's 8 GB card was detected at
+50 MHz high-speed, formatted, written and verified, unmounted cleanly, and
+hot-removed and reinserted with its data intact. It is not yet in the
+installed kernel.
