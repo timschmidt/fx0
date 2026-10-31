@@ -295,6 +295,28 @@ See [evidence](../evidence/2026-10-31-imx179-first-stream.json).
 
 See [evidence](../evidence/2026-10-31-camss-iommu-capture.json).
 
+## Flash and torch
+
+The owner wants the flash LED usable as a torch. The vendor drives it from
+`leds-qpnp.c` through the PM8226 flash block at SPMI 0xd300, with a 1 A flash
+channel and a 200 mA torch (`qcom,torch-enable`). On the phone the block
+reads type **0x18**, subtype **0x02**: the older single-LED layout. Its
+registers are LED current at 0x42, max current at 0x41, enable at 0x46,
+strobe at 0x47, a secure unlock (0xa5 to 0xd0) and the torch switch at 0xe4.
+Mainline `leds-qcom-flash` handles type 0x18 but only subtypes 3, 4 and 7,
+which use a different register layout.
+
+The vendor powers the single-LED variant from the charger's 5 V boost
+(`flash-boost-supply = <&pm8226_chg_boost>`, SMBB `boost@1500`, type 0x1c,
+currently off). Mainline `qcom_smbb` does not expose that boost separately.
+
+Needed:
+- A small LED-class flash driver for this layout. PM8941 phones share it, so
+  it would be useful upstream.
+- A boost regulator on the SMBB side.
+- Torch first (`brightness` up to 200 mA). Flash strobe and its safety timer
+  come after.
+
 ## Implementation and physical test order
 
 1. Repeat controlled touch observation and preserve its completion conditions. The earlier pre-DRM capture was saved as incomplete; a new native-display capture is open.

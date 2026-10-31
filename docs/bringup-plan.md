@@ -271,7 +271,7 @@ Conservative power configuration starts during phase 1. This phase qualifies the
 1. Bring up codec clocks, audio routing, amplifier supplies, jack detection, microphones, speaker, earpiece, and headset paths. Prepare appropriate ALSA UCM configuration and integrate it upstream.
 2. Test recording and playback separately, then simultaneous use, route changes, supported sample rates, volume, and suspend. Qualify Bluetooth and call routes again after modem work.
 3. Enable each physically present sensor, establish its mounting/orientation, and validate raw data before desktop integration. Complete the MPU-6515M raw-sensor, DMP access and DMP interrupt wake requirements in section 6.1. Test rotation, ambient-light control and proximity blanking.
-4. Qualify vibration, notification/home/button lighting, NFC, GNSS, USB device profiles, USB host/OTG where exposed, microSD handling, and any additional discovered hardware.
+4. Qualify vibration, the flash LED as a torch (owner request), notification/home/button lighting, NFC, GNSS, USB device profiles, USB host/OTG where exposed, microSD handling, and any additional discovered hardware.
 5. For GNSS, record cold and warm acquisition under suitable outdoor conditions, time to fix, reported position, and behavior without SIM or assistance data. For NFC, use a suitable test tag rather than just checking device enumeration.
 
 **Exit:** every inventoried peripheral has a passing functional test, or remains an explicit open item that prevents final completion.
