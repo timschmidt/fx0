@@ -159,6 +159,26 @@ restored to automatic band and default power save. The
 network name and credentials are kept only in ignored local files and in the
 phone's root-only NetworkManager profile.
 
+## Bluetooth with the host adapter
+
+With owner approval, the phone was paired with the development host's adapter
+and the pairing was then removed from both sides. Results on installed r6:
+
+| Check | Result |
+| --- | --- |
+| Phone → host ACL (`l2ping`), unpaired | 10/10 in every run |
+| Host inquiry finds the phone | Intermittent: missed in 12 s and 40 s scans, found in a 25 s scan |
+| Host-initiated pairing | Fails: the host cannot page the phone (`ConnectionAttemptFailed`) |
+| Phone-initiated pairing | Passes: SSP numeric comparison shows the same passkey on both sides; phone bonded, host paired |
+| After bonding | `l2ping` gets 4 replies, then the link resets; a 4 MiB RFCOMM transfer resets on the host and stalls on the phone |
+| Phone kernel log | No Bluetooth, SMD or WCNSS errors |
+
+Outgoing connections and pairing work. Incoming connections, the stability of
+an encrypted bonded link and data transfer do not yet. A headset reconnecting
+to the phone needs incoming connections. The next step is HCI tracing on the
+phone (`btmon` is not installed) during paging, encryption setup and the drop.
+See [Bluetooth evidence](../evidence/2026-10-30-bluetooth-host-pairing.json).
+
 ## MAC addresses
 
 When connected, NetworkManager applies Nura's default stable cloned MAC per
@@ -177,8 +197,9 @@ BD_ADDR record whose vendor is not evident. Full addresses stay private.
    suspend/resume once system suspend is qualified.
 2. Decide the MAC source after a stock runtime reading, then implement it without
    publishing the per-unit values.
-3. Pair a Bluetooth device. Then test transfer, HID and audio profiles, and
-   coexistence under Wi-Fi traffic.
+3. Trace and fix Bluetooth incoming connections and the bonded-link drop, then
+   test RFCOMM transfer, HID and audio profiles, and coexistence under Wi-Fi
+   traffic.
 4. Describe the TLMM sleep state, then test WCNSS across real system suspend.
    Check hotspot capability.
 5. Upstream submission is gated on owner approval. The regulator fix is

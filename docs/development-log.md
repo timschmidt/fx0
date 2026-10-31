@@ -1774,3 +1774,15 @@ explicit approval; pushing to the owner's GitHub forks is fine. Forced 2.4 GHz,
 Bluetooth pairing, MAC policy, suspend, hotspot and soak remain open. See
 [wireless work](wireless-bringup.md) and
 [evidence](../evidence/2026-10-30-wifi-r6-qualification.json).
+
+With owner approval, the phone was paired against the host's Bluetooth adapter
+and the pairing was then removed. Outgoing ACL (`l2ping`) works 10/10. The host
+finds the phone by inquiry only intermittently and cannot page it at all, so
+host-initiated pairing fails. Phone-initiated SSP numeric comparison bonds both
+sides, with matching passkeys. After bonding, the link resets within seconds and
+a 4 MiB RFCOMM transfer fails. The phone logs no kernel errors. Several attempts
+failed because of my test harness: the agent never started, discovery was not
+confirmed, and prompts went unanswered. They are kept privately and described
+in the evidence. Both sides are restored: the phone has 0 bonds and is neither
+discoverable nor pairable, and the host is back to its original 9 bonds. HCI
+tracing is next. See [Bluetooth evidence](../evidence/2026-10-30-bluetooth-host-pairing.json).

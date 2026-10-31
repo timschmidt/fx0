@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-30",
+  "scope": "Bluetooth on installed signed r6 against the owner's host adapter, with owner approval; pairing removed from both sides afterwards. No HID, audio or resume pass.",
+  "kernel": "6.18.59-r6 build 7, taint 0",
+  "controller": "Qualcomm (0x001d), HCI version 6, btqcomsmd",
+  "results": {
+    "outgoing_ACL_l2ping_unpaired": "10/10 in each of 5 runs",
+    "host_inquiry_finds_phone": "intermittent: missed in a 12 s scan (twice) and a 40 s BR/EDR scan; found in a 25 s BR/EDR scan",
+    "host_initiated_pairing": "failed: org.bluez.Error.ConnectionAttemptFailed (host cannot page the phone)",
+    "phone_initiated_pairing": "pass: SSP numeric comparison, identical passkey displayed on both sides, confirmed; phone Paired+Bonded, host Paired",
+    "ssp_passkey_equal": true,
+    "after_bonding": "outgoing l2ping got 4 replies then 'Connection reset by peer'; RFCOMM 4 MiB transfer reset by peer on host and stalled on phone",
+    "phone_kernel_log": "no Bluetooth/SMD/WCNSS errors",
+    "cleanup": {
+      "phone_paired_after": 0,
+      "phone_discoverable": false,
+      "phone_pairable": false,
+      "host_paired_count_after": 9,
+      "phone_absent_from_host": true
+    }
+  },
+  "invalid_attempts_kept_private": [
+    "background agent pipeline never started",
+    "host scan without confirmed discovery",
+    "pairing prompts unanswered by auto-registered interactive agents"
+  ],
+  "open": [
+    "incoming connections to the phone (page scan)",
+    "intermittent inquiry response",
+    "bonded link drops within seconds",
+    "RFCOMM data transfer",
+    "HID and audio profiles",
+    "address source (.bt_nv.bin)",
+    "resume"
+  ],
+  "next": "capture HCI traces on the phone (btmon is not installed) during page, encryption setup and the bonded-link drop"
+}
