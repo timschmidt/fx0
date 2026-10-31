@@ -182,6 +182,29 @@ Read/verify the actual sensor clock-divider and lane settings during controlled
 sensor-ID power qualification before advertising rates in a maintained V4L2 driver.
 The full-resolution stock modes, controls and actual camera output remain in scope.
 
+## Mainline CAMSS fit (2026-10-31)
+
+Checked against qcom `for-next` (7.4 merge window). MSM8226 has the same
+capture topology as mainline's MSM8916 resources: two CSIPHYs (2-phase), two
+CSIDs, one ISPIF and one VFE. Mainline's MSM8226 MMCC already provides every
+clock those resources name: top/ISPIF AHB, CSI0/1 AHB/core/PHY/pixel/RDI, the
+CSIPHY timers, CSI_VFE0, VFE0 with its AHB/AXI clocks, and the VFE GDSC. So
+clocks are not a blocker. Three pieces remain:
+
+1. **Camera IOMMU.** The VFE IOMMU at `0xfda44000` needs a `qcom_iommu`
+   instance, configured from the stock values like the display and GPU
+   instances already added for this SoC.
+2. **MSM8226 CAMSS resources and binding.** A resource table modelled on
+   `csiphy_res_8x16`/`csid_res_8x16`/`ispif_res_8x16`/`vfe_res_8x16`, using
+   MSM8226 clock rates and a `qcom,msm8226-camss` binding.
+3. **VFE 4.0 against the 4.1 operations.** The vendor driver has
+   MSM8226-specific VFE versions and VBIF setup. Audit reset, interrupts,
+   write masters, RDI and bus/QoS before reusing `vfe_ops_4_1`.
+
+The first hardware milestone needs no sensor driver: CSID's test-pattern
+generator can feed the VFE through RDI, so capture can be tested even though
+IMX179 and IMX132 have no mainline drivers yet.
+
 ## Implementation and physical test order
 
 1. Repeat controlled touch observation and preserve its completion conditions. The earlier pre-DRM capture was saved as incomplete; a new native-display capture is open.
