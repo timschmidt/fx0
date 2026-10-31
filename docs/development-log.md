@@ -1840,3 +1840,10 @@ mpt. Keeping all 34 leading entries at original offsets is justified entry by
 entry; only system, cache, userdata, sdcard and grow are reclaimed. This does
 not replace the stock-restoration rehearsal. See
 [partition audit](partition-audit.md).
+
+Audio gap assessment (source-only): the Fx0 uses a WCD9302 Tapan codec over an
+MSM8226 SLIMbus NGD with ADSP Q6 routing. Mainline has MSM8226 ADSP
+remoteproc support and generic QDSP6 drivers. It has no Tapan codec driver and
+no MSM8226 machine driver, and its NGD controller matches only v1.5.0/v2.1.0.
+Audio is a substantial new-driver workstream. ADSP enablement and protocol
+checks come first. See [audio assessment](audio-bringup.md).
