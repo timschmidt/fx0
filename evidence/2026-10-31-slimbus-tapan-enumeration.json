@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-31",
+  "scope": "Mainline qcom-ngd-ctrl and the new wcd9306 driver on MSM8226 (RAM boot of the installed r8 kernel with a probe DTB; modules built from r8 config + SLIMBUS/SLIM_QCOM_NGD_CTRL/SND_SOC_WCD9306); owner present",
+  "dt": "fx0-linux integration/fx0-slimbus: slimbam qcom,bam-v1.4.0 at 0xfe104000 (SPI 164, ee 1, controlled remotely, num-channels 31 unverified), slim_msm qcom,slim-ngd-v1.5.0 at 0xfe12f000 (SPI 163, dmas <&slimbam 3>, <&slimbam 4>); Fx0 codec slim217,e0 reg <1 0> with ifd reg <0 0>, reset GPIO72 active-low, vdd-h/px L6, vdd-cx L4",
+  "bring_up_order": "qcom-ngd-ctrl starts the NGD only on an lpass SSR power-up or a PDR up event; this ADSP has no PDR service and is already running when the module loads, so the test restarted the ADSP once through remoteproc",
+  "run1_controller_only": [
+    "remoteproc remoteproc1: stopped remote processor adsp",
+    "remoteproc remoteproc1: powering up adsp",
+    "remoteproc remoteproc1: Booting fw image adsp.mdt, size 988",
+    "remoteproc remoteproc1: remote processor adsp is now up",
+    "qcom,slim-ngd-ctrl fe12f000.slimbus: SLIM SAT: Rcvd master capability",
+    "qcom,slim-ngd-ctrl fe12f000.slimbus: SLIM controller Registered"
+  ],
+  "run2_codec": [
+    "remoteproc remoteproc1: stopped remote processor adsp",
+    "remoteproc remoteproc1: powering up adsp",
+    "remoteproc remoteproc1: Booting fw image adsp.mdt, size 988",
+    "remoteproc remoteproc1: remote processor adsp is now up",
+    "qcom,slim-ngd-ctrl fe12f000.slimbus: SLIM SAT: Rcvd master capability",
+    "wcd9306-slim 217:e0:1:0: error -ENODEV: Unexpected chip ID 00 00 00 00",
+    "qcom,slim-ngd-ctrl fe12f000.slimbus: SLIM controller Registered"
+  ],
+  "run2_finding": "the codec enumerated (logical address, device status up, driver bound to 217:e0:1:0) but read chip ID zeros: register access needs the 0x800 value-element offset (vendor WCD9XXX_REGISTER_START_OFFSET, as WCD9335)",
+  "fix": "fx0-linux af7aa193995b sets regmap reg_base = 0x800",
+  "run3_codec": [
+    "remoteproc remoteproc1: stopped remote processor adsp",
+    "remoteproc remoteproc1: powering up adsp",
+    "remoteproc remoteproc1: Booting fw image adsp.mdt, size 988",
+    "remoteproc remoteproc1: remote processor adsp is now up",
+    "qcom,slim-ngd-ctrl fe12f000.slimbus: SLIM SAT: Rcvd master capability",
+    "wcd9306-slim 217:e0:1:0: WCD9306 family codec, minor ID 0x0001, version 0x21",
+    "qcom,slim-ngd-ctrl fe12f000.slimbus: SLIM controller Registered"
+  ],
+  "result": "codec identified: major ID 0x0103 (Tapan), minor 0x0001, version 0x21; WCD9302 vs WCD9306 is decided by QFUSE in the vendor driver and is not read yet",
+  "installed_system": "unchanged; returned to r8 with taint 0",
+  "open": [
+    "start the NGD without an ADSP restart (probe-time up work or SSR replay)",
+    "codec MCLK (9.6 MHz), QFUSE variant check, ASoC component, SLIMbus ports and AFE",
+    "machine driver and first playback"
+  ]
+}

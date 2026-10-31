@@ -116,6 +116,17 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   controller node needs `dmas = <&slimbam 3>, <&slimbam 4>`
   ([evidence](../evidence/2026-10-31-slimbus-ngd-probe.json)).
 
+- **Mainline SLIMbus and the codec work (2026-10-31).** The SoC DT now gets
+  the NGD (`qcom,slim-ngd-v1.5.0`) and its remotely controlled BAM; the Fx0
+  DT gets the Tapan codec (fx0-linux `integration/fx0-slimbus`). On a RAM
+  boot, mainline `qcom-ngd-ctrl` received the ADSP's master capability and
+  registered the bus. The codec enumerated, and `wcd9306` read major ID
+  0x0103, minor 0x0001, version 0x21. That needed one driver fix: over
+  SLIMbus the registers start at value element 0x800. One quirk remains:
+  the NGD starts only on an ADSP power-up event, and this ADSP is already
+  running when the module loads, so the test restarted the ADSP once
+  ([evidence](../evidence/2026-10-31-slimbus-tapan-enumeration.json)).
+
 - **APR works and matches mainline (2026-10-31).** On the probe RAM boot,
   `qcom,apr-v2` bound on `apr_audio_svc`, the DSP reported ready, and it
   returned API versions for core (0x40000), AFE (0x200000), ASM (0x70002), ADM

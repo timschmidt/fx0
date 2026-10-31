@@ -2006,3 +2006,10 @@ The SLIMbus question is settled. After a QMI power vote, the MSM8226 controller
 reports version 0x0101. Its NGD sits at 0x1000, the mainline v1.5.0 layout,
 and its message queues use BAM pipes 3 (RX) and 4 (TX). The probe ran on
 the installed kernel with the owner present and did not hang.
+
+Mainline SLIMbus runs on MSM8226. New SoC nodes give the NGD (v1.5.0
+layout, pipes 3/4) and its BAM. With them, `qcom-ngd-ctrl` registered the
+bus after an ADSP restart, and the Tapan codec enumerated. The new
+`wcd9306` driver identified the codec once register access used the 0x800
+SLIMbus offset: major 0x0103, minor 0x0001, version 0x21. The owner
+deferred the 24-hour soak; it is stopped.
