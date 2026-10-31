@@ -94,6 +94,18 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   SLIMbus NGD controller to work first, and it has no ASoC component, MCLK,
   charge pump, MBHC or binding yet.
 
+- **SLIMbus DT parameters.** The MSM8226 NGD (`0xfe12f000`, SPI 163) and its
+  BAM (`0xfe104000`, SPI 164) match the MSM8996 pattern that mainline
+  describes as `qcom,slim-ngd-v1.5.0` plus a remotely controlled BAM
+  (`qcom,bam-v1.4.0` is this SoC generation, as for its BLSP BAMs). Mainline
+  expects the apps message-queue BAM pipes as fixed `dmas`. The vendor driver
+  instead reads them at runtime from `NGD_STATUS`, so they are unknown. A
+  diagnostic must first vote SLIMbus power through QMI service 769, as both
+  drivers do, then read the controller version (upper 16 bits at offset 0)
+  and `NGD_STATUS` at the candidate NGD offset. That one read settles both
+  the layout question and the `dmas` values before the controller node is
+  written.
+
 ## Work required
 
 1. Done: the ADSP starts and its QMI services are listed. Still to check: APR
