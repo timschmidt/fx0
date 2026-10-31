@@ -24,6 +24,7 @@ and no Signed-off-by, which the owner adds before sending.
 | boot-deploy `deviceinfo_flash_bootimg_offset` | boot-deploy `main` (GitLab MR) | [submissions/boot-deploy](../submissions/boot-deploy/README.md) |
 | qcom-spmi-iadc current sign and units (`5c3efd4c7fa8`) | IIO `togreg` | [submissions/iio](../submissions/iio/README.md) |
 | qcom-usb-hs init sequences starting at offset zero (`c7b37b2f2132`, rewritten for the flexible array) | PHY `next` | [submissions/phy](../submissions/phy/README.md) |
+| LG Fx0 JDI panel binding and driver (`dc2430e91f81`, `a22c81819da3`, `51190c24d336`, `9723635946c4`) | drm-misc `drm-misc-next` | [submissions/drm-panel](../submissions/drm-panel/README.md) |
 
 ## Already in mainline (backports)
 
@@ -60,7 +61,6 @@ Ordered roughly by how independent they are.
 | `b2512c53f035` msm8226 WCNSS DXE level interrupts | Review comment on Dudziak's MSM8226 WCNSS node (mainline has no node yet) | Owner approval to reply on that series |
 | `7297314a644f` Input: rmi4 assert reset before releasing supplies | input | Vivchar's reset-GPIO patch |
 | `a434ee44e3df` drm/msm/dsi/phy per-lane configuration on MSM8226 | drm/msm | Nothing; needs a non-Fx0 MSM8226 regression test |
-| `dc2430e91f81`, `a22c81819da3`, `51190c24d336`, `9723635946c4` LG Fx0 JDI in-cell panel binding and driver | drm-misc | Fold the three driver fixes into one driver patch |
 | MSM8226 display and GPU IOMMU bindings and configuration (`32fd8a21c5a3`, `b506b8cd827d`, `ca397d0f4501`, `60fa2a06552b`) | iommu | Baryshkov's MSM8974 series |
 | MSM8226 SoC DTS: display IOMMU and secured contexts, GPU IOMMU, CCI clock rate, PON label (`6c99f0648715`, `abe11294089a`, `dad2d15ff6ba`, `8cfcb0fedcd9`, `7e5f8f6b2250`) | qcom arm32 DTS | IOMMU bindings above |
 | LG Fx0 board: binding `933d3593e3ab` and the `lg-madai` DTS commits (UART/USB through PON reboot modes) | qcom arm32 DTS | Squash into a board series; staged so a first version needs only mainline features (UART, USB, eMMC, buttons, PMIC), with display, Wi-Fi, ADSP and GPU following their dependencies |
