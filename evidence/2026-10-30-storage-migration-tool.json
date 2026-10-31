@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-30",
+  "scope": "Host-only migration tool and target GPT generation for plan section 2.1 steps 7-8. Nothing was written to the phone.",
+  "tool": "scripts/fx0_storage_migrate.py (plan, verify, apply)",
+  "tests": {
+    "suite": "tests/test_storage_migrate.py",
+    "cases": 8,
+    "result": "pass",
+    "fixtures": "synthetic GPTs generated in the test; no device data"
+  },
+  "real_plan": {
+    "original_gpt_primary_sha256": "61e22be276a8cc040605a4b330bffeb56ee159791b5308b910055a01cd6afc15",
+    "retained_entries_identical": 34,
+    "root": {
+      "name": "nura-root",
+      "type": "Linux filesystem 0FC63DAF-8483-4772-8E79-3D69D8477DE4",
+      "first_lba": 786432,
+      "last_lba": 30777310,
+      "bytes": 15355330048
+    },
+    "target_primary_sha256": "b9bd3d6bdeb1295c81d7396793486221039df0e76eeb18b716ae81730061dd34",
+    "target_backup_sha256": "deaa20817a3d65ddfa9213479d5e416395db3fc8bf574ef14f66446c062ebdf9",
+    "target_regions_private": true
+  },
+  "sgdisk_verify": {
+    "result": "No problems found",
+    "cautions": [
+      "nonstandard 40-entry table (kept from original)",
+      "partition 35 end not on a 1024-sector boundary"
+    ],
+    "free": "31.5 MiB in 6 segments, largest 8.0 MiB"
+  },
+  "apply_guards": [
+    "requires --restoration-rehearsed",
+    "whole /dev/mmcblk0 only",
+    "exact sector count and non-removable",
+    "no mounted partition above 34",
+    "device primary and backup GPT byte-identical to the original before writing",
+    "writes only the two GPT regions, backup first, fsync, readback compare"
+  ],
+  "not_done": [
+    "factory-stock restoration rehearsal (prerequisite)",
+    "128-entry table compatibility test",
+    "root filesystem creation and installation on the phone",
+    "raw-image boot path qualification"
+  ]
+}

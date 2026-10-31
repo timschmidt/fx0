@@ -1847,3 +1847,9 @@ remoteproc support and generic QDSP6 drivers. It has no Tapan codec driver and
 no MSM8226 machine driver, and its NGD controller matches only v1.5.0/v2.1.0.
 Audio is a substantial new-driver workstream. ADSP enablement and protocol
 checks come first. See [audio assessment](audio-bringup.md).
+
+Section 2.1 migration tooling (host only): `scripts/fx0_storage_migrate.py` plans,
+verifies and, behind strict guards, applies the single-root GPT. Its 8
+synthetic-GPT tests pass. The real target generated from the original GPT
+passes `sgdisk -v` with the known table-size and alignment cautions. Nothing was
+written to the phone; the restoration rehearsal remains the prerequisite.

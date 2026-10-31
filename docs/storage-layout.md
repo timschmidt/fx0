@@ -65,6 +65,32 @@ Keeping the first 34 partitions preserves existing offsets while the large conti
 
 The first-region gaps total 31.5 MiB in six segments. Reclaiming them into the single root would require changing other retained offsets or proving another layout; deleting their labels alone would not enlarge the contiguous root. Further partition removal or relocation remains part of the requested minimum-layout work.
 
+## Migration tool
+
+[`scripts/fx0_storage_migrate.py`](../scripts/fx0_storage_migrate.py) turns the
+[audited](partition-audit.md) target into a tool. `plan` keeps entries 1–34
+byte for byte, including their unique GUIDs and attributes, and replaces entries
+35–39 with one `nura-root` Linux-filesystem entry over sectors 786432–30777310.
+It keeps the original 40-entry table, recomputes every CRC, and refuses
+non-standard array locations or data that would be lost. `verify` re-checks a
+target pair against the original.
+
+`apply` refuses unless all of the following hold:
+
+- the restoration rehearsal is confirmed
+- the target is the whole non-removable `/dev/mmcblk0` with the exact sector count
+- no reclaimed partition is mounted
+- both on-device GPT regions are byte-identical to the original
+
+It writes only the two GPT regions (backup first) and compares a readback. Eight
+synthetic-GPT tests pass, covering every refusal. For the real original GPT,
+`plan` produces a target that `sgdisk -v` reports as "No problems found". It has
+the same 40-entry and end-alignment cautions as the earlier preview and 31.5 MiB
+of free space in six segments. The target regions stay private. Nothing has
+been written to the phone. The restoration rehearsal, the 128-entry
+compatibility test and the root filesystem/installation steps remain. See
+[migration-tool evidence](../evidence/2026-10-30-storage-migration-tool.json).
+
 ## Original restoration sources
 
 All 29 original critical images, the original 1 GiB system image, and both original GPT regions now have direct copies on two host filesystems. Expected sizes and original SHA-256 values match after independent rehashing; the new system copy was fsynced and its file cache discarded before verification. This is stronger recovery-source coverage, not a claim that original userdata exists or that restoration has passed.
