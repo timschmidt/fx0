@@ -87,6 +87,16 @@ DMP or suspend-wake pass. Low lines alone do not identify a missing supply or
 prove that the proposed pin mapping is correct. See
 [evidence](../evidence/2026-10-30-sensor-ownership-and-id.json).
 
+## Native ADSP start
+
+With the ADSP enabled (`6fb0c0cae80b`, RAM test), the stock ADSP firmware starts
+on the native r6 kernel. It publishes the QMI **Sensor Manager** service (256,
+instances 0 and 1) and further unidentified services (257, 263, 264, 269) over
+QRTR. That makes the stock SMGR path testable natively, in addition to direct
+AP access. Starting the ADSP may also take the sensor bus, which is relevant to
+the earlier low-line refusal. No sensor data has been requested yet. See
+[ADSP evidence](../evidence/2026-10-30-adsp-start.json).
+
 ## Next implementation steps
 
 1. Capture a working stock sensor baseline in a bounded RAM environment. Verify
