@@ -1948,3 +1948,16 @@ systemd 261.
 The owner decided to keep the original 40-entry GPT capacity for the final
 layout instead of testing a 128-entry table. SBL1 parses the GPT before any code
 we control, and without EDL a parse failure would be unrecoverable.
+
+### Final storage layout
+
+The owner asked for a normal Linux system with as much usable space as
+possible. Partitions 1–34 stay at their original offsets. System, cache,
+userdata, internal SD and grow are now one 14.3 GiB native ext4 root (p35), with
+no boot filesystem and the original 40-entry GPT capacity. The migration ran
+from the RAM rescue after a fresh verified snapshot: both GPT regions and the
+3.8 GB root image (same filesystem UUID) were written and read back exactly.
+Nura booted unattended in 44 s and the initramfs grew ext4 to the whole
+partition. With a 1% reserve, 12.67 GB is free (1.4 GB before). Wi-Fi,
+Bluetooth, remoteprocs, firmware lookup, the GPU session and audio work, and
+the owner confirmed the display.

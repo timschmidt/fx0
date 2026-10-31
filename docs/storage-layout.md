@@ -2,7 +2,7 @@
 
 The required endpoint is one maximum-capacity native Linux root/data filesystem, with only the additional partitions the boot chain and working hardware require. External SD remains removable Linux media. The current userdata subpartition installation is transitional.
 
-This document records a **host-only preview**, not an approved final partition map. No phone partition table or filesystem has been changed by this work. Factory-stock restoration and the remaining requirements in [plan section 2.1](bringup-plan.md#21-verify-full-stock-restoration-then-consolidate-internal-storage) must pass before migration.
+**Applied 2026-10-31.** The phone now uses the final layout: partitions 1–34 unchanged, partition 35 `nura-root` (14.3 GiB native ext4) replacing system/cache/userdata/sdcard/grow, no boot filesystem. It has 12.67 GB available on first boot, against 1.4 GB before. See the [final-layout evidence](../evidence/2026-10-31-final-storage-layout.json). The sections below record the preview and qualification that led there. Factory-stock restoration and the remaining requirements in [plan section 2.1](bringup-plan.md#21-verify-full-stock-restoration-then-consolidate-internal-storage) must pass before migration.
 
 ## Measured contiguous space
 
