@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-31",
+  "scope": "Key-entry escape of the production-candidate lk2nd (fx0-lk2nd integration/fx0-rawboot b106e16, LK2ND_EXTLINUX=0, no forced fastboot, sha256 3224c650...) loaded into RAM from the installed lk2nd; owner present",
+  "board_detection": "forced-fastboot sibling build (95b5caf5...) chain-loaded: 'Detected device: LG Fx0 (compatible: lg,madai)', 'keys: 2 keymap overrides applied' (Volume Down TLMM GPIO106, Volume Up GPIO108, active low)",
+  "menu_keys": "owner: Volume Down moves the lk2nd menu selection",
+  "boot_time_key_check": {
+    "attempts": 3,
+    "result": "third attempt with Volume Down held before the handoff: candidate stayed in fastboot (log has no forced-fastboot line); first two attempts were timing misses, owner confirmed released early/not yet held",
+    "pmic_state": "PON warm-reset reason 0x02 (PS_HOLD), so lk2nd's user-force-reset shortcut did not apply"
+  },
+  "continue": "fastboot continue from the candidate booted the raw boot-deploy image: taint 0, systemd running, Wi-Fi connected",
+  "open": [
+    "cold power-on key entry with the candidate installed as the prefix: stock aboot runs first, and LG's Power+Volume Down combination may open the stock factory-reset prompt, so the press timing must be tested with the owner",
+    "a host-triggered 'reboot bootloader' path (reboot-mode) so remote RAM tests work without forced fastboot",
+    "install the candidate prefix and run the plan's 20 cold and 20 warm boots"
+  ]
+}

@@ -1931,3 +1931,8 @@ backported to 0.23.0 and built as a signed `boot-deploy-0.23.0-r1`;
 with the lk2nd prefix and all other bytes unchanged. The image matches the
 installed kernel, DTB, initramfs and extlinux command line, and the
 extlinux-disabled lk2nd booted it.
+
+The production-candidate lk2nd (no extlinux, no forced fastboot) honours
+Volume Down: chain-loaded with the key held, it stayed in fastboot, and
+`fastboot continue` booted the raw image. Its log confirms Fx0 detection and
+the GPIO key overrides. The owner confirmed the menu responds to the key.

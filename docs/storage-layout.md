@@ -67,6 +67,15 @@ and the fallback. See [evidence](../evidence/2026-10-31-boot-deploy-offset-updat
 Remaining: interrupted-update and key-entry recovery, then a raw-preferring
 installed lk2nd.
 
+**Key escape, 2026-10-31.** The production candidate lk2nd (no extlinux, no
+forced fastboot), chain-loaded from RAM, detects the Fx0 and its GPIO volume
+keys. With Volume Down held it stays in fastboot instead of booting the raw
+image, and `fastboot continue` boots it. Still to test with the prefix
+installed: cold power-on entry (stock aboot runs first, and LG's
+Power+Volume Down combination may open the stock factory-reset prompt), a
+host-triggered reboot into the bootloader, and the 20 cold/20 warm boot run.
+See [evidence](../evidence/2026-10-31-lk2nd-key-entry.json).
+
 If the raw-image route cannot meet boot/update/recovery requirements, evaluate a small separate boot filesystem. Size it from actual kernel, DTB, initramfs, fallback and update requirements. Do not reduce the entire root filesystem's integrity features just to satisfy the current ext2 reader.
 
 ## Retained space audit
