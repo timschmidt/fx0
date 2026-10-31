@@ -1894,3 +1894,8 @@ Bluetooth A2DP plays correct left/right tones (confirmed by ear) once
 PipeWire/WirePlumber run. The Sxmo wrapper's `SXMO_NO_AUDIO=1` had left them
 stopped. AVRCP play/pause events arrive. The pairing was removed afterwards.
 GPU devfreq held 450 MHz under a vsync-bound load.
+
+The Sxmo wrapper no longer sets `SXMO_NO_AUDIO`. On systemd, Sxmo leaves
+PipeWire to socket activation, and its sound monitor activates PipeWire and
+WirePlumber. After a clean r7 reboot, all three audio services are active
+without manual steps.

@@ -234,8 +234,9 @@ correctly, as the owner confirmed by ear. Play/pause arrives through the
 `JLab Studio (AVRCP)` input device. Volume buttons produce no key events, as
 expected with AVRCP absolute volume. The pairing was removed afterwards.
 
-The session should start the audio services so this works without manual
-steps. Headset call audio (HFP) and a Bluetooth keyboard remain. See
+The session wrapper no longer sets `SXMO_NO_AUDIO`. After a clean reboot,
+PipeWire, WirePlumber and pipewire-pulse start automatically, so Bluetooth audio
+needs no manual steps. Headset call audio (HFP) and a Bluetooth keyboard remain. See
 [evidence](../evidence/2026-10-30-owner-checks-bt-audio.json).
 
 ## Hotspot

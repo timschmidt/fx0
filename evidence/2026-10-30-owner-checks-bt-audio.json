@@ -22,9 +22,13 @@
     "note": "no downscaling observed; vsync-bound load holds the top frequency"
   },
   "open": [
-    "Sxmo session should start PipeWire/WirePlumber for Bluetooth audio (wrapper sets SXMO_NO_AUDIO=1)",
     "HFP/HSP call audio and headset microphone (needs telephony audio stack)",
     "Bluetooth HID keyboard",
     "GPU devfreq downscaling verification"
-  ]
+  ],
+  "session_audio_fix": {
+    "change": "removed SXMO_NO_AUDIO=1 from fx0-sxmo-test (backup fx0-sxmo-test.noaudio on the phone; repo copy updated)",
+    "mechanism": "on systemd, Sxmo's start hook leaves PipeWire to socket activation; its sxmo_soundmonitor client activates pipewire, pulling in wireplumber",
+    "clean_reboot_result": "pipewire, wireplumber and pipewire-pulse active after the documented UI start with no manual steps; taint 0; wlan0 connected"
+  }
 }
