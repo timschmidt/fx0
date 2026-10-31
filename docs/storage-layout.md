@@ -22,7 +22,12 @@ A fresh ext4 filesystem retains extents, 64-bit metadata and metadata checksums.
 
 Both GPT headers and partition arrays pass CRC checks. The first 34 partition entries and all data bytes from LBA 34 to the root start remain identical to the verified development snapshot. The standalone empty ext4 passes `e2fsck -fn`; after copying it into the host disk image, a complete embedded-filesystem readback hash matches.
 
-The preview deliberately retains the original 40-entry GPT capacity. `sgdisk --verify` reports no structural problems but warns about that nonstandard capacity, gaps around GPT metadata, and the root end boundary. Before finalizing, test primary/secondary bootloader compatibility with a standard 128-entry table and regenerate the preview accordingly. Preserve the exact original table for stock restoration. The current preview does not waive these checks.
+The preview deliberately retains the original 40-entry GPT capacity. `sgdisk --verify` reports no structural problems but warns about that nonstandard capacity, gaps around GPT metadata, and the root end boundary. The owner decided on 2026-10-31 to keep the original 40-entry capacity and not
+to test a 128-entry table. SBL1 parses the GPT before any code we control, and
+no emergency-download recovery is available, so a failed test could leave the
+phone unrecoverable. The boot chain already parses the 40-entry table, and the
+migration changes only the reclaimed entries. `sgdisk`'s capacity warning is
+accepted. Preserve the exact original table for stock restoration.
 
 The private host disk image contains firmware and provisioning from the device; it must not be published. Reviewed measurements are in [the preview evidence](../evidence/2026-10-29-storage-layout-preview.json).
 
@@ -126,8 +131,9 @@ synthetic-GPT tests pass, covering every refusal. For the real original GPT,
 `plan` produces a target that `sgdisk -v` reports as "No problems found". It has
 the same 40-entry and end-alignment cautions as the earlier preview and 31.5 MiB
 of free space in six segments. The target regions stay private. Nothing has
-been written to the phone. The restoration rehearsal, the 128-entry
-compatibility test and the root filesystem/installation steps remain. See
+been written to the phone. The restoration rehearsal has since passed and the
+40-entry capacity is kept by owner decision; the root filesystem/installation
+steps remain. See
 [migration-tool evidence](../evidence/2026-10-30-storage-migration-tool.json).
 
 ## Original restoration sources

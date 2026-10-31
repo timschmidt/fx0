@@ -1942,3 +1942,7 @@ now boots Nura unattended from the boot-deploy raw image, after a warm reboot or
 a cold power-key start. Volume Down at power-on (no LG reset prompt) and
 `systemctl reboot --reboot-argument=bootloader` both reach lk2nd fastboot. The
 positional `systemctl reboot bootloader` form fails on systemd 261.
+
+The owner decided to keep the original 40-entry GPT capacity for the final
+layout instead of testing a 128-entry table. SBL1 parses the GPT before any code
+we control, and without EDL a parse failure would be unrecoverable.
