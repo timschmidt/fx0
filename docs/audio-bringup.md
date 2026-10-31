@@ -167,9 +167,14 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
     - Version 1.0 parts clear `SPKR_DRV_DBG_PWRSTG` 0x24 while the speaker
       supply is on, and restore it afterwards.
     - LG switches the boost (GPIO60) with the DAC.
-  - **SLIMbus:** RX ports start at 16, as on WCD9335, with the same port
-    configuration layout, so the DAI channel map, `slim_stream_*` handling
-    and port setup can follow `wcd9335`.
+  - **SLIMbus:** RX ports start at 16. The vendor treats the Tapan as a
+    Taiko-type slave, so its interface registers are RX multi-channel
+    `0x140 + 4·port` and RX port configuration `0x30 + port`, with the
+    12-byte watermark plus enable. Those are exactly mainline WCD9335's
+    `WCD9335_SLIM_PGD_RX_PORT_MULTI_CHNL_0()` and `..._RX_PORT_CFG()`. The DAI
+    channel map, port setup and `slim_stream_*` handling can follow
+    `wcd9335` unchanged, using an interface-device regmap with the same 0x800
+    offset.
 
   **Step 1 done (2026-10-31):** on an audio probe kernel, all four QDSP6
   services bind on this ADSP (core, AFE, ASM, ADM). The AFE DAIs, including
