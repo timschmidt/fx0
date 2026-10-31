@@ -1974,3 +1974,16 @@ the PMIC PON spare register, which the LG bootloader leaves alone, and the
 installed lk2nd now reads and clears it. `systemctl reboot
 --reboot-argument=bootloader` reaches lk2nd fastboot in about 29 s with no key;
 plain reboots boot Nura unattended.
+
+### First DSP audio protocol and camera capture results
+
+The 24-hour soak was stopped after 130 clean minutes (kept as a partial
+record) so the unattended RAM probes could run; it then restarted on the
+installed system. On a RAM-booted r8 with the probe DTB:
+
+- APR bound to the ADSP and q6core reported its service API versions. The
+  vendor driver uses the same AFE/ADM/ASM opcodes as mainline's QDSP6 stack.
+- The drafted MSM8226 CAMSS probed through the new VFE IOMMU and captured five
+  CSID test-pattern frames (4,608,000 bytes, incrementing data) through ISPIF
+  and VFE RDI0. Mainline CAMSS needed its Kconfig widened to accept 32-bit
+  ARM IOMMU DMA.

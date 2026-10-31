@@ -106,6 +106,14 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   the layout question and the `dmas` values before the controller node is
   written.
 
+- **APR works and matches mainline (2026-10-31).** On the probe RAM boot,
+  `qcom,apr-v2` bound on `apr_audio_svc`, the DSP reported ready, and it
+  returned API versions for core (0x40000), AFE (0x200000), ASM (0x70002), ADM
+  (0x70000), the voice services and LSM/USM. The vendor MSM8226 driver uses the
+  same AFE/ADM/ASM command opcodes as mainline q6afe/q6adm/q6asm, so mainline's
+  QDSP6 stack should drive this firmware. See
+  [evidence](../evidence/2026-10-31-ram-probes-apr-camss.json).
+
 ## Work required
 
 1. Done: the ADSP starts and its QMI services are listed. Still to check: APR

@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-31",
+  "scope": "RAM-booted r8 kernel with the integration/fx0-ram-probes DTB (APR q6core node, CAMSS and VFE IOMMU enabled) plus 17 test modules built with the r8 config and Alpine clang 22.1.3; installed system unchanged",
+  "apr": {
+    "bind": "qcom,apr-v2 on remoteproc1 smd-edge apr_audio_svc; q6core service device aprsvc:service:4:3",
+    "adsp_ready": true,
+    "service_api_versions": {
+      "core_0x03": "0x40000",
+      "afe_0x04": "0x200000",
+      "vsm_0x05": "0x70004",
+      "vpm_0x06": "0x70005",
+      "asm_0x07": "0x70002",
+      "adm_0x08": "0x70000",
+      "mvm_0x09": "0x10000",
+      "cvs_0x0a": "0x10000",
+      "cvp_0x0b": "0x10000",
+      "usm_0x0c": "0x70000000",
+      "lsm_0x0d": "0x10000000",
+      "0x0e_to_0x16": "not supported (-ENOTSUPP)"
+    },
+    "protocol_match": "the vendor MSM8226 qdsp6v2 driver and mainline q6afe/q6asm/q6adm use the same command opcodes (AFE_PORT_CMD_DEVICE_START 0x100E5, ADM_CMD_DEVICE_OPEN_V5 0x10326, ASM_STREAM_CMD_OPEN_WRITE_V3/READ_V3 0x10DB3/0x10DB4); mainline q6adm records the ADM API version without branching on it"
+  },
+  "camss": {
+    "probe": "qcom,msm8226-camss probed through qcom,msm8226-vfe-iommu with 32-bit ARM IOMMU DMA (after a 'deferred probe timeout, ignoring dependency' message); entities msm_csiphy0/1, msm_csid0/1, msm_ispif0/1, msm_vfe0_rdi0/1/2 with video0/1/2",
+    "tpg_capture": {
+      "pipeline": "msm_csid0:1 -> msm_ispif0:0, msm_ispif0:1 -> msm_vfe0_rdi0:0; SGRBG8_1X8 1280x720 on csid0 pads 0 and 1, ispif0 and rdi0; video0 GRBG 1280x720 (multiplanar)",
+      "test_pattern": "1 (Incrementing)",
+      "frames": 5,
+      "bytes": 4608000,
+      "expected_bytes": "5 x 1280 x 720 x 1 = 4608000",
+      "first_bytes": "00 01 02 03 04 05 ... 1f (incrementing pattern)"
+    },
+    "iterations": [
+      "BA10 unpacked 10-bit: not offered by the RDI video node; stream-on -EPIPE",
+      "pgAA packed: video format stayed at default; -EPIPE",
+      "8-bit with only csid source pad set: -EPIPE (csid sink pad still default)",
+      "8-bit with csid sink and source pads set: 5 frames captured"
+    ]
+  },
+  "cleanup": "every run rebooted back to the installed r8 (taint 0, running); 24 h system soak restarted 06:06:39 after keeping the first 130 clean minutes",
+  "open": [
+    "SLIMbus NGD version and pipes (owner present)",
+    "Tapan codec, AFE SLIMbus ports and machine driver",
+    "camera sensors (IMX179/IMX132 drivers), CSIPHY lane setup, VFE 4.0 vs 4.1 audit beyond RDI",
+    "identify the deferred-probe dependency CAMSS waited for"
+  ]
+}

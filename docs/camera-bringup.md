@@ -236,6 +236,18 @@ The first hardware milestone needs no sensor driver: CSID's test-pattern
 generator can feed the VFE through RDI, so capture can be tested even though
 IMX179 and IMX132 have no mainline drivers yet.
 
+## First capture through mainline CAMSS (2026-10-31)
+
+On a RAM-booted r8 with the probe DTB, `qcom,msm8226-camss` probed through the
+new VFE IOMMU using 32-bit ARM IOMMU DMA, and created every CSIPHY, CSID,
+ISPIF and VFE0 RDI entity. With the CSID0 test pattern ("Incrementing") routed
+CSID0 → ISPIF0 → VFE0 RDI0 at SGRBG8 1280×720, five frames streamed:
+4,608,000 bytes, exactly 5 × 1280 × 720, starting `00 01 02 …`. So the MSM8226
+CSID, ISPIF, VFE RDI write path and camera IOMMU work with the reused 4.1
+operations for this path. The VFE pixel path, CSIPHY and sensors remain. The
+CSID sink pad must be set as well as its source. See
+[evidence](../evidence/2026-10-31-ram-probes-apr-camss.json).
+
 ## Implementation and physical test order
 
 1. Repeat controlled touch observation and preserve its completion conditions. The earlier pre-DRM capture was saved as incomplete; a new native-display capture is open.
