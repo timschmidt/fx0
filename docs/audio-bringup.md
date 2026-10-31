@@ -130,6 +130,20 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   ADSP left running, the bus registers and the codec identifies 3 s after the
   module loads.
 
+- **Codec variant and speaker path.** LG's DTS comments out the WCD9306 sound
+  card and uses the `msm8226-tapan9302-snd-card` with `qcom,tapan-codec-9302`,
+  so the Fx0 has the **WCD9302**. The board sets no external speaker-amplifier
+  GPIO. The vendor's WCD9302 routes drive the speaker from the codec's own
+  class-D amplifier: SLIMbus RX → `RX3 MIX1` → `SPK DAC` → `SPK PA` → `SPK_OUT`.
+  Playback needs three pieces:
+  1. QDSP6 under APR: `q6afe`, `q6asm`, `q6adm`, `q6routing`. Their protocol
+     versions already match; this needs a kernel package with the QDSP6
+     options.
+  2. A `wcd9306` codec component: a SLIMbus RX DAI with its channel map, the
+     MCLK/RCO switch, and the RX3-to-speaker DAPM path from the vendor's
+     register sequences.
+  3. A machine driver, reusing the `apq8096`-style SLIMbus card glue.
+
 - **Codec MCLK source.** The vendor machine driver takes the 9.6 MHz Tapan
   MCLK as `osr_clk`. Vendor `clock-8226.c` maps that to `div_clk1`, the RPM
   XO buffer with ID 11 (the PMIC divider output). Mainline `clk-smd-rpm`
