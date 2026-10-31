@@ -1918,3 +1918,9 @@ The rehearsal ran with the owner present:
 
 Stock's own first boot changes one byte of system: the ext4 unsigned-hash flag.
 `adb reboot recovery` powers the stock phone off rather than entering recovery.
+
+The raw boot-image path booted on hardware for the first time. The installed
+lk2nd wrote a 17.5 MB r7 Android image at its 512 KiB offset, and a RAM-booted
+lk2nd without extlinux support booted Nura r7 from it (marker in
+`/proc/cmdline`). The prefix was intact and the payload read back
+byte-identical. Normal boots still use extlinux.

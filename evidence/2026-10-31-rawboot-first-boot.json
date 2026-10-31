@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-31",
+  "scope": "First hardware boot of the raw Android-image path in the boot partition after the lk2nd 512 KiB prefix (storage-layout 'Boot without another filesystem partition', items 1 and partly 3)",
+  "image": {
+    "contents": "installed r7 /boot vmlinuz, qcom-msm8926-lg-madai.dtb and initramfs (hashes verified against the phone) with the installed extlinux command line plus marker fx0.rawboot=1",
+    "bytes": 17483776,
+    "sha256": "009d417f19bf26a88f7a7daf51392380db80408a0b18d159e47c16addf29ca56",
+    "input_sha256": {
+      "vmlinuz": "6026106b71d3c7413a5fc041efd0af6a050ca992077533c667063e65c14459df",
+      "initramfs": "921d9c395080d762be7508decdf172c15c928849797e4f6c08b6e119ccdf8067",
+      "qcom-msm8926-lg-madai.dtb": "28d84b3b8d1699490a80372f1c3165ad514cdbda1763ee794015e63e79ef5508"
+    },
+    "space_after_prefix": 33030144,
+    "headroom_bytes": 15546368
+  },
+  "write": "installed lk2nd fastboot 'flash boot' (writes at its 512 KiB offset)",
+  "boot": "RAM-booted lk2nd built with LK2ND_EXTLINUX=0 (sha256 3224c650..., source b106e16) booted the offset image: /proc/cmdline carries the marker; 6.18.59-r7, taint 0, systemd running, Wi-Fi connected, both remoteprocs up",
+  "verification": {
+    "lk2nd_prefix_sha256_after_write": "a3d4ac88... (unchanged)",
+    "payload_readback_matches": true
+  },
+  "normal_path_unchanged": "subsequent normal reboot through the installed lk2nd uses extlinux (no marker), taint 0, Wi-Fi connected",
+  "state_change": "boot partition bytes after 512 KiB now hold this image instead of stale stock-kernel bytes; the pre-rehearsal snapshot keeps the old bytes",
+  "open": [
+    "install and qualify the offset-aware boot-deploy updater on the phone (current boot-deploy writes from byte 0)",
+    "interrupted-update recovery and a known-good fallback image",
+    "an installed lk2nd that prefers the raw image (LK2ND_EXTLINUX=0) with cold/key recovery into fastboot",
+    "native root selection after repartitioning",
+    "drop obsolete msm.allow_vram_carveout/msm.vram from the command line"
+  ]
+}

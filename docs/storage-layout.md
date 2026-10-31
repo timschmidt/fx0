@@ -46,6 +46,16 @@ The public [boot-deploy preparation branch](https://github.com/timschmidt/fx0-bo
 
 The matching [pmaports schema branch](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-storage) defines the setting without enabling it in any device profile. A positive fixture passes and a negative value is rejected. All 296 existing deviceinfo files produce the same diagnostics with the original and modified schema under dint 0.2.1: 305 pre-existing warnings. This is not a clean full pmaports CI result or an upstream submission.
 
+**First hardware boot, 2026-10-31.** The installed r7 kernel, DTB and initramfs
+were packed into one 17.5 MB Android image (15.5 MB headroom). The installed
+lk2nd's fastboot wrote it at the 512 KiB offset. An lk2nd built with
+`LK2ND_EXTLINUX=0`, booted from RAM, then booted Nura r7 from that image: a
+command-line marker proved the path, with taint 0 and Wi-Fi up. The lk2nd prefix
+hash was unchanged and the payload read back byte-identical. Normal reboots
+still use extlinux. This qualifies item 1's fit and boot from the real offset.
+The on-device updater, interrupted-update recovery, an installed raw-preferring
+lk2nd and cold/key recovery remain. See [evidence](../evidence/2026-10-31-rawboot-first-boot.json).
+
 If the raw-image route cannot meet boot/update/recovery requirements, evaluate a small separate boot filesystem. Size it from actual kernel, DTB, initramfs, fallback and update requirements. Do not reduce the entire root filesystem's integrity features just to satisfy the current ext2 reader.
 
 ## Retained space audit
