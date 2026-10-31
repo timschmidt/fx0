@@ -97,6 +97,15 @@ AP access. Starting the ADSP may also take the sensor bus, which is relevant to
 the earlier low-line refusal. No sensor data has been requested yet. See
 [ADSP evidence](../evidence/2026-10-30-adsp-start.json).
 
+On installed r8 (2026-10-31), with the ADSP running on every boot, QRTR lists
+the Sensor Manager (256) on nodes 5 and 7, the SLIMbus control service (769)
+and the unidentified 257, 263, 264 and 269. The ADSP has **not** taken the
+sensor bus: TLMM GPIO6/7 stay function 0 (GPIO) inputs, reading low with no
+pull, and GPIO66/69 are idle inputs with pull-down. So the earlier idle-low
+lines were not caused by ADSP ownership. An unpowered sensor rail remains the
+leading explanation. The stock path normally configures the Sensor Manager
+from the AP daemon (`sensors.qcom`), which Nura does not run.
+
 ## Next implementation steps
 
 1. Capture a working stock sensor baseline in a bounded RAM environment. Verify
