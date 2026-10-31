@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-30",
+  "scope": "RAM boot with new zImage (qcom_iommu MSM8226 GPU config built in), GPU+GPU IOMMU DTB, installed r6 initramfs/modules (taint 8192 from module signatures)",
+  "source_branch": "integration/fx0-gpu",
+  "source_commit": "4598182e1708",
+  "image_sha256": "19baebf3330831abc42cf1ac4c4c4dbc2aa7b2a8fbe86438f21d52c14ebeb9ac",
+  "checks": {
+    "dtbs_check": "pass",
+    "dt_binding_check_iommu": "pass",
+    "qcom_iommu_W1": "0 warnings"
+  },
+  "result": {
+    "gpu_iommu": "fdb00000.gpu added to iommu group 0",
+    "gpu_id": "3.0.5.18 (A305B) on MSM8926",
+    "firmware": "first bind from initramfs cannot load a330_pm4.fw (-2, rootfs not mounted); first use loads PM4 330043 and PFP 330020",
+    "eglinfo_gbm": "vendor freedreno, renderer FD305, OpenGL ES 3.0 / GL 3.1 core, Mesa 26.1.6",
+    "kmscube": "299 frames in 4.98 s (60.00 fps, vsync-locked) on the DSI panel",
+    "faults_hangs_underruns": 0,
+    "gpu_irqs": 147,
+    "devfreq": "Couldn't initialize GPU devfreq (fixed clock)",
+    "physical_observation": "not yet confirmed by the owner"
+  },
+  "harness_notes": [
+    "kmscube exits when stdin is readable; feed it from a held-open FIFO"
+  ],
+  "open": [
+    "owner visual confirmation",
+    "GPU devfreq/OPP",
+    "firmware availability at first bind (include a330 firmware in initramfs or defer)",
+    "compositor (Sway/Phosh) on Freedreno, memory use, stability soak",
+    "GPU runtime PM/power collapse and suspend",
+    "signed package",
+    "upstream review of binding/driver/DT"
+  ]
+}

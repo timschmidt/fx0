@@ -1861,3 +1861,13 @@ fallback, so the GPU needs its IOMMU (stock `kgsl_iommu`, msm-smmu-v1 at
 `msm.allow_vram_carveout`/`msm.vram` command-line parameters should be removed
 when packaging. ADSP enablement is committed (`6fb0c0cae80b`) and its RAM test
 is prepared to run after the Wi-Fi soak. See [GPU assessment](gpu-bringup.md).
+
+After a clean one-hour Wi-Fi soak, two RAM tests ran. With the ADSP enabled, the
+stock ADSP firmware starts and exposes APR audio channels, the SLIMbus QMI
+service and the Sensor Manager. A new MSM8226 GPU IOMMU description
+(`integration/fx0-gpu`) then gives the first accelerated rendering on the Fx0:
+A305B 3.0.5.18, freedreno FD305 with GLES 3.0, and kmscube at 60 fps locked to
+vsync, with no IOMMU faults. My kmscube harness initially failed only because
+kmscube exits when stdin is readable. Devfreq, the compositor, owner visual
+confirmation and packaging remain. The phone is back on installed r6 with
+taint 0.

@@ -1,4 +1,4 @@
-# Fx0 GPU acceleration assessment
+# Fx0 GPU acceleration
 
 The plan's [phase 3](bringup-plan.md#phase-3-make-the-local-interface-usable)
 requires Freedreno acceleration with a measured renderer, correctness, memory
@@ -21,17 +21,34 @@ Vendor `msm-iommu-v1.dtsi` and `msm8226-iommu.dtsi` describe `kgsl_iommu` at
 with Oxili GX as alternate supply, and uses `qcom,iommu-enable-halt`, an
 alternate core clock and MSM8226-specific BFB prefetch register/value pairs.
 
+## First accelerated rendering
+
+`integration/fx0-gpu` adds four schema-clean commits: the binding for
+`qcom,msm8226-gpu-iommu` with an optional `tbu` clock, an `msm8226_gpu_cfg` with
+stock BFB values and halt, the SoC GPU IOMMU node, and the Fx0 enable. The node
+follows the MSM8974 series' GPU IOMMU (`OXILI_GFX3D_CLK` as `tbu`, two
+non-secure contexts, IRQ 241).
+
+A RAM boot of that kernel with the installed r6 initramfs gives the following
+results:
+
+- The GPU joins its IOMMU group and reports **3.0.5.18 (A305B)** on the MSM8926.
+- `eglinfo` shows **freedreno FD305, OpenGL ES 3.0 / GL 3.1, Mesa 26.1.6**.
+- `kmscube` renders **299 frames in 4.98 s at 60.00 fps**, locked to vsync on
+  the DSI panel, with no IOMMU faults, hangs or underruns.
+
+Firmware fails to load at the first bind from the initramfs, because the root
+filesystem is not mounted yet, but loads on first use: PM4 330043, PFP 330020.
+GPU devfreq does not initialise. The owner has not yet confirmed the picture
+physically. See [GPU evidence](../evidence/2026-10-30-gpu-freedreno.json).
+
 ## Work required
 
-1. Describe the GPU IOMMU in the MSM8226 SoC DT using the mainline
-   `qcom_iommu` (msm-iommu-v1) binding. Map the GPU user/privileged contexts,
-   supplies, clocks and BFB values as for the MDP IOMMU, and attach `iommus` to
-   the GPU node. Keep this SoC change separate from the Fx0 board enable.
-2. Enable the GPU on the Fx0, RAM-test probe, firmware load and context faults,
-   then measure with `kmscube` and `glmark2-es2` (renderer string, correctness,
-   frame rate, memory) and run a compositor (Sway/Phosh) on Freedreno.
+1. Done in RAM: GPU IOMMU, probe, firmware and `kmscube`. Physical
+   confirmation by the owner is pending.
+2. Fix devfreq, run a compositor (Sway/Phosh) on Freedreno, and measure
+   correctness, memory and stability.
 3. Qualify GPU power collapse, runtime PM and resume together with the display
    IOMMU, then package it and remove the obsolete carveout parameters.
 
-The GPU IOMMU description is the blocking piece. The rest reuses existing
-mainline drivers.
+

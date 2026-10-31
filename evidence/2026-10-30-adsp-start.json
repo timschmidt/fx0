@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-30",
+  "scope": "RAM boot of installed r6 kernel/initramfs with ADSP enabled in the DTB; no audio or sensor function tested",
+  "source_commit": "6fb0c0cae80b",
+  "image_sha256": "73dc296ed678c8a0709246bc447971ec697636321163632ea43f13efe9ada2fd",
+  "firmware_fit": "adsp.mdt segments 0x0dc00000-0x0f000000 inside the 25 MiB SoC reservation",
+  "result": {
+    "remoteproc": "adsp running (adsp.mdt), stable at 129 s, no crash/watchdog",
+    "taint": 0,
+    "adsp_smd_channels": [
+      "apr",
+      "apr_apps2",
+      "apr_audio_svc",
+      "IPCRTR",
+      "DIAG",
+      "DIAG_CNTL",
+      "fastrpcsmd-apps-dsp",
+      "sys_mon"
+    ],
+    "qrtr_services_node5": {
+      "256": "Sensor Manager (SMGR), instances 0 and 1",
+      "769": "SLIMbus control service",
+      "15": "test service",
+      "257,263,264,269": "unidentified (sensor-related candidates)"
+    },
+    "wifi_bluetooth_with_adsp": "phy0 and hci0 present, wlan0 connected"
+  },
+  "wcnss_channel_note": "WCNSS also exposes APPS_FM; FM product exposure still requires evidence",
+  "tools_installed": [
+    "qrtr 1.2"
+  ],
+  "implications": [
+    "SLIMbus NGD path has its ADSP QMI service",
+    "QDSP6 APR channels exist for audio",
+    "stock sensor path (SMGR) is available over QRTR"
+  ]
+}

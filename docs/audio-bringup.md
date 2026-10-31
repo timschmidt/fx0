@@ -40,10 +40,19 @@ and the running 6.18.59-r6 configuration:
 
 Public trees contain no mainline-style Tapan driver to build on.
 
+## ADSP start
+
+The ADSP now starts from RAM on the r6 kernel with the
+board enable (`6fb0c0cae80b`). Its stock firmware fits the SoC reservation and
+runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
+**SLIMbus control service** (QMI 769) needed by the NGD controller, and the
+**Sensor Manager** (QMI 256) with other sensor services. See
+[ADSP evidence](../evidence/2026-10-30-adsp-start.json).
+
 ## Work required
 
-1. Enable the ADSP on the Fx0 board and verify firmware start, the QMI service
-   list and APR/APR-service versions. The sensor path depends on the same ADSP
+1. Done: the ADSP starts and its QMI services are listed. Still to check: APR
+   service versions. The sensor path depends on the same ADSP
    decision. Check whether audio and an AP-owned IMU can coexist.
 2. Read the MSM8226 NGD version register. Check the ADSP QMI SLIMbus service
    against `qcom-ngd-ctrl`, and add a compatible only if the protocol really
