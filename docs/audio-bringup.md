@@ -72,6 +72,17 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   the QMI power vote the access may hang. The test is to bind `qcom-ngd-ctrl`
   (which makes the vote) or to read the version after it.
 
+- **Codec groundwork.** [`scripts/wcd9306_regmap_gen.py`](../scripts/wcd9306_regmap_gen.py)
+  turns the vendor WCD9306 (Tapan) register header and tables into
+  mainline-style `WCD9306_*` definitions, a `reg_default` table and a readable
+  map. The vendor sources give 488 registers in a flat 0x400 space, 484 of them
+  readable, with 209 non-zero reset defaults. The generator cross-checks the
+  header's power-on values against the reset table and stops on unknown
+  registers, unparsed values or a short table. A host compile check confirms
+  the output is consistent. The vendor driver's volatile rules (top-level
+  registers below 0x100, MBHC, IIR/ANC coefficients, digital gains, HPH
+  status) are code and will be translated by hand in the driver.
+
 ## Work required
 
 1. Done: the ADSP starts and its QMI services are listed. Still to check: APR
