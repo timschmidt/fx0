@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-30",
+  "scope": "Signed installed r7: r6 plus Fx0 ADSP enable, MSM8226 GPU IOMMU and GPU enable, devfreq config",
+  "package": {
+    "package": "linux-postmarketos-qcom-msm8226-6.18.59-r7.apk",
+    "bytes": 17754120,
+    "sha256": "86d787ce95871fede34f71c5e53569291a8ab436bc08286c86362de33df763cb",
+    "source": "4598182e1708f22a7e58c45e4479d15dc80b5f68",
+    "recipe": "68600046ae970267fbf800c2fbb333de302ba683",
+    "signing_key": "pmos@local-6ae3f5f3.rsa.pub (trusted for r4)",
+    "DTB_byte_identical_to_RAM_tested": true,
+    "DTB_sha256": "28d84b3b8d1699490a80372f1c3165ad514cdbda1763ee794015e63e79ef5508",
+    "kernel_sha256": "6026106b71d3c7413a5fc041efd0af6a050ca992077533c667063e65c14459df",
+    "module_files": 424
+  },
+  "config_change": [
+    "CONFIG_PM_DEVFREQ=y",
+    "CONFIG_DEVFREQ_GOV_SIMPLE_ONDEMAND=y",
+    "CONFIG_DEVFREQ_THERMAL=y"
+  ],
+  "rollback_checkpoint": "exact r6 boot/modules/config, r6 APK, raw boot and both GPTs on two host filesystems",
+  "trusted_dry_run": "6.18.59-r6 -> 6.18.59-r7",
+  "filesystem_verification": {
+    "package_install_success": true,
+    "package_version": "6.18.59-r7",
+    "native_kernel_DTB_match_exact_APK": true,
+    "fallback_boot_files_match_preupdate": true,
+    "old_module_release_retained": true,
+    "new_module_filesystem": "ext4",
+    "both_GPTs_byte_identical": true,
+    "raw_boot_partition_sha256_unchanged": true,
+    "initramfs_bytes": 11957014,
+    "initramfs_sha256": "921d9c395080d762be7508decdf172c15c928849797e4f6c08b6e119ccdf8067",
+    "initramfs_prefix_original_cleanup_bytes_verified": true,
+    "initramfs_contains_only_native_ABI": true,
+    "RAM_overlay_hook_absent": true,
+    "explicit_Fx0_DTB_and_native16_fallback_entry": true,
+    "installed_filesystem_boot_tested": false,
+    "standalone_rescue_entry_preserved": true
+  },
+  "installed_boot": {
+    "build": 8,
+    "taint": 0,
+    "display": "msmdrmfb, four controls auto",
+    "wcnss": "running, L3 vddmx/L6 vddpx consumers, phy0+hci0, wlan0 connected",
+    "adsp": "running",
+    "gpu": {
+      "renderer": "FD305 (freedreno)",
+      "devfreq_governor": "simple_ondemand",
+      "frequencies_hz": [
+        19000000,
+        200000000,
+        320000000,
+        450000000
+      ]
+    },
+    "ui": "tinydm active after documented gate",
+    "module_hashes_match_apk": [
+      "qcom_wcnss_pil",
+      "cfg80211"
+    ]
+  },
+  "verification_script_note": "first check matched the GPU's harmless 'supply vddcx not found' dummy-regulator notice; narrowed to the WCNSS device",
+  "open": [
+    "a330 firmware unavailable at first bind from initramfs (recovers on first use)",
+    "compositor on Freedreno (Sxmo wrapper still forces Pixman)",
+    "owner visual confirmation of accelerated output",
+    "GPU runtime PM/suspend",
+    "obsolete msm.allow_vram_carveout/msm.vram command-line parameters"
+  ]
+}

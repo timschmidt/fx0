@@ -1,16 +1,15 @@
 # Building Fx0 diagnostic images
 
-Current checkpoint: signed native **6.18.59-r6**, Linux source
-`34c341b9039342611d3ca644a9aa9593bdad1c89` (`integration/fx0-wireless-r4`: r4
-plus WCNSS and three fixes), pmaports recipe
-`a725b57f80b5b0089bf82db35c6bb4cdfdb85715`. The rootless container build needs
-`python3` in its package list. The same rollback checkpoint, trusted dry run,
-supervised install, exact readbacks and installed boot pass, with taint 0 and
-Wi-Fi qualified; see
-[r6 evidence](../evidence/2026-10-30-wifi-r6-qualification.json). The r4 record
-below keeps its scope, and the rescue procedure is in
-[standalone rescue](../diagnostics/standalone-rescue/README.md). Factory
-restoration, final layout and remaining hardware qualification are still open.
+Current checkpoint: signed native **6.18.59-r7**, Linux source
+`4598182e1708f22a7e58c45e4479d15dc80b5f68` (`integration/fx0-gpu`: r6 plus the
+ADSP enable and MSM8226 GPU IOMMU), pmaports recipe
+`68600046ae970267fbf800c2fbb333de302ba683`, which adds devfreq to the
+configuration. Rollback checkpoint, trusted dry run, supervised install, exact
+readbacks and installed boot pass, with taint 0, the ADSP running and Freedreno
+FD305 with devfreq; see
+[r7 evidence](../evidence/2026-10-30-native-r7-gpu-adsp.json). Earlier records
+keep their scope. Factory restoration, final layout and remaining hardware
+qualification are still open.
 
 These images are development diagnostics. UART/USB are the only board functions described initially. A successful build does not establish physical boot or Nura hardware acceptance.
 

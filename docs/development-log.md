@@ -1871,3 +1871,12 @@ vsync, with no IOMMU faults. My kmscube harness initially failed only because
 kmscube exits when stdin is readable. Devfreq, the compositor, owner visual
 confirmation and packaging remain. The phone is back on installed r6 with
 taint 0.
+
+Signed r7 (recipe `68600046a`, source `4598182e1708`) is installed by the
+standard checkpoint, preflight, supervised-install and readback sequence. It
+adds the ADSP, the MSM8226 GPU IOMMU and GPU, and devfreq: the GPU devfreq
+failure was only the missing `CONFIG_PM_DEVFREQ`. Installed boot build 8 has
+taint 0, the ADSP running, freedreno FD305, simple-ondemand at 19–450 MHz,
+Wi-Fi and Bluetooth, and the UI active. My first verification check matched
+the GPU's harmless dummy-vddcx notice and was narrowed. See
+[r7 evidence](../evidence/2026-10-30-native-r7-gpu-adsp.json).
