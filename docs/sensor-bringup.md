@@ -106,6 +106,37 @@ lines were not caused by ADSP ownership. An unpowered sensor rail remains the
 leading explanation. The stock path normally configures the Sensor Manager
 from the AP daemon (`sensors.qcom`), which Nura does not run.
 
+## Native direct access works (2026-10-31)
+
+The sensors answer the application processor directly once their rails are
+on. The vendor kernel never configured BLSP1 I2C2 (GPIO6/7) because the ADSP
+owned it, so the rails were found by switching unclaimed candidates one at a
+time and reading only ID registers:
+
+- **LVS1** (1.8 V switch, no AP consumer in the vendor description) powers
+  the sensor I/O and the bus pull-ups. With it on, the IMU returns WHO_AM_I
+  **0x74**, confirming an **MPU-6515**.
+- **L19** (2.85 V) powers the magnetometer, which returns WIA **0x49**: an
+  **ALPS HSCDTD008A**, supported by mainline `ak8974`.
+- L23 is not involved.
+- LVS1 needs about 5 ms before the bus works (no delay: NACK; 2 ms: zeros;
+  5 ms and longer: the ID). Both drivers talk sooner, so the DT gives LVS1 a
+  10 ms enable delay.
+
+With fx0-linux `integration/fx0-imu`, mainline `inv_mpu6050` probes at boot,
+`ak8974` reads a steady field, and the PM8226 vibrator appears as a
+force-feedback device. Running the vibrator at the vendor's 2.4 V raises the
+accelerometer's in-plane noise from about 35 to 5,000–9,000 counts, and the
+gyro responds as well. See [evidence](../evidence/2026-10-31-imu-vibrator.json).
+
+Still open:
+- At rest the acceleration magnitude is 0.91 g instead of 1 g.
+- Mounting matrices.
+- `CONFIG_AK8974` in the kernel package.
+- Suspend and IRQ wake.
+- The DMP: mainline `inv_mpu6050` neither loads nor runs DMP firmware. The
+  DMP gates need either a DMP-capable driver or InvenSense firmware support.
+
 ## Next implementation steps
 
 1. Capture a working stock sensor baseline in a bounded RAM environment. Verify

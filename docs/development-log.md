@@ -2025,3 +2025,12 @@ The rear camera produced its first real image on mainline: a complete
 IDs and programming the RDI frame geometry. Some buffers still lose 64 KiB
 regions to IOMMU translation faults; a TLB invalidate after mapping did not
 change that.
+
+The motion sensors and vibrator work on mainline. BLSP1 I2C2, which the
+vendor left to the ADSP, comes up once LVS1 powers the sensor I/O and bus
+pull-ups; the IMU then identifies as an MPU-6515 (0x74). L19 powers an ALPS
+HSCDTD008A magnetometer (0x49). LVS1 needs about 5 ms before the bus answers,
+so its DT node carries a 10 ms enable delay. `inv_mpu6050` probes at boot, and
+running the PM8226 vibrator at the vendor's 2.4 V shows up clearly in the
+accelerometer and gyro. (A host reboot unmounted Disk B, which holds the work
+trees behind /tmp/fx0-storage; nothing was lost.)
