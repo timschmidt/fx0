@@ -127,6 +127,15 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   running when the module loads, so the test restarted the ADSP once
   ([evidence](../evidence/2026-10-31-slimbus-tapan-enumeration.json)).
 
+- **Codec MCLK source.** The vendor machine driver takes the 9.6 MHz Tapan
+  MCLK as `osr_clk`. Vendor `clock-8226.c` maps that to `div_clk1`, the RPM
+  XO buffer with ID 11 (the PMIC divider output). Mainline `clk-smd-rpm`
+  already provides `RPM_SMD_DIV_CLK1` for `qcom,rpmcc-msm8226`, so the codec
+  node can use `clocks = <&rpmcc RPM_SMD_DIV_CLK1>`. The rate it reports
+  (19.2 MHz) is nominal; the RPM only gates the buffer. The `wcd9306` driver
+  then needs the vendor's MCLK/RCO switch (`tapan_mclk_enable`) before any
+  analog path works.
+
 - **APR works and matches mainline (2026-10-31).** On the probe RAM boot,
   `qcom,apr-v2` bound on `apr_audio_svc`, the DSP reported ready, and it
   returned API versions for core (0x40000), AFE (0x200000), ASM (0x70002), ADM
