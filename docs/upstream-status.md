@@ -32,6 +32,13 @@ and no Signed-off-by, which the owner adds before sending.
 
 Both drop out when the integration branch moves to a kernel that contains them.
 
+## Superseded upstream
+
+- `d260404eef69` dt-bindings: remoteproc: qcom,wcnss: Bound the stop-state
+  specifier. Mainline fixed the same dtschema diagnostic differently in
+  `37534121c4e4` ("dt-bindings: Fix phandle-array constraints, again"). Drop it
+  at the next rebase.
+
 ## Other authors' posted work carried downstream
 
 These are not ours to submit. Track them upstream, test them on the Fx0 and
@@ -50,8 +57,7 @@ Ordered roughly by how independent they are.
 
 | Change | Target | Waits for |
 | --- | --- | --- |
-| `d260404eef69` dt-bindings: wcnss stop-state specifier bound | remoteproc bindings | Nothing |
-| `b2512c53f035` msm8226 WCNSS DXE level interrupts | qcom arm32 DTS | Dudziak's MSM8226 WCNSS node |
+| `b2512c53f035` msm8226 WCNSS DXE level interrupts | Review comment on Dudziak's MSM8226 WCNSS node (mainline has no node yet) | Owner approval to reply on that series |
 | `7297314a644f` Input: rmi4 assert reset before releasing supplies | input | Vivchar's reset-GPIO patch |
 | `a434ee44e3df` drm/msm/dsi/phy per-lane configuration on MSM8226 | drm/msm | Nothing; needs a non-Fx0 MSM8226 regression test |
 | `dc2430e91f81`, `a22c81819da3`, `51190c24d336`, `9723635946c4` LG Fx0 JDI in-cell panel binding and driver | drm-misc | Fold the three driver fixes into one driver patch |
