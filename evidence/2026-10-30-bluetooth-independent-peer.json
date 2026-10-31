@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-30",
+  "scope": "Bluetooth on installed signed r6 against an independent owner-provided USB adapter; pairing removed afterwards. No HID, audio or resume pass.",
+  "peer": "Plugable Bluetooth 4.0 USB adapter (Broadcom BCM20702A0) on the development host",
+  "phone": "6.18.59-r6 build 7; Qualcomm HCI v6 over btqcomsmd; WLAN associated on 5 GHz ch36 during the run",
+  "results": {
+    "unpaired_l2ping": "10/10 (about 7 ms) after making the peer discoverable; 'Connection refused' while it was not discoverable (peer accept policy)",
+    "inquiry": "host finds the phone in 1 s",
+    "phone_initiated_pairing": "success on first attempt, bonded (SSP numeric comparison confirmed on both sides)",
+    "rfcomm_transfers": [
+      {
+        "connection": 0,
+        "bytes": 4194304,
+        "seconds": 27.9,
+        "sha256_match": true
+      },
+      {
+        "connection": 1,
+        "bytes": 4194304,
+        "seconds": 26.81,
+        "sha256_match": true
+      },
+      {
+        "connection": 2,
+        "bytes": 4194304,
+        "seconds": 27.12,
+        "sha256_match": true
+      }
+    ],
+    "rfcomm_throughput_Mbit_s": 1.23,
+    "reconnect_with_stored_key": "3 separate RFCOMM connections after bonding",
+    "bonded_l2ping": "4 replies (11-44 ms), then reset by peer; consistent with the peer closing an idle profile-less link",
+    "traced_paging_to_phone": "host page reaches the phone and is accepted (earlier run on this adapter)"
+  },
+  "harness_lessons": [
+    "peer must be discoverable or the device known, or BlueZ rejects/never accepts unknown connections",
+    "confirmation must be answered on both sides for every pairing attempt",
+    "the earlier PC-adapter failures and WLAN-state correlation were harness/peer artifacts"
+  ],
+  "cleanup": {
+    "phone_bonds_after": 0,
+    "phone_removed_from_peer": true,
+    "peer_discoverable": false,
+    "owner_existing_peer_pairings_untouched": true
+  },
+  "open": [
+    "HID and audio profiles (need a peripheral in pairing mode)",
+    "Bluetooth address source (.bt_nv.bin)",
+    "resume",
+    "whether Iris rail state with WLAN off affects Bluetooth"
+  ]
+}

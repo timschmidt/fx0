@@ -1810,3 +1810,13 @@ after a clean phone reboot. The earlier single runs, and my reading of prima's
 BTC message, were wrong. Host-side state is a likely confound. Separating it
 needs an independent Bluetooth peer. The experimental wcn36xx BTC module was
 only loaded by a swap and is not installed.
+
+The owner provided a Plugable Bluetooth 4.0 USB adapter (Broadcom BCM20702A0)
+as an independent peer. Once the peer was discoverable, unpaired `l2ping`
+passed 10/10. Phone-initiated pairing then bonded on the first attempt, after I
+fixed the harness to confirm both sides on every attempt. Three bonded RFCOMM
+connections each delivered 4 MiB with matching SHA-256 at about 1.2 Mbit/s,
+with WLAN on 5 GHz. The earlier failures came from peer acceptance policy and
+my pairing harness, not from the phone. The pairing was removed; the phone has
+0 bonds and the owner's existing peer pairings are untouched. HID/audio
+profiles, address source and resume remain.

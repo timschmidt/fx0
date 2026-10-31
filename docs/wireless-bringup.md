@@ -201,6 +201,22 @@ observations remain open questions:
 
 See [Bluetooth evidence](../evidence/2026-10-30-bluetooth-host-pairing.json).
 
+### Independent peer
+
+The owner provided a Plugable Bluetooth 4.0 USB adapter (Broadcom BCM20702A0)
+as an independent peer. Unpaired phone-to-peer `l2ping` passes 10/10 at about
+7 ms once the peer is discoverable. Before that, BlueZ on the peer refuses the
+unknown device, which explains the earlier PC-adapter failures.
+
+With the harness confirming on both sides, phone-initiated pairing bonds on the
+first attempt. Three separate bonded RFCOMM connections each deliver 4 MiB with
+matching SHA-256, at about 1.2 Mbit/s, while WLAN is associated on 5 GHz.
+Bonded `l2ping` gets 4 replies before the peer closes the idle, profile-less
+link. The phone's Bluetooth controller, pairing, encryption, reconnection with
+the stored key and data transfer therefore work. The pairing was removed on
+both sides; the owner's existing peer pairings were untouched. See
+[peer evidence](../evidence/2026-10-30-bluetooth-independent-peer.json).
+
 ## MAC addresses
 
 When connected, NetworkManager applies Nura's default stable cloned MAC per
@@ -219,9 +235,9 @@ BD_ADDR record whose vendor is not evident. Full addresses stay private.
    suspend/resume once system suspend is qualified.
 2. Decide the MAC source after a stock runtime reading, then implement it without
    publishing the per-unit values.
-3. Repeat Bluetooth connection tests with an independent peer. Then test
-   whether the Iris rail state with WLAN off and prima's BTC CFG items affect
-   Bluetooth, and retest RFCOMM, HID and audio profiles.
+3. Test HID and audio profiles with a peripheral in pairing mode. Check whether
+   Bluetooth still works with the WLAN radio off (Iris rails off), and decide
+   the Bluetooth address source.
 4. Describe the TLMM sleep state, then test WCNSS across real system suspend.
    Check hotspot capability.
 5. Upstream submission is gated on owner approval. The regulator fix is
