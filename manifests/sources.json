@@ -86,8 +86,8 @@
       "url": "https://github.com/timschmidt/fx0-pmaports",
       "branch": "integration/fx0-v26.06",
       "base_commit": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
-      "status": "Current installed kernel r6 recipe (WCNSS plus fixes), built rootless with verified recipe provenance and signed with the trusted local key. Trusted upgrade r5->r6, exact readbacks and eMMC boot with taint 0 pass. The UPower r4 recipe is on integration/fx0-upower-r4. Factory restoration and final layout remain open.",
-      "commit": "a725b57f80b5b0089bf82db35c6bb4cdfdb85715"
+      "status": "Current installed kernel r7 recipe (r6 plus ADSP, GPU IOMMU/GPU, devfreq config), built rootless with verified provenance, signed with the trusted local key; trusted r6->r7 upgrade, readbacks and eMMC boot with taint 0 pass.",
+      "commit": "68600046ae970267fbf800c2fbb333de302ba683"
     },
     {
       "name": "linux-display-iommu-experimental",
@@ -110,6 +110,14 @@
       "commit": "34c341b9039342611d3ca644a9aa9593bdad1c89",
       "base_commit": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
       "status": "Installed signed r6 source: WCNSS board, Pronto regulator fix, DXE trigger fix, cfg80211 scan-done fix. Wi-Fi association/DHCP/DNS/traffic/reconnect pass on installed r6 with taint 0. Bluetooth pairing, suspend, hotspot, soak and MAC policy open."
+    },
+    {
+      "name": "linux-gpu",
+      "url": "https://github.com/timschmidt/fx0-linux",
+      "branch": "integration/fx0-gpu",
+      "commit": "4598182e1708f22a7e58c45e4479d15dc80b5f68",
+      "base_commit": "34c341b9039342611d3ca644a9aa9593bdad1c89",
+      "status": "Installed signed r7 source: ADSP enable, MSM8226 GPU IOMMU binding/driver/DT, Fx0 GPU enable. Freedreno FD305 GLES 3.0, kmscube 60 fps and devfreq pass; compositor on GPU, firmware-at-first-bind and power management open."
     },
     {
       "name": "boot-deploy-offset-preparation",

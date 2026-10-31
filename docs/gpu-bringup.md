@@ -46,8 +46,10 @@ physically. See [GPU evidence](../evidence/2026-10-30-gpu-freedreno.json).
 
 1. Done in RAM: GPU IOMMU, probe, firmware and `kmscube`. Physical
    confirmation by the owner is pending.
-2. Fix devfreq, run a compositor (Sway/Phosh) on Freedreno, and measure
-   correctness, memory and stability.
+2. Done in installed r7: devfreq (the configuration lacked `CONFIG_PM_DEVFREQ`)
+   now runs simple-ondemand at 19–450 MHz. Next, run a compositor (Sway/Phosh)
+   on Freedreno instead of the Sxmo wrapper's Pixman, and measure correctness,
+   memory and stability.
 3. Qualify GPU power collapse, runtime PM and resume together with the display
    IOMMU, then package it and remove the obsolete carveout parameters.
 
