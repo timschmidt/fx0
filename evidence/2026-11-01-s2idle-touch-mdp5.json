@@ -37,9 +37,16 @@
     "power_key_wake": "r19: s2idle with a 180 s RTC backstop; owner pressed Power after about 10 s; resumed after 13 s (rtcwake rc 0, suspend_stats success +1, taint 0); owner confirms Sxmo and touch after wake"
   },
   "open": [
-    "sway output power on intermittently fails with 'Backend commit failed' (kernel test commits pass, no real commit is submitted); needs a debug-level sway/wlroots session",
+    "sway output power on: first attempt after power off fails deterministically, second succeeds (wlroots 0.20.2 / sway 1.12-rc3)",
     "Sxmo lock/screen-off/suspend states (SXMO_STATES=unlock fixture still set)",
     "cpuidle/SPM states for real power savings in s2idle",
     "suspend current draw"
-  ]
+  ],
+  "sway_power_on": {
+    "versions": "sway 1.12-rc3, wlroots 0.20.2 (Nura v26.06)",
+    "repro": "swaymsg output DSI-1 power off; sleep 3; swaymsg output DSI-1 power on -> sway logs 'Backend commit failed' and the output stays off; an immediate second 'power on' succeeds (3 of 3)",
+    "analysis": "with sway -d and drm.debug=0x16: wlroots' swapchain test commit and a second test pass in the kernel (no warnings, mdp5 assigns DMA0 and SMP blocks), sway renders the first frame, then the real commit fails before any ioctl and wlroots logs nothing; the session stays active; every logged failure path in the wlroots 0.20.2 DRM backend was ruled out by reading the source",
+    "impact": "Sxmo screen-on after blanking would need a second attempt",
+    "status": "open; userspace (wlroots/sway) bug; a report upstream needs the owner's approval"
+  }
 }
