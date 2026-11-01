@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-01",
+  "scope": "Speaker silent since kernel r15 era; investigation (unresolved)",
+  "symptom": "PipeWire playback runs (PCM RUNNING, hw_ptr advancing), every DAPM widget on the speaker path is on, MCLK (RPM div_clk1) enabled, speaker boost GPIO60 high, codec registers read live equal the cache and match the stock Firefox OS playback dump on the speaker driver, yet the owner hears nothing; no kernel errors",
+  "what_worked_before": "r14 installed (2026-11-01 morning, right after the stock capture): owner heard clean tones at 100% PipeWire volume",
+  "owner_listening_results": {
+    "heard": [
+      "r14 kernel+DTB+initramfs RAM boot",
+      "r14 kernel + r19 DTB without the framebuffer node (RAM)",
+      "r19 kernel + DTB with framebuffer node holding only the power domain (RAM, first try)"
+    ],
+    "silent": [
+      "r19 installed (several boots, codec -24..0 dB)",
+      "r14 kernel + r19 DTB (RAM)",
+      "r19 kernel + DTB without IMU vdd-supply (RAM)",
+      "r20 installed (framebuffer power domain only) x2",
+      "r20 DT via RAM boot (round 2)",
+      "r20 DT + PMIC GPIO8 (BOOST_BYP) driven low like stock (RAM)"
+    ]
+  },
+  "conclusion": "not a single DT or kernel change: the same kernel and identical DTB were heard once and silent in later boots; the failure looks per-boot intermittent with a low success rate since the r14 day. Ruled out: stale ALSA controls, PipeWire (direct ALSA plays fail differently: S16 AFE start error 1), SLIMbus QMI timeout (present in every boot), MCLK/clock tree, IMU LVS1 supply, framebuffer clocks (r20 dropped them; harmless), PMIC GPIO8 alone, phone position",
+  "side_findings": [
+    "direct S16 playback to hw:0,0 fails: AFE port start returns DSP error 1 (port 0x4000); PipeWire uses S24 and starts fine",
+    "the RX3 digital gain default came from an idle stock snapshot (-24 dB); stock plays at 0 dB",
+    "the boot-restored ALSA state sets RX3 to 0 dB"
+  ],
+  "next": [
+    "an objective detector (record the speaker with the phone's microphone once the TX path works, or an external recording) so owner listening is not the only signal",
+    "compare a full codec/ifc/PMIC/TLMM state capture from an audible boot against the silent captures in local/audio-bisect/state-*.txt",
+    "check for an analog/connector fault by booting stock once"
+  ],
+  "kernel_r20": "fx0-linux integration/fx0-fb-pd-only: framebuffer node keeps only the MDSS power domain (7 of 7 hold-free boots clean); installed"
+}
