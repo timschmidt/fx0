@@ -11,7 +11,7 @@
     "card": "/proc/asound/cards: 0 [Fx0] apq8096 - LG Fx0; controls RX3 Digital Volume, RX3 MIX1 INP1, SPK DAC Switch, SLIMBUS_0_RX Audio Mixer MultiMedia1",
     "playback": "aplay of 48 kHz stereo S16 to hw:0,0 runs without AFE/ASoC errors",
     "codec_registers_during_playback": "BIAS_CENTRAL_BG_CTL 0x55, CLK_BUFF_EN1 0x05, CLK_BUFF_EN2 0x04, CDC_CLK_MCLK_CTL 0x01, CDC_CLK_RX_B1_CTL 0x04 (RX3), CDC_CONN_RX3_B1_CTL 0x05 (RX1), SPKR_DRV_EN 0xef (PA on)",
-    "audible": "NO: owner listening tests on 2026-11-01 heard nothing (three runs, quiet and loud 1 kHz tones)",
+    "audible": "YES (2026-11-01): owner heard both test tones clean, first in a mono experiment, then with the final stereo configuration",
     "runs": {
       "speaker-04": [
         "numid=20,iface=MIXER,name='SLIMBUS_0_RX Audio Mixer MultiMedia1'",
@@ -42,10 +42,9 @@
     }
   },
   "open": [
-    "owner listening test",
-    "package (QDSP6 needs built-in ASoC compress/topology)",
-    "UCM/PipeWire profile",
-    "headphone/earpiece/mic paths, MBHC jack detection, WCD9302 QFUSE confirmation"
+    "kernel package (QDSP6 needs built-in ASoC compress/topology)",
+    "ALSA UCM for PipeWire (speaker device: RX3 MIX1 INP1/INP2, SPK DAC Switch, SLIMBUS_0_RX Audio Mixer MultiMedia1)",
+    "headphones, earpiece, microphones, MBHC jack detection"
   ],
   "diagnosis_2026_11_01": {
     "dsp_side": "PCM hw_ptr advances about 49,900 frames/s; aplay of 10 s takes 10.03 s: ASM/ADM/AFE consume the stream",
@@ -75,5 +74,22 @@
       "check the interpolator/RX input enables against the WCD9335 programming model",
       "review CDC_CONN_RX_SB_B1/B2 semantics"
     ]
+  },
+  "stock_capture_2026_11_01": {
+    "procedure": "owner-approved: verified whole-eMMC snapshot of Nura r13 (sha256 65a8b043791a2639...), restore of the verified old-layout pre-rehearsal image, stock partition writes and recovery wipe (all device hashes matched), stock Firefox OS with adb root; captured tapan_codec codec_reg, tinymix and DAPM state during speaker playback; returned via stock fastboot -> RAM lk2nd -> rescue and restored the Nura snapshot (full readback matched); Nura r13 boots with taint 0",
+    "stock_path": "MultiMedia1 -> SLIMBUS_0_RX (SLIM_0_RX Channels: One, S16_LE) -> SLIM RX1 MUX=AIF1_PB -> RX3 MIX1 INP1=RX1 -> SPK DAC -> SPK PA -> SPK_OUT; DAPM: MCLK, VDD_SPKDRV, EXT_VDD_SPKR, RX_BIAS on; RX3 Digital Volume 60 (-24 dB), SPK DRV Volume 8",
+    "differences_applied": [
+      "vendor tapan_2_x_reg_reset_values (SPKR_DRV_OCP_CTL 0x97, CLIP_DET 0x01, IEC 0x00, class-H defaults)",
+      "RX_BIAS (RX_COM_BIAS bit 7) as a speaker supply",
+      "stock -24 dB digital gain, rewritten after interpolator enable (owner: stock volume was already loud)"
+    ]
+  },
+  "root_cause": {
+    "finding": "with a two-port SLIMbus group (RX1+RX2) and only RX1 consumed, the codec stalls the group: both ports overflow and nothing plays. Stock streams mono (one port). A mono experiment played; the final driver feeds RX1 and RX2 into RX3 MIX1 (INP1/INP2), so a stereo stream plays as mono on the speaker with both ports consumed (port status: closed only, no overflow)",
+    "runs": [
+      "speaker-listen-05 (mono experiment, heard)",
+      "speaker-listen-06 (stereo, INP1=RX1 INP2=RX2, heard)"
+    ],
+    "commit": "fx0-linux integration/fx0-audio"
   }
 }

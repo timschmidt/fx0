@@ -150,6 +150,17 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   and speaker amplifier on. One fix was needed: the codec must report only the
   DAI's own SLIMbus channels, because `q6afe-dai` copies that count into the
   port configuration. With five channels the ADSP refused to start the port.
+  **The speaker plays (2026-11-01).** The owner hears clean test tones. With
+  the owner's approval, the stock system was booted once from the verified
+  snapshots and its codec state captured during speaker playback, then Nura
+  was restored byte for byte. That capture identified the 2.x speaker-driver
+  defaults, the RX bias and the stock gain (−24 dB). The decisive finding:
+  stock streams mono. With a two-port SLIMbus group (RX1 + RX2) and only RX1
+  read, the codec stalls the whole group. The driver now feeds RX1 and RX2
+  into the RX3 mixer, so stereo plays as mono on the speaker
+  ([evidence](../evidence/2026-10-31-first-speaker-playback.json)).
+
+  Earlier diagnosis, kept for the record:
   **The speaker stays silent (owner listening tests, 2026-11-01).** The DSP
   side streams at 48 kHz, and the boost, MCLK pin and codec clocks are on. But
   on a fresh stream both SLIMbus RX ports overflow within half a second: data

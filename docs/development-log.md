@@ -2080,3 +2080,11 @@ RX ports overflowing: data arrives and the codec's RX path never reads it,
 whether clocked from the external MCLK or its internal oscillator. The
 vendor port setup and the WCD9302 routing are confirmed. Next: capture the
 codec registers while stock firmware plays and diff them.
+
+The speaker plays. With the owner's approval, the stock system was booted
+once from the verified snapshots, and its codec state was captured while it
+played a ringtone. Nura was then restored byte for byte. The capture gave
+the missing speaker-driver defaults, the RX bias and the stock gain. A mono
+experiment then found the real blocker: in a two-port SLIMbus group the codec
+stalls unless every port is read. Feeding both stereo channels into the
+speaker mixer fixed it. The owner heard clean tones.
