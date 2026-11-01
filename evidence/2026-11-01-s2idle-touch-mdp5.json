@@ -33,11 +33,11 @@
       "sleep_s": 20,
       "criteria": "rtcwake rc 0, suspend_stats success +1, taint 0, touch IC answers, both remoteprocs running, sound card, msmdrmfb, sway running"
     },
-    "r19_dpms": "sway output power off/on: no mdp5 warning, taint 0; the panel follower powers the touch IC down with the panel (reset asserted, L28 off) and up again (IC answers)"
+    "r19_dpms": "sway output power off/on: no mdp5 warning, taint 0; the panel follower powers the touch IC down with the panel (reset asserted, L28 off) and up again (IC answers)",
+    "power_key_wake": "r19: s2idle with a 180 s RTC backstop; owner pressed Power after about 10 s; resumed after 13 s (rtcwake rc 0, suspend_stats success +1, taint 0); owner confirms Sxmo and touch after wake"
   },
   "open": [
     "sway output power on intermittently fails with 'Backend commit failed' (kernel test commits pass, no real commit is submitted); needs a debug-level sway/wlroots session",
-    "power-key wake from s2idle (owner)",
     "Sxmo lock/screen-off/suspend states (SXMO_STATES=unlock fixture still set)",
     "cpuidle/SPM states for real power savings in s2idle",
     "suspend current draw"
