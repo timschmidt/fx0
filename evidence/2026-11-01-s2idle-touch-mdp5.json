@@ -48,5 +48,11 @@
     "analysis": "with sway -d and drm.debug=0x16: wlroots' swapchain test commit and a second test pass in the kernel (no warnings, mdp5 assigns DMA0 and SMP blocks), sway renders the first frame, then the real commit fails before any ioctl and wlroots logs nothing; the session stays active; every logged failure path in the wlroots 0.20.2 DRM backend was ruled out by reading the source",
     "impact": "Sxmo screen-on after blanking would need a second attempt",
     "status": "open; userspace (wlroots/sway) bug; a report upstream needs the owner's approval"
+  },
+  "cpuidle_attempt": {
+    "change": "qcom-msm8226.dtsi: idle-states/cpu-spc (qcom,idle-state-spc; entry 150, exit 350, min residency 2000 us from the stock msm8226-v2-pm.dtsi standalone_pc latency 500 us) and cpu-idle-states on all four CPUs; the SPM driver already carries msm8226 register data (Dudziak 2021) and CONFIG_ARM_QCOM_SPM_CPUIDLE=y",
+    "result": "RAM boot of installed r19 with that DTB hung before USB/display takeover (lk2nd fastboot screen still shown, no USB device, no ramoops); owner force-restarted; installed system unchanged",
+    "next": "isolate whether the hang is the probe-time SCM warm-boot-address call on LG TrustZone or the first SPC entry (e.g. probe without entering the state, or one CPU only), ideally with a serial console",
+    "patch": "local/cpuidle/spc-attempt-01.patch (not committed)"
   }
 }
