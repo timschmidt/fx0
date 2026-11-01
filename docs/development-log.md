@@ -2065,3 +2065,10 @@ The rear camera is in the installed kernel (r13). Packaging it exposed a
 bus-clock limit: at the default 100 MHz multimedia AXI clock only 46% of
 each full-size frame arrives. CAMSS now raises that clock to 266.67 MHz
 while the camera runs, and full frames complete on a normal boot.
+
+Audio reached the speaker amplifier. On a probe kernel with mainline QDSP6,
+mainline SLIMbus and a new WCD9306 codec component, the "LG Fx0" sound card
+plays a test tone with no errors: AFE port, SLIMbus channels, codec clocks,
+RX3 interpolator and speaker amplifier all switch on. The fix that made it
+work: the codec must report only its DAI's two SLIMbus channels. Whether
+the speaker is audible still needs a listen.

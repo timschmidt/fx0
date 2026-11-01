@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-31",
+  "scope": "First audio playback through mainline QDSP6, SLIMbus and the new WCD9306 codec component (audio probe kernel, RAM boot; installed system unchanged)",
+  "stack": "fx0-linux integration/fx0-audio: QDSP6 services + ASM front-end DAIs (MSM8226 DTSI), NGD start without DSP restart, wcd9306 component (SLIMbus AIF1 playback, RX1 -> RX3 interpolator -> class-D speaker, MCLK/bandgap/clock-buffer supply, vendor register defaults), apq8096-style card 'LG Fx0' (MultiMedia1 -> SLIMBUS_0_RX -> codec), speaker boost GPIO60, codec MCLK = RPM div_clk1 on PM8226 GPIO1",
+  "debugging": [
+    "q6asm-dai needs per-DAI child nodes (added MultiMedia1-3)",
+    "AFE port start (0x100e5, port 0x4000) failed with ADSP error 1 because the codec reported five RX channels; q6afe-dai copies that count into the SLIMbus port config. Reporting only AIF1's two channels fixed it",
+    "defining the SLIMbus channels before the AFE start (experiment) made no difference; the final driver keeps wcd9335's trigger ordering"
+  ],
+  "result": {
+    "card": "/proc/asound/cards: 0 [Fx0] apq8096 - LG Fx0; controls RX3 Digital Volume, RX3 MIX1 INP1, SPK DAC Switch, SLIMBUS_0_RX Audio Mixer MultiMedia1",
+    "playback": "aplay of 48 kHz stereo S16 to hw:0,0 runs without AFE/ASoC errors",
+    "codec_registers_during_playback": "BIAS_CENTRAL_BG_CTL 0x55, CLK_BUFF_EN1 0x05, CLK_BUFF_EN2 0x04, CDC_CLK_MCLK_CTL 0x01, CDC_CLK_RX_B1_CTL 0x04 (RX3), CDC_CONN_RX3_B1_CTL 0x05 (RX1), SPKR_DRV_EN 0xef (PA on)",
+    "audible": "not yet confirmed: needs the owner to listen; accelerometer sampling via sysfs cannot detect the speaker",
+    "runs": {
+      "speaker-04": [
+        "numid=20,iface=MIXER,name='SLIMBUS_0_RX Audio Mixer MultiMedia1'",
+        "numid=3,iface=MIXER,name='SPK DAC Switch'",
+        "  : values=on",
+        "codec regmap /sys/kernel/debug/regmap/217:e0:1:0",
+        "101: 55 108: 05 109: 04 1df: ef 1e0: 04 1e1: 04 2c4: 78 30f: 04 311: 01 386: 05 ",
+        "Playing WAVE '/tmp/fx0-tone.wav' : Signed 16 bit Little Endian, Rate 48000 Hz, Stereo",
+        "[    1.131248] mmc0: SDHCI controller on f9824900.mmc [f9824900.mmc] using ADMA",
+        "[    1.131711] mmc1: SDHCI controller on f98a4900.mmc [f98a4900.mmc] using ADMA",
+        "[   64.254104] snd_soc_wcd9306: loading out-of-tree module taints kernel.",
+        "[   64.625497] qcom,slim-ngd-ctrl fe12f000.slimbus: SLIM SAT: Rcvd master capability",
+        "[   64.685855] wcd9306-slim 217:e0:1:0: WCD9306 family codec, minor ID 0x0001, version 0x21",
+        "[   64.691858] qcom,slim-ngd-ctrl fe12f000.slimbus: SLIM controller Registered",
+        "[   77.749768] wcd9306-slim 217:e0:1:0: SLIMbus stream enabled early: 0 (ch 144, 145)",
+        "12288"
+      ],
+      "speaker-06": [
+        "silence n 543 x:sd=35.4 y:sd=37.2 z:sd=58.1",
+        "[    1.121699] mmc1: SDHCI controller on f98a4900.mmc [f98a4900.mmc] using ADMA",
+        "[    1.183772] mmc0: SDHCI controller on f9824900.mmc [f9824900.mmc] using ADMA",
+        "[   63.811898] snd_soc_wcd9306: loading out-of-tree module taints kernel.",
+        "[   64.195559] qcom,slim-ngd-ctrl fe12f000.slimbus: SLIM SAT: Rcvd master capability",
+        "[   64.273387] wcd9306-slim 217:e0:1:0: WCD9306 family codec, minor ID 0x0001, version 0x21",
+        "[   64.279478] qcom,slim-ngd-ctrl fe12f000.slimbus: SLIM controller Registered",
+        "12288"
+      ]
+    }
+  },
+  "open": [
+    "owner listening test",
+    "package (QDSP6 needs built-in ASoC compress/topology)",
+    "UCM/PipeWire profile",
+    "headphone/earpiece/mic paths, MBHC jack detection, WCD9302 QFUSE confirmation"
+  ]
+}

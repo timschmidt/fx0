@@ -144,6 +144,15 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
      register sequences.
   3. A machine driver, reusing the `apq8096`-style SLIMbus card glue.
 
+  **Playback path runs (2026-10-31).** On the audio probe kernel the card
+  "LG Fx0" registers, and `aplay` to it runs without errors. During playback
+  the codec has its bandgap, clock buffer, MCLK, RX3 interpolator (fed from RX1)
+  and speaker amplifier on. One fix was needed: the codec must report only the
+  DAI's own SLIMbus channels, because `q6afe-dai` copies that count into the
+  port configuration. With five channels the ADSP refused to start the port.
+  Whether the speaker is audible still needs a listening test
+  ([evidence](../evidence/2026-10-31-first-speaker-playback.json)).
+
   Board details from LG's `msm8226-lge-sound.dtsi` (`sound-9302`): the
   speaker supply comes from an external boost converter enabled by **GPIO60**
   (`qcom,cdc-boost-spkr-gpios`). LG's `CONFIG_SND_SPK_BOOST` toggles it from
