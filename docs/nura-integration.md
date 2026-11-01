@@ -24,8 +24,6 @@ it today.
 
 | Fixture | What it does | Needed before removal |
 | --- | --- | --- |
-| `/usr/local/libexec/fx0-init` with `/etc/mkinitfs/files/99-fx0-display.files`, `modules/99-fx0-display.modules` and `hooks-cleanup/90-fx0-display-auto.sh` | Wraps the initramfs init to hold the display subsystem and MDP IOMMU runtime-PM `on` until the native framebuffer binds, then sets them to `auto` | Fix the kernel startup fault the hold works around ([GPU bring-up](gpu-bringup.md) and the display records), then boot repeatedly without it |
-| `tinydm.service.d/50-fx0-first-start.conf` | `ConditionPathExists=/run/fx0-ui-start-ready`, `Restart=no`: the UI starts only on request | Show the session starts unattended at boot, across the reboot runs |
 | `/etc/kernel-cmdline.d/60-fx0-native-display-test.conf` | `drm.debug=0x06 panic=60` | Display debugging; drop once display power transitions are qualified |
 | `lk2nd.pass-simplefb=autorefresh`, `lk2nd.pass-ramoops` (in `50-fx0-development.conf`) | Early framebuffer and ramoops handoff for debugging | Decide after the display fixture goes; ramoops may stay as a feature |
 | `SXMO_STATES=unlock` in the session wrapper | Keeps Sxmo from locking or suspending | Suspend and lock qualification |
@@ -35,8 +33,13 @@ it today.
 
 ## Order of work
 
-1. Remove the display holds and the UI gate once the kernel startup fault is
-   fixed, using the reboot harness to show unattended starts.
+1. **Done 2026-11-01.** The display holds and the UI gate are gone. The kernel
+   startup fault was the MDSS power domain and bus clocks switching off under
+   lk2nd's running display. Since r15 the board DT gives lk2nd's framebuffer
+   node the MDSS GDSC and clocks, so simpledrm holds them until msm takes over.
+   Twenty unattended boots (10 warm, 10 power-off) started Sxmo by themselves
+   ([evidence](../evidence/2026-11-01-display-startup-fix.json)). The
+   `99-fx0-display.modules` initramfs list stays for the device package.
 2. Package the first table as a device package. **Drafted:** `device-lg-madai`
    on fx0-pmaports `integration/fx0-device` (`c87f356c5d2a`), with the schema
    entry for `deviceinfo_flash_bootimg_offset`. It is built and signed

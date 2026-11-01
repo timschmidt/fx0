@@ -1,5 +1,9 @@
 # Temporary native Nura RAM boot
 
+**Retired 2026-11-01.** The startup fault is fixed in the board DT (kernel r15),
+and the installed system no longer uses this hold. See the
+[fix evidence](../../evidence/2026-11-01-display-startup-fix.json).
+
 These are development workarounds for testing the native r1 package while the
 intermittent initial DSI register-read failure remains unresolved. They are not
 upstream fixes or the desired final power policy. They do not qualify suspend.

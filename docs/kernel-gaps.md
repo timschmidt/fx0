@@ -148,6 +148,16 @@ suspend, reliability and installed-Nura qualification remain open. See
 
 ## Current native package and startup fault
 
+**Resolved 2026-11-01 (r15).** The cause was the MDSS GDSC and the MDSS AHB/AXI
+clocks, which nothing in Linux claimed for lk2nd's running display. Once the
+built-in MDP IOMMU runtime-suspended, they could switch off before msm's
+DSI probe, so the first DSI register read aborted. A board DT
+`simple-framebuffer` node, filled in by lk2nd, now gives simpledrm the GDSC and
+clocks until msm takes over. Without it, 2 of 2 hold-free RAM boots reset; with
+it, 6 of 6 boot and the installed system passes 20 unattended boots without
+the initramfs hold ([evidence](../evidence/2026-11-01-display-startup-fix.json)).
+The history below is kept for the record.
+
 The exported native r1 APK now boots from RAM with its own signed modules,
 USB, RMI probe and owner-confirmed RGB after a five-second display off/on.
 Initial MDSS/IOMMU references are still needed for that baseline. They are

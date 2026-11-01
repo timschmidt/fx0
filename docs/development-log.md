@@ -2101,3 +2101,12 @@ processors and the sound card up. Power-on to SSH took 67–75 s. With USB
 attached the PMIC powers the phone back on by itself (charger-insertion
 reason). The owner's power-key boot without USB and without a microSD also
 passed, so the card is optional for boot.
+
+The display startup fault is fixed, and the initramfs display hold and the UI
+gate are gone. lk2nd's running display depended on the MDSS power domain and
+bus clocks, which no Linux driver claimed. The built-in MDP IOMMU suspended,
+the domain switched off, and msm's first DSI register read aborted. A board DT
+framebuffer node, which lk2nd fills in, now lets simpledrm hold the domain and
+clocks until msm takes over (kernel r15). Hold-free RAM boots went from 2 of 2
+resets to 6 of 6 clean. The installed system then started Sxmo unattended on
+20 of 20 boots, and the owner confirmed the screen and touch.
