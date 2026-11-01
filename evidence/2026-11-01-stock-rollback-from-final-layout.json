@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-01",
+  "scope": "Factory-stock rollback from the consolidated (final) layout and return to Nura r13 (plan section 2.1 step 9); performed for the stock codec capture with the owner's approval",
+  "start_state": "final layout (p35 nura-root, production lk2nd, Nura r13)",
+  "steps": {
+    "snapshot": "standalone RAM rescue (no eMMC mounts, nodes read-only); whole user area and both boot areas captured twice, raw on /home and zstd on Disk B, verified by SHA-256 (user area 65a8b043791a2639...)",
+    "restore_stock_layout": "verified old-layout image (before-stock-rehearsal-01, original GPT) written from the rescue; full cache-dropped readback matched; both boot areas matched",
+    "stock_writes": [
+      "boot: writing original 33554432 bytes to /dev/mmcblk0p15",
+      "boot: device hash matches original",
+      "drm: writing original 8388608 bytes to /dev/mmcblk0p30",
+      "drm: device hash matches original",
+      "laf: kept cleared for stock fastboot entry",
+      "misc: writing original 16777216 bytes to /dev/mmcblk0p26",
+      "misc: device hash matches original",
+      "modemst1: writing original 3145728 bytes to /dev/mmcblk0p17",
+      "modemst1: device hash matches original",
+      "modemst2: writing original 3145728 bytes to /dev/mmcblk0p18",
+      "modemst2: device hash matches original",
+      "mpt: writing original 33554432 bytes to /dev/mmcblk0p34",
+      "mpt: device hash matches original",
+      "persist: writing original 33554432 bytes to /dev/mmcblk0p14",
+      "persist: device hash matches original",
+      "sns: writing original 8388608 bytes to /dev/mmcblk0p32",
+      "sns: device hash matches original",
+      "misc: bootloader message set to boot-recovery --wipe_data (stock recovery wipe request)",
+      "all 42 internal eMMC nodes read-only again"
+    ],
+    "stock_boot": "stock aboot ran recovery --wipe_data; Firefox OS first-run wizard; owner enabled USB debugging; adb root (Android 4.4.2) worked; stock speaker playback captured",
+    "return": [
+      "stock fastboot: ['product: MADAI']",
+      "lk2nd loaded into RAM from stock fastboot",
+      "second fastboot: ['product: lk2nd-msm8226']",
+      "rescue loaded into RAM",
+      "rescue raw shell verified; identity matches",
+      "rc=0"
+    ],
+    "restore_nura": "final-layout snapshot written from the rescue; full readback matched; both boot areas matched; Nura r13 booted unattended with taint 0"
+  },
+  "result": "factory-stock state is recoverable from the consolidated layout using the retained snapshots and original partition images, and the final Nura layout is recoverable byte for byte; LAF stayed cleared (stock fastboot entry used for the return)"
+}

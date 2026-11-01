@@ -167,7 +167,7 @@ The factory-stock restoration rehearsal passed on 2026-10-31.
    booted normally.
 
 See [rehearsal evidence](../evidence/2026-10-31-factory-stock-rehearsal.json).
-Repeat it from the consolidated layout after migration.
+Repeat it from the consolidated layout after migration. **Done 2026-11-01:** stock was restored from the final layout and Nura returned byte for byte ([evidence](../evidence/2026-11-01-stock-rollback-from-final-layout.json)).
 
 Next qualify the raw-image boot and update path while the original GPT is still intact. Only after those checks, the retained-partition audit, stable power and final host-image validation pass should the phone receive the new layout. Verify both GPT copies, retained data, filesystems, boot, updates and recovery again after migration. Test external SD detection, mount/unmount and removal independently, including normal boot with no card inserted.
 
