@@ -65,9 +65,12 @@ Ordered roughly by how independent they are.
 | MSM8226 display and GPU IOMMU bindings and configuration (`32fd8a21c5a3`, `b506b8cd827d`, `ca397d0f4501`, `60fa2a06552b`) | iommu | Baryshkov's MSM8974 series |
 | MSM8226 SoC DTS: display IOMMU and secured contexts, GPU IOMMU, CCI clock rate, PON label (`6c99f0648715`, `abe11294089a`, `dad2d15ff6ba`, `8cfcb0fedcd9`, `7e5f8f6b2250`) | qcom arm32 DTS | IOMMU bindings above |
 | LG Fx0 board: binding `933d3593e3ab` and the `lg-madai` DTS commits (UART/USB through PON reboot modes) | qcom arm32 DTS (`qcom/for-next`; new files drop the `qcom-` prefix, e.g. `msm8926.dtsi`) | **Attribution first:** the initial DTS (`3bfdc9d2da6a`) restores Masanori Ogino's work from `omasanori/linux` `lg-madai`. Upstream needs his authorship or `Co-developed-by` with his own Signed-off-by, so the owner should contact him before a board series is posted. Then a first version limited to mainline-supported hardware (UART, USB/VBUS, eMMC, RPM regulators, buttons, reserved memory, PMIC ADC, ADSP, PON modes). Touch waits for RMI4 reset-GPIO driver support; WCNSS, display, GPU and camera wait for their series |
+| `2ebba2c0ab26` iio: imu: inv_mpu6050: fix accel calibbias registers on MPU-6500 parts (Fixes 33da559f861b) | iio `fixes-togreg` | Owner approval; drafted on fx0-linux `integration/fx0-imu-calibbias`, tested on the MPU-6515 ([evidence](../evidence/2026-11-01-imu-accuracy-and-offsets.json)); confirm the ICM-20602/ICM-206xx register maps before claiming them |
+| `21508b9dbbcb` iio: imu: inv_mpu6050: resume the chip before reading calibbias (Fixes 4599cac84614) | iio `fixes-togreg` | Owner approval; same branch and evidence |
+| LG Fx0 board DTS: boot framebuffer holds MDSS (`683f457c18f4`), IMU core supply (`d02a6c3f57d2`), IMU mounting matrix (`6161d5c2ee3a`) | qcom arm32 DTS | Folds into the Fx0 board submission above |
 | `linux-postmarketos-qcom-msm8226` r8 config (`PM_DEVFREQ`, ADSP, GPU IOMMU) | pmaports | The kernel features above reaching a release the package follows |
 | boot-deploy offset key in `deviceinfo_schema.toml` | pmaports | The boot-deploy merge request |
-| `device-lg-madai` (fx0-pmaports `integration/fx0-device` c87f356c5d2a; built and signed, not yet installed) | pmaports | lk2nd and boot-deploy changes accepted; install and fresh-install test on the phone after the soak |
+| `device-lg-madai` (fx0-pmaports `integration/fx0-device` b9491f835c90; 1-r1 installed on the phone 2026-11-01) | pmaports | lk2nd and boot-deploy changes accepted; fresh-install test on the phone after the soak |
 
 ## Maintenance plan
 
