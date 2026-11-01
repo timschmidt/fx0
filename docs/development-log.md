@@ -2118,3 +2118,18 @@ the lk2nd framebuffer handoff the display fix depends on), the initramfs
 display and touch modules, and the speaker UCM. The hand-placed deviceinfo,
 cmdline and module overrides are gone, along with the display debug
 cmdline. Ten unattended boots (5 warm, 5 power-off) passed.
+
+System suspend works. The Fx0 has s2idle only, and the first attempts all
+failed in the touchscreen. The Synaptics controller is part of the in-cell
+panel: once msm switches the display off at the start of suspend, every I2C
+transfer to it stalls for 15 s. The RMI driver then left it powered off and
+in reset after the aborted suspend. The touchscreen now follows the panel
+through the DRM panel-follower API (as i2c-hid does), so it sleeps before
+the panel goes dark and wakes after it comes back. The second suspend then
+failed in msm's PM prepare: drm_atomic_helper_resume() restores plane
+states that still name hardware pipes the MDP5 global state no longer
+records. The plane check now reassigns such pipes. With kernel r19, 20 of 20
+suspend/resume cycles pass, and the owner confirmed display and touch after
+resume. Still open: power-key wake, the Sxmo lock and screen-off states, an
+intermittent sway screen-on failure, and CPU idle states for real power
+savings.
