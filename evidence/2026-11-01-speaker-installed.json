@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-01",
+  "scope": "Speaker audio in the installed system: kernel r14 + ALSA UCM profile + PipeWire",
+  "r14": {
+    "package": "linux-postmarketos-qcom-msm8226-6.18.59-r14",
+    "source": "fx0-linux 5f355155c2c6 (integration/fx0-audio = r13 + QDSP6/SLIMbus/WCD9306/card)",
+    "recipe": "fx0-pmaports a993fc0c1 (QCOM_APR, SND_SOC_QCOM, SND_SOC_QDSP6, SND_SOC_MSM8996, SLIMBUS, SLIM_QCOM_NGD_CTRL, SND_SOC_WCD9306 as modules; ASoC compress/topology built in)",
+    "apk_sha256": "8c4eaf9beaf869a54a5f62b3cc5488d9b84de15c02219ebf4c038f6d8ebb18f0",
+    "ram_boot_first": "r14 kernel+DTB booted to a running system with the installed initramfs before installing",
+    "installed": "boots unattended in 70 s, taint 0, no failed units; NGD comes up without an ADSP restart, codec identifies, card 'LG Fx0' registers, sway starts; rollback copies in local/before-native-r14 and /var/lib/fx0-fallback/before-native-r14"
+  },
+  "ucm": "configs/alsa-ucm2 installed to /usr/share/alsa/ucm2: conf.d/apq8096/LG Fx0.conf -> Qualcomm/msm8926/lg-fx0/HiFi.conf (verb: SLIMBUS_0_RX Audio Mixer MultiMedia1; Speaker device: RX3 MIX1 INP1 RX1, INP2 RX2, SPK DAC Switch)",
+  "pipewire": "WirePlumber exposes 'Built-in Audio Speaker playback' (alsa_output.platform-sound.HiFi__Speaker__sink, S24_LE 2ch 48 kHz) as the default sink; UCM controls applied; codec ports consumed",
+  "listening": "owner: silent at the default 40% sink volume (about -48 dB with the codec's stock -24 dB); both tones clean at 100% via pw-play",
+  "open": [
+    "volume range: expose a limited hardware volume or raise the codec gain so the default level is audible",
+    "'QMI wait timeout' logged once after the NGD registers (second bring-up attempt; harmless so far)",
+    "headphones/earpiece/microphones/jack detection",
+    "device package should ship the UCM files"
+  ]
+}

@@ -160,6 +160,13 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   into the RX3 mixer, so stereo plays as mono on the speaker
   ([evidence](../evidence/2026-10-31-first-speaker-playback.json)).
 
+  **Installed (r14, 2026-11-01).** Kernel r14 carries the audio stack, and
+  `configs/alsa-ucm2` gives the card a HiFi verb with a Speaker device.
+  WirePlumber makes that the default sink, and PipeWire playback is clean
+  (owner-confirmed). The default 40% sink volume is too quiet on top of the
+  stock −24 dB codec gain; the volume range needs tuning
+  ([evidence](../evidence/2026-11-01-speaker-installed.json)).
+
   Earlier diagnosis, kept for the record:
   **The speaker stays silent (owner listening tests, 2026-11-01).** The DSP
   side streams at 48 kHz, and the boost, MCLK pin and codec clocks are on. But

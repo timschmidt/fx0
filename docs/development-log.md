@@ -2088,3 +2088,9 @@ the missing speaker-driver defaults, the RX bias and the stock gain. A mono
 experiment then found the real blocker: in a two-port SLIMbus group the codec
 stalls unless every port is read. Feeding both stereo channels into the
 speaker mixer fixed it. The owner heard clean tones.
+
+Speaker audio works on the installed system. Kernel r14 carries QDSP6,
+SLIMbus, the WCD9306 codec and the sound card. A new UCM profile makes the
+speaker PipeWire's default sink, and the owner hears clean playback through
+PipeWire. At WirePlumber's default 40% the speaker is too quiet with the
+stock codec gain, so the volume range still needs tuning.
