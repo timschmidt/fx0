@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-01",
+  "scope": "20 cold boots on the final layout with installed kernel r14 (plan section 2.1 step 9 / phase 9)",
+  "cycles": 20,
+  "passed": 20,
+  "criteria": "new boot ID; full power-off first (PON warm-reset reason 0); systemd running; taint 0; no failed units; root /dev/mmcblk0p35; both remoteprocs running; sound card 'LG Fx0' present; microSD present or absent as arranged",
+  "triggers": {
+    "usb_charger_insertion": 19,
+    "owner_power_press_without_usb": 1,
+    "note": "with USB connected the PMIC powers the phone back on right after shutdown (PON_REASON1 0x10); the owner's power-key boot with USB unplugged (cycle 19) reported PON_REASON1 0x01 (hard-reset bit) rather than KPDPWR"
+  },
+  "poweroff_to_ssh_seconds": {
+    "min": 67,
+    "median": 68,
+    "max": 75
+  },
+  "microsd": "cycle 19 booted normally without a card (sd absent); cycles 1-18 and 20 with the card present",
+  "cycle_log": "local harness local/cold-boot-run.py; one JSON line per cycle (private)",
+  "open": [
+    "investigate why a power-key boot reports PON hard-reset (0x01) instead of KPDPWR (0x80)"
+  ]
+}

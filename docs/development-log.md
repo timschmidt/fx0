@@ -2094,3 +2094,10 @@ SLIMbus, the WCD9306 codec and the sound card. A new UCM profile makes the
 speaker PipeWire's default sink, and the owner hears clean playback through
 PipeWire. At WirePlumber's default 40% the speaker is too quiet with the
 stock codec gain, so the volume range still needs tuning.
+
+Twenty cold boots passed on kernel r14, each from a full power-off with no
+warm-reset reason: running system, taint 0, no failed units, both remote
+processors and the sound card up. Power-on to SSH took 67–75 s. With USB
+attached the PMIC powers the phone back on by itself (charger-insertion
+reason). The owner's power-key boot without USB and without a microSD also
+passed, so the card is optional for boot.
