@@ -1,0 +1,78 @@
+{
+  "date": "2026-11-01",
+  "scope": "MPU-6515 accelerometer accuracy, inv_mpu6050 offset handling, IMU supply and mounting matrix",
+  "six_position": {
+    "method": "owner placed the phone in six resting orientations; 100-sample means of in_accel_*_raw x in_accel_scale (m/s^2), chip axes, identity matrix",
+    "means": {
+      "screen-up": [
+        -0.144,
+        -0.052,
+        -8.851
+      ],
+      "right-edge": [
+        -0.012,
+        -9.894,
+        1.043
+      ],
+      "screen-down": [
+        -0.064,
+        -0.162,
+        10.779
+      ],
+      "left-edge": [
+        -0.215,
+        9.692,
+        1.083
+      ],
+      "bottom-edge": [
+        9.668,
+        -0.259,
+        1.102
+      ],
+      "top-edge": [
+        -9.958,
+        -0.105,
+        0.976
+      ]
+    },
+    "solution": {
+      "x": {
+        "offset_g": -0.0148,
+        "sensitivity": 1.0007
+      },
+      "y": {
+        "offset_g": -0.0103,
+        "sensitivity": 0.9986
+      },
+      "z": {
+        "offset_g": 0.0983,
+        "sensitivity": 1.0009
+      }
+    },
+    "conclusion": "sensitivity is correct on all axes; the 0.90 g screen-up reading is a +98 mg Z zero-g offset (MPU-6500 family initial Z tolerance is about +-80 mg). The private stock calibration applies unity scale, so it does not encode a sensitivity correction either."
+  },
+  "driver_bugs": {
+    "offset_stride": {
+      "finding": "MPU-6500-map parts keep accelerometer offsets at 0x77/0x78, 0x7a/0x7b, 0x7d/0x7e (0x79 and 0x7c reserved); inv_mpu6050 uses a two-register stride, so in_accel_y/z_calibbias hit 0x79/0x7a and 0x7b/0x7c",
+      "evidence": "bytes from 0x77: ed 10 00 f3 5e 00 23 38; lowering 0x7d by one moved Z by -2007 counts at +-2 g; writing in_accel_z_calibbias on the unfixed driver left Z unchanged",
+      "fix": "fx0-linux 2ebba2c0ab26 (Fixes: 33da559f861b); on r16 writing Z calibbias 9016 -> 8810 moved screen-up Z from -14792 to -16450 counts (-1.004 g)"
+    },
+    "calibbias_read_pm": {
+      "finding": "CALIBBIAS reads access the chip without a runtime resume; with the Fx0 supplies off the I2C bus is dead and reads block on timeouts",
+      "fix": "fx0-linux 21508b9dbbcb (Fixes: 4599cac84614); on r16 all three reads from a suspended chip return in under 105 ms"
+    }
+  },
+  "board": {
+    "imu_supply": {
+      "finding": "DT listed LVS1 only as vddio; the driver switches vddio off at autosuspend, which removed all power; after resume SMPLRT_DIV/CONFIG/GYRO_CONFIG/ACCEL_CONFIG/ACCEL_CONFIG2 read 00 while the driver reported a +-2000 dps gyro scale (gyro readings 8x too large), and calibbias reverted to OTP",
+      "fix": "fx0-linux d02a6c3f57d2 vdd-supply = LVS1; RAM-boot test: LVS1 held, calibbias 8810 survives autosuspend, registers after resume 13 04 18 00 04 (50 Hz, 20 Hz DLPF, +-2000 dps)"
+    },
+    "mount_matrix": "fx0-linux 6161d5c2ee3a: device x = chip +Y, device y = chip +X, device z = chip -Z (from the six positions)"
+  },
+  "open": [
+    "install r17 and confirm the mounting matrix with iio-sensor-proxy",
+    "optional per-device Z offset correction through in_accel_z_calibbias (now persistent)",
+    "magnetometer mounting matrix",
+    "DMP"
+  ]
+}

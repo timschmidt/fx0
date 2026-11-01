@@ -130,13 +130,17 @@ accelerometer's in-plane noise from about 35 to 5,000–9,000 counts, and the
 gyro responds as well. See [evidence](../evidence/2026-10-31-imu-vibrator.json).
 
 Still open:
-- At rest the acceleration magnitude is 0.90–0.91 g instead of 1 g. The chip
-  is at ±2 g (`ACCEL_CONFIG` 0x00, `ACCEL_CONFIG2` 0x00) and its factory
-  offset registers are populated, so this is a sensitivity error of about 10%,
-  beyond normal tolerance. The stock ADSP path applied per-device calibration
-  from the private `sns.reg`; its accelerometer scale entries are the next
-  thing to compare.
-- Mounting matrices.
+- **Accelerometer accuracy, resolved 2026-11-01.** A six-position test shows
+  correct sensitivity on all axes (0.999–1.001). The 0.90 g screen-up reading
+  is a +98 mg Z zero-g offset, not a scale error. It also uncovered two
+  inv_mpu6050 bugs: the MPU-6500 accelerometer offset registers are three
+  bytes apart, not two, and calibbias reads skipped the runtime resume. Fixes
+  are on fx0-linux `integration/fx0-imu-calibbias`. The board DT gave LVS1
+  only as `vddio`, so every autosuspend reset the chip's configuration and
+  left gyro readings 8× too large; LVS1 is now also `vdd`. See the
+  [evidence](../evidence/2026-11-01-imu-accuracy-and-offsets.json).
+- IMU mounting matrix: measured and added (kernel r17). Magnetometer matrix
+  still open.
 - `CONFIG_AK8974` in the kernel package.
 - Suspend and IRQ wake.
 - The DMP: mainline `inv_mpu6050` neither loads nor runs DMP firmware. The
