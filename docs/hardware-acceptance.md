@@ -37,7 +37,7 @@ For each result record the exact image hash, source revisions, package manifest,
 | Suspend and wake | Verified sleep state; measured unplugged consumption; buttons, RTC and required MPU-6515M DMP interrupt wake, plus other supported event wake sources | Unverified |
 | Clock and RTC | Correct timekeeping, time synchronization, suspend continuity and alarm behavior as supported | Unverified |
 | Power-off and restart | Clean shutdown, restart, low-battery handling and repeatable subsequent boot | Unverified |
-| Speaker | Playback, volume, amplifier behavior, supported rates, no persistent distortion and suspend recovery | In progress (audio probe kernel): mainline QDSP6 + SLIMbus + new WCD9306 component play to the speaker path without errors, amplifier enabled; audible output not yet confirmed; not packaged ([evidence](../evidence/2026-10-31-first-speaker-playback.json)) |
+| Speaker | Playback, volume, amplifier behavior, supported rates, no persistent distortion and suspend recovery | In progress (audio probe kernel): mainline QDSP6 + SLIMbus + new WCD9306 component stream to the codec without errors, but the codec's RX path never reads its SLIMbus ports (port overflow) and the owner hears nothing; next: diff against the stock codec register state ([evidence](../evidence/2026-10-31-first-speaker-playback.json)) |
 | Earpiece | Playback and telephone routing, volume, proximity interaction and call transitions | Unverified |
 | Microphones | Every installed mic; recording, route selection, simultaneous playback/record and supported processing | Unverified |
 | Headset jack | Insert/remove detection, headphone playback, headset microphone/buttons where exposed and route transitions | Unverified |

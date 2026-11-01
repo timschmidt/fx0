@@ -2072,3 +2072,11 @@ plays a test tone with no errors: AFE port, SLIMbus channels, codec clocks,
 RX3 interpolator and speaker amplifier all switch on. The fix that made it
 work: the codec must report only its DAI's two SLIMbus channels. Whether
 the speaker is audible still needs a listen.
+
+The speaker is silent so far. In listening tests the owner heard nothing,
+although the DSP streams at 48 kHz and the codec's clocks, boost and
+amplifier enable are on. A fresh-stream diagnostic shows both codec SLIMbus
+RX ports overflowing: data arrives and the codec's RX path never reads it,
+whether clocked from the external MCLK or its internal oscillator. The
+vendor port setup and the WCD9302 routing are confirmed. Next: capture the
+codec registers while stock firmware plays and diff them.

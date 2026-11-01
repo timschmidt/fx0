@@ -150,7 +150,14 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
   and speaker amplifier on. One fix was needed: the codec must report only the
   DAI's own SLIMbus channels, because `q6afe-dai` copies that count into the
   port configuration. With five channels the ADSP refused to start the port.
-  Whether the speaker is audible still needs a listening test
+  **The speaker stays silent (owner listening tests, 2026-11-01).** The DSP
+  side streams at 48 kHz, and the boost, MCLK pin and codec clocks are on. But
+  on a fresh stream both SLIMbus RX ports overflow within half a second: data
+  reaches the codec, and its RX path never reads it. Neither the external MCLK
+  nor the codec's internal RC oscillator makes a difference. The port setup
+  matches the vendor's and the WCD9302 route is confirmed. The next step is to
+  capture the codec's register state while stock firmware plays to the speaker
+  and diff it against this driver
   ([evidence](../evidence/2026-10-31-first-speaker-playback.json)).
 
   Board details from LG's `msm8226-lge-sound.dtsi` (`sound-9302`): the

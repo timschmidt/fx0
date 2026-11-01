@@ -11,7 +11,7 @@
     "card": "/proc/asound/cards: 0 [Fx0] apq8096 - LG Fx0; controls RX3 Digital Volume, RX3 MIX1 INP1, SPK DAC Switch, SLIMBUS_0_RX Audio Mixer MultiMedia1",
     "playback": "aplay of 48 kHz stereo S16 to hw:0,0 runs without AFE/ASoC errors",
     "codec_registers_during_playback": "BIAS_CENTRAL_BG_CTL 0x55, CLK_BUFF_EN1 0x05, CLK_BUFF_EN2 0x04, CDC_CLK_MCLK_CTL 0x01, CDC_CLK_RX_B1_CTL 0x04 (RX3), CDC_CONN_RX3_B1_CTL 0x05 (RX1), SPKR_DRV_EN 0xef (PA on)",
-    "audible": "not yet confirmed: needs the owner to listen; accelerometer sampling via sysfs cannot detect the speaker",
+    "audible": "NO: owner listening tests on 2026-11-01 heard nothing (three runs, quiet and loud 1 kHz tones)",
     "runs": {
       "speaker-04": [
         "numid=20,iface=MIXER,name='SLIMBUS_0_RX Audio Mixer MultiMedia1'",
@@ -46,5 +46,34 @@
     "package (QDSP6 needs built-in ASoC compress/topology)",
     "UCM/PipeWire profile",
     "headphone/earpiece/mic paths, MBHC jack detection, WCD9302 QFUSE confirmation"
-  ]
+  ],
+  "diagnosis_2026_11_01": {
+    "dsp_side": "PCM hw_ptr advances about 49,900 frames/s; aplay of 10 s takes 10.03 s: ASM/ADM/AFE consume the stream",
+    "board": "speaker boost GPIO60 high and spk_boost enabled for vdd-spkdrv; div_clk1 enabled; PM8226 GPIO1 in func1 output, VIN 3, push-pull, high drive (vendor settings)",
+    "variant": "QFUSE_DATA_OUT1 0x0f / OUT2 0x3c (non-zero): WCD9302, so RX3 -> SPK DAC is the right route",
+    "fresh_stream": "after clearing the port interrupt status at stream start, both RX ports (16, 17) report OVERFLOW within 0.5 s (INT_STATUS_RX_0 0x03, sources 0x01 0x01); SPKR_DRV_STATUS_PA 0x00, OCP 0x00: SLIMbus data arrives but the codec RX path never reads it",
+    "ruled_out": [
+      "SLIMbus port configuration (identical to the vendor/WCD9335 layout)",
+      "codec clock source: external 9.6 MHz MCLK and the internal RC oscillator behave the same",
+      "MCLK rate setting (CHIP_CTL 0x02 now programmed, kept as a fix)",
+      "channel ordering (define-before-AFE-start experiment)",
+      "compander, RDAC and charge-pump clocks (headphone/compander only)",
+      "SLIM RX mux (purely virtual in the vendor driver)"
+    ],
+    "diag_runs": {
+      "mclk": [
+        "[   81.147935] wcd9306-slim 217:e0:1:0: diag0: port st 03 00 src 01 01, spk en ef pa 00 ocp 00",
+        "[   82.717977] wcd9306-slim 217:e0:1:0: diag1: port st 03 00 src 01 01, spk en ef pa 00 ocp 00"
+      ],
+      "rco": [
+        "[   85.354907] wcd9306-slim 217:e0:1:0: diag0: port st 03 00 src 01 01, spk en ef pa 00 ocp 00",
+        "[   86.876477] wcd9306-slim 217:e0:1:0: diag1: port st 03 00 src 01 01, spk en ef pa 00 ocp 00"
+      ]
+    },
+    "next": [
+      "capture the vendor codec register state while stock firmware plays through the speaker (stock boot) and diff it against this driver",
+      "check the interpolator/RX input enables against the WCD9335 programming model",
+      "review CDC_CONN_RX_SB_B1/B2 semantics"
+    ]
+  }
 }
