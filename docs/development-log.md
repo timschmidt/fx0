@@ -2110,3 +2110,11 @@ framebuffer node, which lk2nd fills in, now lets simpledrm hold the domain and
 clocks until msm takes over (kernel r15). Hold-free RAM boots went from 2 of 2
 resets to 6 of 6 clean. The installed system then started Sxmo unattended on
 20 of 20 boots, and the owner confirmed the screen and touch.
+
+The Fx0 now runs its own device package. `device-lg-madai` replaced the
+generic `device-qcom-msm8226` in one apk transaction. It carries the
+deviceinfo for the raw boot image after lk2nd, the kernel cmdline (including
+the lk2nd framebuffer handoff the display fix depends on), the initramfs
+display and touch modules, and the speaker UCM. The hand-placed deviceinfo,
+cmdline and module overrides are gone, along with the display debug
+cmdline. Ten unattended boots (5 warm, 5 power-off) passed.

@@ -1,6 +1,12 @@
 # Nura integration layer
 
-The installed Fx0 runs Nura v26.06 with the generic `device-qcom-msm8226`
+**Update 2026-11-01:** `device-lg-madai` now replaces `device-qcom-msm8226` on
+the phone and carries the deviceinfo, kernel cmdline, initramfs modules and
+speaker UCM. The local deviceinfo, cmdline and module overrides are gone
+([evidence](../evidence/2026-11-01-device-package-installed.json)). The tables
+below are the original inventory, annotated.
+
+The installed Fx0 ran Nura v26.06 with the generic `device-qcom-msm8226`
 package plus hand-placed overrides. This inventory, taken on 2026-10-31 from
 `apk audit` and the override directories, sorts each override into two groups:
 what belongs in an Fx0 device package, and development fixtures that must go
@@ -11,10 +17,10 @@ it today.
 
 | Override | Content | Purpose |
 | --- | --- | --- |
-| `/etc/deviceinfo` | `deviceinfo_dtb="qcom-msm8926-lg-madai"`, `generate_extlinux_config="false"`, `generate_bootimg`, `flash_kernel_on_update`, `flash_bootimg_offset="524288"`, `append_dtb`, page size 2048, base 0 and the kernel/ramdisk/second/tags offsets | Raw boot image after the lk2nd prefix ([storage layout](storage-layout.md)); needs boot-deploy with the offset key and the pmaports schema entry |
-| `/etc/kernel-cmdline.d/50-device-qcom-msm8226.conf` | `earlycon console=ttyMSM0,115200 cma=256m` | Replaces the generic fragment without the obsolete `msm.allow_vram_carveout`/`msm.vram` |
-| `/etc/kernel-cmdline.d/60-fx0-stowaway.conf` | `pmos.stowaway` | `/boot` as a directory on the single root |
-| `/etc/kernel-cmdline.d/50-fx0-development.conf` (part) | `console=tty0`, `reboot=w` | Console on the panel; warm reboot (keeps ramoops) |
+| `/etc/deviceinfo` | `deviceinfo_dtb="qcom-msm8926-lg-madai"`, `generate_extlinux_config="false"`, `generate_bootimg`, `flash_kernel_on_update`, `flash_bootimg_offset="524288"`, `append_dtb`, page size 2048, base 0 and the kernel/ramdisk/second/tags offsets | Raw boot image after the lk2nd prefix ([storage layout](storage-layout.md)); needs boot-deploy with the offset key and the pmaports schema entry — **in `device-lg-madai`** |
+| `/etc/kernel-cmdline.d/50-device-qcom-msm8226.conf` | `earlycon console=ttyMSM0,115200 cma=256m` | Replaces the generic fragment without the obsolete `msm.allow_vram_carveout`/`msm.vram` — **in `device-lg-madai`** |
+| `/etc/kernel-cmdline.d/60-fx0-stowaway.conf` | `pmos.stowaway` | `/boot` as a directory on the single root — **in `device-lg-madai`** |
+| `/etc/kernel-cmdline.d/50-fx0-development.conf` (part) | `console=tty0`, `reboot=w` | Console on the panel; warm reboot (keeps ramoops) — **in `device-lg-madai`** |
 | `/etc/fstab` | Root by UUID, no `/boot` line | Final single-root layout |
 | `/usr/local/bin/sxmo_deviceprofile_lg,madai.sh` | Power/volume input names, scale 1.5, lisgd thresholds measured on the panel | Sxmo device profile; belongs in Sxmo's device profiles upstream |
 | `/usr/local/libexec/fx0-sxmo-test` and `fx0-sxmo.desktop` | `WLR_RENDERER=gles2`, the display card's by-path node, `LIBSEAT_BACKEND=logind`, scale, `SXMO_NO_MODEM=1` | Session settings. The by-path node is needed because the GPU and display are separate DRM cards. `SXMO_NO_MODEM` goes when cellular works |
@@ -24,8 +30,8 @@ it today.
 
 | Fixture | What it does | Needed before removal |
 | --- | --- | --- |
-| `/etc/kernel-cmdline.d/60-fx0-native-display-test.conf` | `drm.debug=0x06 panic=60` | Display debugging; drop once display power transitions are qualified |
-| `lk2nd.pass-simplefb=autorefresh`, `lk2nd.pass-ramoops` (in `50-fx0-development.conf`) | Early framebuffer and ramoops handoff for debugging | Decide after the display fixture goes; ramoops may stay as a feature |
+| `/etc/kernel-cmdline.d/60-fx0-native-display-test.conf` | `drm.debug=0x06 panic=60` | Display debugging; drop once display power transitions are qualified — **removed 2026-11-01** |
+| `lk2nd.pass-simplefb=autorefresh`, `lk2nd.pass-ramoops` (in `50-fx0-development.conf`) | Early framebuffer and ramoops handoff for debugging | Decide after the display fixture goes; ramoops may stay as a feature — **kept and packaged**: lk2nd must fill the framebuffer node that holds the MDSS power domain |
 | `SXMO_STATES=unlock` in the session wrapper | Keeps Sxmo from locking or suspending | Suspend and lock qualification |
 | `/etc/sway/fx0-console.conf`, `/usr/local/libexec/fx0-sway-test` | Fallback console session | Not needed once Sxmo is the qualified session |
 | `fx0-system-soak.sh`, `fx0-wifi-soak.sh` | Test harnesses | Keep in the repository; not part of an install |
@@ -40,15 +46,14 @@ it today.
    Twenty unattended boots (10 warm, 10 power-off) started Sxmo by themselves
    ([evidence](../evidence/2026-11-01-display-startup-fix.json)). The
    `99-fx0-display.modules` initramfs list stays for the device package.
-2. Package the first table as a device package. **Drafted:** `device-lg-madai`
-   on fx0-pmaports `integration/fx0-device` (`c87f356c5d2a`), with the schema
-   entry for `deviceinfo_flash_bootimg_offset`. It is built and signed
-   (`device-lg-madai-1-r0`, sha256 `cbf35443…`) but not installed. Swapping it
-   for `device-qcom-msm8226` must happen in one transaction because both ship
-   `/etc/machine-info`. Also check whether the plain
-   `/usr/share/deviceinfo/deviceinfo` file on the phone comes from the generic
-   package. The Sxmo profile goes to sxmo-utils instead
-   ([draft](../submissions/sxmo-utils/README.md)), which ships all device
-   profiles. The session wrapper settings remain to be packaged.
+2. **Done 2026-11-01.** `device-lg-madai-1-r1` (fx0-pmaports
+   `integration/fx0-device` `b9491f835c90`) replaced `device-qcom-msm8226` in one
+   apk transaction. The local deviceinfo, cmdline and module overrides and the
+   debug cmdline are gone, and ten unattended boots passed
+   ([evidence](../evidence/2026-11-01-device-package-installed.json)).
+   `/etc/deviceinfo` has to stay, as the empty template: the initramfs file
+   list includes it. Still local: the Sxmo device profile (headed for
+   sxmo-utils, [draft](../submissions/sxmo-utils/README.md)) and the session
+   wrapper settings.
 3. Reinstall from scratch with that package and the final layout, then rerun
    the boot, Wi-Fi, Bluetooth, display, audio-service and soak checks.

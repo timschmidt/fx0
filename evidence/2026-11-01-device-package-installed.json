@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-01",
+  "scope": "device-lg-madai package installed in place of device-qcom-msm8226; local deviceinfo, kernel-cmdline and initramfs-module overrides removed; debug cmdline dropped",
+  "package": {
+    "name": "device-lg-madai-1-r1",
+    "recipe": "fx0-pmaports integration/fx0-device b9491f835c90",
+    "apk_sha256": "4fb9076f3fa7ff001bf2ee31058a67fc5c9589b7206baa929c7120b54111ce7c",
+    "contents": "deviceinfo (raw boot image after the 512 KiB lk2nd prefix, Fx0 DTB, offsets), kernel cmdline (earlycon, serial and panel consoles, cma=256m, reboot=w, pmos.stowaway, lk2nd.pass-simplefb=autorefresh, lk2nd.pass-ramoops), initramfs modules (simpledrm, msm, panel_lg_fx0, qcom_wled, rmi_i2c), speaker UCM"
+  },
+  "swap": "one apk v3 transaction: apk add device-lg-madai-1-r1.apk '!device-qcom-msm8226' (purge then install); mkinitfs trigger regenerated the boot image",
+  "removed_local": [
+    "/etc/kernel-cmdline.d/50-device-qcom-msm8226.conf",
+    "/etc/kernel-cmdline.d/50-fx0-development.conf",
+    "/etc/kernel-cmdline.d/60-fx0-native-display-test.conf (drm.debug=0x06 panic=60)",
+    "/etc/kernel-cmdline.d/60-fx0-stowaway.conf",
+    "/etc/mkinitfs/modules/99-fx0-display.modules",
+    "hand-installed UCM copies (now owned by the package)"
+  ],
+  "deviceinfo_note": "/etc/deviceinfo must exist (initramfs base file list includes it); reset to the pmbootstrap template with no overrides",
+  "verification_before_reboot": "boot.img cmdline has lk2nd.pass-simplefb=autorefresh (required by the display fix), no drm.debug; kernel+DTB equal /boot; initramfs has msm, panel-lg-fx0, qcom-wled, rmi_i2c and the load list; only other boards' touch drivers dropped",
+  "after_reboot": "running, taint 0, no failed units, msmdrmfb, Sxmo unattended, hostname 'LG Fx0' handset, sound card and PipeWire speaker sink, Wi-Fi connected",
+  "repetitions": {
+    "warm": 5,
+    "cold_poweroff": 5,
+    "passed": 10,
+    "reboot_to_ssh_seconds": {
+      "min": 75,
+      "median": 76,
+      "max": 77
+    },
+    "criteria": "previous hold-free criteria plus no /etc/kernel-cmdline.d fragments and device-lg-madai installed"
+  },
+  "backups": "local/before-device-package and /var/lib/fx0-fallback/before-device-package"
+}
