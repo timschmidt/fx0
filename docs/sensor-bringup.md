@@ -140,7 +140,9 @@ Still open:
   left gyro readings 8× too large; LVS1 is now also `vdd`. See the
   [evidence](../evidence/2026-11-01-imu-accuracy-and-offsets.json).
 - IMU mounting matrix: measured and added (kernel r17). Magnetometer matrix
-  still open.
+  measured with the owner and added (kernel r30,
+  [evidence](../evidence/2026-11-02-camera-rotation-and-compass.json)); its
+  large hard-iron offset needs userspace calibration.
 - `CONFIG_AK8974` in the kernel package.
 - Suspend and IRQ wake.
 - The DMP: mainline `inv_mpu6050` neither loads nor runs DMP firmware. The
