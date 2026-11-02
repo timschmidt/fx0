@@ -40,5 +40,16 @@
     ],
     "interpretation": "Activation only ever works when it happens after the front-end stream has been triggered, and then about half the time regardless of delay; a remaining state difference between the ADSP side and the codec port decides each stream",
     "phone_state": "r37 TEST kernel installed (fx0-s16-test with slim_early/slim_delay_ms parameters at 0 = current behaviour)"
+  },
+  "experiments_r39": {
+    "changes": "TEST: AFE_PARAM_ID_CDC_SLIMBUS_SLAVE_CFG sent once to the DSP (WCD9306 enumeration address 0x0217/0x00e00100, TX offset 0, RX offset 16; DSP returned 0), and the codec's SLIMbus port interrupt status cleared before and after every stream",
+    "results": "9/16 and 6/8 mono plays delivered, still in runs; codec port status (0x34-0x37, sources 0x60/0x70) stays 0 during both delivered and silent streams - a silent stream never reaches the codec port as data, so the codec cannot detect it",
+    "also_ruled_out": [
+      "the downstream AFE codec slave description",
+      "latched codec port interrupts",
+      "NGD register layout (v1.5.0 offset 0x1000 matches downstream for an odd instance)",
+      "downstream slim_query_ch (local bookkeeping only, no bus message)"
+    ],
+    "phone_state": "r39 TEST kernel installed"
   }
 }
