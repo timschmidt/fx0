@@ -2190,3 +2190,7 @@ rejects 16-bit, which is now the main lead
 ([evidence](../evidence/2026-11-02-stock-speaker-comparison.json)). The return
 to Nura restored the snapshot byte for byte. On stock, a warm reboot from the
 rescue hung on the au logo until the battery was pulled.
+
+With the owner, both cameras' image rotation (270, no mirroring) and the
+magnetometer's mounting matrix were measured and are in the DT since kernel
+r30 ([evidence](../evidence/2026-11-02-camera-rotation-and-compass.json)).

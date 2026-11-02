@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-02",
+  "subject": "Camera image rotation and magnetometer mounting matrix, measured with the owner",
+  "kernel": "r30 (fx0-linux integration/fx0-orient 7ca2b9706cd8)",
+  "cameras": {
+    "method": "Phone upright in portrait; one settled frame per camera (rear 820x616 binned viewfinder, front 1968x1200); owner confirmed scene facts (rear: window to the left of a bookshelf; front: an upright spray can). Frames viewed locally and deleted",
+    "result": "Both cameras put the top of the scene on the image's left edge and need a 90 degree clockwise correction, with no mirroring (front label text reads normally after rotation). In DT/libcamera terms rotation = 270 for both; the original system's mount angles (rear 90, front 270) are Android clockwise corrections that agree",
+    "verified": "r30: both sensor subdevices report camera_sensor_rotation 270; libcamera reports Rotation = 270"
+  },
+  "magnetometer": {
+    "sensor": "Alps HSCDTD008A at I2C 0x0c",
+    "method": "Six poses at a fixed heading (screen up/down, top up/down, right/left edge up), 60 samples each with the accelerometer confirming the pose. For each device axis the up-minus-down difference cancels the large hard-iron offset (about -2700 raw on z); the Earth's field points down here, so the raw axis that drops most when the device axis points up is that axis",
+    "deltas_raw": {
+      "x (right up - left up)": [
+        -1.7,
+        674.8,
+        -157.9
+      ],
+      "y (top up - top down)": [
+        -575.9,
+        87.2,
+        -86.5
+      ],
+      "z (screen up - down)": [
+        -14.5,
+        -4.0,
+        -722.1
+      ]
+    },
+    "result": "mount-matrix = \"0\", \"-1\", \"0\", \"1\", \"0\", \"0\", \"0\", \"0\", \"1\" (determinant +1); dominant-axis ratios 4.3, 6.6 and 50",
+    "verified": "r30 in_mount_matrix reads 0, -1, 0; 1, 0, 0; 0, 0, 1",
+    "open": "hard-iron calibration (offsets about 8x the Earth field, likely the speaker magnet) belongs to userspace compass calibration"
+  }
+}
