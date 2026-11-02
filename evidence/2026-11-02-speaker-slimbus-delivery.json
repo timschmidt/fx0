@@ -19,5 +19,26 @@
     "compare with downstream ordering: SLIM_USR_MC_REQ_BW before defining channels, codec channel activation relative to the AFE port start",
     "once delivery is reliable: mono speaker path (RX1 only) as on stock, then the owner's listening check"
   ],
-  "measurement": "Main microphone at 16-bit (clean floor near -110 dBFS) recording a 1 kHz tone played through hw:0,0; scripts in local/mic (private)"
+  "measurement": "Main microphone at 16-bit (clean floor near -110 dBFS) recording a 1 kHz tone played through hw:0,0; scripts in local/mic (private)",
+  "experiments_r34_r38": {
+    "method": "Eight mono plays into RX1 (as stock) per configuration, each recorded by the main mic at 16-bit; 1 kHz present (#) or absent per 100 ms; TEST logs of AFE config/device start, NGD DEF_ACT_CHAN/CHAN_CTRL results and codec trigger timing",
+    "message_sequence": "Identical for delivered and silent streams: AFE slim cfg + DEVICE_START (ret 0), CONNECT_SINK, DEF_ACT_CHAN (ret 0) about 30 ms later at trigger, RECONFIG_NOW, removal at stop (ret 0)",
+    "results": {
+      "activation at trigger (current)": "2/8, 6/8, 5/6, 3/8, 3/8 in different runs",
+      "activation in hw_params, before the AFE start": "0/8",
+      "activation in codec prepare, right after the AFE start": "0/8; with 20-200 ms delay 0/30",
+      "activation at trigger with 20/50/100 ms delay": "2/6, 2/6, 3/6",
+      "stream owned by the codec interface device": "0/16 (reverted)",
+      "NGD runtime PM forced on (no 100 ms autosuspend)": "3/8 vs 3/8 with auto"
+    },
+    "ruled_out": [
+      "DEF_ACT_CHAN contents (presence rate 0x83, segment length, coefficient/exponent identical to downstream)",
+      "port watermark/enable value (0x05) and interface register addresses (Taiko-type bases)",
+      "codec MCLK rate handling (9.6 MHz assumed; the RPM reports the XO default)",
+      "NGD runtime suspend",
+      "activation timing after the AFE start"
+    ],
+    "interpretation": "Activation only ever works when it happens after the front-end stream has been triggered, and then about half the time regardless of delay; a remaining state difference between the ADSP side and the codec port decides each stream",
+    "phone_state": "r37 TEST kernel installed (fx0-s16-test with slim_early/slim_delay_ms parameters at 0 = current behaviour)"
+  }
 }
