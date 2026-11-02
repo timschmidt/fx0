@@ -1,0 +1,39 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 1 Nov 2026 21:34:45 -0500
+Subject: [PATCH] backend/drm: treat a gamma reset as a no-op on CRTCs without
+ gamma
+
+Resetting the gamma LUT on a CRTC that has neither a GAMMA_LUT property
+nor a legacy gamma table (legacy_gamma_size 0, e.g. msm's MDP5) made
+drm_legacy_crtc_set_gamma() fail without logging anything.
+
+The scene re-applies the gamma LUT when an output is enabled again,
+which adds a color transform reset to the state. wlr_output_test_state()
+drops that field because it is unchanged, so the test passes, but
+wlr_backend_commit() keeps it and the real commit fails. With sway,
+'output X power on' after 'power off' therefore failed once with
+"Backend commit failed" and only worked on the second try.
+
+There is nothing to reset on such a CRTC, so report success.
+---
+ backend/drm/legacy.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/backend/drm/legacy.c b/backend/drm/legacy.c
+index 714addb..a152ff3 100644
+--- a/backend/drm/legacy.c
++++ b/backend/drm/legacy.c
+@@ -255,7 +255,8 @@ bool drm_legacy_crtc_set_gamma(struct wlr_drm_backend *drm,
+ 		// The legacy interface doesn't offer a way to reset the gamma LUT
+ 		size = drm_crtc_get_gamma_lut_size(drm, crtc);
+ 		if (size == 0) {
+-			return false;
++			// The CRTC has no gamma LUT, so there is nothing to reset
++			return true;
+ 		}
+ 
+ 		linear_lut = malloc(3 * size * sizeof(uint16_t));
+-- 
+2.56.0
+

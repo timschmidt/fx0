@@ -2152,3 +2152,12 @@ mosaic, despite a third-party driver comment claiming the opposite. On the
 binned preview, auto-exposure settles in about 4 s instead of about 50 s
 ([camera notes](camera-bringup.md#exposure-and-preview-mode-2026-11-01)).
 Real-scene colour and orientation need the owner.
+
+The sway screen-on failure is solved. On re-enable, wlroots re-applies the
+gamma LUT by adding a "reset gamma" to the commit. Its test drops the unchanged
+field, but the real device commit keeps it, and on MDP5, which has no gamma
+table, the legacy gamma fallback fails without a log message. Treating that
+reset as a no-op fixes it: 5 of 5 power-on cycles instead of 0 of 5
+([evidence](../evidence/2026-11-01-sway-power-on-gamma.json),
+[wlroots draft](../submissions/wlroots/README.md)). The patched wlroots0.20
+r1 is installed.

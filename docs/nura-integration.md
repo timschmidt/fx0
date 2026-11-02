@@ -25,6 +25,8 @@ it today.
 | `/usr/local/bin/sxmo_deviceprofile_lg,madai.sh` | Power/volume input names, scale 1.5, lisgd thresholds measured on the panel | Sxmo device profile; belongs in Sxmo's device profiles upstream |
 | `/usr/local/libexec/fx0-sxmo-test` and `fx0-sxmo.desktop` | `WLR_RENDERER=gles2`, the display card's by-path node, `LIBSEAT_BACKEND=logind`, scale, `SXMO_NO_MODEM=1` | Session settings. The by-path node is needed because the GPU and display are separate DRM cards. `SXMO_NO_MODEM` goes when cellular works |
 | `pmos@local-6ae3f5f3` key and local packages | boot-deploy 0.23.0-r1, kernel r8 | Until the changes are in Nura's repositories |
+| `wlroots0.20` 0.20.2-r1 (fx0-pmaports `temp/wlroots0.20`, 2026-11-01) | Alpine 3.24 aport plus the gamma-reset fix | sway re-enables the panel at the first attempt; drop once the fix is in an Alpine wlroots release ([draft](../submissions/wlroots/README.md)) |
+| `libcamera` 99990.7.1-r1 (fx0-pmaports `temp/libcamera`, 2026-11-01) | IMX179 sensor helper and tuning file | Rear-camera auto-exposure; until the helper is upstream in libcamera |
 
 ## Development fixtures to remove
 

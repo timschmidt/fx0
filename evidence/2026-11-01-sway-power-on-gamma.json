@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-01",
+  "subject": "sway output power on failed at the first attempt: wlroots gamma reset on a CRTC without gamma",
+  "device": "LG Fx0 (MSM8926, MDP5), Nura v26.06, kernel r27, sway 1.12-rc3",
+  "root_cause": [
+    "Disabling an output sets wlr_scene_output gamma_lut_changed.",
+    "On re-enable, scene_output_state_attempt_gamma() adds a NULL color transform and tests it with wlr_output_test_state(), which strips unchanged fields, so the test passes.",
+    "wlr_backend_commit() keeps the field; MDP5 has no GAMMA_LUT property, so the DRM backend uses drm_legacy_crtc_set_gamma(), which returns false for legacy gamma size 0 without logging.",
+    "gamma_lut_changed is already cleared, so the second power on succeeds."
+  ],
+  "trace": "strace -e ioctl on sway: first attempt runs ADDFB2/atomic test, renders, runs the gamma-attempt atomic test (passes), then the real commit creates the mode blob and stops; sway logs 'Backend commit failed'. The second attempt's real commit continues to SYNCOBJ export and DRM_IOCTL_MODE_ATOMIC.",
+  "fix": "wlroots backend/drm/legacy.c: a gamma reset on a CRTC with no gamma table is a no-op (return true). Applies to wlroots master 07438f5492a8.",
+  "package": "fx0-pmaports temp/wlroots0.20 0.20.2-r1 (recipe fcf4e364170c), built in a plain Alpine 3.24 armv7 chroot (the systemd channel's buildroot cannot install libseat-dev next to systemd-dev) and signed with the local pmbootstrap key",
+  "results": {
+    "method": "5 cycles of swaymsg output DSI-1 power off; sleep 3; power on; sleep 2; read swaymsg power, DRM dpms and enabled; count 'Backend commit failed' in ~/.local/state/tinydm.log (sway's stderr); fresh boot for each variant",
+    "wlroots0.20-0.20.2-r0 (Alpine)": "0 of 5 back on (power false, dpms Off, disabled); 5 failures logged",
+    "wlroots0.20-0.20.2-r1 (patched)": "5 of 5 back on (power true, dpms On, enabled); 0 failures logged"
+  },
+  "installed": "wlroots0.20-0.20.2-r1 left installed",
+  "upstream": "Draft in submissions/wlroots; not sent (owner approval)"
+}
