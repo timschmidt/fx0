@@ -2194,3 +2194,12 @@ rescue hung on the au logo until the battery was pulled.
 With the owner, both cameras' image rotation (270, no mirroring) and the
 magnetometer's mounting matrix were measured and are in the DT since kernel
 r30 ([evidence](../evidence/2026-11-02-camera-rotation-and-compass.json)).
+
+The speaker problem is now located in SLIMbus stream setup. With the
+microphone as a clean 16-bit detector, each playback stream either delivers
+audio for its whole length or nothing, and most starts deliver nothing. Two
+fixes so far: the NGD controller now removes a stream's channels at the
+ADSP when the stream stops, so a stream at a new sample width no longer
+fails; and a stock-like mono stream into RX1 alone reaches the speaker for
+the first time. Reliable channel activation is the next step
+([evidence](../evidence/2026-11-02-speaker-slimbus-delivery.json)).

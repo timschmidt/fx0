@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-02",
+  "subject": "Speaker data path: 16-bit chain, NGD channel removal fix, mono RX1 and per-stream SLIMbus delivery failures",
+  "kernels": {
+    "r31": "r30 without the 24-bit back-end pin, plus a TEST log of the AFE SLIMbus config",
+    "r32": "r31 + slimbus: qcom-ngd-ctrl: Remove stream channels when disabling a stream",
+    "r33": "r32 + TEST mono playback (back-end fixup allows 1 channel, AFE channel map follows the stream, codec DAI channels_min 1)"
+  },
+  "findings": [
+    "16-bit SLIMbus AFE starts now succeed (they failed earlier); AFE config is version 1, device 0, format 0, RX channels 144/145, TX 128/129",
+    "NGD bug: qcom_slim_ngd_xfer_msg() drops all core reconfiguration messages and the controller has no disable_stream, so stream channels were never removed at the ADSP manager. Without removal, a stream at a different sample width than the previous one failed with ADSP error 1 (r31); with the new disable_stream (SLIM_USR_MC_CHAN_CTRL remove + RECONFIG_NOW, as downstream) 16- and 24-bit streams follow each other (r32). Clean commit: fx0-linux integration/fx0-ngd-disable-v2 c4e259382709",
+    "Stock plays mono: only SLIM RX1 carries AIF1_PB and RX3 mixes RX1 alone. With r33, mono into RX1 alone reaches the speaker (mic -23 dBFS at -10 dB digital gain) - the first time RX1 has carried audio on mainline",
+    "Each stream is all-or-nothing: the tone either plays for its full length or the stream is silent from the start",
+    "With capture restarted before each play about half the plays work, in clusters; with one continuous capture across eight plays none worked. RX channel activation itself mostly fails and successes coincide with other reconfigurations (e.g. a TX stream starting)",
+    "The codec's SLIMbus port interrupt status latches PORT_CLOSED on RX 16/17 and TX 0/1 and is never cleared (no interrupt handling in the driver), but working plays also show it set"
+  ],
+  "next": [
+    "instrument the NGD define/activate/reconfigure messages and ADSP replies per stream",
+    "compare with downstream ordering: SLIM_USR_MC_REQ_BW before defining channels, codec channel activation relative to the AFE port start",
+    "once delivery is reliable: mono speaker path (RX1 only) as on stock, then the owner's listening check"
+  ],
+  "measurement": "Main microphone at 16-bit (clean floor near -110 dBFS) recording a 1 kHz tone played through hw:0,0; scripts in local/mic (private)"
+}
