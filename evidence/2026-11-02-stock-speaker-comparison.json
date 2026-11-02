@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-02",
+  "subject": "Second stock Firefox OS session for the speaker: full codec, PMIC, GPIO, clock and regulator state while stock plays loudly, compared with Nura r29; supply experiments",
+  "procedure": {
+    "snapshot": "Nura r29 whole eMMC captured from the RAM rescue (raw on Disk B, zstd on /home), verified (user area sha256 e4596e9d83212f8e...)",
+    "stock": "old-layout image restored and verified; original boot/drm/misc/modemst1/2/mpt/persist/sns written and verified; recovery wipe requested",
+    "stock_boot": "stuck on the au logo after the warm reboot from the rescue; Power hold did not help; owner pulled the battery, after which stock booted normally (wipe, first-run wizard); owner enabled USB debugging",
+    "capture": "owner played a 3-minute 1 kHz beep (pushed to /sdcard/Music) at maximum volume - 'loud'; adb root dumps idle and playing",
+    "return": "power off + Volume Up + USB: the screen said 'Download mode' but USB showed stock fastboot (product MADAI); RAM lk2nd, RAM rescue, Nura r29 snapshot restored with full readback match; Nura booted, taint 0"
+  },
+  "comparison_stock_loud_vs_nura_faint": {
+    "tlmm": "Audio GPIOs identical: GPIO60 TAPAN_CODEC_BOOSTER high, GPIO72 CDC_RESET high",
+    "pmic_gpio_mpp": "PMIC GPIO8 (BOOST_BYP) same mode (output, inverted constant = high); only its VIN and drive strength differ. GPIO1 is the codec MCLK on both. MPP2/4/6 are LED current sinks on stock",
+    "supplies": "Stock runs S4 (codec VDD_BUCK) at 2.075 V (range 1, code 0x15) and enables L25 (buck helper) in high-power mode during playback; Nura had S4 at 1.85 V and L25 disabled in low-power mode",
+    "codec": "61 of 484 registers differ, mostly MBHC, mic bias and capture. Playback-relevant: CDC_CONN_RX3_B1_CTL stock 0x05 (RX3 from SLIMbus RX1 only) vs Nura 0x65 (RX1 + RX2); CDC_CONN_RX_SB_B1_CTL stock 0xaa (16-bit RX ports) vs Nura 0xa0 (24-bit); RX1/RX2 chain bits (HPH interpolators) differ"
+  },
+  "experiments": {
+    "S4_2075mV_L25_HPM": "RAM boot of the installed r29 kernel with S4 = 2.075 V and L25 10 mA system load; rails confirmed as stock during playback; owner: one tone of three, faint",
+    "plus_L25_enabled": "as above plus L25 always on (enable 0x80 as stock); owner: one tone of three, low",
+    "conclusion": "the codec supply rails are not the cause; the DT change was discarded"
+  },
+  "observations": [
+    "Only one of three consecutive plays is heard, and it is faint; ADSP pacing is real-time for every play (2.04 s per 2 s file); codec, interface and DAPM state are identical between plays",
+    "Mic detection of the tone is inconsistent between boots (-4.5 dBFS in one session, noise in others)"
+  ],
+  "next": "Stock drives the same ADSP firmware with 16-bit SLIMbus RX ports while mainline's AFE port start rejects 16-bit; find the mainline q6afe SLIMbus configuration difference so the chain can run exactly like stock; then RX3 from RX1 only",
+  "privacy": "Dumps kept in the ignored local/stock-capture-02; only conclusions published"
+}

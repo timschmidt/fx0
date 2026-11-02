@@ -2177,3 +2177,16 @@ digital volume, so the amplifier path can be loud. Capture is still not
 clean, and playback dropped out after a few play/record cycles, so the
 speaker level needs a listening check by the owner
 ([evidence](../evidence/2026-11-01-mic-tx-port-format.json)).
+
+## November 2
+
+A second stock session compared the whole audio state while stock Firefox OS
+plays loudly with Nura r29, where only one of three tones is heard and faint.
+The TLMM and PMIC pins agree. Stock runs the codec buck supply S4 at 2.075 V
+and the buck helper L25 on, in high-power mode; matching both on Nura changed
+nothing. In the codec, stock feeds the speaker interpolator from SLIMbus RX1
+alone, and its RX ports carry 16-bit samples. Mainline's DSP port start
+rejects 16-bit, which is now the main lead
+([evidence](../evidence/2026-11-02-stock-speaker-comparison.json)). The return
+to Nura restored the snapshot byte for byte. On stock, a warm reboot from the
+rescue hung on the au logo until the battery was pulled.
