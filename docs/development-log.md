@@ -2133,3 +2133,13 @@ suspend/resume cycles pass, and the owner confirmed display and touch after
 resume. Still open: power-key wake, the Sxmo lock and screen-off states, an
 intermittent sway screen-on failure, and CPU idle states for real power
 savings.
+
+The main microphone works (kernel r21) and became the speaker's objective
+detector. The speaker does play: a 1 kHz tone reaches the mic at -52 dBFS
+on every play, tracks the codec gain, disappears with the speaker DAC off,
+and drops 20 dB when the grille is covered. But it is roughly 30 dB too
+quiet to hear. Along the way: the MSM8226 ADSP refuses 16-bit SLIMbus
+ports, which made PipeWire drop the card (back ends now pinned to 24-bit),
+and the codec's RX port sample format was never programmed (now set per
+stream). The stock line-out 2 path was added from the stock DAPM state but
+adds nothing acoustically. The speaker level problem remains open.

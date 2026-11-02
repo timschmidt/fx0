@@ -29,5 +29,18 @@
     "compare a full codec/ifc/PMIC/TLMM state capture from an audible boot against the silent captures in local/audio-bisect/state-*.txt",
     "check for an analog/connector fault by booting stock once"
   ],
-  "kernel_r20": "fx0-linux integration/fx0-fb-pd-only: framebuffer node keeps only the MDSS power domain (7 of 7 hold-free boots clean); installed"
+  "kernel_r20": "fx0-linux integration/fx0-fb-pd-only: framebuffer node keeps only the MDSS power domain (7 of 7 hold-free boots clean); installed",
+  "update_mic": {
+    "kernel": "r21 (fx0-linux integration/fx0-mic): main microphone capture works (MultiMedia2 <- SLIMBUS_0_TX <- SLIM TX1/TX2 <- DEC1 <- ADC1, MIC BIAS1/LDO_H); owner voice at 30 cm reaches -45 dBFS",
+    "speaker_measured": "a 1 kHz tone at full codec gain reaches the mic at -52 dBFS (amplitude) on every play, scales 1:1 with RX3 gain, disappears with the SPK DAC off, and drops 20 dB when the owner covers the rear grille: the speaker plays acoustically but roughly 30 dB too quietly to hear",
+    "earlier_silent_plays": "script artifacts (missing /tmp files after reboot, chained commands), not real intermittency",
+    "stock_path": "stock DAPM during playback powers SPK DAC/PA and, from RX3 via RDAC5=DEM3_INV, LINEOUT2 DAC/PA with CDC_CP_VDD (VDD_BUCK S4 + buck helper L25)",
+    "r22": "fx0-linux integration/fx0-lineout2: LINEOUT2 path with the stock class-H line-out sequence and S4/L25 supplies; resulting buck/NCP registers equal stock; mic shows no acoustic contribution from LINEOUT2 (alone: nothing; with SPK: unchanged -52 dBFS)",
+    "r24": "fx0-linux integration/fx0-be-s24 + integration/fx0-rxsb-format: SLIMbus back ends pinned to S24_LE (the ADSP rejects 16-bit SLIMbus starts; PipeWire's 16-bit UCM probe then dropped the card profile and left only a dummy sink) and the codec RX port sample format programmed per stream width (was stuck at 16-bit); PipeWire speaker sink restored, no AFE errors; speaker level unchanged, owner still hears nothing",
+    "remaining_hypotheses": [
+      "a further analog setting stock applies outside the registers compared (stock dumps were all taken mid-playback; idle values unknown)",
+      "the external speaker boost/amp needs more than GPIO60 (no further GPIO found in the stock DT or machine driver)",
+      "compare against stock with the same microphone method: boot stock once and record the stock speaker with a second device, or capture stock's full PMIC/TLMM pin state during playback"
+    ]
+  }
 }
