@@ -344,10 +344,28 @@ With the torch off, the phone lies on its back and the camera faces the desk,
 so gain and exposure saturate; images stay private. See
 [evidence](../evidence/2026-11-01-rear-camera-binned-preview.json).
 
+## Front camera (2026-11-01)
+
+Kernel r28 adds a Sony IMX132 driver and the front-camera wiring: CCI 0x36,
+L5 1.2 V and L15 2.8 V (camera-only rails on the stock Madai DT), the shared
+GPIO64 I/O switch, MCLK1 on GPIO27, reset on GPIO28 and one data lane into
+CSIPHY1. The register sequence comes from NVIDIA's GPLv2 Tegra driver, which
+runs two lanes. The Fx0 wires one, so the driver selects one lane (0x3301)
+and the matching VT divider (0x30a4), following the AtomISP driver's clock
+code. At 24 MHz ÷ 2 × 33 = 396 Mbit/s the pixel rate is 39.6 Mpixel/s, which
+predicts 14.37 fps; the sensor streams at exactly that.
+
+The colour-bar test pattern decodes correctly (RGGB, black level 64, full
+1976-pixel lines). A libcamera IMX132 helper (fx0-pmaports `temp/libcamera`
+r2) gives a real image of the room with balanced colour; in that dim light,
+exposure and gain run at their limits. See
+[evidence](../evidence/2026-11-01-front-camera-imx132.json).
+
 Next:
-- a real-scene check of brightness, colour and orientation with the owner;
-- the DT `rotation` property, once the image orientation is known;
-- the front IMX132.
+- a real-scene check of both cameras' brightness, colour and orientation with
+  the owner;
+- the rear camera's DT `rotation`, once its image orientation is known;
+- longer exposure (larger vblank) in low light.
 
 ## Flash and torch
 

@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-01",
+  "subject": "Front camera (Sony IMX132) brought up: probe, single-lane streaming, test pattern, real image",
+  "device": "LG Fx0 (MSM8926), Nura v26.06",
+  "software": {
+    "kernel": "linux-postmarketos-qcom-msm8226 6.18.59-r28 (fx0-linux integration/fx0-imx132 ba6982590133)",
+    "kernel_changes": [
+      "a3ce062e9cf9 dt-bindings: media: i2c: Add Sony IMX132",
+      "b671973c0a6c media: i2c: Add Sony IMX132 driver",
+      "ba6982590133 ARM: dts: qcom: msm8926-lg-madai: Add the front camera"
+    ],
+    "libcamera": "99990.7.1-r2 (fx0-pmaports temp/libcamera 1ddb2e6906623): adds CameraSensorHelperImx132 (gain 256/(256-code), black level 64 at 10 bits)",
+    "checks": "checkpatch --strict clean on the driver; dt_binding_check passes; W=1 build clean"
+  },
+  "wiring": "CCI master 0 at 0x36; L5 1.2 V core, L15 2.8 V analogue (camera-only on the stock Madai DT), shared GPIO64 I/O switch; MCLK1 on GPIO27 at 24 MHz; reset GPIO28; CSIPHY1 data lane 0 with clock lane 1 (stock lane mask 0x3); stock mount angle 270",
+  "clocking": "Register sequence from NVIDIA's GPLv2 Tegra imx132.c; one lane selected with 0x3301 = 0x01 and the VT divider 0x30a4 = 2 (/1), per the AtomISP imx driver. PLL 24 MHz / 2 * 33 = 396 Mbit/s on one lane, link frequency 198 MHz, pixel rate 39.6 Mpixel/s, 2248 x 1226 per frame: 14.37 fps predicted",
+  "results": {
+    "probe": "chip ID 0x0132 read at probe; libcamera lists 'Internal front camera' and 'Internal back camera'",
+    "raw_stream": "10 frames at 14.37 fps, 2966400 bytes each (1200 lines x 2472-byte stride)",
+    "test_pattern": "Colour bars (test_pattern=2), row 600, even columns every 124 px: 1023 x4, 64 x4, 1023 x4, 64 x4 - the red channel of white/yellow, cyan/green, magenta/red, blue/black bars. Confirms RGGB order, an intact 1976-pixel line and black level 64",
+    "real_scene": "Phone on its back, front camera facing a dim room at night: soft ISP output 1968x1200 at about 7 fps written to disk; frame means settle at R 103, G 104, B 95 within 100 frames. Exposure (1222 lines) and gain (code 224, 8x) at their limits in this light",
+    "rear_regression": "Rear raw capture still 30.05 fps"
+  },
+  "open": [
+    "front camera image orientation and mirroring check with the owner",
+    "static properties (pixel size) for libcamera",
+    "longer exposure in low light (vblank)"
+  ],
+  "privacy": "Images stayed on the phone and were deleted after statistics were computed"
+}

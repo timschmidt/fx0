@@ -2161,3 +2161,9 @@ reset as a no-op fixes it: 5 of 5 power-on cycles instead of 0 of 5
 ([evidence](../evidence/2026-11-01-sway-power-on-gamma.json),
 [wlroots draft](../submissions/wlroots/README.md)). The patched wlroots0.20
 r1 is installed.
+
+The front camera works. A new IMX132 driver (kernel r28) identifies the sensor,
+streams one CSI-2 lane at the predicted 14.37 fps, and its colour-bar test
+pattern decodes correctly. With a libcamera IMX132 helper it gives a real,
+colour-balanced image ([evidence](../evidence/2026-11-01-front-camera-imx132.json)).
+Both cameras now list in libcamera. Orientation checks need the owner.
