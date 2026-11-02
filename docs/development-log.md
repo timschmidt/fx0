@@ -2167,3 +2167,13 @@ streams one CSI-2 lane at the predicted 14.37 fps, and its colour-bar test
 pattern decodes correctly. With a libcamera IMX132 helper it gives a real,
 colour-balanced image ([evidence](../evidence/2026-11-01-front-camera-imx132.json)).
 Both cameras now list in libcamera. Orientation checks need the owner.
+
+Correction to the speaker investigation: the microphone capture used for the
+"30 dB too quiet" readings was mis-packed. The codec's SLIMbus TX ports stayed
+in 16-bit format while the stream ran at 24 bits, so only 8 bits of each
+sample arrived. Kernel r29 sets the TX port format like the RX one. With it,
+the speaker's 1 kHz tone reaches the mic at about -4.5 dBFS and tracks the
+digital volume, so the amplifier path can be loud. Capture is still not
+clean, and playback dropped out after a few play/record cycles, so the
+speaker level needs a listening check by the owner
+([evidence](../evidence/2026-11-01-mic-tx-port-format.json)).

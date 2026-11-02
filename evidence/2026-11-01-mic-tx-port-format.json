@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-01",
+  "subject": "Microphone capture was mis-packed (TX port 16-bit in a 24-bit stream); earlier mic-based speaker levels are unreliable",
+  "device": "LG Fx0, Nura v26.06, kernel r29 (fx0-linux integration/fx0-txsb-format)",
+  "finding": {
+    "symptom": "With the back ends pinned to 24-bit (since r24), every captured sample had its low 16 bits zero: only bits 23:16 varied (8 significant bits), giving noise-like data around -13 to -20 dBFS in a quiet room.",
+    "cause": "WCD9306 CDC_CONN_TX_SB_Bn_CTL bits 5:4 hold each TX port's sample format (0 = 24-bit, 2 = 16-bit), like the RX ports. The driver (as the downstream tapan init table) set all TX ports to 16-bit (0x20) and never changed it; live registers read 0x28 (DEC1 + 16-bit).",
+    "fix": "fx0-linux 'ASoC: codecs: wcd9306: Program the TX port sample format' sets the TX format from hw_params. After it the registers read 0x08 and the data carries about 13 significant bits (bits 23:11)."
+  },
+  "after_fix": {
+    "speaker_tone_at_mic": "1 kHz tone at 0.7 FS through RX3 picked up at -4.5 dBFS (digital volume 84) and -14.2 dBFS (74), a 9.7 dB step for 10 dB; gone (-62 dBFS) with SPK DAC off. The earlier '-52 dBFS' speaker readings came from the mis-packed capture and do not measure level.",
+    "open": [
+      "Capture still not clean: low 11 bits always zero and a quiet-room level near -23 dBFS",
+      "Playback stopped reaching the mic after two or three play/record cycles in one session and was absent in a following session; cause unknown",
+      "Whether the speaker is now audible needs the owner's ears (r25 stock-register values plus r29)"
+    ]
+  },
+  "ucm": "A 'Mic' UCM device (local/mic/HiFi.conf.with-mic) gave PipeWire a working 'Main microphone' source, but it is held back and the packaged UCM restored until capture data is clean"
+}
