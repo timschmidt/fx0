@@ -58,5 +58,10 @@
     "reactivate_while_running (r41, mode 4)": "Normal activation at trigger, then remove and redefine the channel 100 ms later: 0/8 (normal mode in the same session 5/8)",
     "model": "The DSP attaches its AFE source port to the SLIMbus channel only at the first channel activation after the front-end stream is triggered, and then roughly half the time; activation before that, a kept channel, or a later redefinition never attaches",
     "phone_state": "r41 TEST kernel installed; wcd9306 slim_early defaults to 0 (normal behaviour)"
+  },
+  "clean_build_r42": {
+    "kernel": "linux-postmarketos-qcom-msm8226 6.18.59-r42 = fx0-linux integration/fx0-ngd-disable-v2 c4e259382709 (r30 chain + slimbus: qcom-ngd-ctrl: Remove stream channels when disabling a stream); all TEST changes dropped, SLIMbus back ends at 24 bits",
+    "verified_after_install": "taint 0, system running, magnetometer mount matrix 0,-1,0;1,0,0;0,0,1, both cameras in libcamera, PipeWire speaker sink, sway running, wlroots0.20 r1 and libcamera r2 present",
+    "speaker": "unchanged: playback streams deliver about half the time (see the experiments above)"
   }
 }
