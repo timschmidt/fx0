@@ -2143,3 +2143,12 @@ ports, which made PipeWire drop the card (back ends now pinned to 24-bit),
 and the codec's RX port sample format was never programmed (now set per
 stream). The stock line-out 2 path was added from the stock DAPM state but
 adds nothing acoustically. The speaker level problem remains open.
+
+The rear camera's exposure and preview path moved forward. libcamera now has
+an IMX179 sensor helper (fx0-pmaports `temp/libcamera` r1), the driver reports
+crop rectangles, and the DT marks the camera as rear-facing (kernel r26). A new
+2×2 binned 1640×1232 mode (kernel r27) runs at 30 fps and keeps the RGGB
+mosaic, despite a third-party driver comment claiming the opposite. On the
+binned preview, auto-exposure settles in about 4 s instead of about 50 s
+([camera notes](camera-bringup.md#exposure-and-preview-mode-2026-11-01)).
+Real-scene colour and orientation need the owner.

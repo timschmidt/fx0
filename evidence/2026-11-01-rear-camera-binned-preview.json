@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-01",
+  "subject": "Rear camera: libcamera IMX179 helper, crop rectangles, orientation and a 2x2 binned preview mode",
+  "device": "LG Fx0 (MSM8926), Nura v26.06",
+  "software": {
+    "kernel": "linux-postmarketos-qcom-msm8226 6.18.59-r27 (fx0-linux integration/fx0-imx179-bin 5ff9bed4160f)",
+    "kernel_changes": [
+      "5371aa4768c8 media: i2c: imx179: Report the crop rectangles",
+      "4c36987daa8e ARM: dts: qcom: msm8926-lg-madai: Mark the rear camera's location",
+      "5ff9bed4160f media: i2c: imx179: Add a 2x2 binned 1640x1232 mode"
+    ],
+    "libcamera": "99990.7.1-r1 (fx0-pmaports temp/libcamera 09f27858c): CameraSensorHelperImx179 (gain 256/(256-code), black level 4096 in 16-bit units) and imx179.yaml tuning",
+    "checks": "checkpatch --strict clean apart from the intentionally missing Signed-off-by; dt_binding_check for sony,imx179 passes"
+  },
+  "results": {
+    "libcamera_warnings": "Before (r25, libcamera r0): 19 warnings/errors per run (no crop rectangles, no sensor properties, no sensor helper). After (r26+, r1): the camera is listed as 'Internal back camera'; the only warning left is the missing rotation control (DT has no rotation property yet).",
+    "agc_full_resolution": "Torch at maximum, viewfinder at full resolution: the soft ISP handles about 1 frame/s; analogue gain code fell 224 -> 71 over about 50 s with exposure at 2503 lines.",
+    "binned_mode": {
+      "frame_sizes": "enum_frame_size lists 3280x2464 and 1640x1232",
+      "raw_1640x1232": "30.05 fps, consecutive sequence numbers, 2532992 bytes per frame (stride 2056), vblank 1275, exposure max 2503",
+      "viewfinder_820x616": "libcamera selects the binned sensor mode; sensor 30.05 fps",
+      "viewfinder_1640x1232": "libcamera keeps the full sensor mode and halves in the soft ISP: 10-15 fps output",
+      "bayer_check": "Raw frames under torch light, central region. Full mode: R 910 Gr 984 Gb 983 B 891, adjacent-pixel difference 82.9 vs same-colour (2 apart) 5.8. Binned mode: R 909 Gr 983 Gb 982 B 892, 83.1 vs 7.0. The binned readout keeps the RGGB mosaic.",
+      "agc_binned": "Torch at maximum, 820x616 viewfinder: gain code 190 -> 96 within 4 s, then stable; frame mean 171/255 steady over 28 s, 15 fps written to disk"
+    },
+    "dark_scene_note": "With the torch off the phone lies on its back, so the rear camera faces the desk; gain and exposure saturate (code 224, 2503 lines). Real-scene brightness and colour need the owner to point the camera at something."
+  },
+  "privacy": "Images stayed on the phone and were deleted after statistics were computed."
+}

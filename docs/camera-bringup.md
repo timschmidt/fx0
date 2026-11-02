@@ -322,10 +322,31 @@ frames: the sensor streams at 30 fps, the ISP keeps up at about 1 fps at full
 resolution. Images are dark, because the soft IPA has no IMX179 sensor helper
 and so cannot use analogue gain.
 
+## Exposure and preview mode (2026-11-01)
+
+- **libcamera sensor helper.** fx0-pmaports `temp/libcamera` 99990.7.1-r1
+  adds `CameraSensorHelperImx179` (Sony's 256/(256−code) analogue gain, black
+  level 64 in 10-bit) and a tuning file, so the soft IPA can use gain.
+- **Crop rectangles and location.** Kernel r26 reports the crop, crop
+  default, crop bounds and native size, and the DT marks the camera as
+  rear-facing. libcamera's crop-rectangle and sensor-property warnings are
+  gone, and it names the device "Internal back camera".
+- **Binned preview mode.** Kernel r27 adds a 1640×1232 mode that bins the
+  whole array 2×2 and keeps the full-resolution frame length, so it also
+  runs at 30 fps. The binned raw output keeps the RGGB mosaic: its channel
+  means match full resolution within 2 codes. An 820×616 viewfinder selects
+  it automatically.
+- **Auto-exposure.** At full resolution the soft ISP handles about one frame
+  per second, and AGC took about 50 s to settle after the torch came on.
+  With the binned mode it settles in about 4 s and stays steady.
+
+With the torch off, the phone lies on its back and the camera faces the desk,
+so gain and exposure saturate; images stay private. See
+[evidence](../evidence/2026-11-01-rear-camera-binned-preview.json).
+
 Next:
-- a libcamera sensor helper for the IMX179 (Sony's 256/(256−code) gain);
-- crop rectangles (`get_selection`) in the driver;
-- a smaller binned mode for preview;
+- a real-scene check of brightness, colour and orientation with the owner;
+- the DT `rotation` property, once the image orientation is known;
 - the front IMX132.
 
 ## Flash and torch
