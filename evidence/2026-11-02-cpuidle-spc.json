@@ -12,9 +12,12 @@
   "conclusion": "Cause found: the Cortex-A7 cores lose the ARM architected timer in standalone power collapse, so the idle state needs local-timer-stop for the always-on arch_mem_timer broadcast device (registered as the broadcast device); the original system uses qcom,use-broadcast-timer for this mode. The SPM_CTL bit was not needed",
   "comparison_with_stock": "msm8226-v2-pm.dtsi standalone_pc sequence [20 10 80 30 90 5b 60 03 60 3b 76 76 0b 94 5b 80 10 26 30 0f] and spm-dly 0x3c102800 are identical to mainline spm_reg_8226_cpu; stock also initialises SAW2 SPM_CTL to 0x8 (bit 3), which mainline never sets",
   "next": [
-    "boot and suspend cycles on the installed r44",
     "battery-life comparison (the SMBB supplies expose no current_now)"
   ],
   "owner_assisted": true,
-  "fix": "fx0-linux integration/fx0-cpuidle 4b800b920c7d 'ARM: dts: qcom: msm8226: Add the standalone power collapse idle state' (entry 150 us, exit 350 us, min residency 2000 us, local-timer-stop); package r44"
+  "fix": "fx0-linux integration/fx0-cpuidle 4b800b920c7d 'ARM: dts: qcom: msm8226: Add the standalone power collapse idle state' (entry 150 us, exit 350 us, min residency 2000 us, local-timer-stop); package r44",
+  "installed_r44": {
+    "reboots": "5 of 5: taint 0, system running, sway up, PipeWire speaker sink present, 2733-6207 SPC entries per core within about 60 s of boot; no RCU stalls or timer errors",
+    "s2idle": "10 of 10 rtcwake 20 s cycles pass (suspend_stats success 10, fail 0, taint 0, touch IC, ADSP/WCNSS running, Wi-Fi connected, sound card, msmdrmfb, sway running)"
+  }
 }
