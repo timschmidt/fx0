@@ -2211,3 +2211,11 @@ secondary core (CPU3) hangs the phone, so entering power collapse is the
 problem. The power-collapse sequence matches stock; stock additionally sets
 bit 3 of the SAW2 SPM_CTL register, the next thing to try
 ([evidence](../evidence/2026-11-02-cpuidle-spc.json)).
+
+CPU idle works. The hang was a missing broadcast timer: MSM8226's Cortex-A7
+cores lose their architected timer in standalone power collapse, so the idle
+state must be marked local-timer-stop and the always-on memory-mapped timer
+takes over. The owner spotted the decisive "possible timer handling issue on
+cpu=3" message on the console. With the fix, all four cores spend about 90% of
+idle time power-collapsed, suspend still works, and the UI is normal (kernel
+r44, [evidence](../evidence/2026-11-02-cpuidle-spc.json)).

@@ -77,6 +77,7 @@ Ordered roughly by how independent they are.
 | wlroots: treat a gamma reset as a no-op on CRTCs without gamma ([draft](../submissions/wlroots/README.md)) | wlroots (GitLab MR) | Owner approval; fixes sway failing the first screen-on after blanking on MDP5 |
 | New Sony IMX132 binding `a3ce062e9cf9`, driver `b671973c0a6c`, Fx0 front camera `ba6982590133` | media, qcom arm32 DTS | Owner approval; MAINTAINERS entries for IMX132 and IMX179; orientation check. fx0-linux `integration/fx0-imx132` (`dt_binding_check` passes) |
 | `c4e259382709` slimbus: qcom-ngd-ctrl: Remove stream channels when disabling a stream | slimbus | Owner approval; fixes 16/24-bit stream switching on MSM8226. fx0-linux `integration/fx0-ngd-disable-v2` |
+| `4b800b920c7d` ARM: dts: qcom: msm8226: Add the standalone power collapse idle state | qcom arm32 DTS | Owner approval; fx0-linux `integration/fx0-cpuidle`; applies to every MSM8226 board |
 | `linux-postmarketos-qcom-msm8226` r8 config (`PM_DEVFREQ`, ADSP, GPU IOMMU) | pmaports | The kernel features above reaching a release the package follows |
 | boot-deploy offset key in `deviceinfo_schema.toml` | pmaports | The boot-deploy merge request |
 | `device-lg-madai` (fx0-pmaports `integration/fx0-device` b9491f835c90; 1-r1 installed on the phone 2026-11-01) | pmaports | lk2nd and boot-deploy changes accepted; fresh-install test on the phone after the soak |

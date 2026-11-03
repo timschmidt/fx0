@@ -4,13 +4,17 @@
   "kernel": "installed r42 kernel, RAM boots with test DTBs (fx0-linux integration/fx0-ngd-disable-v2 + local/cpuidle/spc-attempt-01.patch)",
   "tests": {
     "A": "idle-states/cpu-spc on all CPUs with min-residency 100 s (registered, never selected): boots; qcom_spm cpuidle driver registered with states WFI and cpu-spc on CPU0-3 (cpu-spc usage 0); the TrustZone warm-boot-address SCM call (legacy convention) succeeds; taint 0",
-    "B": "cpu-spc (entry 150, exit 350, min residency 2000 us) on CPU3 only: never reached USB; owner saw a black screen with backlight on; force restart; no ramoops record after the cold restart"
+    "B": "cpu-spc (entry 150, exit 350, min residency 2000 us) on CPU3 only: never reached USB; owner saw a black screen with backlight on; force restart; no ramoops record after the cold restart",
+    "C": "as B on kernel r43 with SAW2 SPM_CTL initialised to 0x8 like stock: hung; owner saw kernel errors on the VT including 'possible timer handling issue on cpu=3 timer-softirq=70' (RCU stall diagnostics: CPU3's timer softirq never ran)",
+    "D": "as B plus local-timer-stop on the idle state (CPU3 only): boots; CPU3 cpu-spc usage 2425 shortly after boot; taint 0",
+    "E": "local-timer-stop, SPC on all four CPUs: boots; after 3 minutes each core spent 180-191 s of about 200 s in SPC (usage 5784-7190 per core), no RCU stalls, system running, sway up; one s2idle cycle succeeded (suspend_stats success 1, fail 0); owner: display and touch work normally"
   },
-  "conclusion": "The earlier boot hang is not the SCM call at probe: entering standalone power collapse hangs, even on a single secondary core",
+  "conclusion": "Cause found: the Cortex-A7 cores lose the ARM architected timer in standalone power collapse, so the idle state needs local-timer-stop for the always-on arch_mem_timer broadcast device (registered as the broadcast device); the original system uses qcom,use-broadcast-timer for this mode. The SPM_CTL bit was not needed",
   "comparison_with_stock": "msm8226-v2-pm.dtsi standalone_pc sequence [20 10 80 30 90 5b 60 03 60 3b 76 76 0b 94 5b 80 10 26 30 0f] and spm-dly 0x3c102800 are identical to mainline spm_reg_8226_cpu; stock also initialises SAW2 SPM_CTL to 0x8 (bit 3), which mainline never sets",
   "next": [
-    "try SPM_CTL bit 3 at SPM init (kernel build + owner-assisted RAM boot)",
-    "get a console of the hang: arm a warm-reset watchdog so ramoops survives, or a UART"
+    "boot and suspend cycles on the installed r44",
+    "battery-life comparison (the SMBB supplies expose no current_now)"
   ],
-  "owner_assisted": true
+  "owner_assisted": true,
+  "fix": "fx0-linux integration/fx0-cpuidle 4b800b920c7d 'ARM: dts: qcom: msm8226: Add the standalone power collapse idle state' (entry 150 us, exit 350 us, min residency 2000 us, local-timer-stop); package r44"
 }
