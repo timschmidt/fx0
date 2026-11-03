@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-02",
+  "subject": "Real-scene camera check with the owner (kernel r44, libcamera r2)",
+  "method": "Owner held the phone upright in a room at night; one settled soft-ISP viewfinder frame per camera, rotated 90 degrees clockwise (DT rotation 270), viewed locally and deleted; then raw dark frames with both lenses covered",
+  "orientation": "Both images upright after the rotation correction and not mirrored (confirms the 2026-11-02 rotation result)",
+  "front_imx132": "Desk scene: recognisable, neutral colour, dim",
+  "rear_imx179_full_resolution": "Bookshelf scene: very dark (channel means 11-18/255) with a green cast; at normal brightness the same camera balanced to R 103 G 104 B 95 earlier",
+  "black_level": "Raw dark frames: front R 64 Gr 65 Gb 65 B 65, rear R 64 Gr 64 Gb 64 B 64 - matches the 64 (10-bit) configured in the libcamera IMX132/IMX179 helpers",
+  "conclusion": "Drivers, Bayer order, black level and orientation are correct. Low-light quality is limited by libcamera's simple soft ISP: auto-exposure stops at one frame time and maximum analogue gain, and grey-world white balance has little signal in very dark scenes (no tuned colour matrix)",
+  "note": "libcamera camera indices are not stable between boots; select cameras by name ('Internal back/front camera')",
+  "open": [
+    "longer exposure in low light (frame-duration control in the soft ISP AGC)",
+    "per-sensor colour tuning"
+  ]
+}
