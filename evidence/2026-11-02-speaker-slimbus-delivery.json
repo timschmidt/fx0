@@ -68,5 +68,11 @@
     "finding": "Mainline's NGD driver ignores the status byte in the manager's GENERIC_ACK (downstream treats a missing 0x20 bit as NACK). Logging every user message and ACK shows all are accepted: CONNECT_SRC/SINK and DEF_ACT_CHAN and CHAN_CTRL remove 0x20, RECONFIG_NOW 0x2b (success bit set), for delivered and silent streams alike",
     "messages": "CONNECT_SINK la 0xcb port 16 <- ch 144 (and 17 <- 145); DEF_ACT_CHAN la 0xcb seg 6 + coef-3 bit (0x26), exp 2 ISO (0x20), presence rate 0x83, channels 0x90 0x91; RECONFIG_NOW; CHAN_CTRL remove 0x8b; DISCONNECT_PORT",
     "conclusion": "The ADSP bus manager accepts every setup; whether its AFE data reaches the channel is decided inside the DSP"
-  }
+  },
+  "experiment_r46_sacrificial": {
+    "mode": "before each stream, define/activate and remove the channel in prepare, then the normal activation at trigger",
+    "result": "5/8 delivered vs 3/8 in normal mode in the same session; within the usual spread, so no exploitable per-activation toggle"
+  },
+  "adm_order": "ADM/COPP open happens in the FE prepare after the BE AFE start (q6asm_dai_prepare -> q6routing_stream_open -> q6adm_open), the same order as downstream",
+  "phone_state": "clean r44 reinstalled after the test"
 }
