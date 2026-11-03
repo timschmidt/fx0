@@ -2203,3 +2203,11 @@ ADSP when the stream stops, so a stream at a new sample width no longer
 fails; and a stock-like mono stream into RX1 alone reaches the speaker for
 the first time. Reliable channel activation is the next step
 ([evidence](../evidence/2026-11-02-speaker-slimbus-delivery.json)).
+
+CPU idle: with the owner restarting the phone when needed, a test DTB that
+registers the standalone power collapse state but never selects it boots fine,
+so the TrustZone warm-boot call at driver load works. Allowing the state on one
+secondary core (CPU3) hangs the phone, so entering power collapse is the
+problem. The power-collapse sequence matches stock; stock additionally sets
+bit 3 of the SAW2 SPM_CTL register, the next thing to try
+([evidence](../evidence/2026-11-02-cpuidle-spc.json)).
