@@ -63,5 +63,10 @@
     "kernel": "linux-postmarketos-qcom-msm8226 6.18.59-r42 = fx0-linux integration/fx0-ngd-disable-v2 c4e259382709 (r30 chain + slimbus: qcom-ngd-ctrl: Remove stream channels when disabling a stream); all TEST changes dropped, SLIMbus back ends at 24 bits",
     "verified_after_install": "taint 0, system running, magnetometer mount matrix 0,-1,0;1,0,0;0,0,1, both cameras in libcamera, PipeWire speaker sink, sway running, wlroots0.20 r1 and libcamera r2 present",
     "speaker": "unchanged: playback streams deliver about half the time (see the experiments above)"
+  },
+  "experiment_r45_ack_codes": {
+    "finding": "Mainline's NGD driver ignores the status byte in the manager's GENERIC_ACK (downstream treats a missing 0x20 bit as NACK). Logging every user message and ACK shows all are accepted: CONNECT_SRC/SINK and DEF_ACT_CHAN and CHAN_CTRL remove 0x20, RECONFIG_NOW 0x2b (success bit set), for delivered and silent streams alike",
+    "messages": "CONNECT_SINK la 0xcb port 16 <- ch 144 (and 17 <- 145); DEF_ACT_CHAN la 0xcb seg 6 + coef-3 bit (0x26), exp 2 ISO (0x20), presence rate 0x83, channels 0x90 0x91; RECONFIG_NOW; CHAN_CTRL remove 0x8b; DISCONNECT_PORT",
+    "conclusion": "The ADSP bus manager accepts every setup; whether its AFE data reaches the channel is decided inside the DSP"
   }
 }
