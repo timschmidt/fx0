@@ -999,3 +999,28 @@ separate from the hardware results above. This is short correctness/load and
 repeat-transition evidence at 600 MHz. Higher rates, voltage adjustment,
 long stress, whole-RAM testing, thermal throttling, analogue rails, battery
 power, suspend and distribution/installed qualification remain open.
+
+### Prepared 787.2 MHz PLL trial
+
+The next RAM-only image is prepared with the same qualified kernel/module
+family and worker. It limits userspace to 787.2 MHz, checks three
+787.2→600→787.2→300 MHz cycles, then a bounded four-core load at 787.2 MHz
+before returning through 600 MHz to 300 MHz. This rate shares virtual corner
+4/fuse corner 2 with 600 MHz: the APC bounds remain 1.08–1.18 V and the MX
+floor 1.1875 V. The new clock path uses a direct 787.2 MHz CPU PLL, while
+600/300 MHz must disable that PLL and use the auxiliary source.
+
+Six controller tests covering 22 modes, three tests executing the actual
+PLL/mux selection code, and four actual C corner-mapper tests pass. The
+selection fixture uses board PLL OPP frequencies, checks 42 canonical
+decisions and rejects missing/incorrect parent points before programming.
+Those parent callbacks and programming are modeled; no hardware result is
+inferred. The shell requires matching uncached CPU/PLL rates and enable state
+alongside the existing voltage, temperature, IRQ, CPU and policy guards.
+
+The image is unbooted and unstaged. Its stage entry checks the exact previous
+native boot ID and physical display/touch result before any phone command;
+the pending-result path is verified to create no transfer or BOOT request.
+The newest r50 return remains running, NTP-synchronized and untainted. Its UI
+check remains pending. See
+[787.2 MHz preparation](../evidence/2026-11-08-cpr-787-preparation.json).

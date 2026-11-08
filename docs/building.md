@@ -375,6 +375,13 @@ run passes 90 guarded samples and 1,463 verified hashes, then restores native
 r50 through the original timer. See [load evidence](../evidence/2026-11-08-cpr-load-600.json).
 This does not update the Alpine package or qualify higher rates/long stress.
 
+The separate prepared `load-787.sh` image reuses that exact kernel/DTB/module
+and worker family. It adds explicit CPU-PLL rate/enable checks for 787.2 MHz,
+with the existing shared-corner voltage bounds. Thirteen targeted host checks
+pass; see [preparation evidence](../evidence/2026-11-08-cpr-787-preparation.json).
+It remains unbooted/unstaged, with previous-return physical UI required before
+entry. Do not attribute the 600 MHz hardware result to this next-rate trial.
+
 The input-dependent preboot USB defect remains open. The original image stalls
 after 5,783,552 confirmed bytes with both standard fastboot and synchronous
 transfers. Padding and pacing do not fix it; an isolated 32 KiB block reproduces

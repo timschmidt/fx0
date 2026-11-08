@@ -148,3 +148,34 @@ thermal throttling, analogue rails, battery power, suspend or higher rates.
 Native startup subsequently reaches running with NTP synchronized and no
 failed units/jobs, without configuration changes. The newest UI check remains
 boot-specific in the evidence; earlier DNS/startup delays remain unqualified.
+
+## Prepared 787.2 MHz trial
+
+`load-787.sh` is a separate, unbooted extension requiring the
+`787-repeat-load` permit. It caps userspace at 787.2 MHz and checks three
+787.2→600→787.2→300 MHz cycles, with ten quiet checks after the first PLL
+entry. It then uses the same verified four 30-second workers at 787.2 MHz
+and returns through 600 MHz to the fixed 300 MHz corner. Its 15 requests
+never exceed 787.2 MHz; the kernel, signed modules, DTB, worker, boot arguments
+and independent return timer are unchanged.
+
+The qualified C mapper puts both 600 and 787.2 MHz in virtual corner 4/fuse
+corner 2, so both retain the 1.08–1.18 V provider bounds and 1.1875 V MX floor.
+The new path requires the uncached CPU PLL to read 787.2 MHz with enable count
+one at 787.2 MHz, and enable count zero at 600/300 MHz. CPU mux, PLL, voltage,
+loop, policy, IRQ and both temperature observations are logged. Only responses
+observed at 787.2 MHz contribute to its feedback-response condition.
+
+Six real-shell tests cover 22 simulated modes, including wrong PLL rate,
+disabled PLL at 787.2 MHz, active PLL on an auxiliary return, false CPU rate,
+worker failures and cleanup. `tests/test_cpu_rate_selection.py` executes the
+actual qualified PLL/mux selection functions with the board PLL OPP table:
+42 canonical decisions and two non-exact-rate rejection controls pass.
+Parent callbacks/programming are modeled there; this is not a hardware test.
+Four actual C corner-mapper tests also pass against the pinned vendor plans.
+
+The prepared RAM image has not been staged or booted. Physical entry requires
+the matching display/touch pass for the preceding r50 boot; the stage entry
+has been checked to stop before any phone command while that result is
+pending. See `evidence/2026-11-08-cpr-787-preparation.json`. No 787.2 MHz CPR
+hardware, load, thermal or recovery result follows from this preparation.

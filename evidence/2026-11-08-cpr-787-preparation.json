@@ -1,0 +1,267 @@
+{
+  "date": "2026-11-08",
+  "recorded_UTC": "2026-11-08T21:21:13.304327+00:00",
+  "status": "787.2 MHz RAM trial prepared and host-verified; unbooted and unstaged; preceding native return physical UI check pending",
+  "source_commit": "b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8",
+  "source_manifest": "manifests/kernel-cpr-voltage-observation.json",
+  "parent_600MHz_hardware_evidence": "evidence/2026-11-08-cpr-load-600.json",
+  "image": {
+    "image_path": "local/cpr-load-787/fx0-cpr-load-787-ram.img",
+    "image_sha256": "5fe346327a3f58a602c3c8a6984a6b8c302c9da78d2fce881c4bff71ecba9ad9",
+    "image_bytes": 6993920,
+    "kernel_sha256": "82052f4d623a8bcb64a57e93f6354e6b9397e04cb2ccd7a19da3ee972f2e4c88",
+    "DTB_sha256": "589d17908c2bd9584b0f3f51bc4c19ced467b60791e3fd13bc4ee3fbcd9e0284",
+    "header_digest_and_addresses_verified": true,
+    "return_after_seconds": 180,
+    "initially_moduleless": true,
+    "allowed_module_loads": [
+      "cpufreq_userspace.ko",
+      "cpufreq-dt.ko"
+    ],
+    "signature_enforcement": true,
+    "default_governor": "userspace",
+    "registration_script_sha256": "8391c8d434b2b23e2ba1a5c539ebc9ae0373a0515064dd09372dda694502c367",
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\" cpufreq.default_governor=userspace module.sig_enforce=1",
+    "entries_sha256": {
+      "bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dev": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sys": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tmp": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "www": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bin/busybox": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+      "bin/sh": "9d75f0d7c398df565d7ac04c6819b62d6d8f9560f5eb4672596ecd8f7e96ae91",
+      "bin/serve-http": "4005fed0312bc216b3c32129ffdd2ceac06544a2503ecd572349e729af543d5e",
+      "init": "8a25f6757a7f0de87cb7433def659d0fee00981c2a311ed816a12bac439ac0d1",
+      "etc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modules": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "etc/fx0-cpr-trial": "7726ddde5c6f08780f95da9cf91f1f2193ca4afa433c889b98e28a66af85ce47",
+      "bin/cpr-register": "8391c8d434b2b23e2ba1a5c539ebc9ae0373a0515064dd09372dda694502c367",
+      "modules/cpufreq_userspace.ko": "4c219cc6637db54cd4dc488de2e43df5513333f5c9943913d9d04bf6863b989f",
+      "modules/cpufreq-dt.ko": "3e5279a527d8f036450226f9b2d9a3df4df02f5f9ea35c98fd5f13d1c9639644",
+      "etc/fx0-cpr-modules.sha256": "449b08d9d8b61fdf4d6f4bcd6898c35560d486bde9df88b989de8e2d9cf0d8b3",
+      "etc/fx0-cpr-load-step": "cf87811f419c6b68cbdbb1cf375fe06619c885568dbd298d221167668bcd8e1a",
+      "bin/cpr-load-787": "f73a4720e0d630f0259d059daa6001501ab7a3c4d74c5a81d5d178e0d41e73a3",
+      "bin/cpr-sha256": "71d77dd2e9eb109402a46313f2b489d4ff18c961a5a78bfda9606952bd4eabde",
+      "etc/fx0-cpr-load.sha256": "7b3fde1388717782024fb85f51fbdd53d4636693d692e4bca0fc9629a5edc297"
+    },
+    "packed_kernel_encoding": "XZ preset 3; runtime Image and ELF exactly unchanged",
+    "previous_failed_image_sha256": "48e29c2c7a8dd05f854bacf2ea910fa4488abdc368b73f2b6e462a06ff7a0abc",
+    "phase": "787.2 MHz PLL/auxiliary transitions and bounded four-core checksum load",
+    "explicit_frequency_requests_kHz": [
+      787200,
+      600000,
+      787200,
+      300000,
+      787200,
+      600000,
+      787200,
+      300000,
+      787200,
+      600000,
+      787200,
+      300000,
+      787200,
+      600000,
+      300000
+    ],
+    "policy_limits_kHz": [
+      300000,
+      787200
+    ],
+    "expected_APC_bounds_at_600MHz_uV": [
+      1080000,
+      1180000
+    ],
+    "expected_APC_bounds_at_787MHz_uV": [
+      1080000,
+      1180000
+    ],
+    "expected_CPU_PLL_at_787MHz_Hz": 787200000,
+    "expected_CPU_PLL_enabled_at_787MHz": 1,
+    "expected_CPU_PLL_enabled_at_600_and_300MHz": 0,
+    "expected_return_APC_target_uV": 1080000,
+    "expected_feedback_LOOP_EN_at_600MHz": 1,
+    "expected_feedback_LOOP_EN_at_300MHz": 0,
+    "repeated_PLL_aux_PLL_fixed_corner_cycles": 3,
+    "workers": 4,
+    "worker_seconds": 30,
+    "minimum_each_worker_CPU_ms": 25000,
+    "worker_sha256": "71d77dd2e9eb109402a46313f2b489d4ff18c961a5a78bfda9606952bd4eabde",
+    "worker_source_sha256": "eabfec59e1c876d474c49e47b1b2e1a5100baf3987ec90673df7b5b20787ce50",
+    "maximum_IRQ_delta": 10000,
+    "temperature_limit_mC_exclusive": 60000,
+    "load_script_sha256": "f73a4720e0d630f0259d059daa6001501ab7a3c4d74c5a81d5d178e0d41e73a3",
+    "kernel_DTB_modules_cmdline_and_timer_identical_to_registration_trial": true,
+    "previous_native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "previous_UI_result_required_before_stage": "local/ram-cpr-load-01/owner-display-touch.json: status passed, matching boot ID",
+    "expected_feedback_LOOP_EN_at_787MHz": 1
+  },
+  "host_tests": {
+    "shell_controller_tests": {
+      "tests": 6,
+      "simulated_modes": 22,
+      "observed_result": "Ran 6 tests in 51.205s; OK"
+    },
+    "actual_PLL_mux_selection_tests": {
+      "tests": 3,
+      "canonical_selections": 42,
+      "negative_modes": [
+        "missing 787.2 MHz PLL OPP",
+        "wrong auxiliary parent rate"
+      ],
+      "observed_result": "Ran 3 tests in 0.130s; OK",
+      "scope": "actual selection functions with board OPP frequencies; modeled parent callbacks and programming, not hardware"
+    },
+    "actual_corner_mapper_tests": {
+      "tests": 4,
+      "observed_result": "Ran 4 tests in 0.147s; OK",
+      "scope": "actual qualified C mapper versus pinned vendor plans across bins, versions and boundaries"
+    },
+    "failures": 0,
+    "kernel_source": "worktrees/linux-fx0-cpr-observe",
+    "files_sha256": {
+      "diagnostics/cpu-cpr-runtime/load-787.sh": "f73a4720e0d630f0259d059daa6001501ab7a3c4d74c5a81d5d178e0d41e73a3",
+      "tests/test_cpr_787.py": "abb0c2a2d1283e663f40018c8413bfcfc192709574c031405f107eac0a1a41a8",
+      "tests/test_cpu_rate_selection.py": "6a8ac6d949c67ba1d6a33b6b25d5466dcde9e77cd4d7da8f45464522568741cf",
+      "tests/test_msm8926_corner.py": "aaa8ac8a12410511d483e756b1c40e7530ccfd30c928ef930c6d39f95aec3e67"
+    }
+  },
+  "expected_corner": {
+    "600_and_787MHz_share_virtual_corner": 4,
+    "fuse_corner": 2,
+    "APC_bounds_uV": [
+      1080000,
+      1180000
+    ],
+    "APC_step_uV": 10000,
+    "MX_floor_uV": 1187500,
+    "basis": "qualified C mapper first-covering 787.2 MHz fmax entry and already verified 10 mV provider plan; these are expected limits, not 787.2 MHz hardware observations"
+  },
+  "expected_clock_topology": {
+    "at_787200_kHz": {
+      "CPU_mux_Hz": 787200000,
+      "CPU_PLL_Hz": 787200000,
+      "CPU_PLL_enable_count": 1
+    },
+    "at_600000_kHz": {
+      "CPU_mux_Hz": 600000000,
+      "CPU_PLL_enable_count": 0
+    },
+    "at_300000_kHz": {
+      "CPU_mux_Hz": 300000000,
+      "CPU_PLL_enable_count": 0
+    },
+    "scope": "host executes actual rate-selection functions with board OPP frequencies; callbacks/programming modeled, no physical topology measurement at 787.2 MHz"
+  },
+  "physical_entry_gate": {
+    "actual_stage_process_exit": 1,
+    "expected_failure": "Previous native return display/touch check is pending; no reboot or transfer allowed",
+    "previous_native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "bootloader_entry_controller_created": false,
+    "transfer_directory_created": false,
+    "BOOT_request_created": false,
+    "scope": "host-side verification of physical-entry gate; no phone commands"
+  },
+  "native_current_observation": {
+    "boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "kernel": "6.18.59-fx0-dmp",
+    "taint": 0,
+    "systemd": "running",
+    "NTP_synchronized": true,
+    "reported_temperatures_mC": [
+      41000,
+      40000
+    ],
+    "display_touch": "pending on this newest native return",
+    "last_restored_PMIC_target_uV_from_parent_evidence": 1150000
+  },
+  "hardware_operations": {
+    "reboot_commands": 0,
+    "staging_attempts": 0,
+    "BOOT_requests": 0,
+    "787MHz_hardware_trial_performed": false,
+    "candidate_installed": false,
+    "eMMC_flashed": false,
+    "audio_tested": false,
+    "host_builtin_WiFi_changed": false,
+    "only_phone_activity": "read-only same-boot health query"
+  },
+  "next_gate": "Record matching display/touch result for native boot 28db1c68-3b08-4a53-8e5a-3397b8315813, then fresh native preflight, exact stage/readback, one RAM boot and timed/native recovery validation",
+  "remaining": [
+    "787.2 MHz physical clock/feedback/load/recovery, plus all higher eligible rates",
+    "voltage adjustment, long CPU/whole-RAM stress, thermal throttling, analogue rails, battery and suspend",
+    "stable/edge packaging, installed update/recovery and wider hardware/reliability gates",
+    "intermittent native DNS/startup delays and content-dependent USB staging defect"
+  ],
+  "files_sha256": {
+    "diagnostics/cpu-cpr-runtime/README.md": "c4eb3ceb1914b882e7e0bd7b1baccf784dfbb35872c9fa722a876425dd498b62",
+    "diagnostics/cpu-cpr-runtime/load-787.sh": "f73a4720e0d630f0259d059daa6001501ab7a3c4d74c5a81d5d178e0d41e73a3",
+    "diagnostics/cpu-cpr-runtime/sha256-worker.c": "eabfec59e1c876d474c49e47b1b2e1a5100baf3987ec90673df7b5b20787ce50",
+    "docs/building.md": "51154dd3870f9765b5740691534ff60316fea5e7d574d193bff8ad3ba23faaa3",
+    "docs/development-log.md": "fe0d0042cd4e6d4f74ba7e8d8bc7315e151074863c5f3d22aac5395644cbcace",
+    "docs/hardware-acceptance.md": "55b84236818a433208cadf568fee4f7347709f4cfc685a7549dc027edf891aeb",
+    "docs/msm8226-cpu-performance.md": "ec7e8ffa40b8a673c257e5567129702b40b78d05ceccdcd8bb5adad52a6d683b",
+    "evidence/2026-11-08-cpr-load-600.json": "747309e9dffeba04d9be6cc6497f3baa0e41e107fb848e810c128b60415ea199",
+    "local/cpr-load-600/sha256-worker-arm": "71d77dd2e9eb109402a46313f2b489d4ff18c961a5a78bfda9606952bd4eabde",
+    "local/cpr-load-600/worker-ARM-verification.json": "64a7cab579c83fac6e7bc3d2331c50834d82613650f56c06f9890ae364e9d36c",
+    "local/cpr-load-787/RAM-image.json": "921a982bdd91d29ff9c5ee6e6aa2e34d6eb5a155c27b33b5e47d93e88ae9d3d2",
+    "local/cpr-load-787/fx0-cpr-load-787-ram.img": "5fe346327a3f58a602c3c8a6984a6b8c302c9da78d2fce881c4bff71ecba9ad9",
+    "local/cpr-load-787/host-tests.json": "4a05b0b0751e7a8067a0a0f2299f2d637c9263c8189669bfcd7ebb90997b8726",
+    "local/cpr-load-787/physical-entry-gate-check.json": "a6e016438680b3b1a1b61fd411b5dd77586877281d2714ba6010ef06d862fbfd",
+    "local/cpr-load-787/prepare-image.py": "a46141c81871db93509ac309fdd35a43a7d177a133822b30589d6f9d00032deb",
+    "local/cpr-load-787/record-preparation.py": "35e42ee21e51a00443534e68defe001d5d246786729e4ce89754b3e185a1e0ad",
+    "local/cpr-load-publication/native-before-787-preparation.txt": "91c1a7ee23a36a1ca93c48009b301d6c9e6ab2f58a111c17543442ee4533579d",
+    "local/ram-cpr-787-01/boot-once.py": "495388e1f3f8b081b9e000a871d1cb61d6adcbb34bb572cef9e110561dce8dfd",
+    "local/ram-cpr-787-01/image-verification.json": "921a982bdd91d29ff9c5ee6e6aa2e34d6eb5a155c27b33b5e47d93e88ae9d3d2",
+    "local/ram-cpr-787-01/observe.py": "d5f6a6c6a957dda7954d632352b7f63a7aea291c6261ab7b140528237eb9a2bc",
+    "local/ram-cpr-787-01/postflight.py": "6ba24cbac1b5a5945008653c4129eb5c31dc3a1869aef06ec431b0a178cb6009",
+    "local/ram-cpr-787-01/preflight.py": "30d5b8a1b454c8b5dc3733985d9cd9c0d7d43115868d75a29a6d2838c2665c59",
+    "local/ram-cpr-787-01/ram-observation.json": "2f4342c40a9d374898ae09a76fee88b97e3147392f5bca9bc3a5e14bd7b4421b",
+    "local/ram-cpr-787-01/run-process.py": "0eac33ecf8506abf2ee5ab1ddf8b32c9523799c55be0fb110fb5709226058c66",
+    "local/ram-cpr-787-01/stage.py": "c0dc5a2a78cdc81f77b791a087d01f09443c27eff01af885086ac87eef280ff9",
+    "local/ram-cpr-787-01/wait-native.py": "a32833912d63d63fd54204d77d535bce69aec2768cc40f367c8aa025e47c3159",
+    "local/ram-cpr-load-01/owner-display-touch.json": "58d123649220ed3f84f20b6f9e0a11b6ebc3716423cb625134a70d81d87749c8",
+    "manifests/kernel-cpr-voltage-observation.json": "46c04b4e05b0595cc9d69eabcbcd7cc12c78b118d834c2726e355e6d05717598",
+    "tests/test_cpr_787.py": "abb0c2a2d1283e663f40018c8413bfcfc192709574c031405f107eac0a1a41a8",
+    "tests/test_cpu_rate_selection.py": "6a8ac6d949c67ba1d6a33b6b25d5466dcde9e77cd4d7da8f45464522568741cf",
+    "tests/test_msm8926_corner.py": "aaa8ac8a12410511d483e756b1c40e7530ccfd30c928ef930c6d39f95aec3e67",
+    "worktrees/linux-fx0-cpr-observe/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi": "20f9aa62a67fa37b80344901a7497f0c35aa0144e81b7b6288cdd204d5bd9d1f",
+    "worktrees/linux-fx0-cpr-observe/drivers/clk/qcom/clk-pll.c": "bfbaf9e47a56e0e37a670a26bdeda82a3072b8966fc644cb25b96eacacddafda",
+    "worktrees/linux-fx0-cpr-observe/drivers/clk/qcom/clk-regmap-mux-div.c": "3395adb60d400564bd432404003efbe42db92f28b55c31e66fd0b632a24b4a92",
+    "worktrees/linux-fx0-cpr-observe/drivers/pmdomain/qcom/cpr-msm8926-corner.h": "b72a60b781fd3b589f55aef7de4f5c3c178b4f5588a24c581d396a63cbf76a81",
+    "worktrees/linux-fx0-cpr-observe/drivers/pmdomain/qcom/cpr-msm8926-voltage.h": "6ddb8af84ae4e31b8287e83d80ff961fb35019164e17a26635a92265015165d2"
+  },
+  "prior_checkpoint_file_versions": {
+    "diagnostics/cpu-cpr-runtime/README.md": {
+      "prior_commit": "3c96ee61e5409db2bb7576fce9e391bcf97cc2aa",
+      "prior_sha256": "0b4a7632aaef4f3dbea1036c697a6d66646d1aa62f780be1204bae3a04c3d2aa",
+      "current_sha256": "c4eb3ceb1914b882e7e0bd7b1baccf784dfbb35872c9fa722a876425dd498b62",
+      "meaning": "Preparation document update; prior evidence/versions remain historical and unchanged."
+    },
+    "docs/msm8226-cpu-performance.md": {
+      "prior_commit": "3c96ee61e5409db2bb7576fce9e391bcf97cc2aa",
+      "prior_sha256": "a459160feae6c52269b56e7ec5e17d2b08138d50f955f28acde55c1e518512a0",
+      "current_sha256": "ec7e8ffa40b8a673c257e5567129702b40b78d05ceccdcd8bb5adad52a6d683b",
+      "meaning": "Preparation document update; prior evidence/versions remain historical and unchanged."
+    },
+    "docs/building.md": {
+      "prior_commit": "3c96ee61e5409db2bb7576fce9e391bcf97cc2aa",
+      "prior_sha256": "77288324b7b34c862972061d7d612ed343dde71bd89f79426d8b55ce1f94415b",
+      "current_sha256": "51154dd3870f9765b5740691534ff60316fea5e7d574d193bff8ad3ba23faaa3",
+      "meaning": "Preparation document update; prior evidence/versions remain historical and unchanged."
+    },
+    "docs/development-log.md": {
+      "prior_commit": "3c96ee61e5409db2bb7576fce9e391bcf97cc2aa",
+      "prior_sha256": "358d1211e1c509f51a73cc8039fce9fd3ff5809edb423657eaa7a262666cb43e",
+      "current_sha256": "fe0d0042cd4e6d4f74ba7e8d8bc7315e151074863c5f3d22aac5395644cbcace",
+      "meaning": "Preparation document update; prior evidence/versions remain historical and unchanged."
+    },
+    "docs/hardware-acceptance.md": {
+      "prior_commit": "3c96ee61e5409db2bb7576fce9e391bcf97cc2aa",
+      "prior_sha256": "ed3e575bd4bad6785c4ba9d94185176910f8af9cbdad25894f41e59e1ab0a3a9",
+      "current_sha256": "55b84236818a433208cadf568fee4f7347709f4cfc685a7549dc027edf891aeb",
+      "meaning": "Preparation document update; prior evidence/versions remain historical and unchanged."
+    }
+  }
+}

@@ -128,6 +128,14 @@ with no failed units/jobs and no configuration changes; earlier intermittent
 DNS/startup delays remain a reliability gate. See the
 [startup follow-up](../evidence/2026-11-08-r50-time-sync-followup.json).
 
+A separate 787.2 MHz PLL/load RAM image is prepared with thirteen passing host
+checks, explicit raw PLL/mux guards and the shared 600/787.2 MHz voltage bounds.
+It is unbooted and unstaged while the preceding 600 MHz load return's newest
+physical UI check remains pending. The actual stage entry rejects that pending
+result before sending any phone command. This is preparation only, not a
+787.2 MHz hardware pass. See
+[preparation evidence](../evidence/2026-11-08-cpr-787-preparation.json).
+
 November 8 r50 regression: the owner confirms display and touch before testing.
 Five USB-powered RTC controls retain DMP execution across traced s2idle and
 recover 373 quaternion samples, with RTC IRQ +1 and IMU IRQ +0 per cycle, no

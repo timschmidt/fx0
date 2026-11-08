@@ -4112,3 +4112,28 @@ startup with no failed units/jobs are verified. No network/time/unit settings
 are changed or services restarted. This closes startup for this boot, without
 claiming earlier intermittent DNS/startup delays fixed. See
 [time-sync follow-up](../evidence/2026-11-08-r50-time-sync-followup.json).
+
+### Prepared 787.2 MHz PLL transition/load trial (2026-11-08)
+
+Prepared a separate guarded userspace 787.2 MHz RAM controller and image,
+retaining the exact qualified kernel, DTB, signed modules, static worker,
+command line and timer. Three 787.2→600→787.2→300 MHz cycles precede the
+bounded four-core 787.2 MHz load and a 600→300 MHz return. All checks now
+include the uncached CPU PLL rate/enable state; high-rate feedback must be
+observed at 787.2 MHz. Both 600 and 787.2 MHz map to virtual corner 4/fuse
+corner 2 with APC bounds 1.08–1.18 V and MX floor 1.1875 V.
+
+Six real-shell tests covering 22 modes pass, including wrong CPU/PLL rates,
+wrong PLL enable state, worker faults and termination cleanup. Three new tests
+execute the actual PLL/mux selection functions with the board PLL OPP table,
+checking 42 canonical decisions and two negative parent controls. Four actual
+corner-mapper tests pass. The new 6,993,920-byte image verifies its header,
+digest, unchanged kernel/DTB/modules/worker and exact request list.
+
+No phone reboot, transfer or BOOT is performed. Native r50 boot
+28db1c68-3b08-4a53-8e5a-3397b8315813 remains running, NTP-synchronized and
+untainted. Its physical display/touch result is still pending. The actual
+next stage entry is tested to reject that result before any phone command
+or transfer/controller creation. This turn advances host preparation and
+verification; no 787.2 MHz hardware or broader qualification is claimed. See
+[preparation evidence](../evidence/2026-11-08-cpr-787-preparation.json).
