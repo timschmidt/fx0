@@ -35,6 +35,16 @@ changes remain excluded.
 
 ## Transport encoding and observed scope
 
+The host transfer helper now requires every data write to complete in full.
+A short result stops immediately, including a packet-aligned short prefix;
+it sends no remainder or upload. The installed fastboot code rejects a short
+download, so the host must not assume continuation remains valid. Early failure
+reports start at zero confirmed bytes. Twenty-five host checks pass, including
+the actual bootloader C framing functions with controlled completions and three
+regression controls that fail on the previous helper. This changes no image or
+bootloader bytes and does not fix the observed content-dependent stall. See
+[framing evidence](../../evidence/2026-11-08-ram-transfer-framing.json).
+
 The original packed observation kernel stalls during data-only USB download at
 3,588,096 confirmed bytes, before any BOOT and before the initramfs. The known
 content-dependent lk2nd transport defect therefore also affects a compressed

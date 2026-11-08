@@ -4,6 +4,8 @@
 This tool stops after readback. It sends no boot, flash, erase or reset command.
 Use a new private output directory. Errors leave device-state diagnosis to the
 caller; an uncertain transfer is never retried automatically.
+Short USB data writes also stop: resuming the remaining bytes can violate
+lk2nd's download framing. Partial readback remains allowed.
 """
 import argparse
 import ctypes as c
@@ -58,7 +60,12 @@ def stage_readback(fd, output, input_, data, io=bulk, progress=lambda **kw: None
     while offset < len(data):
         part = data[offset:offset + CHUNK]
         actual = io(fd, output, data=part)
-        boot.require(0 < actual <= len(part), 'Invalid data write progress')
+        # A short OUT transfer can terminate lk2nd's pending USB read. Its
+        # cmd_download rejects a short result, so the remaining bytes cannot
+        # safely be sent as a continuation or a new command.
+        boot.require(actual == len(part),
+                     f'Short or invalid data write at offset {offset}: '
+                     f'{actual} of {len(part)} bytes; do not resume or boot')
         offset += actual
         pause()
         progress(phase='download', bytes=offset)
@@ -94,7 +101,7 @@ def main():
     boot.require(0 < len(data) <= MAX_BYTES, 'Invalid RAM transfer size')
     args.output.mkdir(parents=True, mode=0o700)
     report = {'started_UTC': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-              'state': 'identity probe', 'bytes': len(data), 'payload_bytes': len(data),
+              'state': 'identity probe', 'bytes': 0, 'payload_bytes': len(data),
               'sha256': args.sha256, 'chunk_bytes': CHUNK, 'pace_ms': args.pace_ms}
 
     def save():

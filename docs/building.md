@@ -444,6 +444,18 @@ do not attach such tracing to an active transfer. Every failed attempt here
 stopped before boot, and only the identified phone's USB transport was reset.
 See [native bootstrap/transport evidence](../evidence/2026-11-08-l2-s2-ram-bootstrap.json).
 
+The later host transfer correction rejects every short data write immediately,
+without sending its remainder, upload or BOOT. The installed lk2nd's actual
+`hsusb_usb_read`/`cmd_download` functions reject a short download; treating a
+positive short USB write as resumable did not preserve that framing contract.
+Failure reports now start at zero confirmed bytes rather than the payload size.
+Exact writes, partial readback, pacing and the final byte comparison retain
+their behavior. Twenty-five host checks pass, including five controlled C
+completion modes; three new regression tests fail against the previous helper.
+These checks do not exercise DMA or explain the content-dependent USB stall.
+No bootloader change or new device operation occurs. See
+[transfer framing evidence](../evidence/2026-11-08-ram-transfer-framing.json).
+
 ## Earlier diagnostic build records
 
 Historical r7 checkpoint: signed native **6.18.59-r7**, Linux source

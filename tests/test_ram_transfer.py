@@ -1,7 +1,10 @@
-"""Exercise synchronous RAM transfer framing, partial I/O and failure stops."""
+"""Exercise RAM transfer framing, short-I/O failure stops and readback."""
+import json
 import sys
 from pathlib import Path
+import tempfile
 import unittest
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import transfer_fx0_ram as RAM
@@ -16,6 +19,7 @@ class Wire:
         self.phase = 'download command'
         self.position = 0
         self.max_part = RAM.CHUNK
+        self.max_read = RAM.CHUNK
         self.writes = 0
         self.fail_write = 0
         self.short_command = self.zero_read = self.corrupt = False
@@ -52,7 +56,7 @@ class Wire:
             return self.queue.pop(0)
         if self.zero_read:
             return b''
-        count = min(size, self.max_part, len(self.data) - self.position)
+        count = min(size, self.max_read, len(self.data) - self.position)
         part = self.data[self.position:self.position + count]
         if self.corrupt and self.position == 0:
             part = bytes([part[0] ^ 1]) + part[1:]
@@ -80,10 +84,37 @@ class RamTransferTests(unittest.TestCase):
         self.assertEqual(self.wire.sent, self.data)
         self.assertEqual(self.wire.commands, [b'download:0000c800', b'upload'])
 
-    def test_partial_transfers_advance_without_duplicating_bytes(self):
-        self.wire.max_part = 997
+    def test_partial_readback_advances_without_duplicating_bytes(self):
+        self.wire.max_read = 997
         self.assertEqual(self.transfer(), self.data)
         self.assertEqual(self.wire.sent, self.data)
+
+    def test_short_data_write_stops_without_resuming_or_upload(self):
+        # Include both a USB-packet-aligned prefix and a short packet. The
+        # host must not guess which state a positive short result left behind.
+        for count in [0, 1, 997, 8192, RAM.CHUNK - 1]:
+            with self.subTest(count=count):
+                self.wire = Wire(self.data)
+                self.wire.max_part = count
+                with self.assertRaisesRegex(ValueError, 'do not resume or boot'):
+                    self.transfer()
+                self.assertEqual(self.wire.writes, 1)
+                self.assertEqual(len(self.wire.sent), count)
+                self.assertEqual(self.wire.commands, [b'download:0000c800'])
+
+    def test_short_write_after_progress_preserves_confirmed_offset(self):
+        wire = self.wire
+        progress = []
+        def short_second(*args, **kwargs):
+            if kwargs.get('data') is not None and wire.phase == 'download bytes' and wire.writes == 1:
+                wire.max_part = 997
+            return wire(*args, **kwargs)
+        with self.assertRaisesRegex(ValueError, 'offset 16384: 997 of 16384'):
+            RAM.stage_readback(1, 1, 129, self.data, io=short_second,
+                               progress=lambda **values: progress.append(values))
+        self.assertEqual(wire.writes, 2)
+        self.assertEqual(progress, [{'phase': 'download', 'bytes': RAM.CHUNK}])
+        self.assertEqual(wire.commands, [b'download:0000c800'])
 
     def test_uncertain_completion_is_not_retried(self):
         self.wire.fail_write = 2
@@ -135,6 +166,60 @@ class RamTransferTests(unittest.TestCase):
                                     pause=lambda: pauses.append(True))
         self.assertEqual(result, self.data)
         self.assertEqual(len(pauses), 8)
+
+    def test_identity_failure_report_has_zero_confirmed_bytes(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            payload = base / 'payload.bin'
+            payload.write_bytes(self.data)
+            output = base / 'report'
+            argv = ['transfer_fx0_ram.py', '--serial', 'fixture-device',
+                    '--payload', str(payload), '--sha256', hashlib.sha256(self.data).hexdigest(),
+                    '--output', str(output)]
+            with mock.patch.object(sys, 'argv', argv), mock.patch.object(RAM.boot, 'query', side_effect=OSError('identity unavailable')), mock.patch.object(RAM.os, 'open') as opened:
+                with self.assertRaisesRegex(OSError, 'identity unavailable'):
+                    RAM.main()
+                opened.assert_not_called()
+            report = json.loads((output / 'result.json').read_text())
+            self.assertEqual(report['state'], 'failed')
+            self.assertEqual(report['bytes'], 0)
+            self.assertEqual(report['payload_bytes'], len(self.data))
+            self.assertIn('finished_UTC', report)
+
+    def test_data_failure_report_never_marks_unconfirmed_bytes(self):
+        import hashlib
+        original = RAM.stage_readback
+        for mode, expected in [('first_timeout', 0), ('second_short', RAM.CHUNK)]:
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as directory:
+                base = Path(directory)
+                payload = base / 'payload.bin'
+                payload.write_bytes(self.data)
+                output = base / 'report'
+                argv = ['transfer_fx0_ram.py', '--serial', 'fixture-device',
+                        '--payload', str(payload), '--sha256', hashlib.sha256(self.data).hexdigest(),
+                        '--output', str(output), '--pace-ms', '0']
+                wire = Wire(self.data)
+                wire.fail_write = 1 if mode == 'first_timeout' else 0
+                def io(*args, **kwargs):
+                    if mode == 'second_short' and kwargs.get('data') is not None and wire.phase == 'download bytes' and wire.writes == 1:
+                        wire.max_part = 997
+                    return wire(*args, **kwargs)
+                def transfer(*args, **kwargs):
+                    return original(*args, io=io, **kwargs)
+                with mock.patch.object(sys, 'argv', argv), mock.patch.object(RAM.boot, 'query', return_value={'product': 'fixture'}), mock.patch.object(RAM.boot, 'device', return_value=('/dev/fixture', 0, 1, 129)), mock.patch.object(RAM.os, 'open', return_value=123), mock.patch.object(RAM.os, 'close') as closed, mock.patch.object(RAM.boot, 'ioctl', return_value=0) as ioctl, mock.patch.object(RAM, 'stage_readback', side_effect=transfer):
+                    with self.assertRaises((OSError, ValueError)):
+                        RAM.main()
+                    closed.assert_called_once_with(123)
+                    self.assertEqual([call.args[1] for call in ioctl.call_args_list], [RAM.boot.CLAIM, RAM.boot.RELEASE])
+                report = json.loads((output / 'result.json').read_text())
+                self.assertEqual(report['state'], 'failed')
+                self.assertEqual(report['bytes'], expected)
+                self.assertEqual(report['payload_bytes'], len(self.data))
+                self.assertNotIn('readback_sha256', report)
+                self.assertFalse((output / 'readback.bin').exists())
+                self.assertEqual(wire.writes, 1 if mode == 'first_timeout' else 2)
+                self.assertEqual(wire.commands, [b'download:0000c800'])
 
 
 if __name__ == '__main__':

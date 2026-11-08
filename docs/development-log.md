@@ -4201,3 +4201,27 @@ No device operation is performed in this preparation. Independent Alpine
 startup, registration, recovery and later OPP/load tests remain open; the
 existing 787.2 MHz Fedora trial is also still unbooted. See
 [Alpine preparation](../evidence/2026-11-08-alpine-cpr-registration-preparation.json).
+
+### Corrected RAM transfer short-write handling (2026-11-08)
+
+Inspected the exact installed lk2nd source while investigating the recurring
+pre-BOOT content-dependent download stall. The host helper incorrectly
+continued after a positive short data write, although the bootloader's actual
+USB-read/download functions reject a short download. It also initialized
+confirmed progress to the full payload size, making an identity or first-write
+failure report misleading.
+
+The helper now rejects short/invalid data writes without sending a remainder,
+upload or BOOT, and initializes confirmed bytes to zero. Full writes, optional
+pacing, partial readback and exact final comparison retain their behavior.
+Fourteen transfer tests, eight boot tests and three actual-C framing tests
+pass without skips. Controlled C completions cover full/first-short/later-short/
+read-error/oversize paths; both extracted source files match installed commit
+`079eebe745de650df02e92fd9ca8d9fec5110c56`. Three new regression tests fail
+against the previous published helper, including real main-entry report checks.
+
+This is a host correctness fix. It does not exercise USB DMA/interrupts,
+identify the observed stall's cause, alter bootloader/image bytes or qualify a
+new transfer. No phone command or configuration change occurs; both prepared
+RAM trials remain gated on the newest native return's physical UI result.
+See [transfer framing evidence](../evidence/2026-11-08-ram-transfer-framing.json).
