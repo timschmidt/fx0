@@ -4069,3 +4069,46 @@ The owner confirms display and touch on this newest 600 MHz trial's r50
 return, closing its physical recovery check. Follow-up retains the same boot
 ID, zero taint, Sway and sensor proxy; the two existing time-sync jobs remain
 pending, so running systemd startup is not claimed for this boot.
+
+### Repeated 600 MHz transitions and bounded four-core load (2026-11-08)
+
+Added a static ARM checksum worker and a guarded repeat/load RAM controller.
+Four Clang undefined-behavior-sanitized worker tests and six real-shell tests
+covering 17 controller modes pass, including failed mid-trial observations,
+worker affinity/accounting/deadline failures and cleanup after termination.
+The exact production ARM binary passes fifteen independent digest cases and
+its 30-second affinity/accounting lifecycle under emulation. The runtime
+worker uses the production 30-second default, not the host test's short variant.
+
+The 6,993,920-byte RAM image preserves the qualified kernel, DTB, two signed
+modules, command line and timer. Exact staging/readback precedes one BOOT.
+Five 300→600→300 MHz round trips pass, followed by four pinned workers at
+600 MHz and another verified 300 MHz return. Workers on CPUs 0–3 check
+362/365/365/371 one-MiB hashes, totaling 1,463 hashes and 113.737 process CPU
+seconds in approximately 30 elapsed seconds each. All workers terminate
+before the final request. All 90 state checks pass, including 37 during load;
+temperatures span 38–44°C. APC remains 1.08 V with one handled floor-clamp
+interrupt and no observed voltage adjustment. Return clears LOOP_EN and
+restores the first-corner MX floor.
+
+The timer fires at 181.714515 seconds. Both observers exit zero, the temporary
+profile is removed and host routes/resolver match before. R50 boot
+28db1c68-3b08-4a53-8e5a-3397b8315813 retains the original boot hash, four-rate
+schedutil policy, zero taint, Sway and sensor proxy. Two known PMIC rows confirm
+the native 1.15 V target restored. Latest physical UI/startup follow-up is
+tracked in [repeat/load evidence](../evidence/2026-11-08-cpr-load-600.json).
+The existing native time-sync wait is diagnosed separately with read-only
+service/DNS/route snapshots. Higher rates, long stress/whole RAM, physical
+rails, thermal throttling, battery, suspend, stable/edge/install/recovery and
+wider bringup remain open.
+
+On this same newest r50 boot, the bounded `getent hosts` probe succeeds.
+`resolvectl` is absent (status 127), so it cannot diagnose the active resolver;
+the first broad snapshot also used an unsupported JSON route invocation.
+Follow-up uses supported commands, captures stderr and records each status.
+Timesyncd subsequently contacts a public pool server and synchronizes
+naturally. The exact boot ID, zero taint, Sway/sensor proxy and running systemd
+startup with no failed units/jobs are verified. No network/time/unit settings
+are changed or services restarted. This closes startup for this boot, without
+claiming earlier intermittent DNS/startup delays fixed. See
+[time-sync follow-up](../evidence/2026-11-08-r50-time-sync-followup.json).

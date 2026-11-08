@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-08",
+  "status": "Newest r50 boot reaches NTP synchronization and running startup naturally; no failed units or pending jobs",
+  "native": {
+    "verified_UTC": "2026-11-08T21:08:03.570585+00:00",
+    "native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "systemd": "running",
+    "failed_units": [],
+    "pending_jobs": [],
+    "taint": 0,
+    "Sway": true,
+    "sensor_proxy": "active",
+    "NTP_synchronized": true,
+    "configuration_changes": false,
+    "scope": "this native boot completes synchronization and startup naturally; earlier intermittent DNS/boot delays are not claimed fixed"
+  },
+  "initial_observation": {
+    "timesyncd": "active/running, no restarts",
+    "time_wait_sync": "activating/start",
+    "NTP_server_address": "unset",
+    "NTP_synchronized": false
+  },
+  "exact_probe_statuses": {
+    "boot": 0,
+    "route": 0,
+    "address": 0,
+    "resolver": 127,
+    "DNS_servers": 127,
+    "resolvfile": 0,
+    "DNS_route": 0,
+    "resolve_NTP": 127,
+    "hosts_NTP": 0,
+    "journal": 0
+  },
+  "DNS_observation": "bounded getent hosts 2.pool.ntp.org succeeds; resolvectl is not installed (127), so its absence is not evidence of resolver failure",
+  "later_journal": "timesyncd contacts a public pool NTP server and logs initial clock synchronization",
+  "changes": {
+    "time_manually_set": false,
+    "network_configuration_changed": false,
+    "units_restarted_or_modified": false,
+    "host_builtin_WiFi_changed": false
+  },
+  "scope": "this boot completes NTP and startup; earlier intermittent DNS/boot delays and general offline/network reliability remain open",
+  "files_sha256": {
+    "local/native-time-sync-20261108-01/exact-status-probes.json": "cb53408704780c4372e44ad491de4cdffd444e37b73fa0415bc835b6d0cbc545",
+    "local/native-time-sync-20261108-01/context.json": "c5a13ae9f068b1c6879f737c64a81f22f8f0564dc4cd5f990e985cd7c21d4e8a",
+    "local/native-time-sync-20261108-01/probe.py": "8942dcd4cb06881fc9e41df3a473d6bfefc97d8be1ad06ea7e05ec60e36a9fef",
+    "local/native-time-sync-20261108-01/synchronized-followup.txt": "3cd7c426ca5a967e95e89d9e216d4770d71f1a499328e0267103e05cf3e5ce87",
+    "local/native-time-sync-20261108-01/exact-status-probes.txt": "92b7fe615e1044e66c41fd3409739edc7a0b1c2a2b64ecd60e2607992a1a38e7",
+    "local/native-time-sync-20261108-01/diagnose.txt": "9fbb76d92ee77b147465077f5da8c9a63206c9ee751d9ca5a384335d36a272d9",
+    "local/native-time-sync-20261108-01/verified-status.json": "6986a51e6599f8a5eafdb16c783a484ffbbdd81182ce8ad6012b75082c6bc159"
+  }
+}

@@ -949,3 +949,53 @@ checks. Actual hardware voltage adjustment under controlled load, repeated
 transitions, higher rates, physical rails, sustained load/thermal/suspend and
 installed/distribution qualification remain open. The successful kernel
 encoding still works around the unresolved USB staging defect.
+
+### Repeated transitions and short four-core 600 MHz load
+
+The unchanged observation kernel/module family passes five pre-load
+300→600→300 MHz round trips, followed by a 600 MHz four-core checksum load and
+another verified 300 MHz return. The userspace cap remains 600 MHz throughout.
+The RAM image adds only a permit, guarded shell controller, static userspace
+worker and its SHA256 manifest to the qualified registration initramfs.
+Kernel, DTB, signed modules, command line and 180-second return timer are
+byte-identical to the registration trial.
+
+Each worker pins itself, verifies affinity, checks every one-MiB repeating-byte
+SHA256 result and exits after 30 monotonic seconds. Its reported accounting is:
+
+| CPU | Verified one-MiB hashes | Process CPU seconds | Elapsed seconds |
+| --- | ---: | ---: | ---: |
+| 0 | 362 | 28.116 | 30.023 |
+| 1 | 365 | 28.320 | 30.026 |
+| 2 | 365 | 28.322 | 30.014 |
+| 3 | 371 | 28.979 | 30.016 |
+
+The 1,463 hashes cover 1,534,066,688 bytes of repeated computation over four
+one-MiB buffers, not that much distinct RAM. All workers terminate before the
+final frequency request. All 90 state checks pass, including 37 during load:
+uncached clock, applied/allowed feedback, voltage/cache bounds and grid, policy,
+four CPUs, zero taint, IRQ counts and both temperature sensors. Reported RAM
+temperatures span 38–44°C. APC stays at 1.08 V; one floor-clamp interrupt sets
+CTL 0x20000469 at 600 MHz. No voltage adjustment is observed. The fixed-corner
+300 MHz return reads CTL 0x20000428. MX floor requests remain 1.1875 V at 600 MHz
+and 1.0875 V at 300 MHz.
+
+The timer returns at 181.714515 seconds. Both observers exit zero and the host
+network state restores. Native r50 boot `28db1c68-3b08-4a53-8e5a-3397b8315813`
+has the original hash, four-rate schedutil policy, zero taint, Sway and sensor
+proxy. Bounded PMIC reads restore S2 range/VSET 1/115 and the native 1.15 V
+target. Newest physical UI and startup status are tracked in
+[repeat/load evidence](../evidence/2026-11-08-cpr-load-600.json).
+Startup subsequently reaches running with NTP synchronized and no failed
+units/jobs, without changing configuration. Exact-status probes distinguish
+the successful bounded hostname lookup from missing `resolvectl`; see the
+[natural startup follow-up](../evidence/2026-11-08-r50-time-sync-followup.json).
+This does not establish a fix for earlier intermittent DNS/startup delays.
+
+Four sanitizer-backed worker tests, six real-shell controller tests covering
+17 modes, fifteen ARM-emulated digest cases and the exact ARM binary's
+30-second emulated lifecycle pass before the physical run. Emulation is kept
+separate from the hardware results above. This is short correctness/load and
+repeat-transition evidence at 600 MHz. Higher rates, voltage adjustment,
+long stress, whole-RAM testing, thermal throttling, analogue rails, battery
+power, suspend and distribution/installed qualification remain open.

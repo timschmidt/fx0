@@ -157,3 +157,10 @@ verified 300 MHz return. No new kernel patch or source commit is involved.
 The [trial evidence](../evidence/2026-11-08-cpr-feedback-600.json) keeps this
 result scoped to the host-built family; the frozen 39-patch mail export and
 unbooted Alpine r54 package do not inherit it.
+
+The observation family also passes five bounded 300–600 MHz round trips and
+a short four-core checksum load at 600 MHz, with verified worker affinity,
+CPU accounting, temperatures, feedback and fixed-corner return. The
+[repeat/load evidence](../evidence/2026-11-08-cpr-load-600.json) belongs to the
+same `b721ebaecd7d` kernel/module family. Only RAM userspace control/load files
+are new; no kernel patch or receiving-tree readiness is implied.

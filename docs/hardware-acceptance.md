@@ -112,6 +112,22 @@ the existing time-sync jobs remain pending. Details are recorded in
 [600 MHz feedback evidence](../evidence/2026-11-08-cpr-feedback-600.json).
 Higher rates, repeated transitions, physical rails and broader gates remain open.
 
+The same family subsequently passes five pre-load 300–600 MHz round trips and
+a bounded four-core load at 600 MHz. Four affinity-verified 30-second workers
+check 1,463 one-MiB SHA256 results with 113.737 total process CPU seconds. All
+90 state checks pass, with reported temperatures 38–44°C and APC at 1.08 V;
+feedback handles the floor without observed voltage adjustment. Workers stop
+before the final verified 300 MHz return. The 181.714515-second timer restores
+r50's hash, PMIC 1.15 V target, zero taint and UI services; host network cleanup
+passes. Latest physical UI/startup status is in
+[repeat/load evidence](../evidence/2026-11-08-cpr-load-600.json). This short run
+does not qualify higher rates, long stress, whole RAM, thermal throttling,
+physical rails, battery power, suspend or installed/distribution behavior.
+The same native boot subsequently synchronizes NTP and reaches running startup
+with no failed units/jobs and no configuration changes; earlier intermittent
+DNS/startup delays remain a reliability gate. See the
+[startup follow-up](../evidence/2026-11-08-r50-time-sync-followup.json).
+
 November 8 r50 regression: the owner confirms display and touch before testing.
 Five USB-powered RTC controls retain DMP execution across traced s2idle and
 recover 373 quaternion samples, with RTC IRQ +1 and IMU IRQ +0 per cycle, no

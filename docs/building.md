@@ -366,6 +366,15 @@ line remain identical to the registration trial. The host script tests cover
 for exact image hashes, raw response and native recovery. This quiet run does
 not qualify voltage adjustment under load, higher rates or distribution installs.
 
+`load-600.sh` and the static `sha256-worker.c` extend that unchanged build family
+with five repeated round trips and a 30-second pinned worker on each core at
+600 MHz. The [runtime-trial README](../diagnostics/cpu-cpr-runtime/README.md)
+gives the exact tested ARM-musl/Clang build recipe; runtime Python is unnecessary.
+Ten host tests and the exact ARM binary's emulated checks pass. The physical
+run passes 90 guarded samples and 1,463 verified hashes, then restores native
+r50 through the original timer. See [load evidence](../evidence/2026-11-08-cpr-load-600.json).
+This does not update the Alpine package or qualify higher rates/long stress.
+
 The input-dependent preboot USB defect remains open. The original image stalls
 after 5,783,552 confirmed bytes with both standard fastboot and synchronous
 transfers. Padding and pacing do not fix it; an isolated 32 KiB block reproduces

@@ -93,3 +93,58 @@ original boot hash and PMIC 1.15 V target. The exact run and newest physical
 UI/startup status are in `evidence/2026-11-08-cpr-feedback-600.json`.
 The owner confirms display and touch on that newest return. Native startup
 still has only the existing time-sync jobs pending at the latest check.
+
+## Repeated transitions and bounded 600 MHz load
+
+`load-600.sh` requires a separate `600-repeat-load` permit and the same guarded
+registration. It caps userspace at 600 MHz, checks five 300→600→300 MHz round
+trips, then runs one `sha256-worker.c` process on each CPU at 600 MHz. Each
+process verifies its affinity, repeatedly hashes the known one-MiB repeating
+0–255 byte pattern, checks every digest and exits after 30 monotonic seconds.
+A compiler memory barrier requires a fresh buffer read each iteration.
+The helper reports its own CPU and elapsed time and rechecks affinity.
+
+The shell verifies the helper binary's digest and known-pattern result before
+any performance request. Throughout transitions and load it checks the actual
+clock, applied/cache/APC state, policy, four CPUs, zero taint, two reported
+temperatures below 60°C, monotonic IRQ counts and the same voltage bounds.
+It stops and joins workers on a guard failure or handled termination. All four
+workers must exit successfully, report the correct affinity, at least 25 CPU
+seconds each and 30–35 elapsed seconds before any 300 MHz return. The final
+fixed-corner return gets ten more checks separated by 0.5-second sleeps.
+The independent 180-second RAM return timer remains unchanged.
+
+Build the helper with the tested ARM Alpine musl development sysroot and
+Clang/LLD; no libraries are needed in the RAM image:
+
+```sh
+fx0_arm_sysroot=/path/to/alpine-armv7-rootfs
+clang --target=armv7-alpine-linux-musleabihf --sysroot="$fx0_arm_sysroot" \
+  -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard -std=gnu11 -O2 \
+  -Wall -Wextra -Werror -nostdlib -static --ld-path=/usr/bin/ld.lld-18 \
+  "$fx0_arm_sysroot/usr/lib/crt1.o" "$fx0_arm_sysroot/usr/lib/crti.o" \
+  diagnostics/cpu-cpr-runtime/sha256-worker.c \
+  "$fx0_arm_sysroot/usr/lib/libc.a" \
+  "$fx0_arm_sysroot/usr/lib/gcc/armv7-alpine-linux-musleabihf/15.2.0/libgcc.a" \
+  "$fx0_arm_sysroot/usr/lib/crtn.o" -Wl,--build-id=none -o cpr-sha256
+```
+
+Keep the production 30-second default. `--digest SIZE` checks the repeating
+byte pattern at lengths up to one MiB; `--worker CPU` performs the bounded
+load. Four host tests use Clang's undefined-behavior sanitizer, including a
+one-second variant for lifecycle/accounting, independent hashlib padding
+vectors, checksum corruption and termination. Six shell tests cover 17 modes
+with instrumented I/O and real child cleanup. The exact production ARM binary
+also passes fifteen checksum cases and a 30-second emulated worker run.
+
+The first hardware run passes all 90 state checks, including 37 load samples.
+Four workers verify 1,463 one-MiB hashes with 113.737 total process CPU seconds;
+reported temperatures span 38–44°C. APC stays at the 1.08 V floor with one
+handled floor interrupt; voltage adjustment is not observed. Both observers
+exit zero after the timer at 181.714515 seconds. See
+`evidence/2026-11-08-cpr-load-600.json` for native recovery and the newest UI
+check. This short workload does not qualify whole-RAM correctness, long stress,
+thermal throttling, analogue rails, battery power, suspend or higher rates.
+Native startup subsequently reaches running with NTP synchronized and no
+failed units/jobs, without configuration changes. The newest UI check remains
+boot-specific in the evidence; earlier DNS/startup delays remain unqualified.
