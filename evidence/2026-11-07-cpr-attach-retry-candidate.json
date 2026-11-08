@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-07",
+  "status": "unpackaged; not installed",
+  "component": "CPR attachment initialization retry",
+  "source_sha256": "118909f4d4cfbbe3439627242bc3ece7d13a4913b123d0a952a9c1b75de5de37",
+  "patch": "patches/linux-integration/fx0-cpr-attach-retry.diff",
+  "problem": "attached_cpu_dev was published before initialization, causing failed attachments to skip initialization on retry; ACC register errors were ignored",
+  "change": [
+    "pass candidate CPU explicitly to corner initialization",
+    "publish attached_cpu_dev only after successful initialization",
+    "propagate ACC configuration and enable errors"
+  ],
+  "verification": {
+    "actual_callback_C_harness": "10 initialization failures including clock defer, OPP defer/count, allocation, corner/parameter/config/initial-corner and ACC writes; each retries and completes; later CPU attachment is idempotent",
+    "ARM_W1_cpr_object": "passed LLVM=1 LD=ld.lld-18",
+    "CPR_regressions": "2 harnesses passed",
+    "checkpatch": "0 errors and 0 warnings",
+    "whitespace": "passed"
+  },
+  "limits": [
+    "CPR is disabled on current r50 phone",
+    "test stubs establish software control flow, not hardware rollback or regulator lifetime",
+    "no new full kernel, source package or APK",
+    "Fx0 calibration/OPP attachment and suspend handoff remain incomplete"
+  ],
+  "constraints": {
+    "audio_tests": false,
+    "host_builtin_wifi_changes": false
+  }
+}

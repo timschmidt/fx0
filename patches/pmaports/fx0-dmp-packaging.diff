@@ -1,0 +1,1587 @@
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD b/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD
+index 301599011..954ac1593 100644
+--- a/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD
++++ b/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD
+@@ -3,7 +3,7 @@ maintainer="Newbyte <newbie13xd@gmail.com>"
+ _flavor="postmarketos-qcom-msm8226"
+ pkgname=linux-$_flavor
+ pkgver=6.18.59
+-pkgrel=44
++pkgrel=47
+ pkgdesc="Mainline Kernel fork for APQ8026/MSM8226/MSM8926 devices"
+ arch="armv7"
+ _carch="arm"
+@@ -36,6 +36,10 @@ _commit="4b800b920c7db82e8012a580a17cc2d8ff9d5e66"
+ source="
+ 	linux-fx0-$_commit.tar.gz::https://github.com/timschmidt/fx0-linux/archive/$_commit.tar.gz
+ 	$_config
++	fx0-mpu6515-dmp.patch
++	iio-preserve-tiny-log2-scale.patch
++	fx0-mpu6515-dmp-smd-awake.patch
++	fx0-mpu6515-dmp-smd-wake.patch
+ "
+ builddir="$srcdir/fx0-linux-$_commit"
+ 
+@@ -46,7 +50,7 @@ prepare() {
+ 
+ build() {
+ 	unset LDFLAGS
+-	make ARCH="$_carch" LLVM=1 \
++	make ARCH="$_carch" LLVM=1 LOCALVERSION="" \
+ 		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-$_flavor"
+ }
+ 
+@@ -54,7 +58,7 @@ package() {
+ 	mkdir -p "$pkgdir"/boot
+ 	make zinstall modules_install dtbs_install \
+ 		ARCH="$_carch" \
+-		LLVM=1 \
++		LLVM=1 LOCALVERSION="" \
+ 		INSTALL_PATH="$pkgdir"/boot/ \
+ 		INSTALL_MOD_PATH="$pkgdir" \
+ 		INSTALL_MOD_STRIP=1 \
+@@ -67,5 +71,9 @@ package() {
+ 
+ sha512sums="
+ 3479e7b9d3e753f4dddde1b88cb6544d2304e46aa92b3ba0aab8cd0ce1108869efd8cc36692a05bc094ccdff6213e0cae0433dc5b742289c57023a838fda8741  linux-fx0-4b800b920c7db82e8012a580a17cc2d8ff9d5e66.tar.gz
+-72504b42ec22fca4b0ea0f102b01e7fc9d995de358a0270594d347f828ad65b28e545e2ac4854089f037b8c8ad4a905ef8e0b7b7c31d211188800857c604002b  config-postmarketos-qcom-msm8226.armv7
++13025d9c1c635883a223eca3009c83410f5722aff41c59f63fab67fc8336f0e6fb1ae069ac78c4a438577fc4e7b71ca8c5724689d3ea130187a6032886190a89  config-postmarketos-qcom-msm8226.armv7
++638996e6df8e96a1ba54560fc5075840876b788c8e5a534b1f2178a0269a765ec34b05a999287bdc7da5f22f9666ac7e122c63818a54fb76133797cb4ce586de  fx0-mpu6515-dmp.patch
++14435047cf0bd838eb3c246ac5689a5f3bb908e23f55ef0c5655436ea15a75d26023dae63dcb52d4b6f7e0cd3f170a6e4a018a39a241f7670913fb90dc17cbda  iio-preserve-tiny-log2-scale.patch
++197cc0debb094c372a25a3e46efc1451e554e679084b285df8c8786b5f7c372d9358acc568f641042b2fa94d88f0659caf7d3e4da2df740c6a3a481eefcb1d4d  fx0-mpu6515-dmp-smd-awake.patch
++01112a410985fe30a8b3056d5a26ff3f8608e4aa41bb56c531ee3aecdce28eaad168c044415b5b032c10540314a0ceb70fcd8a3e65d5311276b304d41994d4c9  fx0-mpu6515-dmp-smd-wake.patch
+ "
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/README.fx0-dmp b/device/testing/linux-postmarketos-qcom-msm8226/README.fx0-dmp
+new file mode 100644
+index 000000000..3cfe7422a
+--- /dev/null
++++ b/device/testing/linux-postmarketos-qcom-msm8226/README.fx0-dmp
+@@ -0,0 +1,32 @@
++Fx0 DMP development package preparation
++=======================================
++
++Prepared from pmaports CPU-idle integration 0a5720063, before the later audio
++experiment recipes. The pinned kernel source is 4b800b920c7db82e8012a580a17cc2d8ff9d5e66.
++Four ordered patches reproduce the nine changed files in worktrees/linux-dmp.
++No proprietary DMP firmware is included; firmware remains separately provisioned.
++
++The candidate package is 6.18.59-r47 and uses kernel release 6.18.59-fx0-dmp.
++A fixed release avoids dependence on archive checkout SCM information and keeps
++its module directory separate from both legacy 6.18.59 and the running trial.
++The inherited recipe uses LLVM; the running development trial was built with GCC.
++This recipe therefore requires its own complete build and device qualification.
++
++Validated: shell syntax, all local SHA-512 entries, ordered patch application,
++and exact patched-source comparison to the running candidate source.
++The separate host Clang/CFI build and signed binary-wrapper APK now pass; all
++464 module vermagics and 545 packaged file hashes were checked. This source
++recipe itself has not been built with Alpine abuild. The signed host-built
++binary-wrapper APK is now installed through normal APK hooks. The phone boots
++6.18.59-fx0-dmp with matching installed metadata and taint zero. Boot-image
++readback and lk2nd prefix preservation passed; raw/quaternion, awake arming
++and one RTC suspend also pass. Physical motion-wake qualification is pending
++on this Clang/CFI build; earlier GCC tests do not qualify this image.
++Never change kernel or module inputs during an active 20-cycle wake run.
++Audio testing remains excluded.
++
++Later current-phone result: r49 retains this DMP implementation and adds an
++MSM video-start ordering change. Twenty consecutive physical DMP wakes and a
++matched disabled-SMD motion control pass with zero taint/underruns; owner
++confirms display/touch recovery. Overall battery/overnight, 50-cycle/peripheral
++and false-wake/accuracy gates remain open. See coordination-repo evidence.
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7 b/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7
+index 753627501..aeec6d520 100644
+--- a/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7
++++ b/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7
+@@ -34,8 +34,8 @@ CONFIG_THREAD_INFO_IN_TASK=y
+ CONFIG_INIT_ENV_ARG_LIMIT=32
+ # CONFIG_COMPILE_TEST is not set
+ # CONFIG_WERROR is not set
+-CONFIG_LOCALVERSION=""
+-CONFIG_LOCALVERSION_AUTO=y
++CONFIG_LOCALVERSION="-fx0-dmp"
++# CONFIG_LOCALVERSION_AUTO is not set
+ CONFIG_BUILD_SALT=""
+ CONFIG_HAVE_KERNEL_GZIP=y
+ CONFIG_HAVE_KERNEL_LZMA=y
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/fx0-mpu6515-dmp-smd-awake.patch b/device/testing/linux-postmarketos-qcom-msm8226/fx0-mpu6515-dmp-smd-awake.patch
+new file mode 100644
+index 000000000..b5419f704
+--- /dev/null
++++ b/device/testing/linux-postmarketos-qcom-msm8226/fx0-mpu6515-dmp-smd-awake.patch
+@@ -0,0 +1,287 @@
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++index e66ad01..3f45131 100644
++--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++@@ -1201,6 +1201,12 @@ static int inv_mpu6050_read_event_config(struct iio_dev *indio_dev,
++ {
++ 	struct inv_mpu6050_state *st = iio_priv(indio_dev);
++ 
+++	if (chan->type == IIO_ACTIVITY && chan->channel2 == IIO_MOD_STILL &&
+++	    type == IIO_EV_TYPE_CHANGE && dir == IIO_EV_DIR_FALLING) {
+++		guard(mutex)(&st->lock);
+++		return st->dmp_smd_armed;
+++	}
+++
++ 	/* support only WoM (accel roc rising) event */
++ 	if (chan->type != IIO_ACCEL || type != IIO_EV_TYPE_ROC ||
++ 	    dir != IIO_EV_DIR_RISING)
++@@ -1219,6 +1225,19 @@ static int inv_mpu6050_write_event_config(struct iio_dev *indio_dev,
++ {
++ 	struct inv_mpu6050_state *st = iio_priv(indio_dev);
++ 
+++	if (chan->type == IIO_ACTIVITY && chan->channel2 == IIO_MOD_STILL &&
+++	    type == IIO_EV_TYPE_CHANGE && dir == IIO_EV_DIR_FALLING) {
+++		int ret;
+++
+++		if (!iio_device_claim_direct(indio_dev))
+++			return -EBUSY;
+++		mutex_lock(&st->lock);
+++		ret = inv_mpu6515_dmp_smd_set(st, state);
+++		mutex_unlock(&st->lock);
+++		iio_device_release_direct(indio_dev);
+++		return ret;
+++	}
+++
++ 	/* support only WoM (accel roc rising) event */
++ 	if (chan->type != IIO_ACCEL || type != IIO_EV_TYPE_ROC ||
++ 	    dir != IIO_EV_DIR_RISING)
++@@ -1496,6 +1515,14 @@ static const struct iio_chan_spec_ext_info inv_ext_info[] = {
++ 	{ }
++ };
++ 
+++static const struct iio_event_spec inv_smd_events[] = {
+++	{
+++		.type = IIO_EV_TYPE_CHANGE,
+++		.dir = IIO_EV_DIR_FALLING,
+++		.mask_separate = BIT(IIO_EV_INFO_ENABLE),
+++	},
+++};
+++
++ static const struct iio_event_spec inv_wom_events[] = {
++ 	{
++ 		.type = IIO_EV_TYPE_ROC,
++@@ -1604,6 +1631,8 @@ static const struct iio_chan_spec inv_mpu6515_channels[] = {
++ 
++ 	INV_MPU6050_EVENT_CHAN(IIO_ACCEL, IIO_MOD_X_OR_Y_OR_Z,
++ 			       inv_wom_events, ARRAY_SIZE(inv_wom_events)),
+++	INV_MPU6050_EVENT_CHAN(IIO_ACTIVITY, IIO_MOD_STILL,
+++			       inv_smd_events, ARRAY_SIZE(inv_smd_events)),
++ 	{
++ 		.type = IIO_ROT,
++ 		.modified = 1,
++@@ -2202,6 +2231,10 @@ int inv_mpu_core_probe(struct regmap *regmap, int irq, const char *name,
++ 		}
++ 	}
++ 
+++	result = devm_add_action_or_reset(dev, inv_mpu6515_dmp_cleanup, st);
+++	if (result)
+++		return result;
+++
++ 	result = devm_iio_device_register(dev, indio_dev);
++ 	if (result) {
++ 		dev_err(dev, "IIO register fail %d\n", result);
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
++index 29fcdf4..ab32d72 100644
++--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
++@@ -214,6 +214,9 @@ struct inv_mpu6050_state {
++ 	unsigned int suspended_sensors;
++ 	bool level_shifter;
++ 	bool dmp_active;
+++	bool dmp_smd_mode;
+++	bool dmp_smd_armed;
+++	bool dmp_smd_pm;
++ 	bool dmp_overflow;
++ 	bool dmp_saved_valid;
++ 	u8 dmp_saved[12];
++@@ -527,6 +530,9 @@ int inv_mpu6515_dmp_mem_write(struct inv_mpu6050_state *st,
++ #define INV_MPU6515_SCAN_QUATERNION 7
++ #define INV_MPU6515_SCAN_TIMESTAMP 8
++ int inv_mpu6515_dmp_start(struct inv_mpu6050_state *st);
+++int inv_mpu6515_dmp_smd_set(struct inv_mpu6050_state *st, bool enable);
+++int inv_mpu6515_dmp_smd_event(struct inv_mpu6050_state *st);
+++void inv_mpu6515_dmp_cleanup(void *data);
++ int inv_mpu6515_dmp_stop(struct inv_mpu6050_state *st);
++ int inv_mpu6515_dmp_recover(struct inv_mpu6050_state *st);
++ int inv_mpu6515_dmp_read_fifo(struct iio_dev *indio_dev, s64 timestamp);
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
++index 1feaa8e..e430ca5 100644
++--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
++@@ -167,6 +167,9 @@ static int inv_mpu6050_set_enable(struct iio_dev *indio_dev, bool enable)
++ 	unsigned int scan;
++ 	int result;
++ 
+++	if (st->dmp_smd_pm)
+++		return -EBUSY;
+++
++ 	if (st->chip_type == INV_MPU6515 && indio_dev->active_scan_mask &&
++ 	    test_bit(INV_MPU6515_SCAN_QUATERNION, indio_dev->active_scan_mask)) {
++ 		if (enable) {
++@@ -306,6 +309,23 @@ static irqreturn_t inv_mpu6050_interrupt_handle(int irq, void *p)
++ 			return IRQ_HANDLED;
++ 		}
++ 
+++		if (st->dmp_smd_mode) {
+++			if (int_status & INV_MPU6050_BIT_DMP_INT_EN) {
+++				result = inv_mpu6515_dmp_smd_event(st);
+++				if (result > 0) {
+++					ev_code = IIO_MOD_EVENT_CODE(
+++						IIO_ACTIVITY, 0, IIO_MOD_STILL,
+++						IIO_EV_TYPE_CHANGE, IIO_EV_DIR_FALLING);
+++					iio_push_event(indio_dev, ev_code, st->it_timestamp);
+++				} else if (result < 0) {
+++					dev_err_ratelimited(
+++						regmap_get_device(st->map),
+++						"DMP event status read failed: %d\n", result);
+++				}
+++			}
+++			return IRQ_HANDLED;
+++		}
+++
++ 		if (st->dmp_active && (int_status & INV_MPU6050_BIT_FIFO_OVERFLOW_INT))
++ 			st->dmp_overflow = true;
++ 
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
++index ae585eb..02a736d 100644
++--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
++@@ -6,6 +6,7 @@
++ #include <linux/firmware.h>
++ #include <linux/lockdep.h>
++ #include <linux/module.h>
+++#include <linux/pm_runtime.h>
++ #include <linux/string.h>
++ #include <linux/unaligned.h>
++ 
++@@ -257,6 +258,36 @@ int inv_mpu6515_dmp_decode(const u8 *data, size_t len,
++ 	return size;
++ }
++ 
+++/* Manufacturer SMD defaults; physical threshold units are not exposed. */
+++static int inv_mpu6515_dmp_configure_smd(struct inv_mpu6050_state *st)
+++{
+++	static const struct {
+++		u16 address;
+++		u8 length;
+++		u8 data[4];
+++	} patches[] = {
+++		{ 1770, 2, { 0xf4, 0x12 } }, /* no accel FIFO producer */
+++		{ 1701, 2, { 0xf4, 0x13 } }, /* no quaternion FIFO producer */
+++		{ 1983, 1, { 0xa3 } }, /* algorithm events only */
+++		{ 1985, 1, { 0xff } }, /* pedometer disabled */
+++		{ 2796, 3, { 0xf1, 0xf1, 0xf1 } }, /* pedometer IRQ disabled */
+++		{ 344, 4, { 0x05, 0xdc, 0, 0 } }, /* threshold 1500 << 16 */
+++		{ 340, 4, { 0, 0, 0x02, 0x58 } }, /* 3 seconds at 200 Hz */
+++		{ 348, 4, { 0, 0, 0, 0xc8 } }, /* 1 second at 200 Hz */
+++		{ 288, 2, { 0, 1 } }, /* SMD enable */
+++	};
+++	unsigned int i;
+++	int ret;
+++
+++	for (i = 0; i < ARRAY_SIZE(patches); i++) {
+++		ret = inv_mpu6515_dmp_mem_write(st, patches[i].address,
+++					      patches[i].data, patches[i].length);
+++		if (ret)
+++			return ret;
+++	}
+++	return 0;
+++}
+++
++ /* Registers changed by the DMP mode; restore cached raw settings verbatim. */
++ static const u8 inv_dmp_saved_regs[] = {
++ 	0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x23, 0x38, 0x6a,
++@@ -359,6 +390,15 @@ int inv_mpu6515_dmp_start(struct inv_mpu6050_state *st)
++ 	ret = inv_mpu6515_dmp_configure(st);
++ 	if (ret)
++ 		goto fail;
+++	if (st->dmp_smd_mode) {
+++		ret = inv_mpu6515_dmp_configure_smd(st);
+++		if (ret)
+++			goto fail;
+++		/* Clear a previous algorithm status before enabling a new run. */
+++		ret = regmap_read(st->map, 0x39, &value);
+++		if (ret)
+++			goto fail;
+++	}
++ 	ret = regmap_multi_reg_write(st->map, setup, ARRAY_SIZE(setup));
++ 	if (ret)
++ 		goto fail;
++@@ -374,12 +414,13 @@ int inv_mpu6515_dmp_start(struct inv_mpu6050_state *st)
++ 	st->dmp_last_timestamp = 0;
++ 	ret = regmap_write(st->map, st->reg->user_ctrl,
++ 			   st->chip_config.user_ctrl | INV_MPU6050_BIT_DMP_EN |
++-			   INV_MPU6050_BIT_FIFO_EN);
+++			   (st->dmp_smd_mode ? 0 : INV_MPU6050_BIT_FIFO_EN));
++ 	if (ret)
++ 		goto fail;
++ 	st->dmp_active = true;
++ 	ret = regmap_write(st->map, st->reg->int_enable,
++-			   INV_MPU6050_BIT_DMP_INT_EN | INV_MPU6050_BIT_FIFO_OVERFLOW_INT);
+++			   INV_MPU6050_BIT_DMP_INT_EN |
+++			   (st->dmp_smd_mode ? 0 : INV_MPU6050_BIT_FIFO_OVERFLOW_INT));
++ 	if (!ret)
++ 		return 0;
++ fail:
++@@ -505,3 +546,71 @@ int inv_mpu6515_dmp_read_fifo(struct iio_dev *indio_dev, s64 timestamp)
++ 		inv_mpu6515_dmp_stop(st);
++ 	return ret;
++ }
+++
+++/* Enable owns a direct-mode claim; all callers hold lock. Event owns PM vote. */
+++int inv_mpu6515_dmp_smd_set(struct inv_mpu6050_state *st, bool enable)
+++{
+++	struct device *dev = regmap_get_device(st->map);
+++	int ret;
+++
+++	lockdep_assert_held(&st->lock);
+++	if (st->chip_type != INV_MPU6515 || st->irq <= 0)
+++		return -EOPNOTSUPP;
+++	if (!enable) {
+++		if (!st->dmp_smd_pm)
+++			return 0;
+++		ret = inv_mpu6515_dmp_stop(st);
+++		st->dmp_smd_mode = false;
+++		st->dmp_smd_armed = false;
+++		st->dmp_smd_pm = false;
+++		pm_runtime_put_autosuspend(dev);
+++		return ret;
+++	}
+++	if (st->dmp_smd_armed)
+++		return 0;
+++	if (st->dmp_active || st->chip_config.wom_en)
+++		return -EBUSY;
+++	ret = pm_runtime_resume_and_get(dev);
+++	if (ret)
+++		return ret;
+++	st->dmp_smd_mode = true;
+++	ret = inv_mpu6515_dmp_start(st);
+++	if (ret) {
+++		st->dmp_smd_mode = false;
+++		pm_runtime_put_autosuspend(dev);
+++		return ret;
+++	}
+++	st->dmp_smd_armed = true;
+++	st->dmp_smd_pm = true;
+++	return 0;
+++}
+++
+++/* One-shot event attribution: only manufacturer status 0x39 bit 0x04 qualifies. */
+++int inv_mpu6515_dmp_smd_event(struct inv_mpu6050_state *st)
+++{
+++	unsigned int status;
+++	int ret;
+++
+++	lockdep_assert_held(&st->lock);
+++	if (!st->dmp_smd_mode || !st->dmp_smd_armed)
+++		return 0;
+++	ret = regmap_read(st->map, 0x39, &status);
+++	if (ret)
+++		return ret;
+++	if (!(status & BIT(2)))
+++		return 0;
+++	dev_dbg(regmap_get_device(st->map), "DMP significant motion status %#x\n", status);
+++	ret = inv_mpu6515_dmp_smd_set(st, false);
+++	if (ret)
+++		dev_err(regmap_get_device(st->map), "DMP event cleanup failed: %d\n", ret);
+++	return 1;
+++}
+++
+++void inv_mpu6515_dmp_cleanup(void *data)
+++{
+++	struct inv_mpu6050_state *st = data;
+++
+++	guard(mutex)(&st->lock);
+++	if (st->dmp_smd_pm)
+++		inv_mpu6515_dmp_smd_set(st, false);
+++}
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/fx0-mpu6515-dmp-smd-wake.patch b/device/testing/linux-postmarketos-qcom-msm8226/fx0-mpu6515-dmp-smd-wake.patch
+new file mode 100644
+index 000000000..95c8515a7
+--- /dev/null
++++ b/device/testing/linux-postmarketos-qcom-msm8226/fx0-mpu6515-dmp-smd-wake.patch
+@@ -0,0 +1,250 @@
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++@@ -23,6 +23,8 @@
++ 
++ #include <linux/iio/common/inv_sensors_timestamp.h>
++ #include <linux/iio/iio.h>
+++
+++#include <linux/iio/events.h>
++ 
++ #include "inv_mpu_iio.h"
++ #include "inv_mpu_magn.h"
++@@ -2256,6 +2258,18 @@
++ 	bool wakeup;
++ 	int result;
++ 
+++	if (READ_ONCE(st->dmp_smd_suspended)) {
+++		bool event;
+++
+++		result = inv_mpu6515_dmp_smd_resume(st, &event);
+++		if (event)
+++			iio_push_event(indio_dev,
+++				IIO_MOD_EVENT_CODE(IIO_ACTIVITY, 0, IIO_MOD_STILL,
+++						   IIO_EV_TYPE_CHANGE, IIO_EV_DIR_FALLING),
+++				iio_get_time_ns(indio_dev));
+++		return result;
+++	}
+++
++ 	guard(mutex)(&st->lock);
++ 
++ 	wakeup = device_may_wakeup(dev) && st->chip_config.wom_en;
++@@ -2302,10 +2316,22 @@
++ 	bool wakeup;
++ 	int result;
++ 
+++	if (READ_ONCE(st->dmp_smd_pm)) {
+++		bool event;
+++
+++		result = inv_mpu6515_dmp_smd_suspend(st, &event);
+++		if (event)
+++			iio_push_event(indio_dev,
+++				IIO_MOD_EVENT_CODE(IIO_ACTIVITY, 0, IIO_MOD_STILL,
+++						   IIO_EV_TYPE_CHANGE, IIO_EV_DIR_FALLING),
+++				iio_get_time_ns(indio_dev));
+++		return result;
+++	}
+++
++ 	guard(mutex)(&st->lock);
++ 
++-	/* DMP event retention/wake is not implemented yet. */
++-	if (st->dmp_active || st->dmp_saved_valid)
+++	/* Streaming suspend and unresolved wake/restore failures are unsupported. */
+++	if (st->dmp_active || st->dmp_saved_valid || st->dmp_smd_irq_wake)
++ 		return -EBUSY;
++ 
++ 	st->suspended_sensors = 0;
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
++--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
++@@ -217,6 +217,9 @@
++ 	bool dmp_smd_mode;
++ 	bool dmp_smd_armed;
++ 	bool dmp_smd_pm;
+++	bool dmp_smd_suspended;
+++	bool dmp_smd_irq_wake;
+++	u8 dmp_smd_last_status;
++ 	bool dmp_overflow;
++ 	bool dmp_saved_valid;
++ 	u8 dmp_saved[12];
++@@ -533,6 +536,8 @@
++ int inv_mpu6515_dmp_smd_set(struct inv_mpu6050_state *st, bool enable);
++ int inv_mpu6515_dmp_smd_event(struct inv_mpu6050_state *st);
++ void inv_mpu6515_dmp_cleanup(void *data);
+++int inv_mpu6515_dmp_smd_suspend(struct inv_mpu6050_state *st, bool *event);
+++int inv_mpu6515_dmp_smd_resume(struct inv_mpu6050_state *st, bool *event);
++ int inv_mpu6515_dmp_stop(struct inv_mpu6050_state *st);
++ int inv_mpu6515_dmp_recover(struct inv_mpu6050_state *st);
++ int inv_mpu6515_dmp_read_fifo(struct iio_dev *indio_dev, s64 timestamp);
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
++--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
++@@ -4,6 +4,7 @@
++ */
++ 
++ #include <linux/pm_runtime.h>
+++#include <linux/pm_wakeup.h>
++ 
++ #include <linux/iio/common/inv_sensors_timestamp.h>
++ #include <linux/iio/events.h>
++@@ -302,6 +303,10 @@
++ 	}
++ 
++ 	scoped_guard(mutex, &st->lock) {
+++		if (st->dmp_smd_suspended) {
+++			pm_wakeup_event(regmap_get_device(st->map), 0);
+++			return IRQ_HANDLED;
+++		}
++ 		/* ack interrupt and check status */
++ 		result = regmap_read(st->map, st->reg->int_status, &int_status);
++ 		if (result) {
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
++--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
++@@ -7,6 +7,8 @@
++ #include <linux/lockdep.h>
++ #include <linux/module.h>
++ #include <linux/pm_runtime.h>
+++#include <linux/pm_wakeup.h>
+++#include <linux/interrupt.h>
++ #include <linux/string.h>
++ #include <linux/unaligned.h>
++ 
++@@ -418,6 +420,11 @@
++ 	if (ret)
++ 		goto fail;
++ 	st->dmp_active = true;
+++	if (st->dmp_smd_mode) {
+++		ret = regmap_read(st->map, st->reg->int_status, &value);
+++		if (ret)
+++			goto fail;
+++	}
++ 	ret = regmap_write(st->map, st->reg->int_enable,
++ 			   INV_MPU6050_BIT_DMP_INT_EN |
++ 			   (st->dmp_smd_mode ? 0 : INV_MPU6050_BIT_FIFO_OVERFLOW_INT));
++@@ -551,21 +558,30 @@
++ int inv_mpu6515_dmp_smd_set(struct inv_mpu6050_state *st, bool enable)
++ {
++ 	struct device *dev = regmap_get_device(st->map);
++-	int ret;
+++	int ret, wake_ret = 0;
++ 
++ 	lockdep_assert_held(&st->lock);
++ 	if (st->chip_type != INV_MPU6515 || st->irq <= 0)
++ 		return -EOPNOTSUPP;
+++	if (st->dmp_smd_suspended)
+++		return -EBUSY;
++ 	if (!enable) {
+++		if (st->dmp_smd_irq_wake) {
+++			wake_ret = disable_irq_wake(st->irq);
+++			if (!wake_ret)
+++				st->dmp_smd_irq_wake = false;
+++		}
++ 		if (!st->dmp_smd_pm)
++-			return 0;
+++			return wake_ret;
++ 		ret = inv_mpu6515_dmp_stop(st);
++ 		st->dmp_smd_mode = false;
++ 		st->dmp_smd_armed = false;
++ 		st->dmp_smd_pm = false;
++ 		pm_runtime_put_autosuspend(dev);
++-		return ret;
++-	}
+++		return ret ? ret : wake_ret;
+++	}
+++	if (st->dmp_smd_irq_wake)
+++		return -EBUSY;
++ 	if (st->dmp_smd_armed)
++ 		return 0;
++ 	if (st->dmp_active || st->chip_config.wom_en)
++@@ -594,11 +610,17 @@
++ 	lockdep_assert_held(&st->lock);
++ 	if (!st->dmp_smd_mode || !st->dmp_smd_armed)
++ 		return 0;
+++	if (st->dmp_smd_suspended)
+++		return -EBUSY;
+++	st->dmp_smd_last_status = 0;
++ 	ret = regmap_read(st->map, 0x39, &status);
++ 	if (ret)
++ 		return ret;
+++	st->dmp_smd_last_status = status;
++ 	if (!(status & BIT(2)))
++ 		return 0;
+++	pm_wakeup_event(regmap_get_device(st->map), 0);
+++	st->dmp_smd_armed = false;
++ 	dev_dbg(regmap_get_device(st->map), "DMP significant motion status %#x\n", status);
++ 	ret = inv_mpu6515_dmp_smd_set(st, false);
++ 	if (ret)
++@@ -611,6 +633,71 @@
++ 	struct inv_mpu6050_state *st = data;
++ 
++ 	guard(mutex)(&st->lock);
++-	if (st->dmp_smd_pm)
+++	if (st->dmp_smd_pm || st->dmp_smd_irq_wake)
++ 		inv_mpu6515_dmp_smd_set(st, false);
++ }
+++
+++/* IRQ synchronization must occur outside st->lock: the IRQ thread takes it. */
+++int inv_mpu6515_dmp_smd_suspend(struct inv_mpu6050_state *st, bool *event)
+++{
+++	struct device *dev = regmap_get_device(st->map);
+++	int ret;
+++
+++	*event = false;
+++	if (!device_may_wakeup(dev))
+++		return -EBUSY;
+++	disable_irq(st->irq);
+++	mutex_lock(&st->lock);
+++	if (!st->dmp_smd_pm || !st->dmp_smd_armed || !st->dmp_active ||
+++	    st->dmp_smd_suspended || st->dmp_smd_irq_wake) {
+++		ret = -EBUSY;
+++		goto unlock;
+++	}
+++	/* Attribute a pre-entry event, then abort rather than silently lose it. */
+++	ret = inv_mpu6515_dmp_smd_event(st);
+++	if (ret) {
+++		*event = ret > 0;
+++		ret = ret > 0 ? -EBUSY : ret;
+++		goto unlock;
+++	}
+++	ret = enable_irq_wake(st->irq);
+++	if (ret)
+++		goto unlock;
+++	st->dmp_smd_irq_wake = true;
+++	st->dmp_smd_suspended = true;
+++	mutex_unlock(&st->lock);
+++	/* No registers, regulators or firmware are changed while the bus sleeps. */
+++	return 0;
+++unlock:
+++	mutex_unlock(&st->lock);
+++	enable_irq(st->irq);
+++	return ret;
+++}
+++
+++/* Parent I2C adapter has resumed before this child's system-resume callback. */
+++int inv_mpu6515_dmp_smd_resume(struct inv_mpu6050_state *st, bool *event)
+++{
+++	int ret = 0, status_ret;
+++
+++	*event = false;
+++	mutex_lock(&st->lock);
+++	if (!st->dmp_smd_suspended) {
+++		mutex_unlock(&st->lock);
+++		return 0;
+++	}
+++	if (st->dmp_smd_irq_wake) {
+++		ret = disable_irq_wake(st->irq);
+++		if (!ret)
+++			st->dmp_smd_irq_wake = false;
+++	}
+++	st->dmp_smd_suspended = false;
+++	status_ret = inv_mpu6515_dmp_smd_event(st);
+++	*event = status_ret > 0;
+++	dev_dbg(regmap_get_device(st->map), "DMP resume status %#x, event %d\n",
+++		st->dmp_smd_last_status, *event);
+++	if (!ret && status_ret < 0)
+++		ret = status_ret;
+++	mutex_unlock(&st->lock);
+++	enable_irq(st->irq);
+++	return ret;
+++}
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/fx0-mpu6515-dmp.patch b/device/testing/linux-postmarketos-qcom-msm8226/fx0-mpu6515-dmp.patch
+new file mode 100644
+index 000000000..e0d9f7378
+--- /dev/null
++++ b/device/testing/linux-postmarketos-qcom-msm8226/fx0-mpu6515-dmp.patch
+@@ -0,0 +1,841 @@
++diff --git a/drivers/iio/imu/inv_mpu6050/Kconfig b/drivers/iio/imu/inv_mpu6050/Kconfig
++index 5f62e4fd475d..868c6dfea6c4 100644
++--- a/drivers/iio/imu/inv_mpu6050/Kconfig
+++++ b/drivers/iio/imu/inv_mpu6050/Kconfig
++@@ -5,6 +5,8 @@
++ 
++ config INV_MPU6050_IIO
++ 	tristate
+++	select CRC32
+++	select FW_LOADER
++ 	select IIO_BUFFER
++ 	select IIO_TRIGGERED_BUFFER
++ 	select IIO_INV_SENSORS_TIMESTAMP
++diff --git a/drivers/iio/imu/inv_mpu6050/Makefile b/drivers/iio/imu/inv_mpu6050/Makefile
++index c103441a906b..2a9f96fc8242 100644
++--- a/drivers/iio/imu/inv_mpu6050/Makefile
+++++ b/drivers/iio/imu/inv_mpu6050/Makefile
++@@ -5,7 +5,7 @@
++ 
++ obj-$(CONFIG_INV_MPU6050_IIO) += inv-mpu6050.o
++ inv-mpu6050-y := inv_mpu_core.o inv_mpu_ring.o inv_mpu_trigger.o \
++-		 inv_mpu_aux.o inv_mpu_magn.o
+++		 inv_mpu_aux.o inv_mpu_magn.o inv_mpu_dmp.o
++ 
++ obj-$(CONFIG_INV_MPU6050_I2C) += inv-mpu6050-i2c.o
++ inv-mpu6050-i2c-y := inv_mpu_i2c.o inv_mpu_acpi.o
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++index 2a4e6b46be87..e66ad01477e8 100644
++--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++@@ -674,6 +674,10 @@ static int inv_mpu6050_read_channel_data(struct iio_dev *indio_dev,
++ 	if (result)
++ 		return result;
++ 
+++	result = inv_mpu6515_dmp_recover(st);
+++	if (result)
+++		goto error_power_off;
+++
++ 	switch (chan->type) {
++ 	case IIO_ANGL_VEL:
++ 		if (!st->chip_config.gyro_en) {
++@@ -771,8 +775,17 @@ inv_mpu6050_read_raw(struct iio_dev *indio_dev,
++ 		mutex_unlock(&st->lock);
++ 		iio_device_release_direct(indio_dev);
++ 		return ret;
+++	case IIO_CHAN_INFO_SAMP_FREQ:
+++		if (chan->type != IIO_ROT)
+++			return -EINVAL;
+++		*val = 25;
+++		return IIO_VAL_INT;
++ 	case IIO_CHAN_INFO_SCALE:
++ 		switch (chan->type) {
+++		case IIO_ROT:
+++			*val = 1;
+++			*val2 = 30;
+++			return IIO_VAL_FRACTIONAL_LOG2;
++ 		case IIO_ANGL_VEL:
++ 			mutex_lock(&st->lock);
++ 			*val  = 0;
++@@ -824,7 +837,9 @@ inv_mpu6050_read_raw(struct iio_dev *indio_dev,
++ 		if (ret)
++ 			return ret;
++ 		mutex_lock(&st->lock);
++-		ret = inv_mpu6050_sensor_show(st, reg, chan->channel2, val);
+++		ret = inv_mpu6515_dmp_recover(st);
+++		if (!ret)
+++			ret = inv_mpu6050_sensor_show(st, reg, chan->channel2, val);
++ 		mutex_unlock(&st->lock);
++ 		pm_runtime_put_autosuspend(pdev);
++ 		return ret;
++@@ -918,6 +933,10 @@ static int inv_mpu6050_write_raw(struct iio_dev *indio_dev,
++ 	if (result)
++ 		goto error_write_raw_unlock;
++ 
+++	result = inv_mpu6515_dmp_recover(st);
+++	if (result)
+++		goto error_write_raw_power_off;
+++
++ 	switch (mask) {
++ 	case IIO_CHAN_INFO_SCALE:
++ 		switch (chan->type) {
++@@ -954,6 +973,7 @@ static int inv_mpu6050_write_raw(struct iio_dev *indio_dev,
++ 		break;
++ 	}
++ 
+++error_write_raw_power_off:
++ 	pm_runtime_put_autosuspend(pdev);
++ error_write_raw_unlock:
++ 	mutex_unlock(&st->lock);
++@@ -1135,6 +1155,9 @@ static int inv_mpu6050_enable_wom(struct inv_mpu6050_state *st, bool en)
++ 	unsigned int mask;
++ 	int result;
++ 
+++	if (st->dmp_active || st->dmp_saved_valid)
+++		return -EBUSY;
+++
++ 	if (en) {
++ 		result = pm_runtime_resume_and_get(pdev);
++ 		if (result)
++@@ -1254,6 +1277,8 @@ static int inv_mpu6050_write_event_value(struct iio_dev *indio_dev,
++ 		return -EINVAL;
++ 
++ 	guard(mutex)(&st->lock);
+++	if (st->dmp_active || st->dmp_saved_valid)
+++		return -EBUSY;
++ 
++ 	result = pm_runtime_resume_and_get(pdev);
++ 	if (result)
++@@ -1333,6 +1358,10 @@ inv_mpu6050_fifo_rate_store(struct device *dev, struct device_attribute *attr,
++ 	fifo_period = NSEC_PER_SEC / fifo_rate;
++ 
++ 	mutex_lock(&st->lock);
+++	if (st->dmp_active || st->dmp_saved_valid) {
+++		result = -EBUSY;
+++		goto fifo_rate_fail_unlock;
+++	}
++ 	if (d == st->chip_config.divider) {
++ 		result = 0;
++ 		goto fifo_rate_fail_unlock;
++@@ -1560,6 +1589,38 @@ static const struct iio_chan_spec inv_mpu6500_channels[] = {
++ 			       inv_wom_events, ARRAY_SIZE(inv_wom_events)),
++ };
++ 
+++static const struct iio_chan_spec inv_mpu6515_channels[] = {
+++	IIO_CHAN_SOFT_TIMESTAMP(INV_MPU6515_SCAN_TIMESTAMP),
+++
+++	INV_MPU6050_TEMP_CHAN(INV_MPU6050_SCAN_TEMP),
+++
+++	INV_MPU6050_CHAN(IIO_ANGL_VEL, IIO_MOD_X, INV_MPU6050_SCAN_GYRO_X),
+++	INV_MPU6050_CHAN(IIO_ANGL_VEL, IIO_MOD_Y, INV_MPU6050_SCAN_GYRO_Y),
+++	INV_MPU6050_CHAN(IIO_ANGL_VEL, IIO_MOD_Z, INV_MPU6050_SCAN_GYRO_Z),
+++
+++	INV_MPU6050_CHAN(IIO_ACCEL, IIO_MOD_X, INV_MPU6050_SCAN_ACCL_X),
+++	INV_MPU6050_CHAN(IIO_ACCEL, IIO_MOD_Y, INV_MPU6050_SCAN_ACCL_Y),
+++	INV_MPU6050_CHAN(IIO_ACCEL, IIO_MOD_Z, INV_MPU6050_SCAN_ACCL_Z),
+++
+++	INV_MPU6050_EVENT_CHAN(IIO_ACCEL, IIO_MOD_X_OR_Y_OR_Z,
+++			       inv_wom_events, ARRAY_SIZE(inv_wom_events)),
+++	{
+++		.type = IIO_ROT,
+++		.modified = 1,
+++		.channel2 = IIO_MOD_QUATERNION,
+++		.info_mask_separate = BIT(IIO_CHAN_INFO_SCALE) |
+++				      BIT(IIO_CHAN_INFO_SAMP_FREQ),
+++		.scan_index = INV_MPU6515_SCAN_QUATERNION,
+++		.scan_type = {
+++			.sign = 's',
+++			.realbits = 32,
+++			.storagebits = 32,
+++			.repeat = 4,
+++			.endianness = IIO_CPU,
+++		},
+++	},
+++};
+++
++ #define INV_MPU6050_SCAN_MASK_3AXIS_ACCEL	\
++ 	(BIT(INV_MPU6050_SCAN_ACCL_X)		\
++ 	| BIT(INV_MPU6050_SCAN_ACCL_Y)		\
++@@ -1586,6 +1647,21 @@ static const unsigned long inv_mpu_scan_masks[] = {
++ 	0,
++ };
++ 
+++static const unsigned long inv_mpu6515_scan_masks[] = {
+++	/* 3-axis accel */
+++	INV_MPU6050_SCAN_MASK_3AXIS_ACCEL,
+++	INV_MPU6050_SCAN_MASK_3AXIS_ACCEL | INV_MPU6050_SCAN_MASK_TEMP,
+++	/* 3-axis gyro */
+++	INV_MPU6050_SCAN_MASK_3AXIS_GYRO,
+++	INV_MPU6050_SCAN_MASK_3AXIS_GYRO | INV_MPU6050_SCAN_MASK_TEMP,
+++	/* 6-axis accel + gyro */
+++	INV_MPU6050_SCAN_MASK_3AXIS_ACCEL | INV_MPU6050_SCAN_MASK_3AXIS_GYRO,
+++	INV_MPU6050_SCAN_MASK_3AXIS_ACCEL | INV_MPU6050_SCAN_MASK_3AXIS_GYRO
+++		| INV_MPU6050_SCAN_MASK_TEMP,
+++	BIT(INV_MPU6515_SCAN_QUATERNION),
+++	0,
+++};
+++
++ #define INV_MPU9X50_MAGN_CHAN(_chan2, _bits, _index)			\
++ 	{								\
++ 		.type = IIO_MAGN,					\
++@@ -2045,6 +2121,11 @@ int inv_mpu_core_probe(struct regmap *regmap, int irq, const char *name,
++ 		return result;
++ 
++ 	switch (chip_type) {
+++	case INV_MPU6515:
+++		indio_dev->channels = inv_mpu6515_channels;
+++		indio_dev->num_channels = ARRAY_SIZE(inv_mpu6515_channels);
+++		indio_dev->available_scan_masks = inv_mpu6515_scan_masks;
+++		break;
++ 	case INV_MPU6000:
++ 	case INV_MPU6050:
++ 		indio_dev->channels = inv_mpu6050_channels;
++@@ -2190,6 +2271,10 @@ static int inv_mpu_suspend(struct device *dev)
++ 
++ 	guard(mutex)(&st->lock);
++ 
+++	/* DMP event retention/wake is not implemented yet. */
+++	if (st->dmp_active || st->dmp_saved_valid)
+++		return -EBUSY;
+++
++ 	st->suspended_sensors = 0;
++ 	if (pm_runtime_suspended(dev))
++ 		return 0;
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
++index 6239b1a803f7..29fcdf4b1775 100644
++--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
++@@ -213,6 +213,14 @@ struct inv_mpu6050_state {
++ 	struct iio_mount_matrix magn_orient;
++ 	unsigned int suspended_sensors;
++ 	bool level_shifter;
+++	bool dmp_active;
+++	bool dmp_overflow;
+++	bool dmp_saved_valid;
+++	u8 dmp_saved[12];
+++	u8 dmp_fifo[1040];
+++	u8 dmp_tail[16];
+++	size_t dmp_tail_len;
+++	s64 dmp_last_timestamp;
++ 	u8 *data;
++ 	s64 it_timestamp;
++ };
++@@ -511,6 +519,32 @@ int inv_mpu_acpi_create_mux_client(struct i2c_client *client);
++ void inv_mpu_acpi_delete_mux_client(struct i2c_client *client);
++ int inv_mpu_core_probe(struct regmap *regmap, int irq, const char *name,
++ 		int (*inv_mpu_bus_setup)(struct iio_dev *), int chip_type);
+++/* Caller holds lock/runtime PM and stops FIFO/DMP before RAM access. */
+++int inv_mpu6515_dmp_mem_read(struct inv_mpu6050_state *st,
+++			   unsigned int address, u8 *data, size_t len);
+++int inv_mpu6515_dmp_mem_write(struct inv_mpu6050_state *st,
+++			    unsigned int address, const u8 *data, size_t len);
+++#define INV_MPU6515_SCAN_QUATERNION 7
+++#define INV_MPU6515_SCAN_TIMESTAMP 8
+++int inv_mpu6515_dmp_start(struct inv_mpu6050_state *st);
+++int inv_mpu6515_dmp_stop(struct inv_mpu6050_state *st);
+++int inv_mpu6515_dmp_recover(struct inv_mpu6050_state *st);
+++int inv_mpu6515_dmp_read_fifo(struct iio_dev *indio_dev, s64 timestamp);
+++int inv_mpu6515_dmp_load(struct inv_mpu6050_state *st);
+++int inv_mpu6515_dmp_configure(struct inv_mpu6050_state *st);
+++
+++/* Firmware wire packets: accelerometer XYZ or six-axis quaternion XYZ (Q30). */
+++enum inv_mpu6515_dmp_packet_type {
+++	INV_MPU6515_DMP_ACCEL,
+++	INV_MPU6515_DMP_QUATERNION,
+++};
+++struct inv_mpu6515_dmp_packet {
+++	enum inv_mpu6515_dmp_packet_type type;
+++	s32 xyz[3];
+++	u8 step_flags;
+++};
+++int inv_mpu6515_dmp_decode(const u8 *data, size_t len,
+++			   struct inv_mpu6515_dmp_packet *packet);
++ extern const struct dev_pm_ops inv_mpu_pmops;
++ 
++ #endif
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c
++index c4c11124f92f..c6308c7c4fd4 100644
++--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c
++@@ -55,6 +55,10 @@ irqreturn_t inv_mpu6050_read_fifo(int irq, void *p)
++ 	size_t i, nb;
++ 
++ 	mutex_lock(&st->lock);
+++	if (st->dmp_active) {
+++		inv_mpu6515_dmp_read_fifo(indio_dev, pf->timestamp);
+++		goto end_session;
+++	}
++ 
++ 	if (!(st->chip_config.accl_fifo_enable |
++ 		st->chip_config.gyro_fifo_enable |
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
++index 22c1ce66f99e..1feaa8e6d182 100644
++--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
++@@ -167,6 +167,32 @@ static int inv_mpu6050_set_enable(struct iio_dev *indio_dev, bool enable)
++ 	unsigned int scan;
++ 	int result;
++ 
+++	if (st->chip_type == INV_MPU6515 && indio_dev->active_scan_mask &&
+++	    test_bit(INV_MPU6515_SCAN_QUATERNION, indio_dev->active_scan_mask)) {
+++		if (enable) {
+++			result = pm_runtime_resume_and_get(pdev);
+++			if (result)
+++				return result;
+++			result = inv_mpu6515_dmp_start(st);
+++			if (result)
+++				pm_runtime_put_autosuspend(pdev);
+++			return result;
+++		}
+++		result = inv_mpu6515_dmp_stop(st);
+++		pm_runtime_put_autosuspend(pdev);
+++		return result;
+++	}
+++	/* A failed DMP restoration must succeed before raw capture resumes. */
+++	if (st->dmp_saved_valid) {
+++		result = pm_runtime_resume_and_get(pdev);
+++		if (result)
+++			return result;
+++		result = inv_mpu6515_dmp_stop(st);
+++		pm_runtime_put_autosuspend(pdev);
+++		if (result)
+++			return result;
+++	}
+++
++ 	if (enable) {
++ 		scan = inv_scan_query(indio_dev);
++ 		result = pm_runtime_resume_and_get(pdev);
++@@ -280,6 +306,9 @@ static irqreturn_t inv_mpu6050_interrupt_handle(int irq, void *p)
++ 			return IRQ_HANDLED;
++ 		}
++ 
+++		if (st->dmp_active && (int_status & INV_MPU6050_BIT_FIFO_OVERFLOW_INT))
+++			st->dmp_overflow = true;
+++
++ 		/* handle WoM event */
++ 		if (st->chip_config.wom_en && (int_status & wom_bits)) {
++ 			ev_code = IIO_MOD_EVENT_CODE(IIO_ACCEL, 0, IIO_MOD_X_OR_Y_OR_Z,
++@@ -290,7 +319,9 @@ static irqreturn_t inv_mpu6050_interrupt_handle(int irq, void *p)
++ 
++ data_ready_interrupt:
++ 	/* handle raw data interrupt */
++-	if (int_status & INV_MPU6050_BIT_RAW_DATA_RDY_INT) {
+++	if (int_status & (READ_ONCE(st->dmp_active) ?
+++			  (INV_MPU6050_BIT_DMP_INT_EN | INV_MPU6050_BIT_FIFO_OVERFLOW_INT) :
+++			  INV_MPU6050_BIT_RAW_DATA_RDY_INT)) {
++ 		indio_dev->pollfunc->timestamp = st->it_timestamp;
++ 		iio_trigger_poll_nested(st->trig);
++ 	}
++diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
++new file mode 100644
++index 000000000000..ae585eb6df3c
++--- /dev/null
+++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
++@@ -0,0 +1,507 @@
+++// SPDX-License-Identifier: GPL-2.0-only
+++/* MPU6515 DMP RAM transport. Firmware and execution lifecycle are separate. */
+++#include <linux/crc32.h>
+++#include <linux/delay.h>
+++#include <linux/math.h>
+++#include <linux/firmware.h>
+++#include <linux/lockdep.h>
+++#include <linux/module.h>
+++#include <linux/string.h>
+++#include <linux/unaligned.h>
+++
+++#include "inv_mpu_iio.h"
+++
+++#define INV_DMP_BANK_SEL 0x6d
+++#define INV_DMP_MEM_START 0x6e
+++#define INV_DMP_MEM_RW 0x6f
+++#define INV_DMP_RAM_START 32
+++#define INV_DMP_RAM_END 3072
+++#define INV_DMP_CHUNK 16
+++
+++/*
+++ * Caller holds st->lock and a runtime-PM reference, with DMP/FIFO stopped.
+++ * Never select OTP or the reserved first 32 bytes. Re-select the address for
+++ * every transfer: independent regmap transactions must not rely on a retained
+++ * cursor. The memory port itself must not increment the register address.
+++ */
+++static int inv_mpu6515_dmp_mem_transfer(struct inv_mpu6050_state *st,
+++				      unsigned int address, u8 *data,
+++				      size_t len, bool write)
+++{
+++	unsigned int ctrl;
+++	size_t chunk;
+++	int ret;
+++
+++	lockdep_assert_held(&st->lock);
+++	if (st->chip_type != INV_MPU6515)
+++		return -EOPNOTSUPP;
+++	if (!len || address < INV_DMP_RAM_START || address >= INV_DMP_RAM_END ||
+++	    len > INV_DMP_RAM_END - address)
+++		return -EINVAL;
+++
+++	ret = regmap_read(st->map, st->reg->user_ctrl, &ctrl);
+++	if (ret)
+++		return ret;
+++	if (ctrl & (INV_MPU6050_BIT_DMP_EN | INV_MPU6050_BIT_FIFO_EN))
+++		return -EBUSY;
+++
+++	while (len) {
+++		chunk = min_t(size_t, len, INV_DMP_CHUNK);
+++		chunk = min_t(size_t, chunk, 256 - (address & 0xff));
+++		ret = regmap_write(st->map, INV_DMP_BANK_SEL, address >> 8);
+++		if (ret)
+++			return ret;
+++		ret = regmap_write(st->map, INV_DMP_MEM_START, address & 0xff);
+++		if (ret)
+++			return ret;
+++		if (write)
+++			ret = regmap_noinc_write(st->map, INV_DMP_MEM_RW, data, chunk);
+++		else
+++			ret = regmap_noinc_read(st->map, INV_DMP_MEM_RW, data, chunk);
+++		if (ret)
+++			return ret;
+++		address += chunk;
+++		data += chunk;
+++		len -= chunk;
+++	}
+++
+++	return 0;
+++}
+++
+++int inv_mpu6515_dmp_mem_read(struct inv_mpu6050_state *st,
+++			   unsigned int address, u8 *data, size_t len)
+++{
+++	return inv_mpu6515_dmp_mem_transfer(st, address, data, len, false);
+++}
+++
+++/* A failed write/verify leaves execution disabled; caller must invalidate FW. */
+++int inv_mpu6515_dmp_mem_write(struct inv_mpu6050_state *st,
+++			    unsigned int address, const u8 *data, size_t len)
+++{
+++	u8 verify[INV_DMP_CHUNK];
+++	size_t chunk, offset = 0;
+++	int ret;
+++
+++	/* Validate the complete range before the first hardware write. */
+++	if (!len || address < INV_DMP_RAM_START || address >= INV_DMP_RAM_END ||
+++	    len > INV_DMP_RAM_END - address)
+++		return -EINVAL;
+++	while (offset < len) {
+++		chunk = min_t(size_t, len - offset, sizeof(verify));
+++		ret = inv_mpu6515_dmp_mem_transfer(st, address + offset,
+++						(u8 *)data + offset, chunk, true);
+++		if (ret)
+++			return ret;
+++		ret = inv_mpu6515_dmp_mem_read(st, address + offset, verify, chunk);
+++		if (ret)
+++			return ret;
+++		if (memcmp(verify, data + offset, chunk))
+++			return -EIO;
+++		offset += chunk;
+++	}
+++
+++	return 0;
+++}
+++
+++#define INV_MPU6515_DMP_FIRMWARE "invensense/mpu6515-dmp.bin"
+++#define INV_MPU6515_DMP_IMAGE_SIZE 2943
+++#define INV_MPU6515_DMP_IMAGE_CRC 0xa7e2110d
+++#define INV_MPU6515_DMP_PROGRAM_START 0x70
+++#define INV_MPU6515_DMP_ENTRY 0x0400
+++
+++/*
+++ * Always reload: no cached RAM-valid state survives reset or power loss.
+++ * Caller owns lock/runtime PM and has stopped DMP/FIFO and masked interrupts.
+++ * On failure the image is unusable; this function never enables execution.
+++ */
+++int inv_mpu6515_dmp_load(struct inv_mpu6050_state *st)
+++{
+++	struct device *dev = regmap_get_device(st->map);
+++	const struct firmware *fw;
+++	u8 entry[] = { INV_MPU6515_DMP_ENTRY >> 8,
+++		       INV_MPU6515_DMP_ENTRY & 0xff };
+++	unsigned int ctrl, irq, high, low;
+++	int ret;
+++
+++	lockdep_assert_held(&st->lock);
+++	if (st->chip_type != INV_MPU6515)
+++		return -EOPNOTSUPP;
+++	ret = regmap_read(st->map, st->reg->user_ctrl, &ctrl);
+++	if (ret)
+++		return ret;
+++	ret = regmap_read(st->map, st->reg->int_enable, &irq);
+++	if (ret)
+++		return ret;
+++	if (irq || (ctrl & (INV_MPU6050_BIT_DMP_EN | INV_MPU6050_BIT_FIFO_EN)))
+++		return -EBUSY;
+++
+++	ret = request_firmware(&fw, INV_MPU6515_DMP_FIRMWARE, dev);
+++	if (ret)
+++		return ret;
+++	/* Match the manufacturer MPU6515 image contract before modifying RAM. */
+++	if (fw->size != INV_MPU6515_DMP_IMAGE_SIZE ||
+++	    crc32_le(0, fw->data, fw->size) != INV_MPU6515_DMP_IMAGE_CRC) {
+++		ret = -EINVAL;
+++		goto release;
+++	}
+++	ret = inv_mpu6515_dmp_mem_write(st, INV_DMP_RAM_START, fw->data, fw->size);
+++	if (ret)
+++		goto release;
+++	ret = regmap_bulk_write(st->map, INV_MPU6515_DMP_PROGRAM_START,
+++				entry, sizeof(entry));
+++	if (ret)
+++		goto release;
+++	ret = regmap_read(st->map, INV_MPU6515_DMP_PROGRAM_START, &high);
+++	if (ret)
+++		goto release;
+++	ret = regmap_read(st->map, INV_MPU6515_DMP_PROGRAM_START + 1, &low);
+++	if (!ret && ((high << 8) | low) != INV_MPU6515_DMP_ENTRY)
+++		ret = -EIO;
+++release:
+++	release_firmware(fw);
+++	return ret;
+++}
+++
+++MODULE_FIRMWARE(INV_MPU6515_DMP_FIRMWARE);
+++
+++/*
+++ * Reference image sensor frame, accel + six-axis quaternion, 25 Hz each.
+++ * No batching, pedometer, gesture, compass or pressure output is requested.
+++ * Interrupt generation is configured separately by the execution lifecycle.
+++ */
+++int inv_mpu6515_dmp_configure(struct inv_mpu6050_state *st)
+++{
+++	static const struct {
+++		u16 address;
+++		u8 length;
+++		u8 data[4];
+++	} patches[] = {
+++		{ 1127, 3, { 0x4c, 0xcd, 0x6c } },
+++		{ 1152, 3, { 0x36, 0x56, 0x76 } },
+++		{ 1131, 3, { 0x0c, 0xc9, 0x2c } },
+++		{ 1138, 3, { 0x26, 0x46, 0x66 } },
+++		{ 1770, 2, { 0xa3, 0xa3 } }, /* accel on */
+++		{ 1701, 2, { 0xa3, 0xa3 } }, /* six-axis quaternion on */
+++		{ 1804, 2, { 0xf4, 0x12 } }, /* gyro off */
+++		{ 1666, 2, { 0xf4, 0x13 } }, /* low-power quaternion off */
+++		{ 1736, 2, { 0xf4, 0x12 } }, /* pedometer quaternion off */
+++		{ 1838, 2, { 0xf4, 0x12 } }, /* compass off */
+++		{ 1872, 2, { 0xf4, 0x12 } }, /* pressure off */
+++		{ 1636, 2, { 0xf4, 0x0e } }, /* step output off */
+++		{ 1983, 1, { 0xfe } }, /* continuous FIFO interrupt mode */
+++		{ 2807, 2, { 0xf4, 0x03 } }, /* step indicator off */
+++		{ 744, 2, { 0, 7 } }, /* accel ODR */
+++		{ 736, 2, { 0 } }, /* accel ODR counter */
+++		{ 730, 2, { 0, 7 } }, /* quaternion ODR */
+++		{ 722, 2, { 0 } }, /* quaternion ODR counter */
+++		{ 454, 2, { 0 } }, /* batch enable */
+++		{ 452, 2, { 0 } }, /* batch word count */
+++		{ 436, 4, { 0 } }, /* batch counter */
+++		{ 384, 4, { 0 } }, /* run counter */
+++		{ 456, 4, { 0 } }, /* step timestamp */
+++	};
+++	unsigned int i;
+++	int ret;
+++
+++	lockdep_assert_held(&st->lock);
+++	for (i = 0; i < ARRAY_SIZE(patches); i++) {
+++		ret = inv_mpu6515_dmp_mem_write(st, patches[i].address,
+++					      patches[i].data, patches[i].length);
+++		if (ret)
+++			return ret;
+++	}
+++
+++	return 0;
+++}
+++
+++/*
+++ * Decode exactly one wire packet, returning bytes consumed. Caller retains an
+++ * incomplete tail on -EAGAIN and flushes/restarts on any other error. Do not
+++ * scan for another header after corruption: payload bytes can mimic headers.
+++ * Quaternion scalar reconstruction/mounting belong to the output ABI layer.
+++ */
+++int inv_mpu6515_dmp_decode(const u8 *data, size_t len,
+++			   struct inv_mpu6515_dmp_packet *packet)
+++{
+++	struct inv_mpu6515_dmp_packet decoded = { };
+++	u16 header;
+++	unsigned int i;
+++	size_t size;
+++
+++	if (len < 2)
+++		return -EAGAIN;
+++	header = get_unaligned_be16(data);
+++	switch (header & 0xfff0) {
+++	case 0x4000:
+++		decoded.type = INV_MPU6515_DMP_ACCEL;
+++		size = 8;
+++		break;
+++	case 0x0400:
+++		decoded.type = INV_MPU6515_DMP_QUATERNION;
+++		size = 16;
+++		break;
+++	default:
+++		return -EPROTO;
+++	}
+++	if (len < size)
+++		return -EAGAIN;
+++	decoded.step_flags = header & 0xf;
+++	for (i = 0; i < ARRAY_SIZE(decoded.xyz); i++) {
+++		if (decoded.type == INV_MPU6515_DMP_ACCEL)
+++			decoded.xyz[i] = (s16)get_unaligned_be16(data + 2 + 2 * i);
+++		else
+++			decoded.xyz[i] = (s32)get_unaligned_be32(data + 4 + 4 * i);
+++	}
+++	*packet = decoded;
+++
+++	return size;
+++}
+++
+++/* Registers changed by the DMP mode; restore cached raw settings verbatim. */
+++static const u8 inv_dmp_saved_regs[] = {
+++	0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x23, 0x38, 0x6a,
+++	0x6b, 0x6c, 0x70, 0x71,
+++};
+++
+++int inv_mpu6515_dmp_stop(struct inv_mpu6050_state *st)
+++{
+++	unsigned int i, value;
+++	int ret, first = 0;
+++
+++	lockdep_assert_held(&st->lock);
+++	st->dmp_active = false;
+++	st->dmp_overflow = false;
+++	st->dmp_tail_len = 0;
+++	st->dmp_last_timestamp = 0;
+++	if (!st->dmp_saved_valid)
+++		return 0;
+++	/* Try every cleanup operation, retaining the first failure for callers. */
+++	ret = regmap_write(st->map, st->reg->int_enable, 0);
+++	if (ret)
+++		first = ret;
+++	ret = regmap_write(st->map, st->reg->user_ctrl, st->chip_config.user_ctrl);
+++	if (ret && !first)
+++		first = ret;
+++	for (i = 0; i < ARRAY_SIZE(inv_dmp_saved_regs); i++) {
+++		if (inv_dmp_saved_regs[i] == st->reg->int_enable ||
+++		    inv_dmp_saved_regs[i] == st->reg->user_ctrl)
+++			continue;
+++		ret = regmap_write(st->map, inv_dmp_saved_regs[i], st->dmp_saved[i]);
+++		if (ret && !first)
+++			first = ret;
+++	}
+++	ret = regmap_write(st->map, st->reg->user_ctrl, st->dmp_saved[7]);
+++	if (ret && !first)
+++		first = ret;
+++	/* A successful bus write alone is insufficient to certify restoration. */
+++	for (i = 0; i < ARRAY_SIZE(inv_dmp_saved_regs); i++) {
+++		if (inv_dmp_saved_regs[i] == st->reg->int_enable)
+++			continue;
+++		ret = regmap_read(st->map, inv_dmp_saved_regs[i], &value);
+++		if (!ret && value != st->dmp_saved[i])
+++			ret = -EIO;
+++		if (ret && !first)
+++			first = ret;
+++	}
+++	/* Do not rearm an interrupt if functional configuration restoration failed. */
+++	if (!first) {
+++		ret = regmap_write(st->map, st->reg->int_enable, st->dmp_saved[6]);
+++		if (ret)
+++			first = ret;
+++	}
+++	if (!first)
+++		st->dmp_saved_valid = false;
+++	return first;
+++}
+++
+++/* Caller holds lock and runtime PM before resuming ordinary register access. */
+++int inv_mpu6515_dmp_recover(struct inv_mpu6050_state *st)
+++{
+++	lockdep_assert_held(&st->lock);
+++	if (st->dmp_active)
+++		return -EBUSY;
+++	if (st->dmp_saved_valid)
+++		return inv_mpu6515_dmp_stop(st);
+++	return 0;
+++}
+++
+++int inv_mpu6515_dmp_start(struct inv_mpu6050_state *st)
+++{
+++	static const struct reg_sequence setup[] = {
+++		{ 0x19, 4 }, { 0x1a, 1 }, { 0x1b, 0x18 }, { 0x1c, 0 },
+++		{ 0x1d, 0x40 }, { 0x23, 0 }, { 0x6b, 9 }, { 0x6c, 0 },
+++	};
+++	unsigned int i, value;
+++	int ret, cleanup;
+++
+++	lockdep_assert_held(&st->lock);
+++	if (st->chip_type != INV_MPU6515)
+++		return -EOPNOTSUPP;
+++	if (st->dmp_active || st->chip_config.wom_en)
+++		return -EBUSY;
+++	if (st->dmp_saved_valid) {
+++		ret = inv_mpu6515_dmp_stop(st);
+++		if (ret)
+++			return ret;
+++	}
+++	for (i = 0; i < ARRAY_SIZE(inv_dmp_saved_regs); i++) {
+++		ret = regmap_read(st->map, inv_dmp_saved_regs[i], &value);
+++		if (ret)
+++			return ret;
+++		st->dmp_saved[i] = value;
+++	}
+++	if (st->dmp_saved[6] || (st->dmp_saved[7] & 0xc0))
+++		return -EBUSY;
+++	st->dmp_saved_valid = true;
+++	ret = inv_mpu6515_dmp_load(st);
+++	if (ret)
+++		goto fail;
+++	ret = inv_mpu6515_dmp_configure(st);
+++	if (ret)
+++		goto fail;
+++	ret = regmap_multi_reg_write(st->map, setup, ARRAY_SIZE(setup));
+++	if (ret)
+++		goto fail;
+++	msleep(50);
+++	ret = regmap_write(st->map, st->reg->user_ctrl,
+++			   st->chip_config.user_ctrl | INV_MPU6050_BIT_DMP_RST |
+++			   INV_MPU6050_BIT_FIFO_RST);
+++	if (ret)
+++		goto fail;
+++	usleep_range(10000, 12000);
+++	st->dmp_overflow = false;
+++	st->dmp_tail_len = 0;
+++	st->dmp_last_timestamp = 0;
+++	ret = regmap_write(st->map, st->reg->user_ctrl,
+++			   st->chip_config.user_ctrl | INV_MPU6050_BIT_DMP_EN |
+++			   INV_MPU6050_BIT_FIFO_EN);
+++	if (ret)
+++		goto fail;
+++	st->dmp_active = true;
+++	ret = regmap_write(st->map, st->reg->int_enable,
+++			   INV_MPU6050_BIT_DMP_INT_EN | INV_MPU6050_BIT_FIFO_OVERFLOW_INT);
+++	if (!ret)
+++		return 0;
+++fail:
+++	cleanup = inv_mpu6515_dmp_stop(st);
+++	if (cleanup)
+++		dev_err(regmap_get_device(st->map), "DMP restoration failed: %d\n", cleanup);
+++	return ret;
+++}
+++
+++/* Flush corruption/overflow without retaining a tail or replaying old samples. */
+++static int inv_mpu6515_dmp_flush(struct inv_mpu6050_state *st)
+++{
+++	int ret;
+++
+++	st->dmp_overflow = false;
+++	st->dmp_tail_len = 0;
+++	ret = regmap_write(st->map, st->reg->user_ctrl,
+++			   st->chip_config.user_ctrl | INV_MPU6050_BIT_FIFO_RST);
+++	if (ret)
+++		return ret;
+++	return regmap_write(st->map, st->reg->user_ctrl,
+++			    st->chip_config.user_ctrl | INV_MPU6050_BIT_DMP_EN |
+++			    INV_MPU6050_BIT_FIFO_EN);
+++}
+++
+++int inv_mpu6515_dmp_read_fifo(struct iio_dev *indio_dev, s64 timestamp)
+++{
+++	struct inv_mpu6050_state *st = iio_priv(indio_dev);
+++	struct inv_mpu6515_dmp_packet packet;
+++	/* Repeated quaternion storage aligns the complete timestamped scan to 16. */
+++	struct { s32 q[4]; s64 padding; s64 timestamp; } sample __aligned(16) = { };
+++	unsigned int hi, lo, check, tries, count, quats = 0;
+++	size_t len, offset;
+++	u64 norm;
+++	s64 t;
+++	int ret, pushed;
+++
+++	lockdep_assert_held(&st->lock);
+++	if (st->dmp_overflow) {
+++		ret = -EOVERFLOW;
+++		goto flush;
+++	}
+++	for (tries = 0; tries < 4; tries++) {
+++		ret = regmap_read(st->map, 0x72, &hi);
+++		if (ret)
+++			goto flush;
+++		ret = regmap_read(st->map, 0x73, &lo);
+++		if (ret)
+++			goto flush;
+++		ret = regmap_read(st->map, 0x72, &check);
+++		if (ret)
+++			goto flush;
+++		if (hi == check)
+++			break;
+++	}
+++	if (tries == 4) {
+++		ret = -EAGAIN;
+++		goto flush;
+++	}
+++	count = (hi << 8) | lo;
+++	if (count >= 992) {
+++		ret = -EOVERFLOW;
+++		goto flush;
+++	}
+++	if (!count)
+++		return 0;
+++	memcpy(st->dmp_fifo, st->dmp_tail, st->dmp_tail_len);
+++	ret = regmap_noinc_read(st->map, st->reg->fifo_r_w,
+++				st->dmp_fifo + st->dmp_tail_len, count);
+++	if (ret)
+++		goto flush;
+++	len = count + st->dmp_tail_len;
+++	/* Validate the complete batch before publishing any sample from it. */
+++	for (offset = 0; offset < len; offset += ret) {
+++		ret = inv_mpu6515_dmp_decode(st->dmp_fifo + offset, len - offset, &packet);
+++		if (ret == -EAGAIN)
+++			break;
+++		if (ret < 0)
+++			goto flush;
+++		if (packet.type == INV_MPU6515_DMP_QUATERNION) {
+++			norm = (u64)((s64)packet.xyz[0] * packet.xyz[0]) +
+++			       (u64)((s64)packet.xyz[1] * packet.xyz[1]) +
+++			       (u64)((s64)packet.xyz[2] * packet.xyz[2]);
+++			if (norm > BIT_ULL(60)) {
+++				ret = -ERANGE;
+++				goto flush;
+++			}
+++			quats++;
+++		}
+++	}
+++	st->dmp_tail_len = len - offset;
+++	memcpy(st->dmp_tail, st->dmp_fifo + offset, st->dmp_tail_len);
+++	len = offset;
+++	/* IRQ-anchored 25 Hz timestamps; hardware packet timestamps are not used. */
+++	t = timestamp - (s64)(quats ? quats - 1 : 0) * 40000000;
+++	for (offset = 0; offset < len; offset += ret) {
+++		ret = inv_mpu6515_dmp_decode(st->dmp_fifo + offset, len - offset, &packet);
+++		if (packet.type != INV_MPU6515_DMP_QUATERNION)
+++			continue;
+++		norm = (u64)((s64)packet.xyz[0] * packet.xyz[0]) +
+++		       (u64)((s64)packet.xyz[1] * packet.xyz[1]) +
+++		       (u64)((s64)packet.xyz[2] * packet.xyz[2]);
+++		if (norm > BIT_ULL(60)) {
+++			ret = -ERANGE;
+++			goto flush;
+++		}
+++		sample.q[0] = int_sqrt64(BIT_ULL(60) - norm);
+++		memcpy(&sample.q[1], packet.xyz, sizeof(packet.xyz));
+++		if (t > st->dmp_last_timestamp) {
+++			pushed = iio_push_to_buffers_with_ts(indio_dev, &sample, sizeof(sample), t);
+++			if (pushed) {
+++				ret = pushed;
+++				goto flush;
+++			}
+++			st->dmp_last_timestamp = t;
+++		}
+++		t += 40000000;
+++	}
+++	return 0;
+++flush:
+++	dev_warn_ratelimited(regmap_get_device(st->map), "DMP FIFO reset: %d\n", ret);
+++	if (inv_mpu6515_dmp_flush(st))
+++		inv_mpu6515_dmp_stop(st);
+++	return ret;
+++}
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/iio-preserve-tiny-log2-scale.patch b/device/testing/linux-postmarketos-qcom-msm8226/iio-preserve-tiny-log2-scale.patch
+new file mode 100644
+index 000000000..636f1ad41
+--- /dev/null
++++ b/device/testing/linux-postmarketos-qcom-msm8226/iio-preserve-tiny-log2-scale.patch
+@@ -0,0 +1,79 @@
++diff --git a/drivers/iio/industrialio-core.c b/drivers/iio/industrialio-core.c
++index be2b3259c8e7..74c085ee3628 100644
++--- a/drivers/iio/industrialio-core.c
+++++ b/drivers/iio/industrialio-core.c
++@@ -20,6 +20,7 @@
++ #include <linux/kdev_t.h>
++ #include <linux/kernel.h>
++ #include <linux/module.h>
+++#include <linux/math64.h>
++ #include <linux/mutex.h>
++ #include <linux/poll.h>
++ #include <linux/property.h>
++@@ -650,6 +651,25 @@ int iio_read_mount_matrix(struct device *dev, struct iio_mount_matrix *matrix)
++ }
++ EXPORT_SYMBOL(iio_read_mount_matrix);
++ 
+++/* Power-of-two fractions terminate after at most shift decimal places. */
+++static ssize_t iio_format_tiny_log2(char *buf, size_t offset, int numerator, unsigned int shift)
+++{
+++	u64 remainder = numerator < 0 ? -(s64)numerator : numerator;
+++	u64 divisor = BIT_ULL(shift);
+++	char fraction[64];
+++	unsigned int digit, count = 0;
+++
+++	while (remainder && count < shift) {
+++		digit = mul_u64_u64_div_u64(remainder, 10, divisor);
+++		/* Unsigned wrap cancels here; the resulting remainder is < divisor. */
+++		remainder = remainder * 10 - digit * divisor;
+++		fraction[count++] = '0' + digit;
+++	}
+++	fraction[count] = '\0';
+++
+++	return sysfs_emit_at(buf, offset, "%s0.%s", numerator < 0 ? "-" : "", fraction);
+++}
+++
++ static ssize_t __iio_format_value(char *buf, size_t offset, unsigned int type,
++ 				  int size, const int *vals)
++ {
++@@ -688,6 +708,9 @@ static ssize_t __iio_format_value(char *buf, size_t offset, unsigned int type,
++ 					     abs(tmp1));
++ 	case IIO_VAL_FRACTIONAL_LOG2:
++ 		tmp2 = shift_right((s64)vals[0] * 1000000000LL, vals[1]);
+++		/* Preserve nonzero scales smaller than the usual nine decimal places. */
+++		if (!tmp2 && vals[0] && vals[1] > 0 && vals[1] < 64)
+++			return iio_format_tiny_log2(buf, offset, vals[0], vals[1]);
++ 		tmp0 = (int)div_s64_rem(tmp2, 1000000000LL, &tmp1);
++ 		if (tmp0 == 0 && tmp2 < 0)
++ 			return sysfs_emit_at(buf, offset, "-0.%09u", abs(tmp1));
++diff --git a/drivers/iio/test/iio-test-format.c b/drivers/iio/test/iio-test-format.c
++index 872dd8582003..3abf39e74f9c 100644
++--- a/drivers/iio/test/iio-test-format.c
+++++ b/drivers/iio/test/iio-test-format.c
++@@ -181,6 +181,26 @@ static void iio_test_iio_format_value_fractional_log2(struct kunit *test)
++ 	values[1] = 10;
++ 	ret = iio_format_value(buf, IIO_VAL_FRACTIONAL_LOG2, ARRAY_SIZE(values), values);
++ 	IIO_TEST_FORMAT_EXPECT_EQ(test, buf, ret, "0.000000000\n");
+++
+++	/* Q30 quaternion scale must not be rounded to zero. */
+++	values[0] = 1;
+++	values[1] = 30;
+++	ret = iio_format_value(buf, IIO_VAL_FRACTIONAL_LOG2, ARRAY_SIZE(values), values);
+++	IIO_TEST_FORMAT_EXPECT_EQ(test, buf, ret, "0.000000000931322574615478515625\n");
+++	values[0] = -1;
+++	ret = iio_format_value(buf, IIO_VAL_FRACTIONAL_LOG2, ARRAY_SIZE(values), values);
+++	IIO_TEST_FORMAT_EXPECT_EQ(test, buf, ret, "-0.000000000931322574615478515625\n");
+++
+++	/* Maximum supported shift and signed numerator boundary. */
+++	values[0] = 1;
+++	values[1] = 63;
+++	ret = iio_format_value(buf, IIO_VAL_FRACTIONAL_LOG2, ARRAY_SIZE(values), values);
+++	IIO_TEST_FORMAT_EXPECT_EQ(test, buf, ret,
+++		"0.000000000000000000108420217248550443400745280086994171142578125\n");
+++	values[0] = INT_MIN;
+++	ret = iio_format_value(buf, IIO_VAL_FRACTIONAL_LOG2, ARRAY_SIZE(values), values);
+++	IIO_TEST_FORMAT_EXPECT_EQ(test, buf, ret, "-0.00000000023283064365386962890625\n");
+++
++ }
++ 
++ static void iio_test_iio_format_value_multiple(struct kunit *test)

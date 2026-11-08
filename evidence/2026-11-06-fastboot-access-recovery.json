@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-06",
+  "subject": "Regain Fx0 development access using fastboot RAM recovery",
+  "fastboot_product": "lk2nd-msm8226",
+  "image": "artifacts/recovery-access/ram-recovery.img",
+  "image_sha256": "f260108fafe962df0811bf96f17b15635e8be82ef672346c19abb039d6eaa0a5",
+  "kernel": "6.18.59-fx0-ngd-candidate-00129-g4b800b920c7d-dirty",
+  "recovery": "fastboot boot accepted; RAM Linux exposed NCM and ACM; root serial shell verified; eMMC root identified as ext4 pmOS_root on partition 35; root initially mounted ro,noload for inspection",
+  "installed_system": "postmarketOS v26.06; ordinary login user UID/GID 10000",
+  "changes": [
+    "Backed up the previous user authorized_keys in place, then appended the dedicated host development public key.",
+    "Created root authorized_keys with the same public key under the existing SSH policy.",
+    "Verified the root authorized_keys SHA-256 equals the host public-key file.",
+    "Synced and unmounted the root filesystem, then requested reboot into the installed OS."
+  ],
+  "limits": [
+    "No partition flashing, wipe, rootfs reinstall or bootloader changes.",
+    "No host built-in Wi-Fi changes."
+  ],
+  "installed_ssh": "PASS: dedicated host key logs in as root; uid 0; installed uname 6.18.59",
+  "installed_state": {
+    "kernel_package": "linux-postmarketos-qcom-msm8226-6.18.59-r44",
+    "compiler": "Alpine clang 22.1.3, LLD 22.1.3",
+    "taint": 0,
+    "failed_systemd_units": 0,
+    "services_observed": [
+      "Sway",
+      "PipeWire",
+      "WirePlumber"
+    ],
+    "alsa_card": "LG Fx0",
+    "alsa_pcm": "MultiMedia1 and MultiMedia2, each playback/capture"
+  },
+  "busybox_source": "https://dl-cdn.alpinelinux.org/alpine/v3.23/main/armv7/busybox-static-1.37.0-r30.apk",
+  "temporary_http_server": "Stopped after SSH access was verified"
+}

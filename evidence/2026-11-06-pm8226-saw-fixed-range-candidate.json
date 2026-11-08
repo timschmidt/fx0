@@ -1,0 +1,130 @@
+{
+  "status": "Unpackaged opt-in fixed-range PM8226 S2 SAW driver and binding; not active on phone",
+  "installed_kernel": "6.18.59-r50",
+  "patches": {
+    "fx0-pm8226-saw-fixed-range-binding.diff": "23cdad9ce596deed1beed66cdf898c4e2bad7c194f1e16762eb52f9bea323451",
+    "fx0-pm8226-saw-fixed-range.diff": "6267bd46d55d9e2cd868d3249efc7ca54c18de21d9c0d98d805f54903842bb64"
+  },
+  "candidate_files": [
+    "Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml",
+    "drivers/regulator/qcom_spmi-regulator.c",
+    "drivers/regulator/qcom-spmi-saw-fts2.h"
+  ],
+  "source_vendor_commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+  "implementation": [
+    "PM8226 S2 opt-in restricted to SAW leader with fixed power-on FTS2 range",
+    "Per-regulator SAW map, operations and selector range",
+    "Read-only initialization validates controller, boot range, PWM/AUTO mode and slew rate",
+    "Defer uninitialized L2 owner; reject unexpected controller data or active hardware AVS",
+    "Preserve voltage range and PMIC data slots; port0 acknowledged VCTL command on CPU0",
+    "Propagate command/read/timeout/SMP and getter errors; settle rising voltage with vendor slew margin",
+    "Report deferred AUTO restore failures after confirmed voltage success; retry without inducing voltage-transition rollback"
+  ],
+  "tests": {
+    "compiled_C_harnesses": 2,
+    "hardware_selector_candidates": 514,
+    "valid_fixed_range_selector_roundtrips": 321,
+    "initialization_read_faults": 11,
+    "rising_transaction_IO_faults": 10,
+    "includes": [
+      "Mode restore deferred success and retry",
+      "Polling timeout and delayed acknowledgement",
+      "Range drift, invalid mode, active AVS and uninitialized-controller rejection",
+      "Nominal1075000uV maps1080000uV in range1; impossible exact requests rejected",
+      "Per-instance getter and SMP transport/result failure propagation",
+      "Legacy range0 dispatch retained"
+    ],
+    "poll_test_limit": "Host harness models a bounded poll; actual50us deadline and analog settling are not hardware qualified",
+    "compiled_DT_schema_tests": 8,
+    "binding_meta_example_lint_check": "Passed after inspecting log for errors, not exit code alone",
+    "ARM_driver_object_W1_compile": "Passed",
+    "binding_checkpatch": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "driver_checkpatch": {
+      "errors": 0,
+      "warnings": 2,
+      "notes": [
+        "Per-instance operations must be populated before registration; mutable ops warning reviewed",
+        "Generic new-file ownership warning; drivers/regulator/ already covered by regulator maintainers"
+      ]
+    },
+    "patch_reproduction": "Both exports exactly reproduce all three files"
+  },
+  "live_SAW_inventory": {
+    "boot_id": "9a3a2475-fbef-4a97-be8f-888f396204d1",
+    "physical_base": "0xf9012000",
+    "scope": "Read-only mapping, only eight selected four-byte SAW registers read twice; no writes",
+    "hardware_register_bytes_read": 64,
+    "registers": {
+      "ID": {
+        "offset": "0x4",
+        "value": "0x2010086f",
+        "reread": "0x2010086f"
+      },
+      "PMIC_STS": {
+        "offset": "0x14",
+        "value": "0x0",
+        "reread": "0x0"
+      },
+      "VCTL": {
+        "offset": "0x1c",
+        "value": "0x0",
+        "reread": "0x0"
+      },
+      "AVS_CTL": {
+        "offset": "0x20",
+        "value": "0x0",
+        "reread": "0x0"
+      },
+      "PMIC_DATA0": {
+        "offset": "0x40",
+        "value": "0x0",
+        "reread": "0x0"
+      },
+      "PMIC_DATA1": {
+        "offset": "0x44",
+        "value": "0x0",
+        "reread": "0x0"
+      },
+      "PMIC_DATA3": {
+        "offset": "0x4c",
+        "value": "0x0",
+        "reread": "0x0"
+      },
+      "VERSION": {
+        "offset": "0xfd0",
+        "value": "0x20010000",
+        "reread": "0x20010000"
+      }
+    },
+    "reread_matches": true,
+    "major_version": 2,
+    "pmic_arbiter_present": true,
+    "hardware_AVS_enabled": false,
+    "PMIC_status_selector": 0,
+    "taint": 0
+  },
+  "live_CFG_inventory": {
+    "boot_id": "9a3a2475-fbef-4a97-be8f-888f396204d1",
+    "physical_address": "0xf9012008",
+    "register": "L2 SAW CFG",
+    "value": "0x0",
+    "reread": "0x0",
+    "hardware_bytes_read": 8,
+    "read_only": true,
+    "taint": 0
+  },
+  "native_voltage_transition_tested": false,
+  "voltage_changed": false,
+  "audio_tested": false,
+  "host_builtin_wifi_changed": false,
+  "remaining": [
+    "Implement/register the Madai L2 SPM owner with validated configuration and regmap handoff",
+    "Map nominal calibration to supported APC selectors and MX floors covering actual APC",
+    "Connect calibration, rail activation/handoff and CPR power-domain/OPP lifecycle",
+    "Reconcile uncertain failed voltage commands before clock rollback",
+    "Package a fully linked new kernel with r50 rollback and qualify native transitions, thermal/suspend/peripheral behavior"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-06",
+  "status": "Native configuration and packet decoder staged; no hardware installation or ABI yet",
+  "source_sha256": "a89ff138281d8d141e3c423809279b05c9338e6953f89d49ed6dafb0f96ba34e",
+  "configuration": "Sensor-frame accel and six-axis quaternion at 25 Hz; unused outputs/batching/step indicators off; every patch uses verified bounded RAM writes. Does not enable hardware execution or interrupts.",
+  "decoder": "One wire packet at a time; accel XYZ signed16 or quaternion XYZ signed32 Q30. Preserves low-nibble header flags. EAGAIN for incomplete packets, EPROTO for unknown headers, no output modification on failure. Caller must retain partial tails and flush/restart on corruption. No scalar reconstruction or accuracy claim.",
+  "tests": {
+    "targeted_total": 19,
+    "native_configuration_operation_failures": 184,
+    "native_transport_operation_failures": 1472,
+    "packet_controls": [
+      "Every partial length for both packets",
+      "Signed minimum/maximum values",
+      "Header flags",
+      "Unknown header rejection",
+      "Unchanged output on incomplete/invalid packet"
+    ],
+    "scope": "Host harness compiles real C with modeled regmap. No native physical FIFO or IRQ test."
+  },
+  "remaining": [
+    "Firmware-loader failure tests",
+    "Execution state and configuration restore on raw/DMP switching",
+    "Native IIO channels and quaternion scalar convention",
+    "IRQ FIFO drain with partial-tail, overflow/reset/timestamp handling",
+    "Physical native execution and DMP suspend wake"
+  ]
+}

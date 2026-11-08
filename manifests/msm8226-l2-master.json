@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "status": "Compiled Madai parameters; r51 had an initial reboot failure and a later native bootstrap pass; r50 restored",
+  "FDT_sha256": "74bf40ac24c0978cecf9bb4f8b00202a364fdfb2d2c51abc0c1e2f0a2fd286bc",
+  "source_vendor_commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+  "node": "/soc/qcom,spm@f9012000",
+  "parameters": {
+    "compatible": [
+      "qcom,spm-v2"
+    ],
+    "reg": [
+      4177600512,
+      4096
+    ],
+    "qcom,saw2-cfg": [
+      20
+    ],
+    "qcom,saw2-spm-dly": [
+      1007691776
+    ],
+    "qcom,saw2-spm-ctl": [
+      0
+    ],
+    "qcom,saw2-pmic-data0": [
+      33751168
+    ],
+    "qcom,saw2-pmic-data1": [
+      196608
+    ],
+    "qcom,vctl-timeout-us": [
+      50
+    ],
+    "qcom,vctl-port": [
+      0
+    ],
+    "qcom,L2-spm-is-apcs-master": []
+  },
+  "initialization": "Configure idle arbiter data and delay before CFG, without VCTL or sequencer commands"
+}

@@ -1,0 +1,33 @@
+{
+  "status": "Experimental signed MSM module built; not installed or hardware tested",
+  "kernel_release": "6.18.59-fx0-dmp",
+  "imported_symbol_CRCs_equal_r47": 631,
+  "exported_symbols": 0,
+  "vermagic_and_signature_key_match_r47": true,
+  "compiler": "Host Clang 21.1.8 / LLD 18.1.8 with r47 CFI configuration",
+  "module_sha256": "744d652a802b50b860e5281ff14e6d55bdae61bfebcaca32f8eef738574b7114",
+  "module_bytes": 253262,
+  "patch_sha256": "d626c745802e9c7b5230b8dbc5e524fe4eae78b522cf15b4bf947fd0f6acdbb3",
+  "source": "worktrees/linux-mdp5-prefill",
+  "vendor_reference": {
+    "commit": "04a77e80d63a6b792970c8567447f70d76ac7be4",
+    "CTL_source_sha256": "146d0ec5372094380187ee175bee820df410a19bcb71467ade060abe01e0c3c7",
+    "video_source_sha256": "d103d6caa4b29ba9776e427229f3a899e03b1f754f97aed33a86a6b29cfe7012",
+    "finding": "mdss_mdp_display_commit flushes before display_fnc kickoff; mdss_mdp_video_display enables timing engine during kickoff",
+    "urls": [
+      "https://android.googlesource.com/kernel/msm/+/04a77e80d63a6b792970c8567447f70d76ac7be4/drivers/video/msm/mdss/mdss_mdp_ctl.c",
+      "https://android.googlesource.com/kernel/msm/+/04a77e80d63a6b792970c8567447f70d76ac7be4/drivers/video/msm/mdss/mdss_mdp_intf_video.c"
+    ]
+  },
+  "audio": "No audio tests or source changes",
+  "host_builtin_wifi": "Untouched",
+  "build_command": "make -C worktrees/linux-mdp5-prefill O=$PWD/local/mdp5-prefill-build/llvm ARCH=arm LLVM=1 LOCALVERSION= CC=/usr/bin/clang LD=/usr/bin/ld.lld-18 HOSTCC=/usr/bin/gcc HOSTLD=/usr/bin/ld KBUILD_BUILD_VERSION=48-postmarketos-qcom-msm8226 -j8 M=drivers/gpu/drm/msm modules",
+  "build_output": "worktrees/linux-mdp5-prefill/drivers/gpu/drm/msm/msm.ko (external-module output; copied O directory supplies r47 kernel configuration/generated headers)",
+  "limits": [
+    "Not installed or hardware tested; no underrun fix is claimed",
+    "Generic video-path ordering affects other MDP5 devices and requires wider regression review",
+    "The phone still runs the unchanged r47 module"
+  ],
+  "follow_up": "First external-module artifact retired for out-of-tree taint; proper in-tree r49 is validated separately",
+  "superseded_by": "2026-11-06-mdp5-prefill-r49-trial.json"
+}

@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-06",
+  "subject": "Make Fx0 default WPA2 hotspot settings work and verify a physical client",
+  "status": "NetworkManager configuration installed and functionally tested; device package source updated, native APK build/install not performed",
+  "system": {
+    "kernel": "6.18.59, linux-postmarketos-qcom-msm8226 6.18.59-r44",
+    "driver": "wcn36xx",
+    "device_package_installed": "device-lg-madai-1-r1 plus the tracked config file copied to its intended package destination",
+    "NetworkManager": "1.52.2"
+  },
+  "implementation": {
+    "repository": "https://github.com/timschmidt/fx0-pmaports",
+    "branch": "development/fx0-hotspot",
+    "worktree": "worktrees/pmaports-hotspot",
+    "base": "b9491f835c903bff38cd2c29f24d1f88d45e8735",
+    "package_candidate": "device-lg-madai-1-r2",
+    "config": "/usr/lib/NetworkManager/conf.d/50-wcn36xx-pmf.conf",
+    "config_sha256": "1d4069ddf84c610470458d729b02a2b0034fdd0ae4d1eab07c30872edb5ca6fb",
+    "driver_match": "driver:wcn36xx",
+    "default": "wifi-sec.pmf=1",
+    "scope": "Only profiles using the default PMF value on wcn36xx. Does not implement BIP/PMF support; explicit per-profile requirements retain NetworkManager precedence.",
+    "patch": "patches/pmaports/device-lg-madai-wcn36xx-pmf.diff",
+    "patch_sha256": "000fa1320bc99ad5e2ba576c391df224cf8f7749e592438fdb2b7f4b1c29e411"
+  },
+  "validation": {
+    "before": "Same hotspot profile with PMF default=0 failed to initialize AP; wpa_supplicant logged key setting validation failed and Failed to initialize AP interface. nmcli timed out at 20 seconds.",
+    "after": "Config reloaded without restarting NetworkManager; same profile still PMF default=0 activated successfully; independent USB client associated and received DHCP.",
+    "physical_peer": "RTL8188CUS USB adapter wlp0s20f0u4; host built-in wlo1 not changed",
+    "security": "WPA2-PSK, CCMP; PMF disabled through driver-specific default",
+    "band_channel": "2.4 GHz, channel 6",
+    "dhcp": "10.44.0.201/24; router and DNS option 10.44.0.1",
+    "baseline_ping": "10/10",
+    "direct_transfer": {
+      "bytes": 16777216,
+      "seconds": 4.67542,
+      "sha256_match": true
+    },
+    "forwarding_topology": "To avoid Linux delivering traffic locally between interfaces on the same host, the client requested phone AP address 10.44.0.1:29980. A temporary, port-specific phone DNAT rule forwarded that flow to USB host 172.16.42.2:29980. Existing NetworkManager shared-mode masquerading and forwarding carried the data. The host server saw source 172.16.42.1, confirming phone-side NAT.",
+    "forwarded_baseline": {
+      "bytes": 16777216,
+      "seconds": 3.83461,
+      "sha256_match": true
+    },
+    "reconnect_cycles": [
+      {
+        "cycle": 1,
+        "ping_transmitted": 3,
+        "ping_received": 3,
+        "bytes": 16777216,
+        "sha256_match": true,
+        "transfer_seconds": 8.226,
+        "cycle_seconds": 13.322,
+        "host_default_and_dns_unchanged": true
+      },
+      {
+        "cycle": 2,
+        "ping_transmitted": 3,
+        "ping_received": 3,
+        "bytes": 16777216,
+        "sha256_match": true,
+        "transfer_seconds": 7.462,
+        "cycle_seconds": 12.621,
+        "host_default_and_dns_unchanged": true
+      },
+      {
+        "cycle": 3,
+        "ping_transmitted": 3,
+        "ping_received": 3,
+        "bytes": 16777216,
+        "sha256_match": true,
+        "transfer_seconds": 8.119,
+        "cycle_seconds": 11.496,
+        "host_default_and_dns_unchanged": true
+      },
+      {
+        "cycle": 4,
+        "ping_transmitted": 3,
+        "ping_received": 3,
+        "bytes": 16777216,
+        "sha256_match": true,
+        "transfer_seconds": 8.394,
+        "cycle_seconds": 9.296,
+        "host_default_and_dns_unchanged": true
+      },
+      {
+        "cycle": 5,
+        "ping_transmitted": 3,
+        "ping_received": 3,
+        "bytes": 16777216,
+        "sha256_match": true,
+        "transfer_seconds": 7.963,
+        "cycle_seconds": 10.892,
+        "host_default_and_dns_unchanged": true
+      }
+    ],
+    "payload_sha256": "f3d5f092d6b333938b96d0d507a465e6934e1b94a0dbcb71a50b35f418e6ce6e",
+    "static_checks": [
+      "APKBUILD sh -n passes",
+      "all device package source SHA-512 checksums match",
+      "git diff --check passes"
+    ]
+  },
+  "cleanup": [
+    "Removed temporary host USB-client profile and phone hotspot profile. Both radios returned to disconnected.",
+    "Removed temporary phone HTTP input exception and DNAT table; stopped both HTTP servers.",
+    "Restored phone net.ipv4.ip_forward=0.",
+    "Retained only the tested driver-specific PMF config on the phone.",
+    "Verified host default route and /etc/resolv.conf match pre-test snapshots after every reconnect and after cleanup.",
+    "No audio work or tests performed."
+  ],
+  "limits": [
+    "External DNS queries timed out in this setup, which has no usable upstream resolver; external DNS/Internet service not qualified.",
+    "Hotspot suspend/resume, power draw, long soak, second concurrent client and actual Internet backhaul remain unverified.",
+    "This does not add protected management frame support to wcn36xx.",
+    "Initial direct HTTP request was blocked by the phone input firewall and reached the 40-second timeout while finishing after a narrow test-port rule was added. Successful direct transfer was measured separately."
+  ],
+  "references": [
+    "https://www.networkmanager.dev/docs/api/latest/NetworkManager.conf.html",
+    "https://networkmanager.pages.freedesktop.org/NetworkManager/nm-settings-nmcli.html"
+  ],
+  "package_followup": "Signed ARMv7 device-lg-madai-1-r2 built/installed, boot image verified and default hotspot startup passes after reboot; see 2026-11-06-hotspot-package-installed.json"
+}

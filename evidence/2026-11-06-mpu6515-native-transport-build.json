@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-06",
+  "status": "ARM driver object build pass; staged transport only, not installed or reachable through an ABI",
+  "base_commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+  "branch": "development/fx0-dmp",
+  "audio": "No audio changes in this worktree or tests performed",
+  "command": "make O=/tmp/fx0-dmp-build ARCH=arm CROSS_COMPILE=arm-linux-gnu- CC=/usr/bin/arm-linux-gnu-gcc HOSTCC=/usr/bin/gcc W=1 -j4 drivers/iio/imu/inv_mpu6050/",
+  "compiler_diagnostics": "No warnings/errors in build log",
+  "checks": [
+    "git diff --check passed",
+    "checkpatch: zero errors/warnings on new transport file"
+  ],
+  "files": {
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c": "ae4963ca5c2721aa46ef95fdd0f15cecc02712b5070fb305138200881a38f354",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h": "f7a9a977bc4308de994b90540dc8cfea30b1bc2b9a5af835692a9dcc279bac22",
+    "drivers/iio/imu/inv_mpu6050/Makefile": "3f89dfed1f10d488a793f045992275093a701496e26f12192d62d21e980165f4"
+  },
+  "remaining": [
+    "Fault-injected transport tests",
+    "Physical native bulk transport validation",
+    "Firmware loader/state lifecycle",
+    "Native buffered output ABI and IRQ parser",
+    "DMP suspend event wake and battery qualification"
+  ]
+}

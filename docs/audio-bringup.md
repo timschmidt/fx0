@@ -254,3 +254,27 @@ runs stably. It exposes the `apr`, `apr_audio_svc` and `apr_apps2` channels, the
 This is the substantial infrastructure workstream the plan anticipated. Steps
 1–3 decide how much of the generic Qualcomm stack is reusable and come first.
 Call audio depends on the modem path in phase 8.
+
+## Repeated-playback measurement on the new host (2026-11-06)
+
+Use `scripts/check_audio_tone.py` to measure the existing 1 kHz playback
+experiment in explicit signed PCM16 WAV microphone captures. It reports AC
+RMS, coherent tone level, tone power fraction, DC offset and clipped samples
+per 100 ms window. Select the actual microphone channel with `--channel`
+(zero based). For example, after independently verifying the capture route:
+
+```sh
+python3 scripts/check_audio_tone.py local/audio/play-01.wav --channel 0
+```
+
+The tool requires uncompressed PCM16, a valid channel, and integral tone
+cycles per analysis window. It omits an incomplete trailing window and emits
+JSON `null` for the level of digital silence. It never declares a hardware
+pass: route controls, clean capture and the tone source must be verified
+separately. The earlier 24-bit packing failure shows why a software waveform
+or successful playback return alone is inadequate. Preserve per-stream results
+and the exact kernel/ALSA setup when access is restored. Do not replace separate
+playback starts with one continuous playback stream when testing activation
+reliability. Synthetic tests cover known tone level, DC rejection, silence,
+noise, a different frequency, clipping, stereo channel isolation and invalid
+capture formats. No new physical audio result is claimed.

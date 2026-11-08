@@ -1,0 +1,205 @@
+{
+  "date": "2026-11-06",
+  "scope": "WPA2-CCMP two-client hotspot on r49, temporary IPv4 test network, both host USB Wi-Fi adapters; no Internet backhaul test",
+  "status": "Concurrent two-client data passes; suspend/recovery integration remains open",
+  "system": {
+    "kernel": "6.18.59-fx0-dmp",
+    "package": "6.18.59-r49",
+    "boot_id": "27e64765-ae45-483e-b341-3634eef18357",
+    "phone_driver": "wcn36xx",
+    "client_drivers": [
+      "rtl8xxxu",
+      "rtw88_8821cu"
+    ],
+    "radio": "2.4 GHz channel 6",
+    "profile_PMF": "default 0, with installed wcn36xx-specific config default disabling unsupported PMF",
+    "host_client_power_save": "disabled per temporary USB profile only"
+  },
+  "two_client_validation": {
+    "baseline_runs": 4,
+    "transfers": 8,
+    "bytes_per_transfer": 16777216,
+    "total_bytes": 134217728,
+    "sha256": "f3d5f092d6b333938b96d0d507a465e6934e1b94a0dbcb71a50b35f418e6ce6e",
+    "DHCP": "Two distinct DHCP addresses per run",
+    "ping": "5/5 from each client in every baseline",
+    "simultaneous_station_count": 2,
+    "transfer_binding": "Each curl bound to its physical USB client interface, proxy disabled, phone HTTP endpoint"
+  },
+  "runs": [
+    {
+      "attempt": "02",
+      "baseline_transfers": [
+        {
+          "device": "wlp0s20f0u4",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 9.95830896100233
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 3.882845305997762
+        }
+      ],
+      "simultaneous_stations": 2,
+      "outcome_after_baseline": "('wlp0s20f0u4', 'PING 10.46.0.1 (10.46.0.1) from 10.46.0.48 wlp0s20f0u4: 56(84) bytes of data.\\n\\n--- 10.46.0.1 ping statistics ---\\n5 packets transmitted, 0 received, 100% packet loss, time 830ms\\n\\n')",
+      "cleanup_passed": true,
+      "host_default_DNS_and_builtin_connection_unchanged": true
+    },
+    {
+      "attempt": "03",
+      "baseline_transfers": [
+        {
+          "device": "wlp0s20f0u4",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 10.085748828998476
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 3.6723732259997632
+        }
+      ],
+      "simultaneous_stations": 2,
+      "outcome_after_baseline": "Data plane did not recover automatically within 25 seconds: wlp0s20f0u4",
+      "cleanup_passed": true,
+      "host_default_DNS_and_builtin_connection_unchanged": true
+    },
+    {
+      "attempt": "04",
+      "baseline_transfers": [
+        {
+          "device": "wlp0s20f0u4",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 10.270135067999945
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 5.979257988001336
+        }
+      ],
+      "simultaneous_stations": 2,
+      "outcome_after_baseline": "System suspend helper failed: CalledProcessError(1, ['systemctl', '-i', 'suspend'])",
+      "cleanup_passed": true,
+      "host_default_DNS_and_builtin_connection_unchanged": true
+    },
+    {
+      "attempt": "05",
+      "baseline_transfers": [
+        {
+          "device": "wlp0s20f0u4",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 8.080590884004778
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 3.822086059997673
+        }
+      ],
+      "simultaneous_stations": 2,
+      "outcome_after_baseline": "Data plane did not recover automatically within 25 seconds: wlp0s20f0u4",
+      "cleanup_passed": true,
+      "host_default_DNS_and_builtin_connection_unchanged": true
+    }
+  ],
+  "suspend_cycles": [
+    {
+      "attempt": "02",
+      "sleep_path": "direct kernel /sys/power/state",
+      "real_sleep_seconds": 12.377952999999707,
+      "stations_before": 2,
+      "stations_immediately_after": 0,
+      "AP_state_after": "100 (connected)",
+      "taint": 0,
+      "trace_sha256": "79717bee8147f4866ca38fe3b57149cf82f2b5424977fef05c13404c1eace152",
+      "kernel_log_sha256": "1a45643928eb9dcc3c209180e1eb429ee07626101f14c1c1946554798d018887"
+    },
+    {
+      "attempt": "03",
+      "sleep_path": "direct kernel /sys/power/state",
+      "real_sleep_seconds": 11.892683000000034,
+      "stations_before": 2,
+      "stations_immediately_after": 0,
+      "AP_state_after": "100 (connected)",
+      "taint": 0,
+      "trace_sha256": "45b8473350059b035a47d3b9a5ae77bf2451af7f44225b2745a3dfbee3c46cb6",
+      "kernel_log_sha256": "c33a72c321c39ca45c0af49b809bff31154cb0c7c846a5390e61b56b71a13cfc"
+    },
+    {
+      "attempt": "05",
+      "sleep_path": "systemctl suspend",
+      "real_sleep_seconds": 17.93808799999988,
+      "stations_before": 2,
+      "stations_immediately_after": 0,
+      "AP_state_after": "30 (disconnected)",
+      "taint": 0,
+      "trace_sha256": "b0ef445f194defdff487569768f4c91208dee66a8e49a5afa12164585bc710a2",
+      "kernel_log_sha256": "088cac9693d43a32851f5f8d9bf8123be696183dd9818335cb18618e71f34fc8"
+    }
+  ],
+  "direct_resume_data_polls": {
+    "after-resume-01-wlp0s20f0u2i2-readiness.json": {
+      "polls": 17,
+      "last_poll_seconds": 24.758720569996512,
+      "successes": 0
+    },
+    "after-resume-01-wlp0s20f0u4-readiness.json": {
+      "polls": 16,
+      "last_poll_seconds": 24.599989816000743,
+      "successes": 0
+    }
+  },
+  "interpretation": [
+    "Direct kernel suspend clears the two AP stations while NetworkManager continues reporting the AP active; clients do not recover data within the bounded 25-second polling window",
+    "Normal systemctl suspend correctly notifies NetworkManager, which deactivates the AP; it remains off afterward under this test profile (autoconnect=no)",
+    "Installed Sxmo suspend script ultimately uses rtcwake -m mem; surrounding hooks and the intended AP resume policy need investigation before selecting an integration or driver change"
+  ],
+  "harness_history": [
+    "Attempt 01 AP activated but parser expected PMF enum decoration; actual value was numeric 0, corrected before client tests",
+    "Attempt 04 root request to ignore fixture sleep inhibitor was rejected by polkit; no policy changed. Attempt 05 used idle-only fixture inhibition and ordinary systemctl suspend successfully"
+  ],
+  "cleanup": [
+    "All test AP/client profiles and HTTP services removed/stopped",
+    "Only fixture-specific input rules removed; original firewall policy retained",
+    "Phone forwarding restored to 0 and wlan0 disconnected",
+    "Host default route, resolver bytes and built-in Wi-Fi connection UUID unchanged",
+    "Both USB client adapters returned idle"
+  ],
+  "limits": [
+    "No successful post-suspend hotspot data-recovery pass claimed",
+    "No Internet/DNS-backhaul, IPv6, overnight or power-draw qualification",
+    "This does not implement protected management frames"
+  ],
+  "audio": "No audio tests",
+  "host_builtin_wifi": "No configuration or connection changes",
+  "references": [
+    "https://networkmanager.dev/docs/api/1.30/gdbus-org.freedesktop.NetworkManager.html",
+    "https://www.freedesktop.org/software/systemd/man/255/systemctl.html"
+  ]
+}

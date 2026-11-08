@@ -1,0 +1,133 @@
+diff --git a/drivers/slimbus/stream.c b/drivers/slimbus/stream.c
+index 863ab3075d7e..e152c1d8e143 100644
+--- a/drivers/slimbus/stream.c
++++ b/drivers/slimbus/stream.c
+@@ -206,7 +206,7 @@ int slim_stream_prepare(struct slim_stream_runtime *rt,
+ {
+ 	struct slim_controller *ctrl = rt->dev->ctrl;
+ 	struct slim_port *port;
+-	int num_ports, i, port_id, prrate;
++	int num_ports, i, port_id, prrate, ret;
+ 
+ 	if (rt->ports) {
+ 		dev_err(&rt->dev->dev, "Stream already Prepared\n");
+@@ -227,7 +227,8 @@ int slim_stream_prepare(struct slim_stream_runtime *rt,
+ 	if (prrate < 0) {
+ 		dev_err(&rt->dev->dev, "Cannot get presence rate for rate %d Hz\n",
+ 			cfg->rate);
+-		return prrate;
++		ret = prrate;
++		goto err_free_ports;
+ 	}
+ 
+ 	if (cfg->rate % ctrl->a_framer->superfreq) {
+@@ -261,11 +262,22 @@ int slim_stream_prepare(struct slim_stream_runtime *rt,
+ 		else
+ 			port->direction = SLIM_PORT_SOURCE;
+ 
+-		slim_connect_port_channel(rt, port);
++		ret = slim_connect_port_channel(rt, port);
++		if (ret)
++			goto err_disconnect_ports;
+ 		i++;
+ 	}
+ 
+ 	return 0;
++
++err_disconnect_ports:
++	while (i--)
++		slim_disconnect_port(rt, &rt->ports[i]);
++err_free_ports:
++	kfree(rt->ports);
++	rt->ports = NULL;
++	rt->num_ports = 0;
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(slim_stream_prepare);
+ 
+@@ -419,8 +431,11 @@ int slim_stream_disable(struct slim_stream_runtime *stream)
+ 	if (!stream->ports || !stream->num_ports)
+ 		return -EINVAL;
+ 
+-	if (ctrl->disable_stream)
+-		ctrl->disable_stream(stream);
++	if (ctrl->disable_stream) {
++		ret = ctrl->disable_stream(stream);
++		if (ret)
++			return ret;
++	}
+ 
+ 	ret = slim_do_transfer(ctrl, &txn);
+ 	if (ret)
+@@ -448,19 +463,22 @@ EXPORT_SYMBOL_GPL(slim_stream_disable);
+  */
+ int slim_stream_unprepare(struct slim_stream_runtime *stream)
+ {
+-	int i;
++	int i, ret = 0, err;
+ 
+ 	if (!stream->ports || !stream->num_ports)
+ 		return -EINVAL;
+ 
+-	for (i = 0; i < stream->num_ports; i++)
+-		slim_disconnect_port(stream, &stream->ports[i]);
++	for (i = 0; i < stream->num_ports; i++) {
++		err = slim_disconnect_port(stream, &stream->ports[i]);
++		if (!ret)
++			ret = err;
++	}
+ 
+ 	kfree(stream->ports);
+ 	stream->ports = NULL;
+ 	stream->num_ports = 0;
+ 
+-	return 0;
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(slim_stream_unprepare);
+ 
+diff --git a/sound/soc/codecs/wcd9306.c b/sound/soc/codecs/wcd9306.c
+index 9ac1cbb14d41..aee55cc6bf86 100644
+--- a/sound/soc/codecs/wcd9306.c
++++ b/sound/soc/codecs/wcd9306.c
+@@ -970,23 +970,32 @@ static int wcd9306_trigger(struct snd_pcm_substream *substream, int cmd,
+ {
+ 	struct wcd9306_codec *wcd = snd_soc_component_get_drvdata(dai->component);
+ 	struct slim_stream_runtime *srt = wcd->sruntime[dai->id];
++	int ret, cleanup_ret;
+ 
+ 	switch (cmd) {
+ 	case SNDRV_PCM_TRIGGER_START:
+ 	case SNDRV_PCM_TRIGGER_RESUME:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+-		slim_stream_prepare(srt, &wcd->sconfig[dai->id]);
+-		slim_stream_enable(srt);
+-		break;
++		ret = slim_stream_prepare(srt, &wcd->sconfig[dai->id]);
++		if (ret)
++			return ret;
++
++		ret = slim_stream_enable(srt);
++		if (ret) {
++			/* Activation may have failed after defining some channels. */
++			slim_stream_disable(srt);
++			slim_stream_unprepare(srt);
++		}
++		return ret;
+ 	case SNDRV_PCM_TRIGGER_STOP:
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+-		slim_stream_disable(srt);
+-		slim_stream_unprepare(srt);
+-		break;
++		ret = slim_stream_disable(srt);
++		cleanup_ret = slim_stream_unprepare(srt);
++		return ret ? ret : cleanup_ret;
++	default:
++		return -EINVAL;
+ 	}
+-
+-	return 0;
+ }
+ 
+ static int wcd9306_set_channel_map(struct snd_soc_dai *dai,

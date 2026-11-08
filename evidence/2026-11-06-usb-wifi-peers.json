@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-06",
+  "subject": "USB Wi-Fi peers available for Fx0 hardware qualification",
+  "status": "Read-only capability inventory; not a phone functional test",
+  "adapters": [
+    {
+      "interface": "wlp0s20f0u4",
+      "phy": "phy0",
+      "usb_id": "0bda:8176",
+      "supported_modes": [
+        "managed",
+        "AP",
+        "AP/VLAN",
+        "monitor"
+      ],
+      "bands": [
+        "2.4 GHz"
+      ],
+      "usable_test_channels": [
+        1,
+        6,
+        11
+      ],
+      "concurrent_interface_combinations": false
+    },
+    {
+      "interface": "wlp0s20f0u2i2",
+      "phy": "phy2",
+      "usb_id": "0bda:c820",
+      "supported_modes": [
+        "IBSS",
+        "managed",
+        "AP",
+        "AP/VLAN",
+        "monitor"
+      ],
+      "bands": [
+        "2.4 GHz",
+        "5 GHz"
+      ],
+      "usable_test_channels": [
+        1,
+        6,
+        11,
+        36,
+        40,
+        44,
+        48
+      ],
+      "concurrent_interface_combinations": false
+    }
+  ],
+  "evidence_commands": [
+    "iw dev wlp0s20f0u4 info",
+    "iw dev wlp0s20f0u2i2 info",
+    "iw phy phy0 info",
+    "iw phy phy2 info"
+  ],
+  "host_network_constraint": "Built-in wlo1 is the host connection; no network configuration, radio state, connection profiles, DNS or routes changed.",
+  "next_tests": [
+    "Use separate USB adapters when AP and client roles are needed concurrently. Neither device advertises concurrent hardware interface combinations.",
+    "Phone hotspot: use a USB adapter as the associated client; verify DHCP, bidirectional traffic, forwarding, reconnect and suspend. The existing phone evidence requires PMF disabled.",
+    "Phone client: use the dual-band USB adapter as a controlled AP to test both 2.4 GHz and 5 GHz. Bind any future profiles to that USB interface, disable autoconnect, default routes and automatic DNS changes.",
+    "Confirm capabilities by actual AP/client association before treating the host lab setup as qualified."
+  ]
+}

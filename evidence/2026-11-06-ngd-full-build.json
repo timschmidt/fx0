@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-06",
+  "subject": "Full GCC Fx0 NGD candidate build and staged module bundle",
+  "status": "Host build and staging pass; not installed or physically tested",
+  "kernel_release": "6.18.59-fx0-ngd-candidate-00129-g4b800b920c7d-dirty",
+  "base_commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+  "source_diff_sha256": "c8ca932566f9b6820b40e714e02a013715365e79f9647cec354b3f4523959126",
+  "build_command": "make -C fx0/src/fx0-linux O=/tmp/fx0-r44-candidate ARCH=arm CROSS_COMPILE=arm-linux-gnu- CC=/usr/bin/arm-linux-gnu-gcc HOSTCC=/usr/bin/gcc LOCALVERSION=-fx0-ngd-candidate -j8 zImage qcom/qcom-msm8926-lg-madai.dtb modules",
+  "compiler": "arm-linux-gnu-gcc 15.2.1 20250808",
+  "results": {
+    "build_exit": 0,
+    "compiler_errors": 0,
+    "compiler_warnings": 0,
+    "module_staging_exit": 0,
+    "staged_module_count": 464,
+    "all_module_release_strings_match": true,
+    "depmod": "PASS"
+  },
+  "artifact_directory": "artifacts/2026-11-06-ngd-gcc",
+  "files": {
+    "root/boot/zImage": {
+      "bytes": 4936192,
+      "sha256": "8fbd44a9303432c9bbcfadb65c3655ce1110377130fb15dfc6aa8c8c3d7f358c"
+    },
+    "root/boot/qcom-msm8926-lg-madai.dtb": {
+      "bytes": 40544,
+      "sha256": "fb260140d7e78c2832320d4e2a673532e185786cc69d7afeb0cde9bb0a05bb5e"
+    },
+    "kernel.config": {
+      "bytes": 202845,
+      "sha256": "6594a7668c86bd5bb7821edcefab9131968d34d8aa7014b3e2418780c0732af2"
+    },
+    "source.diff": {
+      "bytes": 7684,
+      "sha256": "c8ca932566f9b6820b40e714e02a013715365e79f9647cec354b3f4523959126"
+    },
+    "fx0-ngd-gcc-candidate.tar.gz": {
+      "bytes": 15095533,
+      "sha256": "5f3469bce11782630e8822a03e4d96c8d9a91452fbd847391da20852d1f55c52"
+    }
+  },
+  "limitations": [
+    "GCC resolves the input pmaports configuration without CFI. Separate Clang/CFI driver-object coverage is recorded in 2026-11-06-audio-clang-cfi-build.json.",
+    "Bundle contains a raw zImage, Fx0 DTB and matching modules, not a ready-to-flash Android boot image or a complete rootfs.",
+    "No phone state or host network configuration changed.",
+    "Hardware acceptance, repeated playback/capture and suspend tests remain pending SSH authorization."
+  ]
+}

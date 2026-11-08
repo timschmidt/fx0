@@ -2,8 +2,10 @@
 
 The required endpoint is native raw sensor access, actual MPU DMP execution and
 DMP-event wake from verified system suspend. The [acceptance gates](bringup-plan.md#61-mpu-6515m-dmp-access-and-interrupt-wake)
-remain open. Current configuration evidence does not identify the installed
-silicon or prove any DMP algorithm is running.
+remain open. Native WHO_AM_I `0x74` identifies the MPU-6515, and raw IIO
+sensors are working. A pinned manufacturer DMP image now passes a physical
+RAM upload/readback check; no DMP algorithm execution or interrupt wake has
+yet been demonstrated. Earlier sections below retain their historical results.
 
 ## Preserved stock path
 
@@ -175,3 +177,126 @@ Still open:
    DMP event causality and masked-event negative controls, at least 20 consecutive
    DMP wakes within the global 50-cycle requirement, and battery standby/false-
    wake measurements. Keep each result tied to exact sources and firmware.
+
+## Pinned DMP image and physical upload path (2026-11-06)
+
+InvenSense's AOSP `6515` HAL at `d411d613f60e6305d48ade617c848262b62a582a`
+contains a 2,943-byte `dmpMemory` image. Its Linux CRC32 (seed zero) is
+`0xa7e2110d`, exactly the contract in the MPU-6515 manufacturer kernel driver
+at `04a77e80d63a6b792970c8567447f70d76ac7be4`. Source, agreement and firmware
+hashes are pinned by the new extractor; the binary and agreement stay in
+ignored private local storage. This is a reference-image candidate, not a
+claim about the stock Fx0 firmware's DMP use or the part's M suffix.
+
+A diagnostic using the bound driver's debugfs access, runtime-power hold and
+temporarily stopped sensor proxy first failed by assuming that separate
+MEM_R_W reads preserve auto-increment. Restoration verification also failed
+and that first trial's RAM snapshot was not separately preserved; exact
+restoration to its original volatile RAM state remains unproven. The DMP
+was never enabled, reserved/OTP regions were not written, and native raw
+sensor access and ordinary service/power state remained available.
+
+An explicitly indexed four-byte control passed and restored its scratch
+region, isolating the transaction issue. After adding explicit addressing and
+a private pre-write recovery file, the corrected full-image trial verified
+all 2,943 uploaded bytes across RAM banks 0–11, then restored and verified
+that retry's pre-write RAM. It took 66.73 seconds; power policy returned to
+auto, the sensor proxy returned active/unmasked, and taint stayed zero.
+
+The next implementation is a maintained IIO firmware loader/lifecycle using
+bounded, addressed no-increment memory-port transfers, followed by actual
+DMP execution/output, a reviewed ABI and DMP interrupt wake. Neither the RAM
+diagnostic nor the driver's existing ordinary wake-on-motion meets those
+gates. See the [reproducer](../diagnostics/imu-dmp-memory/README.md) and
+[physical evidence](../evidence/2026-11-06-mpu6515-dmp-memory.json). Audio testing
+remains excluded by the owner; no audio work was performed in these trials.
+
+
+## Bounded DMP execution (2026-11-06)
+
+The corrected `check_execution.py` diagnostic ran the pinned image for two
+seconds with interrupts masked. It decoded 44 accelerometer packets and 44
+six-axis quaternion packets (1,056 bytes), with a maximum observed FIFO count
+of 192 bytes and no partial packet remaining. The run counter advanced to 421;
+it stayed at zero before enabling and at 422 after disabling. Cleanup verified
+all 3,040 writable RAM bytes and functional registers, restored power/service
+state, and canonicalized the memory cursor. This is an execution/output pass,
+not an accuracy, native IIO, stability or suspend-wake pass.
+
+An earlier execution produced packets but failed its final cursor readback.
+Independent controls established that reading MEM_START_ADDR advances it;
+the corrected diagnostic verifies functional controls and sets the cursor
+without reading it. The earlier trial remains an overall failure.
+
+A later reboot cleared the private captures and recovery snapshots in `/tmp`
+before archival. The execution result survives in diagnostic stdout only.
+The prior journal ends without a shutdown explanation and pstore is empty;
+the owner subsequently confirmed a manual reboot after an apparent black-screen
+lockup. The lockup and any relationship to the diagnostic remain unverified.
+Sensor proxy is active on the new boot.
+See [execution evidence](../evidence/2026-11-06-mpu6515-dmp-execution.json).
+Audio remains excluded. Native IIO firmware lifecycle, parsed channels/events,
+and real DMP interrupt suspend wake remain required.
+
+
+### Native DMP firmware-loader stage (2026-11-06)
+
+The isolated DMP worktree now requests `invensense/mpu6515-dmp.bin`, validates
+its manufacturer size/CRC contract before writing, verifies all uploaded RAM,
+and writes/read-verifies entry point 0x0400. It requires stopped DMP/FIFO and
+masked interrupts and never enables execution. Always reloading avoids a stale
+RAM-valid cache after reset/power loss. Firmware bytes remain private.
+
+The complete ARM IMU object build with W=1 passed without diagnostics, and
+checkpatch reported zero issues on the new file. Eighteen targeted DMP tests
+pass. A new host C harness compiles the actual transport and injects each of
+1,472 transfer-operation failures, with bank-boundary, lost-cursor, corrupt-
+readback, bounds, busy and wrong-device controls. This models transport only;
+physical native bulk transfers and loader failure paths remain unqualified.
+The initial sanitizer link failed because the host UBSan library is missing;
+the passing host harness uses compiler warnings as errors without sanitizers.
+The loader remains staged, with no userspace entry point or installation.
+Native execution lifecycle, buffered channels, IRQ parsing and actual DMP
+suspend wake remain open. No audio testing or host Wi-Fi changes were made.
+See [loader evidence](../evidence/2026-11-06-mpu6515-native-loader-build.json).
+
+
+### Native DMP configuration and decoding (2026-11-06)
+
+Ported the physically exercised 25 Hz accel/six-axis quaternion configuration
+into the native driver, with verified bounded RAM patches. Added a one-packet
+wire decoder: signed accel XYZ and Q30 quaternion XYZ, partial-packet retry,
+header flag extraction and explicit corruption failure without publishing
+partial/stale output. Caller-side FIFO draining/tail retention, overflow/reset,
+quaternion scalar conversion and timestamped IIO output remain to implement.
+Neither helper starts execution or enables interrupts.
+
+Nineteen targeted tests pass. The actual C configuration helper stops at each
+of 184 injected operation failures; the actual decoder passes every packet
+fragment length, signed extremes, header flags and unknown-header controls.
+Transport's 1,472 fault controls still pass. ARM W=1 driver object compilation,
+checkpatch and diff whitespace checks pass. This stage is not installed or a
+physical native FIFO/ABI/wake qualification. Audio and host built-in Wi-Fi
+remain untouched. See [evidence](../evidence/2026-11-06-mpu6515-native-config-decode.json).
+
+
+## Awake native DMP significant motion (2026-11-06)
+
+The driver now exposes an independent activity/still CHANGE/FALLING event,
+with event-only DMP configuration, PM ownership, stale-status clearing and
+automatic single-shot disarm. A ten-second no-event interval verified zero
+IRQs and empty/disabled FIFO. One owner-assisted physical-motion test then
+produced one IRQ and the expected IIO event; raw access and 74 quaternion
+samples worked afterward, with unchanged boot ID and normal service state.
+All 28 targeted host tests and ARM module/style checks pass.
+
+That result was awake-only at the time. Subsequent r49 packaging, 20
+consecutive physical DMP wakes and a matched-build masked-motion control pass;
+battery, overnight, accuracy and broader qualification remain unfinished. Audio stays excluded; host built-in
+Wi-Fi untouched. See [evidence](../evidence/2026-11-06-mpu6515-dmp-smd-awake.json)
+and the [wake implementation notes](mpu6515-dmp-wake-design.md).
+
+Current r49 result: all 20 consecutive DMP wakes pass with retained status and
+IRQ attribution, plus a same-build masked-motion RTC control. Owner confirms
+display/touch recovery, taint is zero and raw/quaternion access is restored.
+See [consecutive-wake evidence](../evidence/2026-11-06-mpu6515-dmp-20-consecutive-wakes.json).

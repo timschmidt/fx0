@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-06",
+  "status": "Madai CPU supply/bin-plan provenance recovered; diagnostic preview implemented; hardware controls unchanged",
+  "repository": "https://github.com/peremen/android-kernel-lg-madai",
+  "commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+  "source_sha256": {
+    "msm8926-lge.dtsi": "9180a7b5a05e0de4cdcdabb26e8d5ebeab54720051b4136d533d3c6e9ea89274",
+    "msm8226-madai.dts": "6dbbd504b8450c43af404d4dd144ca585a4adb539207329d3a60f32fb8044b99",
+    "msm8226-lge-common.dtsi": "f5266ff40c2eb4c4f807d252fdefd914909f06a4942f398dacaa8bbf1f48eff5",
+    "clock-a7.c": "3a3837491bfc0376838c85bc3497c5baae6011b2cd6743a5c3c4a4180125c945",
+    "msm8226-madai-pm.dtsi": "4c960bd5d52a9b96235dba394773250083f12e2e5cb26ee1532c442cd17adf5e",
+    "msm8226-madai.dtsi": "f85f658897d3b8e05d87ad5d3feafbdb59bb296942302332677ab06639f2d835",
+    "msm8926.dtsi": "3e5d4842cbd16f024cc3131255b6a48afafb296e100949252bf0bfe159a5af08",
+    "msm8926-v1.dtsi": "9b58727505f80427e03664c9268f59b0f8180648bdbdb5186bdf97ba8ae76229",
+    "msm8226.dtsi": "457800aaf990e5bb353a41ae6b17be6a095ef8afd30fc3dae00de2c6811b0894",
+    "msm8226-v2.dtsi": "ba882d68c981ccdcff1b09e8b27398333be39f525703635066037b82b263e8d0",
+    "msm8226-regulator.dtsi": "aa60d71526a2ac71649e2078adc604638237bde1e36736039064678217325d76",
+    "msm8226-lge-pm.dtsi": "29d89e77fe68d8ede99386f83eba3cc90fac16d0e7c7222872076fbababb0caf"
+  },
+  "board_source": "arch/arm/boot/dts/msm8226-madai/msm8226-madai.dts",
+  "include_chain": "Madai -> msm8926-lge -> msm8926-v1 -> msm8926 -> msm8226; LGE/Madai PM source inspected",
+  "live_match": "MSM8926 ID 200 revision 1.1 appears in v1 ID list",
+  "clock_resource": {
+    "base": "0xf9011050",
+    "raw_efuse": "0xfc4b80b0",
+    "declared_resource_bytes": 8,
+    "read_word_bytes": 4
+  },
+  "supply": {
+    "CPR": "0xf9018000",
+    "APC": "PM8226 S2, direct SPM peripheral 0x1700",
+    "MX": "PM8226 L3 always-on",
+    "mainline_note": "PM8226 S2 and SAW support exist in qcom_spmi-regulator; MSM8926 CPR/supply binding remains to implement and qualify"
+  },
+  "manifest": "manifests/msm8926-cpu-corner-plans.json",
+  "implemented": "Host diagnostic plan/corner selection with separate conservative fallback; no hardware access",
+  "tests": {
+    "command": "python3 -m unittest discover -s tests -p test_msm8226_speedbin.py",
+    "passed": 8
+  },
+  "limits": [
+    "Vendor source is not yet checked against original compiled stock DTB",
+    "Raw/corrected fuse mapping and live fuse value unverified",
+    "No CPU regulator/voltage/frequency change",
+    "No high-frequency hardware pass or CPR implementation claimed"
+  ],
+  "audio": "Excluded",
+  "host_builtin_wifi": "Unchanged"
+}

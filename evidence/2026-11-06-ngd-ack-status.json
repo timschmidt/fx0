@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-06",
+  "subject": "Propagate SLIMbus NGD manager rejection to command callers",
+  "status": "Host-validated candidate; not installed or physically qualified",
+  "repository": "https://github.com/timschmidt/fx0-linux",
+  "branch": "development/fx0-ngd-ack-status",
+  "base_commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+  "patch": "patches/linux-integration/fx0-ngd-ack-status.diff",
+  "patch_sha256": "dd72a30d31cc03529456455b105cbc333b4bf8ced461040dce614e3d94fe5e14",
+  "behavior": [
+    "CONNECT_SOURCE, CONNECT_SINK and DISCONNECT_PORT return -EIO when the manager response lacks bit 5.",
+    "DEF_ACT_CHAN, CHAN_CTRL and RECONFIG_NOW propagate the same rejection.",
+    "Clear status before each synchronous command so an empty reply cannot reuse prior success.",
+    "ADDR_QUERY replies contain enumeration-address data and bypass ACK checking.",
+    "A rejection received synchronously returns without dropping the runtime-PM vote a second time; the response callback already released it.",
+    "Synchronous helper releases the TID on pre-response failures; stream and address-query callers no longer release it again after a rejected response. The receive callback owns response-side release."
+  ],
+  "validation": {
+    "arm_compile": "PASS: multi_v7_defconfig, COMPILE_TEST=y, SLIMBUS=y, SLIM_QCOM_NGD_CTRL=m; make ARCH=arm CROSS_COMPILE=arm-linux-gnu- HOSTCC=/usr/bin/gcc O=/tmp/fx0-ngd-build drivers/slimbus/qcom-ngd-ctrl.o -j4",
+    "compiler": "arm-linux-gnu-gcc 15.2.1 20250808",
+    "checkpatch": "PASS: 0 errors, 0 warnings",
+    "diff_check": "PASS",
+    "host_helper": "PASS: actual C helper extracted into a stub harness, all 256 status values for six command codes plus all 256 address reply values (1792 cases). This does not test transport, runtime PM or hardware.",
+    "response_ownership": "PASS: generated-C harness executes actual synchronous helper with all 256 ACK values plus missing status, power-up failure, send failure, timeout and address-query reply. Mock counters assert balanced TID/PM ownership. This is not a concurrent receive/timeout race test."
+  },
+  "physical_state": {
+    "usb": "18d1:d001 visible through lsusb; fastboot devices -l empty; timed waiting getvar canceled without a device reply",
+    "diagnostics": "HTTP 172.16.42.1:8000 connection refused",
+    "host_network": "wlo1 identified as active built-in Wi-Fi; no configuration changed. USB adapters detected: 0bda:8176 and 0bda:c820.",
+    "correction": "Full USB descriptors subsequently showed CDC NCM, not fastboot. SSH responds but existing host keys are not authorized; prior fastboot interpretation was incorrect."
+  },
+  "limits": [
+    "Earlier r45 evidence shows successful ACK codes for both audible and silent streams. This error-propagation fix does not establish a cure for intermittent speaker delivery.",
+    "No firmware, partition or phone state was changed.",
+    "Full system and hardware acceptance remain open."
+  ]
+}

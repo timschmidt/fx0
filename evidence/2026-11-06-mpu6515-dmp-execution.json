@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-06",
+  "scope": "Bounded debugfs DMP execution only; no native IIO ABI, accuracy, stability or suspend-wake qualification",
+  "audio": "excluded",
+  "script_sha256": "6b3036727c732ea9cf305baa412b3c67a74417f20f5d8a0c0b24d62f13b03b7d",
+  "corrected_trial": {
+    "exit_code": 0,
+    "seconds_total": 71.307,
+    "execution_seconds": 2,
+    "disabled_counter_before": 0,
+    "disabled_counter_after": 0,
+    "running_counter": 421,
+    "stopped_counter_before": 422,
+    "stopped_counter_after": 422,
+    "fifo_bytes": 1056,
+    "max_fifo_bytes": 192,
+    "accel_packets": 44,
+    "six_axis_quaternion_packets": 44,
+    "partial_packet_bytes": 0,
+    "interrupts_enabled": false,
+    "ram_and_config_restored": true,
+    "memory_cursor_canonicalized": true
+  },
+  "earlier_execution_trial": "Produced 50 packets of each type but failed configuration restoration verification because reading MEM_START_ADDR advances its cursor. Independent controls isolated the cursor side effect; corrected trial excludes cursor readback and canonicalizes it after functional-register verification. Earlier trial is not an overall pass.",
+  "artifact_limit": "Raw capture and private recovery snapshots were in phone /tmp and unavailable after reboot; results retained from diagnostic stdout, without independently archived raw capture or remote script hash.",
+  "reboot_observation": {
+    "previous_boot": "99f2c072c823439688a638d85f8a0392",
+    "previous_journal_last": "2026-11-06 05:08:39 EST",
+    "current_boot": "59c083825a2743b9970583a19cdb9286",
+    "current_journal_start": "2026-11-06 09:41:30 EST",
+    "pstore": "empty",
+    "cause": "Owner confirms manual reboot because phone appeared locked on a black screen; whether it was locked and any relationship to the DMP diagnostic remain unverified.",
+    "sensor_proxy": "active"
+  }
+}

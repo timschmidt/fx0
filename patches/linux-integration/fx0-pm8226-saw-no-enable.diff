@@ -1,0 +1,49 @@
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -1480,6 +1480,21 @@
+ 	vreg->set_points = &vreg->saw_points;
+ 	vreg->desc.n_voltages = range->n_voltages;
+ 	return 0;
++}
++
++static void spmi_regulator_saw_init_ops(struct spmi_regulator *vreg)
++{
++	vreg->saw_ops = *vreg->desc.ops;
++	vreg->saw_ops.set_voltage_sel = spmi_regulator_saw_set_voltage;
++	if (vreg->saw_fts2.pmic) {
++		/* SAW owns an always-on CPU rail, not the PMIC enable register. */
++		vreg->saw_ops.enable = NULL;
++		vreg->saw_ops.disable = NULL;
++		vreg->saw_ops.is_enabled = NULL;
++		vreg->saw_ops.get_voltage_sel = spmi_regulator_saw_fixed_get_voltage;
++		vreg->saw_ops.map_voltage = spmi_regulator_single_map_voltage;
++	}
++	vreg->desc.ops = &vreg->saw_ops;
+ }
+ 
+ static const struct regulator_ops spmi_smps_ops = {
+@@ -2657,6 +2672,7 @@
+ 		if (of_property_read_bool(reg_node, "qcom,saw-fixed-range")) {
+ 			if (!saw_regmap ||
+ 			    !of_property_read_bool(reg_node, "qcom,saw-leader") ||
++			    !of_property_read_bool(reg_node, "regulator-always-on") ||
+ 			    !of_device_is_compatible(node, "qcom,pm8226-regulators") ||
+ 			    reg->base != 0x1700) {
+ 				of_node_put(reg_node);
+@@ -2671,14 +2687,7 @@
+ 		}
+ 		if (saw_regmap && of_property_read_bool(reg_node, "qcom,saw-leader")) {
+ 			vreg->saw_regmap = saw_regmap;
+-			vreg->saw_ops = *vreg->desc.ops;
+-			vreg->saw_ops.set_voltage_sel = spmi_regulator_saw_set_voltage;
+-			if (vreg->saw_fts2.pmic) {
+-				vreg->saw_ops.get_voltage_sel =
+-					spmi_regulator_saw_fixed_get_voltage;
+-				vreg->saw_ops.map_voltage = spmi_regulator_single_map_voltage;
+-			}
+-			vreg->desc.ops = &vreg->saw_ops;
++			spmi_regulator_saw_init_ops(vreg);
+ 		}
+ 		of_node_put(reg_node);
+ 

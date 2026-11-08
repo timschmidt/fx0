@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-06",
+  "scope": "Owner-assisted masked physical-motion negative control for native DMP suspend wake",
+  "boot_id": "78f624e5-8b48-4821-8f64-44d6b6905f90",
+  "protocol": "Same physical movement after five seconds; DMP SMD detection kept disabled; USB retained with UDC wake disabled; RTC fallback 30 seconds",
+  "SMD_enable_readback": "0",
+  "machine_sleep_seconds": 30.009096000000227,
+  "whole_suspend_call_seconds": 30.901264571,
+  "RTC_IRQ": 33,
+  "RTC_IRQ_delta": 1,
+  "IMU_IRQ": 82,
+  "IMU_IRQ_delta": 0,
+  "events": [],
+  "RTC_alarm_after": "fired/empty",
+  "quaternion_samples_after": 74,
+  "post_state": {
+    "SMD_enable": 0,
+    "buffer_enable": 0,
+    "sensor_proxy": "active",
+    "taint": 0,
+    "IMU_wakeup_policy": "restored disabled",
+    "RTC_alarm": "cleared",
+    "boot_id_unchanged": true
+  },
+  "relationship": "Positive pilot had retained status 0x04, IMU IRQ delta 1 and RTC delta 0; masking SMD left the phone asleep until RTC despite requested motion",
+  "limits": [
+    "One control and one positive pilot, not yet 20 consecutive qualifying cycles",
+    "No unplugged standby or energy qualification",
+    "MDP5 warning remains logged during resume; owner confirms normal display/touch after the positive test"
+  ],
+  "hashes": {
+    "trace": "468c78245260ca270da0476802dda2be3efd929f1199d129c4626be9b39f429e",
+    "kernel_log": "afa33816a1fbc4e697b84ff53843c90cca4175d37c2ebde3412f1bea9f669ffe",
+    "manifest": "92eb1a51ec9195d1b5263083e64b1ab9b716a98852f774aaa7d1919efba7fc2e"
+  },
+  "audio": "No audio testing or source changes",
+  "host_builtin_wifi": "untouched"
+}

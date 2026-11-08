@@ -1,0 +1,436 @@
+{
+  "date": "2026-11-06",
+  "scope": "Owner-assisted consecutive MPU6515 DMP significant-motion wakes on r49, USB powered",
+  "status": "20 consecutive cycles passed",
+  "kernel_release": "6.18.59-fx0-dmp",
+  "package": "6.18.59-r49",
+  "loaded_MSM_build_id": "51f26d8cb53c1ae2884aba5540f6afd667337623",
+  "boot_id": "27e64765-ae45-483e-b341-3634eef18357",
+  "cycle_count": 20,
+  "real_s2idle_seconds": {
+    "min": 2.6385419999996884,
+    "max": 14.236157999999705,
+    "total": 66.01838899999802
+  },
+  "IRQ_attribution": {
+    "IMU_GPIO": 69,
+    "IMU_IRQ": 76,
+    "IMU_IRQ_delta_per_cycle": 1,
+    "RTC_IRQ_delta_per_cycle": 0
+  },
+  "event_identity": "activity/still CHANGE/FALLING; code 0x5021e1300000000, retained SMD status 0x04 on every resume",
+  "automatically_disarmed_each_cycle": true,
+  "RTC_fallback": "45 seconds; still pending at every motion-triggered resume",
+  "quaternion_samples_total": 1498,
+  "MDP5_underrun_count": 0,
+  "owner_post_test_UI": "Both display and touch work normally (explicit owner reply after the run)",
+  "post_state": {
+    "kernel_release": "6.18.59-fx0-dmp",
+    "boot_id": "27e64765-ae45-483e-b341-3634eef18357",
+    "taint": 0,
+    "sensor_proxy": "active",
+    "SMD_enabled": "0",
+    "buffer_enabled": "0",
+    "RTC_alarm": "",
+    "IMU_wakeup": "disabled",
+    "loaded_MSM_note_hex": "040000001400000003000000474e550051f26d8cb53c1ae2884aba5540f6afd667337623",
+    "wlan_state": "30 (disconnected)",
+    "ip_forward": "0"
+  },
+  "first_attempt": "qualification-01 expired to RTC with no motion event; owner explicitly reported missing the cue. It was stopped and is not counted. Fresh qualification-02 passed all 20.",
+  "timestamp_limit": "IIO event timestamp is resume attribution time, not hardware event-generation time; sleep intervals come from kernel trace",
+  "validation": "Re-ran actual cycle verifier on all downloaded artifacts, checked >=70 post-wake scans per cycle and zero display underruns, and verified final live state",
+  "cycles": [
+    {
+      "sleep_seconds": 14.236157999999705,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016050824931134
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 1,
+      "hashes": {
+        "manifest.json": "ed75053f1a6b3953f0b82e6c908125549707cc855cddf4c40d07acf080639e3f",
+        "power-irq.trace": "d6dff187677cc4c0204efd8b8da140825c6c079c297e0ef5b2dc388e40348885",
+        "kernel.log": "dd723882537d67fc36d2ffe49a64b5022734517a47b3c491d48f09c807f45c96",
+        "quaternion-after-resume.csv": "6b89d68493f851eb405b161415c84146afe477fb370fc5246c34093b02e9626e"
+      }
+    },
+    {
+      "sleep_seconds": 2.7992800000001807,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016063204233993
+      },
+      "quaternion_samples": 74,
+      "mdp5_warning_count": 0,
+      "cycle": 2,
+      "hashes": {
+        "manifest.json": "555bec4c9b88dc8bc3df07075ddc5c70ce231d994b7dc8aa83232282a22a587c",
+        "power-irq.trace": "1fd05848565080054be45bc1c98f7194e03b0a78575c27040f8c151d3a4dd369",
+        "kernel.log": "9968a7364c902866d6c9c1d5fa0fe6750f78d827ca5279452c0b3361249934c6",
+        "quaternion-after-resume.csv": "a01d65c426129c08d725f4c3c0769edd9a78abdfa1d0a7eb43f88c7e6050e568"
+      }
+    },
+    {
+      "sleep_seconds": 2.7784969999993336,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016075701486280
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 3,
+      "hashes": {
+        "manifest.json": "161fa89061d29bc604c8e30a69c7fb2ab73c86e746450518e6cf0f78c913e8b4",
+        "power-irq.trace": "28c7beffb848b41f2be6e3dcd6b3bd6a16acfe3a4cf22d3a4b992ff800309009",
+        "kernel.log": "261e413c5efb9d9be22d7ee6d5b1e9c0207af395230b2494c64d7cd3796f5321",
+        "quaternion-after-resume.csv": "8618563c4d686872f1b57202ba5055b6a6d292cacbfffe61ad127c334d74183d"
+      }
+    },
+    {
+      "sleep_seconds": 2.7156880000002275,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016087985695702
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 4,
+      "hashes": {
+        "manifest.json": "65872b4249fdbad079c054f2d57c459b64cd63fb70421a993995daaffc85a115",
+        "power-irq.trace": "c32fd84db6a1170f13f743746b8f19669424b41f034aa8f02286100c08b2d6f5",
+        "kernel.log": "51eb2ebb9aae5f08ad649596c45bcb3f9574f40cfc1e3e39b0fd56988f13d72b",
+        "quaternion-after-resume.csv": "af16827e1de090aa6987983ff9d113b44b9e6d216ac310cd1b9bf83332634b8a"
+      }
+    },
+    {
+      "sleep_seconds": 2.7170209999994768,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016100254164082
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 5,
+      "hashes": {
+        "manifest.json": "8f7074d1ea5303649b2d464f6984100db8d30f8d8c6d9d246e7e447988e612b1",
+        "power-irq.trace": "c2349b9ebc4fc2bee42370968fb0a67a10ef55d0880caaaf611c9ed320d603e2",
+        "kernel.log": "ee38c20281fe145166fd85eb428cf223d9b25fa29f79dd8823406a01aa6d7223",
+        "quaternion-after-resume.csv": "1df2025d9cea7666f58226f8626869edce576db4da603dea37708c5cd7ada8d8"
+      }
+    },
+    {
+      "sleep_seconds": 2.7916070000001127,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016112601802045
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 6,
+      "hashes": {
+        "manifest.json": "acb4ab4f5dea35c5cd696b255df180616d22f2b556daf33ba35aff52c0c926ea",
+        "power-irq.trace": "31dbd9ed8a96eb0175d4f45cccfe1d9f241d021931890b55dd7e1ee1a892242d",
+        "kernel.log": "56a2f31d048631806b7a4e276f77434bf7648a4fff5e10d3900a1abf65ed333d",
+        "quaternion-after-resume.csv": "3eda11263107dbb040f5fd5f273ec664ec30a654f70573f7ea73b189ec6b6dc1"
+      }
+    },
+    {
+      "sleep_seconds": 2.661685000000034,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016124824642717
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 7,
+      "hashes": {
+        "manifest.json": "8ea6ed7ccce77b225b5759268f0eb8512d6b5c2d7573cec4ebeaa2526dc9342f",
+        "power-irq.trace": "bc21d70481f75fb4f89d7aae54db8374e11202b5ec0cd8cbf2d8d60a767df311",
+        "kernel.log": "a7593717f4f728aa68d87f47d012ab488c0031e3655ab765ee24a8678da7b84a",
+        "quaternion-after-resume.csv": "01455c5b975c230bd06a67c7cd9d709907d75abb3049faa5be35751b0e3200c3"
+      }
+    },
+    {
+      "sleep_seconds": 2.7129339999992226,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016137060505940
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 8,
+      "hashes": {
+        "manifest.json": "f29387da53334dce0c030a933c2520a81690b109382da0365ee39d388382099a",
+        "power-irq.trace": "b6a7613efb6a8d6f5ebe214fca792b54c2f766f38178e3baf76cfa607d309290",
+        "kernel.log": "9370716d1e4e2b64b438f42c144064693f880774031b0e87037f7b3ec959ecaf",
+        "quaternion-after-resume.csv": "713470e19238c8d66baef8f5c35a39dc361cbd49f5a9576f2ed6fd3a704460ea"
+      }
+    },
+    {
+      "sleep_seconds": 2.763702999999623,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016149331300102
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 9,
+      "hashes": {
+        "manifest.json": "911e6d70b8341d559241bd450935b7b4927a16e866ddf96673ccd172ecf8aef7",
+        "power-irq.trace": "156f25b2b2ac9828df9af04b4f89dd8e2bc5b275186a9bc136d0042ecdfe14a6",
+        "kernel.log": "4e0bd0999009e7c25c9d9229b6621814cbd23575fe8ca4c2a2bcb884aa591698",
+        "quaternion-after-resume.csv": "4d4645d417d844b7072bbe6c3bdfeca906e813374a509827d974147381b63e9d"
+      }
+    },
+    {
+      "sleep_seconds": 2.6526530000001003,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016161631425877
+      },
+      "quaternion_samples": 74,
+      "mdp5_warning_count": 0,
+      "cycle": 10,
+      "hashes": {
+        "manifest.json": "169b6a8d106ee99a76de53434564347b3f2b54932cbff34d06b84e004babf37a",
+        "power-irq.trace": "5a0407e1855c414a942346bcb1ab2dac5f463c4fdc5c96fa94d178dfec5f8a15",
+        "kernel.log": "869bd2dedaea68f21ab0e16f94760b3c77f449d5c302f76bf610feeeb04386b4",
+        "quaternion-after-resume.csv": "f820474e0f1263fcfb1be69e5ce939bc0e8168da3ededf2f2b565c3b8aa5a961"
+      }
+    },
+    {
+      "sleep_seconds": 2.767706999999973,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016174232314622
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 11,
+      "hashes": {
+        "manifest.json": "0f68d9caae9268955b11d2ea697c292238e2c02ddc3adfb4465363d534f921a8",
+        "power-irq.trace": "2b05a325fb0727c4a2ef33303b507baed093e122800439a4ec7503968da6f3be",
+        "kernel.log": "cb7a32021e4776f5bdfe14b37eb2e18e76f2f8c934a760a8170ef643d0f5535f",
+        "quaternion-after-resume.csv": "b154aea60ba8cf9df9ae5038ea3079b66584c579374e0400225f9646e9a8ca8e"
+      }
+    },
+    {
+      "sleep_seconds": 2.691439000000173,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016186564192897
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 12,
+      "hashes": {
+        "manifest.json": "e6c41a0d46d4cf552f2ed7f438f9b5e9f536f6338f620fbbf5e5a4b15d387bee",
+        "power-irq.trace": "f620ae45013c2720447fe0fca9e4246098b1e4ffdb780a404ef554ec9c69ace0",
+        "kernel.log": "e9b774c9e73172c51b8632a3bcf8c2f99fa0ef32c24eb9db77e7d942bf55b002",
+        "quaternion-after-resume.csv": "1e68f4a6142a8a8000723f8b219b9666b8e14a107bd0c560d7acfc0474544fe2"
+      }
+    },
+    {
+      "sleep_seconds": 2.6963980000000447,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016198886073152
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 13,
+      "hashes": {
+        "manifest.json": "9296365d9f9ca7651bdffdc115648195e008b87d43e9fe9f63801315c927d63b",
+        "power-irq.trace": "f484dbe647910cbb2d255a0f0769622f38d32a89715113f014ba7d4826139d86",
+        "kernel.log": "709bbc841ce6bda66277d89cd449dfe7f4c2e05bbbfb020c583ae382215ef78c",
+        "quaternion-after-resume.csv": "a3bced163a9336dc092c75944888c81e8de8b6ad9ecd270d060a3bac742f4a17"
+      }
+    },
+    {
+      "sleep_seconds": 2.8243270000002667,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016211221780022
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 14,
+      "hashes": {
+        "manifest.json": "657cfb25fd27ff2ab7bb6563d54240bb8d3c7990daf7a72d8e364fbedf79c15b",
+        "power-irq.trace": "5935e69c3b4d8d5bfa20e7ed224de9a755796485d1b8c35eae73e11a86d30641",
+        "kernel.log": "85145dfbc7d2c37c3a875d6976c3957efc4efea5c0ba604a7534a638e04f65d7",
+        "quaternion-after-resume.csv": "6cb65bf2cc14c9653f7ddfff2f06c30ebfe00f7438c7aa129e44139da610b259"
+      }
+    },
+    {
+      "sleep_seconds": 2.7162319999997635,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016223596375798
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 15,
+      "hashes": {
+        "manifest.json": "9d6f6823a394b7c2c354240ab4d0fbe93104a2e7a8047095275834f102db74cf",
+        "power-irq.trace": "7343102d1937b32f02b4730bbe3c87b8af19b86ee051f4b519015d29151f6fea",
+        "kernel.log": "13814a3efc2a12f8d1a01e189abfe0f759fb926029750dff8c02e0760f00e12d",
+        "quaternion-after-resume.csv": "34195bf9ef19aee300fe435aa27b28d1fa1998f76a4cbcf7f3da3ca5eb279a6b"
+      }
+    },
+    {
+      "sleep_seconds": 2.7494360000000597,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016236093410689
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 16,
+      "hashes": {
+        "manifest.json": "d9b925ba7864ed287cfc7d2d2ccaac9b94805647d4642eb5e50793cffabba437",
+        "power-irq.trace": "22d4240e226ccdbdcba5b9cc56ec71db12e12b75f86b2297c35dc0a30e2e7a66",
+        "kernel.log": "53e8b96eb3a0a7fbb1f4fce22f3e100c7e71f629fc25ed178769d2e9d5ace79e",
+        "quaternion-after-resume.csv": "71efe0a0e4dad7e00a905d334a76d7bebe710f238e1ff4cf8fd05f930a596b2c"
+      }
+    },
+    {
+      "sleep_seconds": 2.7022329999999783,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016248358209590
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 17,
+      "hashes": {
+        "manifest.json": "35ca80707886a332413ef5dcd9d70d3e6aec147cffe22782f97e326f4bd0482b",
+        "power-irq.trace": "bad2a51a3e1b7eefef1eb5b5ef09da23928d8084ed07206ecdf35b60c3113999",
+        "kernel.log": "d66b4f925d87137de5946fbd44862142403d82682e80c4b37828006435a7a177",
+        "quaternion-after-resume.csv": "e0c713129f484238002a6c5698c508c80f3fbdd964cce3c37ed6c58bf3e698ac"
+      }
+    },
+    {
+      "sleep_seconds": 2.7557749999996304,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016260775293490
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 18,
+      "hashes": {
+        "manifest.json": "12537106475e788bc0812e8a3b2f2f73f80df5c7be868d599d855a69ce3646ab",
+        "power-irq.trace": "61fb5dd6186fcb2cb1152132e93b1c05dbbab7d67d3deb874305688b022079f3",
+        "kernel.log": "4cac1eef2fdedabda4460075e9b03a1e3686bd3abc8dd7798aa4cf333df8f747",
+        "quaternion-after-resume.csv": "6a2ef71144cc0e24f31cd96963eb722cf37bc7c0d4fc205b4b0fa389811a3bda"
+      }
+    },
+    {
+      "sleep_seconds": 2.6385419999996884,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016272940097756
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 19,
+      "hashes": {
+        "manifest.json": "6c72df551d00b72c97bdc48af42a99b6d8f420589a047a13de900c06cbe1b74a",
+        "power-irq.trace": "5f405eb044d90257931350f0f9f107647992e1739a3ca02c93ac69a631231368",
+        "kernel.log": "9a0aebb36958a24e314af30036de3eb674a1f09c529075dd8f9d696bad007b1d",
+        "quaternion-after-resume.csv": "bdccc91f4af14cff6f93fcb922457c91000bf0d757d70d5b9aa935921e7fb0cc"
+      }
+    },
+    {
+      "sleep_seconds": 2.64707400000043,
+      "IMU_irq": 76,
+      "IMU_irq_delta": 1,
+      "RTC_irq_delta": 0,
+      "event": {
+        "code": "0x5021e1300000000",
+        "timestamp_ns": 1794016285152576865
+      },
+      "quaternion_samples": 75,
+      "mdp5_warning_count": 0,
+      "cycle": 20,
+      "hashes": {
+        "manifest.json": "d30e873bfc230c5813bdc36f117fb101e9e7ff6970f873db7e8e88edb05ae9a2",
+        "power-irq.trace": "f2f09d04a4a0381420deda4c113e85cf87038dc0c7fb9d5ef84c25888ffab505",
+        "kernel.log": "3b6476775c9cc167131cbc72e32025c98e9c179bfeff737cdeeaa87f6d22ce9f",
+        "quaternion-after-resume.csv": "0e21de8a749a08e87258aca7762a9c86fcdf655c8becae7d6a1fd5fb064e393a"
+      }
+    }
+  ],
+  "limits": [
+    "This closes the 20-consecutive-DMP-wake gate only",
+    "Overall 50-cycle/peripheral/battery acceptance remains incomplete",
+    "Standby power, false-wake rate, calibrated motion accuracy and external wake-latency measurement remain open",
+    "Hotspot resume/recovery integration remains open"
+  ],
+  "audio": "No audio tests or audio source changes",
+  "host_builtin_wifi": "Untouched",
+  "verifier_sha256": "6cf90b61e8f401d485c1d468c340932895f21b7a34aa0798040aa747840d960d",
+  "summary_sha256": "5e8708090bbff6d0503a925cc1da1bfc36dbfa4831095b65665567cdbb2e5521",
+  "matched_build_negative_control": "Passed subsequently; see 2026-11-06-mpu6515-dmp-r49-masked-control.json"
+}

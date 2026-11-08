@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-06",
+  "scope": "Native DMP significant-motion event while awake; real suspend wake not implemented or tested",
+  "kernel_release": "6.18.59-fx0-dmp-candidate-00129-g4b800b920c7d-dirty",
+  "boot_id": "78f624e5-8b48-4821-8f64-44d6b6905f90",
+  "module_hashes": {
+    "inv-mpu6050.ko.zst": {
+      "sha256": "07c521b0ebd273b3f0a433fe56d114b9f8f2973aca27058bb4b628530acaa714"
+    },
+    "inv-mpu6050-i2c.ko.zst": {
+      "sha256": "fc05fae7d70b36299ea9b1c75e484955abf2f67d7f22edc3100719b745d2388b"
+    }
+  },
+  "configuration": {
+    "firmware_smd_enable_address": 288,
+    "reference_threshold": 1500,
+    "delay_seconds": [
+      3,
+      1
+    ],
+    "producer_mode": "Event only; accel/quaternion FIFO outputs and pedometer IRQ disabled",
+    "physically_read_USER_CTRL": 128,
+    "physically_read_INT_ENABLE": 2,
+    "physically_read_FIFO_EN": 0,
+    "physically_read_FIFO_count": 0,
+    "runtime_status_armed": "active"
+  },
+  "idle_observation": {
+    "seconds": 10,
+    "events": 0,
+    "irq_delta": 0,
+    "still_armed_after": "1",
+    "quaternion_samples_after": 75,
+    "scope_limit": "No controlled physical-stationarity measurement, just an awake no-event interval"
+  },
+  "physical_motion_test": {
+    "owner_confirmed_ready": true,
+    "instruction": "Move phone back and forth for about 15 seconds while USB stays connected, after armed message",
+    "event_count": 1,
+    "event_code": "0x5021e1300000000",
+    "decoded": {
+      "event_type": 5,
+      "direction": 2,
+      "modifier": 30,
+      "channel_type": 19
+    },
+    "meaning": "IIO_ACTIVITY/IIO_MOD_STILL, CHANGE/FALLING",
+    "source_attribution": "Native IRQ handler pushes only after register 0x39 bit 0x04; bit 0x08 and zero/stale status are rejected by actual-C model controls",
+    "irq_delta": 1,
+    "automatically_disarmed": true,
+    "raw_reads_after": "succeeded",
+    "quaternion_samples_after": 74,
+    "boot_id_unchanged": true,
+    "capture_manifest_sha256": "c5bd6923cb56cb5f54d4bbf67a84b3c3558e6acb04df242a2fe8749830e5f685"
+  },
+  "post_state": {
+    "sensor_proxy": "active",
+    "SMD_enable": 0,
+    "buffer_enable": 0,
+    "raw_read": "succeeded",
+    "taint": 0,
+    "new_DMP_or_panic_log": "none observed in filtered current-boot journal"
+  },
+  "tests": {
+    "targeted_total": 28,
+    "SMD_startup_operation_failures": 280,
+    "controls": [
+      "PM-reference balance",
+      "Stale-status clearing",
+      "Pedometer-status rejection",
+      "Single-shot/rearm",
+      "Status read error propagation",
+      "Device cleanup"
+    ],
+    "ARM_modules_build": "passed without diagnostics",
+    "checkpatch": "zero errors/warnings",
+    "integration_limit": "Host model does not execute full IIO/sysfs or Linux runtime-PM machinery; awake physical test supplements those controls"
+  },
+  "remaining": [
+    "Implement genuine system-suspend DMP power/state retention and IRQ wake",
+    "Retain and identify wake status after bus resumes",
+    "Masked physical-motion controls and 20 consecutive DMP wake cycles",
+    "Battery standby/false-wake/latency qualification",
+    "Further awake rearm/fault/recovery and accuracy qualification",
+    "Kernel packaging"
+  ],
+  "audio": "No audio work/testing",
+  "host_builtin_wifi": "untouched"
+}

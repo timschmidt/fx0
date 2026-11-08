@@ -1,0 +1,21 @@
+--- a/configs/default_hooks/sxmo_hook_block_suspend.sh
++++ b/configs/default_hooks/sxmo_hook_block_suspend.sh
+@@ -54,7 +54,17 @@
+ }
+ 
+ hotspot_active() {
+-	nmcli -t c show --active | grep -q ^Hotspot
++	# Profile names are user-defined; check the active Wi-Fi mode instead.
++	# If NM cannot answer, keep blocking rather than risk losing an AP.
++	hotspot_connections="$(nmcli -t -f UUID,TYPE connection show --active)" || return 0
++	while IFS=: read -r hotspot_uuid hotspot_type; do
++		[ "$hotspot_type" = "802-11-wireless" ] || continue
++		hotspot_mode="$(nmcli -g 802-11-wireless.mode connection show uuid "$hotspot_uuid")" || return 0
++		[ "$hotspot_mode" != "ap" ] || return 0
++	done <<EOF
++$hotspot_connections
++EOF
++	return 1
+ }
+ 
+ ssh_connected() {

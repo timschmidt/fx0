@@ -1,0 +1,134 @@
+{
+  "status": "Candidate pure C Madai calibration decoder; no live CPR/OPP consumer",
+  "candidate_patch": "patches/linux-integration/fx0-msm8926-calibration-decoder.diff",
+  "patch_sha256": "2ea51081968ed3a1d7d8877414eb5f5aa1bc2b29b6b6106fd87c6b8f6b71ec22",
+  "source_vendor_commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+  "compiled_reference_FDT_sha256": "74bf40ac24c0978cecf9bb4f8b00202a364fdfb2d2c51abc0c1e2f0a2fd286bc",
+  "compiled_parameters": 45,
+  "tests": {
+    "unittest_cases": 5,
+    "decoded_vectors": 4060,
+    "fault_vectors_output_unchanged": 6,
+    "host_compile": "cc -std=gnu11 -Wall -Wextra -Werror -shared -fPIC",
+    "oracle": "Independent vendor-sequence translation using compiled parameter arrays, plus explicit overflow rejection",
+    "ARM_object_compile": true,
+    "header_checkpatch_errors": 0,
+    "header_checkpatch_warnings": 0,
+    "patch_checkpatch_errors": 0,
+    "patch_checkpatch_warnings": 1,
+    "patch_warning": "Generic new-file MAINTAINERS reminder; CPR header ownership was added to MAINTAINERS",
+    "patch_reproduction": "Header and MAINTAINERS change reproduced exactly"
+  },
+  "unit_nominal_calibration": {
+    "pvs_bin": 21,
+    "pvs_version": 1,
+    "clock_speed_bin": 0,
+    "cpr_speed_bin": 0,
+    "fuse_corners": [
+      {
+        "floor_uV": 1075000,
+        "ceiling_uV": 1075000,
+        "initial_uV": 1075000,
+        "quotient": 798,
+        "ring_osc": 2
+      },
+      {
+        "floor_uV": 1075000,
+        "ceiling_uV": 1175000,
+        "initial_uV": 1075000,
+        "quotient": 931,
+        "ring_osc": 2
+      },
+      {
+        "floor_uV": 1125000,
+        "ceiling_uV": 1280000,
+        "initial_uV": 1140000,
+        "quotient": 1188,
+        "ring_osc": 2
+      }
+    ],
+    "quotient_adjust": [
+      0,
+      0,
+      0,
+      0,
+      122,
+      61,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "quotient_scaling": 637,
+    "clock_bin_valid": 1,
+    "pvs_redundant": 0,
+    "cpr_redundant": 0,
+    "local_scheme": 1,
+    "minimum_override": 0,
+    "uplift": 0,
+    "fuse_allows_loop": 1,
+    "mx_ceiling_supported": 1,
+    "interpolation_applied": 1,
+    "scope": "Offline candidate C decode of private r50 reads; no regulator/clock writes or full CPR integration"
+  },
+  "APC_read_only_inventory": {
+    "boot_id": "9a3a2475-fbef-4a97-be8f-888f396204d1",
+    "regmap": "0-01",
+    "SID": 1,
+    "peripheral_base": "0x1700",
+    "registers": {
+      "type": {
+        "address": "0x1704",
+        "value": 28
+      },
+      "subtype": {
+        "address": "0x1705",
+        "value": 8
+      },
+      "range": {
+        "address": "0x1740",
+        "value": 1
+      },
+      "setpoint": {
+        "address": "0x1741",
+        "value": 115
+      },
+      "mode": {
+        "address": "0x1745",
+        "value": 128
+      },
+      "step_control": {
+        "address": "0x1761",
+        "value": 129
+      }
+    },
+    "reread_matches": true,
+    "hardware_register_reads": 12,
+    "boot_range": 1,
+    "decoded_voltage_uV": 1150000,
+    "scope": "Read-only bounded PMIC state inventory; no regulator/SAW write or voltage qualification",
+    "taint": 0
+  },
+  "installed_kernel": "6.18.59-r50",
+  "decoder_installed": false,
+  "raw_fuse_bytes_published": false,
+  "voltage_changed": false,
+  "CPU_limits_changed": false,
+  "audio_tested": false,
+  "host_builtin_wifi_changed": false,
+  "remaining": [
+    "Fixed boot-range1 FTS2/SAW selector support with error propagation and settling",
+    "Quantize nominal APC floors/ceilings/initial voltages and vote MX for actual APC",
+    "CPR calibration consumer, rail activation/handoff, performance-domain/OPP integration",
+    "Boot, transition, thermal, suspend and peripheral hardware qualification"
+  ],
+  "primary_source_urls": [
+    "https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/mach-msm/cpr-regulator.c",
+    "https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/mach-msm/spm-regulator.c",
+    "https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/mach-msm/spm-v2.c"
+  ]
+}

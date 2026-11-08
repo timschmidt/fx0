@@ -1,0 +1,349 @@
+{
+  "status": "Initial software reboot reached EDL; later boot after reconnection passed bootstrap checks; r50 now restored and verified",
+  "source_recipe": {
+    "recipe_revision": 51,
+    "local_sha512_verified": [
+      "config-postmarketos-qcom-msm8226.armv7",
+      "fx0-mpu6515-dmp.patch",
+      "iio-preserve-tiny-log2-scale.patch",
+      "fx0-mpu6515-dmp-smd-awake.patch",
+      "fx0-mpu6515-dmp-smd-wake.patch",
+      "fx0-mdp5-video-flush-before-enable.patch",
+      "fx0-msm8926-raw-qfprom-binding.patch",
+      "fx0-msm8926-raw-qfprom-driver.patch",
+      "fx0-msm8926-raw-qfprom-dt.patch",
+      "fx0-cpr-mx-voltage-sequencing.patch",
+      "fx0-scm-legacy-fuse-read.patch",
+      "fx0-msm8926-calibration-decoder.patch",
+      "fx0-pm8226-saw-fixed-range-binding.patch",
+      "fx0-pm8226-saw-fixed-range.patch",
+      "fx0-msm8226-l2-master-binding.patch",
+      "fx0-msm8226-l2-master-driver.patch",
+      "fx0-msm8926-l2-master-dt.patch"
+    ],
+    "source_archive_checksum_unchanged": [
+      "linux-fx0-4b800b920c7db82e8012a580a17cc2d8ff9d5e66.tar.gz"
+    ],
+    "patches": [
+      "fx0-mpu6515-dmp.patch",
+      "iio-preserve-tiny-log2-scale.patch",
+      "fx0-mpu6515-dmp-smd-awake.patch",
+      "fx0-mpu6515-dmp-smd-wake.patch",
+      "fx0-mdp5-video-flush-before-enable.patch",
+      "fx0-msm8926-raw-qfprom-binding.patch",
+      "fx0-msm8926-raw-qfprom-driver.patch",
+      "fx0-msm8926-raw-qfprom-dt.patch",
+      "fx0-cpr-mx-voltage-sequencing.patch",
+      "fx0-scm-legacy-fuse-read.patch",
+      "fx0-msm8926-calibration-decoder.patch",
+      "fx0-pm8226-saw-fixed-range-binding.patch",
+      "fx0-pm8226-saw-fixed-range.patch",
+      "fx0-msm8226-l2-master-binding.patch",
+      "fx0-msm8226-l2-master-driver.patch",
+      "fx0-msm8926-l2-master-dt.patch"
+    ],
+    "exact_candidate_files_reproduced": [
+      "Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml",
+      "Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml",
+      "Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml",
+      "MAINTAINERS",
+      "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts",
+      "drivers/firmware/qcom/qcom_scm.c",
+      "drivers/firmware/qcom/qcom_scm.h",
+      "drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c",
+      "drivers/iio/imu/inv_mpu6050/Kconfig",
+      "drivers/iio/imu/inv_mpu6050/Makefile",
+      "drivers/iio/imu/inv_mpu6050/inv_mpu_core.c",
+      "drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c",
+      "drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h",
+      "drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c",
+      "drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c",
+      "drivers/iio/industrialio-core.c",
+      "drivers/iio/test/iio-test-format.c",
+      "drivers/nvmem/qfprom.c",
+      "drivers/pmdomain/qcom/cpr-msm8926.h",
+      "drivers/pmdomain/qcom/cpr-voltage.h",
+      "drivers/pmdomain/qcom/cpr.c",
+      "drivers/regulator/qcom-spmi-saw-fts2.h",
+      "drivers/regulator/qcom_spmi-regulator.c",
+      "drivers/soc/qcom/Kconfig",
+      "drivers/soc/qcom/spm-msm8226-l2.h",
+      "drivers/soc/qcom/spm.c",
+      "include/linux/firmware/qcom/qcom_scm.h"
+    ],
+    "Alpine_source_build_run": false
+  },
+  "compiled_DT": {
+    "owner": "/soc/power-manager@f9012000",
+    "provider": "/soc/spmi@fc4cf000/pm8226@1/regulators",
+    "phandle_match": true,
+    "schemas_valid": true,
+    "S2_always_on": true,
+    "S2_limits_uV": [
+      900000,
+      1350000
+    ],
+    "CPU_OPPs_Hz": [
+      300000000,
+      384000000,
+      600000000,
+      787200000
+    ],
+    "CPR_enabled": false
+  },
+  "linked_kernel": {
+    "release": "6.18.59-fx0-dmp",
+    "build_number": "52-postmarketos-qcom-msm8226",
+    "CPR_enabled": false,
+    "CPU_frequencies_Hz": [
+      300000000,
+      384000000,
+      600000000,
+      787200000
+    ],
+    "vmlinux_build_id": "7baa3c6e3a3a848e5504d658aac26cd84ebfe547",
+    "GPL_SCM_fuse_export": "0x7b276b05",
+    "module_count": 464,
+    "all_modules_intree": true,
+    "all_module_vermagic_match": true,
+    "original_signing_key_preserved": true,
+    "artifacts": {
+      "arch/arm/boot/zImage": "7d29f4344fffdb5b79ba20dc19874e2ebfa98a622f628a3a663af62f20617c9a",
+      "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb": "c8ff861b7cf89dd6c68e6811e8310cf4703fe09737388919c362a57f74241128",
+      "vmlinux": "c8a50ea75b14dcff41107733a933a886c383a66a7f28deff8c663138201c8611",
+      "Module.symvers": "f8a8e14d15e193b049176081abe2ff60976f7e95dd9d7f1e0cbaa9c84e15d925"
+    },
+    "module_signature_check": "All464 staged module signatures cryptographically verified",
+    "linked_L2_master_and_fixed_range_symbols": true,
+    "linked_L2_master_constants_match_compiled_reference": true,
+    "vmlinux_differs_from_r50": true
+  },
+  "module_signatures": {
+    "signed_modules_cryptographically_verified": 464,
+    "certificate": "original r49-preserved build key",
+    "method": "OpenSSL CMS detached verification with explicit kernel certificate; certificate chain validation disabled for local self-signed development key"
+  },
+  "package": {
+    "package": "linux-postmarketos-qcom-msm8226-6.18.59-r51.apk",
+    "sha256": "31982665d310f93268739eb66769c7a6556ac8bf8ecebb796509cabdb0154d26",
+    "payload_files_verified": 545,
+    "modules": 464,
+    "provenance": "Host Clang 21.1.8 / LLD 18.1.8 build; not an Alpine source build",
+    "installed": true,
+    "apk_signature_verified": true
+  },
+  "rollback": {
+    "kernel_package": "6.18.59-r50",
+    "release": "6.18.59-fx0-dmp",
+    "boot_id": "9a3a2475-fbef-4a97-be8f-888f396204d1",
+    "taint": 0,
+    "CPU_policy": {
+      "scaling_governor": "schedutil",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200"
+    },
+    "nvmem_providers": [
+      "qfprom0",
+      "qfprom-raw1"
+    ],
+    "backup_paths": [
+      "boot",
+      "lib/modules/6.18.59-fx0-dmp",
+      "usr/share/kernel/postmarketos-qcom-msm8226",
+      "etc/apk/world",
+      "lib/apk/db"
+    ],
+    "SHA256": {
+      "installed-state-before.tar.gz": "b34d562cd469e5ea0704623a34412ac658975152821c06a9b35fa822503b05e1",
+      "boot-before-r51.img": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921"
+    }
+  },
+  "host_rollback_hashes_verified": true,
+  "owner_tests": {
+    "actual_C_owner_and_publication": true,
+    "I_O_failure_points_and_retries": 18,
+    "access_policy_addresses_checked": 4096,
+    "schema_cases": 8,
+    "reference_extraction_tests": 4,
+    "ARM_W1_compile": true,
+    "binding_meta_examples_lint": true
+  },
+  "changes": [
+    "Explicit Madai L2 arbiter-owner opt-in, with no VCTL or sequencer commands at initialization",
+    "Per-instance fixed-range PM8226 S2 provider and always-on CPU rail constraint",
+    "Provider waits until owner publishes its verified permanent register map"
+  ],
+  "higher_CPU_OPPs_enabled": false,
+  "CPR_enabled": false,
+  "audio_tested": false,
+  "host_builtin_wifi_changed": false,
+  "remaining": [
+    "Enter fastboot physically and RAM-boot verified r50",
+    "Restore r50 package/filesystem/boot payload, preserving lk2nd prefix, and verify readback",
+    "Capture available crash/reset diagnostics and isolate L2 initialization from S2 registration in future RAM-only trials",
+    "Full CPU calibration/rail/CPR/OPP integration and all broader hardware acceptance gates"
+  ],
+  "accepted_for_use": false,
+  "native_boot_passed": true,
+  "USB_failure_state": {
+    "VID": "05c6",
+    "PID": "9008",
+    "Linux_USB_network_present": false,
+    "fastboot_present": false
+  },
+  "root_cause": "Unknown; first failure may have occurred during shutdown, bootloader handoff or r51 startup. Later boot after reconnection passed bootstrap checks.",
+  "recovery": {
+    "last_known_working_package": "6.18.59-r50",
+    "verified_RAM_boot_image": "local/cpu-rail-r51-build/recovery/r50-boot.img",
+    "SHA256": "85e4906004c0f40a9ba2c137ffe635f86f23b2434825d69c3f5990240ba1b579",
+    "module_payloads_identical": 464,
+    "physical_power_cycle_to_fastboot_pending": false,
+    "EDL_loader_verified": false,
+    "restore_script_prepared": "local/cpu-rail-r51-build/recovery/restore-r50-on-phone.py",
+    "LK2nd_prefix_sha256": "073271d9d5361af7bc6fbda9e137862831bf36f88dd5489b7bb3d29fa28499ba",
+    "path": "Restore via SSH on reconnected live r51; no fastboot operation required",
+    "initial_CLI_attempt": "Unsupported --allow-downgrade rejected before package/boot mutation; supported local-file downgrade simulated successfully and retry started",
+    "restored_and_rebooted": true,
+    "evidence": "evidence/2026-11-07-r50-restored-after-r51.json"
+  },
+  "voltage_after_failed_boot": "Unknown; no Linux readback available",
+  "registration_audit": {
+    "finding": "Fixed S2 inherits generic PMIC enable/disable/is_enabled callbacks; always-on registration invokes enable if reached",
+    "vendor_difference": "Vendor SAW enable applies its cached voltage and changes logical online state; it does not use the generic PMIC gate callback",
+    "hardware_enable_register_state_before_failure": "Not captured; a callback invocation does not prove an actual bus write if update_bits found the bit already set",
+    "cause_of_EDL_proven": false
+  },
+  "post_failure_followup": {
+    "packaged_or_booted": false,
+    "binding_requires_always_on": true,
+    "fixed_S2_enable_disable_is_enabled_callbacks_removed": true,
+    "actual_kernel_core_enable_dispatch_tested": true,
+    "legacy_gate_hooks_preserved": true,
+    "C_harnesses_passed": 2,
+    "binding_cases_passed": 9,
+    "ARM_W1_object_compile": true,
+    "binding_meta_examples_lint": true,
+    "patch_checkpatch": "0 errors,0 warnings for both follow-up exports",
+    "patches": {
+      "fx0-pm8226-saw-always-on-binding.diff": "584fadb90037884b23e0947fddbab8c325cf7b97b6695171f1963fcec0c3ef35",
+      "fx0-pm8226-saw-no-enable.diff": "a7e1fa92a85e61404cd8d662fcffc755b28b02d0091763c3e1543c553f417980"
+    }
+  },
+  "recovery_blocker_audit": {
+    "checked_at_UTC": "2026-11-07T05:40:30.545352+00:00",
+    "same_condition_observed_in_consecutive_goal_turns": 3,
+    "USB_mode": "05c6:9008 Qualcomm emergency-download",
+    "fastboot_devices": [],
+    "Linux_USB_interface_present": false,
+    "verified_EDL_loader": false,
+    "required_external_change": "Owner power-cycle and Volume Down entry into lk2nd fastboot",
+    "recovery_image_SHA256_reverified": "85e4906004c0f40a9ba2c137ffe635f86f23b2434825d69c3f5990240ba1b579",
+    "goal_complete": false
+  },
+  "first_software_reboot_passed": false,
+  "repeatable_boot_qualified": false,
+  "reconnected_native_boot": {
+    "boot_id": "6178455a-f4db-464f-b60f-c6da8dee27e2",
+    "kernel_version": "Linux version 6.18.59-fx0-dmp (tim@fedora) (clang version 21.1.8 (Fedora 21.1.8-4.fc43), LLD 18.1.8) #52-postmarketos-qcom-msm8226 SMP PREEMPT Sat Nov  7 00:03:14 ES",
+    "taint": 0,
+    "owner_bound": true,
+    "owner_unbind_exposed": false,
+    "owner_regmap_names": [
+      "f9012000.power-manager-l2-master"
+    ],
+    "owner_registers": {
+      "0x4": "0x2010086f",
+      "0x8": "0x14",
+      "0x14": "0x0",
+      "0x1c": "0x0",
+      "0x20": "0x0",
+      "0x30": "0x0",
+      "0x34": "0x3c102800",
+      "0x40": "0x2030080",
+      "0x44": "0x30000",
+      "0xfd0": "0x20010000"
+    },
+    "owner_reread_matches": true,
+    "VCTL_unchanged_from_r50": true,
+    "PMIC_STS_unchanged_from_r50": true,
+    "APC_regulators": [
+      "regulator.5"
+    ],
+    "APC_attributes": {
+      "name": "pm8226-apc",
+      "microvolts": "1150000",
+      "state": "enabled",
+      "min_microvolts": "900000",
+      "max_microvolts": "1350000",
+      "num_users": "1"
+    },
+    "PMIC_registers": {
+      "0x1704": 28,
+      "0x1705": 8,
+      "0x1740": 1,
+      "0x1741": 115,
+      "0x1745": 128,
+      "0x1761": 129
+    },
+    "PMIC_reread_matches": true,
+    "CPU_policy": {
+      "scaling_governor": "schedutil",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200",
+      "scaling_available_frequencies": "300000 384000 600000 787200"
+    },
+    "SD_mounted": false,
+    "CPR_disabled": true,
+    "scope": "L2 master bootstrap and read-only S2 provider checks; no requested voltage transition or higher frequency qualification",
+    "errors": []
+  },
+  "reconnected_pstore_files": [],
+  "current_state": "Running restored r50 build51, bootf7e2e340-96eb-4265-b72d-292e36ec8bfe",
+  "r50_post_recovery": {
+    "boot_id": "f7e2e340-96eb-4265-b72d-292e36ec8bfe",
+    "kernel_version": "Linux version 6.18.59-fx0-dmp (tim@fedora) (clang version 21.1.8 (Fedora 21.1.8-4.fc43), LLD 18.1.8) #51-postmarketos-qcom-msm8226 SMP PREEMPT Fri Nov  6 23:07:08 ES",
+    "taint": 0,
+    "kernel_package": "linux-postmarketos-qcom-msm8226-6.18.59-r50 armv7 {linux-postmarketos-qcom-msm8226} (GPL-2.0-only) [installed]",
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "CPU_policy": {
+      "scaling_governor": "schedutil",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200",
+      "scaling_available_frequencies": "300000 384000 600000 787200"
+    },
+    "SD_mounted": false,
+    "sensor_proxy": "active",
+    "IMU_raw": {
+      "in_accel_x_raw": "-348",
+      "in_accel_y_raw": "-609",
+      "in_accel_z_raw": "-14622",
+      "in_anglvel_x_raw": "31"
+    },
+    "IMU_SMD": "0",
+    "IMU_buffer": "0",
+    "RTC_alarm": "",
+    "PMIC_registers": {
+      "0x1704": 28,
+      "0x1705": 8,
+      "0x1740": 1,
+      "0x1741": 115,
+      "0x1745": 128,
+      "0x1746": 128,
+      "0x1761": 129
+    },
+    "L2_registers": {
+      "0x8": "0x0",
+      "0x14": "0x0",
+      "0x1c": "0x0",
+      "0x20": "0x0",
+      "0x30": "0x0",
+      "0x34": "0x0",
+      "0x40": "0x0",
+      "0x44": "0x0"
+    },
+    "L2_reverted_to_pretrial_zero": true,
+    "L2_owner_bound": false,
+    "MDP5_underruns": 0,
+    "scope": "Restored r50 warm-boot, exact boot readback, voltage-selector and raw-sensor checks; no audio, voltage transition or suspend test"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-06",
+  "status": "Source build and exact payload checks pass; not installed on phone",
+  "artifact_directory": "artifacts/2026-11-06-sxmo-hotspot-r6",
+  "package": "sxmo-utils-1.18.1-r6",
+  "source_commit": "61ade447e7c033421df8f248835d0f51daaf58c3",
+  "aports_base_commit": "cc621c6ce750e58537d77ae7516be652fb6413b0",
+  "source_archive_sha512": "dac85d8684f97cd2849cb8cc2c6a639b8d585fc9bcea47af38741a829539af7c32504a73282e8f3b4038bf68c27571f6a4137a4fb5cd5f46d8f5a7307dddbc03",
+  "patches": [
+    "patches/sxmo/hotspot-suspend-detect-ap-mode.diff",
+    "patches/sxmo/fx0-hotspot-coordinated-suspend.diff",
+    "patches/sxmo/alpine-sxmo-utils-hotspot-packaging.diff"
+  ],
+  "build": "Native ARMv7 compiler under emulation in isolated Alpine container, offline abuild with verified inputs; full source build, not binary payload wrapper",
+  "behavior": "Fx0 uses coordinator, refreshes wakeup_count after AP teardown and passes original absolute RTC wake deadline. Other devices keep prior relative RTC path. Automatic suspend remains blocked by AP mode.",
+  "verification": {
+    "predicate_tests": 5,
+    "coordinator_tests": 9,
+    "suspend_integration_tests": 4,
+    "exact_packaged_script_matches": true,
+    "generated_hook_configversion_md5": true,
+    "signature_verified_APKs": 14
+  },
+  "packaging_failure_caught": "Initial abuild fetched .diff files without applying them. Exact payload verification rejected that build. Recipe now explicitly applies both patches in prepare; corrected build payload verified.",
+  "install_state": "Phone production hooks unchanged; install requires rollback snapshot and bounded installed-path hardware trial",
+  "remaining": [
+    "Capture installed package/file rollback and compare complete package payload",
+    "Install matching main and already-installed dependency subpackages as one local transaction",
+    "Verify installed AP guard and explicit coordinated Sxmo suspend path on hardware"
+  ],
+  "audio": "No audio tests",
+  "host_builtin_wifi": "No configuration or connection changes",
+  "installed_followup": "2026-11-06-sxmo-hotspot-installed.json"
+}

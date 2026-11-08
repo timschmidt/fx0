@@ -1,0 +1,97 @@
+{
+  "date": "2026-11-06",
+  "status": "Card-detect IRQ burst reproduced during filesystem writeback; no fix installed",
+  "kernel": "6.18.59-fx0-dmp",
+  "package": "6.18.59-r49",
+  "procedure": "Owned 4 MiB random file; separate buffered write, fsync, global sync, cache-discarded SHA read, cleanup/unmount and idle phases. Only unmounted FAT media passing fsck -n accepted; no format/repair.",
+  "phases": [
+    {
+      "phase": "idle",
+      "observed_seconds": 3.0082888010001625,
+      "controller_IRQ_delta": 0,
+      "card_detect_GPIO37_IRQ_delta": 0
+    },
+    {
+      "phase": "mount",
+      "observed_seconds": 0.9960163020004984,
+      "controller_IRQ_delta": 0,
+      "card_detect_GPIO37_IRQ_delta": 1
+    },
+    {
+      "phase": "write-buffered",
+      "observed_seconds": 0.0793108329999086,
+      "controller_IRQ_delta": 0,
+      "card_detect_GPIO37_IRQ_delta": 0
+    },
+    {
+      "phase": "fsync",
+      "observed_seconds": 0.29094526000153564,
+      "controller_IRQ_delta": 0,
+      "card_detect_GPIO37_IRQ_delta": 22675
+    },
+    {
+      "phase": "sync",
+      "observed_seconds": 0.08684729099877586,
+      "controller_IRQ_delta": 0,
+      "card_detect_GPIO37_IRQ_delta": 9
+    },
+    {
+      "phase": "read-discard-cache",
+      "observed_seconds": 0.2383735940002225,
+      "controller_IRQ_delta": 0,
+      "card_detect_GPIO37_IRQ_delta": 0
+    },
+    {
+      "phase": "idle-after-io",
+      "observed_seconds": 6.003853903999698,
+      "controller_IRQ_delta": 0,
+      "card_detect_GPIO37_IRQ_delta": 0
+    },
+    {
+      "phase": "remove-unmount",
+      "observed_seconds": 0.12403301999984251,
+      "controller_IRQ_delta": 0,
+      "card_detect_GPIO37_IRQ_delta": 12
+    },
+    {
+      "phase": "idle-after-unmount",
+      "observed_seconds": 3.003816406000624,
+      "controller_IRQ_delta": 0,
+      "card_detect_GPIO37_IRQ_delta": 0
+    }
+  ],
+  "result": {
+    "status": "I/O observation passed",
+    "phases": [
+      "idle",
+      "mount",
+      "write-buffered",
+      "fsync",
+      "sync",
+      "read-discard-cache",
+      "idle-after-io",
+      "remove-unmount",
+      "idle-after-unmount"
+    ],
+    "sha256_match": true,
+    "final_fsck_exit": 0,
+    "unmounted_after": true
+  },
+  "live_GPIO37": "input low, GPIO function0, 2mA, pull-up; matches current DT",
+  "driver_analysis": {
+    "slot-gpio.c": "Each CD IRQ calls mmc_detect_change; software debounce delays rescan but does not mask repeated IRQs",
+    "core.c": "CD IRQ activates a five-second MMC wake event; a new event after wakeup_count sync aborts the freezer",
+    "scope": "Mechanism consistent with captured suspend abort; electrical origin of GPIO transitions still unproven"
+  },
+  "artifacts": {
+    "samples.json": "bf629ede692029343ecfb09f250fe8723224a801ce8240f7bc5a746ad9db8935",
+    "gpio.txt": "5980f4847bd630eda62a017b355bf7cb692815862689dbff287af683afbb6813",
+    "kernel-after.log": "b9462519101b65c53e19f2419a14f647dc0fefb51819ab33e8afbc796c1177bb",
+    "fsck-before.log": "da30fecc7c52ef359335fd43fd2233d1c3a2f0bd54d8d44fc782c0f53de51d7d",
+    "fsck-after.log": "da30fecc7c52ef359335fd43fd2233d1c3a2f0bd54d8d44fc782c0f53de51d7d"
+  },
+  "cleanup": "Owned file/directory removed, card unmounted, final read-only FAT check passed",
+  "next_step": "Await coordinated powered-off reseat, then repeat identical phase probe before choosing any driver/DT change",
+  "audio": "Excluded",
+  "host_builtin_wifi": "Unchanged"
+}

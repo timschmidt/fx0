@@ -1,0 +1,99 @@
+diff --git a/Makefile b/Makefile
+index 87ba2ca..5221ce8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -153,6 +153,7 @@ install-scripts: $(PROGRAMS)
+ 
+ 	# Bin
+ 	install -D -t $(DESTDIR)$(PREFIX)/bin scripts/*/*.sh
++	install -D -t $(DESTDIR)$(PREFIX)/bin scripts/core/fx0-hotspot-suspend
+ 
+ 	install -t $(DESTDIR)$(PREFIX)/bin/ ${PROGRAMS}
+ 	setcap 'cap_wake_alarm=ep' $(DESTDIR)$(PREFIX)/bin/sxmo_sleep
+diff --git a/scripts/core/sxmo_suspend.sh b/scripts/core/sxmo_suspend.sh
+index 99cfa1e..2f5e12c 100755
+--- a/scripts/core/sxmo_suspend.sh
++++ b/scripts/core/sxmo_suspend.sh
+@@ -41,7 +41,14 @@ fi
+ sxmo_log "calling suspend with suspend_time <$suspend_time>"
+ 
+ start="$(date "+%s")"
+-doas rtcwake -m mem -s "$suspend_time" || exit 1
++if [ "$SXMO_DEVICE_NAME" = "lg,madai" ]; then
++	# AP teardown can take time: keep the original scheduled wake deadline.
++	# The coordinator refreshes wakeup_count after network preparation.
++	fx0-hotspot-suspend --sync-wakeup-count \
++		doas -n rtcwake -m mem -t "$((start + suspend_time))" || exit 1
++else
++	doas rtcwake -m mem -s "$suspend_time" || exit 1
++fi
+ #We woke up again
+ time_spent="$(( $(date "+%s") - start ))"
+ 
+--- /dev/null
++++ b/scripts/core/fx0-hotspot-suspend
+@@ -0,0 +1,64 @@
++#!/bin/sh
++# SPDX-License-Identifier: MIT
++# Coordinate wcn36xx AP teardown with a caller-supplied blocking sleep command.
++set -u
++sync_count=0
++if [ "${1:-}" = --sync-wakeup-count ]; then
++    sync_count=1
++    shift
++fi
++[ "${1:-}" != -- ] || shift
++if [ "$#" -eq 0 ]; then
++    echo 'Usage: fx0-hotspot-suspend [--sync-wakeup-count] COMMAND [ARG ...]' >&2
++    exit 2
++fi
++if ! command -v nmcli >/dev/null 2>&1; then
++    exec "$@"
++fi
++umask 077
++state=$(mktemp -d "${TMPDIR:-/tmp}/fx0-hotspot-suspend.XXXXXX") || exit 1
++: > "$state/restore"
++finish() {
++    status=$?
++    trap - EXIT HUP INT TERM
++    while IFS= read -r uuid; do
++        if ! nmcli -w 30 connection up uuid "$uuid" >/dev/null; then
++            echo "Could not restore hotspot profile $uuid" >&2
++            [ "$status" -ne 0 ] || status=1
++        fi
++    done < "$state/restore"
++    rm -rf -- "$state"
++    exit "$status"
++}
++trap finish EXIT
++trap 'exit 129' HUP
++trap 'exit 130' INT
++trap 'exit 143' TERM
++if ! nmcli -t -f UUID,TYPE,DEVICE connection show --active > "$state/active"; then
++    echo 'Could not read active connections; refusing an uncoordinated suspend' >&2
++    exit 1
++fi
++while IFS=: read -r uuid type device; do
++    [ "$type" = '802-11-wireless' ] || continue
++    case "$uuid" in ''|*[!0123456789abcdefABCDEF-]*) continue ;; esac
++    [ "${#uuid}" -eq 36 ] || continue
++    case "$device" in ''|*[!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-]*) continue ;; esac
++    driver=$(readlink -f "/sys/class/net/$device/device/driver" 2>/dev/null) || continue
++    [ "${driver##*/}" = wcn36xx ] || continue
++    mode=$(nmcli -g 802-11-wireless.mode connection show uuid "$uuid") || exit 1
++    [ "$mode" = ap ] || continue
++    # Register restoration before the request, including interruption races.
++    printf '%s\n' "$uuid" >> "$state/restore"
++    if ! nmcli -w 15 connection down uuid "$uuid" >/dev/null; then
++        echo "Could not stop hotspot profile $uuid; sleep not attempted" >&2
++        exit 1
++    fi
++done < "$state/active"
++if [ "$sync_count" -eq 1 ]; then
++    count=$(cat /sys/power/wakeup_count) || exit 1
++    if ! printf '%s\n' "$count" | doas -n tee /sys/power/wakeup_count >/dev/null; then
++        echo 'Wakeup state changed during hotspot preparation; sleep not attempted' >&2
++        exit 1
++    fi
++fi
++"$@"

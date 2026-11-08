@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-06",
+  "status": "Retired: external-module build tainted kernel; not a qualification pass",
+  "package": "6.18.59-r48",
+  "boot_id": "ca5e1bff-a3d2-45ad-be1e-ad73e8dab328",
+  "kernel_taint": 4096,
+  "cause": "First build used Kbuild M= external-module route and omitted authentic in-tree module marker",
+  "loaded_build_id": "d36197ad15a2b4a36d52398640de0ce61d75ede0",
+  "MDP5_underruns_in_boot_observation": 0,
+  "sensor_tests": "Not run on this tainted trial",
+  "correction": "Rebuilt using proper in-tree MSM and seven dependency module targets; signed r49 replacement",
+  "kernel_log_sha256": "26679385c3cd45e3c8116188597c27133450bd76019f135fcfe7a77de1fc136b",
+  "audio": "No audio tests",
+  "host_builtin_wifi": "Untouched"
+}

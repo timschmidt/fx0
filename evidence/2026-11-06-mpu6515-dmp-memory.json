@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-06",
+  "subject": "Pinned MPU6515 DMP firmware and physically verified RAM transport",
+  "status": "Firmware extraction and upload/readback pass; DMP execution and wake remain unimplemented",
+  "device": {
+    "kernel": "6.18.59, package r44",
+    "device_package": "device-lg-madai-1-r2",
+    "who_am_i": "0x74",
+    "interface": "existing inv_mpu6050 IIO debugfs register access; driver remained bound",
+    "discovery": "By IIO name mpu6515, not a fixed iio:device number"
+  },
+  "firmware": {
+    "source": "https://android.googlesource.com/platform/hardware/invensense/+/d411d613f60e6305d48ade617c848262b62a582a/6515/libsensors_iio/software/core/mllite/linux/ml_load_dmp.c",
+    "source_sha256": "af94aecf908676765e48c629a0b146f4af95c0245bb2b51dc05ae3525e4d3f3f",
+    "license_sha256": "f358932599499c93dfbbabd5c87064f77f48efad6798d7c102975d8c32920299",
+    "firmware_sha256": "eabe2b79d93565358cca83864fece47d7dca5d5826bfbdab2d79ed75996076aa",
+    "firmware_bytes": 2943,
+    "linux_crc32_seed0": "0xa7e2110d",
+    "load_address": "0x20",
+    "entry_point": "0x400",
+    "qualification": "Reference image extracted; no device or execution test."
+  },
+  "reference_driver": {
+    "commit": "04a77e80d63a6b792970c8567447f70d76ac7be4",
+    "url": "https://android.googlesource.com/kernel/msm/+/04a77e80d63a6b792970c8567447f70d76ac7be4/drivers/iio/imu/inv_mpu6515/",
+    "expected_bytes": 2943,
+    "linux_crc32_seed0": "0xa7e2110d",
+    "load_address": "0x20",
+    "entry_point": "0x400"
+  },
+  "initial_trial": {
+    "result": "FAILED: image and restoration verification mismatch",
+    "cause_control": "Explicitly indexed four-byte writes/reads matched, sequential single-register debugfs reads did not. Scratch restoration verified.",
+    "restoration_limit": "The initial RAM snapshot was only in the failed process memory. Exact restoration to the first pre-test RAM state is unproven; do not retroactively mark it passed.",
+    "engine": "DMP was never enabled; no OTP/reserved region writes; normal sensor service/power policy restored and raw readings available."
+  },
+  "corrected_trial": {
+    "script_sha256": "0fb169598d2d5024a17a4701ada3979c32e9dec1091688d339ea6496672ba2fb",
+    "uploaded_bytes": 2943,
+    "all_banks_verified": true,
+    "firmware_sha256": "eabe2b79d93565358cca83864fece47d7dca5d5826bfbdab2d79ed75996076aa",
+    "restoration": "Private pre-retry snapshot written before image upload, original pre-retry bytes restored and verified afterward. This claim is scoped to the corrected trial.",
+    "seconds": 66.73,
+    "dmp_enabled": false,
+    "control_registers_before": {
+      "USER_CTRL": "0x00",
+      "PWR_MGMT_1": "0x09",
+      "PWR_MGMT_2": "0x3f",
+      "ACCEL_CONFIG2": "0x04",
+      "INT_ENABLE": "0x00"
+    }
+  },
+  "validation": {
+    "targeted_tests": "7 unittest cases pass: independent bitwise CRC reference, strict array parsing, unpinned-source refusal, transfer bounds, bank crossings and both incrementing/nonincrementing port models",
+    "post_state": {
+      "sensor_proxy": "active, unit static (runtime mask removed)",
+      "runtime_power_policy": "auto",
+      "raw_accel_z": "-14504 after initial failure; -14511 after corrected trial (raw native reading available)",
+      "taint": 0
+    },
+    "firmware_storage": "Mode 0700 directory, mode 0600 image/agreement/manifest; ignored local/firmware; downloaded sources ignored in downloads/",
+    "script_deployed_sha256": "0fb169598d2d5024a17a4701ada3979c32e9dec1091688d339ea6496672ba2fb"
+  },
+  "limits": [
+    "No DMP start, decoded output, event or interrupt-wake test performed.",
+    "No stock Fx0 DMP baseline and no significance of the M suffix established.",
+    "No production kernel/ABI change yet; the diagnostic is a prerequisite for maintained-driver integration.",
+    "Firmware redistribution rights not asserted; image and agreement remain local.",
+    "Audio remains excluded; no audio tests or configuration changes.",
+    "Host built-in Wi-Fi untouched."
+  ]
+}

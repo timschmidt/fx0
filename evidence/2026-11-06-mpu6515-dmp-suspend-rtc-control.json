@@ -1,0 +1,71 @@
+{
+  "date": "2026-11-06",
+  "scope": "Implemented DMP suspend retention and resume attribution; RTC-controlled real s2idle passed. Physical DMP wake not yet tested.",
+  "modules": {
+    "kernel_release": "6.18.59-fx0-dmp-candidate-00129-g4b800b920c7d-dirty",
+    "modules": {
+      "inv-mpu6050.ko.zst": {
+        "sha256": "4632038f88fc437fe0dc87a6a9e1bf22c8809ee6e22631a581d9568a297cb1c6"
+      },
+      "inv-mpu6050-i2c.ko.zst": {
+        "sha256": "e05c0fe890d17bc526d28319b92e1679ada99f91cb11f1afc507bc22f7c516d5"
+      }
+    }
+  },
+  "boot_id": "78f624e5-8b48-4821-8f64-44d6b6905f90",
+  "sleep_state": "s2idle",
+  "trace_machine_sleep_seconds": 12.387564999999995,
+  "whole_suspend_call_seconds": 18.350157285,
+  "rtc_irq": 33,
+  "rtc_irq_delta": 1,
+  "imu_irq": 82,
+  "imu_gpio": 69,
+  "imu_irq_delta": 0,
+  "DMP_counter_before": 5,
+  "DMP_counter_after": 3684,
+  "DMP_counter_delta": 3679,
+  "event_after_resume": [],
+  "SMD_still_armed_after_RTC": true,
+  "retained_resume_status": "0x0, event 0 (dynamic-debug kernel log)",
+  "hardware_controls_before_after": {
+    "USER_CTRL": 128,
+    "INT_ENABLE": 2,
+    "FIFO_EN": 0,
+    "FIFO_count": 0
+  },
+  "quaternion_samples_after": 75,
+  "post_state": {
+    "SMD_enable": 0,
+    "buffer_enable": 0,
+    "proxy": "active",
+    "taint": 0,
+    "IMU_wakeup_policy": "restored disabled",
+    "RTC_alarm": "cleared; original was empty",
+    "boot_id_unchanged": true
+  },
+  "model_checks": [
+    "IRQ synchronization outside mutex",
+    "Wake-enable failure unwinds disabled IRQ",
+    "Pre-entry event emits then aborts suspend",
+    "RTC/abort resume keeps SMD armed",
+    "SMD resume attributes status then disarms",
+    "Wake-disable failure preserves cleanup obligation",
+    "Status read failure preserves pending event",
+    "Direct event access while suspended performs no bus reads"
+  ],
+  "targeted_host_tests": 28,
+  "ARM_module_build": "passed without diagnostics",
+  "checkpatch": "zero errors/warnings",
+  "trace_sha256": "14f30dde62ec35dde12eedec2f1ea4fb161b0a851ae130301e93a50b10a15884",
+  "kernel_log_sha256": "40d04d8f9a36661cf8c393209e13038c4b7660c489b16225070a8b24de09ec5c",
+  "patch_sha256": "92f9acedd8ab3397fbb80bd47ee440914ff48382a355455f7dd1037ff06ccf85",
+  "other_observation": "MDP5 logged display error 0x04000000 during resume; display/UI was not physically qualified by this test and remains an open regression item.",
+  "limits": [
+    "No physical-motion wake from suspend yet",
+    "No masked physical controls or 20 consecutive DMP wake cycles",
+    "No unplugged standby/false-wake/latency or full hardware PM qualification",
+    "IIO wake timestamp is resume attribution time, not a hardware event timestamp"
+  ],
+  "audio": "No audio feature testing or audio source changes",
+  "host_builtin_wifi": "untouched"
+}

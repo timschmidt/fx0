@@ -1,0 +1,51 @@
+diff --git a/device/testing/device-lg-madai/APKBUILD b/device/testing/device-lg-madai/APKBUILD
+index 8b36e66e5..16eec8e2f 100644
+--- a/device/testing/device-lg-madai/APKBUILD
++++ b/device/testing/device-lg-madai/APKBUILD
+@@ -3,7 +3,7 @@
+ pkgname=device-lg-madai
+ pkgdesc="LG Fx0"
+ pkgver=1
+-pkgrel=1
++pkgrel=2
+ url="https://github.com/timschmidt/fx0"
+ license="MIT"
+ arch="armv7"
+@@ -22,6 +22,7 @@ source="
+ 	deviceinfo
+ 	kernel-cmdline.conf
+ 	modules-initfs
++	50-wcn36xx-pmf.conf
+ 	ucm-card.conf
+ 	ucm-HiFi.conf
+ "
+@@ -33,6 +34,9 @@ build() {
+ package() {
+ 	devicepkg_package $startdir $pkgname
+ 
++	install -Dm644 "$srcdir"/50-wcn36xx-pmf.conf \
++		"$pkgdir"/usr/lib/NetworkManager/conf.d/50-wcn36xx-pmf.conf
++
+ 	# The card's long name selects the UCM profile, so the file name has a space
+ 	install -Dm644 "$srcdir"/ucm-card.conf \
+ 		"$pkgdir/usr/share/alsa/ucm2/conf.d/apq8096/LG Fx0.conf"
+@@ -44,6 +48,7 @@ sha512sums="
+ f18d322194f1cad61dff763f416ad8ec257bb8d637c599f55747344c7291ac11661530a7146d3840f257e6c182c5e110bf99e63a61d89f6643730c56461db342  deviceinfo
+ 84ada4c915b7baae69c629be02f41a88bdf9811cf7017fd5fb8e5acd1f816ad0660d31507472c58de6b0f5e27471cd2ddc12ddc990bb17f383ffd676cd3dec13  kernel-cmdline.conf
+ 7bfa9faf29e6de2a4072c8fdd06ab3f878de2c569a749c2720c9b944d46df416fda7198c0aeb12b7da4695c69646752ece615e032f8530283b68f7767be1333a  modules-initfs
++2eab2d0d68b57b8a98b6686c54798bcffe31320b39c0c55f6ad5048fc31987b055f829c1b36dcac2de8b70fcb69cb5100a7eaa0355d3053f668d16243e6139ba  50-wcn36xx-pmf.conf
+ 9ace5e8c938b6a57f7c47684286bdd30b9b7a52acfbbffb3ec68b93be83b65f798365b4381335832e48b78339751e22a5f2167cb558c21a7bb448aafd7530f1e  ucm-card.conf
+ f0da16f1158c5d6ed4c926d01f93d9821a72595c62646559a85a2570d59a24469e9313b3660528f99bea3f056b4ecd23020572245e37fbe7209ebbb5994ed1fd  ucm-HiFi.conf
+ "
+diff --git a/device/testing/device-lg-madai/50-wcn36xx-pmf.conf b/device/testing/device-lg-madai/50-wcn36xx-pmf.conf
+new file mode 100644
+index 000000000..4367fd56f
+--- /dev/null
++++ b/device/testing/device-lg-madai/50-wcn36xx-pmf.conf
+@@ -0,0 +1,6 @@
++# wcn36xx exposes no BIP cipher. NetworkManager's optional-PMF default
++# otherwise makes WPA2 hotspot activation fail in wpa_supplicant.
++# Explicit profile PMF requirements still take precedence over this default.
++[connection-wcn36xx]
++match-device=driver:wcn36xx
++wifi-sec.pmf=1

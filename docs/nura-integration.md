@@ -59,3 +59,32 @@ it today.
    wrapper settings.
 3. Reinstall from scratch with that package and the final layout, then rerun
    the boot, Wi-Fi, Bluetooth, display, audio-service and soak checks.
+
+## Hotspot default integration (2026-11-06)
+
+The installed kernel's wcn36xx driver exposes no BIP cipher. A WPA2 hotspot
+using NetworkManager's default PMF value fails AP initialization; setting the
+driver-specific default to disabled allows that same unmodified profile to
+activate. The tested file is installed at
+`/usr/lib/NetworkManager/conf.d/50-wcn36xx-pmf.conf` and matches only
+`driver:wcn36xx`. Explicit profile settings still follow NetworkManager's
+normal precedence; this does not implement PMF support.
+
+The file is included in the `device-lg-madai-1-r2` source candidate on local
+fx0-pmaports branch `development/fx0-hotspot`, based on `integration/fx0-device`.
+The phone still has r1 with this file copied to the intended package path;
+no native r2 APK build/install is claimed. APKBUILD shell syntax, source
+checksums and patch applicability pass. No existing packaged audio files were
+changed or installed. See the [package diff](../patches/pmaports/device-lg-madai-wcn36xx-pmf.diff)
+and [physical client evidence](../evidence/2026-11-06-hotspot-default-and-client.json).
+Remove this default when wcn36xx provides working BIP support.
+
+**Package follow-up:** `device-lg-madai-1-r2` is now built and signed in an
+Alpine ARMv7 container (QEMU), verified and installed by the phone's apk-tools.
+All eight package-file hashes matched the already installed contents before
+the upgrade and the APK contents after reboot. Normal mkinitfs/boot-deploy
+triggers ran, and the deployed boot image matched readback while the lk2nd
+prefix and unused partition tail remained unchanged. The configuration is now
+package-owned. Default `nmcli device wifi hotspot` succeeds after reboot with
+the generated profile still at `pmf=0`. See
+[package/update evidence](../evidence/2026-11-06-hotspot-package-installed.json).

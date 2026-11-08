@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-06",
+  "status": "Source patch and predicate regression tests pass; not installed on phone",
+  "upstream": "https://git.sr.ht/~mil/sxmo-utils",
+  "release": "1.18.1",
+  "commit": "61ade447e7c033421df8f248835d0f51daaf58c3",
+  "installed_package": "sxmo-utils-1.18.1-r4",
+  "patch": "patches/sxmo/hotspot-suspend-detect-ap-mode.diff",
+  "worktree": "worktrees/sxmo-hotspot",
+  "finding": "Name-based detection misses renamed AP profiles and can block a station profile named Hotspot. Query active wireless profiles and their actual mode instead.",
+  "behavior": "AP mode blocks; station/ethernet-only and no connections allow; NM query failure blocks conservatively",
+  "scope": "Only hotspot_active predicate; other blockers unchanged and not exercised",
+  "validation": {
+    "upstream_patch_apply": "passed",
+    "shell_syntax": "passed",
+    "predicate_tests": 5,
+    "coordinator_tests": 9
+  },
+  "remaining": [
+    "Package and install maintained Sxmo build",
+    "Integrate explicit coordinator path with preserved RTC deadline and fresh wakeup_count",
+    "Exercise installed automatic-suspend AP guard and explicit manual suspend on hardware"
+  ],
+  "audio": "Excluded",
+  "host_builtin_wifi": "Unchanged",
+  "installed_followup": "2026-11-06-sxmo-hotspot-installed.json"
+}

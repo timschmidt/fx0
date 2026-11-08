@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-06",
+  "status": "Raw read windows constrained and actual-core contracts pass; kernel build resumed, not installed",
+  "worktree": "worktrees/linux-cpu-cpr",
+  "patch": "patches/linux-integration/fx0-msm8926-raw-qfprom-driver.diff",
+  "patch_sha256": "d82fac0f63e2951e3485af0caf9182ffa78dada8f49e6c48ea8a7e864cce8a1a",
+  "allowed_raw_windows": [
+    {
+      "offset": "0xb0",
+      "bytes": 8,
+      "source": "CPU/PVS row22"
+    },
+    {
+      "offset": "0x450",
+      "bytes": 16,
+      "source": "CPR primary/redundant rows138/139"
+    }
+  ],
+  "other_offsets": "NVMEM keepout zero-fill; no hardware callback, including secure row54",
+  "contracts": {
+    "actual_NVMEM_core_and_actual_match_data": 28577,
+    "full_4KiB_read_hardware_bytes": 24,
+    "full_read_hardware_callbacks": 2,
+    "protected_conditional_row_hardware_callbacks": 0,
+    "existing_probe_contracts": 9
+  },
+  "source_recipe": {
+    "local_SHA512_checks": 11,
+    "patches": 10,
+    "exact_source_files_reproduced": 18,
+    "export": "patches/pmaports/fx0-cpu-calibration-packaging.diff",
+    "Alpine_source_build_run": false
+  },
+  "build": {
+    "prior_build": "Intentionally interrupted with SIGINT for this required source correction; terminal exit130 confirmed",
+    "resumed": "Incremental complete zImage/modules/DTB build, KBUILD_BUILD_VERSION=51-postmarketos-qcom-msm8226",
+    "module_signing_key": "Verified unchanged from the known r49 build",
+    "status": "Running at checkpoint; no success or installable artifact claimed"
+  },
+  "remaining": [
+    "Finish full kernel build and artifact checks",
+    "Prepare signed package, validate preserved rollback and boot deployment",
+    "Verify native filtered raw reads and secure SCM read on hardware",
+    "Complete CPR calibration/lifecycle/OPP/PM implementation before raising CPU frequency"
+  ],
+  "audio": "Excluded",
+  "host_builtin_wifi": "Unchanged",
+  "running_phone": "r49; no kernel or voltage change"
+}

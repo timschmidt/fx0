@@ -1,0 +1,130 @@
+{
+  "status": "r50 restored, warm reboot and bounded baseline verified",
+  "checked_at_UTC": "2026-11-07T13:03:21.245579+00:00",
+  "reconnected_r51_observation": {
+    "boot_id": "6178455a-f4db-464f-b60f-c6da8dee27e2",
+    "kernel_version": "Linux version 6.18.59-fx0-dmp (tim@fedora) (clang version 21.1.8 (Fedora 21.1.8-4.fc43), LLD 18.1.8) #52-postmarketos-qcom-msm8226 SMP PREEMPT Sat Nov  7 00:03:14 ES",
+    "taint": 0,
+    "owner_bound": true,
+    "owner_unbind_exposed": false,
+    "owner_regmap_names": [
+      "f9012000.power-manager-l2-master"
+    ],
+    "owner_registers": {
+      "0x4": "0x2010086f",
+      "0x8": "0x14",
+      "0x14": "0x0",
+      "0x1c": "0x0",
+      "0x20": "0x0",
+      "0x30": "0x0",
+      "0x34": "0x3c102800",
+      "0x40": "0x2030080",
+      "0x44": "0x30000",
+      "0xfd0": "0x20010000"
+    },
+    "owner_reread_matches": true,
+    "VCTL_unchanged_from_r50": true,
+    "PMIC_STS_unchanged_from_r50": true,
+    "APC_regulators": [
+      "regulator.5"
+    ],
+    "APC_attributes": {
+      "name": "pm8226-apc",
+      "microvolts": "1150000",
+      "state": "enabled",
+      "min_microvolts": "900000",
+      "max_microvolts": "1350000",
+      "num_users": "1"
+    },
+    "PMIC_registers": {
+      "0x1704": 28,
+      "0x1705": 8,
+      "0x1740": 1,
+      "0x1741": 115,
+      "0x1745": 128,
+      "0x1761": 129
+    },
+    "PMIC_reread_matches": true,
+    "CPU_policy": {
+      "scaling_governor": "schedutil",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200",
+      "scaling_available_frequencies": "300000 384000 600000 787200"
+    },
+    "SD_mounted": false,
+    "CPR_disabled": true,
+    "scope": "L2 master bootstrap and read-only S2 provider checks; no requested voltage transition or higher frequency qualification",
+    "errors": []
+  },
+  "restoration": {
+    "pid": 5315,
+    "boot_id": "6178455a-f4db-464f-b60f-c6da8dee27e2",
+    "status": "r50 restored and readback verified; not rebooted",
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "lk2nd_prefix_never_written": true,
+    "package": "6.18.59-r50"
+  },
+  "restored_r50": {
+    "boot_id": "f7e2e340-96eb-4265-b72d-292e36ec8bfe",
+    "kernel_version": "Linux version 6.18.59-fx0-dmp (tim@fedora) (clang version 21.1.8 (Fedora 21.1.8-4.fc43), LLD 18.1.8) #51-postmarketos-qcom-msm8226 SMP PREEMPT Fri Nov  6 23:07:08 ES",
+    "taint": 0,
+    "kernel_package": "linux-postmarketos-qcom-msm8226-6.18.59-r50 armv7 {linux-postmarketos-qcom-msm8226} (GPL-2.0-only) [installed]",
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "CPU_policy": {
+      "scaling_governor": "schedutil",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200",
+      "scaling_available_frequencies": "300000 384000 600000 787200"
+    },
+    "SD_mounted": false,
+    "sensor_proxy": "active",
+    "IMU_raw": {
+      "in_accel_x_raw": "-348",
+      "in_accel_y_raw": "-609",
+      "in_accel_z_raw": "-14622",
+      "in_anglvel_x_raw": "31"
+    },
+    "IMU_SMD": "0",
+    "IMU_buffer": "0",
+    "RTC_alarm": "",
+    "PMIC_registers": {
+      "0x1704": 28,
+      "0x1705": 8,
+      "0x1740": 1,
+      "0x1741": 115,
+      "0x1745": 128,
+      "0x1746": 128,
+      "0x1761": 129
+    },
+    "L2_registers": {
+      "0x8": "0x0",
+      "0x14": "0x0",
+      "0x1c": "0x0",
+      "0x20": "0x0",
+      "0x30": "0x0",
+      "0x34": "0x0",
+      "0x40": "0x0",
+      "0x44": "0x0"
+    },
+    "L2_reverted_to_pretrial_zero": true,
+    "L2_owner_bound": false,
+    "MDP5_underruns": 0,
+    "scope": "Restored r50 warm-boot, exact boot readback, voltage-selector and raw-sensor checks; no audio, voltage transition or suspend test"
+  },
+  "initial_r51_reboot_failure_still_unexplained": true,
+  "r51_repeatable_boot_qualified": false,
+  "r51_quarantined": true,
+  "recovery_required_fastboot": false,
+  "initial_recovery_CLI_attempt": "Unsupported --allow-downgrade rejected before package or boot changes; installed apk help and successful simulation verified direct local-package downgrade; corrected retry completed",
+  "recovery_extent": "Exact r50 boot/module/metadata/world/apkdb snapshot restored; only boot payload/tail written, never lk2nd prefix",
+  "display_touch_owner_confirmation": "Pending; software display log has zero MDP5 underruns",
+  "audio_tested": false,
+  "host_builtin_wifi_changed": false,
+  "full_hardware_goal_complete": false,
+  "remaining": [
+    "Owner display/touch confirmation",
+    "Isolate initial reboot/download-mode failure with RAM-only trials",
+    "Full CPU calibration/CPR/rail/OPP integration and hardware qualification",
+    "SD card-detect diagnosis and broader existing acceptance gates"
+  ]
+}

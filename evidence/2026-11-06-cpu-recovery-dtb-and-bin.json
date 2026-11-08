@@ -1,0 +1,121 @@
+{
+  "date": "2026-11-06",
+  "status": "Recovery compiled CPU plan matches vendor source; bounded raw fuse read identifies unit bin/version; no performance change",
+  "running_kernel": "6.18.59-fx0-dmp",
+  "running_package": "6.18.59-r49",
+  "recovery_reference": {
+    "partition": "mmcblk0p16, recovery label",
+    "partition_sha256": "84e500e839cab2f7016119aaa0932449b73dda1bfc982c23096658ef46818698",
+    "separate_DT_section_bytes": 174080,
+    "valid_FDTs": 1,
+    "FDT_sha256": "74bf40ac24c0978cecf9bb4f8b00202a364fdfb2d2c51abc0c1e2f0a2fd286bc",
+    "root_properties": {
+      "model": [
+        "Qualcomm MSM 8926 madai"
+      ],
+      "compatible": [
+        "qcom,msm8926-madai",
+        "qcom,msm8926",
+        "qcom,mtp"
+      ],
+      "qcom,msm-id": [
+        200,
+        0,
+        224,
+        0,
+        200,
+        65537,
+        224,
+        65537
+      ],
+      "qcom,board-id": [
+        150,
+        0
+      ]
+    },
+    "validation": [
+      "libfdt full-structure validation",
+      "Independent dtc decompile exit 0"
+    ],
+    "limit": "Captured current vendor recovery reference, not byte-verified against unavailable original stock backup; no whole-image originality claim"
+  },
+  "compiled_plan_comparison": {
+    "manifest": "manifests/msm8926-cpu-corner-plans.json",
+    "all_five_plans_match": true,
+    "CPU_clock_and_efuse_resources_match": true,
+    "resolved_supply_links": [
+      {
+        "consumer": "/soc/qcom,clock-a7@f9011050",
+        "property": "cpu-vdd-supply",
+        "provider": "/soc/regulator@f9018000"
+      },
+      {
+        "consumer": "/soc/regulator@f9018000",
+        "property": "vdd-apc-supply",
+        "provider": "/soc/qcom,spmi@fc4c0000/qcom,pm8226@1/spm-regulator@1700"
+      },
+      {
+        "consumer": "/soc/regulator@f9018000",
+        "property": "vdd-mx-supply",
+        "provider": "/soc/qcom,rpm-smd/rpm-regulator-ldoa3/regulator-3-ao"
+      }
+    ]
+  },
+  "fuse_read": {
+    "address": "0xfc4b80b0",
+    "bytes": 4,
+    "method": "read-only MMIO mmap; only four bytes accessed",
+    "stable_reread": true,
+    "read_only": true,
+    "raw_word": "Private phone/host artifact only",
+    "initial_method": "pread returned EFAULT for this MMIO address; read-only mmap then accessed only the validated four bytes; no protection settings changed"
+  },
+  "decoded": {
+    "valid": true,
+    "redundant_selector": 0,
+    "selected_copy": "primary",
+    "speed_bin": 0,
+    "pvs_version": 1,
+    "voltage_plan_property": "qcom,speed0-bin-v1",
+    "invalid_speed_fallback": false,
+    "preview_787_2_MHz": {
+      "requested_plan": "qcom,speed0-bin-v1",
+      "selected_plan": "qcom,speed0-bin-v1",
+      "conservative_plan_fallback": false,
+      "requested_frequency_Hz": 787200000,
+      "covering_max_frequency_Hz": 787200000,
+      "virtual_CPR_corner": 4,
+      "diagnostic_only": true
+    },
+    "preview_1190_4_MHz": {
+      "requested_plan": "qcom,speed0-bin-v1",
+      "selected_plan": "qcom,speed0-bin-v1",
+      "conservative_plan_fallback": false,
+      "requested_frequency_Hz": 1190400000,
+      "covering_max_frequency_Hz": 1190400000,
+      "virtual_CPR_corner": 7,
+      "diagnostic_only": true
+    }
+  },
+  "tests": {
+    "DTB_inspector": 4,
+    "bin_and_corner_selector": 8
+  },
+  "final_state": {
+    "boot_id": "27e64765-ae45-483e-b341-3634eef18357",
+    "taint": 0,
+    "CPU_policy": {
+      "scaling_governor": "schedutil",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200"
+    },
+    "SD_unmounted": true
+  },
+  "remaining": [
+    "Implement and qualify MSM8926 CPR/APC/MX supply control and OPP transitions",
+    "Keep r49 rollback; compile/binding checks and isolated boot trial before higher frequencies",
+    "Full high-frequency stress, thermal and peripheral qualification remains open"
+  ],
+  "audio": "Excluded",
+  "host_builtin_wifi": "No configuration or connection changes"
+}

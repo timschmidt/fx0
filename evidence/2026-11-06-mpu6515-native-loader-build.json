@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-06",
+  "status": "Staged native loader and transport; not wired to buffered output or installed",
+  "firmware": "invensense/mpu6515-dmp.bin, 2943 bytes, Linux CRC32 seed zero 0xa7e2110d; original private binary is not redistributed",
+  "loader": "Requires MPU6515, caller lock/runtime PM, masked IRQ and stopped DMP/FIFO; validates image before upload, verifies RAM and entry-point registers; always reloads, never enables execution or caches validity",
+  "build": {
+    "target": "ARM complete inv_mpu6050 driver object directory",
+    "W": 1,
+    "exit_code": 0,
+    "warnings": 0,
+    "log_sha256": "5e427414784f85704b4ca132dcff9364ddd776086a2d11ecfbb84b585325bf10"
+  },
+  "tests": {
+    "command": "python3 -m unittest discover -s tests -p 'test_mpu_dmp*.py' -q",
+    "passed": 18,
+    "native_c_test": "Compiles real transport source with a modeled regmap; exercises every one of 1472 operation failures, bank boundaries, reserved region protection, cursor loss, corrupt readback, busy and unsupported devices",
+    "limits": "Model tests do not validate physical no-increment bulk transactions, runtime PM, loader request_firmware failures or actual FIFO/IRQ behavior. No sanitizer result; installed host UBSan library unavailable."
+  },
+  "files": {
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c": "44d23ff44e0c020aa65b3ecffbd9feac8da7e87258f193cabf00f2f9d59e1345",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h": "7455ad3e779307337cc71ec9587dc68da1947b482155de02deebe9c18908f313",
+    "drivers/iio/imu/inv_mpu6050/Kconfig": "f8df4dbd5d3e3cf02d5886c24d2e07e2333847156473479679d83efc4c81c27a",
+    "drivers/iio/imu/inv_mpu6050/Makefile": "3f89dfed1f10d488a793f045992275093a701496e26f12192d62d21e980165f4"
+  },
+  "remaining": [
+    "Native loader fault tests including firmware errors",
+    "Native physical transfer/load test",
+    "Firmware execution configuration/state and safe mode switching",
+    "Native buffered quaternion/acceleration channels and FIFO IRQ parser",
+    "Suspend DMP event/wake retention and battery qualification"
+  ]
+}

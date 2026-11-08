@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-06",
+  "subject": "Clang/CFI validation of Fx0 audio changes",
+  "status": "PASS for three ARM driver objects; not a full linked Clang kernel or hardware result",
+  "base_commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+  "source_diff_sha256": "c8ca932566f9b6820b40e714e02a013715365e79f9647cec354b3f4523959126",
+  "source_config": "src/fx0-pmaports/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7",
+  "resolved_config_sha256": "aff4bf617f9ec1864e3ea24771a1ca2debf8c2331015c0a69a25e0e93aa25397",
+  "compiler": "Fedora clang 21.1.8",
+  "linker": "ld.lld-18 18.1.8",
+  "config_checks": {
+    "CONFIG_CFI": "y",
+    "CONFIG_CFI_ICALL_NORMALIZE_INTEGERS": "y"
+  },
+  "command": "make -C fx0/src/fx0-linux O=/tmp/fx0-llvm-check ARCH=arm LLVM=1 CC=/usr/bin/clang LD=/usr/bin/ld.lld-18 HOSTCC=/usr/bin/gcc HOSTLD=/usr/bin/ld olddefconfig drivers/slimbus/qcom-ngd-ctrl.o drivers/slimbus/stream.o sound/soc/codecs/wcd9306.o -j4",
+  "object_sha256": {
+    "drivers/slimbus/qcom-ngd-ctrl.o": "f45f2f2a299dc24eeb7859cead4be6ad9874836d6da240890a05dfda8b35b889",
+    "drivers/slimbus/stream.o": "e055637a3120200a87f6d113d1e021d296748a6538ae9283fc823f7b1ee46061",
+    "sound/soc/codecs/wcd9306.o": "96269b51f4f7316ff4fa62db837edb18c9ff6aa739f7372d1788d9eeb90e0e45"
+  },
+  "limitations": [
+    "Installed device configuration was prepared with Alpine clang 22.1.3; this object check uses Fedora clang 21.1.8 and LLD 18.1.8.",
+    "The separate full GCC device build automatically disables CFI; it is supplementary build coverage, not an equivalent replacement for the Clang/CFI configuration.",
+    "No candidate installed and no new hardware pass claimed."
+  ]
+}

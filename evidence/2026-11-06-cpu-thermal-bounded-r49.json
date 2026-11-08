@@ -1,0 +1,118 @@
+{
+  "date": "2026-11-06",
+  "status": "Bounded four-core load and recovery pass; broader CPU/thermal qualification remains open",
+  "kernel": "6.18.59-fx0-dmp",
+  "package": "6.18.59-r49",
+  "boot_id": "27e64765-ae45-483e-b341-3634eef18357",
+  "power_source": "USB connected",
+  "procedure": "5 s baseline, 30 s pinned SHA256 worker on each CPU, 15 s recovery; one-MiB known pattern checked each iteration; sample cpufreq/thermal/cpu accounting/cpuidle once per second",
+  "temperature_stop_mC": 65000,
+  "reported_passive_trip_mC": 75000,
+  "reported_critical_trip_mC": 110000,
+  "phases": [
+    {
+      "phase": "baseline",
+      "samples": 5,
+      "min_reported_temperature_mC": 39000,
+      "max_reported_temperature_mC": 41000,
+      "observed_frequency_kHz": [
+        600000,
+        787200
+      ],
+      "final_reported_temperatures_mC": {
+        "cpu1-thermal": 40000,
+        "cpu0-thermal": 39000
+      }
+    },
+    {
+      "phase": "load",
+      "samples": 30,
+      "min_reported_temperature_mC": 38000,
+      "max_reported_temperature_mC": 47000,
+      "observed_frequency_kHz": [
+        787200
+      ],
+      "final_reported_temperatures_mC": {
+        "cpu1-thermal": 44000,
+        "cpu0-thermal": 47000
+      }
+    },
+    {
+      "phase": "recovery",
+      "samples": 15,
+      "min_reported_temperature_mC": 40000,
+      "max_reported_temperature_mC": 47000,
+      "observed_frequency_kHz": [
+        300000,
+        787200
+      ],
+      "final_reported_temperatures_mC": {
+        "cpu1-thermal": 41000,
+        "cpu0-thermal": 40000
+      }
+    }
+  ],
+  "workers": [
+    {
+      "cpu": 3,
+      "hashes": 763,
+      "bytes_per_hash": 1048576,
+      "cpu_seconds": 29.560608585,
+      "affinity": [
+        3
+      ]
+    },
+    {
+      "cpu": 1,
+      "hashes": 762,
+      "bytes_per_hash": 1048576,
+      "cpu_seconds": 29.526634718,
+      "affinity": [
+        1
+      ]
+    },
+    {
+      "cpu": 0,
+      "hashes": 771,
+      "bytes_per_hash": 1048576,
+      "cpu_seconds": 29.884504564,
+      "affinity": [
+        0
+      ]
+    },
+    {
+      "cpu": 2,
+      "hashes": 767,
+      "bytes_per_hash": 1048576,
+      "cpu_seconds": 29.735283685,
+      "affinity": [
+        2
+      ]
+    }
+  ],
+  "verified_hashes": 3063,
+  "verified_bytes_hashed": 3211788288,
+  "policy": {
+    "scaling_governor": "schedutil",
+    "scaling_min_freq": "300000",
+    "scaling_max_freq": "787200"
+  },
+  "policy_unchanged": true,
+  "taint_after": 0,
+  "boot_unchanged": true,
+  "workers_terminal": true,
+  "result_sha256": "fb7729e1284edbe9eeac5d66112e2f50abbc4647cf7169d815fb067a2317474f",
+  "executed_script_sha256": "924f5ceef7cd6d0eb6c671d7a701052ee8fbe276bfdcd0efcf48ee210f5cfaac",
+  "source_note": "Current helper only removes an unused variable from the executed version; no behavior changed",
+  "source_limitation": "qcom-msm8226.dtsi explicitly restricts shared CPU OPPs to 300/384/600/787.2 MHz until speed-bin support exists; no voltage or frequency changes made",
+  "limits": [
+    "Short hash workload, not long CPU/RAM stress or exhaustive memory testing",
+    "Temperature sensor accuracy is not independently calibrated",
+    "No throttling test: observed peak 47 C stays below passive trip",
+    "No full speed-bin/voltage support or battery power qualification",
+    "No physical display/touch confirmation during this run"
+  ],
+  "audio": "No audio tests",
+  "microSD": "Left unmounted; no card operations during CPU test",
+  "host_builtin_wifi": "No configuration or connection changes"
+}

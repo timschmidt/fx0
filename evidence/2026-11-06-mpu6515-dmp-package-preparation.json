@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-06",
+  "status": "Full host Clang/CFI build and signed local development APK passed; not installed",
+  "pmaports_base": "0a5720063",
+  "worktree": "worktrees/pmaports-dmp",
+  "branch": "development/fx0-dmp-packaging",
+  "kernel_base": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+  "package": "linux-postmarketos-qcom-msm8226-6.18.59-r47",
+  "kernel_release": "6.18.59-fx0-dmp",
+  "checks": {
+    "ordered_patch_application": "All four patches apply to pinned source and reproduce all nine modified source files exactly",
+    "local_source_sha512": "All five local source entries verified",
+    "shell_syntax": "bash -n passed",
+    "resolved_config": {
+      "CONFIG_CFI": "y",
+      "CONFIG_CFI_ICALL_NORMALIZE_INTEGERS": "y",
+      "CONFIG_LOCALVERSION": "-fx0-dmp",
+      "CONFIG_LOCALVERSION_AUTO": "n"
+    },
+    "dmp_tests": "32 passed",
+    "full_build": "zImage, all configured DTBs and modules passed, then incremental release normalization passed; no compiler warnings",
+    "module_vermagic": "All 464 staged modules match 6.18.59-fx0-dmp",
+    "APK_signature": "apk verify using existing development public key: OK",
+    "APK_payload": "All 545 packaged files match staged SHA256 manifest"
+  },
+  "limitations": [
+    "Host Clang 21.1.8 and LLD 18.1.8 differ from Alpine toolchain",
+    "APK is a signed wrapper of the host-built payload; maintained source recipe is prepared separately",
+    "Install, normal boot regeneration and device qualification still required",
+    "Running phone remains on manually deployed GCC trial and legacy package metadata"
+  ],
+  "build_log": "local/dmp-package-build/build.log",
+  "build_command": "make -C worktrees/linux-dmp O=$PWD/local/dmp-package-build/llvm ARCH=arm LLVM=1 LOCALVERSION= CC=/usr/bin/clang LD=/usr/bin/ld.lld-18 HOSTCC=/usr/bin/gcc HOSTLD=/usr/bin/ld KBUILD_BUILD_VERSION=48-postmarketos-qcom-msm8226 -j8 zImage dtbs modules",
+  "audio": "No audio changes or tests; baseline drivers compile as part of full kernel",
+  "host_builtin_wifi": "untouched",
+  "packaging_tools": {
+    "image": "localhost/fx0-dmp-apk-tools:20261106",
+    "architecture": "armv7",
+    "signing": "Existing development key accessible read-only in a rootless container; key bytes not copied into image",
+    "network": "Disabled for APK packaging",
+    "SELinux": "Container label separation disabled for this rootless packaging container; host enforcement unchanged",
+    "helpers": [
+      "local/dmp-package-build/stage.py",
+      "local/dmp-package-build/package.py"
+    ],
+    "helper_status": "Stage and package helpers executed successfully",
+    "artifact_provenance": "Local binary wrapper for host-built payload; separate source recipe preserved, no Alpine source-build claim"
+  },
+  "artifact": {
+    "path": "artifacts/2026-11-06-dmp-kernel-r47/linux-postmarketos-qcom-msm8226-6.18.59-r47.apk",
+    "sha256": "0a589c80fb80d3bc664f0fce21adc4179ab1d11fce4ec270c9a33509babb8d24",
+    "bytes": 18665170,
+    "modules": 464
+  },
+  "release_fix": "Explicit empty LOCALVERSION suppresses SCM plus suffix when building from a Git worktree; source recipe build and package calls both pass it",
+  "abuild_warnings": [
+    "Existing kernel module layout uses /lib/modules; abuild suggests /usr/lib",
+    "No uncompressed ELF binaries detected because kernel and modules are compressed; armv7 architecture retained"
+  ]
+}

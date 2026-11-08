@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-06",
+  "status": "MicroSD suspend qualification failed before real sleep; no SD suspend pass claimed",
+  "kernel": "6.18.59-fx0-dmp",
+  "package": "6.18.59-r49",
+  "boot_id": "27e64765-ae45-483e-b341-3634eef18357",
+  "media": "Owner-inserted existing 8 GB SDHC, FAT32, mmcblk1p1; no format or repair",
+  "procedure": "Read-only FAT check; unique owned test directory; 64 MiB random write/fsync/cache-discard/read hash; bounded RTC attempt with USB wake disabled and wakeup_count handshake; cleanup restores power settings, removes owned test data and unmounts",
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "Suspend entry rejected; zero real sleep cycles",
+      "payload_bytes": 67108864,
+      "initial_SHA256_verified": true,
+      "sha256": "6f47f3e62a865189be9219dc8dce21419db0464ad67a8f615291778a3ee9c842",
+      "unmounted_after": true,
+      "trace_sha256": "c7b93927d17c2de7bd0cbdf3055c3d6a033f687bb3700201bacfec3b8a623141",
+      "kernel_log_sha256": "c061359c6747677adc860bc9b01fb1ff2e1b36b51a4d9d44f7824f28e6955ace"
+    },
+    {
+      "attempt": 2,
+      "status": "Suspend entry rejected; zero real sleep cycles",
+      "payload_bytes": 67108864,
+      "initial_SHA256_verified": true,
+      "sha256": "29459a92a5f973344b4d4255a427b905c8cb73a0963e129c997049ffce245d80",
+      "unmounted_after": true,
+      "trace_sha256": "5ebf060104878250bc885fa948ae0564557c1ef5d921d2724a9fe60ee51f44f8",
+      "kernel_log_sha256": "b9462519101b65c53e19f2419a14f647dc0fefb51819ab33e8afbc796c1177bb"
+    }
+  ],
+  "trace_attribution": {
+    "second_attempt": "GPIO37 IRQ63 mmc1 card-detect wakes immediately before freezer abort; no machine_suspend phase",
+    "activation_trace": "irq/63-f98a4900: wakeup_source_activate: mmc1 at 9046.477776; suspend_enter begins 9046.484915",
+    "wakeup_source_counters_before": {
+      "active_count": 3,
+      "event_count": 143267,
+      "wakeup_count": 1
+    },
+    "wakeup_source_counters_after": {
+      "active_count": 4,
+      "event_count": 143268,
+      "wakeup_count": 2
+    },
+    "kernel_message": "Freezing user space processes aborted after 0.002 seconds (105 tasks refusing to freeze, wq_busy=0)",
+    "interpretation": "Wake event abort is demonstrated. This is not proof of filesystem corruption, a freezer task bug, or the electrical root cause of card-detect activity."
+  },
+  "installed_host": {
+    "DT": "cd-gpios GPIO37 active-low, status okay",
+    "ios": "50 MHz, SD high-speed, 4-bit, 3.30 V"
+  },
+  "idle_direct_read_control": {
+    "read_bytes": 16777216,
+    "read_seconds": 0.8228972910001175,
+    "exit": 0,
+    "card_detect_IRQ_count_samples": [
+      723618,
+      723618,
+      723618,
+      723618
+    ],
+    "procedure": "3 s idle, 16 MiB direct block read, 3 s idle; card remained unmounted",
+    "result": "No new card-detect IRQs during this bounded observation; accumulated count alone does not establish an ongoing IRQ rate"
+  },
+  "cleanup": {
+    "final_readonly_fsck_exit": 0,
+    "existing_FAT_counts_unchanged": "4 files, 16386/1961732 clusters before and after",
+    "unmounted": true,
+    "RTC_alarm_clear": true,
+    "mem_sleep": "s2idle restored",
+    "USB_wakeup": "disabled restored to initial state",
+    "taint": 0
+  },
+  "next_steps": [
+    "Capture IRQ/pin level around separate read, write and sync operations to identify when card-detect transitions occur",
+    "Compare live GPIO/pin configuration with vendor setup and inspect debounce handling",
+    "If contact instability remains plausible, coordinate card reseat while unmounted before choosing a driver/DT change"
+  ],
+  "audio": "No audio tests",
+  "host_builtin_wifi": "No configuration or connection changes"
+}

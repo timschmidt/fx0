@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-06",
+  "scope": "First owner-assisted real DMP significant-motion wake pilot; not the required 20-cycle qualification",
+  "kernel_release": "6.18.59-fx0-dmp-candidate-00129-g4b800b920c7d-dirty",
+  "boot_id": "78f624e5-8b48-4821-8f64-44d6b6905f90",
+  "sleep_state": "s2idle",
+  "machine_sleep_seconds": 32.207046999999875,
+  "whole_suspend_call_seconds": 33.078353007,
+  "owner_instruction": "After armed marker, remain still five seconds, then move for fifteen seconds without screen/button input; USB connected",
+  "hardware_before": {
+    "0x23": 0,
+    "0x38": 2,
+    "0x6a": 128,
+    "0x72": 0,
+    "0x73": 0
+  },
+  "DMP_algorithm_status_at_resume": "0x04, event 1 (kernel dynamic-debug log before suspend exit)",
+  "IMU_IRQ": 82,
+  "IMU_GPIO": 69,
+  "IMU_IRQ_delta": 1,
+  "RTC_IRQ": 33,
+  "RTC_IRQ_delta": 0,
+  "RTC_fallback_seconds": 45,
+  "RTC_alarm_still_pending_on_resume": true,
+  "RTC_seconds_remaining": 12,
+  "event": {
+    "code": "0x5021e1300000000",
+    "timestamp_ns": 1793984809136208852
+  },
+  "event_identity": "activity/still CHANGE/FALLING, native SMD status only",
+  "automatically_disarmed": true,
+  "quaternion_samples_after": 75,
+  "post_state": {
+    "raw_reads": "succeeded",
+    "event_enable": 0,
+    "buffer_enable": 0,
+    "sensor_proxy": "active",
+    "taint": 0,
+    "wakeup_policy": "restored disabled",
+    "RTC_alarm": "cleared",
+    "boot_id_unchanged": true
+  },
+  "physical_wake_pilots_passed": 1,
+  "consecutive_qualification_cycles": 0,
+  "why_not_complete": [
+    "At least 20 consecutive DMP wakes and total 50-cycle gate remain",
+    "Battery standby, false-wake rate and latency remain",
+    "Kernel packaging and other hardware gates unfinished"
+  ],
+  "hashes": {
+    "trace": "466a5f537f1cac61d7964e1eed3dfb0ed96b38d0b0efc225c863aed14ebbbcbc",
+    "kernel_log": "7eda849dd7bebd70c9927b20a63706eac27a8b985f2863bbeee4feb2ab8b1b3c",
+    "manifest": "4e8de75763537ef19aeaab7d37ee2fa52a4163cc796633339c8f92d162989f06",
+    "wake_patch": "92f9acedd8ab3397fbb80bd47ee440914ff48382a355455f7dd1037ff06ccf85"
+  },
+  "timestamp_limit": "IIO event timestamp is resume attribution time; trace supplies actual sleep interval. It is not a hardware event-generation timestamp.",
+  "audio": "No audio tests or audio source changes",
+  "host_builtin_wifi": "untouched",
+  "owner_display_and_touch": "Both work normally (owner reply after positive wake)",
+  "masked_control": "Passed subsequently; see 2026-11-06-mpu6515-dmp-wake-masked-control.json",
+  "display_warning": "MDP5 still logs error 0x04000000; owner reports display/touch normal, long-run behavior remains open",
+  "display_warning_decode": {
+    "status": "0x04000000 = BIT(26), MDP5 INTF1_UNDER_RUN",
+    "source": "drivers/gpu/drm/msm/registers/display/mdp5.xml:116",
+    "meaning": "Display interface FIFO underrun; cause and persistence remain unqualified. Owner reports normal display and touch recovery."
+  }
+}

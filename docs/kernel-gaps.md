@@ -192,3 +192,14 @@ two-contact input are tested; all display controls return to auto and taint is 0
 This permits broader hardware/userspace work while the first-read startup defect
 remains unresolved. It is not evidence that the bounded C6 candidates or the
 userspace workaround are ready as an upstream kernel fix.
+
+## CPU performance follow-up (2026-11-06)
+
+The r49 bounded four-core test passes, but the shared CPU OPP table stops at
+787.2 MHz. A read-only audit confirms SoC ID 200 (MSM8926 revision 1.1),
+an accessible QFPROM provider, and missing MSM8226 CPU bin/supply integration.
+A supplied-word decoder follows the MSM8226-matching Qualcomm reference and
+passes five boundary/selection tests; no fuse word or unverified offset was
+read. Voltage/corner plans and APC/CPR control must be validated before any
+higher OPP is enabled. See [implementation gates](msm8226-cpu-performance.md)
+and [audit evidence](../evidence/2026-11-06-cpu-speedbin-audit.json).

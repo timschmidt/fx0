@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-07",
+  "status": "unpackaged metadata mapper; no live consumer",
+  "source": "worktrees/linux-cpu-cpr/drivers/pmdomain/qcom/cpr-msm8926-corner.h",
+  "sha256": "7a2931f8507d16b5d1871e9093dc67d96677169441bfc692efc9a5cd2a4125e9",
+  "patch": "patches/linux-integration/fx0-msm8926-corner-map.diff",
+  "behavior": [
+    "select first covering vendor clock fmax entry",
+    "preserve speed0/v0 fallback for absent bin/version tables",
+    "keep clock bin independent from CPR bin",
+    "return virtual/fuse corners, adjusted quotient, oscillator and quantized rail limits",
+    "reject excess frequency and inconsistent metadata; leave output unchanged on failure"
+  ],
+  "verification": {
+    "manifest": "all five tables and source SHA256 checked against cached pinned vendor msm8926.dtsi",
+    "C_mapper": "all eight clock bins, four versions and every plan frequency boundary plus low rates",
+    "invalid_metadata": "13 cases, output unchanged",
+    "ARM_W1_external_object": "passed; local/cpu-rail-r51-build/corner-arm-check.log",
+    "calibration_corner_planner_regressions": "13 tests passed",
+    "checkpatch": "0 errors; generic new-file MAINTAINERS warning; existing cpr*.h pattern covers file",
+    "whitespace": "passed"
+  },
+  "limits": [
+    "caller must validate actual supported clock rates; mapper accepts rates between fmax entries as vendor voter does",
+    "metadata only; no voltage writes or regulator activation",
+    "no package, device tree opt-in or native qualification",
+    "CPR attachment, OPP integration, MX lifetime and suspend handoff still incomplete"
+  ],
+  "constraints": {
+    "audio_testing": false,
+    "host_builtin_wifi_changed": false
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-06",
+  "status": "Legacy secure fuse-read API and compiled calibration manifest prepared; full diagnostic kernel build in progress, not installed",
+  "patch": "patches/linux-integration/fx0-scm-legacy-fuse-read.diff",
+  "patch_sha256": "a5d6a54661c3755d38112fe97aa84bbc10742b591fd782257e3cf11680474ac4",
+  "source_basis": {
+    "vendor_commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+    "CPR_path": "arch/arm/mach-msm/cpr-regulator.c",
+    "service_constants_path": "arch/arm/mach-msm/include/mach/scm.h",
+    "service": 8,
+    "command": 7,
+    "transport": "Legacy request address/type in two 32-bit words, response low/high/status in three words"
+  },
+  "implemented": [
+    "qcom_scm_legacy_fuse_read accepts only aligned 32-bit physical addresses and nonnull output",
+    "SCM absence defers; nonlegacy conventions reject before the read request",
+    "Firmware status and transport failures leave output unchanged",
+    "32-bit response halves assembled into 64-bit row only after success"
+  ],
+  "contracts": 13,
+  "ARM_SCM_object_compile": "passed",
+  "checkpatch": "0 errors, 0 warnings",
+  "five_patch_CPU_series_reproduces_files": 8,
+  "compiled_calibration_manifest": "manifests/msm8926-cpr-parameters.json",
+  "conditional_minimum_rule": "Secure row54 bits42:47 expected7; raise floor to 1140000 uV when value differs, per manufacturer logic. No secure value read yet.",
+  "source_recipe": {
+    "worktree": "worktrees/pmaports-cpu-cpr",
+    "revision": 50,
+    "local_SHA512_checks": 11,
+    "kernel_patches": 10,
+    "exact_changed_files": 18,
+    "Alpine_source_build_run": false
+  },
+  "rollback": {
+    "phone_snapshot_complete": true,
+    "host_copy_SHA256_verified": true,
+    "boot_SHA256": "e41931a266fa8d521db8e86fc991355465b055ff4159303f5700b76347143b86",
+    "state_archive_SHA256": "11381ec3858c7cae28aed9c53619832f95aa34606229065b36ed748cb20481d5"
+  },
+  "remaining": [
+    "Complete and inspect full kernel build; no signed/installable package produced yet",
+    "Constrain raw provider reads to validated CPU/CPR windows before boot/pilot; secure rule must use SCM",
+    "Package, boot and verify native raw/secure reads against independent references",
+    "Implement full MSM8926 calibration/lifecycle/OPP/PM handling before higher frequencies"
+  ],
+  "audio": "Excluded",
+  "host_builtin_wifi": "Unchanged"
+}

@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-06",
+  "scope": "Display/clock snapshot and filtered function trace around one RTC suspend on r47; no display-driver changes",
+  "kernel_release": "6.18.59-fx0-dmp",
+  "boot_id": "679c94a9-9de1-4857-9092-b881d79f8ef7",
+  "active_display": {
+    "mode": "720x1280 at 60Hz",
+    "pixel_clock_hz": 70169532,
+    "MDP_clock_hz": 200000000,
+    "AXI_clock_hz": 100000000,
+    "DRM_active": true,
+    "power_controls": "auto"
+  },
+  "interconnect": "No provider nodes in summary; MDP5 logs missing interconnect support; DT lacks display bandwidth paths",
+  "trace": {
+    "buffer_overruns": 0,
+    "dropped_events": 0,
+    "underrun_handler_calls": 1,
+    "event_times_boot_seconds": {
+      "mdp5_encoder_enable": 536.536623,
+      "mdp5_ctl_set_encoder_state": 536.53665,
+      "mdp5_irq_error_handler": 536.53674
+    },
+    "first_MDP_IRQ_after_resume": 536.536719,
+    "underrun_after_encoder_enable_us": 117,
+    "underrun_after_encoder_state_us": 90,
+    "observation": "Underrun and first traced vblank callback occur in the first MDP5 IRQ after resume",
+    "inference": "Startup sequencing/prefill is a candidate; trace does not establish cause or eliminate bandwidth"
+  },
+  "next": "Compare vendor flush and timing-engine ordering before testing a targeted change",
+  "limits": [
+    "One instrumented resume; instrumentation can affect timing",
+    "Missing interconnect support remains an independent platform issue",
+    "No fix or display acceptance pass claimed"
+  ],
+  "audio": "No audio tests",
+  "host_builtin_wifi": "Untouched",
+  "hashes": {
+    "drm-state.txt": "7c522938b9a8384b730e47119de89583feeb81695d2cd845afc45276e2a18840",
+    "snapshot.json": "5bbd653354b12d6d1c790fe0af98a8f5fca273e25a70a3298bdacb0d6b18d34e",
+    "mdp5-resume.trace": "2e0967608f3bab83dfb70c0b2596776b021fe59f0fe546e32feed0ec02e8a849",
+    "trace-stats.json": "47e9386d48824e30c95e9cd46a77df184a58182e65014f25e2999b2f5a5567a2",
+    "trace-functions.txt": "0cd7ba1ba3c84acd51d031ad7ec205509f4b7c29702fda7281872ed7e3d5ceb0",
+    "clocks.txt": "478106b1f9ceecbe9e1ad6237e315a2f3d2d608ba59ef1449444c40c3b5663dd",
+    "interconnect.txt": "ede7494a6fa3d5911bf666437c237b517623a54c5048737463a35dd4d88aa333",
+    "tracers.txt": "006e8c69fef5e0856141b0dc9b810ab57a19e661dc32cd6f625093fcac887aa3",
+    "rtc-trace-01/wakeup-sources-after.txt": "24b79197c3957741200b3972d79a76d49d832e38cd90a4eecf49d0c95ac72dde",
+    "rtc-trace-01/interrupts-before.txt": "db3f28c33070d9b840c0142e3059551541180f1fee3188ae743481e0652ec960",
+    "rtc-trace-01/power-irq.trace": "44e0cc860d0f214bb56cc9ab9d20f10ec586ceb99e0f9f6488d528b79c800fe4",
+    "rtc-trace-01/quaternion-after-resume.csv": "360ec3b4ce2d4ec175d9f7408b30c2795dad81857b5f1a525518686a15a4010a",
+    "rtc-trace-01/interrupts-after.txt": "c68bb389c1c463b1be1d59b6c5adc240c0be5b186ef32c924690b5b15c9a54c5",
+    "rtc-trace-01/quaternion-after-resume.log": "799b44a29376126c4b550603305b4aaed08330903e9c7480a316887f99eaae22",
+    "rtc-trace-01/kernel.log": "384fca1fd158854976f8768c0c47d3ab2ceee8f32c4460ad64c46ff0ae55bbcb",
+    "rtc-trace-01/manifest.json": "30daa1e676ab12a0aa5236adafb24f6a9bfb27a6d204aa88964b79b654c30254",
+    "rtc-trace-01/wakeup-sources-before.txt": "a816e03bd986676335f75fe3526f84d8d17445e615af375a70c052e4dd38842e"
+  }
+}

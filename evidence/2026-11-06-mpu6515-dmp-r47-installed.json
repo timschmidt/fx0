@@ -1,0 +1,99 @@
+{
+  "date": "2026-11-06",
+  "scope": "Signed r47 kernel installation via normal APK hooks, verified boot readback and first physical Clang/CFI boot with bounded DMP checks",
+  "status": "passed installation, boot, raw/quaternion, awake arming and one RTC-retention control",
+  "package": "linux-postmarketos-qcom-msm8226-6.18.59-r47",
+  "package_sha256": "0a589c80fb80d3bc664f0fce21adc4179ab1d11fce4ec270c9a33509babb8d24",
+  "running": {
+    "kernel_release": "6.18.59-fx0-dmp",
+    "boot_id": "679c94a9-9de1-4857-9092-b881d79f8ef7",
+    "CONFIG_CFI": true,
+    "module_vermagic": "6.18.59-fx0-dmp SMP preempt mod_unload modversions ARMv7 p2v8",
+    "raw_before": {
+      "in_accel_x_raw": "-1353",
+      "in_accel_y_raw": "-12",
+      "in_accel_z_raw": "-14568",
+      "in_anglvel_x_raw": "31"
+    },
+    "quaternion_scale": "0.000000000931322574615478515625",
+    "raw_after": {
+      "in_accel_x_raw": "-1307",
+      "in_accel_y_raw": "-25",
+      "in_accel_z_raw": "-14642",
+      "in_anglvel_x_raw": "31"
+    },
+    "taint": 0,
+    "sensor_proxy": "active",
+    "SMD_enabled": "0",
+    "buffer_enabled": "0",
+    "IMU_wakeup": "disabled",
+    "RTC_alarm": ""
+  },
+  "installation_readback": {
+    "boot_id": "78f624e5-8b48-4821-8f64-44d6b6905f90",
+    "package_sha256": "0a589c80fb80d3bc664f0fce21adc4179ab1d11fce4ec270c9a33509babb8d24",
+    "kernel_release": "6.18.59-fx0-dmp",
+    "boot_image_sha256": "1ae46a8e2f6b06e5964f5df6358b2aa93041e883424d058b6c9607f85a083610",
+    "boot_image_bytes": 17549312,
+    "boot_partition_sha256": "73a6527c42d6c8324426fb65eea0805954aaca4ff20c748018d56fd1d4c995fc",
+    "lk2nd_prefix_unchanged": true,
+    "tail_unchanged": true,
+    "payload_files_checked": 545,
+    "regenerated_module_indexes": []
+  },
+  "rollback": {
+    "boot_before_sha256": "d0f57db69dde2821010415e6c2a121166d5cfaeef0cc77d1667d4729a50e5365",
+    "boot_before_bytes": 33554432,
+    "files": {
+      "installed-state-before.tar.gz": "7f02cc82ee6b9d418c2b6040618421b389bfe8e7f68eb3de8db9175151d7bf0e",
+      "state-before.json": "7b1aaa5ff48a0d6b669eeafe6e0bd9c50c51dad4c4d03aa1e9b8edc4a2164d32",
+      "boot-before-r47.img": "d0f57db69dde2821010415e6c2a121166d5cfaeef0cc77d1667d4729a50e5365",
+      "linux-postmarketos-qcom-msm8226-6.18.59-r44.apk": "b735fc54fcf18ea8e1acd46aca9039757e5cf4720fd60de0f67c9d35c0710832"
+    },
+    "old_APK_signature_verified": true,
+    "running_kernel": "6.18.59-fx0-dmp-candidate-00129-g4b800b920c7d-dirty",
+    "installation_started": false
+  },
+  "RTC_retention": {
+    "machine_sleep_seconds": 12.172684000000004,
+    "DMP_counter_delta": 3639,
+    "IMU_IRQ_delta": 0,
+    "RTC_IRQ_delta": 1,
+    "retained_status": "0x0, event 0",
+    "MDP5_underrun_count": 1
+  },
+  "stream_samples": {
+    "quaternion.csv": 75,
+    "smd-awake/quaternion-after-smd.csv": 75,
+    "rtc-retention/quaternion-after-resume.csv": 75
+  },
+  "physical_motion_wake_qualification_cycles_on_this_build": 0,
+  "display_touch_owner_report": "Pending for this build",
+  "limits": [
+    "New Clang/CFI build has no owner-assisted motion-wake pass yet",
+    "20 consecutive DMP wakes, overall 50-cycle and battery/false-wake qualification remain",
+    "MDP5 display underrun persists",
+    "Other hardware results from earlier images are not automatically requalified",
+    "Host Clang 21.1.8 / LLD 18.1.8 binary-wrapper APK, not Alpine source-build reproduction"
+  ],
+  "audio": "No audio tests or audio source modifications",
+  "host_builtin_wifi": "Untouched",
+  "evidence_hashes": {
+    "quaternion.csv": "2682593d550aff368499c4c3096be2758fffbbb469469c7207afa6e08aaf8bb7",
+    "quaternion.log": "799b44a29376126c4b550603305b4aaed08330903e9c7480a316887f99eaae22",
+    "postboot-result.json": "710f4412bbfc92417722e071dc9948858056e721117e056542d57265b9743111",
+    "kernel.log": "c13b0d02bcac1cb6b3f1882a80a1d03b59c034d9fd6aedb6e2e48e4b70820ab3",
+    "smd-awake/quaternion-after-smd.log": "799b44a29376126c4b550603305b4aaed08330903e9c7480a316887f99eaae22",
+    "smd-awake/quaternion-after-smd.csv": "b3efffa31a6fc904d816b1982d67a827bb51c7efef54569d470583f4bb2fd10c",
+    "smd-awake/manifest.json": "21ece2b53682cbf688d85981fe7c2c58276b2cce16c994c7e57468f9d6cf14af",
+    "rtc-retention/wakeup-sources-after.txt": "a816e03bd986676335f75fe3526f84d8d17445e615af375a70c052e4dd38842e",
+    "rtc-retention/interrupts-before.txt": "43ad12ff92900851fbd21496286dac72400381d54b256464c236ea4c6c187c43",
+    "rtc-retention/power-irq.trace": "5cb37b220b9bb067ac569036de7e55cdb25efe6c0303329d3cf793db909f52d1",
+    "rtc-retention/quaternion-after-resume.csv": "2ac82ba95166868f82504725764e4a4964c1c5a81fca98922eeb313e36af43c5",
+    "rtc-retention/interrupts-after.txt": "ab4645943c4c0260fa5986ec8643ea955a161f7ac00cb9ab32f67f0cc40b57e3",
+    "rtc-retention/quaternion-after-resume.log": "799b44a29376126c4b550603305b4aaed08330903e9c7480a316887f99eaae22",
+    "rtc-retention/kernel.log": "3db360674356995c7398299a7a74cec8dbc8d4bf014c16c33d81923696f73479",
+    "rtc-retention/manifest.json": "d94f325330452c5820a7112ac473d38b0a80651c510ab6f7d43e1ee41b3dcb21",
+    "rtc-retention/wakeup-sources-before.txt": "1703af6210027503337a7eb30ae0a3ec685810e35d37fad9e011868a43ef34f6"
+  }
+}

@@ -1,0 +1,132 @@
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index c8e6ebe47f05..9ea9b39c7189 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -67,6 +67,7 @@
+ 
+ /* User defined commands */
+ #define SLIM_USR_MC_GENERIC_ACK	0x25
++#define SLIM_USR_ACK_SUCCESS		BIT(5)
+ #define SLIM_USR_MC_MASTER_CAPABILITY	0x0
+ #define SLIM_USR_MC_REPORT_SATELLITE	0x1
+ #define SLIM_USR_MC_ADDR_QUERY		0xD
+@@ -783,6 +784,22 @@ static irqreturn_t qcom_slim_ngd_interrupt(int irq, void *d)
+ 	return IRQ_HANDLED;
+ }
+ 
++/* ADDR_QUERY returns an enumeration address rather than a GENERIC_ACK. */
++static int qcom_slim_ngd_check_ack(struct slim_controller *ctrl,
++				 struct slim_msg_txn *txn)
++{
++	if (txn->mc == SLIM_USR_MC_ADDR_QUERY)
++		return 0;
++
++	if (!(txn->msg->rbuf[0] & SLIM_USR_ACK_SUCCESS)) {
++		dev_err(ctrl->dev, "Manager rejected MC:0x%x, status:0x%x\n",
++			txn->mc, txn->msg->rbuf[0]);
++		return -EIO;
++	}
++
++	return 0;
++}
++
+ static int qcom_slim_ngd_xfer_msg(struct slim_controller *sctrl,
+ 				  struct slim_msg_txn *txn)
+ {
+@@ -792,7 +809,7 @@ static int qcom_slim_ngd_xfer_msg(struct slim_controller *sctrl,
+ 	int ret, i;
+ 	unsigned long time_left;
+ 	u8 wbuf[SLIM_MSGQ_BUF_LEN];
+-	u8 rbuf[SLIM_MSGQ_BUF_LEN];
++	u8 rbuf[SLIM_MSGQ_BUF_LEN] = {0};
+ 	u32 *pbuf;
+ 	u8 *puc;
+ 	u8 la = txn->la;
+@@ -908,10 +925,11 @@ static int qcom_slim_ngd_xfer_msg(struct slim_controller *sctrl,
+ 			mutex_unlock(&ctrl->tx_lock);
+ 			return -ETIMEDOUT;
+ 		}
++		ret = qcom_slim_ngd_check_ack(sctrl, txn);
+ 	}
+ 
+ 	mutex_unlock(&ctrl->tx_lock);
+-	return 0;
++	return ret;
+ }
+ 
+ static int qcom_slim_ngd_xfer_msg_sync(struct slim_controller *ctrl,
+@@ -926,6 +944,8 @@ static int qcom_slim_ngd_xfer_msg_sync(struct slim_controller *ctrl,
+ 		goto pm_put;
+ 
+ 	txn->comp = &done;
++	/* Do not reuse a previous success if the reply has no status byte. */
++	txn->msg->rbuf[0] = 0;
+ 
+ 	ret = qcom_slim_ngd_xfer_msg(ctrl, txn);
+ 	if (ret)
+@@ -938,9 +958,12 @@ static int qcom_slim_ngd_xfer_msg_sync(struct slim_controller *ctrl,
+ 		ret = -ETIMEDOUT;
+ 		goto pm_put;
+ 	}
+-	return 0;
++
++	/* The response handler has already dropped the runtime-PM vote. */
++	return qcom_slim_ngd_check_ack(ctrl, txn);
+ 
+ pm_put:
++	slim_free_txn_tid(ctrl, txn);
+ 	pm_runtime_put(ctrl->dev);
+ 
+ 	return ret;
+@@ -1059,8 +1082,7 @@ static int qcom_slim_ngd_enable_stream(struct slim_stream_runtime *rt)
+ 	txn.rl = txn.msg->num_bytes + 4;
+ 	ret = qcom_slim_ngd_xfer_msg_sync(ctrl, &txn);
+ 	if (ret) {
+-		slim_free_txn_tid(ctrl, &txn);
+-		dev_err(&sdev->dev, "TX timed out:MC:0x%x,mt:0x%x", txn.mc,
++		dev_err(&sdev->dev, "Transfer failed:MC:0x%x,mt:0x%x", txn.mc,
+ 				txn.mt);
+ 		return ret;
+ 	}
+@@ -1079,8 +1101,7 @@ static int qcom_slim_ngd_enable_stream(struct slim_stream_runtime *rt)
+ 	wbuf[0] = txn.tid;
+ 	ret = qcom_slim_ngd_xfer_msg_sync(ctrl, &txn);
+ 	if (ret) {
+-		slim_free_txn_tid(ctrl, &txn);
+-		dev_err(&sdev->dev, "TX timed out:MC:0x%x,mt:0x%x", txn.mc,
++		dev_err(&sdev->dev, "Transfer failed:MC:0x%x,mt:0x%x", txn.mc,
+ 				txn.mt);
+ 	}
+ 
+@@ -1131,8 +1152,7 @@ static int qcom_slim_ngd_disable_stream(struct slim_stream_runtime *rt)
+ 	txn.rl = txn.msg->num_bytes + 4;
+ 	ret = qcom_slim_ngd_xfer_msg_sync(ctrl, &txn);
+ 	if (ret) {
+-		slim_free_txn_tid(ctrl, &txn);
+-		dev_err(&sdev->dev, "TX timed out:MC:0x%x,mt:0x%x", txn.mc,
++		dev_err(&sdev->dev, "Transfer failed:MC:0x%x,mt:0x%x", txn.mc,
+ 			txn.mt);
+ 		return ret;
+ 	}
+@@ -1151,8 +1171,7 @@ static int qcom_slim_ngd_disable_stream(struct slim_stream_runtime *rt)
+ 	wbuf[0] = txn.tid;
+ 	ret = qcom_slim_ngd_xfer_msg_sync(ctrl, &txn);
+ 	if (ret) {
+-		slim_free_txn_tid(ctrl, &txn);
+-		dev_err(&sdev->dev, "TX timed out:MC:0x%x,mt:0x%x", txn.mc,
++		dev_err(&sdev->dev, "Transfer failed:MC:0x%x,mt:0x%x", txn.mc,
+ 			txn.mt);
+ 	}
+ 
+@@ -1189,10 +1208,8 @@ static int qcom_slim_ngd_get_laddr(struct slim_controller *ctrl,
+ 	memcpy(&wbuf[1], ea, sizeof(*ea));
+ 
+ 	ret = qcom_slim_ngd_xfer_msg_sync(ctrl, &txn);
+-	if (ret) {
+-		slim_free_txn_tid(ctrl, &txn);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	if (!memcmp(rbuf, failed_ea, 6))
+ 		return -ENXIO;

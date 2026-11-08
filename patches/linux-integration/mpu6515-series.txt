@@ -1,0 +1,18 @@
+# MPU6515 development series, base integration/fx0-cpuidle 4b800b920c7d
+# All listed patches describe the current development source and are required for the current native quaternion interface.
+fx0-mpu6515-dmp.diff
+iio-preserve-tiny-log2-scale.diff
+fx0-mpu6515-dmp-smd-awake.diff
+fx0-mpu6515-dmp-smd-wake.diff
+
+# The raw-recovery delta is historical, targeting the initial candidate;
+# its changes are now included in fx0-mpu6515-dmp.diff. Do not apply it again.
+# The initial archived candidate had a 24-byte scan-buffer overflow and is
+# retired. Current source allocates 32 bytes and uses the checked IIO push.
+# Native output and bounded DMP wake are physically demonstrated; accuracy,
+# wider PM/battery and complete fault-recovery qualification remain open. See diagnostics/imu-dmp-native/README.md.
+
+# SMD suspend wake has passed one positive pilot and a masked-motion control.
+# Signed r47 packaging, normal update hooks and first Clang/CFI boot pass.
+# r49 passes 20 consecutive physical DMP wakes plus matched masked control.
+# Overall 50-cycle, battery/standby, false-wake and accuracy gates remain open.

@@ -1,0 +1,88 @@
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+index 082faf1..e66ad01 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+@@ -674,6 +674,10 @@ static int inv_mpu6050_read_channel_data(struct iio_dev *indio_dev,
+ 	if (result)
+ 		return result;
+ 
++	result = inv_mpu6515_dmp_recover(st);
++	if (result)
++		goto error_power_off;
++
+ 	switch (chan->type) {
+ 	case IIO_ANGL_VEL:
+ 		if (!st->chip_config.gyro_en) {
+@@ -833,7 +837,9 @@ inv_mpu6050_read_raw(struct iio_dev *indio_dev,
+ 		if (ret)
+ 			return ret;
+ 		mutex_lock(&st->lock);
+-		ret = inv_mpu6050_sensor_show(st, reg, chan->channel2, val);
++		ret = inv_mpu6515_dmp_recover(st);
++		if (!ret)
++			ret = inv_mpu6050_sensor_show(st, reg, chan->channel2, val);
+ 		mutex_unlock(&st->lock);
+ 		pm_runtime_put_autosuspend(pdev);
+ 		return ret;
+@@ -927,6 +933,10 @@ static int inv_mpu6050_write_raw(struct iio_dev *indio_dev,
+ 	if (result)
+ 		goto error_write_raw_unlock;
+ 
++	result = inv_mpu6515_dmp_recover(st);
++	if (result)
++		goto error_write_raw_power_off;
++
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_SCALE:
+ 		switch (chan->type) {
+@@ -963,6 +973,7 @@ static int inv_mpu6050_write_raw(struct iio_dev *indio_dev,
+ 		break;
+ 	}
+ 
++error_write_raw_power_off:
+ 	pm_runtime_put_autosuspend(pdev);
+ error_write_raw_unlock:
+ 	mutex_unlock(&st->lock);
+@@ -1266,6 +1277,8 @@ static int inv_mpu6050_write_event_value(struct iio_dev *indio_dev,
+ 		return -EINVAL;
+ 
+ 	guard(mutex)(&st->lock);
++	if (st->dmp_active || st->dmp_saved_valid)
++		return -EBUSY;
+ 
+ 	result = pm_runtime_resume_and_get(pdev);
+ 	if (result)
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
+index 5aa4fb0..29fcdf4 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
+@@ -528,6 +528,7 @@ int inv_mpu6515_dmp_mem_write(struct inv_mpu6050_state *st,
+ #define INV_MPU6515_SCAN_TIMESTAMP 8
+ int inv_mpu6515_dmp_start(struct inv_mpu6050_state *st);
+ int inv_mpu6515_dmp_stop(struct inv_mpu6050_state *st);
++int inv_mpu6515_dmp_recover(struct inv_mpu6050_state *st);
+ int inv_mpu6515_dmp_read_fifo(struct iio_dev *indio_dev, s64 timestamp);
+ int inv_mpu6515_dmp_load(struct inv_mpu6050_state *st);
+ int inv_mpu6515_dmp_configure(struct inv_mpu6050_state *st);
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
+index 4e00dc2..a41970f 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
+@@ -314,6 +314,17 @@ int inv_mpu6515_dmp_stop(struct inv_mpu6050_state *st)
+ 	return first;
+ }
+ 
++/* Caller holds lock and runtime PM before resuming ordinary register access. */
++int inv_mpu6515_dmp_recover(struct inv_mpu6050_state *st)
++{
++	lockdep_assert_held(&st->lock);
++	if (st->dmp_active)
++		return -EBUSY;
++	if (st->dmp_saved_valid)
++		return inv_mpu6515_dmp_stop(st);
++	return 0;
++}
++
+ int inv_mpu6515_dmp_start(struct inv_mpu6050_state *st)
+ {
+ 	static const struct reg_sequence setup[] = {

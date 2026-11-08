@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-06",
+  "subject": "Build, sign, install and reboot with the Fx0 hotspot-default package",
+  "status": "PASS: installed signed device-lg-madai-1-r2 and post-upgrade reboot/default hotspot startup",
+  "package": {
+    "name": "device-lg-madai",
+    "version": "1-r2",
+    "architecture": "armv7",
+    "apk_bytes": 3846,
+    "apk_sha256": "8e595399e79b39cb9560d7d9fe900be8ab87e5fd728959e0da09b749d0703c5b",
+    "signing_public_key_sha256": "5dd106576fa0a735431d4c1f975820639d66b1c870c8ece4d3d5efa02c90f065",
+    "artifacts": "artifacts/device-lg-madai-1-r2"
+  },
+  "source": {
+    "repo": "https://github.com/timschmidt/fx0-pmaports",
+    "branch": "development/fx0-hotspot",
+    "base": "b9491f835c903bff38cd2c29f24d1f88d45e8735",
+    "diff": "patches/pmaports/device-lg-madai-wcn36xx-pmf.diff"
+  },
+  "build": {
+    "environment": "Alpine 3.23 ARMv7 container through host QEMU binfmt; no build tools installed on phone",
+    "image_digest": "sha256:a69938a920926e3ddb659f68a1432d1bcda694b411e4352b1e7a16aff20f5f05",
+    "abuild": "3.16.0-r0",
+    "helper": "devicepkg-dev 0.22.2-r0 built first from the checked-out pmaports source",
+    "command": "abuild -F -d -P /out",
+    "dependency_note": "Build dependency resolution bypassed in the container; devicepkg-dev was built/installed first. Runtime dependencies were checked by a phone-side offline apk simulation, which planned only r1 -> r2.",
+    "checks": "All source checksums and abuild package postchecks pass. Helper source emitted existing missing-maintainer/testdata warnings and non-fatal rmdir messages; the device package completed successfully."
+  },
+  "install": {
+    "signature": "apk verify: OK with the dedicated development public key installed in /etc/apk/keys",
+    "transaction": "apk --no-network add /tmp/device-lg-madai-1-r2.apk; only device-lg-madai upgraded",
+    "packaged_file_count": 8,
+    "all_preexisting_file_bytes_equal_before_upgrade": true,
+    "all_file_hashes_match_apk_after_reboot": true,
+    "hooks": "Normal mkinitfs/boot-deploy and postmarketos-base triggers completed. No trigger/script suppression.",
+    "boot_backup": "32 MiB saved privately; independent device read SHA-256 matched 2910f3148957b8aa96a8d24b0da2161d690b1e0a46ad727653026f3138bdfd99",
+    "readback": {
+      "image_bytes": 17483776,
+      "image_sha256": "ef1b4346c23eb984d832cdec47155c52dbf0b24637a8fcd2fad998d774731667",
+      "partition_image_sha256": "ef1b4346c23eb984d832cdec47155c52dbf0b24637a8fcd2fad998d774731667",
+      "prefix_sha256": "073271d9d5361af7bc6fbda9e137862831bf36f88dd5489b7bb3d29fa28499ba",
+      "tail_sha256": "2f113cf423efb9bfef928649e3a63635671c26bcd376ed108d1d109a81a75cb5",
+      "tail_bytes": 15546368
+    }
+  },
+  "post_reboot": {
+    "kernel": "6.18.59 (installed r44 unchanged)",
+    "taint": 0,
+    "package": "device-lg-madai-1-r2 installed and owns 50-wcn36xx-pmf.conf",
+    "NetworkManager": "Driver-specific PMF default loaded from package after reboot",
+    "default_hotspot": "nmcli device wifi hotspot succeeds; generated profile retains pmf=0 (default)",
+    "cleanup": "Smoke profile deactivated/deleted; wlan0 disconnected; phone IPv4 forwarding restored to 0"
+  },
+  "constraints": [
+    "Audio testing remains excluded. No audio behavior was tested or changed.",
+    "No host built-in Wi-Fi configuration changes.",
+    "This is one post-upgrade warm boot and hotspot-startup check, not full update/recovery, cold-boot or suspend qualification."
+  ]
+}

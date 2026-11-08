@@ -1,0 +1,64 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# Coordinate wcn36xx AP teardown with a caller-supplied blocking sleep command.
+set -u
+sync_count=0
+if [ "${1:-}" = --sync-wakeup-count ]; then
+    sync_count=1
+    shift
+fi
+[ "${1:-}" != -- ] || shift
+if [ "$#" -eq 0 ]; then
+    echo 'Usage: fx0-hotspot-suspend [--sync-wakeup-count] COMMAND [ARG ...]' >&2
+    exit 2
+fi
+if ! command -v nmcli >/dev/null 2>&1; then
+    exec "$@"
+fi
+umask 077
+state=$(mktemp -d "${TMPDIR:-/tmp}/fx0-hotspot-suspend.XXXXXX") || exit 1
+: > "$state/restore"
+finish() {
+    status=$?
+    trap - EXIT HUP INT TERM
+    while IFS= read -r uuid; do
+        if ! nmcli -w 30 connection up uuid "$uuid" >/dev/null; then
+            echo "Could not restore hotspot profile $uuid" >&2
+            [ "$status" -ne 0 ] || status=1
+        fi
+    done < "$state/restore"
+    rm -rf -- "$state"
+    exit "$status"
+}
+trap finish EXIT
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
+if ! nmcli -t -f UUID,TYPE,DEVICE connection show --active > "$state/active"; then
+    echo 'Could not read active connections; refusing an uncoordinated suspend' >&2
+    exit 1
+fi
+while IFS=: read -r uuid type device; do
+    [ "$type" = '802-11-wireless' ] || continue
+    case "$uuid" in ''|*[!0123456789abcdefABCDEF-]*) continue ;; esac
+    [ "${#uuid}" -eq 36 ] || continue
+    case "$device" in ''|*[!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-]*) continue ;; esac
+    driver=$(readlink -f "/sys/class/net/$device/device/driver" 2>/dev/null) || continue
+    [ "${driver##*/}" = wcn36xx ] || continue
+    mode=$(nmcli -g 802-11-wireless.mode connection show uuid "$uuid") || exit 1
+    [ "$mode" = ap ] || continue
+    # Register restoration before the request, including interruption races.
+    printf '%s\n' "$uuid" >> "$state/restore"
+    if ! nmcli -w 15 connection down uuid "$uuid" >/dev/null; then
+        echo "Could not stop hotspot profile $uuid; sleep not attempted" >&2
+        exit 1
+    fi
+done < "$state/active"
+if [ "$sync_count" -eq 1 ]; then
+    count=$(cat /sys/power/wakeup_count) || exit 1
+    if ! printf '%s\n' "$count" | doas -n tee /sys/power/wakeup_count >/dev/null; then
+        echo 'Wakeup state changed during hotspot preparation; sleep not attempted' >&2
+        exit 1
+    fi
+fi
+"$@"

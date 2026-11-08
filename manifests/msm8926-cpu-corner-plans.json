@@ -1,0 +1,226 @@
+{
+  "schema": 1,
+  "status": "Vendor-source diagnostic reference, not a live OPP configuration",
+  "repository": "https://github.com/peremen/android-kernel-lg-madai",
+  "commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+  "board_chain": [
+    "msm8226-madai/msm8226-madai.dts",
+    "msm8226-lge-common/msm8926-lge.dtsi",
+    "msm8926-v1.dtsi",
+    "msm8926.dtsi",
+    "msm8226.dtsi"
+  ],
+  "source_path": "arch/arm/boot/dts/msm8926.dtsi",
+  "source_sha256": "3e5d4842cbd16f024cc3131255b6a48afafb296e100949252bf0bfe159a5af08",
+  "plan_units": [
+    "frequency_Hz",
+    "virtual_CPR_corner"
+  ],
+  "cpu_clock_resource": {
+    "clock_base": "0xf9011050",
+    "efuse_base": "0xfc4b80b0",
+    "efuse_resource_bytes": 8,
+    "word_used_bytes": 4
+  },
+  "fallback_plan": "qcom,speed0-bin-v0",
+  "plans": {
+    "qcom,speed0-bin-v0": [
+      [
+        0,
+        0
+      ],
+      [
+        384000000,
+        2
+      ],
+      [
+        787200000,
+        4
+      ],
+      [
+        1190400000,
+        7
+      ]
+    ],
+    "qcom,speed0-bin-v1": [
+      [
+        0,
+        0
+      ],
+      [
+        384000000,
+        2
+      ],
+      [
+        787200000,
+        4
+      ],
+      [
+        998400000,
+        5
+      ],
+      [
+        1094400000,
+        6
+      ],
+      [
+        1190400000,
+        7
+      ]
+    ],
+    "qcom,speed2-bin-v1": [
+      [
+        0,
+        0
+      ],
+      [
+        384000000,
+        2
+      ],
+      [
+        787200000,
+        4
+      ],
+      [
+        998400000,
+        5
+      ],
+      [
+        1094400000,
+        6
+      ],
+      [
+        1190400000,
+        7
+      ],
+      [
+        1305600000,
+        8
+      ],
+      [
+        1344000000,
+        9
+      ],
+      [
+        1401600000,
+        10
+      ]
+    ],
+    "qcom,speed1-bin-v1": [
+      [
+        0,
+        0
+      ],
+      [
+        384000000,
+        2
+      ],
+      [
+        787200000,
+        4
+      ],
+      [
+        998400000,
+        5
+      ],
+      [
+        1094400000,
+        6
+      ],
+      [
+        1190400000,
+        7
+      ],
+      [
+        1305600000,
+        8
+      ],
+      [
+        1344000000,
+        9
+      ],
+      [
+        1401600000,
+        10
+      ],
+      [
+        1497600000,
+        11
+      ],
+      [
+        1593600000,
+        12
+      ]
+    ],
+    "qcom,speed5-bin-v1": [
+      [
+        0,
+        0
+      ],
+      [
+        384000000,
+        2
+      ],
+      [
+        787200000,
+        4
+      ],
+      [
+        998400000,
+        5
+      ],
+      [
+        1094400000,
+        6
+      ],
+      [
+        1190400000,
+        7
+      ],
+      [
+        1305600000,
+        8
+      ],
+      [
+        1344000000,
+        9
+      ],
+      [
+        1401600000,
+        10
+      ],
+      [
+        1497600000,
+        11
+      ],
+      [
+        1593600000,
+        12
+      ],
+      [
+        1689600000,
+        13
+      ],
+      [
+        1785600000,
+        14
+      ]
+    ]
+  },
+  "supply_chain": [
+    "apc_vreg_corner / qcom,cpr-regulator at 0xf9018000",
+    "vdd-apc: PM8226 S2 via qcom,spm-regulator",
+    "vdd-mx: PM8226 L3 always-on rail"
+  ],
+  "limits": [
+    "Current recovery compiled CPU plans match; original whole stock-image identity is not established",
+    "Raw CPU clock fuse read is validated at its compiled resource; no corrected-provider offset translation was assumed",
+    "Virtual corner numbers are not microvolts",
+    "No regulator/OPP or frequency changes authorized by this manifest alone"
+  ],
+  "compiled_reference_verification": {
+    "evidence": "evidence/2026-11-06-cpu-recovery-dtb-and-bin.json",
+    "all_five_plans_match": true,
+    "FDT_sha256": "74bf40ac24c0978cecf9bb4f8b00202a364fdfb2d2c51abc0c1e2f0a2fd286bc"
+  }
+}

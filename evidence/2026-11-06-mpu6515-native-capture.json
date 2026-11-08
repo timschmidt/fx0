@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-06",
+  "status": "Five-second native DMP quaternion stream passed after fixing scan-buffer overflow; scale ABI still unqualified",
+  "kernel_release": "6.18.59-fx0-dmp-candidate-00129-g4b800b920c7d-dirty",
+  "installation": "Normal offset-aware boot update under prior development authorization; 512 KiB lk2nd prefix and tail preserved by exact full-partition readback",
+  "boot_partition_after_install_sha256": "3ba954adf6ba8e6822c6aa84ae1e7ebde2336ea7fc24d90306156371cb31d34a",
+  "rollback_sha256": "2910f3148957b8aa96a8d24b0da2161d690b1e0a46ad727653026f3138bdfd99",
+  "initial_trial": {
+    "boot_id": "686b01ee-6d75-4ed7-8259-d89bdad980d2",
+    "result": "Kernel panic during native FIFO handling; no capture survived",
+    "panic": "stack-protector: Kernel stack is corrupted in inv_mpu6515_dmp_read_fifo",
+    "cause": "Driver allocated 24 bytes; IIO aligns quaternion repeat=4 to 16 bytes and rounds the timestamped scan to 32; timestamp write at byte 24 overran stack allocation",
+    "pstore_sha256": "7f2c32f2539670b73b99a82dfbf00c112d56a34b21155bd089b62b8e4fa2c48a"
+  },
+  "fix": "32-byte zero-initialized aligned scan storage; size-checked IIO push; reader uses timestamp offset 24 and 32-byte stride; host sink now models actual IIO padding",
+  "hotfix_modules": {
+    "inv-mpu6050.ko.zst": {
+      "sha256": "b8bd76c55c0e24e61ccc0e52a9cb5306c28d36879c793659aeeb235abb50b637",
+      "srcversion": ""
+    },
+    "inv-mpu6050-i2c.ko.zst": {
+      "sha256": "b20af542deb5cff0d8d7594ad50302f28ae66c312ddc47ed8fe164bb0de5e0d4",
+      "srcversion": ""
+    }
+  },
+  "successful_trial": {
+    "boot_id": "5d9a54a1-4876-4dcd-8f75-5d81494ac0de",
+    "seconds_requested": 5,
+    "samples": 125,
+    "span_ns": 4954333800,
+    "minimum_interval_ns": 39746250,
+    "maximum_interval_ns": 40183177,
+    "timestamps_strictly_increasing": true,
+    "csv_sha256": "34d399494705fdebdf58ef5f93138078741e59012078e79cf2a23dc384fd1ebb",
+    "capture_exit": 0,
+    "boot_id_unchanged_after_capture": true,
+    "buffer_enable_after": 0,
+    "raw_accel_read_after": "succeeded",
+    "sensor_proxy_after": "active",
+    "taint_after": 0,
+    "DMP_FIFO_reset_or_panic_log_after": "none observed in current-boot filtered kernel log"
+  },
+  "scale_issue": "Physical sysfs value was 0.000000000 because generic IIO formatter truncates Q30 scale below 1e-9. Reader explicitly used known Q30 contract; generic client ABI pass not claimed. Formatter fix building separately.",
+  "limits": [
+    "No motion/orientation accuracy qualification",
+    "No native reset/reload soak or physical raw/DMP cycle qualification",
+    "No DMP event/suspend wake qualification",
+    "Host IRQ-based timestamps, not firmware packet timestamps"
+  ],
+  "audio": "No audio tests or audio changes",
+  "host_builtin_wifi": "untouched"
+}

@@ -1,0 +1,206 @@
+{
+  "date": "2026-11-06",
+  "status": "Installed Sxmo r6; two bounded installed-path AP suspend/recovery cycles pass",
+  "package": "sxmo-utils-1.18.1-r6",
+  "installed_packages": [
+    "sxmo-utils-1.18.1-r6",
+    "sxmo-utils-audio-bluetooth-1.18.1-r6",
+    "sxmo-utils-audio-bluetooth-pipewire-1.18.1-r6",
+    "sxmo-utils-audio-pipewire-1.18.1-r6",
+    "sxmo-utils-common-1.18.1-r6",
+    "sxmo-utils-sway-1.18.1-r6",
+    "sxmo-utils-udev-1.18.1-r6",
+    "sxmo-utils-wayland-1.18.1-r6"
+  ],
+  "artifact_manifest": "artifacts/2026-11-06-sxmo-hotspot-r6/manifest.json",
+  "rollback": "Phone /var/lib/fx0-diagnostics/sxmo-hotspot-install-01 and verified host local/sxmo-hotspot-install-01/rollback",
+  "payload_verification": {
+    "files_checked": 331,
+    "mismatches": [],
+    "world_bytes_preserved": true,
+    "four_rebuilt_C_helpers": "ARM ABI header and required shared libraries match original",
+    "other_changes": "Two intended scripts, new coordinator and equivalent symlink spelling; no other installed file changes"
+  },
+  "boot": {
+    "whole_partition_sha256": "e41931a266fa8d521db8e86fc991355465b055ff4159303f5700b76347143b86",
+    "whole_partition_unchanged_from_r49": true,
+    "Android_image_sha256": "5c8ec72f09fbd802a878080a13c84d22900ac168159b6aedd0505b7bcfd3043c",
+    "image_readback_matches": true,
+    "lk2nd_prefix_sha256": "073271d9d5361af7bc6fbda9e137862831bf36f88dd5489b7bb3d29fa28499ba",
+    "lk2nd_prefix_matches_original_backup": true,
+    "note": "udev package triggered mkinitfs/boot-deploy; full resulting boot partition stays byte-for-byte unchanged. Unused tail is nonzero and unchanged."
+  },
+  "live_session": [
+    {
+      "pid": "1563",
+      "environment": {
+        "SXMO_DEVICE_NAME": "lg,madai",
+        "SXMO_NO_MODEM": "1"
+      }
+    }
+  ],
+  "predicate": {
+    "active_renamed_AP_exit": 0,
+    "idle_WLAN_exit": 1,
+    "only_hotspot_predicate_exercised": "Other suspend blockers, including audio blockers, were not invoked"
+  },
+  "test_path": "Installed /usr/bin/sxmo_suspend.sh -> installed fx0-hotspot-suspend -> existing doas RTC/wakeup_count permissions",
+  "bounded_fixture": "mnc hook reports 30 seconds, yielding original absolute wake deadline after 20 seconds; wakelock hook records the two expected cron-hold requests without creating a persistent hold. Actual default postwake hook runs with the live session SXMO_NO_MODEM=1.",
+  "cycles": [
+    {
+      "cycle": 1,
+      "real_sleep_seconds": 17.626640000000407,
+      "AP_state_after": "100 (connected)",
+      "profile_autoconnect_after": "no",
+      "taint": 0,
+      "trace_sha256": "a6cceabf98a7ff26b67c6b3284b3bb267d4cf0b2cd8003a2e43a9e8e99919bde",
+      "kernel_log_sha256": "b176baeb0758fda98ac39f7fcc41957adf1b1aa8d85e49d046275fa371d889fa"
+    },
+    {
+      "cycle": 2,
+      "real_sleep_seconds": 19.180516000000353,
+      "AP_state_after": "100 (connected)",
+      "profile_autoconnect_after": "no",
+      "taint": 0,
+      "trace_sha256": "0008d130ea6329ec915d0e3f99df861387202a2f4fcb12337d0842277bba06cf",
+      "kernel_log_sha256": "630e397843d197468b4f395e7b41834a5f5f444b109d362b831cfe30654e9491"
+    }
+  ],
+  "phases": [
+    {
+      "name": "baseline-two-clients",
+      "transfers": [
+        {
+          "device": "wlp0s20f0u4",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 8.372937158004788
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 5.729030034999596
+        }
+      ],
+      "readiness": [
+        {
+          "device": "wlp0s20f0u4",
+          "data_ready_seconds": 0.0416195220022928,
+          "attempts": 1
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "data_ready_seconds": 0.04458821199659724,
+          "attempts": 1
+        }
+      ],
+      "host_network_unchanged": true
+    },
+    {
+      "name": "after-resume-01",
+      "transfers": [
+        {
+          "device": "wlp0s20f0u4",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 10.099071794000338
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 6.9247091979996185
+        }
+      ],
+      "readiness": [
+        {
+          "device": "wlp0s20f0u4",
+          "data_ready_seconds": 0.043395686996518634,
+          "attempts": 1
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "data_ready_seconds": 1.6067399040039163,
+          "attempts": 2
+        }
+      ],
+      "host_network_unchanged": true
+    },
+    {
+      "name": "after-resume-02",
+      "transfers": [
+        {
+          "device": "wlp0s20f0u4",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 9.311462582001695
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 6.500094263006758
+        }
+      ],
+      "readiness": [
+        {
+          "device": "wlp0s20f0u4",
+          "data_ready_seconds": 0.052810560999205336,
+          "attempts": 1
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "data_ready_seconds": 3.3344613680019393,
+          "attempts": 3
+        }
+      ],
+      "host_network_unchanged": true
+    }
+  ],
+  "verified_bytes": 100663296,
+  "two_client_station_count_each_phase": 2,
+  "cleanup": {
+    "ip_forward": "0",
+    "wlan_state": "30 (disconnected)",
+    "AP_profile_present": false,
+    "http_active": "inactive",
+    "firewall_rule_present": false,
+    "taint": 0,
+    "boot_id": "27e64765-ae45-483e-b341-3634eef18357"
+  },
+  "final_state": {
+    "AP_guard_idle_exit": 1,
+    "AP_guard_active_exit": 0,
+    "expected_cron_wakelock_requests": 2,
+    "boot_id": "27e64765-ae45-483e-b341-3634eef18357",
+    "taint": 0,
+    "RTC_alarm": "",
+    "IMU_wakeup": "disabled",
+    "IMU_buffer": "0",
+    "IMU_event": "0",
+    "sensor_proxy": "active",
+    "wlan_state": "30 (disconnected)",
+    "forwarding": "0"
+  },
+  "host_default_route_DNS_and_builtin_connection_unchanged": true,
+  "audio": "No audio tests; audio metapackages only advance revision to satisfy the package version closure; audio file payload unchanged",
+  "limits": [
+    "Two bounded explicit Sxmo suspend cycles, not a full UI/autosuspend-loop qualification",
+    "AP deliberately disconnects during suspend; continuous Wi-Fi service is not provided",
+    "No Internet/DNS backhaul, IPv6, power draw, overnight or long-duration AP qualification",
+    "Overall Fx0 hardware acceptance and 50-cycle/peripheral gates remain open"
+  ]
+}

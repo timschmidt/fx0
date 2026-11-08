@@ -475,7 +475,7 @@ A fifth cycle holds the display off for five seconds with all four devices in
 automatic PM. MDSS,IOMMU,DSI host and PHY all report suspended. L8 remains at
 usecount1 while both DSI vddio consumers drop to0; L4 drops to0 and touch retains
 its L28 vote. Restored half brightness explicitly; owner confirms visible RGB.
-Controlled post-cycle gestures record31,488bytes/1,968events,27starts/releases,
+Controlled post-cycle gestures record31,488 bytes/1,968events,27starts/releases,
 max2contacts,X24–719/Y3–1277,no SYN_DROPPED or active contacts left. One transient
 RMI IRQ-read -6 occurred during enable; subsequent reporting works. Owner reports
 near-room battery temperature. The earlier three-cycle black-screen reply
@@ -639,7 +639,7 @@ fourth. These private candidates are not promoted or installed.
 
 A board/release-guarded diagnostic probes ARM do_bad and encodes fault arguments
 as named functions in the existing retained trace, without display accesses or
-storage writes. Both exact-ABI W=1 module builds pass. On full44, its known-RAM
+storage writes. Both exact-ABI W=1 module builds pass. On full 44, its known-RAM
 read succeeds, an invalid address is safely rejected, and all four synthetic
 frame values plus end markers decode exactly. Probe registration/unload pass.
 This validates the encoder, not a real exception. Four later pmdebug1 starts
@@ -2219,3 +2219,1203 @@ takes over. The owner spotted the decisive "possible timer handling issue on
 cpu=3" message on the console. With the fix, all four cores spend about 90% of
 idle time power-collapsed, suspend still works, and the UI is normal (kernel
 r44, [evidence](../evidence/2026-11-02-cpuidle-spc.json)).
+
+## November 6
+
+A host-validated SLIMbus NGD candidate now returns `-EIO` when the DSP manager
+rejects a command instead of treating every generic acknowledgement as success.
+It covers port connection/disconnection and channel activation/removal/reconfiguration,
+leaves address replies alone, clears stale status before each synchronous command,
+and preserves response-handler runtime-PM ownership. The ARM driver object compiles,
+checkpatch has no findings, and an extracted-C helper harness passes 1,792 cases.
+See [evidence](../evidence/2026-11-06-ngd-ack-status.json) and the
+[reviewable diff](../patches/linux-integration/fx0-ngd-ack-status.diff).
+The local Linux branch is `development/fx0-ngd-ack-status`, based on the r44
+cpuidle integration branch. It has not been installed.
+
+This closes an error-reporting gap, not the intermittent speaker problem: the
+r45 measurements already found accepted ACKs for both audible and silent plays.
+Next audio work remains the AFE-to-SLIMbus attachment sequence. Physical tests
+currently cannot run: USB metadata shows `18d1:d001`, but fastboot lists no
+accessible device and the USB HTTP service refuses connections. The built-in
+host Wi-Fi interface `wlo1` was identified and left untouched; both USB Wi-Fi
+adapters are present. Restore phone communication before RAM-boot qualification
+or hotspot client tests. No phone writes or network configuration changes were made.
+
+### Stream error propagation and phone access correction
+
+The stream core and WCD9306 trigger also discarded errors, so manager rejection
+could still look like successful playback to ALSA. The candidate now rolls back
+partially connected ports, frees failed preparation state, propagates controller
+disable and port-disconnection errors, and returns preparation/activation errors
+from the codec trigger. Start failure attempts teardown; stop attempts every
+disconnect and preserves the first failure. Both affected ARM objects compile,
+checkpatch remains clean, and all 25 host tests pass, including fault injection
+against the actual C function bodies. See [evidence](../evidence/2026-11-06-slimbus-stream-errors.json),
+[patch](../patches/linux-integration/fx0-slimbus-stream-errors.diff), and
+[tests](../tests/test_slimbus_error_paths.py). These are uninstalled candidates,
+and do not yet resolve the accepted-but-silent playback problem.
+
+Correction: `18d1:d001` is labelled fastboot by the host USB ID database, but
+full interface descriptors show the running Linux CDC NCM gadget, not fastboot.
+SSH is reachable on the direct USB link; the available host keys are rejected
+for root and tim. The owner says the prior setup was on another machine and
+authorizes wiping/reinstallation if needed. A dedicated local development key
+and a public-key setup script were prepared under ignored `local/ssh-access/`;
+the private key is never served. The script is served only on USB address
+172.16.42.2, port 8765, pending execution in the phone terminal. No phone writes
+or built-in Wi-Fi configuration changes have been made.
+
+### Candidate cleanup ownership and full device build
+
+Review found that returning a negative manager ACK would make the existing
+callers release an already completed transaction ID again. Synchronous NGD
+pre-response error cleanup now lives in the helper; response-side release
+remains owned by the receive callback. An extracted-C regression covers every
+ACK value plus missing status, power-up failure, send failure, timeout and
+address replies with mocked TID/PM counters. All 26 existing host tests pass.
+The ARM controller object rebuild passes. Concurrent receive/timeout races
+are not covered by this harness.
+
+A full kernel/DTB/module build is running at `/tmp/fx0-r44-candidate` using
+the pmaports device configuration, GCC 15.2.1 and local version
+`-fx0-ngd-candidate`; the log is `/tmp/fx0-candidate-build.log`. It is not
+yet a completed or installed build. The Fx0 DTB has compiled.
+
+A portable PCM16 tone analyzer and three synthetic tests were added to
+recreate the unavailable private audio detector on this machine. See the
+[audio notes](audio-bringup.md#repeated-playback-measurement-on-the-new-host-2026-11-06).
+The public-key setup server is still running on the USB network, with no
+request received at the last poll. Phone login/key setup is still needed
+before live hardware experiments.
+
+### USB Wi-Fi test peers
+
+Read-only `iw` inspection confirms that the RTL8188CUS USB adapter
+(`wlp0s20f0u4`, phy0) supports managed/AP modes on 2.4 GHz, and the second
+Realtek adapter (`wlp0s20f0u2i2`, phy2) supports managed/AP modes on both
+2.4 and 5 GHz. Neither advertises concurrent hardware interface combinations,
+so use the separate adapters for simultaneous AP and client roles. This is
+capability evidence only, not an association or phone Wi-Fi pass. No network
+configuration changed; built-in `wlo1` remains untouched. See
+[peer inventory](../evidence/2026-11-06-usb-wifi-peers.json).
+
+### Clang/CFI object coverage
+
+The full GCC build resolves the device configuration without CFI because GCC
+does not implement the configured Clang protection. Treat that build as
+supplementary coverage, not an equivalent replacement for the configured
+Clang/CFI kernel. A separate Clang 21.1.8/LLD 18.1.8 build of all three changed
+ARM driver objects succeeds with `CONFIG_CFI=y` and integer normalization
+retained. The input pmaports configuration records Alpine Clang 22.1.3, so this
+is not an exact distro toolchain reproduction. See [object hashes and command](../evidence/2026-11-06-audio-clang-cfi-build.json).
+
+The USB network interface is in the existing FedoraWorkstation firewall zone,
+which permits TCP ports 1025–65535, including the public-key setup server on
+8765. This read-only check required no firewall changes. The full GCC kernel
+build is still active at the time of this entry; SSH authorization is still
+pending the phone terminal step.
+
+### Full GCC candidate completed; access gate
+
+The full GCC kernel, Fx0 DTB and modules build completed successfully.
+Module installation/signing/compression and depmod also succeeded. All 464
+staged modules report the same candidate release. The 15,095,533-byte archive
+under ignored `artifacts/2026-11-06-ngd-gcc/` contains the raw kernel, Fx0 DTB,
+matching modules, resolved config and exact source diff; archive readback
+verifies the kernel/DTB/config/source hashes and module count. Build logs have
+no compiler warnings or errors. It is not a complete boot image/rootfs and
+has not been installed. GCC lacks the configured CFI protection; retain the
+separate Clang/CFI object check and that limitation. See
+[build manifest](../evidence/2026-11-06-ngd-full-build.json).
+
+The two stream/codec fault regressions also reject the unmodified r44 baseline,
+confirming they detect the original ignored-error paths.
+
+Access remains the immediate hardware gate across repeated development turns:
+the direct USB SSH server is reachable but rejects the prepared key for tim,
+and the public-key setup server has received no phone request. The existing
+server remains available at `http://172.16.42.2:8765/setup.sh`, bound only to
+USB. Run `curl -fsS http://172.16.42.2:8765/setup.sh | sh` (or wget equivalent)
+in the phone terminal and report its printed login name. If the UI cannot
+provide a terminal, physical bootloader entry is needed for a recovery path.
+Owner authorization permits reinstall if necessary, but no wipe, phone writes,
+network-profile changes or built-in Wi-Fi changes were performed. Further
+implementation and acceptance need live hardware access; do not infer any
+new functional pass from the host builds.
+
+### Fastboot access recovery
+
+The owner made lk2nd fastboot available. `getvar product` confirmed
+`lk2nd-msm8226`; `fastboot boot` accepted a 5,607,424-byte RAM-only diagnostic
+image using the new GCC candidate and Alpine's static ARMv7 BusyBox. USB ACM
+provided a root shell. The root filesystem was identified live as ext4
+`pmOS_root` on eMMC partition 35 and first mounted read-only with journal
+replay disabled. The installed OS is postmarketOS v26.06 and its normal
+account is `user` (UID/GID 10000), not tim.
+
+After inspection, the root filesystem was mounted writable. The previous
+user authorized-key file was backed up in place, the dedicated host public
+key was appended, and a root authorized-key file was created under the
+existing SSH policy. Its SHA-256 matched the host public-key file. The
+filesystem was synced/unmounted before reboot. Root key-based SSH now works
+on the installed kernel `6.18.59`, taint 0. There are no failed systemd units;
+Sway, PipeWire and WirePlumber are running and the sound card exposes two
+playback/capture front ends. This is an access and boot check, not an audio
+functional pass. The temporary public-key HTTP server was stopped.
+
+No partition was flashed, wiped or resized, no OS reinstall was needed, and
+the host's built-in Wi-Fi remained untouched. See
+[recovery evidence](../evidence/2026-11-06-fastboot-access-recovery.json).
+
+### Goal resumed; audio excluded; hotspot startup fixed
+
+The owner resumed development and directed that audio testing be skipped
+until notified. This restriction remains in force; this work changed/tested
+only Wi-Fi and temporary test networking.
+
+On the installed r44 kernel, the phone's default-PMF hotspot still failed
+with key-setting validation and AP-initialization errors. A wcn36xx-specific
+NetworkManager connection default (`wifi-sec.pmf=1`) fixes activation while
+the profile itself remains `pmf=0` (default). The config was deployed to its
+intended package path and reloaded without restarting NetworkManager. The
+local pmaports branch `development/fx0-hotspot` contains the device-package
+r2 candidate and SHA-512 entry. Native APK build/install is still pending.
+
+The first USB adapter was an independent WPA2 client on 2.4 GHz channel 6.
+It received DHCP and passed 10/10 baseline pings, a 16 MiB direct transfer,
+and a 16 MiB Wi-Fi-to-USB forwarded transfer. Five reconnect cycles using
+the default-PMF profile each passed 3/3 pings and a SHA-256-verified 16 MiB
+forwarded transfer. Because both test interfaces are on this host, a narrow
+phone-side DNAT fixture forced the request through Wi-Fi and then USB; the
+server observed the phone's USB source address after NetworkManager NAT.
+This is not an Internet-backhaul test. External DNS queries timed out with
+no usable upstream resolver; suspend, power and long soak remain open.
+
+Temporary phone/client profiles, HTTP servers and firewall/DNAT test rules
+were removed. Phone forwarding was restored to its original zero value,
+and both host USB adapters returned to idle. The phone's WLAN returned to
+disconnected. Host default route and resolver-file contents matched their
+pre-test snapshots after each reconnect and after cleanup. The built-in
+host Wi-Fi was not changed. See [evidence](../evidence/2026-11-06-hotspot-default-and-client.json).
+
+### Hotspot fix packaged and installed
+
+The host's registered QEMU binfmt and rootless Podman provided an Alpine
+ARMv7 build environment. `devicepkg-dev-0.22.2-r0` was built first from the
+checked-out pmaports source, then the unchanged candidate recipe produced
+`device-lg-madai-1-r2.apk` with abuild 3.16.0. Both builds completed; the helper
+emitted existing metadata/rmdir warnings. Dependency resolution was skipped
+in the container after installing the helper; the phone's offline apk
+simulation independently confirmed a one-package r1-to-r2 upgrade.
+
+The dedicated signing public key was installed, `apk verify` passed, and
+normal apk installation completed. Before installation all eight package
+files already matched their phone counterparts, so no existing device-file
+content changed. A full 32 MiB boot-partition backup matched an independent
+device hash. mkinitfs and boot-deploy triggers ran normally; readback matched
+the new boot image exactly, with the 512 KiB lk2nd prefix and unused partition
+tail unchanged.
+
+The phone rebooted into the same r44 kernel with taint 0. The r2 package owns
+the hotspot default, NetworkManager loads it, and the ordinary `nmcli device
+wifi hotspot` command now starts an AP while its generated profile remains
+at PMF default (0). The smoke-test profile was removed and forwarding restored
+to zero afterward. All package files still match the built APK. No audio
+behavior was tested or changed; host built-in Wi-Fi was untouched. See
+[package evidence](../evidence/2026-11-06-hotspot-package-installed.json).
+
+### MPU6515 DMP firmware and RAM transport
+
+The manufacturer AOSP MPU6515 HAL supplies a 2,943-byte image matching the
+manufacturer kernel driver's `0xa7e2110d` Linux CRC32. The new extractor pins
+source/agreement/image hashes, preserves the agreement and writes only a new
+private local directory. Firmware bytes are not added to the public repository.
+
+The first physical memory trial failed image and restoration verification
+because sequential debugfs register reads did not preserve memory-pointer
+auto-increment. Its initial RAM snapshot existed only in the failed process,
+so exact restoration to that first pre-test volatile RAM state is unproven.
+The DMP never ran, no reserved or OTP addresses were written, and raw sensor
+access and normal service/power state remained available. A four-byte indexed
+control isolated the read-transaction issue and verified scratch restoration.
+
+The corrected, tested diagnostic explicitly addresses every byte and saves a
+private pre-write snapshot. It uploaded/read-verified all 2,943 reference-image
+bytes across twelve RAM banks, then restored/read-verified the retry snapshot,
+in 66.73 seconds. Service/power state and register selection were restored;
+sensor proxy active/unmasked, power policy auto and taint 0 were checked.
+Seven targeted tests pass, including nonincrementing transaction behavior.
+No DMP execution, algorithm, userspace ABI or interrupt-wake pass is claimed.
+The next step is a maintained IIO loader/lifecycle and decoded DMP data/events,
+then the required real system-suspend interrupt wake. Audio remains excluded;
+no audio work or host built-in Wi-Fi changes were performed. See
+[evidence](../evidence/2026-11-06-mpu6515-dmp-memory.json) and
+[reproducer](../diagnostics/imu-dmp-memory/README.md).
+
+
+## Bounded DMP execution (2026-11-06)
+
+The corrected `check_execution.py` diagnostic ran the pinned image for two
+seconds with interrupts masked. It decoded 44 accelerometer packets and 44
+six-axis quaternion packets (1,056 bytes), with a maximum observed FIFO count
+of 192 bytes and no partial packet remaining. The run counter advanced to 421;
+it stayed at zero before enabling and at 422 after disabling. Cleanup verified
+all 3,040 writable RAM bytes and functional registers, restored power/service
+state, and canonicalized the memory cursor. This is an execution/output pass,
+not an accuracy, native IIO, stability or suspend-wake pass.
+
+An earlier execution produced packets but failed its final cursor readback.
+Independent controls established that reading MEM_START_ADDR advances it;
+the corrected diagnostic verifies functional controls and sets the cursor
+without reading it. The earlier trial remains an overall failure.
+
+A later reboot cleared the private captures and recovery snapshots in `/tmp`
+before archival. The execution result survives in diagnostic stdout only.
+The prior journal ends without a shutdown explanation and pstore is empty;
+the owner subsequently confirmed a manual reboot after an apparent black-screen
+lockup. The lockup and any relationship to the diagnostic remain unverified.
+Sensor proxy is active on the new boot.
+See [execution evidence](../evidence/2026-11-06-mpu6515-dmp-execution.json).
+Audio remains excluded. Native IIO firmware lifecycle, parsed channels/events,
+and real DMP interrupt suspend wake remain required.
+
+
+### Native DMP transport foundation (2026-11-06)
+
+Created `worktrees/linux-dmp` on `development/fx0-dmp` from the maintained
+cpuidle integration branch, independent of earlier audio modifications. Added
+MPU6515-only RAM helpers with explicit bank/address selection, 16-byte bounded
+no-increment transfers, bank-boundary splitting and write readback. Full-range
+validation excludes reserved RAM/OTP; live DMP/FIFO rejects transfers. Caller
+lock and runtime power are prerequisites. ARM W=1 compilation of the complete
+IMU driver objects passed without diagnostics; new-file checkpatch and diff
+whitespace checks passed. These helpers have no userspace entry point yet and
+are not installed. Fault-injected and physical native transfer tests, firmware
+lifecycle, native channels and DMP interrupt wake remain required. See
+[build evidence](../evidence/2026-11-06-mpu6515-native-transport-build.json).
+
+
+### Native DMP firmware-loader stage (2026-11-06)
+
+The isolated DMP worktree now requests `invensense/mpu6515-dmp.bin`, validates
+its manufacturer size/CRC contract before writing, verifies all uploaded RAM,
+and writes/read-verifies entry point 0x0400. It requires stopped DMP/FIFO and
+masked interrupts and never enables execution. Always reloading avoids a stale
+RAM-valid cache after reset/power loss. Firmware bytes remain private.
+
+The complete ARM IMU object build with W=1 passed without diagnostics, and
+checkpatch reported zero issues on the new file. Eighteen targeted DMP tests
+pass. A new host C harness compiles the actual transport and injects each of
+1,472 transfer-operation failures, with bank-boundary, lost-cursor, corrupt-
+readback, bounds, busy and wrong-device controls. This models transport only;
+physical native bulk transfers and loader failure paths remain unqualified.
+The initial sanitizer link failed because the host UBSan library is missing;
+the passing host harness uses compiler warnings as errors without sanitizers.
+The loader remains staged, with no userspace entry point or installation.
+Native execution lifecycle, buffered channels, IRQ parsing and actual DMP
+suspend wake remain open. No audio testing or host Wi-Fi changes were made.
+See [loader evidence](../evidence/2026-11-06-mpu6515-native-loader-build.json).
+
+
+### Native DMP configuration and decoding (2026-11-06)
+
+Ported the physically exercised 25 Hz accel/six-axis quaternion configuration
+into the native driver, with verified bounded RAM patches. Added a one-packet
+wire decoder: signed accel XYZ and Q30 quaternion XYZ, partial-packet retry,
+header flag extraction and explicit corruption failure without publishing
+partial/stale output. Caller-side FIFO draining/tail retention, overflow/reset,
+quaternion scalar conversion and timestamped IIO output remain to implement.
+Neither helper starts execution or enables interrupts.
+
+Nineteen targeted tests pass. The actual C configuration helper stops at each
+of 184 injected operation failures; the actual decoder passes every packet
+fragment length, signed extremes, header flags and unknown-header controls.
+Transport's 1,472 fault controls still pass. ARM W=1 driver object compilation,
+checkpatch and diff whitespace checks pass. This stage is not installed or a
+physical native FIFO/ABI/wake qualification. Audio and host built-in Wi-Fi
+remain untouched. See [evidence](../evidence/2026-11-06-mpu6515-native-config-decode.json).
+
+
+### Native DMP buffered IIO candidate (2026-11-06)
+
+Connected the loader/configuration/decoder to an exclusive quaternion scan on
+the maintained MPU6515 device. Existing raw scans remain selectable. Added
+PM-held startup, raw register snapshot/restoration with readback and retry,
+DMP IRQ dispatch, FIFO overflow/count guards, partial-tail retention, batch
+validation, positive-W Q30 output and IRQ-anchored 25 Hz timestamps. Ordinary
+WoM/rate changes reject active DMP operation. System suspend is temporarily
+rejected during DMP capture rather than invoking raw FIFO resume; required
+DMP event retention/wake remains unfinished.
+
+Twenty-one targeted tests pass, including actual-C model tests for 1,478 loader,
+207 startup and 25 stop failures, missing/bad firmware, partial FIFO packets,
+quaternion reconstruction, invalid-batch rejection and overflow. Loader test
+uses the private extracted image; no firmware bytes are published. Object
+compilation and style checks passed. A full kernel/DTB/module build is running;
+no complete build or hardware qualification is claimed yet. The phone still
+runs 6.18.59 with sensor proxy active and taint zero. No installation occurred.
+See [candidate evidence](../evidence/2026-11-06-mpu6515-native-iio-candidate.json)
+and [provisional ABI and reader](../diagnostics/imu-dmp-native/README.md).
+Audio remains excluded and host built-in Wi-Fi untouched.
+
+
+Native reader restoration now clears the exclusive quaternion scan before
+restoring a saved raw mask; kernel IIO checks each enabled bit against available
+scan masks, so restoring raw bits first would fail. Two modeled reader tests
+bring the targeted total to 23 passing tests. The full candidate build remains
+active, with no warnings/errors observed. Live boot-partition identity and
+SHA256 match the preserved 32 MiB rollback image. Examined and hash-verified
+mkinitfs 2.11.0 source: `-no-bootdeploy` allows off-side candidate generation;
+kernel modules are selected by `/usr/share/kernel/*/kernel.release`. No boot
+image or installed kernel has been changed.
+
+The manufacturer reference includes a distinct DMP significant-motion status
+(0x39 bit 0x04), separate from pedometer and raw motion. Recorded source-backed
+[implementation notes](mpu6515-dmp-wake-design.md) for the required native event
+and suspend-wake path. No SMD or wake qualification is claimed. Audio remains
+excluded and host built-in Wi-Fi untouched.
+
+
+### Complete native DMP candidate build and RAM-boot preparation
+
+The full GCC zImage/Fx0 DTB/module build completed with zero warnings/errors.
+All 464 staged modules match the candidate release and depmod -e against the
+matching System.map reports no diagnostics. Preserved the complete source
+[patch](../patches/linux-integration/fx0-mpu6515-dmp.diff), which applies cleanly
+to the integration base (including the separate source checkout with unrelated
+earlier changes). Build logs/manifests are in ignored candidate artifacts.
+
+Staged matching modules under a separate release directory and the pinned
+private firmware on the phone. The first no-bootdeploy initramfs attempt failed
+its output check: mkinitfs 2.11.0 removes temporary archives without a deployment
+copy step. Corrected the helper to intercept boot-deploy in a private mount
+namespace with an archive-copy-only shim. The resulting 11,494,064-byte archive
+passed hash and module-version inspection; installed kernel metadata stayed
+unchanged. Boot-partition SHA256 still matches the preserved rollback image.
+
+Assembled a 16,472,064-byte RAM image from the new kernel/DTB and initramfs,
+preserving working Android header parameters. Unpacked payload readback matches.
+Reboot-to-bootloader was accepted and USB disconnected; fastboot product query
+is waiting. No candidate boot, native output or wake pass is claimed yet.
+Audio remains excluded and host built-in Wi-Fi untouched.
+
+
+The software reboot-to-bootloader instead enumerated Qualcomm 05c6:f006 with
+HID interfaces and a single interrupt IN endpoint. Neither fastboot nor ADB
+detects it. The DMP candidate has not been sent or booted. Asked the owner to
+restore lk2nd fastboot using the earlier physical method; a read-only fastboot
+product query remains live waiting for serial 10eceacd. No blind USB commands
+or flashing were attempted. This does not establish a cause for the unexpected
+mode, and the native candidate cannot have caused it because it never ran.
+
+
+### Pending-restoration recovery follow-up
+
+While the physical native trial awaited lk2nd fastboot, identified a gap in
+the prepared candidate: raw buffered capture retries failed DMP restoration,
+but direct raw reads/scale/calibration accesses can bypass pending cleanup.
+Created an independent `development/fx0-dmp-recovery` worktree so the prepared
+RAM image/source stay unchanged. Direct operations now invoke recovery under
+the existing lock/runtime-PM reference; active DMP rejects access, and pending
+restoration must pass before ordinary data access or mutation. WoM threshold
+updates also reject active/pending DMP state.
+
+The actual-C model verifies active-mode rejection without bus traffic, failure
+propagation, preserved pending state and verified raw scale restoration before
+access. Targeted total is 24 passing tests. ARM W=1 IMU object compilation and
+style/whitespace checks pass. Follow-up [patch](../patches/linux-integration/fx0-mpu6515-dmp-raw-recovery.diff)
+applies cleanly over the candidate; it is not installed or included in that
+prepared RAM image. See [evidence](../evidence/2026-11-06-mpu6515-pending-restore-recovery.json).
+Audio remains excluded and host built-in Wi-Fi untouched.
+
+
+The phone subsequently returned to normal Linux NCM USB (18d1:d001). SSH
+confirms original kernel 6.18.59, boot ID d8e46abf-d8db-4a03-a3a9-991f47ab0f4c,
+sensor proxy active and persistent candidate directory present. No owner text
+response established the reason for this transition. The candidate still has
+not run, and a physical lk2nd fastboot entry remains necessary for the RAM
+trial. The read-only fastboot query is still waiting.
+
+
+### Native kernel boot, crash diagnosis and corrected physical stream
+
+Used the existing authorized offset-aware update path after software fastboot
+entry proved unreliable. Saved/read-verified a fresh full boot backup, invoked
+the installed boot-deploy partition writer at 524288 bytes and verified the
+entire expected partition, preserved lk2nd prefix and tail. Normal reboot booted
+the candidate and SSH; all changes remain reversible via the preserved original.
+
+The first native capture caused a stack-protector panic in DMP FIFO handling.
+Ramoops was preserved privately. My allocation was 24 bytes, but IIO rounds the
+quaternion repeat=4 plus timestamp scan to 32 bytes and writes the timestamp at
+byte 24. The earlier host sink failed to model that real alignment. Corrected
+allocation/reader stride to 32, zeroed padding, used the size-checked IIO push
+and corrected the model. Reloaded only the updated IMU modules.
+
+The corrected physical trial captured 125 native DMP quaternion samples over
+five seconds, with strictly increasing IRQ-anchored timestamps about 40 ms apart.
+Raw acceleration worked after cleanup, buffer was disabled, sensor proxy active,
+taint zero and boot ID unchanged. Capture is archived off-phone. This is bounded
+execution/output proof, not accuracy, stability, recovery-soak or wake proof.
+See [evidence](../evidence/2026-11-06-mpu6515-native-capture.json).
+
+Physical metadata also exposed zero Q30 scale from IIO's nine-decimal formatter.
+Added a companion core formatter fix for subnanounit power-of-two fractions,
+with exact Decimal host tests and KUnit vectors. Twenty-seven targeted host
+tests pass; added KUnit vectors have not been run. Targeted ARM core W=1 build
+passes. A global W=1 build was intentionally cancelled because it unnecessarily
+rebuilt unrelated objects and exposed preexisting security/keys warnings; final
+kernel build is proceeding with normal project flags. Audio work/testing remains
+excluded and host built-in Wi-Fi untouched.
+
+
+### Exact-scale kernel and repeated native switching pass
+
+The normal-flags kernel build and targeted ARM IIO-core W=1 compilation pass.
+Installed the scale-fixed boot image using the same offset-aware writer with
+full readback; prefix and tail remain unchanged, original rollback retained.
+The corrected IMU modules load from root and are absent from the reused
+initramfs. New boot 78f624e5-8b48-4821-8f64-44d6b6905f90 reports exact Q30 scale
+0.000000000931322574615478515625.
+
+The strict reader passed three raw/DMP/raw cycles, each capturing 75 samples
+in three seconds with increasing timestamps. Raw acceleration worked before
+and after every capture, buffer returned disabled, proxy returned active and
+unmasked/static, runtime power auto, taint zero, boot ID unchanged and no DMP
+reset/panic messages observed in current-boot filtered logs. Captures and
+per-cycle manifests were fsynced and copied off-phone. Twenty-seven targeted
+host tests pass; KUnit vectors were added but not executed.
+
+This proves bounded native streaming and normal mode switching, not mounting/
+accuracy, fault/overflow recovery, long-run stability, DMP event wake or battery
+standby. Proper kernel package integration is also still required: this is a
+development boot image with a separate versioned module tree. Original distro
+boot assets remain for rollback. Audio work/testing stays excluded and host
+built-in Wi-Fi untouched. See [evidence](../evidence/2026-11-06-mpu6515-native-stream-and-scale.json).
+
+
+### Native DMP significant-motion event, awake physical pass
+
+Added an activity/still CHANGE/FALLING IIO event with event-only firmware
+configuration, independent PM vote, stale status clearing, single-shot/rearm,
+exclusive raw/streaming modes and managed teardown. IRQ attribution requires
+manufacturer status 0x39 bit 0x04; ordinary data-ready/FIFO and pedometer status
+do not qualify. All 28 targeted host tests pass, including 280 injected SMD
+startup-operation failures and PM/status/cleanup controls. ARM modules build
+without diagnostics; checkpatch/diff checks pass. Updated signed IMU modules
+were reloaded, preserving the working kernel and rollback images.
+
+Physical register readback verified event-only USER_CTRL=0x80, INT_ENABLE=0x02,
+FIFO_EN=0 and empty FIFO with runtime power active. A ten-second observation
+saw zero IRQs/events, remained armed and disarmed cleanly; quaternion capture
+afterward returned 75 samples. The owner then confirmed readiness and moved
+the phone after the armed marker. Exactly one IRQ produced event code
+0x05021e1300000000 (activity/still CHANGE/FALLING), automatically disarmed, and
+raw reads plus a 74-sample quaternion capture worked afterward. Boot ID stayed
+unchanged, proxy active, buffers/event disabled and taint zero. Files are saved
+on persistent phone storage and archived off-phone.
+
+This is an awake algorithm-event pass, not real system suspend/wake. Power/state
+retention, bus-safe IRQ sequencing, retained wake status, physical masked
+controls, 20 consecutive event wakes and battery standby remain required.
+No audio work/testing or host built-in Wi-Fi changes. See
+[evidence](../evidence/2026-11-06-mpu6515-dmp-smd-awake.json) and
+[awake SMD follow-up patch](../patches/linux-integration/fx0-mpu6515-dmp-smd-awake.diff).
+
+
+### DMP suspend retention, physical wake pilot and masked control
+
+Implemented SMD-specific system-suspend/resume with IRQ synchronization outside
+the driver mutex, an IRQ-thread suspended guard, retained power/RAM/clock,
+checked IRQ-wake arming/unwinding, pre-entry event abort/attribution and status
+read only after the parent I2C adapter resumes. Retained events are delivered
+with a resume-attribution timestamp. Streaming suspend still rejects. ARM
+modules build without diagnostics and style checks pass; model tests cover
+IRQ depth/PM balance, aborts, wake API errors and status read errors.
+
+RTC control: 12.39 s traced machine sleep, DMP counter advanced 3679 across
+the whole 18.35 s call, zero IMU IRQ/events, RTC IRQ +1, SMD remained armed.
+Positive owner-assisted pilot: 32.21 s traced s2idle, retained status 0x04,
+IMU IRQ +1, RTC IRQ +0, fallback still pending with 12 s remaining. Raw reads
+and 75 quaternion samples recovered. Masked-motion control: 30.01 s sleep
+until RTC, no IMU IRQ/event despite requested motion, normal recovery. Owner
+confirms display/touch after positive wake. MDP5 error 0x04000000 is still logged
+during resume and remains a separate tracked warning.
+
+Settings, services and alarms restored; boot ID unchanged and taint zero. All
+trace/capture files are archived off-phone. See
+[RTC evidence](../evidence/2026-11-06-mpu6515-dmp-suspend-rtc-control.json),
+[pilot](../evidence/2026-11-06-mpu6515-dmp-wake-pilot.json) and
+[masked control](../evidence/2026-11-06-mpu6515-dmp-wake-masked-control.json).
+
+Prepared a durable consecutive-cycle runner with independent evidence checks;
+it accepts the real pilot and rejects the masked control as a DMP success.
+Four verifier tests reject missing sleep, wrong IRQ/RTC attribution, bad event
+or hardware modes, missing retained status and malformed scans. Targeted host
+total is 32 passes. Required 20-cycle run awaits operator availability; full
+50-cycle, unplugged standby/false-wake/latency and packaging gates remain open.
+Audio work/testing remains excluded and host built-in Wi-Fi untouched.
+
+### 2026-11-06: repeated DMP retention across RTC suspend
+
+Five consecutive USB-powered s2idle cycles passed with native significant-motion
+detection armed and a 12-second RTC fallback. Trace intervals were 12.20–12.43 s;
+every cycle had one RTC IRQ and zero IMU IRQs, retained DMP execution, no event,
+and 74–75 valid quaternion samples afterward. Boot ID stayed unchanged, taint
+remained zero, and proxy/wake/alarm/event state was restored. One MDP5 INTF1
+underrun appeared per resume; display stability is still open. These are RTC
+retention checks, not the pending 20 physical DMP wakes or a completed 50-cycle
+peripheral qualification. No audio testing or host built-in Wi-Fi changes.
+See [reviewed evidence](../evidence/2026-11-06-mpu6515-dmp-rtc-series.json).
+
+The separate Clang/CFI kernel build remains active. ARMv7 APK tooling and local
+payload staging/signing helpers are prepared; no new APK or phone installation
+is claimed until their actual build and verification finish.
+
+### 2026-11-06: signed DMP kernel development APK
+
+The full host Clang/CFI build passes for zImage, DTBs and all modules without
+compiler warnings. Explicit `LOCALVERSION=` fixes the Git-worktree plus suffix
+so kernel release is exactly `6.18.59-fx0-dmp`. All 464 staged modules match
+that release. A local binary-wrapper APK, `6.18.59-r47`, was signed using the
+existing development key; `apk verify` passes and all 545 packaged file hashes
+match the staged payload. This uses host Clang 21 / LLD 18; the separate
+maintained source recipe has not been built using Alpine's exact toolchain.
+No installation or new boot is claimed. The phone's legacy metadata and boot
+regeneration still need integration after the pending motion-wake run.
+See [package evidence](../evidence/2026-11-06-mpu6515-dmp-package-preparation.json).
+
+### 2026-11-06: r47 initramfs preview without installation
+
+The phone verifies the signed APK, and all 545 privately extracted payload
+files match the staged manifest. Extended the initramfs helper to expose a
+private module tree inside its mount namespace. Native mkinitfs successfully
+generates an 11,945,465-byte archive for `6.18.59-fx0-dmp`; all 19 archived
+module files match the APK and no legacy module release is included. Complete
+before/after hashes match for the boot partition, `/boot`, installed modules,
+kernel metadata and APK database; boot ID is unchanged. Boot-deploy remains
+intercepted, so this proves archive generation rather than real boot-image
+generation or installation. Audio and host built-in Wi-Fi remain untouched.
+See [preview evidence](../evidence/2026-11-06-mpu6515-dmp-initramfs-preview.json).
+
+### 2026-11-06: native boot-image generation preview
+
+Installed boot-deploy generates a 17,549,312-byte Android v0 image using the
+r47 kernel, appended Fx0 DTB and verified initramfs in a private `/boot` mount.
+Both flash functions were replaced with explicit no-ops. The image fits after
+the configured 524,288-byte lk2nd prefix; used load addresses, 2048-byte page
+size and command line match the working image. The absent second payload has
+a different unused address; second size is zero in both images. Kernel plus
+DTB and initramfs match their verified inputs byte-for-byte, checked on the
+phone and again after host download. Full live state hashes remained unchanged.
+No APK installation or new-kernel boot is claimed. See [boot-image preview
+evidence](../evidence/2026-11-06-mpu6515-dmp-boot-image-preview.json).
+
+### 2026-11-06: r47 installed and booted through normal package hooks
+
+Verified a full pre-install rollback on phone and host (working 32 MiB boot
+partition, signed cached r44 APK, `/boot`, metadata and all four module trees).
+Installed signed r47 using normal APK hooks. All 545 payload files matched,
+and the boot image exactly matched the preview. Full partition readback
+verified both lk2nd prefix and trailing bytes unchanged. Normal reboot now
+runs `6.18.59-fx0-dmp` with matching installed release metadata and CFI enabled.
+
+Post-boot raw acceleration/angular-rate reads, exact Q30 scale, three native
+captures of 75 quaternion samples each, awake SMD arming, and a real 12.17 s
+RTC suspend pass. RTC IRQ +1, IMU IRQ +0, retained status zero/no event, and
+DMP counter delta 3639 were observed. Boot ID stayed unchanged through these
+checks; taint zero, sensor proxy active and event/buffer/wake/alarm state clean.
+The MDP5 underrun persists. Owner UI confirmation and 20 physical DMP wakes
+remain pending on this new build. Earlier GCC pilots remain image-specific.
+No audio tests or host built-in Wi-Fi changes. See [installed evidence](../evidence/2026-11-06-mpu6515-dmp-r47-installed.json).
+
+### 2026-11-06: locate the display underrun during resume
+
+Read-only r47 snapshot: 720×1280 at 60 Hz, pixel clock 70.17 MHz, MDP core
+200 MHz, AXI 100 MHz, DRM active and display power controls auto. There are
+no interconnect provider nodes and MDP5 logs missing interconnect support.
+A private, filtered function trace across one RTC suspend has no overruns
+or dropped events. Its sole underrun occurs in the first post-resume MDP5
+IRQ, with the first vblank callback, 117 µs after encoder enable and 90 µs
+after encoder-state setup. This narrows investigation to startup/prefill
+ordering, without proving causality or excluding bandwidth. No clocks, votes
+or display sequencing changed. The private trace instance was removed and
+the sensor wrapper completed cleanup. See [trace evidence](../evidence/2026-11-06-mdp5-r47-resume-trace.json).
+
+### 2026-11-06: experimental MDP5 flush-before-enable module
+
+The pinned vendor driver flushes CTL state in mdss_mdp_display_commit before
+calling the video kickoff, which enables the timing engine. Mainline enables
+the engine before its encoder flush. Prepared a separate source worktree
+(`linux-mdp5-prefill`) that flushes staged state before enabling video timing.
+The unchanged r47 DMP source worktree and running phone are preserved.
+
+The experimental MSM module compiles with r47's Clang/CFI configuration without
+warnings. All 631 imported symbol CRCs, vermagic and signature key match r47;
+the module has no exported symbols. Signed/compressed candidate and standalone
+patch are retained. This is a build result, not an installed or demonstrated
+underrun fix. Generic MDP5 video-mode regression review remains required.
+See [candidate build evidence](../evidence/2026-11-06-mdp5-prefill-build.json).
+Audio testing and host built-in Wi-Fi remain untouched.
+
+### 2026-11-06: r49 display startup ordering trial
+
+Packaged the single MSM module change as r48 and verified normal update hooks,
+new module presence in initramfs, all 545 payload files and exact boot readback.
+That first module used Kbuild's external-module path: it loaded with its expected
+build ID and no startup underrun but tainted the kernel O (4096). It is retired
+and excluded from qualification. A first in-tree single-module modpost attempt
+lacked the dependency modules; building MSM with its seven dependency targets
+resolved that and produced an authentic in-tree module. No marker was forged.
+
+Signed r49 retains the r47 kernel and changes only MSM. All 631 import CRCs,
+vermagic and signature key match r47. Installation verifies the module inside
+the generated initramfs and preserves the lk2nd prefix/tail. Reboot loads ELF
+build ID 51f26d8cb53c1ae2884aba5540f6afd667337623 with taint zero. An SSH client
+disconnection did not reboot the phone: saved complete result, unchanged boot
+ID and absent live test process were checked before retrieving the evidence.
+
+Startup and three traced RTC suspends (11.86–12.40 s) show zero underruns; r47
+recorded one at startup and each observed resume. Each RTC cycle has RTC IRQ
++1 and IMU IRQ +0, retained DMP state and counter rate about 200.5 Hz over the
+whole suspend call. Five quaternion captures contain 74–75 valid samples.
+Final state is DRM active, proxy active, taint zero, event/buffer disabled and
+wake/alarm policy restored. Owner visible display/touch confirmation, physical
+DMP wakes, battery/longer-load tests and shared MDP5 regression review remain
+open; missing interconnect support is not fixed. No audio tests or host built-in
+Wi-Fi changes. Experimental source APK recipe is in pmaports-mdp5-prefill; it
+reproduces all ten changed files and passes six local checksum checks but has
+not been built as an Alpine source APK. See [r49 evidence](../evidence/2026-11-06-mdp5-prefill-r49-trial.json).
+
+### 2026-11-06: twenty consecutive r49 DMP motion wakes
+
+The first attempt expired to its RTC fallback with no event; the owner reported
+missing the armed cue. It was stopped, cleaned up and excluded. A fresh run
+then passes all 20 consecutive owner-assisted DMP wakes. Every actual trace
+shows real s2idle (2.64–14.24 s), one GPIO69/IRQ76 IMU interrupt, zero RTC IRQs,
+retained status 0x04 and one correct IIO event. Every event auto-disarms with
+RTC still pending, followed by recovered quaternion streaming (1,498 samples
+total). All downloaded records independently pass the actual cycle verifier.
+Boot ID stays unchanged, taint zero and no MDP5 underruns occur. Owner confirms
+display and touch work normally after the run.
+
+A matched-build disabled-SMD movement control then sleeps 29.86 seconds to
+its RTC alarm, with RTC IRQ +1, IMU IRQ +0 and no IIO event; 74 quaternion
+samples follow. This supports motion-wake attribution without conflating it
+with raw WoM. Proxy/wake/alarm/event/buffer state is restored. This closes the
+20-consecutive-DMP gate only: overall 50-cycle/peripheral, battery/overnight,
+false-wake and calibrated-accuracy work remains. Audio excluded; built-in host
+Wi-Fi untouched. See [positive run](../evidence/2026-11-06-mpu6515-dmp-20-consecutive-wakes.json)
+and [matched control](../evidence/2026-11-06-mpu6515-dmp-r49-masked-control.json).
+
+### 2026-11-06: r49 concurrent hotspot clients and resume gap
+
+Both USB Wi-Fi adapters independently associate with the default-PMF r49
+hotspot and get distinct DHCP addresses. Four baselines each pass two
+simultaneous SHA256-verified 16 MiB transfers and 5/5 pings per client (128 MiB
+total). Phone reports two authorized stations; all transfers bind their USB
+interface and disable proxies. This is local IPv4 data, not Internet backhaul.
+
+Direct kernel suspend completes real s2idle but clears AP stations while NM
+continues reporting the AP active. Immediate pings fail; a fresh bounded
+25-second polling run also sees no recovery on either client. An ordinary
+system suspend comparison initially failed because the test asked root to
+ignore its own sleep inhibitor and polkit refused. No policy was relaxed:
+the fixture was changed to inhibit idle only and ordinary systemctl suspend
+then worked. NM receives sleep/wake notifications and deactivates the AP;
+it remains disconnected afterward with the temporary profile's autoconnect=no
+setting. This does not qualify hotspot resume/recovery. The installed Sxmo
+suspend script ultimately calls rtcwake -m mem; surrounding hooks and desired
+AP resume policy need review before an integration/driver change is selected.
+
+All profiles, HTTP services and narrow firewall rules are removed, forwarding
+restored to zero, WLAN disconnected and USB client adapters idle. Host default
+route, resolver bytes and built-in Wi-Fi UUID remain unchanged throughout and
+after cleanup. Audio not exercised. See [Wi-Fi evidence](../evidence/2026-11-06-hotspot-r49-two-clients-and-suspend.json).
+
+### 2026-11-06: explicit hotspot suspend coordinator candidate
+
+The installed Sxmo autosuspend hook blocks hotspots by a `Hotspot` name prefix,
+so renamed AP profiles can bypass the intended block. Preserve that policy in
+future integration. The suspend script uses direct rtcwake, and its default
+postwake hook does not restore Wi-Fi. No production Sxmo changes were installed.
+
+Added a narrowly scoped coordinator candidate that disconnects active wcn36xx
+AP profiles, refreshes wakeup_count after preparation, runs the blocking sleep
+command, and restores profiles on return or handled failure/signal. Nine
+transaction regression tests pass. Using the ordinary phone user and existing
+doas permissions, two real RTC suspend cycles on r49 restore the same AP
+without changing autoconnect=no. Both USB clients automatically recover and
+pass 5/5 pings plus concurrent SHA256-verified 16 MiB transfers after each
+cycle; including baseline, six transfers total 96 MiB. This qualifies only the
+explicit candidate path, not production autosuspend or uninterrupted Wi-Fi.
+
+Cleanup removes temporary profiles/services/firewall rules and restores phone
+forwarding to zero. Kernel taint remains zero; host default route, resolver
+and built-in Wi-Fi connection remain unchanged. Audio excluded. See
+[coordinator evidence](../evidence/2026-11-06-hotspot-coordinated-suspend.json).
+
+### 2026-11-06: Sxmo hotspot policy source fix
+
+Retrieved Sxmo 1.18.1 at 61ade447e7c033421df8f248835d0f51daaf58c3
+and created worktrees/sxmo-hotspot on development/fx0-hotspot-suspend.
+The maintained patch replaces name-prefix matching with active wireless
+profile mode checks, preserving AP blocking regardless of profile name and
+allowing station-only connections. NetworkManager query failures keep
+suspend blocked conservatively. Other blockers remain unchanged and were
+not exercised. Five predicate tests and all nine coordinator tests pass;
+the patch applies to the exact upstream release and shell syntax passes.
+The phone's production hooks remain unmodified pending packaging and
+integration; this source fix alone does not close the suspend feature gate.
+See [policy evidence](../evidence/2026-11-06-sxmo-hotspot-policy.json).
+
+### 2026-11-06: Sxmo Fx0 suspend integration source package
+
+Added an Fx0-only Sxmo suspend branch that invokes the tested AP coordinator,
+refreshes wakeup_count after network preparation, and uses the original
+absolute RTC wake deadline so teardown does not shift scheduled wake time.
+Other devices retain the original relative RTC path. The source Makefile
+installs the coordinator executable. Four integration tests cover the deadline,
+preparation failure, imminent-cron hold and other-device behavior; combined
+with predicate and transaction tests, all 18 pass.
+
+Built signed ARMv7 sxmo-utils 1.18.1-r6 and its subpackages from the verified
+upstream archive using Alpine abuild offline. Initial payload inspection
+caught that fetched .diff files were not automatically applied. The corrected
+recipe explicitly applies both patches; the rebuilt coordinator/suspend script
+and AP predicate match source exactly, hook configversion validates, and all
+14 APK signatures verify. Artifacts and manifest are under
+artifacts/2026-11-06-sxmo-hotspot-r6. No phone production files have changed:
+rollback capture, complete payload comparison, installation and installed-path
+hardware qualification remain open. Audio not tested; built-in Wi-Fi unchanged.
+See [source package evidence](../evidence/2026-11-06-sxmo-hotspot-source-package.json).
+
+### 2026-11-06: Sxmo r6 installed and bounded hotspot recovery qualified
+
+Captured all 330 owned files from the eight installed r4 Sxmo packages, APK
+database/world and cached original APKs; mirrored and verified the rollback
+on the laptop. Full candidate comparison caught an unwanted patch .orig
+file, corrected by disabling mismatch backups in the explicit prepare steps
+and rebuilding. Final payload removes no files and adds only the coordinator.
+Other changes are the two intended scripts, four rebuilt C helpers (matching
+ARM ABI/shared-library requirements), and equivalent symlink spelling. Audio
+file payload is unchanged; the audio dependency-only metapackages advance
+revision with the matching package closure. No audio tests were performed.
+
+An offline simulated transaction selected only the eight already-installed
+Sxmo packages. Installed them as one local signed transaction and preserved
+world bytes. All 331 installed payload files/links verify after accounting
+for APK's normalization of equivalent symlink targets. Udev triggered
+mkinitfs/boot-deploy, but the entire boot partition is still exactly r49
+SHA256 e41931a266fa8d521db8e86fc991355465b055ff4159303f5700b76347143b86;
+Android image readback matches and the original lk2nd prefix is intact.
+
+The live Sway session exports lg,madai and SXMO_NO_MODEM=1, matching the test
+branch. Exercising only the installed hotspot predicate confirms idle WLAN
+allows suspend and a renamed active AP blocks it. Two bounded explicit calls
+through installed sxmo_suspend.sh and the installed coordinator then pass
+17.63/19.18 seconds of real s2idle, automatically restoring the AP and both
+USB clients. Each phase passes 5/5 pings and two simultaneous SHA256-verified
+16 MiB transfers: six transfers/96 MiB including baseline. Test mnc=30 bounds
+the original absolute RTC deadline to 20 seconds; a fixture wakelock hook
+records two expected cron-hold requests without leaving a persistent hold.
+This does not exercise audio blockers or qualify the complete UI/autosuspend
+loop, Internet backhaul, power behavior or longer AP soak.
+
+Cleanup removes test profiles/services/rules and temporary hooks, restores
+forwarding=0 and disconnected WLAN, clears RTC alarm, and verifies IMU event
+and buffer off, IMU wake disabled, sensor proxy active, same boot and taint=0.
+Host default route, resolver and built-in Wi-Fi connection stay unchanged.
+See [installed Sxmo evidence](../evidence/2026-11-06-sxmo-hotspot-installed.json).
+
+### 2026-11-06: microSD suspend test exposes card-detect wake abort
+
+Added a bounded microSD diagnostic that refuses mounted/non-SD/non-FAT media
+and failed read-only FAT checks. It uses a unique test directory and 64 MiB
+random payload, fsync/cache-discard/hash checks, traced RTC suspend, remount
+persistence checks, and cleanup restoring wake/alarm/mem settings. It never
+formats or repairs the card. No audio or host Wi-Fi changes are involved.
+
+Two fresh r49 attempts pass initial 64 MiB write/read hashes but rtcwake
+returns a write error during freeze; neither enters machine_suspend. The
+second trace captures mmc1 wake activation from GPIO37 card-detect IRQ63
+just before suspend_enter. Its wakeup count increments and the freezer
+aborts in 2 ms. This is a demonstrated pending wake event, not proof that
+105 tasks are faulty or that the card filesystem is corrupt. GPIO37's
+accumulated interrupt count is large (723618), but a separate three-second
+idle, 16 MiB direct read and three-second idle control sees no new CD IRQs
+and the read succeeds. Root cause remains unproven; next isolate read/write/
+sync transitions and compare live pin/debounce configuration before a fix.
+
+Both failed trials remove only their test data and leave the card unmounted.
+A final read-only FAT check succeeds with unchanged original file/cluster
+counts. RTC alarm clears, original s2idle/USB-wakeup-disabled settings restore
+and taint remains zero. MicroSD suspend remains failed/open, with zero
+qualified cycles. See [abort evidence](../evidence/2026-11-06-microsd-r49-suspend-abort.json).
+
+### 2026-11-06: SD card-detect interrupts isolated to writeback
+
+The new owned-file phase probe samples SD/CD IRQ counters around a 4 MiB
+write, fsync, sync, cache-discarded read and idle periods. GPIO37 IRQ63
+increments by 22675 in about 0.29 s during fsync, by 9 during global sync
+and by 12 during deletion/unmount; read and idle phases show no increments.
+The payload hash and final read-only FAT check pass. Live GPIO37 is input
+low with pull-up, matching the current DT. Card remains unmounted afterward.
+
+The generic MMC GPIO handler schedules debounced rescan but does not mask
+repeated IRQs; every CD IRQ can create a five-second wake event. This explains
+how writeback-associated CD activity can abort the wakeup_count-protected
+freezer, but does not establish the electrical root cause. No polling fallback
+or generic driver change was installed. Owner reports back-cover access
+requires USB disconnection; a clean shutdown/reseat is offered and awaits
+physical coordination before further card tests. Audio and host Wi-Fi unchanged.
+See [phase evidence](../evidence/2026-11-06-microsd-writeback-cd-irqs.json).
+
+### 2026-11-06: bounded CPU load and thermal recovery
+
+While card-reseat coordination remains pending, performed an independent
+non-audio CPU check without touching SD or host networking. Four CPUs are
+online under one schedutil policy, limited to 300/384/600/787.2 MHz. The
+source explicitly reserves higher OPPs for speed-bin support. Both CPU thermal
+zones report passive 75°C and critical 110°C trips.
+
+A new bounded helper samples 5 s baseline, 30 s pinned SHA256 load on all four
+cores, and 15 s recovery, with a conservative 65°C stop and no policy writes.
+All four workers pass 3063 known one-MiB hashes in total, consuming about
+29.5–29.9 CPU seconds each. Reported temperature peaks at 47°C; frequency
+stays at 787.2 MHz under load and reaches 300 MHz during recovery. All workers
+terminate, policy remains identical, boot ID remains the same and taint is zero.
+This is not a long CPU/RAM stress, calibrated temperature or throttling pass;
+higher speed-bin/voltage support and performance/power qualification remain
+open. SD stays unmounted and audio is not exercised. See
+[bounded CPU evidence](../evidence/2026-11-06-cpu-thermal-bounded-r49.json).
+
+### 2026-11-06: CPU speed-bin/supply integration audit
+
+Read-only live inventory identifies MSM8926 ID 200 revision 1.1 and the
+corrected-region qfprom0 NVMEM provider. No unverified fuse offsets were read.
+Current CPU nodes expose only conservative OPPs without a CPU supply; the
+qcom-cpufreq-nvmem and CPR match tables lack MSM8226 support. Retrieved a
+Qualcomm clock-a7 revision explicitly matching MSM8226 after rejecting a
+newer source as the sole reference because it no longer lists that SoC.
+Its CPU supply and per-bin/version plan selection show that a higher PLL
+frequency alone is insufficient for a safe OPP implementation.
+
+Added a diagnostic uint32 speed-bin/version decoder with five passing tests
+for validity, redundant selection, reserved bits and input bounds. It accesses
+no hardware and makes no claim about this unit's actual fuse grade. The
+implementation plan requires stock resource/voltage-corner provenance,
+APC/CPR supply control, tested OPP transitions and rollback before higher
+frequencies. No clocks, voltages, fuses or thermal settings changed. Audio
+remains excluded; host built-in Wi-Fi untouched. See
+[audit evidence](../evidence/2026-11-06-cpu-speedbin-audit.json).
+
+### 2026-11-06: actual Madai CPU corner-plan provenance
+
+Recovered the pinned peremen/android-kernel-lg-madai source through GitHub
+and followed the Madai -> LGE MSM8926 -> MSM8926 v1 -> MSM8926 -> MSM8226
+include chain. Its v1 ID list includes the live ID 200 revision 1.1. MSM8926
+overrides declare raw clock efuse resource 0xfc4b80b0 and version-1 corner
+plans, distinct from the MSM8226 v2/version-2 tables. No guessed translation
+to the corrected QFPROM provider and no live fuse read was performed.
+
+The vendor CPU rail is CPR-controlled PM8226 S2 via direct SPM, plus MX/L3
+voting; literal corner values are not microvolts or RPM voltage requests.
+Recorded five source plans in a provenance manifest and extended the host
+decoder with diagnostic corner preview/conservative-plan fallback. Eight
+tests pass, including version-dependent 998.4 MHz votes and out-of-plan
+rejection. This prepares concrete data for supply/bin integration without
+raising clocks or changing voltages. Original stock DTB comparison, fuse
+mapping and MSM8926 CPR implementation remain open. Audio and built-in Wi-Fi
+unchanged. See [Madai plan evidence](../evidence/2026-11-06-madai-cpu-corner-plans.json).
+
+### 2026-11-06: compiled recovery CPU data and live fuse selection
+
+Older original stock images are absent from this checkout. Read the current
+recovery partition without modifying it, capturing hashes and its separate
+174080-byte DT section privately. One valid DTB identifies Qualcomm MSM8926
+Madai, board ID 150 and the ID 200/revision1.1 tuple. libfdt validation and
+independent dtc decompilation pass. All five compiled CPU corner plans match
+the vendor-source manifest; supply phandles resolve through CPR to direct
+PM8226 S2 and the MX/L3 rail. This does not prove whole-image originality
+against the unavailable original backup.
+
+The compiled efuse resource validates raw address 0xfc4b80b0. Direct pread
+returned EFAULT for MMIO; a read-only mmap accesses only its four documented
+bytes and a matching reread. No protection settings changed and no guessed
+corrected-provider offset was used. Raw bytes remain private. The decoded
+unit has valid primary speed bin 0/PVS version1, selecting speed0-bin-v1
+without fallback, with a 1.1904 GHz plan ceiling. No clocks/voltages changed:
+CPR/APC/MX supply implementation and high-frequency qualification remain open.
+
+Added a libfdt-backed CPU DTB inspector with private output directories and
+resolved supply links; four malformed/embedded-data tests pass alongside
+eight bin/plan tests. Final phone state retains the same boot, taint0,
+schedutil and 300–787.2 MHz limits; SD remains unmounted. Audio and built-in
+host Wi-Fi untouched. See
+[compiled CPU/fuse evidence](../evidence/2026-11-06-cpu-recovery-dtb-and-bin.json).
+
+### 2026-11-06: native read-only CPU/CPR raw fuse provider candidate
+
+Inspected the pinned Madai CPR regulator source against mainline CPR. The
+existing QFPROM raw path is tied to the programming-resource setup; CPU/CPR
+needs raw calibration without that interface or a global corrected/raw switch.
+Created isolated linux-cpu-cpr with the r49 baseline and added a standalone
+MSM8926 raw provider. It enforces one resource, root-only/read-only NVMEM and
+no writer callback. The Madai DT exposes only CPU/PVS and primary/redundant
+CPR cells; corrected calibration consumers and CPU frequencies stay unchanged.
+
+ARM QFPROM object and board DTB compile. Nine actual-C-probe contracts pass
+for raw permissions/resource rejection, legacy behavior and failures; seven
+DT schema tests validate real compiled raw/corrected nodes, negative raw
+configurations and legacy writable schema. Binding meta/example validation
+and YAML lint pass. Exported binding, driver and DT patches separately pass
+checkpatch with zero warnings/errors and reproduce the candidate exactly.
+QFPROM is built-in: no full replacement kernel/package or boot trial exists
+yet. CPR calibration/voltage/MX sequencing, OPP transitions and hardware
+qualification remain open. Running r49 unchanged, audio excluded and host
+built-in Wi-Fi untouched. See
+[raw NVMEM candidate evidence](../evidence/2026-11-06-cpu-raw-nvmem-candidate.json).
+
+### 2026-11-06: CPR APC/MX ordering and failure component
+
+Compared the pinned Madai CPR source with mainline. Compiled recovery policy1
+uses the APC fuse-corner ceiling for MX, and mainline has no MX coordination.
+Added a private regulator-sequencing helper and routed existing CPR APC-only
+requests through it. The optional MX path raises MX before APC, lowers APC
+before MX, retains high MX on APC failure, and treats a failed MX reduction
+as a deferred optimization after successful APC change, avoiding clock rollback
+against an already lowered APC voltage. Requests below the required floor or
+without initialized MX state fail before any regulator call. Bootstrap votes
+cover all possible boot corners and cannot lower an existing vote.
+
+The actual C helper passes eighteen ordering/fault/bounds contracts; ARM CPR
+object compiles and checkpatch has zero errors/warnings. Four exported CPU
+foundation patches reproduce all five candidate files exactly. Regulator
+activation/handoff, MSM8926 PVS/quotient calibration, supply/binding/OPP and
+PM integration remain open; no current compatible enables MX and no kernel
+was installed. Phone clocks/voltages unchanged; audio excluded; built-in
+Wi-Fi untouched. See
+[CPR sequencing evidence](../evidence/2026-11-06-cpr-mx-sequencing-candidate.json).
+
+### 2026-11-06: native legacy secure-fuse read prerequisite
+
+Calibration review found a compiled secure conditional-floor rule: row54
+bits42–47 expected7, with a 1.14 V minimum on mismatch. Captured44compiled
+parameters and preserved the secure method and comparison direction. The
+pinned Madai SCM header defines service8/command7; the legacy two-word request
+and three-word response match current SCM legacy marshalling. Added a guarded
+read API with alignment/convention/status checks and unchanged output on error.
+Thirteen actual-C contracts, ARM SCM object compile and checkpatch pass.
+No native secure read or CPU voltage/frequency request has occurred.
+
+Prepared r50 source packaging with ten patches, eleven local checksum checks
+and exact reproduction of eighteen candidate files; no Alpine source APK
+build is claimed. A complete diagnostic host kernel build is live, retaining
+disabled CPR and conservative OPPs. Current r49 boot/full module tree/package
+state is backed up and the laptop copy hash-verified. Before any boot/pilot,
+restrict raw reads to validated CPU/CPR windows; the conditional secure fuse
+requires SCM. Packaging, native readback and complete calibration/PM integration
+remain open. Audio excluded; host built-in Wi-Fi unchanged. See
+[secure API evidence](../evidence/2026-11-06-cpr-secure-fuse-api-candidate.json).
+
+### 2026-11-06: bounded native raw-fuse view before hardware pilot
+
+Stopped the verified active diagnostic kernel build with SIGINT to apply
+the required raw-read boundary correction, confirmed terminal exit 130, then
+resumed incrementally. The provider now uses keepouts for every offset except
+CPU/PVS row22 (8 bytes) and CPR rows138/139 (16 bytes). Protected conditional
+row54 returns a redaction without MMIO; it must be read through secure SCM.
+
+A host harness executes the actual NVMEM core keepout routine against the
+actual candidate match data. All 28,577 bounded ranges pass; a full 4 KiB read
+accesses 24 hardware bytes in two callbacks, with zero protected-row access.
+Existing nine probe contracts and checkpatch pass. Source recipe/checksums
+are synchronized:11 local files verified,10 patches reproduce18 source files.
+The source-packaging export is available. The original module signing key
+is unchanged. Resumed build uses version 51 for recipe r50; no full artifact,
+signed package or runtime pass is claimed. Phone remains r49, audio excluded
+and host built-in Wi-Fi unchanged. See
+[keepout evidence](../evidence/2026-11-06-cpu-raw-keepouts.json).
+
+### 2026-11-06: CPU calibration r50 package built, awaiting native pilot
+
+The resumed full kernel build completed with terminal status0. Verified ARM
+image/build51, the GPL secure-read export, the filtered raw provider and
+unchanged 300–787.2MHz OPPs; CPR remains disabled. All464 staged modules have
+matching release and in-tree metadata. OpenSSL independently verified each
+detached module signature using the preserved r49 certificate. The locally
+signed r50 APK passes apk verification and all545 payload file hashes match
+staging. This wraps a host Clang/LLD build; the Alpine source recipe was not
+built. No phone installation or new hardware qualification is claimed.
+
+Prepared and built a separate manually loaded conditional-fuse pilot. It
+reports status and selector equality only, exposes no raw row, and changes
+no voltage. A failed read remains an error; successful loading alone is not
+a pass. Its external-module taint requires a reboot before later zero-taint
+checks. The phone stays on r49 and the SD remains unmounted pending owner
+readiness for a clean shutdown/reseat requiring USB disconnection. Audio
+remains excluded and host built-in Wi-Fi unchanged. See
+[r50 build evidence](../evidence/2026-11-06-cpu-calibration-r50-build.json).
+
+### 2026-11-06: r50 installed and native CPU fuse prerequisites verified
+
+Installed the signed r50 kernel with exact545-file payload and full boot
+readback checks; lk2nd prefix and unused tail are unchanged. The first new
+build51 boot is untainted. Native root-only0400 raw NVMEM CPU reads match the
+prior bounded MMIO capture; primary/redundant CPR rows reread consistently.
+The protected row is redacted without using it as calibration data. The
+separate legacy SCM pilot reports status0 and selector match1, confirming
+that the mismatch-only1.14V minimum rule is inactive on this unit. Raw words
+stay private and CPU voltage/frequency limits remain unchanged.
+
+Unloaded the external diagnostic and rebooted to clear expected taint4096.
+The clean r50 baseline verifies the matching loaded MSM build ID, raw IMU
+reads,74 quaternion samples, awake SMD arming, and retained DMP state across
+12.328135s traced s2idle. RTC IRQ delta1 and IMU delta0 establish the control
+scope;75 quaternion samples recover afterward. Final taint0, no MDP5
+underruns, sensor proxy active, SMD/buffer/wakeup disabled and RTC clear.
+The SD remains unmounted, WLAN disconnected, CPU schedutil300–787.2MHz, and
+boot readback unchanged. Full CPR calibration/control, higher OPPs and the
+broad hardware acceptance gates remain open; no r49 motion-wake pass is
+transferred to r50. Audio excluded, host built-in Wi-Fi unchanged. See
+[native evidence](../evidence/2026-11-06-cpu-calibration-r50-native.json).
+
+### 2026-11-06: Madai calibration decoder and APC range prerequisite
+
+Added an unpackaged C calibration helper and45th compiled parameter: the
+CPR speed-bin selector is independent of clock redundancy/validity. The
+helper preserves PVS redundancy, primary-row control flags with backup CPR,
+minimum/uplift rules, all32 PVS table entries, turbo ceiling expansion and
+virtual quotient interpolation. Five tests pass4060 vectors plus six failed
+read/selector contracts with unchanged error output; ARM compile and header
+checkpatch pass. The exported patch includes header ownership and reproduces
+both files; its one generic new-file ownership warning is documented.
+
+Private r50 rows decode to PVS21/version1, speed0, valid primary copies,
+quotients798/931/1188 and nominal1075/1075/1140mV initial voltages. A bounded
+read-only PMIC inventory (six registers reread,12 hardware reads, no full
+bank dump) proves FTS2 S2 uses fixed range1 at1150mV with taint0. Vendor
+range1 is fixed after power-on and uses10mV steps. Existing mainline SAW
+rejects range1 and does not return poll/read errors, so regulator support
+and quantized APC/MX voting are necessary before live CPR/OPP integration.
+No voltage/frequency/audio/host built-in Wi-Fi changes occurred. SD remains
+unmounted pending physical reseat readiness. See
+[calibration evidence](../evidence/2026-11-06-msm8926-calibration-decoder-candidate.json).
+
+### 2026-11-06: fixed-range PM8226 S2 SAW candidate
+
+Implemented a separate opt-in fixed-range S2 path, preserving the immutable
+power-on FTS2 range, per-instance operation/map ownership and legacy range 0
+behavior. The driver validates initialized Madai L2 controller ownership and
+propagates real command, acknowledgement, getter and SMP errors. Rising
+voltages use PWM and conservative settling. Failed AUTO restoration after a
+confirmed voltage transition is reported/deferred and retried instead of
+causing a clock rollback. Uncertain command outcomes still need CPR/OPP
+consumer handling. No live voltage transition is claimed.
+
+Two actual-C harnesses pass 514 hardware selector candidates and 321 valid
+roundtrips,11 initialization faults,10 transaction faults and retry/legacy/
+getter/SMP contracts. Eight compiled schema cases pass, as do binding
+meta/examples/lint and ARM W=1 compile. Separate binding and driver patches
+reproduce three files; driver checkpatch has only mutable per-instance ops
+and generic file-ownership warnings. Candidate remains unpackaged.
+
+Bounded read-only SAW inventory confirms major version 2 and PMIC arbiter with AVS
+disabled, but r50 CFG and PMIC data slots are zero. The L2 SPM owner must
+initialize the compiled Madai master configuration and provide its regmap
+before the fixed-range provider can activate. Installed r50, CPU limits and
+voltage remain unchanged, taint 0, no audio tests or host built-in Wi-Fi
+changes. Full hardware goal and SD physical-reseat coordination remain open.
+See [SAW evidence](../evidence/2026-11-06-pm8226-saw-fixed-range-candidate.json).
+
+### 2026-11-07: r51 L2 owner trial failed; r50 recovery prepared
+
+Implemented the opt-in L2 master owner and verified setup/publication ordering
+with18 I/O failure points, retries and4096-address access checks. The owner
+leaves voltage commands and the low-power sequencer untouched during its
+initialization function. Eight schema cases and compiled Madai phandle/OPP
+checks pass. Source recipe r51 verifies17 checksums and16 patches reproducing
+27 files. Full build52, linked constants, all464 module signatures, all545
+payload hashes, signed APK, snapshot consistency and boot readback pass.
+
+After installation/reboot, the phone enumerated as Qualcomm9008, with no
+Linux USB network or fastboot. Native boot failed; no L2/S2 or postboot
+acceptance is claimed. Root cause is unknown. Quarantined r51 and requested
+physical power-off/Volume Down entry to lk2nd fastboot. No EDL loader is
+verified. Extracted the r50 Android boot image from the verified rollback,
+matching both archived /boot and the known partition payload. All464 r50/r51
+module files are identical. A prepared recovery script requires r50 RAM boot,
+restores package/files from the verified snapshot and writes only the boot
+payload/tail, preserving the lk2nd prefix. Recovery has not run yet. Future
+first power-controller trials will use RAM boot before persistent installation.
+
+Source review found fixed S2 still inherited generic PMIC enable/disable
+callbacks. Core always-on registration can invoke enable; the vendor SAW
+provider does not use that generic gate. This is a protocol mismatch, not a
+proven explanation of the reset. Added an unpackaged no-gate correction and
+mandatory always-on binding. Actual provider/core enable-dispatch tests,
+nine binding cases and ARM W=1 compile pass. No correction was booted and no
+post-failure voltage state is known. Audio remains excluded; host built-in
+Wi-Fi unchanged. Full hardware goal remains open. See
+[failed r51 evidence](../evidence/2026-11-07-l2-master-r51.json).
+
+### 2026-11-07: offline voltage planner while recovery awaits physical entry
+
+USB still enumerates Qualcomm 9008 with no fastboot device. The physical
+power-cycle request remains pending; no EDL loader or further phone writes
+were attempted. Verified r50 RAM boot and bounded restoration remain ready.
+
+Added an unused C APC/MX planner that queries only provider metadata and
+commits no output on failure. Exact rounded points must exist; the global
+APC ceiling and MX cap cannot be exceeded. The initial MX floor includes
+actual boot APC voltage, not a clock-derived guess. Six tests pass 512
+nominal combinations and all 1608 metadata failure positions, plus holes,
+invalid handles/bounds and representability checks. ARM W=1 compilation and
+header checkpatch pass. The earlier captured unit’s nominal 1075mV point maps
+to 1080mV APC and 1087.5mV MX; no voltage was applied or measured on the phone.
+Fixed range 0 rejects the compiled 1280mV ceiling. There is no package or
+live CPR consumer for this helper.
+
+Reviewed the pinned RPM driver: L3’s `_ao` supply uses active-only requests,
+not an inferred always-on constraint. Suspend vote lifetime remains open.
+Audio and host built-in Wi-Fi remain untouched. See
+[planner evidence](../evidence/2026-11-07-msm8926-voltage-plan-candidate.json).
+
+### 2026-11-07: reconnect allowed r51 inspection and complete r50 recovery
+
+The owner reconnected the phone; USB networking/SSH returned with r51
+build 52, boot 6178455a-f4db-464f-b60f-c6da8dee27e2 and taint 0. Native
+bootstrap checks pass: L2 owner bound, stock CFG/DLY/DATA, unchanged VCTL 0
+and PMIC status 0, named APC provider at 1150mV/range1/PWM, conservative OPPs.
+No pstore files were present. This changes the evidence from no successful
+boot to one successful bootstrap after reconnection. It does not identify
+the earlier failure stage or establish reliable r51 startup. Quarantine
+remains, and future first controller trials will be RAM-only.
+
+Performed the prepared r50 restoration over SSH. The first apk command
+rejected unsupported --allow-downgrade before package/boot changes; inspected
+installed help, simulated direct local-file downgrade, archived that failed
+attempt and retried successfully. Restored and verified all archived files,
+package state and world. Only boot payload/tail was written; lk2nd prefix
+was untouched. Full partition readback matches 3790f14d... from the r50 backup.
+Normal reboot succeeded into r50 build 51, boot f7e2e340-96eb-4265-b72d-292e36ec8bfe,
+taint 0, same 1150mV APC target and 300–787.2MHz policy. L2 registers returned
+to zero and the r51 owner is absent. Sensor proxy is active, raw IMU works,
+SMD/buffer 0 and RTC clear; no MDP5 underruns. SD remains unmounted. Owner
+display/touch confirmation is pending. No audio tests or host built-in Wi-Fi
+changes occurred. Full hardware implementation/qualification remains open.
+See [recovery evidence](../evidence/2026-11-07-r50-restored-after-r51.json).
+
+### 2026-11-07 — CPR MX activation candidate
+
+Added explicit MX bootstrap activation and blocked APC changes before a successful enable. Cached requests, enable failure/retry and idempotence pass the actual-header C harness; ARM W=1 CPR object compilation and six planner tests pass. Exported the fifteenth CPU-series patch. No package or native voltage trial; r50 remains installed. See evidence/2026-11-07-cpr-mx-activation-candidate.json. Audio excluded; host built-in Wi-Fi unchanged.
+
+### 2026-11-07 — CPR attachment retry
+
+Fixed premature CPU attachment publication and ignored ACC register errors. Actual callback fault injection covers ten initialization failures and successful retries; CPR regressions, ARM W=1 compilation and checkpatch pass. Exported CPU-series patch 16, uninstalled. Fx0 CPR/OPP integration remains open; no audio testing or built-in Wi-Fi changes. Evidence: evidence/2026-11-07-cpr-attach-retry-candidate.json.
+
+### 2026-11-07 — Vendor clock-to-CPR mapping
+
+Added the vendor fmax selection/fallback mapper connecting calibration and quantized rail metadata. All five reference tables match pinned source/hash; bin/version/boundary C tests, 13 calibration/planner regressions and ARM W=1 compilation pass. CPU patch 17 is uninstalled, with no native trial. CPR domain/OPP and suspend integration remain open. Audio excluded; built-in Wi-Fi unchanged. Evidence: evidence/2026-11-07-msm8926-corner-map-candidate.json.

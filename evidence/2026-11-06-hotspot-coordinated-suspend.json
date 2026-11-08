@@ -1,0 +1,157 @@
+{
+  "date": "2026-11-06",
+  "status": "Two explicit coordinated RTC suspend cycles pass; production Sxmo integration remains open",
+  "kernel": "6.18.59-fx0-dmp",
+  "package": "6.18.59-r49",
+  "boot_id": "27e64765-ae45-483e-b341-3634eef18357",
+  "helper": "diagnostics/hotspot-suspend/fx0-hotspot-suspend",
+  "helper_sha256": "fcdd8b19d30e613f63e76b3d74d118b406f9a8c85c3b81601504687e47f91241",
+  "execution": "ordinary phone user controls NetworkManager and uses existing doas permissions for wakeup_count and rtcwake; no policy changes",
+  "cycles": [
+    {
+      "cycle": 1,
+      "real_sleep_seconds": 13.309630000000652,
+      "AP_state_after": "100 (connected)",
+      "profile_autoconnect_after": "no",
+      "taint_after": 0,
+      "trace_sha256": "dee4fd0d9d1d234b47785431fd08ef4d3f7200e4d49ac95ea62bd0db4585200f",
+      "kernel_log_sha256": "2e3ce6193c3014e72cb4d5490e756e813a40545b47494557c551b38d8f09c6db"
+    },
+    {
+      "cycle": 2,
+      "real_sleep_seconds": 12.810526000000209,
+      "AP_state_after": "100 (connected)",
+      "profile_autoconnect_after": "no",
+      "taint_after": 0,
+      "trace_sha256": "40abe58fd354cf78534525d1cbc29045eccc2436b84037c5656fec784dbf8082",
+      "kernel_log_sha256": "96bf5a39e5ee26ac336cef388987a026f88a7650822f7acb88069e885554ddf6"
+    }
+  ],
+  "phases": [
+    {
+      "name": "baseline-two-clients",
+      "transfers": [
+        {
+          "device": "wlp0s20f0u4",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 8.05325699900277
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 3.765106099002878
+        }
+      ],
+      "readiness": [
+        {
+          "device": "wlp0s20f0u4",
+          "data_ready_seconds": 0.040422056998068,
+          "attempts": 1
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "data_ready_seconds": 0.051440563998767175,
+          "attempts": 1
+        }
+      ],
+      "host_network_unchanged": true
+    },
+    {
+      "name": "after-resume-01",
+      "transfers": [
+        {
+          "device": "wlp0s20f0u4",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 9.052570242005459
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 4.969769477997033
+        }
+      ],
+      "readiness": [
+        {
+          "device": "wlp0s20f0u4",
+          "data_ready_seconds": 0.0476066500050365,
+          "attempts": 1
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "data_ready_seconds": 1.5876512070026365,
+          "attempts": 2
+        }
+      ],
+      "host_network_unchanged": true
+    },
+    {
+      "name": "after-resume-02",
+      "transfers": [
+        {
+          "device": "wlp0s20f0u4",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 12.23381670499657
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "ping_sent": 5,
+          "ping_received": 5,
+          "bytes": 16777216,
+          "sha256_match": true,
+          "transfer_seconds": 10.839772554005322
+        }
+      ],
+      "readiness": [
+        {
+          "device": "wlp0s20f0u4",
+          "data_ready_seconds": 0.04912807099753991,
+          "attempts": 1
+        },
+        {
+          "device": "wlp0s20f0u2i2",
+          "data_ready_seconds": 1.5826906270012842,
+          "attempts": 2
+        }
+      ],
+      "host_network_unchanged": true
+    }
+  ],
+  "concurrent_station_count": 2,
+  "verified_bytes": 100663296,
+  "cleanup": {
+    "ip_forward": "0",
+    "wlan_state": "30 (disconnected)",
+    "AP_profile_present": false,
+    "http_active": "inactive",
+    "firewall_rule_present": false,
+    "taint": 0,
+    "boot_id": "27e64765-ae45-483e-b341-3634eef18357"
+  },
+  "host_default_route_resolver_and_builtin_connection_unchanged": true,
+  "regression_tests": {
+    "passed": 9,
+    "command": "python3 -m unittest discover -s tests -p test_hotspot_suspend.py"
+  },
+  "policy_finding": "Installed Sxmo blocks autosuspend by a Hotspot connection-name prefix; detection must cover renamed AP profiles while preserving that policy. Its direct rtcwake path does not notify NetworkManager.",
+  "limits": [
+    "Candidate only; not installed as the production Sxmo suspend path",
+    "No continuous connectivity during suspend; AP is deliberately disconnected and restored",
+    "No Internet backhaul, IPv6, power draw or overnight qualification",
+    "Audio excluded; built-in host Wi-Fi unchanged"
+  ]
+}

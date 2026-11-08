@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-06",
+  "status": "Follow-up code and ARM object build pass; not in prepared RAM candidate and not installed",
+  "worktree": "worktrees/linux-dmp-recovery",
+  "branch": "development/fx0-dmp-recovery",
+  "problem": "Prepared candidate retries failed DMP restoration before raw buffered capture, but direct raw data/scale/calibration accesses can bypass pending restoration.",
+  "change": "Runtime-powered direct channel and calibration access now invokes locked recovery gate; active DMP rejects access, pending restoration must complete/read-verify before raw access. WoM threshold mutations reject active or pending DMP state.",
+  "tests": {
+    "targeted_total": 24,
+    "new_test": "Actual C recovery gate with modeled bus: active mode rejects without bus traffic, failed cleanup remains pending, failed recovery propagates, successful retry restores raw scale before access, clean state causes no traffic",
+    "scope_limit": "Model does not exercise Linux runtime-PM or complete sysfs callbacks. No physical raw/DMP switching qualification yet."
+  },
+  "build": "ARM W=1 complete IMU object directory exit 0, no diagnostics; full kernel not rebuilt for this follow-up",
+  "checks": [
+    "Patch applies cleanly over prepared candidate source",
+    "checkpatch new file and tracked diff: zero errors/warnings",
+    "git diff --check passed"
+  ],
+  "patch_sha256": "8bbd499b68e5f17ca3b9f32c0c377c72d91db59de679a6e9335c767271222d79",
+  "prepared_candidate": "Unchanged and separately preserved in worktrees/linux-dmp; this follow-up is deliberately separate from its image and manifest",
+  "audio": "excluded",
+  "host_builtin_wifi": "untouched"
+}

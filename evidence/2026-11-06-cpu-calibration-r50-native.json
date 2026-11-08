@@ -1,0 +1,110 @@
+{
+  "boot_id": "4064272a-51a1-4c4c-bea4-f8ec846801d6",
+  "provider": "qfprom-raw1",
+  "mode": "0o400",
+  "raw_reads_match_reread": true,
+  "CPU_matches_prior_MMIO": true,
+  "protected_row_redacted_not_decoded": true,
+  "CPR_enabled": false,
+  "CPU_policy_before": {
+    "scaling_min_freq": "300000",
+    "scaling_max_freq": "787200",
+    "scaling_governor": "schedutil"
+  },
+  "read_status": 0,
+  "condition_matches": 1,
+  "taint_with_external_pilot": 4096,
+  "taint_after_unload": 4096,
+  "CPU_policy_after": {
+    "scaling_min_freq": "300000",
+    "scaling_max_freq": "787200",
+    "scaling_governor": "schedutil"
+  },
+  "installation": {
+    "pid": 20408,
+    "boot_id": "27e64765-ae45-483e-b341-3634eef18357",
+    "status": "installed, readback verified, not rebooted",
+    "package_sha256": "1790e7571564cffc1274831cee8025431a53b1255e35299865f36f95f31e2970",
+    "kernel_release": "6.18.59-fx0-dmp",
+    "boot_image_sha256": "85e4906004c0f40a9ba2c137ffe635f86f23b2434825d69c3f5990240ba1b579",
+    "boot_image_bytes": 17549312,
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "lk2nd_prefix_unchanged": true,
+    "tail_unchanged": true,
+    "payload_files_checked": 545,
+    "regenerated_module_indexes": [],
+    "new_MSM_in_initramfs": true
+  },
+  "status": "Native bounded raw and secure reads passed; clean reboot and bounded sensor/RTC baseline passed",
+  "package": "6.18.59-r50",
+  "raw_fuse_bytes_published": false,
+  "voltage_changed": false,
+  "CPU_frequency_limits_changed": false,
+  "audio_tested": false,
+  "host_builtin_wifi_changed": false,
+  "remaining": [
+    "Full calibration parser and MSM8926 CPR/regulator/OPP integration",
+    "Higher OPP hardware qualification",
+    "SD electrical diagnosis and suspend qualification"
+  ],
+  "clean_postboot": {
+    "loaded_MSM_build_id": "eb152a70d222d199697bf103bde5bea2ef269ded",
+    "package": "6.18.59-r50",
+    "kernel_release": "6.18.59-fx0-dmp",
+    "boot_id": "9a3a2475-fbef-4a97-be8f-888f396204d1",
+    "CONFIG_CFI": true,
+    "module_vermagic": "6.18.59-fx0-dmp SMP preempt mod_unload modversions ARMv7 p2v8",
+    "raw_before": {
+      "in_accel_x_raw": "-531",
+      "in_accel_y_raw": "36",
+      "in_accel_z_raw": "-14652",
+      "in_anglvel_x_raw": "33"
+    },
+    "quaternion_scale": "0.000000000931322574615478515625",
+    "raw_after": {
+      "in_accel_x_raw": "-526",
+      "in_accel_y_raw": "63",
+      "in_accel_z_raw": "-14736",
+      "in_anglvel_x_raw": "31"
+    },
+    "MDP5_underrun_count": 0,
+    "taint": 0,
+    "sensor_proxy": "active",
+    "SMD_enabled": "0",
+    "buffer_enabled": "0",
+    "IMU_wakeup": "disabled",
+    "RTC_alarm": ""
+  },
+  "final_state": {
+    "boot_id": "9a3a2475-fbef-4a97-be8f-888f396204d1",
+    "taint": 0,
+    "CPU_policy": {
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200",
+      "scaling_governor": "schedutil"
+    },
+    "SD_mounted": false,
+    "probe_loaded": false,
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "CPR_disabled": true,
+    "wlan0_state": "30 (disconnected)"
+  },
+  "RTC_control": {
+    "requested_seconds": 12,
+    "traced_machine_suspend_seconds": 12.328135,
+    "IRQ_deltas": {
+      "pm8xxx_rtc_alarm": 1,
+      "inv_mpu": 0
+    },
+    "DMP_armed_after_resume": "1",
+    "DMP_counter_delta": 3659,
+    "quaternion_samples_after_resume": 75,
+    "scope": "RTC control with armed DMP; not a physical DMP wake pass"
+  },
+  "awake_SMD": {
+    "armed": "1",
+    "IRQ_delta": 0,
+    "quaternion_samples_after": 75,
+    "scope": "Awake arming/status observation only. No commanded physical motion or suspend/wake qualification."
+  }
+}

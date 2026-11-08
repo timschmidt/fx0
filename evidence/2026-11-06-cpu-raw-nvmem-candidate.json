@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-06",
+  "status": "Read-only raw QFPROM kernel/DT foundation built and validated; not installed",
+  "worktree": "worktrees/linux-cpu-cpr",
+  "branch": "development/fx0-cpu-cpr",
+  "base": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66 plus the same r49 DMP/MDP5 source patches",
+  "patches": {
+    "fx0-msm8926-raw-qfprom-binding.diff": "2affc2d26b7c7585d1cc0f847412da8011fcbc97754b3b1ca7fed9e3af164011",
+    "fx0-msm8926-raw-qfprom-driver.diff": "d552388edaa8a9ab6aafeb44b1918aea795ff4ba177355fbb6d075d1c6246047",
+    "fx0-msm8926-raw-qfprom-dt.diff": "08e458d5cca9c00441fa177cf38fbf74984a680bebc66ff014a80e73835f7aa1"
+  },
+  "interface": {
+    "compatible": "qcom,msm8926-qfprom-raw",
+    "region": "0xfc4b8000 size 0x1000",
+    "access": "root-only and read-only NVMEM config; no writer callback; extra memory regions rejected before mapping",
+    "cells": {
+      "cpu-bin": "offset 0xb0, 4 bytes",
+      "cpr-primary": "offset 0x450, 8 bytes",
+      "cpr-redundant": "offset 0x458, 8 bytes"
+    },
+    "corrected_provider": "Unchanged; no global raw-read toggle or calibration view switch"
+  },
+  "validation": {
+    "ARM_object_compile": "passed",
+    "Madai_DTB_compile": "passed",
+    "DT_binding_meta_and_examples": "passed",
+    "YAML_lint": "passed after installing optional yamllint in isolated venv",
+    "actual_probe_C_contracts": 9,
+    "DT_schema_tests": 7,
+    "exported_series_reproduces_candidate": "passed",
+    "checkpatch": "0 errors, 0 warnings for each separate binding/driver/DT patch"
+  },
+  "host_artifacts": {
+    "llvm/drivers/nvmem/qfprom.o": "a4f795446fe50b4b6ac9dd4d9e6d6afcf644275109bbfed55e644976e8a1bf86",
+    "llvm/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda"
+  },
+  "tooling": "Clang 21/LLD18 ARM kernel build; dtschema 2026.9 in isolated local venv",
+  "limits": [
+    "QFPROM is built-in in the installed config: only the object and DTB were built, no replacement kernel package or boot trial yet",
+    "No runtime raw NVMEM permission/data equivalence test yet",
+    "CPR voltage/PVS initialization, MX coordination and CPU OPP transitions still need implementation and hardware qualification",
+    "Running r49 phone remains unchanged; no higher frequency or voltage requested"
+  ],
+  "audio": "Excluded",
+  "host_builtin_wifi": "No configuration or connection changes"
+}

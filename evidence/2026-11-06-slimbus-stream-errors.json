@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-06",
+  "subject": "Propagate and clean up Fx0 SLIMbus stream setup failures",
+  "status": "Host validated; not installed or hardware qualified",
+  "kernel_branch": "development/fx0-ngd-ack-status",
+  "kernel_base": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+  "patch": "patches/linux-integration/fx0-slimbus-stream-errors.diff",
+  "patch_sha256": "9fecaac67a716826c67de115f800a446b4903f9d58daa6ece89039949e6345e8",
+  "changes": [
+    "Return port connection errors from slim_stream_prepare, disconnect earlier successful connections, free port state and permit a fresh retry.",
+    "Free port state on invalid sample rate.",
+    "Propagate controller disable errors.",
+    "Attempt every port disconnect in unprepare and return the first error.",
+    "WCD9306 propagates prepare and activation errors; activation failure attempts disable and unprepare, preserving the original error.",
+    "Stop/suspend/pause attempts unprepare even if disable fails, returning the first error."
+  ],
+  "validation": {
+    "ARM": "PASS: drivers/slimbus/stream.o and sound/soc/codecs/wcd9306.o, GCC 15.2.1, multi_v7_defconfig plus SLIMBUS/NGD and WCD9306",
+    "checkpatch": "PASS: combined patch 0 errors, 0 warnings",
+    "tests": "PASS: 26 unittest cases after adding synchronous NGD response-ownership fault injection; three new tone-analysis cases also pass separately.",
+    "test_file": "tests/test_slimbus_error_paths.py",
+    "fault_cases": [
+      "allocation and sample-rate failures",
+      "first and second port connection failure",
+      "successful retry after preparation failure",
+      "duplicate prepare refusal",
+      "disconnect failure still attempts every disconnect and frees port state",
+      "start/resume/pause-release success, preparation failure, activation failure and failing cleanup",
+      "stop/suspend/pause-push success, disable failure, unprepare failure",
+      "invalid trigger command"
+    ]
+  },
+  "access_correction": "The USB ID 18d1:d001 has a misleading fastboot database label. Full descriptors identify LG Fx0 bcdDevice 6.18 and CDC NCM USB network interfaces. SSH at 172.16.42.1 responds; existing keys are rejected for root and tim. HTTP on ports 80 and 8000 is unavailable. This supersedes the prior assumption that the phone is in fastboot.",
+  "next": "Add this host public key using the phone terminal or recover the prior development key, inspect live kernel/configuration, then qualify audio setup, repeated playback/capture and suspend. Generic ACK acceptance was already observed during silent playback; these changes do not claim to fix that delivery race.",
+  "authorization": "Owner permits wipe/reinstallation if needed; no phone writes, wipe, reinstall or host Wi-Fi configuration changes performed."
+}

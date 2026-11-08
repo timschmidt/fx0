@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-06",
+  "status": "CPR APC/MX sequencing component implemented and built; MSM8926 integration remains inactive",
+  "worktree": "worktrees/linux-cpu-cpr",
+  "patch": "patches/linux-integration/fx0-cpr-mx-voltage-sequencing.diff",
+  "patch_sha256": "f5bdd80531d944f84c41eaabd7c381c988a9b6ae233956327d542a6f4c05a119",
+  "source_basis": {
+    "Madai_driver": "https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/mach-msm/cpr-regulator.c",
+    "driver_sha256": "41e82b8f55f248c3ce5a066561919ce2ab64a66dafe4930cc736c880b9ce322d",
+    "MX_policy": "Compiled recovery qcom,vdd-mx-vmin-method=1, APC fuse-corner ceiling, maximum 1337500 uV"
+  },
+  "implemented": [
+    "Actual CPR scaling uses a shared private voltage state/helper; APC-only behavior remains direct exact-voltage request",
+    "Raise MX floor before raising APC; lower APC before reducing MX vote",
+    "Keep raised MX vote on APC failure",
+    "If MX reduction fails after APC succeeds, retain the old floor, record/log error and avoid inducing unsafe OPP rollback",
+    "Reject uninitialized MX vote, invalid voltage bounds and MX floor below APC",
+    "Bootstrap helper requires a floor covering all boot possibilities and never lowers an existing vote"
+  ],
+  "contracts": {
+    "compiled_actual_helper_with_fault_injected_regulators": 18,
+    "host_test": "python3 -m unittest discover -s tests -p test_cpr_voltage.py",
+    "ARM_CPR_object_compile": "passed",
+    "checkpatch": "0 errors, 0 warnings",
+    "four_patch_series_reproduction": "all five source files exactly match"
+  },
+  "object_sha256": "887bc1f6981b555dc61cac2a385fc35c7f456c4e9656b84e79d56905855354e9",
+  "limits": [
+    "No current compatible acquires/activates MX; this component is not full MSM8926 CPR support",
+    "Caller must implement regulator activation, handoff and locking; those remain integration gates",
+    "MSM8926 PVS/quotient initialization, MX lifecycle, native supply binding, OPP tables, boot/PM/fault qualification remain open",
+    "Object compile only, no new kernel package or phone installation",
+    "No real regulator requests or frequency changes in this turn"
+  ],
+  "audio": "Excluded",
+  "host_builtin_wifi": "Unchanged"
+}

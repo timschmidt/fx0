@@ -1,0 +1,38 @@
+# r51 had one EDL event of unknown stage, then a successful native bootstrap.
+# r51 remains unqualified; r50 was restored. Later patches are not native-tested.
+# Last known working kernel is r50 (first five CPU foundation patches).
+# CPU foundation: first five patches installed in r50; full CPR/OPP integration pending.
+fx0-msm8926-raw-qfprom-binding.diff
+fx0-msm8926-raw-qfprom-driver.diff
+fx0-msm8926-raw-qfprom-dt.diff
+fx0-cpr-mx-voltage-sequencing.diff
+fx0-scm-legacy-fuse-read.diff
+
+# Unpackaged follow-up: offline calibration helper, no live CPR consumer yet.
+fx0-msm8926-calibration-decoder.diff
+
+# Unpackaged opt-in PM8226 S2 fixed-range driver; L2 owner init still required.
+fx0-pm8226-saw-fixed-range-binding.diff
+fx0-pm8226-saw-fixed-range.diff
+
+# r51 L2 owner setup and Madai S2 opt-in; one native bootstrap pass.
+fx0-msm8226-l2-master-binding.diff
+fx0-msm8226-l2-master-driver.diff
+fx0-msm8926-l2-master-dt.diff
+
+# Unpackaged post-failure correction: never gate SAW-owned always-on S2.
+# These follow-ups are NOT in the failed r51 image and have no native pass.
+fx0-pm8226-saw-always-on-binding.diff
+fx0-pm8226-saw-no-enable.diff
+
+# Read-only planning follow-up; no live consumer, package or voltage trial.
+fx0-msm8926-voltage-plan.diff
+
+# Activate MX before allowing APC transitions; uninstalled, no native trial.
+fx0-cpr-mx-activation.diff
+
+# Retry attachment after initialization failure; uninstalled.
+fx0-cpr-attach-retry.diff
+
+# Map vendor clock fmax tables to calibrated rail/quotient metadata; uninstalled.
+fx0-msm8926-corner-map.diff

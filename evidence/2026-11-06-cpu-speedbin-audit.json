@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-06",
+  "status": "Read-only support audit and diagnostic decoder; no higher OPP enabled",
+  "live_inventory": {
+    "soc": {
+      "soc_id": "200",
+      "revision": "1.1",
+      "family": "Snapdragon",
+      "machine": "MSM8926"
+    },
+    "nvmem": [
+      {
+        "name": "qfprom0",
+        "path": "/sys/devices/platform/soc/fc4bc000.efuse/qfprom0",
+        "files": [
+          "cells",
+          "subsystem",
+          "power",
+          "type",
+          "nvmem",
+          "uevent",
+          "of_node"
+        ]
+      }
+    ]
+  },
+  "reference": {
+    "url": "https://android.googlesource.com/kernel/msm/+/866b728388bc6a1d774e8433482a08f11e8245d4/drivers/clk/msm/clock-a7.c",
+    "sha256": "af4abe87b60cc83affd97bb97f0291fad01d86d1cf37392c3397a58f37b7d14c",
+    "MSM8226_compatible_present": true,
+    "binding": "https://android.googlesource.com/kernel/msm/+/android-7.1.0_r0.2/Documentation/devicetree/bindings/arm/msm/acpuclock/clock-a7.txt"
+  },
+  "source_findings": [
+    "CPU DTS has four conservative OPPs and no CPU supply association",
+    "qcom-cpufreq-nvmem match table lacks MSM8226",
+    "Current generic CPR match table lists qcs404, not MSM8226",
+    "Manufacturer clock path requires CPU supply plus per-bin/version plan, with separate conservative fallback"
+  ],
+  "implemented": "scripts/decode_msm8226_speedbin.py: supplied-word uint32 decoder only, no hardware access",
+  "tests": {
+    "command": "python3 -m unittest discover -s tests -p test_msm8226_speedbin.py",
+    "passed": 5
+  },
+  "required_work": "docs/msm8226-cpu-performance.md",
+  "limits": [
+    "No validated Fx0 fuse offset or fuse-word classification",
+    "No validated per-unit voltage/corner plan or APC/CPR control implementation",
+    "No CPU frequency/voltage change and no high-frequency hardware pass"
+  ],
+  "audio": "Excluded",
+  "host_builtin_wifi": "Unchanged"
+}

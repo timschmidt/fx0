@@ -1,0 +1,44 @@
+{
+  "status": "boot-image generation passed, flash functions suppressed",
+  "bytes": 17549312,
+  "sha256": "1ae46a8e2f6b06e5964f5df6358b2aa93041e883424d058b6c9607f85a083610",
+  "filename": "boot.img",
+  "fits_after_524288_byte_prefix": true,
+  "boot_partition_unchanged": true,
+  "boot_files_unchanged": true,
+  "installed_modules_unchanged": true,
+  "kernel_metadata_unchanged": true,
+  "APK_database_unchanged": true,
+  "boot_id_unchanged": true,
+  "functions_sha256": "6ace3029eb96c402cba3530d4debecb0073758f2ac69732c09ad2a7975b10f9c",
+  "date": "2026-11-06",
+  "scope": "Installed boot-deploy image generation using private candidate /boot and explicit no-flash function overrides",
+  "header_check": {
+    "header_version": 0,
+    "page_size": 2048,
+    "used_header_addresses_match_working_image": true,
+    "unused_second_address": {
+      "new": 15728640,
+      "working": 0,
+      "second_size": 0
+    },
+    "command_line_matches_working_image": true,
+    "embedded_kernel_and_DTB_match_verified_APK": true,
+    "embedded_initramfs_matches_verified_preview": true,
+    "kernel_and_DTB_bytes": 5599328,
+    "ramdisk_bytes": 11945465,
+    "boot_image_sha256": "1ae46a8e2f6b06e5964f5df6358b2aa93041e883424d058b6c9607f85a083610"
+  },
+  "host_readback_sha256_verified": true,
+  "host_embedded_payload_check": "Kernel plus DTB and ramdisk byte-for-byte verified again after download",
+  "actual_flash_functions_executed": false,
+  "deviceinfo_flash_bootimg_offset": 524288,
+  "source_boot_id": "78f624e5-8b48-4821-8f64-44d6b6905f90",
+  "limitations": [
+    "No package installed and no candidate boot performed",
+    "Flash functions were overridden; actual write/rollback behavior was not tested by this preview",
+    "New Clang/CFI kernel requires physical qualification, including motion wakes"
+  ],
+  "audio": "No audio tests",
+  "host_builtin_wifi": "Untouched"
+}

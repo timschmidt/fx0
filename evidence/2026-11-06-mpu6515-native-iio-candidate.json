@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-06",
+  "scope": "Native DMP quaternion IIO candidate, not installed or physically qualified",
+  "base_commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+  "branch": "development/fx0-dmp",
+  "features": [
+    "Exclusive quaternion scan with raw scans retained",
+    "Runtime-PM-held startup and verified raw register restoration",
+    "DMP interrupt dispatch and overflow status handling",
+    "Bounded coherent FIFO count, partial-tail retention and batch validation",
+    "Q30 positive-W quaternion reconstruction and IRQ-anchored 25 Hz timestamps",
+    "FIFO recovery without stale tail; monotonic timestamp filtering"
+  ],
+  "limits": [
+    "System suspend rejected during DMP capture: retention/wake not implemented",
+    "Host model does not verify Linux PM/trigger integration, hardware IRQ, transport or accuracy",
+    "RAM is reloaded each start but previous volatile RAM contents are not restored on stop; raw functional registers are restored",
+    "Native sample reader prepared, not physically exercised"
+  ],
+  "tests": {
+    "passed": 23,
+    "skipped": 0,
+    "transport_operation_failures": 1472,
+    "loader_operation_failures": 1478,
+    "configuration_operation_failures": 184,
+    "startup_operation_failures": 207,
+    "stop_operation_failures": 25,
+    "private_firmware": "Loader harness reads ignored private reference image; skips that test on systems where it has not been extracted",
+    "host_model": "Actual C functions compiled with modeled regmap/firmware/IIO sink; lifecycle harness stubs firmware loader separately from dedicated loader tests",
+    "reader_restore": "Exclusive-mask restore and error reporting tested against IIO-like mask validation"
+  },
+  "checks": {
+    "ARM_driver_objects": "W=1 build passed before final comment-free recovery timestamp adjustment; full build includes adjustment",
+    "checkpatch": "new file zero errors/warnings; tracked patch zero errors/warnings",
+    "whitespace": "passed",
+    "rollback_partition": "Live SHA256 2910f3148957b8aa96a8d24b0da2161d690b1e0a46ad727653026f3138bdfd99 matches private 32 MiB preserved boot-before-package.img; partition reports PARTNAME=boot, 65536 sectors",
+    "full_build": "Kernel zImage, Fx0 DTB and modules exit 0, no warnings/errors",
+    "module_staging": "464 modules, all vermagic releases match; depmod -e -F System.map exit 0 without diagnostics",
+    "trial_initramfs": "11,494,064 bytes; SHA256 516e82cf15b709b467eaab6d520758da4eca0e9bf71a5256811e806766c4eb18; only candidate module version plus nonversioned initramfs.load metadata",
+    "ram_image": "16,472,064 bytes; SHA256 de4a2676a4ec1ab05c3ea21a5565d73cd27469aed9ac2d5c6e3ea6575c362328; unpacked payloads match; working Android header parameters retained",
+    "RAM_payload_readback": "unpack_bootimg kernel and ramdisk exactly match zImage+DTB and trial initramfs"
+  },
+  "source_diff_sha256": "70881ac26662886649480c3c05150e9df6039e57f59684b4b6e0eda3f7ef3322",
+  "audio": "No audio modifications or testing; full baseline kernel build includes configured sound drivers",
+  "host_wifi": "Built-in Wi-Fi untouched",
+  "phone_preparation": "Separate candidate module directory and private pinned firmware staged; installed kernel/release metadata 6.18.59 unchanged; boot partition hash still equals rollback image after initramfs preparation",
+  "initramfs_trial_history": "First helper invocation with -no-bootdeploy generated then deleted temporary archive, correctly failed missing-output check. Corrected private-namespace boot-deploy interception retained archive. Real deployment script not invoked.",
+  "boot_trial": "Software reboot accepted, then phone enumerated 05c6:f006 with HID interfaces (one interrupt IN endpoint), not fastboot. fastboot -s 10eceacd getvar product is live on session 28868 waiting for device. Candidate was not sent or booted. Owner asked to restore lk2nd fastboot physically.",
+  "boot_trial_followup": {
+    "observed": "Phone subsequently returned to normal Linux NCM USB 18d1:d001",
+    "kernel": "6.18.59",
+    "boot_id": "d8e46abf-d8db-4a03-a3a9-991f47ab0f4c",
+    "sensor_proxy": "active",
+    "candidate_files": "persistent directory survives",
+    "cause_of_transition": "not established; no owner text response received",
+    "candidate_booted": false,
+    "next": "Physical lk2nd fastboot entry still required; read-only query remains waiting"
+  },
+  "current_status": "Initial candidate superseded after a FIFO stack-buffer panic. Corrected driver and exact-scale kernel have now passed bounded physical native stream tests; see 2026-11-06-mpu6515-native-stream-and-scale.json. Earlier fastboot-only waiting status is historical."
+}

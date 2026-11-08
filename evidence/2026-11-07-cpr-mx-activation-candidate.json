@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-07",
+  "component": "CPR MX bootstrap activation",
+  "status": "unpackaged candidate; no native consumer or voltage trial",
+  "source": "worktrees/linux-cpu-cpr/drivers/pmdomain/qcom/cpr-voltage.h",
+  "sha256": "dde6825349a9805e9a59753973f91222e7ef164623d419bb53678db0956f2cd5",
+  "patch": "patches/linux-integration/fx0-cpr-mx-activation.diff",
+  "behavior": [
+    "bootstrap sets a nondecreasing boot floor before enabling MX",
+    "successful enable tracked separately from cached voltage request",
+    "APC transition rejected before successful MX activation",
+    "failed enable retains requested floor and permits retry",
+    "repeated bootstrap takes no additional enable reference",
+    "no automatic MX disable while always-on APC may remain live"
+  ],
+  "verification": {
+    "actual_header_C_harness": "passed; original 18 sequencing contracts plus activation/cache/failure/retry/idempotence",
+    "ARM_W1_cpr_object": "passed using LLVM=1 LD=ld.lld-18",
+    "planner_regression": "6 tests passed",
+    "checkpatch": "0 errors, 0 warnings, 2 existing voltage-unit naming checks",
+    "diff_whitespace": "passed"
+  },
+  "limitations": [
+    "model tests do not establish actual RPM hardware state",
+    "CPR attach, lifetime, error unwind and suspend handoff still require integration",
+    "no full kernel rebuild, source recipe update or package produced",
+    "phone remains on restored r50; audio excluded; host built-in Wi-Fi unchanged"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "status": "Offline unused voltage-planning helper; no native or boot qualification",
+  "kernel_header": "drivers/pmdomain/qcom/cpr-msm8926-voltage.h",
+  "patch": "patches/linux-integration/fx0-msm8926-voltage-plan.diff",
+  "patch_sha256": "7408b82182e6478c26eb9a57b7e83737965b91206412f083634558f459ea3ce3",
+  "tests": {
+    "unittest_cases": 6,
+    "nominal_rule_and_range_combinations": 512,
+    "provider_count_list_failure_points": 1608,
+    "each_metadata_failure_leaves_output_unchanged": true,
+    "exact_missing_selector_and_invalid_bound_tests": true,
+    "ARM_W1_object_compile": true,
+    "header_checkpatch_errors": 0,
+    "header_checkpatch_warnings": 0,
+    "patch_reproduces_header": true,
+    "patch_checkpatch": {
+      "errors": 0,
+      "warnings": 1,
+      "note": "Generic new-file MAINTAINERS reminder; existing CPR cpr*.h coverage includes this helper"
+    }
+  },
+  "fixture_for_prior_unit_capture": {
+    "PVS_bin": 21,
+    "PVS_version": 1,
+    "speed_bin": 0,
+    "conditional_selector_matches": true,
+    "boot_APC_uV": 1150000,
+    "source": "Previously captured r50 metadata, not a current device reading",
+    "provider_models": "Fixed FTS2 range1 at10mV with900mV..1.35V machine limits; PM8226 L3 grid750mV+n*12.5mV capped1.3375V"
+  },
+  "computed_plan": {
+    "floor_uV": [
+      1080000,
+      1080000,
+      1130000
+    ],
+    "ceiling_uV": [
+      1080000,
+      1180000,
+      1280000
+    ],
+    "initial_uV": [
+      1080000,
+      1080000,
+      1140000
+    ],
+    "MX_min_uV": [
+      1087500,
+      1187500,
+      1287500
+    ],
+    "bootstrap_MX_uV": 1287500
+  },
+  "policies": [
+    "Read provider count/list/step metadata only; never enable or set a regulator",
+    "Use exact rounded APC points; reject holes rather than substituting a higher voltage",
+    "Never round the nominal global APC ceiling upward",
+    "MX floor covers actual mapped APC ceiling",
+    "Bootstrap MX covers actual read boot APC voltage even above the selected plan",
+    "Reject unrepresentable or MX-incompatible plans before any rail vote"
+  ],
+  "limitations": [
+    "Fixed range0 cannot represent the compiled1280000uV ceiling; keep conservative behavior instead of silently lowering calibration",
+    "Actual provider and controller bootstrap are not qualified: r51 boot failed into EDL",
+    "No live CPR consumer, rail activation, OPP integration, voltage transition or performance qualification"
+  ],
+  "audio_tested": false,
+  "host_builtin_wifi_changed": false,
+  "phone_state_when_plan_prepared": "Qualcomm9008 emergency-download; physical fastboot entry and r50 recovery pending",
+  "subsequent_recovery_evidence": "evidence/2026-11-07-r50-restored-after-r51.json"
+}

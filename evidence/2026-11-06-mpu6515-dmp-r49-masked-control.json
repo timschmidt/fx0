@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-06",
+  "scope": "Owner-assisted masked-motion negative control on the same r49 build as the 20 consecutive positive wakes",
+  "status": "passed",
+  "kernel_release": "6.18.59-fx0-dmp",
+  "package": "6.18.59-r49",
+  "boot_id": "27e64765-ae45-483e-b341-3634eef18357",
+  "instructions": "Wait five seconds after armed cue, then repeat physical movement for fifteen seconds without screen or buttons",
+  "SMD_disabled": true,
+  "machine_sleep_seconds": 29.864176000000043,
+  "RTC_IRQ_delta": 1,
+  "IMU_IRQ_delta": 0,
+  "events": [],
+  "RTC_alarm_expired": true,
+  "post_quaternion_samples": 74,
+  "MDP5_underruns": 0,
+  "interpretation": "Matched-build movement did not wake the phone when SMD was disabled; the RTC fallback caused wake",
+  "limits": [
+    "Bounded control, not an overnight false-wake-rate or battery-power qualification"
+  ],
+  "hashes": {
+    "wakeup-sources-after.txt": "f9470152cebded2436090fd6b3dc806e4229bb7e95eb37ad2ffcfd5134322c0e",
+    "interrupts-before.txt": "fcababa3bc0854e7e8cd4dd166df62a165cc537354625eb38affd4e582f56131",
+    "power-irq.trace": "4aaf29cfbf55c33aa9326b285db83c52e939e82db086c3a23ba7fb0d36e84aee",
+    "quaternion-after-resume.csv": "052fc816891ce9c9a49c55221df65073a2225a7e29df8d9ef6a2d6f045000600",
+    "interrupts-after.txt": "b180abba9e2e5a9d15753fe3f8c58fa2f1892c7463669be939394b284f8076dd",
+    "quaternion-after-resume.log": "026fa5b1d2780802b42e410cb80a5e6cc9e75252584aab6089310de394df1eda",
+    "kernel.log": "ed1bafa7d0d26715b4035c2d2e2db0a3111243131ed95238fa3f0450e133470e",
+    "manifest.json": "0df330de826016da038d544a426f2792d9334ec2f0e3bb0c1c9ccaec8bffa34c",
+    "wakeup-sources-before.txt": "e5dba47e989b604cd9a3652692f681fe29c6f35aab48cc218b4db5912c2370d5"
+  },
+  "audio": "No audio tests",
+  "host_builtin_wifi": "Untouched"
+}

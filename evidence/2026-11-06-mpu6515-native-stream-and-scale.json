@@ -1,0 +1,83 @@
+{
+  "date": "2026-11-06",
+  "scope": "Bounded native DMP quaternion streaming, exact scale, three raw/DMP/raw cycles; not full sensor or wake qualification",
+  "boot_id": "78f624e5-8b48-4821-8f64-44d6b6905f90",
+  "kernel_release": "6.18.59-fx0-dmp-candidate-00129-g4b800b920c7d-dirty",
+  "boot_image_sha256": "23ac49c36dda98fb60a848472c26113d40b6c18e6e050149c53a8478973bbdda",
+  "boot_partition_sha256": "d0f57db69dde2821010415e6c2a121166d5cfaeef0cc77d1667d4729a50e5365",
+  "lk2nd_prefix_and_tail": "exact readback preserved",
+  "original_rollback_sha256": "2910f3148957b8aa96a8d24b0da2161d690b1e0a46ad727653026f3138bdfd99",
+  "modules": {
+    "inv-mpu6050.ko.zst": {
+      "sha256": "b8bd76c55c0e24e61ccc0e52a9cb5306c28d36879c793659aeeb235abb50b637",
+      "srcversion": ""
+    },
+    "inv-mpu6050-i2c.ko.zst": {
+      "sha256": "b20af542deb5cff0d8d7594ad50302f28ae66c312ddc47ed8fe164bb0de5e0d4",
+      "srcversion": ""
+    }
+  },
+  "scale": "0.000000000931322574615478515625",
+  "scan": "native-endian signed32 WXYZ Q30; 8 zero padding bytes; signed64 timestamp at byte24; 32 bytes total",
+  "cycles": [
+    {
+      "cycle": 1,
+      "samples": 75,
+      "capture_exit": 0,
+      "buffer_disabled_after": true,
+      "raw_reads_before_and_after": true,
+      "strictly_increasing_timestamps": true,
+      "span_ns": 2956809270,
+      "csv_sha256": "a60945f2e191055f34b19667dcd183331915cd8896a7d84b55eaf6cc70d7b764"
+    },
+    {
+      "cycle": 2,
+      "samples": 75,
+      "capture_exit": 0,
+      "buffer_disabled_after": true,
+      "raw_reads_before_and_after": true,
+      "strictly_increasing_timestamps": true,
+      "span_ns": 2956726874,
+      "csv_sha256": "1d221b8263e1c512322e3e827ca45e503a30b44b9f5db0466279a8378dfba9d8"
+    },
+    {
+      "cycle": 3,
+      "samples": 75,
+      "capture_exit": 0,
+      "buffer_disabled_after": true,
+      "raw_reads_before_and_after": true,
+      "strictly_increasing_timestamps": true,
+      "span_ns": 2956704218,
+      "csv_sha256": "4680eeefc424aa2a9bceb256c4db0d05fbb50df06493681769a9375802f1dc5c"
+    }
+  ],
+  "post_state": {
+    "boot_id_unchanged": true,
+    "sensor_proxy": "active, static and unmasked",
+    "buffer_enable": 0,
+    "raw_acceleration": "read succeeded",
+    "runtime_power_control": "auto",
+    "taint": 0,
+    "current_boot_DMP_reset_or_panic_log": "none observed in filtered journal"
+  },
+  "tests": {
+    "targeted_host_passed": 27,
+    "ARM_IIO_core_W1": "passed",
+    "kernel_zImage_build": "passed with normal project flags, no diagnostics",
+    "KUnit": "boundary vectors added, not executed"
+  },
+  "source_patches": {
+    "fx0-mpu6515-dmp.diff": "9ad19adac6fa9aa3eb995e41e031daa556595d0a3f7e3713757e19f32f6c0ce4",
+    "iio-preserve-tiny-log2-scale.diff": "7b01db1be9db0b1e73a4cb3034cd05d5b3eb164990fe6024fc58804278aaa0b0"
+  },
+  "history": "Initial native FIFO capture panicked from a 24-byte scan allocation; preserved ramoops and diagnosed actual 32-byte IIO alignment. Corrected driver and host sink, then captured 125 samples. Scale formatter subsequently fixed and validated by these three 75-sample cycles.",
+  "remaining": [
+    "Motion/orientation accuracy and mounting validation",
+    "Physical overflow, fault, reset/reload and long-run recovery qualification",
+    "Maintained kernel package integration; current trial uses a development boot image and separate versioned modules",
+    "DMP event-only lifecycle and genuine suspend-event wake, 20 physical wake cycles and battery standby",
+    "Other hardware acceptance requirements; audio work/testing remains deferred"
+  ],
+  "audio": "No audio feature changes or tests",
+  "host_builtin_wifi": "untouched"
+}
