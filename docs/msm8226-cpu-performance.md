@@ -939,7 +939,8 @@ Native r50 boot `8eda2570-36e5-43aa-a35c-6c531fdd349c` retains the original boot
 hash, four-rate schedutil policy, zero taint, Sway and sensor proxy. Two bounded
 PMIC reads confirm S2 range/VSET 1/115 and the restored 1.15 V target. Only the
 existing time-sync target/service remain pending at the initial check; the
-newest physical UI and any startup follow-up are tracked in
+owner confirms display and touch on this newest return. The same time-sync
+jobs remain pending at follow-up; details are tracked in
 [600 MHz feedback evidence](../evidence/2026-11-08-cpr-feedback-600.json).
 
 Three host shell tests cover 22 simulated modes, including voltage adjustment,

@@ -4064,3 +4064,8 @@ without phone or network changes; their original records remain private.
 Higher rates, controlled load/thermal/suspend, repeated transitions, physical
 rails, stable/edge packaging, installed update/recovery and wider hardware
 qualification remain open. The content-dependent USB staging defect persists.
+
+The owner confirms display and touch on this newest 600 MHz trial's r50
+return, closing its physical recovery check. Follow-up retains the same boot
+ID, zero taint, Sway and sensor proxy; the two existing time-sync jobs remain
+pending, so running systemd startup is not claimed for this boot.

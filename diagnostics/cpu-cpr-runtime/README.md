@@ -91,3 +91,5 @@ This is the handled floor branch, with no observed voltage adjustment. Return
 to 300 MHz verifies CTL `0x20000428`. The timed native return restores r50's
 original boot hash and PMIC 1.15 V target. The exact run and newest physical
 UI/startup status are in `evidence/2026-11-08-cpr-feedback-600.json`.
+The owner confirms display and touch on that newest return. Native startup
+still has only the existing time-sync jobs pending at the latest check.

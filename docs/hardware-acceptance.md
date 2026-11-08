@@ -107,7 +107,8 @@ sets the IRQ-handler floor-response flag with LOOP_EN enabled. This qualifies
 a handled floor clamp, not voltage adjustment or load/thermal/suspend. Return
 to 300 MHz clears LOOP_EN. The 181.741527-second timer returns to r50 with its
 original hash, PMIC 1.15 V target, zero taint and UI services; host network
-cleanup passes. Latest physical UI and startup follow-up are recorded in
+cleanup passes. The owner confirms display/touch on this newest return; only
+the existing time-sync jobs remain pending. Details are recorded in
 [600 MHz feedback evidence](../evidence/2026-11-08-cpr-feedback-600.json).
 Higher rates, repeated transitions, physical rails and broader gates remain open.
 

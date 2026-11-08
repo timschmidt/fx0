@@ -1,7 +1,7 @@
 {
   "date": "2026-11-08",
-  "recorded_UTC": "2026-11-08T20:41:14.887753+00:00",
-  "status": "First bounded 600 MHz CPR feedback floor response and fixed-corner return pass; native r50 hash/1.15 V target/services restored; physical UI pending on this newest native return",
+  "recorded_UTC": "2026-11-08T20:43:41.324854+00:00",
+  "status": "First bounded 600 MHz CPR feedback floor response and fixed-corner return pass; native r50 hash/1.15 V target/services restored; physical UI passed",
   "source_manifest": "manifests/kernel-cpr-voltage-observation.json",
   "source_commit": "b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8",
   "parent_registration_evidence": "evidence/2026-11-08-cpr-voltage-observation.json",
@@ -684,9 +684,17 @@
     },
     "owner_display_touch": {
       "native_boot_id": "8eda2570-36e5-43aa-a35c-6c531fdd349c",
-      "status": "pending on this newest native return",
-      "question": "The 600 MHz CPR feedback RAM trial has returned to installed r50. The original boot hash and 1.15 V PMIC target are restored, with Sway and the sensor proxy active. Do display and touch work normally on this newest boot?"
-    }
+      "status": "passed",
+      "question": "The 600 MHz CPR feedback RAM trial has returned to installed r50. The original boot hash and 1.15 V PMIC target are restored, with Sway and the sensor proxy active. Do display and touch work normally on this newest boot?",
+      "answer": "Display and touch work",
+      "received_UTC": "2026-11-08T20:42:48.394027+00:00",
+      "question_item_id": "[\"request_user_input_async\",\"call_9e5212b2f22d47d6b920e5fed50d8704\",0]"
+    },
+    "failed_units": [],
+    "pending_jobs_latest": [
+      "systemd-time-wait-sync.service",
+      "time-sync.target"
+    ]
   },
   "host_return": {
     "default_routes_unchanged": true,
@@ -710,12 +718,12 @@
   "host_postflight_note": "Initial native and route/resolver checks passed; final profile absence query used an invalid nmcli field. Correcting the read-only list field to UUID completed verification without network changes.",
   "host_preflight_note": "Initial read-only preflight stopped before any reboot because apk info -v prints descriptions on this installation; querying the exact installed database version retained the r50 requirement and passed.",
   "files_sha256": {
-    "diagnostics/cpu-cpr-runtime/README.md": "7d9d0405c90485b949fa1b6fe87773ffc02ed0c51423248c99e50a64e2cc98e0",
+    "diagnostics/cpu-cpr-runtime/README.md": "a950676e35f3ca030ba011a530ca9ffd505dd0083dacbc3ca0850c0234774f81",
     "diagnostics/cpu-cpr-runtime/feedback-600.sh": "3440befd815ea83007e6709e6e651783c444f46bd74c4eba9cecaebf799a89b4",
     "docs/building.md": "7d06f4daf3d0b73f08991899a966e62eaa7ea270cfed1a52bfa64807041eecac",
-    "docs/development-log.md": "c45c2bffd9c147ade620fde3ba64dcf0b8666aaccbeabb3e16026443cef82d58",
-    "docs/hardware-acceptance.md": "ddf65b99fc6457881b1d4c22022f9d0b77ee9ec75af0beb03bb4a3756fcce09e",
-    "docs/msm8226-cpu-performance.md": "5f245583b15ee3ac7939ec621785964a0497ba94a4f0ae8b1d4a5d5e40995df3",
+    "docs/development-log.md": "8f4c3a98281b19e83704de5752f3439fd44f61f1f80442f48eac0883fca5a40e",
+    "docs/hardware-acceptance.md": "c5f7dd83037d94d59921c9c0b302c868b6577c812c373382b2aa16cdff518531",
+    "docs/msm8226-cpu-performance.md": "5a63bed7dda2522db6c22da6c0049ad8bd7f48005cb10ee1dfdab8be5a5c53e1",
     "docs/upstream-development.md": "159a2af04170f9e9b3d6cb5dd8fcfc3c16541fa4e4ede5d3c7c8de7aa157c2d1",
     "evidence/2026-11-08-cpr-first-fixed-corner.json": "276dee2bcf134c6204bf7fbbc2744b707b2427b7134bf5ff9bf2de8db464f8a8",
     "evidence/2026-11-08-cpr-voltage-observation.json": "0f971ffb858df06357e92f01b414bd482cc9f7479f41abfa629df704bf77adee",
@@ -770,6 +778,7 @@
     "local/ram-cpr-feedback-01/boot-request.json": "1d5dc87212db5b626fd316f1cb8672eeb9729214fe030a4bce859e4e73d7f96d",
     "local/ram-cpr-feedback-01/bootloader-entry-controller.json": "5d5c081e00a386906cd2f44693c65dee862fbbe675fbcafef1fbb936e6635aaf",
     "local/ram-cpr-feedback-01/collect-evidence.py": "f57aeb2c38e290fd996ab42853676b9892057e642383d46f6917c01890ed9a4f",
+    "local/ram-cpr-feedback-01/commit-message.txt": "75c4364f4d9e9f80999afac2775c81bc9384549d5a01b241c2819544ac5bbd62",
     "local/ram-cpr-feedback-01/host-feedback-tests.json": "551f5de8b4b816bacd0597e8eed7a21f63cea168a10e60025ba36e797522b6d5",
     "local/ram-cpr-feedback-01/host-network-restored.json": "41842f7c6ae06727767929881e4c723f2a478ad407076876f433bc28466cefc2",
     "local/ram-cpr-feedback-01/host-postflight-initial.json": "d5707740e23c7c3b772f525f2cdfb739b2f888b561ef4ac5fd61d3deec5441cf",
@@ -785,6 +794,7 @@
     "local/ram-cpr-feedback-01/native-preflight-before-package-query-correction.txt": "e72b54bb91194dd568aec0248c77bea122814c91887948db6de2ee9b07a171c7",
     "local/ram-cpr-feedback-01/native-preflight.txt": "9ba0c8ba975b34cc7674d36a609161be57d760f9b0fd3bc48094fed34be3a511",
     "local/ram-cpr-feedback-01/native-return-controller.json": "58ad020a3b16252aa17e32dbed68a1e716bf9467bd188e8dd36c816d5d6ad941",
+    "local/ram-cpr-feedback-01/native-startup-followup-before-UI.txt": "9130955be121d2b8843f165fb3139b3c0bfe2ca5f156ea25fd1da7112d7c13b6",
     "local/ram-cpr-feedback-01/native-startup-followup.txt": "9130955be121d2b8843f165fb3139b3c0bfe2ca5f156ea25fd1da7112d7c13b6",
     "local/ram-cpr-feedback-01/network-controller.json": "722a6dc4df42c293dbec09df8721d990bfddf1429bf73ac44a63111d857d3539",
     "local/ram-cpr-feedback-01/network-controller.log": "aa8da52a2415918171e4e1d5396629ba1644e02e8ef83a9e9a7216e4d42740e3",
@@ -792,13 +802,16 @@
     "local/ram-cpr-feedback-01/observe.py": "11108dee8c0c6abb0f7d174faf199172673b80d4cee16d25eab888cf0250e747",
     "local/ram-cpr-feedback-01/observer-controller.json": "0146f11268deb47009f5124bfefb14db39b0a1bb998315ff5835cad508f87e81",
     "local/ram-cpr-feedback-01/observer-controller.log": "6b2663d823c1f83fae1bc846fb102dbffae08c5690b5559d95de78237f4ec6e1",
-    "local/ram-cpr-feedback-01/owner-display-touch.json": "a1574266047c05e704762bf4da378f840fd091cdef88926158910c551597bf3a",
+    "local/ram-cpr-feedback-01/owner-display-touch-before-confirmation.json": "a1574266047c05e704762bf4da378f840fd091cdef88926158910c551597bf3a",
+    "local/ram-cpr-feedback-01/owner-display-touch.json": "29f776d19dc180d6dc4ce634040a97d5759e22f0a31063aa916cb0db9db6c3d0",
     "local/ram-cpr-feedback-01/postflight-controller-initial.stderr": "aa94f7c07a55a75eea0707287007ca2726c2929bbdbe368166832ec0a20d3cc0",
     "local/ram-cpr-feedback-01/postflight-controller-initial.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "local/ram-cpr-feedback-01/postflight-controller.json": "8068bde786de87e2e82f895076fd9d06be56a536b7f6f0f41289d85b2d71df68",
     "local/ram-cpr-feedback-01/postflight-controller.log": "522772685c92c2b40e3f30efce2874c3738efb86509de3a97d2cfbdf285c8822",
     "local/ram-cpr-feedback-01/postflight.py": "d8b1aa8cb739a64a36b7828619822ad60401616e46a98d9251ab7187791f2983",
     "local/ram-cpr-feedback-01/preflight.py": "3e5e89c3ddb11a2ae4c97f950ad1372a413d1e2835df8c1b5851e438a09cff2b",
+    "local/ram-cpr-feedback-01/prepare-publication.py": "3c51f66638d047504ac2ab8891317478250efce8fc1ae26449417200d91a5d71",
+    "local/ram-cpr-feedback-01/publication-inputs.json": "85a25d64f9c2779216409d7d2cee6b267bc272c3c23ef2ce1df27092f337e493",
     "local/ram-cpr-feedback-01/ram-observation.json": "2f4342c40a9d374898ae09a76fee88b97e3147392f5bca9bc3a5e14bd7b4421b",
     "local/ram-cpr-feedback-01/run-process.py": "0eac33ecf8506abf2ee5ab1ddf8b32c9523799c55be0fb110fb5709226058c66",
     "local/ram-cpr-feedback-01/serial-kmsg.txt": "3f3f8efb92f83099c89f50187307f1d8e8a1099c4ff363ff8870ac7935c2fd1b",
@@ -814,7 +827,7 @@
     "diagnostics/cpu-cpr-runtime/README.md": {
       "prior_commit": "a416dad0d538bc7d21c822f66723551be73ba813",
       "prior_sha256": "f5d03676127ac1bf68f6671cd7972aa6d045b8841f50a28b450816db99228077",
-      "current_sha256": "7d9d0405c90485b949fa1b6fe87773ffc02ed0c51423248c99e50a64e2cc98e0",
+      "current_sha256": "a950676e35f3ca030ba011a530ca9ffd505dd0083dacbc3ca0850c0234774f81",
       "meaning": "New checkpoint replaces this document version; prior evidence hashes remain historical and unchanged."
     },
     "docs/building.md": {
@@ -826,19 +839,19 @@
     "docs/development-log.md": {
       "prior_commit": "a416dad0d538bc7d21c822f66723551be73ba813",
       "prior_sha256": "42b982829beebe3210f5a4d94a9c1252544c3e9ff04d96cac695f6db2653328c",
-      "current_sha256": "c45c2bffd9c147ade620fde3ba64dcf0b8666aaccbeabb3e16026443cef82d58",
+      "current_sha256": "8f4c3a98281b19e83704de5752f3439fd44f61f1f80442f48eac0883fca5a40e",
       "meaning": "New checkpoint replaces this document version; prior evidence hashes remain historical and unchanged."
     },
     "docs/hardware-acceptance.md": {
       "prior_commit": "a416dad0d538bc7d21c822f66723551be73ba813",
       "prior_sha256": "f58ca117852582c901bb13eed9ad64a27df5572066a4dd435e7dfa62ee1caefd",
-      "current_sha256": "ddf65b99fc6457881b1d4c22022f9d0b77ee9ec75af0beb03bb4a3756fcce09e",
+      "current_sha256": "c5f7dd83037d94d59921c9c0b302c868b6577c812c373382b2aa16cdff518531",
       "meaning": "New checkpoint replaces this document version; prior evidence hashes remain historical and unchanged."
     },
     "docs/msm8226-cpu-performance.md": {
       "prior_commit": "a416dad0d538bc7d21c822f66723551be73ba813",
       "prior_sha256": "2bdc780ccfe0039eb7ee3e2bd4d14ff803dbe93dd77d6b0b476d755d466c10f0",
-      "current_sha256": "5f245583b15ee3ac7939ec621785964a0497ba94a4f0ae8b1d4a5d5e40995df3",
+      "current_sha256": "5a63bed7dda2522db6c22da6c0049ad8bd7f48005cb10ee1dfdab8be5a5c53e1",
       "meaning": "New checkpoint replaces this document version; prior evidence hashes remain historical and unchanged."
     },
     "docs/upstream-development.md": {
@@ -846,6 +859,37 @@
       "prior_sha256": "ef9c0cfd174983b8c6fc0f1dc459a895d2d950f2ff3d0565505d2c73cc565b19",
       "current_sha256": "159a2af04170f9e9b3d6cb5dd8fcfc3c16541fa4e4ede5d3c7c8de7aa157c2d1",
       "meaning": "New checkpoint replaces this document version; prior evidence hashes remain historical and unchanged."
+    }
+  },
+  "previous_UI_pending_checkpoint": {
+    "commit": "759d93e6b449ef977c14a01d13b532e0ee968b75",
+    "evidence_sha256": "14f880c7dfeb2285f1e5e0ed145b82b9fb055db21d7358877d62c6de77645ea5",
+    "updated_file_versions": {
+      "diagnostics/cpu-cpr-runtime/README.md": {
+        "previous_sha256": "7d9d0405c90485b949fa1b6fe87773ffc02ed0c51423248c99e50a64e2cc98e0",
+        "current_sha256": "a950676e35f3ca030ba011a530ca9ffd505dd0083dacbc3ca0850c0234774f81",
+        "public_version_at_commit": "759d93e6b449ef977c14a01d13b532e0ee968b75"
+      },
+      "docs/development-log.md": {
+        "previous_sha256": "c45c2bffd9c147ade620fde3ba64dcf0b8666aaccbeabb3e16026443cef82d58",
+        "current_sha256": "8f4c3a98281b19e83704de5752f3439fd44f61f1f80442f48eac0883fca5a40e",
+        "public_version_at_commit": "759d93e6b449ef977c14a01d13b532e0ee968b75"
+      },
+      "docs/hardware-acceptance.md": {
+        "previous_sha256": "ddf65b99fc6457881b1d4c22022f9d0b77ee9ec75af0beb03bb4a3756fcce09e",
+        "current_sha256": "c5f7dd83037d94d59921c9c0b302c868b6577c812c373382b2aa16cdff518531",
+        "public_version_at_commit": "759d93e6b449ef977c14a01d13b532e0ee968b75"
+      },
+      "docs/msm8226-cpu-performance.md": {
+        "previous_sha256": "5f245583b15ee3ac7939ec621785964a0497ba94a4f0ae8b1d4a5d5e40995df3",
+        "current_sha256": "5a63bed7dda2522db6c22da6c0049ad8bd7f48005cb10ee1dfdab8be5a5c53e1",
+        "public_version_at_commit": "759d93e6b449ef977c14a01d13b532e0ee968b75"
+      },
+      "local/ram-cpr-feedback-01/owner-display-touch.json": {
+        "previous_sha256": "a1574266047c05e704762bf4da378f840fd091cdef88926158910c551597bf3a",
+        "current_sha256": "29f776d19dc180d6dc4ce634040a97d5759e22f0a31063aa916cb0db9db6c3d0",
+        "archived_path": "local/ram-cpr-feedback-01/owner-display-touch-before-confirmation.json"
+      }
     }
   }
 }
