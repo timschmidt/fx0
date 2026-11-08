@@ -150,3 +150,10 @@ source. The host-built family passes signed-module registration and the first
 300–384 MHz fixed-corner requests; the original 35-mail review export remains
 a separate frozen 39-patch source and must not inherit these later results.
 DCO, receiving-tree rebases/routing and broad runtime qualification remain open.
+
+That same observation source subsequently passes a bounded 600 MHz RAM
+feedback trial: one handled floor-clamp interrupt, fifty checked samples and
+verified 300 MHz return. No new kernel patch or source commit is involved.
+The [trial evidence](../evidence/2026-11-08-cpr-feedback-600.json) keeps this
+result scoped to the host-built family; the frozen 39-patch mail export and
+unbooted Alpine r54 package do not inherit it.

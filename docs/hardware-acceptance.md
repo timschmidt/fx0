@@ -100,6 +100,17 @@ load/thermal/suspend or distribution/install behavior. See
 [registration](../evidence/2026-11-08-cpr-voltage-observation.json) and
 [first fixed-corner evidence](../evidence/2026-11-08-cpr-first-fixed-corner.json).
 
+A separate 300→600→300 MHz RAM trial passes fifty bounded feedback samples on
+the same kernel/module family. The CPU clock reads 600 MHz, APC/cache remain
+at this unit's 1.08 V floor within the 1.08–1.18 V limits, and one CPR interrupt
+sets the IRQ-handler floor-response flag with LOOP_EN enabled. This qualifies
+a handled floor clamp, not voltage adjustment or load/thermal/suspend. Return
+to 300 MHz clears LOOP_EN. The 181.741527-second timer returns to r50 with its
+original hash, PMIC 1.15 V target, zero taint and UI services; host network
+cleanup passes. Latest physical UI and startup follow-up are recorded in
+[600 MHz feedback evidence](../evidence/2026-11-08-cpr-feedback-600.json).
+Higher rates, repeated transitions, physical rails and broader gates remain open.
+
 November 8 r50 regression: the owner confirms display and touch before testing.
 Five USB-powered RTC controls retain DMP execution across traced s2idle and
 recover 373 quaternion samples, with RTC IRQ +1 and IMU IRQ +0 per cycle, no

@@ -4032,3 +4032,35 @@ Native startup subsequently reaches running with no failed units/jobs, and the
 owner confirms display/touch on this newest first-fixed-corner return. The
 restored PMIC target, boot hash and physical UI checks close that bounded warm
 recovery gate; all broader qualification remains open.
+
+### First bounded 600 MHz CPR feedback response (2026-11-08)
+
+Added a guarded userspace 300→600→300 MHz RAM script and three real-shell host
+tests covering 22 simulated modes. Feedback requires interrupt progress plus
+a voltage adjustment or handled clamp; LOOP_EN or an interrupt alone remains
+inconclusive. All host tests pass. The new 6,899,712-byte RAM image keeps the
+qualified observation kernel, DTB, two signed modules, command line and timer
+unchanged; exact staging/readback precedes one BOOT.
+
+All fifty samples pass with the uncached CPU at 600 MHz, APC/cache/planned
+target 1.08 V, CTL 0x20000469 and one CPR interrupt. The unit starts at its
+second-corner floor, so the handler enables auto-NACK-DOWN rather than changing
+voltage. The active MX floor request is 1.1875 V. Explicit return to 300 MHz
+restores the fixed-corner target, MX floor 1.0875 V and CTL 0x20000428/LOOP_EN
+clear. No panic/Oops/BUG/lockup is recorded; temperatures remain below the
+script's 60°C cutoff. This is quiet floor-response evidence, not load or
+voltage-adjustment qualification.
+
+The timer fires at 181.741527 seconds. Both observers exit zero, host routes
+and resolver match before, and the temporary profile is absent. R50 boot
+8eda2570-36e5-43aa-a35c-6c531fdd349c has the original hash, four-rate schedutil
+policy, zero taint, Sway and sensor proxy. Two exact PMIC rows read S2 range/VSET
+1/115, restoring the native 1.15 V target. Initial startup has only the prior
+time-sync jobs pending. Latest physical UI/startup follow-up is tracked in
+[feedback evidence](../evidence/2026-11-08-cpr-feedback-600.json). Two host query
+format errors stop read-only verification before proceeding and are corrected
+without phone or network changes; their original records remain private.
+
+Higher rates, controlled load/thermal/suspend, repeated transitions, physical
+rails, stable/edge packaging, installed update/recovery and wider hardware
+qualification remain open. The content-dependent USB staging defect persists.

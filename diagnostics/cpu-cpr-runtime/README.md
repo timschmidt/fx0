@@ -54,8 +54,40 @@ and returns to the 300 MHz auxiliary path. Both points have applied 1.08 V APC
 targets and LOOP_EN clear. The active MX vote requests a 1.0875 V floor; this
 is not a claim that all other clients release their higher votes or that an
 analogue rail was measured. The timed warm return restores the original r50
-boot hash and native PMIC S2 range/VSET 1/115 (1.15 V target). The latest
+boot hash and native PMIC S2 range/VSET 1/115 (1.15 V target). That trial's
 physical display/touch check is recorded separately in
 `evidence/2026-11-08-cpr-first-fixed-corner.json`. Quiet two-second holds and
 one warm return do not qualify sustained load, thermal/suspend or later-corner
 feedback.
+
+## First 600 MHz feedback trial
+
+`feedback-600.sh` adds a `300-600` permit and calls the same guarded
+registration script. It caps userspace at 300–600 MHz and explicitly requests
+600 MHz, then 300 MHz. The second corner's stock floor/ceiling of
+1.075–1.175 V become 1.08–1.18 V on the provider's 10 mV grid. At 600 MHz,
+each check requires the uncached CPU clock, applied corner, allowed and enabled
+feedback, matching APC/cache targets within those bounds, four online CPUs,
+zero taint, unchanged policy and reported temperatures below 60°C.
+
+Fifty samples, separated by 0.2-second sleeps, log voltage/control/result and
+the four-CPU CPR interrupt total. A feedback pass requires interrupt progress
+and either a cache/plan voltage difference or an IRQ-handler floor/ceiling
+response flag. LOOP_EN or an interrupt alone is inconclusive. After sampling,
+the script requires 300 MHz, the fixed 1.08 V target and LOOP_EN clear before
+reporting success or inconclusive feedback. Invalid state stops further
+requests; the unchanged 180-second timer remains responsible for native return.
+
+`tests/test_cpr_feedback.py` executes the real shell control with FIFO frequency
+requests and simulated observations. Its 22 modes cover voltage adjustment,
+both clamps, inconclusive feedback, bad preconditions, voltage/grid/cache/clock
+errors, interrupt storm, temperature cutoff and failed return. Host models do
+not establish hardware behavior. Quiet feedback observation does not qualify
+sustained load, analogue rails, thermal/suspend or higher eligible rates.
+
+The first hardware run passes all fifty samples at the unit's 1.08 V initial
+floor, with one interrupt and CTL `0x20000469` (enabled loop and auto-NACK-DOWN).
+This is the handled floor branch, with no observed voltage adjustment. Return
+to 300 MHz verifies CTL `0x20000428`. The timed native return restores r50's
+original boot hash and PMIC 1.15 V target. The exact run and newest physical
+UI/startup status are in `evidence/2026-11-08-cpr-feedback-600.json`.

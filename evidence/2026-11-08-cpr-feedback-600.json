@@ -1,0 +1,851 @@
+{
+  "date": "2026-11-08",
+  "recorded_UTC": "2026-11-08T20:41:14.887753+00:00",
+  "status": "First bounded 600 MHz CPR feedback floor response and fixed-corner return pass; native r50 hash/1.15 V target/services restored; physical UI pending on this newest native return",
+  "source_manifest": "manifests/kernel-cpr-voltage-observation.json",
+  "source_commit": "b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8",
+  "parent_registration_evidence": "evidence/2026-11-08-cpr-voltage-observation.json",
+  "parent_fixed_corner_evidence": "evidence/2026-11-08-cpr-first-fixed-corner.json",
+  "image": {
+    "image_path": "local/cpr-voltage-observation/fx0-cpr-feedback-600-ram.img",
+    "image_sha256": "86275615f27d860d9a8e114c6d36af0447a012439df7afa4972c0bcd535182a8",
+    "image_bytes": 6899712,
+    "kernel_sha256": "82052f4d623a8bcb64a57e93f6354e6b9397e04cb2ccd7a19da3ee972f2e4c88",
+    "DTB_sha256": "589d17908c2bd9584b0f3f51bc4c19ced467b60791e3fd13bc4ee3fbcd9e0284",
+    "header_digest_and_addresses_verified": true,
+    "return_after_seconds": 180,
+    "initially_moduleless": true,
+    "allowed_module_loads": [
+      "cpufreq_userspace.ko",
+      "cpufreq-dt.ko"
+    ],
+    "signature_enforcement": true,
+    "default_governor": "userspace",
+    "registration_script_sha256": "8391c8d434b2b23e2ba1a5c539ebc9ae0373a0515064dd09372dda694502c367",
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\" cpufreq.default_governor=userspace module.sig_enforce=1",
+    "entries_sha256": {
+      "bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dev": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sys": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tmp": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "www": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bin/busybox": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+      "bin/sh": "9d75f0d7c398df565d7ac04c6819b62d6d8f9560f5eb4672596ecd8f7e96ae91",
+      "bin/serve-http": "4005fed0312bc216b3c32129ffdd2ceac06544a2503ecd572349e729af543d5e",
+      "init": "8a25f6757a7f0de87cb7433def659d0fee00981c2a311ed816a12bac439ac0d1",
+      "etc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modules": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "etc/fx0-cpr-trial": "7726ddde5c6f08780f95da9cf91f1f2193ca4afa433c889b98e28a66af85ce47",
+      "bin/cpr-register": "8391c8d434b2b23e2ba1a5c539ebc9ae0373a0515064dd09372dda694502c367",
+      "modules/cpufreq_userspace.ko": "4c219cc6637db54cd4dc488de2e43df5513333f5c9943913d9d04bf6863b989f",
+      "modules/cpufreq-dt.ko": "3e5279a527d8f036450226f9b2d9a3df4df02f5f9ea35c98fd5f13d1c9639644",
+      "etc/fx0-cpr-modules.sha256": "449b08d9d8b61fdf4d6f4bcd6898c35560d486bde9df88b989de8e2d9cf0d8b3",
+      "etc/fx0-cpr-feedback-step": "b6103d7346c917cd2bedccbcaade0b95e2685efbacd206e68840f638fd135398",
+      "bin/cpr-feedback-600": "3440befd815ea83007e6709e6e651783c444f46bd74c4eba9cecaebf799a89b4"
+    },
+    "packed_kernel_encoding": "XZ preset 3; runtime Image and ELF exactly unchanged",
+    "previous_failed_image_sha256": "48e29c2c7a8dd05f854bacf2ea910fa4488abdc368b73f2b6e462a06ff7a0abc",
+    "phase": "first 600 MHz feedback observation",
+    "explicit_frequency_requests_kHz": [
+      600000,
+      300000
+    ],
+    "policy_limits_kHz": [
+      300000,
+      600000
+    ],
+    "expected_APC_bounds_at_600MHz_uV": [
+      1080000,
+      1180000
+    ],
+    "expected_return_APC_target_uV": 1080000,
+    "expected_feedback_LOOP_EN_at_600MHz": 1,
+    "expected_feedback_LOOP_EN_at_300MHz": 0,
+    "samples_at_600MHz": 50,
+    "sample_delay_seconds": 0.2,
+    "maximum_IRQ_delta": 10000,
+    "temperature_limit_mC_exclusive": 60000,
+    "feedback_script_sha256": "3440befd815ea83007e6709e6e651783c444f46bd74c4eba9cecaebf799a89b4",
+    "kernel_DTB_cmdline_identical_to_registration_trial": true
+  },
+  "host_feedback_tests": {
+    "recorded_UTC": "2026-11-08T20:33:07.773121+00:00",
+    "command": "TMPDIR=\"$PWD/local/kernel-reconstruction/tmp\" PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_cpr_feedback.py -v",
+    "observed_result": "Ran 3 tests in 24.864s; OK",
+    "tests": 3,
+    "failures": 0,
+    "positive_modes": [
+      "normal",
+      "floor",
+      "ceiling"
+    ],
+    "inconclusive_modes": [
+      "no_irq",
+      "unhandled_irq"
+    ],
+    "failure_modes": [
+      "permit",
+      "registration",
+      "governor",
+      "taint",
+      "online",
+      "hot_before",
+      "irq_missing",
+      "stuck",
+      "low",
+      "high",
+      "grid",
+      "cache",
+      "clock",
+      "loop",
+      "storm",
+      "hot_after",
+      "return_voltage"
+    ],
+    "files_sha256": {
+      "diagnostics/cpu-cpr-runtime/feedback-600.sh": "3440befd815ea83007e6709e6e651783c444f46bd74c4eba9cecaebf799a89b4",
+      "tests/test_cpr_feedback.py": "faa856bfc68d13fbcabbc55c03acca34c88e6d70eb08f0347451dde2a5b1c1ff"
+    }
+  },
+  "RAM": {
+    "directory": "local/ram-cpr-feedback-01",
+    "BOOT_count": 1,
+    "boot_id": "d7457574-ff0f-49e5-a5ac-2653be897eb8",
+    "taint": 0,
+    "online_CPUs": "0-3",
+    "signature_enforcement": true,
+    "governor": "userspace",
+    "policy_limits_kHz": [
+      300000,
+      600000
+    ],
+    "explicit_request_sequence_kHz": [
+      600000,
+      300000
+    ],
+    "registration_before_requests_passed": true,
+    "initial_APC_boot_target_uV": 1150000,
+    "points": [
+      {
+        "requested_kHz": 600000,
+        "observed_CPU_mux_Hz": 600000000,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "corner_voltage_applied": true,
+        "feedback_allowed": true,
+        "LOOP_EN": true,
+        "CTL": "0X20000469",
+        "CPU_PLL_enable_count": 0,
+        "CPU_PLL_rate_Hz_unused": 800000000,
+        "active_MX_floor_uV_from_verified_source": 1187500,
+        "active_MX_summary_mV_truncated": 1187
+      },
+      {
+        "requested_kHz": 300000,
+        "observed_CPU_mux_Hz": 300000000,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "corner_voltage_applied": true,
+        "feedback_allowed": true,
+        "LOOP_EN": false,
+        "CTL": "0X20000428",
+        "CPU_PLL_enable_count": 0,
+        "CPU_PLL_rate_Hz_unused": 800000000,
+        "active_MX_floor_uV_from_verified_source": 1087500,
+        "active_MX_summary_mV_truncated": 1087
+      }
+    ],
+    "feedback_samples": [
+      {
+        "n": 1,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2AD5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 2,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2815",
+        "IRQ_total": 1
+      },
+      {
+        "n": 3,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2955",
+        "IRQ_total": 1
+      },
+      {
+        "n": 4,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2915",
+        "IRQ_total": 1
+      },
+      {
+        "n": 5,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2AD5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 6,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2955",
+        "IRQ_total": 1
+      },
+      {
+        "n": 7,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2995",
+        "IRQ_total": 1
+      },
+      {
+        "n": 8,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2995",
+        "IRQ_total": 1
+      },
+      {
+        "n": 9,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X28D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 10,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2B15",
+        "IRQ_total": 1
+      },
+      {
+        "n": 11,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2995",
+        "IRQ_total": 1
+      },
+      {
+        "n": 12,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2955",
+        "IRQ_total": 1
+      },
+      {
+        "n": 13,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2B15",
+        "IRQ_total": 1
+      },
+      {
+        "n": 14,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X28D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 15,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2995",
+        "IRQ_total": 1
+      },
+      {
+        "n": 16,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2955",
+        "IRQ_total": 1
+      },
+      {
+        "n": 17,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2AD5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 18,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2995",
+        "IRQ_total": 1
+      },
+      {
+        "n": 19,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2955",
+        "IRQ_total": 1
+      },
+      {
+        "n": 20,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2995",
+        "IRQ_total": 1
+      },
+      {
+        "n": 21,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2895",
+        "IRQ_total": 1
+      },
+      {
+        "n": 22,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2995",
+        "IRQ_total": 1
+      },
+      {
+        "n": 23,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X29D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 24,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2955",
+        "IRQ_total": 1
+      },
+      {
+        "n": 25,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2995",
+        "IRQ_total": 1
+      },
+      {
+        "n": 26,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X29D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 27,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X29D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 28,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X29D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 29,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2855",
+        "IRQ_total": 1
+      },
+      {
+        "n": 30,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2A15",
+        "IRQ_total": 1
+      },
+      {
+        "n": 31,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2B15",
+        "IRQ_total": 1
+      },
+      {
+        "n": 32,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2A15",
+        "IRQ_total": 1
+      },
+      {
+        "n": 33,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2915",
+        "IRQ_total": 1
+      },
+      {
+        "n": 34,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2955",
+        "IRQ_total": 1
+      },
+      {
+        "n": 35,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X28D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 36,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X29D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 37,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2995",
+        "IRQ_total": 1
+      },
+      {
+        "n": 38,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2995",
+        "IRQ_total": 1
+      },
+      {
+        "n": 39,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X28D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 40,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X28D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 41,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2AD5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 42,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X28D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 43,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X28D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 44,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2A95",
+        "IRQ_total": 1
+      },
+      {
+        "n": 45,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2915",
+        "IRQ_total": 1
+      },
+      {
+        "n": 46,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2895",
+        "IRQ_total": 1
+      },
+      {
+        "n": 47,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X28D5",
+        "IRQ_total": 1
+      },
+      {
+        "n": 48,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2995",
+        "IRQ_total": 1
+      },
+      {
+        "n": 49,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2A15",
+        "IRQ_total": 1
+      },
+      {
+        "n": 50,
+        "APC_target_uV": 1080000,
+        "cached_uV": 1080000,
+        "planned_uV": 1080000,
+        "CTL": "0X20000469",
+        "RESULT_0": "0X2895",
+        "IRQ_total": 1
+      }
+    ],
+    "sample_count": 50,
+    "inter_sample_sleep_seconds": 0.2,
+    "quiet_hold_nominal_seconds": 10,
+    "hold_scope": "50 complete state checks with 0.2-second sleeps plus read/logging overhead; no sustained or all-core stress",
+    "IRQ_total_before": 0,
+    "IRQ_total_after": 1,
+    "feedback_response": "one handled DOWN-at-floor response; CTL bit6 auto-NACK-DOWN set while LOOP_EN remains set",
+    "response_interpretation": "inferred from the exact qualified cpr_scale() floor branch and raw CTL/IRQ observations; no voltage adjustment was observed because this unit starts at its second-corner floor",
+    "allowed_APC_bounds_uV": [
+      1080000,
+      1180000
+    ],
+    "voltage_grid_uV": 10000,
+    "temperatures_below_mC_each_check": 60000,
+    "loaded_modules": [
+      "cpufreq_userspace",
+      "cpufreq_dt"
+    ],
+    "physical_analogue_voltages_measured": false,
+    "serial_error": null,
+    "timer_kernel_seconds": 181.741527,
+    "HTTP_attempts": 23,
+    "HTTP_complete_pairs": 22,
+    "serial_bytes": 229797,
+    "udev_permission_retries": 1,
+    "RAM_detached_UTC": "2026-11-08T20:36:45.593748+00:00",
+    "observer_returncodes": {
+      "network": 0,
+      "observer": 0
+    },
+    "panic_Oops_BUG_or_lockup_messages": 0
+  },
+  "native_before": {
+    "boot_id": "d745a11f-71fa-4f23-9e0a-d1d7914d2927",
+    "systemd": "running",
+    "owner_UI_confirmed_on_this_prior_boot": true,
+    "PMIC_S2": {
+      "method": "two exact nine-byte pread rows after dense-map metadata check",
+      "registers": {
+        "0x1740": 1,
+        "0x1741": 115
+      }
+    },
+    "preflight_temperatures_mC": [
+      40000,
+      40000
+    ]
+  },
+  "native_return": {
+    "boot_id": "8eda2570-36e5-43aa-a35c-6c531fdd349c",
+    "kernel": "6.18.59-fx0-dmp",
+    "package": "linux-postmarketos-qcom-msm8226-6.18.59-r50",
+    "boot_SHA256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "taint": 0,
+    "systemd_initial": "starting",
+    "systemd_latest": "starting",
+    "governor": "schedutil",
+    "available_kHz": [
+      300000,
+      384000,
+      600000,
+      787200
+    ],
+    "Sway": true,
+    "sensor_proxy": "active",
+    "PMIC_S2": {
+      "method": "two exact nine-byte pread rows after dense-map metadata check",
+      "registers": {
+        "0x1740": 1,
+        "0x1741": 115
+      }
+    },
+    "owner_display_touch": {
+      "native_boot_id": "8eda2570-36e5-43aa-a35c-6c531fdd349c",
+      "status": "pending on this newest native return",
+      "question": "The 600 MHz CPR feedback RAM trial has returned to installed r50. The original boot hash and 1.15 V PMIC target are restored, with Sway and the sensor proxy active. Do display and touch work normally on this newest boot?"
+    }
+  },
+  "host_return": {
+    "default_routes_unchanged": true,
+    "resolver_unchanged": true,
+    "root_index_unchanged": true,
+    "own_volatile_profile_removed": true
+  },
+  "constraints": {
+    "candidate_installed": false,
+    "eMMC_flashed": false,
+    "audio_tested": false,
+    "host_builtin_WiFi_changed": false,
+    "kernel_modules_DTB_cmdline_changed_from_registration_trial": false
+  },
+  "remaining": [
+    "voltage-adjustment response under controlled load, higher eligible rates, repeated transitions and suspend/thermal/load qualification",
+    "physical analogue rails and complete CPU/power qualification",
+    "distribution/installed update/recovery, stable/edge and all wider bringup gates",
+    "content-dependent USB staging defect; successful encoding is a workaround"
+  ],
+  "host_postflight_note": "Initial native and route/resolver checks passed; final profile absence query used an invalid nmcli field. Correcting the read-only list field to UUID completed verification without network changes.",
+  "host_preflight_note": "Initial read-only preflight stopped before any reboot because apk info -v prints descriptions on this installation; querying the exact installed database version retained the r50 requirement and passed.",
+  "files_sha256": {
+    "diagnostics/cpu-cpr-runtime/README.md": "7d9d0405c90485b949fa1b6fe87773ffc02ed0c51423248c99e50a64e2cc98e0",
+    "diagnostics/cpu-cpr-runtime/feedback-600.sh": "3440befd815ea83007e6709e6e651783c444f46bd74c4eba9cecaebf799a89b4",
+    "docs/building.md": "7d06f4daf3d0b73f08991899a966e62eaa7ea270cfed1a52bfa64807041eecac",
+    "docs/development-log.md": "c45c2bffd9c147ade620fde3ba64dcf0b8666aaccbeabb3e16026443cef82d58",
+    "docs/hardware-acceptance.md": "ddf65b99fc6457881b1d4c22022f9d0b77ee9ec75af0beb03bb4a3756fcce09e",
+    "docs/msm8226-cpu-performance.md": "5f245583b15ee3ac7939ec621785964a0497ba94a4f0ae8b1d4a5d5e40995df3",
+    "docs/upstream-development.md": "159a2af04170f9e9b3d6cb5dd8fcfc3c16541fa4e4ede5d3c7c8de7aa157c2d1",
+    "evidence/2026-11-08-cpr-first-fixed-corner.json": "276dee2bcf134c6204bf7fbbc2744b707b2427b7134bf5ff9bf2de8db464f8a8",
+    "evidence/2026-11-08-cpr-voltage-observation.json": "0f971ffb858df06357e92f01b414bd482cc9f7479f41abfa629df704bf77adee",
+    "local/cpr-voltage-observation/feedback-600-RAM-image.json": "d212efb36478661c7159da581160801e3636e07221265905ae0ef4c31538c39f",
+    "local/cpr-voltage-observation/prepare-feedback-image.py": "4dfe27b3d1093359194d2c2d8a743c6f6d544c9a678714efa63832d74a0ee68d",
+    "local/ram-cpr-feedback-01/HTTP-00-dmesg.txt": "d286eaec40c38b034a49fecbf62cbacfc043228ecfe857a93381fe20f45c4abc",
+    "local/ram-cpr-feedback-01/HTTP-01-dmesg.txt": "d286eaec40c38b034a49fecbf62cbacfc043228ecfe857a93381fe20f45c4abc",
+    "local/ram-cpr-feedback-01/HTTP-01-status.txt": "183763c897ef868fc49b274ac59f5cf14a9ffbc1120c78b57e911a8be67c0e3a",
+    "local/ram-cpr-feedback-01/HTTP-02-dmesg.txt": "d286eaec40c38b034a49fecbf62cbacfc043228ecfe857a93381fe20f45c4abc",
+    "local/ram-cpr-feedback-01/HTTP-02-status.txt": "bd808e1e616dee6527e6050da2bda6bc7660f6a946b55daa4772fc9589e322b2",
+    "local/ram-cpr-feedback-01/HTTP-03-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-03-status.txt": "a7b22bbc675f8cb7f6c54fd0ca75d8e673abcb07c9ee954ff01dbf887b3bf5ed",
+    "local/ram-cpr-feedback-01/HTTP-04-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-04-status.txt": "4a57670553f7934abd36b3f5bb5a191369a14270f27048721a6fcbe459484ca3",
+    "local/ram-cpr-feedback-01/HTTP-05-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-05-status.txt": "b8cbea3e56ca115b5454b0e0215f6f1f31da7ba72c8820308490b03e5c341f34",
+    "local/ram-cpr-feedback-01/HTTP-06-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-06-status.txt": "b8cbea3e56ca115b5454b0e0215f6f1f31da7ba72c8820308490b03e5c341f34",
+    "local/ram-cpr-feedback-01/HTTP-07-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-07-status.txt": "24d4c01eaa03dd5a7bfc9b6abe3bcafaceb1b3c4e5b1398eaeb6cfd5196c142a",
+    "local/ram-cpr-feedback-01/HTTP-08-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-08-status.txt": "b42582674d2d4ab7d9d981901f986fbd8805573cc897af73c252aff13f9bc73c",
+    "local/ram-cpr-feedback-01/HTTP-09-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-09-status.txt": "1d41e693c6d13f2087b751c5d6c593cf1a079ba891fa68414258360d3e655781",
+    "local/ram-cpr-feedback-01/HTTP-10-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-10-status.txt": "1d41e693c6d13f2087b751c5d6c593cf1a079ba891fa68414258360d3e655781",
+    "local/ram-cpr-feedback-01/HTTP-11-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-11-status.txt": "c189a06b80a8f6d790dc0fee48dbd04d894fc2503df0f3805ddaa32ceb2d47e7",
+    "local/ram-cpr-feedback-01/HTTP-12-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-12-status.txt": "f622a54cfff75997f6febaa9a4f0279067de69b77b85ddccc840c4cc74a21327",
+    "local/ram-cpr-feedback-01/HTTP-13-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-13-status.txt": "5dac37e9d4cdd3f0a09396ccb411b6c14763dad0024b8494d2a992977978e516",
+    "local/ram-cpr-feedback-01/HTTP-14-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-14-status.txt": "ca2f9eca60b6e93b658e92bfea37574e57ccecffc5ee41514fb569dadb3c9207",
+    "local/ram-cpr-feedback-01/HTTP-15-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-15-status.txt": "ca2f9eca60b6e93b658e92bfea37574e57ccecffc5ee41514fb569dadb3c9207",
+    "local/ram-cpr-feedback-01/HTTP-16-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-16-status.txt": "a51fc7ca0c64adf77843142c5550047a1e4a5b0c951c9b572e46718cd9d8dddd",
+    "local/ram-cpr-feedback-01/HTTP-17-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-17-status.txt": "4b30edce2959d04ed2b976e65f3468b7ac29199662e60324b950716860054e89",
+    "local/ram-cpr-feedback-01/HTTP-18-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-18-status.txt": "d43ff765c71a5b38cd22038868b49e272dd06c867b087218b44e402899e340ec",
+    "local/ram-cpr-feedback-01/HTTP-19-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-19-status.txt": "6b0ffc78412e5d38f815af7a3f70366bff2b4cd9e1d40a5ce330b736d2f52354",
+    "local/ram-cpr-feedback-01/HTTP-20-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-20-status.txt": "6b0ffc78412e5d38f815af7a3f70366bff2b4cd9e1d40a5ce330b736d2f52354",
+    "local/ram-cpr-feedback-01/HTTP-21-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-21-status.txt": "a2a7dd828785863a801218ab006b8b26085a5cf8926b25ef35910525850a53b6",
+    "local/ram-cpr-feedback-01/HTTP-22-dmesg.txt": "f9d2fd436696843b06d2648fdcc838010963763eb7fd1411ca761becb1e89e8b",
+    "local/ram-cpr-feedback-01/HTTP-22-status.txt": "93fb2ccab6e6e5dfc7a37b2f6e081553f2b24a1d5f2bdac9aa06776578d5f38b",
+    "local/ram-cpr-feedback-01/boot-once.py": "4b30c89d4b18c099f739dc02dacfc2ebbe8366c7f1fa9b37b8eb0b74d3f316bc",
+    "local/ram-cpr-feedback-01/boot-request.json": "1d5dc87212db5b626fd316f1cb8672eeb9729214fe030a4bce859e4e73d7f96d",
+    "local/ram-cpr-feedback-01/bootloader-entry-controller.json": "5d5c081e00a386906cd2f44693c65dee862fbbe675fbcafef1fbb936e6635aaf",
+    "local/ram-cpr-feedback-01/collect-evidence.py": "f57aeb2c38e290fd996ab42853676b9892057e642383d46f6917c01890ed9a4f",
+    "local/ram-cpr-feedback-01/host-feedback-tests.json": "551f5de8b4b816bacd0597e8eed7a21f63cea168a10e60025ba36e797522b6d5",
+    "local/ram-cpr-feedback-01/host-network-restored.json": "41842f7c6ae06727767929881e4c723f2a478ad407076876f433bc28466cefc2",
+    "local/ram-cpr-feedback-01/host-postflight-initial.json": "d5707740e23c7c3b772f525f2cdfb739b2f888b561ef4ac5fd61d3deec5441cf",
+    "local/ram-cpr-feedback-01/host-postflight.json": "278868909c2b4bcad2a525f3ebd81a92e402d2826c01ff81cc4157f6a58afa4c",
+    "local/ram-cpr-feedback-01/host-preflight.json": "533ad77c57b43d4f81204b3528ea678d0e6a5a797bc66337f475b85771997e97",
+    "local/ram-cpr-feedback-01/image-verification.json": "d212efb36478661c7159da581160801e3636e07221265905ae0ef4c31538c39f",
+    "local/ram-cpr-feedback-01/native-APC-postflight-initial.json": "675bf79e179ba149ef2134ae8e7305f0aa98d8ce47251c7fa971be4df0d46114",
+    "local/ram-cpr-feedback-01/native-APC-postflight.json": "675bf79e179ba149ef2134ae8e7305f0aa98d8ce47251c7fa971be4df0d46114",
+    "local/ram-cpr-feedback-01/native-APC-preflight.json": "675bf79e179ba149ef2134ae8e7305f0aa98d8ce47251c7fa971be4df0d46114",
+    "local/ram-cpr-feedback-01/native-immediate-preboot.txt": "0c9fdb202b833476ffd9b60cef9feba6e9cfe26956d14089d9b211292d2d6c53",
+    "local/ram-cpr-feedback-01/native-postflight-initial.txt": "09e20b7db866917f3bef420ee7d1318d82e746862b5c8076a5f30b7035dc6472",
+    "local/ram-cpr-feedback-01/native-postflight.txt": "00dfbda940cc4a69fc4a0adc632f4fbab7219b610a80e81416751e6792ac9afa",
+    "local/ram-cpr-feedback-01/native-preflight-before-package-query-correction.txt": "e72b54bb91194dd568aec0248c77bea122814c91887948db6de2ee9b07a171c7",
+    "local/ram-cpr-feedback-01/native-preflight.txt": "9ba0c8ba975b34cc7674d36a609161be57d760f9b0fd3bc48094fed34be3a511",
+    "local/ram-cpr-feedback-01/native-return-controller.json": "58ad020a3b16252aa17e32dbed68a1e716bf9467bd188e8dd36c816d5d6ad941",
+    "local/ram-cpr-feedback-01/native-startup-followup.txt": "9130955be121d2b8843f165fb3139b3c0bfe2ca5f156ea25fd1da7112d7c13b6",
+    "local/ram-cpr-feedback-01/network-controller.json": "722a6dc4df42c293dbec09df8721d990bfddf1429bf73ac44a63111d857d3539",
+    "local/ram-cpr-feedback-01/network-controller.log": "aa8da52a2415918171e4e1d5396629ba1644e02e8ef83a9e9a7216e4d42740e3",
+    "local/ram-cpr-feedback-01/observation.json": "adec5883f4c0be34dcc2dc32831e49472178c6ab3abf917e9a7b0d82df3bd483",
+    "local/ram-cpr-feedback-01/observe.py": "11108dee8c0c6abb0f7d174faf199172673b80d4cee16d25eab888cf0250e747",
+    "local/ram-cpr-feedback-01/observer-controller.json": "0146f11268deb47009f5124bfefb14db39b0a1bb998315ff5835cad508f87e81",
+    "local/ram-cpr-feedback-01/observer-controller.log": "6b2663d823c1f83fae1bc846fb102dbffae08c5690b5559d95de78237f4ec6e1",
+    "local/ram-cpr-feedback-01/owner-display-touch.json": "a1574266047c05e704762bf4da378f840fd091cdef88926158910c551597bf3a",
+    "local/ram-cpr-feedback-01/postflight-controller-initial.stderr": "aa94f7c07a55a75eea0707287007ca2726c2929bbdbe368166832ec0a20d3cc0",
+    "local/ram-cpr-feedback-01/postflight-controller-initial.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/ram-cpr-feedback-01/postflight-controller.json": "8068bde786de87e2e82f895076fd9d06be56a536b7f6f0f41289d85b2d71df68",
+    "local/ram-cpr-feedback-01/postflight-controller.log": "522772685c92c2b40e3f30efce2874c3738efb86509de3a97d2cfbdf285c8822",
+    "local/ram-cpr-feedback-01/postflight.py": "d8b1aa8cb739a64a36b7828619822ad60401616e46a98d9251ab7187791f2983",
+    "local/ram-cpr-feedback-01/preflight.py": "3e5e89c3ddb11a2ae4c97f950ad1372a413d1e2835df8c1b5851e438a09cff2b",
+    "local/ram-cpr-feedback-01/ram-observation.json": "2f4342c40a9d374898ae09a76fee88b97e3147392f5bca9bc3a5e14bd7b4421b",
+    "local/ram-cpr-feedback-01/run-process.py": "0eac33ecf8506abf2ee5ab1ddf8b32c9523799c55be0fb110fb5709226058c66",
+    "local/ram-cpr-feedback-01/serial-kmsg.txt": "3f3f8efb92f83099c89f50187307f1d8e8a1099c4ff363ff8870ac7935c2fd1b",
+    "local/ram-cpr-feedback-01/stage.py": "28aca6e2ec41d0a04da487fd73c1cfaf2a0c45e6b823946fc39fdf3913b663df",
+    "local/ram-cpr-feedback-01/temporary-USB-network.json": "05261693d1cf385ab73608650ffae4ba641697d514cf63667b19daab22c4c3c2",
+    "local/ram-cpr-feedback-01/transfer-controller.json": "ce66f8ca7c90f4a7180fb75f29b79a9ad482b6423e3fbcec0a87a502d507dca9",
+    "local/ram-cpr-feedback-01/transfer-controller.log": "0616463fd93d29683203b37f63e4e2d599b663c33235870996aa66d30a5ad324",
+    "local/ram-cpr-feedback-01/wait-native.py": "b92c6a338344421a4703fa80de17e8106b347575ac18bf985e944b1a1a6f6966",
+    "manifests/kernel-cpr-voltage-observation.json": "46c04b4e05b0595cc9d69eabcbcd7cc12c78b118d834c2726e355e6d05717598",
+    "tests/test_cpr_feedback.py": "faa856bfc68d13fbcabbc55c03acca34c88e6d70eb08f0347451dde2a5b1c1ff"
+  },
+  "prior_checkpoint_file_versions": {
+    "diagnostics/cpu-cpr-runtime/README.md": {
+      "prior_commit": "a416dad0d538bc7d21c822f66723551be73ba813",
+      "prior_sha256": "f5d03676127ac1bf68f6671cd7972aa6d045b8841f50a28b450816db99228077",
+      "current_sha256": "7d9d0405c90485b949fa1b6fe87773ffc02ed0c51423248c99e50a64e2cc98e0",
+      "meaning": "New checkpoint replaces this document version; prior evidence hashes remain historical and unchanged."
+    },
+    "docs/building.md": {
+      "prior_commit": "a416dad0d538bc7d21c822f66723551be73ba813",
+      "prior_sha256": "e9bc5c00ed8c3e4811ca1380551a403ade2d2714f36455fca310093a6ac1fb4c",
+      "current_sha256": "7d06f4daf3d0b73f08991899a966e62eaa7ea270cfed1a52bfa64807041eecac",
+      "meaning": "New checkpoint replaces this document version; prior evidence hashes remain historical and unchanged."
+    },
+    "docs/development-log.md": {
+      "prior_commit": "a416dad0d538bc7d21c822f66723551be73ba813",
+      "prior_sha256": "42b982829beebe3210f5a4d94a9c1252544c3e9ff04d96cac695f6db2653328c",
+      "current_sha256": "c45c2bffd9c147ade620fde3ba64dcf0b8666aaccbeabb3e16026443cef82d58",
+      "meaning": "New checkpoint replaces this document version; prior evidence hashes remain historical and unchanged."
+    },
+    "docs/hardware-acceptance.md": {
+      "prior_commit": "a416dad0d538bc7d21c822f66723551be73ba813",
+      "prior_sha256": "f58ca117852582c901bb13eed9ad64a27df5572066a4dd435e7dfa62ee1caefd",
+      "current_sha256": "ddf65b99fc6457881b1d4c22022f9d0b77ee9ec75af0beb03bb4a3756fcce09e",
+      "meaning": "New checkpoint replaces this document version; prior evidence hashes remain historical and unchanged."
+    },
+    "docs/msm8226-cpu-performance.md": {
+      "prior_commit": "a416dad0d538bc7d21c822f66723551be73ba813",
+      "prior_sha256": "2bdc780ccfe0039eb7ee3e2bd4d14ff803dbe93dd77d6b0b476d755d466c10f0",
+      "current_sha256": "5f245583b15ee3ac7939ec621785964a0497ba94a4f0ae8b1d4a5d5e40995df3",
+      "meaning": "New checkpoint replaces this document version; prior evidence hashes remain historical and unchanged."
+    },
+    "docs/upstream-development.md": {
+      "prior_commit": "a416dad0d538bc7d21c822f66723551be73ba813",
+      "prior_sha256": "ef9c0cfd174983b8c6fc0f1dc459a895d2d950f2ff3d0565505d2c73cc565b19",
+      "current_sha256": "159a2af04170f9e9b3d6cb5dd8fcfc3c16541fa4e4ede5d3c7c8de7aa157c2d1",
+      "meaning": "New checkpoint replaces this document version; prior evidence hashes remain historical and unchanged."
+    }
+  }
+}

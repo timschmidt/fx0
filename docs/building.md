@@ -357,6 +357,15 @@ qualify the default schedutil route or update the r54 Alpine artifact. The
 lossless XZ re-encoding used after a preboot USB stall preserves runtime Image,
 ELF and module compatibility; every image still needs exact stage/readback.
 
+The same build family also passes the separate `feedback-600.sh` RAM control:
+userspace limited to 300–600 MHz, fifty voltage/clock/loop/temperature checks,
+one handled CPR floor response, then verified fixed-corner return to 300 MHz.
+The initramfs adds only that script and its permit; kernel/DTB/modules/command
+line remain identical to the registration trial. The host script tests cover
+22 modes in three tests. See [feedback evidence](../evidence/2026-11-08-cpr-feedback-600.json)
+for exact image hashes, raw response and native recovery. This quiet run does
+not qualify voltage adjustment under load, higher rates or distribution installs.
+
 The input-dependent preboot USB defect remains open. The original image stalls
 after 5,783,552 confirmed bytes with both standard fastboot and synchronous
 transfers. Padding and pacing do not fix it; an isolated 32 KiB block reproduces

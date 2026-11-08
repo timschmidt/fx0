@@ -913,3 +913,38 @@ without failed/pending jobs, as tracked in
 [first fixed-corner evidence](../evidence/2026-11-08-cpr-first-fixed-corner.json).
 Later-corner feedback, higher eligible rates, physical rails, sustained load,
 thermal/suspend and installed/distribution qualification remain open.
+
+### First bounded 600 MHz feedback response
+
+The same `b721ebaecd7d` kernel, qualification DTB, signed CPU modules and boot
+arguments pass a separate 300→600→300 MHz RAM trial. Only the feedback script
+and its permit are added to the previously qualified registration initramfs.
+The userspace policy is capped at 600 MHz. Fifty complete checks, separated by
+0.2-second sleeps, require the uncached 600 MHz clock, four online CPUs, zero
+taint, temperatures below 60°C and matching APC/cache targets within the
+second corner's rounded 1.08–1.18 V bounds.
+
+This unit's initial plan is already at the 1.08 V floor. All fifty samples
+retain that target, with LOOP_EN set and one CPR interrupt in total. CTL reads
+`0x20000469`: its auto-NACK-DOWN bit is set by the qualified IRQ handler's
+DOWN-at-floor branch. This proves a handled floor response; it does not
+demonstrate voltage adjustment. RESULT_0 continues to report down requests.
+The active MX floor request is 1.1875 V (summary truncates to 1187 mV).
+The script then verifies 300 MHz, the fixed 1.08 V target and LOOP_EN clear
+(`0x20000428`), with MX's floor back to 1.0875 V.
+
+Serial records the timer at 181.741527 seconds. Both observers exit zero and
+host default routes/resolver restore, with the temporary profile removed.
+Native r50 boot `8eda2570-36e5-43aa-a35c-6c531fdd349c` retains the original boot
+hash, four-rate schedutil policy, zero taint, Sway and sensor proxy. Two bounded
+PMIC reads confirm S2 range/VSET 1/115 and the restored 1.15 V target. Only the
+existing time-sync target/service remain pending at the initial check; the
+newest physical UI and any startup follow-up are tracked in
+[600 MHz feedback evidence](../evidence/2026-11-08-cpr-feedback-600.json).
+
+Three host shell tests cover 22 simulated modes, including voltage adjustment,
+both clamps, inconclusive feedback and failed state/temperature/IRQ/return
+checks. Actual hardware voltage adjustment under controlled load, repeated
+transitions, higher rates, physical rails, sustained load/thermal/suspend and
+installed/distribution qualification remain open. The successful kernel
+encoding still works around the unresolved USB staging defect.
