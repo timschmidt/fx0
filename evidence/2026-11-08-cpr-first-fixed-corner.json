@@ -1,0 +1,289 @@
+{
+  "date": "2026-11-08",
+  "status": "First fixed-corner 300-384-300 MHz RAM trial and warm return pass; original r50 hash/PMIC 1.15 V target, running systemd and owner-confirmed display/touch restored",
+  "source_manifest": "manifests/kernel-cpr-voltage-observation.json",
+  "source_commit": "b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8",
+  "parent_module_registration_evidence": "evidence/2026-11-08-cpr-voltage-observation.json",
+  "image": {
+    "image_path": "local/cpr-voltage-observation/fx0-cpr-first-step-ram.img",
+    "image_sha256": "b37b5fae99b27c0f95a840e76ce886fd28d94455131d34aa5ff6c4eb7c88e027",
+    "image_bytes": 6899712,
+    "kernel_sha256": "82052f4d623a8bcb64a57e93f6354e6b9397e04cb2ccd7a19da3ee972f2e4c88",
+    "DTB_sha256": "589d17908c2bd9584b0f3f51bc4c19ced467b60791e3fd13bc4ee3fbcd9e0284",
+    "header_digest_and_addresses_verified": true,
+    "return_after_seconds": 180,
+    "initially_moduleless": true,
+    "allowed_module_loads": [
+      "cpufreq_userspace.ko",
+      "cpufreq-dt.ko"
+    ],
+    "signature_enforcement": true,
+    "default_governor": "userspace",
+    "registration_script_sha256": "8391c8d434b2b23e2ba1a5c539ebc9ae0373a0515064dd09372dda694502c367",
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\" cpufreq.default_governor=userspace module.sig_enforce=1",
+    "entries_sha256": {
+      "bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dev": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sys": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tmp": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "www": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bin/busybox": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+      "bin/sh": "9d75f0d7c398df565d7ac04c6819b62d6d8f9560f5eb4672596ecd8f7e96ae91",
+      "bin/serve-http": "4005fed0312bc216b3c32129ffdd2ceac06544a2503ecd572349e729af543d5e",
+      "init": "8a25f6757a7f0de87cb7433def659d0fee00981c2a311ed816a12bac439ac0d1",
+      "etc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modules": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "etc/fx0-cpr-trial": "7726ddde5c6f08780f95da9cf91f1f2193ca4afa433c889b98e28a66af85ce47",
+      "bin/cpr-register": "8391c8d434b2b23e2ba1a5c539ebc9ae0373a0515064dd09372dda694502c367",
+      "modules/cpufreq_userspace.ko": "4c219cc6637db54cd4dc488de2e43df5513333f5c9943913d9d04bf6863b989f",
+      "modules/cpufreq-dt.ko": "3e5279a527d8f036450226f9b2d9a3df4df02f5f9ea35c98fd5f13d1c9639644",
+      "etc/fx0-cpr-modules.sha256": "449b08d9d8b61fdf4d6f4bcd6898c35560d486bde9df88b989de8e2d9cf0d8b3",
+      "etc/fx0-cpr-first-step": "6d948563703136f750125da3f9ed0f3d462dbf3637b58e25c47f3980a7bee8fc",
+      "bin/cpr-first-step": "2120d2c21c019c7a099f5636f5690761c5de9399fd768348ecb23e7d78cff88b"
+    },
+    "packed_kernel_encoding": "XZ preset 3; runtime Image and ELF exactly unchanged",
+    "previous_failed_image_sha256": "48e29c2c7a8dd05f854bacf2ea910fa4488abdc368b73f2b6e462a06ff7a0abc",
+    "phase": "first fixed-corner performance request",
+    "explicit_frequency_requests_kHz": [
+      384000,
+      300000
+    ],
+    "policy_limits_kHz": [
+      300000,
+      384000
+    ],
+    "expected_applied_APC_target_uV": 1080000,
+    "expected_feedback_LOOP_EN": 0,
+    "first_step_script_sha256": "2120d2c21c019c7a099f5636f5690761c5de9399fd768348ecb23e7d78cff88b",
+    "kernel_DTB_cmdline_identical_to_registration_trial": true
+  },
+  "host_tests": {
+    "selected_kernel_tests": 120,
+    "registration_shell_tests": 2,
+    "first_step_shell_tests": 2,
+    "failures": 0,
+    "scope": "separate invocations; real C functions and shell control with fake I/O; hardware trial recorded separately"
+  },
+  "RAM": {
+    "directory": "local/ram-cpr-first-step-01",
+    "BOOT_count": 1,
+    "boot_id": "ef0d3fbd-509f-4998-96c3-6b2a2fce7b55",
+    "taint": 0,
+    "online_CPUs": "0-3",
+    "signature_enforcement": true,
+    "governor": "userspace",
+    "policy_limits_kHz": [
+      300000,
+      384000
+    ],
+    "registration_before_requests_passed": true,
+    "initial_APC_boot_target_uV": 1150000,
+    "points": [
+      {
+        "requested_kHz": 384000,
+        "observed_CPU_mux_Hz": 384000000,
+        "APC_target_uV": 1080000,
+        "active_MX_floor_uV_from_verified_source": 1087500,
+        "active_MX_summary_mV_truncated": 1087,
+        "direct_L3_summary_mV_truncated": 1287,
+        "A7_PLL_Hz": 768000000,
+        "A7_PLL_enable_count": 1,
+        "corner_voltage_applied": true,
+        "feedback_allowed": true,
+        "LOOP_EN": false,
+        "CPR_control_hex": "0x20000428",
+        "quiet_hold_seconds": 2,
+        "state_checks_during_hold": 10,
+        "hold_proof": "actual script completes its ten checks before emitting observed marker; intermediate samples are not separately logged"
+      },
+      {
+        "requested_kHz": 300000,
+        "observed_CPU_mux_Hz": 300000000,
+        "APC_target_uV": 1080000,
+        "active_MX_floor_uV_from_verified_source": 1087500,
+        "active_MX_summary_mV_truncated": 1087,
+        "direct_L3_summary_mV_truncated": 1287,
+        "A7_PLL_Hz": 768000000,
+        "A7_PLL_enable_count": 0,
+        "corner_voltage_applied": true,
+        "feedback_allowed": true,
+        "LOOP_EN": false,
+        "CPR_control_hex": "0x20000428",
+        "quiet_hold_seconds": 2,
+        "state_checks_during_hold": 10,
+        "hold_proof": "actual script completes its ten checks before emitting observed marker; intermediate samples are not separately logged"
+      }
+    ],
+    "explicit_request_sequence_kHz": [
+      384000,
+      300000
+    ],
+    "loaded_modules": [
+      "cpufreq_userspace",
+      "cpufreq_dt"
+    ],
+    "no_request_above_384MHz": true,
+    "physical_analogue_voltages_measured": false,
+    "serial_error": null,
+    "timer_kernel_seconds": 181.756403,
+    "HTTP_attempts": 23,
+    "HTTP_complete_pairs": 22,
+    "serial_bytes": 221260,
+    "udev_permission_retries": 1,
+    "RAM_detached_UTC": "2026-11-08T19:53:42.406992+00:00",
+    "observer_returncodes": {
+      "network": 0,
+      "observer": 0
+    },
+    "panic_Oops_BUG_or_lockup_messages": 0
+  },
+  "native_before": {
+    "boot_id": "48ddf314-a3e3-407b-bd8f-b330ede124e6",
+    "r50_hash": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "PMIC_S2": {
+      "method": "two exact nine-byte pread rows; dense range metadata checked; no whole-map dump",
+      "range": "0-ffff",
+      "registers": {
+        "0x1740": 1,
+        "0x1741": 115
+      }
+    },
+    "owner_UI_confirmed_on_this_prior_boot": true
+  },
+  "constraints": {
+    "candidate_installed": false,
+    "eMMC_flashed": false,
+    "audio_tested": false,
+    "host_builtin_WiFi_changed": false
+  },
+  "remaining": [
+    "feedback at later corners, higher eligible rates, physical analogue rails, thermal/load/suspend",
+    "distribution/installed update/recovery, stable/edge and all wider bringup gates",
+    "content-dependent USB staging defect"
+  ],
+  "files_sha256": {
+    "diagnostics/cpu-cpr-runtime/first-step.sh": "2120d2c21c019c7a099f5636f5690761c5de9399fd768348ecb23e7d78cff88b",
+    "tests/test_cpr_first_step.py": "b5e2184914b9e155b77bc1991ee640b07bfc8de136077faab2983e0e6c9dac86",
+    "local/cpr-voltage-observation/first-step-RAM-image.json": "49fe85895af8eee9c8fa2923e2812ff24ac0dea87c5b0ad7d9c89797a5fd294d",
+    "local/ram-cpr-first-step-01/image-verification.json": "49fe85895af8eee9c8fa2923e2812ff24ac0dea87c5b0ad7d9c89797a5fd294d",
+    "local/ram-cpr-first-step-01/native-preflight.txt": "2689f7161ff9cc3d94d01ea3f2bf6eb4a0e4aa367306f74298ebb71e52736b24",
+    "local/ram-cpr-first-step-01/native-APC-preflight.json": "c0e29352ab2e46bf4857118bc48eba5b68015dac4d0ac30f7a048a8e48dc741b",
+    "local/ram-cpr-first-step-01/boot-request.json": "d9b34081d7f1be6ffdff2add3e431dc8354126520f1eaad7280ae7b8cef62ac5",
+    "local/ram-cpr-first-step-01/transfer-controller.json": "0d6c440ebd27f517e53734d418521e8b55ee15917829717cb5083dfa260a4506",
+    "local/ram-cpr-first-step-01/HTTP-05-status.txt": "bd48c4af2fb206d83fd8334a57a4df8d331ddfd717e8e7187b4d57e8d048a5ff",
+    "local/ram-cpr-first-step-01/network-controller.json": "12b4c5009d0ab2b4a4f3177c15afdc98b567bdf241a39b797d5eef99dcedae6b",
+    "local/ram-cpr-first-step-01/HTTP-15-status.txt": "126aaff6cc090a64aee695d6233a673df2e9ca06e219f19250541f8d1cbb2247",
+    "local/ram-cpr-first-step-01/HTTP-19-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-06-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-12-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-00-dmesg.txt": "3bb7ee773f7aadc119744f3f298bb4f6f404f048f20ebb3673afde3750beb382",
+    "local/ram-cpr-first-step-01/HTTP-16-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-21-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/ram-observation.json": "2f4342c40a9d374898ae09a76fee88b97e3147392f5bca9bc3a5e14bd7b4421b",
+    "local/ram-cpr-first-step-01/HTTP-01-dmesg.txt": "3bb7ee773f7aadc119744f3f298bb4f6f404f048f20ebb3673afde3750beb382",
+    "local/ram-cpr-first-step-01/HTTP-02-status.txt": "a48efb90763d7c3dee17fbb675f01c944ad6f9265951e8cbb9d66890e502ba37",
+    "local/ram-cpr-first-step-01/HTTP-08-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/transfer-controller.log": "0616463fd93d29683203b37f63e4e2d599b663c33235870996aa66d30a5ad324",
+    "local/ram-cpr-first-step-01/native-APC-postflight.json": "675bf79e179ba149ef2134ae8e7305f0aa98d8ce47251c7fa971be4df0d46114",
+    "local/ram-cpr-first-step-01/HTTP-19-status.txt": "289fb0198bf2591f24bc06565bd23bb17877bb29fcdff6a8dcad9ed22b5d2526",
+    "local/ram-cpr-first-step-01/boot-once.py": "224ea76acb64b6c4064f71a0f63eab8dbb83b89a7a615042ca72ff7c0d106203",
+    "local/ram-cpr-first-step-01/HTTP-17-status.txt": "c6314a430cab71335af98675f0f85d8e539ff26733a4c6326557d96fd6938b72",
+    "local/ram-cpr-first-step-01/host-network-restored.json": "f252a6dd0c05af65f0a54402415e8369cfdc9aec23981fb43f8be0bb32c64c1c",
+    "local/ram-cpr-first-step-01/HTTP-15-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-14-status.txt": "126aaff6cc090a64aee695d6233a673df2e9ca06e219f19250541f8d1cbb2247",
+    "local/ram-cpr-first-step-01/HTTP-14-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-09-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-16-status.txt": "eb744277bafede2b9195e709d08cdf418c31d5b57eb834b096002d8ad79eeee5",
+    "local/ram-cpr-first-step-01/HTTP-01-status.txt": "35eb346125a7b3acf930cb415220f4ba9c5c1e6ddd5644d21908a54a9b00500c",
+    "local/ram-cpr-first-step-01/observer-controller.json": "05541acd3128e87eadb6d00476c5117ee4496427d0b5e7b5fcfc157f4ed459c1",
+    "local/ram-cpr-first-step-01/stage.py": "980a9e0bbf4afe40507f06ab7d2da512bf332e41bab23145cba174481b393100",
+    "local/ram-cpr-first-step-01/native-postflight.txt": "d272ed8fe559dd1ce8c75bce59201b6b9673a3f8a8533bc2b05ddb10ab39f6e3",
+    "local/ram-cpr-first-step-01/network-controller.log": "aa8da52a2415918171e4e1d5396629ba1644e02e8ef83a9e9a7216e4d42740e3",
+    "local/ram-cpr-first-step-01/HTTP-06-status.txt": "bd48c4af2fb206d83fd8334a57a4df8d331ddfd717e8e7187b4d57e8d048a5ff",
+    "local/ram-cpr-first-step-01/HTTP-12-status.txt": "19ef0e53807669013364e308c394c4bff9811491075ae3ce450340fced2fd397",
+    "local/ram-cpr-first-step-01/HTTP-07-status.txt": "72ca693f4ca458079cb5b5c11221c01c1f573fcceadbabd8425dec674f7a1b98",
+    "local/ram-cpr-first-step-01/temporary-USB-network.json": "e83c100eb813ecd2f9289b42af4d6bad1e199d456b362eb4b2c7c9d41d157d48",
+    "local/ram-cpr-first-step-01/HTTP-22-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-11-status.txt": "51430b8e98fb7518c7dd69ec2eab7d2016c6e184b71b79c9f2e15433fe24d1b5",
+    "local/ram-cpr-first-step-01/HTTP-22-status.txt": "816048567c3a4bc3872f7d3dda4344ca0a9e7e95a19a5d1f11a8cf16eb1c4d39",
+    "local/ram-cpr-first-step-01/HTTP-11-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-17-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/serial-kmsg.txt": "225ef2c8cdee7eb4161f3aaff3c5efb15e8349c90b94b5fef139dbe0ecd52f68",
+    "local/ram-cpr-first-step-01/HTTP-04-status.txt": "24283de8ee77b736e13908d1c624ffcb6e9dbd96179d005d92c63dc765ba72c8",
+    "local/ram-cpr-first-step-01/HTTP-10-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-09-status.txt": "de4aa695b5ee846a69950e7dcd2f7415ba0c0d54f4d0077c32365013858b5020",
+    "local/ram-cpr-first-step-01/HTTP-20-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-10-status.txt": "de4aa695b5ee846a69950e7dcd2f7415ba0c0d54f4d0077c32365013858b5020",
+    "local/ram-cpr-first-step-01/observe.py": "2001700123f58b8aa2136f909de280789dbc223fd4ff5c39e6df66b00f78c86d",
+    "local/ram-cpr-first-step-01/HTTP-07-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/host-preflight.json": "281b9e1eb5fed4120c2b8e2448e42c81c3947851368dd67169f6905b388e986e",
+    "local/ram-cpr-first-step-01/HTTP-13-status.txt": "9bce771aac752b1922cb4a6853af5591e74e147c8f99355dea1b528edfe4c620",
+    "local/ram-cpr-first-step-01/HTTP-03-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-05-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-18-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-18-status.txt": "b5f4c9ee2edacabc377f836bdf640368f90e73147dc4be63b6f27d774aef6c03",
+    "local/ram-cpr-first-step-01/HTTP-04-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/HTTP-13-dmesg.txt": "ec7aee325d153ef38ad30ae17f1e1a63ecba5bee963e0c48069d0a40e59e9ca3",
+    "local/ram-cpr-first-step-01/native-immediate-preboot.txt": "624b22b047b4cecd7c73896db936c5c938b62cc9c30936bafd4191c05b5b38ae",
+    "local/ram-cpr-first-step-01/HTTP-20-status.txt": "289fb0198bf2591f24bc06565bd23bb17877bb29fcdff6a8dcad9ed22b5d2526",
+    "local/ram-cpr-first-step-01/HTTP-08-status.txt": "c09faf4133728730e22fffcbbfc6f6cb933be5b55346d835232c733e129f636a",
+    "local/ram-cpr-first-step-01/run-process.py": "0eac33ecf8506abf2ee5ab1ddf8b32c9523799c55be0fb110fb5709226058c66",
+    "local/ram-cpr-first-step-01/HTTP-02-dmesg.txt": "3bb7ee773f7aadc119744f3f298bb4f6f404f048f20ebb3673afde3750beb382",
+    "local/ram-cpr-first-step-01/bootloader-entry-controller.json": "61fa7a905de18f59becbe6f937a3ad1d7aec500dea879b489116a7daa79a5a7f",
+    "local/ram-cpr-first-step-01/HTTP-03-status.txt": "b4dbc01c7c84fc0d9a07eba3d42db2336f3aa51dbe373b191cd541e7e62b72e4",
+    "local/ram-cpr-first-step-01/HTTP-21-status.txt": "e28cdf097f6de5e01b0a216e02f12121515427ae316c84ac67de035c69984441",
+    "local/ram-cpr-first-step-01/observer-controller.log": "d31ff738cd1554d02cffabf0d2ef6b23e358faf781db0117fc6e0f4aede75d09",
+    "local/ram-cpr-first-step-01/observation.json": "8d0855a79e289d9d13bc19ac1829afb9d6b9132005a80bd20793628d0e533283",
+    "local/ram-cpr-first-step-01/native-startup-followup.txt": "90a8480856a373238b0adb023523c79bcea3aa81196d4292cb5c46105d254899"
+  },
+  "native_return": {
+    "boot_id": "d745a11f-71fa-4f23-9e0a-d1d7914d2927",
+    "kernel_release": "6.18.59-fx0-dmp",
+    "package": "linux-postmarketos-qcom-msm8226-6.18.59-r50",
+    "taint": 0,
+    "systemd_state_at_first_snapshot": "starting",
+    "failed_units": 0,
+    "Sway_running": true,
+    "sensor_proxy_active": true,
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "rates_kHz": [
+      300000,
+      384000,
+      600000,
+      787200
+    ],
+    "governor": "schedutil",
+    "PMIC_S2_target_restored": true,
+    "PMIC_S2_registers": {
+      "method": "two exact nine-byte pread rows after dense-map metadata check",
+      "registers": {
+        "0x1740": 1,
+        "0x1741": 115
+      }
+    },
+    "PMIC_target_uV": 1150000,
+    "physical_display_touch": "owner explicitly confirms display and touch work on this newest return",
+    "host_default_routes_and_resolver_restored": true,
+    "own_temporary_profile_deleted": true,
+    "scope": "Functional warm return after operating at the first 1.08 V fixed corner; source stages causing PMIC restoration are not inferred from the readback",
+    "startup_followup": [
+      "running",
+      "d745a11f-71fa-4f23-9e0a-d1d7914d2927"
+    ],
+    "initial_pending_jobs": [
+      "systemd-time-wait-sync.service",
+      "time-sync.target"
+    ],
+    "current_systemd_state": "running",
+    "current_pending_jobs": [],
+    "startup_followup_passed": true
+  },
+  "image_metadata_followup": {
+    "change": "remove inherited empty registration-only explicit_frequency_requests field; explicit_frequency_requests_kHz already lists the actual [384000,300000] requests; image bytes and SHA unchanged",
+    "previous_metadata_sha256": {
+      "local/cpr-voltage-observation/first-step-RAM-image.json": "7cc2e0db0d841b3301225244732e6f3edbaf7243ba9bdc2140d5d086cd16eea6",
+      "local/ram-cpr-first-step-01/image-verification.json": "7cc2e0db0d841b3301225244732e6f3edbaf7243ba9bdc2140d5d086cd16eea6"
+    }
+  }
+}

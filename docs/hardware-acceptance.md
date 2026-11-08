@@ -88,6 +88,18 @@ jobs remain pending. This closes startup only; runtime
 DVFS/feedback, real rails, thermal/suspend and wider gates remain open. See
 [startup evidence](../evidence/2026-11-08-cpr-disabled-reference.json).
 
+The later observation kernel and its two matching signed CPU modules pass
+registration under enforced signatures/userspace, retaining 300 MHz, the
+unapplied 1.15 V APC target and disabled feedback. A separate limited trial
+passes 300→384→300 MHz with applied 1.08 V targets at both fixed-corner points
+and LOOP_EN clear. The timer returns at 181.756403 seconds to the original
+r50 hash/policy; exact PMIC S2 reads confirm restoration to 1.15 V. Taint is
+zero and Sway/sensor proxy run. The owner confirms display/touch and startup reaches running without failed
+or pending jobs. These quiet holds do not qualify later feedback, analogue rails,
+load/thermal/suspend or distribution/install behavior. See
+[registration](../evidence/2026-11-08-cpr-voltage-observation.json) and
+[first fixed-corner evidence](../evidence/2026-11-08-cpr-first-fixed-corner.json).
+
 November 8 r50 regression: the owner confirms display and touch before testing.
 Five USB-powered RTC controls retain DMP execution across traced s2idle and
 recover 373 quaternion samples, with RTC IRQ +1 and IMU IRQ +0 per cycle, no

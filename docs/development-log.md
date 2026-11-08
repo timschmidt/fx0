@@ -3986,3 +3986,49 @@ The owner confirms display and touch on the successful startup trial’s newest
 r50 return, closing that physical recovery check. Native time-sync remains
 open; bounded supported hosts lookup exits 124 and timesyncd has no server
 address/packets. The underlying DNS/network/service cause is not yet established.
+
+### Signed CPU modules and first fixed-corner performance requests (2026-11-08)
+
+Prepared isolated observation source b721ebaecd7d and 43-patch manifest, adding
+read-only planned/cache/applied/feedback/APC-target distinctions while preserving
+legacy output. All 120 selected C/schema/DMP checks, a separate ARM W=1 object
+and checkpatch pass. Two real-shell registration tests and two first-step tests
+exercise load ordering, preconditions, exact request limits and rejection after
+failed observations. The full kernel/both DTBs/all 464 modules build in 6m06s.
+Every staged module signature verifies against the certificate exactly embedded
+in the ELF trust list; corrupt contents/signatures and the prior certificate
+reject. Source publication is verified on the owner's observation branch.
+
+The first image's data-only transfer times out after 3,588,096 bytes, within
+the compressed kernel and before any BOOT. Only after terminal failure and
+confirmed process exit is the identified phone USB transport reset. XZ preset
+3 re-encoding preserves decompressed Image, ELF, certificate and symbol-version
+bytes exactly. This image stages/reads back and boots once; the underlying
+content-dependent USB defect remains open.
+
+Enforced signatures and checked userspace-first load order register both CPU
+modules at 300 MHz with APC held at 1.15 V, no positive performance state and
+feedback disabled. Taint is zero. The 181.722188-second timer returns to r50
+boot 48ddf314-a3e3-407b-bd8f-b330ede124e6, with running systemd, original hash,
+four rates/schedutil, Sway/sensor proxy and owner-confirmed display/touch.
+Host network state restores. See
+[registration evidence](../evidence/2026-11-08-cpr-voltage-observation.json).
+
+A separate RAM trial caps userspace at 300–384 MHz, requests 384 then 300 MHz
+and passes quiet holds at both. APC reads 1.08 V and the positive performance
+state is applied; LOOP_EN remains clear at the fixed-voltage corner. The PLL
+reads 768 MHz for the 384 MHz point, and return uses the 300 MHz auxiliary
+path. Active MX requests 1.0875 V while another L3 view remains at 1.2875 V;
+these are digital targets/votes, not analogue measurements. The timer returns
+at 181.756403 seconds to r50 boot d745a11f-71fa-4f23-9e0a-d1d7914d2927. Its
+original hash/policy, zero taint and Sway/sensor proxy verify; narrow dense-map
+PMIC reads confirm S2 range/VSET 1/115 and the 1.15 V target restored after the
+low-voltage warm return. Initial time-sync jobs and latest physical UI follow-up
+remain recorded separately. Later feedback/rates, physical rails, sustained
+load/thermal/suspend, distribution/install and wider bringup gates remain open.
+See [first fixed-corner evidence](../evidence/2026-11-08-cpr-first-fixed-corner.json).
+
+Native startup subsequently reaches running with no failed units/jobs, and the
+owner confirms display/touch on this newest first-fixed-corner return. The
+restored PMIC target, boot hash and physical UI checks close that bounded warm
+recovery gate; all broader qualification remains open.

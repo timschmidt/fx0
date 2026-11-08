@@ -141,3 +141,12 @@ passes one moduleless 300 MHz startup RAM gate. These development publications
 do not claim receiving-tree/DCO readiness or runtime DVFS/feedback qualification.
 The r54 pmaports branch still packages the earlier 39-patch source and requires
 a separate update and independent Alpine RAM trial.
+
+The [observation source branch](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-cpr-observe)
+is published and independently verified at
+`b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8`. Its 43 raw patches replay to the
+exact tree, with only read-only debug output added after the qualified startup
+source. The host-built family passes signed-module registration and the first
+300–384 MHz fixed-corner requests; the original 35-mail review export remains
+a separate frozen 39-patch source and must not inherit these later results.
+DCO, receiving-tree rebases/routing and broad runtime qualification remain open.

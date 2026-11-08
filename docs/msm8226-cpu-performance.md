@@ -875,3 +875,41 @@ Its time-sync target/service remain
 pending, so full systemd startup is not claimed. See
 [qualified startup evidence](../evidence/2026-11-08-cpr-disabled-reference.json)
 and the published [source branch](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-cpr-disabled-reference).
+
+### Signed runtime registration and first fixed-corner requests
+
+The 43-patch observation source (`b721ebaecd7d`) distinguishes planned/cached
+corner voltage, whether a performance request has been applied, feedback
+eligibility and the APC target read through the regulator provider. Unattached,
+applied/unapplied, suspended/inhibited, read-error and legacy cases execute the
+actual C diagnostics without state mutation. The full kernel/both DTBs and
+464 signed modules build; the embedded ELF trust list exactly matches their
+certificate. CMS payload/signature corruption and the prior certificate reject.
+
+The first packed kernel hits the unresolved USB download defect at 3,588,096
+confirmed bytes before any BOOT. Re-encoding XZ at preset 3 leaves decompressed
+Image, ELF, certificate and Module.symvers byte-identical. The new encoding
+stages/reads back and RAM-boots. Under `module.sig_enforce=1` and a verified
+`cpufreq.default_governor=userspace`, userspace loads before cpufreq-dt and
+registration leaves the CPU at 300 MHz, APC at 1.15 V and performance unapplied.
+This load order matters: actual CPUFreq tests demonstrate that an absent
+userspace governor falls back to built-in schedutil. See
+[registration and build evidence](../evidence/2026-11-08-cpr-voltage-observation.json).
+
+A separate userspace-limited 300–384 MHz trial then requests 384 MHz and 300 MHz.
+Both points pass ten state checks across two-second quiet holds. The 384 MHz
+point uses a 768 MHz PLL; return to 300 MHz uses GPLL0/2. Both have applied
+1.08 V APC targets and LOOP_EN clear because the first corner's rounded floor
+and ceiling are equal. Feedback eligibility is true after application; this
+is distinct from an enabled loop. The active MX vote requests a 1.0875 V
+floor (summary truncates to 1087 mV); the direct L3 view still reports 1287 mV.
+No analogue voltage or release of other clients' votes is inferred.
+
+Taint remains zero, and serial captures the timer at 181.756403 seconds. Warm
+return restores r50's original boot hash, four-rate schedutil policy, Sway and
+sensor proxy. Two exact nine-byte PMIC debugfs reads, after validating its dense
+range metadata, confirm S2 range/VSET 1/115 (the original 1.15 V target). The owner confirms display/touch and startup subsequently reaches running
+without failed/pending jobs, as tracked in
+[first fixed-corner evidence](../evidence/2026-11-08-cpr-first-fixed-corner.json).
+Later-corner feedback, higher eligible rates, physical rails, sustained load,
+thermal/suspend and installed/distribution qualification remain open.

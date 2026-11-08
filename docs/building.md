@@ -345,6 +345,18 @@ r54 Alpine package, whose 39-patch kernel remains independently unqualified.
 Keep the source/build/certificate/module families distinct. See
 [startup evidence](../evidence/2026-11-08-cpr-disabled-reference.json).
 
+For the signed-runtime trial, use the separate
+[43-patch profile](../manifests/kernel-cpr-voltage-observation.json) and
+[observation configuration](../configs/linux-6.18.59-fx0-cpr-observe.armv7).
+The resulting 464 host-built modules verify against the exact embedded kernel
+certificate. Only userspace and cpufreq-dt enter the RAM initramfs, with
+signature enforcement and a checked userspace boot default. Their controlled
+[registration/first-step scripts](../diagnostics/cpu-cpr-runtime/README.md)
+pass registration and 300–384 MHz fixed-corner requests in RAM. This does not
+qualify the default schedutil route or update the r54 Alpine artifact. The
+lossless XZ re-encoding used after a preboot USB stall preserves runtime Image,
+ELF and module compatibility; every image still needs exact stage/readback.
+
 The input-dependent preboot USB defect remains open. The original image stalls
 after 5,783,552 confirmed bytes with both standard fastboot and synchronous
 transfers. Padding and pacing do not fix it; an isolated 32 KiB block reproduces
