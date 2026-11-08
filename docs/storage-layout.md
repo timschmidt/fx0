@@ -4,6 +4,25 @@ The required endpoint is one maximum-capacity native Linux root/data filesystem,
 
 **Applied 2026-10-31.** The phone now uses the final layout: partitions 1–34 unchanged, partition 35 `nura-root` (14.3 GiB native ext4) replacing system/cache/userdata/sdcard/grow, no boot filesystem. It has 12.67 GB available on first boot, against 1.4 GB before. See the [final-layout evidence](../evidence/2026-10-31-final-storage-layout.json). The sections below record the preview and qualification that led there. Factory-stock restoration and the remaining requirements in [plan section 2.1](bringup-plan.md#21-verify-full-stock-restoration-then-consolidate-internal-storage) must pass before migration.
 
+**Bounded r50 integrity, 2026-11-08.** On the native ext4 root, four rounds
+overwrite and directly verify one 512 MiB synthetic file: 2 GiB written and
+2 GiB read in 417.83 seconds. Each sector carries its run, round and absolute
+position; all four checksums match the host values computed before launch.
+Aligned `O_DIRECT` I/O, per-round file `fsync`, close/reopen and final directory
+`fsync` avoid a page-cache-only readback. Block counters account for at least
+the tested volume. All 512 guarded temperature samples are 39–45°C; filesystem
+errors stay zero and no new storage errors appear in the kernel log.
+
+The same r50 boot retains its original boot hash, schedutil 300–787.2 MHz
+limits, zero taint, running startup/NTP, Sway and sensor proxy. The finished
+transient service is removed and its sleep inhibitor released. The final
+512 MiB file remains for a later cross-boot read, with 7,615,930,368 bytes still
+available. No reboot or raw block write occurs. This is a bounded same-boot
+integrity pass; cross-boot retention, sudden power loss, long soak and final
+candidate regression remain open. See the
+[worker/procedure](../diagnostics/emmc-integrity/README.md) and
+[native evidence](../evidence/2026-11-08-emmc-native-integrity.json).
+
 ## Measured contiguous space
 
 The eMMC user area contains 30,777,344 sectors of 512 bytes. The following original partitions are adjacent:

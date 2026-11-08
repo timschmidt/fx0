@@ -1,0 +1,265 @@
+{
+  "date": "2026-11-08",
+  "recorded_UTC": "2026-11-08T22:49:49.498302+00:00",
+  "status": "Bounded native r50 same-boot eMMC regular-file integrity passed; cross-boot/power-loss/long-soak/final-candidate qualification remains open",
+  "phone": {
+    "model": "LG Fx0",
+    "native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "kernel": "6.18.59-fx0-dmp",
+    "package": [
+      "linux-postmarketos-qcom-msm8226-6.18.59-r50 - Fx0 DMP kernel with bounded CPU calibration interfaces"
+    ],
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "loaded_identities": {
+      "kernel_GNU_build_id": "f6c78534b602f8ec80f85d37a866e6fd7963b6eb",
+      "msm_module_GNU_build_id": "eb152a70d222d199697bf103bde5bea2ef269ded",
+      "native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813"
+    },
+    "identity_reference": "Kernel GNU note matches original r50 vmlinux build record; the older loaded_MSM_build_id names the DRM msm module, whose separate GNU note also matches. They are not interchangeable identity fields.",
+    "build_reference": "evidence/2026-11-06-cpu-calibration-r50-build.json",
+    "original_package_sha256": "1790e7571564cffc1274831cee8025431a53b1255e35299865f36f95f31e2970",
+    "package_manifest_sha256": "b42f36f876e1e2b7cdcb5bf94a093b1408c0c226929c0a673ee855a652d6265d",
+    "root_mount": [
+      "/dev/mmcblk0p35 / ext4 rw,relatime 0 0"
+    ],
+    "root_partition_start_sector": 786432,
+    "root_partition_sectors": 29990879,
+    "eMMC_user_sectors": 30777344,
+    "power": "USB input online before launch and at every guarded sample",
+    "battery_condition": "Native BIF reports Discharging. No qualified voltage/current/temperature/SOC values were available; this is a bounded USB-powered run.",
+    "physical_revision": "Same controlled Fx0 unit as prior evidence; no new physical revision inspection in this headless trial"
+  },
+  "procedure": {
+    "run_id": "3c7e3506-e811-468b-8c4a-eca390976a41",
+    "worker_sha256": "ec8b149ddbe61aebdffa3cec7eeb30715a38cad5909aa367d5c3dadeb853aacc",
+    "file_bytes": 536870912,
+    "rounds": 4,
+    "pattern": "Every 512-byte sector carries run UUID, round/complement and absolute sector index with deterministic payload",
+    "io": "Aligned mmap buffers; full O_DIRECT writes, file fsync, close/reopen, full O_DIRECT reads with every-byte verification and SHA256; final directory fsync",
+    "host_expected_hashes_computed_before_launch": [
+      "badad039129b433c021d66987076e0d689f050e5795e2a54e33a4accbfd8aa00",
+      "592cea05f9373cd1139a5654c857dc9bedc3eb8fd2f02b798244b53d568dc825",
+      "23b08de8bd519bbef2ee34c1a927d1d4693157afeda9bf7134d479b7a0468e3e",
+      "38a7446b5c52184b8a8542a8c9154e81b1a9801718466928c2f227316790f17b"
+    ],
+    "limits": {
+      "elapsed_seconds": 900,
+      "memory_bytes": 100663296,
+      "free_space_reserve_bytes": 2147483648,
+      "temperature_mC_exclusive": 60000
+    },
+    "guard_interval_bytes": 8388608,
+    "guards": [
+      "exact native boot/release",
+      "untainted conservative CPU policy",
+      "exact ext4 root mount and partition geometry",
+      "USB input",
+      "two temperature bounds",
+      "zero filesystem errors",
+      "available-space reserve"
+    ],
+    "temporary_service": "Nice 10, idle I/O, 15-minute/96 MiB bounds, temporary sleep inhibitor; exact service/worker confirmed live and later terminal before cleanup",
+    "raw_block_device_writes": false,
+    "global_cache_drop": false,
+    "filesystem_unmounted": false
+  },
+  "host_checks": {
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "scope": "Real host O_DIRECT files; full close/reopen/readback and deliberate bitflip/sector-alias/stale-round/truncation controls"
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "bytes_written": 536870912,
+      "bytes_directly_read": 536870912,
+      "sha256": "badad039129b433c021d66987076e0d689f050e5795e2a54e33a4accbfd8aa00",
+      "write_and_fsync_seconds": 52.71443353199993,
+      "read_and_verify_seconds": 50.82481708500018
+    },
+    {
+      "round": 1,
+      "bytes_written": 536870912,
+      "bytes_directly_read": 536870912,
+      "sha256": "592cea05f9373cd1139a5654c857dc9bedc3eb8fd2f02b798244b53d568dc825",
+      "write_and_fsync_seconds": 52.94322330100022,
+      "read_and_verify_seconds": 51.231366801999684
+    },
+    {
+      "round": 2,
+      "bytes_written": 536870912,
+      "bytes_directly_read": 536870912,
+      "sha256": "23b08de8bd519bbef2ee34c1a927d1d4693157afeda9bf7134d479b7a0468e3e",
+      "write_and_fsync_seconds": 52.40556684500007,
+      "read_and_verify_seconds": 51.61401293699964
+    },
+    {
+      "round": 3,
+      "bytes_written": 536870912,
+      "bytes_directly_read": 536870912,
+      "sha256": "38a7446b5c52184b8a8542a8c9154e81b1a9801718466928c2f227316790f17b",
+      "write_and_fsync_seconds": 53.63061259599999,
+      "read_and_verify_seconds": 52.308924606999426
+    }
+  ],
+  "postflight": {
+    "verified_UTC": "2026-11-08T22:43:29.533409+00:00",
+    "native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "kernel": "6.18.59-fx0-dmp",
+    "boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "rounds_verified": 4,
+    "bytes_written": 2147483648,
+    "bytes_directly_read": 2147483648,
+    "elapsed_seconds": 417.83075503300006,
+    "temperature_mC_min": 39000,
+    "temperature_mC_max": 45000,
+    "temperature_samples": 512,
+    "mmc_read_sectors_delta": 4194416,
+    "mmc_write_sectors_delta": 4266240,
+    "ext4_errors": 0,
+    "new_storage_kernel_errors": [],
+    "taint": 0,
+    "startup": "running; no failed units or jobs",
+    "UI_services": "Sway and sensor proxy active; physical UI result remains pending for this boot",
+    "time_sync": "NTPSynchronized=yes",
+    "policy": {
+      "scaling_governor": "schedutil",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200"
+    },
+    "retained_file_bytes": 536870912,
+    "retained_file_sha256": "38a7446b5c52184b8a8542a8c9154e81b1a9801718466928c2f227316790f17b",
+    "cross_boot_persistence": "pending; no reboot performed",
+    "private_packages_manifest_sha256": "b42f36f876e1e2b7cdcb5bf94a093b1408c0c226929c0a673ee855a652d6265d",
+    "trial_sleep_inhibitor_released": true
+  },
+  "service_cleanup": {
+    "stop": {
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "unit_after": {
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "MainPID": "0"
+    },
+    "payload_retained": 536870912,
+    "startup": {
+      "returncode": 0,
+      "stdout": "running\n",
+      "stderr": ""
+    },
+    "failed_units": {
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "jobs": {
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "verified_UTC": "2026-11-08T22:43:38.786869+00:00"
+  },
+  "available_bytes_before": 8152911872,
+  "available_bytes_after": 7615930368,
+  "latest_physical_UI": {
+    "native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "status": "pending on this newest native return",
+    "question": "The five-round-trip and four-core 600 MHz RAM load trial has returned to installed r50. Its original boot hash and 1.15 V PMIC target are restored, with Sway and the sensor proxy active. Do display and touch work normally on this newest boot?"
+  },
+  "retained_artifact": {
+    "phone_directory": "/var/tmp/fx0-emmc-integrity-3c7e3506-e811-468b-8c4a-eca390976a41",
+    "file": "payload.bin",
+    "bytes": 536870912,
+    "round": 3,
+    "sha256": "38a7446b5c52184b8a8542a8c9154e81b1a9801718466928c2f227316790f17b",
+    "purpose": "Future changed-boot direct read then exact trial-file cleanup",
+    "cross_boot_verified": false,
+    "future_verifier": "local/emmc-integrity-r50-01/verify-after-next-boot.py",
+    "future_verifier_executed": false
+  },
+  "hardware_operations": {
+    "payload_bytes_written": 2147483648,
+    "payload_bytes_directly_read": 2147483648,
+    "reboots": 0,
+    "raw_block_device_writes": 0,
+    "partition_changes": 0,
+    "kernel_package_changes": 0,
+    "CPU_policy_changes": 0,
+    "audio_tests": 0,
+    "host_builtin_WiFi_changes": 0
+  },
+  "scope_limits": [
+    "Same installed r50 boot only; no Alpine or CPR candidate acceptance transferred",
+    "Reported thermal readings are not calibrated physical rail/battery measurements",
+    "Block counters include metadata and background activity; timings include generation/verification and are not isolated performance benchmarks",
+    "Direct I/O and fsync do not prove sudden power-loss survival or eMMC-internal cache behavior",
+    "No mounted-root e2fsck was attempted; zero sysfs errors and inspected kernel messages are bounded runtime evidence",
+    "Newest physical UI result remains pending for this exact boot; no reboot or CPU RAM trial entered"
+  ],
+  "remaining": [
+    "Retained 512 MiB file verification after a separately authorized changed boot, followed by exact cleanup",
+    "Long storage/mixed-use soak and clean-shutdown/power-loss/update behavior",
+    "Final kernel/distribution regression, stable/edge and the complete hardware acceptance matrix",
+    "Minimum retained-partition justification and broader upstream/reliability requirements"
+  ],
+  "files_sha256": {
+    "diagnostics/emmc-integrity/worker.py": "ec8b149ddbe61aebdffa3cec7eeb30715a38cad5909aa367d5c3dadeb853aacc",
+    "diagnostics/emmc-integrity/README.md": "fb872c63278a24d7300ec1b0b5e744d6e42454f8267be9c1a41e43cb988e5916",
+    "tests/test_emmc_integrity.py": "ed8256f5cac556fdb0f5e1a35a76b7b5f12e9411a77b0527c300ed4b675f9ff6",
+    "docs/storage-layout.md": "27cb949de2899680d1d4b7447950d430e9ebffdb6082a8b44d8f896874c23088",
+    "docs/hardware-acceptance.md": "d1484b5cf629e59400b27647076f39ab129f9799ddf9a555e48cded2d6c5bbee",
+    "docs/development-log.md": "4ccbcc60a268fc7f387c29a7041d44af9e102acba9eadc837160c091a9df8ff1",
+    "evidence/2026-11-06-cpu-calibration-r50-build.json": "ea991b12a6fcdffdee3600ddec7595aad351cdff1fefddd5306db7178840f72c",
+    "evidence/2026-11-06-cpu-calibration-r50-native.json": "d13ca1df6590735a7193eba3bda23d592b91246c14731ea204b55e9df9addd69",
+    "evidence/2026-11-01-stock-rollback-from-final-layout.json": "4a30c5f32c5757e34c6abe51ee816ce07ed9ea2cbbb433563b741f7b6a3d7d6e",
+    "local/emmc-integrity-r50-01/finish-service.py": "971577b5b65ce6054f7c573b83c835a3f31b95d93bc61bd1a401bfbc3e200b84",
+    "local/emmc-integrity-r50-01/host-checks.txt": "708294d2be4e132c5823aecfa3f217c5374df57e73949a2d98254424deaca833",
+    "local/emmc-integrity-r50-01/last-poll.json": "fb593a17f1fcdd935c8a31ddd64c151c76c04c35e6957417a6ba65b51eebe042",
+    "local/emmc-integrity-r50-01/launch-reply.txt": "59444a32e09c375bdd0ac321f7fa65513399fca8c17cd9077f7dec08b9584df2",
+    "local/emmc-integrity-r50-01/launch.json": "be2098e953edaecba2f192559f43ddb95a716987d902ae075de4278fd42f950c",
+    "local/emmc-integrity-r50-01/loaded-identities.json": "7edf1939ef0c0b230a925bec98097baf1f2f8dbc0251640bd4fafe31442472ee",
+    "local/emmc-integrity-r50-01/loaded-kernel.json": "bfcaac736ec40fee07a5a7be4e6547b611e750d160f7372f86e361937990f4e7",
+    "local/emmc-integrity-r50-01/new-kernel-lines.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "local/emmc-integrity-r50-01/phone-result.json": "5f3f5de769414e66ddaa3e420de5cad6a2d5baf48406b1c6a9983687031a34cd",
+    "local/emmc-integrity-r50-01/poll-history.jsonl": "3465c9d4f0d7fef3ca2a5f363ed3c8d2c3fc8c2aed2fa6134946ec4d8ef7b56f",
+    "local/emmc-integrity-r50-01/poll.py": "96929738d2c06b29d90e657c15c1424472597643536a9bbe973f47e06e91f68d",
+    "local/emmc-integrity-r50-01/postflight-dmesg.txt": "1770e530fb0702f799319d16658c088e7f23ea6287487bbf2019dfb0f23fe831",
+    "local/emmc-integrity-r50-01/postflight-journal.txt": "bd7b4073f1e0a63953cd11a88b3f99cf6218a4414f7b36d4b582bb5608414aa1",
+    "local/emmc-integrity-r50-01/postflight-packages.txt": "b42f36f876e1e2b7cdcb5bf94a093b1408c0c226929c0a673ee855a652d6265d",
+    "local/emmc-integrity-r50-01/postflight-private.json": "11186f087a3283a518c6a0a4a3850e4ebba851f4ee725a405f7974ae32f43a40",
+    "local/emmc-integrity-r50-01/postflight.json": "aacb9a636148cbfc455b036096db513b12888a7a6460632e417bf42739074c04",
+    "local/emmc-integrity-r50-01/postflight.py": "1925eabe10d1d6a9da7179c4cfdba12e488e1e612c41030efef1a40ea33cb2be",
+    "local/emmc-integrity-r50-01/preflight-kernel.txt": "97b099413280c30d2248cfb42ae942f5d5ce406eaf18cf6c5661382b59d69e4b",
+    "local/emmc-integrity-r50-01/preflight.txt": "9185b3962b820a0363ef80e0f5737cb77557fa2d772d5a3ace4e31555a547249",
+    "local/emmc-integrity-r50-01/prepare.py": "5b1dc8f0c5a1d99d8c0143aa33ddde3663063dc57cfcb57b3187eb6d63107420",
+    "local/emmc-integrity-r50-01/record-evidence.py": "855fa8eb121e788400a2c2526a1514d378527b0409b10576be8aa32608e0785f",
+    "local/emmc-integrity-r50-01/run.json": "f13151e455807ceeb7dbf97a1960c24415f1521e712028af5a652d2f0d2ddb20",
+    "local/emmc-integrity-r50-01/service-finished.json": "f0d90db508bc0e5dbd97c4840ef70e5a3baa7876c6ab8e480efdbd7f1c1e9f6e",
+    "local/emmc-integrity-r50-01/start.py": "fa293f6a0771dee57b5c2cfcc3b56fcc4b048f36f137428ef3a7637a1a70618c",
+    "local/emmc-integrity-r50-01/verify-after-next-boot.py": "5d3e0f1388a2bb1384b2f15b5cdd4453a8acb4407449192d91b464c0ced27057"
+  },
+  "prior_checkpoint_file_versions": {
+    "docs/storage-layout.md": {
+      "commit": "09061e8aa81beada6584480f703dfad392c976a9",
+      "sha256": "d651148881acbeceed60e6e00d5eb67045c419fbe3381ca08d647ce2868ea27a",
+      "meaning": "Previous documentation version; frozen evidence continues to identify its historical inputs."
+    },
+    "docs/hardware-acceptance.md": {
+      "commit": "09061e8aa81beada6584480f703dfad392c976a9",
+      "sha256": "7e4102f714790900c719294fa6f696760a9d2e25769710de6c19aa33d6e2c03a",
+      "meaning": "Previous documentation version; frozen evidence continues to identify its historical inputs."
+    },
+    "docs/development-log.md": {
+      "commit": "09061e8aa81beada6584480f703dfad392c976a9",
+      "sha256": "af50eecedc5fa9cdd85a5693f81c3538f8588c46b20196b34e63d02f48f1914c",
+      "meaning": "Previous documentation version; frozen evidence continues to identify its historical inputs."
+    }
+  },
+  "full_bringup": "in progress"
+}

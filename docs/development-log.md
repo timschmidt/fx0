@@ -4225,3 +4225,32 @@ identify the observed stall's cause, alter bootloader/image bytes or qualify a
 new transfer. No phone command or configuration change occurs; both prepared
 RAM trials remain gated on the newest native return's physical UI result.
 See [transfer framing evidence](../evidence/2026-11-08-ram-transfer-framing.json).
+
+### Native r50 eMMC direct-file integrity (2026-11-08)
+
+Ran a bounded filesystem integrity trial on the existing native p35 ext4
+root without rebooting or entering either prepared CPU RAM trial. Fresh
+preflight confirms the same r50 boot/hash, schedutil 300–787.2 MHz limits,
+untainted running startup, UI services, USB input and space reserve. Four
+host tests first exercise actual direct-file I/O and deliberately corrupt,
+misdirect, stale and truncate fixtures; all pass without skips.
+
+The phone then completes four 512 MiB write/fsync/close/reopen/direct-read
+rounds in 417.83 seconds. Every 512-byte sector binds its run, round and
+absolute position. All four SHA256 results match the host's precomputed
+values: 2 GiB written and 2 GiB directly read. The 512 guard samples report
+39–45°C, with the 2 GiB free-space reserve retained. Whole-device read/write
+counters rise by 4,194,416/4,266,240 sectors, including metadata/background I/O.
+Filesystem errors remain zero and the new kernel log has no storage errors.
+
+The exact service and worker PID reach successful terminal state before
+postflight. Original boot hash, native boot ID, policy, zero taint, running
+startup/NTP and Sway/sensor proxy are retained. Its temporary sleep inhibitor
+is released and only the finished transient unit is stopped/unloaded. The
+final 512 MiB synthetic file and host hash remain for a future changed-boot
+read; 7,615,930,368 bytes remain available. No raw block write, reboot, audio
+test or host Wi-Fi change occurs. The previous native physical UI question
+still belongs to this same boot. Same-boot integrity passes; cross-boot,
+power-loss, long soak and final-candidate regression remain open. See
+[worker](../diagnostics/emmc-integrity/README.md) and
+[native integrity evidence](../evidence/2026-11-08-emmc-native-integrity.json).
