@@ -4173,3 +4173,31 @@ sensor proxy. The latest physical UI check remains pending. This Alpine
 artifact is unbooted and uninstalled; independent RAM, stable/edge, installed
 update/recovery and wider hardware qualification remain open. See
 [r55 package evidence](../evidence/2026-11-08-cpr-observation-source-package.json).
+
+### Prepared independent Alpine startup/signed registration (2026-11-08)
+
+Selected only the two r55 CPU modules, verifying their exact packaged payloads,
+Alpine release, empty dependency lists and detached CMS signatures against the
+certificate exactly embedded in the APK kernel. Added a separate release/permit
+guard and before/after bootstrap checks for four CPUs, taint, two thermal
+sensors, CPU mux/PLL, MX consumer, unapplied state, disabled feedback and the
+1.15 V APC target. Userspace must load successfully before cpufreq-dt; no
+explicit frequency/performance request occurs.
+
+Three real-shell tests cover 36 instrumented modes. Incorrect build families,
+preconditions, failed/silent loads and post-registration drift reject, with
+post-drift failures matched to the intended guard. The exact ARM BusyBox parses
+the script. Built a 6,240,256-byte RAM image preserving the original APK kernel
+encoding and exact DTB/modules, with only five registration-related initramfs
+entries changed from the qualified template. Init, BusyBox, HTTP, command line
+and 180-second timer remain unchanged. Header/digest and kernel/BSS footprint
+below the forced ramdisk address verify; the actual observer prefix emits the
+expected status and the complete command passes shell syntax.
+
+The actual stage entry rejects the previous native boot's pending physical UI
+result before any phone command, transfer or BOOT. Its checks bind the Alpine
+build controller, release, kernel and certificate instead of the Fedora family.
+No device operation is performed in this preparation. Independent Alpine
+startup, registration, recovery and later OPP/load tests remain open; the
+existing 787.2 MHz Fedora trial is also still unbooted. See
+[Alpine preparation](../evidence/2026-11-08-alpine-cpr-registration-preparation.json).

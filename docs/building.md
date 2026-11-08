@@ -371,6 +371,16 @@ recovery qualification; neither the host-built 600 MHz results nor matching
 DTBs qualify the new kernel. Existing RAM scripts reject its distinct release
 until a separate guarded trial is prepared. Stable/edge, installed update and
 all wider acceptance remain open.
+
+The next independent Alpine startup/registration RAM image is now prepared
+from the exact r55 APK bytes. It uses only that release's two signed CPU
+modules and a separate `register-alpine.sh` guard. Three shell tests cover 36
+instrumented modes; the exact ARM BusyBox parses the script. Image checks
+include unchanged return/init logic, exact module/kernel/DTB payloads, legacy
+header/digest and kernel/BSS placement below the forced ramdisk address. The
+observer command and pending previous-return UI gate are checked on the host.
+No staging or boot has occurred. See
+[Alpine RAM preparation](../evidence/2026-11-08-alpine-cpr-registration-preparation.json).
 The owner authorized GitHub pushes for all fx0 development; the published ref
 was independently verified at `4f17b6905c75da8a35f220b1f80724d2d07e997b`.
 

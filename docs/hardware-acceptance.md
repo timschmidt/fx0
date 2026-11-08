@@ -147,6 +147,15 @@ original hash/1.15 V target, zero taint, running startup/NTP and UI services;
 its latest physical UI result remains pending. See
 [r55 package evidence](../evidence/2026-11-08-cpr-observation-source-package.json).
 
+The first independent Alpine startup/signed-registration RAM image is prepared
+with the exact signed APK kernel/DTB and matching two-module family. It retains
+the 180-second return and makes no explicit performance request. Three real-shell
+tests cover 36 modes, including before/after bootstrap drift; ARM BusyBox syntax,
+image layout and actual observer-command checks pass. Its stage entry rejects
+the pending previous-return physical UI result before any phone command. This
+remains preparation only, with no Alpine staging, boot or hardware pass. See
+[Alpine RAM preparation](../evidence/2026-11-08-alpine-cpr-registration-preparation.json).
+
 November 8 r50 regression: the owner confirms display and touch before testing.
 Five USB-powered RTC controls retain DMP execution across traced s2idle and
 recover 373 quaternion samples, with RTC IRQ +1 and IMU IRQ +0 per cycle, no

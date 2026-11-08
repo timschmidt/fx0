@@ -183,6 +183,44 @@ hardware, load, thermal or recovery result follows from this preparation.
 The independent Alpine r55 package uses release
 `6.18.59-fx0-cpr-observe-alpine`, its own trust certificate and matching modules.
 Its source/signature/package checks pass, but it is unbooted/uninstalled. The
-scripts above intentionally reject that different release: prepare a separate
-guarded Alpine RAM family before attempting its startup or module registration.
+Fedora scripts above intentionally reject that different release. The separate
+Alpine preparation below uses the matching package family for startup and
+module registration.
 See `evidence/2026-11-08-cpr-observation-source-package.json`.
+
+## Prepared Alpine startup and signed registration
+
+`register-alpine.sh` is pinned to r55's
+`6.18.59-fx0-cpr-observe-alpine` release and the `alpine-r55-registration`
+permit. The RAM image uses the exact signed APK kernel and qualification DTB,
+plus only its two independently verified, dependency-free CPU modules. Kernel
+encoding is unchanged. The BusyBox/init/HTTP/timer and boot arguments remain
+identical to the qualified diagnostic family, including the 180-second warm
+return, enforced signatures and explicit userspace governor default.
+
+Before loading anything, the script requires no CPUfreq policy or modules,
+four online CPUs, zero taint, two temperatures below 60°C, a 300 MHz CPU mux,
+zero CPU-PLL enable count, unapplied performance, disabled feedback and the
+retained 1.15 V APC target. It also requires the enabled MX consumer's 1287 mV
+summary floor, consistent with the source's 1.2875 V bootstrap request. These
+are software targets/votes and readbacks, not analogue measurements. A complete
+bootstrap snapshot is emitted before loading userspace, then cpufreq-dt.
+Successful registration must retain the same bootstrap and userspace/300 MHz
+policy; the script makes no explicit performance request.
+
+Three real-shell tests cover 36 instrumented modes, including Fedora/r54/native
+kernel rejection, failed/silent loads, signature/default/digest failures and
+pre/post drift in voltage/feedback, MX, PLL, clocks, temperature, topology and
+taint. Post-load drift must fail at its intended guard. The exact ARM BusyBox
+also parses the script under emulation. These host checks do not load modules
+into the Alpine kernel or qualify hardware.
+
+The 6,240,256-byte image verifies its legacy header/digest, exact APK inputs,
+two module payloads, unchanged timer and real observer command. Kernel memory
+from `_text` through `_end`, including BSS, fits below the forced ramdisk load
+address. Its stage entry binds the exact previous native boot/UI result and
+Alpine build family. The pending-UI path is tested to stop before any phone
+command. The image remains unstaged and unbooted; see
+`evidence/2026-11-08-alpine-cpr-registration-preparation.json`. Actual Alpine
+startup, signed registration, native recovery and later performance tests remain
+open, independently of the Fedora 600 MHz results.

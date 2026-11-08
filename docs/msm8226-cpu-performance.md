@@ -1037,3 +1037,13 @@ APK, corruption/wrong-certificate controls and offline ARMv7 simulation pass.
 The artifact is unbooted and uninstalled, so controlled Alpine startup,
 registration, governor/OPP/load and recovery remain separate gates. See
 [package evidence](../evidence/2026-11-08-cpr-observation-source-package.json).
+
+The independent Alpine registration trial is prepared separately. Its script
+checks the moduleless 300 MHz/1.15 V/unapplied bootstrap, MX vote, CPU PLL,
+four CPUs, taint and both temperatures before loading userspace then cpufreq-dt,
+and requires those states retained afterward. No explicit performance request
+is made. Three shell tests cover 36 modes and the exact ARM BusyBox parses the
+script. The image preserves exact APK kernel/DTB/module bytes and the qualified
+timer/init logic; memory-footprint and observer-command checks pass. It remains
+unstaged/unbooted while the preceding native return physical UI check is pending.
+See [Alpine registration preparation](../evidence/2026-11-08-alpine-cpr-registration-preparation.json).
