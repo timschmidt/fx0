@@ -333,6 +333,44 @@ messages. Local recipe commits `e59da87d99afc76fe177d44752913831f013dcbe` and
 `4f17b6905c75da8a35f220b1f80724d2d07e997b` are reviewable through the
 [package diff](../patches/pmaports/fx0-cpu-runtime-packaging.diff) and the
 published [GitHub branch](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-cpu-runtime-package).
+
+### Observation source package r55
+
+The later r55 package uses the 43-patch
+[observation manifest](../manifests/kernel-cpr-voltage-observation.json),
+including the checked XO handoff and read-only voltage diagnostics. Export
+with the same command above, changing the manifest to
+`manifests/kernel-cpr-voltage-observation.json`, config to
+`configs/linux-6.18.59-fx0-cpr-observe-alpine.armv7`, output to a new directory
+and `--pkgrel 55`. Its `6.18.59-fx0-cpr-observe-alpine` release isolates this
+toolchain/module family. The input differs from the host observation config
+only in LOCALVERSION; the original 39 patch files remain byte-identical.
+
+The full Alpine Clang 22.1.3 source build passes. All 48 prepared source files
+match `b721ebaecd7d`, and the actual normalized config passes the official
+community check with CFI retained. The signed 18,481,234-byte APK contains the
+exact built kernel and both DTBs, an embedded trust list matching its own
+certificate and 464 independently verified signed ARM modules. Module and
+package corruption, both other-build certificates and modified signed recipe
+metadata reject. A normal offline ARMv7 install simulation passes in a fresh
+initialized usermode database; it does not perform an installed-phone update.
+
+R54's complete build tree and original log are preserved before reuse. The
+first r55 attempt stops before compilation at a rootless sysfs bind failure;
+the tested recursive prebind fixes the fixture without changing source or
+config guards. Offline simulation also requires explicit database initialization
+before `--simulate` and `--arch armv7` on the x86_64 host. These fixture failures
+and corrected checks are recorded in
+[r55 evidence](../evidence/2026-11-08-cpr-observation-source-package.json).
+
+The [published recipe commit](https://github.com/timschmidt/fx0-pmaports/commit/b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9)
+and [review diff](../patches/pmaports/fx0-cpr-observation-packaging.patch) contain
+source/configuration/provenance only. This Alpine artifact is unbooted and
+uninstalled. It requires its own RAM startup, signed-module/governor/OPP and
+recovery qualification; neither the host-built 600 MHz results nor matching
+DTBs qualify the new kernel. Existing RAM scripts reject its distinct release
+until a separate guarded trial is prepared. Stable/edge, installed update and
+all wider acceptance remain open.
 The owner authorized GitHub pushes for all fx0 development; the published ref
 was independently verified at `4f17b6905c75da8a35f220b1f80724d2d07e997b`.
 

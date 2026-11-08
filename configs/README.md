@@ -25,3 +25,11 @@ registration and bounded 300–384 MHz fixed-corner RAM trials. The compiled
 default remains schedutil, so follow the controlled RAM recipe rather than
 loading cpufreq-dt without a checked userspace override and governor module.
 Later-corner feedback and installed/distribution qualification remain open.
+
+`linux-6.18.59-fx0-cpr-observe-alpine.armv7` is the separate r55 Alpine package
+input. It differs from the host observation input only in LOCALVERSION,
+using `-fx0-cpr-observe-alpine` to isolate the independently compiled module
+family. The recipe normalizes compiler capabilities with `olddefconfig`;
+the actual Alpine configuration retains CFI and signed modules and passes the
+official community check. Host RAM results do not qualify this Alpine build,
+its default schedutil path or installed update/recovery.

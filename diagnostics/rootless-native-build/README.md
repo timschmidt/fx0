@@ -15,6 +15,17 @@ of these device fixtures; start from an empty work directory and record reuse.
 Use explicit `--arch armv7`: autodetection builds an `arch=all` package for the
 host. pmbootstrap registers its emulation within this environment.
 
+Some rootless container mounts retain locked sysfs submounts. In the r55
+observation-package build, pmbootstrap's ordinary `mount --bind /sys` fails
+before compilation (mount exit 32; a disposable BusyBox control reports
+`Invalid argument`). `mount --rbind /sys` succeeds and retains those submounts.
+Prebind `/sys` recursively into each private buildroot alongside `/dev` before
+running pmbootstrap; its mount detector then leaves that existing mount alone.
+The comparison uses only disposable container targets and changes no host
+mount/network configuration. The failed build process must be terminal before
+retry, and its logs must be retained. This fixture change does not alter kernel
+source, configuration or hardware qualification.
+
 The normal copied-APKBUILD layout produces `commit = -dirty`: abuild's path-based
 Git lookup cannot identify the copied root-level APKBUILD at its original tracked
 path. The wrapper here verifies the expected repository HEAD and a clean tree,

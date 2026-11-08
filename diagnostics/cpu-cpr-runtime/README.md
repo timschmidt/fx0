@@ -179,3 +179,10 @@ the matching display/touch pass for the preceding r50 boot; the stage entry
 has been checked to stop before any phone command while that result is
 pending. See `evidence/2026-11-08-cpr-787-preparation.json`. No 787.2 MHz CPR
 hardware, load, thermal or recovery result follows from this preparation.
+
+The independent Alpine r55 package uses release
+`6.18.59-fx0-cpr-observe-alpine`, its own trust certificate and matching modules.
+Its source/signature/package checks pass, but it is unbooted/uninstalled. The
+scripts above intentionally reject that different release: prepare a separate
+guarded Alpine RAM family before attempting its startup or module registration.
+See `evidence/2026-11-08-cpr-observation-source-package.json`.

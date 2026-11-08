@@ -136,6 +136,17 @@ result before sending any phone command. This is preparation only, not a
 787.2 MHz hardware pass. See
 [preparation evidence](../evidence/2026-11-08-cpr-787-preparation.json).
 
+The independent Alpine r55 source package now includes the 43-patch observation
+source instead of r54's 39-patch candidate. Its full build, actual normalized
+community config/CFI, exact kernel/DTBs/trust list, all 464 signed modules,
+corruption/wrong-certificate checks and normal offline ARMv7 package simulation
+pass. The distinct `-fx0-cpr-observe-alpine` release prevents ordinary module
+path mixing. It is unbooted/uninstalled and inherits no Fedora RAM hardware
+result. A read-only postflight confirms the phone remains on the same r50 boot,
+original hash/1.15 V target, zero taint, running startup/NTP and UI services;
+its latest physical UI result remains pending. See
+[r55 package evidence](../evidence/2026-11-08-cpr-observation-source-package.json).
+
 November 8 r50 regression: the owner confirms display and touch before testing.
 Five USB-powered RTC controls retain DMP execution across traced s2idle and
 recover 373 quaternion samples, with RTC IRQ +1 and IMU IRQ +0 per cycle, no

@@ -164,3 +164,13 @@ CPU accounting, temperatures, feedback and fixed-corner return. The
 [repeat/load evidence](../evidence/2026-11-08-cpr-load-600.json) belongs to the
 same `b721ebaecd7d` kernel/module family. Only RAM userspace control/load files
 are new; no kernel patch or receiving-tree readiness is implied.
+
+The pmaports diagnostic recipe is now published at
+[`b234cd8bb1de`](https://github.com/timschmidt/fx0-pmaports/commit/b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9).
+R55 packages the same 43-patch observation source, preserving the original 39
+patch bytes and using a distinct Alpine module release. Full source/config,
+kernel/DTB/trust-list, 464 module signatures, package tamper controls and offline
+ARMv7 simulation pass. It remains unbooted/uninstalled and does not inherit
+host RAM acceptance. The [source-only review diff](../patches/pmaports/fx0-cpr-observation-packaging.patch)
+extends r54; the frozen 39-patch Linux mail export remains unchanged. See
+[r55 evidence](../evidence/2026-11-08-cpr-observation-source-package.json).

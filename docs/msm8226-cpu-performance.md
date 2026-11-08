@@ -1024,3 +1024,16 @@ the pending-result path is verified to create no transfer or BOOT request.
 The newest r50 return remains running, NTP-synchronized and untainted. Its UI
 check remains pending. See
 [787.2 MHz preparation](../evidence/2026-11-08-cpr-787-preparation.json).
+
+### Independent Alpine observation package
+
+Alpine r55 now source-builds the 43-patch observation tree at `b721ebaecd7d`,
+including XO handoff and voltage diagnostics. The input changes only
+LOCALVERSION to `-fx0-cpr-observe-alpine`; actual Clang 22.1.3 normalization
+retains CFI, signed modules, the userspace module and the compiled schedutil
+default. Both DTBs match the host versions, but kernel, certificate and module
+family are independent. All 464 module signatures, embedded trust list, signed
+APK, corruption/wrong-certificate controls and offline ARMv7 simulation pass.
+The artifact is unbooted and uninstalled, so controlled Alpine startup,
+registration, governor/OPP/load and recovery remain separate gates. See
+[package evidence](../evidence/2026-11-08-cpr-observation-source-package.json).

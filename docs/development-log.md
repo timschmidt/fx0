@@ -4137,3 +4137,39 @@ next stage entry is tested to reject that result before any phone command
 or transfer/controller creation. This turn advances host preparation and
 verification; no 787.2 MHz hardware or broader qualification is claimed. See
 [preparation evidence](../evidence/2026-11-08-cpr-787-preparation.json).
+
+### Independent Alpine r55 observation source package (2026-11-08)
+
+Updated the isolated pmaports recipe from 39 to 43 patches, retaining the
+original patch bytes and explicit olddefconfig. The new input changes only
+LOCALVERSION to `-fx0-cpr-observe-alpine`, keeping this module family separate
+from the Fedora artifacts. Seven exporter integrity tests pass. R54's full
+source/build tree, ELF/certificate/config/symbols and original log are preserved.
+
+The first build attempt stops before compilation because a nonrecursive sysfs
+bind fails in the rootless container. Disposable controls reproduce ordinary
+bind failure and recursive success; recursive sysfs prebinds resolve the fixture.
+The recorded retry completes its full Alpine Clang 22.1.3 source build in
+9m24s of abuild time. All 48 actual prepared files match b721ebaecd7d. The actual
+normalized config passes the official community check; its 19 compiler-related
+differences exactly match the prior Alpine run, with CFI/LTO policy retained.
+
+The signed 18,481,234-byte r55 APK embeds the exact recipe commit, kernel and
+both DTBs. Its explicit certificate exactly matches the ELF trust list; all
+464 signed ARM modules and vermagic verify. Actual KCFI compile flags/linked
+symbols, zero introduced undefined symbols and 0600 module-key mode verify.
+Corrupt module payload/signature, modified signed APK metadata and certificates
+from both r54 Alpine and the qualified Fedora build reject. Offline simulation
+needs an initialized empty usermode database and explicit armv7 architecture
+on the x86_64 host; both fixture errors are retained, and the normal signed,
+offline ARMv7 simulation then passes. No trust or architecture guard is bypassed.
+
+Published the source-only recipe commit b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9
+to the owner's existing package branch under standing GitHub authorization;
+the remote ref matches. Compiled packages, private keys, firmware and device
+logs remain private. Read-only postflight confirms the same native r50 boot,
+original boot hash/1.15 V target, zero taint, running startup/NTP, Sway and
+sensor proxy. The latest physical UI check remains pending. This Alpine
+artifact is unbooted and uninstalled; independent RAM, stable/edge, installed
+update/recovery and wider hardware qualification remain open. See
+[r55 package evidence](../evidence/2026-11-08-cpr-observation-source-package.json).
