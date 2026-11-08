@@ -26,6 +26,87 @@ gates remain open; hotspot installed Sxmo recovery passes two bounded cycles; br
 evidence](../evidence/2026-11-06-mpu6515-dmp-20-consecutive-wakes.json).
 Audio testing remains excluded.
 
+November 8 reconstructed-r50 RAM baseline: two boots return to installed r50
+with an unchanged boot-partition hash, four CPUs online and taint zero. The
+second captures the timed return and 22 USB HTTP status/log pairs; the owner
+reports restored-r50 display/touch working. That return still had a pending
+time-synchronization job despite no failed units; the later read-only runtime
+candidate preflight reaches `running` startup with Sway and the original
+hash/limits/zero taint. No controller or higher-OPP pass
+is implied: the moduleless baseline reports an inherited 800 MHz CPU clock,
+which needs a safe handoff before the current CPR candidate can attach.
+See [RAM baseline evidence](../evidence/2026-11-08-r50-ram-baseline.json).
+
+The 39-patch runtime CPU-clock candidate now has a complete linked ARM kernel,
+464 verified signed modules and 114 passing host checks with no skips. Its
+first moduleless ordinary-DTB RAM bootstrap/return passes: four CPUs, taint zero,
+L2 master bound and APC's reported 1.15 V boot target. Twenty-two USB HTTP log
+pairs and serial capture the timed return; installed r50 retains its hash,
+limits, Sway and sensor proxy. The same return boot subsequently reaches running
+systemd startup with no failed services or pending jobs; its physical UI check
+remains pending. The original image reproduces an input-dependent lk2nd USB
+stall; an equivalent gzip-level-1 encoding boots, while that transport defect
+remains open. CPR, eligible higher OPPs, actual rails/feedback, fail-stop recovery
+and wider hardware qualification remain open. See
+[runtime source/build evidence](../evidence/2026-11-08-msm8926-runtime-clock-candidate.json)
+and [native bootstrap evidence](../evidence/2026-11-08-l2-s2-ram-bootstrap.json).
+
+The complete runtime candidate now also passes a distribution source-package
+build with Alpine Clang 22.1.3. The actual community configuration, signed APK,
+exact kernel/DTBs, embedded kernel trust certificate and all 464 module
+signatures verify; corruption and wrong-certificate controls reject. This
+Alpine artifact is unbooted and uninstalled, so the earlier Fedora-Clang RAM
+result does not qualify it. The [source-package branch](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-cpu-runtime-package)
+is published at `4f17b6905c75` after the owner authorized fx0 development pushes. See
+[package evidence](../evidence/2026-11-08-runtime-kernel-source-package.json).
+
+The first separate CPR qualification-DTB RAM trial reaches diagnostics but
+fails its startup gate: provider probe returns -EINVAL, CPU stays at 800 MHz
+and no CPUfreq policy appears. The timer returns at 181.623794 seconds to
+unchanged installed r50; startup, services, original hash/rates and the owner's
+display/touch check pass. Host network state is restored. Failure-stage
+instrumentation passes 116 selected checks and its ARM object; the separate
+kernel links and RAM-boots once. It identifies the reference-source check as
+the failure. A read-only native APCS+0x64 word is 1, the stock AHB selection;
+controlled XO ownership and verified selection remain to implement. Pstore
+confirms a 181.601496-second timer return, with unchanged r50 and another owner
+display/touch pass. No CPU/rail guard is bypassed and no CPR/DVFS
+qualification is inferred. See
+[trial evidence](../evidence/2026-11-08-cpr-bootstrap-first-ram.json) and
+[diagnostic preparation](../evidence/2026-11-08-cpr-probe-diagnostics-preparation.json).
+
+The subsequent stopped-controller XO handoff passes its moduleless startup
+RAM gate: CPR initializes seven eligible OPPs, all four virtual CPU consumers
+attach, the CPU mux reads 300 MHz, APC's reported 1.15 V boot target is retained,
+and MX has an enabled bootstrap vote. LOOP_EN stays clear despite RESULT_0.BUSY
+remaining set. All four CPUs are online with taint zero and five bound SPM
+controllers; no module, CPUfreq policy or positive pstate is activated. A cached
+1.08 V debugfs corner value is not the programmed APC target. The timer returns
+at 181.782488 seconds to unchanged r50, with Sway/sensor proxy and restored host
+network state. The owner confirms display/touch on this return. Time-sync
+jobs remain pending. This closes startup only; runtime
+DVFS/feedback, real rails, thermal/suspend and wider gates remain open. See
+[startup evidence](../evidence/2026-11-08-cpr-disabled-reference.json).
+
+November 8 r50 regression: the owner confirms display and touch before testing.
+Five USB-powered RTC controls retain DMP execution across traced s2idle and
+recover 373 quaternion samples, with RTC IRQ +1 and IMU IRQ +0 per cycle, no
+MDP5 underruns and taint 0. Sensor proxy and wake/alarm policy are restored.
+These add RTC-control evidence; the r49 physical-motion results do not become
+r50 motion-wake qualification. Post-test physical display/touch confirmation
+and the overall reliability gates remain open. See [r50 regression](../evidence/2026-11-08-r50-rtc-regression.json).
+
+The owner confirms display and touch after the restored-r50 boot, closing that
+recovery check ([record](../evidence/2026-11-07-r50-restored-after-r51.json)).
+CPU-series 25–27 now provide shared CPU/CPR filtering, retry-safe attachment
+and a separate qualification DTB. Complete-source reconstruction now links both
+r50 and the CPU candidate and verifies all 928 staged module signatures. The
+109 source/DMP/preparation checks and three image-placement checks pass.
+The phone still runs the same r50 boot with four rates. A checked r50 RAM
+baseline image is prepared but has not booted; source packaging, RAM-only
+controller/recovery and physical OPP/rail/thermal/suspend qualification remain
+open. See [rebuild evidence](../evidence/2026-11-08-kernel-reconstruction.json).
+
 ## Acceptance matrix
 
 | Function | Required identification and functional evidence | Initial status |

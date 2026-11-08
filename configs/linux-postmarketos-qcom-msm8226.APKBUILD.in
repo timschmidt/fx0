@@ -1,0 +1,71 @@
+# Co-Maintainer: Luca Weiss <luca@lucaweiss.eu>
+maintainer="Newbyte <newbie13xd@gmail.com>"
+_flavor="postmarketos-qcom-msm8226"
+pkgname=linux-$_flavor
+pkgver=6.18.59
+pkgrel=8
+pkgdesc="Mainline Kernel fork for APQ8026/MSM8226/MSM8926 devices"
+arch="armv7"
+_carch="arm"
+url="https://github.com/timschmidt/fx0-linux"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps
+	pmb:cross-native
+	pmb:kconfigcheck-community
+	"
+makedepends="
+	bison
+	clang
+	findutils
+	flex
+	lld
+	llvm
+	openssl-dev
+	perl
+	postmarketos-installkernel
+	python3
+	xz
+	zstd
+"
+
+_config="config-$_flavor.$arch"
+# Fx0 development integration; shared-SoC regression qualification is pending.
+_commit="962a378204d641b1af66b0bcf27c84c52d278815"
+
+# Source
+source="
+	linux-fx0-$_commit.tar.gz::https://github.com/timschmidt/fx0-linux/archive/$_commit.tar.gz
+	$_config
+"
+builddir="$srcdir/fx0-linux-$_commit"
+
+prepare() {
+	default_prepare
+	cp "$srcdir/config-$_flavor.$arch" .config
+}
+
+build() {
+	unset LDFLAGS
+	make ARCH="$_carch" LLVM=1 \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-$_flavor"
+}
+
+package() {
+	mkdir -p "$pkgdir"/boot
+	make zinstall modules_install dtbs_install \
+		ARCH="$_carch" \
+		LLVM=1 \
+		INSTALL_PATH="$pkgdir"/boot/ \
+		INSTALL_MOD_PATH="$pkgdir" \
+		INSTALL_MOD_STRIP=1 \
+		INSTALL_DTBS_PATH="$pkgdir"/boot/dtbs
+	rm -f "$pkgdir"/lib/modules/*/build "$pkgdir"/lib/modules/*/source
+
+	install -D "$builddir"/include/config/kernel.release \
+		"$pkgdir"/usr/share/kernel/$_flavor/kernel.release
+}
+
+sha512sums="
+4c63e0d1ea1ccde0dc379542d4578f3f78d4387add79ef2c16a94b6cf93f15054fe084fdadbbbf471faa697ac77b4b6201e4f87a289e0fcac68ced9f0118c141  linux-fx0-962a378204d641b1af66b0bcf27c84c52d278815.tar.gz
+d494f4460ea4043dc2b46e8f43c5b6e063a709e6c9f3d86de099179803407e6bcb25c290c6596083315b3fe5651230e41bf2adafab1c768039edd5bdac3e1fc9  config-postmarketos-qcom-msm8226.armv7
+"

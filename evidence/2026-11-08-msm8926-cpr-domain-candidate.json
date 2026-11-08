@@ -1,0 +1,86 @@
+{
+  "date": "2026-11-08",
+  "status": "source-only MSM8926 CPR domain bridge; no device integration or native pass",
+  "patches": {
+    "patches/linux-integration/fx0-msm8926-cpr-domain-binding.diff": "0b821674cdeebb766b1df472408ee5927274c1ea3e84fb1c5c1a347f36102b28",
+    "patches/linux-integration/fx0-msm8926-cpr-domain.diff": "1e17b59dcf211d70911e4ec9d7f447efdbf2047f37f5c885e9e4b24440ccab30"
+  },
+  "series_entries": [
+    19,
+    20
+  ],
+  "source_sha256": {
+    "drivers/pmdomain/qcom/cpr.c": "c2460293791b1f9dea34e525cb9f2cf9ca5a7fe3b44466738746f967ee048d01",
+    "drivers/pmdomain/qcom/Kconfig": "0bd37273aed1805ad6971d6682632c32fdbefb84ce25046bf30e2214b45cac19",
+    "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml": "f92b7194e9e7c825e80fad1575c5e0a56df9710a642491e7367c740e5af99b29"
+  },
+  "source_base": "bdc0b5c00e7bcaa3375a394a9b376d391e4972fd plus CPU series entries 1-18; not a complete reproduction of installed r50",
+  "implemented": [
+    "MSM8926-specific calibration/probe path with raw NVMEM and secure SCM, fixed-range APC metadata and quantized MX limits; does not reuse QCS404 signed-voltage fuses or ACC",
+    "Required-OPP corner construction validates consecutive levels, increasing frequencies, fuse-corner agreement, actual clock rounding and vendor frequency limits; releases every OPP reference",
+    "Invalid clock/feedback calibration cannot authorize rates above the existing 787.2MHz limit",
+    "Clear inherited feedback before IRQ registration; do not start feedback until a successful nominal voltage request; IRQ/transition failures quiesce feedback",
+    "Initialize the always-on domain as logically on; establish MX floor covering actual boot APC plus all plan ceilings and hold idempotent APC/MX references for the built-in driver lifetime",
+    "Do not apply inferred boot voltage; require a listed boot clock; attachment retries reset the current-corner pointer and publish only after initialization succeeds",
+    "Retain votes across domain-off; suspend-to-idle quiesces feedback and resume waits for a fresh nominal request; reject deeper PM until RPM sleep-vote handoff exists",
+    "Built-in-only opt-in requires QCOM_CPR=y and QCOM_SCM=y, defaults off and suppresses manual binding; no board opt-in or CPUfreq attachment is added",
+    "Protect debug-state reads with the mutex and handle an unattached CPU domain"
+  ],
+  "verification": {
+    "CPU_suite": {
+      "run": 54,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "actual_driver_C_harnesses": [
+      "calibration/probe metadata faults with no partial publication",
+      "seven mapped CPU OPPs, malformed/missing/unsupported OPPs and reference ownership",
+      "16 legacy/MSM8926 attachment failures followed by retry and idempotence",
+      "initial nominal/feedback ordering, voltage error recovery request, retained references, PM ordering and unchanged legacy PM behavior"
+    ],
+    "binding_cases": "six MSM8926/QCS404 schema tests plus all existing raw/SAW/L2 binding tests",
+    "ARM_W1": "Clang object builds with MSM8926 enabled and disabled; enabled object references legacy SCM API, disabled object does not",
+    "object_sha256": {
+      "MSM8926_enabled": "32e75930f314fdcbc0d2543d3a0f591922f2ee069b00b88aadbc108d2f4351c1",
+      "MSM8926_disabled": "b849b2bd7bedb45aab5e6711a0cdeaf441347de1aa3623f3fc5e08c0cfc3205f"
+    },
+    "binding_check": "meta-validation, YAML lint and example build pass",
+    "checkpatch_binding": "0 errors, 0 warnings, 0 checks",
+    "checkpatch_driver": "0 errors, 0 warnings, 0 checks with CAMELCASE ignored to retain existing uV field/API naming; explicit-root unfiltered check reports 7 naming checks",
+    "patch_reproduction": "both patches reproduce all three changed kernel files byte for byte",
+    "whitespace": "passed"
+  },
+  "remaining_before_device_enable": [
+    "CPUfreq domain attachment, validated speed-bin/PVS OPP filtering and board description",
+    "Define and test recovery when a failed APC command may have changed hardware voltage; OPP/genpd cached performance state must not authorize a later clock increase from stale voltage assumptions",
+    "Recover or rebuild the complete current r50/DMP/display integration source and package, preserving rollback and using RAM-only first controller trials",
+    "Physical bootstrap, each supported voltage/frequency, thermal, suspend, peripheral and long-duration qualification",
+    "RPM sleep-state vote handoff for deeper suspend; current source rejects it"
+  ],
+  "installed_phone": {
+    "package": "6.18.59-r50",
+    "kernel_build": 51,
+    "boot_id": "8a837db4-683d-4625-8654-c266af8664f9",
+    "taint": 0,
+    "available_CPU_kHz": [
+      300000,
+      384000,
+      600000,
+      787200
+    ],
+    "scope": "read-only baseline at start of this turn; no device writes/tests performed by this source integration"
+  },
+  "constraints": {
+    "audio_testing": false,
+    "host_builtin_wifi_changed": false,
+    "kernel_or_firmware_installed": false
+  },
+  "caller_audit_sources": {
+    "drivers/opp/core.c": "f8a225a16f71c1c68ae09d6473526999b30fcd261e249d37742b6f11a5420208",
+    "drivers/pmdomain/core.c": "9c29c7ee4b45ceda7daabff3b86d42b71dab5d493e8e489ebb74b177411e3127",
+    "drivers/regulator/core.c": "82ab4ea2091b8acc8174b435146910dca9b2171db1c291ba7a2a9cabd8ae8c0d",
+    "drivers/regulator/qcom-spmi-saw-fts2.h": "120892a989944853f26537454445dea1d4296b579e215c2c4bfeed6f6c241202"
+  },
+  "next_error_contract": "A failed downward APC request can leave a lower voltage applied. OPP current_opp and genpd performance_state stay at the prior point on callback failure. The next intermediate request can therefore be ordered as a downscale despite a physically lower clock/voltage. Regulator cached-request short-circuiting also needs consideration when restoring; regulator_sync_voltage can force reapplication but restore failure still needs a defined outcome."
+}

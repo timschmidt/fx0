@@ -1,0 +1,53 @@
+From 84adf38f7463e6a58543008749afe41b5bb4d7f5 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:33:09 +0000
+Subject: [PATCH 14/35] dt-bindings: soc: qcom: describe the MSM8226 L2 master
+ owner
+
+Describe the L2 SAW controller that owns the shared APC interface. Keep ownership separate from per-CPU idle controllers.
+
+Source-patch: patches/linux-integration/fx0-msm8226-l2-master-binding.diff
+Source-sha256: ff6540380e0d1e091b3ecdf98fd7ab0d3b3d7c160c20149b797d7d541d7816fa
+---
+ .../bindings/soc/qcom/qcom,saw2.yaml          | 21 +++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+index c2f1f5946cfa..889c29614564 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+@@ -47,6 +47,14 @@ properties:
+           - qcom,apq8064-saw2-v1.1-cpu
+       - const: qcom,saw2
+ 
++  qcom,pmic-arbiter-master:
++    description:
++      Initialize the MSM8226 L2 controller as the shared APC PMIC arbiter
++      master and publish its register map to the PM8226 S2 regulator. This
++      mode leaves the low-power sequencer disabled and issues no voltage
++      commands during initialization. The owner must be built into the kernel.
++    type: boolean
++
+   reg:
+     items:
+       - description: Base address and size of the SPM register region
+@@ -62,6 +70,19 @@ required:
+   - compatible
+   - reg
+ 
++allOf:
++  - if:
++      required: ["qcom,pmic-arbiter-master"]
++    then:
++      properties:
++        compatible:
++          items:
++            - const: qcom,msm8226-saw2-v2.1-l2
++            - const: qcom,saw2
++        reg:
++          maxItems: 1
++        regulator: false
++
+ additionalProperties: false
+ 
+ examples:

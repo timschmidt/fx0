@@ -8,7 +8,7 @@ try:
 except ImportError:
     dtschema=None
 ROOT=Path(__file__).resolve().parents[1]
-BUILD=ROOT/'local/cpu-cpr-build/llvm'
+BUILD=Path(os.environ.get('FX0_CPU_BUILD', ROOT/'local/cpu-cpr-build/llvm'))
 CACHE=Path(os.environ.get('FX0_DT_SCHEMA_CACHE',BUILD/'Documentation/devicetree/bindings/processed-schema.json'))
 DTB=BUILD/'arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb'
 
@@ -24,7 +24,7 @@ class QfpromRawBindingTests(unittest.TestCase):
         return list(self.validator.iter_errors(node,filter=['nvmem/qcom,qfprom.yaml']))
     def test_compiled_raw_provider_is_valid(self):
         node=self.raw();self.assertFalse(self.errors(node));self.assertEqual(node['reg'],[[0xfc4b8000,4096]])
-        self.assertTrue(node['read-only']);self.assertEqual(node['cpu-bin@b0']['reg'],[[0xb0,4]])
+        self.assertTrue(node['read-only']);self.assertEqual(node['cpu-bin@b0']['reg'],[[0xb0,8]])
         self.assertEqual(node['cpr-primary@450']['reg'],[[0x450,8]])
         self.assertEqual(node['cpr-redundant@458']['reg'],[[0x458,8]])
     def test_read_only_marker_required(self):

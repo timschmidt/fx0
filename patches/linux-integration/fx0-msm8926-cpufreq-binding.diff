@@ -1,0 +1,162 @@
+diff --git a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+--- a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
++++ b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+@@ -33,12 +33,12 @@
+     maxItems: 1
+ 
+   clocks:
+-    items:
+-      - description: Reference clock.
++    minItems: 1
++    maxItems: 2
+ 
+   clock-names:
+-    items:
+-      - const: ref
++    minItems: 1
++    maxItems: 2
+ 
+   vdd-apc-supply:
+     description: APC regulator supply.
+@@ -53,6 +53,12 @@
+     description: |
+       A phandle to the OPP table containing the performance states
+       supported by the CPR power domain.
++
++  qcom,apcs-syscon:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: |
++      MSM8926 APCS syscon containing the CPR reference selector. The driver
++      requires bit 0 at offset 0x64 to select the 19.2 MHz XO source.
+ 
+   acc-syscon:
+     $ref: /schemas/types.yaml#/definitions/phandle
+@@ -74,6 +80,14 @@
+             const: qcom,msm8926-cpr
+     then:
+       properties:
++        clocks:
++          items:
++            - description: Reference clock.
++            - description: CPU cluster clock, retained across CPU attachments.
++        clock-names:
++          items:
++            - const: ref
++            - const: cpu
+         acc-syscon: false
+         nvmem-cells:
+           items:
+@@ -87,9 +101,17 @@
+             - const: cpr_redundant
+       required:
+         - vdd-mx-supply
++        - qcom,apcs-syscon
+     else:
+       properties:
++        clocks:
++          items:
++            - description: Reference clock.
++        clock-names:
++          items:
++            - const: ref
+         vdd-mx-supply: false
++        qcom,apcs-syscon: false
+         nvmem-cells:
+           items:
+             - description: Corner 1 quotient offset
+diff --git a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+--- a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
++++ b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+@@ -11,6 +11,24 @@
+ 
+ allOf:
+   - $ref: opp-v2-base.yaml#
++  - if:
++      properties:
++        compatible:
++          const: operating-points-v2-msm8926-cpu
++    then:
++      properties:
++        nvmem-cells: false
++      required:
++        - opp-shared
++      patternProperties:
++        '^opp-?[0-9]+$':
++          properties:
++            opp-microvolt: false
++          patternProperties:
++            '^opp-microvolt-speed[0-9]+-pvs[0-9]+$': false
++          required:
++            - opp-supported-hw
++            - required-opps
+ 
+ description: |
+   In certain Qualcomm Technologies, Inc. SoCs like APQ8096 and MSM8996,
+@@ -24,11 +42,18 @@
+   This is used to determine the voltage and frequency value for each OPP of
+   operating-points-v2 table when it is parsed by the OPP framework.
+ 
++  On MSM8926 the CPR provider reads the calibration and supplies the same
++  eligibility mask for both CPU and CPR domain OPP tables. Each CPU OPP
++  requires its matching CPR state, which owns voltage programming. Bits 0-13
++  correspond to the frequencies defined in dt-bindings/opp/qcom,msm8926.h;
++  this is a per-frequency mask, rather than a speed-bin index.
++
+ properties:
+   compatible:
+     enum:
+       - operating-points-v2-krait-cpu
+       - operating-points-v2-kryo-cpu
++      - operating-points-v2-msm8926-cpu
+ 
+   nvmem-cells:
+     description: |
+@@ -73,6 +98,10 @@
+           1:  IPQ8064/IPQ8066/IPQ8068
+           2:  IPQ8065/IPQ8069
+           3-31:  unused
++
++          On MSM8926, each bit corresponds to one canonical frequency in
++          dt-bindings/opp/qcom,msm8926.h. Use one bit per OPP in both CPU and
++          CPR domain tables.
+ 
+           Other platforms use bits directly corresponding to speedbin index.
+ 
+diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+--- a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
++++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+@@ -23,6 +23,8 @@
+ 
+     properties:
+       opp-level: true
++
++      opp-supported-hw: true
+ 
+       qcom,opp-fuse-level:
+         description: |
+diff --git a/include/dt-bindings/opp/qcom,msm8926.h b/include/dt-bindings/opp/qcom,msm8926.h
+new file mode 100644
+--- /dev/null
++++ b/include/dt-bindings/opp/qcom,msm8926.h
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++#ifndef __DT_BINDINGS_OPP_QCOM_MSM8926_H
++#define __DT_BINDINGS_OPP_QCOM_MSM8926_H
++
++/* Shared CPU/CPR opp-supported-hw bits, one per canonical frequency. */
++#define MSM8926_OPP_300000000	0x0001
++#define MSM8926_OPP_384000000	0x0002
++#define MSM8926_OPP_600000000	0x0004
++#define MSM8926_OPP_787200000	0x0008
++#define MSM8926_OPP_998400000	0x0010
++#define MSM8926_OPP_1094400000	0x0020
++#define MSM8926_OPP_1190400000	0x0040
++#define MSM8926_OPP_1305600000	0x0080
++#define MSM8926_OPP_1344000000	0x0100
++#define MSM8926_OPP_1401600000	0x0200
++#define MSM8926_OPP_1497600000	0x0400
++#define MSM8926_OPP_1593600000	0x0800
++#define MSM8926_OPP_1689600000	0x1000
++#define MSM8926_OPP_1785600000	0x2000
++
++#endif

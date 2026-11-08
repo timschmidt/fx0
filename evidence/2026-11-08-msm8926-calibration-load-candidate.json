@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-08",
+  "status": "unpackaged calibration acquisition helper; no live CPR consumer",
+  "patch": "patches/linux-integration/fx0-msm8926-calibration-load.diff",
+  "patch_sha256": "09c459db1158f514fec1ba940e4ddea0e88ced74bcfe8883b627e73a0aa6aa8e",
+  "source_base": "bdc0b5c00e7bcaa3375a394a9b376d391e4972fd",
+  "reconstruction": "All 17 preceding exported CPU patches applied cleanly to a local clone; this is subsystem validation, not a complete r50 source-image reproduction",
+  "behavior": [
+    "Read protected row54 exclusively through legacy SCM; propagate transport/status/convention errors",
+    "Read exact full eight-byte NVMEM rows22/138/139, little endian; never infer missing upper bytes",
+    "Widen raw CPU DT cell from four to eight bytes to include uplift bit53",
+    "Release every acquired cell and sensitive buffer; preserve output on every acquisition failure",
+    "Decode into output only after all reads succeed; no regulator or clock operation"
+  ],
+  "verification": {
+    "CPU_regression_suite": {
+      "tests_run": 46,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "fault_contracts": "four errors at each SCM/cell-get/cell-read stage, positive SCM status normalization, 18 malformed lengths, invalid arguments, upper-row/PVS/redundancy/conditional cases and ownership checks",
+    "ARM_loader_object": "W=1 Clang build passed; emitted object references actual SCM/NVMEM APIs",
+    "ARM_CPR_object_and_Madai_DTB": "passed; three pre-existing DT warnings remain (two duplicate TSENS addresses and a single-child display graph)",
+    "compiled_CPU_cell": "reg = <0xb0 0x8>, raw provider/legacy schema tests passed",
+    "schema": "dtschema 2026.9, full processed Linux binding tree; no schema tests skipped",
+    "checkpatch": "0 errors, 1 generic new-file MAINTAINERS warning, 0 checks; existing cpr*.h ownership covers helper",
+    "patch_reproduction": "both files reproduced byte for byte from pre-patch inputs",
+    "whitespace": "passed"
+  },
+  "source_sha256": {
+    "drivers/pmdomain/qcom/cpr-msm8926-fuses.h": "df62e27cf377db1c087725d23f6cf628262e715495f5ea9baab52ef0c02beab5",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "8661666b4319f3eef085016fbfb49595943b671e62687a3589d82596ce0a8448"
+  },
+  "limits": [
+    "No package or device installation",
+    "No claim of native execution of this loader",
+    "CPR probe/OPP consumer, rail lifetime, suspend integration and higher-OPP hardware qualification remain open"
+  ],
+  "constraints": {
+    "audio_testing": false,
+    "host_builtin_wifi_changed": false
+  }
+}

@@ -95,4 +95,49 @@ Published development history and ready-to-send material meet the submission-pre
 
 These are development branches, not submission-ready or fully functional releases. Upstream patch sending and PR creation have not occurred.
 
+## Runtime integration history checkpoint (2026-11-08)
+
+The complete runtime candidate now has a local 35-commit review history at
+`57e61d7961e7367d24b65b7969bdfe6f652b85bc`, based on
+`4b800b920c7db82e8012a580a17cc2d8ff9d5e66`. Its final tree exactly matches the
+39-patch source composition already built and tested. The original 39-commit
+draft is retained: four intermediate prefixes require clocks absent from their
+qualification DTB. Grouping source patches 33–35 and 37–39 into atomic
+integration transitions removes those failures without changing any final
+source blob. Every exposed CPR DTB prefix validates against its own binding.
+
+All 35 prefixes pass the 20 affected ARM object targets with `W=1` and no
+compiler warnings. These are object checks, not complete intermediate links.
+The [exported mail patches](../submissions/linux-runtime-integration/series)
+replay from the exact base to the same commit ID, tree and 48 source hashes;
+the local thin bundle also verifies and unbundles. The
+[history manifest](../manifests/kernel-runtime-history.json) maps the 35 commits
+back to all 39 source patches. The frozen source checkout, HEAD and original
+index remain unchanged.
+
+The [cover letter](../submissions/linux-runtime-integration/0000-cover-letter.patch)
+states the measured build/RAM scope and remaining gates. Tentative routing uses
+the integration tree's `MAINTAINERS`; current receiving-tree bases and contacts
+must be revalidated before submission. Raw diffs contain no author or sign-off
+headers, so reconstruction uses the existing repository identity, preserves
+file notices and base history, and adds no DCO/review/test trailers. Contributor
+certification, maintainer-base splitting/rebases, complete intermediate links
+and physical qualification remain open. The Linux review series remains local;
+no mail or PR has been sent. After the owner explicitly authorized GitHub pushes
+for all fx0 development, the prepared pmaports package branch was published at
+[`4f17b6905c75`](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-cpu-runtime-package).
+Its remote ref matches the reviewed local commit. See
+[history evidence](../evidence/2026-11-08-runtime-integration-history.json) and
+[package publication evidence](../evidence/2026-11-08-runtime-kernel-source-package.json).
+
 - [Nura pmaports development fork](https://github.com/timschmidt/fx0-pmaports), branch `integration/fx0-v26.06`: maintained-kernel package/configuration integration. This is an Fx0 development branch; the shared MSM8226 upgrade is not proposed upstream until its external dependencies and regressions are qualified.
+
+The later [CPR startup follow-up](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-cpr-disabled-reference)
+is published at `86a9e78ce4b645f6df46d97d165c18875042595f`, after the original
+[XO candidate](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-cpr-xo)
+at `a9c68b1b25b6`. Both remote refs are independently verified. Their 41/42 raw
+patch profiles extend the preserved 35-commit review history; the latter
+passes one moduleless 300 MHz startup RAM gate. These development publications
+do not claim receiving-tree/DCO readiness or runtime DVFS/feedback qualification.
+The r54 pmaports branch still packages the earlier 39-patch source and requires
+a separate update and independent Alpine RAM trial.

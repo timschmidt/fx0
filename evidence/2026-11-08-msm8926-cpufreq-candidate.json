@@ -1,0 +1,161 @@
+{
+  "date": "2026-11-08",
+  "status": "source-only CPUfreq attachment and separate CPR qualification DTB; uninstalled, no native voltage/frequency qualification",
+  "series_entries": [
+    25,
+    26,
+    27
+  ],
+  "patches_sha256": {
+    "patches/linux-integration/fx0-msm8926-cpufreq-binding.diff": "12d14f6200c4f7b07f2c58848f0aaeca76f7fee1d7c8754e8e7b43c0073f4b98",
+    "patches/linux-integration/fx0-msm8926-cpufreq-attachment.diff": "7475b0e1164770b065976a9e19b6128d4841330d634db50921652b017f665ecd",
+    "patches/linux-integration/fx0-msm8926-cpr-qualification-dt.diff": "54d0770a66cb9f705844c4718cf9f6ba0a813373597516c1ab7ddec285706bd5"
+  },
+  "source_base": "bdc0b5c00e7bcaa3375a394a9b376d391e4972fd plus CPU series; subsystem validation checkout, not a complete installed-r50 reproduction; retains previously unqualified L2/S2 integration",
+  "source_sha256": {
+    "drivers/pmdomain/qcom/cpr.c": "d57641ac319966d9172c2d0154819461e4dc1fe04422e6ede1d8b37e3139bfc0",
+    "drivers/pmdomain/qcom/cpr-msm8926-corner.h": "b72a60b781fd3b589f55aef7de4f5c3c178b4f5588a24c581d396a63cbf76a81",
+    "include/linux/soc/qcom/cpr.h": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3",
+    "drivers/cpufreq/qcom-cpufreq-nvmem.c": "2f61370f6c4f6a8410830a523483b1395ecfb5e98be6c0f293f52364a5e173b8",
+    "drivers/cpufreq/cpufreq-dt-platdev.c": "d71050ae44d69720ac21a3a0d53c4e57f5071b56d604e59ab1ed885c415b5a4a",
+    "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml": "0c9bee47ddf073e3fbef991619ec98b1f28e41339a6efd1bee5c2609a03b6994",
+    "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml": "060f4f058680afff9429ad25331e15797fdc009e73e6fb61b5e43e366b0d3a63",
+    "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml": "155a952f9a6c233b589da25852fdaa8019eba713e190409391637ac8fa03dc28",
+    "include/dt-bindings/opp/qcom,msm8926.h": "89c62bbea61fddd0e9eaffa78faa5278c92aafc72bcbc504526260fdd7fdb6f6",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts": "797fa46cae2c8df9eb5bfcbdaa2b30c3988eb9f77af66e6e68d64db2cc7c0a7e",
+    "arch/arm/boot/dts/qcom/Makefile": "d23e64aa14250dfa84c0b2437b69382b1b31eed5267525aac6f29ee33306a0c0",
+    "MAINTAINERS": "bc53190fad73776bb46eb59f36a1ba227b18341cb99671dcf4619e967857c1f9"
+  },
+  "implemented": [
+    "CPR supplier exports an immutable per-frequency mask after calibration, full rail-plan metadata, physical reference-selector readback and exact CPU clock-rounding validation; no duplicate raw/SCM reads in CPUfreq",
+    "Per-frequency prefix masks cover 4/7/10/12/14 canonical rates; invalid clock or disabled feedback flags restrict eligibility to 300/384/600/787.2MHz. Hard read/provider/unrepresentable-plan failures still fail/defer; they do not invent fallback voltages",
+    "Install the same supported_hw on the genpd device before provider table parsing and on each CPU before required-domain attachment; reject domain counts/rates that disagree with the canonical prefix",
+    "MSM8926 provider owns the CPU clock handle across temporary virtual-CPU detach/reprobe; attachment publication uses a bool, retaining no virtual-device pointer. Disabled feedback clears unused RO/quotient metadata",
+    "APCS selector offset0x64 bit0 must read as XO; AHB or read errors prevent publication/configuration, including resume. This guard does not change the selector",
+    "Only the explicit operating-points-v2-msm8926-cpu type routes through calibrated qcom-cpufreq-nvmem. Ordinary MSM8926 boards retain generic cpufreq-dt; the new type suppresses early duplicate generic registration",
+    "Separate qcom-msm8926-lg-madai-cpr.dtb includes 14 CPU and 14 CPR entries with identical one-bit masks and required links; all four CPUs share the table/domain; SPI15 rising IRQ, APC S2, MX L3 and complete raw rows match pinned vendor/reference wiring",
+    "Ordinary Madai DTS bytes remain unchanged by these three patches; no installed package or boot selection changed"
+  ],
+  "verification": {
+    "CPU_suite": {
+      "modules": [
+        "test_cpr_attach",
+        "test_cpr_domain_state",
+        "test_cpr_mx_recovery",
+        "test_cpr_voltage",
+        "test_cpu_voltage_recovery",
+        "test_msm8926_calibration",
+        "test_msm8926_corner",
+        "test_msm8926_cpr_binding",
+        "test_msm8926_cpufreq",
+        "test_msm8926_domain",
+        "test_msm8926_fuses",
+        "test_msm8926_opp_binding",
+        "test_msm8926_voltage_plan",
+        "test_qfprom_raw_binding",
+        "test_qfprom_raw_keepouts",
+        "test_qfprom_raw_probe",
+        "test_saw_fts2",
+        "test_saw_fts2_binding",
+        "test_scm_legacy_fuse",
+        "test_smd_rpm_ack",
+        "test_spm_l2_binding",
+        "test_spm_l2_master"
+      ],
+      "run": 71,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "test_sources_sha256": {
+      "tests/test_cpr_attach.py": "39d43678556c9c524911b0d276bb9e692543ab75ad0c180870789f0fda4b4d4c",
+      "tests/test_cpr_domain_state.py": "fb0641dc445f0f9bcb6f447f10f7ba49c14899e50737585764d94a30b4154617",
+      "tests/test_cpr_mx_recovery.py": "1465fe418b67191e9ac836dde0efc7a5faa7bd327cb53579aa74f87e8637a952",
+      "tests/test_cpr_voltage.py": "25b19daa8bb6c613d6e7b3188485f1988ebba92544b615d5d1d29b8e8f940d89",
+      "tests/test_cpu_voltage_recovery.py": "53ac17ae955accdf860c059cbbe6fd2dc1b82f62ec6306c4b45361f62ee475af",
+      "tests/test_msm8926_calibration.py": "7f312cc9ba091225bcf532626b2c4cffeb3a5ce115d67f8adef4fd53a33acc22",
+      "tests/test_msm8926_corner.py": "bee02fb36a47d196755570ba0fb1625d7b7ebf733b40161e39b9819d77f3770c",
+      "tests/test_msm8926_cpr_binding.py": "148c3952f5f9a5beef1981dbc543b366f9146a80cfcd1e790b59a137d17761c0",
+      "tests/test_msm8926_cpufreq.py": "eee9763d5dd9d27dc13ebb2e4d3eae285851cbd383173db87552acfdb5f8a0be",
+      "tests/test_msm8926_domain.py": "c5fdd237ed8d9881e4aa66b72fcbeb29f2521add6709ad961f586cdae69defb9",
+      "tests/test_msm8926_fuses.py": "1fc8498122b11cc9850e3276f4e56ce96b8a05921999c358fde93b8b86614cee",
+      "tests/test_msm8926_opp_binding.py": "5674237fe55747e47784260d4515219dedd5c81ee79f1717d8999df772a1a50c",
+      "tests/test_msm8926_voltage_plan.py": "3a7140df2d48e2882f57f8d925d3ae8d574da9a751d64b4f660934db4af4d459",
+      "tests/test_qfprom_raw_binding.py": "6acba48f899e2af558f4e2367ea80e444933808593c0ae59fe6232d079f72ec4",
+      "tests/test_qfprom_raw_keepouts.py": "8f6582a4cfc5c06dceb09ba91a3b8c3f82bb3691505d2e7d2354cf382e170e80",
+      "tests/test_qfprom_raw_probe.py": "eae9c0304c1302b2b2dfd6edd3ed2ddb31fc0410f30d1db201b50ce9f0b32c4d",
+      "tests/test_saw_fts2.py": "61e2cd07631b2631f54757d04a5c90543f542a7a64baa426c6ecbee36371e2a7",
+      "tests/test_saw_fts2_binding.py": "ba301398de4c522e5968f0535efbc31322cca341919de4571d425d07710f9117",
+      "tests/test_scm_legacy_fuse.py": "dc539cba40f3d9d8fac8ad37637b55ac6274c690bbcc91b6ed2ad407cda5f77f",
+      "tests/test_smd_rpm_ack.py": "7c064f610ba72c8b94cd678c5b1c82d8e34af614d8abceec4f5118b4c2c3729f",
+      "tests/test_spm_l2_binding.py": "4c268ab0eefa754881ff63a5f736c9b14782703ecda7fa9e20832435a39b89aa",
+      "tests/test_spm_l2_master.py": "823d5bcd5224724c78ff2aae74a3b22a0719958c53c32e1497412cc2ee16e3f2"
+    },
+    "fault_cases": [
+      "12 supplier-query failures preserve output/references, each followed by a successful retry",
+      "14 CPUfreq probe failures unwind configurations/domains, each followed by successful four-CPU probe/remove",
+      "provider mask-before-parse order and genpd/config/provider-registration failures",
+      "legacy and opt-in platform routing, failed driver/device registration and OF reference ownership",
+      "provider-owned clock failures/rounding, APCS lookup/read/AHB rejection, open-loop invalid feedback and failed resume admission",
+      "all 8 clock bins x4 versions match pinned vendor plan prefixes; compiled DTB schema and phandle/mask/rail/raw-row relationships"
+    ],
+    "ARM_W1": "CPR, qcom-cpufreq-nvmem module object and generic cpufreq platform object build with MSM8926 enabled and disabled; symbol checks confirm enabled export/consumer and disabled stub",
+    "binding_check": "dt-doc-validate, kernel YAML lint and targeted dt_binding_check examples pass; compiled qualification CPU/domain/provider nodes pass processed schemas",
+    "DTB_warnings": "Three existing common-DTS warnings: two duplicate corrected-QFPROM child unit addresses and one display graph single-child address warning",
+    "checkpatch": "0 errors, 0 checks with existing CAMELCASE naming ignored; one generic new-file MAINTAINERS reminder per patch. API and DT macro ownership records updated; board files covered by existing ARM Qualcomm patterns",
+    "patch_reproduction": {
+      "base": "bdc0b5c00e7bcaa3375a394a9b376d391e4972fd",
+      "patches": 27,
+      "files": 31,
+      "result": "all changed files reproduced byte for byte"
+    },
+    "scratch_reproduction": "Initial /tmp scratch copy hit quota; retry in ignored workspace scratch passed, without changing source or artifacts",
+    "artifact_sha256": {
+      "build/cpu-calibration-load/drivers/pmdomain/qcom/cpr.o": "01994109f862cd4a8d04c46fee432c46d810dbc2fe44f7f5c01861828f4b38b2",
+      "build/cpu-calibration-load/drivers/cpufreq/qcom-cpufreq-nvmem.o": "476da25ad80393b31b4cf80aba7369efc8c289cc93072e91506b0db867a23abb",
+      "build/cpu-calibration-load/drivers/cpufreq/cpufreq-dt-platdev.o": "c93a756eccc1831371aebdf4f92922c540c158aac24c3997763892995d104aad",
+      "build/cpu-frequency-cpr-disabled/drivers/pmdomain/qcom/cpr.o": "74314174e33bc207da4a6c8ddb13b1a615a268aa01f6d3bd1e13466c9807fe4b",
+      "build/cpu-frequency-cpr-disabled/drivers/cpufreq/qcom-cpufreq-nvmem.o": "0d34129a1960d2d410c421b00acfc723febee27e6b8aab7dcd13ee394dbcb1e3",
+      "build/cpu-frequency-cpr-disabled/drivers/cpufreq/cpufreq-dt-platdev.o": "6c7ecdc907bd0465ccec7325e8bb7c7bf2c0690190cbe56382e9d2a3e6f08bc1",
+      "build/cpu-calibration-load/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb": "8fdd1d71462f31c742e4f58997ebd73d163651e67e2365bbabb1963496f45d8a",
+      "build/cpu-calibration-load/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dtb": "b0680640b0f78673b7bd0f5c1e7a44a55913fc57a483b5ef1831c3ba567781fd"
+    },
+    "whitespace": "root and source git diff --check pass"
+  },
+  "pinned_vendor_reference": {
+    "commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+    "paths_sha256": {
+      "arch/arm/boot/dts/msm8226-regulator.dtsi": "8094713ffdc57aa961eb39b9f4934b3c196b16d8dc4a2138db78da61a0617438",
+      "arch/arm/mach-msm/cpr-regulator.c": "10c976dc9abbcc6cb521897ba42270306d6bb94cf67eee928956a77c9d5bae1b"
+    },
+    "observed": "CPR resource f9018000/0x1000; interrupt SPI15; driver requests rising trigger. Ref selector f9011064 bit0=0 chooses19.2MHz XO"
+  },
+  "installed_phone": {
+    "release": "6.18.59-fx0-dmp",
+    "taint": 0,
+    "boot_id": "8a837db4-683d-4625-8654-c266af8664f9",
+    "available_CPU_kHz": [
+      300000,
+      384000,
+      600000,
+      787200
+    ],
+    "failed_services": 0,
+    "scope": "read-only end-of-turn SSH check; same restored r50 boot"
+  },
+  "owner_confirmation": "Owner answered restored-r50 boot check: Display and touch work. This is not relabeled as a distinct post-RTC-run physical observation",
+  "remaining": [
+    "Recover/reconstruct complete current r50 DMP/display source integration and controlled package/initramfs composition",
+    "RAM-only L2/S2/CPR bootstrap and verified r50 recovery, isolate earlier unexplained r51 EDL event",
+    "Physical source/rail/feedback checks, each supported voltage/frequency, transitions, thermal, suspend and peripheral/reliability qualification",
+    "RPM sleep-state voting for deeper PM; current implementation rejects it",
+    "All broader hardware, stable/edge, storage and reliability gates in bringup plan remain open"
+  ],
+  "constraints": {
+    "kernel_or_firmware_installed": false,
+    "native_voltage_or_higher_frequency_trial": false,
+    "audio_tested": false,
+    "host_builtin_wifi_changed": false,
+    "full_goal_complete": false
+  }
+}

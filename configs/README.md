@@ -9,3 +9,11 @@ The first configuration records the completed initial kernel/module build.
 The `simplefb` configuration additionally enables built-in simpledrm for
 an inherited framebuffer console. Hardware support still depends on the
 exact device tree, kernel source revision, firmware and physical validation.
+
+`linux-6.18.59-fx0-r50.armv7` records the running restored-r50 configuration
+read on 2026-11-08. Its exact hash is pinned in the kernel integration manifest.
+It includes Clang CFI, four conservative CPU rates and no CPR provider.
+`msm8926-cpr-qualification.fragment` enables built-in CPR/CPUfreq and a separate
+module release for source/build qualification. Its presence is not hardware
+acceptance or authorization to skip RAM-only controller/recovery qualification.
+See [the reconstruction procedure](../docs/building.md#reconstruct-r50-and-the-cpucpr-source-candidate).

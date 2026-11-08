@@ -1,0 +1,119 @@
+{
+  "date": "2026-11-08",
+  "status": "source-only transactional APC/MX recovery and RPM response correlation; no native qualification",
+  "series_entries": [
+    21,
+    22,
+    23,
+    24
+  ],
+  "patch_sha256": {
+    "fx0-pm8226-saw-voltage-recovery.diff": "86e3f7abc9c7690487b52704484f8d5740393abe8b9f860d497fa4d17581d32d",
+    "fx0-smd-rpm-request-acks.diff": "e98356b9a18208abf97b3c8e8a71c2ada24d699a500ec51295cc014a227ca58e",
+    "fx0-cpr-mx-vote-recovery.diff": "bd0ed2c8b2d5eb24017e1e209e67cdeb1e61fe1c116658e16a118f09eeee127e",
+    "fx0-cpr-preserve-feedback-on-error.diff": "1db5e678882022f11f732c98eb5c3ac39e7a62c131d616542ba5280758b8e7bb"
+  },
+  "source_sha256": {
+    "drivers/regulator/qcom-spmi-saw-fts2.h": "c9a6e1d5be97d0738c67720ec8e1a80733cb08fe6b123a201f2fa4d2fddc2c68",
+    "drivers/soc/qcom/smd-rpm.c": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+    "drivers/pmdomain/qcom/cpr-voltage.h": "6d7e30127931256752b48a8fd5e9db243e1625696e7de5e83b9afd352cc8057b",
+    "drivers/pmdomain/qcom/cpr.c": "8a541bcddb091f966cf11064e950aafb16cc99a576c44ebda7ebe3dffd25342d"
+  },
+  "APC_contract": [
+    "A failed VCTL command can have changed hardware. Reset and resubmit the old physical selector directly through SAW before returning the original error.",
+    "Require matching selector plus idle PMIC state, apply conservative slew delay, and verify PMIC range/selector.",
+    "Recovery forces PWM for a possible voltage rise, retries once, and stops the kernel if the old rail cannot be confirmed after two attempts.",
+    "A failed AUTO-mode restore after confirmed voltage remains a deferred mode error with the voltage held in PWM."
+  ],
+  "RPM_contract": [
+    "Allocate per-channel nonzero IDs under the send mutex.",
+    "Reinitialize completion and publish the pending ID under an IRQ-safe spinlock before send.",
+    "Bounds-check unaligned response TLVs and require exactly one matching request ID before completing.",
+    "Complete while holding the response lock; retire the pending request on all send/wait outcomes so late or duplicate replies cannot satisfy a later request."
+  ],
+  "MX_contract": [
+    "A failed active MX vote may already have applied, including after a timeout.",
+    "Force the prior regulator consumer request through regulator_sync_voltage, whose RPM set_voltage path sends a fresh request.",
+    "Retry restoration once and stop the kernel if the prior vote cannot be confirmed. This depends on request-correlated RPM acknowledgements.",
+    "A failed MX reduction can remain a deferred error only after the old floor is restored; subsequent APC increases may rely on that restored floor."
+  ],
+  "CPR_contract": "Restore feedback for the confirmed old corner after a failed performance request. Keep feedback off after an initial failed nominal request or system suspend; do not leave a previously adapted high-frequency point permanently without feedback merely because genpd cached its old state.",
+  "verification": {
+    "targeted_CPU_regulator_RPM_suite": {
+      "run": 58,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "actual_caller_chain": {
+      "functions": "unmodified OPP _set_opp/_set_required_opps/_set_opp_level and genpd callbacks, actual CPR performance callback and coupled helper, actual SAW transaction helper; regulator request caching and I/O are modeled",
+      "patched_provider": {
+        "changed_on_error_cases": 8,
+        "unsafe_clock_increases": 0
+      },
+      "old_provider_negative_control": {
+        "source": "header from exported fx0-pm8226-saw-fixed-range.diff",
+        "changed_on_error_cases": 4,
+        "unsafe_clock_increases": 4
+      }
+    },
+    "APC_fault_cases": {
+      "before_and_after_effect_IO": 248,
+      "transient_recovery_retries": 12,
+      "persistent_failure_no_return": 12,
+      "fail_stop_mechanism": "kernel panic mocked with longjmp; no host or device kernel stopped"
+    },
+    "MX_fault_cases": "actual kernel regulator_sync_voltage and RPM regulator callbacks; before/after-effect failures, forced old-vote restoration, retry, future APC rise and persistent-failure no-return controls",
+    "RPM_cases": {
+      "bounded_packets_at_protected_page_boundary": 111537,
+      "interleavings": [
+        "fast reply before wait",
+        "timed-out request followed by late old ACK",
+        "old ACK while a newer request waits",
+        "duplicate response",
+        "completion at timeout boundary",
+        "send error",
+        "matching NACK",
+        "ID wrap and independent channels",
+        "malformed/duplicate/truncated IDs and unbound callback"
+      ]
+    },
+    "ARM_W1_objects": {
+      "drivers/regulator/qcom_spmi-regulator.o": "98a7d8fdb8b1a77b04e8d1a15fddbe9aa0af06fe9c9b6cc41bbab51f0e1942d6",
+      "drivers/soc/qcom/smd-rpm.o": "450035f3107691fb6adabb50ebb11f5a9178cef6ea8ffd7b26132f6d4ea243a1",
+      "drivers/pmdomain/qcom/cpr.o": "aedb3aa462496c9be1d52289a773a5cf32db3e066deae254dd6cbde2a74493ab"
+    },
+    "build_scope": "Clang ARM objects only; no full kernel, package, new boot image or installation",
+    "full_series_reproduction": {
+      "base": "bdc0b5c00e7bcaa3375a394a9b376d391e4972fd",
+      "patches": 24,
+      "files": 23,
+      "result": "all changed files reproduced byte for byte"
+    },
+    "checkpatch": "all four patches have 0 errors and 0 warnings; SAW has one atomic-context udelay suggestion, MX has one existing uV naming suggestion; RPM and feedback patches have no checks",
+    "whitespace": "passed"
+  },
+  "hardware_limits": [
+    "Models test transaction ordering, not physical voltage/settling, SAW reset semantics or real RPM firmware behavior.",
+    "Native RAM qualification, CPUfreq attachment/bin filtering, complete current DMP/display source reconstruction, packaging, rollback and broader hardware acceptance remain open.",
+    "Deeper suspend remains unsupported by the source candidate until RPM sleep-vote handoff is implemented."
+  ],
+  "installed_baseline": {
+    "package": "6.18.59-r50",
+    "kernel_build": 51,
+    "boot_id": "8a837db4-683d-4625-8654-c266af8664f9",
+    "taint": 0,
+    "CPU_frequencies_kHz": [
+      300000,
+      384000,
+      600000,
+      787200
+    ],
+    "scope": "read-only baseline check; no device changes or native fault injection"
+  },
+  "constraints": {
+    "audio_testing": false,
+    "host_builtin_wifi_changed": false,
+    "kernel_or_firmware_installed": false
+  }
+}

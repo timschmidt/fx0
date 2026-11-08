@@ -6,7 +6,8 @@ import tempfile
 import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
-SOURCE=Path(os.environ.get('FX0_QFPROM_SOURCE',ROOT/'worktrees/linux-cpu-cpr/drivers/nvmem/qfprom.c'))
+KERNEL = Path(os.environ.get('FX0_KERNEL_SOURCE', ROOT/'worktrees/linux-fx0-cpr'))
+SOURCE=Path(os.environ.get('FX0_QFPROM_SOURCE',KERNEL/'drivers/nvmem/qfprom.c'))
 STUBS=r'''
 #include <stdbool.h>
 #include <stdint.h>

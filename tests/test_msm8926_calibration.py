@@ -9,7 +9,8 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-HEADER = Path(os.environ.get('FX0_CPR_CALIBRATION_HEADER', ROOT / 'worktrees/linux-cpu-cpr/drivers/pmdomain/qcom/cpr-msm8926.h'))
+KERNEL = Path(os.environ.get('FX0_KERNEL_SOURCE', ROOT/'worktrees/linux-fx0-cpr'))
+HEADER = Path(os.environ.get('FX0_CPR_CALIBRATION_HEADER', KERNEL/'drivers/pmdomain/qcom/cpr-msm8926.h'))
 PARAMS = json.loads((ROOT / 'manifests/msm8926-cpr-parameters.json').read_text())['parameters']
 WRAPPER = '''
 #include "cpr-msm8926.h"

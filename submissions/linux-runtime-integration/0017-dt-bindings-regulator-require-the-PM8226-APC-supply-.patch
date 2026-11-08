@@ -1,0 +1,38 @@
+From 92d8237aa93e26cf32ea0f94c2edc86c219d3d0f Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:33:09 +0000
+Subject: [PATCH 17/35] dt-bindings: regulator: require the PM8226 APC supply
+ to stay on
+
+Describe the always-on lifetime of the PM8226 SAW APC supply. Avoid presenting a disable operation that cannot turn the live CPU rail off safely.
+
+Source-patch: patches/linux-integration/fx0-pm8226-saw-always-on-binding.diff
+Source-sha256: 584fadb90037884b23e0947fddbab8c325cf7b97b6695171f1963fcec0c3ef35
+---
+ .../devicetree/bindings/regulator/qcom,spmi-regulator.yaml  | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+index 1b14316cee1e..05f189af24e6 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+@@ -106,7 +106,7 @@ patternProperties:
+           PM8226 S2 uses its immutable power-on FTS2 voltage range through
+           the L2 SAW controller. Expose only that range, acknowledge voltage
+           commands and allow the PMIC slew time before returning success.
+-          Requires a SAW leader, an initialized Madai L2 master controller
++          Requires an always-on rail, a SAW leader, an initialized Madai L2 master controller
+           and disabled hardware AVS.
+         type: boolean
+ 
+@@ -119,7 +119,9 @@ patternProperties:
+       - if:
+           required: ["qcom,saw-fixed-range"]
+         then:
+-          required: ["qcom,saw-leader"]
++          required:
++            - qcom,saw-leader
++            - regulator-always-on
+           properties:
+             qcom,saw-slave: false
+ 

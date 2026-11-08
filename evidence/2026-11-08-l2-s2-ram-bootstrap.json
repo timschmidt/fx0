@@ -1,0 +1,291 @@
+{
+  "date": "2026-11-08",
+  "checked_UTC": "2026-11-08T15:31:51.010261+00:00",
+  "status": "first L2/S2 moduleless RAM bootstrap and timed return to unchanged r50 pass; physical UI confirmation pending; CPR, DVFS and analog qualification remain open",
+  "build_record": "evidence/2026-11-08-msm8926-runtime-clock-candidate.json",
+  "booted_image": {
+    "image_path": "local/ram-runtime-l2-s2/image-gzip-level1.img",
+    "sha256": "2b1fcff1dd28f1f2b14b4b5b3f466d1dae2678ff4fc2acd333c8d85a0fc3f74f",
+    "bytes": 6275072,
+    "readback_exact": true,
+    "original_kernel_DTB_cmdline_and_uncompressed_initramfs_unchanged": true,
+    "Android_header_digest_and_addresses_verified": true,
+    "first_boot_trial": true
+  },
+  "RAM_and_recovery": {
+    "RAM_boot_id": "fb11530a-b5dc-4ce3-9b21-88af0e6c3c2a",
+    "RAM_release": "6.18.59-fx0-cpr-runtime",
+    "taint": 0,
+    "online_CPUs": "0-3",
+    "loaded_modules": 0,
+    "CCF_CPU_clock_Hz": 800000000,
+    "CPU0_idle_state": "cpu-spc",
+    "CPU0_idle_usage": 344,
+    "APC_programmed_target_uV": 1150000,
+    "APC_regulator_summary_line": "pm8226-apc                    1    0      0  normal  1150mV     0mA   900mV  1350mV",
+    "bound_SPM_controllers": [
+      "f9012000.power-manager",
+      "f9089000.power-manager",
+      "f9099000.power-manager",
+      "f90a9000.power-manager",
+      "f90b9000.power-manager"
+    ],
+    "mounts": [
+      "rootfs / rootfs rw,size=689444k,nr_inodes=156307 0 0",
+      "proc /proc proc rw,relatime 0 0",
+      "sysfs /sys sysfs rw,relatime 0 0",
+      "devtmpfs /dev devtmpfs rw,relatime,size=689444k,nr_inodes=156307,mode=755 0 0",
+      "devpts /dev/pts devpts rw,relatime,mode=600,ptmxmode=000 0 0",
+      "debugfs /sys/kernel/debug debugfs rw,relatime 0 0",
+      "configfs /sys/kernel/config configfs rw,relatime 0 0"
+    ],
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "HTTP_attempts": 23,
+    "successful_HTTP_pairs": 22,
+    "return_message_kernel_seconds": 181.611751,
+    "return_message": "12,272,181611751,-;Returning to lk2nd for diagnostic retrieval",
+    "panic_oops_or_controller_init_failure_in_collected_logs": false,
+    "scope": "first moduleless L2/S2 provider bootstrap and timed recovery; no CPR or CPUfreq/governor trial, no analog voltage/frequency measurement",
+    "native_return": {
+      "release": "6.18.59-fx0-dmp",
+      "boot_id": "41bb3f1b-6df3-4a9e-91da-a1af0bd52c60",
+      "taint": 0,
+      "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+      "CPU": {
+        "scaling_available_frequencies": "300000 384000 600000 787200",
+        "scaling_min_freq": "300000",
+        "scaling_max_freq": "787200",
+        "scaling_governor": "schedutil"
+      },
+      "startup": "starting",
+      "failed_services": [],
+      "startup_jobs": [
+        "68 systemd-time-wait-sync.service start running",
+        "69 time-sync.target               start waiting"
+      ],
+      "sensor_proxy": "active",
+      "Sway_process_count": 1,
+      "checked_UTC": "2026-11-08T15:23:44.589429+00:00"
+    },
+    "host_network_restored": {
+      "default_routes_match": true,
+      "resolver_matches": true,
+      "temporary_connection_removed": true,
+      "cleanup_returncode": 0
+    },
+    "physical_display_touch_confirmation": "pending owner response"
+  },
+  "transport_issue": {
+    "original_image_sha256": "5c732301ff18ea6ed43deff7ea10d18fef3dfe558575dc19f803092a2d80352e",
+    "legacy_fastboot": "blocked USB write; attaching strace interrupted it with EINTR before any boot request; acknowledged avoidable diagnostic interference",
+    "synchronous_transport": "16 KiB chunks, 30-second per-I/O timeout, optional pacing; never retries uncertain I/O and sends no boot/flash/reset command",
+    "host_transport_tests": 10,
+    "successful_controls": [
+      "1000 bytes",
+      "1 MiB",
+      "paced 6 MiB known data"
+    ],
+    "reproducer": "original image fails after 5783552 confirmed bytes; trailing padding and pacing do not fix it; isolated 32 KiB block reproduces after 16384 bytes at a different staging address",
+    "small_reproducer_sha256": "8e73a2983c4d42435cc23e1b45215e06cc5514dab25865eb83d1291349bf1223",
+    "workaround": "gzip compression level1 preserves exact kernel, DTB, cmdline and uncompressed initramfs; full alternate image readback verifies and the same kernel boots",
+    "workaround_transfer_seconds": 8.724619495973457,
+    "root_cause": "unresolved input-dependent lk2nd USB download defect; no size-only, pacing-only or kernel fix claimed",
+    "failed_attempts": "all stopped before any boot command; phone-only USB transport resets restore verified lk2nd command state",
+    "data_transfer_receipts": {
+      "probe-1000-controller.json": {
+        "UTC": "2026-11-08T14:52:08.105209+00:00",
+        "returncode": 0,
+        "elapsed_seconds": 0.08699055598117411,
+        "bytes": 1000,
+        "operation": "RAM stage/readback only, no boot"
+      },
+      "probe-1MiB-controller.json": {
+        "UTC": "2026-11-08T14:53:07.847913+00:00",
+        "returncode": 0,
+        "elapsed_seconds": 0.1591568990261294,
+        "bytes": 1048576,
+        "operation": "RAM stage/readback only, no boot"
+      },
+      "image-bulk-controller.json": {
+        "UTC": "2026-11-08T14:53:39.662896+00:00",
+        "returncode": 1,
+        "elapsed_seconds": 31.80706130398903,
+        "bytes": 6246400,
+        "operation": "RAM stage/readback only, no boot"
+      },
+      "probe-6MiB-paced-controller.json": {
+        "UTC": "2026-11-08T14:58:59.574051+00:00",
+        "returncode": 0,
+        "elapsed_seconds": 4.3943225020193495,
+        "bytes": 6291456,
+        "chunk_bytes": 16384,
+        "pace_ms": 5,
+        "operation": "RAM stage/readback only, no boot"
+      },
+      "image-paced-controller.json": {
+        "UTC": "2026-11-08T14:59:33.457913+00:00",
+        "returncode": 1,
+        "elapsed_seconds": 33.8797240559943,
+        "bytes": 6246400,
+        "chunk_bytes": 16384,
+        "pace_ms": 5,
+        "operation": "RAM stage/readback only, no boot"
+      },
+      "image-padded-paced-controller.json": {
+        "UTC": "2026-11-08T15:05:58.991933+00:00",
+        "returncode": 1,
+        "elapsed_seconds": 32.62584439996863,
+        "payload_bytes": 6258688,
+        "operation": "data-only alignment test, no boot"
+      },
+      "image-exact-6MiB-controller.json": {
+        "UTC": "2026-11-08T15:09:48.871622+00:00",
+        "returncode": 1,
+        "elapsed_seconds": 33.334118628990836,
+        "payload_bytes": 6291456,
+        "operation": "data-only test matching the successful pattern payload size exactly; no boot"
+      },
+      "isolated-32KiB-controller.json": {
+        "UTC": "2026-11-08T15:13:17.257616+00:00",
+        "returncode": 1,
+        "elapsed_seconds": 30.306632064981386,
+        "bytes": 32768,
+        "operation": "data-only stage/readback, no boot"
+      },
+      "image-gzip-level1-controller.json": {
+        "UTC": "2026-11-08T15:13:28.442450+00:00",
+        "returncode": 0,
+        "elapsed_seconds": 8.724619495973457,
+        "bytes": 6275072,
+        "operation": "data-only stage/readback, no boot"
+      }
+    }
+  },
+  "public_tool_test_sha256": {
+    "scripts/transfer_fx0_ram.py": "63474bf2b1a07e02a47be2e19480cfb4b48df83570e93920eacaa63636de5e02",
+    "tests/test_ram_transfer.py": "6a56e8e45040659bb9ea3f4f7cf232e72add7493d2c852677278359a6cc54050",
+    "scripts/boot_fx0_ram.py": "fea54ce86d19f1a51665446095e9ae3dce60b34a0f38bfc70f7764f5611409b6",
+    "scripts/connect_fx0_ram_usb.py": "faead9b555e83d13845e4631f212791b3e7fdd0e5211202ed5a51818645c0fcc",
+    "scripts/make_diagnostic_image.py": "cd9c976a758d2f4b0282afe88a4c6038750e1fc11f08fdb289737e9f1cc9613f"
+  },
+  "private_evidence_sha256": {
+    "local/ram-runtime-l2-s2-gzip1/image-verification.json": "98e76e073707e26ab62a2574b6c86817f8ea3fb90734a53127976e2fde43ddb8",
+    "local/ram-runtime-l2-s2-gzip1/boot-request.json": "1ca6300c29749b971c89671713eb8d4a0a1161f84c86d2614d540583a9598fd3",
+    "local/ram-runtime-l2-s2-gzip1/observation.json": "6c887e06d60c00940e83cd8f9d92090615170ed5a10517c3362ef3b7e250d55e",
+    "local/ram-runtime-l2-s2-gzip1/serial-kmsg.txt": "f3bccf0e5123b953c6e7f7cb81722fde934869176d51133c05fea4f5e59d7c5f",
+    "local/ram-runtime-l2-s2-gzip1/temporary-USB-network.json": "c3fa03b5ca723c620073ef96fd6551ca46ee2775fb3166dcc71b1373c472da37",
+    "local/ram-runtime-l2-s2-gzip1/native-postflight.json": "da6abbf2c7028e0cdf5ea16976189a1d604e97c061c01073cc06bdd1ac2da29d",
+    "local/ram-runtime-l2-s2-gzip1/host-network-restored.json": "b1b1f4d5706119eb33fe83d926ba7b43eec4324249f2e80b6af854c88d179b5b",
+    "local/ram-runtime-l2-s2-gzip1/RAM-checks.json": "92fad1b1f8c3a8e886f989029e88b2cfe7b4e073029094b9af5cbce12add12e1",
+    "local/ram-runtime-l2-s2-gzip1/snapshot-fields.json": "67673bd96d27c7331267f789d91c2f0139c94a77b134600a87e3f324ffc88368",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-00-dmesg.txt": "abcf65bd609ba64f86ddc88b91f3567018ce875f0062df954442479c55c1e3dc",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-01-dmesg.txt": "abcf65bd609ba64f86ddc88b91f3567018ce875f0062df954442479c55c1e3dc",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-01-status.txt": "8c0b8def95d97aba109e6a3363603635b0aee95a5710d5eaed8390dc30a02423",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-02-dmesg.txt": "0aeba304a7904148cc1a7b85558a1ee560aebc9c22bd3ea333d5860e54e19c61",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-02-status.txt": "2d4a1f5104ec073a4cbea16afb4b68902b594ca0d8bc1ba294309a60506df250",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-03-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-03-status.txt": "92a11a0439bb1adcece8293c879f925b7b1a676d464949371bee6327c956edba",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-04-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-04-status.txt": "12dabe1d3147cb87104b3358dfc4aad2a033e387fe8f63b045d15b82a43b1836",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-05-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-05-status.txt": "27ee615ee77d41119a18470fecb8f0f7dcdb1e5580116c50e78582d51711a91f",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-06-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-06-status.txt": "27ee615ee77d41119a18470fecb8f0f7dcdb1e5580116c50e78582d51711a91f",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-07-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-07-status.txt": "4621a8459e49b5654f7a416e8f8dc18c476eae262140c5931af4dd3cdf610e9f",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-08-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-08-status.txt": "23ab9c0e23e6ed2b40431ad5a67b084656312e8c260c1ff328d6880815f0ec3d",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-09-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-09-status.txt": "5203ee7a436bb905279e56ce8d9523ab4134dd17e23cd384cada1b1b484231d5",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-10-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-10-status.txt": "91a00afca0c000343826e3d5af03f5fa96af3c63c8bf44eb5a8b89b777a19d29",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-11-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-11-status.txt": "91a00afca0c000343826e3d5af03f5fa96af3c63c8bf44eb5a8b89b777a19d29",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-12-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-12-status.txt": "4eb96db9c3f0ac45b0f0833e9faaefe49340a7905d8622764c0fc50879d7ae4f",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-13-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-13-status.txt": "d9de7ebbf903a52516cb400232a9cdf1c42f6b3e5ed99aeafea61cb12dabdef8",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-14-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-14-status.txt": "02c00af3184d9e8f4b168efd9a4473bf837d64e4e109313491a8b00c4b9dd680",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-15-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-15-status.txt": "6298ea4bb3b9e882bea34534a559b97bcc5987c26586c32641b4bbbfe33723e5",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-16-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-16-status.txt": "6298ea4bb3b9e882bea34534a559b97bcc5987c26586c32641b4bbbfe33723e5",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-17-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-17-status.txt": "a3a5c6c0fe7ee830f8a02e88a6663ceea61d31f67aca1eaa2af8a0f34c39f0c9",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-18-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-18-status.txt": "227ffdeba8433354f93224d4fd8e434ad4d4764eb17c1f8df1c26355bb32473d",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-19-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-19-status.txt": "58c95a36d2a6dfb150dc3dbe84bb9852f6966ae7bf86ecc203aea979560bf861",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-20-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-20-status.txt": "3dabd13b3ed3c3658c5c5c3b0f28922dd97c240c8dabf7b090d33e5baae20d1a",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-21-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-21-status.txt": "3dabd13b3ed3c3658c5c5c3b0f28922dd97c240c8dabf7b090d33e5baae20d1a",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-22-dmesg.txt": "19822c9d5d7e0dfd3a0261b7c282518f18f57e7ba01075631354c844d6ae5dd7",
+    "local/ram-runtime-l2-s2-gzip1/HTTP-22-status.txt": "c0cc4ca1f78eebec4b2d222df2689208f39e9c25054fd70fbccdf877e5602761",
+    "local/ram-runtime-l2-s2/native-preflight.txt": "247737c7cad8b9895cf8bcca399237d194028a3401f71ca3ef53be03ebf2050d",
+    "local/ram-runtime-l2-s2/boot-controller.json": "e5eca104eacefbc4545f4e9956260bd22408068b472f7aa01f1bdda92e3889ce",
+    "local/ram-runtime-l2-s2/transfer/result.json": "d948abb3f37b9f211c2a7f3747e8af4e5fba0ea3fd8ec6b84a8d2e3f24b63bf9",
+    "local/ram-runtime-l2-s2/transfer/fastboot.log": "a09ce9866a9625d532bbcd4a26bb855a26e426c01af79ad2086fbc4d57bd65fc",
+    "local/ram-runtime-l2-s2/live-transfer-diagnostic.json": "e73ea01367d9ad03e144e64eb03179c5e74f2948060e2dd3e2877136169011ca",
+    "local/ram-runtime-l2-s2/live-transfer.strace": "f470e47f50034953a3f4e5b2821b9f3d734a9b9f4012d930a800db63c52b8cda",
+    "local/ram-runtime-l2-s2/probe-6MiB-paced/result.json": "c3fbffa7c94cd490ce0e680edf14ea2d96950c265e1fd7b3b11fb09a21e0ac79",
+    "local/ram-runtime-l2-s2/image-paced/result.json": "dbfb636b2e71fef29159e57ad14aeffbb9d86b72dfdd2a17b11254cc80404d80",
+    "local/ram-runtime-l2-s2/image-padded-paced/result.json": "788caa754c4b3dfeaeb3ff69edde7d7b4792c0f758b6b93691105d259b12b2ea",
+    "local/ram-runtime-l2-s2/image-exact-6MiB/result.json": "c46d1e1dbcbe00804aecf62f84fa8a380a1d6a9630ffba50fff7d8a663d62adf",
+    "local/ram-runtime-l2-s2/isolated-32KiB/result.json": "00133c4613f266047dbb1536be866e06a7fe37f4d9652e7948db7d45662bd650",
+    "local/ram-runtime-l2-s2/image-gzip-level1.json": "ec5e561ada2b5614b0798079bb7d4a3d674820ec5d10313d02acb09192d6b596",
+    "local/ram-runtime-l2-s2/image-gzip-level1/result.json": "893f6a6810083514815020f24dabd1d5cf449ebfd130077b678c61fecd6be544",
+    "local/ram-runtime-l2-s2/lk-after-image-timeout.bin": "e0615f630c786baba7ab3079e199e4e8390233bf0f21cce72c4d493d05058213",
+    "local/ram-runtime-l2-s2/ram-transfer-tests.log": "fb7eeec2446d1226a81b5cd62ddb0d564d4260bf066940d59e4e8c98bb9b247c",
+    "local/ram-runtime-l2-s2-gzip1/reproduced-level1.json": "c6a56ba1d36e74a7f0d87da5c2158a46ba130854e03b1d40f5a441fc303a953e",
+    "local/ram-runtime-l2-s2-gzip1/reproduced-default.json": "b208207899ca58b574d579a6586306f68d10de4f909fa1950709cc0f0c7e146a",
+    "local/ram-runtime-l2-s2-gzip1/make_diagnostic_image-before-gzip-option.py": "9be178d61076330a793fb5aad48a329e4b16dde6b3663cf8af62bc48beb6a5dd",
+    "local/ram-runtime-l2-s2/combined-host-tests.log": "24705467ed198bbeff0efae9b7cb92911dfa93741f5874c4d9217a15bdb440e9",
+    "local/ram-runtime-l2-s2-gzip1/native-settled-postflight.txt": "a8c1578bf7927700add64c082d00efebba1e6eefc056bff2cab19ad9b87f44ec",
+    "local/ram-runtime-l2-s2-gzip1/native-settled-postflight.json": "e5e0fd5fae94ea9570e25a4500e84e4f2077ca16fadb1a4d2e1b34deca17958e"
+  },
+  "constraints": {
+    "phone_boot_partition_written": false,
+    "phone_package_installed": false,
+    "CPR_node_present": false,
+    "CPUfreq_module_loaded": false,
+    "deliberate_higher_OPP_requested": false,
+    "audio_tested": false,
+    "host_builtin_WiFi_changed": false
+  },
+  "remaining": [
+    "owner physical display/touch confirmation after current r50 return",
+    "input-dependent lk2nd USB defect and robust preboot transport qualification",
+    "separate moduleless CPR bootstrap/clock-normalization/RPM-floor RAM trial",
+    "controlled governor and CPUfreq trials before higher eligible rates",
+    "analog rails/feedback, recovery, thermal, suspend and peripheral qualification",
+    "stable/edge source packaging, update/upstream work and all wider reliability/hardware gates"
+  ],
+  "image_builder_followup": {
+    "option": "--gzip-level 1",
+    "builder_sha256": "cd9c976a758d2f4b0282afe88a4c6038750e1fc11f08fdb289737e9f1cc9613f",
+    "exact_reproduction_of_booted_image": true,
+    "unchanged_default9_reproduction": true
+  },
+  "combined_boot_network_transfer_host_tests": {
+    "run": 21,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_startup_followup": {
+    "checked_UTC": "2026-11-08T15:48:32.997113+00:00",
+    "boot_id": "41bb3f1b-6df3-4a9e-91da-a1af0bd52c60",
+    "release": "6.18.59-fx0-dmp",
+    "taint": 0,
+    "startup": "running",
+    "failed_services": [],
+    "startup_jobs": [],
+    "Sway_process_count": 1,
+    "sensor_proxy": "active",
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "physical_display_touch_confirmation": "separate question about this new RAM-trial return remains pending; earlier restored-r50 owner confirmation retained on its original recovery record"
+  },
+  "next_CPR_image_prepared": "evidence/2026-11-08-cpr-bootstrap-preparation.json"
+}

@@ -1,0 +1,85 @@
+{
+  "date": "2026-11-08",
+  "status": "five RTC-control cycles passed on restored r50",
+  "installed_package": "linux-postmarketos-qcom-msm8226-6.18.59-r50",
+  "kernel_release": "6.18.59-fx0-dmp",
+  "kernel_build": 51,
+  "boot_id": "8a837db4-683d-4625-8654-c266af8664f9",
+  "power": "USB",
+  "pretest_display_and_touch": "owner confirmed working",
+  "unit": "fx0-r50-rtc-20261108.service",
+  "unit_terminal_state": {
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "MainPID": 0,
+    "ExecMainStatus": 0
+  },
+  "cycles": [
+    {
+      "cycle": 1,
+      "sleep_seconds": 11.690517,
+      "RTC_irq_delta": 1,
+      "IMU_irq_delta": 0,
+      "counter_delta": 3567,
+      "quaternion_samples": 74,
+      "MDP5_underruns": 0
+    },
+    {
+      "cycle": 2,
+      "sleep_seconds": 12.479437,
+      "RTC_irq_delta": 1,
+      "IMU_irq_delta": 0,
+      "counter_delta": 2701,
+      "quaternion_samples": 75,
+      "MDP5_underruns": 0
+    },
+    {
+      "cycle": 3,
+      "sleep_seconds": 12.12216,
+      "RTC_irq_delta": 1,
+      "IMU_irq_delta": 0,
+      "counter_delta": 2649,
+      "quaternion_samples": 74,
+      "MDP5_underruns": 0
+    },
+    {
+      "cycle": 4,
+      "sleep_seconds": 12.121486,
+      "RTC_irq_delta": 1,
+      "IMU_irq_delta": 0,
+      "counter_delta": 2604,
+      "quaternion_samples": 75,
+      "MDP5_underruns": 0
+    },
+    {
+      "cycle": 5,
+      "sleep_seconds": 12.490822,
+      "RTC_irq_delta": 1,
+      "IMU_irq_delta": 0,
+      "counter_delta": 2678,
+      "quaternion_samples": 75,
+      "MDP5_underruns": 0
+    }
+  ],
+  "host_reverification": "all five downloaded trace/IRQ/manifest/quaternion sets independently checked; helper bytes match repository",
+  "private_trace_archive_sha256": "b809e0f585beeccecda906d6304e5f5e52951ff69b958e1c60e71ffd5991985a",
+  "observation": "SSH observations timed out while the phone was repeatedly suspended; host USB records show reconnects and the existing unit later reported completion. No restart or recovery was performed.",
+  "final_state": {
+    "taint": 0,
+    "CPU_min_kHz": 300000,
+    "CPU_max_kHz": 787200,
+    "governor": "schedutil",
+    "sensor_proxy": "active",
+    "SMD_enabled": 0,
+    "buffer_enabled": 0,
+    "IMU_wakeup": "disabled",
+    "RTC_alarm": "clear",
+    "SD_mounted": false
+  },
+  "scope": [
+    "RTC controls with DMP armed, not physical DMP wake cycles",
+    "No battery standby, 50-cycle mixed-peripheral or full reliability acceptance",
+    "No voltage/frequency/kernel/package change; no audio test; host built-in Wi-Fi unchanged",
+    "Post-test physical display/touch confirmation remains separate"
+  ]
+}

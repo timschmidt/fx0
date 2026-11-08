@@ -1,0 +1,149 @@
+From 57e61d7961e7367d24b65b7969bdfe6f652b85bc Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 11:42:01 -0500
+Subject: [PATCH 00/35] LG Fx0 runtime integration checkpoint (local draft)
+
+Local integration checkpoint only. This mixed-subsystem series has not been
+sent for review and is not a claim of upstream submission readiness.
+
+Reconstruct the complete Fx0 runtime candidate from the pinned pre-DMP base,
+retaining the DMP/display prerequisites and CPU/CPR integration. The original
+39 source patches are preserved in the manifest. Four original prefixes fail
+their own CPR clock bindings because the stricter requirement precedes the
+matching qualification DTB. Group source patches 33-35 and 37-39 as atomic
+integration transitions, yielding 35 commits with the exact same final tree.
+Every exposed CPR qualification DTB now passes its own prefix binding.
+
+The 35 mail patches replay cleanly with git am from the exact base, reproducing
+the complete final tree and commit ID. Final source matches all 48 changed
+files in the frozen host/Alpine builds. The final Alpine source package passes
+its actual community configuration check, signed-APK metadata/binary checks,
+embedded kernel trust-list comparison and all 464 module signatures. Modified
+payload/signature/metadata and a different build certificate are rejected.
+The existing final-source host suite passes 114 checks; the package exporter
+passes seven checks. All 35 prefixes pass the 20 affected ARM object targets with W=1. These
+object checks do not replace full intermediate kernel links or hardware tests.
+
+Hardware scope remains narrower. One ordinary-DTB Fedora-Clang RAM image
+boots four CPUs, binds the L2 master, records cpu-spc use and returns on its
+timer to unchanged installed r50. Its 22 HTTP status/dmesg pairs and serial
+log support that bootstrap result. The Alpine artifact remains unbooted. The separate CPR DTB now reaches
+moduleless RAM diagnostics but its provider probe fails -EINVAL: CPU stays at
+800 MHz and no CPUfreq policy appears. Its 181.623794-second return reaches
+unchanged r50, with owner-confirmed display/touch. This does not qualify the
+300 MHz/MX startup handoff. A second instrumented RAM image identifies
+the reference-source check returning -EINVAL. A read-only native word at
+APCS+0x64 is 1, the stock AHB selection; the stock driver explicitly selects
+XO=0. Controlled reference setup while CPR is stopped and verified readback
+remain to implement. Pstore confirms that diagnostic return at 181.601496
+seconds, and the owner confirms display/touch on its newest unchanged r50 boot. Higher eligible rates, actual rails/feedback, thermal, suspend,
+fail-stop recovery and the earlier r51 EDL cause remain unqualified. The
+input-dependent lk2nd download defect has only an encoding workaround.
+
+Before submission, split/rebase the changes onto current subsystem trees,
+review original contributor attribution and DCO certification, and complete
+the relevant physical and intermediate-build gates. Tentative recipients
+come only from the pinned integration MAINTAINERS and must be refreshed.
+No certification, review or test trailers have been invented. No firmware,
+calibration, private identifiers or signing keys are included.
+
+Timothy Schmidt (35):
+  iio: inv_mpu6050: add guarded MPU6515 DMP execution
+  iio: core: preserve precision in small fractional log2 values
+  iio: inv_mpu6050: expose verified significant-motion events
+  iio: inv_mpu6050: retain significant-motion state through s2idle
+  drm/msm/mdp5: flush staged scanout before starting video timing
+  dt-bindings: nvmem: describe MSM8926 raw calibration rows
+  nvmem: qfprom: add a bounded raw MSM8926 calibration view
+  ARM: dts: qcom: madai: describe raw CPU calibration cells
+  pmdomain: qcom: cpr: sequence MX and APC voltage requests
+  firmware: qcom: scm: support the legacy conditional fuse read
+  pmdomain: qcom: cpr: decode MSM8926 calibration metadata
+  dt-bindings: regulator: describe the PM8226 SAW fixed range
+  regulator: qcom-spmi: add the fixed-range PM8226 SAW provider
+  dt-bindings: soc: qcom: describe the MSM8226 L2 master owner
+  soc: qcom: spm: register the MSM8226 L2 master owner
+  ARM: dts: qcom: madai: connect the L2 master and APC provider
+  dt-bindings: regulator: require the PM8226 APC supply to stay on
+  regulator: qcom-spmi: retain the always-on SAW APC supply
+  pmdomain: qcom: cpr: plan MSM8926 APC and MX voltages
+  pmdomain: qcom: cpr: activate the MX floor before APC changes
+  pmdomain: qcom: cpr: retry incomplete domain attachment
+  pmdomain: qcom: cpr: map MSM8926 rates to calibrated corners
+  pmdomain: qcom: cpr: acquire MSM8926 calibration atomically
+  dt-bindings: power: qcom: describe the MSM8926 CPR domain
+  pmdomain: qcom: cpr: add the MSM8926 calibrated CPU domain
+  regulator: qcom-spmi: restore uncertain SAW voltage writes
+  soc: qcom: smd-rpm: correlate replies with pending requests
+  pmdomain: qcom: cpr: confirm MX vote restoration after errors
+  pmdomain: qcom: cpr: restore feedback after recovered voltage errors
+  dt-bindings: opp: describe calibrated MSM8926 CPU eligibility
+  cpufreq: qcom-nvmem: attach MSM8926 CPUs to calibrated CPR
+  ARM: dts: qcom: add a separate Madai CPR qualification target
+  pmdomain: qcom: cpr: normalize the MSM8926 startup clock
+  clk: qcom: verify MSM8226 CPU PLL and mux programming
+  pmdomain: qcom: cpr: guard APC changes with fresh parent rates
+
+ .../bindings/nvmem/qcom,qfprom.yaml           | 123 +--
+ .../bindings/opp/opp-v2-kryo-cpu.yaml         |  29 +
+ .../bindings/opp/opp-v2-qcom-level.yaml       |   2 +
+ .../bindings/power/avs/qcom,cpr.yaml          | 126 +++-
+ .../regulator/qcom,spmi-regulator.yaml        |  35 +
+ .../bindings/soc/qcom/qcom,saw2.yaml          |  21 +
+ MAINTAINERS                                   |   3 +
+ arch/arm/boot/dts/qcom/Makefile               |   1 +
+ .../dts/qcom/qcom-msm8926-lg-madai-cpr.dts    | 223 ++++++
+ .../boot/dts/qcom/qcom-msm8926-lg-madai.dts   |  40 +
+ drivers/clk/qcom/a53-pll.c                    |   5 +
+ drivers/clk/qcom/apcs-msm8916.c               |   6 +-
+ drivers/clk/qcom/clk-pll.c                    |  98 ++-
+ drivers/clk/qcom/clk-pll.h                    |   2 +
+ drivers/clk/qcom/clk-regmap-mux-div.c         |  85 ++-
+ drivers/clk/qcom/clk-regmap-mux-div.h         |   2 +
+ drivers/clk/qcom/gcc-msm8974.c                |  19 +-
+ drivers/cpufreq/cpufreq-dt-platdev.c          |  13 +
+ drivers/cpufreq/qcom-cpufreq-nvmem.c          |  46 +-
+ drivers/firmware/qcom/qcom_scm.c              |  42 ++
+ drivers/firmware/qcom/qcom_scm.h              |   3 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c  |  11 +-
+ drivers/iio/imu/inv_mpu6050/Kconfig           |   2 +
+ drivers/iio/imu/inv_mpu6050/Makefile          |   2 +-
+ drivers/iio/imu/inv_mpu6050/inv_mpu_core.c    | 146 +++-
+ drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c     | 703 ++++++++++++++++++
+ drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h     |  45 ++
+ drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c    |   4 +
+ drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c |  58 +-
+ drivers/iio/industrialio-core.c               |  23 +
+ drivers/iio/test/iio-test-format.c            |  20 +
+ drivers/nvmem/qfprom.c                        |  33 +-
+ drivers/pmdomain/qcom/Kconfig                 |  12 +
+ drivers/pmdomain/qcom/cpr-msm8926-corner.h    | 134 ++++
+ drivers/pmdomain/qcom/cpr-msm8926-fuses.h     |  73 ++
+ drivers/pmdomain/qcom/cpr-msm8926-voltage.h   | 117 +++
+ drivers/pmdomain/qcom/cpr-msm8926.h           | 149 ++++
+ drivers/pmdomain/qcom/cpr-voltage.h           | 115 +++
+ drivers/pmdomain/qcom/cpr.c                   | 646 ++++++++++++++--
+ drivers/regulator/qcom-spmi-saw-fts2.h        | 258 +++++++
+ drivers/regulator/qcom_spmi-regulator.c       | 158 +++-
+ drivers/soc/qcom/Kconfig                      |   1 +
+ drivers/soc/qcom/smd-rpm.c                    | 106 ++-
+ drivers/soc/qcom/spm-msm8226-l2.h             |  88 +++
+ drivers/soc/qcom/spm.c                        |  92 +++
+ include/dt-bindings/opp/qcom,msm8926.h        |  21 +
+ include/linux/firmware/qcom/qcom_scm.h        |   1 +
+ include/linux/soc/qcom/cpr.h                  |  20 +
+ 48 files changed, 3680 insertions(+), 282 deletions(-)
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+ create mode 100644 drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
+ create mode 100644 drivers/pmdomain/qcom/cpr-msm8926-corner.h
+ create mode 100644 drivers/pmdomain/qcom/cpr-msm8926-fuses.h
+ create mode 100644 drivers/pmdomain/qcom/cpr-msm8926-voltage.h
+ create mode 100644 drivers/pmdomain/qcom/cpr-msm8926.h
+ create mode 100644 drivers/pmdomain/qcom/cpr-voltage.h
+ create mode 100644 drivers/regulator/qcom-spmi-saw-fts2.h
+ create mode 100644 drivers/soc/qcom/spm-msm8226-l2.h
+ create mode 100644 include/dt-bindings/opp/qcom,msm8926.h
+ create mode 100644 include/linux/soc/qcom/cpr.h
+
+
+base-commit: 4b800b920c7db82e8012a580a17cc2d8ff9d5e66

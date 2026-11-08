@@ -1,0 +1,257 @@
+From c171e74c753dfadc4de3b3271a7653fde62190e0 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:33:09 +0000
+Subject: [PATCH 32/35] ARM: dts: qcom: add a separate Madai CPR qualification
+ target
+
+Keep the experimental full CPU/CPR table in a separate DTB. Preserve the ordinary Madai DTB and its conservative legacy CPU-frequency route.
+
+Source-patch: patches/linux-integration/fx0-msm8926-cpr-qualification-dt.diff
+Source-sha256: 54d0770a66cb9f705844c4718cf9f6ba0a813373597516c1ab7ddec285706bd5
+---
+ arch/arm/boot/dts/qcom/Makefile               |   1 +
+ .../dts/qcom/qcom-msm8926-lg-madai-cpr.dts    | 223 ++++++++++++++++++
+ 2 files changed, 224 insertions(+)
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+
+diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
+index d04ef20b273d..6da91620b32a 100644
+--- a/arch/arm/boot/dts/qcom/Makefile
++++ b/arch/arm/boot/dts/qcom/Makefile
+@@ -38,6 +38,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+ 	qcom-msm8916-samsung-serranove.dtb \
+ 	qcom-msm8926-htc-memul.dtb \
+ 	qcom-msm8926-lg-madai.dtb \
++	qcom-msm8926-lg-madai-cpr.dtb \
+ 	qcom-msm8926-microsoft-superman-lte.dtb \
+ 	qcom-msm8926-microsoft-tesla.dtb \
+ 	qcom-msm8926-motorola-peregrine.dtb \
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+new file mode 100644
+index 000000000000..e123436c1e53
+--- /dev/null
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+@@ -0,0 +1,223 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Experimental CPU/CPR qualification target, separate from the ordinary DTB.
++ * This validation tree is not a complete reproduction of installed r50.
++ * Reconstruct the current integration before RAM-only controller qualification.
++ */
++#include "qcom-msm8926-lg-madai.dts"
++#include <dt-bindings/opp/qcom,msm8926.h>
++
++/ {
++	cpr_opp_table: opp-table-cpr {
++		compatible = "operating-points-v2-qcom-level";
++
++		cpr_opp1: opp1 {
++			opp-level = <1>;
++			qcom,opp-fuse-level = <1>;
++			opp-supported-hw = <MSM8926_OPP_300000000>;
++		};
++
++		cpr_opp2: opp2 {
++			opp-level = <2>;
++			qcom,opp-fuse-level = <1>;
++			opp-supported-hw = <MSM8926_OPP_384000000>;
++		};
++
++		cpr_opp3: opp3 {
++			opp-level = <3>;
++			qcom,opp-fuse-level = <2>;
++			opp-supported-hw = <MSM8926_OPP_600000000>;
++		};
++
++		cpr_opp4: opp4 {
++			opp-level = <4>;
++			qcom,opp-fuse-level = <2>;
++			opp-supported-hw = <MSM8926_OPP_787200000>;
++		};
++
++		cpr_opp5: opp5 {
++			opp-level = <5>;
++			qcom,opp-fuse-level = <3>;
++			opp-supported-hw = <MSM8926_OPP_998400000>;
++		};
++
++		cpr_opp6: opp6 {
++			opp-level = <6>;
++			qcom,opp-fuse-level = <3>;
++			opp-supported-hw = <MSM8926_OPP_1094400000>;
++		};
++
++		cpr_opp7: opp7 {
++			opp-level = <7>;
++			qcom,opp-fuse-level = <3>;
++			opp-supported-hw = <MSM8926_OPP_1190400000>;
++		};
++
++		cpr_opp8: opp8 {
++			opp-level = <8>;
++			qcom,opp-fuse-level = <3>;
++			opp-supported-hw = <MSM8926_OPP_1305600000>;
++		};
++
++		cpr_opp9: opp9 {
++			opp-level = <9>;
++			qcom,opp-fuse-level = <3>;
++			opp-supported-hw = <MSM8926_OPP_1344000000>;
++		};
++
++		cpr_opp10: opp10 {
++			opp-level = <10>;
++			qcom,opp-fuse-level = <3>;
++			opp-supported-hw = <MSM8926_OPP_1401600000>;
++		};
++
++		cpr_opp11: opp11 {
++			opp-level = <11>;
++			qcom,opp-fuse-level = <3>;
++			opp-supported-hw = <MSM8926_OPP_1497600000>;
++		};
++
++		cpr_opp12: opp12 {
++			opp-level = <12>;
++			qcom,opp-fuse-level = <3>;
++			opp-supported-hw = <MSM8926_OPP_1593600000>;
++		};
++
++		cpr_opp13: opp13 {
++			opp-level = <13>;
++			qcom,opp-fuse-level = <3>;
++			opp-supported-hw = <MSM8926_OPP_1689600000>;
++		};
++
++		cpr_opp14: opp14 {
++			opp-level = <14>;
++			qcom,opp-fuse-level = <3>;
++			opp-supported-hw = <MSM8926_OPP_1785600000>;
++		};
++	};
++};
++
++&cpu_opp_table {
++	compatible = "operating-points-v2-msm8926-cpu";
++
++	opp-300000000 {
++		opp-hz = /bits/ 64 <300000000>;
++		opp-supported-hw = <MSM8926_OPP_300000000>;
++		required-opps = <&cpr_opp1>;
++	};
++
++	opp-384000000 {
++		opp-hz = /bits/ 64 <384000000>;
++		opp-supported-hw = <MSM8926_OPP_384000000>;
++		required-opps = <&cpr_opp2>;
++	};
++
++	opp-600000000 {
++		opp-hz = /bits/ 64 <600000000>;
++		opp-supported-hw = <MSM8926_OPP_600000000>;
++		required-opps = <&cpr_opp3>;
++	};
++
++	opp-787200000 {
++		opp-hz = /bits/ 64 <787200000>;
++		opp-supported-hw = <MSM8926_OPP_787200000>;
++		required-opps = <&cpr_opp4>;
++	};
++
++	opp-998400000 {
++		opp-hz = /bits/ 64 <998400000>;
++		opp-supported-hw = <MSM8926_OPP_998400000>;
++		required-opps = <&cpr_opp5>;
++	};
++
++	opp-1094400000 {
++		opp-hz = /bits/ 64 <1094400000>;
++		opp-supported-hw = <MSM8926_OPP_1094400000>;
++		required-opps = <&cpr_opp6>;
++	};
++
++	opp-1190400000 {
++		opp-hz = /bits/ 64 <1190400000>;
++		opp-supported-hw = <MSM8926_OPP_1190400000>;
++		required-opps = <&cpr_opp7>;
++	};
++
++	opp-1305600000 {
++		opp-hz = /bits/ 64 <1305600000>;
++		opp-supported-hw = <MSM8926_OPP_1305600000>;
++		required-opps = <&cpr_opp8>;
++	};
++
++	opp-1344000000 {
++		opp-hz = /bits/ 64 <1344000000>;
++		opp-supported-hw = <MSM8926_OPP_1344000000>;
++		required-opps = <&cpr_opp9>;
++	};
++
++	opp-1401600000 {
++		opp-hz = /bits/ 64 <1401600000>;
++		opp-supported-hw = <MSM8926_OPP_1401600000>;
++		required-opps = <&cpr_opp10>;
++	};
++
++	opp-1497600000 {
++		opp-hz = /bits/ 64 <1497600000>;
++		opp-supported-hw = <MSM8926_OPP_1497600000>;
++		required-opps = <&cpr_opp11>;
++	};
++
++	opp-1593600000 {
++		opp-hz = /bits/ 64 <1593600000>;
++		opp-supported-hw = <MSM8926_OPP_1593600000>;
++		required-opps = <&cpr_opp12>;
++	};
++
++	opp-1689600000 {
++		opp-hz = /bits/ 64 <1689600000>;
++		opp-supported-hw = <MSM8926_OPP_1689600000>;
++		required-opps = <&cpr_opp13>;
++	};
++
++	opp-1785600000 {
++		opp-hz = /bits/ 64 <1785600000>;
++		opp-supported-hw = <MSM8926_OPP_1785600000>;
++		required-opps = <&cpr_opp14>;
++	};
++};
++
++&cpu0 {
++	power-domains = <&cpr>;
++	power-domain-names = "cpr";
++};
++
++&cpu1 {
++	power-domains = <&cpr>;
++	power-domain-names = "cpr";
++};
++
++&cpu2 {
++	power-domains = <&cpr>;
++	power-domain-names = "cpr";
++};
++
++&cpu3 {
++	power-domains = <&cpr>;
++	power-domain-names = "cpr";
++};
++
++&soc {
++	cpr: power-controller@f9018000 {
++		compatible = "qcom,msm8926-cpr", "qcom,cpr";
++		reg = <0xf9018000 0x1000>;
++		interrupts = <GIC_SPI 15 IRQ_TYPE_EDGE_RISING>;
++		clocks = <&xo_board>, <&apcs>;
++		clock-names = "ref", "cpu";
++		qcom,apcs-syscon = <&apcs>;
++		vdd-apc-supply = <&pm8226_apc>;
++		vdd-mx-supply = <&pm8226_l3>;
++		#power-domain-cells = <0>;
++		operating-points-v2 = <&cpr_opp_table>;
++		nvmem-cells = <&cpu_speedbin>, <&cpr_primary>, <&cpr_redundant>;
++		nvmem-cell-names = "cpu_calibration", "cpr_primary", "cpr_redundant";
++	};
++};

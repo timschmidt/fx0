@@ -1,0 +1,65 @@
+From a852c5ceb7b7f623c5e94a664c0106a1f92335e7 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:33:09 +0000
+Subject: [PATCH 29/35] pmdomain: qcom: cpr: restore feedback after recovered
+ voltage errors
+
+Restore the previous corner and feedback state only after rail providers have restored the old point. Keep the logical corner unchanged when the transition fails.
+
+Source-patch: patches/linux-integration/fx0-cpr-preserve-feedback-on-error.diff
+Source-sha256: 1db5e678882022f11f732c98eb5c3ac39e7a62c131d616542ba5280758b8e7bb
+---
+ drivers/pmdomain/qcom/cpr.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
+index 8dfede99d7a9..80d24227bec4 100644
+--- a/drivers/pmdomain/qcom/cpr.c
++++ b/drivers/pmdomain/qcom/cpr.c
+@@ -582,10 +582,6 @@ static int cpr_scale(struct cpr_drv *drv, enum voltage_change_dir dir)
+ 
+ 	ret = cpr_scale_voltage(drv, corner, new_uV, dir);
+ 	if (ret) {
+-		if (drv->msm8926) {
+-			cpr_ctl_disable(drv);
+-			drv->msm8926->applied = false;
+-		}
+ 		cpr_irq_clr_nack(drv);
+ 		return ret;
+ 	}
+@@ -787,6 +783,7 @@ static int cpr_set_performance_state(struct generic_pm_domain *domain,
+ 	struct corner *corner, *end;
+ 	enum voltage_change_dir dir;
+ 	int ret, new_uV;
++	bool restore_feedback;
+ 
+ 	guard(mutex)(&drv->lock);
+ 
+@@ -817,18 +814,23 @@ static int cpr_set_performance_state(struct generic_pm_domain *domain,
+ 	else
+ 		dir = NO_CHANGE;
+ 
+-	if (cpr_is_allowed(drv))
++	restore_feedback = cpr_is_allowed(drv);
++	if (restore_feedback)
+ 		new_uV = corner->last_uV;
+ 	else
+ 		new_uV = corner->uV;
+ 
+-	if (cpr_is_allowed(drv))
++	if (restore_feedback)
+ 		cpr_ctl_disable(drv);
+ 
+ 	ret = cpr_scale_voltage(drv, corner, new_uV, dir);
+ 	if (ret) {
+-		if (drv->msm8926)
+-			drv->msm8926->applied = false;
++		if (drv->msm8926 && restore_feedback) {
++			/* APC/MX providers restored the old point before returning. */
++			cpr_irq_clr(drv);
++			cpr_corner_restore(drv, drv->corner);
++			cpr_ctl_enable(drv, drv->corner);
++		}
+ 		return ret;
+ 	}
+ 	if (drv->msm8926) {

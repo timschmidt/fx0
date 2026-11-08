@@ -431,3 +431,447 @@ preserve output. All 13 calibration/mapper/planner tests and ARM W=1 object
 compilation pass. This is CPU-series patch 17, unpackaged and uninstalled.
 The CPR domain consumer, OPP installation, MX lifetime and suspend handoff
 remain incomplete. See [mapper evidence](../evidence/2026-11-07-msm8926-corner-map-candidate.json).
+
+## Full-row calibration acquisition (November 8)
+
+The next source-only helper joins NVMEM acquisition to the existing nominal
+decoder. It reads protected row54 through the legacy SCM service and reads
+raw rows22/138/139 through three named NVMEM cells. Every raw cell must return
+exactly eight bytes. The earlier four-byte CPU cell covered clock/PVS decoding
+but omitted bit53, which selects the manufacturer's uplift rule. The candidate
+DT now exposes the full eight-byte CPU row, within the existing raw keepout
+boundary. The installed r50 DT has not changed.
+
+Acquisition errors leave calibration output untouched. Cell references are
+released on all read outcomes, and successful read buffers are freed with
+`kfree_sensitive()`. An unavailable secure service remains an error rather than
+an inferred selector. The future consumer must provide cell names
+`cpu_calibration`, `cpr_primary` and `cpr_redundant`, each mapping a complete,
+unshifted raw row. No compatible match, regulator activation or higher OPP is
+enabled by this helper.
+
+All 46 CPU foundation tests pass with no skips, including SCM/NVMEM fault
+injection and 18 malformed cell lengths. The emitted ARM loader object, generic
+CPR object and Madai DTB compile with W=1; the DTB retains three earlier warnings.
+The full processed schema validates the candidate provider and existing legacy
+cases. Patch reproduction is byte-exact. Binding tests accept `FX0_CPU_BUILD`
+to select the actual compiled tree and `FX0_DT_SCHEMA_CACHE` to select its
+processed schema; use the dtschema environment's Python to avoid silently
+skipping schema checks. See [acquisition evidence](../evidence/2026-11-08-msm8926-calibration-load-candidate.json).
+
+The CPU validation checkout was recovered from local commit
+`bdc0b5c00e7bcaa3375a394a9b376d391e4972fd` plus all preceding exported CPU
+patches. It is not a complete source reproduction of the installed r50 image
+and must not be packaged as its replacement. The remaining implementation is
+the CPR probe/domain/OPP consumer, rail lifetime and suspend handoff, followed
+by RAM-only bootstrap and hardware qualification.
+
+The restored r50 separately passes five USB-powered RTC suspend controls:
+11.69–12.49 seconds of traced s2idle per cycle, RTC IRQ +1, IMU IRQ +0, retained
+DMP execution and 373 recovered quaternion samples. No MDP5 underrun or taint
+appeared. CPU limits remain 300–787.2MHz, sensor proxy is active, SMD/buffer
+are off, IMU wake is disabled and RTC is clear. The owner confirmed display
+and touch before these tests. These are RTC controls, not physical DMP wakes
+or battery/overall reliability acceptance. See [native regression evidence](../evidence/2026-11-08-r50-rtc-regression.json).
+
+## CPR probe and performance-domain bridge (November 8)
+
+The next two exported patches connect calibration to the CPR driver rather
+than leaving it in an independent helper. The new MSM8926 probe reads the
+three complete raw rows and secure conditional selector, queries the fixed
+APC range and MX provider, and constructs quantized fuse corners. It does not
+reuse QCS404's signed voltage-fuse format or ACC register settings.
+
+Attachment constructs one corner per required CPU OPP. It checks consecutive
+levels, increasing frequencies, exact clock rounding, vendor fmax eligibility
+and matching fuse-corner declarations. Invalid clock/feedback calibration
+cannot authorize operation above 787.2MHz. Every OPP reference is released on
+errors. The initial clock must have a listed corner; its voltage is never
+inferred from a rounded-down frequency. After all setup succeeds, attachment
+establishes an MX floor covering the measured boot APC target and all planned
+ceilings, takes idempotent APC/MX references and publishes the attachment.
+
+The domain is marked always-on and initialized as logically on, as genpd
+requires for that flag. Its builtin-only option defaults off and requires
+builtin CPR and SCM; manual bind/unbind is suppressed. Domain-off retains
+both votes because the CPU supply remains live. Feedback starts only after
+a successful nominal voltage request. Errors quiesce feedback. Suspend-to-idle
+quiesces the controller, and resume waits for a fresh nominal request before
+feedback resumes. Deeper PM is explicitly rejected until RPM sleep-state
+voting exists. These are implemented paths, not physical PM qualification.
+
+All 54 CPU tests pass without skips, including the actual driver initialization,
+corner construction, 16 attachment failure/retry cases, performance/PM ordering
+and six new binding cases. ARM W=1 builds pass with MSM8926 enabled and disabled;
+only the enabled object references the new SCM fuse API. Binding meta-validation,
+lint and the example build pass. Both exported patches reproduce the three
+changed kernel files exactly. See [domain evidence](../evidence/2026-11-08-msm8926-cpr-domain-candidate.json).
+
+No board consumer, CPUfreq attachment, higher OPP, package or native trial is
+added. The subsequent recovery series below addresses failed writes across
+the caller/provider fault model. Before enabling this driver, complete CPUfreq
+domain attachment and speed-bin/PVS filtering, reconstruct the complete current
+DMP/display integration, and qualify recovery physically. The local CPU
+validation tree is not a replacement for restored r50. Full voltage/frequency,
+thermal, PM and peripheral acceptance remains open.
+
+## Transactional voltage recovery and RPM reply matching
+
+A host test now reproduces the failure using the actual OPP, genpd and CPR
+callbacks. A downward clock change succeeds, an APC write lowers the voltage
+but returns an error, and OPP/genpd retain their prior performance state.
+A subsequent intermediate or original-frequency request can then raise the
+clock using that stale state. The old provider produces four unsafe clock
+increases in four negative-control cases. The patched provider produces zero
+in eight cases, including post-command verification failures.
+
+The fixed-range SAW provider now restores the old physical selector directly
+before returning a failed voltage command. It resets the uncertain command,
+forces PWM for possible upward recovery, waits for the selector and idle PMIC
+state, allows slew/mode settling, and rereads the PMIC range and selector.
+Direct SAW submission avoids regulator request caching. It retries restoration
+once. Two failed restoration attempts stop the kernel, preventing further clock
+changes at an unknown voltage. A mode-only failure after confirmed voltage can
+retain PWM and defer AUTO restoration.
+
+MX voting has the same uncertainty: a failed RPM request may already have
+lowered the dependency rail. The CPR helper now forces the prior consumer vote
+through the kernel's `regulator_sync_voltage()` and actual RPM voltage callback
+before retaining a supposedly higher MX floor. It also retries once and stops
+the kernel if restoration cannot be confirmed. Restored votes let a later APC
+increase rely on the cached floor safely in the tested model.
+
+That restoration requires trustworthy RPM acknowledgements. The SMD RPM
+transport previously ignored response IDs and reused completion state, allowing
+a late reply to satisfy a newer request. It now allocates per-channel IDs,
+publishes/retires the pending ID under an IRQ-safe lock, reinitializes completion
+for each request, validates bounded unaligned TLVs and accepts only the matching
+reply. Completion occurs under the same lock so timeout retirement cannot race
+a reply into the next request. NACK, duplicate, stale, malformed and unbound
+responses have explicit tests.
+
+CPR restores feedback for the confirmed old corner after a recoverable
+performance-request failure. This supersedes the earlier unconditional error
+quiescing: genpd can retain that corner and skip a repeated request, so leaving
+an adapted high-frequency voltage without feedback would be incorrect. An
+initial failed nominal request still does not enable feedback, and system PM
+still requires a fresh nominal request after resume.
+
+All 58 targeted CPU/regulator/RPM tests pass with no skips. Coverage includes
+248 before/after-effect I/O cases, 12 recovery retries, 12 persistent-failure
+no-return controls, actual regulator-sync/RPM callbacks, and 111,537 packet
+cases ending at a protected memory page. ARM W=1 builds pass for the regulator,
+SMD RPM and CPR objects. All 24 CPU patches reproduce their 23 changed source
+files exactly. See [recovery evidence](../evidence/2026-11-08-cpu-voltage-recovery-candidate.json).
+
+These tests use modeled I/O and do not establish actual rail voltage, analog
+settling, SAW reset behavior or RPM firmware recovery. No native fault injection,
+kernel/package installation or CPU-limit change occurred. CPUfreq/bin filtering,
+complete-source reconstruction and RAM-only hardware qualification remain the
+next implementation/deployment gates. The installed phone stays on r50.
+
+
+## CPUfreq attachment and separate qualification DTB (2026-11-08)
+
+CPU-series entries 25–27 now connect the MSM8926 CPR supplier to
+`qcom-cpufreq-nvmem`. The supplier validates calibration, the complete quantized
+rail plan and exact clock rounding before exporting one immutable frequency
+mask. Both its domain OPP table and every CPU receive that mask before table
+parsing or domain attachment. This avoids CPU OPP references to filtered-out
+CPR states. Consecutive domain levels must match the canonical frequency prefix.
+
+The masks describe 4/7/10/12/14 eligible rates across the vendor clock plans.
+Invalid clock-valid or disabled-feedback flags restrict the table to the
+existing four rates; unused feedback metadata is cleared. Hard calibration,
+provider or unrepresentable-plan errors still fail or defer. They do not create
+an invented four-rate voltage plan. The unit's earlier native calibration
+implies a seven-rate host plan through 1.1904 GHz, which remains unqualified on
+hardware.
+
+CPU attachment uses temporary virtual devices, whose managed resources are
+released by device deletion even if a reference to the device remains. The
+new provider therefore owns its CPU clock handle for its lifetime, and shared
+plan publication uses a boolean rather than retaining a virtual-device pointer.
+Probe failures unwind each CPU's OPP configuration and domain attachment;
+completed shared initialization survives a retry.
+
+The vendor audit also identifies the physical CPR reference selector at
+APCS+0x64: bit 0 must be zero for 19.2 MHz XO. Supplying an XO phandle alone does
+not verify that selection. The new `qcom,apcs-syscon` readback guard rejects AHB
+or read errors before provider publication and on configuration/resume. It
+changes no selector bits. Resume failure keeps the domain suspended and
+feedback unarmed.
+
+The new CPU OPP type is `operating-points-v2-msm8926-cpu`. Ordinary MSM8926
+boards retain generic cpufreq-dt; only this explicit type routes through the
+calibrated driver and suppresses early generic registration. The separate
+`qcom-msm8926-lg-madai-cpr.dtb` describes all 14 canonical CPU rates and 14 CPR
+states, with identical one-bit masks and matching required-OPP links. All four
+CPUs share that table/domain. SPI15/rising, APC/S2, MX/L3 and the complete raw
+rows follow the pinned vendor/reference wiring. The ordinary board DTS bytes
+are unchanged by these three patches.
+
+All 71 targeted tests pass with no skips, including actual supplier/probe/remove,
+registration-order, unwind/retry and platform-routing paths. Both ARM option
+configurations compile the three affected objects; export/consumer and disabled
+stub symbols match. Binding meta-validation, lint, examples and the compiled
+candidate's selected schemas pass. The candidate inherits three existing
+common-DTS warnings. All 27 CPU patches reproduce 31 changed source files byte
+for byte. Checkpatch reports no errors/checks with existing uV naming ignored;
+its generic new-file ownership reminders have been reviewed.
+See [candidate evidence](../evidence/2026-11-08-msm8926-cpufreq-candidate.json).
+
+This remains a subsystem validation checkout with unqualified L2/S2 integration,
+not a reproduction of the complete installed r50 DMP/display source. No package
+or boot payload changed. Read-only SSH still finds the same restored r50 boot,
+taint 0, no failed services and 300–787.2 MHz. The next gate is complete-source
+reconstruction and controlled RAM-only bootstrap/recovery, followed by actual
+rail/feedback, supported-OPP, thermal, suspend and peripheral qualification.
+Deeper PM remains rejected until RPM sleep-state voting is implemented.
+
+
+## Complete-source reconstruction (2026-11-08)
+
+The complete r50/CPU source reconstruction gate now has host evidence. The
+pinned pre-DMP base plus ten patches reproduces the installed r50 DTB exactly.
+The separate 32-patch candidate restores the same idle/peripheral base and
+matches all 31 CPU-series files; all 41 source changes are accounted for.
+Both complete Clang/CFI kernels link with LLD 18.1.8 and build 464 modules.
+All 928 staged module signatures verify against their explicit kernel
+certificates, including corruption/wrong-build rejection controls. The 109
+combined source tests and three image-placement tests pass.
+
+A checked r50-source RAM baseline now passes two physical boots and returns
+to the unchanged installed r50. The second captures the timed return at
+181.641642 kernel seconds and 22 HTTP status/log samples, with taint zero and
+four online CPUs. Its moduleless image leaves `CPUFREQ_DT=m` unloaded.
+CCF reports the inherited CPU clock as 800 MHz, outside the canonical table.
+The actual `cpr_find_initial_corner()` host harness confirms that the current
+MSM8926 driver rejects this rate before MX/APC bootstrap. This predicts an
+attachment failure; no CPR candidate has yet booted and no analog frequency
+measurement is claimed. Do not merely label 800 MHz as the 787.2 MHz corner:
+OPP direction and cached state must agree with the actual clock handoff.
+
+The next implementation gate is a safe startup clock handoff with feedback
+disabled and a confirmed rail floor, including the clock notifier and
+failures/retries. The notifier programs source 4, divider 3: the RAM log's
+600 MHz GPLL0 produces 300 MHz (`600 * 2 / (3 + 1)`), despite its generic
+400 MHz comment. The vendor `clock-a7.c` likewise names 300 MHz as its safe
+frequency. CCF's `clk_change_rate()` ignores the return from the provider's
+set-rate callbacks; a successful `clk_set_rate()` alone therefore cannot
+authorize lowering APC. The final implementation must verify hardware clock
+state and retain voltage/floors on an uncertain result. No normalization or
+clock-error fix has been applied to the current candidate checkpoint.
+Source packaging, staged L2/S2/CPR bootstrap,
+actual rail/OPP/thermal/suspend and peripheral qualification remain open.
+See [RAM evidence](../evidence/2026-11-08-r50-ram-baseline.json),
+[rebuild evidence](../evidence/2026-11-08-kernel-reconstruction.json) and
+[reproduction procedure](building.md#reconstruct-r50-and-the-cpucpr-source-candidate).
+
+## Startup-clock handoff draft (2026-11-08)
+
+A separate 35-patch source draft adds the auxiliary clock dependency and
+implements the startup part of the handoff above. It preserves boot APC's
+programmed target while activating the MX floor and one logical APC reference,
+then requests the lowest 300 MHz OPP. It verifies two stable APCS command/config
+samples for source 4/HID 3, the 600 MHz auxiliary clock and CCF's 300 MHz result
+before initial-corner lookup. It rejects an inherited rate below 300 MHz or a
+boot target below that OPP's nominal voltage/above the prepared MX floor.
+These checks are controller readback, not analog frequency or voltage measurements.
+
+Host tests execute the actual helper, supplier initialization and attach callback.
+They cover 24 handoff faults, seven attachment failures, partial activation,
+retry/idempotency and cached-success/hardware-mismatch rejection. Removing the
+mux signature check or boot-voltage floor makes the executing C harness fail.
+All 16 targeted source/binding/compiled-DTB tests pass, as does the ARM W=1 CPR
+object. Binding/driver/DT patches are split; checkpatch reports no errors,
+warnings or checks with inherited uV naming ignored. All 41 files reproduce
+from the pinned base plus 35 patches. The earlier 32-patch source/build and
+installed r50 remain unchanged.
+
+This draft does not yet handle runtime clock-programming failures. A fresh
+hardware clock check before voltage reduction remains necessary because CCF
+can discard provider errors and PLL-rate caches can be stale. Complete that
+guard, full kernel/module linkage and staged RAM controller/recovery tests
+before enabling CPR or higher OPPs. No hardware trial or analog rail/feedback
+qualification follows from these host checks.
+See [startup evidence](../evidence/2026-11-08-msm8926-startup-clock-candidate.json)
+and the [build procedure](building.md#startup-clock-source-draft).
+
+## Runtime clock-error guard (2026-11-08)
+
+The separate 39-patch runtime candidate now implements the next source gate.
+CPR obtains its own CPU-PLL reference and refreshes both PLL parents before
+an uncached CPU mux query. Each voltage change, including feedback IRQ changes,
+rejects a zero/unknown clock or an actual reported rate above the requested
+corner. This prevents a failed downclock from authorizing a lower APC target.
+
+The clock-provider audit also finds errors that cannot safely return to CCF:
+it may select a PLL after a failed enable/lock or release the old PLL after a
+failed mux switch. On MSM8226, CPU PLL/mux programming errors therefore panic
+before CCF can continue. Successful rate writes require PLL-rate readback;
+enable requires mode/lock readback; mux programming requires settled CMD/CFG
+readback. Ordinary PLL/mux reads fail with a zero rate on I/O/unstable state
+instead of using uninitialized values. PLL rate arithmetic avoids ARM32
+truncation. Uncached rate flags and strict failure behavior are selected by
+the actual MSM8226 provider probes; the legacy probe policy remains unchanged.
+
+All 114 selected tests pass against this source with no skips. Executing actual
+kernel functions covers 76 PLL I/O faults, 25 mux I/O/unstable-state controls,
+28 CPR query I/O faults, timeout/lost-write controls, stale caches/topology and
+the startup path. Five unsafe mutations are rejected at execution. The six
+changed ARM objects and both DTBs build; all 48 files reproduce from the pinned
+base plus 39 patches. The complete kernel/module build now passes. All 464
+staged module signatures match the certificate embedded in the kernel, and
+corruption/wrong-build controls fail as required. A 64-bit division identified
+in the ARM object was changed to `do_div()` before successful full linkage;
+the resulting PLL object has no unavailable `__aeabi_uldivmod` dependency.
+The earlier
+checkpoints and installed r50 are unchanged.
+
+Hardware frequency/voltage/feedback, fail-stop recovery and higher OPPs remain
+unqualified. The checked moduleless L2/S2 image uses the ordinary DTB, with
+CPR absent, before a separate CPR-bootstrap trial. A current read-only native
+r50 preflight reaches running systemd startup with Sway, unchanged limits/hash
+and taint zero. Its stable APCS CMD=0x2/CFG=0x501 and PLL MODE=0x7/STATUS=0x10001
+confirm the command and PLL-lock bit layout while the existing governor runs;
+they do not qualify the new controller. Next perform staged moduleless RAM
+bootstrap/recovery, followed by controlled CPUfreq/governor trials. None of
+these host models proves analog timing or settling.
+See [runtime evidence](../evidence/2026-11-08-msm8926-runtime-clock-candidate.json).
+
+## First L2/S2 RAM bootstrap and return (2026-11-08)
+
+The 39-patch kernel now boots the ordinary DTB in a moduleless RAM environment.
+All four CPUs are online with taint zero; the L2 master at f9012000 binds to
+qcom_spm, the APC provider reports its 1.15 V programmed boot target, and CPU0
+reports cpu-spc idle with 344 uses at the initial snapshot. CCF reports the
+inherited 800 MHz CPU clock. No CPUfreq module, governor or CPR node is active.
+These are controller/framework observations rather than analog measurements.
+
+Serial logs and 22 HTTP status/dmesg pairs capture the 180-second return timer
+at 181.611751 kernel seconds. The fresh r50 return has the same boot-partition
+hash, four conservative rates, taint zero, Sway and sensor proxy. Host routes
+and resolver match before, and the temporary USB profile is removed. Physical
+display/touch confirmation for this return is pending. A later read-only check
+of the same boot reaches running systemd startup, with no failed services or
+pending jobs. The
+earlier r51 EDL event remains unexplained; this one RAM result does not clear
+persistent installation or broader reliability gates.
+
+An input-dependent lk2nd USB download stall initially prevents transferring
+the default image. A 32 KiB block reproduces without booting any kernel.
+Gzip level 1 preserves the exact kernel/DTB and unpacked initramfs, verifies
+full RAM readback and permits this boot. The USB root cause remains open.
+The next CPU gate is a separate moduleless CPR startup/clock-normalization/MX
+floor trial, followed by governor-controlled CPUfreq and actual rail/feedback,
+thermal, suspend and peripheral qualification. See
+[native evidence](../evidence/2026-11-08-l2-s2-ram-bootstrap.json).
+
+The separate CPR-bootstrap RAM image is now prepared and host-verified, but
+unbooted. It retains the exact successful diagnostic initramfs and command line,
+uses the built qualification DTB, includes no modules or CPUfreq governor, and
+has no CPU-level default performance-state request. Built-in calibration domain
+attachment is intended to exercise the boot clock normalization and MX floor
+before any CPUfreq policy exists. These remain source-reviewed expectations
+until a native trial verifies them. See
+[preparation evidence](../evidence/2026-11-08-cpr-bootstrap-preparation.json).
+
+## Distribution source-package checkpoint (2026-11-08)
+
+The complete 39-patch source now builds through pmbootstrap/abuild in an
+isolated Alpine 3.24 container with Clang 22.1.3. All 48 prepared source files
+match the frozen host candidate. The normalized recipe explicitly runs
+olddefconfig; its actual community configuration, signed r54 APK, recipe commit,
+kernel and both DTBs verify. All 464 module signatures match the exact
+certificate embedded in vmlinux; modified payload/signature/metadata and a
+different build's certificate reject. The five undefined symbols match the
+accepted r50 baseline, with none introduced. Offline package simulation passes
+only in the initialized usermode workspace database.
+
+This closes the candidate's distribution source-build gap, while installed
+update/recovery and native qualification remain open. The package is unbooted
+and uninstalled; existing L2 RAM evidence belongs to the Fedora-Clang build.
+The phone remains on the same installed r50 boot, taint zero, running systemd,
+Sway and sensor proxy, four conservative rates and unchanged boot hash. The
+reviewable source/config/recipe branch remains local after automatic approval
+review rejected its GitHub push; explicit publication approval is pending. See
+[package evidence](../evidence/2026-11-08-runtime-kernel-source-package.json).
+
+## First CPR RAM startup failure (2026-11-08)
+
+The checked qualification image stages and reads back in 5.63 s. One RAM boot
+reaches diagnostic USB, four CPUs and taint zero, but CPR probe returns -EINVAL
+under the broad calibration message. The provider remains unbound, its CPU
+calibration supplier defers and no CPUfreq policy loads. CCF reports the
+inherited 800 MHz and APC its 1.15 V programmed target; this does not pass
+the 300 MHz/MX/domain bootstrap gate. No raw calibration or analog voltage
+measurement is published.
+
+Twenty-two HTTP status/log pairs and serial capture the return timer at
+181.623794 kernel seconds. The new r50 boot is running with no failed services,
+Sway, sensor proxy, four rates/schedutil and the unchanged boot hash. The owner
+confirms display/touch on this latest return. The temporary USB profile is
+deleted and host routes/resolver match before. No persistent candidate install
+or deliberate higher OPP occurs. See
+[first trial evidence](../evidence/2026-11-08-cpr-bootstrap-first-ram.json).
+
+The initial message does not identify the failing stage. A separate diagnostic source adds
+context to fuse access, reference-source checks, voltage planning, eligibility
+and parent-clock failures without changing their return values or relaxing a
+guard. All 116 selected checks, its ARM CPR object, checkpatch and 40-patch
+tree replay pass; its built-in RAM kernel links and boots once. The test fixtures add
+only logging-return/header stubs, with prior versions archived and referenced
+explicitly. See
+[diagnostic preparation](../evidence/2026-11-08-cpr-probe-diagnostics-preparation.json).
+
+That diagnostic identifies the CPR reference-source check returning -EINVAL.
+An independent read-only native read of 0xf9011064 returns 1. The stock driver
+defines bit0=1 as AHB, bit0=0 as 19.2 MHz XO, and explicitly selects XO before
+CPR configuration. An XO phandle alone leaves the hardware selection inherited.
+The next work is owned XO selection with CPR stopped and verified readback;
+the read guard remains required. The native word is read after recovery, not
+presented as an independent RAM register snapshot.
+
+HTTP captures 22 status/log pairs after the serial open hits a host udev
+permission race. Archived pstore recovers the own-kernel identity, exact stage
+failure and timer message at 181.601496 seconds. The newest r50 boot is running,
+taint zero, original hash/four rates, with Sway/sensor proxy and owner-confirmed
+display/touch. Host networking restores. Missing RAM taint/clock/voltage fields
+are left unmeasured. See
+[reference diagnosis](../evidence/2026-11-08-cpr-reference-first-diagnostic.json).
+
+### XO handoff reaches the moduleless startup gate
+
+The first owned-XO candidate stops IRQ/CTL and waits for RESULT_0.BUSY before
+selection. Its RAM trial returns -ETIMEDOUT: BUSY remains set with the controls
+cleared. The stock driver does not impose this wait, and both stock/upstream
+IRQ handlers consult BUSY only after checking LOOP_EN. The preserved
+[41-patch trial](../evidence/2026-11-08-cpr-xo-handoff.json) returns to unchanged
+r50 at 181.597437 seconds, with owner-confirmed display/touch.
+
+The separate 42-patch follow-up verifies disabled IRQ/CTL both before and after
+masked XO selection and keeps the selector readback guard. Its full ARM link,
+independent patch replay, 118 selected checks, W=1 object and checkpatch pass.
+One moduleless RAM boot initializes CPR with seven eligible OPPs and binds all
+four virtual CPU consumers. The mux reads 300 MHz from the 600 MHz auxiliary
+clock, with APC's reported 1.15 V boot target retained and an enabled MX vote
+(requested floor 1.2875 V; summary truncates to 1287 mV). LOOP_EN is clear while
+BUSY still reads one, directly supporting the corrected disabled-state check.
+All four CPUs are online, taint is zero, five SPM controllers bind and CPU-SPC
+usage increments. No CPUfreq policy or module is loaded.
+
+The debugfs `current_volt = 1080000` is the unapplied corner cache, not the
+programmed APC target. Correct this label before relying on it for runtime
+qualification. Governor userspace is itself a module; schedutil remains the
+built-in default, so load order/default-governor control must be settled before
+loading cpufreq-dt. No positive pstate, feedback, higher OPP, physical analogue
+rail, thermal or suspend acceptance follows from this startup result.
+
+Serial captures the return at 181.782488 seconds; both observers exit zero and
+host network state restores. Installed r50 retains its boot hash, four-rate
+policy, zero taint, Sway and sensor proxy, with owner-confirmed display/touch.
+Its time-sync target/service remain
+pending, so full systemd startup is not claimed. See
+[qualified startup evidence](../evidence/2026-11-08-cpr-disabled-reference.json)
+and the published [source branch](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-cpr-disabled-reference).

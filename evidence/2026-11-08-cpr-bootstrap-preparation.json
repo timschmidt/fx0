@@ -1,0 +1,51 @@
+{
+  "checked_UTC": "2026-11-08T15:47:59.138001+00:00",
+  "status": "prepared and host-verified only; not staged or booted",
+  "image": {
+    "path": "local/cpu-runtime/cpr-bootstrap-prepared/fx0-runtime-cpr-bootstrap-ram.img",
+    "sha256": "c573f86aebec70cee27192f308d7d4fb6fbd5761328642113ef34c7dd6e8a7a1",
+    "bytes": 6277120
+  },
+  "inputs_sha256": {
+    "build/fx0-cpr-runtime/arch/arm/boot/zImage": "eefac76c4bfea551693fe7f176bb211b3189d2dad1b67eab2f043bab1fbdcacd",
+    "build/fx0-cpr-runtime/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dtb": "589d17908c2bd9584b0f3f51bc4c19ced467b60791e3fd13bc4ee3fbcd9e0284",
+    "scripts/make_diagnostic_image.py": "cd9c976a758d2f4b0282afe88a4c6038750e1fc11f08fdb289737e9f1cc9613f"
+  },
+  "checks": {
+    "exact_kernel_and_CPR_qualification_DTB": true,
+    "Android_header_digest_and_load_addresses": true,
+    "same_cmdline_and_byte_identical_compressed_initramfs_as_successful_L2_trial": true,
+    "gzip_newc_and_GNU_cpio": true,
+    "init_syntax": true,
+    "moduleless": true,
+    "CPU_level_required_opps_absent": true,
+    "four_provider_clock_names": true,
+    "CPUFREQ_DT_is_module_not_in_image": true,
+    "built_in_calibration_can_attach_CPR_domain": true
+  },
+  "intended_trial": {
+    "return_after_seconds": 180,
+    "source_path": "qcom_cpufreq_probe configures eligibility and attaches four CPU domains before registering unloaded cpufreq-dt device; cpr_pd_attach_dev retains APC boot target, establishes MX floor, moves clock to 300 MHz and verifies settled APCS mux",
+    "feedback_gate": "applied starts false from zeroed allocation; positive set_performance_state is required to arm feedback; CPU nodes have no default required-opps property",
+    "initial_performance_state": 0,
+    "no_policy_or_governor": true,
+    "no_emmc_filesystem_mount": true,
+    "no_persistent_installation": true
+  },
+  "remaining": [
+    "fresh physical display/touch check on r50 return from the L2 trial (separate question already pending)",
+    "current phone preflight; exact USB staged readback; fresh RAM observers; one boot request",
+    "native CPR bootstrap, clock normalization, MX/APC programmed targets, disabled feedback and timed recovery verification",
+    "higher OPP, analog, feedback, thermal, suspend and whole bringup remain unqualified"
+  ],
+  "CPR_first_RAM_followup": {
+    "record": "evidence/2026-11-08-cpr-bootstrap-first-ram.json",
+    "image_booted": true,
+    "startup_gate": "fails: provider probe -EINVAL, CPU remains 800 MHz; no CPUfreq policy",
+    "timed_return_seconds": 181.623794,
+    "returned_native_release": "6.18.59-fx0-dmp",
+    "native_boot_id": "82018c60-6d13-4af3-afae-8c3e4a3d9306",
+    "boot_hash_unchanged": true,
+    "latest_native_display_touch_owner_confirmed": true
+  }
+}

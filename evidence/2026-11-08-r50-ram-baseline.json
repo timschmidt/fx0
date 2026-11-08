@@ -1,0 +1,237 @@
+{
+  "date": "2026-11-08",
+  "recorded_UTC": "2026-11-08T13:08:45.960719+00:00",
+  "status": "two reconstructed-r50 moduleless RAM boots and native returns pass; CPU/CPR candidate remains unbooted and unqualified",
+  "image": {
+    "path": "local/kernel-reconstruction/fx0-r50-reconstructed-ram.img",
+    "bytes": 6230016,
+    "sha256": "349ab28ce8d8c48a9699d67e9b84ed53e9038baeac896f3a8fd923c96b1d853b",
+    "source_record": "evidence/2026-11-08-kernel-reconstruction.json",
+    "return_after_seconds": 180,
+    "eMMC_mount_or_flash_commands": false,
+    "modules_loaded": false,
+    "configuration_note": "CPUFREQ_DT=m; no scaling policy expected in this moduleless RAM baseline"
+  },
+  "transfer": {
+    "procedure": "identify lk2nd; fastboot stage; fastboot get_staged; exact bytes and SHA-256; single standard boot command via USB bulk",
+    "both_image_readbacks_exact": true,
+    "successful_stage_elapsed_seconds": [
+      30.233,
+      58.245
+    ],
+    "earlier_attempt": {
+      "result": "host killed fastboot after 40 seconds while downloading; lk2nd log contains download but no boot command",
+      "recovery": "USBDEVFS_RESET of only the verified phone USB device, followed by successful identity queries and new transfers",
+      "root_cause": "unresolved transfer latency; successful transfers exhibit about 30-second USB pauses"
+    },
+    "bootloader_product": "lk2nd-msm8226",
+    "bootloader_version": "fx0-pon-reboot"
+  },
+  "RAM_boots": [
+    {
+      "RAM_boot_id": "7b172820-e77e-4c8f-806e-225b72a31ec2",
+      "rebuilt_kernel_identity": "Linux (none) 6.18.59-fx0-dmp #51-postmarketos-qcom-msm8226 SMP PREEMPT 2026-11-08 12:00:00 UT armv7l Linux",
+      "taint": 0,
+      "online_CPUs": "0-3",
+      "CPUfreq_policy_observed": false,
+      "CPUfreq_note": "CONFIG_CPUFREQ_DT=m; no modules loaded in this baseline",
+      "mounts": [
+        "rootfs / rootfs rw,size=689460k,nr_inodes=156314 0 0",
+        "proc /proc proc rw,relatime 0 0",
+        "sysfs /sys sysfs rw,relatime 0 0",
+        "devtmpfs /dev devtmpfs rw,relatime,size=689460k,nr_inodes=156314,mode=755 0 0",
+        "devpts /dev/pts devpts rw,relatime,mode=600,ptmxmode=000 0 0",
+        "debugfs /sys/kernel/debug debugfs rw,relatime 0 0",
+        "configfs /sys/kernel/config configfs rw,relatime 0 0"
+      ],
+      "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+      "HTTP": "unverified: host DHCP activation failed; diagnostic uses a fixed USB address",
+      "automatic_return": "new native USB identity and r50 boot observed; explicit timer message not captured",
+      "scope": "moduleless baseline boot/readback only, no new controller or higher OPP qualification"
+    },
+    {
+      "RAM_boot_id": "e0bccdfa-43c5-42d8-a341-65469034c125",
+      "taint": 0,
+      "online_CPUs": "0-3",
+      "inherited_CCF_CPU_clock_Hz": 800000000,
+      "CPUfreq_driver": "CONFIG_CPUFREQ_DT=m, not loaded in this moduleless baseline",
+      "CPU0_idle_state": "cpu-spc",
+      "CPU0_idle_usage": "269",
+      "mounts": [
+        "rootfs / rootfs rw,size=689460k,nr_inodes=156314 0 0",
+        "proc /proc proc rw,relatime 0 0",
+        "sysfs /sys sysfs rw,relatime 0 0",
+        "devtmpfs /dev devtmpfs rw,relatime,size=689460k,nr_inodes=156314,mode=755 0 0",
+        "devpts /dev/pts devpts rw,relatime,mode=600,ptmxmode=000 0 0",
+        "debugfs /sys/kernel/debug debugfs rw,relatime 0 0",
+        "configfs /sys/kernel/config configfs rw,relatime 0 0"
+      ],
+      "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+      "successful_HTTP_status_and_dmesg_samples": 22,
+      "return_message_kernel_seconds": 181.641642,
+      "return_message": "12,271,181641642,-;Returning to lk2nd for diagnostic retrieval",
+      "panic_or_oops_in_collected_logs": false,
+      "network_cleanup": {
+        "default_routes_match": true,
+        "resolver_matches": true,
+        "temporary_connection_removed": true
+      },
+      "scope": "baseline RAM execution and timed recovery; no voltage change or higher CPU OPP request"
+    }
+  ],
+  "native_return": {
+    "release": "6.18.59-fx0-dmp",
+    "boot_id": "6d7040ee-ac95-4263-a0c4-2964dba2e7a9",
+    "taint": 0,
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "CPU": {
+      "scaling_available_frequencies": "300000 384000 600000 787200",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200",
+      "scaling_governor": "schedutil"
+    },
+    "failed_services": [],
+    "startup_jobs": [
+      "40 time-sync.target               start waiting",
+      "39 systemd-time-wait-sync.service start running"
+    ],
+    "sensor_proxy": "active",
+    "sway_process_count": 1
+  },
+  "display_touch_report": {
+    "answer": "Display and touch work",
+    "question": "The phone is reachable on restored r50. Do its display and touch respond normally after this boot?",
+    "source": "owner response in conversation",
+    "scope": "owner report for restored r50; no display/touch qualification of the moduleless diagnostic or CPR candidate"
+  },
+  "host_network_restoration": {
+    "default_routes_match": true,
+    "resolver_matches": true,
+    "temporary_connection_removed": true
+  },
+  "next_CPU_gate": {
+    "observation": "CCF clk_summary reports a53mux@f9011000 at 800000000 Hz before cpufreq module load",
+    "measurement_limit": "CCF reported clock, not an analog frequency measurement",
+    "source_finding": "MSM8926 cpr_find_initial_corner requires an exact canonical rate, so 800 MHz is rejected before voltage bootstrap",
+    "host_check": "actual kernel function accepts 7 exact eligible rates, rejects 5 unlisted rates including 800 MHz, preserves legacy floor behavior",
+    "next_step": "implement and validate safe startup clock normalization, rail floor, notifier transient and retry behavior before RAM controller qualification",
+    "clock_notifier": {
+      "source_selector": 4,
+      "HID_divider": 3,
+      "GPLL0_reported_Hz": 600000000,
+      "computed_temporary_Hz": 300000000,
+      "generic_400MHz_comment": "does not describe this board",
+      "vendor_safe_Hz": 300000000
+    },
+    "clock_error_audit": "drivers/clk/clk.c clk_change_rate() ignores provider set_rate/set_rate_and_parent return values; verify hardware state before authorizing APC reduction",
+    "source_fixes_applied": false,
+    "audited_source_sha256": {
+      "drivers/pmdomain/qcom/cpr.c": "d57641ac319966d9172c2d0154819461e4dc1fe04422e6ede1d8b37e3139bfc0",
+      "drivers/opp/core.c": "f8a225a16f71c1c68ae09d6473526999b30fcd261e249d37742b6f11a5420208",
+      "drivers/clk/clk.c": "a30805dc12b79b20f41dfaf20ce18aa04aa6afb332317b7c1310df3d2b2cd235",
+      "drivers/clk/qcom/apcs-msm8916.c": "7fbb307d82b75052294f661948e678a969453ae02fbc21f6b14ac80a9a2213eb",
+      "drivers/clk/qcom/clk-regmap-mux-div.c": "f4bfcc8a91a2fbd097352cea21b3c6f9e2f81ef25be7bd4878f8cab037412653",
+      "drivers/clk/qcom/a53-pll.c": "db9684949acb34ae19dc5e854cf19ba5a1e42a1cd8cca8720d8f5ac75c81378a",
+      "drivers/clk/qcom/clk-pll.c": "b12e945d1f142101c28d33cf465095a247b560c2255f12fb1b8a224f49db8c30",
+      "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi": "20f9aa62a67fa37b80344901a7497f0c35aa0144e81b7b6288cdd204d5bd9d1f"
+    },
+    "vendor_clock_a7_sha256": "322670ed6dcacb415d95cc1d6dfd8d0448f2a6781515da1ed1b9843fe6574468"
+  },
+  "public_helpers": {
+    "scripts/boot_fx0_ram.py": "fea54ce86d19f1a51665446095e9ae3dce60b34a0f38bfc70f7764f5611409b6",
+    "scripts/connect_fx0_ram_usb.py": "faead9b555e83d13845e4631f212791b3e7fdd0e5211202ed5a51818645c0fcc",
+    "tests/test_ram_boot.py": "e43e7d86c767cd5cdff777b27ba5af293d351eb4c975c82357c37ffc898d1024",
+    "tests/test_cpr_initial_corner.py": "1792de8e713f88429d16c4b88612c51d337261b08b544e71a79dd7ec34ae7633",
+    "tests/test_ram_usb_network.py": "fb7d81daf3993e6ed9cb4fafed319187f9a5bc18edeb9afdea836c22ae515583"
+  },
+  "helper_validation": {
+    "boot_tool_tests": 8,
+    "actual_CPR_lookup_tests": 1,
+    "Python_compile": "pass",
+    "hardware_scope": "equivalent private stage/readback/boot and network helpers used successfully; consolidated public boot wrapper not yet run on hardware",
+    "USB_network_controls": 3
+  },
+  "private_evidence_sha256": {
+    "local/ram-r50-baseline/preflight.json": "18cc7a0eb9cf63456bda4f5b9882a78f98624d37430a5727ad3decc35c98099e",
+    "local/ram-r50-baseline/image-stage.json": "a5118eb737c42f109f0b25c5f6ccfd7daaffd7cb7fa238287f494a71859bf72c",
+    "local/ram-r50-baseline/image-readback.json": "eb2a3926699ac6bcdf246dc16cfc38fada3e254c5e1ad7308b27d25b9fedc9f1",
+    "local/ram-r50-baseline/staged-boot-request.json": "05acd2abc4b60bd80ed48d673401f4a31d595fa1efe9b7d17c6fad1a2d6a4c64",
+    "local/ram-r50-baseline/RAM-baseline-checks.json": "f3a3c84fd4aedac20c1b83317f210f704d4eff2909ad27582a93c1975c09e563",
+    "local/ram-r50-baseline/postflight.json": "80da3a95af4b550d5a0aa1dacb4917ee1f7c32b960f32d632031f4de52c1c437",
+    "local/ram-r50-baseline/lk-after-timeout.bin": "2cf7c5639dc92cb2811c978aeaf768bee3502ef36b282ed782c22bf19233b6ea",
+    "local/ram-r50-baseline/targeted-USB-reset.json": "6d3f18d47054743974542c390fb04d9ca94f7b7c8dc3dbb046b683a19bbe4d57",
+    "local/ram-r50-network-baseline/image-stage.json": "83fa8ed3df2126487dcfaf71adb9bfde6d928b3f4381c6ac91769957f9e5ec42",
+    "local/ram-r50-network-baseline/image-readback.json": "83fa8ed3df2126487dcfaf71adb9bfde6d928b3f4381c6ac91769957f9e5ec42",
+    "local/ram-r50-network-baseline/staged-boot-request.json": "562b6e77a862f59cc134b83d1a5a3b934c01095bdbce6703c1da3faf869d3720",
+    "local/ram-r50-network-baseline/RAM-baseline-checks.json": "b2205fff576d7f3924bb0147f304dc32988853240f879534e92913b0d676ebbd",
+    "local/ram-r50-network-baseline/postflight.json": "5eeb7553de4a0c9ed0b1c64e4ff778ce423360e6aedfb2584bf3c008b9d671b2",
+    "local/ram-r50-network-baseline/serial-kmsg.txt": "f16fcadcd186d6ed2c3fc1ec394b69e2a79a2fcab11e9d9a39fc3b17bb700559",
+    "local/ram-r50-network-baseline/observation.json": "e99c9fbbfa13dc5fb28a99eaa960209825186fd74945327d0099a2c4ccff15e2",
+    "local/ram-r50-network-baseline/temporary-USB-network.json": "3ea1a3f9ca4474419584dc890e1dc44d49c6d9ca1e0c1c2916555040cd3f15df",
+    "local/ram-r50-network-baseline/host-network-restored.json": "b27c245c19460ccff8e88250f94c85a3ab29e1d27b945f06f92baa69e5d0a576",
+    "local/ram-r50-network-baseline/HTTP-01-status.txt": "12b4007cd0e8f96555d8e821c22694462e3fd941ab016b75c133372c4b359633",
+    "local/ram-r50-network-baseline/HTTP-02-status.txt": "a803185e1219c3512dddbb7612b068b0990322e8495650f621d928b4f23ed106",
+    "local/ram-r50-network-baseline/HTTP-03-status.txt": "ebddcf7826ba9c5e5aa567c2b226cc7afa5b9e8da299ad030162239fed542e93",
+    "local/ram-r50-network-baseline/HTTP-04-status.txt": "4b97c73c2f32246fa726404e52302e3bf43118729e07d7c5243d2d06613093c0",
+    "local/ram-r50-network-baseline/HTTP-05-status.txt": "98a5be148ca88de0f867fd8d1e10096c923b6cf112fccf59b8275c8ae7720fcb",
+    "local/ram-r50-network-baseline/HTTP-06-status.txt": "98a5be148ca88de0f867fd8d1e10096c923b6cf112fccf59b8275c8ae7720fcb",
+    "local/ram-r50-network-baseline/HTTP-07-status.txt": "5ef90ae70731cf2d34c3bda018e076f4216a4a44faeb565f6a5f90a1f6c6f6ea",
+    "local/ram-r50-network-baseline/HTTP-08-status.txt": "e10170537ca951ea77e1ae1b950a7d4153028db21f65d3b309c7ee0e2b4e3aff",
+    "local/ram-r50-network-baseline/HTTP-09-status.txt": "2d8c34b09b17adf3d810afc3fc6f685b229840dd85601ec0bfba4a1e40b9d552",
+    "local/ram-r50-network-baseline/HTTP-10-status.txt": "ac57672f98546841c853448272fb192f1b838413fbd6c23c0e5fe7650bf6117f",
+    "local/ram-r50-network-baseline/HTTP-11-status.txt": "ac57672f98546841c853448272fb192f1b838413fbd6c23c0e5fe7650bf6117f",
+    "local/ram-r50-network-baseline/HTTP-12-status.txt": "9021d5a1c3c9b94ee7e005b8b98556af92224f72b446358b18387177d2e695c1",
+    "local/ram-r50-network-baseline/HTTP-13-status.txt": "4ab46f008dfe2b3fd98644175e11d6ded336b86124ecf8303077cb46096494c3",
+    "local/ram-r50-network-baseline/HTTP-14-status.txt": "f89bb8c710dcd9814919081f3181615ea09c515039d710c854dc2c4b98bd46f1",
+    "local/ram-r50-network-baseline/HTTP-15-status.txt": "82576ba5d3cf39832dd84992b159d10a81ee389cf00b4aeab4c887738f6f135c",
+    "local/ram-r50-network-baseline/HTTP-16-status.txt": "82576ba5d3cf39832dd84992b159d10a81ee389cf00b4aeab4c887738f6f135c",
+    "local/ram-r50-network-baseline/HTTP-17-status.txt": "2383de6ac21ee6c4e9e26901ef0f1a322e53ed889ff4f33fc78dbf509c1ecb3e",
+    "local/ram-r50-network-baseline/HTTP-18-status.txt": "d9be909b4380d9ccffb754a049aafb69ffc38beccd3ac56bf2178ef580b967fe",
+    "local/ram-r50-network-baseline/HTTP-19-status.txt": "e0a8bbe86d9209276a4f0c418f6327c30180ad164d487d7bd195696e94b70ac3",
+    "local/ram-r50-network-baseline/HTTP-20-status.txt": "d06d798206703926eec125c56661221eff74f1f652df9d5c8852e8ac931f9e43",
+    "local/ram-r50-network-baseline/HTTP-21-status.txt": "d06d798206703926eec125c56661221eff74f1f652df9d5c8852e8ac931f9e43",
+    "local/ram-r50-network-baseline/HTTP-22-status.txt": "1f4b78ce4e26a4f4172fa720ca986d2af8cd296fea050149273f59759b7fe3e8",
+    "local/ram-r50-network-baseline/HTTP-00-dmesg.txt": "cb3f956cc3bf15a61fca69b27682106fabf0036d32ffc1379fc8d8334d21f1f2",
+    "local/ram-r50-network-baseline/HTTP-01-dmesg.txt": "cb3f956cc3bf15a61fca69b27682106fabf0036d32ffc1379fc8d8334d21f1f2",
+    "local/ram-r50-network-baseline/HTTP-02-dmesg.txt": "91d6c4c18fee8d2c469d9325f07f4f40e3ad0ea5faddac2b68a4594affe26fa3",
+    "local/ram-r50-network-baseline/HTTP-03-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-04-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-05-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-06-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-07-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-08-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-09-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-10-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-11-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-12-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-13-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-14-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-15-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-16-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-17-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-18-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-19-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-20-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-21-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/HTTP-22-dmesg.txt": "df139c3e94eeb4a921c59ae67f6946f3f6ab63bfd8f202ce09062a5d806d0f2b",
+    "local/ram-r50-network-baseline/cpr-initial-corner-tests.log": "81567f730e248e5ea42cab9d84bfd4b6d67e0a89f4fd58ae3b4132a301d6e5ca",
+    "local/ram-r50-network-baseline/ram-boot-tests.log": "d24d348a06a0c2aa9772fa5b9a181afe122cd36622988f2a5af014b49f72a09c",
+    "local/ram-r50-network-baseline/USB-network-tests.log": "2f473bd1c10fef569c3fe14bc2bd41620eaa29e7e81a0505ba910b547d1258b0"
+  },
+  "constraints": {
+    "phone_boot_partition_unchanged": true,
+    "phone_package_or_boot_write": false,
+    "higher_OPP_requested": false,
+    "CPR_candidate_booted": false,
+    "audio_tested": false,
+    "host_builtin_WiFi_changed": false
+  },
+  "open": [
+    "safe inherited-clock handoff",
+    "staged controller RAM trials and verified recovery",
+    "physical rail, feedback, eligible OPP and thermal qualification",
+    "full source package rebuilds and maintained stable/edge integration",
+    "remaining peripheral, suspend, cold/key recovery and reliability gates",
+    "systemd time synchronization still pending on observed native return"
+  ]
+}

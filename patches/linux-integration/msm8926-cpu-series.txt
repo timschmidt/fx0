@@ -36,3 +36,27 @@ fx0-cpr-attach-retry.diff
 
 # Map vendor clock fmax tables to calibrated rail/quotient metadata; uninstalled.
 fx0-msm8926-corner-map.diff
+
+# Full-row NVMEM + secure SCM calibration acquisition; no live consumer yet.
+fx0-msm8926-calibration-load.diff
+
+# Calibrated CPR probe/corner/lifetime bridge, disabled by default and uninstalled.
+# No board consumer or higher CPU OPP is enabled; voltage-error integration remains open.
+fx0-msm8926-cpr-domain-binding.diff
+fx0-msm8926-cpr-domain.diff
+
+# Transactional APC/MX recovery; source-only, no native qualification.
+# MX recovery requires request-correlated RPM acknowledgements (entry 22).
+fx0-pm8226-saw-voltage-recovery.diff
+fx0-smd-rpm-request-acks.diff
+fx0-cpr-mx-vote-recovery.diff
+fx0-cpr-preserve-feedback-on-error.diff
+
+# Shared CPU/domain frequency masks and retry-safe CPUfreq attachment; uninstalled.
+# Requires XO selected in APCS; rejects AHB/read errors without changing the mux.
+fx0-msm8926-cpufreq-binding.diff
+fx0-msm8926-cpufreq-attachment.diff
+
+# Separate experimental DTB; ordinary Madai CPU table is unchanged by this patch.
+# Requires complete current-source reconstruction and RAM-only qualification.
+fx0-msm8926-cpr-qualification-dt.diff

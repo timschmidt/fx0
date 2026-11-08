@@ -1,0 +1,42 @@
+From 0813d9bdbd2e78bd47bc713605f6dec9d0c56655 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:33:09 +0000
+Subject: [PATCH 16/35] ARM: dts: qcom: madai: connect the L2 master and APC
+ provider
+
+Describe the L2 master and wire the PM8226 APC provider to its shared register interface. Preserve the separate CPU idle controller nodes.
+
+Source-patch: patches/linux-integration/fx0-msm8926-l2-master-dt.diff
+Source-sha256: 1de1ddd79c35e93ba2256d5091f076c8d6ad5b077423544e936d658b5424dc5e
+---
+ .../arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index 4e09310c6609..4842beee4bf2 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -487,6 +487,23 @@ &mdss_dsi0_phy {
+ 	vddio-supply = <&pm8226_l8>;
+ };
+ 
++&pm8226_spmi_regulators {
++	qcom,saw-reg = <&saw_l2>;
++
++	pm8226_apc: s2 {
++		regulator-name = "pm8226-apc";
++		regulator-min-microvolt = <900000>;
++		regulator-max-microvolt = <1350000>;
++		regulator-always-on;
++		qcom,saw-leader;
++		qcom,saw-fixed-range;
++	};
++};
++
++&saw_l2 {
++	qcom,pmic-arbiter-master;
++};
++
+ &pm8226_1 {
+ 	pm8226_wled: wled@d800 {
+ 		compatible = "qcom,pm8941-wled";

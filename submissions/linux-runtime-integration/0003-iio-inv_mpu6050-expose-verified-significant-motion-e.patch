@@ -1,0 +1,304 @@
+From 9c6cb08d33bf3153eb443f8cffe22ad76b8487f5 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:33:09 +0000
+Subject: [PATCH 03/35] iio: inv_mpu6050: expose verified significant-motion
+ events
+
+Configure the MPU6515 significant-motion algorithm while awake and attribute events to its manufacturer status bit. Keep the direct-mode claim and runtime-PM ownership across the one-shot event lifecycle.
+
+Source-patch: patches/linux-integration/fx0-mpu6515-dmp-smd-awake.diff
+Source-sha256: 97c1a1028b962414123e54bba812cbbe14e0dadcf7dfb66265a0178060dc8ec9
+---
+ drivers/iio/imu/inv_mpu6050/inv_mpu_core.c    |  33 +++++
+ drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c     | 113 +++++++++++++++++-
+ drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h     |   6 +
+ drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c |  20 ++++
+ 4 files changed, 170 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+index e66ad01477e8..3f4513132306 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+@@ -1201,6 +1201,12 @@ static int inv_mpu6050_read_event_config(struct iio_dev *indio_dev,
+ {
+ 	struct inv_mpu6050_state *st = iio_priv(indio_dev);
+ 
++	if (chan->type == IIO_ACTIVITY && chan->channel2 == IIO_MOD_STILL &&
++	    type == IIO_EV_TYPE_CHANGE && dir == IIO_EV_DIR_FALLING) {
++		guard(mutex)(&st->lock);
++		return st->dmp_smd_armed;
++	}
++
+ 	/* support only WoM (accel roc rising) event */
+ 	if (chan->type != IIO_ACCEL || type != IIO_EV_TYPE_ROC ||
+ 	    dir != IIO_EV_DIR_RISING)
+@@ -1219,6 +1225,19 @@ static int inv_mpu6050_write_event_config(struct iio_dev *indio_dev,
+ {
+ 	struct inv_mpu6050_state *st = iio_priv(indio_dev);
+ 
++	if (chan->type == IIO_ACTIVITY && chan->channel2 == IIO_MOD_STILL &&
++	    type == IIO_EV_TYPE_CHANGE && dir == IIO_EV_DIR_FALLING) {
++		int ret;
++
++		if (!iio_device_claim_direct(indio_dev))
++			return -EBUSY;
++		mutex_lock(&st->lock);
++		ret = inv_mpu6515_dmp_smd_set(st, state);
++		mutex_unlock(&st->lock);
++		iio_device_release_direct(indio_dev);
++		return ret;
++	}
++
+ 	/* support only WoM (accel roc rising) event */
+ 	if (chan->type != IIO_ACCEL || type != IIO_EV_TYPE_ROC ||
+ 	    dir != IIO_EV_DIR_RISING)
+@@ -1496,6 +1515,14 @@ static const struct iio_chan_spec_ext_info inv_ext_info[] = {
+ 	{ }
+ };
+ 
++static const struct iio_event_spec inv_smd_events[] = {
++	{
++		.type = IIO_EV_TYPE_CHANGE,
++		.dir = IIO_EV_DIR_FALLING,
++		.mask_separate = BIT(IIO_EV_INFO_ENABLE),
++	},
++};
++
+ static const struct iio_event_spec inv_wom_events[] = {
+ 	{
+ 		.type = IIO_EV_TYPE_ROC,
+@@ -1604,6 +1631,8 @@ static const struct iio_chan_spec inv_mpu6515_channels[] = {
+ 
+ 	INV_MPU6050_EVENT_CHAN(IIO_ACCEL, IIO_MOD_X_OR_Y_OR_Z,
+ 			       inv_wom_events, ARRAY_SIZE(inv_wom_events)),
++	INV_MPU6050_EVENT_CHAN(IIO_ACTIVITY, IIO_MOD_STILL,
++			       inv_smd_events, ARRAY_SIZE(inv_smd_events)),
+ 	{
+ 		.type = IIO_ROT,
+ 		.modified = 1,
+@@ -2202,6 +2231,10 @@ int inv_mpu_core_probe(struct regmap *regmap, int irq, const char *name,
+ 		}
+ 	}
+ 
++	result = devm_add_action_or_reset(dev, inv_mpu6515_dmp_cleanup, st);
++	if (result)
++		return result;
++
+ 	result = devm_iio_device_register(dev, indio_dev);
+ 	if (result) {
+ 		dev_err(dev, "IIO register fail %d\n", result);
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
+index ae585eb6df3c..02a736d24e36 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
+@@ -6,6 +6,7 @@
+ #include <linux/firmware.h>
+ #include <linux/lockdep.h>
+ #include <linux/module.h>
++#include <linux/pm_runtime.h>
+ #include <linux/string.h>
+ #include <linux/unaligned.h>
+ 
+@@ -257,6 +258,36 @@ int inv_mpu6515_dmp_decode(const u8 *data, size_t len,
+ 	return size;
+ }
+ 
++/* Manufacturer SMD defaults; physical threshold units are not exposed. */
++static int inv_mpu6515_dmp_configure_smd(struct inv_mpu6050_state *st)
++{
++	static const struct {
++		u16 address;
++		u8 length;
++		u8 data[4];
++	} patches[] = {
++		{ 1770, 2, { 0xf4, 0x12 } }, /* no accel FIFO producer */
++		{ 1701, 2, { 0xf4, 0x13 } }, /* no quaternion FIFO producer */
++		{ 1983, 1, { 0xa3 } }, /* algorithm events only */
++		{ 1985, 1, { 0xff } }, /* pedometer disabled */
++		{ 2796, 3, { 0xf1, 0xf1, 0xf1 } }, /* pedometer IRQ disabled */
++		{ 344, 4, { 0x05, 0xdc, 0, 0 } }, /* threshold 1500 << 16 */
++		{ 340, 4, { 0, 0, 0x02, 0x58 } }, /* 3 seconds at 200 Hz */
++		{ 348, 4, { 0, 0, 0, 0xc8 } }, /* 1 second at 200 Hz */
++		{ 288, 2, { 0, 1 } }, /* SMD enable */
++	};
++	unsigned int i;
++	int ret;
++
++	for (i = 0; i < ARRAY_SIZE(patches); i++) {
++		ret = inv_mpu6515_dmp_mem_write(st, patches[i].address,
++					      patches[i].data, patches[i].length);
++		if (ret)
++			return ret;
++	}
++	return 0;
++}
++
+ /* Registers changed by the DMP mode; restore cached raw settings verbatim. */
+ static const u8 inv_dmp_saved_regs[] = {
+ 	0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x23, 0x38, 0x6a,
+@@ -359,6 +390,15 @@ int inv_mpu6515_dmp_start(struct inv_mpu6050_state *st)
+ 	ret = inv_mpu6515_dmp_configure(st);
+ 	if (ret)
+ 		goto fail;
++	if (st->dmp_smd_mode) {
++		ret = inv_mpu6515_dmp_configure_smd(st);
++		if (ret)
++			goto fail;
++		/* Clear a previous algorithm status before enabling a new run. */
++		ret = regmap_read(st->map, 0x39, &value);
++		if (ret)
++			goto fail;
++	}
+ 	ret = regmap_multi_reg_write(st->map, setup, ARRAY_SIZE(setup));
+ 	if (ret)
+ 		goto fail;
+@@ -374,12 +414,13 @@ int inv_mpu6515_dmp_start(struct inv_mpu6050_state *st)
+ 	st->dmp_last_timestamp = 0;
+ 	ret = regmap_write(st->map, st->reg->user_ctrl,
+ 			   st->chip_config.user_ctrl | INV_MPU6050_BIT_DMP_EN |
+-			   INV_MPU6050_BIT_FIFO_EN);
++			   (st->dmp_smd_mode ? 0 : INV_MPU6050_BIT_FIFO_EN));
+ 	if (ret)
+ 		goto fail;
+ 	st->dmp_active = true;
+ 	ret = regmap_write(st->map, st->reg->int_enable,
+-			   INV_MPU6050_BIT_DMP_INT_EN | INV_MPU6050_BIT_FIFO_OVERFLOW_INT);
++			   INV_MPU6050_BIT_DMP_INT_EN |
++			   (st->dmp_smd_mode ? 0 : INV_MPU6050_BIT_FIFO_OVERFLOW_INT));
+ 	if (!ret)
+ 		return 0;
+ fail:
+@@ -505,3 +546,71 @@ int inv_mpu6515_dmp_read_fifo(struct iio_dev *indio_dev, s64 timestamp)
+ 		inv_mpu6515_dmp_stop(st);
+ 	return ret;
+ }
++
++/* Enable owns a direct-mode claim; all callers hold lock. Event owns PM vote. */
++int inv_mpu6515_dmp_smd_set(struct inv_mpu6050_state *st, bool enable)
++{
++	struct device *dev = regmap_get_device(st->map);
++	int ret;
++
++	lockdep_assert_held(&st->lock);
++	if (st->chip_type != INV_MPU6515 || st->irq <= 0)
++		return -EOPNOTSUPP;
++	if (!enable) {
++		if (!st->dmp_smd_pm)
++			return 0;
++		ret = inv_mpu6515_dmp_stop(st);
++		st->dmp_smd_mode = false;
++		st->dmp_smd_armed = false;
++		st->dmp_smd_pm = false;
++		pm_runtime_put_autosuspend(dev);
++		return ret;
++	}
++	if (st->dmp_smd_armed)
++		return 0;
++	if (st->dmp_active || st->chip_config.wom_en)
++		return -EBUSY;
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret)
++		return ret;
++	st->dmp_smd_mode = true;
++	ret = inv_mpu6515_dmp_start(st);
++	if (ret) {
++		st->dmp_smd_mode = false;
++		pm_runtime_put_autosuspend(dev);
++		return ret;
++	}
++	st->dmp_smd_armed = true;
++	st->dmp_smd_pm = true;
++	return 0;
++}
++
++/* One-shot event attribution: only manufacturer status 0x39 bit 0x04 qualifies. */
++int inv_mpu6515_dmp_smd_event(struct inv_mpu6050_state *st)
++{
++	unsigned int status;
++	int ret;
++
++	lockdep_assert_held(&st->lock);
++	if (!st->dmp_smd_mode || !st->dmp_smd_armed)
++		return 0;
++	ret = regmap_read(st->map, 0x39, &status);
++	if (ret)
++		return ret;
++	if (!(status & BIT(2)))
++		return 0;
++	dev_dbg(regmap_get_device(st->map), "DMP significant motion status %#x\n", status);
++	ret = inv_mpu6515_dmp_smd_set(st, false);
++	if (ret)
++		dev_err(regmap_get_device(st->map), "DMP event cleanup failed: %d\n", ret);
++	return 1;
++}
++
++void inv_mpu6515_dmp_cleanup(void *data)
++{
++	struct inv_mpu6050_state *st = data;
++
++	guard(mutex)(&st->lock);
++	if (st->dmp_smd_pm)
++		inv_mpu6515_dmp_smd_set(st, false);
++}
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
+index 29fcdf4b1775..ab32d7266cc8 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
+@@ -214,6 +214,9 @@ struct inv_mpu6050_state {
+ 	unsigned int suspended_sensors;
+ 	bool level_shifter;
+ 	bool dmp_active;
++	bool dmp_smd_mode;
++	bool dmp_smd_armed;
++	bool dmp_smd_pm;
+ 	bool dmp_overflow;
+ 	bool dmp_saved_valid;
+ 	u8 dmp_saved[12];
+@@ -527,6 +530,9 @@ int inv_mpu6515_dmp_mem_write(struct inv_mpu6050_state *st,
+ #define INV_MPU6515_SCAN_QUATERNION 7
+ #define INV_MPU6515_SCAN_TIMESTAMP 8
+ int inv_mpu6515_dmp_start(struct inv_mpu6050_state *st);
++int inv_mpu6515_dmp_smd_set(struct inv_mpu6050_state *st, bool enable);
++int inv_mpu6515_dmp_smd_event(struct inv_mpu6050_state *st);
++void inv_mpu6515_dmp_cleanup(void *data);
+ int inv_mpu6515_dmp_stop(struct inv_mpu6050_state *st);
+ int inv_mpu6515_dmp_recover(struct inv_mpu6050_state *st);
+ int inv_mpu6515_dmp_read_fifo(struct iio_dev *indio_dev, s64 timestamp);
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
+index 1feaa8e6d182..e430ca5e68a6 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
+@@ -167,6 +167,9 @@ static int inv_mpu6050_set_enable(struct iio_dev *indio_dev, bool enable)
+ 	unsigned int scan;
+ 	int result;
+ 
++	if (st->dmp_smd_pm)
++		return -EBUSY;
++
+ 	if (st->chip_type == INV_MPU6515 && indio_dev->active_scan_mask &&
+ 	    test_bit(INV_MPU6515_SCAN_QUATERNION, indio_dev->active_scan_mask)) {
+ 		if (enable) {
+@@ -306,6 +309,23 @@ static irqreturn_t inv_mpu6050_interrupt_handle(int irq, void *p)
+ 			return IRQ_HANDLED;
+ 		}
+ 
++		if (st->dmp_smd_mode) {
++			if (int_status & INV_MPU6050_BIT_DMP_INT_EN) {
++				result = inv_mpu6515_dmp_smd_event(st);
++				if (result > 0) {
++					ev_code = IIO_MOD_EVENT_CODE(
++						IIO_ACTIVITY, 0, IIO_MOD_STILL,
++						IIO_EV_TYPE_CHANGE, IIO_EV_DIR_FALLING);
++					iio_push_event(indio_dev, ev_code, st->it_timestamp);
++				} else if (result < 0) {
++					dev_err_ratelimited(
++						regmap_get_device(st->map),
++						"DMP event status read failed: %d\n", result);
++				}
++			}
++			return IRQ_HANDLED;
++		}
++
+ 		if (st->dmp_active && (int_status & INV_MPU6050_BIT_FIFO_OVERFLOW_INT))
+ 			st->dmp_overflow = true;
+ 

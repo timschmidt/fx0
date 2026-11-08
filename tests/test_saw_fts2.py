@@ -6,11 +6,13 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-HEADER = Path(os.environ.get('FX0_SAW_FTS2_HEADER', ROOT/'worktrees/linux-cpu-cpr/drivers/regulator/qcom-spmi-saw-fts2.h'))
+KERNEL = Path(os.environ.get('FX0_KERNEL_SOURCE', ROOT/'worktrees/linux-fx0-cpr'))
+HEADER = Path(os.environ.get('FX0_SAW_FTS2_HEADER', KERNEL/'drivers/regulator/qcom-spmi-saw-fts2.h'))
 HARNESS = r'''
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <setjmp.h>
 #include "qcom-spmi-saw-fts2.h"
 #define CHECK(x) do { if(!(x)){fprintf(stderr,"line%d: %s\n",__LINE__,#x);exit(1);} } while(0)
 static struct regmap pmic={0},saw={1};
@@ -18,29 +20,37 @@ static unsigned int p[0x1800],s[0x1000];
 struct operation {int map,write;unsigned int address,value;};
 static struct operation operations[1000];
 static int n,fail_at,writes,polls,ack_after;
+static int second_fail_at,commit_error,second_commit_error,expect_panic,panics,busy_cycles,persistent_fault;
+static jmp_buf panic_jump;
+void panic(const char *format, ...){(void)format;panics++;if(expect_panic)longjmp(panic_jump,1);fprintf(stderr,"unexpected unrecoverable CPU rail\n");exit(99);}
+static int io_fault(void){return n==fail_at||n==second_fail_at||(persistent_fault&&n>=second_fail_at&&second_fail_at>0);}
+static int committed_fault(void){return n==fail_at?commit_error:second_commit_error;}
 static unsigned int target;
 static unsigned long delay_total;
 void udelay(unsigned long amount){delay_total+=amount;}
 int regmap_read(struct regmap *map,unsigned int address,unsigned int *value){
  CHECK(n<1000);operations[n++]=(struct operation){map->id,0,address,0};
- if(n==fail_at)return -EIO;
+ if(io_fault()&&!committed_fault())return -EIO;
  if(map==&saw && address==0x14){
   polls++;
-  if(ack_after>=0 && polls>=ack_after){s[0x14]=target;p[0x1741]=target;}
+  if(busy_cycles&&polls<=busy_cycles){s[0x14]=target|0x10000;p[0x1741]=target;}
+  else if(ack_after>=0 && polls>=ack_after){s[0x14]=target;p[0x1741]=target;}
  }
+ if(io_fault())return -EIO;
  *value=map==&pmic?p[address]:s[address];return 0;
 }
 int regmap_write(struct regmap *map,unsigned int address,unsigned int value){
  CHECK(n<1000);operations[n++]=(struct operation){map->id,1,address,value};
  /* No range register, PMIC data-slot, AVS or unrelated writes allowed. */
  CHECK((map==&pmic && address==0x1745)||(map==&saw&&(address==0x18||address==0x1c)));
- if(n==fail_at)return -EIO;
+ if(io_fault()&&!committed_fault())return -EIO;
  writes++;
  if(map==&pmic)p[address]=value;else s[address]=value;
- if(map==&saw&&address==0x1c){target=value&255;polls=0;}
+ if(map==&saw&&address==0x1c){target=value&255;polls=0;if(io_fault())p[0x1741]=target;}
+ if(io_fault())return -EIO;
  return 0;
 }
-static void clear_trace(void){n=fail_at=writes=polls=0;delay_total=0;ack_after=1;}
+static void clear_trace(void){n=fail_at=writes=polls=0;second_fail_at=commit_error=second_commit_error=expect_panic=panics=busy_cycles=persistent_fault=0;delay_total=0;ack_after=1;}
 static struct spmi_saw_fts2 reset(unsigned int range,unsigned int mode){
  memset(p,0,sizeof(p));memset(s,0,sizeof(s));clear_trace();
  p[0x1704]=0x1c;p[0x1705]=8;p[0x1740]=range;p[0x1741]=range?115:230;
@@ -76,17 +86,18 @@ int main(void){
  state=ready(1,0x42);CHECK(!spmi_saw_fts2_set(&state,1,116));raise_ops=n;
  CHECK(operations[5].map==0&&operations[5].address==0x1745&&operations[5].value==0x82);
  CHECK(operations[6].address==0x18&&operations[7].address==0x1c&&operations[8].address==0x14);
- CHECK(operations[9].map==0&&operations[9].address==0x1745&&operations[9].value==0x42);
+ CHECK(operations[raise_ops-1].map==0&&operations[raise_ops-1].address==0x1745&&operations[raise_ops-1].value==0x42);
  CHECK(delay_total==44&&p[0x1745]==0x42&&!state.mode_pending);
  /* Real transition errors propagate; mode-only post-set errors defer safely. */
  for(int fault=1;fault<=raise_ops;fault++){
   state=ready(1,0x40);fail_at=fault;CHECK(spmi_saw_fts2_set(&state,1,116)==(fault==raise_ops?0:-EIO));
   if(fault==raise_ops)CHECK(state.mode_restore_error==-EIO);
   if(fault<=5)CHECK(!writes);
-  if(fault>=7)CHECK(p[0x1745]==0x80&&state.mode_pending);
+  if(fault==7)CHECK(p[0x1745]==0x80&&state.mode_pending);
+  if(fault>=8&&fault<raise_ops)CHECK(p[0x1741]==115);
  }
  state=ready(1,0x40);ack_after=-1;CHECK(spmi_saw_fts2_set(&state,1,116)==-ETIMEDOUT);
- CHECK(p[0x1745]==0x80&&state.mode_pending&&polls==50);
+ CHECK(p[0x1741]==115&&p[0x1745]==0x40&&!state.mode_pending);
  /* Retry reconciles current PMIC state, then completes deferred mode restore. */
  clear_trace();CHECK(!spmi_saw_fts2_set(&state,1,115));CHECK(p[0x1745]==0x40&&!state.mode_pending);
  state=ready(1,0x80);ack_after=4;CHECK(!spmi_saw_fts2_set(&state,1,116));CHECK(polls==4);
@@ -114,9 +125,64 @@ int main(void){
 '''
 
 
+RECOVERY_MAIN = r"""
+static struct spmi_saw_fts2 fatal_state;
+static void fatal_case(int position,int committed) {
+ fatal_state=ready(1,0x80);
+ fail_at=7;commit_error=1; /* committed VCTL write from 1150 to 1100mV */
+ second_fail_at=7+position;second_commit_error=committed;persistent_fault=1;
+ expect_panic=1;
+ if(!setjmp(panic_jump)) {
+  (void)spmi_saw_fts2_set(&fatal_state,1,110);
+  CHECK(0); /* No uncertain rail state may return to the clock caller. */
+ }
+ CHECK(panics==1);
+}
+int main(void) {
+ struct spmi_saw_fts2 state;
+ int cases=0,recovery_cases=0;
+ for(unsigned int range=0;range<2;range++)
+  for(unsigned int mode=0x40;mode<=0x80;mode+=0x40)
+   for(int direction=-1;direction<=1;direction++) {
+    unsigned int old=range?115:230,target_selector=old+direction*(range?5:10);
+    state=ready(range,mode);CHECK(!spmi_saw_fts2_set(&state,range,target_selector));
+    int total=n;
+    int mode_restore=state.restore_mode && operations[total-1].write && operations[total-1].map==0?total:0;
+    for(int fault=1;fault<=total;fault++)for(int committed=0;committed<2;committed++) {
+     state=ready(range,mode);fail_at=fault;commit_error=committed;
+     int ret=spmi_saw_fts2_set(&state,range,target_selector);
+     CHECK(ret==(fault==mode_restore?0:-EIO));
+     CHECK(p[0x1741]==(ret?old:target_selector));
+     CHECK(p[0x1740]==range && !panics);
+     if(ret && fault==mode_restore)CHECK(0);
+     cases++;
+    }
+   }
+ /* Every recovery I/O failure gets one bounded retry, even after mutation. */
+ for(int position=1;position<=6;position++)for(int committed=0;committed<2;committed++) {
+  state=ready(1,0x80);fail_at=7;commit_error=1;
+  second_fail_at=7+position;second_commit_error=committed;
+  CHECK(spmi_saw_fts2_set(&state,1,110)==-EIO);
+  CHECK(p[0x1741]==115 && p[0x1740]==1 && !panics);
+  recovery_cases++;
+  fatal_case(position,committed);
+ }
+ /* A failed mode restore after a confirmed old voltage remains a safe error. */
+ state=ready(1,0x40);fail_at=7;commit_error=1;second_fail_at=14;
+ CHECK(spmi_saw_fts2_set(&state,1,110)==-EIO);
+ CHECK(p[0x1741]==115 && p[0x1745]==0x80 && state.mode_pending && !panics);
+ /* A matching byte with a busy controller is not an acknowledgement. */
+ state=ready(1,0x80);busy_cycles=3;
+ CHECK(!spmi_saw_fts2_set(&state,1,116));CHECK(polls==4);
+ printf("%d before/after-effect I/O cases, %d recovery retry cases and 12 persistent fail-stop contracts passed\n",cases,recovery_cases);
+ return 0;
+}
+"""
+
+
 @unittest.skipUnless(HEADER.exists(), 'Candidate fixed-range SAW helper required')
 class SawFts2Tests(unittest.TestCase):
-    def run_harness(self, harness):
+    def run_harness(self, harness, extra_headers=None, header=None):
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
             (base/'linux').mkdir()
@@ -124,18 +190,28 @@ class SawFts2Tests(unittest.TestCase):
             (base/'linux/errno.h').write_text('#define EPROBE_DEFER 517\n#define EIO 5\n#define ENODEV 19\n#define EINVAL 22\n#define EOPNOTSUPP 95\n#define ETIMEDOUT 110\n')
             (base/'linux/kernel.h').write_text('#define max(a,b) ((a)>(b)?(a):(b))\n#define DIV_ROUND_UP(a,b) (((a)+(b)-1)/(b))\n')
             (base/'linux/delay.h').write_text('void udelay(unsigned long);\n')
+            (base/'linux/panic.h').write_text('void panic(const char *,...) __attribute__((noreturn));\n')
             (base/'linux/iopoll.h').write_text('#define read_poll_timeout_atomic(op,ret,condition,delay,timeout,sleep,args...) ({int poll_result=-ETIMEDOUT; for(int poll_index=0;poll_index<50;poll_index++){ret=op(args);if(condition){poll_result=0;break;}} poll_result;})\n')
-            (base/'qcom-spmi-saw-fts2.h').write_bytes(HEADER.read_bytes())
+            (base/'qcom-spmi-saw-fts2.h').write_bytes(HEADER.read_bytes() if header is None else header)
+            for name, content in (extra_headers or {}).items():
+                path = base/name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(content)
             (base/'test.c').write_text(harness)
             result = subprocess.run(['cc','-std=gnu11','-Wall','-Wextra','-Werror','-I',str(base),str(base/'test.c'),'-o',str(base/'test')],capture_output=True,text=True)
             self.assertEqual(result.returncode,0,result.stderr)
             result = subprocess.run([str(base/'test')],capture_output=True,text=True)
             self.assertEqual(result.returncode,0,result.stderr)
             self.assertIn('contracts passed',result.stdout)
+            return result.stdout
 
 
     def test_actual_transaction_helper(self):
         self.run_harness(HARNESS)
+
+    def test_recovery_after_effects_and_persistent_failure(self):
+        report = self.run_harness(HARNESS.split('int main(void)')[0] + RECOVERY_MAIN)
+        self.assertIn('248 before/after-effect I/O cases, 12 recovery retry cases', report)
 
     def test_actual_provider_mapping_and_smp_dispatch(self):
         source = (HEADER.parent/'qcom_spmi-regulator.c').read_text()
@@ -188,7 +264,7 @@ class SawFts2Tests(unittest.TestCase):
         definitions+='\n'+source[start:end]+'\n'
         for name in ['spmi_regulator_select_voltage','spmi_sw_selector_to_hw','spmi_hw_selector_to_sw','spmi_regulator_single_map_voltage','spmi_saw_fts2_set_vdd','spmi_regulator_saw_set_voltage','spmi_regulator_saw_fixed_get_voltage','spmi_regulator_saw_fixed_init','spmi_regulator_common_list_voltage','spmi_regulator_saw_init_ops']:
             definitions+='\n'+function(name)+'\n'
-        core=(ROOT/'worktrees/linux-cpu-cpr/drivers/regulator/core.c').read_text()
+        core=(KERNEL/'drivers/regulator/core.c').read_text()
         definitions+='\n'+function('_regulator_is_enabled',core)+'\n'+function('_regulator_do_enable',core)+'\n'
         tests=r"""
 +int main(void){
@@ -223,7 +299,7 @@ class SawFts2Tests(unittest.TestCase):
 + cpu_error=-7;CHECK(spmi_regulator_saw_set_voltage(&r,46)==-7&&!n);cpu_error=0;
 + fail_at=9;CHECK(spmi_regulator_saw_set_voltage(&r,46)==-EIO);
 + clear_trace();CHECK(!spmi_regulator_saw_set_voltage(&r,46));CHECK(p[0x1741]==116);
-+ p[0x1745]=0x40;clear_trace();fail_at=10;CHECK(!spmi_regulator_saw_set_voltage(&r,47));
++ p[0x1745]=0x40;clear_trace();fail_at=12;CHECK(!spmi_regulator_saw_set_voltage(&r,47));
 + CHECK(warning_count==1&&v.saw_fts2.mode_restore_error==-EIO&&v.saw_fts2.mode_pending);
 + clear_trace();CHECK(!spmi_regulator_saw_set_voltage(&r,47));CHECK(!v.saw_fts2.mode_pending&&!v.saw_fts2.mode_restore_error);
 + /* Legacy range0 dispatch remains supported without fixed-range state. */

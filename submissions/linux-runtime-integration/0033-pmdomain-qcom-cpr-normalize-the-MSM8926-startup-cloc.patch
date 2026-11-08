@@ -1,0 +1,197 @@
+From 8e33a6edfd2d6ed5955176860a17a1516d212b48 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:42:00 +0000
+Subject: [PATCH 33/35] pmdomain: qcom: cpr: normalize the MSM8926 startup
+ clock
+
+Own the auxiliary clock, retain the boot APC target and activate the MX floor before normalizing the inherited CPU clock. Verify the settled GPLL0/2 path before assigning the initial corner.
+
+Keep the new clock requirement, provider implementation and qualification DTB transition atomic in this integration history so every exposed qualification target satisfies its binding.
+
+Source-patch: patches/linux-integration/fx0-msm8926-startup-clock-binding.diff
+Source-sha256: ab51749965a6fa8395613c14f3efae5c832b3929f57b1e40ea3e9fea2378b48d
+
+Source-patch: patches/linux-integration/fx0-msm8926-startup-clock.diff
+Source-sha256: bc90b5109ba3caa5a7898bc53228c1080ece5a3b600393b88aace560c66e5e52
+
+Source-patch: patches/linux-integration/fx0-msm8926-startup-clock-dt.diff
+Source-sha256: 3727744c39fd0151a12c7f798de2e654df71b0c1d38e57f60aeef7b3c4345de8
+---
+ .../bindings/power/avs/qcom,cpr.yaml          |  6 +-
+ .../dts/qcom/qcom-msm8926-lg-madai-cpr.dts    |  4 +-
+ drivers/pmdomain/qcom/cpr.c                   | 88 ++++++++++++++++---
+ 3 files changed, 80 insertions(+), 18 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+index 6b49f74898e9..bd17eba5709a 100644
+--- a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
++++ b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+@@ -34,11 +34,11 @@ properties:
+ 
+   clocks:
+     minItems: 1
+-    maxItems: 2
++    maxItems: 3
+ 
+   clock-names:
+     minItems: 1
+-    maxItems: 2
++    maxItems: 3
+ 
+   vdd-apc-supply:
+     description: APC regulator supply.
+@@ -84,10 +84,12 @@ allOf:
+           items:
+             - description: Reference clock.
+             - description: CPU cluster clock, retained across CPU attachments.
++            - description: GPLL0 vote supplying the 300 MHz startup/notifier path.
+         clock-names:
+           items:
+             - const: ref
+             - const: cpu
++            - const: aux
+         acc-syscon: false
+         nvmem-cells:
+           items:
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+index e123436c1e53..77ba25737a6e 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+@@ -210,8 +210,8 @@ cpr: power-controller@f9018000 {
+ 		compatible = "qcom,msm8926-cpr", "qcom,cpr";
+ 		reg = <0xf9018000 0x1000>;
+ 		interrupts = <GIC_SPI 15 IRQ_TYPE_EDGE_RISING>;
+-		clocks = <&xo_board>, <&apcs>;
+-		clock-names = "ref", "cpu";
++		clocks = <&xo_board>, <&apcs>, <&gcc GPLL0_VOTE>;
++		clock-names = "ref", "cpu", "aux";
+ 		qcom,apcs-syscon = <&apcs>;
+ 		vdd-apc-supply = <&pm8226_apc>;
+ 		vdd-mx-supply = <&pm8226_l3>;
+diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
+index b7e8b88aee12..ec47fc3e7e8d 100644
+--- a/drivers/pmdomain/qcom/cpr.c
++++ b/drivers/pmdomain/qcom/cpr.c
+@@ -239,6 +239,7 @@ struct cpr_msm8926_data {
+ 	u32 supported_hw;
+ 	int opp_token;
+ 	struct regmap *apcs;
++	struct clk *aux_clk;
+ };
+ 
+ static struct platform_driver cpr_driver;
+@@ -1183,6 +1184,12 @@ static int __maybe_unused cpr_msm8926_init(struct cpr_drv *drv)
+ 	cpu_clk = devm_clk_get(drv->dev, "cpu");
+ 	if (IS_ERR(cpu_clk))
+ 		return PTR_ERR(cpu_clk);
++	data->aux_clk = devm_clk_get(drv->dev, "aux");
++	if (IS_ERR(data->aux_clk))
++		return PTR_ERR(data->aux_clk);
++	/* The source-4, HID-3 notifier path must be the lowest CPU OPP. */
++	if (clk_get_rate(data->aux_clk) != 600000000)
++		return -ERANGE;
+ 	for (i = 0; i < ARRAY_SIZE(cpr_msm8926_rates); i++) {
+ 		if (!(data->supported_hw & (1U << i)))
+ 			continue;
+@@ -1710,6 +1717,67 @@ static int cpr_power_on(struct generic_pm_domain *domain)
+ 	return cpr_enable(drv);
+ }
+ 
++/*
++ * lk2nd can hand over an unlisted 800 MHz rate before cpufreq-dt is loaded.
++ * Retain APC's boot target while moving to the 300 MHz GPLL0/2 path. Never
++ * label the old clock with a rounded-down corner or lower voltage here.
++ * This is a startup handoff; runtime clock-error qualification is separate.
++ */
++static int cpr_msm8926_bootstrap_clock(struct cpr_drv *drv)
++{
++	struct cpr_msm8926_data *data = drv->msm8926;
++	u32 cmd, cmd_after, cfg, cfg_after;
++	unsigned long rate;
++	int ret, boot_uV;
++
++	if (!data || !drv->num_corners || drv->corners[0].freq != 300000000)
++		return -EINVAL;
++	if (clk_get_rate(data->aux_clk) != 600000000)
++		return -ERANGE;
++	rate = clk_get_rate(drv->cpu_clk);
++	if (rate < drv->corners[0].freq)
++		return -ERANGE;
++	boot_uV = regulator_get_voltage(drv->rails.apc);
++	if (boot_uV < 0)
++		return boot_uV;
++	if (boot_uV < drv->corners[0].uV || boot_uV > data->plan.bootstrap_mx_uV)
++		return -ERANGE;
++
++	ret = cpr_voltage_bootstrap(&drv->rails, data->plan.bootstrap_mx_uV);
++	if (ret)
++		return ret;
++	if (!data->apc_enabled) {
++		ret = regulator_enable(drv->rails.apc);
++		if (ret)
++			return ret;
++		data->apc_enabled = true;
++	}
++
++	ret = clk_set_rate(drv->cpu_clk, drv->corners[0].freq);
++	if (ret)
++		return ret;
++
++	/* CCF can discard provider set-rate errors. Verify the actual mux. */
++	ret = regmap_read(data->apcs, 0x50, &cmd);
++	if (ret)
++		return ret;
++	ret = regmap_read(data->apcs, 0x54, &cfg);
++	if (ret)
++		return ret;
++	ret = regmap_read(data->apcs, 0x50, &cmd_after);
++	if (ret)
++		return ret;
++	ret = regmap_read(data->apcs, 0x54, &cfg_after);
++	if (ret)
++		return ret;
++	if ((cmd | cmd_after) & (BIT(0) | BIT(4) | BIT(31)) || cfg != cfg_after ||
++	    (cfg & (GENMASK(10, 8) | GENMASK(4, 0))) != (4 << 8 | 3) ||
++	    clk_get_rate(drv->cpu_clk) != drv->corners[0].freq)
++		return -EIO;
++
++	return 0;
++}
++
+ static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+ 			     struct device *dev)
+ {
+@@ -1790,6 +1858,12 @@ static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+ 	if (ret)
+ 		return ret;
+ 
++	if (drv->msm8926) {
++		ret = cpr_msm8926_bootstrap_clock(drv);
++		if (ret)
++			return ret;
++	}
++
+ 	ret = cpr_find_initial_corner(drv);
+ 	if (ret)
+ 		return ret;
+@@ -1810,20 +1884,6 @@ static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+ 			return ret;
+ 	}
+ 
+-	if (drv->msm8926) {
+-		/* No clock/APC change before a floor covering the real boot rail. */
+-		ret = cpr_voltage_bootstrap(&drv->rails,
+-					    drv->msm8926->plan.bootstrap_mx_uV);
+-		if (ret)
+-			return ret;
+-		if (!drv->msm8926->apc_enabled) {
+-			ret = regulator_enable(drv->rails.apc);
+-			if (ret)
+-				return ret;
+-			drv->msm8926->apc_enabled = true;
+-		}
+-	}
+-
+ 	/* Only a fully initialized attachment may bypass setup on retry. */
+ 	drv->initialized = true;
+ 

@@ -12,7 +12,7 @@ except ImportError:
     dtschema = None
 
 ROOT = Path(__file__).resolve().parents[1]
-BUILD = ROOT/'local/cpu-cpr-build/llvm'
+BUILD = Path(os.environ.get('FX0_CPU_BUILD', ROOT/'local/cpu-cpr-build/llvm'))
 CACHE = Path(os.environ.get('FX0_DT_SCHEMA_CACHE', BUILD/'Documentation/devicetree/bindings/processed-schema.json'))
 DTC = BUILD/'scripts/dtc/dtc'
 FIXTURE = '''/dts-v1/;

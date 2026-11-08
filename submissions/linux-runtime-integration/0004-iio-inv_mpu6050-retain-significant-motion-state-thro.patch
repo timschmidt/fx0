@@ -1,0 +1,270 @@
+From ca17e5cf5eca2dedcba928f9995261f955fac96c Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:33:09 +0000
+Subject: [PATCH 04/35] iio: inv_mpu6050: retain significant-motion state
+ through s2idle
+
+Synchronize the threaded interrupt outside the state lock and retain the armed DMP state while the bus sleeps. Attribute pre-entry events, reject unsupported streaming suspend and restore ownership on resume failures.
+
+Source-patch: patches/linux-integration/fx0-mpu6515-dmp-smd-wake.diff
+Source-sha256: 92f9acedd8ab3397fbb80bd47ee440914ff48382a355455f7dd1037ff06ccf85
+---
+ drivers/iio/imu/inv_mpu6050/inv_mpu_core.c    | 30 +++++-
+ drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c     | 95 ++++++++++++++++++-
+ drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h     |  5 +
+ drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c |  5 +
+ 4 files changed, 129 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+index 3f4513132306..a319fac29cb9 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+@@ -24,6 +24,8 @@
+ #include <linux/iio/common/inv_sensors_timestamp.h>
+ #include <linux/iio/iio.h>
+ 
++#include <linux/iio/events.h>
++
+ #include "inv_mpu_iio.h"
+ #include "inv_mpu_magn.h"
+ 
+@@ -2256,6 +2258,18 @@ static int inv_mpu_resume(struct device *dev)
+ 	bool wakeup;
+ 	int result;
+ 
++	if (READ_ONCE(st->dmp_smd_suspended)) {
++		bool event;
++
++		result = inv_mpu6515_dmp_smd_resume(st, &event);
++		if (event)
++			iio_push_event(indio_dev,
++				IIO_MOD_EVENT_CODE(IIO_ACTIVITY, 0, IIO_MOD_STILL,
++						   IIO_EV_TYPE_CHANGE, IIO_EV_DIR_FALLING),
++				iio_get_time_ns(indio_dev));
++		return result;
++	}
++
+ 	guard(mutex)(&st->lock);
+ 
+ 	wakeup = device_may_wakeup(dev) && st->chip_config.wom_en;
+@@ -2302,10 +2316,22 @@ static int inv_mpu_suspend(struct device *dev)
+ 	bool wakeup;
+ 	int result;
+ 
++	if (READ_ONCE(st->dmp_smd_pm)) {
++		bool event;
++
++		result = inv_mpu6515_dmp_smd_suspend(st, &event);
++		if (event)
++			iio_push_event(indio_dev,
++				IIO_MOD_EVENT_CODE(IIO_ACTIVITY, 0, IIO_MOD_STILL,
++						   IIO_EV_TYPE_CHANGE, IIO_EV_DIR_FALLING),
++				iio_get_time_ns(indio_dev));
++		return result;
++	}
++
+ 	guard(mutex)(&st->lock);
+ 
+-	/* DMP event retention/wake is not implemented yet. */
+-	if (st->dmp_active || st->dmp_saved_valid)
++	/* Streaming suspend and unresolved wake/restore failures are unsupported. */
++	if (st->dmp_active || st->dmp_saved_valid || st->dmp_smd_irq_wake)
+ 		return -EBUSY;
+ 
+ 	st->suspended_sensors = 0;
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
+index 02a736d24e36..5fab34cfee79 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
+@@ -7,6 +7,8 @@
+ #include <linux/lockdep.h>
+ #include <linux/module.h>
+ #include <linux/pm_runtime.h>
++#include <linux/pm_wakeup.h>
++#include <linux/interrupt.h>
+ #include <linux/string.h>
+ #include <linux/unaligned.h>
+ 
+@@ -418,6 +420,11 @@ int inv_mpu6515_dmp_start(struct inv_mpu6050_state *st)
+ 	if (ret)
+ 		goto fail;
+ 	st->dmp_active = true;
++	if (st->dmp_smd_mode) {
++		ret = regmap_read(st->map, st->reg->int_status, &value);
++		if (ret)
++			goto fail;
++	}
+ 	ret = regmap_write(st->map, st->reg->int_enable,
+ 			   INV_MPU6050_BIT_DMP_INT_EN |
+ 			   (st->dmp_smd_mode ? 0 : INV_MPU6050_BIT_FIFO_OVERFLOW_INT));
+@@ -551,21 +558,30 @@ int inv_mpu6515_dmp_read_fifo(struct iio_dev *indio_dev, s64 timestamp)
+ int inv_mpu6515_dmp_smd_set(struct inv_mpu6050_state *st, bool enable)
+ {
+ 	struct device *dev = regmap_get_device(st->map);
+-	int ret;
++	int ret, wake_ret = 0;
+ 
+ 	lockdep_assert_held(&st->lock);
+ 	if (st->chip_type != INV_MPU6515 || st->irq <= 0)
+ 		return -EOPNOTSUPP;
++	if (st->dmp_smd_suspended)
++		return -EBUSY;
+ 	if (!enable) {
++		if (st->dmp_smd_irq_wake) {
++			wake_ret = disable_irq_wake(st->irq);
++			if (!wake_ret)
++				st->dmp_smd_irq_wake = false;
++		}
+ 		if (!st->dmp_smd_pm)
+-			return 0;
++			return wake_ret;
+ 		ret = inv_mpu6515_dmp_stop(st);
+ 		st->dmp_smd_mode = false;
+ 		st->dmp_smd_armed = false;
+ 		st->dmp_smd_pm = false;
+ 		pm_runtime_put_autosuspend(dev);
+-		return ret;
++		return ret ? ret : wake_ret;
+ 	}
++	if (st->dmp_smd_irq_wake)
++		return -EBUSY;
+ 	if (st->dmp_smd_armed)
+ 		return 0;
+ 	if (st->dmp_active || st->chip_config.wom_en)
+@@ -594,11 +610,17 @@ int inv_mpu6515_dmp_smd_event(struct inv_mpu6050_state *st)
+ 	lockdep_assert_held(&st->lock);
+ 	if (!st->dmp_smd_mode || !st->dmp_smd_armed)
+ 		return 0;
++	if (st->dmp_smd_suspended)
++		return -EBUSY;
++	st->dmp_smd_last_status = 0;
+ 	ret = regmap_read(st->map, 0x39, &status);
+ 	if (ret)
+ 		return ret;
++	st->dmp_smd_last_status = status;
+ 	if (!(status & BIT(2)))
+ 		return 0;
++	pm_wakeup_event(regmap_get_device(st->map), 0);
++	st->dmp_smd_armed = false;
+ 	dev_dbg(regmap_get_device(st->map), "DMP significant motion status %#x\n", status);
+ 	ret = inv_mpu6515_dmp_smd_set(st, false);
+ 	if (ret)
+@@ -611,6 +633,71 @@ void inv_mpu6515_dmp_cleanup(void *data)
+ 	struct inv_mpu6050_state *st = data;
+ 
+ 	guard(mutex)(&st->lock);
+-	if (st->dmp_smd_pm)
++	if (st->dmp_smd_pm || st->dmp_smd_irq_wake)
+ 		inv_mpu6515_dmp_smd_set(st, false);
+ }
++
++/* IRQ synchronization must occur outside st->lock: the IRQ thread takes it. */
++int inv_mpu6515_dmp_smd_suspend(struct inv_mpu6050_state *st, bool *event)
++{
++	struct device *dev = regmap_get_device(st->map);
++	int ret;
++
++	*event = false;
++	if (!device_may_wakeup(dev))
++		return -EBUSY;
++	disable_irq(st->irq);
++	mutex_lock(&st->lock);
++	if (!st->dmp_smd_pm || !st->dmp_smd_armed || !st->dmp_active ||
++	    st->dmp_smd_suspended || st->dmp_smd_irq_wake) {
++		ret = -EBUSY;
++		goto unlock;
++	}
++	/* Attribute a pre-entry event, then abort rather than silently lose it. */
++	ret = inv_mpu6515_dmp_smd_event(st);
++	if (ret) {
++		*event = ret > 0;
++		ret = ret > 0 ? -EBUSY : ret;
++		goto unlock;
++	}
++	ret = enable_irq_wake(st->irq);
++	if (ret)
++		goto unlock;
++	st->dmp_smd_irq_wake = true;
++	st->dmp_smd_suspended = true;
++	mutex_unlock(&st->lock);
++	/* No registers, regulators or firmware are changed while the bus sleeps. */
++	return 0;
++unlock:
++	mutex_unlock(&st->lock);
++	enable_irq(st->irq);
++	return ret;
++}
++
++/* Parent I2C adapter has resumed before this child's system-resume callback. */
++int inv_mpu6515_dmp_smd_resume(struct inv_mpu6050_state *st, bool *event)
++{
++	int ret = 0, status_ret;
++
++	*event = false;
++	mutex_lock(&st->lock);
++	if (!st->dmp_smd_suspended) {
++		mutex_unlock(&st->lock);
++		return 0;
++	}
++	if (st->dmp_smd_irq_wake) {
++		ret = disable_irq_wake(st->irq);
++		if (!ret)
++			st->dmp_smd_irq_wake = false;
++	}
++	st->dmp_smd_suspended = false;
++	status_ret = inv_mpu6515_dmp_smd_event(st);
++	*event = status_ret > 0;
++	dev_dbg(regmap_get_device(st->map), "DMP resume status %#x, event %d\n",
++		st->dmp_smd_last_status, *event);
++	if (!ret && status_ret < 0)
++		ret = status_ret;
++	mutex_unlock(&st->lock);
++	enable_irq(st->irq);
++	return ret;
++}
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
+index ab32d7266cc8..ba1f9d6b1ffa 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
+@@ -217,6 +217,9 @@ struct inv_mpu6050_state {
+ 	bool dmp_smd_mode;
+ 	bool dmp_smd_armed;
+ 	bool dmp_smd_pm;
++	bool dmp_smd_suspended;
++	bool dmp_smd_irq_wake;
++	u8 dmp_smd_last_status;
+ 	bool dmp_overflow;
+ 	bool dmp_saved_valid;
+ 	u8 dmp_saved[12];
+@@ -533,6 +536,8 @@ int inv_mpu6515_dmp_start(struct inv_mpu6050_state *st);
+ int inv_mpu6515_dmp_smd_set(struct inv_mpu6050_state *st, bool enable);
+ int inv_mpu6515_dmp_smd_event(struct inv_mpu6050_state *st);
+ void inv_mpu6515_dmp_cleanup(void *data);
++int inv_mpu6515_dmp_smd_suspend(struct inv_mpu6050_state *st, bool *event);
++int inv_mpu6515_dmp_smd_resume(struct inv_mpu6050_state *st, bool *event);
+ int inv_mpu6515_dmp_stop(struct inv_mpu6050_state *st);
+ int inv_mpu6515_dmp_recover(struct inv_mpu6050_state *st);
+ int inv_mpu6515_dmp_read_fifo(struct iio_dev *indio_dev, s64 timestamp);
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
+index e430ca5e68a6..eedc4378c3c3 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
+@@ -4,6 +4,7 @@
+ */
+ 
+ #include <linux/pm_runtime.h>
++#include <linux/pm_wakeup.h>
+ 
+ #include <linux/iio/common/inv_sensors_timestamp.h>
+ #include <linux/iio/events.h>
+@@ -302,6 +303,10 @@ static irqreturn_t inv_mpu6050_interrupt_handle(int irq, void *p)
+ 	}
+ 
+ 	scoped_guard(mutex, &st->lock) {
++		if (st->dmp_smd_suspended) {
++			pm_wakeup_event(regmap_get_device(st->map), 0);
++			return IRQ_HANDLED;
++		}
+ 		/* ack interrupt and check status */
+ 		result = regmap_read(st->map, st->reg->int_status, &int_status);
+ 		if (result) {
