@@ -4254,3 +4254,38 @@ still belongs to this same boot. Same-boot integrity passes; cross-boot,
 power-loss, long soak and final-candidate regression remain open. See
 [worker](../diagnostics/emmc-integrity/README.md) and
 [native integrity evidence](../evidence/2026-11-08-emmc-native-integrity.json).
+
+### PN547 NFC reference-clock and board preparation (2026-11-08)
+
+Audited the pinned production PN547 C2 configuration, GPIO mapping and vendor
+clock driver. QUP3 uses address 0x28 and pins 10/11; VEN/FIRM use 20/22 and
+IRQ21 is requested rising despite the old DT flag. The selected PMIC path
+uses `cxo_d1_pin`, matching maintained RPM XO buffer ID 2 and clock binding 54.
+Native r50's read-only baseline confirms disabled QUP3, unclaimed relevant
+pins, no NFC stack and `AF_NFC` rejection without module-list changes.
+
+Created a separate sparse source branch from the clean conservative ancestor
+that exactly matches all 18 reconstructed-r50 changed files. Four commits add
+IRQ-failure NCI unregister, the optional reference-clock binding, balanced
+mode-dependent clock/error handling and the board wiring/cold states. Published
+`integration/fx0-nfc` at `94010ddccf9aaa212870ecd0ea0058e33de482c9` under the
+standing fx0 push approval; its remote ref and exact four-patch replay verify.
+All four patches pass strict checkpatch without sign-off checking.
+
+Twenty ARM objects/composites build with W=1 and KCFI retained, with no compiler
+warnings. Twelve actual-C/schema checks pass without skips, including nine
+mode/probe cases, clock-shape rejection and legacy controls, compiled
+GPIO/clock/pin/bus bindings and unchanged four-rate CPU semantics. Three new
+failure controls reject the unmodified driver. The rebuilt baseline DTB is
+byte-identical to original r50; all three DTC warnings are pre-existing.
+Sparse header/syscall/vendor-prefix fixture omissions were corrected, and the
+DT uses supported flat cold pin states with TLMM `output-disable`.
+
+The qualified source/index and build artifacts remain unchanged. Read-only
+postflight confirms the same native r50 boot/hash/policy, zero taint, running
+startup and UI services; QUP3 remains disabled and no candidate modules load.
+No full kernel/module/package/image or hardware NFC trial exists yet, and no
+firmware/library/calibration is exported or programmed. The latest native UI
+gate, controller/tag/RF/userspace/suspend and broader bringup remain open. See
+[NFC work](nfc-bringup.md) and
+[preparation evidence](../evidence/2026-11-08-nfc-source-preparation.json).

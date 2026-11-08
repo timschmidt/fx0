@@ -1,0 +1,16 @@
+diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
+index a6c08175d9dd..213d3eea7dd0 100644
+--- a/drivers/nfc/nxp-nci/i2c.c
++++ b/drivers/nfc/nxp-nci/i2c.c
+@@ -326,8 +326,10 @@ static int nxp_nci_i2c_probe(struct i2c_client *client)
+ 				 nxp_nci_i2c_irq_thread_fn,
+ 				 irqflags | IRQF_ONESHOT,
+ 				 NXP_NCI_I2C_DRIVER_NAME, phy);
+-	if (r < 0)
++	if (r < 0) {
+ 		nfc_err(&client->dev, "Unable to register IRQ handler\n");
++		nxp_nci_remove(phy->ndev);
++	}
+ 
+ 	return r;
+ }

@@ -1,0 +1,29 @@
+diff --git a/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml b/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+index 364b36151180..b47ba2e589b2 100644
+--- a/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
++++ b/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+@@ -23,6 +23,13 @@ properties:
+   enable-gpios:
+     description: Output GPIO pin used for enabling/disabling the controller
+ 
++  clocks:
++    maxItems: 1
++    description: Optional external reference clock for the controller
++
++  clock-names:
++    const: ref
++
+   firmware-gpios:
+     description: Output GPIO pin used to enter firmware download mode
+ 
+@@ -38,6 +45,10 @@ required:
+   - interrupts
+   - reg
+ 
++dependencies:
++  clocks: [clock-names]
++  clock-names: [clocks]
++
+ additionalProperties: false
+ 
+ examples:

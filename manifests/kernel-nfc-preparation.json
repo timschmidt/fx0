@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "status": "NFC source preparation only; no complete kernel/modules/package/image/hardware qualification",
+  "source": {
+    "repository": "https://github.com/timschmidt/fx0-linux.git",
+    "branch": "integration/fx0-nfc",
+    "base_commit": "789d5197844d5268197a17a94605316eedae9fdb",
+    "commit": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+    "tree": "606bc78aa074f6a47d44d790c153362fac665fa8",
+    "conservative_base": "Exact 18-file reconstructed-r50 changes; excludes later CPR/CPU candidate"
+  },
+  "patches": [
+    {
+      "commit": "646899ebb110abdc50efeef21769c6344e09cd2f",
+      "patch": "patches/linux-integration/fx0-nxp-nci-irq-unwind.patch",
+      "sha256": "a3263c64b32eed95b374d285d8beadacc0463193a1440854f7f39fa7022c2ea6",
+      "parent": "789d5197844d5268197a17a94605316eedae9fdb"
+    },
+    {
+      "commit": "92a85c81bb37acbfecae856c52af5b735586b4d8",
+      "patch": "patches/linux-integration/fx0-nxp-nci-ref-clock-binding.patch",
+      "sha256": "31bfbb060aa142b2e4e8b4faef5b238e1c2289b8532ac3c50cbbbb4100c30ce6",
+      "parent": "646899ebb110abdc50efeef21769c6344e09cd2f"
+    },
+    {
+      "commit": "3e3afba92adb38a6ab75d52b2b7a94ff60177a71",
+      "patch": "patches/linux-integration/fx0-nxp-nci-ref-clock.patch",
+      "sha256": "120beb388d538aabf5e09a42176ca5c093dbddf266f55fd6a2c179c9b6470a13",
+      "parent": "92a85c81bb37acbfecae856c52af5b735586b4d8"
+    },
+    {
+      "commit": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+      "patch": "patches/linux-integration/fx0-madai-pn547-nfc.patch",
+      "sha256": "ed20b4a846b8def6bdcc5640a2692a7777cff35f22b8bc1ff358cc241569dcc0",
+      "parent": "3e3afba92adb38a6ab75d52b2b7a94ff60177a71"
+    }
+  ],
+  "source_files_sha256": {
+    "Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml": "88ee1c78274634957bf103f1d3c8cafd87e9bab73e54b4dbdd6dffb0dd771728",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "18df13b4830232d52fa75026676ea9c1e19b83ec21c0f06f4f89c3b2ec729f25",
+    "drivers/nfc/nxp-nci/core.c": "a7d73f0d938b6cc7f980ca988e909358a312da312f8860c335afef85305fa6fb",
+    "drivers/nfc/nxp-nci/i2c.c": "5ab6d961f79159906a5f642b6613e762475085b24214b74e31eb254a3f801688"
+  },
+  "configuration": {
+    "base": "configs/linux-6.18.59-fx0-r50.armv7",
+    "base_sha256": "f20d2270cf1cabf6129e4a7a659861a3981d98792f38afaf6741f5896cec8703",
+    "fragment": "configs/msm8926-nfc.fragment",
+    "fragment_sha256": "4de759ada41c2b14bf767bb2df3514760d017e540173cc90f9818fc8bf4081f7",
+    "normalized_config_sha256": "4ff4e9b68edba6a6e7dd62d401f3196cbff0f599e5ecabfbd1e42a3f1101af8f",
+    "release": "6.18.59-fx0-nfc-prep",
+    "CFI_retained": true,
+    "changes": "Only NFC options and LOCALVERSION from the normalized r50 config"
+  },
+  "validation": {
+    "host_tests": 12,
+    "ARM_objects": 20,
+    "KCFI": true,
+    "targeted_schemas": [
+      "NXP NCI",
+      "QUP I2C",
+      "MSM8226 TLMM",
+      "MSM8226 RPMCC"
+    ],
+    "new_compiler_or_DTC_warnings": 0,
+    "exact_patch_replay": true,
+    "checkpatch": "strict; no signoff check; all four pass"
+  },
+  "evidence": "evidence/2026-11-08-nfc-source-preparation.json",
+  "remaining": [
+    "full linked kernel and MODPOST/signature-verified module family",
+    "source/distribution packaging and bounded RAM image",
+    "exact native-return physical UI gate before boot",
+    "actual controller NCI reset/init and clean clock/GPIO ownership",
+    "tag/RF/userspace/restart/suspend/wake and final installed acceptance",
+    "current receiving-tree/DCO/routing/upstream preparation"
+  ],
+  "constraints": [
+    "No private keys, proprietary NFC libraries/firmware or calibration included",
+    "Do not transfer r50 or CPR hardware acceptance to this new source/configuration",
+    "No firmware download or nonvolatile programming as part of preparation",
+    "Audio and host built-in Wi-Fi changes excluded"
+  ]
+}
