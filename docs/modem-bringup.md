@@ -81,3 +81,49 @@ its actual location service and outdoor acquisition/position/time evidence;
 absence of a generic GNSS class node is not a product-absence finding. Audio
 tests remain excluded. No modem, GNSS, radio, power-management, coexistence or
 full-hardware pass follows from this description work.
+
+## Offline-probe RAM image prepared
+
+A separate 6,301,696-byte image uses the exact installed r50 kernel encoding
+and five matching retained signed modules. All signatures verify against the
+entire certificate list extracted from that kernel; all 197 imported CRCs match
+its actual export tables or earlier signed dependencies. System.map resolves
+11,709 kernel exports, the linked notes, certificate bounds and decompressed
+footprint. Payload/signature/CRC corruption controls reject for each module.
+The public extraction helper and a fresh native-family replay reproduce the
+inputs and checks; a final image rebuild is byte-identical on this host.
+
+Relative to the inactive candidate, only three DT property values change:
+modem and S5 become available, while BAM-DMUX is explicitly disabled. Every
+other property byte/path is unchanged. This avoids the driver's otherwise
+created BAM child. Actual MSS/RPM bindings pass. Native source has auto_boot
+false; core registration only auto-boots when requested, and the offline crash/
+shutdown paths do not start firmware. This is a source audit, not a runtime pass.
+
+The image initially loads no modules. Its explicit worker verifies kernel notes,
+seventeen DT properties, five module hashes, enforced signatures, RAM-only mounts,
+no CPUfreq/CPR provider or firmware/helper paths and bounded temperatures. It
+performs one five-module load and reverse unload, requiring only the expected
+modem remoteproc, offline state, expected parent/firmware name, no startup log,
+no BAM child and bounded IRQ counts. It never writes remoteproc state, requests
+firmware, retries an operation or kills a pending one. The original independent
+180-second init timer, BusyBox and USB diagnostics stay byte-identical.
+
+Host and exact ARM BusyBox each pass five test methods/44 subcases, including
+ten failed-operation boundaries and eight dynamic failures. They detect two
+weakened guards. An early shell-counter collision is reproduced and fixed;
+positive tests require the full ten operations and cleanup. These are mocked
+sysfs/module operations, not physical driver, IRQ, power or radio qualification.
+Independent parsing checks all 23 CPIO entries, Android checksum/addresses,
+original kernel bytes, three ARM shell scripts and absence of firmware/services.
+
+Read-only native sampling on the same boot captures APC's 1.15 V target and S5
+at base 0x2000: type3/subtype8/revision2, range0/selector62 (1.15 V programmed
+target), mode0x40 and enable0. Bit7 is clear; this does not measure analogue
+voltage or prove every possible physical enable path is off. Future entry and
+return checks must freshly preserve those raw controls, together with r50/r5,
+services, boot hash and the newest physical UI result. The image is unstaged/
+unbooted. Entry/observer/native-return controllers still need preparation; no
+trial is launched by these artifacts. Firmware start/EFS/RF/GNSS and full
+bringup remain open. See [procedure](../diagnostics/modem-control/probe-ram.md)
+and [preparation evidence](../evidence/2026-11-09-modem-offline-probe-preparation.json).

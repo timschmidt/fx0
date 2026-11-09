@@ -51,3 +51,10 @@ EFS, remote-filesystem, ownership, fault/stop and native-return handling.
 
 See [bringup status](../../docs/modem-bringup.md) and
 [evidence](../../evidence/2026-11-09-modem-control-description.json).
+
+
+A later [offline-probe RAM preparation](probe-ram.md) uses exact retained native
+r50 kernel/modules and a separate DTB derivative. It enables modem/S5 only in
+that unbooted image and disables BAM-DMUX. The inactive source patch above and
+installed system remain unchanged. The worker never starts firmware; physical
+entry/return controls and the current UI gate remain unfinished.

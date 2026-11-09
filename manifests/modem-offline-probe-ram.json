@@ -1,0 +1,301 @@
+{
+  "recorded_UTC": "2026-11-09T09:38:51.769108+00:00",
+  "status": "Prepared and host/ARM BusyBox verified native-r50 offline modem probe image; unstaged/unbooted; entry controllers unfinished",
+  "inactive_description_manifest": "manifests/modem-control-description.json",
+  "inactive_description_manifest_sha256": "f1c899bfd172ed343e251617a5ea66c9d25644f95dba62e6537dbb21a795b9e7",
+  "image": {
+    "image_path": "local/modem-probe-preparation-01/fx0-r50-modem-offline-probe-ram.img",
+    "image_sha256": "e7ae8e67f9d97ffa02576447c23af2d0c72853d98d61d8033e4405a11f400659",
+    "image_bytes": 6301696,
+    "kernel_sha256": "7e896bb7c3fc80d7d8c8306a659fa57c1bcb3924ec2aaf37b77924e23c274417",
+    "kernel_encoding_unchanged": true,
+    "probe_DTB_sha256": "b0d75f3c79dace502728c2ee91a300ba147e76088e0dc9a79582e573b628c7de",
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\" cpufreq.default_governor=schedutil module.sig_enforce=1",
+    "CPIO_entries": 23,
+    "all_ten_qualified_base_payloads_and_modes_unchanged": true,
+    "timer_seconds": 180,
+    "initially_moduleless": true,
+    "module_count": 5,
+    "firmware_files": 0,
+    "loader_services": 0,
+    "CPU_frequency_requests": [],
+    "remoteproc_state_writes": [],
+    "worker_sha256": "e950a174f91869c66d0c771bc0e56a70966c3a91cd1161548fde59e5bfe596db",
+    "DT_guard_properties": 17,
+    "entries_sha256": {
+      "bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dev": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sys": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tmp": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "www": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bin/busybox": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+      "bin/sh": "9d75f0d7c398df565d7ac04c6819b62d6d8f9560f5eb4672596ecd8f7e96ae91",
+      "bin/serve-http": "4005fed0312bc216b3c32129ffdd2ceac06544a2503ecd572349e729af543d5e",
+      "init": "8a25f6757a7f0de87cb7433def659d0fee00981c2a311ed816a12bac439ac0d1",
+      "etc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modules": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modules/qcom_pil_info.ko": "ac7c4c5d1e15d9bd072873bb305e502b9efc5a54b3a64f58b1e0334a946b3b61",
+      "modules/qcom_common.ko": "31c80ccd7009d9378fbf515cd8c0eca00c58d384e53a21eca6a13e0ea5f2472d",
+      "modules/qcom_q6v5.ko": "7a7553ca8cce957367f4181d38078a94401bc9eb345f0299ff9181a4a395e66e",
+      "modules/mdt_loader.ko": "87a0144c16eef11ff331ec7433f7de2eb4b2e147ac31f606126c719bfd5ac559",
+      "modules/qcom_q6v5_mss.ko": "2f768b89e820b583d7ead1678a8486fa65ee522a5a3dc45ba68d52c3f71d2d13",
+      "etc/fx0-modem-trial": "0353d4e3d1f7c24e01968b88aecb0fd42f561df4669b6cea99df3a14b8bc4c4b",
+      "etc/fx0-modem-native-boot-id": "a880c01f6ba4233b6f2796ea7a40fdfff037da098e8a01f9ca0a3d4a3fa48912",
+      "etc/fx0-modem-notes.sha256": "0ae9cd24f66ef1d482bb280a727cad744456f02bf813704821c3e14a77882be1",
+      "etc/fx0-modem-modules.sha256": "2e639dd4039b3a0a23a3c456880183eaba57f5b482708eccdae3e29fe98db682",
+      "etc/fx0-modem-DT.sha256": "ea4bd17a1d353f1b65b1fb68f82147e0c56088eba941bfda1216b04e3f11faef",
+      "bin/modem-probe": "e950a174f91869c66d0c771bc0e56a70966c3a91cd1161548fde59e5bfe596db"
+    },
+    "physical_entry": false,
+    "modem_firmware_started": false
+  },
+  "native_kernel_and_modules": {
+    "verified_UTC": "2026-11-09T09:05:57.640767+00:00",
+    "kernel_sha256": "7e896bb7c3fc80d7d8c8306a659fa57c1bcb3924ec2aaf37b77924e23c274417",
+    "runtime_Image_sha256": "7f355ca46d02521e939d8dffb8c180058b254c2aa87fc4199233c1d151e1b2d6",
+    "certificate_sha256": "0f5e9ed13fb5e85bca920e4900226a7786b05619f20b6791b29618df34fec98a",
+    "certificate_is_entire_exact_kernel_trust_list": true,
+    "linked_notes_sha256": "cb8ff4d80009dbd0b4542ce5d28d7ce10e4d84e0db4e332c749ff8ae18a08269",
+    "kernel_exports_checked_against_System_map": 11709,
+    "kernel_and_BSS_plus_load_offset_below_ramdisk": true,
+    "modules": {
+      "qcom_pil_info.ko": {
+        "sha256": "ac7c4c5d1e15d9bd072873bb305e502b9efc5a54b3a64f58b1e0334a946b3b61",
+        "bytes": 8061,
+        "imported_CRCs_checked": 19,
+        "provided_exports": 1,
+        "vermagic": "6.18.59-fx0-dmp SMP preempt mod_unload modversions ARMv7 p2v8",
+        "CMS_checked_with_exact_kernel_certificate": true,
+        "depends": [
+          ""
+        ]
+      },
+      "qcom_common.ko": {
+        "sha256": "31c80ccd7009d9378fbf515cd8c0eca00c58d384e53a21eca6a13e0ea5f2472d",
+        "bytes": 18965,
+        "imported_CRCs_checked": 43,
+        "provided_exports": 12,
+        "vermagic": "6.18.59-fx0-dmp SMP preempt mod_unload modversions ARMv7 p2v8",
+        "CMS_checked_with_exact_kernel_certificate": true,
+        "depends": [
+          ""
+        ]
+      },
+      "qcom_q6v5.ko": {
+        "sha256": "7a7553ca8cce957367f4181d38078a94401bc9eb345f0299ff9181a4a395e66e",
+        "bytes": 13325,
+        "imported_CRCs_checked": 22,
+        "provided_exports": 7,
+        "vermagic": "6.18.59-fx0-dmp SMP preempt mod_unload modversions ARMv7 p2v8",
+        "CMS_checked_with_exact_kernel_certificate": true,
+        "depends": [
+          ""
+        ]
+      },
+      "mdt_loader.ko": {
+        "sha256": "87a0144c16eef11ff331ec7433f7de2eb4b2e147ac31f606126c719bfd5ac559",
+        "bytes": 11161,
+        "imported_CRCs_checked": 18,
+        "provided_exports": 5,
+        "vermagic": "6.18.59-fx0-dmp SMP preempt mod_unload modversions ARMv7 p2v8",
+        "CMS_checked_with_exact_kernel_certificate": true,
+        "depends": [
+          ""
+        ]
+      },
+      "qcom_q6v5_mss.ko": {
+        "sha256": "2f768b89e820b583d7ead1678a8486fa65ee522a5a3dc45ba68d52c3f71d2d13",
+        "bytes": 53449,
+        "imported_CRCs_checked": 95,
+        "provided_exports": 0,
+        "vermagic": "6.18.59-fx0-dmp SMP preempt mod_unload modversions ARMv7 p2v8",
+        "CMS_checked_with_exact_kernel_certificate": true,
+        "depends": [
+          "qcom_q6v5",
+          "qcom_common",
+          "mdt_loader",
+          "qcom_pil_info"
+        ]
+      }
+    },
+    "module_count": 5,
+    "all_imported_CRCs_match_actual_kernel_or_earlier_signed_module": true,
+    "imported_CRC_checks": 197,
+    "controls": [
+      "modified payload rejected for each module",
+      "modified CMS rejected for each module",
+      "modified module_layout CRC rejected for each module"
+    ],
+    "proprietary_firmware_or_private_key_bytes_read": false,
+    "no_module_loading_or_phone_access": true
+  },
+  "runtime_worker_checks": {
+    "verified_UTC": "2026-11-09T09:24:03.914188+00:00",
+    "host": {
+      "methods": 5,
+      "subcases": 44,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0
+    },
+    "exact_ARM_BusyBox_shell_and_ten_read_applets": {
+      "methods": 5,
+      "subcases": 44,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0
+    },
+    "full_ten_operations_and_reverse_cleanup_checked": true,
+    "one_use_repeat_refused": true,
+    "operation_failure_boundaries": 10,
+    "dynamic_failure_modes": 8,
+    "no_kill_retry_or_followup_after_nonterminal_operation": true,
+    "weakened_guard_controls": [
+      {
+        "mode": "offline-state-guard-removed",
+        "detected": true,
+        "failures": 1,
+        "errors": 0
+      },
+      {
+        "mode": "module-hash-guard-removed",
+        "detected": true,
+        "failures": 1,
+        "errors": 0
+      }
+    ],
+    "counter_collision_baseline_rejected": true,
+    "scope": "Actual shell worker with mocked module syscalls/sysfs; no actual driver/DMA/IRQ/voltage/modem firmware/RF qualification"
+  },
+  "independent_image_verification": {
+    "image_sha256": "e7ae8e67f9d97ffa02576447c23af2d0c72853d98d61d8033e4405a11f400659",
+    "bytes": 6301696,
+    "header_digest_and_load_addresses": "pass",
+    "independent_CPIO_parse_and_GNU_listing_entries": 23,
+    "kernel_exact_retained_native_bytes": true,
+    "DTB_exact_probe_derivative_bytes": true,
+    "qualified_init_and_independent_timer_exactly_preserved": true,
+    "exact_ARM_BusyBox_three_script_syntax": "pass",
+    "five_signed_modules_match": true,
+    "no_firmware_or_services_or_CPUfreq_provider_in_CPIO": true,
+    "DT_property_guard_count": 17,
+    "RAM_booted": false
+  },
+  "replay": {
+    "native_family_rederived_from_retained_kernel_map_config_and_modules_only": true,
+    "derived_Image_notes_certificate_and_all_five_module_checks_identical": true,
+    "native_family_197_CRCs_passed_again": true,
+    "image_reassembled_by_final_public_builder_byte_identical": true,
+    "image_sha256": "e7ae8e67f9d97ffa02576447c23af2d0c72853d98d61d8033e4405a11f400659",
+    "independent_environment_or_hardware_reproducibility_claimed": false
+  },
+  "DT_property_comparison": {
+    "all_other_property_bytes_and_paths_identical": true,
+    "properties_compared": 1415,
+    "changes": [
+      {
+        "node": "/remoteproc/smd-edge/rpm-requests/regulators/s5",
+        "property": "status",
+        "old": "disabled",
+        "new": "okay"
+      },
+      {
+        "node": "/soc/remoteproc@fc880000",
+        "property": "status",
+        "old": "disabled",
+        "new": "okay"
+      },
+      {
+        "node": "/soc/remoteproc@fc880000/bam-dmux",
+        "property": "status",
+        "old": null,
+        "new": "disabled"
+      }
+    ],
+    "scope": "Probe derivative versus the inactive stock-derived candidate, not versus installed original DTB"
+  },
+  "source_probe_audit": {
+    "source_files_sha256": {
+      "worktrees/linux-fx0-integration/drivers/remoteproc/qcom_q6v5_mss.c": "c1c444d0da8cfe47d9e11a17e49f96840bc4f2123341200e8c59d566d7b5ea8c",
+      "worktrees/linux-fx0-integration/drivers/remoteproc/qcom_q6v5.c": "75667c767521dbeea81f370224e2c3f279a76339635a9a41c33b8bd99285beaf",
+      "worktrees/linux-fx0-integration/drivers/remoteproc/remoteproc_core.c": "22088aeeef96047526343f2a1be45aca32cba01297e1998a64ba74476a50bac9",
+      "worktrees/linux-fx0-integration/drivers/of/platform.c": "67557f81563a13b6347e449a3c7aa8acfac4cd3da67c55d433f0163df3d92100",
+      "worktrees/linux-fx0-integration/drivers/regulator/qcom_spmi-regulator.c": "09436b8793dc69bf0805f941512b796b0831507d0c7d9d566ce186b6031c0dbc",
+      "worktrees/linux-fx0-integration/include/linux/export-internal.h": "851bacf90bc83a17862d734604dc91d644dfedc173d3ea7218a7873653115d70"
+    },
+    "MSS_auto_boot_false": true,
+    "rproc_add_boots_only_if_auto_boot": true,
+    "offline_crash_handler_returns_without_recovery": true,
+    "rproc_shutdown_offline_returns_EINVAL_before_power_decrement_or_stop": true,
+    "MSS_probe_creates_BAM_DMUX_child": true,
+    "disabled_child_rejected_by_of_platform_device_create": true,
+    "single_CX_domain_probe_path_only_runtime_enables_device": true,
+    "q6v5_init_acquires_IRQs_SMEM_stop_handle_QMP_and_interconnect_without_start_or_load_vote": true,
+    "native_config_SYSMON_and_firmware_user_helper_disabled": true,
+    "PM8226_S5_base_address": "0x2000",
+    "S5_voltage_range_set_enable_offsets": [
+      "0x40",
+      "0x41",
+      "0x46"
+    ],
+    "native_S5_type_subtype_revision_match_legacy_SMPS_decoder": true,
+    "scope": "Audited existing source plus exact native binary/config/signature/CRC provenance; hardware probe/IRQ/voltage effects remain unqualified"
+  },
+  "native_baseline": {
+    "boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "kernel": "6.18.59-fx0-dmp",
+    "kernel_taint": 0,
+    "modem_DT_status": "disabled",
+    "services": {
+      "upower": "active",
+      "tinydm": "active",
+      "iio-sensor-proxy": "active",
+      "ModemManager": "active"
+    },
+    "systemd": "running",
+    "pending_jobs": [],
+    "raw_boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "method": "Nine exact nine-byte pread rows after dense-map metadata check; no full register dump",
+    "SPMI_registers": {
+      "0x1740": 1,
+      "0x1741": 115,
+      "0x2001": 2,
+      "0x2004": 3,
+      "0x2005": 8,
+      "0x2040": 0,
+      "0x2041": 62,
+      "0x2045": 64,
+      "0x2046": 0
+    },
+    "APC_programmed_target_uV": 1150000,
+    "S5_programmed_target_uV": 1150000,
+    "S5_enable_control_bit7_set": false,
+    "S5_mode_control_raw": 64,
+    "temperatures_mC": [
+      40000,
+      40000
+    ],
+    "SPMI_writes_or_modem_actions": false,
+    "analogue_voltage_measurement": false,
+    "verified_UTC": "2026-11-09T09:26:52.545762+00:00"
+  },
+  "native_UI": {
+    "native_boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "status": "pending on this newest native return",
+    "question": "The r59 transfer timed out before BOOT, and the phone has returned to installed r50 with UPower r5 active, the original boot hash, and Sway and the sensor proxy running. Do display and touch work normally on this newest boot?",
+    "recorded_UTC": "2026-11-09T08:14:37.367617+00:00"
+  },
+  "entry_controllers_prepared": false,
+  "remaining": [
+    "Host-prepared image only; no physical MSS probe, IRQ, voltage, firmware startup, RF, GNSS or cellular qualification",
+    "Source inactive candidate remains unchanged; only the separate probe DTB enables modem/S5 and disables BAM-DMUX",
+    "Probe may exercise IRQ/domain/PMIC registration; stock constraints and programmed targets are not analogue voltage measurements",
+    "No firmware/services/control userspace included; runtime worker never writes remoteproc state or requests firmware",
+    "Native current-boot physical UI still pending before any RAM entry",
+    "One-use entry/observer/native-return controllers and fresh APC/S5/raw-boot/service/host-network checks still need preparation",
+    "Unresolved USB download defect retains terminal-PID/exact-readback/single-BOOT/no-retry rules",
+    "EFS/firmware/start-stop/fault handling, GNSS/SIM/radio and full bringup remain unfinished"
+  ],
+  "evidence": "evidence/2026-11-09-modem-offline-probe-preparation.json"
+}

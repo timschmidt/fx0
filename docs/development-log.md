@@ -4857,3 +4857,35 @@ UPower/ModemManager/Sway PIDs, with systemd running and no jobs. The newest
 physical UI answer remains pending. Modem startup/control, GNSS, SIM/RF and full
 bringup are unfinished. See [status](modem-bringup.md) and
 [evidence](../evidence/2026-11-09-modem-control-description.json).
+
+## November 9: native-family offline modem probe image prepared
+
+Extract only GPL kernel/map/config and a five-module dependency closure from
+the previously audited retained backup. Public helper replay reproduces all
+bytes. Verify the exact installed kernel's entire 1,324-byte certificate list,
+11,709 exports and all 197 imported CRCs across five signed modules. Per-module
+payload/signature/CRC controls reject. A fresh family replay derives Image,
+notes and certificate from the retained kernel/map/config without pre-derived
+files. The original native XZ encoding stays unchanged.
+
+Create a probe derivative of the inactive MSM8926 description: enable modem/S5,
+disable the BAM-DMUX child that probe otherwise creates. Full property comparison
+finds only those three changes. Bindings pass. Audit auto-boot, offline crash/
+shutdown, domain attach, IRQ setup and child creation in existing source. The
+RAM image contains no firmware or loader service and uses the original independent
+180-second init/USB/BusyBox bytes. Its guarded worker requests one offline
+load/remove cycle only, with no remoteproc-state write or firmware request.
+
+Host and exact ARM BusyBox pass five methods/44 subcases each; ten operation
+failures, eight dynamic failures, one-use refusal and two weakened guards are
+covered. The initial global shell-counter collision is caught by the full
+positive workflow and its frozen baseline remains rejected. Image parsing,
+header checksum, all 23 CPIO entries and three ARM script syntax checks pass.
+The final rebuild reproduces the 6,301,696-byte image exactly on this host.
+
+A read-only native pre-entry baseline confirms the same boot/hash/services,
+APC target 1.15 V, and S5 target1.15 V with mode0x40/enable0 using nine exact
+register preads. This is programmed state, not analogue voltage. No kernel/
+package/firmware/radio change or RAM entry occurs. Fresh pre/postflight and
+observer controllers plus the pending current-boot physical UI check remain
+required before use. See [preparation](../evidence/2026-11-09-modem-offline-probe-preparation.json).
