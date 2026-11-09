@@ -236,3 +236,21 @@ tag reading, RF/protocol behavior, userspace integration, restart/error unwind,
 suspend/wake and final distribution packaging. The maintained kernel NCI path
 does not provide the vendor `/dev/pn547` userspace ABI. No native NFC hardware
 function is accepted yet. See [preparation evidence](../evidence/2026-11-08-nfc-source-preparation.json).
+
+## Corrected-family startup prepared
+
+The owner confirms working display and touch on native r50 boot
+`28db1c68-3b08-4a53-8e5a-3397b8315813`; its original boot hash, zero taint,
+running systemd, Sway and sensor proxy are rechecked. The corrected r58
+NFC family now has a separate moduleless RAM image and checker, passing 30
+fixture cases including rejection of the older r56 release and marker.
+Kernel/DTB bytes match the signed r58 APK; qualified init/USB/HTTP/BusyBox
+and the independent 180-second return timer remain unchanged. The image
+is unstaged and unbooted at this checkpoint. See [r58 startup details](../diagnostics/nfc-startup/teardown-startup.md)
+and [preparation evidence](../evidence/2026-11-08-nfc-teardown-startup-preparation.json).
+
+Fresh byte comparisons also correct an earlier audit count: each r56/r58
+build has 21 changed source files matching its published commit. The old
+field reported ELF symbol-string-table bytes. Original reports and all
+linked artifact hashes are preserved; [the erratum](../evidence/2026-11-08-nfc-source-comparison-correction.json)
+adds no runtime or hardware qualification.
