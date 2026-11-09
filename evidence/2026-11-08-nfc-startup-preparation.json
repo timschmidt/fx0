@@ -1,0 +1,316 @@
+{
+  "date": "2026-11-08",
+  "recorded_UTC": "2026-11-09T01:06:01.325503+00:00",
+  "status": "Prepared and host-verified moduleless NFC RAM startup; unstaged/unbooted; exact latest-native physical UI gate pending",
+  "source_commit": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+  "source_package": "evidence/2026-11-08-nfc-alpine-package.json",
+  "image": {
+    "image_path": "local/nfc-startup-preparation/fx0-nfc-moduleless-startup-ram.img",
+    "image_sha256": "e4b04713cfcf8deda30872b69fdaf1cd429af525d4053c6412fc0953f16eb1b7",
+    "image_bytes": 6207488,
+    "kernel_release": "6.18.59-fx0-nfc-alpine",
+    "kernel_sha256": "8f94f5f9dfac03ba0aaf1a1fe5e6612618f1a14a26124829a89858a1bb4ca914",
+    "kernel_bytes": 5505536,
+    "source_package_sha256": "fd288071ac02d0a0fd10fc13fab0266b137ccc69fc9eec1688384f82f8331c14",
+    "source_recipe_commit": "b18a8f71ba83948cac280c4127ca674ac0c54027",
+    "certificate_sha256": "846fdf13b2cbfe48b6f71b57d54e1b44b337f284e4aa274c4a46c3f982e2c3ba",
+    "DTB_sha256": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483",
+    "kernel_and_DTB_exact_signed_APK_bytes": true,
+    "kernel_encoding_workaround_applied": false,
+    "kernel_notes_bytes": 84,
+    "kernel_notes_sha256": "effce0d45399e7fb6cca90264ea5e7c0dc33b7daf96894132b13b26f0cca00c4",
+    "kernel_GNU_build_id": "41da13782ac8043f861f8f5b251e995ea86217b9",
+    "kernel_Image_bytes": 21201060,
+    "kernel_text_to_end_bytes_including_BSS": 21499728,
+    "kernel_footprint_plus_load_offset_below_forced_ramdisk_address": true,
+    "header_digest_and_addresses_verified": true,
+    "return_after_seconds": 180,
+    "initially_and_entirely_moduleless": true,
+    "allowed_module_loads": [],
+    "explicit_frequency_requests": [],
+    "explicit_NFC_bus_GPIO_clock_RF_or_firmware_actions": [],
+    "signature_enforcement": true,
+    "default_governor": "schedutil",
+    "CPUfreq_driver_module_included": false,
+    "NFC_modules_included": false,
+    "expected_CPUfreq_policy": "absent; cpufreq-dt is a module and no modules are included",
+    "expected_NFC_client": "one unbound QUP3 client at address 0x28",
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\" cpufreq.default_governor=schedutil module.sig_enforce=1",
+    "only_cmdline_change_from_qualified_RAM": "cpufreq.default_governor=userspace -> schedutil for the conservative source family",
+    "startup_script_sha256": "74d42c0d7a49b99cf2c0a5ffbc3f27d288c61f2e626cf5028bc1dbca94bee1d2",
+    "ARM_BusyBox_shell_syntax_check": "pass under qemu-arm-static",
+    "entries_sha256": {
+      "bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dev": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sys": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tmp": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "www": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bin/busybox": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+      "bin/sh": "9d75f0d7c398df565d7ac04c6819b62d6d8f9560f5eb4672596ecd8f7e96ae91",
+      "bin/serve-http": "4005fed0312bc216b3c32129ffdd2ceac06544a2503ecd572349e729af543d5e",
+      "init": "8a25f6757a7f0de87cb7433def659d0fee00981c2a311ed816a12bac439ac0d1",
+      "etc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "etc/fx0-nfc-trial": "4966b5a7a57ef79a4edc9b71edf5ca96502a0daafaf77154d665e04de1671559",
+      "etc/fx0-nfc-notes.sha256": "d56230401f494b0c79779c24964ce9b2da5497f32587b8e0a536f6d2ca5c17a3",
+      "bin/nfc-startup-check": "74d42c0d7a49b99cf2c0a5ffbc3f27d288c61f2e626cf5028bc1dbca94bee1d2"
+    },
+    "qualified_base_entries_unchanged": [
+      "bin",
+      "dev",
+      "proc",
+      "sys",
+      "tmp",
+      "www",
+      "bin/busybox",
+      "bin/sh",
+      "bin/serve-http",
+      "init"
+    ],
+    "removed_CPR_entries": [
+      "bin/cpr-register",
+      "etc",
+      "etc/fx0-cpr-modules.sha256",
+      "etc/fx0-cpr-trial",
+      "modules",
+      "modules/cpufreq-dt.ko",
+      "modules/cpufreq_userspace.ko"
+    ],
+    "added_NFC_entries": [
+      "bin/nfc-startup-check",
+      "etc",
+      "etc/fx0-nfc-notes.sha256",
+      "etc/fx0-nfc-trial"
+    ],
+    "previous_native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "previous_UI_result_required_before_stage": "local/ram-cpr-load-01/owner-display-touch.json; matching boot ID and passed status",
+    "staged_or_booted": false,
+    "NFC_hardware_qualified": false
+  },
+  "actual_image_independent_verification": {
+    "image_SHA256": "e4b04713cfcf8deda30872b69fdaf1cd429af525d4053c6412fc0953f16eb1b7",
+    "independent_header_checksum_payload_and_CPIO_reparse": "pass",
+    "exact_CPIO_entries": 14,
+    "module_files": 0,
+    "firmware_files": 0,
+    "CPU_registration_scripts_or_permits": 0,
+    "all_entry_hashes_match": true,
+    "runtime_checker_matches_source_and_executable_mode": true,
+    "kernel_and_DTB_original_APK_encoding_preserved": true,
+    "ARM_BusyBox_init_HTTP_and_checker_syntax": "pass",
+    "ARM_BusyBox_NUL_compatible_conversion": "pass",
+    "kernel_and_BSS_below_forced_ramdisk": true,
+    "stage_or_boot": false
+  },
+  "runtime_checker_host_tests": {
+    "tests": 2,
+    "fixture_modes": 28,
+    "failures": 0,
+    "execution": "Final script/tests passed in the filesystem correction command before image regeneration",
+    "all_fixtures_unchanged": true,
+    "module_GPIO_I2C_commands_attempted": 0,
+    "real_zero_size_nonempty_procfs_fixture_rejected": true,
+    "aliased_block_filesystem_fixture_rejected": true,
+    "files_sha256": {
+      "diagnostics/nfc-startup/check-startup.sh": "74d42c0d7a49b99cf2c0a5ffbc3f27d288c61f2e626cf5028bc1dbca94bee1d2",
+      "tests/test_nfc_startup.py": "dcf2c455f44317bb2dbe9ac650bab15dbd18f5e5123287da18e17fc0ef13ebe1"
+    }
+  },
+  "procfs_size_regression_caught_and_fixed": {
+    "cause": "procfs reports zero st_size even for nonempty /proc/modules; regular-file fixture missed this",
+    "initial_unpublished_checker_sha256": "c99447ba0bc6704d0c0c0dc1dcfab6dcf875e17b6a52375f15e3328fa7e2c47e",
+    "initial_unpublished_image_sha256": "6fc8c42b7524f0fa5a07911f3f8bf46d4e8aacc460c0552a59aa908de1f12191",
+    "actual_zero_size_nonempty_procfs_fixture_accepted_by_old_checker": true,
+    "new_checker_reads_contents_and_rejects_same_fixture": true,
+    "initial_image_and_helpers_retained": true,
+    "initial_image_staged_or_booted": false
+  },
+  "aliased_block_mount_regression_caught_and_fixed": {
+    "old_checker_accepted_block_filesystem_under_UUID_source_alias": true,
+    "corrected_checker_allows_only_RAM_and_expected_pseudo_filesystem_types": true,
+    "same_fixture_rejected_by_corrected_checker": true,
+    "old_checker_sha256": "584cc1602bf2ade83b70fb185f57512390d0af7a04cf855e300ee5446b133e3f",
+    "old_unpublished_image_retained": true,
+    "physical_trial_occurred": false
+  },
+  "private_entry_preparation": {
+    "helper_files": [
+      "boot-once.py",
+      "stage.py",
+      "wait-native.py",
+      "observe.py",
+      "preflight.py",
+      "postflight.py",
+      "run-process.py"
+    ],
+    "observer_calls_read_only_checker": true,
+    "observer_actual_prefix_and_exit_marker_verified": true,
+    "observer_shell_syntax": "pass",
+    "gate": "exact native boot 28db1c68-3b08-4a53-8e5a-3397b8315813 and passed UI status before any nura import/reboot/transfer",
+    "entry_executed": false
+  },
+  "physical_entry_gate": {
+    "checked_UTC": "2026-11-09T01:05:12.627239+00:00",
+    "actual_stage_process_exit": 1,
+    "expected_UI_gate_failure": true,
+    "instrumented_same_pending_and_wrong_boot_cases": [
+      {
+        "mode": "pending",
+        "phone_or_subprocess_calls": [],
+        "expected_UI_gate_rejection": true
+      },
+      {
+        "mode": "wrong_boot",
+        "phone_or_subprocess_calls": [],
+        "expected_UI_gate_rejection": true
+      }
+    ],
+    "owner_UI_evidence_unchanged": true,
+    "phone_client_imports_or_commands": 0,
+    "bootloader_entry_transfer_BOOT_or_private_device_state_created": false,
+    "scope": "Host guard execution only; no hardware action"
+  },
+  "native_postflight": {
+    "boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "kernel": "6.18.59-fx0-dmp",
+    "taint": 0,
+    "systemd": "running",
+    "failed_units": [],
+    "pending_jobs": [],
+    "Sway": true,
+    "sensor_proxy": "active",
+    "boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "CPU_policy": {
+      "scaling_governor": "schedutil",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200",
+      "scaling_available_frequencies": "300000 384000 600000 787200"
+    },
+    "QUP3_status": "disabled",
+    "loaded_NFC_modules": [],
+    "eMMC_retained_file_bytes": 536870912,
+    "checked_UTC": "2026-11-09T01:03:33.569314+00:00",
+    "phone_activity": "Read-only postflight; no reboot, install, RAM stage, NFC I/O or PMIC access",
+    "latest_native_UI": "pending on this newest native return",
+    "retained_eMMC_content_or_cross_boot_persistence_reverified": false
+  },
+  "latest_native_UI": {
+    "native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "status": "pending on this newest native return",
+    "question": "The five-round-trip and four-core 600 MHz RAM load trial has returned to installed r50. Its original boot hash and 1.15 V PMIC target are restored, with Sway and the sensor proxy active. Do display and touch work normally on this newest boot?"
+  },
+  "preservation": {
+    "checked_UTC": "2026-11-09T01:05:12.928066+00:00",
+    "root_index_entries_and_bytes_unchanged": true,
+    "NFC_full_kernel_config_DTB_certificate_and_APK_unchanged": true,
+    "original_r55_and_corrected_r57_APKs_unchanged": true,
+    "prepared_Alpine_CPU_RAM_image_unchanged": true,
+    "new_NFC_RAM_image_and_checker_hashes_match": true,
+    "current_native_UI_gate_pending_for_exact_boot": true,
+    "physical_stage_or_boot_state_absent": true,
+    "recovery_disk_written": false,
+    "audio_tests": 0,
+    "host_builtin_WiFi_changes": 0,
+    "scope": "Host preparation and read-only native health inspection only"
+  },
+  "hardware_operations": {
+    "reboots": 0,
+    "USB_staging_attempts": 0,
+    "BOOT_requests": 0,
+    "NFC_candidate_kernel_booted": false,
+    "candidate_modules_loaded": 0,
+    "explicit_GPIO_clock_NFC_bus_RF_firmware_or_performance_commands": 0,
+    "candidate_installations": 0,
+    "raw_eMMC_writes": 0,
+    "audio_tests": 0,
+    "host_builtin_WiFi_changes": 0,
+    "phone_activity": "Read-only native health inspection only; no physical trial"
+  },
+  "expected_physical_sequence": [
+    "accept matching latest-native display/touch pass and repeat native integrity/temperature/PMIC preflight",
+    "stage exact hash with data-only transfer and complete readback; never BOOT after uncertain or failed I/O",
+    "run existing network/serial observers, issue one BOOT, invoke read-only startup checker and capture notes/kernel/client state",
+    "leave the unchanged 180-second init timer active; observe RAM detach and original r50 return",
+    "verify original boot hash, conservative policy, PMIC target, services, host networking and new physical UI result; retain all failures"
+  ],
+  "limits": [
+    "Host fixtures and ARM BusyBox parsing/applet execution do not boot an ARM kernel or qualify hardware",
+    "The 84-byte runtime sysfs kernel-note export and one unbound QUP3 client are expectations until observed on this image",
+    "Module signing is requested and its sysfs flag checked; no real module insertion/signature rejection occurs in this module-free image",
+    "Candidate DTB enables QUP3; actual built-in controller clock/pinmux/probe behavior remains unqualified even without an NFC client driver",
+    "No PN547 GPIO/clock ownership, NCI controller transaction, tag/RF/userspace, firmware or suspend/wake result follows",
+    "Original APK encoding retained; the content-dependent USB staging defect remains open and requires exact completed transfer/readback",
+    "Native eMMC test-file size only observed; cross-boot content/persistence test remains pending"
+  ],
+  "remaining": [
+    "latest-native display/touch confirmation before physical entry",
+    "real moduleless RAM startup, kernel-note/client/sigflag observations, timer and native recovery",
+    "separate bounded signature/module/clock/GPIO ownership and cleanup trials",
+    "NCI reset/init, tag/RF/userspace/suspend/wake, installed update/recovery and broader bringup"
+  ],
+  "full_bringup": "in progress",
+  "files_sha256": {
+    "diagnostics/nfc-startup/README.md": "d81d3516bd1147a2db9bccb39bad248261f3e5109bce8989d42e12ba06266611",
+    "diagnostics/nfc-startup/check-startup.sh": "74d42c0d7a49b99cf2c0a5ffbc3f27d288c61f2e626cf5028bc1dbca94bee1d2",
+    "docs/building.md": "5eb5174fab1d45827b5b5a04d691f45bb2f638360d4f08f957b02a34a8757c75",
+    "docs/development-log.md": "7a78ce8cf182b6bad5a18b2fa5c2b47efb29b63766f120e5ac53123e6cc89e98",
+    "docs/hardware-acceptance.md": "5821c1fb2276da27beee628d040871502710018554589f9f2592fbdab2d27206",
+    "docs/nfc-bringup.md": "5f998509e264e19aaa766365088cd165e6b1afc052b90324b9b98ded00b2b9a6",
+    "local/kernel-nfc-package/export-depmod-fixed/package.json": "f7bb7fdf21a06d7a93a81a7776c6123838ea3c1a34e89037a28f678b9667214c",
+    "local/kernel-nfc-package/r56-fixed-artifact-inspection.json": "275f486a86974f47a313451de6497e3d80887bfe86f06791bea51fcdeaf8635c",
+    "local/nfc-startup-preparation/RAM-image.json": "ccd4af6565b6009cb018e5c8dc87946e347daffbe0fd8c0dffec988edfe1bbc8",
+    "local/nfc-startup-preparation/actual-pending-stage.stderr": "078999aeec75a3d99542a87262a99f23a495c2112624799db662e29d9a10455e",
+    "local/nfc-startup-preparation/busybox-from-qualified-RAM": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+    "local/nfc-startup-preparation/check-entry-gate.py": "f8bdc449b7763494deb8d954c98327c1bf6abfc87a902f97b0f8002f5d357ed5",
+    "local/nfc-startup-preparation/entry-preparation.json": "cac6df6e8c240ad5cffc1bdbd891333d46abcbefa146304d5eb99f97912d015d",
+    "local/nfc-startup-preparation/final-preservation.py": "ea6381b7b0ab3b7ce2399ec3e46876a44dcc22d4f50244da930ae22a01aa1cc8",
+    "local/nfc-startup-preparation/fx0-nfc-moduleless-startup-ram.img": "e4b04713cfcf8deda30872b69fdaf1cd429af525d4053c6412fc0953f16eb1b7",
+    "local/nfc-startup-preparation/host-tests.json": "112c8eee5143198f85f92097c1de170a0b1d3f2fd5b64e088428b38c6e262f6f",
+    "local/nfc-startup-preparation/independent-image-verification.json": "9fab1c54787b4b2ebd2e5cac7ee9205d78fc1f1df991e8253f4bb51a32c663f6",
+    "local/nfc-startup-preparation/mount-alias-regression.json": "6bf362e770c9a12b84791c8fbce68e3a6983d6161013a87fc792c4e3607b2994",
+    "local/nfc-startup-preparation/native-postflight.json": "6d6dcfd168a728a55c1d8f1f6d68506541b9d9a00408d98f285d38d700b3e285",
+    "local/nfc-startup-preparation/native-postflight.py": "156bdb2150bd80e4b2d688b12e3caf66b36b34329b36e75973de9269e29bbcc6",
+    "local/nfc-startup-preparation/physical-entry-gate-check.json": "848c4c630009d2d14cda7d20b8ef37f3ef5a7f399377310d25b220c95d42dcf8",
+    "local/nfc-startup-preparation/prepare-entry.py": "b6482ba34551f7e82daa4f1cd423fe7195b4da785c70e718f0ebcee42d3fa79b",
+    "local/nfc-startup-preparation/prepare-image.py": "cb4ddcdc12f045c9690239b7c149924431fff69c3db393f6d7f338d84c02b61b",
+    "local/nfc-startup-preparation/preservation.json": "a9b3d89f1d72a4529a23982ce9707c6b68630611ef797bac26fab70b9479ffa9",
+    "local/nfc-startup-preparation/procfs-size-regression.json": "5822599d06f6f1fa8cb69c7f4ed4ed317a57e8dcb4d70d7e509235d2dae8b6e5",
+    "local/nfc-startup-preparation/record-evidence.py": "23f8ccb2e93d6e034d4ae4701b99ac0aa509a65f55604037f2f91c5c824f6160",
+    "local/nfc-startup-preparation/verify-image.py": "cfb7a7d80bb270a2bc28dcc2c7d4aac6b5b5f2a04a7018d2ff7891b802d37d49",
+    "local/ram-cpr-load-01/owner-display-touch.json": "58d123649220ed3f84f20b6f9e0a11b6ebc3716423cb625134a70d81d87749c8",
+    "local/ram-nfc-startup-01/boot-once.py": "5566ba76afedb38312b6d25dd455bc28798608188ddc814f78a7f00438326d66",
+    "local/ram-nfc-startup-01/image-verification.json": "ccd4af6565b6009cb018e5c8dc87946e347daffbe0fd8c0dffec988edfe1bbc8",
+    "local/ram-nfc-startup-01/observe.py": "bb520a48cfbe532723027a7f4cde646b060360b36a5b1f133eae53abaf043e76",
+    "local/ram-nfc-startup-01/postflight.py": "927efe4d7c03889f2e64a20aa9de8f34615d4c28f8eadf1a3f8a5d62c1943f2c",
+    "local/ram-nfc-startup-01/preflight.py": "fb6efbc568be31fee681110628391ff83639005cfe0d183175bf2cf229a70d36",
+    "local/ram-nfc-startup-01/ram-observation.json": "2f4342c40a9d374898ae09a76fee88b97e3147392f5bca9bc3a5e14bd7b4421b",
+    "local/ram-nfc-startup-01/run-process.py": "0eac33ecf8506abf2ee5ab1ddf8b32c9523799c55be0fb110fb5709226058c66",
+    "local/ram-nfc-startup-01/stage.py": "e47362f0da7fec9eef96c7f944d6ddd0809014d923ea59030cef450265b76003",
+    "local/ram-nfc-startup-01/wait-native.py": "c6574e938a031244e3ecb325c968fd875e5d8c4c1e4a78852157526b90d8b73e",
+    "manifests/nfc-startup-ram.json": "4c395c9ce2dd953b4b2b3236c2f5e08f57b53a5f71bf47b30b832b311898886d",
+    "scripts/make_diagnostic_image.py": "cd9c976a758d2f4b0282afe88a4c6038750e1fc11f08fdb289737e9f1cc9613f",
+    "tests/test_nfc_startup.py": "dcf2c455f44317bb2dbe9ac650bab15dbd18f5e5123287da18e17fc0ef13ebe1"
+  },
+  "prior_checkpoint_file_versions": {
+    "docs/nfc-bringup.md": {
+      "commit": "6a5e85c16add79d40cfed6c9a9d461efbec6f5d7",
+      "sha256": "60d087dd0b78ae38a5205860387919094aefe81ff1715a2f738c075accaffdad",
+      "meaning": "Frozen earlier evidence identifies its original input version"
+    },
+    "docs/building.md": {
+      "commit": "6a5e85c16add79d40cfed6c9a9d461efbec6f5d7",
+      "sha256": "ab3308dd82ea8a057c0e5252c70666f87d01d6d8db67c3917959521aa4a60916",
+      "meaning": "Frozen earlier evidence identifies its original input version"
+    },
+    "docs/hardware-acceptance.md": {
+      "commit": "6a5e85c16add79d40cfed6c9a9d461efbec6f5d7",
+      "sha256": "3af01408d4ccb455f8faa988988723e40b52cd5d0b2bd52a884171a13e716908",
+      "meaning": "Frozen earlier evidence identifies its original input version"
+    },
+    "docs/development-log.md": {
+      "commit": "6a5e85c16add79d40cfed6c9a9d461efbec6f5d7",
+      "sha256": "37c59c90098ff2f4626388e1b74a2b95e4a0fe761395ac9d25c5a139e21b264f",
+      "meaning": "Frozen earlier evidence identifies its original input version"
+    }
+  }
+}

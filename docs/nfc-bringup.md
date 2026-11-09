@@ -86,7 +86,7 @@ KCFI remains enabled in compilation and the linked ELF, with permissive mode
 disabled. Its only undefined symbols are the same five BPF/weak-EFI entries
 as the reconstructed-r50 baseline. The DTB is byte-identical to the earlier
 schema-checked NFC DTB, and kernel/BSS placement fits below the forced RAM
-ramdisk address. No RAM image has been built or booted from these artifacts.
+ramdisk address. No RAM image has been built or booted from this Fedora artifact family.
 
 The first attempt terminates on the per-user `/tmp` quota despite filesystem
 free space. The workspace retry adds only
@@ -145,6 +145,36 @@ See the [package manifest](../manifests/kernel-nfc-package.json),
 Source composition, artifact identity and distribution build checks do not
 transfer native r50 hardware qualification or establish installed update hooks.
 
+## Prepared first Alpine NFC RAM startup
+
+The first bounded startup image is prepared from the verified Alpine r56 APK:
+6,207,488 bytes with SHA256
+`e4b04713cfcf8deda30872b69fdaf1cd429af525d4053c6412fc0953f16eb1b7`.
+Its original kernel/DTB encoding is retained, with no modules, firmware or CPU
+registration payloads. All ten base initramfs entries, including BusyBox,
+init/USB/HTTP and the 180-second warm-return timer, are unchanged from the
+qualified RAM family. Only the command-line governor changes from `userspace`
+to `schedutil`, matching this conservative source profile; signature enforcement
+remains requested. No CPUfreq policy or NFC binding is expected without modules.
+
+The [read-only checker](../diagnostics/nfc-startup/check-startup.sh) pins the
+exact kernel notes and release, then validates signatures/topology/taint/module,
+mount/temperature state and one unbound PN547 client on enabled QUP3. Its actual
+shell implementation passes 28 fixture modes without changing any fixture or
+calling module/GPIO/I2C tools. Independent header/checksum/CPIO parsing proves
+all 14 archive entries and the absence of modules/firmware. ARM BusyBox syntax
+and compatible-byte conversion pass under emulation. None of these tests boots
+the new kernel or proves runtime signature enforcement, GPIO levels, bus/RF
+operation or timer recovery.
+
+The actual staging process rejects the pending native UI result before phone
+access; instrumented pending and wrong-boot cases likewise reach no phone
+client or subprocess. No staging/BOOT/controller state exists. The latest
+native r50 boot/hash/policy/services remain unchanged. See the
+[image manifest](../manifests/nfc-startup-ram.json),
+[trial procedure](../diagnostics/nfc-startup/README.md) and
+[preparation evidence](../evidence/2026-11-08-nfc-startup-preparation.json).
+
 ## Remaining hardware and distribution gates
 
 The phone still runs the same original r50 boot/hash and conservative policy,
@@ -153,9 +183,9 @@ and no NFC modules are loaded. The prior exact-boot physical UI result remains
 pending; no NFC RAM entry, GPIO/clock change, bus transaction, RF operation,
 firmware download or nonvolatile programming occurred.
 
-Next prepare a bounded RAM trial after the native-return UI gate, and first
-qualify cold
-ownership, balanced clock/GPIO cleanup and NCI reset/init responses. Then test
+After the exact native-return UI gate, first qualify this moduleless RAM
+startup and native recovery. Then use separate bounded signed-module trials
+for cold ownership, balanced clock/GPIO cleanup and NCI reset/init responses. Then test
 tag reading, RF/protocol behavior, userspace integration, restart/error unwind,
 suspend/wake and final distribution packaging. The maintained kernel NCI path
 does not provide the vendor `/dev/pn547` userspace ABI. No native NFC hardware

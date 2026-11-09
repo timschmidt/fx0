@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "status": "Prepared and host-verified moduleless NFC RAM startup; unstaged/unbooted; exact latest-native physical UI gate pending",
+  "phase": "First conservative Alpine NFC startup and timed native return; no modules or controller commands",
+  "image": {
+    "image_path": "local/nfc-startup-preparation/fx0-nfc-moduleless-startup-ram.img",
+    "image_sha256": "e4b04713cfcf8deda30872b69fdaf1cd429af525d4053c6412fc0953f16eb1b7",
+    "image_bytes": 6207488,
+    "kernel_release": "6.18.59-fx0-nfc-alpine",
+    "kernel_sha256": "8f94f5f9dfac03ba0aaf1a1fe5e6612618f1a14a26124829a89858a1bb4ca914",
+    "kernel_bytes": 5505536,
+    "DTB_sha256": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483",
+    "certificate_sha256": "846fdf13b2cbfe48b6f71b57d54e1b44b337f284e4aa274c4a46c3f982e2c3ba",
+    "kernel_notes_sha256": "effce0d45399e7fb6cca90264ea5e7c0dc33b7daf96894132b13b26f0cca00c4",
+    "kernel_GNU_build_id": "41da13782ac8043f861f8f5b251e995ea86217b9",
+    "source_package_sha256": "fd288071ac02d0a0fd10fc13fab0266b137ccc69fc9eec1688384f82f8331c14",
+    "source_recipe_commit": "b18a8f71ba83948cac280c4127ca674ac0c54027",
+    "return_after_seconds": 180,
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\" cpufreq.default_governor=schedutil module.sig_enforce=1"
+  },
+  "source_package_manifest": "manifests/kernel-nfc-package.json",
+  "source_package_evidence": "evidence/2026-11-08-nfc-alpine-package.json",
+  "source_commit": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+  "integrity": {
+    "kernel_and_DTB_original_signed_APK_bytes": true,
+    "ten_qualified_init_USB_HTTP_BusyBox_timer_entries_unchanged": true,
+    "only_cmdline_change_from_qualified_RAM": "cpufreq.default_governor=userspace -> schedutil for the conservative source family",
+    "header_addresses_checksum_and_14_CPIO_entries_independently_verified": true,
+    "kernel_and_BSS_below_forced_ramdisk": true,
+    "runtime_checker_sha256": "74d42c0d7a49b99cf2c0a5ffbc3f27d288c61f2e626cf5028bc1dbca94bee1d2",
+    "runtime_expected_kernel_notes_bytes": 84
+  },
+  "payload": {
+    "module_files": 0,
+    "firmware_files": 0,
+    "CPU_registration_scripts_or_permits": 0,
+    "allowed_module_loads": [],
+    "explicit_NFC_bus_GPIO_clock_RF_firmware_or_frequency_commands": []
+  },
+  "runtime_expectations": {
+    "module_signature_enforcement_requested": true,
+    "signature_parameter": "Y",
+    "default_governor": "schedutil",
+    "CPUfreq_policy": "absent",
+    "CPR_provider": "absent",
+    "online_CPUs": "0-3",
+    "taint": 0,
+    "thermal_sensors": 2,
+    "temperature_mC_range_inclusive_exclusive": [
+      -40000,
+      60000
+    ],
+    "NFC_client": "one unbound QUP3 address 0x28 client with exact PN547 compatible list",
+    "NFC_QUP3_node_enabled_in_candidate": true,
+    "runtime_signature_enforcement_or_hardware_tested": false
+  },
+  "physical_entry": {
+    "previous_native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "required_owner_UI_status": "passed for this exact boot",
+    "current_owner_UI_status": "pending on this newest native return",
+    "actual_pending_stage_gate_and_instrumented_pending_wrong_boot_paths_verified": true,
+    "staging_or_BOOT": false
+  },
+  "evidence": "evidence/2026-11-08-nfc-startup-preparation.json",
+  "remaining": [
+    "latest-native display/touch confirmation before physical entry",
+    "real moduleless RAM startup, kernel-note/client/sigflag observations, timer and native recovery",
+    "separate bounded signature/module/clock/GPIO ownership and cleanup trials",
+    "NCI reset/init, tag/RF/userspace/suspend/wake, installed update/recovery and broader bringup"
+  ]
+}

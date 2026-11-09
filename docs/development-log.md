@@ -4397,3 +4397,38 @@ No device entry, install, GPIO/clock/bus/firmware action, audio test, host Wi-Fi
 change or recovery-disk write occurs. See
 [r57 manifest](../manifests/kernel-cpr-package-r57.json) and
 [correction evidence](../evidence/2026-11-08-cpr-package-dependencies.json).
+
+### Prepared first moduleless NFC RAM startup (2026-11-08)
+
+Built a 6,207,488-byte RAM-only image from the exact verified Alpine NFC r56
+APK kernel/DTB without changing their encoding. It contains no modules,
+firmware or CPU registration payloads. All ten qualified base initramfs
+entries retain their original BusyBox/init/USB/HTTP/180-second timer bytes.
+The conservative family's schedutil default replaces the earlier CPU trial's
+userspace command-line override; enforced signatures remain requested.
+
+The new read-only checker pins the release and exact 84-byte kernel-note
+fingerprint, signature flag, empty module list, zero taint, four CPUs, two
+bounded temperatures, absence of CPUfreq policy/CPR/block mounts, and one
+unbound PN547 client on enabled QUP3. Two tests execute 28 fixture modes,
+including 27 faults, without fixture changes or module/GPIO/I2C commands.
+Independent actual-image parsing verifies header addresses/checksum, all 14
+CPIO entries and module/firmware absence. The exact ARM BusyBox parses init,
+HTTP and the checker and executes compatible-string NUL conversion.
+Review catches procfs zero-size semantics and aliased block-mount gaps before
+publication. The final checker reads module-list contents and permits only
+expected RAM/pseudo filesystem types. Both new cases are accepted by the
+retained earlier unpublished checkers and rejected by the final version;
+none of those images is staged.
+
+The real pending-UI stage process and instrumented pending/wrong-boot cases
+stop before phone-client imports or subprocesses. There is no physical entry,
+transfer or BOOT state. Read-only postflight retains the same native r50 boot,
+original hash, conservative policy, zero taint and active UI services; the
+latest display/touch result remains pending. The previous CPU RAM image,
+CPU/NFC packages, kernel artifacts and protected root index are unchanged.
+No recovery-disk write, audio test or host Wi-Fi change occurs. These host
+checks qualify neither real startup/return nor runtime signatures, cold NFC
+ownership, NCI commands, tag/RF/userspace/PM or broader bringup. See
+[trial procedure](../diagnostics/nfc-startup/README.md) and
+[preparation evidence](../evidence/2026-11-08-nfc-startup-preparation.json).

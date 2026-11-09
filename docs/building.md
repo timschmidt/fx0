@@ -815,3 +815,22 @@ has no RAM/hardware result; package byte identity does not supply that result.
 Use the corrected package for subsequent distribution work. See
 [r57 evidence](../evidence/2026-11-08-cpr-package-dependencies.json) and the
 [owner-fork recipe](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-cpu-runtime-package).
+
+## Prepared moduleless NFC RAM startup
+
+The [startup manifest](../manifests/nfc-startup-ram.json) identifies a separate
+6,207,488-byte image using the exact verified Alpine NFC APK kernel and DTB.
+It preserves the qualified RAM BusyBox/init/USB/HTTP/timer bytes, removes all
+CPU registration modules/scripts/permits and adds only a read-only startup
+checker and identity files. The command line retains enforced signatures and
+uses this conservative family's schedutil default. The kernel/BSS footprint
+fits below the forced 32 MiB ramdisk address, with independently verified legacy
+header checksum and all 14 CPIO entries. No module or firmware file is included.
+
+Two host tests cover 28 fixture modes; exact ARM BusyBox syntax and compatible
+byte handling pass. The staging gate is tested to stop the actual process and
+instrumented pending/wrong-boot paths before phone-client access or subprocesses.
+No image transfer or BOOT occurs. The checker will be invoked by the serial
+observer; its pass conditions are runtime expectations until a real trial.
+See the [procedure](../diagnostics/nfc-startup/README.md) and
+[host evidence](../evidence/2026-11-08-nfc-startup-preparation.json).
