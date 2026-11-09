@@ -4529,3 +4529,28 @@ CPIO entries. See [procedure and limits](../diagnostics/nfc-startup/cold-lifecyc
 NCI reset/init, tag/RF/userspace/PM, open-device or pending-IRQ teardown and
 firmware concurrency remain unqualified. The candidate is RAM-only; installed
 update/recovery, intermittent USB/time-sync faults and broader bringup remain open.
+
+## November 8: bounded controller startup prepared and host-verified
+
+A separate r58 RAM image is prepared for one NCI up/down pair. It retains the
+qualified kernel/DTB/command line, fourteen base CPIO entries and 180-second
+init timer, with the same five signed modules plus a static ARM get/up/down
+helper. The helper validates kernel sender, sequence, family, attributes, ACK
+and fresh powered state; failed/short/interrupted mutations are not resent.
+The shell requires reset/init/mapping response traces and identity fields,
+active/cold GPIO and clock votes, then cold module cleanup. No polling, RF
+discovery, vendor, secure-element or firmware request is exposed.
+
+Thirteen host tests cover 105 cases and detect five weakened guards. Host
+sanitizers and ARM emulation each pass 16,384 packet byte/length variants;
+all 79 helper cases match under ARM emulation. Independent image and exact
+ARM BusyBox checks pass. These are preparation/model results, with real NCI
+controller communication still unqualified. See [procedure](../diagnostics/nfc-startup/controller-startup.md)
+and [preparation evidence](../evidence/2026-11-08-nfc-controller-preparation.json).
+
+The image is unstaged/unbooted. Its actual entry refuses the pending physical
+UI result before importing the phone client. Native r50 boot
+`2e6126b9-498e-4d89-b23e-f08fe6ccc361` retains the original hash, zero taint,
+running synchronized services, low VEN/FIRM, released NFC pins and zero
+reference-clock votes. New native pre/postflight also checks those pin/clock
+conditions. Current exact-boot display/touch confirmation remains pending.
