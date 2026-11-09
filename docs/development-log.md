@@ -4554,3 +4554,23 @@ UI result before importing the phone client. Native r50 boot
 running synchronized services, low VEN/FIRM, released NFC pins and zero
 reference-clock votes. New native pre/postflight also checks those pin/clock
 conditions. Current exact-boot display/touch confirmation remains pending.
+
+## November 8: preserve receive through the closing NCI reset
+
+An expanded actual-C teardown test finds a gap in the prior r58 open model:
+real NCI unregister sends CORE_RESET, but the driver already released its IRQ.
+The response is lost and the request times out even though close returns zero.
+A new transport stop callback leaves receive available through unregister and
+drains it outside the mode mutex before state free. Successful IRQ registration
+is tracked so error unwind cannot release an unowned IRQ.
+
+Five tests / ten cases pass with address/undefined behavior sanitizers; the
+r58 open failure and five isolated defects are detected. Three fresh ARM
+objects compile with W=1 and CFI; strict checkpatch and all seventeen patches'
+exact replay pass. The first isolated tool run fails on read-only /dev/null;
+its logs are retained and the corrected run passes. Publish the source, patch,
+new profile and [evidence](../evidence/2026-11-08-nfc-open-teardown-source.json).
+No new linked kernel, package or image exists, and hardware teardown remains
+unqualified. Preserve earlier source/build/image evidence and the protected
+root index. Native r50 remains the installed family; the latest physical UI
+check is pending separately from the earlier moduleless return confirmation.

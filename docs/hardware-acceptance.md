@@ -348,3 +348,18 @@ UI result before importing the phone client. Native r50 boot
 running synchronized services, low VEN/FIRM, released NFC pins and zero
 reference-clock votes. New native pre/postflight also checks those pin/clock
 conditions. Current exact-boot display/touch confirmation remains pending.
+
+## November 8: open NFC teardown source correction
+
+The new [source evidence](../evidence/2026-11-08-nfc-open-teardown-source.json)
+shows that r58 open unregister loses its closing reset response because the
+IRQ was already released, while kernel close still returns success. The fix
+keeps receive available through unregister, then drains it outside the mode
+mutex before freeing state. Five host tests / ten cases, five broken variants
+and the r58 baseline control verify the modeled behavior; three ARM objects
+compile with W=1 and CFI. This is source verification, with no new kernel,
+package, RAM boot or hardware acceptance. A fresh matching module family is
+required because the private operations type changed. Existing r58 cold
+qualification remains intact; open/pending IRQ timing, controller/RF/PM and
+firmware concurrency remain unqualified. Exact latest-native display/touch
+confirmation remains pending; the older moduleless return was already passed.

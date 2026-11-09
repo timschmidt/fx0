@@ -326,3 +326,22 @@ UI result before importing the phone client. Native r50 boot
 running synchronized services, low VEN/FIRM, released NFC pins and zero
 reference-clock votes. New native pre/postflight also checks those pin/clock
 conditions. Current exact-boot display/touch confirmation remains pending.
+
+## Open unregister reset ordering corrected in source
+
+The r58 remove ordering drains the IRQ before unregister, preventing an open
+controller's final CORE_RESET response from reaching NCI. Kernel close ignores
+that timeout and returns success. A new optional transport stop callback keeps
+receive available through unregister, then drains it outside the mode mutex
+before NCI state is freed. The I2C hook releases only a successfully registered
+IRQ. See [source verification and limits](../diagnostics/nfc-startup/open-teardown.md).
+
+Five extracted-C tests cover ten cases under address/undefined behavior
+sanitizers. They detect the r58 reset failure and five isolated ordering, lock,
+wiring and IRQ ownership defects. Three fresh ARM objects compile with W=1
+and CFI; all seventeen source patches replay exactly. The new profile is
+source-only: its changed private operations layout requires a new matching
+kernel/module/package family before hardware use. Existing r58 images and
+cold qualification remain frozen; the prepared controller trial explicitly
+closes NCI before unload. Open/pending IRQ hardware teardown and concurrent
+firmware remain unqualified. The latest native UI check is still pending.

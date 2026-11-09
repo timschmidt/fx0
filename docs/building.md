@@ -956,3 +956,20 @@ UI result before importing the phone client. Native r50 boot
 running synchronized services, low VEN/FIRM, released NFC pins and zero
 reference-clock votes. New native pre/postflight also checks those pin/clock
 conditions. Current exact-boot display/touch confirmation remains pending.
+
+## Source-only NFC open-teardown profile
+
+The [17-patch profile](../manifests/kernel-nfc-open-teardown.json) appends a
+receive-stop callback fix to the frozen r58 series. Its complete replay matches
+Linux commit `7bbe33bd97b6f57a05de33ce8dcceba6942352a3`. The new input config
+changes only LOCALVERSION to `-fx0-nfc-open-teardown-alpine`; no linked kernel,
+signed modules, recipe/APK or RAM image exists yet for this family. The private
+`nxp_nci_phy_ops` layout changed, so mixing these objects with r58 modules is
+not supported. Preserve r58 artifacts and build a new complete matching family.
+
+[Host checks](../diagnostics/nfc-startup/open-teardown.md) include five tests /
+ten cases with address/undefined behavior sanitizers, the actual r58 reset
+failure and five isolated negative controls. Three ARM objects compile with
+W=1 and CFI using a separate output and the r58 normalized configuration; these
+objects do not constitute a build of the newly named profile. Strict checkpatch
+and exact patch replay pass. Hardware teardown qualification remains open.
