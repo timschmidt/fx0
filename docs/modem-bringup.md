@@ -262,3 +262,21 @@ snapshot rereads match the private host manifest. The current UI gate remains
 pending. See [RMTFS procedure](../diagnostics/modem-control/rmtfs-userspace.md),
 [draft](../submissions/rmtfs/README.md) and
 [evidence](../evidence/2026-11-09-rmtfs-storage-candidate.json).
+
+## RMTFS packet-handler candidate
+
+The actual dispatcher/QMI/storage harness now passes 25/25 synthetic cases on
+host Clang ASan/UBSan/leak detection and static ARM/QEMU. The storage-patched
+baseline fails 11/25 on both runners, including four ARM segmentation faults.
+The handler patch corrects GET_DEV_ERROR handle validation, verbose CLOSE,
+wide sector multiplication, sync error reporting and initialization/formatting.
+Far reads and writes check actual 64-bit storage offsets. Transport and memory
+are mocked; guarded synthetic backing files remain unchanged.
+
+This does not close malformed QMI decoding, shared-memory span checks, large
+counts, lifecycle, dependency provenance or physical modem operation. The OPEN
+request encoder has an unresolved descriptor mismatch; tests construct its
+string TLV directly. All decoding and remaining encoding use the pinned codec.
+No phone commands or hardware changes occur; the latest UI gate remains pending.
+See [packet procedure](../diagnostics/modem-control/rmtfs-packets.md) and
+[evidence](../evidence/2026-11-09-rmtfs-handler-candidate.json).

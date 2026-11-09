@@ -1,0 +1,24 @@
+{
+  "subject": "RMTFS handler candidate; synthetic protocol qualification only",
+  "rmtfs_base": "b30a3eb38f9af283f18dbd3c7755653efc52c094",
+  "qrtr_base": "29e36ae164389580a0f8ea7a7fdb728140ae978d",
+  "patches_in_order": [
+    "diagnostics/modem-control/rmtfs-storage-bounds.patch",
+    "diagnostics/modem-control/rmtfs-handler-errors.patch"
+  ],
+  "handler_base_sha256": "ff99083eb0d8bdd84a42306fcb1e357e87be9e49b45f607493df99c9f3b42f7b",
+  "handler_candidate_sha256": "52151e492cbfa6684019b755673a4fd0762837b2db49386ae9e68392ef82b4d9",
+  "unchanged_tested_storage_sha256": "4505ebab10cd039bdafa776792874a69d269c75aa34508e3cad5939274f8e7e4",
+  "protocol_harness_sha256": "30ffc270671d81bd40176c07c8405d482a273e18e5838b94b0b41bb83797eb92",
+  "checker_sha256": "5668b377ce43b526d1d65e4f5585e79a16c84a2b0c4d3f5f82f44d3512786d4d",
+  "handler_patch_sha256": "4b89958fd4584c4dcc4dc979a480d0e4f60dc41cf73243c76e496a967e0d9e8c",
+  "cases_per_architecture": 25,
+  "candidate_failures": 0,
+  "baseline_failures_each": 11,
+  "baseline_ARM_segmentation_faults": 4,
+  "exact_patch_replay": true,
+  "physical_qualification": false,
+  "phone_installed_or_started": false,
+  "full_daemon_dependency_source_closure_qualified": false,
+  "malformed_packet_and_shared_memory_span_qualification": false
+}
