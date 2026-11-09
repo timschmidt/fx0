@@ -699,3 +699,81 @@ The [Fx0 Sxmo profile](../diagnostics/sxmo-fx0-profile/README.md) uses measured
 gesture thresholds and observed input identifiers. It retains software rendering
 and the current restricted idle/suspend/audio/modem test policy. This milestone
 does not complete remaining hardware, power, cold-boot or reliability qualification.
+
+## Independent Alpine PN547 NFC package
+
+The [NFC package manifest](../manifests/kernel-nfc-package.json) pins the same
+pre-DMP base archive, ten conservative r50 patches and four PN547 patches.
+Its actual exported series replays to the complete published NFC source tree
+`606bc78aa074f6a47d44d790c153362fac665fa8`. The independent configuration uses
+release `6.18.59-fx0-nfc-alpine` and package revision 56; it excludes the later
+CPU/CPR series. Do not build it from the CPU package branch or mix module families.
+
+With the independently recorded base archive available locally:
+
+```sh
+python3 scripts/prepare_kernel_package.py \
+  --manifest manifests/kernel-nfc-package.json --profile nfc \
+  --config configs/linux-6.18.59-fx0-nfc-alpine.armv7 \
+  --template configs/linux-postmarketos-qcom-msm8226.APKBUILD.in \
+  --archive /path/to/linux-fx0-4b800b920c7db82e8012a580a17cc2d8ff9d5e66.tar.gz \
+  --archive-sha512 3479e7b9d3e753f4dddde1b88cb6544d2304e46aa92b3ba0aab8cd0ce1108869efd8cc36692a05bc094ccdff6213e0cae0433dc5b742289c57023a838fda8741 \
+  --output local/nfc-source-recipe --pkgrel 56
+```
+
+The [owner-fork recipe branch](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-nfc-package)
+contains the complete standalone package directory. Its r56 source build uses
+the pinned pmbootstrap wrapper and cached Alpine environment described above.
+The actual normalized configuration passes the official community checker;
+its 19 compiler/capability differences exactly match the preceding Alpine
+build. The complete kernel retains KCFI, full compressed DWARF and the exact
+new embedded certificate. All 468 package modules pass explicit-certificate
+CMS and current-build import-CRC verification, including corruption and
+wrong-family controls. APK signatures and normal offline ARMv7 resolution pass.
+These checks do not execute installed update hooks or prove hardware behavior.
+
+The first APK exposes a real packaging defect: Alpine BusyBox `depmod` writes
+empty dependency lists for all compressed modules. The canonical template and
+NFC recipe now explicitly require kmod. The unchanged source-built kernel,
+configuration and private signing key are retained; `abuild rootpkg` reruns
+only packaging/signing/dependency generation under the verified new recipe
+commit. The corrected APK has all 391 direct and 577 transitive dependency
+edges matching module metadata. The initial bad APK is retained, and the new
+[dependency verifier](../scripts/verify_kernel_module_dependencies.py) rejects
+it. Two regression tests cover missing dependency lists, missing modules and
+cycles. Run this audit alongside signatures and ABI checks:
+
+```sh
+python3 scripts/verify_kernel_module_dependencies.py \
+  --modules /path/to/staged/lib/modules/6.18.59-fx0-nfc-alpine \
+  --expected-count 468 --report local/nfc-module-dependencies.json
+```
+
+The preserved r55 Alpine package also has 464 empty dependency lists. Its
+previous signature/build/RAM-image preparation evidence does not qualify
+autoloading or installed deployment; that package needs the same recipe and
+repackaging correction before distribution. The prepared r55 image remains
+unbooted. No installed phone package is changed by this host-side fix.
+
+Capacity was recovered by losslessly archiving 26,941 regenerable `.o` files
+from seven older host output directories and the completed host NFC build.
+Every archived file is independently decompressed and SHA256-checked before its original is removed;
+5,842 final-artifact hashes remain unchanged, including kernels, modules,
+configurations, DTBs and signing material. The private per-file receipts under
+`local/kernel-nfc-package/old-object-archives{,-02}` and
+`local/kernel-nfc-package/host-NFC-object-archives` record exact paths, modes
+and hashes. Restore the matching archives from the workspace root and verify
+original hashes before incremental work in those old output directories.
+The module audit initially stops on a scratch-space error; additional verified
+small-batch archives recover 323 MB before resuming only the unfinished checks.
+One deliberately corrupted old APK control is retired after reproducing and
+comparing every byte in memory; its original signed APK and prior test evidence
+remain. The prior r55 Alpine build is retained intact at
+`build-r55-preserved` beside its original build path, with 1,394 final-file hashes verified. The root
+index, source checkouts, recovery disk and native phone installation are preserved.
+
+The [package evidence](../evidence/2026-11-08-nfc-alpine-package.json) pins the
+recipe commit, APK, actual kernel/configuration/DTB/certificate and verification
+reports. RAM startup/signature enforcement, controller reset/init, tag/RF,
+userspace, suspend/wake and installed update/recovery remain open. Device entry
+still requires the pending UI confirmation for the latest native boot.

@@ -33,3 +33,12 @@ family. The recipe normalizes compiler capabilities with `olddefconfig`;
 the actual Alpine configuration retains CFI and signed modules and passes the
 official community check. Host RAM results do not qualify this Alpine build,
 its default schedutil path or installed update/recovery.
+
+`linux-6.18.59-fx0-nfc-alpine.armv7` is the independent r56 PN547 package
+input. It differs from the verified full host NFC configuration only in
+LOCALVERSION, using `-fx0-nfc-alpine`; all NFC options, conservative CPU
+choices, nonpermissive CFI, signing and losslessly compressed DWARF remain.
+The [NFC package manifest](../manifests/kernel-nfc-package.json) selects the
+exact ten-patch r50 composition followed by four NFC patches, excluding the
+experimental CPU/CPR series. Alpine compiler-capability normalization is
+recorded separately from this input. This family has no RAM/hardware pass.

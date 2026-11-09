@@ -105,7 +105,7 @@ def export(manifest_path, profile, config, template, archive, archive_sha512,
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--manifest', type=Path, required=True)
-    parser.add_argument('--profile', choices=['r50', 'cpr'], required=True)
+    parser.add_argument('--profile', choices=['r50', 'cpr', 'nfc'], required=True)
     for name in ['config', 'template', 'archive', 'output']:
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--archive-sha512', required=True)

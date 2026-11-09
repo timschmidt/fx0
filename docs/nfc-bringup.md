@@ -118,8 +118,31 @@ runtime signature enforcement. No module is loaded during these checks.
 
 The [full-build manifest](../manifests/kernel-nfc-full-build.json) and
 [evidence](../evidence/2026-11-08-nfc-full-build.json) pin these artifacts and
-the complete configuration delta. The source APK, independent Alpine build,
-RAM startup/NFC operation and installed update/recovery remain unqualified.
+the complete configuration delta. The independent Alpine source build is described below. RAM startup/NFC
+operation and installed update/recovery remain unqualified.
+
+## Independent Alpine distribution build
+
+The separate r56 source package now builds from the exact ten conservative
+r50 patches plus the four NFC patches. Its complete exported series matches
+the published NFC tree, with a distinct `6.18.59-fx0-nfc-alpine` release and
+certificate. The actual Alpine configuration has only the 19 known compiler
+capability differences, passes the official community checker and retains
+nonpermissive CFI, module signing and compressed DWARF. All 468 packaged
+modules pass CMS and import-CRC checks against this kernel, with tampered and
+wrong-family controls rejecting. APK signatures and normal offline ARMv7
+resolution pass. The package initially exposes empty BusyBox dependency lists for compressed
+modules. Explicit kmod plus a packaging-only rerun fixes all 391 direct/577
+transitive edges without changing the compiled kernel/configuration/key;
+the new all-module dependency audit rejects the preserved original bad APK.
+The prior uninstalled r55 Alpine package shares this metadata defect and
+needs the same correction before distribution. Neither NFC family has booted.
+
+See the [package manifest](../manifests/kernel-nfc-package.json),
+[build procedure](building.md#independent-alpine-pn547-nfc-package) and
+[measured package evidence](../evidence/2026-11-08-nfc-alpine-package.json).
+Source composition, artifact identity and distribution build checks do not
+transfer native r50 hardware qualification or establish installed update hooks.
 
 ## Remaining hardware and distribution gates
 
@@ -129,8 +152,8 @@ and no NFC modules are loaded. The prior exact-boot physical UI result remains
 pending; no NFC RAM entry, GPIO/clock change, bus transaction, RF operation,
 firmware download or nonvolatile programming occurred.
 
-Next prepare the distribution package and a bounded RAM trial after the
-native-return UI gate, and first qualify cold
+Next prepare a bounded RAM trial after the native-return UI gate, and first
+qualify cold
 ownership, balanced clock/GPIO cleanup and NCI reset/init responses. Then test
 tag reading, RF/protocol behavior, userspace integration, restart/error unwind,
 suspend/wake and final distribution packaging. The maintained kernel NCI path

@@ -107,7 +107,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', type=Path, required=True,
                         help='Existing pristine checkout at the manifest base commit')
-    parser.add_argument('--profile', choices=['r50', 'cpr'], required=True)
+    parser.add_argument('--profile', choices=['r50', 'cpr', 'nfc'], required=True)
     parser.add_argument('--manifest', type=Path,
                         default=ROOT/'manifests/kernel-integration.json')
     parser.add_argument('--report', type=Path, required=True)

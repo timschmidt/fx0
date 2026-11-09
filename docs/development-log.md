@@ -4326,3 +4326,46 @@ Wi-Fi change occurs. Distribution/independent Alpine packaging, bounded RAM,
 controller/tag/userspace/PM and full bringup remain open. See
 [full-build manifest](../manifests/kernel-nfc-full-build.json) and
 [evidence](../evidence/2026-11-08-nfc-full-build.json).
+
+### Independent conservative PN547 Alpine package (2026-11-08)
+
+Exported and independently source-built r56 from the ten conservative r50
+patches plus four published NFC changes, excluding the later CPU/CPR series.
+All 16 source checksums verify and the raw recipe payload replays to the exact
+published Git tree. The distinct `6.18.59-fx0-nfc-alpine` family retains
+nonpermissive KCFI, module signing and full losslessly compressed DWARF.
+Its actual configuration passes the official community checker and has exactly
+the 19 known Alpine compiler/capability differences. All 468 packaged modules
+pass explicit embedded-kernel-certificate CMS and current `Module.symvers`
+import-CRC checks; corruption and wrong-family controls reject. APK signatures,
+modified signed-metadata rejection and normal offline ARMv7 resolution pass.
+
+The initial APK's BusyBox depmod metadata has 468 empty dependency lists.
+Requiring kmod in the canonical template and committed NFC recipe fixes that
+real defect. An authenticated `abuild rootpkg` run reuses the unchanged compiled
+kernel/configuration/key and repeats only packaging/signing/dependency
+generation. The final 391 direct and 577 transitive edges match every module's
+metadata. The new generic audit rejects the actual initial bad APK; two graph
+regression checks pass. The preserved uninstalled r55 package has the same
+464-entry defect and needs correction before distribution.
+
+Lossless archives of 26,941 regenerable objects recover 3,895,319,084 bytes
+while preserving 5,842 recorded final-artifact hashes. Each file is independently
+decompressed and SHA256-checked before removal, with private restoration
+receipts retained. The previous r55 Alpine build is preserved by rename and
+1,394 final-file hash checks. Setup attempts stop before compilation on missing
+shared objects/upstream/channel metadata; each terminal attempt is retained,
+and the corrected build attempt uses the identical initial recipe commit. An
+audit harness sparse-file lookup is corrected to compare published Git objects. Module verification initially stops on ENOSPC; after verified small
+batch archiving, only the remaining checks resume. One exactly reproducible
+old corrupt-APK control is retired while retaining its original signed package
+and test evidence. No recovery-disk write or root-index change occurs.
+
+Read-only phone postflight retains the original r50 boot/hash, conservative
+CPU policy, zero taint, running startup/Sway/sensor proxy, disabled QUP3 and
+no NFC modules. The retained eMMC file's size is unchanged; its cross-boot
+content check remains pending. The exact latest-boot UI question remains open.
+No package install, RAM entry, NFC GPIO/clock/bus/RF/firmware action, audio test
+or host Wi-Fi change occurs. Hardware, installed update/recovery and broader
+bringup qualification remain open. See [NFC work](nfc-bringup.md) and
+[package evidence](../evidence/2026-11-08-nfc-alpine-package.json).
