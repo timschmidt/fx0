@@ -4482,3 +4482,28 @@ build has 21 changed source files matching its published commit. The old
 field reported ELF symbol-string-table bytes. Original reports and all
 linked artifact hashes are preserved; [the erratum](../evidence/2026-11-08-nfc-source-comparison-correction.json)
 adds no runtime or hardware qualification.
+
+## November 8: r58 moduleless startup, recovery and eMMC persistence
+
+The corrected r58 family passes one moduleless RAM startup and timed return to
+installed r50. Its original packed image first times out before BOOT; after
+terminal transfer recovery and an owner-confirmed native boot, isolated XZ
+preset-3 encoding preserves the exact runtime Image/ELF/notes/certificate/ABI.
+The new image reads back exactly, the actual startup checker passes, and its
+84-byte notes match the linked r58 build. Four CPUs, no modules and one unbound
+PN547 client at QUP3 `1-0028` are observed. The timer returns at 181.610626 s,
+with serial and 22 complete HTTP pairs. Original r50 hash, zero taint, 1.15 V
+PMIC target, policy and UI services are restored; owner confirms display/touch
+on boot `98ab64c6-01c6-4c1e-91a2-433fc3afc4cf`. See
+[startup evidence](../evidence/2026-11-08-nfc-moduleless-startup.json).
+
+The preceding intermediate native reboot also verifies the retained 512 MiB
+eMMC pattern with direct reads, full pattern and hash checks, and no ext4
+errors. Its exact synthetic files are archived/removed after the later RAM
+return. This is warm-reboot persistence, with power-loss/endurance qualification
+still open. See [storage evidence](../evidence/2026-11-08-emmc-cross-boot-persistence.json).
+
+Signed module runtime checks, NFC GPIO/clock ownership/teardown, controller/RF/PM
+and wider bringup remain open. Original build/package/image artifacts and the
+protected root index are unchanged. The USB transport fault remains unresolved;
+native systemd currently waits on time synchronization with no failed units.

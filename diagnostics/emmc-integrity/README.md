@@ -58,5 +58,14 @@ other system activity; they are not isolated storage benchmarks.
 The first native r50 run passes all four rounds, totaling 2 GiB written and
 directly verified in 417.83 seconds, with 512 reported temperature samples of
 39–45°C, zero filesystem errors and no new storage kernel errors. The original
-boot/hash/policy/services remain intact; the final file awaits cross-boot
-verification. See [native evidence](../../evidence/2026-11-08-emmc-native-integrity.json).
+boot/hash/policy/services remain intact. See [native evidence](../../evidence/2026-11-08-emmc-native-integrity.json).
+
+A later changed native boot passes a full 512 MiB `O_DIRECT` read in 50.15
+seconds, verifying every byte and the expected final SHA256 with no ext4 errors.
+The native boot IDs differ and block counters account for the direct read.
+This establishes warm-reboot persistence for that synthetic file; it does not
+qualify sudden power loss, endurance or the whole device. After a later r58 RAM
+trial returns to native r50, the inactive trial unit and exact file set are
+checked; worker/result are archived and only the synthetic payload, worker,
+result and its one Python cache file are removed. The payload is not reverified
+on that later cleanup boot. See [persistence and cleanup evidence](../../evidence/2026-11-08-emmc-cross-boot-persistence.json).
