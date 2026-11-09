@@ -1,6 +1,6 @@
 {
-  "recorded_UTC": "2026-11-09T10:30:49.581385+00:00",
-  "status": "Progress: on-phone firmware layout verified; separate unbooted RMTFS description; no firmware start",
+  "recorded_UTC": "2026-11-09T10:48:45.182670+00:00",
+  "status": "Progress: firmware layout and unbooted RMTFS description; current private provisioning snapshots verified; no firmware start",
   "firmware_layout": {
     "layout_checks_passed": true,
     "MSS_loader_program_headers_adjacent_to_ELF_header": true,
@@ -647,11 +647,20 @@
   "candidate_installed_packaged_or_booted": false,
   "limits": [
     "Firmware layout only; actual authentication/start/stop/fault handling and physical RMTFS memory remain unqualified",
-    "Current matching private rollback snapshots and independent copies for persist/modemst1/modemst2 remain unproven; originals preserved",
+    "Current private snapshots match at capture on phone plus one off-device host filesystem; recheck freshness before use; physical restore remains untested",
     "RMTFS candidate is outside the active kernel recipe and existing offline-probe image; would map reserved memory if booted",
     "Current native display/touch gate pending before any RAM entry",
     "RMTFS userspace/QRTR/shared-memory/service ownership, RFSA needs, modem transport/ModemManager, SIM/RF/GNSS remain unfinished",
     "Intermittent USB transfer failure and full battery/thermal/CPU/peripheral/reliability/current-stable-edge/upstream bringup remain open"
   ],
-  "evidence": "evidence/2026-11-09-modem-firmware-layout.json"
+  "evidence": "evidence/2026-11-09-modem-firmware-layout.json",
+  "current_provisioning_snapshot": {
+    "manifest": "manifests/modem-provisioning-backup.json",
+    "partition_count": 5,
+    "bytes": 43515904,
+    "phone_and_host_current_images_verified": true,
+    "off_device_copies": 1,
+    "physical_partition_restore_tested": false,
+    "evidence": "evidence/2026-11-09-modem-provisioning-backup.json"
+  }
 }

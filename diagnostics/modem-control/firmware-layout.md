@@ -62,8 +62,9 @@ separate firmware-start action. A future startup trial needs explicit lifecycle
 ownership, a qualified memory device and current provisioning rollback coverage.
 
 Original backup comparisons match modem/FSG/FSC but differ for persist and both
-modemst partitions. Current verified private copies are still required before
-startup. Keep the original images; this comparison does not diagnose corruption
-or authorize restoring old provisioning. The current native UI question is
+modemst partitions. A later [private provisioning snapshot](provisioning-backup.md)
+now preserves current bytes on the phone and one off-device host filesystem.
+Recheck freshness before startup. Keep the original images; the earlier
+comparison does not diagnose corruption or authorize restoring old provisioning. The current native UI question is
 pending, and this procedure has not launched a RAM trial or changed the phone.
 See [evidence](../../evidence/2026-11-09-modem-firmware-layout.json).

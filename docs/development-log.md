@@ -4957,3 +4957,39 @@ Sway/UPower and other services, CPU/NFC/MSS baseline, taint0 and raw APC/S5
 controls. Host state/index and installed files remain unchanged. No reboot,
 USB transfer/reset, module load, firmware/radio/package change or recovery-disk
 write. Full bringup remains active. See [evidence](../evidence/2026-11-09-modem-firmware-layout.json).
+
+
+## November 9: current provisioning captured privately on phone and host
+
+The previous turn is progress: firmware layout and the separate unbooted RMTFS
+description were published at 8be6165. Revalidate 2,324 prior hashes and the
+protected index. Keep the current native physical UI gate pending; no RAM entry.
+
+Capture five fixed provisioning partitions into a fresh mode-700 phone rootfs
+directory, excluding modem firmware. Check labels/offsets/sizes, disabled MSS,
+absent storage daemons/writer descriptors and read-only/unmounted sources. Every
+source is opened read-only, and all five before/copy/after digests agree. Fsync
+and reread five images plus metadata. Transfer only those private provisioning
+snapshots and capture metadata to mode-600 files on encrypted workstation
+storage. Independent post-transfer phone snapshot/source reads and host rereads
+match; the capture PID is absent. Original card identity matches privately.
+
+The two persistent copies contain 43,515,904 bytes across persist/modemst1/
+modemst2/FSG/FSC. The phone copy shares the source eMMC; this establishes one
+off-device current copy, not two. Factory-era originals remain preserved. No
+provisioning bytes, per-partition digests, card identity or firmware payload are
+published. The private manifest and verifier bind those images without listing
+their individual digests in the public evidence map.
+
+Four methods/25 synthetic cases pass for exact bounded copying, no-clobber,
+changed/short/oversized/symlink/nondevice sources and eighteen bad snapshot
+metadata/map/hash/permission/controller cases. A host round-trip into disposable
+regular files verifies all five image payloads; temporary copies are removed.
+No physical provisioning restore or power-loss durability is tested.
+
+Final read-only native checks retain the same r50/r5 boot, files, raw boot hash,
+taint0, Sway/UPower and other services, CPU/NFC/MSS baseline, nine APC/S5 controls
+and unchanged host state/index. Phone writes are confined to seven new regular
+backup files on rootfs. No source partition write, flash, reboot, USB reset/RAM
+transfer, module load, firmware/radio/package change or recovery-disk write.
+Full bringup remains active. See [evidence](../evidence/2026-11-09-modem-provisioning-backup.json).

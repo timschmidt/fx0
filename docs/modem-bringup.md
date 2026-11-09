@@ -192,10 +192,10 @@ Read-only hashes of modem, persist, modemst1, modemst2, FSG and FSC are compared
 with independently rehashed original private recovery images. Modem firmware,
 FSG and FSC match. Persist and both modemst partitions differ. The audit does
 not establish when or why they changed, and does not diagnose corruption.
-Keep the original backups. Current verified private snapshots and a second
-independent copy of the changed provisioning state remain prerequisites before
-firmware start; an old factory image is not a current-state rollback image.
-No provisioning payload is read back to the host in this audit.
+Keep the original backups. That read-only audit exported no provisioning
+payload. The later private snapshot below now captures current provisioning
+state. Recheck its freshness before firmware start; an old factory image is
+not a current-state rollback image.
 
 Final native checks preserve the same boot, r50/r5 hashes, raw boot image,
 taint0, services, CPU/NFC baseline and all nine APC/S5 controls. Original firmware
@@ -204,3 +204,35 @@ There is no reboot, RAM transfer, driver registration, firmware start, RMTFS
 installation or radio change. The physical UI gate for the newest native boot
 remains pending. See [reproduction procedure](../diagnostics/modem-control/firmware-layout.md)
 and [evidence](../evidence/2026-11-09-modem-firmware-layout.json).
+
+
+## Current private provisioning snapshots
+
+A later one-use capture now preserves persist, modemst1, modemst2, FSG and FSC:
+43,515,904 bytes in five images. It verifies exact labels/offsets/sizes, disabled
+MSS, absent remote-storage writers and unmounted or read-only source filesystems.
+All five source digests agree before capture, during each bounded copy and on
+independent reads after host transfer. Every source device is opened read-only.
+No source partition is restored or written.
+
+Private mode-600 images and metadata are fsynced in
+`/var/lib/fx0-rollback/modem-provisioning-01` on phone rootfs p35 and in
+`local/modem-provisioning-backup-01/host-backup` on the encrypted workstation.
+The phone copy shares the source eMMC; the workstation is one off-device copy.
+Both persistent copies are rehashed, their manifests agree and the capture PID
+is absent. Original card identity is compared privately with the retained card
+record; no CID, provisioning bytes or per-partition digests are published.
+The original factory-era images remain unchanged.
+
+This writes seven new regular backup files on phone rootfs, not firmware or
+source partitions. It excludes the modem firmware partition. A host payload
+round-trip into five fresh regular files matches all bytes; disposable copies
+are removed afterward. This does not rehearse physical partition restoration
+or power-loss survival. Four synthetic test methods/25 cases pass for bounded
+copy, no-clobber, private paths and snapshot acceptance/refusal.
+
+Final r50/r5, original raw boot, services, CPU/NFC/MSS state, raw APC/S5 controls
+and host routes/resolver/index are preserved on the same native boot. No reboot,
+RAM entry, firmware start, package or radio change occurs. The newest physical
+UI gate remains pending. See [backup and restoration procedure](../diagnostics/modem-control/provisioning-backup.md)
+and [snapshot evidence](../evidence/2026-11-09-modem-provisioning-backup.json).

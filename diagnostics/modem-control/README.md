@@ -67,3 +67,9 @@ verify the installed segment bounds without exporting payloads and identify the
 missing shared-memory device. The candidate is host-only and keeps MSS disabled.
 Original and current provisioning hashes differ for three partitions; fresh
 current-state rollback coverage remains required before firmware start.
+
+
+Current [private provisioning backups](provisioning-backup.md) now match fresh
+source reads on both phone and host storage. This closes the current-image
+freshness gap as of capture, while physical restoration, RMTFS qualification,
+the native UI gate and firmware startup remain separate unfinished work.

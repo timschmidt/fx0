@@ -1,0 +1,86 @@
+{
+  "recorded_UTC": "2026-11-09T10:48:45.182085+00:00",
+  "status": "Current private provisioning snapshots verified on phone and host; no source restore or modem start",
+  "backup": {
+    "verified_UTC": "2026-11-09T10:48:45.182085+00:00",
+    "current_matching_private_images_verified": true,
+    "partition_count": 5,
+    "bytes": 43515904,
+    "partitions": {
+      "persist": {
+        "bytes": 33554432,
+        "verified": true
+      },
+      "modemst1": {
+        "bytes": 3145728,
+        "verified": true
+      },
+      "modemst2": {
+        "bytes": 3145728,
+        "verified": true
+      },
+      "fsg": {
+        "bytes": 3145728,
+        "verified": true
+      },
+      "fsc": {
+        "bytes": 524288,
+        "verified": true
+      }
+    },
+    "native_backup_directory": "/var/lib/fx0-rollback/modem-provisioning-01",
+    "host_backup_directory": "local/modem-provisioning-backup-01/host-backup",
+    "private_unit_binding": "local/modem-provisioning-backup-01/unit-binding.private.json",
+    "source_reads_before_copy_copy_digest_and_fresh_post_transfer_reads_match": true,
+    "all_snapshot_files_fsynced_and_independently_reread": true,
+    "two_persistent_filesystems": "Phone eMMC ext4 /dev/mmcblk0p35 and encrypted workstation filesystem",
+    "phone_copy_shares_source_eMMC": true,
+    "off_device_current_copies": 1,
+    "same_original_card_privately_verified": true,
+    "original_stock_backups_preserved": true,
+    "firmware_partition_excluded": true,
+    "host_payload_roundtrip_to_disposable_regular_files": "pass; five files/43515904 bytes; temporary files removed",
+    "physical_partition_restore_tested": false,
+    "power_loss_or_eMMC_failure_durability_tested": false,
+    "native_boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "kernel_and_UPower_preserved": "r50/r5",
+    "source_partition_writes": 0,
+    "new_phone_regular_backup_files": 7,
+    "reboots_or_modem_starts": 0,
+    "scope": "Current private byte snapshots only. Recheck before use; whole-device/factory rollback and physical provisioning restore are separate."
+  },
+  "synthetic_tests": {
+    "methods": 4,
+    "cases": 25,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "log": "local/modem-provisioning-backup-01/host-tests.log",
+    "scope": "Synthetic file copy/private snapshot fixtures only; native system/proc guards exercised by the real capture, not fault-injected",
+    "checks": [
+      "bounded exact copy, source unchanged, private target and no-clobber",
+      "short/oversized/changed/symlink/nondevice source refusal",
+      "complete five-image verification and redacted report",
+      "eighteen bad snapshot/map/hash/permission/controller cases"
+    ],
+    "files_sha256": {
+      "diagnostics/modem-control/capture-provisioning.py": "511dfda8a016db238a6c6a4a1ce45a8f43a73879355e399c13fbb6b8fc0b1883",
+      "diagnostics/modem-control/verify-provisioning-backup.py": "88954ce735129c0297f84137d1f63d4f080a03a6c78d217ff00a451c6127077e",
+      "tests/test_modem_provisioning_backup.py": "a8652fc8c4f9869441316cc289fbde8f96b2d283ed89f8cb8c53b9a5476164a4"
+    }
+  },
+  "latest_native_UI_unchanged": {
+    "native_boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "status": "pending on this newest native return",
+    "question": "The r59 transfer timed out before BOOT, and the phone has returned to installed r50 with UPower r5 active, the original boot hash, and Sway and the sensor proxy running. Do display and touch work normally on this newest boot?",
+    "recorded_UTC": "2026-11-09T08:14:37.367617+00:00"
+  },
+  "remaining": [
+    "Recheck source freshness and original-card/partition mapping before any use",
+    "Physical provisioning restoration and power-loss durability remain untested; broader stock/whole-device restoration acceptance is separate",
+    "One off-device current copy; phone secondary copy shares the source eMMC",
+    "Current UI gate, physical RMTFS/MSS probe, firmware startup/stop/fault ownership, transport/RF/SIM/GNSS and full bringup remain unfinished"
+  ],
+  "private_payload_integrity": "Pinned private host manifest plus verify-provisioning-backup.py; per-partition payload digests are not public",
+  "evidence": "evidence/2026-11-09-modem-provisioning-backup.json"
+}
