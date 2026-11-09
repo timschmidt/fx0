@@ -4369,3 +4369,31 @@ No package install, RAM entry, NFC GPIO/clock/bus/RF/firmware action, audio test
 or host Wi-Fi change occurs. Hardware, installed update/recovery and broader
 bringup qualification remain open. See [NFC work](nfc-bringup.md) and
 [package evidence](../evidence/2026-11-08-nfc-alpine-package.json).
+
+### Corrected CPU/CPR compressed-module package r57 (2026-11-08)
+
+Fixed the original r55 APK's 464 empty BusyBox dependency lists by requiring
+kmod and incrementing the package revision to r57. All 43 source patches and
+the input configuration are unchanged. Authenticated `abuild rootpkg` runs
+in the retained source-build tree, reusing the exact kernel/DTBs/configuration,
+embedded certificate and private mode-0600 signing key. This is packaging-only;
+the original kernel release and compiled build number are retained.
+
+All 464 signed module files and payloads match r55 byte for byte. All 25,294
+imported CRCs, signatures and corruption/wrong-family/ABI controls pass. The
+new graph verifies 385 direct/567 transitive edges and rejects the actual
+original bad r55 metadata. Dry-run modprobe checks all 464 packaged binary-index
+resolutions and dependency orders; the same audit passes all 468 NFC modules.
+No modules load or host configuration changes. APK signature/tamper and offline
+ARMv7 checks pass. An isolated workspace usermode r55-to-r57 replacement with
+hooks disabled produces 546 regular files matching the signed r57 payload.
+Actual phone update hooks, autoload, boot and recovery remain untested.
+
+All 1,394 retained r55 final-file hashes, 48 published source-file comparisons,
+CFI flags/link/config and original APK remain intact. Separate NFC artifacts
+and the protected root index are unchanged. The prepared r55 RAM registration
+image remains unchanged/unbooted; its exact native-UI gate is still pending.
+No device entry, install, GPIO/clock/bus/firmware action, audio test, host Wi-Fi
+change or recovery-disk write occurs. See
+[r57 manifest](../manifests/kernel-cpr-package-r57.json) and
+[correction evidence](../evidence/2026-11-08-cpr-package-dependencies.json).

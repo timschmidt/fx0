@@ -198,6 +198,17 @@ Alpine preparation below uses the matching package family for startup and
 module registration.
 See `evidence/2026-11-08-cpr-observation-source-package.json`.
 
+The original r55 APK later exposes empty BusyBox dependency metadata for all
+464 compressed modules. Packaging revision r57 requires kmod and retains the
+exact original kernel, both DTBs, certificate/configuration and all signed
+module bytes. All 25,294 import CRCs, 567 transitive dependency edges, binary
+loader dry-runs and signed-APK checks pass. Isolated usermode replacement
+checks all 546 payload files with hooks disabled. The prepared r55 image below
+remains attached to its original fingerprints, unchanged and unbooted; no
+hardware acceptance follows from r57's identical payloads. Use the corrected
+package for distribution work. See
+`evidence/2026-11-08-cpr-package-dependencies.json`.
+
 ## Prepared Alpine startup and signed registration
 
 `register-alpine.sh` is pinned to r55's

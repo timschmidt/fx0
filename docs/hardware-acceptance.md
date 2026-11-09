@@ -147,6 +147,14 @@ original hash/1.15 V target, zero taint, running startup/NTP and UI services;
 its latest physical UI result remains pending. See
 [r55 package evidence](../evidence/2026-11-08-cpr-observation-source-package.json).
 
+Its empty BusyBox module dependency metadata is now corrected in packaging
+revision r57 using kmod. The original kernel/configuration/DTBs/certificate
+and all 464 signed modules remain byte-identical. All 25,294 import CRCs and
+567 dependency edges verify; binary-index loader dry-runs and isolated
+usermode r55-to-r57 replacement also pass, including all 546 final payload
+files. These checks do not test phone autoload, update hooks, boot or recovery.
+See [r57 correction](../evidence/2026-11-08-cpr-package-dependencies.json).
+
 The first independent Alpine startup/signed-registration RAM image is prepared
 with the exact signed APK kernel/DTB and matching two-module family. It retains
 the 180-second return and makes no explicit performance request. Three real-shell

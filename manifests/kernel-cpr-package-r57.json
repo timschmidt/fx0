@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "status": "Packaging-only revision r57 corrects dependency metadata; retained exact independently source-built r55 kernel/signing family; unbooted/uninstalled",
+  "source": {
+    "repository": "https://github.com/timschmidt/fx0-linux.git",
+    "branch": "integration/fx0-cpr-observe",
+    "commit": "b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8",
+    "integration_manifest": "manifests/kernel-cpr-voltage-observation.json",
+    "patch_count": 43,
+    "original_source_recipe_commit": "b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9"
+  },
+  "recipe": {
+    "verified_UTC": "2026-11-09T00:43:54.157939+00:00",
+    "repository": "https://github.com/timschmidt/fx0-pmaports",
+    "branch": "integration/fx0-cpu-runtime-package",
+    "commit": "aff76347460f7f367e5e963b245cea1aa9e7d854",
+    "remote_ref_independently_verified": true,
+    "checkout_clean": true,
+    "published_payload": "r57 recipe/provenance correction; all 43 raw source patches and configuration unchanged",
+    "binary_firmware_private_key_or_device_log_export": false,
+    "owner_authorization": "Pushing to github is approved for all fx0 development."
+  },
+  "package": {
+    "name": "linux-postmarketos-qcom-msm8226-6.18.59-r57.apk",
+    "bytes": 18620461,
+    "sha256": "21708970fdb3b414c2fad9c7f9119f6bac2d46266d4122979c048140ae9c4916",
+    "recipe_commit": "aff76347460f7f367e5e963b245cea1aa9e7d854",
+    "source_build": true,
+    "package_phase_repeated_only": true,
+    "compiled_kernel_source_recipe_commit": "b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9",
+    "reason": "Use explicit kmod depmod for compressed-module dependencies; source/config/kernel/key unchanged"
+  },
+  "kernel_release": "6.18.59-fx0-cpr-observe-alpine",
+  "compiled_kernel_build_number": "56-postmarketos-qcom-msm8226; r57 is packaging-only, no rebuild claimed",
+  "kernel_recompiled": false,
+  "configuration": {
+    "input": "configs/linux-6.18.59-fx0-cpr-observe-alpine.armv7",
+    "input_sha256": "18a13809f3aa5042fb8447b1ae171b660b9321d85b9de6fd3c42134c7c8234fc",
+    "actual_config_sha256": "577b0584787a58bcc914a077bdad753faecc68d4889d64f1843b85fc4201af76",
+    "actual_config_matches_original_r55": true
+  },
+  "kernel": {
+    "zImage_sha256": "746d40e30fb95d10d86ef2ac7dd886f068f0cf09ad7a3ee8006535d396a03923",
+    "ELF_sha256": "5c441c8d97e2f51fd4ce592bb7c1128ad5c95d1d42ba4f0113cb1aecb61fbd95",
+    "DTBs_sha256": {
+      "qcom-msm8926-lg-madai": "c251a13f8a92ff86c024e8ccd3114760aec4c4febb78ef67e16c3b03ba94613f",
+      "qcom-msm8926-lg-madai-cpr": "589d17908c2bd9584b0f3f51bc4c19ced467b60791e3fd13bc4ee3fbcd9e0284"
+    },
+    "certificate_sha256": "edc7d3cd556be62ff28bae1e201652d5c39166c34a9172a53a7390dc38972260",
+    "certificate_exactly_matches_kernel_trust_list": true,
+    "Module_symvers_sha256": "c3b94138ac5a136a3f494ff441179f81b6c6619a845a3ebeeb37f1db88624486"
+  },
+  "modules": {
+    "count": 464,
+    "all_signed_files_and_payloads_identical_to_r55": true,
+    "all_explicit_kernel_certificate_CMS_checks_pass": true,
+    "imported_symbol_CRC_checks": 25294,
+    "all_imports_match_full_Module_symvers": true,
+    "direct_dependency_edges": 385,
+    "transitive_dependency_edges": 567,
+    "all_text_dependency_entries_match_module_metadata": true,
+    "all_binary_index_loader_requests_pass_dry_run": true
+  },
+  "constraints": [
+    "Package version/provenance and dependency metadata change; original compiled build number, kernel release/configuration/key/module bytes retained",
+    "Host loader dry-runs and usermode APK replacement do not qualify device autoload, probe, root-mode scripts/hooks, boot or recovery",
+    "Original r55 APK and prepared registration image retained; image remains unchanged and unbooted",
+    "No proprietary firmware/calibration, private keys or binaries published; no recovery-disk writes, audio tests or host Wi-Fi changes"
+  ],
+  "evidence": "evidence/2026-11-08-cpr-package-dependencies.json"
+}

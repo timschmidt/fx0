@@ -135,8 +135,9 @@ resolution pass. The package initially exposes empty BusyBox dependency lists fo
 modules. Explicit kmod plus a packaging-only rerun fixes all 391 direct/577
 transitive edges without changing the compiled kernel/configuration/key;
 the new all-module dependency audit rejects the preserved original bad APK.
-The prior uninstalled r55 Alpine package shares this metadata defect and
-needs the same correction before distribution. Neither NFC family has booted.
+The prior uninstalled r55 Alpine package shares this metadata defect;
+[r57 now corrects it](../evidence/2026-11-08-cpr-package-dependencies.json) while
+retaining its exact kernel and signed modules. Neither NFC family has booted.
 
 See the [package manifest](../manifests/kernel-nfc-package.json),
 [build procedure](building.md#independent-alpine-pn547-nfc-package) and

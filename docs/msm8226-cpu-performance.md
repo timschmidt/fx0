@@ -1047,3 +1047,22 @@ script. The image preserves exact APK kernel/DTB/module bytes and the qualified
 timer/init logic; memory-footprint and observer-command checks pass. It remains
 unstaged/unbooted while the preceding native return physical UI check is pending.
 See [Alpine registration preparation](../evidence/2026-11-08-alpine-cpr-registration-preparation.json).
+
+### Observation package dependency correction r57
+
+The original r55 APK retains the correct signatures and payloads but has empty
+BusyBox-generated dependency lists for all 464 compressed modules. Revision
+r57 requires kmod and repeats only the authenticated `abuild rootpkg` phase,
+retaining the exact r55 kernel/configuration/DTBs/certificate and every signed
+module byte. Its kernel release and original compiled build number remain
+unchanged; only the package revision, provenance and dependency metadata change.
+
+All 25,294 imported CRCs and 464 signatures verify. All 385 direct/567 transitive
+dependency edges match the module metadata, and all 464 binary-index modprobe
+resolutions pass in dry-run mode. The original r55 package fails the new graph
+audit. APK signature/tamper checks, offline ARMv7 resolution and isolated
+usermode r55-to-r57 replacement pass; all 546 final payload files match the
+signed APK, with scripts/hooks disabled during extraction. The prepared r55
+RAM image remains unchanged/unbooted. On-device boot, controlled registration,
+autoload, update hooks/recovery and all later CPU hardware gates remain open.
+See [r57 package evidence](../evidence/2026-11-08-cpr-package-dependencies.json).

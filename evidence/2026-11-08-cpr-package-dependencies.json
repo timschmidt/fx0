@@ -1,0 +1,549 @@
+{
+  "date": "2026-11-08",
+  "recorded_UTC": "2026-11-09T00:46:36.523967+00:00",
+  "status": "r57 package-only correction of empty BusyBox dependency metadata; exact r55 kernel/signing family, all signatures/CRC/graphs/binary loader checks and usermode package replacement pass; unbooted/uninstalled",
+  "source": {
+    "repository": "https://github.com/timschmidt/fx0-linux.git",
+    "branch": "integration/fx0-cpr-observe",
+    "commit": "b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8",
+    "integration_manifest": "manifests/kernel-cpr-voltage-observation.json",
+    "patch_count": 43,
+    "original_source_recipe_commit": "b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9"
+  },
+  "recipe_publication": {
+    "verified_UTC": "2026-11-09T00:43:54.157939+00:00",
+    "repository": "https://github.com/timschmidt/fx0-pmaports",
+    "branch": "integration/fx0-cpu-runtime-package",
+    "commit": "aff76347460f7f367e5e963b245cea1aa9e7d854",
+    "remote_ref_independently_verified": true,
+    "checkout_clean": true,
+    "published_payload": "r57 recipe/provenance correction; all 43 raw source patches and configuration unchanged",
+    "binary_firmware_private_key_or_device_log_export": false,
+    "owner_authorization": "Pushing to github is approved for all fx0 development."
+  },
+  "recipe_inputs": {
+    "manifest_sha256": "46c04b4e05b0595cc9d69eabcbcd7cc12c78b118d834c2726e355e6d05717598",
+    "profile": "cpr",
+    "base_commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+    "configuration_sha256": "18a13809f3aa5042fb8447b1ae171b660b9321d85b9de6fd3c42134c7c8234fc",
+    "template_sha256": "1db21f51e35974da6ab4a8eb2e9ce57f48cba688bc43ebb6c6001f8f72356bdb",
+    "source_archive_sha512": "3479e7b9d3e753f4dddde1b88cb6544d2304e46aa92b3ba0aab8cd0ce1108869efd8cc36692a05bc094ccdff6213e0cae0433dc5b742289c57023a838fda8741",
+    "pkgrel": 57,
+    "patch_order": [
+      "fx0-mpu6515-dmp.patch",
+      "iio-preserve-tiny-log2-scale.patch",
+      "fx0-mpu6515-dmp-smd-awake.patch",
+      "fx0-mpu6515-dmp-smd-wake.patch",
+      "fx0-mdp5-video-flush-before-enable.patch",
+      "fx0-msm8926-raw-qfprom-binding.patch",
+      "fx0-msm8926-raw-qfprom-driver.patch",
+      "fx0-msm8926-raw-qfprom-dt.patch",
+      "fx0-cpr-mx-voltage-sequencing.patch",
+      "fx0-scm-legacy-fuse-read.patch",
+      "fx0-msm8926-calibration-decoder.patch",
+      "fx0-pm8226-saw-fixed-range-binding.patch",
+      "fx0-pm8226-saw-fixed-range.patch",
+      "fx0-msm8226-l2-master-binding.patch",
+      "fx0-msm8226-l2-master-driver.patch",
+      "fx0-msm8926-l2-master-dt.patch",
+      "fx0-pm8226-saw-always-on-binding.patch",
+      "fx0-pm8226-saw-no-enable.patch",
+      "fx0-msm8926-voltage-plan.patch",
+      "fx0-cpr-mx-activation.patch",
+      "fx0-cpr-attach-retry.patch",
+      "fx0-msm8926-corner-map.patch",
+      "fx0-msm8926-calibration-load.patch",
+      "fx0-msm8926-cpr-domain-binding.patch",
+      "fx0-msm8926-cpr-domain.patch",
+      "fx0-pm8226-saw-voltage-recovery.patch",
+      "fx0-smd-rpm-request-acks.patch",
+      "fx0-cpr-mx-vote-recovery.patch",
+      "fx0-cpr-preserve-feedback-on-error.patch",
+      "fx0-msm8926-cpufreq-binding.patch",
+      "fx0-msm8926-cpufreq-attachment.patch",
+      "fx0-msm8926-cpr-qualification-dt.patch",
+      "fx0-msm8926-startup-clock-binding.patch",
+      "fx0-msm8926-startup-clock.patch",
+      "fx0-msm8926-startup-clock-dt.patch",
+      "fx0-msm8226-cpu-clock-errors.patch",
+      "fx0-msm8926-runtime-clock-binding.patch",
+      "fx0-msm8926-runtime-clock-guard.patch",
+      "fx0-msm8926-runtime-clock-dt.patch",
+      "fx0-msm8926-probe-diagnostics.patch",
+      "fx0-msm8926-cpr-xo-handoff.patch",
+      "fx0-msm8926-cpr-disabled-reference.patch",
+      "fx0-msm8926-cpr-voltage-observation.patch"
+    ],
+    "exported_sha256": {
+      "fx0-mpu6515-dmp.patch": "9ad19adac6fa9aa3eb995e41e031daa556595d0a3f7e3713757e19f32f6c0ce4",
+      "iio-preserve-tiny-log2-scale.patch": "7b01db1be9db0b1e73a4cb3034cd05d5b3eb164990fe6024fc58804278aaa0b0",
+      "fx0-mpu6515-dmp-smd-awake.patch": "97c1a1028b962414123e54bba812cbbe14e0dadcf7dfb66265a0178060dc8ec9",
+      "fx0-mpu6515-dmp-smd-wake.patch": "92f9acedd8ab3397fbb80bd47ee440914ff48382a355455f7dd1037ff06ccf85",
+      "fx0-mdp5-video-flush-before-enable.patch": "d626c745802e9c7b5230b8dbc5e524fe4eae78b522cf15b4bf947fd0f6acdbb3",
+      "fx0-msm8926-raw-qfprom-binding.patch": "2affc2d26b7c7585d1cc0f847412da8011fcbc97754b3b1ca7fed9e3af164011",
+      "fx0-msm8926-raw-qfprom-driver.patch": "d82fac0f63e2951e3485af0caf9182ffa78dada8f49e6c48ea8a7e864cce8a1a",
+      "fx0-msm8926-raw-qfprom-dt.patch": "08e458d5cca9c00441fa177cf38fbf74984a680bebc66ff014a80e73835f7aa1",
+      "fx0-cpr-mx-voltage-sequencing.patch": "f5bdd80531d944f84c41eaabd7c381c988a9b6ae233956327d542a6f4c05a119",
+      "fx0-scm-legacy-fuse-read.patch": "a5d6a54661c3755d38112fe97aa84bbc10742b591fd782257e3cf11680474ac4",
+      "fx0-msm8926-calibration-decoder.patch": "2ea51081968ed3a1d7d8877414eb5f5aa1bc2b29b6b6106fd87c6b8f6b71ec22",
+      "fx0-pm8226-saw-fixed-range-binding.patch": "23cdad9ce596deed1beed66cdf898c4e2bad7c194f1e16762eb52f9bea323451",
+      "fx0-pm8226-saw-fixed-range.patch": "6267bd46d55d9e2cd868d3249efc7ca54c18de21d9c0d98d805f54903842bb64",
+      "fx0-msm8226-l2-master-binding.patch": "ff6540380e0d1e091b3ecdf98fd7ab0d3b3d7c160c20149b797d7d541d7816fa",
+      "fx0-msm8226-l2-master-driver.patch": "67b29ca5dd4f5a62225abc29253d890c72ecfebe6c06d4856170ba9d8efaeaab",
+      "fx0-msm8926-l2-master-dt.patch": "1de1ddd79c35e93ba2256d5091f076c8d6ad5b077423544e936d658b5424dc5e",
+      "fx0-pm8226-saw-always-on-binding.patch": "584fadb90037884b23e0947fddbab8c325cf7b97b6695171f1963fcec0c3ef35",
+      "fx0-pm8226-saw-no-enable.patch": "a7e1fa92a85e61404cd8d662fcffc755b28b02d0091763c3e1543c553f417980",
+      "fx0-msm8926-voltage-plan.patch": "7408b82182e6478c26eb9a57b7e83737965b91206412f083634558f459ea3ce3",
+      "fx0-cpr-mx-activation.patch": "735e1d0c6116e8a33c1bd95034f6ba9901c9eb339c326aa873697ee2e123ec87",
+      "fx0-cpr-attach-retry.patch": "1d8d0182384519b8749afe4f38215c15cf7c481289299a14e188c0b9dd182d81",
+      "fx0-msm8926-corner-map.patch": "1d38fb2d95ea22b070029872c971fe8109e5b538bfb20f8d5c2cc7dedec95a62",
+      "fx0-msm8926-calibration-load.patch": "09c459db1158f514fec1ba940e4ddea0e88ced74bcfe8883b627e73a0aa6aa8e",
+      "fx0-msm8926-cpr-domain-binding.patch": "0b821674cdeebb766b1df472408ee5927274c1ea3e84fb1c5c1a347f36102b28",
+      "fx0-msm8926-cpr-domain.patch": "1e17b59dcf211d70911e4ec9d7f447efdbf2047f37f5c885e9e4b24440ccab30",
+      "fx0-pm8226-saw-voltage-recovery.patch": "86e3f7abc9c7690487b52704484f8d5740393abe8b9f860d497fa4d17581d32d",
+      "fx0-smd-rpm-request-acks.patch": "e98356b9a18208abf97b3c8e8a71c2ada24d699a500ec51295cc014a227ca58e",
+      "fx0-cpr-mx-vote-recovery.patch": "bd0ed2c8b2d5eb24017e1e209e67cdeb1e61fe1c116658e16a118f09eeee127e",
+      "fx0-cpr-preserve-feedback-on-error.patch": "1db5e678882022f11f732c98eb5c3ac39e7a62c131d616542ba5280758b8e7bb",
+      "fx0-msm8926-cpufreq-binding.patch": "12d14f6200c4f7b07f2c58848f0aaeca76f7fee1d7c8754e8e7b43c0073f4b98",
+      "fx0-msm8926-cpufreq-attachment.patch": "7475b0e1164770b065976a9e19b6128d4841330d634db50921652b017f665ecd",
+      "fx0-msm8926-cpr-qualification-dt.patch": "54d0770a66cb9f705844c4718cf9f6ba0a813373597516c1ab7ddec285706bd5",
+      "fx0-msm8926-startup-clock-binding.patch": "ab51749965a6fa8395613c14f3efae5c832b3929f57b1e40ea3e9fea2378b48d",
+      "fx0-msm8926-startup-clock.patch": "bc90b5109ba3caa5a7898bc53228c1080ece5a3b600393b88aace560c66e5e52",
+      "fx0-msm8926-startup-clock-dt.patch": "3727744c39fd0151a12c7f798de2e654df71b0c1d38e57f60aeef7b3c4345de8",
+      "fx0-msm8226-cpu-clock-errors.patch": "7f1f97cafbe29c8c2cf92adc6b3f5b5ce5d342019c0420b7c439b4abf35f723b",
+      "fx0-msm8926-runtime-clock-binding.patch": "fae83d0ee35ac0b6a84c92fd3051a75271e28069e2be71f6fb4cb3f9bfdd74c8",
+      "fx0-msm8926-runtime-clock-guard.patch": "009bfbdde5a801987525907a77825d29b07f4ef0f5ffd0de05e8c6d55d721cbe",
+      "fx0-msm8926-runtime-clock-dt.patch": "235a5bcb5004ffed9e71086dce3325091dc7f5281af45db53b2d7ad4ac7783d5",
+      "fx0-msm8926-probe-diagnostics.patch": "9dfbccdc362a70b15aaf28644a91f9f855f366bf530bb9f73f5232bb159260eb",
+      "fx0-msm8926-cpr-xo-handoff.patch": "4d215e04ef19ce6c011dbdf99ef1539d73d3f7a5be240d0d2160dfacf9ab126a",
+      "fx0-msm8926-cpr-disabled-reference.patch": "1fd7047761a4dd448907661396a7cfd5b82263e2ab97f88e753d99327e7a8e98",
+      "fx0-msm8926-cpr-voltage-observation.patch": "993c85b5b1abedbe0a4920dd0b4e2dd59fb4cdb3af1081ac21bb92115f735dbc",
+      "config-postmarketos-qcom-msm8226.armv7": "18a13809f3aa5042fb8447b1ae171b660b9321d85b9de6fd3c42134c7c8234fc",
+      "APKBUILD": "b08a02b99c9fc8c2826094100a4ed583c189dc9a5b2487edb966723f266dee80"
+    },
+    "status": "exported only; source build and hardware acceptance separate"
+  },
+  "review_diff": {
+    "patch": "patches/pmaports/fx0-cpr-module-dependencies.patch",
+    "sha256": "f645a190f9d87099d46e4ae7e888ad9d35ab943679e629c3957fce5875d670d9",
+    "base_commit": "b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9",
+    "recipe_commit": "aff76347460f7f367e5e963b245cea1aa9e7d854",
+    "exact_replay_to_recipe_tree": true
+  },
+  "original_defect": {
+    "original_r55_APK": {
+      "name": "linux-postmarketos-qcom-msm8226-6.18.59-r55.apk",
+      "bytes": 18481234,
+      "sha256": "a60821c69c6f72f48458934c5d48741c4ed5408714fe8aaffa5a6bf99407d4ca",
+      "recipe_commit": "b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9",
+      "source_build": true
+    },
+    "dependency_lists": 464,
+    "nonempty_lists": 0,
+    "cause": "BusyBox depmod in original Alpine source-build chroot did not resolve compressed Zstandard modules",
+    "actual_old_APK_rejected": {
+      "original_r55_with_empty_BusyBox_dependency_lists_rejected": true,
+      "expected_failure_is_dependency_closure_mismatch": true,
+      "original_signed_APK_and_metadata_retained": true,
+      "returncode": 1,
+      "module_loading_or_device_access": false
+    }
+  },
+  "packaging_controller": {
+    "started_UTC": "2026-11-09T00:38:46.797046+00:00",
+    "operation": "Alpine CPU r57 package phase only with explicit kmod; verified kernel/source/config/key retained; no phone operation",
+    "recipe_commit": "aff76347460f7f367e5e963b245cea1aa9e7d854",
+    "command": [
+      "podman",
+      "--root",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/podman-storage",
+      "--runroot",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/podman-run",
+      "--storage-driver",
+      "vfs",
+      "--cgroup-manager",
+      "cgroupfs",
+      "run",
+      "--rm",
+      "--name",
+      "fx0-cpr-r57-repackage-depmod",
+      "--privileged",
+      "--network",
+      "host",
+      "--security-opt",
+      "label=disable",
+      "--cgroups=disabled",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/src/pmbootstrap:/pmbootstrap:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-runtime:/pmaports:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/pmb:/pmb:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/pmbootstrap.cfg:/pmb-config:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/cpr-package-dependencies/pmbootstrap-repackage-provenance.py:/pmb-repro:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/cpr-package-dependencies/export:/export:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/cpr-package-dependencies:/audit:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/cpr-package-dependencies/repackage-container.sh:/build-container.sh:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/pmb/work/cache_distfiles/linux-fx0-4b800b920c7db82e8012a580a17cc2d8ff9d5e66.tar.gz:/source-archive:ro",
+      "3ea06e4cb95e726ea6c6cc4377570ac4c4050d78710004cbd631ca809daf7e8e",
+      "/bin/sh",
+      "/build-container.sh"
+    ],
+    "podman_PID": 2919335,
+    "returncode": 0,
+    "finished_UTC": "2026-11-09T00:39:01.893417+00:00"
+  },
+  "package_only": {
+    "kernel_recompiled": false,
+    "kernel_build_number": "56-postmarketos-qcom-msm8226; r57 is packaging-only, no rebuild claimed",
+    "proper_APK_revision_bump_to_r57": true,
+    "new_recipe_commit_authenticated_before_abuild_rootpkg": true,
+    "original_43_patches_and_configuration_unchanged": true,
+    "kernel_DTB_config_certificate_and_all_signed_modules_unchanged": true,
+    "kmod_version": "34.2",
+    "pinned_pmbootstrap_commit": "46ee403e4680002ce42dc2645adf9b08557270e9",
+    "cached_container_image": "3ea06e4cb95e726ea6c6cc4377570ac4c4050d78710004cbd631ca809daf7e8e"
+  },
+  "artifact": {
+    "package": {
+      "name": "linux-postmarketos-qcom-msm8226-6.18.59-r57.apk",
+      "bytes": 18620461,
+      "sha256": "21708970fdb3b414c2fad9c7f9119f6bac2d46266d4122979c048140ae9c4916",
+      "recipe_commit": "aff76347460f7f367e5e963b245cea1aa9e7d854",
+      "source_build": true,
+      "package_phase_repeated_only": true,
+      "compiled_kernel_source_recipe_commit": "b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9",
+      "reason": "Use explicit kmod depmod for compressed-module dependencies; source/config/kernel/key unchanged"
+    },
+    "release": "6.18.59-fx0-cpr-observe-alpine",
+    "ELF": "ARM ELF32 little-endian",
+    "kernel_sha256": "746d40e30fb95d10d86ef2ac7dd886f068f0cf09ad7a3ee8006535d396a03923",
+    "DTBs_sha256": {
+      "qcom-msm8926-lg-madai": "c251a13f8a92ff86c024e8ccd3114760aec4c4febb78ef67e16c3b03ba94613f",
+      "qcom-msm8926-lg-madai-cpr": "589d17908c2bd9584b0f3f51bc4c19ced467b60791e3fd13bc4ee3fbcd9e0284"
+    },
+    "certificate_sha256": "edc7d3cd556be62ff28bae1e201652d5c39166c34a9172a53a7390dc38972260",
+    "certificate_bytes": 1324,
+    "certificate_exactly_matches_kernel_trust_list": true,
+    "undefined_symbols": [
+      "U __bpf_callback_fn",
+      "U __bpf_prog_runX",
+      "w efi_attr_config_table",
+      "w efi_attr_fw_vendor",
+      "w efi_attr_runtime"
+    ],
+    "introduced_undefined_symbols": [],
+    "module_directory": "r57-inspection/lib/modules/6.18.59-fx0-cpr-observe-alpine",
+    "compiled_kernel_and_both_DTBs_match_package": true,
+    "embedded_recipe_commit_matches": true,
+    "physical_RAM_boot_of_this_Alpine_artifact": false
+  },
+  "module_verification": {
+    "verified_UTC": "2026-11-09T00:39:52.212915+00:00",
+    "release": "6.18.59-fx0-cpr-observe-alpine",
+    "verified_modules": 464,
+    "all_ARM_ELF_release_intree_and_explicit_CMS_checks_pass": true,
+    "certificate_sha256": "edc7d3cd556be62ff28bae1e201652d5c39166c34a9172a53a7390dc38972260",
+    "all_464_signed_module_file_and_payload_hashes_exactly_match_r55": true,
+    "all_imported_symbol_CRCs_match_current_full_Module_symvers": true,
+    "imported_symbol_CRC_checks": 25294,
+    "corrupted_payload_and_signature_rejected": true,
+    "wrong_build_certificate_controls": [
+      {
+        "certificate_sha256": "b788b077f154eb7c32a8fd71dd6cea5aa490a1ba79a6b915fdbf104a0a050b81",
+        "CPU_module_rejected": true
+      },
+      {
+        "certificate_sha256": "846fdf13b2cbfe48b6f71b57d54e1b44b337f284e4aa274c4a46c3f982e2c3ba",
+        "CPU_module_rejected": true
+      }
+    ],
+    "ABI_negative_controls": [
+      "modified import CRC rejected",
+      "wrong export ABI map rejected"
+    ],
+    "no_modules_loaded_or_forced": true
+  },
+  "ABI": {
+    "modules": 464,
+    "imported_CRC_checks": 25294,
+    "negative_controls": [
+      "modified import CRC rejected",
+      "wrong export ABI map rejected"
+    ],
+    "private_report_sha256": "d5491bbcd33a7e153930c500b0298f1c36174ae785d79c66e00093d62ce9b507"
+  },
+  "dependency_graph": {
+    "verified_modules": 464,
+    "declared_dependency_edges": 385,
+    "transitive_dependency_edges": 567,
+    "all_modules_dep_entries_match_module_metadata": true,
+    "modules_dep_sha256": "fd84f711abe7f02170c677e0dedd849e43e7efdece794a38360fec32fb1f77a0",
+    "scope": "Dependency metadata only; signatures, ABI, runtime loading and install hooks separate"
+  },
+  "binary_loader_indexes": {
+    "checked_UTC": "2026-11-09T00:41:32.383239+00:00",
+    "release": "6.18.59-fx0-cpr-observe-alpine",
+    "module_requests_checked": 464,
+    "all_binary_index_resolutions_match_verified_text_graph": true,
+    "all_dependency_orders_valid": true,
+    "loader": "modprobe --show-depends --dry-run --ignore-install --config /dev/null --dirname STAGING --set-version RELEASE",
+    "host_configuration_or_modules_modified": false,
+    "binary_indexes_sha256": {
+      "modules.alias.bin": "388fa09051b2d4b968f782a61d2fa3c19e3ba804d9be61820679d8d953d519be",
+      "modules.builtin.bin": "bd08fd404bc527b773d1da67685e7c4be7188bf7f91ac7060000c0424feaa159",
+      "modules.symbols.bin": "cf010ed54437b8299387ee9daf1c23bf4e4eb9463d07e32eb40e3393cd0060e3",
+      "modules.dep.bin": "88c1bcca372399d3a6aad68e856d9a1101908a6557775c7486e52053b9dac799",
+      "modules.builtin.alias.bin": "b50bf04882e18c378eebc5661495dcb1bc0c229de7b705517bdb5cfa4e325942"
+    },
+    "scope": "Host loader resolution only; device autoload, insertion, probe and installed hooks remain unqualified"
+  },
+  "additional_NFC_binary_index_check": {
+    "checked_UTC": "2026-11-09T00:41:44.114385+00:00",
+    "release": "6.18.59-fx0-nfc-alpine",
+    "module_requests_checked": 468,
+    "all_binary_index_resolutions_match_verified_text_graph": true,
+    "all_dependency_orders_valid": true,
+    "loader": "modprobe --show-depends --dry-run --ignore-install --config /dev/null --dirname STAGING --set-version RELEASE",
+    "host_configuration_or_modules_modified": false,
+    "binary_indexes_sha256": {
+      "modules.alias.bin": "f97c0c99c5a28fd9ee8112f720db7a84c089688bd687ce6319796cb7bdf61a12",
+      "modules.builtin.bin": "ab2bb8879575cf5c3216c9307bb854a7003188e3e9b92d225a3558cc6ec78e66",
+      "modules.symbols.bin": "e4e39bc031881ed86d53a0b3b3f604647055c3f209ffd896b0903e7a675f9f8a",
+      "modules.dep.bin": "3c9f1b14564520765a41daad3cbd7ee66c2a1c920fecb220db072a90f108df35",
+      "modules.builtin.alias.bin": "cdc55d6dac7565a5cdd9cf8d5bc947c7a2e1f737000f5265aba82c2e6a24cb3b"
+    },
+    "scope": "Host loader resolution only; device autoload, insertion, probe and installed hooks remain unqualified"
+  },
+  "APK_signature_and_offline_simulation": {
+    "verified_UTC": "2026-11-09T00:39:54.472356+00:00",
+    "package": {
+      "name": "linux-postmarketos-qcom-msm8226-6.18.59-r57.apk",
+      "bytes": 18620461,
+      "sha256": "21708970fdb3b414c2fad9c7f9119f6bac2d46266d4122979c048140ae9c4916",
+      "recipe_commit": "aff76347460f7f367e5e963b245cea1aa9e7d854",
+      "source_build": true,
+      "package_phase_repeated_only": true,
+      "compiled_kernel_source_recipe_commit": "b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9",
+      "reason": "Use explicit kmod depmod for compressed-module dependencies; source/config/kernel/key unchanged"
+    },
+    "APK_signature_verified": true,
+    "modified_signed_recipe_metadata_rejected": true,
+    "modified_metadata_message": "BAD signature; original signature retained and modified control stream recompressed with valid gzip CRC",
+    "no_private_keys_or_firmware_in_APK": true,
+    "normal_offline_ARMv7_simulation": {
+      "returncode": 0,
+      "stdout": "(1/1) Installing linux-postmarketos-qcom-msm8226 (6.18.59-r57)\nOK: 22.8 MiB in 1 packages\n",
+      "stderr": "",
+      "scope": "empty initialized usermode database; package resolution only; no installation or update hooks"
+    },
+    "actual_device_install": false
+  },
+  "isolated_usermode_upgrade": {
+    "checked_UTC": "2026-11-09T00:43:27.059635+00:00",
+    "old_APK_sha256": "a60821c69c6f72f48458934c5d48741c4ed5408714fe8aaffa5a6bf99407d4ca",
+    "new_APK_sha256": "21708970fdb3b414c2fad9c7f9119f6bac2d46266d4122979c048140ae9c4916",
+    "r55_to_r57_simulation_and_user_mode_replacement_pass": true,
+    "simulation_did_not_modify_database": true,
+    "final_database_version": "6.18.59-r57",
+    "final_regular_payload_files_matching_signed_APK": 546,
+    "symlinks_verified": 0,
+    "commands": [
+      {
+        "arguments": [
+          "--no-scripts",
+          "add",
+          "/home/tim/Documents/GitHub/fx0/local/kernel-observation-package/export-retry01/linux-postmarketos-qcom-msm8226-6.18.59-r55.apk"
+        ],
+        "returncode": 0,
+        "stdout": "(1/1) Installing linux-postmarketos-qcom-msm8226 (6.18.59-r55)\nOK: 22.1 MiB in 1 packages\n",
+        "stderr": ""
+      },
+      {
+        "arguments": [
+          "add",
+          "--simulate",
+          "/home/tim/Documents/GitHub/fx0/local/cpr-package-dependencies/export/linux-postmarketos-qcom-msm8226-6.18.59-r57.apk"
+        ],
+        "returncode": 0,
+        "stdout": "(1/1) Upgrading linux-postmarketos-qcom-msm8226 (6.18.59-r55 -> 6.18.59-r57)\nOK: 22.8 MiB in 1 packages\n",
+        "stderr": ""
+      },
+      {
+        "arguments": [
+          "--no-scripts",
+          "add",
+          "/home/tim/Documents/GitHub/fx0/local/cpr-package-dependencies/export/linux-postmarketos-qcom-msm8226-6.18.59-r57.apk"
+        ],
+        "returncode": 0,
+        "stdout": "(1/1) Upgrading linux-postmarketos-qcom-msm8226 (6.18.59-r55 -> 6.18.59-r57)\nOK: 22.8 MiB in 1 packages\n",
+        "stderr": ""
+      }
+    ],
+    "scope": "Isolated workspace usermode root; scripts/hooks disabled on actual extraction; no phone installation, actual root-mode hooks, boot, update/recovery qualification"
+  },
+  "preservation": {
+    "checked_UTC": "2026-11-09T00:42:31.249821+00:00",
+    "all_checks_passed": true,
+    "original_r55_final_files_hash_checked": 1394,
+    "source_files_matching_published_observation_tip": 48,
+    "source_commit": "b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8",
+    "CFI_compilation_link_and_nonpermissive_config_retained": true,
+    "r55_kernel_config_DTBs_certificate_and_all_464_signed_modules_exactly_retained": true,
+    "old_r55_APK_and_metadata_retained": true,
+    "separate_NFC_kernel_config_certificate_and_APK_unchanged": true,
+    "root_index_entries_and_bytes_unchanged": true,
+    "private_key_mode": "0600; ownership/bytes retained, no host key read or permission change",
+    "kernel_compilation_performed": false,
+    "device_boot_staging_install_or_module_load": false,
+    "recovery_disk_written": false,
+    "audio_tested": false,
+    "host_builtin_WiFi_changed": false
+  },
+  "native_postflight": {
+    "boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "kernel": "6.18.59-fx0-dmp",
+    "taint": 0,
+    "systemd": "running",
+    "failed_units": [],
+    "pending_jobs": [],
+    "Sway": true,
+    "sensor_proxy": "active",
+    "boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "CPU_policy": {
+      "scaling_governor": "schedutil",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200",
+      "scaling_available_frequencies": "300000 384000 600000 787200"
+    },
+    "QUP3_status": "disabled",
+    "loaded_NFC_modules": [],
+    "eMMC_retained_file_bytes": 536870912,
+    "checked_UTC": "2026-11-09T00:45:22.114431+00:00",
+    "phone_activity": "Read-only postflight; no reboot, install, RAM stage, NFC I/O or PMIC access",
+    "latest_native_UI": "pending on this newest native return",
+    "retained_eMMC_content_or_cross_boot_persistence_reverified": false
+  },
+  "latest_native_UI": {
+    "native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "status": "pending on this newest native return",
+    "question": "The five-round-trip and four-core 600 MHz RAM load trial has returned to installed r50. Its original boot hash and 1.15 V PMIC target are restored, with Sway and the sensor proxy active. Do display and touch work normally on this newest boot?"
+  },
+  "operations": {
+    "device_boot_or_RAM_stage": false,
+    "candidate_install_or_module_load": false,
+    "raw_eMMC_writes": false,
+    "GPIO_clock_NFC_bus_RF_or_firmware_actions": false,
+    "recovery_disk_writes": false,
+    "audio_tests": false,
+    "host_builtin_WiFi_changes": false
+  },
+  "limits": [
+    "Kernel hardware family is unchanged but remains unbooted independently of Fedora acceptance",
+    "The prepared r55 image stays pinned to its original APK/input fingerprints; no image update or physical pass implied",
+    "Binary loader checks use explicit staged root, release, /dev/null configuration, --show-depends, --dry-run and --ignore-install; nothing inserted",
+    "Actual isolated usermode upgrade disables scripts/hooks and checks every final payload; it does not prove phone root-mode hooks, boot, autoload, installed rollback or recovery",
+    "Latest exact-native physical UI gate remains pending; retained eMMC cross-boot content check remains pending",
+    "Full fx0 stable/edge/hardware/reliability/upstream and cellular-with-SIM gates remain open"
+  ],
+  "full_bringup": "in progress",
+  "files_sha256": {
+    "configs/README.md": "8f0256c0e0d0474638dae2618f7eb773d76e5b3e94c176e9f91369ab6232124e",
+    "diagnostics/cpu-cpr-runtime/README.md": "6d3befe185709860724efcf8e1c445bb5a47cb50e0c1f69c4b4d2d0a0d5b9314",
+    "docs/building.md": "ab3308dd82ea8a057c0e5252c70666f87d01d6d8db67c3917959521aa4a60916",
+    "docs/development-log.md": "37c59c90098ff2f4626388e1b74a2b95e4a0fe761395ac9d25c5a139e21b264f",
+    "docs/hardware-acceptance.md": "3af01408d4ccb455f8faa988988723e40b52cd5d0b2bd52a884171a13e716908",
+    "docs/msm8226-cpu-performance.md": "27f9c12fd2a3138e75dfcc547504e52fb81caed042e777543dea8b92787bbe1a",
+    "docs/nfc-bringup.md": "60d087dd0b78ae38a5205860387919094aefe81ff1715a2f738c075accaffdad",
+    "local/cpr-package-dependencies/NFC-loader-indexes.json": "d98ba785b591b6160092fb39d81ffdaa07a84601687f8122caff83d994263855",
+    "local/cpr-package-dependencies/actual-r55-regression-control.json": "d79b142d50f75be903900b86be4659a0ce4d7de82fd4e7072948189280be4c17",
+    "local/cpr-package-dependencies/audit-controller.json": "30e822656fe3b6c6b5325b59b7cca1a1034ea1981e79674edd29eedd7211667b",
+    "local/cpr-package-dependencies/before.json": "1cf9ddbc1b555e6c937b2eb138a4e9917ef0b49ceca68e16a9cb78705df3b103",
+    "local/cpr-package-dependencies/check-user-upgrade.py": "94454ac83afe7aa98b075eb1f3f46a8d979c68b068685a17283e70244fd1e397",
+    "local/cpr-package-dependencies/commit-message.txt": "2dac8a5dd76c53f21677834f365d1ba796ad68a96995d15dec622544bc57625a",
+    "local/cpr-package-dependencies/final-preservation.py": "0c5b05129c2825e008d59aba47c81765933feefe791fb6bbb2b073cea079d57a",
+    "local/cpr-package-dependencies/inspect-package.py": "fc4289a6735e0e0003e92aa2dca7118060f286fe11126ce9cdd8973ef8a047b9",
+    "local/cpr-package-dependencies/inspect-package.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/cpr-package-dependencies/inspect-package.stdout": "5b6f7e3482e20cb12d8488c27f3c02edb6e9de0851d50926ed0021ac44634fe7",
+    "local/cpr-package-dependencies/loader-indexes.json": "931f58480c6332ba63a7e144669682c1ab08c6c578010f1aa3716a809411e360",
+    "local/cpr-package-dependencies/module-ABI-verification.json": "d5491bbcd33a7e153930c500b0298f1c36174ae785d79c66e00093d62ce9b507",
+    "local/cpr-package-dependencies/module-dependencies.json": "994a14e87103468fd65ffb4d4cd9e446f0036ddecbde07af8391c97891ad33cb",
+    "local/cpr-package-dependencies/module-postflight.json": "c6eba139175305c8b39d96fcd68c2e44c89d7f8812124bbc5ac61a95570366f8",
+    "local/cpr-package-dependencies/module-verification.json": "65c9e69a2f8b6ebe481a7d6d13abf5a8cb6ce6b13cf1f9216445299dd17b271b",
+    "local/cpr-package-dependencies/native-postflight.json": "89fef89fff597c26deb7146413bcdbbdcdf882e4877ccc5ea407fbc793bbfe8e",
+    "local/cpr-package-dependencies/native-postflight.py": "7bedd40df42b75825ee19567c01198faa3e84c8274381884abfd3a1c369e460a",
+    "local/cpr-package-dependencies/pmbootstrap-repackage-provenance.py": "c8c984ca7daeefc60082ab0578fbb3e61c87c45a99ecdacce57198a0bafba82f",
+    "local/cpr-package-dependencies/postbuild-checks.json": "f6a1895d1eeb479073eaae0863ba839f7352f3fe20c2e482b6e7299ba5426aa4",
+    "local/cpr-package-dependencies/prepare-repackage.py": "07e605d51db98a4ca87c287da620515825a65fd0b5447e167b592e027d5e6447",
+    "local/cpr-package-dependencies/prepare-verifiers.py": "34e4e219370d3682b5a853c37152b43ee6768292e9d407d91098796946d28143",
+    "local/cpr-package-dependencies/publish-recipe.py": "b1af052241e8cdc2427ecb9d4905ea015038b4b4a0faf6b7b99e9db124af3f85",
+    "local/cpr-package-dependencies/r55-preservation.json": "95b78c05e1554b446ea036b4eb2b1e39a41bbca3b6fc9ef8211875689be5f45d",
+    "local/cpr-package-dependencies/r57-artifact-inspection.json": "5b6f7e3482e20cb12d8488c27f3c02edb6e9de0851d50926ed0021ac44634fe7",
+    "local/cpr-package-dependencies/recipe/source-provenance.json": "37c49051bf03f3ac190d2ae056d1b357a557445ae84cc5ab409262886b36520b",
+    "local/cpr-package-dependencies/recipe-publication.json": "9fbc1cd895667fb20265c5fad15565256f500a3280e4fd72c4e3429f15366b7d",
+    "local/cpr-package-dependencies/record-evidence.py": "04afd3ef296f2a5f6097461852f599f86fb7f37432cb1f5b70cb0d4fafb76e11",
+    "local/cpr-package-dependencies/repackage-container.log": "bf25aa8ae4cd9ebe6d7467a6f91b826dec02a27ef320cd939f461de83a5d9f30",
+    "local/cpr-package-dependencies/repackage-container.sh": "ce9c3466b552c6b4e16f289522a014b808a812d7e7bf094e8be43bf4650fe432",
+    "local/cpr-package-dependencies/repackage-controller.json": "c8a7fc7c2452a7cb87c7209e43d937f2b6568e5d6463373ee765331bc66ad697",
+    "local/cpr-package-dependencies/review-diff-replay.json": "41d72caf732bab5f0e1f51057b6038ad6c9f4c4f6da23d99020bd91d94e30894",
+    "local/cpr-package-dependencies/run-audits.py": "1c64aa4294d6ffefc7a34eec4aa2d3d87bab98daf3511866cdc3ac76246165d9",
+    "local/cpr-package-dependencies/run-repackage.py": "126ae928fe3d7d74649a22607b71c03799aa947b3e5d95ff586a8d9fd2d4b3cf",
+    "local/cpr-package-dependencies/signature-and-simulation-checks.json": "5d948b1d0c7f0783673c7a89050ac47fe8ab6924ca16bcf82f56cbe2a299c329",
+    "local/cpr-package-dependencies/update-docs.py": "2dcd18c4a0aef8be75579a7d281c0a534950c34e883be1a7d30f11597e1f33a0",
+    "local/cpr-package-dependencies/user-upgrade-check.json": "7df66431fb8e907fd863a80a68d022dc45086625ed9bb6069269373df3b7a2c6",
+    "local/cpr-package-dependencies/verify-apk.py": "9e103f42372acf5594456ffd62f877e398feec9868692360a864cd2bb1e8cad8",
+    "local/cpr-package-dependencies/verify-apk.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/cpr-package-dependencies/verify-apk.stdout": "5d948b1d0c7f0783673c7a89050ac47fe8ab6924ca16bcf82f56cbe2a299c329",
+    "local/cpr-package-dependencies/verify-loader-indexes.py": "9546fa198cfcfddb80330235c287e662ca58bf237a57fb54211acf1623319230",
+    "local/cpr-package-dependencies/verify-modules.py": "58eb148865a80a0ecfd82e6daececa157e1861509d3e84e9e6887fee61335658",
+    "local/cpr-package-dependencies/verify-modules.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/cpr-package-dependencies/verify-modules.stdout": "c6eba139175305c8b39d96fcd68c2e44c89d7f8812124bbc5ac61a95570366f8",
+    "local/cpr-package-dependencies/verify_kernel_module_dependencies.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/cpr-package-dependencies/verify_kernel_module_dependencies.stdout": "04c797dcb03d674f3672d6bd800d81be5a7b494db772de27e32492271f39b215",
+    "manifests/kernel-cpr-package-r57.json": "036cac75640c2b23b5ab3406a68fd603684eaa864f52e6cdde2d68389745139e",
+    "patches/pmaports/fx0-cpr-module-dependencies.patch": "f645a190f9d87099d46e4ae7e888ad9d35ab943679e629c3957fce5875d670d9"
+  },
+  "prior_checkpoint_file_versions": {
+    "configs/README.md": {
+      "commit": "066a21bce0c0c3b352138b3763538d08b7b80857",
+      "sha256": "5f214a1d2b8fd844ca57343bcd9c73111c07c685c3a2aa6ada8c46f8c237cc12",
+      "meaning": "Frozen earlier evidence continues to identify the original version"
+    },
+    "diagnostics/cpu-cpr-runtime/README.md": {
+      "commit": "066a21bce0c0c3b352138b3763538d08b7b80857",
+      "sha256": "19e0fc8af2eae3f4fa0d18dc41df9e3492dc9a51c87ab9055652a6cf12622e21",
+      "meaning": "Frozen earlier evidence continues to identify the original version"
+    },
+    "docs/building.md": {
+      "commit": "066a21bce0c0c3b352138b3763538d08b7b80857",
+      "sha256": "3ff5cdb3726679a9df48b1d15db44c6e5482090b9a88c411e0a09d19cbc84b15",
+      "meaning": "Frozen earlier evidence continues to identify the original version"
+    },
+    "docs/msm8226-cpu-performance.md": {
+      "commit": "066a21bce0c0c3b352138b3763538d08b7b80857",
+      "sha256": "131d4f60d7162c046a3ad1c1d115d1a03d15b5b0334fb0eb4d2947f627f766f6",
+      "meaning": "Frozen earlier evidence continues to identify the original version"
+    },
+    "docs/hardware-acceptance.md": {
+      "commit": "066a21bce0c0c3b352138b3763538d08b7b80857",
+      "sha256": "40e1d82fd630ea9e676dbe8d30724bcb58fc2dd9484137bb05c49df1fa5fe127",
+      "meaning": "Frozen earlier evidence continues to identify the original version"
+    },
+    "docs/nfc-bringup.md": {
+      "commit": "066a21bce0c0c3b352138b3763538d08b7b80857",
+      "sha256": "4fb659cfa010222b519f67586c7912c4a47d2e84dcf32a934e42348848234c3a",
+      "meaning": "Frozen earlier evidence continues to identify the original version"
+    },
+    "docs/development-log.md": {
+      "commit": "066a21bce0c0c3b352138b3763538d08b7b80857",
+      "sha256": "a1f5990be56c8b7305003ac02d3f62c962b5258841a6cabcbcdb1a90a0aa0f55",
+      "meaning": "Frozen earlier evidence continues to identify the original version"
+    }
+  }
+}

@@ -42,3 +42,10 @@ The [NFC package manifest](../manifests/kernel-nfc-package.json) selects the
 exact ten-patch r50 composition followed by four NFC patches, excluding the
 experimental CPU/CPR series. Alpine compiler-capability normalization is
 recorded separately from this input. This family has no RAM/hardware pass.
+
+Packaging revision r57 reuses the exact r55 Alpine CPU/CPR input and compiled
+signing family. It corrects compressed-module dependency generation with kmod;
+it does not change this configuration or recompile the kernel. The
+[r57 manifest](../manifests/kernel-cpr-package-r57.json) records package version,
+retained kernel build/release and exact artifact fingerprints separately.
+Hardware, runtime autoload and installed update/recovery remain unqualified.

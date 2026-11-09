@@ -749,11 +749,10 @@ python3 scripts/verify_kernel_module_dependencies.py \
   --expected-count 468 --report local/nfc-module-dependencies.json
 ```
 
-The preserved r55 Alpine package also has 464 empty dependency lists. Its
-previous signature/build/RAM-image preparation evidence does not qualify
-autoloading or installed deployment; that package needs the same recipe and
-repackaging correction before distribution. The prepared r55 image remains
-unbooted. No installed phone package is changed by this host-side fix.
+The preserved r55 Alpine package also has 464 empty dependency lists. The
+r57 packaging correction below repairs its metadata while retaining the exact
+compiled kernel and signed-module family. The prepared r55 RAM image remains
+unchanged and unbooted. No installed phone package is changed by these fixes.
 
 Capacity was recovered by losslessly archiving 26,941 regenerable `.o` files
 from seven older host output directories and the completed host NFC build.
@@ -777,3 +776,42 @@ recipe commit, APK, actual kernel/configuration/DTB/certificate and verification
 reports. RAM startup/signature enforcement, controller reset/init, tag/RF,
 userspace, suspend/wake and installed update/recovery remain open. Device entry
 still requires the pending UI confirmation for the latest native boot.
+
+## Corrected CPU/CPR package revision r57
+
+The [r57 package manifest](../manifests/kernel-cpr-package-r57.json) pins the
+corrected observation package. Its canonical recipe now requires kmod and
+increments the package revision from r55 to r57. All 43 source patches and
+the input configuration remain byte-identical. `abuild rootpkg` packages the
+preserved, independently source-built r55 kernel directly from its retained
+workspace tree. It does not recompile the kernel: its release stays
+`6.18.59-fx0-cpr-observe-alpine` and its compiled build number stays
+`56-postmarketos-qcom-msm8226`. The signed APK records the verified new recipe
+commit and r57 package version. A future complete source rebuild will use the
+recipe's then-current build number and its own signing key; no independent
+bit-identical reconstruction is claimed.
+
+The kernel, both DTBs, configuration, embedded certificate and all 464 signed
+module files/payloads exactly match r55. All signatures and 25,294 imported
+symbol CRCs verify, including corruption, wrong-certificate and wrong-ABI
+controls. The corrected `modules.dep` has 385 direct and 567 transitive edges,
+each matching module metadata. The actual original r55 APK fails this audit.
+Read-only `modprobe --show-depends --dry-run --ignore-install --config /dev/null`
+resolves all 464 modules through the packaged binary indexes with the complete
+expected dependencies and correct order. The same audit passes all 468 NFC
+module requests. No module is loaded and no host configuration is changed.
+
+APK signatures and modified signed-metadata rejection pass. A new workspace
+usermode root accepts the original signed r55 APK, resolves an offline upgrade
+to r57 without modifying its database during simulation, then performs that
+replacement with scripts/hooks disabled. All 546 resulting regular payload
+files match the signed r57 APK. This is a usermode packaging check, separate
+from actual phone/root-mode hooks, boot, autoload, installed upgrade/rollback
+and recovery qualification.
+
+The original r55 APK, source-build artifacts and prepared registration image
+remain intact. The image is still tied to its original input fingerprints and
+has no RAM/hardware result; package byte identity does not supply that result.
+Use the corrected package for subsequent distribution work. See
+[r57 evidence](../evidence/2026-11-08-cpr-package-dependencies.json) and the
+[owner-fork recipe](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-cpu-runtime-package).
