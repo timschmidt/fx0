@@ -145,5 +145,24 @@ native-qualified by a help check. Probe files are removed. See
 [manifest](../../manifests/upower-telemetry-r5.json),
 [procedure and limits](../../diagnostics/upower-telemetry-fix/README.md#arm-r5-candidate)
 and [evidence](../../evidence/2026-11-09-upower-r5-arm-candidate.json).
-The candidate is not installed; rollback/deployment and native daemon acceptance
-remain open. No upstream message or author certification is added.
+At that packaging checkpoint the candidate was not installed. The later native
+installation is recorded below. No upstream message or author certification is added.
+
+## Native r5 installation checkpoint
+
+The owner-approved r5 update is installed on the same r50 boot. Current
+rollback/config/database/boot/module backups are verified on the host and phone
+eMMC, and isolated r5-to-r4 file/database restoration passes. Only the three
+UPower package versions change, with the expected recipe identity and running
+r5 daemon hash. Native CLI and real incomplete-interface/no-warning behavior
+pass, including more than 30 seconds after the temporary inhibitor is released.
+Normal services and the same Sway PID remain; temporary mask, inhibitor, unit
+and transfer files are cleaned up.
+
+Normal APK hooks **rewrite the existing r50 boot image** after regenerating
+initramfs. Full readback proves all boot files and the complete raw partition
+are byte-identical, both GPTs match, and module/initramfs contents are unchanged.
+The 524,288-byte bootloader prefix is preserved. No reboot, live rollback,
+physical UI or native malformed-telemetry/power-action qualification is claimed.
+See [installed manifest](../../manifests/upower-telemetry-r5.json) and
+[native evidence](../../evidence/2026-11-09-upower-r5-native-install.json).

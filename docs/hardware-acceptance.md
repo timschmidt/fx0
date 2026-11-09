@@ -242,7 +242,7 @@ open. See [rebuild evidence](../evidence/2026-11-08-kernel-reconstruction.json).
 | Voice calls | Incoming/outgoing, DTMF, earpiece/mic, speakerphone, headset, Bluetooth, proximity, suspend wake | Blocked without SIM/network |
 | Network modes | Bands and modes supported by this device/network; airplane mode; VoLTE/IMS only if supported | Blocked for network qualification |
 | UI integration | Keyboard, rotation, lock/unlock, notifications, camera/audio selection and console recovery | Native Wayland/Sxmo terminal and keyboard physically work using Pixman; installed r2 orientation passes. A physical-trace-driven gesture profile passes synthetic replay on installed r3; physical close/open retest passes; remaining integration tests pending |
-| Updates | Current packages; kernel actually changes after update; DTB/initramfs deployment; recovery to known-good image | Partial: repository refresh/upgrade audited earlier; native r3 replacement and subsequent boot pass; saved native16 fallback fails startup acceptance. Frozen-r3 rescue/menu repair pass across the kernel r4 upgrade. UPower r4 installation, native CLI/services and regenerated artifacts pass; the later sensor diagnostic returns to a fresh r4/UPower r4 boot. No whole-system currency claim. Package/root rollback and final-layout update tests remain pending. See [UPower evidence](../evidence/2026-10-30-upower-telemetry-r4.json) and [return boot](../evidence/2026-10-30-sensor-ownership-and-id.json) |
+| Updates | Current packages; kernel actually changes after update; DTB/initramfs deployment; recovery to known-good image | Partial: repository refresh/upgrade audited earlier; native r3 replacement and subsequent boot pass; saved native16 fallback fails startup acceptance. Frozen-r3 rescue/menu repair pass across the kernel r4 upgrade. UPower r4 installation, native CLI/services and regenerated artifacts pass; the later sensor diagnostic returns to a fresh r4/UPower r4 boot. UPower r5 is now installed on r50 with matching daemon, native startup/CLI checks and byte-identical boot readback after normal hooks. No whole-system currency claim. Live package/root rollback and final-layout update tests remain pending. See [UPower evidence](../evidence/2026-10-30-upower-telemetry-r4.json) and [return boot](../evidence/2026-10-30-sensor-ownership-and-id.json) |
 | Final storage layout | Full restoration coverage/rehearsal before repartition; one maximum-capacity native root and minimum justified extra partitions; external SD removable | In progress: host-only 14.30 GiB ext4/GPT preview and offset-aware updater source checks pass; factory-stock rehearsal, minimum retained-partition audit and all physical migration/update/recovery tests remain open |
 
 ## Reliability qualification
@@ -442,3 +442,21 @@ power/radio/audio operation occurs. Rollback/deployment, native daemon/gauge and
 final hardware acceptance remain open. See
 [manifest](../manifests/upower-telemetry-r5.json) and
 [evidence](../evidence/2026-11-09-upower-r5-arm-candidate.json).
+
+## November 9: installed UPower r5, kernel r50 retained
+
+The exact r5 daemon is now installed/running after explicit owner approval,
+two-persistent-filesystem current backups and a successful isolated r5-to-r4
+file/database rehearsal. Native CLI and real charger-only rejection pass;
+unknown/absent display battery remains finite with no warning for more than
+30 seconds after the temporary inhibitor is released. Services are active,
+Sway keeps its PID and all display power controls are auto. Owned mask,
+inhibitor, transaction unit and temporary transfers are cleaned up.
+
+Normal APK hooks write the existing r50 boot image, preserving its 524,288-byte
+prefix. Independent readback proves the complete raw partition, both GPTs,
+all 99 boot paths/bytes, 478 module paths/bytes and 243 initramfs payloads/modes
+match the backup. The 19 initramfs module payloads match installed r50. This is
+same-boot software integration, without a new boot, physical UI test, live
+rollback, native malformed-telemetry fault or physical gauge/power qualification.
+See [evidence](../evidence/2026-11-09-upower-r5-native-install.json).

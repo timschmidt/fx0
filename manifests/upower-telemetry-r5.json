@@ -1,7 +1,7 @@
 {
-  "status": "prepared ARM candidate; not installed",
+  "status": "installed and bounded native startup/integration checks passed",
   "package_version": "99991.91.0-r5",
-  "installed_version": "99991.91.0-r4",
+  "installed_version": "99991.91.0-r5",
   "kernel_unchanged": "6.18.59-r50",
   "UPower_base_tag": "v1.91.0",
   "validated_backport_source": "24a6bdb6bf27822b25288db0c6ecaabe99afa1fb",
@@ -181,7 +181,20 @@
     "scripts_or_hooks_executed": false,
     "real_phone_install": false
   },
-  "native_temporary_probe": {
+  "latest_owner_UI": {
+    "native_boot_id": "2e6126b9-498e-4d89-b23e-f08fe6ccc361",
+    "status": "pending on this newest native return",
+    "question": "The NFC signature and three-round cold module lifecycle RAM trial has returned to installed r50. The original boot hash and 1.15 V PMIC target are restored, with systemd running, Sway and the sensor proxy active. Do display and touch work normally on this newest boot?",
+    "recorded_UTC": "2026-11-09T02:43:33.836382+00:00"
+  },
+  "upstream_submission_sent": false,
+  "remaining": [
+    "native malformed-value/read-failure and later-availability qualification beyond the real incomplete-interface case",
+    "stale-data policy and physical battery current/SOC/charging/thermal qualification",
+    "new-boot, actual device package/root rollback and full-system hardware acceptance"
+  ],
+  "packaged_ELFs_match_linked_runtime_sections_after_exact_Meson_RUNPATH_removal_and_stripping": true,
+  "preinstall_temporary_probe": {
     "LD_BIND_NOW": true,
     "commands": [
       {
@@ -225,20 +238,59 @@
     "installed_database_binaries_boot_hash_and_running_daemon_PID_unchanged": true,
     "temporary_files_removed": true,
     "new_r5_daemon_service_started": false,
-    "native_install": false
+    "native_install": false,
+    "historical_preparation_scope": true
   },
-  "latest_owner_UI": {
-    "native_boot_id": "2e6126b9-498e-4d89-b23e-f08fe6ccc361",
-    "status": "pending on this newest native return",
-    "question": "The NFC signature and three-round cold module lifecycle RAM trial has returned to installed r50. The original boot hash and 1.15 V PMIC target are restored, with systemd running, Sway and the sensor proxy active. Do display and touch work normally on this newest boot?",
-    "recorded_UTC": "2026-11-09T02:43:33.836382+00:00"
-  },
-  "upstream_submission_sent": false,
-  "remaining": [
-    "current rollback/config/database/boot backup and actual package deployment",
-    "new daemon service and native telemetry behavior validation",
-    "real kernel telemetry faults and stale-data policy",
-    "physical gauge/current/SOC/charging acceptance and full bringup"
-  ],
-  "packaged_ELFs_match_linked_runtime_sections_after_exact_Meson_RUNPATH_removal_and_stripping": true
+  "native_installation": {
+    "evidence": "evidence/2026-11-09-upower-r5-native-install.json",
+    "explicit_owner_approval_before_launch": true,
+    "package_records": {
+      "upower": {
+        "version": "99991.91.0-r5",
+        "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+      },
+      "upower-lang": {
+        "version": "99991.91.0-r5",
+        "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+      },
+      "upower-systemd": {
+        "version": "99991.91.0-r5",
+        "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+      }
+    },
+    "only_three_package_versions_changed": true,
+    "running_daemon_sha256": "317e746e74fdaa25fb14b895790bc674a5c491eeb7f9a422e2a36b0f5abde6fd",
+    "same_kernel_boot_id": "2e6126b9-498e-4d89-b23e-f08fe6ccc361",
+    "kernel_taint": 0,
+    "display": {
+      "IsPresent": false,
+      "State": 0,
+      "WarningLevel": 1,
+      "Percentage": 0.0
+    },
+    "OnBattery": false,
+    "services": {
+      "upower": "active",
+      "tinydm": "active",
+      "iio-sensor-proxy": "active"
+    },
+    "Sway_PID_unchanged": true,
+    "post_owned_inhibitor_release_observation_seconds": 31.59402273899832,
+    "runtime_mask_and_owned_inhibitor_removed": true,
+    "normal_APK_scripts_and_hooks": true,
+    "boot_deploy_rewrote_existing_image": true,
+    "preserved_bootloader_prefix_bytes": 524288,
+    "all_99_boot_paths_and_bytes_unchanged": true,
+    "all_478_module_paths_and_bytes_unchanged": true,
+    "all_243_initramfs_entry_payloads_and_modes_unchanged": true,
+    "initramfs_module_payloads_match_installed_r50": 19,
+    "raw_boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "raw_boot_partition_contents_unchanged_after_write": true,
+    "both_GPTs_byte_identical": true,
+    "current_rollback_on_two_persistent_filesystems": true,
+    "isolated_rollback_rehearsal_passed": true,
+    "native_rollback_needed_or_claimed_tested": false,
+    "no_reboot": true,
+    "new_physical_UI_test_claimed": false
+  }
 }

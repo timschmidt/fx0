@@ -71,13 +71,16 @@ are retained rather than counted as successful full runs.
 These are x86_64 UMockdev/private D-Bus results. The read-error shim models NULL
 from libudev with ENODATA; it does not inject a kernel error. No native power
 action, radio or audio operation is exercised. Keeping the last good sample does
-not qualify a complete stale-data policy. ARM packaging, native deployment,
-physical current/SOC accuracy and final battery/charging acceptance remain open.
-Installed r50 and UPower r4 are unchanged by this source correction.
+not qualify a complete stale-data policy. The initial source checkpoint left ARM packaging and native deployment open;
+the later sections record those results. Physical current/SOC accuracy and final
+battery/charging acceptance remain open. The source-only phase left installed
+r50/UPower r4 unchanged; the later deployment installs r5 on r50.
 
 See [reviewed evidence](../../evidence/2026-11-09-battery-telemetry-fix.json).
 
 ## ARM r5 candidate
+
+The package is now installed; [native deployment](#native-r5-installation) below records the later result. This section records its preparation.
 
 The [r5 recipe](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-upower-r5/extra-repos/systemd/upower)
 at `4c5db910dd68205cc26303325186ccb39cb17521` adds the tested backport to r4.
@@ -110,6 +113,46 @@ help path establishes loading, not native execution of the new battery logic.
 
 See [candidate manifest](../../manifests/upower-telemetry-r5.json) and
 [package evidence](../../evidence/2026-11-09-upower-r5-arm-candidate.json).
-Rollback/config/database/boot backup, package deployment and native daemon/
-telemetry acceptance remain pending. No reboot or physical power/radio/audio
-operation is performed.
+At the preparation checkpoint, rollback/backups, deployment and native daemon
+acceptance remained pending; the later deployment below completes those startup
+steps. Physical gauge/power qualification remains open.
+
+## Native r5 installation
+
+UPower `99991.91.0-r5` is now installed on the same native r50 boot, after the
+owner explicitly approved this exact package update. Current rollback APKs,
+UPower files/config/state, APK database/world, the complete boot tree, current
+modules and GPT metadata are preserved on both the host filesystem and phone
+persistent eMMC. The 114,387,299-byte archives have identical hashes and were
+fsynced before installation. An isolated host-root r5-to-r4 rehearsal restores
+all captured UPower payload/config bytes and every original package version.
+This does not claim a live-phone rollback or full root rollback test.
+
+A single persistent transaction temporarily masks/stops UPower, verifies the
+native signatures again, installs only the three UPower packages with normal
+APK scripts/hooks, and starts the exact new daemon. An owned sleep/shutdown
+inhibitor covers the transaction and is released on exit. Initial automatic
+approval review rejected the live transaction; the explicit owner approval was
+received before its only launch. The automatic rollback path was not needed.
+
+Normal hooks regenerate initramfs and invoke boot-deploy, which **writes the
+existing r50 boot image** while preserving the 524,288-byte bootloader prefix.
+This is not a claim of no boot-partition write. Independent readback shows the
+entire raw boot partition and both GPTs match the backup. All 99 boot paths and
+bytes, all 478 module-file paths and bytes, and all 243 initramfs entry payloads
+and modes are unchanged. The 19 initramfs module payloads match installed r50,
+the RAM-overlay hook is absent, and the inherited memory limit is respected.
+
+The running daemon hashes to the packaged r5 binary. Native CLI modes pass;
+the real charger-only interface stays ignored, with absent/unknown display
+battery, finite percentage and no warning. More than 30 seconds of checks after
+the owned inhibitor is released keep that state and the same new daemon PID.
+UPower, tinydm and the sensor proxy are active; Sway keeps its original PID and
+all four display power controls are auto. The runtime mask and owned inhibitor
+are removed, the completed unit is stopped, and temporary transfer files are
+removed while persistent rollback copies remain.
+
+No reboot or new physical UI test occurs. Native malformed telemetry faults,
+complete stale-data behavior, measured SOC/current, charging and final hardware
+acceptance remain open. See [installed manifest](../../manifests/upower-telemetry-r5.json)
+and [native evidence](../../evidence/2026-11-09-upower-r5-native-install.json).

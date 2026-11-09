@@ -671,3 +671,33 @@ The [candidate manifest](../manifests/upower-telemetry-r5.json) and
 source, signature and probe scope. Current rollback/config/database/boot backup,
 actual deployment and native daemon acceptance remain pending, along with real
 telemetry faults, stale-data policy, gauge/current/SOC and charging acceptance.
+
+## November 9: install UPower r5 on native r50
+
+After explicit approval for the live update, r5 is installed with the exact
+packaged daemon running. Only upower, upower-lang and upower-systemd versions
+change. Fresh rollback APK/payload/config/state/database/world and complete
+boot/module/GPT backups are verified on the host and phone persistent eMMC.
+An isolated r5-to-r4 rehearsal restores every captured UPower payload/config
+file and all package versions; no live-phone rollback is claimed.
+
+The temporary runtime mask and owned shutdown/sleep inhibitor are removed.
+Native CLI modes, real incomplete SMBB battery rejection, finite unknown/absent
+display battery and no warning pass, including more than 30 seconds after the
+inhibitor is released. Normal services stay active, Sway retains its PID and
+all four display controls are auto. Temporary transfer files and the completed
+unit are cleaned up; persistent rollback copies remain.
+
+Normal APK hooks regenerate initramfs and **rewrite the same r50 boot image**
+with its 524,288-byte bootloader prefix preserved. Independent readback verifies
+all 99 boot paths and bytes, the entire raw boot partition, both GPTs and all
+478 module-file paths/bytes match the backup. All 243 initramfs entry payloads
+and modes remain identical; its 19 module payloads match installed r50. No new
+kernel package or reboot occurs. See [manifest](../manifests/upower-telemetry-r5.json)
+and [evidence](../evidence/2026-11-09-upower-r5-native-install.json).
+
+This qualifies native startup/integration and the real missing-telemetry case.
+Native malformed/failing reads, stale-data policy, battery current/SOC accuracy,
+charging/thermal behavior, live package/root rollback and final hardware
+acceptance remain open. The newest physical display/touch answer is still
+pending for the same boot; no older answer is reused.

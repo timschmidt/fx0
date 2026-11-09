@@ -4713,3 +4713,45 @@ Preserve earlier artifacts and the protected root index, publish the
 [evidence](../evidence/2026-11-09-upower-r5-arm-candidate.json). Rollback/current
 config/database/boot backup, deployment, native daemon acceptance and full
 bringup remain unfinished. No reboot, charging, radio or audio operation occurs.
+
+## November 9: approved native UPower r5 deployment and boot readback
+
+Freeze the 1,820 earlier evidence hashes and collect the current r50 baseline.
+The broad initramfs firmware-directory export guard stops at regulatory.db and
+its signature. Verify both exact files against a signed public ISC wireless-regdb
+APK, then audit all six boot/ramdisk images: only those verified public regulatory
+files are allowed, native GPL kernel components match, and private-key markers
+are absent. No proprietary firmware export occurs.
+
+Preserve trusted r4 rollback and r5 candidate APKs plus the complete current
+UPower/config/state/database/world, boot tree, module tree and GPT metadata on
+both host and phone persistent eMMC. The fsynced archives match exactly
+(114,387,299 bytes), and 21 captured payload files match the original r4 APKs.
+In an isolated host root, execute r5 installation and r4 downgrade with scripts/
+hooks disabled; all captured payload/config bytes and package versions return.
+
+Initial automatic approval review rejects the live native transaction for lack
+of exact authorization. The owner explicitly approves the UPower r5 install
+before its only launch. Run one persistent monitored unit with current backup/
+package/boot checks, an owned runtime mask and a temporary sleep/shutdown
+inhibitor. Native APK installation retains normal scripts/hooks. Only the three
+UPower package versions change, with recipe `4c5db910dd68205cc26303325186ccb39cb17521`.
+The expected r5 executable hash runs and eight startup samples/CLI modes pass.
+No automatic rollback is needed.
+
+Normal mkinitfs/boot-deploy hooks regenerate initramfs and rewrite the existing
+r50 boot image while preserving 524,288 bytes before it. This write should have
+been called out explicitly before launch; the owner had approved normal hooks.
+Independent readback verifies all 99 boot paths/bytes, complete raw partition,
+both GPTs, all 478 module paths/bytes and all 243 initramfs payloads/modes match
+the backup. Its 19 module payloads match installed r50; overlay hook is absent
+and memory fit remains valid. No new kernel package or reboot occurs.
+
+After inhibitor release, seven samples over 31.59 seconds keep the same new
+daemon PID, no warning and finite unknown/absent battery state. Services stay
+active, Sway retains its PID and display power controls are auto. Remove owned
+mask/inhibitor, stop the completed unit and remove verified temporary transfer
+files; keep persistent rollback copies. Archive the new package database/world
+and [native evidence](../evidence/2026-11-09-upower-r5-native-install.json).
+Physical UI, native malformed telemetry/stale-data policy, measured battery/
+charging behavior, live package/root rollback and full bringup remain open.
