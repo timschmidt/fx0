@@ -123,3 +123,27 @@ trees, patch/test hashes and replay. These are x86_64 mock results, with no ARM
 package or native deployment yet. Installed r50/UPower r4 remain unchanged.
 These additional review drafts have no fabricated author certification; no
 upstream issue, merge request or message has been sent.
+
+## ARM r5 packaging checkpoint
+
+The [r5 recipe](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-upower-r5/extra-repos/systemd/upower)
+is published at `4c5db910dd68205cc26303325186ccb39cb17521`. All 159 retained
+ARM source files match the validated recipe, including its inherited Nura timing
+patch. Two same-target/toolchain builds produce identical original APKs. The six
+candidates are signed inside the container using the key already trusted by the
+phone, preserving the built control/data bytes and adding no trust-store key.
+Native-key verification, a signed-metadata tamper rejection and an offline plan
+against the actual r50 database pass; only the three installed UPower packages
+would upgrade.
+
+Five ARM core bodies pass under QEMU; two system-bus-dependent bodies are not
+exercised. The full Linux integration suite remains x86_64 coverage. Temporary
+native CLI/read-only and updated-daemon help checks pass with eager loading,
+while installed r4 and its daemon PID remain unchanged. CLI/shared-library bytes
+match the original r4 APK; the new daemon's service/telemetry behavior is not
+native-qualified by a help check. Probe files are removed. See
+[manifest](../../manifests/upower-telemetry-r5.json),
+[procedure and limits](../../diagnostics/upower-telemetry-fix/README.md#arm-r5-candidate)
+and [evidence](../../evidence/2026-11-09-upower-r5-arm-candidate.json).
+The candidate is not installed; rollback/deployment and native daemon acceptance
+remain open. No upstream message or author certification is added.

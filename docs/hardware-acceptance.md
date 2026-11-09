@@ -427,3 +427,18 @@ UPower r4 remain unchanged; ARM package/deployment and physical gauge, power,
 charging, stale-data policy and final hardware acceptance are pending. The latest
 native return's exact display/touch answer is still pending; older confirmations
 are not reused. See [evidence](../evidence/2026-11-09-battery-telemetry-fix.json).
+
+## November 9: ARM UPower r5 candidate, deployment pending
+
+Six native-trusted candidate APKs now build from the validated r5 recipe. Actual
+ARM source fingerprints, same-target repeat-build byte identity, all signatures,
+signed-metadata tamper rejection and offline actual-r50 database resolution pass.
+Five ARM dummy-backend/core bodies execute under QEMU; two system-bus-dependent
+bodies do not. Temporary native eager-loader/read-only CLI and daemon-help
+checks pass, leaving installed r4, its PID, the database and original boot hash
+unchanged. The updated daemon service and its telemetry logic have not run on
+the phone. Probe files are removed. No installation, reboot or physical
+power/radio/audio operation occurs. Rollback/deployment, native daemon/gauge and
+final hardware acceptance remain open. See
+[manifest](../manifests/upower-telemetry-r5.json) and
+[evidence](../evidence/2026-11-09-upower-r5-arm-candidate.json).

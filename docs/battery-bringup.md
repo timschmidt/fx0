@@ -645,3 +645,29 @@ accuracy and battery/charging qualification remain open. Installed r50/UPower r4
 are unchanged. See [review patches](../submissions/upower/README.md),
 [reproduction instructions](../diagnostics/upower-telemetry-fix/README.md) and
 [evidence](../evidence/2026-11-09-battery-telemetry-fix.json).
+
+## November 9: prepare a native-trusted ARM UPower r5 candidate
+
+The tested backport is now packaged by the published r5 recipe. All eight
+patches apply, and actual retained ARM source matches all 159 expected files.
+The only difference from the host-tested source is the unchanged Nura core-test
+timing patch. Two same-target/toolchain builds yield identical original APKs.
+Candidate signing uses the existing trusted key inside the container and
+preserves original control/data streams; no phone trust-store change occurs.
+All six signatures pass native public-key verification and altered signed
+metadata is rejected. Offline simulation against the current r50 database
+upgrades only upower, upower-lang and upower-systemd.
+
+Five dummy-backend/core test bodies pass under ARM QEMU; two system-bus bodies
+are not exercised. The Linux validity suite is still host coverage. A temporary
+native eager-loader probe passes CLI version/enumeration/dump/battery plus
+updated-daemon help as an unprivileged user. CLI/shared-library bytes match the
+original r4 APK. These checks do not run the new daemon service or battery
+refresh logic. Installed r4 binaries/database, original boot hash, boot ID and
+running daemon PID are unchanged, and temporary files are removed.
+
+The [candidate manifest](../manifests/upower-telemetry-r5.json) and
+[evidence](../evidence/2026-11-09-upower-r5-arm-candidate.json) preserve package,
+source, signature and probe scope. Current rollback/config/database/boot backup,
+actual deployment and native daemon acceptance remain pending, along with real
+telemetry faults, stale-data policy, gauge/current/SOC and charging acceptance.

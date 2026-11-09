@@ -4676,3 +4676,40 @@ Publish [evidence](../evidence/2026-11-09-battery-telemetry-fix.json) and
 [review instructions](../submissions/upower/README.md). No native install, reboot,
 charging, radio or audio operation occurs. ARM packaging, deployment and full
 bringup remain unfinished.
+
+## November 9: build and verify the ARM UPower r5 candidate
+
+Prepare a fresh recipe checkout from r4, adding only the tested backport patch
+and pkgrel bump. All eight patches apply; seven after the inherited Nura timing
+patch have no fuzz or offsets. Publish recipe `4c5db910dd68205cc26303325186ccb39cb17521`.
+Retain two terminal setup failures caused by missing upstream remote/tracking
+metadata in the fresh clone; repair metadata without changing source HEAD/tree.
+The first ARM QEMU-only build succeeds and exports six signed APKs. Its default
+cleanup removes source, so enable retention and repeat with the same recipe,
+target/toolchain and warm cache. All six original APKs are byte-identical; the
+retained compiled source matches all 159 expected files. This is bounded repeat
+build evidence, not independent-environment reproducibility.
+
+The workspace build key is absent from the phone's existing trust store. Use
+the existing native-trusted key only inside a network-disabled signing container,
+keeping original package control/data gzip bytes identical and exporting no
+private key bytes. Native public-key checks accept all six candidates and reject
+modified signed recipe metadata. Offline simulation against a fresh read-only
+r50 database snapshot upgrades exactly the three installed UPower packages.
+The existing ARM core test passes under QEMU; five bodies run and two system-bus
+bodies return early. The recipe's inherited automatic-check policy is unchanged;
+Linux integration remains the separately validated host suite.
+
+Stage only three verified ELF files and their local library symlink in a phone
+temporary directory. Force eager symbol resolution and run unprivileged CLI
+version/enumeration/dump/battery plus updated-daemon help. All pass; installed
+binaries/database, original boot hash, boot ID, taint and running r4 daemon PID
+match before/after. Remove probe files after verifying their hashes again. CLI
+and shared-library bytes equal the original r4 APK; daemon help is loading
+coverage, with no new daemon service or native battery-logic qualification.
+
+Preserve earlier artifacts and the protected root index, publish the
+[candidate manifest](../manifests/upower-telemetry-r5.json) and
+[evidence](../evidence/2026-11-09-upower-r5-arm-candidate.json). Rollback/current
+config/database/boot backup, deployment, native daemon acceptance and full
+bringup remain unfinished. No reboot, charging, radio or audio operation occurs.

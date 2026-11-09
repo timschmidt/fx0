@@ -1,0 +1,244 @@
+{
+  "status": "prepared ARM candidate; not installed",
+  "package_version": "99991.91.0-r5",
+  "installed_version": "99991.91.0-r4",
+  "kernel_unchanged": "6.18.59-r50",
+  "UPower_base_tag": "v1.91.0",
+  "validated_backport_source": "24a6bdb6bf27822b25288db0c6ecaabe99afa1fb",
+  "source_fix_evidence": "evidence/2026-11-09-battery-telemetry-fix.json",
+  "pmaports_repository": "https://github.com/timschmidt/fx0-pmaports",
+  "pmaports_branch": "integration/fx0-upower-r5",
+  "pmaports_commit": "4c5db910dd68205cc26303325186ccb39cb17521",
+  "pmaports_tree": "89be6bd69cd5ed0b4cdf6419be079322e9443220",
+  "source_files_verified_after_actual_ARM_build": 159,
+  "package_builds": {
+    "both_succeeded": true,
+    "all_six_original_APKs_byte_identical_in_repeat_build": true,
+    "scope": "repeat builds in same QEMU target/toolchain with a warm cache; not independently reproduced environment"
+  },
+  "signing": {
+    "candidate_public_key_sha256": "d03c2c7d83f402a9fd24c844063c7286bcd73c25ccf8211b24776a126ee5ce87",
+    "already_in_phone_trust_store": true,
+    "all_six_candidate_signatures_verified_with_native_public_keys": true,
+    "build_control_and_data_streams_unchanged": true,
+    "existing_trusted_key_used_only_inside_container": true,
+    "private_key_host_read_or_exported": false,
+    "phone_trust_store_changed": false
+  },
+  "packages": [
+    {
+      "name": "upower-99991.91.0-r5.apk",
+      "bytes": 119400,
+      "sha256": "20bc6d1bc5f267d32559148dc94fa19c825b0e6a65c9cd865a643fa94cbc2fcd",
+      "package": "upower",
+      "version": "99991.91.0-r5",
+      "arch": "armv7",
+      "commit": "4c5db910dd68205cc26303325186ccb39cb17521",
+      "depends": [
+        "so:libc.musl-armv7.so.1",
+        "so:libgio-2.0.so.0",
+        "so:libglib-2.0.so.0",
+        "so:libgobject-2.0.so.0",
+        "so:libgudev-1.0.so.0",
+        "so:libpolkit-gobject-1.so.0"
+      ],
+      "signature_members": [
+        ".SIGN.RSA.pmos@local-6ae3f5f3.rsa.pub"
+      ],
+      "signature_verified_with_native_trust_store": true,
+      "control_and_data_gzip_bytes_unchanged_from_build": true
+    },
+    {
+      "name": "upower-dev-99991.91.0-r5.apk",
+      "bytes": 15673,
+      "sha256": "93055b96453f4db4d2691b3554cc5d1e31e33dcf460127e3577584444f2894d3",
+      "package": "upower-dev",
+      "version": "99991.91.0-r5",
+      "arch": "armv7",
+      "commit": "4c5db910dd68205cc26303325186ccb39cb17521",
+      "depends": [
+        "upower=99991.91.0-r5",
+        "pc:glib-2.0>=2.76",
+        "pc:gobject-2.0>=2.76",
+        "pc:polkit-gobject-1>=0.103",
+        "pkgconfig"
+      ],
+      "signature_members": [
+        ".SIGN.RSA.pmos@local-6ae3f5f3.rsa.pub"
+      ],
+      "signature_verified_with_native_trust_store": true,
+      "control_and_data_gzip_bytes_unchanged_from_build": true
+    },
+    {
+      "name": "upower-doc-99991.91.0-r5.apk",
+      "bytes": 55067,
+      "sha256": "b3dfc87aa3bc140a0a5186b63619fcad4b9a32c9cfd13eb37cf6ce67db6e5da2",
+      "package": "upower-doc",
+      "version": "99991.91.0-r5",
+      "arch": "noarch",
+      "commit": "4c5db910dd68205cc26303325186ccb39cb17521",
+      "depends": [],
+      "signature_members": [
+        ".SIGN.RSA.pmos@local-6ae3f5f3.rsa.pub"
+      ],
+      "signature_verified_with_native_trust_store": true,
+      "control_and_data_gzip_bytes_unchanged_from_build": true
+    },
+    {
+      "name": "upower-lang-99991.91.0-r5.apk",
+      "bytes": 4232,
+      "sha256": "f3c59c8422d39e3f185cc52319428e73311f0839390b41aa544fa886a8fe3c6d",
+      "package": "upower-lang",
+      "version": "99991.91.0-r5",
+      "arch": "noarch",
+      "commit": "4c5db910dd68205cc26303325186ccb39cb17521",
+      "depends": [],
+      "signature_members": [
+        ".SIGN.RSA.pmos@local-6ae3f5f3.rsa.pub"
+      ],
+      "signature_verified_with_native_trust_store": true,
+      "control_and_data_gzip_bytes_unchanged_from_build": true
+    },
+    {
+      "name": "upower-systemd-99991.91.0-r5.apk",
+      "bytes": 2176,
+      "sha256": "bddc5f5670f572c3dbab7fcb769a6776341bf366044ee2f9ffb2ce680a8ca89f",
+      "package": "upower-systemd",
+      "version": "99991.91.0-r5",
+      "arch": "noarch",
+      "commit": "4c5db910dd68205cc26303325186ccb39cb17521",
+      "depends": [],
+      "signature_members": [
+        ".SIGN.RSA.pmos@local-6ae3f5f3.rsa.pub"
+      ],
+      "signature_verified_with_native_trust_store": true,
+      "control_and_data_gzip_bytes_unchanged_from_build": true
+    },
+    {
+      "name": "upower-zsh-completion-99991.91.0-r5.apk",
+      "bytes": 1971,
+      "sha256": "203d4e2493e1ef5dc4143a49be085fa313b6550849cf4c6b513db2220deb7608",
+      "package": "upower-zsh-completion",
+      "version": "99991.91.0-r5",
+      "arch": "noarch",
+      "commit": "4c5db910dd68205cc26303325186ccb39cb17521",
+      "depends": [],
+      "signature_members": [
+        ".SIGN.RSA.pmos@local-6ae3f5f3.rsa.pub"
+      ],
+      "signature_verified_with_native_trust_store": true,
+      "control_and_data_gzip_bytes_unchanged_from_build": true
+    }
+  ],
+  "binary_sha256": {
+    "usr/bin/upower": "be7d4d2cd00a1346c01f24f8bb02ee425e246d785f92a104a3059d035b57b365",
+    "usr/lib/libupower-glib.so.3.1.1": "e5974659e5448226d85a469debc61ba21d1addc9742815e86f92e0cb5c7b02b9",
+    "usr/libexec/upowerd": "317e746e74fdaa25fb14b895790bc674a5c491eeb7f9a422e2a36b0f5abde6fd"
+  },
+  "r4_original_APK_to_r5_binary_comparison": {
+    "usr/bin/upower": {
+      "r4_original_APK_sha256": "be7d4d2cd00a1346c01f24f8bb02ee425e246d785f92a104a3059d035b57b365",
+      "r5_sha256": "be7d4d2cd00a1346c01f24f8bb02ee425e246d785f92a104a3059d035b57b365",
+      "byte_identical": true
+    },
+    "usr/lib/libupower-glib.so.3.1.1": {
+      "r4_original_APK_sha256": "e5974659e5448226d85a469debc61ba21d1addc9742815e86f92e0cb5c7b02b9",
+      "r5_sha256": "e5974659e5448226d85a469debc61ba21d1addc9742815e86f92e0cb5c7b02b9",
+      "byte_identical": true
+    },
+    "usr/libexec/upowerd": {
+      "r4_original_APK_sha256": "c34126ccb5df93493a03405441353f4ef11b184627f9bf55fba9e81a6a4e6e10",
+      "r5_sha256": "317e746e74fdaa25fb14b895790bc674a5c491eeb7f9a422e2a36b0f5abde6fd",
+      "byte_identical": false
+    }
+  },
+  "ARM_core_test": {
+    "Meson_self_test_passed": true,
+    "ARM_user_emulation": "QEMU",
+    "duration_seconds": 11.378617286682129,
+    "exercised_core_bodies": [
+      "/power/backend",
+      "/power/device",
+      "/power/device_list",
+      "/power/history",
+      "/power/native"
+    ],
+    "system_bus_dependent_bodies_not_exercised": [
+      "/power/polkit",
+      "/power/daemon"
+    ],
+    "is_Linux_telemetry_integration_suite": false,
+    "physical_ARM_or_phone_execution": false
+  },
+  "offline_current_phone_database_plan": {
+    "returncode": 0,
+    "steps": [
+      "(1/3) Upgrading upower (99991.91.0-r4 -> 99991.91.0-r5)",
+      "(2/3) Upgrading upower-lang (99991.91.0-r4 -> 99991.91.0-r5)",
+      "(3/3) Upgrading upower-systemd (99991.91.0-r4 -> 99991.91.0-r5)"
+    ],
+    "installed_DB_unchanged": true,
+    "scripts_or_hooks_executed": false,
+    "real_phone_install": false
+  },
+  "native_temporary_probe": {
+    "LD_BIND_NOW": true,
+    "commands": [
+      {
+        "program": "upower",
+        "arguments": [
+          "--version"
+        ],
+        "returncode": 0
+      },
+      {
+        "program": "upower",
+        "arguments": [
+          "--enumerate"
+        ],
+        "returncode": 0
+      },
+      {
+        "program": "upower",
+        "arguments": [
+          "--dump"
+        ],
+        "returncode": 0
+      },
+      {
+        "program": "upower",
+        "arguments": [
+          "--battery"
+        ],
+        "returncode": 0
+      },
+      {
+        "program": "upowerd",
+        "arguments": [
+          "--help"
+        ],
+        "returncode": 0
+      }
+    ],
+    "ran_as_unprivileged_user": true,
+    "candidate_daemon_help_only": true,
+    "installed_database_binaries_boot_hash_and_running_daemon_PID_unchanged": true,
+    "temporary_files_removed": true,
+    "new_r5_daemon_service_started": false,
+    "native_install": false
+  },
+  "latest_owner_UI": {
+    "native_boot_id": "2e6126b9-498e-4d89-b23e-f08fe6ccc361",
+    "status": "pending on this newest native return",
+    "question": "The NFC signature and three-round cold module lifecycle RAM trial has returned to installed r50. The original boot hash and 1.15 V PMIC target are restored, with systemd running, Sway and the sensor proxy active. Do display and touch work normally on this newest boot?",
+    "recorded_UTC": "2026-11-09T02:43:33.836382+00:00"
+  },
+  "upstream_submission_sent": false,
+  "remaining": [
+    "current rollback/config/database/boot backup and actual package deployment",
+    "new daemon service and native telemetry behavior validation",
+    "real kernel telemetry faults and stale-data policy",
+    "physical gauge/current/SOC/charging acceptance and full bringup"
+  ],
+  "packaged_ELFs_match_linked_runtime_sections_after_exact_Meson_RUNPATH_removal_and_stripping": true
+}

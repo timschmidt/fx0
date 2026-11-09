@@ -76,3 +76,40 @@ physical current/SOC accuracy and final battery/charging acceptance remain open.
 Installed r50 and UPower r4 are unchanged by this source correction.
 
 See [reviewed evidence](../../evidence/2026-11-09-battery-telemetry-fix.json).
+
+## ARM r5 candidate
+
+The [r5 recipe](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-upower-r5/extra-repos/systemd/upower)
+at `4c5db910dd68205cc26303325186ccb39cb17521` adds the tested backport to r4.
+All eight patches apply; the unchanged Nura timing patch retains its seven-line
+offsets. Actual retained ARM build source matches all 159 expected files,
+including that timing change. Two builds in the same QEMU target/toolchain with
+a warm cache produce byte-identical sets of six original APKs. This is not
+independent-environment reproducibility.
+
+The current build key differs from the phone's existing trust store. Candidate
+APKs use the already trusted build key inside a network-disabled signing
+container, with original control and data gzip streams preserved byte for byte.
+No private key bytes are host-read/exported and no phone trust key is added.
+All six signatures pass against the captured native public keys; modified signed
+recipe metadata fails verification. Offline simulation against the actual r50
+package database upgrades only upower, upower-lang and upower-systemd.
+
+The existing ARM dummy-backend/core test runs under QEMU: five bodies exercise
+backend/device/list/history/native logic; polkit and daemon bodies return early
+without a system bus. This does not run the Linux telemetry integration suite
+on ARM. The recipe's inherited `!check` policy remains; the full 122-test Linux
+backport suite was validated separately on x86_64.
+
+The exact candidate CLI/shared library and daemon run from a temporary phone
+directory with eager symbol resolution. CLI version/enumeration/dump/battery and
+daemon help pass as an unprivileged user; installed files/database, boot hash and
+the running r4 daemon PID stay unchanged. Probe files are removed. The CLI and
+shared library match the original r4 APK byte for byte; the updated daemon's
+help path establishes loading, not native execution of the new battery logic.
+
+See [candidate manifest](../../manifests/upower-telemetry-r5.json) and
+[package evidence](../../evidence/2026-11-09-upower-r5-arm-candidate.json).
+Rollback/config/database/boot backup, package deployment and native daemon/
+telemetry acceptance remain pending. No reboot or physical power/radio/audio
+operation is performed.
