@@ -1,6 +1,6 @@
 {
-  "recorded_UTC": "2026-11-09T09:38:51.769108+00:00",
-  "status": "Prepared and host/ARM BusyBox verified native-r50 offline modem probe image; unstaged/unbooted; entry controllers unfinished",
+  "recorded_UTC": "2026-11-09T10:12:00.872483+00:00",
+  "status": "Prepared offline-probe image and host-checked entry/return controllers; unstaged/unbooted; current native UI pending",
   "inactive_description_manifest": "manifests/modem-control-description.json",
   "inactive_description_manifest_sha256": "f1c899bfd172ed343e251617a5ea66c9d25644f95dba62e6537dbb21a795b9e7",
   "image": {
@@ -286,16 +286,42 @@
     "question": "The r59 transfer timed out before BOOT, and the phone has returned to installed r50 with UPower r5 active, the original boot hash, and Sway and the sensor proxy running. Do display and touch work normally on this newest boot?",
     "recorded_UTC": "2026-11-09T08:14:37.367617+00:00"
   },
-  "entry_controllers_prepared": false,
+  "entry_controllers_prepared": true,
   "remaining": [
     "Host-prepared image only; no physical MSS probe, IRQ, voltage, firmware startup, RF, GNSS or cellular qualification",
     "Source inactive candidate remains unchanged; only the separate probe DTB enables modem/S5 and disables BAM-DMUX",
     "Probe may exercise IRQ/domain/PMIC registration; stock constraints and programmed targets are not analogue voltage measurements",
     "No firmware/services/control userspace included; runtime worker never writes remoteproc state or requests firmware",
     "Native current-boot physical UI still pending before any RAM entry",
-    "One-use entry/observer/native-return controllers and fresh APC/S5/raw-boot/service/host-network checks still need preparation",
+    "Prepared one-use controllers still need physical entry/return exercise after the current native UI gate passes",
     "Unresolved USB download defect retains terminal-PID/exact-readback/single-BOOT/no-retry rules",
     "EFS/firmware/start-stop/fault handling, GNSS/SIM/radio and full bringup remain unfinished"
   ],
-  "evidence": "evidence/2026-11-09-modem-offline-probe-preparation.json"
+  "evidence": "evidence/2026-11-09-modem-probe-entry-preparation.json",
+  "entry_controller_preparation": {
+    "private_directory": "local/ram-modem-probe-01",
+    "stage_cases": 14,
+    "BOOT_cases": 14,
+    "native_phase_cases": 6,
+    "recovery_guard_cases": 12,
+    "changed_register_controls": 9,
+    "return_artifact_test_methods": 3,
+    "physical_entry_transfer_or_postflight_exercised": false,
+    "native_read_only_preparation_checks": 1,
+    "current_native_boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "postflight_startup_observation_budget_seconds": 120,
+    "helpers_sha256": {
+      "local/ram-modem-probe-01/boot-once.py": "b7b345313083c397107013ece4dbaafa99dfa900b8fcf9fec582d9de71a9a14f",
+      "local/ram-modem-probe-01/native-check-remote.py": "0f7292c835315591f4cf026d386a73cefbc6b12733baf64850f0c60aaf792a12",
+      "local/ram-modem-probe-01/native-check.py": "f708d404b4d01126d76207e77f1f1d564dcc5ec1dc563d1072823a3cd5442862",
+      "local/ram-modem-probe-01/observe.py": "79d4eb5fb98de2b9690a40ab1648f8d0eb71370c857d36aef2bf263ba14bf69f",
+      "local/ram-modem-probe-01/postflight.py": "460bdaffd46a0991dc9f80944f8cb20af2f47c3021bdd8768f2de3426fa9e5f6",
+      "local/ram-modem-probe-01/preflight.py": "b479a5d86b33a68643b04d65b1895b669729640bd1063bd1fdc9e757cc3eb0c3",
+      "local/ram-modem-probe-01/recover-native.py": "d502c45fa983aeaef2b45dd15e10c2fb74da4ce0abe29447b788b363ab2edb5a",
+      "local/ram-modem-probe-01/run-process.py": "0eac33ecf8506abf2ee5ab1ddf8b32c9523799c55be0fb110fb5709226058c66",
+      "local/ram-modem-probe-01/stage.py": "be6e1b59361a51831b08ace6e743b7eada4fc33c49ea176f0c6b76fa1f106c69",
+      "local/ram-modem-probe-01/wait-native.py": "3edd002cc4a9900cb36633ecd820e149a06ff3dbb84d90568a1281589af3851a"
+    },
+    "evidence": "evidence/2026-11-09-modem-probe-entry-preparation.json"
+  }
 }

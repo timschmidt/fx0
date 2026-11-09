@@ -123,7 +123,19 @@ target), mode0x40 and enable0. Bit7 is clear; this does not measure analogue
 voltage or prove every possible physical enable path is off. Future entry and
 return checks must freshly preserve those raw controls, together with r50/r5,
 services, boot hash and the newest physical UI result. The image is unstaged/
-unbooted. Entry/observer/native-return controllers still need preparation; no
-trial is launched by these artifacts. Firmware start/EFS/RF/GNSS and full
+unbooted. Entry/observer/native-return controllers are prepared and their host
+guards pass; the newest native UI gate remains pending and no trial has run. Firmware start/EFS/RF/GNSS and full
 bringup remain open. See [procedure](../diagnostics/modem-control/probe-ram.md)
 and [preparation evidence](../evidence/2026-11-09-modem-offline-probe-preparation.json).
+
+
+The prepared controllers require exact native preflight, data-only transfer/full
+readback, live identified observers and one recorded BOOT attempt. Return checks
+cover the original raw boot and r50/r5 files/services, nine exact APC/S5 controls,
+CPU/NFC/MSS state and host network/index restoration. One real read-only
+preparation sample passes on the unchanged boot. Host tests exercise refusal
+boundaries and artifact validation; no physical modem entry, return, reset,
+firmware start or radio action occurs. A pure artifact verifier leaves physical
+display/touch explicitly unconfirmed. The older post-install UI reply is already
+recorded for its earlier boot and does not satisfy the current gate. See
+[controller preparation evidence](../evidence/2026-11-09-modem-probe-entry-preparation.json).

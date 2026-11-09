@@ -57,4 +57,6 @@ A later [offline-probe RAM preparation](probe-ram.md) uses exact retained native
 r50 kernel/modules and a separate DTB derivative. It enables modem/S5 only in
 that unbooted image and disables BAM-DMUX. The inactive source patch above and
 installed system remain unchanged. The worker never starts firmware; physical
-entry/return controls and the current UI gate remain unfinished.
+entry/return controls are now prepared and host-checked, while the current UI
+gate remains pending. No trial has run. See the preparation procedure for the
+separate controller evidence and remaining requirements.

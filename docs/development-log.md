@@ -4889,3 +4889,31 @@ register preads. This is programmed state, not analogue voltage. No kernel/
 package/firmware/radio change or RAM entry occurs. Fresh pre/postflight and
 observer controllers plus the pending current-boot physical UI check remain
 required before use. See [preparation](../evidence/2026-11-09-modem-offline-probe-preparation.json).
+
+
+## November 9: offline modem entry and return controls prepared
+
+Prepare a one-use staging, serial/HTTP observation, single-BOOT and native-return
+controller set for the verified native-r50 offline probe image. Preserve the
+pending current-boot UI gate before phone-client import. Fourteen staging and
+fourteen BOOT cases pass with instrumented sources; six native phase cases,
+twelve recovery refusal cases and nine changed-register controls pass. No test
+opens a real USB device or sends a phone command. An uncertain BOOT reply blocks
+a second attempt. Recovery requires the known terminal pre-BOOT timeout and
+absent PIDs; no live transfer is killed/reset/retried.
+
+One real read-only preparation check confirms the same native boot, r50/r5
+hashes, taint0, CPU/NFC/MSS baseline, nine APC/S5 raw controls, Sway and three
+UPower samples. Host routes/resolver/protected index remain unchanged. The
+future postflight permits normal startup observation for up to 120 seconds;
+that return path remains unexercised. Exact ARM BusyBox `od -v` preserves all
+84 native kernel-note bytes for serial capture.
+
+Add a pure artifact return verifier and three passing test methods using actual
+mocked-worker output and synthetic handoff/native receipts. Bad operation order,
+state, identity, timer, IRQ, raw controls, UPower and host restoration are rejected.
+Physical display/touch is never inferred. The new structured reply repeats the
+already-recorded older post-UPower-install pass; the current native-return UI
+question remains pending. The image is unstaged/unbooted; no reboot, transfer,
+BOOT, module load, package or radio change occurs. Full bringup remains active.
+See [evidence](../evidence/2026-11-09-modem-probe-entry-preparation.json).
