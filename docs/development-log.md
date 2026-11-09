@@ -4644,3 +4644,35 @@ sources remain unchanged. Preserve previous NFC/CPU artifacts and the root
 index. Publish the probes and [evidence](../evidence/2026-11-09-battery-telemetry-validity.json).
 A production validity/recovery correction and its native qualification remain
 open; no phone reboot or package/policy change occurs.
+
+## November 9: fix UPower telemetry validity and later-availability recovery
+
+Implement strict uncached numeric parsing and shared usable-charge validation
+in fresh current/backport source clones. Keep library read failure, empty text,
+malformed/non-finite values and out-of-range capacity distinct from valid zero.
+Capture charge fields once per refresh, retain prior properties/update time on
+unusable data, and retry initially ignored supplies through the existing removal
+and registration paths so sibling links remain consistent. Prefer real charge
+over approximate levels, preserve peripheral/MacBook behavior and avoid replacing
+zero energy with a stale average. Bring the backport denominator guard in line
+with current source.
+
+All 28 new validity cases pass per tree. Full regressions expose an approximate
+level precedence error, which is corrected; the old NaN test is updated to reject
+false-empty reporting. Retain the initial missing-USB-metadata fixture failure.
+A repeated Wacom mock event-send failure reproduces with unchanged pinned
+production C; paced identical records pass there and with the fix, keeping all
+final assertions. Host scheduling also exposes the fixed-per-loop simulated
+power assumption; use elapsed monotonic time while retaining charging/discharging
+assertions. Retain failed/misselected attempts separately. Final complete runs
+pass all 131 and 122 configured tests with normal zero exit status; no skips or
+expected failures are substituted. The public verifier rejects seven invalid
+report controls.
+
+Export reviewed mail patches and replay them at their exact bases to identical
+clean source trees. Preserve earlier CPU/NFC/battery artifacts, original diagnostic
+reproductions, the protected root index and the newest pending physical UI record.
+Publish [evidence](../evidence/2026-11-09-battery-telemetry-fix.json) and
+[review instructions](../submissions/upower/README.md). No native install, reboot,
+charging, radio or audio operation occurs. ARM packaging, deployment and full
+bringup remain unfinished.

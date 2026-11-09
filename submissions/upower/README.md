@@ -90,3 +90,36 @@ from numeric validity and recovery. These diagnostic fixtures and libudev
 read-failure model are not yet an additional production patch or submission.
 Native r50 and UPower r4 remain unchanged; [evidence](../../evidence/2026-11-09-battery-telemetry-validity.json)
 records the precise x86_64/mock scope and earlier excluded setup attempts.
+
+## November 9: numeric validity and recovery correction
+
+Apply [0003](0003-linux-validate-battery-telemetry-and-retry-ignored-supplies.patch)
+after the two current-tree drafts above, at base
+`d8e650c3180db30b4c7df59caadefae9c2ff2866`. It corrects the
+[reproduced validity gaps](../../diagnostics/upower-telemetry-validity/README.md)
+and adds 28 validity/lifecycle cases. The separate
+[1.91.0 backport patch](backport-1.91.0-validate-battery-telemetry.patch) applies to
+`1ddb4275a13932db1a64d8549182947066c57fb0`, the source base used for installed r4.
+Do not apply the two version-specific corrections together.
+
+Final complete Linux suites pass 131 tests on the current tree and 122 on the
+backport. Parsing failure stays distinct from zero, failed refreshes hold prior
+properties/update time, and ignored supplies can recover on change without
+losing sibling lifetime. Real remaining charge outranks approximate levels;
+peripheral Unknown and MacBook handling remain covered. The backport also gains
+the current core's positive-denominator inference guard. Genuine-empty,
+overfull and existing critical-action controls pass. The current NaN-only test
+now requires no battery or warning instead of fabricated zero charge.
+
+The current Wacom fixture paces identical records after its burst event-send
+failure is reproduced against unchanged pinned production C. Both trees'
+simulated 1 W state fixture tracks elapsed time so host scheduling cannot lower
+the intended power. All original final assertions remain. Earlier fixture and
+partial-selection runs are retained and excluded from complete-pass claims.
+
+See [build/reproduction instructions](../../diagnostics/upower-telemetry-fix/README.md)
+and [evidence](../../evidence/2026-11-09-battery-telemetry-fix.json) for exact source
+trees, patch/test hashes and replay. These are x86_64 mock results, with no ARM
+package or native deployment yet. Installed r50/UPower r4 remain unchanged.
+These additional review drafts have no fabricated author certification; no
+upstream issue, merge request or message has been sent.

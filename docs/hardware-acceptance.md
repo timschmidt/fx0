@@ -412,3 +412,18 @@ This is reproduction evidence, with no native fault injection, production C
 change, package update, charging/radio/audio operation or reboot. GNSS/radio
 class-node absence is only an inventory observation. See
 [evidence](../evidence/2026-11-09-battery-telemetry-validity.json).
+
+## November 9: UPower numeric validity correction tested on host
+
+The source correction passes 131 current-tree and 122 backport tests, including
+28 validity/lifecycle cases each, genuine-empty and existing critical-action
+controls. Failed reads retain the last good report, and ignored supplies can
+register when valid telemetry appears. Existing overfull behavior remains
+covered; NaN alone no longer fabricates an empty system battery. Fixture event
+pacing and elapsed-time corrections are distinguished from production changes.
+
+This is host UMockdev/private D-Bus qualification. Native installed r50 and
+UPower r4 remain unchanged; ARM package/deployment and physical gauge, power,
+charging, stale-data policy and final hardware acceptance are pending. The latest
+native return's exact display/touch answer is still pending; older confirmations
+are not reused. See [evidence](../evidence/2026-11-09-battery-telemetry-fix.json).

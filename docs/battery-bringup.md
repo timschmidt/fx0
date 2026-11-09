@@ -623,3 +623,25 @@ without suppressing a genuine empty battery. Full malformed/partial/fault and
 recovery coverage remains required before gauge promotion. No production C,
 package or phone policy changes are part of this reproduction. See
 [evidence](../evidence/2026-11-09-battery-telemetry-validity.json).
+
+## November 9: correct unusable UPower readings and recover later telemetry
+
+Source corrections for the pinned 1.91.5 review tree and 1.91.0 backport now
+pass all 131 and 122 configured Linux tests respectively. The 28 validity cases
+per tree cover malformed/non-finite data, library-visible NULL reads, retaining
+a prior sample on failure, later availability, sibling lifetime, valid zero,
+capacity levels and peripheral/MacBook behavior. The parser keeps success
+separate from zero; real remaining charge takes priority over approximate
+levels, and an older average cannot replace real zero energy. The backport
+also receives the current core's positive-denominator inference guard.
+
+The old NaN-only expectation of an empty battery is corrected. Existing
+overfull and critical-action controls still pass. Wacom fixture pacing is
+checked against unchanged production code, and the simulated 1 W state fixture
+uses elapsed monotonic time; earlier fixture failures remain recorded. These
+are x86_64 UMockdev/private D-Bus results, with no native fault injection or
+power action. ARM packaging, deployment, stale-data policy, physical SOC/current
+accuracy and battery/charging qualification remain open. Installed r50/UPower r4
+are unchanged. See [review patches](../submissions/upower/README.md),
+[reproduction instructions](../diagnostics/upower-telemetry-fix/README.md) and
+[evidence](../evidence/2026-11-09-battery-telemetry-fix.json).
