@@ -4825,3 +4825,35 @@ native boot `c3ac8f04-888e-493c-bb5d-a1729a275f7d`. No new reboot, transfer,
 BOOT, flash, radio/audio operation, host Wi-Fi change or recovery-disk write
 occurs. r59 startup, reliable transport and full bringup remain open. See
 [trace evidence](../evidence/2026-11-09-ram-transfer-journal.json).
+
+## November 9: identify the modem gap and prepare an inactive MSM8926 description
+
+Read-only inventory on the unchanged r50/r5 boot finds only ADSP and WCNSS
+running. MSS at fc880000 is disabled and inherits the MSM8226 compatible;
+active ModemManager has no objects. The installed MSS module exists but is not
+loaded. rmtfs and several optional support tools are absent. Firmware names
+mba.b00/modem.mdt are present through the actual configured runtime search path,
+with original modem/persist read-only. No firmware/calibration bytes, identifiers,
+QMI/location requests or radio controls are exported or executed.
+
+Resolve the unit's private stock DTB supply phandles: MX L3, PLL L8, MSS S5,
+with S5 fixed at 1.15 V. A separate patch against exact r50 source selects
+MSM8926 resources, removes the inherited MSM8226-only BHS property and describes
+those supplies. Modem and new S5 both remain disabled; no kernel recipe, package
+or RAM image changes. The existing driver requests a minimum voltage with
+INT_MAX upper bound and has remoteproc auto_boot false; runtime ownership and
+filesystem/calibration handling still need qualification before activation.
+
+Baseline/candidate DTBs compile with the same three inherited warnings; the
+baseline matches the retained installed-r50 DTB hash. Stock-derived checks
+reject the old description, wrong same-type supply and unexpected S5 enablement.
+The first schema applicability assertion catches disabled nodes relaxing required
+properties. Preserve that failed attempt; separate enabled host copies then
+validate without MSS/RPM regulator diagnostics. Old missing supplies and stale
+BHS controls are rejected. The actual candidate remains disabled and unbooted.
+
+Final native checks preserve boot, taint, raw image, package database/world and
+UPower/ModemManager/Sway PIDs, with systemd running and no jobs. The newest
+physical UI answer remains pending. Modem startup/control, GNSS, SIM/RF and full
+bringup are unfinished. See [status](modem-bringup.md) and
+[evidence](../evidence/2026-11-09-modem-control-description.json).

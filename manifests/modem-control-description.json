@@ -1,0 +1,350 @@
+{
+  "recorded_UTC": "2026-11-09T08:53:57.839944+00:00",
+  "status": "Stock-derived disabled MSM8926 modem/S5 description verified on host; native modem remains disabled",
+  "source_profile": "Reconstructed complete r50 source; board hash and patch pinned; no recipe integration",
+  "source_base": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+  "source_board_sha256": "5df5d19e8ab3cffebd0778a320298475ebe50e4e05712e40f654f44ea7ac3135",
+  "patch": "diagnostics/modem-control/fx0-msm8926-modem-description.patch",
+  "patch_sha256": "54673c6e15790e6cbe604fa9a81baf4f8092d904ede68bf92c3477f38396e4aa",
+  "verifier": "diagnostics/modem-control/verify-description.py",
+  "verifier_sha256": "df31da47ab02c5bfd525c098a6835a946e10a831ea3dc4659b592a5800131faf",
+  "stock_selected_supply_mapping": {
+    "mx": {
+      "stock_regulator": "8226_l3",
+      "minimum_uV": 750000,
+      "maximum_uV": 1337500
+    },
+    "pll": {
+      "stock_regulator": "8226_l8",
+      "minimum_uV": 1800000,
+      "maximum_uV": 1800000
+    },
+    "mss": {
+      "stock_regulator": "8226_s5",
+      "minimum_uV": 1150000,
+      "maximum_uV": 1150000
+    }
+  },
+  "candidate": {
+    "supply_paths": {
+      "mx": "/remoteproc/smd-edge/rpm-requests/regulators/l3",
+      "pll": "/remoteproc/smd-edge/rpm-requests/regulators/l8",
+      "mss": "/remoteproc/smd-edge/rpm-requests/regulators/s5"
+    },
+    "memory_paths": [
+      "/reserved-memory/mba@d100000",
+      "/reserved-memory/mpss@8000000"
+    ],
+    "modem_status": "disabled",
+    "S5_status": "disabled"
+  },
+  "candidate_DTB_sha256": "0895e2b3167363012f55db751c9ad974e9aa3ac2e2752f0cc6b8129f3762e0af",
+  "candidate_DTB_booted_or_packaged": false,
+  "verification": {
+    "verified_UTC": "2026-11-09T08:46:39.285522+00:00",
+    "stock_selected_supply_mapping": {
+      "mx": {
+        "stock_regulator": "8226_l3",
+        "minimum_uV": 750000,
+        "maximum_uV": 1337500
+      },
+      "pll": {
+        "stock_regulator": "8226_l8",
+        "minimum_uV": 1800000,
+        "maximum_uV": 1800000
+      },
+      "mss": {
+        "stock_regulator": "8226_s5",
+        "minimum_uV": 1150000,
+        "maximum_uV": 1150000
+      }
+    },
+    "candidate": {
+      "supply_paths": {
+        "mx": "/remoteproc/smd-edge/rpm-requests/regulators/l3",
+        "pll": "/remoteproc/smd-edge/rpm-requests/regulators/l8",
+        "mss": "/remoteproc/smd-edge/rpm-requests/regulators/s5"
+      },
+      "memory_paths": [
+        "/reserved-memory/mba@d100000",
+        "/reserved-memory/mpss@8000000"
+      ],
+      "modem_status": "disabled",
+      "S5_status": "disabled"
+    },
+    "controls": [
+      {
+        "mode": "baseline-wrong-description",
+        "rejected": true
+      },
+      {
+        "mode": "wrong-MSS-supply",
+        "rejected": true
+      },
+      {
+        "mode": "S5-unexpectedly-enabled",
+        "rejected": true
+      }
+    ],
+    "patch_applies_without_fuzz": true,
+    "baseline_and_candidate_DTC": "pass",
+    "candidate_MSS_and_RPM_regulator_schema_diagnostics": 0,
+    "schema_validates_separate_enabled_host_copies": true,
+    "baseline_missing_supplies_detected_by_actual_schema": true,
+    "stale_MSM8226_BHS_property_detected_by_actual_schema": true,
+    "new_DTC_warnings": 0,
+    "inherited_DTC_warnings": 3,
+    "patch_sha256": "54673c6e15790e6cbe604fa9a81baf4f8092d904ede68bf92c3477f38396e4aa",
+    "baseline_board_sha256": "5df5d19e8ab3cffebd0778a320298475ebe50e4e05712e40f654f44ea7ac3135",
+    "candidate_board_sha256": "3f79bf8411bcf0eb6108304ebcebd2a7111122fd5bec1a135a893361cef29b77",
+    "baseline_DTB_sha256": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+    "candidate_DTB_sha256": "0895e2b3167363012f55db751c9ad974e9aa3ac2e2752f0cc6b8129f3762e0af",
+    "no_device_access": true,
+    "candidate_booted_or_packaged": false,
+    "scope": "Stock-derived wiring and disabled DT description only; no voltage, modem startup, radio or GNSS qualification"
+  },
+  "schema_applicability_correction": {
+    "recorded_UTC": "2026-11-09T08:47:52.784480+00:00",
+    "terminal_returncode": 1,
+    "failure": "Positive applicability assertion found no missing-supply diagnostics on baseline disabled node",
+    "false_success_claimed": false,
+    "resolution": "Separate enabled host DTB copies for required-property/schema verification; actual candidate stays disabled",
+    "verifier_as_run": "verifier-as-run.py",
+    "first_attempt_artifacts_preserved": true
+  },
+  "native_inventory": {
+    "recorded_UTC": "2026-11-09T08:31:43.197990+00:00",
+    "boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "kernel": "6.18.59-fx0-dmp",
+    "kernel_taint": 0,
+    "raw_boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "remoteprocs": [
+      {
+        "class": "remoteproc0",
+        "name": "fb204000.remoteproc",
+        "state": "running",
+        "firmware": "wcnss.mdt",
+        "recovery": "enabled",
+        "coredump": "disabled",
+        "device": "/sys/devices/platform/soc/fb204000.remoteproc",
+        "driver": "/sys/bus/platform/drivers/qcom-wcnss-pil",
+        "of_node": "/sys/firmware/devicetree/base/soc/remoteproc@fb204000"
+      },
+      {
+        "class": "remoteproc1",
+        "name": "adsp",
+        "state": "running",
+        "firmware": "adsp.mdt",
+        "recovery": "enabled",
+        "coredump": "disabled",
+        "device": "/sys/devices/platform/soc/fe200000.remoteproc",
+        "driver": "/sys/bus/platform/drivers/qcom_q6v5_pas",
+        "of_node": "/sys/firmware/devicetree/base/soc/remoteproc@fe200000"
+      }
+    ],
+    "modem_node": {
+      "node": "/soc/remoteproc@fc880000",
+      "compatible": [
+        "qcom,msm8226-mss-pil"
+      ],
+      "status": "disabled",
+      "firmware-name": null,
+      "reg_hex": "fc88000000004040fc82000000010000",
+      "memory-region_hex": "0000005600000057"
+    },
+    "modem_platform_device_present": false,
+    "ModemManager_objects": [],
+    "ModemManager_PID_unchanged": 1047,
+    "installed_MSS_module_metadata": [
+      {
+        "path": "/lib/modules/6.18.59-fx0-dmp/kernel/drivers/remoteproc/qcom_q6v5_mss.ko.zst",
+        "bytes": 20159,
+        "sha256": "1929ff0b275b50508fcbd996cd1ba6104c512d65ffdce00373dd642008d4b90c"
+      }
+    ],
+    "loaded_related_modules": [
+      "qrtr_smd",
+      "qcom_q6v5_pas",
+      "qcom_q6v5",
+      "qcom_camss",
+      "qrtr",
+      "qmi_helpers"
+    ],
+    "device_node_paths": [
+      "/dev/rpmsg_ctrl0",
+      "/dev/rpmsg_ctrl1",
+      "/dev/rpmsg_ctrl2"
+    ],
+    "packages": {
+      "geoclue": {
+        "version": "2.8.1-r0",
+        "commit": "8ca2388d2fc38fb54b5d05e69ae66a18913f2e74"
+      },
+      "libqmi": {
+        "version": "1.38.0_git20260414-r0",
+        "commit": "4506dd91d3dc3cb2002cd2bcade6487a87809f4c"
+      },
+      "libqrtr-glib": {
+        "version": "1.4.0-r0",
+        "commit": "2e7f17adb91f65d9dd620f699e46d59de744fd93"
+      },
+      "linux-postmarketos-qcom-msm8226": {
+        "version": "6.18.59-r50",
+        "commit": null
+      },
+      "modemmanager": {
+        "version": "1.25.95_git20260527-r1",
+        "commit": "c17ec2f14e8e3e294abca534fb4b34a62c80fd30"
+      },
+      "modemmanager-systemd": {
+        "version": "1.25.95_git20260527-r1",
+        "commit": "c17ec2f14e8e3e294abca534fb4b34a62c80fd30"
+      },
+      "msm-firmware-loader": {
+        "version": "1.8.0-r2",
+        "commit": "-dirty"
+      },
+      "qrtr": {
+        "version": "1.2-r1",
+        "commit": "75f79bc5db830813e28ea173fc9d72ca69054fc3"
+      },
+      "upower": {
+        "version": "99991.91.0-r5",
+        "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+      }
+    },
+    "tools": {
+      "qrtr-lookup": "/usr/bin/qrtr-lookup",
+      "qrtr-ns": null,
+      "qmicli": null,
+      "qmi-network": null,
+      "mmcli": "/usr/bin/mmcli",
+      "rmtfs": null,
+      "pd-mapper": null,
+      "tqftpserv": null,
+      "gpsd": null,
+      "gpspipe": null
+    },
+    "selected_boot_configs": {
+      "/boot/config": [
+        "CONFIG_QRTR=m",
+        "CONFIG_QRTR_SMD=m",
+        "# CONFIG_QRTR_TUN is not set",
+        "# CONFIG_GNSS is not set",
+        "CONFIG_RPMSG_WWAN_CTRL=m",
+        "CONFIG_QCOM_PIL_INFO=m",
+        "CONFIG_QCOM_Q6V5_MSS=m",
+        "# CONFIG_QCOM_SYSMON is not set",
+        "CONFIG_RPMSG_CHAR=y",
+        "CONFIG_RPMSG_CTRL=y",
+        "CONFIG_QCOM_QMI_HELPERS=m",
+        "CONFIG_QCOM_SMD_RPM=y"
+      ]
+    },
+    "effective_firmware_path": "/run/msm-firmware-loader/target",
+    "modem_firmware_name_metadata_only": [
+      {
+        "path": "/run/msm-firmware-loader/target/mba.b00",
+        "exists": true,
+        "is_symlink": true,
+        "target": "/run/msm-firmware-loader/mnt/modem/image/mba.b00",
+        "regular_file": true,
+        "bytes": 295824
+      },
+      {
+        "path": "/run/msm-firmware-loader/target/modem.mdt",
+        "exists": true,
+        "is_symlink": true,
+        "target": "/run/msm-firmware-loader/mnt/modem/image/modem.mdt",
+        "regular_file": true,
+        "bytes": 1820
+      }
+    ],
+    "modem_and_persist_mount_metadata": [
+      {
+        "source": "/dev/mmcblk0p1",
+        "target": "/run/msm-firmware-loader/mnt/modem",
+        "type": "vfat",
+        "options": "ro,nosuid,nodev,noexec,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro"
+      },
+      {
+        "source": "/dev/mmcblk0p14",
+        "target": "/run/msm-firmware-loader/mnt/persist",
+        "type": "ext4",
+        "options": "ro,nosuid,nodev,noexec,relatime"
+      }
+    ],
+    "modem_reserved_memory": [
+      {
+        "node": "/reserved-memory/mba@d100000",
+        "phandle": 86,
+        "reg_hex": "0d10000000100000",
+        "status": "okay",
+        "no_map": true
+      },
+      {
+        "node": "/reserved-memory/mpss@8000000",
+        "phandle": 87,
+        "reg_hex": "0800000005100000",
+        "status": "okay",
+        "no_map": true
+      }
+    ],
+    "final_native_state": {
+      "boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+      "kernel": "6.18.59-fx0-dmp",
+      "kernel_taint": 0,
+      "systemd": "running",
+      "pending_jobs": [],
+      "raw_boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+      "UPower_PID": 2776,
+      "ModemManager_PID": 1047,
+      "Sway_PID": 1523,
+      "services": {
+        "ModemManager": "active",
+        "upower": "active",
+        "tinydm": "active",
+        "iio-sensor-proxy": "active"
+      },
+      "remoteprocs": {
+        "remoteproc1": {
+          "name": "adsp",
+          "state": "running"
+        },
+        "remoteproc0": {
+          "name": "fb204000.remoteproc",
+          "state": "running"
+        }
+      },
+      "modem_DT_status": "disabled",
+      "MSS_platform_device_absent": true,
+      "package_DB_sha256": "ba2b88f03bdca3ae8566714e9c9f1722907b84d6f0a2772fe20c253917408364",
+      "world_sha256": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+      "temperatures_mC": [
+        40000,
+        41000
+      ],
+      "verified_UTC": "2026-11-09T08:49:11.840711+00:00"
+    },
+    "no_modem_control_node_open_or_QMI_QRTR_request": true,
+    "no_service_activation_or_remoteproc_start": true,
+    "no_proprietary_firmware_calibration_identifier_or_location_export": true
+  },
+  "latest_UI": {
+    "native_boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "status": "pending on this newest native return",
+    "question": "The r59 transfer timed out before BOOT, and the phone has returned to installed r50 with UPower r5 active, the original boot hash, and Sway and the sensor proxy running. Do display and touch work normally on this newest boot?",
+    "recorded_UTC": "2026-11-09T08:14:37.367617+00:00"
+  },
+  "limits": [
+    "Host description and read-only native inventory only; no physical modem startup/control or GNSS pass",
+    "Modem and new S5 remain disabled; active kernel recipe/package/images unchanged",
+    "Firmware name/size availability does not establish identity, load ranges or runtime compatibility",
+    "Stock voltage constraints are not measured analogue rails",
+    "RMTFS/EFS ownership, current provisioning backup and firmware/start/stop/fault handling need preparation before activation",
+    "No generic GNSS class-node absence or missing optional tool is a product-absence conclusion",
+    "Current-boot physical UI answer remains pending before another RAM entry",
+    "Planning baseline has no SIM; final cellular, all remaining hardware, current stable/edge, recovery and upstream readiness remain open"
+  ],
+  "evidence": "evidence/2026-11-09-modem-control-description.json"
+}
