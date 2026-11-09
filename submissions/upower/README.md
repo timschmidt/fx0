@@ -76,3 +76,17 @@ and [evidence](../../evidence/2026-10-30-upower-telemetry-r4.json) for exact rev
 package hashes and native smoke-test scope. Review metadata and any required
 author certification still need review before submission; no trailers have been
 invented.
+
+## November 9: validity gaps reproduced, correction pending
+
+The [unusable-telemetry probes](../../diagnostics/upower-telemetry-validity/README.md)
+extend the two pinned review/backport sources without modifying production C.
+Each has eleven failing contracts and five passing controls. Unusable numeric
+data and failed refreshes can become false critical warnings; infinity becomes
+100%, and ignored supplies do not recover on change. The backport also aborts
+on NaN under fatal diagnostics. A NULL read at coldplug is already rejected,
+and the genuine zero-charge control passes. This distinguishes availability
+from numeric validity and recovery. These diagnostic fixtures and libudev
+read-failure model are not yet an additional production patch or submission.
+Native r50 and UPower r4 remain unchanged; [evidence](../../evidence/2026-11-09-battery-telemetry-validity.json)
+records the precise x86_64/mock scope and earlier excluded setup attempts.

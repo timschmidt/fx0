@@ -589,3 +589,37 @@ and [ADC reference evidence](../evidence/2026-10-30-battery-adc-references.json)
 the current development results. The signed installed r4 kernel is restored after
 the unsigned module tests; normal eMMC boot, taint 0, native framebuffer and active
 Sxmo/UPower pass. Native fuel-gauge and charging qualification remain unfinished.
+
+## November 9: native inventory and unusable-telemetry reproduction
+
+A read-only inventory on the unchanged r50 boot confirms three SMBB supplies.
+The battery-labelled interface still lacks voltage, current, temperature,
+capacity and remaining-charge attributes. USB is online with a 500 mA input
+setting and a 500 mA ConfigFS descriptor; the battery reports Good/Discharging.
+These are interface/configuration observations, not measured battery flow or
+automatic USB negotiation. VADC/IADC drivers are bound, but the required new
+processed battery channels, BMS consumer and firmware battery-profile handoff
+are absent from this native configuration. GNSS/radio class nodes are also
+absent; that does not prove product-feature absence. The installed UPower r4
+CLI/daemon hashes and original r50 boot hash still match their manifests.
+
+New [diagnostic probes](../diagnostics/upower-telemetry-validity/README.md) run
+the unchanged 1.91.5 guard and installed 1.91.0 backport source under UMockdev
+and private D-Bus. Each has eleven failing validity contracts and five passing
+controls. On 1.91.5 nine cases turn unusable data into a false 0% critical/action
+warning. The backport does so in eight; NaN instead aborts under fatal GObject
+diagnostics. Both report infinity as 100% and fail to reconsider an ignored
+supply when valid capacity arrives on a change event. Genuine zero charge
+still receives normal critical handling in both versions.
+
+The GUdev presence check already reads the attribute. A modeled unavailable
+read at coldplug is correctly ignored, while a later unavailable read can
+turn a valid 50% into 0%. The shim returns NULL at the shared libudev sysattr
+boundary with errno ENODATA; this is consumer-visible fault modeling, not a
+real kernel errno injection or phone test. Design/current/voltage/counter data
+still do not supply remaining charge. The next correction must validate
+retrieved values, avoid false-empty refreshes, and handle later availability
+without suppressing a genuine empty battery. Full malformed/partial/fault and
+recovery coverage remains required before gauge promotion. No production C,
+package or phone policy changes are part of this reproduction. See
+[evidence](../evidence/2026-11-09-battery-telemetry-validity.json).

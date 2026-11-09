@@ -4616,3 +4616,31 @@ Reverify 873 earlier input hashes and 53 original encoding inputs before
 documentation updates; retain earlier artifacts and the protected root index.
 Publish [preparation evidence](../evidence/2026-11-08-nfc-r59-startup-preparation.json).
 No physical trial or installation starts; full bringup continues.
+
+## November 9: identify battery telemetry validity and recovery defects
+
+Inventory the unchanged r50 native supplies, ADC bindings, firmware property
+names and remote-processor/class interfaces without changing policy or
+starting a radio. Confirm missing battery measurements and profile handoff,
+and verify the installed r4 UPower CLI/daemon plus original boot hashes. A
+follow-up resolves IIO drivers through canonical ancestor devices; initial
+class-path nulls did not mean unbound drivers. USB input setting and descriptor
+both read 500 mA; actual current/negotiation remain unqualified.
+
+Build pristine copies of the two pinned UPower guard/backport trees with the
+original tool rootfs mounted read-only. Add twelve validity probes, leaving
+production C untouched. Matched sixteen-case runs each show eleven failing
+contracts and five passing controls: nine false 0% critical/action states on
+1.91.5; eight plus a NaN fatal-diagnostic abort on 1.91.0. Infinity becomes
+100%; ignored supplies stay invisible after valid telemetry arrives. An
+unavailable coldplug read and real-zero-charge protection pass. The read
+error shim targets libudev, covering GUdev string and numeric paths; it is not
+a kernel fault injection.
+
+Retain the initial setup failures, missed numeric injection and earlier
+backport partial-metadata diagnostics separately. Actual public preparation
+replay matches both final tested fixtures; production C and recovery-disk
+sources remain unchanged. Preserve previous NFC/CPU artifacts and the root
+index. Publish the probes and [evidence](../evidence/2026-11-09-battery-telemetry-validity.json).
+A production validity/recovery correction and its native qualification remain
+open; no phone reboot or package/policy change occurs.
