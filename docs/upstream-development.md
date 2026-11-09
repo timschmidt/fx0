@@ -174,3 +174,16 @@ ARMv7 simulation pass. It remains unbooted/uninstalled and does not inherit
 host RAM acceptance. The [source-only review diff](../patches/pmaports/fx0-cpr-observation-packaging.patch)
 extends r54; the frozen 39-patch Linux mail export remains unchanged. See
 [r55 evidence](../evidence/2026-11-08-cpr-observation-source-package.json).
+
+## NFC teardown source fixes
+
+The isolated `integration/fx0-nfc-teardown` Linux branch adds two commits after
+the conservative PN547 source: release/drain the threaded I2C IRQ before NCI
+state is freed, and run NCI unregister outside the mode mutex before final cold
+shutdown/free. Actual C callback tests reject each restored old behavior; strict
+style, exact patch replay, targeted ARM W=1 and the complete independent Alpine
+r58 source build pass. Existing firmware-work handling is retained and firmware
+concurrency is unqualified. Owner-fork source/recipe publication is separate from
+current receiving-tree, DCO/routing, maintainer review and hardware acceptance.
+No upstream email or PR is sent. See
+[NFC evidence](../evidence/2026-11-08-nfc-teardown-source-package.json).

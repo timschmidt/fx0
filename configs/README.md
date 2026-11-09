@@ -49,3 +49,11 @@ it does not change this configuration or recompile the kernel. The
 [r57 manifest](../manifests/kernel-cpr-package-r57.json) records package version,
 retained kernel build/release and exact artifact fingerprints separately.
 Hardware, runtime autoload and installed update/recovery remain unqualified.
+
+`linux-6.18.59-fx0-nfc-teardown-alpine.armv7` changes only LOCALVERSION from the
+prior NFC Alpine input. The independent r58 source build includes two driver
+teardown fixes and uses a new certificate/module family. The
+[source profile](../manifests/kernel-nfc-teardown.json) and
+[build manifest](../manifests/kernel-nfc-teardown-build.json) separate input
+identity from measured compiler normalization and artifacts. Prior NFC runtime
+or host results do not qualify live teardown for this family.

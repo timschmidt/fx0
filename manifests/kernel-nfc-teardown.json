@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "base": {
+    "repository": "https://github.com/timschmidt/fx0-linux.git",
+    "commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66"
+  },
+  "configuration": {
+    "path": "configs/linux-6.18.59-fx0-nfc-teardown-alpine.armv7",
+    "sha256": "cf07cd609c78832e613cb111edcf14574785f0b158bfe409ea88aa3047b0ba02",
+    "origin": "Verified conservative NFC Alpine input; only LOCALVERSION changed for the independently rebuilt teardown-fix family"
+  },
+  "profiles": {
+    "nfc": {
+      "status": "Unqualified independent Alpine NFC teardown fixes; source/host checks do not provide runtime acceptance",
+      "patches": [
+        "patches/linux-integration/fx0-mpu6515-dmp.diff",
+        "patches/linux-integration/iio-preserve-tiny-log2-scale.diff",
+        "patches/linux-integration/fx0-mpu6515-dmp-smd-awake.diff",
+        "patches/linux-integration/fx0-mpu6515-dmp-smd-wake.diff",
+        "patches/linux-integration/fx0-mdp5-video-flush-before-enable.diff",
+        "patches/linux-integration/fx0-msm8926-raw-qfprom-binding.diff",
+        "patches/linux-integration/fx0-msm8926-raw-qfprom-driver.diff",
+        "patches/linux-integration/fx0-msm8926-raw-qfprom-dt.diff",
+        "patches/linux-integration/fx0-cpr-mx-voltage-sequencing.diff",
+        "patches/linux-integration/fx0-scm-legacy-fuse-read.diff",
+        "patches/linux-integration/fx0-nxp-nci-irq-unwind.patch",
+        "patches/linux-integration/fx0-nxp-nci-ref-clock-binding.patch",
+        "patches/linux-integration/fx0-nxp-nci-ref-clock.patch",
+        "patches/linux-integration/fx0-madai-pn547-nfc.patch",
+        "patches/linux-integration/fx0-nxp-nci-irq-teardown.patch",
+        "patches/linux-integration/fx0-nxp-nci-unregister-lock.patch"
+      ],
+      "expected_source_commit": "3be72fe7a5fb16f74494023b134ce1f2654bff40",
+      "expected_source_tree": "ced58428a4f02187a4e0d89e676fa3c2039f4ba3"
+    }
+  },
+  "sha256": {
+    "patches/linux-integration/fx0-mpu6515-dmp.diff": "9ad19adac6fa9aa3eb995e41e031daa556595d0a3f7e3713757e19f32f6c0ce4",
+    "patches/linux-integration/iio-preserve-tiny-log2-scale.diff": "7b01db1be9db0b1e73a4cb3034cd05d5b3eb164990fe6024fc58804278aaa0b0",
+    "patches/linux-integration/fx0-mpu6515-dmp-smd-awake.diff": "97c1a1028b962414123e54bba812cbbe14e0dadcf7dfb66265a0178060dc8ec9",
+    "patches/linux-integration/fx0-mpu6515-dmp-smd-wake.diff": "92f9acedd8ab3397fbb80bd47ee440914ff48382a355455f7dd1037ff06ccf85",
+    "patches/linux-integration/fx0-mdp5-video-flush-before-enable.diff": "d626c745802e9c7b5230b8dbc5e524fe4eae78b522cf15b4bf947fd0f6acdbb3",
+    "patches/linux-integration/fx0-msm8926-raw-qfprom-binding.diff": "2affc2d26b7c7585d1cc0f847412da8011fcbc97754b3b1ca7fed9e3af164011",
+    "patches/linux-integration/fx0-msm8926-raw-qfprom-driver.diff": "d82fac0f63e2951e3485af0caf9182ffa78dada8f49e6c48ea8a7e864cce8a1a",
+    "patches/linux-integration/fx0-msm8926-raw-qfprom-dt.diff": "08e458d5cca9c00441fa177cf38fbf74984a680bebc66ff014a80e73835f7aa1",
+    "patches/linux-integration/fx0-cpr-mx-voltage-sequencing.diff": "f5bdd80531d944f84c41eaabd7c381c988a9b6ae233956327d542a6f4c05a119",
+    "patches/linux-integration/fx0-scm-legacy-fuse-read.diff": "a5d6a54661c3755d38112fe97aa84bbc10742b591fd782257e3cf11680474ac4",
+    "patches/linux-integration/fx0-nxp-nci-irq-unwind.patch": "a3263c64b32eed95b374d285d8beadacc0463193a1440854f7f39fa7022c2ea6",
+    "patches/linux-integration/fx0-nxp-nci-ref-clock-binding.patch": "31bfbb060aa142b2e4e8b4faef5b238e1c2289b8532ac3c50cbbbb4100c30ce6",
+    "patches/linux-integration/fx0-nxp-nci-ref-clock.patch": "120beb388d538aabf5e09a42176ca5c093dbddf266f55fd6a2c179c9b6470a13",
+    "patches/linux-integration/fx0-madai-pn547-nfc.patch": "ed20b4a846b8def6bdcc5640a2692a7777cff35f22b8bc1ff358cc241569dcc0",
+    "patches/linux-integration/fx0-nxp-nci-irq-teardown.patch": "487c88dc83c51406c0d9227aa8ab761cbb68d801446b94239d8d7580080f8fd8",
+    "patches/linux-integration/fx0-nxp-nci-unregister-lock.patch": "1b5a88fb46285739e9f0c14242aa03076d13dd9a8526a5ceebc42a7ba63eb39e"
+  },
+  "constraints": [
+    "Exact ten-patch r50 composition plus four PN547 source patches; excludes experimental CPR/CPU patches",
+    "CFI nonpermissive, module signing and full DWARF retained with lossless zlib compression",
+    "No proprietary firmware/libraries/calibration or private keys included",
+    "Distinct release/certificate/module family; hardware and distribution acceptance separate",
+    "No audio testing or host built-in Wi-Fi changes",
+    "Two teardown fixes drain IRQ before NCI free and avoid unregister mutex recursion; original NFC startup artifacts retained separately; firmware-download concurrency remains unqualified"
+  ]
+}

@@ -175,6 +175,51 @@ native r50 boot/hash/policy/services remain unchanged. See the
 [trial procedure](../diagnostics/nfc-startup/README.md) and
 [preparation evidence](../evidence/2026-11-08-nfc-startup-preparation.json).
 
+## Teardown fixes and independent r58 family
+
+Preparation of a cold module load/unload trial exposes two defects in the
+pinned driver: the I2C remove callback frees the NCI device before releasing
+its threaded IRQ, although that handler reads the device and driver data;
+the core holds `info_lock` across `nci_unregister_device()`, which can call
+close/flush callbacks requiring that mutex. The isolated source branch now
+releases/drains the IRQ first, runs unregister outside the mutex, then finalizes
+cold mode under the mutex and unlocks before freeing NCI state. Existing
+firmware-work handling is unchanged; concurrent firmware download is unqualified.
+
+Two raw patches replay to the exact published source at
+`3be72fe7a5fb16f74494023b134ce1f2654bff40`. Nine host tests execute actual C in
+16 modes, including instrumented pending IRQ and unregister close/flush
+callbacks. Restoring either old defect alone makes its regression fail. Both
+patches pass strict style checks. These are instrumented callbacks, separate
+from real IRQ concurrency or live NCI teardown qualification.
+
+The complete 16-patch r58 source build uses the distinct
+`6.18.59-fx0-nfc-teardown-alpine` release and a new certificate. The input changes
+only LOCALVERSION from the prior NFC configuration; normalization has the same
+19 compiler/capability differences. CFI, exact trust list, full compressed DWARF,
+all 468 signatures and 25,562 imported CRCs verify. Both changed ARM objects
+also compile with W=1 without warnings and match the full-build object bytes;
+original command/object bytes and timestamps are restored afterward. All
+577 dependency edges and 468 binary-index loader dry-runs pass. Its DTB and
+`Module.symvers` match the prior NFC family, but release/certificate/module
+identity remains separate and hardware acceptance does not transfer.
+
+APK signatures, tamper rejection, offline ARMv7 resolution and isolated usermode
+r56-to-r58 replacement pass. All 549 final payload files match the signed APK,
+and old module-family payloads are removed. Scripts/hooks are disabled during
+workspace extraction; actual phone update, autoload, boot and recovery are open.
+The build uses a separate mounted home, preserving prior source builds, packages,
+keys and the original unbooted moduleless startup image.
+
+Do not use the old r56 NFC modules for the planned teardown trial. The preserved
+startup image has no modules, so it cannot execute these driver remove paths;
+it still provides no hardware result. Before exercising corrected modules,
+prepare/qualify a matching r58 moduleless startup and native return, then a
+separate bounded signed-module cold-registration/cleanup trial. See the
+[source profile](../manifests/kernel-nfc-teardown.json),
+[measured build manifest](../manifests/kernel-nfc-teardown-build.json) and
+[fix/build evidence](../evidence/2026-11-08-nfc-teardown-source-package.json).
+
 ## Remaining hardware and distribution gates
 
 The phone still runs the same original r50 boot/hash and conservative policy,
@@ -183,9 +228,10 @@ and no NFC modules are loaded. The prior exact-boot physical UI result remains
 pending; no NFC RAM entry, GPIO/clock change, bus transaction, RF operation,
 firmware download or nonvolatile programming occurred.
 
-After the exact native-return UI gate, first qualify this moduleless RAM
-startup and native recovery. Then use separate bounded signed-module trials
-for cold ownership, balanced clock/GPIO cleanup and NCI reset/init responses. Then test
+After the exact native-return UI gate, qualify moduleless startup and native
+recovery for the corrected family. Use separate bounded signed-module trials
+for cold ownership, balanced clock/GPIO cleanup and NCI reset/init responses.
+Then test
 tag reading, RF/protocol behavior, userspace integration, restart/error unwind,
 suspend/wake and final distribution packaging. The maintained kernel NCI path
 does not provide the vendor `/dev/pn547` userspace ABI. No native NFC hardware

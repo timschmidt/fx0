@@ -1,0 +1,874 @@
+{
+  "date": "2026-11-08",
+  "recorded_UTC": "2026-11-09T01:41:56.650887+00:00",
+  "status": "Complete independent Alpine r58 teardown-fix source build and host package checks pass; no runtime/hardware qualification",
+  "source": {
+    "repository": "https://github.com/timschmidt/fx0-linux",
+    "branch": "integration/fx0-nfc-teardown",
+    "commit": "3be72fe7a5fb16f74494023b134ce1f2654bff40",
+    "tree": "ced58428a4f02187a4e0d89e676fa3c2039f4ba3",
+    "base": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+    "new_fix_commits": [
+      {
+        "commit": "a5ac56697b9332f3dfa7918341920eb0e252516c",
+        "parent": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+        "patch": "patches/linux-integration/fx0-nxp-nci-irq-teardown.patch",
+        "sha256": "487c88dc83c51406c0d9227aa8ab761cbb68d801446b94239d8d7580080f8fd8"
+      },
+      {
+        "commit": "3be72fe7a5fb16f74494023b134ce1f2654bff40",
+        "parent": "a5ac56697b9332f3dfa7918341920eb0e252516c",
+        "patch": "patches/linux-integration/fx0-nxp-nci-unregister-lock.patch",
+        "sha256": "1b5a88fb46285739e9f0c14242aa03076d13dd9a8526a5ceebc42a7ba63eb39e"
+      }
+    ],
+    "total_recipe_patches": 16
+  },
+  "source_checks": {
+    "checked_UTC": "2026-11-09T01:17:02.540805+00:00",
+    "base": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+    "tip": "3be72fe7a5fb16f74494023b134ce1f2654bff40",
+    "tree": "ced58428a4f02187a4e0d89e676fa3c2039f4ba3",
+    "commits": [
+      {
+        "commit": "a5ac56697b9332f3dfa7918341920eb0e252516c",
+        "parent": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+        "patch": "patches/linux-integration/fx0-nxp-nci-irq-teardown.patch",
+        "sha256": "487c88dc83c51406c0d9227aa8ab761cbb68d801446b94239d8d7580080f8fd8"
+      },
+      {
+        "commit": "3be72fe7a5fb16f74494023b134ce1f2654bff40",
+        "parent": "a5ac56697b9332f3dfa7918341920eb0e252516c",
+        "patch": "patches/linux-integration/fx0-nxp-nci-unregister-lock.patch",
+        "sha256": "1b5a88fb46285739e9f0c14242aa03076d13dd9a8526a5ceebc42a7ba63eb39e"
+      }
+    ],
+    "tests": 9,
+    "actual_C_modes": 16,
+    "regression_controls": [
+      {
+        "restored_defect": "IRQ_lifetime",
+        "actual_old_C_behavior_rejected": true
+      },
+      {
+        "restored_defect": "unregister_lock",
+        "actual_old_C_behavior_rejected": true
+      }
+    ],
+    "raw_patch_replay_exact": true,
+    "checkpatch_strict_no_signoff": "both pass; initial sparse-tree reference failure retained",
+    "source_files_sha256": {
+      "drivers/nfc/nxp-nci/i2c.c": "f7e45320dd700c0046a07e811db1d0eb50364a148634bf46f46552440e778ee1",
+      "drivers/nfc/nxp-nci/core.c": "8773490f96c4233d0ebb18597f76ca278302f4a3e8873aa9c7dd7f5f7303d8e0"
+    },
+    "runtime_and_concurrent_firmware_qualification": false
+  },
+  "source_publication": {
+    "repository": "https://github.com/timschmidt/fx0-linux",
+    "branch": "integration/fx0-nfc-teardown",
+    "commit": "3be72fe7a5fb16f74494023b134ce1f2654bff40",
+    "remote_ref_independently_verified": true,
+    "raw_patch_replay_exact": true,
+    "only_two_driver_source_files_changed": true,
+    "public_payload": "two source-fix commits only; no firmware/binaries/private keys",
+    "DCO_receiving_tree_or_runtime_acceptance": false
+  },
+  "recipe_publication": {
+    "verified_UTC": "2026-11-09T01:36:48.360051+00:00",
+    "repository": "https://github.com/timschmidt/fx0-pmaports",
+    "branch": "integration/fx0-nfc-teardown-package",
+    "commit": "328a281d6da3a414c417de7fb9a4eefcd8950fcb",
+    "remote_ref_independently_verified": true,
+    "checkout_clean": true,
+    "published_payload": "r58 standalone recipe/configuration/16 raw source patches/provenance; new teardown family",
+    "binary_firmware_private_key_or_device_log_export": false,
+    "owner_authorization": "Pushing to github is approved for all fx0 development."
+  },
+  "recipe_inputs": {
+    "manifest_sha256": "0b014ccab7d91b55a676fab5c78fc9583abb0a317ee00329af2dac3df2d06391",
+    "profile": "nfc",
+    "base_commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+    "configuration_sha256": "cf07cd609c78832e613cb111edcf14574785f0b158bfe409ea88aa3047b0ba02",
+    "template_sha256": "1db21f51e35974da6ab4a8eb2e9ce57f48cba688bc43ebb6c6001f8f72356bdb",
+    "source_archive_sha512": "3479e7b9d3e753f4dddde1b88cb6544d2304e46aa92b3ba0aab8cd0ce1108869efd8cc36692a05bc094ccdff6213e0cae0433dc5b742289c57023a838fda8741",
+    "pkgrel": 58,
+    "patch_order": [
+      "fx0-mpu6515-dmp.patch",
+      "iio-preserve-tiny-log2-scale.patch",
+      "fx0-mpu6515-dmp-smd-awake.patch",
+      "fx0-mpu6515-dmp-smd-wake.patch",
+      "fx0-mdp5-video-flush-before-enable.patch",
+      "fx0-msm8926-raw-qfprom-binding.patch",
+      "fx0-msm8926-raw-qfprom-driver.patch",
+      "fx0-msm8926-raw-qfprom-dt.patch",
+      "fx0-cpr-mx-voltage-sequencing.patch",
+      "fx0-scm-legacy-fuse-read.patch",
+      "fx0-nxp-nci-irq-unwind.patch",
+      "fx0-nxp-nci-ref-clock-binding.patch",
+      "fx0-nxp-nci-ref-clock.patch",
+      "fx0-madai-pn547-nfc.patch",
+      "fx0-nxp-nci-irq-teardown.patch",
+      "fx0-nxp-nci-unregister-lock.patch"
+    ],
+    "exported_sha256": {
+      "fx0-mpu6515-dmp.patch": "9ad19adac6fa9aa3eb995e41e031daa556595d0a3f7e3713757e19f32f6c0ce4",
+      "iio-preserve-tiny-log2-scale.patch": "7b01db1be9db0b1e73a4cb3034cd05d5b3eb164990fe6024fc58804278aaa0b0",
+      "fx0-mpu6515-dmp-smd-awake.patch": "97c1a1028b962414123e54bba812cbbe14e0dadcf7dfb66265a0178060dc8ec9",
+      "fx0-mpu6515-dmp-smd-wake.patch": "92f9acedd8ab3397fbb80bd47ee440914ff48382a355455f7dd1037ff06ccf85",
+      "fx0-mdp5-video-flush-before-enable.patch": "d626c745802e9c7b5230b8dbc5e524fe4eae78b522cf15b4bf947fd0f6acdbb3",
+      "fx0-msm8926-raw-qfprom-binding.patch": "2affc2d26b7c7585d1cc0f847412da8011fcbc97754b3b1ca7fed9e3af164011",
+      "fx0-msm8926-raw-qfprom-driver.patch": "d82fac0f63e2951e3485af0caf9182ffa78dada8f49e6c48ea8a7e864cce8a1a",
+      "fx0-msm8926-raw-qfprom-dt.patch": "08e458d5cca9c00441fa177cf38fbf74984a680bebc66ff014a80e73835f7aa1",
+      "fx0-cpr-mx-voltage-sequencing.patch": "f5bdd80531d944f84c41eaabd7c381c988a9b6ae233956327d542a6f4c05a119",
+      "fx0-scm-legacy-fuse-read.patch": "a5d6a54661c3755d38112fe97aa84bbc10742b591fd782257e3cf11680474ac4",
+      "fx0-nxp-nci-irq-unwind.patch": "a3263c64b32eed95b374d285d8beadacc0463193a1440854f7f39fa7022c2ea6",
+      "fx0-nxp-nci-ref-clock-binding.patch": "31bfbb060aa142b2e4e8b4faef5b238e1c2289b8532ac3c50cbbbb4100c30ce6",
+      "fx0-nxp-nci-ref-clock.patch": "120beb388d538aabf5e09a42176ca5c093dbddf266f55fd6a2c179c9b6470a13",
+      "fx0-madai-pn547-nfc.patch": "ed20b4a846b8def6bdcc5640a2692a7777cff35f22b8bc1ff358cc241569dcc0",
+      "fx0-nxp-nci-irq-teardown.patch": "487c88dc83c51406c0d9227aa8ab761cbb68d801446b94239d8d7580080f8fd8",
+      "fx0-nxp-nci-unregister-lock.patch": "1b5a88fb46285739e9f0c14242aa03076d13dd9a8526a5ceebc42a7ba63eb39e",
+      "config-postmarketos-qcom-msm8226.armv7": "cf07cd609c78832e613cb111edcf14574785f0b158bfe409ea88aa3047b0ba02",
+      "APKBUILD": "c28403e9fefb770ae605311fce11c28ff73e49005e039dc7fa86f8750a48a23e"
+    },
+    "status": "exported only; source build and hardware acceptance separate"
+  },
+  "whole_recipe_replay": {
+    "patches": 16,
+    "all_18_source_checksums_verified": true,
+    "raw_patch_payloads_preserved": true,
+    "recipe_order_replays_to_exact_published_tree": true,
+    "source_tree": "ced58428a4f02187a4e0d89e676fa3c2039f4ba3",
+    "source_commit": "3be72fe7a5fb16f74494023b134ce1f2654bff40",
+    "experimental_CPU_CPR_series_excluded": true
+  },
+  "review_diff": {
+    "path": "patches/pmaports/fx0-nfc-teardown-packaging.patch",
+    "sha256": "5eef725c34aa0d43e008cfacd839b83b1eaf650211a45716d35614c9238067fe",
+    "exact_replay_to_recipe_tree": true,
+    "base": "b18a8f71ba83948cac280c4127ca674ac0c54027",
+    "tip": "328a281d6da3a414c417de7fb9a4eefcd8950fcb"
+  },
+  "build_controller": {
+    "started_UTC": "2026-11-09T01:19:53.620186+00:00",
+    "operation": "Alpine r58 source build of conservative 16-patch NFC teardown family; isolated pmos HOME; no phone operation",
+    "recipe_commit": "328a281d6da3a414c417de7fb9a4eefcd8950fcb",
+    "command": [
+      "podman",
+      "--root",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/podman-storage",
+      "--runroot",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/podman-run",
+      "--storage-driver",
+      "vfs",
+      "--cgroup-manager",
+      "cgroupfs",
+      "run",
+      "--rm",
+      "--name",
+      "fx0-nfc-teardown-r58-attempt01",
+      "--privileged",
+      "--network",
+      "host",
+      "--security-opt",
+      "label=disable",
+      "--cgroups=disabled",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/nfc-teardown-package/pmos-home:/pmb/work/chroot_native/home/pmos:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc/.git/objects:/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc/.git/objects:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-runtime/.git/objects:/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-runtime/.git/objects:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/src/pmbootstrap:/pmbootstrap:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc-teardown:/pmaports:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/pmb:/pmb:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/pmbootstrap.cfg:/pmb-config:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/diagnostics/rootless-native-build/pmbootstrap-with-recipe-provenance.py:/pmb-repro:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/nfc-teardown-package/export:/export:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/nfc-teardown-package:/audit:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/nfc-teardown-package/build-container.sh:/build-container.sh:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/pmb/work/cache_distfiles/linux-fx0-4b800b920c7db82e8012a580a17cc2d8ff9d5e66.tar.gz:/source-archive:ro",
+      "3ea06e4cb95e726ea6c6cc4377570ac4c4050d78710004cbd631ca809daf7e8e",
+      "/bin/sh",
+      "/build-container.sh"
+    ],
+    "podman_PID": 2977237,
+    "returncode": 0,
+    "finished_UTC": "2026-11-09T01:28:15.932943+00:00"
+  },
+  "build_compiler_errors": [],
+  "retained_build_warnings": [
+    ">>> WARNING: linux-postmarketos-qcom-msm8226: source-provenance.json is not in $source/$install/$triggers",
+    ">>> WARNING: linux-postmarketos-qcom-msm8226*: Packages must not put anything under /lib, use /usr/lib instead",
+    ">>> WARNING: linux-postmarketos-qcom-msm8226*: No arch specific binaries found so arch should probably be set to \"noarch\""
+  ],
+  "configuration": {
+    "actual_community_check": {
+      "actual_Alpine_config_community_check": "pass",
+      "config_sha256": "c47081914b5c7980deb352773fc1beddfcccf88c723647c4aabd3f03469f7457",
+      "official_checker": "pmb.parse.kconfig.check_file, community category",
+      "rules_path": "/pmaports/kconfigcheck.toml",
+      "rules_sha256": "222c0086395ea4bc8907cd1262bbd577a15bd176ba87acc6d24eda484dad8b5f",
+      "path_resolution": "read-only explicit rules path; normalized config checked after normalization during the single active build; no second pmbootstrap CLI",
+      "configuration_modified": false
+    },
+    "normalization": {
+      "differences": {
+        "CONFIG_ARCH_USES_CFI_GENERIC_LLVM_PASS": {
+          "input": "y",
+          "Alpine": null
+        },
+        "CONFIG_AS_VERSION": {
+          "input": "210108",
+          "Alpine": "220103"
+        },
+        "CONFIG_CC_OPT_INLINE_MEMSET": {
+          "input": null,
+          "Alpine": "\"-mllvm -max-store-memset=4294967294\""
+        },
+        "CONFIG_CC_VERSION_TEXT": {
+          "input": "\"clang version 21.1.8 (Fedora 21.1.8-6.fc43)\"",
+          "Alpine": "\"Alpine clang version 22.1.3\""
+        },
+        "CONFIG_CLANG_VERSION": {
+          "input": "210108",
+          "Alpine": "220103"
+        },
+        "CONFIG_DEBUG_INFO_COMPRESSED_ZSTD": {
+          "input": null,
+          "Alpine": "n"
+        },
+        "CONFIG_DRM_MSM_VALIDATE_XML": {
+          "input": "n",
+          "Alpine": null
+        },
+        "CONFIG_HAVE_LD_DEAD_CODE_DATA_ELIMINATION": {
+          "input": null,
+          "Alpine": "y"
+        },
+        "CONFIG_LD_CAN_USE_KEEP_IN_OVERLAY": {
+          "input": null,
+          "Alpine": "y"
+        },
+        "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION": {
+          "input": null,
+          "Alpine": "n"
+        },
+        "CONFIG_LLD_VERSION": {
+          "input": "180108",
+          "Alpine": "220103"
+        },
+        "CONFIG_RUSTC_HAS_COERCE_POINTEE": {
+          "input": "y",
+          "Alpine": null
+        },
+        "CONFIG_RUSTC_HAS_FILE_AS_C_STR": {
+          "input": "y",
+          "Alpine": null
+        },
+        "CONFIG_RUSTC_HAS_FILE_WITH_NUL": {
+          "input": "y",
+          "Alpine": null
+        },
+        "CONFIG_RUSTC_HAS_SPAN_FILE": {
+          "input": "y",
+          "Alpine": null
+        },
+        "CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS": {
+          "input": "y",
+          "Alpine": null
+        },
+        "CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES": {
+          "input": "y",
+          "Alpine": null
+        },
+        "CONFIG_RUSTC_LLVM_VERSION": {
+          "input": "220108",
+          "Alpine": "0"
+        },
+        "CONFIG_RUSTC_VERSION": {
+          "input": "109801",
+          "Alpine": "0"
+        }
+      },
+      "same_19_normalization_changes_as_prior_Alpine_family": true,
+      "source_input_changed_only_LOCALVERSION": true,
+      "CFI_signing_debug_and_runtime_choices_retained": true
+    }
+  },
+  "targeted_ARM_W1": {
+    "actual_ARM_objects": 2,
+    "W1_compile": "pass",
+    "KCFI_retained": true,
+    "compiled": {
+      "drivers/nfc/nxp-nci/core.o": {
+        "sha256": "297b91667c4a640376297ca94f37edfa4a5fb5ea67951d29e441ffb090c638df",
+        "matches_full_build_object_or_command": true
+      },
+      "drivers/nfc/nxp-nci/.core.o.cmd": {
+        "sha256": "3b2a89b66790666d05aa534803fbb3d8158e75585816e139530115fa22e4ec7d",
+        "matches_full_build_object_or_command": false
+      },
+      "drivers/nfc/nxp-nci/i2c.o": {
+        "sha256": "a23336d77b1cd7604e86921cee67f2c68f00464aa4974f8db2f9776eac439e64",
+        "matches_full_build_object_or_command": true
+      },
+      "drivers/nfc/nxp-nci/.i2c.o.cmd": {
+        "sha256": "3a7a27f0bdd033b97d8959221294dcc2b61facca3e8d490877778267110cb3ad",
+        "matches_full_build_object_or_command": false
+      }
+    },
+    "original_full_build_object_and_command_bytes_and_mtimes_restored": true,
+    "kernel_or_modules_relinked": false
+  },
+  "W1_controller": {
+    "started_UTC": "2026-11-09T01:30:06.165630+00:00",
+    "command": [
+      "podman",
+      "--root",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/podman-storage",
+      "--runroot",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/podman-run",
+      "--storage-driver",
+      "vfs",
+      "--cgroup-manager",
+      "cgroupfs",
+      "run",
+      "--rm",
+      "--name",
+      "fx0-nfc-teardown-W1",
+      "--privileged",
+      "--security-opt",
+      "label=disable",
+      "--cgroups=disabled",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/pmb:/pmb:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/nfc-teardown-package/pmos-home:/pmb/work/chroot_native/home/pmos:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/src/pmbootstrap:/pmbootstrap:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc-teardown:/pmaports:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc/.git/objects:/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc/.git/objects:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-runtime/.git/objects:/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-runtime/.git/objects:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/pmbootstrap.cfg:/pmb-config:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/diagnostics/rootless-native-build/pmbootstrap-with-recipe-provenance.py:/pmb-repro:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/nfc-teardown-package:/audit:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/nfc-teardown-package/W1-container.sh:/check.sh:ro",
+      "6213355c8ea96806ce237d1ca509cfda6b5db33acff2d9addb80501baa6f2301",
+      "sh",
+      "/check.sh"
+    ],
+    "PID": 3053722,
+    "returncode": 0,
+    "finished_UTC": "2026-11-09T01:30:15.942446+00:00"
+  },
+  "linked_kernel": {
+    "verified_UTC": "2026-11-09T01:32:36.666056+00:00",
+    "release": "6.18.59-fx0-nfc-teardown-alpine",
+    "source_commit": "3be72fe7a5fb16f74494023b134ce1f2654bff40",
+    "ELF": "ARM ELF32 little-endian",
+    "kernel_build_id": "2ea8828d45c4897b053f6e22a9a0fa9b1babef0a",
+    "KCFI_enabled_in_compilation_and_link": true,
+    "debug_information": "DWARF5 retained with lossless zlib section compression",
+    "undefined_symbols": [
+      "U __bpf_callback_fn",
+      "U __bpf_prog_runX",
+      "w efi_attr_config_table",
+      "w efi_attr_fw_vendor",
+      "w efi_attr_runtime"
+    ],
+    "introduced_undefined_symbols": [],
+    "private_key_mode": "0600",
+    "certificate_sha256": "80e62e8a6f99428a0ad50ec11450f98db40640886cae5cf433857196c933e831",
+    "ELF_certificate_list_exactly_matches": true,
+    "certificate_bytes": 1324,
+    "certificate_distinct_from_reconstructed_r50": true,
+    "NFC_DTB_matches_prepared_schema_checked_bytes": true,
+    "module_order_count": 468,
+    "NFC_modules": [
+      "net/nfc/nfc.ko",
+      "net/nfc/nci/nci.ko",
+      "drivers/nfc/nxp-nci/nxp-nci.ko",
+      "drivers/nfc/nxp-nci/nxp-nci_i2c.ko"
+    ],
+    "kernel_text_to_end_span_including_BSS": 21499728,
+    "kernel_footprint_plus_load_offset_below_forced_ramdisk": true,
+    "files_sha256": {
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/vmlinux": "a3ad801abbf321dba744df5fb18ae18b234a68a4fc178411e0541b6a84d7c9a5",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/arch/arm/boot/Image": "23df6dd774b14f45d18bd2c5304a63a5db7b6814b2bed8d897ef49a9b1584d75",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/arch/arm/boot/zImage": "f60d9011f31c2200a99539a68bff3d63f8630a4e0d36210dd223485bdcbd9d66",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/System.map": "46b3c3a0d3206ff50081f36eeca32bd8f52148ba5ab779ffa7bc84dcbd9965d0",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/Module.symvers": "bd6f0c08ca376deef1e1c3887cb8201afa13f206ce1db71723fda89ff44efdf8",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/.config": "c47081914b5c7980deb352773fc1beddfcccf88c723647c4aabd3f03469f7457",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/modules.order": "78f10e98cff3dda4c997887a73defd5f0f089b6649f1d1461c6e0f52c5e5cb63",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/certs/signing_key.x509": "80e62e8a6f99428a0ad50ec11450f98db40640886cae5cf433857196c933e831",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483"
+    },
+    "source_files_matching_published_tip": 3049664,
+    "scope": "Complete independently built Alpine kernel; package and module audit separate; unbooted/uninstalled"
+  },
+  "debug_information": {
+    "debug_sections": {
+      ".debug_info": {
+        "compressed_section_bytes": 67651212,
+        "uncompressed_bytes": 106599581,
+        "uncompressed_sha256": "01e2f47d84fbb4c9b316cc8221634fcb8be160f6e3428a4873870dd5c63558b0",
+        "complete_zlib_stream_and_size_verified": true
+      },
+      ".debug_line": {
+        "compressed_section_bytes": 6122336,
+        "uncompressed_bytes": 14158874,
+        "uncompressed_sha256": "45d481e9c72e4fca6f272ca68079b10dabb8f29ae39ff7aa09f962c872399f60",
+        "complete_zlib_stream_and_size_verified": true
+      },
+      ".debug_str": {
+        "compressed_section_bytes": 1653372,
+        "uncompressed_bytes": 3958332,
+        "uncompressed_sha256": "760fc39369eb4d9f98d79a023bdfb1a912563e1627a57515cacd6f6fcc94dd4f",
+        "complete_zlib_stream_and_size_verified": true
+      }
+    },
+    "DWARF_version": 5,
+    "debug_information_retained_not_stripped": true,
+    "compression": "Lossless zlib, actual ELF section streams verified"
+  },
+  "package": {
+    "package": {
+      "name": "linux-postmarketos-qcom-msm8226-6.18.59-r58.apk",
+      "bytes": 18699174,
+      "sha256": "8b2d616ccb4b0e9359c4be00eb03198be689aec55fb56dd0a55ded9701e6f632",
+      "recipe_commit": "328a281d6da3a414c417de7fb9a4eefcd8950fcb",
+      "source_build": true
+    },
+    "release": "6.18.59-fx0-nfc-teardown-alpine",
+    "ELF": "ARM ELF32 little-endian",
+    "kernel_sha256": "f60d9011f31c2200a99539a68bff3d63f8630a4e0d36210dd223485bdcbd9d66",
+    "DTBs_sha256": {
+      "qcom-msm8926-lg-madai": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483"
+    },
+    "certificate_sha256": "80e62e8a6f99428a0ad50ec11450f98db40640886cae5cf433857196c933e831",
+    "certificate_bytes": 1324,
+    "certificate_exactly_matches_kernel_trust_list": true,
+    "undefined_symbols": [
+      "U __bpf_callback_fn",
+      "U __bpf_prog_runX",
+      "w efi_attr_config_table",
+      "w efi_attr_fw_vendor",
+      "w efi_attr_runtime"
+    ],
+    "introduced_undefined_symbols": [],
+    "module_directory": "r58-inspection/lib/modules/6.18.59-fx0-nfc-teardown-alpine",
+    "compiled_kernel_and_DTB_match_package": true,
+    "embedded_recipe_commit_matches": true,
+    "physical_RAM_boot_of_this_Alpine_artifact": false
+  },
+  "module_verification": {
+    "verified_UTC": "2026-11-09T01:32:45.278162+00:00",
+    "release": "6.18.59-fx0-nfc-teardown-alpine",
+    "verified_modules": 468,
+    "all_intree": true,
+    "all_ARM_ELF_release_and_CMS_signatures_verified": true,
+    "certificate_sha256": "80e62e8a6f99428a0ad50ec11450f98db40640886cae5cf433857196c933e831",
+    "matches_exact_linked_kernel_certificate": true,
+    "corrupted_payload_and_signature_rejected": true,
+    "wrong_build_certificate_controls": [
+      {
+        "certificate_sha256": "846fdf13b2cbfe48b6f71b57d54e1b44b337f284e4aa274c4a46c3f982e2c3ba",
+        "NFC_module_rejected": true
+      },
+      {
+        "certificate_sha256": "edc7d3cd556be62ff28bae1e201652d5c39166c34a9172a53a7390dc38972260",
+        "NFC_module_rejected": true
+      }
+    ],
+    "all_imported_symbol_CRCs_match_current_Module_symvers": true,
+    "imported_symbol_CRC_checks": 25562,
+    "ABI_negative_controls": [
+      "modified import CRC rejected",
+      "wrong export ABI map rejected"
+    ],
+    "NFC_modules": {
+      "net/nfc/nfc.ko": {
+        "path": "local/nfc-teardown-package/r58-inspection/lib/modules/6.18.59-fx0-nfc-teardown-alpine/kernel/net/nfc/nfc.ko.zst",
+        "sha256": "3e1d389fd07489f450bb40803a6e304468005571f5a92c32189108754851cb72",
+        "depends": [
+          "rfkill"
+        ],
+        "vermagic": "6.18.59-fx0-nfc-teardown-alpine SMP preempt mod_unload modversions ARMv7 p2v8",
+        "intree": "Y"
+      },
+      "net/nfc/nci/nci.ko": {
+        "path": "local/nfc-teardown-package/r58-inspection/lib/modules/6.18.59-fx0-nfc-teardown-alpine/kernel/net/nfc/nci/nci.ko.zst",
+        "sha256": "9d8bdb895a1713b1aef5058aa21df5c362ffbbd370f9e1bbaaef62c69fbabb24",
+        "depends": [
+          "nfc"
+        ],
+        "vermagic": "6.18.59-fx0-nfc-teardown-alpine SMP preempt mod_unload modversions ARMv7 p2v8",
+        "intree": "Y"
+      },
+      "drivers/nfc/nxp-nci/nxp-nci.ko": {
+        "path": "local/nfc-teardown-package/r58-inspection/lib/modules/6.18.59-fx0-nfc-teardown-alpine/kernel/drivers/nfc/nxp-nci/nxp-nci.ko.zst",
+        "sha256": "6b5328625ccaec6c7766a6b7b411a001dfd282068254a6a09404d473bf8b95eb",
+        "depends": [
+          "nci",
+          "nfc"
+        ],
+        "vermagic": "6.18.59-fx0-nfc-teardown-alpine SMP preempt mod_unload modversions ARMv7 p2v8",
+        "intree": "Y"
+      },
+      "drivers/nfc/nxp-nci/nxp-nci_i2c.ko": {
+        "path": "local/nfc-teardown-package/r58-inspection/lib/modules/6.18.59-fx0-nfc-teardown-alpine/kernel/drivers/nfc/nxp-nci/nxp-nci_i2c.ko.zst",
+        "sha256": "663d91061903389cbfbc6ba444dc949f13ba1066daec133cd5da670468f64d8c",
+        "depends": [
+          "nxp-nci",
+          "nci"
+        ],
+        "vermagic": "6.18.59-fx0-nfc-teardown-alpine SMP preempt mod_unload modversions ARMv7 p2v8",
+        "intree": "Y"
+      }
+    },
+    "dependency_order_for_NXP_I2C": [
+      "kernel/net/rfkill/rfkill.ko.zst",
+      "kernel/net/nfc/nfc.ko.zst",
+      "kernel/net/nfc/nci/nci.ko.zst",
+      "kernel/drivers/nfc/nxp-nci/nxp-nci.ko.zst",
+      "kernel/drivers/nfc/nxp-nci/nxp-nci_i2c.ko.zst"
+    ],
+    "no_modules_loaded_or_forced": true,
+    "signature_chain": "Local self-signed development certificate; verification uses explicit kernel certificate, ignoring embedded CMS certificates"
+  },
+  "ABI": {
+    "module_count": 468,
+    "imported_symbol_CRC_checks": 25562,
+    "negative_controls": [
+      "modified import CRC rejected",
+      "wrong export ABI map rejected"
+    ],
+    "private_report_sha256": "b1769aa9d08e925b017f583e79242f680c611e46d9ebcb31fe7364a787e31203"
+  },
+  "dependency_graph": {
+    "verified_modules": 468,
+    "declared_dependency_edges": 391,
+    "transitive_dependency_edges": 577,
+    "all_modules_dep_entries_match_module_metadata": true,
+    "modules_dep_sha256": "08797435e9d731b5cd879b42564d6c0509c7acbf1492899e3abcb5e18f05b50a",
+    "scope": "Dependency metadata only; signatures, ABI, runtime loading and install hooks separate"
+  },
+  "binary_loader_indexes": {
+    "checked_UTC": "2026-11-09T01:32:49.324607+00:00",
+    "release": "6.18.59-fx0-nfc-teardown-alpine",
+    "module_requests_checked": 468,
+    "all_binary_index_resolutions_match_verified_text_graph": true,
+    "all_dependency_orders_valid": true,
+    "loader": "modprobe --show-depends --dry-run --ignore-install --config /dev/null --dirname STAGING --set-version RELEASE",
+    "host_configuration_or_modules_modified": false,
+    "binary_indexes_sha256": {
+      "modules.alias.bin": "f97c0c99c5a28fd9ee8112f720db7a84c089688bd687ce6319796cb7bdf61a12",
+      "modules.builtin.bin": "ab2bb8879575cf5c3216c9307bb854a7003188e3e9b92d225a3558cc6ec78e66",
+      "modules.symbols.bin": "e4e39bc031881ed86d53a0b3b3f604647055c3f209ffd896b0903e7a675f9f8a",
+      "modules.dep.bin": "3c9f1b14564520765a41daad3cbd7ee66c2a1c920fecb220db072a90f108df35",
+      "modules.builtin.alias.bin": "cdc55d6dac7565a5cdd9cf8d5bc947c7a2e1f737000f5265aba82c2e6a24cb3b"
+    },
+    "scope": "Host loader resolution only; device autoload, insertion, probe and installed hooks remain unqualified"
+  },
+  "APK_signatures_and_resolution": {
+    "verified_UTC": "2026-11-09T01:32:49.638035+00:00",
+    "package": {
+      "name": "linux-postmarketos-qcom-msm8226-6.18.59-r58.apk",
+      "bytes": 18699174,
+      "sha256": "8b2d616ccb4b0e9359c4be00eb03198be689aec55fb56dd0a55ded9701e6f632",
+      "recipe_commit": "328a281d6da3a414c417de7fb9a4eefcd8950fcb",
+      "source_build": true
+    },
+    "APK_signature_verified": true,
+    "modified_signed_recipe_metadata_rejected": true,
+    "modified_metadata_message": "BAD signature; original signature retained and modified control stream recompressed with valid gzip CRC",
+    "no_private_keys_or_firmware_in_APK": true,
+    "normal_offline_ARMv7_simulation": {
+      "returncode": 0,
+      "stdout": "(1/1) Installing linux-postmarketos-qcom-msm8226 (6.18.59-r58)\nOK: 22.9 MiB in 1 packages\n",
+      "stderr": "",
+      "scope": "empty initialized usermode database; package resolution only; no installation or update hooks"
+    },
+    "actual_device_install": false
+  },
+  "isolated_usermode_upgrade": {
+    "old_module_family_payloads_removed": true,
+    "checked_UTC": "2026-11-09T01:34:21.855464+00:00",
+    "old_APK_sha256": "fd288071ac02d0a0fd10fc13fab0266b137ccc69fc9eec1688384f82f8331c14",
+    "new_APK_sha256": "8b2d616ccb4b0e9359c4be00eb03198be689aec55fb56dd0a55ded9701e6f632",
+    "r56_to_r58_simulation_and_user_mode_replacement_pass": true,
+    "simulation_did_not_modify_database": true,
+    "final_database_version": "6.18.59-r58",
+    "final_regular_payload_files_matching_signed_APK": 549,
+    "symlinks_verified": 0,
+    "commands": [
+      {
+        "arguments": [
+          "--no-scripts",
+          "add",
+          "/home/tim/Documents/GitHub/fx0/local/kernel-nfc-package/export-depmod-fixed/linux-postmarketos-qcom-msm8226-6.18.59-r56.apk"
+        ],
+        "returncode": 0,
+        "stdout": "(1/1) Installing linux-postmarketos-qcom-msm8226 (6.18.59-r56)\nOK: 22.9 MiB in 1 packages\n",
+        "stderr": ""
+      },
+      {
+        "arguments": [
+          "add",
+          "--simulate",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-teardown-package/export/linux-postmarketos-qcom-msm8226-6.18.59-r58.apk"
+        ],
+        "returncode": 0,
+        "stdout": "(1/1) Upgrading linux-postmarketos-qcom-msm8226 (6.18.59-r56 -> 6.18.59-r58)\nOK: 22.9 MiB in 1 packages\n",
+        "stderr": ""
+      },
+      {
+        "arguments": [
+          "--no-scripts",
+          "add",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-teardown-package/export/linux-postmarketos-qcom-msm8226-6.18.59-r58.apk"
+        ],
+        "returncode": 0,
+        "stdout": "(1/1) Upgrading linux-postmarketos-qcom-msm8226 (6.18.59-r56 -> 6.18.59-r58)\nOK: 22.9 MiB in 1 packages\n",
+        "stderr": ""
+      }
+    ],
+    "scope": "Isolated workspace usermode root; scripts/hooks disabled on actual extraction; no phone installation, actual root-mode hooks, boot, update/recovery qualification"
+  },
+  "preservation": {
+    "verified_UTC": "2026-11-09T01:35:44.178932+00:00",
+    "all_checks_passed": true,
+    "private_HOME_isolated_from_original_NFC_and_CPU_builds": true,
+    "original_NFC_kernel_config_DTB_certificate_and_APKs_unchanged": true,
+    "original_unbooted_moduleless_startup_image_unchanged": true,
+    "original_NFC_source_branch_unchanged_and_clean": true,
+    "corrected_source_branch_clean": true,
+    "root_index_entries_and_bytes_unchanged": true,
+    "new_kernel_module_and_APK_fingerprints_still_match": true,
+    "new_and_original_private_keys_mode": "0600; no private key exported or host-read",
+    "two_targeted_object_and_command_bytes_and_mtimes_restored": true,
+    "Module_symvers_matches_original_NFC_ABI": true,
+    "candidate_staged_booted_or_installed": false,
+    "recovery_disk_written": false,
+    "audio_tests": 0,
+    "host_builtin_WiFi_changes": 0
+  },
+  "native_postflight": {
+    "boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "kernel": "6.18.59-fx0-dmp",
+    "taint": 0,
+    "systemd": "running",
+    "failed_units": [],
+    "pending_jobs": [],
+    "Sway": true,
+    "sensor_proxy": "active",
+    "boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "CPU_policy": {
+      "scaling_governor": "schedutil",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200",
+      "scaling_available_frequencies": "300000 384000 600000 787200"
+    },
+    "QUP3_status": "disabled",
+    "loaded_NFC_modules": [],
+    "eMMC_retained_file_bytes": 536870912,
+    "checked_UTC": "2026-11-09T01:35:47.917407+00:00",
+    "phone_activity": "Read-only postflight; no reboot, install, RAM stage, NFC I/O or PMIC access",
+    "latest_native_UI": "pending on this newest native return",
+    "retained_eMMC_content_or_cross_boot_persistence_reverified": false
+  },
+  "latest_native_UI": {
+    "native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "status": "pending on this newest native return",
+    "question": "The five-round-trip and four-core 600 MHz RAM load trial has returned to installed r50. Its original boot hash and 1.15 V PMIC target are restored, with Sway and the sensor proxy active. Do display and touch work normally on this newest boot?"
+  },
+  "private_tools_cache": {
+    "recorded_UTC": "2026-11-09T01:27:45.606472+00:00",
+    "image_id": "6213355c8ea96806ce237d1ca509cfda6b5db33acff2d9addb80501baa6f2301",
+    "bytes": 80769419,
+    "cache_purpose": "Retain installed public Alpine tools for later local checks without repeated downloads",
+    "source_or_build_or_key_bind_mount_data_included": false,
+    "live_build_paused": false,
+    "image_exported_or_pushed": false,
+    "current_build_still_uses_recorded_original_base_image": true
+  },
+  "hardware_operations": {
+    "device_RAM_entry_or_BOOT": false,
+    "candidate_module_load_or_install": false,
+    "explicit_GPIO_clock_NFC_bus_RF_or_firmware_actions": false,
+    "eMMC_raw_writes": false,
+    "recovery_disk_writes": false,
+    "audio_tests": false,
+    "host_builtin_WiFi_changes": false
+  },
+  "limits": [
+    "Tests execute the actual source functions with instrumented pending-IRQ and close/flush callbacks; no real threaded IRQ or kernel scheduler execution",
+    "Firmware-state callbacks are mocked; firmware-work handling and concurrent download teardown remain unqualified and no firmware bytes are supplied",
+    "The complete kernel and module family is rebuilt independently; identical DTB and Module.symvers do not transfer runtime acceptance or signing trust",
+    "W1-generated ARM objects match the full-build objects and original .o/.cmd bytes/mtimes are restored; no final kernel/module relink occurs in that check",
+    "Host modprobe uses staged root/release, /dev/null config, --show-depends/--dry-run/--ignore-install; no real module insertions",
+    "Actual workspace usermode r56-to-r58 extraction disables scripts/hooks and verifies files; no actual phone update hooks, autoload, boot/recovery qualification",
+    "The old first startup image is unchanged and module-free; corrected-module trials require a matching corrected-family startup before any lifecycle action",
+    "Exact latest-native UI and eMMC cross-boot content gates remain pending",
+    "Owner-fork publication does not establish current receiving-tree/DCO/routing/upstream acceptance"
+  ],
+  "remaining": [
+    "matching latest-native display/touch result before physical entry",
+    "corrected-family moduleless startup image, actual startup/native return and physical UI",
+    "bounded enforced-signature module registration, cold ownership and reverse cleanup",
+    "NCI reset/init, tag/RF/userspace, suspend/wake and installed update/recovery",
+    "all wider CPU/rails/battery/hardware/stable/edge/reliability/upstream and SIM-dependent cellular qualification"
+  ],
+  "full_bringup": "in progress",
+  "files_sha256": {
+    "configs/README.md": "cf80eccd8f182b83b2a251bd107abb92e2154ce0af6b69f33559aea50e26c0d2",
+    "configs/linux-6.18.59-fx0-nfc-teardown-alpine.armv7": "cf07cd609c78832e613cb111edcf14574785f0b158bfe409ea88aa3047b0ba02",
+    "diagnostics/nfc-startup/README.md": "b5b71c0f884f2fd4c389d122b51cb5f0b4282cbf42dd87fae70a2bcf1fd0c1f1",
+    "docs/building.md": "30c632579e81ad19a2c3ea66f28391cad38d2b48448248b3007d621556dbef25",
+    "docs/development-log.md": "d25fc9b245fdb7114dcdf02b97aa9e7895d00cb8474a18b99f6050075c56e8a4",
+    "docs/hardware-acceptance.md": "b231aa1df51a81ec4bbd368d548212831e65ec0bdf44cf1e5f0d5dceb326410d",
+    "docs/nfc-bringup.md": "acc8c33f3c9b0e6f95fa3cf9b2cd336cde596000ac8a57609644d2e49836cc16",
+    "docs/upstream-development.md": "5fd5f949a46a3f569025b03fefc1196e04d300552f714b7a54b6c28fe6731365",
+    "local/cpr-package-dependencies/verify-loader-indexes.py": "9546fa198cfcfddb80330235c287e662ca58bf237a57fb54211acf1623319230",
+    "local/nfc-teardown/IRQ_lifetime-control.stderr": "2c0eaeb3b856884c76a0cc4520a199b55f252739a8dde92127fa43c6594d1a11",
+    "local/nfc-teardown/IRQ_lifetime-control.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/nfc-teardown/checks-and-source.py": "5a22384641836c01856e95e2832897510a0130e3c1c032713196ecd20bd26b15",
+    "local/nfc-teardown/fx0-nxp-nci-irq-teardown-checkpatch.initial.log": "28a96b4d7abccd403b6d28281f78649125cedf8a56572dac46f5357f8c880d86",
+    "local/nfc-teardown/fx0-nxp-nci-irq-teardown-checkpatch.log": "19522ebb379a4b68f0f3d5ffa4f8bb75d377892afd295681a7526759080068df",
+    "local/nfc-teardown/fx0-nxp-nci-irq-teardown-message.txt": "808634cfe271dac4a4218dcb49f940f3fab707cc8cdab32b9d857e8e5ce1fc80",
+    "local/nfc-teardown/fx0-nxp-nci-unregister-lock-checkpatch.log": "de25454aa8c76986098124e14cfab3aabe14d4187cd41f2d295f12757e60b2ac",
+    "local/nfc-teardown/fx0-nxp-nci-unregister-lock-message.txt": "b8115c55686884287029a4e48f5bc97c78d18342c1de9dda4615f3f78781107c",
+    "local/nfc-teardown/resume-source.py": "6c0a9bd331d97aa0a535efaefb82a5fa74ac18bcf43b5d039b2e6939decbfffa",
+    "local/nfc-teardown/source-checks.json": "f11ea193764ab37012b1eeb0a7045a77ce266db9d1474e000277b9952fcce9cf",
+    "local/nfc-teardown/source-publication.json": "2c71b85fd2eab7f959a0dbd234a6e94339e2e236811270c70bd49680e02b8132",
+    "local/nfc-teardown/test_nxp_nci_clock.py.stderr": "a9afbba2c530b0c5608838aca069b9007c41f78ab492ed6643029deb2b9e256b",
+    "local/nfc-teardown/test_nxp_nci_clock.py.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/nfc-teardown/test_nxp_nci_teardown.py.stderr": "b711bbf9acd59b7b9cb8a42674b8e3e566bcee589ed6473ef9504a55514d1637",
+    "local/nfc-teardown/test_nxp_nci_teardown.py.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/nfc-teardown/unregister_lock-control.stderr": "f917b8807496801fa88b9603358433f17b3bb889b632f8d0ad390af9042f07e6",
+    "local/nfc-teardown/unregister_lock-control.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/nfc-teardown-package/W1-before.json": "6b0ff1cdf8c2733ae4f5b6f71b83149fff0b4350081d33c96272dd6bfecd6ddf",
+    "local/nfc-teardown-package/W1-container.log": "48740c349e528e2a4b10789043b0b76355fcf3eac46b6529776f809c14b841aa",
+    "local/nfc-teardown-package/W1-container.sh": "b1eece4a3afed66816c4592bf6069f127d12cca0ec1352929cd105f62b174ac7",
+    "local/nfc-teardown-package/W1-controller.json": "c2554b640fe96b74bad07b74ae09163fde255923382b811274118ef62496a8b9",
+    "local/nfc-teardown-package/actual-config-community-check.json": "1f44e43d09c37b4cc000c19c1401aba2fbf0f8461a4c3d1af479cfa8b2162b69",
+    "local/nfc-teardown-package/audit-controller.json": "21d39fbdb51d0bcf7b5285dcd4f36e31b7465d2cdfb5dfe124e52e9e7ea56c22",
+    "local/nfc-teardown-package/audit-debug.py": "ed26bc944442172c67f4c59cdcd977676f8ca8790b35122d9ee29d20d7faadac",
+    "local/nfc-teardown-package/audit-debug.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/nfc-teardown-package/audit-debug.stdout": "9de364e7d7077f1ca7ed54e249914a1c7374be866f7c82bfdee1a8a20e408343",
+    "local/nfc-teardown-package/audit-kernel.py": "999d5cfb762d62d51ac45cbadc52e4d13c41cd5b544bdb7fe6b81d17564d507f",
+    "local/nfc-teardown-package/audit-kernel.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/nfc-teardown-package/audit-kernel.stdout": "865ce79a2a21c15ebc2d3c8888c1b22e35dab86bc46eaed1b39e2c879ee75bab",
+    "local/nfc-teardown-package/before.json": "f0d8cef8d54cd63ddbc15b3a02c94dfb3b69f1f3cfc6861bf088c15080be957f",
+    "local/nfc-teardown-package/build-container.sh": "9b6ceb67e6a0e7d1eb732c19e1eb8ffb43f7ce72b9dd99449108258df80d6290",
+    "local/nfc-teardown-package/cached-tools-image.json": "25b86ec8492443f954d29fef6941f949f4f38518afd83415a72ee29d33e4c0b4",
+    "local/nfc-teardown-package/check-actual-config.py": "8b3be3c27a4cddbf4178813226381376c4463fef61bff8a568deaea7cd9d31a9",
+    "local/nfc-teardown-package/check-user-upgrade.py": "be6c0141e85eb64acd25b3d1cf752f3fdc5d7cd5f87c0f1f6b70c54133802238",
+    "local/nfc-teardown-package/commit-message.txt": "8094d6a5acf35cde3ffca48e898378c32f8df1f1622dd8ed62a65e7a780bb15f",
+    "local/nfc-teardown-package/config-differences.json": "ad440cebc33dbd2717b47ea240c338f7d082065b143e9d39bd1ae61fde4e3adb",
+    "local/nfc-teardown-package/container.log": "06c5669241378fe426b38a179a0a162a3a84e8952518423abd12b047ba7e6a8b",
+    "local/nfc-teardown-package/controller.json": "61db4df24be1f525a68a2de9c25c67defbdab480dede9c59a5d492ed242e5862",
+    "local/nfc-teardown-package/debug-information-verification.json": "2263bd519b751cc4211dec9888c4ce2d47ce21e73e87694503a8c5e9a5b9989f",
+    "local/nfc-teardown-package/final-preservation.py": "f7796f94caa6a1154be3627eace056706939bba3415764afed7bc1235cce1ae9",
+    "local/nfc-teardown-package/inspect-package.py": "df084e9f4ced120dfa49029e86e3741f3b3f62f4e2fdf4fee44be305a5066bd0",
+    "local/nfc-teardown-package/inspect-package.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/nfc-teardown-package/inspect-package.stdout": "60b0b4949d2093c6558d2db1f0a29f2cb74b1ab590c855824b410de1e97838cf",
+    "local/nfc-teardown-package/linked-kernel-verification.json": "865ce79a2a21c15ebc2d3c8888c1b22e35dab86bc46eaed1b39e2c879ee75bab",
+    "local/nfc-teardown-package/loader-indexes.json": "9737fb1e92b21a1fc7e4ca82eb3d388bda61b00d1160d59c35dc8873bcd247ce",
+    "local/nfc-teardown-package/log-before-r58.txt": "66dc141e6298e4bd4a9e0fcd420d69a8b414174f50d713c0ef9c9bd7e1f72385",
+    "local/nfc-teardown-package/module-ABI-verification.json": "b1769aa9d08e925b017f583e79242f680c611e46d9ebcb31fe7364a787e31203",
+    "local/nfc-teardown-package/module-dependencies.json": "f9764d19cbd41b454d6674d08aeeb6d1205b588412140b0f00e2524af79e626e",
+    "local/nfc-teardown-package/module-postflight.json": "5d98bc2aaaf457a4329fae1cddb7a07135d18d7ae0fa276fbe5695a33cbd6a53",
+    "local/nfc-teardown-package/module-verification.json": "121a451cbf9d022f21beec57f17e9e2db5ad500355b3ac280b81e52ab13d4cd1",
+    "local/nfc-teardown-package/native-postflight.json": "e2e6795af334db4abc2689b75c2b13fcf4836a791e9ef6eace05493282df3f69",
+    "local/nfc-teardown-package/native-postflight.py": "004213ab18cc0cbb279f2821b1089e451725807aa7fd0dbab77460d1f5ef2eca",
+    "local/nfc-teardown-package/postbuild-checks.json": "d9c3b5898c31ba1dec9b764161dc42855479f28865552dba163fa9337b3b9489",
+    "local/nfc-teardown-package/prepare-build.py": "734c1f8e01be4e6553c9b177e9810ccd564b946bf78c75dc5d0e36051db32f04",
+    "local/nfc-teardown-package/prepare-verifiers.py": "ba6c14aa5f132464e2a78c468233ed929e88bd10c83f072afc5d37bdaf9f0b05",
+    "local/nfc-teardown-package/publish-recipe.py": "d9422d4b7d486eab8be390a46ecaad316717f8c865fa7e9d834c4aff9f4ce868",
+    "local/nfc-teardown-package/r58-artifact-inspection.json": "60b0b4949d2093c6558d2db1f0a29f2cb74b1ab590c855824b410de1e97838cf",
+    "local/nfc-teardown-package/r58-build-and-W1.log": "2be3877baa29183ee19d38f17020e0b050a9d337c704606984b58eaa1e7add88",
+    "local/nfc-teardown-package/recipe/source-provenance.json": "337154d886afab4174e7394c718e4d2379091a9e6cd09e8366b3a59b467d3348",
+    "local/nfc-teardown-package/recipe-publication.json": "9cb184d02b9983d8a0cba2f75baae1693210889777ba44199f6163a707b5fc5f",
+    "local/nfc-teardown-package/recipe-replay.json": "06d8df8bd59a8503e0ffe893d1456ee51206376262af2b3a841d5edfca4b3f0e",
+    "local/nfc-teardown-package/record-evidence.py": "e984e34382469a4d44566b3384b0f23e4e66147d8296c401c2e5fc04bd0a21c4",
+    "local/nfc-teardown-package/replay-recipe.py": "f6379eae23b92d30f88d926ce55467b64eed4c6e17a55b47978e7ba76beb2af8",
+    "local/nfc-teardown-package/review-diff-replay.json": "025b86757ad13c4fa85cfd5c2884dd32e34cf4d050ce211da4b75eb650105e87",
+    "local/nfc-teardown-package/run-audits.py": "a25856d17e6e09c8bd119c7d7eea2b6b12c360183968e40eba351552536ad5cb",
+    "local/nfc-teardown-package/run-build.py": "f9eaa6d662655ce133beb936687f06d560551ebeb63bf2bd05fbf43585caffef",
+    "local/nfc-teardown-package/signature-and-simulation-checks.json": "56ea656cac9458002818f50c7830eb543a0b16e30bf13b698942edfce5dba62e",
+    "local/nfc-teardown-package/targeted-W1-result.json": "598ba81b8381e1f89c2a3d1a0809ad643a3ce4f028dadcb2d3fcfe78dedc6da5",
+    "local/nfc-teardown-package/targeted-W1.py": "e5e46ac7cec19accb33b03a254a5b35388b915bccd57e6c963e43ffe09192962",
+    "local/nfc-teardown-package/update-docs.py": "f21d50b39e1c24cf71489c4a608ec74a8b91659b08099fedc8243a36062498bb",
+    "local/nfc-teardown-package/user-upgrade-check.json": "815f25eaeba258618cc106ad9471f6f6c6c7603a687793684c994bc35d54544e",
+    "local/nfc-teardown-package/verify-apk.py": "0eca95bbbf3d7b7c4a2a27b6140e106fe12aa3a330fed49ee38301668655448e",
+    "local/nfc-teardown-package/verify-apk.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/nfc-teardown-package/verify-apk.stdout": "56ea656cac9458002818f50c7830eb543a0b16e30bf13b698942edfce5dba62e",
+    "local/nfc-teardown-package/verify-loader-indexes.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/nfc-teardown-package/verify-loader-indexes.stdout": "d3c455225337feb1a605ee99bcd74058a239c1bc7eeaf73ebe7b03866f3a6527",
+    "local/nfc-teardown-package/verify-modules.py": "da30d8748282dd8cc391dd50f9c4d96b29ef0550e23b46c2865cf9caafc4fc95",
+    "local/nfc-teardown-package/verify-modules.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/nfc-teardown-package/verify-modules.stdout": "5d98bc2aaaf457a4329fae1cddb7a07135d18d7ae0fa276fbe5695a33cbd6a53",
+    "local/nfc-teardown-package/verify_kernel_module_dependencies.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/nfc-teardown-package/verify_kernel_module_dependencies.stdout": "fdeb75450b2ef38a9537f3536cbfca16433e183d88d01d239b437a9b60517351",
+    "manifests/kernel-nfc-teardown-build.json": "3809ae93a6ccee38bd14ae7affed4601ea622466903e89b7a8d45d74b16c1f85",
+    "manifests/kernel-nfc-teardown.json": "0b014ccab7d91b55a676fab5c78fc9583abb0a317ee00329af2dac3df2d06391",
+    "patches/linux-integration/fx0-nxp-nci-irq-teardown.patch": "487c88dc83c51406c0d9227aa8ab761cbb68d801446b94239d8d7580080f8fd8",
+    "patches/linux-integration/fx0-nxp-nci-unregister-lock.patch": "1b5a88fb46285739e9f0c14242aa03076d13dd9a8526a5ceebc42a7ba63eb39e",
+    "patches/pmaports/fx0-nfc-teardown-packaging.patch": "5eef725c34aa0d43e008cfacd839b83b1eaf650211a45716d35614c9238067fe",
+    "tests/test_nxp_nci_teardown.py": "98e32d0ea526326b63e21774cdaa9ec3e56e4570c0eebd5fc0d7d01e3db29d1d"
+  },
+  "prior_checkpoint_file_versions": {
+    "configs/README.md": {
+      "commit": "b7034628fac7d6526d8d869cb0ca1d646a5eae21",
+      "sha256": "8f0256c0e0d0474638dae2618f7eb773d76e5b3e94c176e9f91369ab6232124e",
+      "meaning": "Earlier frozen evidence retains this original input version"
+    },
+    "docs/nfc-bringup.md": {
+      "commit": "b7034628fac7d6526d8d869cb0ca1d646a5eae21",
+      "sha256": "5f998509e264e19aaa766365088cd165e6b1afc052b90324b9b98ded00b2b9a6",
+      "meaning": "Earlier frozen evidence retains this original input version"
+    },
+    "docs/building.md": {
+      "commit": "b7034628fac7d6526d8d869cb0ca1d646a5eae21",
+      "sha256": "5eb5174fab1d45827b5b5a04d691f45bb2f638360d4f08f957b02a34a8757c75",
+      "meaning": "Earlier frozen evidence retains this original input version"
+    },
+    "docs/hardware-acceptance.md": {
+      "commit": "b7034628fac7d6526d8d869cb0ca1d646a5eae21",
+      "sha256": "5821c1fb2276da27beee628d040871502710018554589f9f2592fbdab2d27206",
+      "meaning": "Earlier frozen evidence retains this original input version"
+    },
+    "docs/development-log.md": {
+      "commit": "b7034628fac7d6526d8d869cb0ca1d646a5eae21",
+      "sha256": "7a78ce8cf182b6bad5a18b2fa5c2b47efb29b63766f120e5ac53123e6cc89e98",
+      "meaning": "Earlier frozen evidence retains this original input version"
+    },
+    "docs/upstream-development.md": {
+      "commit": "b7034628fac7d6526d8d869cb0ca1d646a5eae21",
+      "sha256": "f5359eb84f8d0948b92a4d02db2b8092dfa3787f4702d62c790e6ea6df4daf30",
+      "meaning": "Earlier frozen evidence retains this original input version"
+    },
+    "diagnostics/nfc-startup/README.md": {
+      "commit": "b7034628fac7d6526d8d869cb0ca1d646a5eae21",
+      "sha256": "d81d3516bd1147a2db9bccb39bad248261f3e5109bce8989d42e12ba06266611",
+      "meaning": "Earlier frozen evidence retains this original input version"
+    }
+  }
+}

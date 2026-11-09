@@ -834,3 +834,35 @@ No image transfer or BOOT occurs. The checker will be invoked by the serial
 observer; its pass conditions are runtime expectations until a real trial.
 See the [procedure](../diagnostics/nfc-startup/README.md) and
 [host evidence](../evidence/2026-11-08-nfc-startup-preparation.json).
+
+## Independent NFC teardown-fix package r58
+
+The [16-patch source profile](../manifests/kernel-nfc-teardown.json) adds IRQ
+lifetime and unregister-lock fixes after the pinned conservative PN547 series.
+Use `prepare_kernel_package.py --profile nfc` with that manifest,
+`configs/linux-6.18.59-fx0-nfc-teardown-alpine.armv7`, the canonical APKBUILD
+template, pinned base archive/SHA512 and `--pkgrel 58`. The
+[owner-fork recipe](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-nfc-teardown-package)
+contains all 16 source patches. All 18 source checksums verify, and the actual
+exported sequence replays to the exact corrected source tree.
+
+A complete Alpine source build runs in a separate workspace pmos home mounted
+only into the container namespace. Existing NFC/CPU build homes remain untouched.
+Its release is `6.18.59-fx0-nfc-teardown-alpine`; input configuration changes only
+LOCALVERSION, retaining CFI, signing, schedutil and full compressed DWARF. The
+actual configuration passes the official community checker with the same
+19 compiler/capability differences. The exact new certificate is embedded in
+the linked ELF. Every one of 468 packaged modules passes explicit-certificate
+CMS and current-build ABI checks, including corruption/wrong-family controls;
+all 25,562 imports, 577 dependency edges and binary-index dry-runs pass.
+
+The two changed ARM objects also compile with W=1 without diagnostics and have
+identical bytes to the full-build objects. Original object/command bytes and
+mtimes are restored; no kernel/module relink is done for that warning check.
+APK signatures and isolated usermode r56-to-r58 replacement pass: all 549 final
+regular payload files match the signed APK, with the old module payloads removed.
+Actual installed hooks, boot, runtime autoload, live NCI remove and recovery
+remain open. The old module-free startup image is preserved; corrected-module
+trials require a matching newly qualified startup family. See
+[build manifest](../manifests/kernel-nfc-teardown-build.json) and
+[evidence](../evidence/2026-11-08-nfc-teardown-source-package.json).

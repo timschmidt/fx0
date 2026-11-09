@@ -4432,3 +4432,35 @@ checks qualify neither real startup/return nor runtime signatures, cold NFC
 ownership, NCI commands, tag/RF/userspace/PM or broader bringup. See
 [trial procedure](../diagnostics/nfc-startup/README.md) and
 [preparation evidence](../evidence/2026-11-08-nfc-startup-preparation.json).
+
+### NFC teardown lifetime/locking fixes and source-built r58 (2026-11-08)
+
+Cold module-lifecycle preparation exposes a pending-IRQ use-after-free window
+and `info_lock` recursion through NCI unregister/close. Two isolated source
+commits drain the IRQ before releasing NCI state and unregister without holding
+the mode mutex, then finalize cold mode and unlock before free. Firmware-work
+handling is unchanged and concurrent firmware download remains unqualified.
+Nine tests execute actual C in 16 callback modes; restoring either old defect
+alone fails its intended check. Raw patches replay exactly and strict style
+checks pass after restoring sparse-tree reference markers.
+
+The separate 16-patch r58 Alpine family source-builds completely in an isolated
+pmos home. Its distinct release/certificate preserves CFI and full compressed
+DWARF, with the same 19 known configuration capability differences. All 468
+CMS signatures, 25,562 imported CRCs, 577 dependency edges and 468 binary-index
+loader requests verify. The two changed ARM objects compile with W=1 without
+warnings and match the full-build object bytes; original command/object bytes
+and mtimes are restored. APK signatures and isolated usermode r56-to-r58
+replacement pass, including all 549 payload files and old module removal.
+The DTB and symbol ABI remain identical to r56, without transferring runtime
+acceptance across the distinct signing families.
+
+Prior build/source/package/key state, the prepared moduleless image and protected
+root index remain intact. Read-only postflight retains native r50's exact boot,
+original hash/policy, zero taint and active Sway/sensor proxy; its latest physical
+UI check is still pending. No device entry, candidate module load, firmware/RF
+operation, audio test, host Wi-Fi change or recovery-disk write occurs. A matching
+corrected-family startup/return and cold-module lifecycle remain open before
+controller/tag/RF/userspace/PM and broader bringup gates. See
+[build manifest](../manifests/kernel-nfc-teardown-build.json) and
+[fix/build evidence](../evidence/2026-11-08-nfc-teardown-source-package.json).

@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "status": "Complete independent Alpine r58 teardown-fix source build and host package checks pass; no runtime/hardware qualification",
+  "source_profile": "manifests/kernel-nfc-teardown.json",
+  "source": {
+    "repository": "https://github.com/timschmidt/fx0-linux",
+    "branch": "integration/fx0-nfc-teardown",
+    "commit": "3be72fe7a5fb16f74494023b134ce1f2654bff40",
+    "tree": "ced58428a4f02187a4e0d89e676fa3c2039f4ba3",
+    "base": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+    "new_fix_commits": [
+      {
+        "commit": "a5ac56697b9332f3dfa7918341920eb0e252516c",
+        "parent": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+        "patch": "patches/linux-integration/fx0-nxp-nci-irq-teardown.patch",
+        "sha256": "487c88dc83c51406c0d9227aa8ab761cbb68d801446b94239d8d7580080f8fd8"
+      },
+      {
+        "commit": "3be72fe7a5fb16f74494023b134ce1f2654bff40",
+        "parent": "a5ac56697b9332f3dfa7918341920eb0e252516c",
+        "patch": "patches/linux-integration/fx0-nxp-nci-unregister-lock.patch",
+        "sha256": "1b5a88fb46285739e9f0c14242aa03076d13dd9a8526a5ceebc42a7ba63eb39e"
+      }
+    ],
+    "total_recipe_patches": 16
+  },
+  "recipe": {
+    "verified_UTC": "2026-11-09T01:36:48.360051+00:00",
+    "repository": "https://github.com/timschmidt/fx0-pmaports",
+    "branch": "integration/fx0-nfc-teardown-package",
+    "commit": "328a281d6da3a414c417de7fb9a4eefcd8950fcb",
+    "remote_ref_independently_verified": true,
+    "checkout_clean": true,
+    "published_payload": "r58 standalone recipe/configuration/16 raw source patches/provenance; new teardown family",
+    "binary_firmware_private_key_or_device_log_export": false,
+    "owner_authorization": "Pushing to github is approved for all fx0 development."
+  },
+  "release": "6.18.59-fx0-nfc-teardown-alpine",
+  "package": {
+    "name": "linux-postmarketos-qcom-msm8226-6.18.59-r58.apk",
+    "bytes": 18699174,
+    "sha256": "8b2d616ccb4b0e9359c4be00eb03198be689aec55fb56dd0a55ded9701e6f632",
+    "recipe_commit": "328a281d6da3a414c417de7fb9a4eefcd8950fcb",
+    "source_build": true
+  },
+  "configuration": {
+    "input": "configs/linux-6.18.59-fx0-nfc-teardown-alpine.armv7",
+    "input_sha256": "cf07cd609c78832e613cb111edcf14574785f0b158bfe409ea88aa3047b0ba02",
+    "actual_config_sha256": "c47081914b5c7980deb352773fc1beddfcccf88c723647c4aabd3f03469f7457",
+    "same_19_compiler_capability_differences": true,
+    "only_input_change_from_prior_NFC_family": "LOCALVERSION",
+    "community_check": "pass",
+    "CFI_signing_full_DWARF_and_schedutil_retained": true
+  },
+  "kernel": {
+    "zImage_sha256": "f60d9011f31c2200a99539a68bff3d63f8630a4e0d36210dd223485bdcbd9d66",
+    "GNU_build_id": "2ea8828d45c4897b053f6e22a9a0fa9b1babef0a",
+    "ELF_sha256": "a3ad801abbf321dba744df5fb18ae18b234a68a4fc178411e0541b6a84d7c9a5",
+    "DTB_sha256": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483",
+    "certificate_sha256": "80e62e8a6f99428a0ad50ec11450f98db40640886cae5cf433857196c933e831",
+    "certificate_bytes": 1324,
+    "exact_certificate_embedded": true,
+    "no_new_undefined_symbols": true,
+    "kernel_and_BSS_below_forced_ramdisk": true,
+    "full_debug_information_losslessly_compressed": true
+  },
+  "host_checks": {
+    "actual_C_tests": 9,
+    "actual_C_modes": 16,
+    "each_old_defect_restored_alone_is_rejected": true,
+    "raw_source_patches_replay_exactly": true,
+    "strict_checkpatch_without_signoff": "pass",
+    "actual_ARM_objects_W1": 2,
+    "W1_warnings": 0,
+    "targeted_objects_identical_to_full_build": true,
+    "signed_modules_verified": 468,
+    "imported_CRC_checks": 25562,
+    "dependency_edges": 577,
+    "binary_loader_requests": 468,
+    "APK_signatures_and_offline_resolution": "pass",
+    "isolated_usermode_upgrade_payload_files": 549
+  },
+  "constraints": [
+    "Distinct kernel/certificate/module family; old r56 modules must not be used for teardown trials",
+    "Original r56 moduleless startup image remains unchanged and has no NFC modules; matching corrected-family startup and recovery required before corrected-module trials",
+    "Actual-C callbacks and host build/crypto/ABI/loader/usermode checks do not qualify real IRQ concurrency, NCI close/remove, runtime signature enforcement, probe, boot or recovery",
+    "Firmware-work handling unchanged; no firmware download/programming or concurrent firmware teardown qualification",
+    "No private keys/binaries/firmware published, recovery-disk writes, audio tests or host Wi-Fi changes"
+  ],
+  "evidence": "evidence/2026-11-08-nfc-teardown-source-package.json"
+}

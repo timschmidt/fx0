@@ -50,3 +50,11 @@ After startup and native recovery are qualified, separate bounded trials must
 verify signed module registration, cold clock/GPIO ownership and cleanup,
 NCI reset/init, tag/RF/userspace and suspend/wake. This image cannot qualify
 those stages because it contains no NFC modules.
+
+A later source audit finds IRQ-lifetime and unregister-mutex defects in the r56
+NFC driver modules. The prepared image above contains no modules and cannot
+execute those remove callbacks, so its recorded bytes remain intact. A separate
+r58 family includes the fixes; do not add old r56 modules to this startup image
+for a teardown trial. Prepare and qualify a matching corrected-family startup
+before a bounded module lifecycle test. See
+[teardown build evidence](../../evidence/2026-11-08-nfc-teardown-source-package.json).
