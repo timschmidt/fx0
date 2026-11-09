@@ -4507,3 +4507,25 @@ Signed module runtime checks, NFC GPIO/clock ownership/teardown, controller/RF/P
 and wider bringup remain open. Original build/package/image artifacts and the
 protected root index are unchanged. The USB transport fault remains unresolved;
 native systemd currently waits on time synchronization with no failed units.
+
+## November 8: signed NFC cold registration and cleanup
+
+A matching r58 RAM image rejects same-ELF unsigned and altered-CMS rfkill
+controls with key errors/status 129, then loads all five signed modules in
+dependency order. Four cold probe/removal cycles include three explicit
+unbind/rebind rounds and final ordinary reverse module unload. Twelve
+snapshots verify VEN/FIRM low, IRQ21 input/pull-down, pinmux ownership and its
+release, NFC/rfkill parentage and zero reference-clock votes. All NFC IRQ
+counters are zero; 48 temperature samples are 38–39°C. The final state has
+no modules, class/rfkill child, IRQ handler or pin owner. The independent timer
+returns at 181.622714 seconds to original r50 with zero taint, programmed
+1.15 V APC target, running systemd, synchronized time and UI services. Latest
+owner display/touch status is recorded separately in
+[the evidence](../evidence/2026-11-08-nfc-cold-lifecycle.json).
+
+The checker passes 43 host modes, detects three isolated weakened guards and
+preserves the qualified kernel/DTB/command line plus all fourteen original
+CPIO entries. See [procedure and limits](../diagnostics/nfc-startup/cold-lifecycle.md).
+NCI reset/init, tag/RF/userspace/PM, open-device or pending-IRQ teardown and
+firmware concurrency remain unqualified. The candidate is RAM-only; installed
+update/recovery, intermittent USB/time-sync faults and broader bringup remain open.

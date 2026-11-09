@@ -1,0 +1,1102 @@
+{
+  "date": "2026-11-08",
+  "recorded_UTC": "2026-11-09T02:50:27.130290+00:00",
+  "status": "Physical r58 signature enforcement, five-module cold registration, three unbind/rebind rounds and complete unload pass; native integrity restored; latest physical UI pending on this newest native return",
+  "source_commit": "3be72fe7a5fb16f74494023b134ce1f2654bff40",
+  "source_recipe_commit": "328a281d6da3a414c417de7fb9a4eefcd8950fcb",
+  "parent_startup_evidence": "evidence/2026-11-08-nfc-moduleless-startup.json",
+  "image": {
+    "image_path": "local/nfc-cold-lifecycle/fx0-nfc-r58-cold-lifecycle-ram.img",
+    "image_sha256": "75e6f20c5e431fa05b75c02de33f5f99ae827c9c2d2b81b467031be7dcce9a33",
+    "image_bytes": 6967296,
+    "kernel_release": "6.18.59-fx0-nfc-teardown-alpine",
+    "kernel_sha256": "dddb3ec22c3b15667477f8552e661ace05c603b617460af77eaf7390344ca18b",
+    "kernel_bytes": 6107648,
+    "source_package_sha256": "8b2d616ccb4b0e9359c4be00eb03198be689aec55fb56dd0a55ded9701e6f632",
+    "source_recipe_commit": "328a281d6da3a414c417de7fb9a4eefcd8950fcb",
+    "certificate_sha256": "80e62e8a6f99428a0ad50ec11450f98db40640886cae5cf433857196c933e831",
+    "DTB_sha256": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483",
+    "kernel_and_DTB_exact_signed_APK_bytes": false,
+    "kernel_encoding_workaround_applied": true,
+    "kernel_notes_bytes": 84,
+    "kernel_notes_sha256": "572b6a721c8be8b11c0d1055d1036dda563cd016a70e26b9f790074d677862ad",
+    "kernel_GNU_build_id": "2ea8828d45c4897b053f6e22a9a0fa9b1babef0a",
+    "kernel_Image_bytes": 21201060,
+    "kernel_text_to_end_bytes_including_BSS": 21499728,
+    "kernel_footprint_plus_load_offset_below_forced_ramdisk_address": true,
+    "header_digest_and_addresses_verified": true,
+    "return_after_seconds": 180,
+    "initially_and_entirely_moduleless": false,
+    "allowed_module_loads": [
+      "rfkill.ko",
+      "nfc.ko",
+      "nci.ko",
+      "nxp-nci.ko",
+      "nxp-nci_i2c.ko"
+    ],
+    "explicit_frequency_requests": [],
+    "explicit_NFC_bus_GPIO_clock_RF_or_firmware_actions": [
+      "Load matching signed NFC stack into cold mode; driver applies GPIO/IRQ ownership without NCI up",
+      "Three cold unbind/rebind rounds then ordinary reverse module unload; no direct GPIO userspace writes"
+    ],
+    "signature_enforcement": true,
+    "default_governor": "schedutil",
+    "CPUfreq_driver_module_included": false,
+    "NFC_modules_included": true,
+    "expected_CPUfreq_policy": "absent; cpufreq-dt is a module and no modules are included",
+    "expected_NFC_client": "one QUP3 PN547 client; initially unbound, bound cold for checks, unbound after each cleanup and at finish",
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\" cpufreq.default_governor=schedutil module.sig_enforce=1",
+    "startup_script_sha256": "c30e6996bf26a33120972de6a7f77b4455a2f073cca861fb91467517f0cb46bc",
+    "ARM_BusyBox_shell_syntax_check": "four image scripts pass; background wait and pinmux awk controls executed under ARM emulation",
+    "entries_sha256": {
+      "bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dev": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sys": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tmp": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "www": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bin/busybox": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+      "bin/sh": "9d75f0d7c398df565d7ac04c6819b62d6d8f9560f5eb4672596ecd8f7e96ae91",
+      "bin/serve-http": "4005fed0312bc216b3c32129ffdd2ceac06544a2503ecd572349e729af543d5e",
+      "init": "8a25f6757a7f0de87cb7433def659d0fee00981c2a311ed816a12bac439ac0d1",
+      "etc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "etc/fx0-nfc-trial": "9b5a4a7c8d80d753b6722f451356d66b3cfd4b97fa23f239f48da70d081039d2",
+      "etc/fx0-nfc-notes.sha256": "4bf109b2dba691e1502f9f1d7e55c7d71ec42a6191968cecf4cd422d333b74d5",
+      "bin/nfc-startup-check": "c30e6996bf26a33120972de6a7f77b4455a2f073cca861fb91467517f0cb46bc",
+      "modules": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modules/nci.ko": "c1b20d317e39ac9b21adfcd66f453f173880985743b850c23a244a0f00243495",
+      "modules/nfc.ko": "7dcb81164a47e595b7a0066dcfd8b765b6d0753fde3e14e36f3f4af324ed5bbe",
+      "modules/nxp-nci.ko": "a17be2df5c97ab75bf89d73e4930156f39b15a93b3f0269d6d9ff95d45bc5c83",
+      "modules/nxp-nci_i2c.ko": "00f0e8ddec6c52d6e6c17f598e55ba30995b110d7f3090d915fb21b7ba5111d6",
+      "modules/rfkill-badsig.ko": "19414c77c476333900d07ee67e2fe5a874b8935f3d59d97aabadf8c43d346280",
+      "modules/rfkill-unsigned.ko": "d9eafe10137456f4c104d95dbc5b37fc7ce022f443f8b7ca52f97e883cbb5dde",
+      "modules/rfkill.ko": "335777678063b30f0d6cd6febbf8a7482bfbbf187312bb706cbc83d855e8664c",
+      "etc/fx0-nfc-lifecycle": "b2577ae1f4b4f83838083c47149ea9964ccb0527ec51ebbf8fad19f21bc789a3",
+      "etc/fx0-nfc-modules.sha256": "4fd5d1b457936c68cd8eeadab7142ee35c3a395cccc11423b903c38e139d56ec",
+      "bin/nfc-cold-lifecycle": "629e98b64d695cb10e7993f79614f04789ba3d159fbf663590a12b0b582aa774"
+    },
+    "qualified_base_entries_unchanged": [
+      "bin",
+      "dev",
+      "proc",
+      "sys",
+      "tmp",
+      "www",
+      "bin/busybox",
+      "bin/sh",
+      "bin/serve-http",
+      "init"
+    ],
+    "previous_native_boot_id": "98ab64c6-01c6-4c1e-91a2-433fc3afc4cf",
+    "previous_UI_result_required_before_stage": "local/ram-nfc-teardown-startup-02/owner-display-touch.json; same boot and passed status",
+    "staged_or_booted": true,
+    "NFC_hardware_qualified": false,
+    "DTB_exact_signed_APK_bytes": true,
+    "kernel_encoding": "lossless XZ preset-3; original runtime Image, ELF, linked notes, certificate and module ABI unchanged",
+    "runtime_Image_sha256": "23df6dd774b14f45d18bd2c5304a63a5db7b6814b2bed8d897ef49a9b1584d75",
+    "runtime_Image_identical_to_signed_APK_kernel_after_decompression": true,
+    "original_packed_kernel_sha256": "f60d9011f31c2200a99539a68bff3d63f8630a4e0d36210dd223485bdcbd9d66",
+    "ramdisk_and_cmdline_identical_to_first_r58_image": true,
+    "initially_moduleless": true,
+    "allowed_rejected_module_attempts": [
+      "rfkill-unsigned.ko",
+      "rfkill-badsig.ko"
+    ],
+    "firmware_files": 0,
+    "explicit_CPU_frequency_requests": [],
+    "NFC_bus_or_RF_commands": [],
+    "cold_unbind_rebind_rounds": 3,
+    "module_operation_deadline_checks": 20,
+    "overall_checker_deadline_seconds": 90,
+    "independent_init_timer_seconds": 180,
+    "qualified_moduleless_image_sha256": "559956906b77ad44a1a3e499bf0b7afa04e6ded1d4df316577700900eb311633",
+    "all_14_qualified_CPIO_entries_unchanged": true,
+    "lifecycle_script_sha256": "629e98b64d695cb10e7993f79614f04789ba3d159fbf663590a12b0b582aa774",
+    "cmdline_identical_to_qualified_r58": true,
+    "preparation_record": "local/ram-nfc-cold-01/image-verification.json; original pre-entry snapshot retained"
+  },
+  "module_inputs": {
+    "release": "6.18.59-fx0-nfc-teardown-alpine",
+    "certificate_sha256": "80e62e8a6f99428a0ad50ec11450f98db40640886cae5cf433857196c933e831",
+    "signed_modules": {
+      "rfkill.ko": {
+        "source_path": "local/nfc-teardown-package/r58-inspection/lib/modules/6.18.59-fx0-nfc-teardown-alpine/kernel/net/rfkill/rfkill.ko.zst",
+        "source_compressed_sha256": "155e5236768732fbda428f6ac88cd3e014a3189fa4abf9c73e34082efab6ff7c",
+        "signed_module_sha256": "335777678063b30f0d6cd6febbf8a7482bfbbf187312bb706cbc83d855e8664c",
+        "bytes": 34237,
+        "unsigned_ELF_sha256": "d9eafe10137456f4c104d95dbc5b37fc7ce022f443f8b7ca52f97e883cbb5dde",
+        "CMS_sha256": "c4f3529754a24f6765659a83f8485a6b4753ccf6198ae827ecd7e6cb509282b6",
+        "CMS_verified_against_exact_kernel_certificate": true,
+        "vermagic": "6.18.59-fx0-nfc-teardown-alpine SMP preempt mod_unload modversions ARMv7 p2v8",
+        "internal_name": "rfkill",
+        "depends": ""
+      },
+      "nfc.ko": {
+        "source_path": "local/nfc-teardown-package/r58-inspection/lib/modules/6.18.59-fx0-nfc-teardown-alpine/kernel/net/nfc/nfc.ko.zst",
+        "source_compressed_sha256": "3e1d389fd07489f450bb40803a6e304468005571f5a92c32189108754851cb72",
+        "signed_module_sha256": "7dcb81164a47e595b7a0066dcfd8b765b6d0753fde3e14e36f3f4af324ed5bbe",
+        "bytes": 165585,
+        "unsigned_ELF_sha256": "3117abed0be276fed3a6add3aae3c173b505c82ed838a7190947472826298839",
+        "CMS_sha256": "ea83f777c3610140ba84817b33df35a859a2feb2fa8a5a0a629badd5f5b8318b",
+        "CMS_verified_against_exact_kernel_certificate": true,
+        "vermagic": "6.18.59-fx0-nfc-teardown-alpine SMP preempt mod_unload modversions ARMv7 p2v8",
+        "internal_name": "nfc",
+        "depends": "rfkill"
+      },
+      "nci.ko": {
+        "source_path": "local/nfc-teardown-package/r58-inspection/lib/modules/6.18.59-fx0-nfc-teardown-alpine/kernel/net/nfc/nci/nci.ko.zst",
+        "source_compressed_sha256": "9d8bdb895a1713b1aef5058aa21df5c362ffbbd370f9e1bbaaef62c69fbabb24",
+        "signed_module_sha256": "c1b20d317e39ac9b21adfcd66f453f173880985743b850c23a244a0f00243495",
+        "bytes": 92181,
+        "unsigned_ELF_sha256": "f3bee804322be263db717c386c89f3ee2c04f5e03bd406c9e650b24816dae48e",
+        "CMS_sha256": "ec68279fbabb4097fca3aff50ec2bdecbd8ca0ce2e076c297b9b6ce67656ee5d",
+        "CMS_verified_against_exact_kernel_certificate": true,
+        "vermagic": "6.18.59-fx0-nfc-teardown-alpine SMP preempt mod_unload modversions ARMv7 p2v8",
+        "internal_name": "nci",
+        "depends": "nfc"
+      },
+      "nxp-nci.ko": {
+        "source_path": "local/nfc-teardown-package/r58-inspection/lib/modules/6.18.59-fx0-nfc-teardown-alpine/kernel/drivers/nfc/nxp-nci/nxp-nci.ko.zst",
+        "source_compressed_sha256": "6b5328625ccaec6c7766a6b7b411a001dfd282068254a6a09404d473bf8b95eb",
+        "signed_module_sha256": "a17be2df5c97ab75bf89d73e4930156f39b15a93b3f0269d6d9ff95d45bc5c83",
+        "bytes": 13309,
+        "unsigned_ELF_sha256": "6b327f30ff740592b76cceb2d3995943c4178dedacb9737bc4fa6048d4479a27",
+        "CMS_sha256": "bf1cc9f25154713dba13b752df242bd8d40c5062cc310fb4c504fe03e0a89850",
+        "CMS_verified_against_exact_kernel_certificate": true,
+        "vermagic": "6.18.59-fx0-nfc-teardown-alpine SMP preempt mod_unload modversions ARMv7 p2v8",
+        "internal_name": "nxp_nci",
+        "depends": "nci,nfc"
+      },
+      "nxp-nci_i2c.ko": {
+        "source_path": "local/nfc-teardown-package/r58-inspection/lib/modules/6.18.59-fx0-nfc-teardown-alpine/kernel/drivers/nfc/nxp-nci/nxp-nci_i2c.ko.zst",
+        "source_compressed_sha256": "663d91061903389cbfbc6ba444dc949f13ba1066daec133cd5da670468f64d8c",
+        "signed_module_sha256": "00f0e8ddec6c52d6e6c17f598e55ba30995b110d7f3090d915fb21b7ba5111d6",
+        "bytes": 15017,
+        "unsigned_ELF_sha256": "65d6881c6763bbf9097538545069011604a24ab14407ee2007f8042da2c470ca",
+        "CMS_sha256": "afbcadda0c6ab2bf5ad8ba8878edcf9a5f93dbb9a06bd3ff8b214193aaf4ebe0",
+        "CMS_verified_against_exact_kernel_certificate": true,
+        "vermagic": "6.18.59-fx0-nfc-teardown-alpine SMP preempt mod_unload modversions ARMv7 p2v8",
+        "internal_name": "nxp_nci_i2c",
+        "depends": "nxp-nci,nci"
+      }
+    },
+    "negative_controls": {
+      "unsigned": {
+        "sha256": "d9eafe10137456f4c104d95dbc5b37fc7ce022f443f8b7ca52f97e883cbb5dde",
+        "only_signature_trailer_removed": true
+      },
+      "badsig": {
+        "sha256": "19414c77c476333900d07ee67e2fe5a874b8935f3d59d97aabadf8c43d346280",
+        "exact_same_ELF_and_signature_structure": true,
+        "CMS_signature_last_byte_changed": true,
+        "explicit_CMS_check_rejects": true,
+        "ASN1_CMS_structure_parses_successfully": true
+      },
+      "all_controls_same_release_ABI_and_module_init_as_valid_rfkill": true
+    },
+    "module_files_total": 7,
+    "dependency_order": [
+      "rfkill.ko",
+      "nfc.ko",
+      "nci.ko",
+      "nxp-nci.ko",
+      "nxp-nci_i2c.ko"
+    ],
+    "verified_CRCs_in_selected_modules": 325,
+    "private_signing_key_read_or_copied": false,
+    "modules_loaded": false
+  },
+  "host_tests": {
+    "tests": 3,
+    "fixture_modes": 43,
+    "success_modes": 1,
+    "fault_modes": [
+      "permit",
+      "kernel",
+      "notes",
+      "signature",
+      "modules",
+      "digest",
+      "temperature",
+      "uptime",
+      "accept_unsigned",
+      "accept_badsig",
+      "rejection_reason",
+      "hang_load",
+      "load_error",
+      "silent_load",
+      "extra_module",
+      "module_not_live",
+      "post_taint",
+      "post_temperature",
+      "post_policy",
+      "post_online",
+      "post_mount",
+      "post_CPR",
+      "post_signature",
+      "post_governor",
+      "post_uptime",
+      "class_parent",
+      "rfkill_parent",
+      "missing_class",
+      "owner",
+      "IRQ_missing",
+      "IRQ_storm",
+      "GPIO_high",
+      "GPIO_drive",
+      "IRQ_pin",
+      "clock_vote",
+      "unbind_error",
+      "unbind_owner",
+      "unbind_IRQ",
+      "unbind_GPIO",
+      "bind_error",
+      "unload_error",
+      "silent_unload"
+    ],
+    "failures": 0,
+    "forbidden_NCI_I2C_GPIO_RF_commands": 0,
+    "normal_sequence_operations": 18,
+    "normal_snapshots": 12,
+    "deadline_failure_reason_checked": true,
+    "fake_procfs_clock_updated_atomically": true,
+    "clock_IRQ_and_deadline_guard_weakening_controls_detected": 3,
+    "files_sha256": {
+      "tests/test_nfc_cold_lifecycle.py": "a446aae09ce62ef1598c1f8fae4232ed4523712aa26b687c1cb40dd0f1afe2c7",
+      "diagnostics/nfc-startup/cold-lifecycle.sh": "629e98b64d695cb10e7993f79614f04789ba3d159fbf663590a12b0b582aa774"
+    }
+  },
+  "guard_weakening_controls": {
+    "scope": "Each isolated guard weakening runs actual lifecycle failure tests; no phone or real module action",
+    "controls": [
+      {
+        "mutant": "clock-vote",
+        "disabled_guard": "|| fail 'cold reference-clock vote changed'",
+        "intended_fixture_fault": "clock_vote",
+        "test_detected_weakening": true,
+        "failure_count": 1,
+        "mutant_sha256": "4f2dd9a8d02d5f431e5bcaad07aacbef7cb5a949cda659d6f35f6da7a2b8fd15"
+      },
+      {
+        "mutant": "IRQ-release",
+        "disabled_guard": "|| fail 'NFC IRQ not released'",
+        "intended_fixture_fault": "unbind_IRQ",
+        "test_detected_weakening": true,
+        "failure_count": 1,
+        "mutant_sha256": "f404a1cf974e41c27a3d2c9676e78aeb2109475e5b996d087f91a3cb59b093d9"
+      },
+      {
+        "mutant": "operation-deadline",
+        "disabled_guard": "[ \"$attempts\" -lt 20 ] || fail \"operation $label did not terminate; leave recovery to init timer\"",
+        "intended_fixture_fault": "hang_load",
+        "test_detected_weakening": true,
+        "failure_count": 1,
+        "mutant_sha256": "9b10b5a9079367637dd3e931f40e3bd9c2e5a5a6ba44600fc921602ad16aebcc"
+      }
+    ],
+    "all_three_detected": true
+  },
+  "host_fixture_correction": {
+    "initial_control_run": "A non-atomic fake procfs clock write could briefly produce an empty value and an unrelated fail-closed monotonic-clock error",
+    "correction": "Atomic replacement models a coherent procfs read; the final 43-case suite and three targeted guard controls pass",
+    "actual_runtime_checker_changed_for_this_fixture_issue": false,
+    "initial_failure_and_source_versions_retained": "local/nfc-cold-lifecycle/initial-fixture-control"
+  },
+  "independent_image_verification": {
+    "image_sha256": "75e6f20c5e431fa05b75c02de33f5f99ae827c9c2d2b81b467031be7dcce9a33",
+    "independent_header_checksum_and_CPIO_parse": "pass",
+    "exact_CPIO_entries": 25,
+    "qualified_kernel_DTB_cmdline_and_14_entry_modes_payloads_identical": true,
+    "signed_module_files": 5,
+    "same_ELF_signature_rejection_controls": 2,
+    "all_seven_module_hashes_match_independently_verified_inputs": true,
+    "no_CPU_registration_or_firmware_entries": true,
+    "kernel_and_BSS_below_ramdisk": true,
+    "exact_ARM_BusyBox_script_syntax": "all four scripts pass",
+    "exact_ARM_BusyBox_background_wait_exit_status": "pass",
+    "exact_ARM_BusyBox_pinmux_awk_controls": 3,
+    "physical_trial": false
+  },
+  "entry_gate_controls": {
+    "checked_UTC": "2026-11-09T02:32:45.942649+00:00",
+    "cases": [
+      {
+        "mode": "pending",
+        "intercepted_calls": [],
+        "actual_phone_commands_or_subprocesses": 0,
+        "expected_stop": true
+      },
+      {
+        "mode": "wrong_boot",
+        "intercepted_calls": [],
+        "actual_phone_commands_or_subprocesses": 0,
+        "expected_stop": true
+      },
+      {
+        "mode": "passed",
+        "intercepted_calls": [
+          "phone_client_import"
+        ],
+        "actual_phone_commands_or_subprocesses": 0,
+        "expected_stop": true
+      }
+    ],
+    "owner_UI_evidence_unchanged": true,
+    "actual_phone_client_imports_commands_or_subprocesses": 0,
+    "physical_stage_state_created": false,
+    "scope": "Instrumented actual r58 stage script; passed UI reaches controlled stop before actual client import"
+  },
+  "transfer": {
+    "exact_readback_bytes": 6967296,
+    "image_sha256": "75e6f20c5e431fa05b75c02de33f5f99ae827c9c2d2b81b467031be7dcce9a33",
+    "elapsed_seconds": 5.155916504038032,
+    "terminal_transfer_success_and_PID_absence_before_BOOT": true
+  },
+  "RAM": {
+    "BOOT_count": 1,
+    "boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+    "kernel_release": "6.18.59-fx0-nfc-teardown-alpine",
+    "kernel_notes_bytes": 84,
+    "kernel_notes_sha256": "572b6a721c8be8b11c0d1055d1036dda563cd016a70e26b9f790074d677862ad",
+    "signature_enforcement": true,
+    "same_ELF_invalid_controls_rejected_status": [
+      129,
+      129
+    ],
+    "operations": [
+      {
+        "sequence": 1,
+        "operation": "reject-unsigned",
+        "status": 129
+      },
+      {
+        "sequence": 2,
+        "operation": "reject-badsig",
+        "status": 129
+      },
+      {
+        "sequence": 3,
+        "operation": "load-rfkill",
+        "status": 0
+      },
+      {
+        "sequence": 4,
+        "operation": "load-nfc",
+        "status": 0
+      },
+      {
+        "sequence": 5,
+        "operation": "load-nci",
+        "status": 0
+      },
+      {
+        "sequence": 6,
+        "operation": "load-nxp-nci",
+        "status": 0
+      },
+      {
+        "sequence": 7,
+        "operation": "load-nxp-nci_i2c",
+        "status": 0
+      },
+      {
+        "sequence": 8,
+        "operation": "unbind-1",
+        "status": 0
+      },
+      {
+        "sequence": 9,
+        "operation": "bind-1",
+        "status": 0
+      },
+      {
+        "sequence": 10,
+        "operation": "unbind-2",
+        "status": 0
+      },
+      {
+        "sequence": 11,
+        "operation": "bind-2",
+        "status": 0
+      },
+      {
+        "sequence": 12,
+        "operation": "unbind-3",
+        "status": 0
+      },
+      {
+        "sequence": 13,
+        "operation": "bind-3",
+        "status": 0
+      },
+      {
+        "sequence": 14,
+        "operation": "unload-nxp-nci_i2c",
+        "status": 0
+      },
+      {
+        "sequence": 15,
+        "operation": "unload-nxp-nci",
+        "status": 0
+      },
+      {
+        "sequence": 16,
+        "operation": "unload-nci",
+        "status": 0
+      },
+      {
+        "sequence": 17,
+        "operation": "unload-nfc",
+        "status": 0
+      },
+      {
+        "sequence": 18,
+        "operation": "unload-rfkill",
+        "status": 0
+      }
+    ],
+    "snapshots": [
+      {
+        "phase": "before",
+        "RAM_boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+        "modules": [],
+        "clock": "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      deviceless                      no_connection_id",
+        "pinmux": [
+          "pin 20 (GPIO_20): UNCLAIMED",
+          "pin 21 (GPIO_21): UNCLAIMED",
+          "pin 22 (GPIO_22): UNCLAIMED"
+        ],
+        "GPIO": [],
+        "IRQ": [],
+        "IRQ_total": 0,
+        "rfkill": [],
+        "NFC_class_and_rfkill_parent_checks": "passed by actual script"
+      },
+      {
+        "phase": "registered",
+        "RAM_boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+        "modules": [
+          "nci",
+          "nfc",
+          "nxp_nci",
+          "nxp_nci_i2c",
+          "rfkill"
+        ],
+        "clock": "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      1-0028                          ref",
+        "pinmux": [
+          "pin 20 (GPIO_20): device 1-0028 function gpio group gpio20",
+          "pin 21 (GPIO_21): device 1-0028 function gpio group gpio21",
+          "pin 22 (GPIO_22): device 1-0028 function gpio group gpio22"
+        ],
+        "GPIO": [
+          "gpio20  : out low  func0 2mA no pull",
+          "gpio22  : out low  func0 8mA no pull",
+          "gpio21  : in  low  func0 8mA pull down"
+        ],
+        "IRQ": [
+          " 70:          0          0          0          0  msmgpio  21 Edge      nxp-nci_i2c"
+        ],
+        "IRQ_total": 0,
+        "rfkill": [
+          "__NFC_RFKILL__/sys/class/rfkill/rfkill0 soft=0 hard=0"
+        ],
+        "NFC_class_and_rfkill_parent_checks": "passed by actual script"
+      },
+      {
+        "phase": "unbound-1",
+        "RAM_boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+        "modules": [
+          "nci",
+          "nfc",
+          "nxp_nci",
+          "nxp_nci_i2c",
+          "rfkill"
+        ],
+        "clock": "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      deviceless                      no_connection_id",
+        "pinmux": [
+          "pin 20 (GPIO_20): UNCLAIMED",
+          "pin 21 (GPIO_21): UNCLAIMED",
+          "pin 22 (GPIO_22): UNCLAIMED"
+        ],
+        "GPIO": [
+          "gpio20  : out low  func0 2mA no pull",
+          "gpio22  : out low  func0 8mA no pull",
+          "gpio21  : in  low  func0 8mA pull down"
+        ],
+        "IRQ": [],
+        "IRQ_total": 0,
+        "rfkill": [],
+        "NFC_class_and_rfkill_parent_checks": "passed by actual script"
+      },
+      {
+        "phase": "rebound-1",
+        "RAM_boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+        "modules": [
+          "nci",
+          "nfc",
+          "nxp_nci",
+          "nxp_nci_i2c",
+          "rfkill"
+        ],
+        "clock": "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      1-0028                          ref",
+        "pinmux": [
+          "pin 20 (GPIO_20): device 1-0028 function gpio group gpio20",
+          "pin 21 (GPIO_21): device 1-0028 function gpio group gpio21",
+          "pin 22 (GPIO_22): device 1-0028 function gpio group gpio22"
+        ],
+        "GPIO": [
+          "gpio20  : out low  func0 2mA no pull",
+          "gpio22  : out low  func0 8mA no pull",
+          "gpio21  : in  low  func0 8mA pull down"
+        ],
+        "IRQ": [
+          " 70:          0          0          0          0  msmgpio  21 Edge      nxp-nci_i2c"
+        ],
+        "IRQ_total": 0,
+        "rfkill": [
+          "__NFC_RFKILL__/sys/class/rfkill/rfkill1 soft=0 hard=0"
+        ],
+        "NFC_class_and_rfkill_parent_checks": "passed by actual script"
+      },
+      {
+        "phase": "quiet-1",
+        "RAM_boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+        "modules": [
+          "nci",
+          "nfc",
+          "nxp_nci",
+          "nxp_nci_i2c",
+          "rfkill"
+        ],
+        "clock": "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      1-0028                          ref",
+        "pinmux": [
+          "pin 20 (GPIO_20): device 1-0028 function gpio group gpio20",
+          "pin 21 (GPIO_21): device 1-0028 function gpio group gpio21",
+          "pin 22 (GPIO_22): device 1-0028 function gpio group gpio22"
+        ],
+        "GPIO": [
+          "gpio20  : out low  func0 2mA no pull",
+          "gpio22  : out low  func0 8mA no pull",
+          "gpio21  : in  low  func0 8mA pull down"
+        ],
+        "IRQ": [
+          " 70:          0          0          0          0  msmgpio  21 Edge      nxp-nci_i2c"
+        ],
+        "IRQ_total": 0,
+        "rfkill": [
+          "__NFC_RFKILL__/sys/class/rfkill/rfkill1 soft=0 hard=0"
+        ],
+        "NFC_class_and_rfkill_parent_checks": "passed by actual script"
+      },
+      {
+        "phase": "unbound-2",
+        "RAM_boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+        "modules": [
+          "nci",
+          "nfc",
+          "nxp_nci",
+          "nxp_nci_i2c",
+          "rfkill"
+        ],
+        "clock": "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      deviceless                      no_connection_id",
+        "pinmux": [
+          "pin 20 (GPIO_20): UNCLAIMED",
+          "pin 21 (GPIO_21): UNCLAIMED",
+          "pin 22 (GPIO_22): UNCLAIMED"
+        ],
+        "GPIO": [
+          "gpio20  : out low  func0 2mA no pull",
+          "gpio22  : out low  func0 8mA no pull",
+          "gpio21  : in  low  func0 8mA pull down"
+        ],
+        "IRQ": [],
+        "IRQ_total": 0,
+        "rfkill": [],
+        "NFC_class_and_rfkill_parent_checks": "passed by actual script"
+      },
+      {
+        "phase": "rebound-2",
+        "RAM_boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+        "modules": [
+          "nci",
+          "nfc",
+          "nxp_nci",
+          "nxp_nci_i2c",
+          "rfkill"
+        ],
+        "clock": "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      1-0028                          ref",
+        "pinmux": [
+          "pin 20 (GPIO_20): device 1-0028 function gpio group gpio20",
+          "pin 21 (GPIO_21): device 1-0028 function gpio group gpio21",
+          "pin 22 (GPIO_22): device 1-0028 function gpio group gpio22"
+        ],
+        "GPIO": [
+          "gpio20  : out low  func0 2mA no pull",
+          "gpio22  : out low  func0 8mA no pull",
+          "gpio21  : in  low  func0 8mA pull down"
+        ],
+        "IRQ": [
+          " 70:          0          0          0          0  msmgpio  21 Edge      nxp-nci_i2c"
+        ],
+        "IRQ_total": 0,
+        "rfkill": [
+          "__NFC_RFKILL__/sys/class/rfkill/rfkill2 soft=0 hard=0"
+        ],
+        "NFC_class_and_rfkill_parent_checks": "passed by actual script"
+      },
+      {
+        "phase": "quiet-2",
+        "RAM_boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+        "modules": [
+          "nci",
+          "nfc",
+          "nxp_nci",
+          "nxp_nci_i2c",
+          "rfkill"
+        ],
+        "clock": "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      1-0028                          ref",
+        "pinmux": [
+          "pin 20 (GPIO_20): device 1-0028 function gpio group gpio20",
+          "pin 21 (GPIO_21): device 1-0028 function gpio group gpio21",
+          "pin 22 (GPIO_22): device 1-0028 function gpio group gpio22"
+        ],
+        "GPIO": [
+          "gpio20  : out low  func0 2mA no pull",
+          "gpio22  : out low  func0 8mA no pull",
+          "gpio21  : in  low  func0 8mA pull down"
+        ],
+        "IRQ": [
+          " 70:          0          0          0          0  msmgpio  21 Edge      nxp-nci_i2c"
+        ],
+        "IRQ_total": 0,
+        "rfkill": [
+          "__NFC_RFKILL__/sys/class/rfkill/rfkill2 soft=0 hard=0"
+        ],
+        "NFC_class_and_rfkill_parent_checks": "passed by actual script"
+      },
+      {
+        "phase": "unbound-3",
+        "RAM_boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+        "modules": [
+          "nci",
+          "nfc",
+          "nxp_nci",
+          "nxp_nci_i2c",
+          "rfkill"
+        ],
+        "clock": "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      deviceless                      no_connection_id",
+        "pinmux": [
+          "pin 20 (GPIO_20): UNCLAIMED",
+          "pin 21 (GPIO_21): UNCLAIMED",
+          "pin 22 (GPIO_22): UNCLAIMED"
+        ],
+        "GPIO": [
+          "gpio20  : out low  func0 2mA no pull",
+          "gpio22  : out low  func0 8mA no pull",
+          "gpio21  : in  low  func0 8mA pull down"
+        ],
+        "IRQ": [],
+        "IRQ_total": 0,
+        "rfkill": [],
+        "NFC_class_and_rfkill_parent_checks": "passed by actual script"
+      },
+      {
+        "phase": "rebound-3",
+        "RAM_boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+        "modules": [
+          "nci",
+          "nfc",
+          "nxp_nci",
+          "nxp_nci_i2c",
+          "rfkill"
+        ],
+        "clock": "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      1-0028                          ref",
+        "pinmux": [
+          "pin 20 (GPIO_20): device 1-0028 function gpio group gpio20",
+          "pin 21 (GPIO_21): device 1-0028 function gpio group gpio21",
+          "pin 22 (GPIO_22): device 1-0028 function gpio group gpio22"
+        ],
+        "GPIO": [
+          "gpio20  : out low  func0 2mA no pull",
+          "gpio22  : out low  func0 8mA no pull",
+          "gpio21  : in  low  func0 8mA pull down"
+        ],
+        "IRQ": [
+          " 70:          0          0          0          0  msmgpio  21 Edge      nxp-nci_i2c"
+        ],
+        "IRQ_total": 0,
+        "rfkill": [
+          "__NFC_RFKILL__/sys/class/rfkill/rfkill3 soft=0 hard=0"
+        ],
+        "NFC_class_and_rfkill_parent_checks": "passed by actual script"
+      },
+      {
+        "phase": "quiet-3",
+        "RAM_boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+        "modules": [
+          "nci",
+          "nfc",
+          "nxp_nci",
+          "nxp_nci_i2c",
+          "rfkill"
+        ],
+        "clock": "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      1-0028                          ref",
+        "pinmux": [
+          "pin 20 (GPIO_20): device 1-0028 function gpio group gpio20",
+          "pin 21 (GPIO_21): device 1-0028 function gpio group gpio21",
+          "pin 22 (GPIO_22): device 1-0028 function gpio group gpio22"
+        ],
+        "GPIO": [
+          "gpio20  : out low  func0 2mA no pull",
+          "gpio22  : out low  func0 8mA no pull",
+          "gpio21  : in  low  func0 8mA pull down"
+        ],
+        "IRQ": [
+          " 70:          0          0          0          0  msmgpio  21 Edge      nxp-nci_i2c"
+        ],
+        "IRQ_total": 0,
+        "rfkill": [
+          "__NFC_RFKILL__/sys/class/rfkill/rfkill3 soft=0 hard=0"
+        ],
+        "NFC_class_and_rfkill_parent_checks": "passed by actual script"
+      },
+      {
+        "phase": "finished",
+        "RAM_boot_id": "daa0e093-e178-4778-9ea8-b7035ecddbdd",
+        "modules": [],
+        "clock": "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      deviceless                      no_connection_id",
+        "pinmux": [
+          "pin 20 (GPIO_20): UNCLAIMED",
+          "pin 21 (GPIO_21): UNCLAIMED",
+          "pin 22 (GPIO_22): UNCLAIMED"
+        ],
+        "GPIO": [
+          "gpio20  : out low  func0 2mA no pull",
+          "gpio22  : out low  func0 8mA no pull",
+          "gpio21  : in  low  func0 8mA pull down"
+        ],
+        "IRQ": [],
+        "IRQ_total": 0,
+        "rfkill": [],
+        "NFC_class_and_rfkill_parent_checks": "passed by actual script"
+      }
+    ],
+    "cold_probe_remove_cycles": 4,
+    "explicit_unbind_rebind_rounds": 3,
+    "taint": 0,
+    "lifecycle_guard_checks": 24,
+    "qualified_startup_guard": "passed before first module attempt",
+    "temperature_samples": 48,
+    "temperature_min_mC": 38000,
+    "temperature_max_mC": 39000,
+    "IRQ_counters_all_zero": true,
+    "rfkill_children_recreated": [
+      "/sys/class/rfkill/rfkill0",
+      "/sys/class/rfkill/rfkill1",
+      "/sys/class/rfkill/rfkill2",
+      "/sys/class/rfkill/rfkill3"
+    ],
+    "no_explicit_frequency_NCI_up_reset_poll_RF_firmware_or_direct_GPIO_commands": true,
+    "all_module_operations_terminal_and_all_modules_unloaded_before_timer": true,
+    "timer_kernel_seconds": 181.622714,
+    "RAM_detached_UTC": "2026-11-09T02:42:14.811315+00:00",
+    "HTTP_attempts": 23,
+    "HTTP_complete_pairs": 22,
+    "serial_bytes": 105066,
+    "selected_NFC_kernel_messages": [
+      "5,1,0,-;Linux version 6.18.59-fx0-nfc-teardown-alpine (pmos@fedora) (Alpine clang version 22.1.3, LLD 22.1.3) #59-postmarketos-qcom-msm8226 SMP PREEMPT Mon Nov  9 01:27:39 UT",
+      "5,267,2733184,-;Loading of unsigned module is rejected",
+      "5,268,2733682,-;Loading of unsigned module is rejected",
+      "6,269,5985371,-;nfc: nfc_init: NFC Core ver 0.1",
+      "6,270,5985642,-;NET: Registered PF_NFC protocol family",
+      "6,276,23972731,-;NET: Unregistered PF_NFC protocol family"
+    ],
+    "panic_Oops_BUG_lockup_or_CFI_failure_messages": []
+  },
+  "native_before": {
+    "boot_id": "98ab64c6-01c6-4c1e-91a2-433fc3afc4cf",
+    "owner_UI_confirmed": true,
+    "startup": "running; no pending jobs",
+    "PMIC": {
+      "method": "two exact nine-byte pread rows after dense-map metadata check",
+      "registers": {
+        "0x1740": 1,
+        "0x1741": 115
+      }
+    }
+  },
+  "native_return": {
+    "health": {
+      "boot_id": "2e6126b9-498e-4d89-b23e-f08fe6ccc361",
+      "kernel": "6.18.59-fx0-dmp",
+      "taint": 0,
+      "systemd": "running",
+      "failed_units": [],
+      "pending_jobs": [],
+      "Sway": true,
+      "sensor_proxy": "active",
+      "boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+      "CPU_policy": {
+        "scaling_governor": "schedutil",
+        "scaling_min_freq": "300000",
+        "scaling_max_freq": "787200",
+        "scaling_available_frequencies": "300000 384000 600000 787200"
+      },
+      "QUP3_status": "disabled",
+      "loaded_NFC_modules": [],
+      "temperatures_mC": [
+        43000,
+        43000
+      ],
+      "NTP_synchronized": "yes",
+      "ext4_errors": 0,
+      "verified_UTC": "2026-11-09T02:43:38.230887+00:00",
+      "owner_display_touch": {
+        "native_boot_id": "2e6126b9-498e-4d89-b23e-f08fe6ccc361",
+        "status": "pending on this newest native return",
+        "question": "The NFC signature and three-round cold module lifecycle RAM trial has returned to installed r50. The original boot hash and 1.15 V PMIC target are restored, with systemd running, Sway and the sensor proxy active. Do display and touch work normally on this newest boot?",
+        "recorded_UTC": "2026-11-09T02:43:33.836382+00:00"
+      },
+      "PMIC_target_uV_from_this_boot_postflight": 1150000
+    },
+    "PMIC": {
+      "method": "two exact nine-byte pread rows after dense-map metadata check",
+      "registers": {
+        "0x1740": 1,
+        "0x1741": 115
+      }
+    },
+    "latest_owner_display_touch": {
+      "native_boot_id": "2e6126b9-498e-4d89-b23e-f08fe6ccc361",
+      "status": "pending on this newest native return",
+      "question": "The NFC signature and three-round cold module lifecycle RAM trial has returned to installed r50. The original boot hash and 1.15 V PMIC target are restored, with systemd running, Sway and the sensor proxy active. Do display and touch work normally on this newest boot?",
+      "recorded_UTC": "2026-11-09T02:43:33.836382+00:00"
+    },
+    "health_collected_before_latest_owner_reply_if_any": true
+  },
+  "host_return": {
+    "default_routes_unchanged": true,
+    "resolver_unchanged": true,
+    "root_index_unchanged": true,
+    "own_volatile_profile_removed": true
+  },
+  "preservation": {
+    "verified_UTC": "2026-11-09T02:45:57.454123+00:00",
+    "root_index_entries_and_bytes_unchanged": true,
+    "original_r56_r58_build_APKs_and_all_three_prior_NFC_RAM_images_unchanged": true,
+    "original_CPU_APKs_and_prepared_RAM_image_unchanged": true,
+    "original_artifacts_verified": 26,
+    "source_and_recipe_branches_clean_and_pinned": true,
+    "files_sha256": {
+      "local/kernel-runtime-package/pmb/work/chroot_native/home/pmos/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/vmlinux": "8ffb7c0158ece5cd9521f88863587d86a506d82dc52b6fb2d8a9bab46ddc86d2",
+      "local/kernel-runtime-package/pmb/work/chroot_native/home/pmos/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/arch/arm/boot/Image": "c15721624c8205048b626884ea2e4a29d7d3bf2fbd8231edc0a1f85a422a8552",
+      "local/kernel-runtime-package/pmb/work/chroot_native/home/pmos/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/arch/arm/boot/zImage": "8f94f5f9dfac03ba0aaf1a1fe5e6612618f1a14a26124829a89858a1bb4ca914",
+      "local/kernel-runtime-package/pmb/work/chroot_native/home/pmos/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/System.map": "d63a7aec0aa8367255a0d083dd582df65a7904a2ae23381dce1b9a9a55b349f4",
+      "local/kernel-runtime-package/pmb/work/chroot_native/home/pmos/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/Module.symvers": "bd6f0c08ca376deef1e1c3887cb8201afa13f206ce1db71723fda89ff44efdf8",
+      "local/kernel-runtime-package/pmb/work/chroot_native/home/pmos/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/.config": "41c49064a72b89469a7a73a46ee0c12126b2de43e759130d4075aef05323900e",
+      "local/kernel-runtime-package/pmb/work/chroot_native/home/pmos/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/modules.order": "78f10e98cff3dda4c997887a73defd5f0f089b6649f1d1461c6e0f52c5e5cb63",
+      "local/kernel-runtime-package/pmb/work/chroot_native/home/pmos/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/certs/signing_key.x509": "846fdf13b2cbfe48b6f71b57d54e1b44b337f284e4aa274c4a46c3f982e2c3ba",
+      "local/kernel-runtime-package/pmb/work/chroot_native/home/pmos/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/vmlinux": "a3ad801abbf321dba744df5fb18ae18b234a68a4fc178411e0541b6a84d7c9a5",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/arch/arm/boot/Image": "23df6dd774b14f45d18bd2c5304a63a5db7b6814b2bed8d897ef49a9b1584d75",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/arch/arm/boot/zImage": "f60d9011f31c2200a99539a68bff3d63f8630a4e0d36210dd223485bdcbd9d66",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/System.map": "46b3c3a0d3206ff50081f36eeca32bd8f52148ba5ab779ffa7bc84dcbd9965d0",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/Module.symvers": "bd6f0c08ca376deef1e1c3887cb8201afa13f206ce1db71723fda89ff44efdf8",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/.config": "c47081914b5c7980deb352773fc1beddfcccf88c723647c4aabd3f03469f7457",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/modules.order": "78f10e98cff3dda4c997887a73defd5f0f089b6649f1d1461c6e0f52c5e5cb63",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/certs/signing_key.x509": "80e62e8a6f99428a0ad50ec11450f98db40640886cae5cf433857196c933e831",
+      "local/nfc-teardown-package/pmos-home/build/src/fx0-linux-4b800b920c7db82e8012a580a17cc2d8ff9d5e66/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483",
+      "local/kernel-nfc-package/export-depmod-fixed/linux-postmarketos-qcom-msm8226-6.18.59-r56.apk": "fd288071ac02d0a0fd10fc13fab0266b137ccc69fc9eec1688384f82f8331c14",
+      "local/nfc-teardown-package/export/linux-postmarketos-qcom-msm8226-6.18.59-r58.apk": "8b2d616ccb4b0e9359c4be00eb03198be689aec55fb56dd0a55ded9701e6f632",
+      "local/cpr-package-dependencies/export/linux-postmarketos-qcom-msm8226-6.18.59-r57.apk": "21708970fdb3b414c2fad9c7f9119f6bac2d46266d4122979c048140ae9c4916",
+      "local/kernel-observation-package/export-retry01/linux-postmarketos-qcom-msm8226-6.18.59-r55.apk": "a60821c69c6f72f48458934c5d48741c4ed5408714fe8aaffa5a6bf99407d4ca",
+      "local/nfc-startup-preparation/fx0-nfc-moduleless-startup-ram.img": "e4b04713cfcf8deda30872b69fdaf1cd429af525d4053c6412fc0953f16eb1b7",
+      "local/nfc-teardown-startup-preparation/fx0-nfc-moduleless-startup-ram.img": "5e84d159781ef341b45d47611a7b0e1d41e9a37bc1736fa6c6c76bda5deef32c",
+      "local/nfc-teardown-startup-xz3/fx0-nfc-teardown-moduleless-xz3-ram.img": "559956906b77ad44a1a3e499bf0b7afa04e6ded1d4df316577700900eb311633",
+      "local/alpine-cpr-registration/fx0-alpine-cpr-registration-ram.img": "529161ee532508bc69fe2eb313f642630db8a8bac0d45821860b085e9d205c59"
+    },
+    "private_signing_key_read_copied_or_exported": false,
+    "recovery_disk_written": false,
+    "audio_tested": false,
+    "host_builtin_WiFi_changed": false
+  },
+  "constraints": {
+    "candidate_installed": false,
+    "raw_eMMC_writes": false,
+    "private_signing_key_read_copied_or_exported": false,
+    "firmware_exported": false,
+    "audio_tested": false,
+    "host_builtin_WiFi_changed": false,
+    "recovery_disk_written": false,
+    "force_module_parameters_or_removal": false
+  },
+  "limits": [
+    "All controller sessions stay cold; no real NCI controller command or RF/tag result follows",
+    "All NFC IRQ counters are zero; pending-thread teardown and an open NCI unregister are not stressed by this trial",
+    "Source/host controls cover removal ordering and locking; concurrent firmware download remains unqualified",
+    "Clock counts and TLMM registers report requested digital state; analogue rails/external clock/RF measurements are not made",
+    "Same-ELF unsigned and altered-signature rejection are physical tests; wrong-certificate controls remain host-only",
+    "One bounded boot does not qualify long-term power, battery, suspend, endurance or installed update/recovery",
+    "The successful transfer does not fix the content-dependent USB defect; this boot synchronizes time but intermittent native startup reliability remains open"
+  ],
+  "remaining": [
+    "Bounded NCI device up/reset/init, controller identity and reference-clock active/cold behavior",
+    "Open-device close/unregister and runtime suspend/resume; pending IRQ and firmware concurrency",
+    "Actual test tag, RF/userspace, full NFC power management",
+    "Installed update/recovery, stable/edge, battery/thermal/rails/reliability and remaining hardware/upstream bringup"
+  ],
+  "full_bringup": "in progress",
+  "files_sha256": {
+    "diagnostics/nfc-startup/cold-lifecycle.md": "b42295c9ae9de13490b0e30c65bd16015166009ae12630e243694b2ba1c81dd1",
+    "diagnostics/nfc-startup/cold-lifecycle.sh": "629e98b64d695cb10e7993f79614f04789ba3d159fbf663590a12b0b582aa774",
+    "docs/building.md": "918cfd39bedc3f332ae74470ed80e6e7fb58c2cb68ff23a6153ab6f3d16425a2",
+    "docs/development-log.md": "af1fc70aebb3ef1e4f7866918d1cf8f6f096a150215119c12c3eca9bade54a56",
+    "docs/hardware-acceptance.md": "82a16cfffb580b6ae8da2c834796edc092a497114170fb6dcb7ec1588d236077",
+    "docs/nfc-bringup.md": "f3e597273fe57d9109fa1cadb79cc98708d7dab45d5d866071471662c5ebc8ee",
+    "local/nfc-cold-lifecycle/RAM-image.json": "bb9cefa94b182e8159f067151fb39dd28d207ea3af30249c7d1b964f4c1abb71",
+    "local/nfc-cold-lifecycle/before.json": "c575ec9822655769ed75a4e1ec31be73612f44bf24e9536d7989efeabb8d1f3f",
+    "local/nfc-cold-lifecycle/check-entry-gate.py": "ec0e75144c13c493e819bbb3f6a98965de0a313930762410de89938b4816e9dc",
+    "local/nfc-cold-lifecycle/check-negative-controls.py": "7270eadffe587cb49df3bc75767b650e128f866aed59da96b89f1a89d503a4ca",
+    "local/nfc-cold-lifecycle/check-preservation.py": "14c10511b946703dd782d7a39d324379248b8b5931e9e65a89c5a0d7d76d7ca5",
+    "local/nfc-cold-lifecycle/collect-evidence.py": "327d4bdb7bf84281b759555734a6df160b6bd9b3946b5abe0a9eb15056bbcf73",
+    "local/nfc-cold-lifecycle/fx0-nfc-r58-cold-lifecycle-ram.img": "75e6f20c5e431fa05b75c02de33f5f99ae827c9c2d2b81b467031be7dcce9a33",
+    "local/nfc-cold-lifecycle/host-tests-atomic-clock.log": "5513b3836b5d4dbf2870ff15c7ae6aab8d058f1aceea1a24cbe5838a8688ecb8",
+    "local/nfc-cold-lifecycle/host-tests-final.log": "be1a595061bad551f054a435e2461955b1b7f60389603620b416d6674ccbf267",
+    "local/nfc-cold-lifecycle/host-tests.json": "18c2c67c36da3303c0391d1f5bc06f9954cd3a3ccf5fe0f6057399d8e5892c06",
+    "local/nfc-cold-lifecycle/host-tests.log": "bedf9896ad8d2665896a661a32c83e068e2f884e2dc7293d78b79199079bf65c",
+    "local/nfc-cold-lifecycle/image-verification.json": "324716867a04fc4fdc8c9fb704a8b51f5b3263f0ea7cb7c98692eafdfb904f13",
+    "local/nfc-cold-lifecycle/initial-fixture-control/check-negative-controls.py": "5ed769cd8d195c0c7ecb8c40243420056a024934ad60c53828d1a2ad85af2725",
+    "local/nfc-cold-lifecycle/initial-fixture-control/negative-controls.log": "94df9cedaccbb5cc56e6d26993f7354bade5b07cbae09fc6c4a95a92247fe79e",
+    "local/nfc-cold-lifecycle/initial-fixture-control/test_nfc_cold_lifecycle.py": "c5ad8221fba4aab348ecef5817839dd4670fc0504e2a450bd29befb5d3e0ccce",
+    "local/nfc-cold-lifecycle/module-inputs.json": "a13dc6adb12673987694743c4b35ce11f085cad5279689dd612813bdee1c3775",
+    "local/nfc-cold-lifecycle/modules/nci.ko": "c1b20d317e39ac9b21adfcd66f453f173880985743b850c23a244a0f00243495",
+    "local/nfc-cold-lifecycle/modules/nfc.ko": "7dcb81164a47e595b7a0066dcfd8b765b6d0753fde3e14e36f3f4af324ed5bbe",
+    "local/nfc-cold-lifecycle/modules/nxp-nci.ko": "a17be2df5c97ab75bf89d73e4930156f39b15a93b3f0269d6d9ff95d45bc5c83",
+    "local/nfc-cold-lifecycle/modules/nxp-nci_i2c.ko": "00f0e8ddec6c52d6e6c17f598e55ba30995b110d7f3090d915fb21b7ba5111d6",
+    "local/nfc-cold-lifecycle/modules/rfkill-badsig.ko": "19414c77c476333900d07ee67e2fe5a874b8935f3d59d97aabadf8c43d346280",
+    "local/nfc-cold-lifecycle/modules/rfkill-unsigned.ko": "d9eafe10137456f4c104d95dbc5b37fc7ce022f443f8b7ca52f97e883cbb5dde",
+    "local/nfc-cold-lifecycle/modules/rfkill.ko": "335777678063b30f0d6cd6febbf8a7482bfbbf187312bb706cbc83d855e8664c",
+    "local/nfc-cold-lifecycle/modules.sha256": "4fd5d1b457936c68cd8eeadab7142ee35c3a395cccc11423b903c38e139d56ec",
+    "local/nfc-cold-lifecycle/mutant-IRQ-release.log": "d99f3662d7f2dab92213376e13c4f7b72b62cb2abfb5cdea190fa3dd73996bb0",
+    "local/nfc-cold-lifecycle/mutant-IRQ-release.sh": "f404a1cf974e41c27a3d2c9676e78aeb2109475e5b996d087f91a3cb59b093d9",
+    "local/nfc-cold-lifecycle/mutant-clock-vote.log": "928ccf7201f76200ceddb814e80f5ac6e3263dc833ee49a0e4a28e0810054455",
+    "local/nfc-cold-lifecycle/mutant-clock-vote.sh": "4f2dd9a8d02d5f431e5bcaad07aacbef7cb5a949cda659d6f35f6da7a2b8fd15",
+    "local/nfc-cold-lifecycle/mutant-operation-deadline.log": "142b34ca1cf11577aa367dd9cd61acf8d7b21601e9916e2d28ec74eca924aacb",
+    "local/nfc-cold-lifecycle/mutant-operation-deadline.sh": "9b10b5a9079367637dd3e931f40e3bd9c2e5a5a6ba44600fc921602ad16aebcc",
+    "local/nfc-cold-lifecycle/native-health.json": "db05f8c965b26461a9087825ee6775060ef9e0f6e77453ea06a1d1639e26b125",
+    "local/nfc-cold-lifecycle/native-health.py": "ec9536b4a3afbee7395033647a111390ce732bafd7940638358156a75cf3cfb4",
+    "local/nfc-cold-lifecycle/negative-controls-final.log": "5414a0e83f0328a38a994646e420f2f2251762b4dc4172cca518125a1ab1bbe1",
+    "local/nfc-cold-lifecycle/negative-controls.json": "5414a0e83f0328a38a994646e420f2f2251762b4dc4172cca518125a1ab1bbe1",
+    "local/nfc-cold-lifecycle/negative-controls.log": "94df9cedaccbb5cc56e6d26993f7354bade5b07cbae09fc6c4a95a92247fe79e",
+    "local/nfc-cold-lifecycle/physical-entry-gate-check.json": "b32b6d1ccf25497c23935696caf94b164537c800a1236e3e34d1b24f94cdf982",
+    "local/nfc-cold-lifecycle/prepare-image.py": "a6421aa81e7b45e05e1a27a83deb500aa316fcd937b1744a34e218add2928faa",
+    "local/nfc-cold-lifecycle/prepare-modules.py": "8d5a8dfd2907b06649ac8831e7c12f60fc3e265a5ed1ee20f662416424f0a64b",
+    "local/nfc-cold-lifecycle/preservation.json": "79e8f939f9ddf8c40ed77861485f65503a264ad7939bc8d995cd913ab41590a7",
+    "local/nfc-cold-lifecycle/verify-image.py": "3ee441ffec30e7bc0c34184d7f7839430e9867dcd9573c57becd07f6f405ef0e",
+    "local/ram-nfc-cold-01/HTTP-00-dmesg.txt": "4137e40861a3271206e5964d29177369ec789f77837030c1a98d457cc95e16ba",
+    "local/ram-nfc-cold-01/HTTP-01-dmesg.txt": "4137e40861a3271206e5964d29177369ec789f77837030c1a98d457cc95e16ba",
+    "local/ram-nfc-cold-01/HTTP-01-status.txt": "7b117131ed5494857ca3b19aecd3a202c6a71640399cfc79bfede4b0aed954df",
+    "local/ram-nfc-cold-01/HTTP-02-dmesg.txt": "542f0e4758fe1554d959055ed96b3a4bf2fe083e66b60c95565926d98b107401",
+    "local/ram-nfc-cold-01/HTTP-02-status.txt": "71256217613e4bd72a1659d682d86949f13d89382f37901c9d99b59c9870838f",
+    "local/ram-nfc-cold-01/HTTP-03-dmesg.txt": "ff4962ee25ddbe3c24767cb8a022cb25f0f6c55d1a78eb8071cc8ed463f4158b",
+    "local/ram-nfc-cold-01/HTTP-03-status.txt": "444eb7757466723f4987f89b5dde836cd7774871c45cbfddfffa0133071d79d8",
+    "local/ram-nfc-cold-01/HTTP-04-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-04-status.txt": "2e8cfe7e3ec305d302b90a32595523fd731198b9efcb77815d8431a7e5300106",
+    "local/ram-nfc-cold-01/HTTP-05-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-05-status.txt": "56639bc50e962c14bc517ba5ea4672dd5c73b69a4e9861ea5f95ee2ff04d5885",
+    "local/ram-nfc-cold-01/HTTP-06-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-06-status.txt": "56639bc50e962c14bc517ba5ea4672dd5c73b69a4e9861ea5f95ee2ff04d5885",
+    "local/ram-nfc-cold-01/HTTP-07-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-07-status.txt": "056bb872f2dac21f0ebf6521fec7b0942339f85e61adff820bfcc2d9b144ef06",
+    "local/ram-nfc-cold-01/HTTP-08-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-08-status.txt": "4b361fb815f6adf123de744ef2789f62da903c603f2ff09f240f14940f5e4b41",
+    "local/ram-nfc-cold-01/HTTP-09-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-09-status.txt": "17a6e302fbd454be308c855cdabb3bbcb2623fbc3506df03ee687c83b09df272",
+    "local/ram-nfc-cold-01/HTTP-10-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-10-status.txt": "b3bb80dc488f88fa06ae2d098954f05023f2315fa2a02dd58079c450acdf9384",
+    "local/ram-nfc-cold-01/HTTP-11-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-11-status.txt": "b3bb80dc488f88fa06ae2d098954f05023f2315fa2a02dd58079c450acdf9384",
+    "local/ram-nfc-cold-01/HTTP-12-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-12-status.txt": "a6b9c089c5b5557aab2da77df0140cb13e953ac78dfc7af613dc43c763f7b707",
+    "local/ram-nfc-cold-01/HTTP-13-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-13-status.txt": "42b772f7d0329b923a8f0bd6721c12fdd5755bf09e554e9c0ea4056d3a24fcf1",
+    "local/ram-nfc-cold-01/HTTP-14-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-14-status.txt": "0154df04a3e1490ffbbf0726a209820c2a002ec61a6364883cc67beb01bebab1",
+    "local/ram-nfc-cold-01/HTTP-15-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-15-status.txt": "5b9f96286a3f458ea5585181bc02b76a4f8f092900c8eb31b4db1a841ca385d9",
+    "local/ram-nfc-cold-01/HTTP-16-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-16-status.txt": "5b9f96286a3f458ea5585181bc02b76a4f8f092900c8eb31b4db1a841ca385d9",
+    "local/ram-nfc-cold-01/HTTP-17-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-17-status.txt": "1aec048f35f8c272337d3b03d352b88ac77ff9848b1e33b229623b5b40b7f8dc",
+    "local/ram-nfc-cold-01/HTTP-18-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-18-status.txt": "93011d5649f2878550b6b9518f8f6b16791610d479ad2cd70d0ab7cf3916acd8",
+    "local/ram-nfc-cold-01/HTTP-19-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-19-status.txt": "1002b1f30a214e0268d8b27477224a8e01b504b1181616679664e4d81a623461",
+    "local/ram-nfc-cold-01/HTTP-20-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-20-status.txt": "08eb554151456a1e469d98f2a91eb8271df6a4080f134d588668d079010cb920",
+    "local/ram-nfc-cold-01/HTTP-21-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-21-status.txt": "08eb554151456a1e469d98f2a91eb8271df6a4080f134d588668d079010cb920",
+    "local/ram-nfc-cold-01/HTTP-22-dmesg.txt": "65e94c2927359e3c3ab8d0dd01d2c36babca8e04a1038c829bed8c37d76f5acd",
+    "local/ram-nfc-cold-01/HTTP-22-status.txt": "f82d2bf62c877a7b8d1f35fb8593d319874f37e46a41c2a8d9106f9a062f5ba3",
+    "local/ram-nfc-cold-01/boot-once.py": "2fb887e0c4f56f4738ca648ee71a5433b907490dbc83815a15197f54d7ba9a09",
+    "local/ram-nfc-cold-01/boot-request.json": "f98f1fe10345473aa6245c2319815a0c4e7447bfdb9ab883140d263aad770e71",
+    "local/ram-nfc-cold-01/bootloader-entry-controller.json": "8818dbe56bb890dfc2d6a5676583f8cc6f73c5de3a408471d321ad43289f2f2a",
+    "local/ram-nfc-cold-01/host-network-restored.json": "41842f7c6ae06727767929881e4c723f2a478ad407076876f433bc28466cefc2",
+    "local/ram-nfc-cold-01/host-postflight.json": "c9c7f9e2f0c958be979506d0d6ee452ec4ca6ee31a6bb4f218ce28070a5daad4",
+    "local/ram-nfc-cold-01/host-preflight.json": "8642f777be7d91cfbd0eb0400ecb88f8ea2c32e0182d790e5562d71371edc8b7",
+    "local/ram-nfc-cold-01/image-verification.json": "bb9cefa94b182e8159f067151fb39dd28d207ea3af30249c7d1b964f4c1abb71",
+    "local/ram-nfc-cold-01/native-APC-postflight.json": "675bf79e179ba149ef2134ae8e7305f0aa98d8ce47251c7fa971be4df0d46114",
+    "local/ram-nfc-cold-01/native-APC-preflight.json": "675bf79e179ba149ef2134ae8e7305f0aa98d8ce47251c7fa971be4df0d46114",
+    "local/ram-nfc-cold-01/native-immediate-preboot.txt": "26fa4467f6cf5be817200a91894184b682b717789354a7dda1cce1c5368944b1",
+    "local/ram-nfc-cold-01/native-postflight.txt": "344bd80a3aab148bc85fb137b180c4377302057277d39ba71bf7ad34d04e49e7",
+    "local/ram-nfc-cold-01/native-preflight.txt": "0479220411661d10f8c6752258d455d24e94a57ecad13f91e2f89d30000dd1cc",
+    "local/ram-nfc-cold-01/native-return-controller.json": "007df3984e7e581b435aff3953a7eaf86dd96037fc993ec3fe230bf3ddbb7f12",
+    "local/ram-nfc-cold-01/network-controller.json": "acbf3be8b6a43fe31100952957231a8fb8b8cb4a49054e0bf193b83a4f0fbe88",
+    "local/ram-nfc-cold-01/network-controller.log": "aa8da52a2415918171e4e1d5396629ba1644e02e8ef83a9e9a7216e4d42740e3",
+    "local/ram-nfc-cold-01/observation.json": "1a8777e792c7c4723ea7eabeb39e7bb33237032a7fbc2bd5cff413f6d9e292a4",
+    "local/ram-nfc-cold-01/observe.py": "123b2c5e376a1ac8bb502daef17180d1eccfbe9920caf6db288156c66491b4d8",
+    "local/ram-nfc-cold-01/observer-controller.json": "ada6e6b74f24bf0295b944f82a310e91aa62111d28e193a7b9bec32135bd301f",
+    "local/ram-nfc-cold-01/observer-controller.log": "67a821966b7eee356de6d2dbfa1ecf01ff270839adff8c7de60049221e9ff237",
+    "local/ram-nfc-cold-01/owner-display-touch.json": "efade7a862422291f41a5f93c1a758e08663328cedaa1202d69109cb8ce666df",
+    "local/ram-nfc-cold-01/postflight-controller.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/ram-nfc-cold-01/postflight-controller.stdout": "349acc0d0aec426d11a218c006aef90b97f474ee22cf5c944a8712e5156854fa",
+    "local/ram-nfc-cold-01/postflight.py": "e01abb31d439d5fcd3e58af7ded5a40feef5365d6781552400e9140e07f874ec",
+    "local/ram-nfc-cold-01/preflight.py": "f8407fc333171c0c59f9ec6221a535d3885cd0ee1c41e6ebc0a037ed236eeb42",
+    "local/ram-nfc-cold-01/ram-observation.json": "2f4342c40a9d374898ae09a76fee88b97e3147392f5bca9bc3a5e14bd7b4421b",
+    "local/ram-nfc-cold-01/run-process.py": "0eac33ecf8506abf2ee5ab1ddf8b32c9523799c55be0fb110fb5709226058c66",
+    "local/ram-nfc-cold-01/serial-kmsg.txt": "e73434147ae59ad48f1dc5b2192d058dc333f5c61d57f4da45348f31eba8b86a",
+    "local/ram-nfc-cold-01/stage-controller.json": "7e63f22052630a7d4384e6d835829193d86025c26d6b6839475768422b6cb6cf",
+    "local/ram-nfc-cold-01/stage-controller.log": "5bfbc268be705e78fae1b245dc745d3c4c080a564b262cb799c8b6a45a011c4b",
+    "local/ram-nfc-cold-01/stage.py": "9e56a4d1cec32820c6be70a38848a3a619bf820fe6ef95e15d375e5e5c407c26",
+    "local/ram-nfc-cold-01/temporary-USB-network.json": "0aa3e7eb51e732e251541682e6aebe0baaad0ac4a2f93b5a27bee05ec8fc6879",
+    "local/ram-nfc-cold-01/transfer/readback.bin": "75e6f20c5e431fa05b75c02de33f5f99ae827c9c2d2b81b467031be7dcce9a33",
+    "local/ram-nfc-cold-01/transfer/result.json": "40713e3a4054d01b599b4edbc064604749320a4c039781c0456084252c9f80b7",
+    "local/ram-nfc-cold-01/transfer-controller.json": "2d341e6a148836d84078804e5680feaf1a693cf33a9599f2d7305dbad173eefb",
+    "local/ram-nfc-cold-01/transfer-controller.log": "0616463fd93d29683203b37f63e4e2d599b663c33235870996aa66d30a5ad324",
+    "local/ram-nfc-cold-01/wait-native.py": "1d0aa87741506a4a4c6a0e3eaa4932663a8b49c7c2d5fd94ad03a265f0fe7032",
+    "manifests/nfc-cold-lifecycle-ram.json": "97890bc852a100776acc61a6ec341be698bd5d3a1e3a21ef6ee67cdb385a4ce2",
+    "tests/test_nfc_cold_lifecycle.py": "a446aae09ce62ef1598c1f8fae4232ed4523712aa26b687c1cb40dd0f1afe2c7"
+  },
+  "prior_checkpoint_file_versions": {
+    "docs/nfc-bringup.md": {
+      "commit": "d7020eb297a329db4f01a9e011f61f0982a38a8f",
+      "sha256": "af6636dac9ad1b74ecc8dbbd88c23c31afb0fd1062907860d116ca9e76678698",
+      "meaning": "Earlier frozen evidence identifies its input version"
+    },
+    "docs/building.md": {
+      "commit": "d7020eb297a329db4f01a9e011f61f0982a38a8f",
+      "sha256": "5f6ac1cbce223677537d1e6c26749fded75a3d168de53ead76ff0dc00fba183d",
+      "meaning": "Earlier frozen evidence identifies its input version"
+    },
+    "docs/hardware-acceptance.md": {
+      "commit": "d7020eb297a329db4f01a9e011f61f0982a38a8f",
+      "sha256": "fbfffabe1a6c26deff9b8d6a65aa3ebbac73e88572dd30e18464ccd17470ff3c",
+      "meaning": "Earlier frozen evidence identifies its input version"
+    },
+    "docs/development-log.md": {
+      "commit": "d7020eb297a329db4f01a9e011f61f0982a38a8f",
+      "sha256": "bdeae112b91607f091fecf08f62a2f9d2fd54f84a115f395182c5a1434b1393f",
+      "meaning": "Earlier frozen evidence identifies its input version"
+    }
+  }
+}
