@@ -4574,3 +4574,24 @@ No new linked kernel, package or image exists, and hardware teardown remains
 unqualified. Preserve earlier source/build/image evidence and the protected
 root index. Native r50 remains the installed family; the latest physical UI
 check is pending separately from the earlier moduleless return confirmation.
+
+## November 8: build the matching open-teardown NFC family
+
+Build r59 in a new pmos home from the unchanged seventeen-patch profile. The
+first attempt stops before compilation on missing cached upstream metadata;
+the second passes input config checks but cannot retrieve public indexes with
+network disabled. A full pinned checkout and normal builder network allow a
+third fresh-home attempt to complete. Retain all three controllers/logs/homes.
+
+The APK embeds the exact recipe commit; all 22 changed source files match the
+published Linux tip. Its actual normalized config passes the community checker
+and differs from r58 only in LOCALVERSION. The new certificate matches the
+whole kernel trust list. All 468 modules and 25,562 imported CRCs verify; the
+new I2C module rejects the old nxp_nci_probe CRC. All 577 transitive dependency
+edges and 468 loader dry-runs pass. APK signing/tamper and isolated r58-to-r59
+replacement verify 549 payload files, with hooks disabled. Recheck 294 earlier
+input hashes and the protected root index before documentation updates. Publish
+the [measured manifest](../manifests/kernel-nfc-open-teardown-build.json), recipe
+patch and [evidence](../evidence/2026-11-08-nfc-open-teardown-package.json).
+No phone trial or installation starts; the exact latest-native UI result
+remains pending and full bringup continues.

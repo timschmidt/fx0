@@ -16,7 +16,10 @@ The [17-patch source profile](../../manifests/kernel-nfc-open-teardown.json)
 replays to Linux commit `7bbe33bd97b6f57a05de33ce8dcceba6942352a3`.
 The input configuration changes only LOCALVERSION from the frozen r58 input,
 reserving `6.18.59-fx0-nfc-open-teardown-alpine` for an independent build.
-No kernel, signed module, APK or RAM image has been produced for this family.
+At that source checkpoint, no kernel, signed module, APK or RAM image existed
+for this family. A complete r59 kernel/module/APK build is now verified in the
+[measured build manifest](../../manifests/kernel-nfc-open-teardown-build.json);
+no r59 RAM image or physical qualification is included in this checkpoint.
 The private `nxp_nci_phy_ops` layout changed: build all matching modules and
 verify their ABI and signatures before any hardware use.
 
@@ -75,3 +78,27 @@ The current native-boot display/touch check remains pending separately from
 the already-passed moduleless return. No phone boot or installation is part
 of this source checkpoint. See the
 [reviewed evidence](../../evidence/2026-11-08-nfc-open-teardown-source.json).
+
+## Matching r59 package verified
+
+The separate build produces `6.18.59-fx0-nfc-open-teardown-alpine` with a new
+certificate and the exact published source bytes for all 22 changed files.
+The actual normalized configuration passes the community checker and differs
+from r58 only in LOCALVERSION. CFI, signing, schedutil and full compressed
+DWARF remain enabled. All 468 modules pass explicit-certificate CMS checks
+and 25,562 imported CRC comparisons. Dependency metadata has 391 direct and
+577 transitive edges; all 468 binary-index loader dry-runs pass.
+
+The only exported CRC change is `nxp_nci_probe`, from `0x487c4a66` to
+`0xb0b785be`. The new I2C module rejects the r58 export map; altered imports
+and wrong certificates are also rejected. APK signature and signed-metadata
+tamper controls pass. An isolated r58-to-r59 usermode replacement, with hooks
+disabled, verifies all 549 final payload files and removes the old module
+family. This does not qualify phone installation, boot or update/recovery.
+
+Two initial attempts stop before compilation on builder setup: missing cached
+upstream metadata, then unavailable public indexes with networking disabled.
+Their separate homes/controllers/logs remain intact. The third attempt uses a
+fresh home, full pinned checkout and normal public dependency retrieval and
+completes successfully. No new physical trial starts. See
+[package evidence](../../evidence/2026-11-08-nfc-open-teardown-package.json).

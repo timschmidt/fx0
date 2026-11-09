@@ -345,3 +345,22 @@ kernel/module/package family before hardware use. Existing r58 images and
 cold qualification remain frozen; the prepared controller trial explicitly
 closes NCI before unload. Open/pending IRQ hardware teardown and concurrent
 firmware remain unqualified. The latest native UI check is still pending.
+
+## Matching open-teardown NFC package r59 verified
+
+A complete separate build now supplies the kernel/module family required by
+the changed private operations type. The [measured r59 manifest](../manifests/kernel-nfc-open-teardown-build.json)
+supersedes the earlier source checkpoint's unbuilt status while preserving
+that exporter input. All 22 changed source files match the published tip; the
+actual normalized configuration passes the community checker and differs
+from r58 only in LOCALVERSION. The new certificate exactly fills the kernel
+trust list; CFI, signing, schedutil and compressed DWARF are retained.
+
+All 468 signed modules, 25,562 imported CRCs, 577 transitive dependency edges
+and 468 binary-index loader requests verify. The new I2C module rejects the
+r58 export map: only nxp_nci_probe changes CRC, from 0x487c4a66 to 0xb0b785be.
+APK signatures/tamper controls and an isolated r58-to-r59 replacement pass;
+all 549 payload files match with hooks disabled. This is host verification,
+with no new RAM image, phone entry or installation. Physical startup, open
+teardown, RF/tag/PM, firmware concurrency and installed recovery remain open.
+The latest physical UI check remains pending. See [package evidence](../evidence/2026-11-08-nfc-open-teardown-package.json).

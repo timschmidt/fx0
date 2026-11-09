@@ -973,3 +973,24 @@ failure and five isolated negative controls. Three ARM objects compile with
 W=1 and CFI using a separate output and the r58 normalized configuration; these
 objects do not constitute a build of the newly named profile. Strict checkpatch
 and exact patch replay pass. Hardware teardown qualification remains open.
+
+## Complete matching open-teardown package r59
+
+The source-only checkpoint above now has a separate complete build recorded
+in [the measured manifest](../manifests/kernel-nfc-open-teardown-build.json).
+Use the unchanged seventeen-patch source profile and distinct input config
+with the canonical exporter and pkgrel 59. The [owner-fork recipe](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-nfc-open-teardown-package)
+is pinned at 056ba2e6b2328d656d229dfe1785d4842fae0a39; all nineteen source
+checksums verify. Its complete build uses a new pmos home; r58/CPU artifacts
+and the protected root index remain unchanged. Two terminal setup failures
+are retained separately; compilation completes on the third attempt.
+
+Release 6.18.59-fx0-nfc-open-teardown-alpine has a new certificate, exact source
+identity for 22 changed files, community-checked normalized config, CFI and
+full compressed DWARF. The normalized r58/r59 configs differ only in
+LOCALVERSION. All 468 module signatures and 25,562 imported CRCs verify; the
+new I2C import of nxp_nci_probe rejects r58's ABI. All 577 transitive edges and
+468 binary-index loader requests pass. APK signatures/tamper and offline
+resolution checks pass, as does isolated r58-to-r59 usermode replacement of
+549 files with scripts/hooks disabled. No new RAM image, phone installation,
+boot or update/recovery result is claimed. See [package evidence](../evidence/2026-11-08-nfc-open-teardown-package.json).

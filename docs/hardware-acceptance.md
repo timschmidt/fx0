@@ -363,3 +363,17 @@ required because the private operations type changed. Existing r58 cold
 qualification remains intact; open/pending IRQ timing, controller/RF/PM and
 firmware concurrency remain unqualified. Exact latest-native display/touch
 confirmation remains pending; the older moduleless return was already passed.
+
+## November 8: matching open-teardown NFC build verified on host
+
+A separate r59 kernel/module/APK build completes with a new certificate and
+unchanged CFI/signing/full-DWARF policy. All 22 changed source files, 468 module
+signatures, 25,562 imported CRCs and 468 binary-index loader requests verify.
+The changed private operations ABI is observed in nxp_nci_probe; the new I2C
+module rejects the r58 export map. APK signature controls and isolated
+r58-to-r59 usermode replacement pass, with 549 final files matching the APK
+and install hooks disabled. See [evidence](../evidence/2026-11-08-nfc-open-teardown-package.json).
+These results establish host build/package integrity. No r59 RAM image, boot,
+physical signature enforcement, NCI communication, open/pending IRQ teardown
+or installed update/recovery is qualified. Original r58 evidence remains
+unchanged; the current exact-boot UI check remains pending.
