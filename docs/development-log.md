@@ -4917,3 +4917,43 @@ already-recorded older post-UPower-install pass; the current native-return UI
 question remains pending. The image is unstaged/unbooted; no reboot, transfer,
 BOOT, module load, package or radio change occurs. Full bringup remains active.
 See [evidence](../evidence/2026-11-09-modem-probe-entry-preparation.json).
+
+
+## November 9: modem firmware layout checked and missing RMTFS memory described
+
+The prior turn is progress: entry/return controllers and their host guard checks
+were published at ee777d5; the one-use slot remains unconsumed. Revalidate all
+2,241 prior evidence hashes and the protected root index. The current native UI
+question remains pending, so no RAM entry occurs.
+
+Inspect firmware entirely on the phone and export numeric layout/digests only.
+The 27-header MDT has 21 bounded, nonoverlapping MPSS segments (three zero-fill),
+an 81,788,928-byte aligned span in the 81 MiB carveout, exact split payload sizes
+and packed 916+904-byte authenticated metadata. The 295,824-byte MBA fits its
+1 MiB carveout. Four synthetic-fixture methods/22 cases cover fixed/relocatable
+layout, all metadata sources and malformed/range/size/path refusals. No firmware
+is authenticated, loaded or started by these checks.
+
+Native has the RMTFS memory driver built in but no matching DT/device instance.
+Stock DTB/vendor source agree on 0x0fd80000+0x180000. Prepare a separate host
+description that partitions the existing exclusion without changing its union,
+leaves MSS disabled and changes no other existing property. The first manual
+patch hunk length is rejected and preserved; generated patch/compiled candidate
+and real binding checks pass, with four description controls plus a missing-client
+schema control. The candidate is neither packaged nor booted and does not alter
+the earlier prepared offline-probe image.
+
+Pin seven RMTFS source files to b30a3eb and verify their Git blob hashes. Audit
+storage shadow mode and the default unit's remoteproc start/stop ownership;
+read-only backing storage does not imply an inactive daemon. No RMTFS code is
+installed/executed. Rehash all six original private firmware/provisioning images
+and compare live partition digests: modem/FSG/FSC match, persist/modemst1/modemst2
+differ. Cause/time and current matching rollback coverage are unproven. Preserve
+old backups and require current verified snapshots/independent copies before
+startup. No provisioning/firmware payload is exported in this turn.
+
+Final read-only native acceptance retains the same boot, r50/r5/raw boot hash,
+Sway/UPower and other services, CPU/NFC/MSS baseline, taint0 and raw APC/S5
+controls. Host state/index and installed files remain unchanged. No reboot,
+USB transfer/reset, module load, firmware/radio/package change or recovery-disk
+write. Full bringup remains active. See [evidence](../evidence/2026-11-09-modem-firmware-layout.json).

@@ -1,0 +1,657 @@
+{
+  "recorded_UTC": "2026-11-09T10:30:49.581385+00:00",
+  "status": "Progress: on-phone firmware layout verified; separate unbooted RMTFS description; no firmware start",
+  "firmware_layout": {
+    "layout_checks_passed": true,
+    "MSS_loader_program_headers_adjacent_to_ELF_header": true,
+    "MPSS": {
+      "base": 134217728,
+      "size": 84934656,
+      "entry": 134217728,
+      "phnum": 27,
+      "relocatable": false,
+      "relocation_base": 134217728,
+      "aligned_span": 81788928,
+      "metadata": {
+        "source": "packed after ELF header",
+        "offset": 916,
+        "bytes": 904
+      },
+      "loadable_segments": [
+        {
+          "type": 1,
+          "offset": 8192,
+          "vaddr": 134217728,
+          "paddr": 134217728,
+          "filesz": 4052,
+          "memsz": 4052,
+          "flags": 5,
+          "align": 4096,
+          "index": 2,
+          "source": "modem.b02",
+          "carveout_offset": 0,
+          "physical_start": 134217728,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 12288,
+          "vaddr": 134283264,
+          "paddr": 134283264,
+          "filesz": 81920,
+          "memsz": 81920,
+          "flags": 7,
+          "align": 4096,
+          "index": 3,
+          "source": "modem.b03",
+          "carveout_offset": 65536,
+          "physical_start": 134283264,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 94208,
+          "vaddr": 134365184,
+          "paddr": 134365184,
+          "filesz": 177120,
+          "memsz": 177120,
+          "flags": 7,
+          "align": 4096,
+          "index": 6,
+          "source": "modem.b06",
+          "carveout_offset": 147456,
+          "physical_start": 134365184,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 274432,
+          "vaddr": 134561792,
+          "paddr": 134561792,
+          "filesz": 49500,
+          "memsz": 124680,
+          "flags": 7,
+          "align": 4096,
+          "index": 8,
+          "source": "modem.b08",
+          "carveout_offset": 344064,
+          "physical_start": 134561792,
+          "zero_fill_bytes": 75180
+        },
+        {
+          "type": 1,
+          "offset": 327680,
+          "vaddr": 134709248,
+          "paddr": 134709248,
+          "filesz": 48420,
+          "memsz": 48420,
+          "flags": 7,
+          "align": 4096,
+          "index": 9,
+          "source": "modem.b09",
+          "carveout_offset": 491520,
+          "physical_start": 134709248,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 376832,
+          "vaddr": 134774784,
+          "paddr": 134774784,
+          "filesz": 103384,
+          "memsz": 103384,
+          "flags": 7,
+          "align": 4096,
+          "index": 11,
+          "source": "modem.b11",
+          "carveout_offset": 557056,
+          "physical_start": 134774784,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 483328,
+          "vaddr": 134905856,
+          "paddr": 134905856,
+          "filesz": 111060,
+          "memsz": 111060,
+          "flags": 5,
+          "align": 4096,
+          "index": 12,
+          "source": "modem.b12",
+          "carveout_offset": 688128,
+          "physical_start": 134905856,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 598016,
+          "vaddr": 135069696,
+          "paddr": 135069696,
+          "filesz": 1592324,
+          "memsz": 1592324,
+          "flags": 5,
+          "align": 4096,
+          "index": 13,
+          "source": "modem.b13",
+          "carveout_offset": 851968,
+          "physical_start": 135069696,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 2191360,
+          "vaddr": 136663040,
+          "paddr": 136663040,
+          "filesz": 17662928,
+          "memsz": 17662928,
+          "flags": 5,
+          "align": 4096,
+          "index": 14,
+          "source": "modem.b14",
+          "carveout_offset": 2445312,
+          "physical_start": 136663040,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 19857408,
+          "vaddr": 154402816,
+          "paddr": 154402816,
+          "filesz": 663520,
+          "memsz": 663520,
+          "flags": 6,
+          "align": 4096,
+          "index": 15,
+          "source": "modem.b15",
+          "carveout_offset": 20185088,
+          "physical_start": 154402816,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 20520960,
+          "vaddr": 155074560,
+          "paddr": 155074560,
+          "filesz": 139264,
+          "memsz": 139264,
+          "flags": 6,
+          "align": 4096,
+          "index": 16,
+          "source": "modem.b16",
+          "carveout_offset": 20856832,
+          "physical_start": 155074560,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 20660224,
+          "vaddr": 155222016,
+          "paddr": 155222016,
+          "filesz": 5376,
+          "memsz": 5376,
+          "flags": 6,
+          "align": 4096,
+          "index": 17,
+          "source": "modem.b17",
+          "carveout_offset": 21004288,
+          "physical_start": 155222016,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 20668416,
+          "vaddr": 155451392,
+          "paddr": 155451392,
+          "filesz": 8444400,
+          "memsz": 8444400,
+          "flags": 4,
+          "align": 4096,
+          "index": 18,
+          "source": "modem.b18",
+          "carveout_offset": 21233664,
+          "physical_start": 155451392,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 29114368,
+          "vaddr": 163901440,
+          "paddr": 163901440,
+          "filesz": 3349536,
+          "memsz": 3349536,
+          "flags": 6,
+          "align": 4096,
+          "index": 19,
+          "source": "modem.b19",
+          "carveout_offset": 29683712,
+          "physical_start": 163901440,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 32464896,
+          "vaddr": 167251968,
+          "paddr": 167251968,
+          "filesz": 0,
+          "memsz": 1457956,
+          "flags": 6,
+          "align": 4096,
+          "index": 20,
+          "source": "zero-fill only",
+          "carveout_offset": 33034240,
+          "physical_start": 167251968,
+          "zero_fill_bytes": 1457956
+        },
+        {
+          "type": 1,
+          "offset": 32468992,
+          "vaddr": 168714240,
+          "paddr": 168714240,
+          "filesz": 0,
+          "memsz": 34256512,
+          "flags": 6,
+          "align": 4096,
+          "index": 21,
+          "source": "zero-fill only",
+          "carveout_offset": 34496512,
+          "physical_start": 168714240,
+          "zero_fill_bytes": 34256512
+        },
+        {
+          "type": 1,
+          "offset": 32464896,
+          "vaddr": 202973184,
+          "paddr": 202973184,
+          "filesz": 74472,
+          "memsz": 74472,
+          "flags": 6,
+          "align": 4096,
+          "index": 22,
+          "source": "modem.b22",
+          "carveout_offset": 68755456,
+          "physical_start": 202973184,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 32542720,
+          "vaddr": 203051008,
+          "paddr": 203051008,
+          "filesz": 417585,
+          "memsz": 417585,
+          "flags": 4,
+          "align": 4096,
+          "index": 23,
+          "source": "modem.b23",
+          "carveout_offset": 68833280,
+          "physical_start": 203051008,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 35184640,
+          "vaddr": 203468800,
+          "paddr": 203468800,
+          "filesz": 8046100,
+          "memsz": 8046100,
+          "flags": 4,
+          "align": 4096,
+          "index": 24,
+          "source": "modem.b24",
+          "carveout_offset": 69251072,
+          "physical_start": 203468800,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 48308224,
+          "vaddr": 211517440,
+          "paddr": 211517440,
+          "filesz": 1099076,
+          "memsz": 1099076,
+          "flags": 4,
+          "align": 4096,
+          "index": 25,
+          "source": "modem.b25",
+          "carveout_offset": 77299712,
+          "physical_start": 211517440,
+          "zero_fill_bytes": 0
+        },
+        {
+          "type": 1,
+          "offset": 49410048,
+          "vaddr": 212619264,
+          "paddr": 212619264,
+          "filesz": 0,
+          "memsz": 3387392,
+          "flags": 4,
+          "align": 4096,
+          "index": 26,
+          "source": "zero-fill only",
+          "carveout_offset": 78401536,
+          "physical_start": 212619264,
+          "zero_fill_bytes": 3387392
+        }
+      ],
+      "nonoverlapping": true
+    },
+    "MBA": {
+      "base": 219152384,
+      "size": 1048576,
+      "raw_file_bytes": 295824,
+      "metadata_checked_but_loader_uses_raw_b00": true
+    },
+    "files": {
+      "modem.mdt": {
+        "bytes": 1820,
+        "sha256": "5fb3a59ec97591737c87f2368c1fb726c868f6727eb3182386e15634faa48cd7"
+      },
+      "modem.b02": {
+        "bytes": 4052,
+        "sha256": "d4ad3df5349d7ae7b1a78e3de914afe68db9a17b29e9732237294d7beb6cf6d1"
+      },
+      "modem.b03": {
+        "bytes": 81920,
+        "sha256": "f122aa8ad59c3bb6c87572882cccb49f10e6861f5ff0d8e997319422f9598313"
+      },
+      "modem.b06": {
+        "bytes": 177120,
+        "sha256": "77048b4c2645fb82f183ed5a739da73f92605c41f0703f811c288266dad88962"
+      },
+      "modem.b08": {
+        "bytes": 49500,
+        "sha256": "cf3d163c1fc65fef8c88d8128e5f83328b92e17adb3b209796a591229b81c778"
+      },
+      "modem.b09": {
+        "bytes": 48420,
+        "sha256": "3ca72a127b5229f9197a6620821cb03c64f5a5776325ffb293b138f0091779fa"
+      },
+      "modem.b11": {
+        "bytes": 103384,
+        "sha256": "71abebb67ec870275230c77e962fa0d0d6c4050d320ef69b933e28ee94132982"
+      },
+      "modem.b12": {
+        "bytes": 111060,
+        "sha256": "89117ee51950511485cdc94599400171b1b1219f379c7be62ae1ed024eb4f218"
+      },
+      "modem.b13": {
+        "bytes": 1592324,
+        "sha256": "7a332a2d161ff7b0b832c06691a1f23d2885f2b554df33d2d06ace6c2bb53ee9"
+      },
+      "modem.b14": {
+        "bytes": 17662928,
+        "sha256": "0caad87bdafec0beb074d808c42f7afd295eb2c5441137e88c8f564a5dbbc99b"
+      },
+      "modem.b15": {
+        "bytes": 663520,
+        "sha256": "cc3635fbbf00db873bc4aa1d94edcef4dca25ca93dcd334f05ed4b0c53c1b34c"
+      },
+      "modem.b16": {
+        "bytes": 139264,
+        "sha256": "cd248e1cc2c0a9b30154d49ca21c8cbe35098927e06f6411b863bafdb5ce0c15"
+      },
+      "modem.b17": {
+        "bytes": 5376,
+        "sha256": "e5de309f5ef2a62e799302c8b6349e5eadc39be00983b349a4298a20ae21b4d5"
+      },
+      "modem.b18": {
+        "bytes": 8444400,
+        "sha256": "29d597284148bbc6483cb2a49124619d3e1d1292ea099a7ebccc3692c944ef43"
+      },
+      "modem.b19": {
+        "bytes": 3349536,
+        "sha256": "b1f0601ecf7b0bcffdf29538563800d1bc9f6778b2f57be98e7597918950bd71"
+      },
+      "modem.b22": {
+        "bytes": 74472,
+        "sha256": "d333c25626a938c2eabc02693c41a4054396c9561c330a489c4099f8c438f6fe"
+      },
+      "modem.b23": {
+        "bytes": 417585,
+        "sha256": "30bfc411f6e843a4247d19f5369da7455eb89f08b1dc024259da930383693b62"
+      },
+      "modem.b24": {
+        "bytes": 8046100,
+        "sha256": "0fa2cd67f38ecaea7a85ea0ff2a4408a7ca0cb061b2af15b16ed3b65be253f5f"
+      },
+      "modem.b25": {
+        "bytes": 1099076,
+        "sha256": "7af4945268d38d6af4cbb132f365a6fdbbafba71f8de9fb0153659813ecd2ea8"
+      },
+      "mba.mdt": {
+        "bytes": 84,
+        "sha256": "9acee43c4d8df5bd9e8972f024502ca924634ea0e8992ac734eba2c28305c595"
+      },
+      "mba.b00": {
+        "bytes": 295824,
+        "sha256": "6ecce42d24d610101c51ca84a24f8bd3804bf9d6f06ba43e2df022c622cd6276"
+      }
+    },
+    "firmware_payload_exported": false,
+    "firmware_authentication_tested": false,
+    "firmware_started": false,
+    "read_only": true
+  },
+  "native_RMTFS_driver_builtin": true,
+  "native_RMTFS_DT_nodes": [],
+  "native_RMTFS_device_nodes": [],
+  "rmtfs_description": {
+    "stock_RMTFS_base": 265814016,
+    "stock_RMTFS_size": 1572864,
+    "client_id": 1,
+    "prior_no_map_reserved_union_exactly_preserved": true,
+    "overlap_or_gap_introduced": false,
+    "other_property_paths_and_bytes_unchanged": true,
+    "property_differences": [
+      [
+        "/reserved-memory/reserved@fb00000",
+        "reg"
+      ],
+      [
+        "/reserved-memory/rmtfs@fd80000",
+        "compatible"
+      ],
+      [
+        "/reserved-memory/rmtfs@fd80000",
+        "no-map"
+      ],
+      [
+        "/reserved-memory/rmtfs@fd80000",
+        "qcom,client-id"
+      ],
+      [
+        "/reserved-memory/rmtfs@fd80000",
+        "reg"
+      ]
+    ],
+    "DTC_new_warnings": 0,
+    "DTC_inherited_warnings": 3,
+    "actual_RMTFS_schema_diagnostics": 0,
+    "missing_client_schema_control_rejected": true,
+    "negative_controls_rejected": [
+      "wrong-base",
+      "wrong-client",
+      "reservation-overlap",
+      "reservation-gap"
+    ],
+    "board_source_sha256": "5df5d19e8ab3cffebd0778a320298475ebe50e4e05712e40f654f44ea7ac3135",
+    "candidate_board_sha256": "2e4c7adee93abcc449ca3748bf310028c7033d006dec36b41a0bd4872a738ab5",
+    "baseline_DTB_sha256": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+    "candidate_DTB_sha256": "674788b21487182bfca96a9d3d280b538e5717fd92d002843fe382216e573385",
+    "patch_sha256": "badef68d524a7ad498dee8dd06c64254785aea6bd0fb2ed4dbf485daad2caad0",
+    "MSS_stays_disabled": true,
+    "candidate_booted_or_packaged": false,
+    "scope": "Host-only separate candidate; built-in RMTFS driver would map this region if booted. No physical memory/driver/firmware qualification."
+  },
+  "source_audit": {
+    "upstream": {
+      "repository": "https://github.com/linux-msm/rmtfs",
+      "commit": "b30a3eb38f9af283f18dbd3c7755653efc52c094",
+      "tree": "9fc51a614a8a1441ac1148b9b524668987d964bf",
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha": "42c13e9a8c612f0b6f1cabce4531e88e7a4211fc"
+        },
+        {
+          "path": "rmtfs.c",
+          "sha": "ec33a191f2a7a9244a78df38bef9ac2ef82f2f6c"
+        },
+        {
+          "path": "rmtfs.h",
+          "sha": "649b240b11bb1a7f6ecf2efeaf59c50c8180976f"
+        },
+        {
+          "path": "rmtfs.service.in",
+          "sha": "f7df549f9d6f254d55c12cfb04a51e073a6c10e8"
+        },
+        {
+          "path": "rproc.c",
+          "sha": "732d992a8c11a2490a65d4026bb65966630210a1"
+        },
+        {
+          "path": "sharedmem.c",
+          "sha": "c37a58db8fa5fc9136db01e137c09c4043feb46a"
+        },
+        {
+          "path": "storage.c",
+          "sha": "ee9d52676295b6b140b69b9c3fd7dbbfe000aa1d"
+        }
+      ]
+    },
+    "source_files_sha256": {
+      "worktrees/linux-fx0-integration/drivers/remoteproc/qcom_q6v5_mss.c": "c1c444d0da8cfe47d9e11a17e49f96840bc4f2123341200e8c59d566d7b5ea8c",
+      "worktrees/linux-fx0-integration/drivers/soc/qcom/mdt_loader.c": "6ad9ec383fa9f78995ca7d236a30ae1d04183e353ce8d83fa49f4cbb6fa346ab",
+      "worktrees/linux-fx0-integration/include/linux/soc/qcom/mdt_loader.h": "c84628325b478df867fd3ac78205fcd7335b87dea184e8b8e8cdf99731fada14",
+      "worktrees/linux-fx0-integration/drivers/soc/qcom/rmtfs_mem.c": "37ec494507b1ae8f81172d03f3273deca9fb957d84c7636a8d9b96dba875b37f",
+      "worktrees/linux-fx0-integration/drivers/of/platform.c": "67557f81563a13b6347e449a3c7aa8acfac4cd3da67c55d433f0163df3d92100",
+      "worktrees/linux-fx0-integration/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml": "de79dcadcfe1e00c256cb071264c1e1f56c136ac6f470155e979b2b9b7722129",
+      "src/vendor-linux-full/arch/arm/boot/dts/msm8226.dtsi": "731992d37e055f94147c890ae75b1c47991b05bd140f6a558bc53d29756b473c"
+    },
+    "MSS_loader_filters_PT_LOAD_nonzero_memsz_nonhash_segments": true,
+    "MSS_uses_headers_immediately_after_ELF32_header": true,
+    "fixed_or_global_relocation_offsets_checked": true,
+    "split_segment_size_must_match_filesz_and_memsz_must_bound_filesz": true,
+    "metadata_header_plus_hash_authenticated_by_MBA_during_real_start_not_this_audit": true,
+    "RMTFS_memory_builtin_in_native_config": true,
+    "native_RMTFS_memory_DT_and_devices_absent": true,
+    "platform_source_explicitly_populates_qcom_rmtfs_mem_reserved_nodes": true,
+    "RMTFS_memory_probe_maps_reserved_region_and_exposes_client_cdev": true,
+    "RMTFS_memory_candidate_has_no_VMID_or_guard_page_properties": true,
+    "stock_RMTFS_UIO_base": 265814016,
+    "stock_RMTFS_UIO_bytes": 1572864,
+    "userspace_expected_client_id": 1,
+    "rmtfs_r_flag_shadows_storage_in_RAM_instead_of_persisting_writes": true,
+    "rmtfs_without_r_opens_backing_storage_read_write": true,
+    "rmtfs_P_selects_partition_labels": true,
+    "rmtfs_s_controls_remoteproc_start_stop_and_upstream_default_unit_uses_it": true,
+    "rmtfs_r_does_not_prevent_QRTR_or_shared_memory_writes": true,
+    "rmtfs_missing_memory_device_falls_back_to_UIO_then_dev_mem": true,
+    "rmtfs_or_shared_memory_device_executed_opened_or_installed": false,
+    "scope": "Pinned existing C source audit only; no server, QMI, shared-memory or firmware runtime qualification"
+  },
+  "synthetic_layout_tests": {
+    "methods": 4,
+    "subcases": 22,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "scope": "Synthetic ELF/split-file fixtures only; fixed/relocatable/zero-fill and all three metadata sources; malformed header/range/size/path cases",
+    "initial_methods": 2,
+    "initial_failures": 0,
+    "final_log": "local/modem-firmware-audit-01/layout-tests-final.log",
+    "inspector_sha256": "a7ae5791aaf41dcbf38e9e1689065867eecdc06fc1d1dc1de1ef3c022daf6cab",
+    "test_source_sha256": "03300caaae5ab5f88a587ded77edcabcb4b7e24c29fa5fb3e132433edc9c5fdf"
+  },
+  "original_private_backup_comparison": {
+    "modem": {
+      "bytes": 67108864,
+      "retained_backup_verified": true,
+      "live_matches_retained_backup": true
+    },
+    "persist": {
+      "bytes": 33554432,
+      "retained_backup_verified": true,
+      "live_matches_retained_backup": false
+    },
+    "modemst1": {
+      "bytes": 3145728,
+      "retained_backup_verified": true,
+      "live_matches_retained_backup": false
+    },
+    "modemst2": {
+      "bytes": 3145728,
+      "retained_backup_verified": true,
+      "live_matches_retained_backup": false
+    },
+    "fsg": {
+      "bytes": 3145728,
+      "retained_backup_verified": true,
+      "live_matches_retained_backup": true
+    },
+    "fsc": {
+      "bytes": 524288,
+      "retained_backup_verified": true,
+      "live_matches_retained_backup": true
+    }
+  },
+  "native_final": {
+    "verified_UTC": "2026-11-09T10:27:57.059371+00:00",
+    "boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "kernel": "6.18.59-fx0-dmp",
+    "kernel_taint": 0,
+    "raw_boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "registers": {
+      "0x1740": 1,
+      "0x1741": 115,
+      "0x2001": 2,
+      "0x2004": 3,
+      "0x2005": 8,
+      "0x2040": 0,
+      "0x2041": 62,
+      "0x2045": 64,
+      "0x2046": 0
+    },
+    "packages": {
+      "linux-postmarketos-qcom-msm8226": {
+        "version": "6.18.59-r50",
+        "commit": null
+      },
+      "upower": {
+        "version": "99991.91.0-r5",
+        "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+      },
+      "upower-lang": {
+        "version": "99991.91.0-r5",
+        "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+      },
+      "upower-systemd": {
+        "version": "99991.91.0-r5",
+        "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+      }
+    },
+    "systemd": "running",
+    "pending_jobs": [],
+    "failed_units": [],
+    "native_MSS_disabled_and_unloaded": true,
+    "firmware_files_resolve_to_original_modem_image_directory": true
+  },
+  "current_UI_unchanged": {
+    "native_boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "status": "pending on this newest native return",
+    "question": "The r59 transfer timed out before BOOT, and the phone has returned to installed r50 with UPower r5 active, the original boot hash, and Sway and the sensor proxy running. Do display and touch work normally on this newest boot?",
+    "recorded_UTC": "2026-11-09T08:14:37.367617+00:00"
+  },
+  "no_firmware_or_provisioning_payload_exported": true,
+  "candidate_installed_packaged_or_booted": false,
+  "limits": [
+    "Firmware layout only; actual authentication/start/stop/fault handling and physical RMTFS memory remain unqualified",
+    "Current matching private rollback snapshots and independent copies for persist/modemst1/modemst2 remain unproven; originals preserved",
+    "RMTFS candidate is outside the active kernel recipe and existing offline-probe image; would map reserved memory if booted",
+    "Current native display/touch gate pending before any RAM entry",
+    "RMTFS userspace/QRTR/shared-memory/service ownership, RFSA needs, modem transport/ModemManager, SIM/RF/GNSS remain unfinished",
+    "Intermittent USB transfer failure and full battery/thermal/CPU/peripheral/reliability/current-stable-edge/upstream bringup remain open"
+  ],
+  "evidence": "evidence/2026-11-09-modem-firmware-layout.json"
+}

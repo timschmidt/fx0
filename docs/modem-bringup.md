@@ -20,8 +20,9 @@ The firmware loader sets `/sys/module/firmware_class/parameters/path` to
 `/run/msm-firmware-loader/target`. The stock `mba.b00` and `modem.mdt` names
 resolve there to the original modem partition. ADSP and WCNSS names also resolve
 there. Missing files in `/lib/firmware` alone would give a misleading inventory.
-This check reads names, symlinks and sizes only; firmware identity, segment
-ranges and successful loading remain unqualified.
+That initial check read names, symlinks and sizes only. A later on-phone
+inspection below verifies file digests and segment ranges. Successful loading
+and firmware authentication remain unqualified.
 
 The original modem filesystem is mounted read-only from `/dev/mmcblk0p1`;
 persist is mounted read-only from `/dev/mmcblk0p14`. No firmware, calibration,
@@ -68,8 +69,9 @@ RAM entry. Keep the
 original source/builds, installed r50 and its recovery path until a matching,
 bounded RAM procedure is prepared and verified.
 
-Before starting MSS, verify the exact stock firmware layout on the phone and
-audit bootloader, firmware loader, module loading and remoteproc ownership.
+The read-only layout check below now passes for the installed files. Before
+starting MSS, finish bootloader, loader, module and remoteproc ownership
+qualification.
 Prepare current calibration/EFS backups and explicit remote-filesystem handling;
 starting firmware must not silently redirect or overwrite provisioning. A
 driver probe, firmware start and QMI service discovery are separate milestones.
@@ -139,3 +141,66 @@ firmware start or radio action occurs. A pure artifact verifier leaves physical
 display/touch explicitly unconfirmed. The older post-install UI reply is already
 recorded for its earlier boot and does not satisfy the current gate. See
 [controller preparation evidence](../evidence/2026-11-09-modem-probe-entry-preparation.json).
+
+
+## Installed firmware layout and RMTFS prerequisite
+
+The on-phone inspector reads bounded ELF headers/program tables and computes
+file digests on the phone. Only numeric metadata and hashes return to the host.
+The 27-header modem MDT contains 21 loadable segments, including three pure
+zero-fill segments. The fixed-address, nonoverlapping load span is 81,788,928
+bytes inside the 84,934,656-byte MPSS carveout at `0x08000000`. All eighteen
+payload segment files have exactly their declared sizes. The authenticated
+metadata consists of the 916-byte header/table and a packed 904-byte hash region.
+MBA's raw `mba.b00` is 295,824 bytes, within its separate 1 MiB region at
+`0x0d100000`; its selected MDT fields agree. No payload, signature block, modem
+identifier or provisioning contents are exported. Layout validity does not
+establish MBA authentication or successful startup.
+
+The exact native configuration has `CONFIG_QCOM_RMTFS_MEM=y`, but the live tree,
+memory class and device nodes contain no RMTFS memory device. The unit's stock
+DTB and vendor source place its shared region at `0x0fd80000`, size `0x180000`.
+That interval lies inside the existing `reserved@fb00000` exclusion. A separate
+[host candidate](../diagnostics/modem-control/fx0-rmtfs-memory.patch) splits that
+4 MiB exclusion into a leading `0x280000` reserved interval and the stock-sized
+RMTFS region. Their union is identical, with no overlap/gap. SMEM and every other
+existing property stay byte-identical. Client 1 matches the audited userspace
+expectation. The candidate would expose the RMTFS memory device if booted; MSS
+stays disabled. It is outside the active kernel recipe and has not been packaged,
+included in the prepared modem probe image, or booted.
+
+The host verifier checks stock wiring, exact memory coverage and all property
+differences. Both DTBs compile with the same three inherited warnings. The real
+RMTFS binding passes; wrong base/client, reservation overlap/gap and missing
+client controls reject. The first hand-authored patch had a bad hunk length and
+was rejected before compilation. That attempt is preserved; the generated patch
+passes dry-run/apply with zero fuzz.
+
+Pinned [RMTFS source](https://github.com/linux-msm/rmtfs/tree/b30a3eb38f9af283f18dbd3c7755653efc52c094)
+is audited, not installed. Its `-r` storage mode keeps writes in a RAM shadow;
+it still exchanges QRTR messages and writes shared memory. `-P` selects EFS
+partition labels. `-s` owns remoteproc start/stop, and the upstream default unit
+includes it. A future trial must therefore control service/lifecycle ownership
+explicitly. Starting that unit requests firmware startup; package hooks must
+be inspected before any installation. No RMTFS service, memory device,
+`/dev/mem`, QMI channel or modem control is opened
+by this audit.
+
+## Provisioning backup comparison
+
+Read-only hashes of modem, persist, modemst1, modemst2, FSG and FSC are compared
+with independently rehashed original private recovery images. Modem firmware,
+FSG and FSC match. Persist and both modemst partitions differ. The audit does
+not establish when or why they changed, and does not diagnose corruption.
+Keep the original backups. Current verified private snapshots and a second
+independent copy of the changed provisioning state remain prerequisites before
+firmware start; an old factory image is not a current-state rollback image.
+No provisioning payload is read back to the host in this audit.
+
+Final native checks preserve the same boot, r50/r5 hashes, raw boot image,
+taint0, services, CPU/NFC baseline and all nine APC/S5 controls. Original firmware
+directory resolution and unchanged host routes/resolver/index are verified.
+There is no reboot, RAM transfer, driver registration, firmware start, RMTFS
+installation or radio change. The physical UI gate for the newest native boot
+remains pending. See [reproduction procedure](../diagnostics/modem-control/firmware-layout.md)
+and [evidence](../evidence/2026-11-09-modem-firmware-layout.json).

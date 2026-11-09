@@ -60,3 +60,10 @@ installed system remain unchanged. The worker never starts firmware; physical
 entry/return controls are now prepared and host-checked, while the current UI
 gate remains pending. No trial has run. See the preparation procedure for the
 separate controller evidence and remaining requirements.
+
+
+The later [on-phone firmware layout check and separate RMTFS memory candidate](firmware-layout.md)
+verify the installed segment bounds without exporting payloads and identify the
+missing shared-memory device. The candidate is host-only and keeps MSS disabled.
+Original and current provisioning hashes differ for three partitions; fresh
+current-state rollback coverage remains required before firmware start.
