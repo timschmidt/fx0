@@ -377,3 +377,19 @@ These results establish host build/package integrity. No r59 RAM image, boot,
 physical signature enforcement, NCI communication, open/pending IRQ teardown
 or installed update/recovery is qualified. Original r58 evidence remains
 unchanged; the current exact-boot UI check remains pending.
+
+## November 8: matching r59 moduleless RAM preparation
+
+A new [prepared image](../manifests/nfc-open-teardown-startup-ram.json) contains
+no modules/firmware and retains the qualified independent return timer and
+eleven original r58 CPIO payloads/modes. The runtime kernel is byte-identical
+to the built r59 Image after lossless re-encoding. The new read-only checker
+records RAM boot identity and requires released NFC pins, original moduleless
+GPIO states and zero clock votes. Fifty host and exact ARM BusyBox fixture
+cases, three weakened-guard controls and independent image checks pass.
+The actual entry stops at the pending exact-native UI result; no phone reboot,
+transfer or BOOT occurs. Separate native read-only preflight passes on the
+same r50 boot with original hash, zero taint, services and programmed 1.15 V
+target. These are preparation results; r59 startup, signature enforcement,
+NCI communication/teardown and installed recovery remain unqualified. See
+[evidence](../evidence/2026-11-08-nfc-r59-startup-preparation.json).

@@ -4595,3 +4595,24 @@ the [measured manifest](../manifests/kernel-nfc-open-teardown-build.json), recip
 patch and [evidence](../evidence/2026-11-08-nfc-open-teardown-package.json).
 No phone trial or installation starts; the exact latest-native UI result
 remains pending and full bringup continues.
+
+## November 8: prepare matching r59 moduleless startup
+
+Recode the r59 decompressor in isolated scratch, including all thirty thin
+EFI archive members. Original link and assembler replay reproduce the source
+zImage; XZ preset-3 output independently decompresses to the exact runtime
+Image. Build the fourteen-entry moduleless RAM image, retaining eleven r58
+CPIO payloads/modes plus its init timer, serial/HTTP support, command line and
+DTB. Change only the family permit, note hash and read-only checker.
+
+Add RAM boot-ID and moduleless pin/GPIO/clock guards. Fifty fixture cases pass
+on host and exact ARM BusyBox, and three isolated weakened guards are detected.
+Independent header/digest/payload/CPIO, syntax and BSS bounds checks pass. The
+actual pending entry and instrumented pending/wrong-boot cases stop before
+phone-client import. A valid future entry requires a separate one-use native
+preflight before reboot; that directory is still absent. A separate read-only
+preparation baseline confirms the same r50 boot and NFC/PMIC/service state.
+Reverify 873 earlier input hashes and 53 original encoding inputs before
+documentation updates; retain earlier artifacts and the protected root index.
+Publish [preparation evidence](../evidence/2026-11-08-nfc-r59-startup-preparation.json).
+No physical trial or installation starts; full bringup continues.

@@ -18,8 +18,9 @@ The input configuration changes only LOCALVERSION from the frozen r58 input,
 reserving `6.18.59-fx0-nfc-open-teardown-alpine` for an independent build.
 At that source checkpoint, no kernel, signed module, APK or RAM image existed
 for this family. A complete r59 kernel/module/APK build is now verified in the
-[measured build manifest](../../manifests/kernel-nfc-open-teardown-build.json);
-no r59 RAM image or physical qualification is included in this checkpoint.
+[measured build manifest](../../manifests/kernel-nfc-open-teardown-build.json).
+A matching moduleless RAM image is now
+[prepared separately](r59-startup.md), with physical qualification still open.
 The private `nxp_nci_phy_ops` layout changed: build all matching modules and
 verify their ABI and signatures before any hardware use.
 

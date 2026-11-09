@@ -994,3 +994,22 @@ new I2C import of nxp_nci_probe rejects r58's ABI. All 577 transitive edges and
 resolution checks pass, as does isolated r58-to-r59 usermode replacement of
 549 files with scripts/hooks disabled. No new RAM image, phone installation,
 boot or update/recovery result is claimed. See [package evidence](../evidence/2026-11-08-nfc-open-teardown-package.json).
+
+## Matching r59 moduleless RAM preparation
+
+Use the [startup manifest](../manifests/nfc-open-teardown-startup-ram.json) for
+the independently built r59 family. Its lossless XZ preset-3 zImage is derived
+in separate scratch from copied decompressor objects, headers and all thirty
+thin EFI archive members. Original link and assembler replay reproduce the
+source zImage; the final linked compressed payload independently decompresses
+to the exact r59 runtime Image. Original ELF/build/APK/certificate/ABI bytes
+remain unchanged; the intermittent USB defect is still unresolved.
+
+The fourteen-entry CPIO preserves eleven qualified r58 payloads/modes, changing
+only the family permit, note fingerprint and read-only checker. No modules or
+firmware are added. Header/Android digest/kernel/DTB/CPIO and BSS bounds verify,
+as do exact ARM BusyBox syntax and all fifty host/ARM fixture cases. Three
+isolated weakened guards are detected. See [procedure](../diagnostics/nfc-startup/r59-startup.md).
+The entry refuses the pending exact-native UI result before client import,
+then requires a fresh native preflight if that gate passes. The current image
+is unstaged/unbooted; new-family runtime and recovery acceptance remain open.

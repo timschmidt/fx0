@@ -364,3 +364,24 @@ all 549 payload files match with hooks disabled. This is host verification,
 with no new RAM image, phone entry or installation. Physical startup, open
 teardown, RF/tag/PM, firmware concurrency and installed recovery remain open.
 The latest physical UI check remains pending. See [package evidence](../evidence/2026-11-08-nfc-open-teardown-package.json).
+
+## Matching r59 moduleless startup image prepared
+
+The [r59 RAM preparation](../diagnostics/nfc-startup/r59-startup.md) preserves
+the qualified timer, BusyBox, serial/HTTP support, command line and DTB. Its
+fourteen CPIO entries contain no modules, firmware or CPU registration worker;
+eleven payloads/modes remain identical to the qualified r58 image. Isolated
+XZ preset-3 encoding reproduces the original packed kernel before recoding
+and preserves the exact runtime Image/ELF/notes/certificate/ABI.
+
+The read-only checker adds RAM boot identity, unclaimed NFC pins, original
+moduleless GPIO states and zero reference-clock votes. Fifty fixture cases
+pass on host and the exact ARM BusyBox; three weakened guards are detected.
+Independent image/header/CPIO and syntax checks pass. The actual pending
+entry and instrumented pending/wrong-boot cases stop before the phone client.
+Valid entry additionally requires a fresh one-use native preflight. Separate
+read-only preparation checks confirm the same r50 boot, original hash, zero
+taint, running UI services, programmed 1.15 V target and released NFC states.
+The image remains unstaged/unbooted while the exact latest-native UI result
+is pending. Controller communication and hardware teardown remain unqualified;
+see [evidence](../evidence/2026-11-08-nfc-r59-startup-preparation.json).
