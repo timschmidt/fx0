@@ -4289,3 +4289,40 @@ firmware/library/calibration is exported or programmed. The latest native UI
 gate, controller/tag/RF/userspace/suspend and broader bringup remain open. See
 [NFC work](nfc-bringup.md) and
 [preparation evidence](../evidence/2026-11-08-nfc-source-preparation.json).
+
+### Complete NFC host kernel and signed module family (2026-11-08)
+
+Built the published conservative NFC source into a complete
+`6.18.59-fx0-nfc-prep` ARM kernel, all 468 modules and the exact schema-checked
+Fx0 DTB. The successful run finishes in 355.87 seconds. Linked KCFI and
+nonpermissive configuration verify, with no added undefined symbols beyond
+the baseline's two BPF and three weak EFI entries. The embedded certificate
+matches the new private mode-0600 signing key's 1,324-byte certificate, and
+kernel/BSS placement remains below the forced ramdisk address.
+
+The first process terminates on the per-user tmpfs quota. After confirming its
+exit/PID disappearance, the workspace retry changes only the DWARF section
+encoding to lossless zlib compression. Actual ELF debug streams fully
+decompress and retain DWARF5. Seven regenerable top-link objects are verified
+into lossless archives before removing those originals, freeing 1.13 GB.
+All 46 recorded prior final kernel/config/DTB/symbol/certificate hashes and
+the protected indices remain unchanged; the archive receipt provides exact
+restoration paths/hashes before any old incremental relink. Recovery storage
+is read-only throughout. Initial failed output and logs are preserved.
+
+All 468 staged modules pass architecture/release/in-tree and explicit-kernel
+certificate CMS verification, with embedded CMS certificates ignored. All
+25,562 imported CRCs match the current complete `Module.symvers`; modified
+payload/signature/import and wrong-certificate/export-map controls reject.
+The complete NFC dependency order includes matching `rfkill`, `nfc`, `nci`,
+`nxp-nci` and `nxp-nci_i2c` modules. No module is loaded or forced.
+
+Read-only postflight retains the same native r50 boot/hash, conservative
+policy, zero taint, running startup and UI services, with QUP3 disabled and
+no NFC candidate modules. The retained eMMC test file is untouched by this
+work. The exact native UI question remains pending, and no package install,
+RAM image/staging/boot, GPIO/clock/bus/RF/firmware operation, audio test or host
+Wi-Fi change occurs. Distribution/independent Alpine packaging, bounded RAM,
+controller/tag/userspace/PM and full bringup remain open. See
+[full-build manifest](../manifests/kernel-nfc-full-build.json) and
+[evidence](../evidence/2026-11-08-nfc-full-build.json).

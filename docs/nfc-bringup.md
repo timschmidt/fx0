@@ -75,8 +75,53 @@ toolchain, merge [the NFC fragment](../configs/msm8926-nfc.fragment), then run
 and `LOCALVERSION` differ from the normalized r50 config. Targeted checks are
 `make ARCH=arm LLVM=1 LD=ld.lld-18 W=1 prepare net/nfc/
 drivers/nfc/nxp-nci/ qcom/qcom-msm8926-lg-madai.dtb` with a separate output
-directory. This work does not produce a full linked kernel, MODPOST-checked
-signed modules, source APK or boot image.
+directory. This targeted preparation did not produce a full linked kernel,
+MODPOST-checked signed modules, source APK or boot image.
+
+## Complete host kernel and module verification
+
+The same source now builds a complete `6.18.59-fx0-nfc-prep` ARM kernel,
+all 468 modules and the Fx0 DTB. The successful build takes 355.87 seconds.
+KCFI remains enabled in compilation and the linked ELF, with permissive mode
+disabled. Its only undefined symbols are the same five BPF/weak-EFI entries
+as the reconstructed-r50 baseline. The DTB is byte-identical to the earlier
+schema-checked NFC DTB, and kernel/BSS placement fits below the forced RAM
+ramdisk address. No RAM image has been built or booted from these artifacts.
+
+The first attempt terminates on the per-user `/tmp` quota despite filesystem
+free space. The workspace retry adds only
+[lossless DWARF compression](../configs/nfc-debug-storage.fragment) to the
+normalized NFC configuration. Actual `.debug_info`, `.debug_line` and
+`.debug_str` ELF streams decompress completely and retain DWARF5; CFI,
+signing, CPU and other runtime choices stay unchanged. No debug information
+is stripped from the linked kernel.
+
+To provide linking headroom, seven regenerable top-link `vmlinux.o`
+intermediates from earlier workspace builds are losslessly archived. Every
+archive is independently decompressed and checked before removing that
+original intermediate, freeing 1,129,364,904 bytes. All 46 recorded existing
+final kernel/config/DTB/symbol/certificate hashes remain unchanged. The private
+receipt records original/archive paths, sizes and SHA256 values; restore a
+matching intermediate before incrementally relinking one of those old build
+directories. The protected root index and conservative source/index remain
+unchanged, and the recovery disk is never written.
+
+All 468 stripped, signed, compressed staged modules verify against the exact
+1,324-byte certificate embedded in the new kernel. All have the correct ARM
+architecture, release and in-tree marker. All 25,562 imported symbol CRCs
+match this full build's `Module.symvers`. Modified payload/signature, wrong
+certificate and wrong-ABI controls reject. The NFC I2C dependency order is
+`rfkill`, `nfc`, `nci`, `nxp-nci`, `nxp-nci_i2c`; all five must come from this
+same new certificate/build family. The private signing key remains mode 0600.
+Future RAM registration must enforce signatures; the host checks do not prove
+runtime signature enforcement. No module is loaded during these checks.
+
+The [full-build manifest](../manifests/kernel-nfc-full-build.json) and
+[evidence](../evidence/2026-11-08-nfc-full-build.json) pin these artifacts and
+the complete configuration delta. The source APK, independent Alpine build,
+RAM startup/NFC operation and installed update/recovery remain unqualified.
+
+## Remaining hardware and distribution gates
 
 The phone still runs the same original r50 boot/hash and conservative policy,
 with zero taint, running startup, Sway and sensor proxy. QUP3 remains disabled
@@ -84,8 +129,8 @@ and no NFC modules are loaded. The prior exact-boot physical UI result remains
 pending; no NFC RAM entry, GPIO/clock change, bus transaction, RF operation,
 firmware download or nonvolatile programming occurred.
 
-Next build and verify a complete distinct kernel/module family, prepare a
-bounded RAM trial after the native-return UI gate, and first qualify cold
+Next prepare the distribution package and a bounded RAM trial after the
+native-return UI gate, and first qualify cold
 ownership, balanced clock/GPIO cleanup and NCI reset/init responses. Then test
 tag reading, RF/protocol behavior, userspace integration, restart/error unwind,
 suspend/wake and final distribution packaging. The maintained kernel NCI path
