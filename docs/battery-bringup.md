@@ -701,3 +701,18 @@ Native malformed/failing reads, stale-data policy, battery current/SOC accuracy,
 charging/thermal behavior, live package/root rollback and final hardware
 acceptance remain open. The newest physical display/touch answer is still
 pending for the same boot; no older answer is reused.
+
+## November 9: native UPower r5 reboot acceptance
+
+After the fresh post-install display/touch confirmation, a moduleless r59
+download times out before BOOT. Terminal-only identified recovery returns to
+installed r50 on boot `c3ac8f04-888e-493c-bb5d-a1729a275f7d`. UPower r5 is
+already active before querying D-Bus; no explicit service start is used. All
+three r5 package/recipe records, daemon/CLI/library payload hashes and running
+daemon hash pass. Three samples retain absent/unknown state, finite unknown
+percentage 0, no warning and OnBattery false. This does not measure charge.
+Systemd finishes with no jobs, UI/sensor services are active and the boot hash,
+initramfs, kernel, installed package database and world remain unchanged.
+The newest physical UI check is pending. Gauge/current/SOC/charging/thermal,
+native telemetry faults/stale-data policy and live rollback remain open. See
+[return evidence](../evidence/2026-11-09-nfc-r59-transfer-timeout.json).

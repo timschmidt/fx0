@@ -204,7 +204,7 @@ open. See [rebuild evidence](../evidence/2026-11-08-kernel-reconstruction.json).
 | Bluetooth | Controller/firmware; discovery, pairing, transfer, HID, supported audio profiles, reconnect and resume | Partial, installed r6: Qualcomm HCI v6 controller over btqcomsmd. Discovery and outgoing ACL (l2ping 10/10) work. Phone-initiated SSP pairing with the host bonds, and the passkeys match. With an independent Broadcom USB peer, phone-initiated SSP pairing bonds; three bonded RFCOMM connections each deliver 4 MiB with matching SHA-256 at about 1.2 Mbit/s, with WLAN on 5 GHz. Earlier PC-adapter failures were peer-acceptance and harness artifacts. HID, audio, address source and resume pending |
 | Wireless coexistence | Wi-Fi plus Bluetooth audio/data, suspend, modem activity and charging without persistent disruption | Unverified: an earlier WLAN-state correlation was confounded by host-side behaviour and is withdrawn. Iris rails switch off with the WLAN radio off; the effect on Bluetooth is unproven |
 | GNSS | Outdoor cold/warm fix; position/time sanity; acquisition logs; assisted and standalone behavior as exposed | Unverified |
-| NFC | Actual controller and antenna path; tag reading and supported transfer modes; suspend/restart | Partial: production PN547/QUP3/GPIO/rising-IRQ/CXO_D1_PIN wiring is audited. A matching r58 moduleless RAM boot and timer return pass. Same-ELF unsigned/altered-signature controls are rejected; matching signed modules complete four cold probe/remove cycles, with released pins/IRQ, zero clock votes and zero taint ([cold evidence](../evidence/2026-11-08-nfc-cold-lifecycle.json)). These cycles do not exercise NCI communication or pending IRQ/open unregister. A later source fix retains receive through the closing reset; the matching r59 kernel/APK and all 468 modules pass host crypto/ABI/dependency checks. Its moduleless RAM image is host-prepared and unbooted, pending the exact newest native display/touch result ([preparation](../evidence/2026-11-08-nfc-r59-startup-preparation.json)). Installed r50 still has QUP3 disabled and no NFC modules. Controller/tag/RF/userspace/PM, real open teardown and installed update/recovery remain open ([NFC work](nfc-bringup.md)) |
+| NFC | Actual controller and antenna path; tag reading and supported transfer modes; suspend/restart | Partial: production PN547/QUP3/GPIO/rising-IRQ/CXO_D1_PIN wiring is audited. A matching r58 moduleless RAM boot and timer return pass. Same-ELF unsigned/altered-signature controls are rejected; matching signed modules complete four cold probe/remove cycles, with released pins/IRQ, zero clock votes and zero taint ([cold evidence](../evidence/2026-11-08-nfc-cold-lifecycle.json)). These cycles do not exercise NCI communication or pending IRQ/open unregister. A later source fix retains receive through the closing reset; the matching r59 kernel/APK and all 468 modules pass host crypto/ABI/dependency checks. Its first moduleless image transfer times out before verified readback or BOOT; recovery returns to r50/r5 and startup remains untested ([attempt](../evidence/2026-11-09-nfc-r59-transfer-timeout.json)). Installed r50 still has QUP3 disabled and no NFC modules. Controller/tag/RF/userspace/PM, real open teardown and installed update/recovery remain open ([NFC work](nfc-bringup.md)) |
 | FM radio | Establish product exposure first; if present, tune/receive, antenna/audio routing and resume | Unverified |
 | Battery sensing | Battery type, voltage, current, temperature, capacity trends and low-battery reporting | Signed r4 IADC arithmetic and stock baseline pass. Experimental BMS lookup/calibration/lifetime and discharge response pass; 37 getter cases include temperature. RAM thermistor readings agree around 32.6–32.7°C; independent accuracy is open. RAM firmware now selects the stock profile and passes all 155 OCV points/design attributes to r4. No current capacity or usable UPower battery interface is qualified. USB-idle current/counter and first-probe behavior remain unresolved. Raw BATFET IRQ guard is rejected after ~6799 IRQ/s. No promotion; see [battery work](battery-bringup.md) |
 | Charging | Correct input/charge limits; plug/unplug, termination, temperature response, power-off charging as supported | In progress: RAM firmware gate and Linux managed policy now validate runtime profile/sensors, user inhibition and supplier loss while USB HTTP stays available. Forced supplier rebind needs explicit drivers_probe. Model/fault/quiesce/ABI tests and ARM builds pass; actual thermal boundaries, system suspend, watchdog timing, USB negotiation, current accuracy, termination and powered-off charging remain open. BTC stays conservative; the policy remains RAM-only and installed r50 is unchanged. See [native policy evidence](../evidence/2026-10-30-smbb-native-policy.json) |
@@ -460,3 +460,39 @@ match the backup. The 19 initramfs module payloads match installed r50. This is
 same-boot software integration, without a new boot, physical UI test, live
 rollback, native malformed-telemetry fault or physical gauge/power qualification.
 See [evidence](../evidence/2026-11-09-upower-r5-native-install.json).
+
+## November 9: r59 transfer timeout, r50/r5 return verified
+
+A fresh explicit display/touch answer passes for r50 boot
+`2e6126b9-498e-4d89-b23e-f08fe6ccc361` after UPower r5 installation. The
+older cold-trial UI ledger stays unchanged. A new entry directory checks that
+exact question, answer, software checkpoint and boot; six altered UI controls
+fail before phone-client import. Fresh native preflight verifies r50/r5,
+original boot hash, running services, 1.15 V programmed APC target, 40–41 C
+temperatures, released NFC pins and zero reference-clock votes.
+
+The unchanged 6,809,600-byte r59 image download times out after 524,288
+completed bytes. No complete readback, BOOT, RAM startup checker or NFC action
+occurs. Both transfer and stage terminate with status 1 and their PIDs are gone
+before recovery. Reset only the identified USB transport, verify lk2nd, and
+send one standard reboot to installed r50. Do not retry the RAM entry. The
+intermittent USB fault remains unresolved; lossless XZ encoding does not cure it.
+
+Native boot `c3ac8f04-888e-493c-bb5d-a1729a275f7d` returns with the original
+raw boot hash, zero taint, 1.15 V programmed target, low VEN/FIRM, released NFC
+pins and zero clock votes. UPower r5 starts automatically; all three package
+records, installed ELF hashes and running daemon hash match. Three samples
+keep absent/unknown battery state, finite unknown percentage 0, no warning and
+OnBattery false. This is not measured zero charge. Final systemd state is
+running with no jobs; Sway and sensor proxy are active, temperatures are 41 C,
+and initramfs/kernel/package database/world hashes are unchanged. Host routes,
+resolver and protected index match; no temporary USB network was started.
+
+A local return-helper filename collision initially stops at an assertion before
+probing the phone. A separate waiter state filename fixes it; the successful
+read-only postflight and the failed wrapper records are both retained. No
+additional reboot or device action follows from that correction.
+
+The new return has its own pending physical display/touch question. r59 startup,
+NCI communication/open teardown, RF/PM/firmware behavior and full bringup remain
+unqualified. See [trial evidence](../evidence/2026-11-09-nfc-r59-transfer-timeout.json).

@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "recorded_UTC": "2026-11-09T04:56:22.840025+00:00",
-  "status": "Prepared and host/exact ARM BusyBox verified matching r59 moduleless RAM startup; unstaged/unbooted; exact newest native display/touch gate pending",
+  "recorded_UTC": "2026-11-09T08:16:03.631090+00:00",
+  "status": "First r59 staging attempt timed out before verified readback or BOOT; recovered to native r50/r5; r59 startup remains untested",
   "source_build": "manifests/kernel-nfc-open-teardown-build.json",
   "source_build_manifest_sha256": "6a2bbe5bb5e5545983c0bcdd0e41d5e01f834dd3232e73b9cdb839dbc2c7cf92",
   "source_commit": "7bbe33bd97b6f57a05de33ce8dcceba6942352a3",
@@ -83,9 +83,10 @@
       "etc/fx0-nfc-trial"
     ],
     "previous_native_boot_id": "2e6126b9-498e-4d89-b23e-f08fe6ccc361",
-    "previous_UI_result_required_before_stage": "local/ram-nfc-cold-01/owner-display-touch.json; matching boot ID and passed status",
+    "previous_UI_result_required_before_stage": "local/native-r5-ui-01/owner-display-touch.json; exact new post-r5 question/answer, r5 checkpoint, native boot and passed status",
     "staged_or_booted": false,
-    "NFC_hardware_qualified": false
+    "NFC_hardware_qualified": false,
+    "staged_or_booted_meaning": "No complete verified staging or RAM BOOT; one download attempt failed after 524288 completed bytes"
   },
   "encoding": {
     "status": "Lossless preset-3 zImage encoding prepared in isolated scratch; no original build mutation",
@@ -159,12 +160,15 @@
     ],
     "r59_release_encoded_kernel_certificate_and_notes_pinned": true,
     "r59_source_build_and_encoding_terminal_success_required": true,
-    "UI_gate": "passed for exact native boot 2e6126b9-498e-4d89-b23e-f08fe6ccc361 before phone client import",
+    "UI_gate": "Fresh explicit r5/r50 display/touch confirmation for boot 2e6126b9-498e-4d89-b23e-f08fe6ccc361 passed before phone client import",
     "required_immediate_preflight": "New one-use entry-preflight directory; same native boot/hash, 1.15 V programmed target, r50 services, low VEN/FIRM, unclaimed pins and zero clock votes",
     "observer_runs_read_only_checker_once_and_collects_RAM_boot_id": true,
     "transfer_terminal_success_PID_absence_exact_readback_and_live_observers_required_before_one_BOOT": true,
     "NFC_or_CPU_modules_loaded": false,
-    "stage_or_boot_executed": false
+    "stage_or_boot_executed": true,
+    "helper_directory": "local/ram-nfc-open-teardown-startup-02",
+    "stage_attempted": true,
+    "BOOT_executed": false
   },
   "actual_pending_stage_gate": {
     "checked_UTC": "2026-11-09T04:53:14.220716+00:00",
@@ -205,20 +209,18 @@
   },
   "required_native_return": {
     "prior_boot_id": "2e6126b9-498e-4d89-b23e-f08fe6ccc361",
+    "current_boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
     "owner_UI": {
-      "native_boot_id": "2e6126b9-498e-4d89-b23e-f08fe6ccc361",
+      "native_boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
       "status": "pending on this newest native return",
-      "question": "The NFC signature and three-round cold module lifecycle RAM trial has returned to installed r50. The original boot hash and 1.15 V PMIC target are restored, with systemd running, Sway and the sensor proxy active. Do display and touch work normally on this newest boot?",
-      "recorded_UTC": "2026-11-09T02:43:33.836382+00:00"
+      "question": "The r59 transfer timed out before BOOT, and the phone has returned to installed r50 with UPower r5 active, the original boot hash, and Sway and the sensor proxy running. Do display and touch work normally on this newest boot?",
+      "recorded_UTC": "2026-11-09T08:14:37.367617+00:00"
     },
     "kernel": "6.18.59-fx0-dmp",
     "package": "6.18.59-r50",
+    "UPower": "99991.91.0-r5",
     "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
     "APC_programmed_target_uV": 1150000,
-    "NFC_pins": "20/21/22 unclaimed; VEN/FIRM low",
-    "NFC_reference_clock_votes": "0/0/0 at 19.2MHz; no physical clock-off claim",
-    "UI_services": "Sway and sensor proxy active",
-    "host_network": "same routes/resolver and own volatile USB profile removed",
     "no_automatic_retry_after_uncertain_transfer_or_BOOT": true
   },
   "constraints": [
@@ -230,5 +232,319 @@
     "No physical startup, signature enforcement or NCI/IRQ/controller/RF/PM/firmware qualification; no installation or flash",
     "No recovery-disk writes, audio tests or host built-in Wi-Fi changes"
   ],
-  "evidence": "evidence/2026-11-08-nfc-r59-startup-preparation.json"
+  "evidence": "evidence/2026-11-09-nfc-r59-transfer-timeout.json",
+  "historical_preparation": "Original host validation and pending-gate records retained below; this attempt uses a fresh explicit post-r5 UI answer and new helper directory",
+  "latest_attempt": {
+    "recorded_UTC": "2026-11-09T08:16:03.631090+00:00",
+    "entry_UI": {
+      "native_boot_id": "2e6126b9-498e-4d89-b23e-f08fe6ccc361",
+      "status": "passed",
+      "software_checkpoint": "UPower 99991.91.0-r5 on installed r50",
+      "question": "UPower r5 is now installed on the current r50 boot. Do the display and touch still work normally? This checks the current phone state before another RAM-only kernel trial.",
+      "answer": "Display and touch work",
+      "question_item_id": "[\"request_user_input_async\",\"call_c057d7a8d6274624bea139095ea0484e\",0]",
+      "source": "new explicit structured owner reply after r5 installation; not an older trial answer",
+      "recorded_UTC": "2026-11-09T08:03:45.785371+00:00"
+    },
+    "UI_gate_controls": {
+      "verified_UTC": "2026-11-09T08:08:38.902176+00:00",
+      "positive_actual_ledger_passed": true,
+      "negative_controls": [
+        {
+          "changed_field": "status",
+          "rejected_before_client_import": true
+        },
+        {
+          "changed_field": "native_boot_id",
+          "rejected_before_client_import": true
+        },
+        {
+          "changed_field": "question_item_id",
+          "rejected_before_client_import": true
+        },
+        {
+          "changed_field": "question",
+          "rejected_before_client_import": true
+        },
+        {
+          "changed_field": "answer",
+          "rejected_before_client_import": true
+        },
+        {
+          "changed_field": "software_checkpoint",
+          "rejected_before_client_import": true
+        }
+      ],
+      "actual_ledger_modified": false,
+      "all_helper_syntax_passed": true
+    },
+    "trial_directory": "local/ram-nfc-open-teardown-startup-02",
+    "transfer": {
+      "started_UTC": "2026-11-09T08:09:40.059226+00:00",
+      "state": "failed",
+      "bytes": 524288,
+      "payload_bytes": 6809600,
+      "sha256": "0fff381eeb94f8ce8673404a3fb5d896e4767c0d9fb2eb3a942b00cb70980dce",
+      "chunk_bytes": 16384,
+      "pace_ms": 5,
+      "identity": {
+        "product": [
+          "OKAYlk2nd-msm8226"
+        ],
+        "lk2nd_version": [
+          "OKAYfx0-pon-reboot"
+        ]
+      },
+      "phase": "download",
+      "error": "[Errno 110] Connection timed out",
+      "finished_UTC": "2026-11-09T08:10:10.723159+00:00"
+    },
+    "transfer_controller": {
+      "started_UTC": "2026-11-09T08:09:39.986742+00:00",
+      "operation": "data-only staging/readback; no boot command",
+      "PID": 3784994,
+      "returncode": 1,
+      "elapsed_seconds": 30.795206651033368,
+      "finished_UTC": "2026-11-09T08:10:10.782480+00:00"
+    },
+    "stage_controller": {
+      "started_UTC": "2026-11-09T08:08:56.336099+00:00",
+      "operation": "stage",
+      "command": [
+        "python3",
+        "local/ram-nfc-open-teardown-startup-02/stage.py"
+      ],
+      "PID": 3782088,
+      "returncode": 1,
+      "finished_UTC": "2026-11-09T08:10:10.845026+00:00"
+    },
+    "verified_full_readback": false,
+    "BOOT_sent": false,
+    "RAM_kernel_started": false,
+    "NFC_startup_checker_run": false,
+    "automatic_entry_retry": false,
+    "terminal_stage_and_transfer_PIDs_absent_before_identified_recovery": true,
+    "recovery": {
+      "started_UTC": "2026-11-09T08:11:22.415690+00:00",
+      "transfer_failure_bytes": 524288,
+      "stage_and_transfer_PIDs_absent": true,
+      "BOOT_sent": false,
+      "operation": "Reset only identified USB transport after terminal timeout, verify lk2nd identity, send one standard reboot to installed r50",
+      "state": "terminal",
+      "USB_reset_returned": true,
+      "identity_after_reset": {
+        "product": [
+          "OKAYlk2nd-msm8226"
+        ],
+        "lk2nd_version": [
+          "OKAYfx0-pon-reboot"
+        ]
+      },
+      "reboot_PID": 3786876,
+      "reboot_returncode": 0,
+      "finished_UTC": "2026-11-09T08:11:23.858903+00:00"
+    },
+    "native_return": {
+      "boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+      "kernel": "6.18.59-fx0-dmp",
+      "kernel_taint": 0,
+      "systemd": "running",
+      "pending_jobs": [],
+      "failed_units": [],
+      "services": {
+        "upower": "active",
+        "tinydm": "active",
+        "iio-sensor-proxy": "active"
+      },
+      "Sway_PID": 1523,
+      "UPower_PID": 2776,
+      "files_sha256": {
+        "/boot/initramfs": "acc24300e6b931f84cc8244f9006663cf33fa84a3f34930d06c72f3f109e8992",
+        "/boot/vmlinuz": "7e896bb7c3fc80d7d8c8306a659fa57c1bcb3924ec2aaf37b77924e23c274417",
+        "/lib/apk/db/installed": "ba2b88f03bdca3ae8566714e9c9f1722907b84d6f0a2772fe20c253917408364",
+        "/etc/apk/world": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023"
+      },
+      "temperatures_mC": [
+        41000,
+        41000
+      ],
+      "verified_UTC": "2026-11-09T08:13:47.804113+00:00"
+    },
+    "native_APC_target": {
+      "method": "two exact nine-byte pread rows after dense-map metadata check",
+      "registers": {
+        "0x1740": 1,
+        "0x1741": 115
+      }
+    },
+    "native_NFC": {
+      "boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+      "GPIO": [
+        "gpio20  : in  low  func0 2mA pull down",
+        "gpio21  : in  high func0 2mA pull up",
+        "gpio22  : in  low  func0 2mA pull down"
+      ],
+      "ref_clock": [
+        "cxo_d1_pin                       0       0        0        19200000    0          0     50000      Y      deviceless                      no_connection_id"
+      ],
+      "pinmux": [
+        "pin 20 (GPIO_20): UNCLAIMED",
+        "pin 21 (GPIO_21): UNCLAIMED",
+        "pin 22 (GPIO_22): UNCLAIMED"
+      ]
+    },
+    "host_restored": {
+      "default_routes_unchanged": true,
+      "resolver_unchanged": true,
+      "root_index_unchanged": true,
+      "temporary_USB_network_not_started": true
+    },
+    "UPower_preflight": {
+      "boot_id": "2e6126b9-498e-4d89-b23e-f08fe6ccc361",
+      "package_records": {
+        "upower": {
+          "version": "99991.91.0-r5",
+          "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+        },
+        "upower-lang": {
+          "version": "99991.91.0-r5",
+          "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+        },
+        "upower-systemd": {
+          "version": "99991.91.0-r5",
+          "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+        }
+      },
+      "payload_sha256": {
+        "/usr/libexec/upowerd": "317e746e74fdaa25fb14b895790bc674a5c491eeb7f9a422e2a36b0f5abde6fd",
+        "/usr/bin/upower": "be7d4d2cd00a1346c01f24f8bb02ee425e246d785f92a104a3059d035b57b365",
+        "/usr/lib/libupower-glib.so.3.1.1": "e5974659e5448226d85a469debc61ba21d1addc9742815e86f92e0cb5c7b02b9"
+      },
+      "automatically_active": true,
+      "samples": [
+        {
+          "monotonic": 19610.166418967,
+          "PID": 14493,
+          "display": {
+            "IsPresent": false,
+            "State": 0,
+            "WarningLevel": 1,
+            "Percentage": 0.0
+          },
+          "OnBattery": false,
+          "fault_preload_or_mock_environment": false
+        },
+        {
+          "monotonic": 19612.435264885,
+          "PID": 14493,
+          "display": {
+            "IsPresent": false,
+            "State": 0,
+            "WarningLevel": 1,
+            "Percentage": 0.0
+          },
+          "OnBattery": false,
+          "fault_preload_or_mock_environment": false
+        },
+        {
+          "monotonic": 19614.711708135,
+          "PID": 14493,
+          "display": {
+            "IsPresent": false,
+            "State": 0,
+            "WarningLevel": 1,
+            "Percentage": 0.0
+          },
+          "OnBattery": false,
+          "fault_preload_or_mock_environment": false
+        }
+      ],
+      "percentage_zero_means_unknown_not_measured_empty": true,
+      "phase": "preflight",
+      "verified_UTC": "2026-11-09T08:09:15.186119+00:00"
+    },
+    "UPower_postflight": {
+      "boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+      "package_records": {
+        "upower": {
+          "version": "99991.91.0-r5",
+          "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+        },
+        "upower-lang": {
+          "version": "99991.91.0-r5",
+          "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+        },
+        "upower-systemd": {
+          "version": "99991.91.0-r5",
+          "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+        }
+      },
+      "payload_sha256": {
+        "/usr/libexec/upowerd": "317e746e74fdaa25fb14b895790bc674a5c491eeb7f9a422e2a36b0f5abde6fd",
+        "/usr/bin/upower": "be7d4d2cd00a1346c01f24f8bb02ee425e246d785f92a104a3059d035b57b365",
+        "/usr/lib/libupower-glib.so.3.1.1": "e5974659e5448226d85a469debc61ba21d1addc9742815e86f92e0cb5c7b02b9"
+      },
+      "automatically_active": true,
+      "samples": [
+        {
+          "monotonic": 61.927709916,
+          "PID": 2776,
+          "display": {
+            "IsPresent": false,
+            "State": 0,
+            "WarningLevel": 1,
+            "Percentage": 0.0
+          },
+          "OnBattery": false,
+          "fault_preload_or_mock_environment": false
+        },
+        {
+          "monotonic": 64.199009813,
+          "PID": 2776,
+          "display": {
+            "IsPresent": false,
+            "State": 0,
+            "WarningLevel": 1,
+            "Percentage": 0.0
+          },
+          "OnBattery": false,
+          "fault_preload_or_mock_environment": false
+        },
+        {
+          "monotonic": 66.441348959,
+          "PID": 2776,
+          "display": {
+            "IsPresent": false,
+            "State": 0,
+            "WarningLevel": 1,
+            "Percentage": 0.0
+          },
+          "OnBattery": false,
+          "fault_preload_or_mock_environment": false
+        }
+      ],
+      "percentage_zero_means_unknown_not_measured_empty": true,
+      "phase": "postflight",
+      "verified_UTC": "2026-11-09T08:12:53.138860+00:00"
+    },
+    "owner_UI_after_return": {
+      "native_boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+      "status": "pending on this newest native return",
+      "question": "The r59 transfer timed out before BOOT, and the phone has returned to installed r50 with UPower r5 active, the original boot hash, and Sway and the sensor proxy running. Do display and touch work normally on this newest boot?",
+      "recorded_UTC": "2026-11-09T08:14:37.367617+00:00"
+    },
+    "observer_and_temporary_USB_network_started": false,
+    "helper_namespace_collision": {
+      "first_read_only_return_wrapper_exit": 1,
+      "cause": "wrapper and waiter originally selected native-return-controller.json; waiter assertion stopped before native probe",
+      "resolution": "use separate native-health-controller.json for waiter; preserve failed wrapper log and status",
+      "additional_reboot_transfer_or_BOOT": false
+    },
+    "kernel_or_UPower_package_installation": false,
+    "boot_partition_flash": false,
+    "source_package_image_or_old_trial_modified": false,
+    "recovery_disk_written": false,
+    "audio_test_or_host_builtin_WiFi_change": false,
+    "NFC_RF_GPIO_bus_or_firmware_action": false
+  }
 }

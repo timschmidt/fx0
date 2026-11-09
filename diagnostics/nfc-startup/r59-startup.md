@@ -7,10 +7,15 @@ bootstrap state and the unbound NFC client; it does not establish controller
 communication, RF behavior or the corrected open teardown on hardware.
 
 The [manifest](../../manifests/nfc-open-teardown-startup-ram.json) records the
-exact image, linked notes, certificate, DTB and source APK. The image remains
-unstaged/unbooted. The previous cold-lifecycle return on native boot
-`2e6126b9-498e-4d89-b23e-f08fe6ccc361` still needs its own display/touch result;
-the earlier moduleless-return answer covers another boot.
+exact image, linked notes, certificate, DTB and source APK. A fresh post-r5
+display/touch answer permits a new native preflight and staging attempt. That
+download times out after 524,288 completed bytes, before verified readback or
+BOOT. The image remains unbooted; no startup checker runs on hardware.
+Terminal-only identified recovery returns to installed r50 with UPower r5
+automatically active. See [attempt and return evidence](../../evidence/2026-11-09-nfc-r59-transfer-timeout.json).
+The older cold-trial question is preserved separately; the new native return
+has its own pending UI question. Earlier preparation checks below retain their
+historical scope.
 
 ## Image and runtime guard
 
@@ -82,5 +87,24 @@ requires a changed native boot, original r50 hash, zero taint, services, the
 1.15 V target, restored NFC pins/clock votes and host route/DNS/profile state.
 Display/touch must then be confirmed for that new native return.
 
-No phone entry or installation occurs in this checkpoint. See
+No phone entry or installation occurred in the original preparation checkpoint. See
 [preparation evidence](../../evidence/2026-11-08-nfc-r59-startup-preparation.json).
+
+## First physical staging attempt
+
+The fresh `local/ram-nfc-open-teardown-startup-02` helper set binds the exact
+post-r5 question/answer, checkpoint and native UUID before importing the phone
+client. Six wrong-field controls are rejected. The unchanged image enters one
+download only. Its terminal timeout and absent transfer/stage PIDs precede
+identified USB transport reset and one reboot to native r50; BOOT is never sent.
+No observer or USB network profile is started. Original source, package, image
+and earlier helpers remain unchanged. The earlier successful r58 workaround
+does not establish reliable USB transfer for this image or resolve the fault.
+
+Postflight checks the new native UUID, original raw boot hash, pins/clock votes,
+1.15 V programmed APC target, zero taint, services and host routes/resolver/index.
+It additionally verifies r5 packages, installed/running daemon hashes and three
+real D-Bus samples. Final systemd state is running with no jobs. The new physical
+UI answer must match this return before any further RAM entry. No r59 startup,
+signature enforcement execution or controller qualification follows from this
+failed transfer.

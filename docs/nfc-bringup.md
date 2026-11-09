@@ -385,3 +385,39 @@ taint, running UI services, programmed 1.15 V target and released NFC states.
 The image remains unstaged/unbooted while the exact latest-native UI result
 is pending. Controller communication and hardware teardown remain unqualified;
 see [evidence](../evidence/2026-11-08-nfc-r59-startup-preparation.json).
+
+## November 9: r59 transfer timeout, r50/r5 return verified
+
+A fresh explicit display/touch answer passes for r50 boot
+`2e6126b9-498e-4d89-b23e-f08fe6ccc361` after UPower r5 installation. The
+older cold-trial UI ledger stays unchanged. A new entry directory checks that
+exact question, answer, software checkpoint and boot; six altered UI controls
+fail before phone-client import. Fresh native preflight verifies r50/r5,
+original boot hash, running services, 1.15 V programmed APC target, 40–41 C
+temperatures, released NFC pins and zero reference-clock votes.
+
+The unchanged 6,809,600-byte r59 image download times out after 524,288
+completed bytes. No complete readback, BOOT, RAM startup checker or NFC action
+occurs. Both transfer and stage terminate with status 1 and their PIDs are gone
+before recovery. Reset only the identified USB transport, verify lk2nd, and
+send one standard reboot to installed r50. Do not retry the RAM entry. The
+intermittent USB fault remains unresolved; lossless XZ encoding does not cure it.
+
+Native boot `c3ac8f04-888e-493c-bb5d-a1729a275f7d` returns with the original
+raw boot hash, zero taint, 1.15 V programmed target, low VEN/FIRM, released NFC
+pins and zero clock votes. UPower r5 starts automatically; all three package
+records, installed ELF hashes and running daemon hash match. Three samples
+keep absent/unknown battery state, finite unknown percentage 0, no warning and
+OnBattery false. This is not measured zero charge. Final systemd state is
+running with no jobs; Sway and sensor proxy are active, temperatures are 41 C,
+and initramfs/kernel/package database/world hashes are unchanged. Host routes,
+resolver and protected index match; no temporary USB network was started.
+
+A local return-helper filename collision initially stops at an assertion before
+probing the phone. A separate waiter state filename fixes it; the successful
+read-only postflight and the failed wrapper records are both retained. No
+additional reboot or device action follows from that correction.
+
+The new return has its own pending physical display/touch question. r59 startup,
+NCI communication/open teardown, RF/PM/firmware behavior and full bringup remain
+unqualified. See [trial evidence](../evidence/2026-11-09-nfc-r59-transfer-timeout.json).

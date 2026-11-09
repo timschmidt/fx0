@@ -292,5 +292,111 @@
     "native_rollback_needed_or_claimed_tested": false,
     "no_reboot": true,
     "new_physical_UI_test_claimed": false
+  },
+  "native_reboot_acceptance": {
+    "recorded_UTC": "2026-11-09T08:16:03.631090+00:00",
+    "reason": "Installed r50 return after failed r59 download, before any RAM BOOT",
+    "boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "systemd": "running",
+    "pending_jobs": [],
+    "UPower": {
+      "boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+      "package_records": {
+        "upower": {
+          "version": "99991.91.0-r5",
+          "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+        },
+        "upower-lang": {
+          "version": "99991.91.0-r5",
+          "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+        },
+        "upower-systemd": {
+          "version": "99991.91.0-r5",
+          "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+        }
+      },
+      "payload_sha256": {
+        "/usr/libexec/upowerd": "317e746e74fdaa25fb14b895790bc674a5c491eeb7f9a422e2a36b0f5abde6fd",
+        "/usr/bin/upower": "be7d4d2cd00a1346c01f24f8bb02ee425e246d785f92a104a3059d035b57b365",
+        "/usr/lib/libupower-glib.so.3.1.1": "e5974659e5448226d85a469debc61ba21d1addc9742815e86f92e0cb5c7b02b9"
+      },
+      "automatically_active": true,
+      "samples": [
+        {
+          "monotonic": 61.927709916,
+          "PID": 2776,
+          "display": {
+            "IsPresent": false,
+            "State": 0,
+            "WarningLevel": 1,
+            "Percentage": 0.0
+          },
+          "OnBattery": false,
+          "fault_preload_or_mock_environment": false
+        },
+        {
+          "monotonic": 64.199009813,
+          "PID": 2776,
+          "display": {
+            "IsPresent": false,
+            "State": 0,
+            "WarningLevel": 1,
+            "Percentage": 0.0
+          },
+          "OnBattery": false,
+          "fault_preload_or_mock_environment": false
+        },
+        {
+          "monotonic": 66.441348959,
+          "PID": 2776,
+          "display": {
+            "IsPresent": false,
+            "State": 0,
+            "WarningLevel": 1,
+            "Percentage": 0.0
+          },
+          "OnBattery": false,
+          "fault_preload_or_mock_environment": false
+        }
+      ],
+      "percentage_zero_means_unknown_not_measured_empty": true,
+      "phase": "postflight",
+      "verified_UTC": "2026-11-09T08:12:53.138860+00:00"
+    },
+    "native_health": {
+      "boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+      "kernel": "6.18.59-fx0-dmp",
+      "kernel_taint": 0,
+      "systemd": "running",
+      "pending_jobs": [],
+      "failed_units": [],
+      "services": {
+        "upower": "active",
+        "tinydm": "active",
+        "iio-sensor-proxy": "active"
+      },
+      "Sway_PID": 1523,
+      "UPower_PID": 2776,
+      "files_sha256": {
+        "/boot/initramfs": "acc24300e6b931f84cc8244f9006663cf33fa84a3f34930d06c72f3f109e8992",
+        "/boot/vmlinuz": "7e896bb7c3fc80d7d8c8306a659fa57c1bcb3924ec2aaf37b77924e23c274417",
+        "/lib/apk/db/installed": "ba2b88f03bdca3ae8566714e9c9f1722907b84d6f0a2772fe20c253917408364",
+        "/etc/apk/world": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023"
+      },
+      "temperatures_mC": [
+        41000,
+        41000
+      ],
+      "verified_UTC": "2026-11-09T08:13:47.804113+00:00"
+    },
+    "original_raw_boot_hash_verified": true,
+    "native_UI": {
+      "native_boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+      "status": "pending on this newest native return",
+      "question": "The r59 transfer timed out before BOOT, and the phone has returned to installed r50 with UPower r5 active, the original boot hash, and Sway and the sensor proxy running. Do display and touch work normally on this newest boot?",
+      "recorded_UTC": "2026-11-09T08:14:37.367617+00:00"
+    },
+    "evidence": "evidence/2026-11-09-nfc-r59-transfer-timeout.json",
+    "scope": "Bounded real incomplete-interface rejection and automatic service startup; no fabricated battery capacity or native malformed-telemetry fault claim"
   }
 }
