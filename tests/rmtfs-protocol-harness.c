@@ -9,6 +9,7 @@ static const char *scenario, *fixture;
 static unsigned char request[4096], response[4096], memory[8192];
 static size_t request_len, response_len;
 static unsigned node = 7, sends, frees, mem_reads, mem_writes, syncs;
+static unsigned allocations;
 static off_t storage_offset = -1;
 static int sync_error, mem_fault;
 struct rmtfs_mem { int unused; };
@@ -57,7 +58,7 @@ int rproc_init(void) { CHECK(0); return -1; }
 int rproc_start(void) { CHECK(0); return -1; }
 int rproc_stop(void) { CHECK(0); return -1; }
 int64_t rmtfs_mem_alloc(struct rmtfs_mem *m,size_t size)
-{ CHECK(m==&mock_memory); if(size>sizeof(memory)) return -ENOMEM; return BASE; }
+{ CHECK(m==&mock_memory); allocations++; if(size>sizeof(memory)) return -ENOMEM; return BASE; }
 void rmtfs_mem_free(struct rmtfs_mem *m) { CHECK(m==&mock_memory); frees++; }
 static ssize_t memory_transfer(struct rmtfs_mem *m,unsigned long address,void *buf,ssize_t n,int write)
 {
@@ -119,12 +120,53 @@ static void io(unsigned id,unsigned direction,uint32_t sector,uint32_t address,u
     req.iovec[0]=(struct rmtfs_iovec_entry){sector,address,count};
     exchange(3,&req,rmtfs_iovec_req_ei,&resp,rmtfs_iovec_resp_ei,error);
 }
+static void malformed_dispatch(void)
+{
+    unsigned id=open_file("/boot/modem_fs1"),msg=2,txn=0,before=sends;
+    struct qrtr_packet pkt={.data=request,.data_len=sizeof(request)};
+    struct rmtfs_close_req close_req={.caller_id=id};
+    struct qmi_elem_info *resp_ei=rmtfs_close_resp_ei;
+    if(strstr(scenario,"iovec")) {
+        struct rmtfs_iovec_req req={.caller_id=id,.direction=1,.iovec_len=1,.is_force_sync=1};
+        req.iovec[0]=(struct rmtfs_iovec_entry){0,BASE,1}; msg=3; resp_ei=rmtfs_iovec_resp_ei;
+        CHECK(qmi_encode_message(&pkt,QMI_REQUEST,msg,0x1234,&req,rmtfs_iovec_req_ei)>0);
+        if(strstr(scenario,"missing-direction")) {
+            memmove(request+14,request+18,pkt.data_len-18); pkt.data_len-=4;
+        } else { CHECK(request[18]==3 && request[21]==1); request[21]=2; }
+    } else if(strstr(scenario,"alloc")) {
+        struct rmtfs_alloc_buf_req req={.caller_id=id,.buff_size=512}; msg=4; resp_ei=rmtfs_alloc_buf_resp_ei;
+        CHECK(qmi_encode_message(&pkt,QMI_REQUEST,msg,0x1234,&req,rmtfs_alloc_buf_req_ei)>0); pkt.data_len=14;
+    } else {
+        CHECK(qmi_encode_message(&pkt,QMI_REQUEST,msg,0x1234,&close_req,rmtfs_close_req_ei)>0);
+        if(strstr(scenario,"missing")) pkt.data_len=7;
+        else if(strstr(scenario,"short-scalar")) { pkt.data_len--; request[8]=3; }
+        else if(strstr(scenario,"optional-overrun")) {
+            request[pkt.data_len++]=0x10; request[pkt.data_len++]=255; request[pkt.data_len++]=255;
+        } else if(strstr(scenario,"short-header")) pkt.data_len=6;
+        else CHECK(0);
+    }
+    request[5]=(pkt.data_len-7)&255; request[6]=(pkt.data_len-7)>>8;
+    request_len=pkt.data_len;
+    int rc=handle_rmtfs(123);
+    fprintf(stderr,"DISPATCH_EFFECTS %s live=%u frees=%u allocations=%u memory_reads=%u memory_writes=%u syncs=%u\n",
+            scenario,!!storage_get(node,id),frees,allocations,mem_reads,mem_writes,syncs);
+    if(strstr(scenario,"short-header")) CHECK(rc<0 && sends==before);
+    else {
+        union { struct rmtfs_close_resp close; struct rmtfs_alloc_buf_resp alloc; } resp={0};
+        pkt.data=response; pkt.data_len=response_len;
+        CHECK(rc==0 && sends==before+1);
+        CHECK(qmi_decode_message(&resp,&txn,&pkt,QMI_RESPONSE,msg,resp_ei)>=0);
+        CHECK(txn==0x1234 && resp.close.result.result==1 && resp.close.result.error==2);
+    }
+    CHECK(storage_get(node,id) && !frees && !mem_reads && !mem_writes && !syncs && !allocations);
+}
 int main(int argc,char **argv)
 {
     CHECK(argc==3); scenario=argv[1]; fixture=argv[2]; rmem=&mock_memory;
     CHECK(storage_init(fixture,true,false)==0);
     memset(memory,0x5a,sizeof(memory));
-    if(!strcmp(scenario,"allocation-global") || !strcmp(scenario,"allocation-oversize")) {
+    if(!strncmp(scenario,"malformed-",10)) malformed_dispatch();
+    else if(!strcmp(scenario,"allocation-global") || !strcmp(scenario,"allocation-oversize")) {
         struct rmtfs_alloc_buf_req req={.caller_id=77,.buff_size=!strcmp(scenario,"allocation-global") ? 8192 : 8193};
         struct rmtfs_alloc_buf_resp resp={0};
         dbgprintf_enabled=true;

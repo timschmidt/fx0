@@ -1,0 +1,274 @@
+--- a/lib/qmi.c
++++ b/lib/qmi.c
+@@ -361,8 +361,8 @@
+ 			data_len_value = 1;
+ 		} else if (temp_ei->array_type == STATIC_ARRAY) {
+ 			data_len_value = temp_ei->elem_len;
+-		} else if (data_len_value <= 0 ||
+-			    temp_ei->elem_len < data_len_value) {
++		} else if (temp_ei->data_type != QMI_STRING &&
++			   (data_len_value <= 0 || temp_ei->elem_len < data_len_value)) {
+ 			LOGW("%s: Invalid data length\n", __func__);
+ 			return -EINVAL;
+ 		}
+@@ -527,8 +527,8 @@
+ 		decoded_bytes += rc;
+ 	}
+ 
+-	if ((dec_level <= 2 && decoded_bytes != tlv_len) ||
+-	    (dec_level > 2 && (i < elem_len || decoded_bytes > tlv_len))) {
++	if (i != elem_len || decoded_bytes > tlv_len ||
++	    (dec_level <= 2 && decoded_bytes != tlv_len)) {
+ 		LOGW("%s: Fault in decoding: dl(%d), db(%d), tl(%u), i(%d), el(%u)\n",
+ 		     __func__, dec_level, decoded_bytes, tlv_len,
+ 		     i, elem_len);
+@@ -570,6 +570,8 @@
+ 	} else {
+ 		string_len_sz = temp_ei->elem_len <= 256 ?
+ 				sizeof(uint8_t) : sizeof(uint16_t);
++		if (string_len_sz > tlv_len)
++			return -EFAULT;
+ 		rc = qmi_decode_basic_elem(&string_len, buf_src,
+ 					   1, string_len_sz);
+ 		decoded_bytes += rc;
+@@ -579,7 +581,7 @@
+ 		LOGW("%s: String len %u > Max Len %u\n",
+ 		     __func__, string_len, temp_ei->elem_len);
+ 		return -EINVAL;
+-	} else if (string_len > tlv_len) {
++	} else if (string_len > tlv_len - decoded_bytes) {
+ 		LOGW("%s: String len %u > Input Buffer Len %u\n",
+ 		     __func__, string_len, tlv_len);
+ 		return -EFAULT;
+@@ -632,75 +634,73 @@
+  * errno on error.
+  */
+ static int qmi_decode(struct qmi_elem_info *ei_array, void *out_c_struct,
+-		      const void *in_buf, uint32_t in_buf_len,
+-		      int dec_level)
++                      const void *in_buf, uint32_t in_buf_len,
++                      int dec_level)
+ {
+ 	struct qmi_elem_info *temp_ei = ei_array;
+-	uint8_t opt_flag_value = 1;
+-	uint32_t data_len_value = 0, data_len_sz = 0;
+-	uint8_t *buf_dst = out_c_struct;
+-	const uint8_t *tlv_pointer;
+-	uint32_t tlv_len = 0;
+-	uint32_t tlv_type;
++	uint8_t seen[256] = { 0 };
+ 	uint32_t decoded_bytes = 0;
+-	const void *buf_src = in_buf;
+-	int rc;
+-
+-	while (decoded_bytes < in_buf_len) {
+-		if (dec_level >= 2 && temp_ei->data_type == QMI_EOTI)
+-			return decoded_bytes;
++	const uint8_t *buf_src = in_buf;
++	uint32_t data_len_value = 0;
++
++	while (dec_level == 1 ? decoded_bytes < in_buf_len :
++	       temp_ei->data_type != QMI_EOTI) {
++		uint32_t tlv_len = in_buf_len - decoded_bytes;
++		uint32_t tlv_end = in_buf_len;
++		uint32_t tlv_type = 0;
++		uint8_t *buf_dst;
++		int rc;
+ 
+ 		if (dec_level == 1) {
+-			tlv_pointer = buf_src;
+-			QMI_ENCDEC_DECODE_TLV(&tlv_type,
+-					      &tlv_len, tlv_pointer);
+-			buf_src = (void*)((char*)buf_src + (TLV_TYPE_SIZE + TLV_LEN_SIZE));
+-			decoded_bytes += (TLV_TYPE_SIZE + TLV_LEN_SIZE);
++			const uint8_t *tlv_pointer = buf_src;
++
++			if (tlv_len < TLV_TYPE_SIZE + TLV_LEN_SIZE)
++				return -EFAULT;
++			QMI_ENCDEC_DECODE_TLV(&tlv_type, &tlv_len, tlv_pointer);
++			buf_src += TLV_TYPE_SIZE + TLV_LEN_SIZE;
++			decoded_bytes += TLV_TYPE_SIZE + TLV_LEN_SIZE;
++			if (tlv_len > in_buf_len - decoded_bytes)
++				return -EFAULT;
++			tlv_end = decoded_bytes + tlv_len;
+ 			temp_ei = find_ei(ei_array, tlv_type);
+-			if (!temp_ei && tlv_type < OPTIONAL_TLV_TYPE_START) {
+-				LOGW("%s: Inval element info\n", __func__);
+-				return -EINVAL;
+-			} else if (!temp_ei) {
+-				UPDATE_DECODE_VARIABLES(buf_src,
+-							decoded_bytes, tlv_len);
++			if (!temp_ei) {
++				if (tlv_type < OPTIONAL_TLV_TYPE_START)
++					return -EINVAL;
++				UPDATE_DECODE_VARIABLES(buf_src, decoded_bytes, tlv_len);
+ 				continue;
+ 			}
+-		} else {
+-			/*
+-			 * No length information for elements in nested
+-			 * structures. So use remaining decodable buffer space.
+-			 */
+-			tlv_len = in_buf_len - decoded_bytes;
+-		}
+-
+-		buf_dst = (void*)((char*)out_c_struct + temp_ei->offset);
++			seen[tlv_type] = 1;
++			data_len_value = 0;
++		}
++
++		buf_dst = (uint8_t *)out_c_struct + temp_ei->offset;
+ 		if (temp_ei->data_type == QMI_OPT_FLAG) {
+-			memcpy(buf_dst, &opt_flag_value, sizeof(uint8_t));
+-			temp_ei = temp_ei + 1;
+-			buf_dst = (void*)((char*)out_c_struct + temp_ei->offset);
+-		}
+-
++			*buf_dst = 1;
++			temp_ei++;
++			buf_dst = (uint8_t *)out_c_struct + temp_ei->offset;
++		}
+ 		if (temp_ei->data_type == QMI_DATA_LEN) {
+-			data_len_sz = temp_ei->elem_size == sizeof(uint8_t) ?
+-					sizeof(uint8_t) : sizeof(uint16_t);
+-			rc = qmi_decode_basic_elem(&data_len_value, buf_src,
+-						   1, data_len_sz);
++			uint32_t size = temp_ei->elem_size == sizeof(uint8_t) ?
++				       sizeof(uint8_t) : sizeof(uint16_t);
++
++			if (size > tlv_len)
++				return -EFAULT;
++			data_len_value = 0;
++			rc = qmi_decode_basic_elem(&data_len_value, buf_src, 1, size);
+ 			memcpy(buf_dst, &data_len_value, sizeof(uint32_t));
+-			temp_ei = temp_ei + 1;
+-			buf_dst = (void*)((char*)out_c_struct + temp_ei->offset);
+-			tlv_len -= data_len_sz;
+ 			UPDATE_DECODE_VARIABLES(buf_src, decoded_bytes, rc);
+-		}
+-
+-		if (temp_ei->array_type == NO_ARRAY) {
++			tlv_len -= size;
++			temp_ei++;
++			buf_dst = (uint8_t *)out_c_struct + temp_ei->offset;
++		}
++
++		if (temp_ei->array_type == NO_ARRAY)
+ 			data_len_value = 1;
+-		} else if (temp_ei->array_type == STATIC_ARRAY) {
++		else if (temp_ei->array_type == STATIC_ARRAY)
+ 			data_len_value = temp_ei->elem_len;
+-		} else if (data_len_value > temp_ei->elem_len) {
+-			LOGW("%s: Data len %u > max spec %u\n",
+-			     __func__, data_len_value, temp_ei->elem_len);
++		else if (temp_ei->data_type != QMI_STRING &&
++			 data_len_value > temp_ei->elem_len)
+ 			return -EINVAL;
+-		}
+ 
+ 		switch (temp_ei->data_type) {
+ 		case QMI_UNSIGNED_1_BYTE:
+@@ -710,36 +710,43 @@
+ 		case QMI_SIGNED_1_BYTE_ENUM:
+ 		case QMI_SIGNED_2_BYTE_ENUM:
+ 		case QMI_SIGNED_4_BYTE_ENUM:
++			if (!temp_ei->elem_size ||
++			    data_len_value > tlv_len / temp_ei->elem_size)
++				return -EFAULT;
+ 			rc = qmi_decode_basic_elem(buf_dst, buf_src,
+-						   data_len_value,
+-						   temp_ei->elem_size);
+-			UPDATE_DECODE_VARIABLES(buf_src, decoded_bytes, rc);
++					   data_len_value, temp_ei->elem_size);
+ 			break;
+-
+ 		case QMI_STRUCT:
+ 			rc = qmi_decode_struct_elem(temp_ei, buf_dst, buf_src,
+-						    data_len_value, tlv_len,
+-						    dec_level + 1);
+-			if (rc < 0)
+-				return rc;
+-			UPDATE_DECODE_VARIABLES(buf_src, decoded_bytes, rc);
++					    data_len_value, tlv_len, dec_level + 1);
+ 			break;
+-
+ 		case QMI_STRING:
+ 			rc = qmi_decode_string_elem(temp_ei, buf_dst, buf_src,
+-						    tlv_len, dec_level);
+-			if (rc < 0)
+-				return rc;
+-			UPDATE_DECODE_VARIABLES(buf_src, decoded_bytes, rc);
++					    tlv_len, dec_level);
+ 			break;
+-
+ 		default:
+-			LOGW("%s: Unrecognized data type\n", __func__);
+ 			return -EINVAL;
+ 		}
+-		temp_ei = temp_ei + 1;
+-	}
+-
++		if (rc < 0)
++			return rc;
++		if ((uint32_t)rc > tlv_len)
++			return -EFAULT;
++		UPDATE_DECODE_VARIABLES(buf_src, decoded_bytes, rc);
++		if (dec_level == 1 && decoded_bytes != tlv_end)
++			return -EFAULT;
++		temp_ei++;
++	}
++
++	if (dec_level == 1) {
++		/* A group starting with OPT_FLAG may be absent. All other
++		 * declared top-level TLVs must have appeared on the wire. */
++		for (temp_ei = ei_array; temp_ei->data_type != QMI_EOTI;) {
++			if (temp_ei->data_type != QMI_OPT_FLAG &&
++			    !seen[temp_ei->tlv_type])
++				return -EINVAL;
++			temp_ei = skip_to_next_elem(temp_ei, 1);
++		}
++	}
+ 	return decoded_bytes;
+ }
+ 
+@@ -796,15 +803,14 @@
+ 
+ int qmi_decode_header(const struct qrtr_packet *pkt, unsigned int *msg_id)
+ {
+-	const struct qmi_header *qmi = pkt->data;
+-
+-	if (qmi->msg_len != pkt->data_len - sizeof(*qmi)) {
+-		LOGW("[RMTFS] Invalid length of incoming qmi request\n");
++	const struct qmi_header *qmi;
++
++	if (!pkt || !pkt->data || !msg_id || pkt->data_len < sizeof(*qmi))
+ 		return -EINVAL;
+-	}
+-
++	qmi = pkt->data;
++	if (qmi->msg_len != pkt->data_len - sizeof(*qmi))
++		return -EINVAL;
+ 	*msg_id = qmi->msg_id;
+-
+ 	return 0;
+ }
+ 
+@@ -822,13 +828,12 @@
+ 		       const struct qrtr_packet *pkt,
+ 		       int type, int id, struct qmi_elem_info *ei)
+ {
+-	const struct qmi_header *hdr = pkt->data;
+-
+-	if (!ei)
++	const struct qmi_header *hdr;
++	unsigned int msg_id;
++
++	if (!ei || !c_struct || qmi_decode_header(pkt, &msg_id) < 0)
+ 		return -EINVAL;
+-
+-	if (!c_struct || !pkt->data || !pkt->data_len)
+-		return -EINVAL;
++	hdr = pkt->data;
+ 
+ 	if (hdr->type != type)
+ 		return -EINVAL;

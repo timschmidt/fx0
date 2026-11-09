@@ -1,0 +1,11 @@
+--- a/qmi_rmtfs.h
++++ b/qmi_rmtfs.h
+@@ -31,7 +31,7 @@
+ 
+ struct rmtfs_open_req {
+ 	uint32_t path_len;
+-	char path[256];
++	char path[256 + 1]; /* Wire maximum plus terminating NUL. */
+ };
+ 
+ struct rmtfs_open_resp {

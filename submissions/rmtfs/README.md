@@ -30,3 +30,15 @@ dependency provenance includes a retained libudev provider with `-dirty` recipe
 metadata, so hardware trial/promotion is not justified by this build. QMI/sector
 and shared-memory/lifecycle tests remain separate. No firmware or physical
 modem acceptance is claimed. See [scope and evidence](../../diagnostics/modem-control/rmtfs-userspace.md).
+
+
+## OPEN buffer and dependency decoder follow-up
+
+The [OPEN C buffer patch](../../diagnostics/modem-control/rmtfs-open-path-terminator.patch)
+retains the descriptor's 256-byte wire maximum and adds room for the NUL
+terminator. Integrate this allocation rule into `qmic` generation before
+regeneration/package promotion. The separate
+[QRTR QMI candidate](../qrtr/README.md) validates bounds and required fields;
+52 codec and 32 dispatcher cases pass per host/ARM runner. The dispatcher now
+rejects malformed requests before close/allocation/memory/sync effects. See
+[procedure and limits](../../diagnostics/modem-control/rmtfs-qmi.md).

@@ -15,7 +15,9 @@ CASES = ['open-reuse', 'close-verbose', 'close-invalid', 'close-foreign',
          'allocation-global', 'allocation-oversize', 'io-invalid', 'io-foreign',
          'read-multiple', 'write-shadow', 'read-far', 'write-far', 'read-max-sector',
          'sync-error', 'memory-invalid', 'memory-read-error', 'memory-short', 'zero-sectors',
-         'wrong-message-type', 'unknown-request', 'io-closed']
+         'wrong-message-type', 'unknown-request', 'io-closed', 'malformed-close-missing',
+         'malformed-alloc-missing', 'malformed-iovec-missing-direction', 'malformed-iovec-short-array',
+         'malformed-close-optional-overrun', 'malformed-short-header', 'malformed-close-short-scalar']
 
 
 def main():

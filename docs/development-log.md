@@ -5048,3 +5048,20 @@ string TLV directly. All decoding and remaining encoding use the pinned codec.
 No phone commands or hardware changes occur; the latest UI gate remains pending.
 See [packet procedure](../diagnostics/modem-control/rmtfs-packets.md) and
 [evidence](../evidence/2026-11-09-rmtfs-handler-candidate.json).
+
+## QMI bounds and required-field candidate
+
+The corrected codec and OPEN C buffer pass 52 codec cases plus 32 actual
+RMTFS dispatcher cases on host Clang ASan/UBSan/leak detection and static
+ARM/QEMU. Baseline codec failures are 35/52 host and 24/52 ARM. Six malformed
+dispatcher cases fail on each: missing fields or incomplete arrays can close a
+live handle, allocate or transfer data. The candidate rejects those requests
+before effects. The 256-byte OPEN wire maximum is preserved with room for NUL;
+empty/ordinary/maximum OPEN encoding now works.
+
+This is finite synthetic qualification. Generator integration, shared-memory
+spans, huge counts, ownership/lifecycle, dependency provenance and physical
+modem operation remain open. No phone commands or hardware changes occur; the
+latest UI check remains pending. See [procedure](../diagnostics/modem-control/rmtfs-qmi.md),
+[unsent QRTR draft](../submissions/qrtr/README.md) and
+[evidence](../evidence/2026-11-09-rmtfs-qmi-candidate.json).

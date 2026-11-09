@@ -1,0 +1,28 @@
+{
+  "subject": "QRTR QMI bounds/required fields and RMTFS OPEN terminator; synthetic qualification",
+  "QRTR_base": "29e36ae164389580a0f8ea7a7fdb728140ae978d",
+  "RMTFS_base": "b30a3eb38f9af283f18dbd3c7755653efc52c094",
+  "RMTFS_patch_order": [
+    "rmtfs-storage-bounds.patch",
+    "rmtfs-handler-errors.patch",
+    "rmtfs-open-path-terminator.patch"
+  ],
+  "QRTR_patch": "qrtr-qmi-bounds.patch",
+  "wire_OPEN_maximum_bytes": 256,
+  "OPEN_C_buffer_bytes": 257,
+  "candidate_qmi_c_sha256": "f2151f495bffb054feb79edf1db1c5a5fcbd2e2ddbd06628ed40646f5eba7f85",
+  "candidate_rmtfs_header_sha256": "aaf3c382e02e9d7887b6dbbebce1d2a098269fdc435d25a29f2ce29b3b5af0bd",
+  "codec_cases_each": 52,
+  "dispatcher_cases_each": 32,
+  "candidate_failures": 0,
+  "baseline_codec_failures_host": 35,
+  "baseline_codec_failures_ARM": 24,
+  "baseline_dispatcher_failures_each": 6,
+  "generator_integration_qualified": false,
+  "physical_qualification": false,
+  "full_daemon_promoted": false,
+  "patches_sha256": {
+    "qrtr-qmi-bounds.patch": "0a1c4f941352f2984004e7a9e556cb7786141a76868129f46fe1ead3fc1fd824",
+    "rmtfs-open-path-terminator.patch": "0dc4f2d83d917201aad1b022a8ad8a52d82ef750fcea4ee84706bbab7570a7f1"
+  }
+}
