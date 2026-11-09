@@ -6,6 +6,8 @@ Use a new private output directory. Errors leave device-state diagnosis to the
 caller; an uncertain transfer is never retried automatically.
 Short USB data writes also stop: resuming the remaining bytes can violate
 lk2nd's download framing. Partial readback remains allowed.
+The payload-free io.jsonl journal records each framed I/O before execution.
+An error leaves its transferred byte count unknown; it never implies zero.
 """
 import argparse
 import ctypes as c
@@ -32,15 +34,34 @@ def bulk(fd, endpoint, *, data=None, size=64):
 
 
 def stage_readback(fd, output, input_, data, io=bulk, progress=lambda **kw: None,
-                   pause=lambda: None):
+                   pause=lambda: None, trace=lambda **kw: None):
     boot.require(0 < len(data) <= MAX_BYTES, 'Invalid RAM transfer size')
 
-    def send(payload):
-        boot.require(io(fd, output, data=payload) == len(payload), 'Short command write')
+    def exchange(phase, *, payload=None, size=64, offset=None):
+        operation = {'phase': phase, 'direction': 'OUT' if payload is not None else 'IN',
+                     'requested_bytes': len(payload) if payload is not None else size}
+        if offset is not None:
+            operation['offset'] = offset
+        trace(event='started', **operation)
+        started = time.monotonic()
+        try:
+            result = (io(fd, output, data=payload) if payload is not None
+                      else io(fd, input_, size=size))
+        except Exception as error:
+            trace(event='failed', elapsed_seconds=time.monotonic() - started,
+                  error_type=type(error).__name__, errno=getattr(error, 'errno', None),
+                  actual_bytes=None, **operation)
+            raise
+        trace(event='returned', elapsed_seconds=time.monotonic() - started,
+              actual_bytes=result if payload is not None else len(result), **operation)
+        return result
 
-    def status():
+    def send(payload, phase):
+        boot.require(exchange(phase, payload=payload) == len(payload), 'Short command write')
+
+    def status(phase):
         for _ in range(32):
-            packet = io(fd, input_, size=64)
+            packet = exchange(phase)
             if packet.startswith(b'INFO'):
                 continue
             if packet.startswith(b'FAIL'):
@@ -48,18 +69,18 @@ def stage_readback(fd, output, input_, data, io=bulk, progress=lambda **kw: None
             return packet
         raise ValueError('Too many INFO packets')
 
-    def size_response():
-        packet = status()
+    def size_response(phase):
+        packet = status(phase)
         boot.require(re.fullmatch(b'DATA[0-9a-fA-F]{8}', packet) is not None,
                      'Expected DATA size response')
         boot.require(int(packet[4:], 16) == len(data), 'RAM transfer size differs')
 
-    send(f'download:{len(data):08x}'.encode())
-    size_response()
+    send(f'download:{len(data):08x}'.encode(), 'download-command')
+    size_response('download-size')
     offset = 0
     while offset < len(data):
         part = data[offset:offset + CHUNK]
-        actual = io(fd, output, data=part)
+        actual = exchange('download-data', payload=part, offset=offset)
         # A short OUT transfer can terminate lk2nd's pending USB read. Its
         # cmd_download rejects a short result, so the remaining bytes cannot
         # safely be sent as a continuation or a new command.
@@ -69,18 +90,18 @@ def stage_readback(fd, output, input_, data, io=bulk, progress=lambda **kw: None
         offset += actual
         pause()
         progress(phase='download', bytes=offset)
-    boot.require(status() == b'OKAY', 'Missing download acknowledgement')
-    send(b'upload')
-    size_response()
+    boot.require(status('download-status') == b'OKAY', 'Missing download acknowledgement')
+    send(b'upload', 'upload-command')
+    size_response('upload-size')
     received = bytearray()
     while len(received) < len(data):
         size = min(CHUNK, len(data) - len(received))
-        part = io(fd, input_, size=size)
+        part = exchange('readback-data', size=size, offset=len(received))
         boot.require(0 < len(part) <= size, 'Invalid data read progress')
         received.extend(part)
         pause()
         progress(phase='readback', bytes=len(received))
-    boot.require(status() == b'OKAY', 'Missing readback acknowledgement')
+    boot.require(status('upload-status') == b'OKAY', 'Missing readback acknowledgement')
     boot.require(received == data, 'RAM readback differs; do not boot')
     return bytes(received)
 
@@ -112,9 +133,21 @@ def main():
         if values['bytes'] % (CHUNK * 16) == 0 or values['bytes'] == len(data):
             save()
 
+    sequence = 0
+    def trace(**values):
+        nonlocal sequence
+        if values['event'] == 'started':
+            sequence += 1
+        event = {'sequence': sequence,
+                 'UTC': datetime.datetime.now(datetime.timezone.utc).isoformat(), **values}
+        journal.write(json.dumps(event) + '\n')
+        journal.flush()
+        report['last_IO'] = event
+
     fd = None
     claimed = False
     save()
+    journal = (args.output / 'io.jsonl').open('x')
     try:
         report['identity'] = boot.query(args.serial)
         node, interface, output, input_ = boot.device(args.serial)
@@ -125,22 +158,25 @@ def main():
         report['state'] = 'transferring'
         save()
         received = stage_readback(fd, output, input_, data, progress=progress,
-                                  pause=lambda: time.sleep(args.pace_ms / 1000))
+                                  pause=lambda: time.sleep(args.pace_ms / 1000), trace=trace)
         (args.output / 'readback.bin').write_bytes(received)
         report.update(state='verified', readback_sha256=hashlib.sha256(received).hexdigest())
     except Exception as error:
         report.update(state='failed', error=str(error).replace(args.serial, '<serial>'))
         raise
     finally:
-        if claimed:
-            try:
-                boot.ioctl(fd, boot.RELEASE, index)
-            except OSError:
-                pass
-        if fd is not None:
-            os.close(fd)
-        report['finished_UTC'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
-        save()
+        try:
+            if claimed:
+                try:
+                    boot.ioctl(fd, boot.RELEASE, index)
+                except OSError:
+                    pass
+            if fd is not None:
+                os.close(fd)
+            report['finished_UTC'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+            save()
+        finally:
+            journal.close()
     print('RAM bytes staged and read back exactly; no boot command sent.')
 
 

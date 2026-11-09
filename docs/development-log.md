@@ -4791,3 +4791,37 @@ additional reboot or device action follows from that correction.
 The new return has its own pending physical display/touch question. r59 startup,
 NCI communication/open teardown, RF/PM/firmware behavior and full bringup remain
 unqualified. See [trial evidence](../evidence/2026-11-09-nfc-r59-transfer-timeout.json).
+
+## November 9: trace the next preboot transfer failure
+
+Preserve all 2,001 prior inputs and inspect the installed lk2nd USB source:
+fastboot, HSUSB and its descriptor header exactly match installed commit
+`079eebe745de650df02e92fd9ca8d9fec5110c56`. The selected host kernel journal
+shows no disconnect or reported controller error during the latest stalled
+download; its first later reset is the recorded terminal-only recovery. This
+limited log does not establish electrical/controller health or a root cause.
+Kernel r59 never ran, and encoding-dependent observations do not establish a
+content-specific failure mechanism. No bootloader change is justified here.
+
+Add an integrated payload-free per-I/O frame journal to the synchronous host
+helper. It flushes a start before each command/status/data I/O and records a
+returned count or error with exact phase/offset/requested length, duration and
+errno. Failed requests retain an unknown byte count rather than inventing zero;
+positive short OUT counts remain visible and still abort. Identity probing and
+all acceptance/timeout/chunk/pacing/no-retry rules retain their existing path.
+Journal I/O adds host timing overhead; no physical transfer fix is claimed.
+
+All 29 targeted checks pass. Ten injected protocol failure boundaries include
+partial data delivery before error and partial readback. The real CLI retains
+confirmed progress, releases its USB claim, never retries and leaves no verified
+readback. Successful transfer still compares exact bytes. The previous helper
+fails the new metadata contract for data-write/status-read timeouts; two isolated
+mutants (unknown-count zero and missing flush) are rejected with no harness
+errors. Actual extracted lk2nd C functions remain covered in five completion
+modes; DMA/cache/IRQ behavior is not simulated by them.
+
+The phone is untouched this turn. Its newest UI question remains pending on
+native boot `c3ac8f04-888e-493c-bb5d-a1729a275f7d`. No new reboot, transfer,
+BOOT, flash, radio/audio operation, host Wi-Fi change or recovery-disk write
+occurs. r59 startup, reliable transport and full bringup remain open. See
+[trace evidence](../evidence/2026-11-09-ram-transfer-journal.json).

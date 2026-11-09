@@ -456,6 +456,24 @@ These checks do not exercise DMA or explain the content-dependent USB stall.
 No bootloader change or new device operation occurs. See
 [transfer framing evidence](../evidence/2026-11-08-ram-transfer-framing.json).
 
+The later transfer helper writes a payload-free `io.jsonl` journal in its new
+private output directory. Each download/upload command, size/status read and
+data I/O has a flushed start before it runs, then a returned count or error
+with phase, offset, requested bytes, elapsed time and errno. `result.json`
+retains the last event. A failed I/O has `actual_bytes: null`: confirmed earlier
+chunks do not establish how much of the failed request reached the phone.
+Positive short OUT counts remain distinct and still stop immediately. The
+identity probe uses the existing client and is not covered by this frame journal.
+
+Twenty-nine host checks pass across the CLI/framing, boot guard and actual C
+framing suites. Ten protocol failure boundaries and two deliberately weakened
+journals are covered. The old helper fails the new diagnostic contract while
+retaining its correct stop behavior. No retry, reset, BOOT, chunk, pacing,
+timeout or acceptance rule changes. Added journal I/O can affect timing; it has
+not yet been qualified on hardware or shown to fix the fault. Do not attach a
+live syscall tracer to an active transfer. See [diagnostic procedure](../diagnostics/ram-transfer/README.md)
+and [evidence](../evidence/2026-11-09-ram-transfer-journal.json).
+
 ## Earlier diagnostic build records
 
 Historical r7 checkpoint: signed native **6.18.59-r7**, Linux source

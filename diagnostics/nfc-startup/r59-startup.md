@@ -108,3 +108,9 @@ real D-Bus samples. Final systemd state is running with no jobs. The new physica
 UI answer must match this return before any further RAM entry. No r59 startup,
 signature enforcement execution or controller qualification follows from this
 failed transfer.
+
+The next host transfer can capture exact framed I/O through the integrated
+[payload-free journal](../ram-transfer/README.md). It preserves stop/readback
+requirements and does not fix the latest timeout. The current native return
+still needs its own physical UI result before entry; no automatic retry follows
+from adding diagnostics.
