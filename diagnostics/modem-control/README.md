@@ -73,3 +73,9 @@ Current [private provisioning backups](provisioning-backup.md) now match fresh
 source reads on both phone and host storage. This closes the current-image
 freshness gap as of capture, while physical restoration, RMTFS qualification,
 the native UI gate and firmware startup remain separate unfinished work.
+
+
+A later [RMTFS storage candidate](rmtfs-userspace.md) reproduces ARM/host storage
+failures and passes all twenty cases per runner after a storage-only patch.
+Full diagnostic daemons build, with dependency/source and runtime limitations
+recorded; no server is installed or started. Submission material remains draft.

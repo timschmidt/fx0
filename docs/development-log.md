@@ -4993,3 +4993,40 @@ and unchanged host state/index. Phone writes are confined to seven new regular
 backup files on rootfs. No source partition write, flash, reboot, USB reset/RAM
 transfer, module load, firmware/radio/package change or recovery-disk write.
 Full bringup remains active. See [evidence](../evidence/2026-11-09-modem-provisioning-backup.json).
+
+
+## November 9: ARM RMTFS storage defects reproduced and candidate verified
+
+The previous turn is progress: current private provisioning snapshots published
+at a66f965. Reverify 2,362 prior hashes and the five raw private payloads through
+their pinned manifest/verifier. The current native UI gate stays pending.
+
+Pin RMTFS b30a3eb and QRTR 29e36ae inputs. Blob checks reject two source writes
+that normalized trailing bytes; restore exact fetched text before compilation.
+Retain failed incomplete-header, sanitizer/runtime and static-link attempts.
+Build the full daemon for host and ARM using read-only compiler/target inputs
+in a network/device/key-home-isolated sandbox. A signed exact-version public
+libucontext development archive resolves the static libudev link. No key bytes
+or firmware are exported and recovery storage stays read-only.
+
+Exercise actual upstream storage APIs with synthetic files and guarded syscalls.
+Final baseline fails 15/20 Clang sanitizer cases and 13/20 static ARM cases;
+three ARM cases segfault. Reproduce invalid/closed handles, signed/32-bit range
+errors, incomplete snapshots, failed-read leaks, suppressed errors, uninitialized
+growth and incorrect errno. A focused storage-only patch passes all twenty cases
+on each runner, including a positive backing-write control and zero backing
+writes in shadow mode. These are storage tests, not QMI/shared-memory/physical
+qualification. Exact patch replay and full host/static ARM rebuild pass; only
+an early invalid-option daemon path is executed.
+
+Record the retained target systemd/libudev provider's `-dirty` recipe metadata.
+The archive is hashed, but clean dependency source closure remains unresolved,
+so the full daemon is not promoted, uploaded, installed or started. Draft the
+storage correction for upstream review; no upstream message/MR is sent.
+
+Final read-only phone checks preserve the same r50/r5 boot/files/services,
+taint0, original raw boot, CPU/NFC/MSS baseline and all nine APC/S5 controls.
+Fresh provisioning source/phone-copy rereads and the host private verifier pass.
+Host routes/resolver/protected index remain unchanged. No reboot, RAM entry,
+source write, module load, firmware/radio/package change or recovery-disk write.
+Full bringup remains active. See [evidence](../evidence/2026-11-09-rmtfs-storage-candidate.json).

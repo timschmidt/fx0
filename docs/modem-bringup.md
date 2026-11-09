@@ -236,3 +236,29 @@ and host routes/resolver/index are preserved on the same native boot. No reboot,
 RAM entry, firmware start, package or radio change occurs. The newest physical
 UI gate remains pending. See [backup and restoration procedure](../diagnostics/modem-control/provisioning-backup.md)
 and [snapshot evidence](../evidence/2026-11-09-modem-provisioning-backup.json).
+
+
+## RMTFS storage candidate and diagnostic builds
+
+Actual pinned upstream storage code fails 15/20 host sanitizer cases and 13/20
+static ARM cases, including three ARM segmentation faults. The storage-only
+candidate checks live handles and signed/count bounds, completes initial reads,
+preserves errors, frees failed buffers and zeroes grown shadows. It passes 20/20
+on both runners with guarded synthetic files and a persistent-write control.
+No QMI packet, shared-memory device or real provisioning image is used by tests.
+
+Full host and static ARM daemons compile with exact patch replay. The ARM image
+has no interpreter/shared dependencies and its isolated invalid-option path
+exits before memory/socket access. This is not daemon startup qualification.
+The target's retained systemd/libudev provider has `-dirty` recipe metadata;
+its archive is hashed but clean source provenance is unresolved. Close that
+dependency before trial/promotion. Packet/sector arithmetic, shared-memory
+bounds, lifecycle and physical operation still require work. Nothing is uploaded
+or installed, and firmware remains stopped.
+
+Final read-only native checks preserve r50/r5, original boot hash, services,
+taint0, CPU/NFC/MSS and raw APC/S5 controls. Current provisioning source/phone
+snapshot rereads match the private host manifest. The current UI gate remains
+pending. See [RMTFS procedure](../diagnostics/modem-control/rmtfs-userspace.md),
+[draft](../submissions/rmtfs/README.md) and
+[evidence](../evidence/2026-11-09-rmtfs-storage-candidate.json).
