@@ -5135,3 +5135,7 @@ Built paired temporary lk2nd images from the installed source. The candidate cap
 ## 2026-11-10 — PM8226 USB input actuator
 
 Verified the active native USB configuration and its programmed 500 mA SMBB selector on the charger’s SPMI slave. Added a verified `input_current_limit` actuator to the experimental charging-policy source. Zero requests suspend with a battery present, positive requests program and verify the selector before resuming, and the legacy property preserves its previous suspend behavior. The new and existing sanitizer cases and an ARM policy-enabled object build pass. USB event routing and physical current/suspend qualification remain open. [Evidence](../evidence/2026-11-10-smbb-usb-input-control.json)
+
+### PM8226 automatic USB gadget budget candidate
+
+The ChipIdea candidate keeps the PM8226 input at 100 mA until the host acknowledges a successful configuration status stage and then applies the requested budget up to 500 mA. It connects the generic-PHY peripheral path to the USB power supply with a managed device link. Both ARM configurations, the Madai DTB and the callback and policy suites pass. The code is unbooted. [Patch, scope and verification](../diagnostics/smbb-charging-policy/usb-gadget-budget.md)

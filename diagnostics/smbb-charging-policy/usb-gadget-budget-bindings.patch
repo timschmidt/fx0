@@ -1,0 +1,67 @@
+diff --git a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+--- a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
++++ b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+@@ -75,6 +75,13 @@
+     type: boolean
+     deprecated: true
+ 
++  power-supplies:
++    description: Charger supplying the gadget through VBUS. The controller
++      forwards USB current requests to its USB input supply in peripheral
++      mode when using a generic PHY.
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    maxItems: 1
++
+   ulpi:
+     type: object
+     additionalProperties: false
+@@ -91,6 +98,17 @@
+   - $ref: chipidea,usb2-common.yaml#
+   - $ref: usb-hcd.yaml#
+   - $ref: usb-drd.yaml#
++
++  - if:
++      required:
++        - power-supplies
++    then:
++      properties:
++        dr_mode:
++          const: peripheral
++        usb-role-switch: false
++      required:
++        - dr_mode
+ 
+ unevaluatedProperties: false
+ 
+diff --git a/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml b/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml
+--- a/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml
++++ b/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml
+@@ -11,6 +11,14 @@
+ 
+ allOf:
+   - $ref: power-supply.yaml#
++  - if:
++      required:
++        - qcom,usb-gadget-current-limit
++    then:
++      properties:
++        compatible:
++          const: qcom,pm8226-charger
++        usb-charge-current-limit: false
+ 
+ properties:
+   qcom,software-charge-control:
+@@ -19,6 +27,13 @@
+       Experimental firmware-to-native software charging handoff. Charging must
+       already be inhibited before native dependencies can defer probe. The
+       parent keeps charging off until its policy child validates fresh inputs.
++
++  qcom,usb-gadget-current-limit:
++    type: boolean
++    description: |
++      Let the USB gadget controller manage the PM8226 USB input limit.
++      Initialize the limit to 100000 uA and expose the effective and
++      programmed limits as read-only power supply attributes.
+ 
+   qcom,boot-charge-inhibited:
+     type: boolean

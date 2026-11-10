@@ -721,3 +721,7 @@ native telemetry faults/stale-data policy and live rollback remain open. See
 ## November 10 USB input actuator
 
 A native read-only check verifies the configured 500 mA high-speed gadget and the PM8226 USB selector on its actual SPMI slave. Source inspection finds that ChipIdea’s legacy PHY callback leaves the Fx0 generic PHY without a USB budget consumer. The experimental SMBB patch adds a battery-checked USB suspend request and verifies a positive limit before resuming. Forty-eight new callback cases, 8,846 existing policy/legacy cases and the ARM driver object pass. Automatic budgeting and physical charge, suspend and source-loss tests remain open. [Actuator and evidence](../diagnostics/smbb-charging-policy/usb-input-control.md)
+
+### Automatic USB gadget budget candidate
+
+The Madai controller now has a source candidate that routes gadget budgets to the verified PM8226 USB input actuator. It defaults to 100 mA and waits for successful USB configuration status completion before requesting up to 500 mA. The worker handles bus suspend, resume and detach. Managed sysfs limits are read-only and a battery-absent suspend retains 100 mA input. ARM object and DTB builds and actual-source host fixtures pass. Physical bus timing, VBUS-valid behavior during suspend, input current and wall charging remain open. [USB budget candidate](../diagnostics/smbb-charging-policy/usb-gadget-budget.md)

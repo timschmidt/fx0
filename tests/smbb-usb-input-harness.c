@@ -30,6 +30,7 @@ struct smbb_charger {
     struct regmap *regmap;
     struct mutex charge_lock, statlock;
     bool usb_input_control;
+    bool usb_budget_managed;
     unsigned long status;
     unsigned attr[_ATTR_CNT];
 };
@@ -110,6 +111,7 @@ static void reset(bool suspended)
     map.registers[SMBB_USB_SUSPEND] = suspended ? 0xa1 : 0xa0;
     map.registers[SMBB_BAT_PRES_STATUS] = PRES_STATUS_BAT_PRES;
     charger.usb_input_control = true;
+    charger.usb_budget_managed = false;
     charger.attr[ATTR_USBIN_IMAX] = 500000;
 }
 static int set(enum power_supply_property property, int value)
@@ -225,6 +227,37 @@ int main(void)
     map.fail_at = 1;
     map.registers[SMBB_BAT_PRES_STATUS] = 0;
     PASS(set(input, 100000) == -EREMOTEIO && !writes(SMBB_USB_SUSPEND));
+#ifdef HAVE_USB_BUDGET_MANAGED
+    reset(false);
+    charger.usb_budget_managed = true;
+    PASS(!smbb_usbin_writable_property(&psy, input));
+    PASS(!smbb_usbin_writable_property(&psy, legacy));
+    PASS(set(legacy, 200000) == -EBUSY && !map.operations);
+    PASS(!set(input, 500000) && map.registers[SMBB_USB_IMAX] == 5);
+    PASS(!set(input, 0) && map.registers[SMBB_USB_SUSPEND] == 0xa1);
+    PASS(!get(input, &value) && value == 0);
+    PASS(!set(input, 500000) && map.registers[SMBB_USB_SUSPEND] == 0xa0);
+
+    reset(false);
+    charger.usb_budget_managed = true;
+    map.registers[SMBB_BAT_PRES_STATUS] = 0;
+    PASS(set(input, 0) == -ENODEV && map.registers[SMBB_USB_IMAX] == 0 &&
+         map.registers[SMBB_USB_SUSPEND] == 0xa0);
+    PASS(!get(input, &value) && value == 100000);
+
+    reset(true);
+    charger.usb_budget_managed = true;
+    map.registers[SMBB_BAT_PRES_STATUS] = 0;
+    PASS(set(input, 0) == -ENODEV && map.registers[SMBB_USB_IMAX] == 0 &&
+         map.registers[SMBB_USB_SUSPEND] == 0xa0);
+
+    reset(false);
+    charger.usb_budget_managed = true;
+    map.registers[SMBB_BAT_PRES_STATUS] = 0;
+    map.fail_at = 2;
+    PASS(set(input, 0) == -EREMOTEIO && map.registers[SMBB_USB_IMAX] == 5 &&
+         !writes(SMBB_USB_SUSPEND));
+#endif
     printf("USB_INPUT_CASES %u\n", cases);
     return 0;
 }

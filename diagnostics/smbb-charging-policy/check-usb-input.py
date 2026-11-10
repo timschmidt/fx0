@@ -28,6 +28,8 @@ def main():
     spec.loader.exec_module(extractor)
     names = r'SMBB_\w+|STATUS_\w+|USB_TYPE_CHGPTH|USB_SUBTYPE_SMBP|USB_SUSPEND_EN|PRES_STATUS_BAT_PRES'
     macros = re.findall(r'^#define (?:'+names+r')\s+[^\n]+$', source, re.MULTILINE)
+    if '\tbool usb_budget_managed;' in source:
+        macros.append('#define HAVE_USB_BUDGET_MANAGED')
     enum = source[source.index('enum smbb_attr {'):source.index('struct smbb_charger {')]
     (out/'driver-definitions.h').write_text('\n'.join(macros)+'\n'+enum)
     limits = source[source.index('static int smbb_vbat_weak_fn('):source.index('static int smbb_charger_attr_read(')]

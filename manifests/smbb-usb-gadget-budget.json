@@ -1,0 +1,30 @@
+{
+  "subject": "Fx0 PM8226 USB gadget current budget candidate",
+  "source_commit": "2457eebe0bb67bcb5eccee7916650629cc4e9bf0",
+  "patches_in_order": [
+    {
+      "path": "diagnostics/smbb-charging-policy/usb-input-control.patch",
+      "sha256": "49b0a0d575406b9def08f7842147ea5586c4f279ea106024b9dc32c426e998e3"
+    },
+    {
+      "path": "diagnostics/smbb-charging-policy/usb-gadget-budget-bindings.patch",
+      "sha256": "9770fbac1fba5a00ce157cff0039767dbf70787dddcda6dfa0409fd7fdd6fb49"
+    },
+    {
+      "path": "diagnostics/smbb-charging-policy/usb-gadget-budget.patch",
+      "sha256": "0426f800506f925149be591eb7f67c70e5ac1a6c2c08f88333edcf93b8199438"
+    }
+  ],
+  "default_input_mA": 100,
+  "configured_input_cap_mA": 500,
+  "battery_absent_suspend_fallback_mA": 100,
+  "configured_grant_after_EP0_IN_completion": true,
+  "automatic_USB_budget_routing_compiled": true,
+  "chipidea_callback_checks": 59,
+  "managed_SMBB_callback_checks": 59,
+  "original_actuator_compatibility_checks": 48,
+  "existing_policy_and_legacy_checks": 8846,
+  "DTB_sha256": "10e211d76019644d5e87fefa1197c2b1e17ee2860a9d4d8c0888b8f535bf07c5",
+  "physical_qualification": false,
+  "installed": false
+}
