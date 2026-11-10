@@ -297,3 +297,21 @@ modem operation remain open. No phone commands or hardware changes occur; the
 latest UI check remains pending. See [procedure](../diagnostics/modem-control/rmtfs-qmi.md),
 [unsent QRTR draft](../submissions/qrtr/README.md) and
 [evidence](../evidence/2026-11-09-rmtfs-qmi-candidate.json).
+
+## Pinned QMI generator regeneration
+
+The matching qmic kernel-output patch now preserves the OPEN terminator byte
+through regeneration and emits optional string validity markers. All 28 pinned
+qmic files match upstream Git blob hashes. Direct generation and the actual
+RMTFS Makefile target agree; RMTFS descriptor C bytes remain identical to
+upstream. Sixteen normal wire-byte/round-trip cases pass on host sanitizers and
+static ARM, including both current-generator 32-bit RMTFS count fields.
+
+This verifies source regeneration, not distribution packaging or full daemon
+qualification. Legacy 256-byte nested-string length encoding remains unresolved;
+RMTFS uses only a top-level path string. Shared-memory/lifecycle, dependency
+provenance and physical modem work remain open. No phone command or hardware
+change occurs; the current UI check remains pending. See
+[generator procedure](../diagnostics/modem-control/qmic-generation.md),
+[unsent draft](../submissions/qmic/README.md) and
+[evidence](../evidence/2026-11-09-qmic-generation.json).

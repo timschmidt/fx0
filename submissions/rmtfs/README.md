@@ -42,3 +42,13 @@ regeneration/package promotion. The separate
 52 codec and 32 dispatcher cases pass per host/ARM runner. The dispatcher now
 rejects malformed requests before close/allocation/memory/sync effects. See
 [procedure and limits](../../diagnostics/modem-control/rmtfs-qmi.md).
+
+
+## Reproducible source generation checkpoint
+
+The [pinned qmic patch](../qmic/README.md) now reproduces the corrected OPEN
+capacity through RMTFS's real Makefile target. The generated descriptor source
+is byte-identical to upstream; the current generator emits two count fields as
+uint32_t. Sixteen normal cases verify generated wire bytes and round trips on
+host/ARM. Distribution recipe integration and full daemon qualification remain
+open. See [generation procedure](../../diagnostics/modem-control/qmic-generation.md).

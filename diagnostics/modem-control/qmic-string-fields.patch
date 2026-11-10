@@ -1,0 +1,39 @@
+--- a/kernel.c
++++ b/kernel.c
+@@ -34,7 +34,7 @@
+ 			break;
+ 		case TYPE_STRING:
+ 			fprintf(fp, "\tuint32_t %s_len;\n", qsm->name);
+-			fprintf(fp, "\tchar %s[256];\n", qsm->name);
++			fprintf(fp, "\tchar %s[256 + 1];\n", qsm->name);
+ 			break;
+ 		}
+ 	}
+@@ -142,8 +142,10 @@
+ 			emit_native_type(fp, package, qm, qmm);
+ 			break;
+ 		case TYPE_STRING:
++			if (!qmm->required)
++				fprintf(fp, "\tbool %s_valid;\n", qmm->name);
+ 			fprintf(fp, "\tuint32_t %s_len;\n", qmm->name);
+-			fprintf(fp, "\tchar %s[256];\n", qmm->name);
++			fprintf(fp, "\tchar %s[256 + 1];\n", qmm->name);
+ 			break;
+ 		case TYPE_STRUCT:
+ 			emit_struct_type(fp, package, qm, qmm);
+@@ -289,6 +291,15 @@
+ 			emit_struct_ref_ei(fp, package, qm, qmm);
+ 			break;
+ 		case TYPE_STRING:
++			if (!qmm->required)
++				fprintf(fp, "\t{\n"
++				    "\t\t.data_type = QMI_OPT_FLAG,\n"
++				    "\t\t.elem_len = 1,\n"
++				    "\t\t.elem_size = sizeof(uint8_t),\n"
++				    "\t\t.tlv_type = %4$d,\n"
++				    "\t\t.offset = offsetof(struct %1$s_%2$s, %3$s_valid),\n"
++				    "\t},\n",
++				    package, qm->name, qmm->name, qmm->id);
+ 			fprintf(fp, "\t{\n"
+ 				    "\t\t.data_type = QMI_STRING,\n"
+ 				    "\t\t.elem_len = 256,\n"
