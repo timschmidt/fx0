@@ -342,3 +342,8 @@ The [RMTFS span-validation candidate](../diagnostics/modem-control/rmtfs-shared-
 ## 2026-11-10 Linux shared-memory discovery
 
 The [RMTFS discovery candidate](../diagnostics/modem-control/rmtfs-discovery.md) releases partially acquired resources, stops on errors from present RFSA/UIO devices, and checks DT cell widths and the complete region before the legacy mapping fallback. Forty-six constructor and thirty-five memory cases pass on host sanitizers and ARM/QEMU. The offline fx0 DTB matches the test region. No daemon startup or phone action occurs; the latest display/touch gate and physical modem qualification remain open.
+
+
+## 2026-11-10 RMTFS daemon lifecycle
+
+The daemon now holds one remoteproc power reference across QRTR reconnects and serves requests while its serialized state worker completes. Nineteen lifecycle cases, thirty-five memory checks and fifteen selected protocol regressions pass on host sanitizers and ARM/QEMU. A fresh read-only sample confirms the installed r50/r5 baseline and disabled modem. The prepared offline probe is still awaiting the current physical display and touch result. [Lifecycle scope and evidence](../diagnostics/modem-control/rmtfs-lifecycle.md)

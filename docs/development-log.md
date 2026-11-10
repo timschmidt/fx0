@@ -5110,3 +5110,8 @@ Added a common memory-span validator, 64-bit physical helper parameters, backend
 ## 2026-11-10 — RMTFS Linux memory discovery
 
 Fixed duplicate fd closes and incomplete discovery cleanup. Linux RFSA/UIO validate metadata before taking ownership; only a missing device permits fallback. DT parsing uses explicit cell counts and rejects absent, incomplete or ambiguous regions before `/dev/mem` opens. Forty-six discovery and thirty-five memory cases pass on each of host ASan/UBSan and ARM/QEMU. The rebuilt static ARM candidate preserves the eleven authenticated persistent link inputs. Actual device mapping, Android-specific discovery, remoteproc/service lifecycle and physical operation remain unqualified. No phone action occurs. See [evidence](../evidence/2026-11-10-rmtfs-discovery-candidate.json).
+
+
+## 2026-11-10 — RMTFS daemon lifecycle
+
+Serialized remoteproc state writes in one worker, balanced successful start with one stop across QRTR reconnects, and handled shutdown signals without racing the poll wait. Nineteen lifecycle cases and fifty selected regressions pass on both host sanitizers and ARM/QEMU. The complete ARM binary preserves eleven authenticated persistent runtime inputs. A read-only native sample confirms r50/r5, the expected boot hash and rails, active Sway and disabled MSS. Physical driver and modem qualification remain open. [Evidence](../evidence/2026-11-10-rmtfs-lifecycle-candidate.json)

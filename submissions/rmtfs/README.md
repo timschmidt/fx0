@@ -71,3 +71,8 @@ The [incremental memory patch](../../diagnostics/modem-control/rmtfs-shared-memo
 ## Linux discovery candidate follow-up
 
 The [discovery patch](../../diagnostics/modem-control/rmtfs-device-discovery.patch) gives fd, mapping and libudev resources explicit owners, limits fallback to absent device paths, and validates a unique DT region with declared cell counts before mapping. Forty-six synthetic constructor cases and thirty-five memory regressions pass on host sanitizers and ARM/QEMU. See [scope and replay instructions](../../diagnostics/modem-control/rmtfs-discovery.md). Android-specific code, live driver mappings and remoteproc/service lifecycle remain open. This remains a draft.
+
+
+## Daemon lifecycle follow-up
+
+Serialize optional remoteproc start and stop in one worker, keep its power reference independent of QRTR reconnection, and service requests while state writes finish. Correct socket and remoteproc descriptor cleanup and report startup failures to the caller. Nineteen synthetic lifecycle cases and fifty selected regressions pass on both host and ARM. Live remoteproc and firmware behavior remain open. [Lifecycle patch and verification](../../diagnostics/modem-control/rmtfs-lifecycle.md)
