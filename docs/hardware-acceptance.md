@@ -496,3 +496,8 @@ additional reboot or device action follows from that correction.
 The new return has its own pending physical display/touch question. r59 startup,
 NCI communication/open teardown, RF/PM/firmware behavior and full bringup remain
 unqualified. See [trial evidence](../evidence/2026-11-09-nfc-r59-transfer-timeout.json).
+
+
+## November 10 microSD observation and bias comparison
+
+Native r50 passes a bounded 4 MiB direct-read control with the expected read sectors, 18 SDHCI completions, zero GPIO37 interrupts and zero written sectors. A stock-matched bias candidate is prepared with a matching pull-up control, exact retained r50 kernel and the independent RAM return timer. The vendor bias difference is a hypothesis for the fsync-associated interrupt burst. Card insertion/removal, writeback and suspend still need physical comparison. [Procedure and evidence](../diagnostics/microsd/README.md)

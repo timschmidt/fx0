@@ -5120,3 +5120,8 @@ Serialized remoteproc state writes in one worker, balanced successful start with
 ## 2026-11-10 — r59 alternate RAM encoding
 
 The r59 timeout followed 524,288 confirmed bytes inside the compressed kernel. Relinked an XZ4 candidate with the same decoded kernel, DTB and compressed initramfs. The new 16 KiB frame differs in 16,325 bytes. The exact ARM decompressor produces the same Image from the signed, XZ3 and XZ4 streams. Six image refusal checks and the offline entry checks pass. The one-use trial is prepared, with current display/touch confirmation and physical USB transfer still pending. [Evidence](../evidence/2026-11-10-nfc-r59-xz4-encoding.json)
+
+
+## 2026-11-10 — microSD IRQ attribution and GPIO37 bias candidate
+
+A native r50 direct read accounts for 8,192 sectors and 18 SDHCI completions, with zero power/CD interrupts and zero written sectors. Both idle samples are quiet. LG’s Madai gpiomux disables GPIO37 internal bias, while r50 shows a pull-up. A one-property DT candidate matches the vendor bias with active-low detection preserved. DT validation and five observer regression methods pass. Matched r50 RAM images are prepared for the control and candidate. Physical writeback and suspend comparison remain open. [Evidence](../evidence/2026-11-10-microsd-cd-bias.json)
