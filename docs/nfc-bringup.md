@@ -421,3 +421,8 @@ additional reboot or device action follows from that correction.
 The new return has its own pending physical display/touch question. r59 startup,
 NCI communication/open teardown, RF/PM/firmware behavior and full bringup remain
 unqualified. See [trial evidence](../evidence/2026-11-09-nfc-r59-transfer-timeout.json).
+
+
+## November 10 r59 alternate RAM encoding
+
+The r59 XZ4 candidate changes the kernel bytes at the first unconfirmed download frame. The exact r59 ARM decompressor verifies the same runtime Image, and the DTB, initramfs and timer are identical. The new 6,330,368-byte image and separate entry helpers are prepared for a future moduleless trial. Transfer reliability, startup and controller qualification remain open. [Encoding verification](../diagnostics/ram-transfer/r59-xz4.md)

@@ -5115,3 +5115,8 @@ Fixed duplicate fd closes and incomplete discovery cleanup. Linux RFSA/UIO valid
 ## 2026-11-10 — RMTFS daemon lifecycle
 
 Serialized remoteproc state writes in one worker, balanced successful start with one stop across QRTR reconnects, and handled shutdown signals without racing the poll wait. Nineteen lifecycle cases and fifty selected regressions pass on both host sanitizers and ARM/QEMU. The complete ARM binary preserves eleven authenticated persistent runtime inputs. A read-only native sample confirms r50/r5, the expected boot hash and rails, active Sway and disabled MSS. Physical driver and modem qualification remain open. [Evidence](../evidence/2026-11-10-rmtfs-lifecycle-candidate.json)
+
+
+## 2026-11-10 — r59 alternate RAM encoding
+
+The r59 timeout followed 524,288 confirmed bytes inside the compressed kernel. Relinked an XZ4 candidate with the same decoded kernel, DTB and compressed initramfs. The new 16 KiB frame differs in 16,325 bytes. The exact ARM decompressor produces the same Image from the signed, XZ3 and XZ4 streams. Six image refusal checks and the offline entry checks pass. The one-use trial is prepared, with current display/touch confirmation and physical USB transfer still pending. [Evidence](../evidence/2026-11-10-nfc-r59-xz4-encoding.json)

@@ -54,3 +54,8 @@ question remains pending before another entry.
 
 See [evidence](../../evidence/2026-11-09-ram-transfer-journal.json) and the
 [latest failed attempt](../../evidence/2026-11-09-nfc-r59-transfer-timeout.json).
+
+
+## Alternate r59 encoding
+
+The first unconfirmed r59 request falls in the compressed kernel. The new XZ4 image changes 16,325 bytes in that 16 KiB frame while preserving the decoded kernel, appended DTB and compressed initramfs. The exact r59 ARM decompressor verifies all three encodings under QEMU. Physical transfer qualification remains open. [Encoding and verification](r59-xz4.md)
