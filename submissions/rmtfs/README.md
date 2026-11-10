@@ -61,3 +61,8 @@ uses signed eudev and clean target GCC/musl runtime package members. Five real
 libudev API cases pass in synthetic sysfs, and the full ARM diagnostic link has
 no runtime shared dependencies. Earlier dirty-metadata builds remain separate.
 Compiler-executable provenance, packaging and physical startup remain open.
+
+
+## Shared-memory candidate follow-up
+
+The [incremental memory patch](../../diagnostics/modem-control/rmtfs-shared-memory-bounds.patch) adds subtraction-based range checks shared by mapped/fd transfers, 64-bit physical parameters, allocation representation checks and IOVEC preflight before the first transfer. Valid empty-write flush semantics remain. Thirty-five memory tests and fifteen selected functional regressions pass on host sanitizers and ARM/QEMU; public patch replay matches the full candidate. Metadata/mapping guards in constructors are compiled but not exercised. Full daemon lifecycle, physical operation, compiler recipe identity and packaging remain open. See [scope and replay instructions](../../diagnostics/modem-control/rmtfs-shared-memory.md). This remains a draft; no upstream submission or phone startup occurs.

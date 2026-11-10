@@ -332,3 +332,8 @@ packaging, full startup, shared-memory spans, lifecycle and physical modem work
 remain open; the native UI gate stays pending. See
 [provider procedure](../diagnostics/modem-control/rmtfs-libudev.md) and
 [evidence](../evidence/2026-11-09-rmtfs-libudev-candidate.json).
+
+
+## 2026-11-10 shared-memory candidate
+
+The [RMTFS span-validation candidate](../diagnostics/modem-control/rmtfs-shared-memory.md) checks mapped and fd-backed transfers through one validator, preserves 64-bit physical addresses on ARM, and checks all IOVEC spans before the first transfer. Thirty-five memory cases and fifteen selected functional regressions pass on both host sanitizers and static ARM/QEMU. The complete ARM candidate links the same eleven authenticated runtime inputs; only early CLI executes. Constructor lifecycle, physical mapping, modem operation and packaging remain open. No phone commands occur; the newest display/touch gate remains pending.

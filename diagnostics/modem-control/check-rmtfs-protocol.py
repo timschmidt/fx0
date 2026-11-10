@@ -28,7 +28,11 @@ def main():
     parser.add_argument('--compiler-json', default='["clang"]')
     parser.add_argument('--runner-json', default='[]')
     parser.add_argument('--cflags-json', default='[]')
+    parser.add_argument('--cases-json', default=json.dumps(CASES))
     args = parser.parse_args()
+    cases = json.loads(args.cases_json)
+    if not cases or any(case not in CASES for case in cases):
+        parser.error('cases must be a nonempty subset of CASES')
     args.output.mkdir(mode=0o700, exist_ok=False)
     out, source, qrtr = args.output.resolve(), args.source.resolve(), args.qrtr.resolve()
     binary = out/'protocol-harness'
@@ -48,7 +52,7 @@ def main():
     (out/'build.log').write_text(build.stdout+build.stderr)
     build.check_returncode()
     results = []
-    for case in CASES:
+    for case in cases:
         with tempfile.TemporaryDirectory(dir=out) as directory:
             root = Path(directory)
             for name in ['modem_fs1', 'modem_fs2']:

@@ -102,3 +102,8 @@ Alpine eudev and target GCC/musl inputs instead of the retained dirty-metadata
 systemd library and cross-runtime files. It preserves this earlier candidate.
 Five synthetic libudev API cases pass; full daemon startup remains unqualified.
 Compiler-executable recipe identity and packaging are still open.
+
+
+## Shared-memory follow-up
+
+The [shared-memory candidate](rmtfs-shared-memory.md) adds common range validation for both backends and checks all IOVEC spans before transferring. Thirty-five memory cases and fifteen selected functional regressions pass on both host and ARM. Physical mapping, constructors, service lifecycle and modem operation remain unqualified. This preserves the earlier source/build evidence.

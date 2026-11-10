@@ -60,7 +60,9 @@ int rproc_stop(void) { CHECK(0); return -1; }
 int64_t rmtfs_mem_alloc(struct rmtfs_mem *m,size_t size)
 { CHECK(m==&mock_memory); allocations++; if(size>sizeof(memory)) return -ENOMEM; return BASE; }
 void rmtfs_mem_free(struct rmtfs_mem *m) { CHECK(m==&mock_memory); frees++; }
-static ssize_t memory_transfer(struct rmtfs_mem *m,unsigned long address,void *buf,ssize_t n,int write)
+int rmtfs_mem_validate_span(const struct rmtfs_mem *m,uint64_t address,uint64_t n)
+{ CHECK(m==&mock_memory); return address<BASE || address-BASE>sizeof(memory) || n>sizeof(memory)-(address-BASE) ? -EINVAL : 0; }
+static ssize_t memory_transfer(struct rmtfs_mem *m,uint64_t address,void *buf,ssize_t n,int write)
 {
     CHECK(m==&mock_memory && n==512);
     if(write) mem_writes++; else mem_reads++;
@@ -69,9 +71,9 @@ static ssize_t memory_transfer(struct rmtfs_mem *m,unsigned long address,void *b
     if(write) memcpy(memory+(address-BASE),buf,n); else memcpy(buf,memory+(address-BASE),n);
     return n;
 }
-ssize_t rmtfs_mem_read(struct rmtfs_mem *m,unsigned long address,void *buf,ssize_t n)
+ssize_t rmtfs_mem_read(struct rmtfs_mem *m,uint64_t address,void *buf,ssize_t n)
 { return memory_transfer(m,address,buf,n,0); }
-ssize_t rmtfs_mem_write(struct rmtfs_mem *m,unsigned long address,const void *buf,ssize_t n)
+ssize_t rmtfs_mem_write(struct rmtfs_mem *m,uint64_t address,const void *buf,ssize_t n)
 { return memory_transfer(m,address,(void *)buf,n,1); }
 
 static void exchange(unsigned id,void *req,struct qmi_elem_info *req_ei,void *resp,struct qmi_elem_info *resp_ei,unsigned error)
@@ -214,7 +216,7 @@ int main(int argc,char **argv)
             CHECK(storage_offset==(off_t)((uint64_t)sector*512));
             if(!write) CHECK(memory[0]==0 && memory[511]==0);
         } else if(!strcmp(scenario,"sync-error")) { sync_error=1; io(id,1,0,BASE,1,1); CHECK(syncs==1); }
-        else if(!strcmp(scenario,"memory-invalid")) { io(id,0,0,BASE-1,1,1); CHECK(mem_writes==1); }
+        else if(!strcmp(scenario,"memory-invalid")) { io(id,0,0,BASE-1,1,1); CHECK(!mem_writes && storage_offset==-1); }
         else if(!strcmp(scenario,"memory-read-error")) { mem_fault=1; io(id,1,0,BASE,1,1); CHECK(storage_offset==-1); }
         else if(!strcmp(scenario,"memory-short")) { mem_fault=2; io(id,1,0,BASE,1,1); CHECK(storage_offset==-1); }
         else if(!strcmp(scenario,"zero-sectors")) { io(id,0,0,BASE,0,0); CHECK(!mem_reads && !mem_writes); }
