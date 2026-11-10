@@ -1,0 +1,38 @@
+{
+  "subject": "Temporary lk2nd Fastboot request-size comparison",
+  "installed_source_commit": "079eebe745de650df02e92fd9ca8d9fec5110c56",
+  "patch": "diagnostics/ram-transfer/lk2nd-fastboot-single-td.patch",
+  "patch_sha256": "963d8b025ba84e28a23559df2a28642c49233ed83b62a3e3f87d1ad0290485d0",
+  "images": {
+    "control": {
+      "path": "local/lk2nd-fastboot-td-01/control-build/build-lk2nd-msm8226/lk2nd.img",
+      "bytes": 258064,
+      "sha256": "d85a1dbb3720e468504c1a14a417d79191e3e6852013d41ed230139005da09ef",
+      "lk_bin_sha256": "4601b317efd0f5b4fa008837edca0e24c67fd2e05130ace4bc606308f07b7b67",
+      "qcdt_sha256": "0708b62955a4ad2ed88bd3c3a4b569318e31688397f52b7850510d7478f2aefe",
+      "config_sha256": "e9771459efab29e3ef7dcfbc835c85a1a3e73fbe3efadbfcba6f657e7cf1d1dd",
+      "qcdt_version": 2,
+      "qcdt_entries": 1,
+      "device": "lg,madai"
+    },
+    "single_td": {
+      "path": "local/lk2nd-fastboot-td-01/single-td-build/build-lk2nd-msm8226/lk2nd.img",
+      "bytes": 258064,
+      "sha256": "60a88b8bedfe6c3f18815493701e0f981e0af45eb2ddfb2ca2e05073bf2d938b",
+      "lk_bin_sha256": "6b8baec3fa1748aef94c331b6cfd72507224c25202971856eced53c9311bce4a",
+      "qcdt_sha256": "0708b62955a4ad2ed88bd3c3a4b569318e31688397f52b7850510d7478f2aefe",
+      "config_sha256": "e9771459efab29e3ef7dcfbc835c85a1a3e73fbe3efadbfcba6f657e7cf1d1dd",
+      "qcdt_version": 2,
+      "qcdt_entries": 1,
+      "device": "lg,madai"
+    }
+  },
+  "raw_LK_changed_bytes": 4,
+  "data_request_limit_bytes": {
+    "control": 32768,
+    "single_td": 16384
+  },
+  "framing_cases_passed": 16,
+  "physical_boot_or_transfer": false,
+  "USB_timeout_root_cause_identified": false
+}

@@ -5125,3 +5125,8 @@ The r59 timeout followed 524,288 confirmed bytes inside the compressed kernel. R
 ## 2026-11-10 — microSD IRQ attribution and GPIO37 bias candidate
 
 A native r50 direct read accounts for 8,192 sectors and 18 SDHCI completions, with zero power/CD interrupts and zero written sectors. Both idle samples are quiet. LG’s Madai gpiomux disables GPIO37 internal bias, while r50 shows a pull-up. A one-property DT candidate matches the vendor bias with active-low detection preserved. DT validation and five observer regression methods pass. Matched r50 RAM images are prepared for the control and candidate. Physical writeback and suspend comparison remain open. [Evidence](../evidence/2026-11-10-microsd-cd-bias.json)
+
+
+## 2026-11-10 — lk2nd Fastboot descriptor comparison
+
+Built paired temporary lk2nd images from the installed source. The candidate caps Fastboot requests at one 16 KiB HSUSB descriptor. Full ARM binary comparison finds only four changed limit-immediate bytes, with identical board table and configuration. Sixteen mocked download/upload framing cases pass. The physical comparison with the same r59 payload remains open. [Evidence](../evidence/2026-11-10-lk2nd-fastboot-single-td.json)

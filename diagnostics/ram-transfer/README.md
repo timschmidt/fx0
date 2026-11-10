@@ -59,3 +59,8 @@ See [evidence](../../evidence/2026-11-09-ram-transfer-journal.json) and the
 ## Alternate r59 encoding
 
 The first unconfirmed r59 request falls in the compressed kernel. The new XZ4 image changes 16,325 bytes in that 16 KiB frame while preserving the decoded kernel, appended DTB and compressed initramfs. The exact r59 ARM decompressor verifies all three encodings under QEMU. Physical transfer qualification remains open. [Encoding and verification](r59-xz4.md)
+
+
+## lk2nd request-size comparison
+
+Two temporary lk2nd images isolate the 32 KiB versus 16 KiB Fastboot request limit. Their raw ARM binaries differ only in four limit-immediate bytes, and their board table and configuration match. Sixteen mocked framing cases pass. Physical comparison will use the same previously stalled r59 payload. [Build and comparison](lk2nd-single-td.md)
