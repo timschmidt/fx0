@@ -52,3 +52,12 @@ is byte-identical to upstream; the current generator emits two count fields as
 uint32_t. Sixteen normal cases verify generated wire bytes and round trips on
 host/ARM. Distribution recipe integration and full daemon qualification remain
 open. See [generation procedure](../../diagnostics/modem-control/qmic-generation.md).
+
+
+## Provider qualification follow-up
+
+The [new provider/runtime candidate](../../diagnostics/modem-control/rmtfs-libudev.md)
+uses signed eudev and clean target GCC/musl runtime package members. Five real
+libudev API cases pass in synthetic sysfs, and the full ARM diagnostic link has
+no runtime shared dependencies. Earlier dirty-metadata builds remain separate.
+Compiler-executable provenance, packaging and physical startup remain open.

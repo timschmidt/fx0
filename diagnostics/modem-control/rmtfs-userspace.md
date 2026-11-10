@@ -93,3 +93,12 @@ current native UI gate remains pending. No reboot, upload, installation, RMTFS
 start, firmware/radio action or recovery-disk write occurs. See
 [evidence](../../evidence/2026-11-09-rmtfs-storage-candidate.json) and
 [submission draft](../../submissions/rmtfs/README.md).
+
+
+## Later provider replacement checkpoint
+
+A separate [clean provider/runtime candidate](rmtfs-libudev.md) now links signed
+Alpine eudev and target GCC/musl inputs instead of the retained dirty-metadata
+systemd library and cross-runtime files. It preserves this earlier candidate.
+Five synthetic libudev API cases pass; full daemon startup remains unqualified.
+Compiler-executable recipe identity and packaging are still open.

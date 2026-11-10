@@ -315,3 +315,20 @@ change occurs; the current UI check remains pending. See
 [generator procedure](../diagnostics/modem-control/qmic-generation.md),
 [unsent draft](../submissions/qmic/README.md) and
 [evidence](../evidence/2026-11-09-qmic-generation.json).
+
+## Verified libudev provider and runtime link inputs
+
+A new ARM diagnostic build uses signed Alpine eudev 3.2.14-r6, whose source
+archive matches its clean recipe. Every persistent linker input matches a
+verified signed package member with a clean recipe commit. Five real libudev
+API cases pass against read-only synthetic sysfs; only early CLI rejection is
+executed for the full daemon. The old dirty-metadata library and builds remain
+unchanged. No phone operation occurs.
+
+The link audit also found dirty recipe metadata on the cross compiler's bundled
+runtime files; the final build selects clean target GCC runtime files instead.
+The compiler executable's own recipe identity remains unqualified. Distribution
+packaging, full startup, shared-memory spans, lifecycle and physical modem work
+remain open; the native UI gate stays pending. See
+[provider procedure](../diagnostics/modem-control/rmtfs-libudev.md) and
+[evidence](../evidence/2026-11-09-rmtfs-libudev-candidate.json).
