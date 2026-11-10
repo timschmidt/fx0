@@ -5130,3 +5130,8 @@ A native r50 direct read accounts for 8,192 sectors and 18 SDHCI completions, wi
 ## 2026-11-10 — lk2nd Fastboot descriptor comparison
 
 Built paired temporary lk2nd images from the installed source. The candidate caps Fastboot requests at one 16 KiB HSUSB descriptor. Full ARM binary comparison finds only four changed limit-immediate bytes, with identical board table and configuration. Sixteen mocked download/upload framing cases pass. The physical comparison with the same r59 payload remains open. [Evidence](../evidence/2026-11-10-lk2nd-fastboot-single-td.json)
+
+
+## 2026-11-10 — PM8226 USB input actuator
+
+Verified the active native USB configuration and its programmed 500 mA SMBB selector on the charger’s SPMI slave. Added a verified `input_current_limit` actuator to the experimental charging-policy source. Zero requests suspend with a battery present, positive requests program and verify the selector before resuming, and the legacy property preserves its previous suspend behavior. The new and existing sanitizer cases and an ARM policy-enabled object build pass. USB event routing and physical current/suspend qualification remain open. [Evidence](../evidence/2026-11-10-smbb-usb-input-control.json)

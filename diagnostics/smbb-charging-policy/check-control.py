@@ -80,7 +80,7 @@ stubs = stubs.replace('assert(value < 256);', 'assert(value < 256);if(audit_warm
 defines = '\n'.join(re.findall(r'^#define (?:SMBB_\w+|STATUS_\w+|CTRL_EN|PRES_STATUS_BAT_PRES)\s+.*$', source, re.M))
 attrs = source[source.index('enum smbb_attr {'):source.index('struct smbb_charger {')]
 limits = source[source.index('static int smbb_vbat_weak_fn('):source.index('static int smbb_charger_attr_read(')]
-controls = source[source.index('/* Caller holds charge_lock.'):source.index('static enum power_supply_property smbb_charger_properties')]
+controls = source[source.index('static int smbb_charge_verify('):source.index('static enum power_supply_property smbb_charger_properties')]
 
 def definition(name):
     start = source.index(name)

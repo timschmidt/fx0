@@ -716,3 +716,8 @@ initramfs, kernel, installed package database and world remain unchanged.
 The newest physical UI check is pending. Gauge/current/SOC/charging/thermal,
 native telemetry faults/stale-data policy and live rollback remain open. See
 [return evidence](../evidence/2026-11-09-nfc-r59-transfer-timeout.json).
+
+
+## November 10 USB input actuator
+
+A native read-only check verifies the configured 500 mA high-speed gadget and the PM8226 USB selector on its actual SPMI slave. Source inspection finds that ChipIdea’s legacy PHY callback leaves the Fx0 generic PHY without a USB budget consumer. The experimental SMBB patch adds a battery-checked USB suspend request and verifies a positive limit before resuming. Forty-eight new callback cases, 8,846 existing policy/legacy cases and the ARM driver object pass. Automatic budgeting and physical charge, suspend and source-loss tests remain open. [Actuator and evidence](../diagnostics/smbb-charging-policy/usb-input-control.md)
