@@ -107,3 +107,8 @@ Compiler-executable recipe identity and packaging are still open.
 ## Shared-memory follow-up
 
 The [shared-memory candidate](rmtfs-shared-memory.md) adds common range validation for both backends and checks all IOVEC spans before transferring. Thirty-five memory cases and fifteen selected functional regressions pass on both host and ARM. Physical mapping, constructors, service lifecycle and modem operation remain unqualified. This preserves the earlier source/build evidence.
+
+
+## Linux discovery follow-up
+
+The [discovery candidate](rmtfs-discovery.md) fixes constructor ownership and validates Linux RFSA/UIO and DT metadata before mapping. Its 46 isolated discovery cases and 35 memory regressions pass on host and ARM. Actual driver mapping, service lifecycle and modem operation remain open.

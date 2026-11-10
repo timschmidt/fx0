@@ -337,3 +337,8 @@ remain open; the native UI gate stays pending. See
 ## 2026-11-10 shared-memory candidate
 
 The [RMTFS span-validation candidate](../diagnostics/modem-control/rmtfs-shared-memory.md) checks mapped and fd-backed transfers through one validator, preserves 64-bit physical addresses on ARM, and checks all IOVEC spans before the first transfer. Thirty-five memory cases and fifteen selected functional regressions pass on both host sanitizers and static ARM/QEMU. The complete ARM candidate links the same eleven authenticated runtime inputs; only early CLI executes. Constructor lifecycle, physical mapping, modem operation and packaging remain open. No phone commands occur; the newest display/touch gate remains pending.
+
+
+## 2026-11-10 Linux shared-memory discovery
+
+The [RMTFS discovery candidate](../diagnostics/modem-control/rmtfs-discovery.md) releases partially acquired resources, stops on errors from present RFSA/UIO devices, and checks DT cell widths and the complete region before the legacy mapping fallback. Forty-six constructor and thirty-five memory cases pass on host sanitizers and ARM/QEMU. The offline fx0 DTB matches the test region. No daemon startup or phone action occurs; the latest display/touch gate and physical modem qualification remain open.

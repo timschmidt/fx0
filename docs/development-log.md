@@ -5105,3 +5105,8 @@ remain open; the native UI gate stays pending. See
 ## 2026-11-10 — RMTFS shared-memory bounds and IOVEC preflight
 
 Added a common memory-span validator, 64-bit physical helper parameters, backend representability checks, and complete IOVEC preflight before storage/memory I/O. Valid empty-write flush behavior is preserved. Thirty-five actual-helper/handler cases and fifteen selected existing functional regressions pass under host ASan/UBSan and ARM/QEMU, using synthetic backing only. The complete 785,876-byte ARM static PIE builds with the same eleven authenticated runtime inputs and passes only early CLI execution. Public patch replay matches the candidate. Constructor paths are compiled, not exercised; full daemon lifecycle, physical modem acceptance, compiler recipe identity and packaging remain open. No phone action occurs. See [evidence](../evidence/2026-11-10-rmtfs-memory-candidate.json); full bringup remains active.
+
+
+## 2026-11-10 — RMTFS Linux memory discovery
+
+Fixed duplicate fd closes and incomplete discovery cleanup. Linux RFSA/UIO validate metadata before taking ownership; only a missing device permits fallback. DT parsing uses explicit cell counts and rejects absent, incomplete or ambiguous regions before `/dev/mem` opens. Forty-six discovery and thirty-five memory cases pass on each of host ASan/UBSan and ARM/QEMU. The rebuilt static ARM candidate preserves the eleven authenticated persistent link inputs. Actual device mapping, Android-specific discovery, remoteproc/service lifecycle and physical operation remain unqualified. No phone action occurs. See [evidence](../evidence/2026-11-10-rmtfs-discovery-candidate.json).

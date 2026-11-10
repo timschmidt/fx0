@@ -66,3 +66,8 @@ Compiler-executable provenance, packaging and physical startup remain open.
 ## Shared-memory candidate follow-up
 
 The [incremental memory patch](../../diagnostics/modem-control/rmtfs-shared-memory-bounds.patch) adds subtraction-based range checks shared by mapped/fd transfers, 64-bit physical parameters, allocation representation checks and IOVEC preflight before the first transfer. Valid empty-write flush semantics remain. Thirty-five memory tests and fifteen selected functional regressions pass on host sanitizers and ARM/QEMU; public patch replay matches the full candidate. Metadata/mapping guards in constructors are compiled but not exercised. Full daemon lifecycle, physical operation, compiler recipe identity and packaging remain open. See [scope and replay instructions](../../diagnostics/modem-control/rmtfs-shared-memory.md). This remains a draft; no upstream submission or phone startup occurs.
+
+
+## Linux discovery candidate follow-up
+
+The [discovery patch](../../diagnostics/modem-control/rmtfs-device-discovery.patch) gives fd, mapping and libudev resources explicit owners, limits fallback to absent device paths, and validates a unique DT region with declared cell counts before mapping. Forty-six synthetic constructor cases and thirty-five memory regressions pass on host sanitizers and ARM/QEMU. See [scope and replay instructions](../../diagnostics/modem-control/rmtfs-discovery.md). Android-specific code, live driver mappings and remoteproc/service lifecycle remain open. This remains a draft.
