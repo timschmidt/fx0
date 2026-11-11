@@ -5535,3 +5535,40 @@ and human review/certification remain open. No upstream message, phone mutation
 or kernel installation occurs. The approved r1 native update still awaits the
 separate current-r50 physical display/touch answer; full bringup remains active.
 [Evidence](../evidence/2026-11-11-nfc-remove-drafts.json)
+
+
+### Full NFC receiving-tree ARM kernel and module qualification
+
+Build the complete normal ARM kernel and modules for the two-fix receiving-tree
+candidate and its unmodified `b61732f47316` base. Use bounded 10 GiB RAM scratch,
+four jobs, a read-only inner source mount and resource guards; keep Disk B
+read-only. Verify all 95,942 inventoried source paths against Git, excluding
+93 private-named/PEM source paths. The exact normalized configuration remains
+unchanged, with KCFI and full compressed DWARF5 retained.
+
+Both builds link and stage all 457 modules successfully. Each verifies their
+explicit-certificate signatures against the actual embedded kernel certificate,
+complete dependency graph and 24,813 imported symbol CRCs. Real wrong-build
+certificate pairs are rejected. Only `nxp_nci_probe` changes exported CRC,
+from `0x7f5e64fb` to `0x49d5b923`; the candidate I2C module rejects the actual
+baseline map. Both full builds have identical 233 warning lines, with no added
+or removed warnings. Their undefined-symbol sets also match exactly.
+
+The first source extraction normalized symlink text and stopped before
+compilation; preserving the validated original text fixes it. The original
+supplementary ELF auditor then stops on two BPF type-only declarations. Source
+inspection shows the deliberate nonexistent functions, forced CFI type IDs and
+discarded addressability references. The corrected exact whitelist retains CFI
+and matches the baseline. Audit the saved candidate image/module archive without
+repeating its successful compilation. Preserve every stop and terminal process
+receipt. Runtime private keys stay in disposable RAM, with mode-only auditing.
+
+Publish the exact tested config and full-build evidence. The source branch is
+independently verified on the owner fork at
+`2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea`. These are standalone host builds,
+not a distro package or a phone boot result. GCC, broader networking configs,
+NFC hardware/IRQ/firmware concurrency/RF/PM and human review remain open. The
+phone is freshly verified on the same r50 boot; its separate physical UI answer
+and the already-approved native r1 update remain pending. No phone mutation,
+upstream email, PR or audio test occurs.
+[Evidence](../evidence/2026-11-11-nfc-remove-full-build.json)

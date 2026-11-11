@@ -1,0 +1,25 @@
+{
+  "explanation": "kernel/cfi.c explicitly declares two non-existent functions to obtain BPF CFI type hashes. DEFINE_CFI_TYPE uses __ADDRESSABLE to force compiler typeid generation, emits hash data, and the linker discards the forced .discard.addressable references. These are type-only symbol entries, not missing runtime implementations.",
+  "intentional_strong_undefined": [
+    "__bpf_callback_fn",
+    "__bpf_prog_runX"
+  ],
+  "weak_optional_EFI_symbols": [
+    "efi_attr_config_table",
+    "efi_attr_fw_vendor",
+    "efi_attr_runtime"
+  ],
+  "source_sha256": {
+    "kernel/cfi.c": "bda044e3c2b8b735fc54a41555662daeb6236a8f5930e627314e685debe350c2",
+    "include/linux/cfi_types.h": "237f7436ec2cc063234acfe6a0e157e22d479824fe164ac0a17a1a8cc7f9443d",
+    "include/linux/compiler.h": "7eeaa0a6fcc1839428b69ffb78b87d9580a5d2b2c81f0ee6b0797054b2ca72b7",
+    "include/asm-generic/vmlinux.lds.h": "04fdf528a4ea7248a8b2a91ca69733daa8042e2620701153bb29dd591dac6087"
+  },
+  "CFI_config_changed": false,
+  "compiler_instrumentation_disabled": false,
+  "runtime_private_key_read_or_hashed": false,
+  "baseline_comparison_pending": false,
+  "original_explanation_recorded_UTC": "2026-11-11T16:47:46.856613+00:00",
+  "recorded_UTC": "2026-11-11T17:03:03.847281+00:00",
+  "baseline_comparison": "full-build-comparison.json"
+}

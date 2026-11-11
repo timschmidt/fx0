@@ -49,9 +49,41 @@ notices during `olddefconfig`, for `IPV6` and `NETFILTER_NETLINK`.
 [Object checks](prefix-object-checks.json) and [callback inspection](object-inspection.json)
 retain the commands, hashes, flags and actual ARM type words.
 
-Full kernel/module links, GCC, networking `allyesconfig`/`allmodconfig` builds,
-and hardware open/unregister, RF, suspend and reliability remain open. The
-private transport operations layout changes: any later module trial must use
-a completely rebuilt and independently validated matching cohort. Earlier cold
-Fx0 lifecycle results do not qualify this path. These drafts are not claimed
-ready for sending or installation.
+## Full normal ARM build qualification
+
+The [source branch](https://github.com/timschmidt/fx0-linux/tree/submit/nxp-nci-remove-v1)
+is published at `2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea`, with its remote ref
+independently verified. Full `zImage modules` builds and complete module staging
+pass on both this candidate and the unmodified `b61732f47316` base. They use the
+same [normalized ARM configuration](../../configs/linux-7.3-rc3-nxp-nci-remove.armv7),
+Clang 21.1.8, `W=1`, KCFI and full zlib-compressed DWARF5. No configuration
+changes were needed. All 95,942 checked source paths match their Git blobs and
+modes; 93 private-named/PEM source paths are excluded from inventory.
+
+Each build verifies 457 signed modules against the certificate actually embedded
+in its linked kernel, the complete dependency graph, and 24,813 imported symbol
+CRCs. [Candidate audit](full-build-candidate.json), [baseline build](full-build-baseline.json),
+[signatures](full-build-module-signatures.json), [ABI](full-build-module-ABI.json),
+and [dependencies](full-build-module-dependencies.json) retain the exact evidence.
+The [comparison](full-build-comparison.json) finds the same 233 warning lines on
+both builds, with no added or removed warnings.
+
+Only the `nxp_nci_probe` export CRC changes, from `0x7f5e64fb` to `0x49d5b923`.
+The real candidate I2C module rejects the actual baseline export map, and both
+wrong-build certificate combinations fail verification. Keep matching kernels
+and modules together. Runtime signing keys stayed in disposable RAM; their
+contents were never inspected, hashed or exported. Only their modes were checked.
+
+The original supplementary ELF audit assumed no strong undefined symbol entries.
+The pinned kernel deliberately declares two nonexistent BPF function types to
+emit CFI hashes through discarded addressability references. The corrected audit
+permits exactly those documented entries, retains CFI instrumentation, and finds
+the same complete symbol set on both builds. The candidate was audited from its
+saved public artifacts without repeating compilation. See the
+[source explanation](BPF-CFI-symbol-explanation.json).
+
+GCC, networking `allyesconfig`/`allmodconfig` builds, and hardware open/unregister,
+IRQ timing, firmware concurrency, RF, suspend and reliability remain open.
+Earlier cold Fx0 lifecycle results do not qualify this path. These are host
+builds, without distro packaging, boot or native installation qualification;
+the drafts are not claimed ready for sending or installation.

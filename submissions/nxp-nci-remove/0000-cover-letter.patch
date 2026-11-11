@@ -57,11 +57,24 @@ Validation:
 - Strict checkpatch reports zero findings on both patches, with only DCO
   sign-off checking disabled. Both exported prefix trees replay exactly.
 
-Full kernel/module links, GCC, networking allyesconfig/allmodconfig builds,
-and hardware open/unregister, RF, suspend and reliability remain untested.
-Earlier Fx0 cold-lifecycle results do not qualify this open-removal path.
-The private operations layout changes, so any eventual module qualification
-must rebuild and validate the complete matching module cohort.
+Full normal ARM kernel and module builds now pass on both the unmodified
+base and the two-fix candidate with the same normalized config, KCFI and
+full compressed DWARF5. Each verifies 457 signed modules, their dependency
+graph and 24,813 imported symbol CRCs against its actual linked kernel and
+embedded certificate. The 233 warning lines are identical on both builds:
+no warnings added or removed. The only exported CRC change is nxp_nci_probe
+(0x7f5e64fb -> 0x49d5b923). The real candidate I2C module rejects the actual
+baseline export map, and both wrong-build certificate pairs are rejected.
+
+The exact config and full-build receipts accompany this review material.
+Source history: https://github.com/timschmidt/fx0-linux/tree/submit/nxp-nci-remove-v1
+Frozen candidate: 2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea
+
+GCC, networking allyesconfig/allmodconfig builds, and hardware open/unregister,
+RF, suspend and reliability remain untested. Earlier Fx0 cold-lifecycle
+results do not qualify this path. The private operations layout changes;
+keep the complete kernel/module cohort together. These host builds are
+not a distro package or a qualified phone image.
 
 AI assistance: OpenAI Codex assisted analysis, implementation, the split
 from the existing Fx0 integration fixes, original Fixes investigation,

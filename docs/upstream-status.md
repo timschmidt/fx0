@@ -46,9 +46,18 @@ and both prefixes: nine ARM objects with KCFI and compressed DWARF5. Strict
 checkpatch and exported-tree replay pass. The pinned NFC tree requires the
 included `Assisted-by: LLM` tags and prohibits agent-added DCO sign-offs.
 
-These remain review drafts. Full kernel/module and broader networking config
-builds, GCC, physical open/unregister/IRQ timing, concurrent firmware, RF/PM
-and human certification remain open. No email or PR was sent.
+The later [full-build qualification](../evidence/2026-11-11-nfc-remove-full-build.json)
+passes normal ARM kernel/module builds on the candidate and unmodified base.
+Both verify 457 signed modules, complete dependencies and 24,813 imported CRCs;
+all 233 warning lines match, with none added or removed. Real wrong-certificate
+and baseline-ABI combinations are rejected. The
+[two-commit source branch](https://github.com/timschmidt/fx0-linux/tree/submit/nxp-nci-remove-v1)
+is published and independently verified.
+
+These remain review drafts. Broader networking config builds, GCC, physical
+open/unregister/IRQ timing, concurrent firmware, RF/PM and human certification
+remain open. No email or PR was sent; no phone image is qualified by these host
+builds.
 
 ## Prepared, not sent
 
