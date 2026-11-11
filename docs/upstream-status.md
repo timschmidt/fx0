@@ -135,3 +135,19 @@ Each integration rebase drops commits that have landed upstream. Each
 downstream commit keeps a row here until it is merged or replaced. Hardware
 retests use the existing evidence harnesses: Wi-Fi association and soak,
 Bluetooth pairing, display and GPU, reboot loops and the system soak.
+
+## NFC optional reference-clock drafts
+
+The [separate clock series](../submissions/nxp-nci-ref-clock/README.md) targets
+advertised NFC `for-next` at `fd73f4a6659897191fa0d40695fe370925dd3780` and is
+published at `8616767b2b9e01846b1a61af2055ab7965a2f245`. Nine actual C cases,
+five runtime controls, five binding tests, two strict style checks and exact
+prefix replay pass. Full pinned-archive ARM builds produce six matching driver
+objects with no diagnostics, KCFI and actual compressed DWARF5. Full links and
+hardware remain open; the absent Madai board file needs broader board support.
+
+The removal series has now attempted full GCC and Clang `allmodconfig` builds.
+Both stop in byte-identical upstream code on base and candidate; complete
+warning comparison and broad qualification remain open. No warning suppression
+or configuration override was added. `allyesconfig` is still untested.
+[Evidence](../evidence/2026-11-11-nfc-clock-drafts.json)

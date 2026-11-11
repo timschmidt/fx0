@@ -1,0 +1,101 @@
+{
+  "recorded_UTC": "2026-11-11T17:30:08.309978+00:00",
+  "actual_C_positive_cases": 9,
+  "independent_runtime_rejected_controls": 5,
+  "sanitizers": [
+    "ASan",
+    "UBSan"
+  ],
+  "leak_detection_not_disabled": true,
+  "actual_function_sha256": {
+    "mode": "d34147dbf3525d3d3b545606151573fd7a933582af02ec86325e0624fa1aa90e",
+    "open": "771769c7004c7854e06c2d7f2c062da3871fcf090a6fd37ba51b2c44ac095eeb",
+    "close": "df07fe2e1efab75d070cbfc5942d43d8e5e7ab49ca31ef79523bf3f89b566f2b",
+    "probe": "c09cc4e524ebe55591b5644fc73364ca21e5c7d79448985d6fc46a32941e6561"
+  },
+  "test_source_sha256": "ca1c293b9c776aa95ce87372f4debf8f2065f95a212f2388a7a4e03d01b194d9",
+  "outcomes": [
+    {
+      "label": "actual",
+      "mode": "cycle",
+      "returncode": 0
+    },
+    {
+      "label": "actual",
+      "mode": "failure_retry",
+      "returncode": 0
+    },
+    {
+      "label": "actual",
+      "mode": "legacy_no_clock",
+      "returncode": 0
+    },
+    {
+      "label": "actual",
+      "mode": "missing_firmware_pin",
+      "returncode": 0
+    },
+    {
+      "label": "actual",
+      "mode": "firmware_clock_failure",
+      "returncode": 0
+    },
+    {
+      "label": "actual",
+      "mode": "probe_defer",
+      "returncode": 0
+    },
+    {
+      "label": "actual",
+      "mode": "probe_irq_failure",
+      "returncode": 0
+    },
+    {
+      "label": "actual",
+      "mode": "probe_DT",
+      "returncode": 0
+    },
+    {
+      "label": "actual",
+      "mode": "probe_ACPI",
+      "returncode": 0
+    },
+    {
+      "label": "ignored_enable_failure",
+      "mode": "failure_retry",
+      "returncode": 1,
+      "independently_mutated_body": "mode",
+      "rejected_at_runtime": true
+    },
+    {
+      "label": "duplicate_clock_vote",
+      "mode": "cycle",
+      "returncode": 1,
+      "independently_mutated_body": "mode",
+      "rejected_at_runtime": true
+    },
+    {
+      "label": "missing_clock_release",
+      "mode": "cycle",
+      "returncode": 1,
+      "independently_mutated_body": "mode",
+      "rejected_at_runtime": true
+    },
+    {
+      "label": "open_ignores_failure",
+      "mode": "failure_retry",
+      "returncode": 1,
+      "independently_mutated_body": "open",
+      "rejected_at_runtime": true
+    },
+    {
+      "label": "probe_ignores_defer",
+      "mode": "probe_defer",
+      "returncode": 1,
+      "independently_mutated_body": "probe",
+      "rejected_at_runtime": true
+    }
+  ],
+  "kernel_sources_modified": false,
+  "physical_hardware": false
+}

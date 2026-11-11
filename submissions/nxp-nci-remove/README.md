@@ -87,3 +87,16 @@ IRQ timing, firmware concurrency, RF, suspend and reliability remain open.
 Earlier cold Fx0 lifecycle results do not qualify this path. These are host
 builds, without distro packaging, boot or native installation qualification;
 the drafts are not claimed ready for sending or installation.
+
+## Broad allmodconfig attempts
+
+[GCC](gcc-allmodconfig-comparison.json) and
+[Clang](clang-allmodconfig-comparison.json) full `allmodconfig` builds were
+attempted with `W=1` on the removal candidate and its unmodified base. Generated
+configs match within each compiler. Both GCC builds stop on identical lockdep
+and x86 call-thunk errors; the baseline also reaches Coda errors. Both Clang
+builds stop on the same ten Coda unused-variable errors. All diagnostic source
+files are byte-identical between the candidate and base. Parallel progress and
+warning sets differ, so these incomplete builds do not establish complete
+warning equivalence or broad kernel/module qualification. No warnings or config
+options were suppressed. `allyesconfig` remains untested.

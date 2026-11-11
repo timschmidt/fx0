@@ -70,7 +70,11 @@ The exact config and full-build receipts accompany this review material.
 Source history: https://github.com/timschmidt/fx0-linux/tree/submit/nxp-nci-remove-v1
 Frozen candidate: 2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea
 
-GCC, networking allyesconfig/allmodconfig builds, and hardware open/unregister,
+Full GCC and Clang allmodconfig attempts with W=1 stop in unchanged upstream
+code on both candidate and base. GCC reports shared lockdep/call-thunk errors
+and additional baseline Coda errors; Clang reports the same ten Coda errors.
+These incomplete builds do not qualify the broad configuration. No warnings
+or config options were suppressed. allyesconfig and hardware open/unregister,
 RF, suspend and reliability remain untested. Earlier Fx0 cold-lifecycle
 results do not qualify this path. The private operations layout changes;
 keep the complete kernel/module cohort together. These host builds are

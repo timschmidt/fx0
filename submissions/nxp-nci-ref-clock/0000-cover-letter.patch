@@ -1,0 +1,37 @@
+From: Timothy Schmidt <timschmidt@gmail.com>
+Subject: [PATCH 0/2] nfc: nxp-nci: support an optional reference clock
+
+Allow platforms with an external NCI reference clock to describe and use it.
+Prepare the clock before raising controller enable and release it after cold
+mode. Keep one vote across active transitions and preserve clockless boards.
+Propagate lookup and enable errors before changing GPIO or software mode so a
+failed open remains cold and can retry.
+
+The PN547 on Madai uses a pin-controlled XO buffer. Board integration is kept
+separate: the Madai board file is absent from this receiving tree. The removal
+locking and receive-lifetime fixes are also maintained separately.
+
+Base: fd73f4a6659897191fa0d40695fe370925dd3780 (NFC for-next)
+Source: https://github.com/timschmidt/fx0-linux/tree/submit/nxp-nci-ref-clock-v1
+Frozen tip: 8616767b2b9e01846b1a61af2055ab7965a2f245
+
+Validation:
+- Nine actual C mode/open/close/probe cases pass with ASan/UBSan. Five
+  independently modified bodies are rejected at runtime.
+- Binding document validation and five compiled-DTB tests pass using current
+  receiving-tree schemas and the existing development Madai DTB/r50 baseline.
+- Base and clock tip compile six actual ARM objects with W=1 and no diagnostics,
+  unchanged normalized config, KCFI and full compressed DWARF5. Each verifies
+  95,942 source paths from its complete pinned archive; 93 private-named/PEM
+  source paths are excluded from inventory. Actual callback type words match.
+- The binding-only prefix has identical compiler source inputs to the base;
+  its schema is checked separately. Both exported prefix trees replay exactly.
+- Both patches pass strict checkpatch, with only sign-off checking disabled.
+
+Full kernel/module links, GCC, broader configs and physical open/clock/firmware,
+RF, suspend and reliability remain unqualified. These objects are not modules
+or a qualified phone image. No upstream message or PR has been sent.
+
+AI assistance: OpenAI Codex assisted adaptation, analysis, implementation,
+testing and documentation. The unsigned drafts retain Assisted-by: LLM.
+Human review and DCO certification are required before submission.

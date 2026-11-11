@@ -1,0 +1,45 @@
+From 04a022d7daf2623de9850f388e9657264e8a85a2 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 18:15:16 -0500
+Subject: [PATCH 1/2] dt-bindings: net: nfc: nxp,nci: describe an optional
+ reference clock
+
+Allow a controller to use one external reference clock named ref. Require
+clocks and clock-names together while keeping existing clockless boards
+valid. Platforms may supply a pin-controlled oscillator buffer such as
+the PN547 reference clock on Madai.
+
+Assisted-by: LLM
+---
+ .../devicetree/bindings/net/nfc/nxp,nci.yaml          | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml b/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+index 4f3847f64983..4dfb9690b2cf 100644
+--- a/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
++++ b/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+@@ -24,6 +24,13 @@ properties:
+   enable-gpios:
+     description: Output GPIO pin used for enabling/disabling the controller
+ 
++  clocks:
++    maxItems: 1
++    description: Optional external reference clock for the controller
++
++  clock-names:
++    const: ref
++
+   firmware-gpios:
+     description: Output GPIO pin used to enter firmware download mode
+ 
+@@ -39,6 +46,10 @@ required:
+   - interrupts
+   - reg
+ 
++dependencies:
++  clocks: [clock-names]
++  clock-names: [clocks]
++
+ additionalProperties: false
+ 
+ examples:

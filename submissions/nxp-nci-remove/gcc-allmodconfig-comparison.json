@@ -1,0 +1,75 @@
+{
+  "recorded_UTC": "2026-11-11T17:20:32.127496+00:00",
+  "full_GCC_allmodconfig_passed": false,
+  "both_actual_full_builds_failed": true,
+  "shared_blocking_diagnostics": [
+    "/source/arch/x86/kernel/callthunks.c:376:35: error: '%lu' directive writing between 1 and 10 bytes into a region of size 7 [-Werror=format-overflow=]",
+    "/source/kernel/locking/lockdep_proc.c:499:45: error: '%d' directive output may be truncated writing between 1 and 10 bytes into a region of size 2 [-Werror=format-truncation=]"
+  ],
+  "additional_baseline_diagnostics": [
+    "/source/fs/coda/upcall.c:115:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+    "/source/fs/coda/upcall.c:164:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+    "/source/fs/coda/upcall.c:238:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+    "/source/fs/coda/upcall.c:306:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+    "/source/fs/coda/upcall.c:329:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+    "/source/fs/coda/upcall.c:383:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+    "/source/fs/coda/upcall.c:410:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+    "/source/fs/coda/upcall.c:443:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+    "/source/fs/coda/upcall.c:459:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+    "/source/fs/coda/upcall.c:577:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]"
+  ],
+  "diagnostics": {
+    "candidate": [
+      "/source/arch/x86/kernel/callthunks.c:376:35: error: '%lu' directive writing between 1 and 10 bytes into a region of size 7 [-Werror=format-overflow=]",
+      "/source/kernel/locking/lockdep_proc.c:499:45: error: '%d' directive output may be truncated writing between 1 and 10 bytes into a region of size 2 [-Werror=format-truncation=]"
+    ],
+    "baseline": [
+      "/source/arch/x86/kernel/callthunks.c:376:35: error: '%lu' directive writing between 1 and 10 bytes into a region of size 7 [-Werror=format-overflow=]",
+      "/source/fs/coda/upcall.c:115:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+      "/source/fs/coda/upcall.c:164:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+      "/source/fs/coda/upcall.c:238:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+      "/source/fs/coda/upcall.c:306:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+      "/source/fs/coda/upcall.c:329:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+      "/source/fs/coda/upcall.c:383:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+      "/source/fs/coda/upcall.c:410:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+      "/source/fs/coda/upcall.c:443:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+      "/source/fs/coda/upcall.c:459:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+      "/source/fs/coda/upcall.c:577:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+      "/source/kernel/locking/lockdep_proc.c:499:45: error: '%d' directive output may be truncated writing between 1 and 10 bytes into a region of size 2 [-Werror=format-truncation=]"
+    ]
+  },
+  "warning_rows": {
+    "candidate": [
+      "Warning: /source/arch/x86/virt/vmx/tdx/tdx.c:110 This comment starts with '/**', but isn't a kernel-doc comment. Refer to Documentation/doc-guide/kernel-doc.rst"
+    ],
+    "baseline": [
+      "Warning: /source/fs/iomap/iter.c:64 function parameter 'ret' not described in 'iomap_iter_continue'",
+      "Warning: /source/fs/iomap/iter.c:64 function parameter 'ret' not described in 'iomap_iter_continue'"
+    ]
+  },
+  "full_diagnostic_sets_identical": false,
+  "parallel_build_progress_scope": "Baseline reached additional Coda files before make stopped; candidate did not. No complete warning equivalence or GCC NFC success claimed",
+  "unchanged_diagnostic_sources_sha256": {
+    "arch/x86/kernel/callthunks.c": {
+      "b61732f47316d45f27706db7812950145d3327b5": "804a53d575b3ca2375f93be393e9c4b1ae5002972559819399e6d46ea41678a8",
+      "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea": "804a53d575b3ca2375f93be393e9c4b1ae5002972559819399e6d46ea41678a8"
+    },
+    "fs/coda/upcall.c": {
+      "b61732f47316d45f27706db7812950145d3327b5": "f618e62a0cf93a18d52c44f1943f6dfda36c26f9c03695e03a2699201992a2d7",
+      "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea": "f618e62a0cf93a18d52c44f1943f6dfda36c26f9c03695e03a2699201992a2d7"
+    },
+    "kernel/locking/lockdep_proc.c": {
+      "b61732f47316d45f27706db7812950145d3327b5": "5fcf966b0ee0898eb9feaf53e3efb1ea374b968bb7787848ed4125cdeafb56e2",
+      "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea": "5fcf966b0ee0898eb9feaf53e3efb1ea374b968bb7787848ed4125cdeafb56e2"
+    }
+  },
+  "generated_config_identical": true,
+  "config_sha256": "b14f54b4cf95bbfae314b9f9eb0d71d7848f045fc999a477aeee91073e2059bc",
+  "configuration_overrides": [],
+  "warnings_suppressed": false,
+  "NFC_GCC_runtime_or_module_qualification": false,
+  "all_owned_processes_reaped": true,
+  "next": "Full unmodified Clang allmodconfig and allyesconfig baseline/candidate builds; GCC diagnostics remain explicitly reported",
+  "phone_mutations": false,
+  "full_bringup": "active"
+}

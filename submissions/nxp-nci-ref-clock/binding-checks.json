@@ -1,0 +1,56 @@
+{
+  "recorded_UTC": "2026-11-11T17:40:35.117411+00:00",
+  "source_commit": "8616767b2b9e01846b1a61af2055ab7965a2f245",
+  "commands": [
+    {
+      "name": "document",
+      "argv": [
+        "/tmp/fx0-storage/dtschema-venv/bin/python",
+        "/tmp/fx0-storage/dtschema-venv/bin/dt-doc-validate",
+        "/scratch/source/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "/tmp/fx0-storage/dtschema-venv/bin/python",
+        "/tmp/fx0-storage/dtschema-venv/bin/dt-mk-schema",
+        "-j",
+        "-u",
+        "-o",
+        "/receipts/processed-schema.json",
+        "/scratch/source/Documentation/devicetree/bindings"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "tests",
+      "argv": [
+        "/tmp/fx0-storage/dtschema-venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/tests",
+        "-p",
+        "test_nxp_nci_binding.py",
+        "-v"
+      ],
+      "returncode": 0
+    }
+  ],
+  "tests": 5,
+  "current_receiving_tree_binding_document_and_schema": true,
+  "NXP_clock_pairing_name_count_controls": true,
+  "existing_clockless_boards_valid": true,
+  "compiled_DTB": "Previously qualified 6.18 development Madai DTB; not a receiving-tree board build",
+  "compiled_DTB_sha256": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483",
+  "baseline_DTB_sha256": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+  "schema_sha256": "198b5f7724eca11925982b4ebeae7b6453a490c9d8240ebc88a6db72d991d958",
+  "scope": "Validate current receiving-tree schema against the previously compiled development Madai DTB and its r50 baseline. This does not build or boot a receiving-tree Madai board; that board file is absent there.",
+  "readonly_toolchain": true,
+  "Disk_B_writes": false,
+  "phone_mutations": false
+}

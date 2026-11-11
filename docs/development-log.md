@@ -5572,3 +5572,35 @@ phone is freshly verified on the same r50 boot; its separate physical UI answer
 and the already-approved native r1 update remain pending. No phone mutation,
 upstream email, PR or audio test occurs.
 [Evidence](../evidence/2026-11-11-nfc-remove-full-build.json)
+
+
+### NFC reference-clock receiving-tree drafts and broad-build results
+
+Adapt the optional clock binding/driver as two unsigned review drafts on NFC
+`for-next` `fd73f4a6659897191fa0d40695fe370925dd3780`. Keep removal fixes and
+board support separate. Nine actual C cases and five independent runtime
+controls pass with ASan/UBSan and working leak detection. Binding document and
+five compiled-DTB tests pass against the full current binding schemas. Two
+strict style checks and exact prefix replay pass. No AI-added DCO is present.
+
+The source audit catches the sparse checkout before any object compilation.
+Use complete pinned Git archives in 4 GiB RAM instead; verify all 95,942 selected
+paths on both base and clock tip. Six actual ARM objects compile with no
+W=1 diagnostics, unchanged config, KCFI and full compressed DWARF5. Inspect 18
+actual callback type words. The binding-only prefix has identical compiler
+inputs and reuses the base build proof with separate schema validation.
+Publish source tip `8616767b2b9e01846b1a61af2055ab7965a2f245` on the owner fork.
+
+Full removal-series GCC and Clang allmodconfig attempts stop in unchanged
+upstream code. GCC shares lockdep/call-thunk errors and reaches extra baseline
+Coda errors; Clang shares ten Coda errors. Incomplete parallel builds do not
+prove full warning equivalence. Retain all failures; no warnings or config
+options are suppressed. Clock full links, allyesconfig and hardware remain open.
+
+The tmpfs user quota is reached despite apparent filesystem space. Preserve
+the interrupted receipts as interrupted, remove only this attempt's disposable
+outputs with hashes retained, and move full schema extraction into bounded RAM
+with small receipts on the workspace. The resulting schema run passes. Keep
+Disk B read-only. No phone mutation, upstream email/PR or audio test occurs;
+the approved native update still awaits the separate current-return UI answer.
+[Evidence](../evidence/2026-11-11-nfc-clock-drafts.json)
