@@ -33,3 +33,16 @@ python3 -m unittest discover -s tests -p test_hotspot_suspend.py
 
 The tests replace network and privilege commands with fixtures and do not change
 the host's network configuration.
+
+
+The Sxmo r7 candidate preserves all three signed-r6 hotspot payloads byte for
+byte. The four suspend-path integration tests accept an explicit source path,
+so the candidate can be checked without the former local worktree:
+
+```sh
+SXMO_SUSPEND_SCRIPT=/path/to/applied/scripts/core/sxmo_suspend.sh \
+  python3 -m unittest discover -s tests -p test_sxmo_suspend_integration.py
+```
+
+The nine coordinator tests, five AP-policy tests and four integration tests
+pass for this candidate's unchanged hotspot behavior. [Package manifest](../../manifests/sxmo-utils-r7.json)

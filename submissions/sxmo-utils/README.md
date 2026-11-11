@@ -1,6 +1,6 @@
 # sxmo-utils draft submission
 
-Three patches for [sxmo-utils](https://git.sr.ht/~mil/sxmo-utils), based on
+Four patches for [sxmo-utils](https://git.sr.ht/~mil/sxmo-utils), based on
 `master` at `303c755e88d2a25c01bdbc5b46aba1939318f839` (fetched October 31,
 2026). Sxmo takes patches by email to `~mil/sxmo-devel@lists.sr.ht`. **Not
 sent:** sending needs the owner's approval and Signed-off-by.
@@ -31,10 +31,20 @@ both. System suspend and tactile qualification remain open. [Measurements and sc
 The [notification completion draft](0003-notifs-dispatch-after-write-completion.patch)
 removes attribute-triggered dispatch from the pinned master source. A real-inotify
 fixture reproduces partial-file deletion and checks seven complete deliveries
-without empty or early dispatch. All three patches apply in order with zero
+without empty or early dispatch. The first three patches apply in order with zero
 fuzz. The installed 1.18.1 script also needs close-write monitoring and removal
 of its premature touch; that release-specific correction and an opt-in Fx0 user
 haptics hook are maintained in [the diagnostic](../../diagnostics/sxmo-notifications/README.md).
 The real phone passes normal, muted and re-enabled notifications, including
 Dunst replies and PMIC timing. The user hook is outside this upstream patch.
 The drafts remain unsent.
+
+
+The [packaged device-hook draft](0004-hooks-load-device-specific-packaged-defaults.patch)
+searches per-device defaults below user hooks and above generic packaged hooks,
+then ships the qualified Fx0 notification hook there. Missing device directories
+do not add an empty PATH entry. Seven real-loader fixture cases pass; the
+packaged loader/profile/hook and rebuilt utility also pass a temporary native
+notification probe. All four drafts apply in order with zero fuzz. The matching
+1.18.1 r7 package candidate builds twice with 14 byte-identical signed APKs;
+the installed phone remains on r6 with its local overrides. [Package scope](../../diagnostics/sxmo-notifications/README.md#reproducible-r7-package-candidate)

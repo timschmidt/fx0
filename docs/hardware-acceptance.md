@@ -517,3 +517,8 @@ The Sxmo profile now resolves the PM8226 event path and supplies a usable streng
 ## November 10 native notification haptics
 
 The installed notification monitor loses a partial record in a real-inotify control. A local backed-up correction watches completed writes and atomic moves; strict release and pinned-upstream fixtures pass seven deliveries each. The real notification daemon then passes normal/muted/re-enabled cases with one Dunst bus call per notification, two bounded 300 ms pulses at code 21 and no enabled samples while muted. The actuator returns off, all test notification files/history are removed and the mute flag is restored. Sway keeps its PID, with original r50 boot/module/package hashes and zero taint. This qualifies the awake notification path; physical visual/tactile acceptance and lock/suspend remain open. The script correction and user hook are local overrides pending package integration. [Evidence](../evidence/2026-11-10-sxmo-notification-haptics.json)
+
+
+## November 10 Sxmo r7 packaging candidate
+
+Fourteen signed ARM/noarch APKs reproduce byte for byte, preserve r6 hotspot payloads and pass current-trust/tamper, source and ABI checks. A temporary native probe of the exact package loader/profile/hook/helper passes the installed-loader control and normal/muted/re-enabled notification cases. Both real daemons retain their PIDs; original r50 boot, package database/world and idle hardware match postflight. This adds candidate packaging and native payload evidence. The installed package remains r6; package transaction/rollback, override retirement, subsequent-session input/visual checks and lock/suspend remain open. [Evidence](../evidence/2026-11-10-sxmo-r7-arm-candidate.json)

@@ -84,3 +84,62 @@ displayed/waiting notifications and history entries are gone; the mute flag is
 absent as before. These local overrides still need package/configuration
 integration for a reproducible final installation.
 [Evidence](../../evidence/2026-11-10-sxmo-notification-haptics.json)
+
+
+## Reproducible r7 package candidate
+
+The [r7 manifest](../../manifests/sxmo-utils-r7.json) pins the recipe at
+[`8c60fa379d63`](https://github.com/timschmidt/fx0-pmaports/commit/8c60fa379d6377a08dd9c894010942cf0dfd9c43),
+branch `integration/fx0-sxmo-r7`. It reconstructs the installed r6 recipe from
+the exact Alpine base and retained hotspot patches. The r6 hotspot scripts
+match the phone's signed cached APK byte for byte. The new package adds the
+Fx0 profile, the notification write fix and a packaged board hook.
+
+The loader now searches user device hooks, user generic hooks, packaged device
+hooks and packaged generic hooks, in that order. Multiple data roots follow
+`XDG_DATA_DIRS` order. Missing device directories add no empty PATH entry.
+The generic notification hook remains unchanged. The new Fx0 hook has the
+same bounded behavior as the tested user hook. It gains the normal generated
+`configversion` line when packaged.
+
+```sh
+python3 check-packaged-hooks.py   --source /path/to/applied/sxmo-utils-1.18.1   --control-init /path/to/original-release/configs/profile.d/sxmo_init.sh
+```
+
+Seven cases execute the real environment loader with mocked vibration,
+including user priority, multiple data roots, mute and an unaffected other
+device. All four unsent upstream drafts apply in order to the pinned master.
+The release recipe uses its matching notification backport.
+
+Two full ARM source builds produce 14 byte-identical signed APKs. All signatures
+verify against the current phone trust snapshot; altered signed metadata and
+repository data fail independent verification. Four rebuilt helpers have the
+expected ARM hard-float ABI and load with the target musl runtime. Their sources
+are unchanged. Apart from those helpers, the only changed payloads are the
+notification script and two installed copies of the environment loader; the
+profile and shared hook are the only new files. The existing recipe's `!check`
+setting is retained; targeted tests run separately. No audio test is performed.
+
+A temporary native probe executes five exact signed-APK payloads from RAM,
+with the real loader, rebuilt vibrator helper, isolated monitor and Dunst.
+The installed-loader control delivers once without vibration; the new loader
+selects the packaged board hook. Normal and re-enabled cases deliver once and
+produce bounded 300 ms pulses; mute delivers once without enable. The original
+monitor and Sway keep their PIDs, and installed files/database/world stay equal.
+All probe payloads, notifications, history and owned FIFOs are gone afterward.
+The monitor's existing duplicate exit-trap cleanup emits already-removed
+messages; both isolated process groups and FIFOs are verified cleaned up.
+
+Offline resolution against the current r50 database upgrades exactly the eight
+installed Sxmo packages to r7. The three audio dependency subpackages remain
+empty metadata packages with their existing dependency definitions. r7 is **not
+installed**. The r6 local correction and user overrides remain active.
+
+Before deployment, capture current package-owned files, database/scripts/triggers,
+world, boot and the local profile/user hook on the phone and host; verify an
+exact restoration rehearsal. Then run the normal eight-package transaction,
+including its normal hooks, and verify boot readback and installed payloads.
+Retire only the backed-up profile and notification overrides after the packaged
+loader selects their replacements. Recheck real notifications, existing input
+settings and a later session startup. These deployment, rollback and subsequent
+session gates remain open. [Candidate evidence](../../evidence/2026-11-10-sxmo-r7-arm-candidate.json)
