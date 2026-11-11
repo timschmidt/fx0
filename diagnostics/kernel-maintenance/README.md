@@ -1,8 +1,8 @@
 # Linux 6.18.63 maintenance preparation
 
 This candidate updates the r50 feature baseline to stable Linux 6.18.63.
-It has a complete host ARM build and selected regression coverage. It has
-neither a distribution source-package build nor a physical boot result.
+It has complete host and Alpine source-package builds with selected
+regression coverage. Physical boot qualification remains open.
 The installed phone remains Linux 6.18.59-r50 with Sxmo r6.
 
 The [manifest](../../manifests/kernel-maintenance-6.18.63.json) pins the
@@ -92,6 +92,33 @@ rollback preparation and approval. The pending eight-package Sxmo r7 proposal
 does not authorize these broader upgrades.
 
 The [evidence](../../evidence/2026-11-11-kernel-maintenance-6.18.63.json)
-preserves prior input hashes and fresh build/audit receipts. A normal Alpine
-source-package build, guarded RAM qualification and wider hardware acceptance
-remain ahead. Audio testing remains excluded.
+preserves prior input hashes and fresh build/audit receipts. Guarded RAM
+qualification and wider hardware acceptance remain ahead. Audio testing remains
+excluded.
+
+## Alpine source package (2026-11-11)
+
+The separate [Alpine manifest](../../manifests/kernel-maintenance-6.18.63-alpine.json)
+pins `6.18.63-r0`, release `6.18.63-fx0-r50-maint-alpine`, and the published
+pmaports recipe. Standard pmbootstrap cross-native compilation uses Alpine
+Clang/LLD 22.1.3, normal source checksums, community rules and package signing.
+The input changes from the host baseline are the distinct release and full
+DWARF zlib compression. The actual normalized configuration also passes the
+official community checker, retaining nonpermissive CFI and schedutil.
+
+The downloaded archive and all 91,269 compiled-tree source files/symlinks match
+the published Git tree. The exact APK kernel and Fx0 DTB match the build; the
+DTB also matches r50. The linked runtime certificate, CFI, load-footprint bound,
+full compressed debug information, 464 module signatures, every imported-symbol
+CRC and dependency graph pass. Modified import/export CRC, payload, signature,
+wrong-certificate and APK signed-metadata controls reject. Offline APK
+resolution uses an empty initialized ARMv7 database; native upgrade hooks,
+world-hold changes and physical module loading remain untested.
+
+Two pre-build setup stops are retained: the new sparse clone initially lacked
+standard upstream metadata, then omitted the systemd recipe directory required
+by the already-cached systemd buildroot. The successful attempt supplies both
+and uses a fresh build home, preserving earlier source trees and signing keys.
+The existing buildroot/dependency caches are reused; this is not a fresh-bootstrap
+or reproducibility claim. No native package, kernel or service changes occur.
+See [package evidence](../../evidence/2026-11-11-kernel-maintenance-6.18.63-alpine.json).

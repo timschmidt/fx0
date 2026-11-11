@@ -26,11 +26,19 @@ gates remain open; hotspot installed Sxmo recovery passes two bounded cycles; br
 evidence](../evidence/2026-11-06-mpu6515-dmp-20-consecutive-wakes.json).
 Audio testing remains excluded.
 
+The separate Linux 6.18.63 Alpine source package now builds and passes actual
+community configuration, linked CFI/trust, full compressed DWARF, APK signature,
+464 module signature/import-CRC/dependency and source-tree checks. Its ordinary
+DTB remains identical to r50. This distribution artifact has its own signing
+identity and is unbooted/uninstalled. Earlier Fedora or r50 hardware passes do
+not qualify it. See [Alpine evidence](../evidence/2026-11-11-kernel-maintenance-6.18.63-alpine.json).
+
 November 11 maintenance preparation merges Linux 6.18.63 into the r50 feature
 baseline. Its complete host ARM build, 464 module signatures/dependency graphs,
 linked CFI/trust checks, 31 selected unit cases and two regression controls pass.
-The Fx0 DTB is byte-identical to r50. These results do not qualify a physical
-boot, distribution APK or newer peripheral candidates. The phone still runs
+The Fx0 DTB is byte-identical to r50. These host checks alone do not qualify a
+physical boot or newer peripheral candidates. The separate distribution package
+result is recorded above. The phone still runs
 r50 with Sxmo r6; its original boot, package database/world, running services
 and idle hardware are checked in the read-only postflight. The latest physical
 display/touch confirmation remains pending. Stable/edge userspace audits are

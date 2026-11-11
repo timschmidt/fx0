@@ -5242,3 +5242,22 @@ official earlier systemd/old-kernel startup warning is marked fixed since
 postflight retains r50/r6, original boot/database/world, services and idle
 hardware. Sxmo r7 installation approval and the current physical UI check remain
 pending. [Evidence](../evidence/2026-11-11-kernel-maintenance-6.18.63.json)
+
+### Linux 6.18.63 normal Alpine source-package build
+
+A pinned pmaports recipe builds the published r50-baseline maintenance merge
+directly as 6.18.63-r0, without reapplying the previous NFC family's patches.
+The archive and all 91,269 compiled-tree source paths match Git. The fresh
+build home preserves previous kernels and private signing keys. Two setup
+stops precede compilation; supplying standard upstream metadata and the pinned
+systemd extra-repository directory aligns the cached buildroot channel.
+
+Alpine Clang/LLD 22.1.3 produces a signed APK and matching kernel/DTB/modules.
+The actual normalized config passes community rules, retaining nonpermissive
+CFI, schedutil and full compressed DWARF. All 464 module signatures and import
+CRCs, dependency graphs and linked trust/CFI checks pass with negative controls.
+The Fx0 DTB remains byte-identical to r50; the APK's altered signed recipe
+metadata rejects. Empty-database ARM resolution passes. This is source/package
+qualification only: no native install hooks, RAM boot, new kernel/module loading
+or phone configuration changes occur.
+[Evidence](../evidence/2026-11-11-kernel-maintenance-6.18.63-alpine.json)
