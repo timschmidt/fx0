@@ -1,0 +1,51 @@
+Select the PMIC voltage range from the register layout
+
+drv2_addr includes the peripheral base even when drv2_offset is zero.
+Use the second register mask to distinguish the fine-resolution PMICs
+from PM8058 and PM8916-compatible hardware.
+
+Clamp the inclusive-range calculation at the advertised maximum so
+the highest rumble magnitude cannot wrap the legacy five-bit field.
+Replace the cached drive bits when changing intensity while enabled.
+
+The Fx0 PM8226 uses the PM8916 layout. Its uncorrected driver programs
+code 21 for magnitude 39168. The corrected mapping produces code 24.
+Host tests cover every byte-scale speed for all three layouts and
+reject each independent regression. Physical corrected-driver testing
+remains pending.
+
+---
+--- a/drivers/input/misc/pm8xxx-vibrator.c
++++ b/drivers/input/misc/pm8xxx-vibrator.c
+@@ -11,9 +11,9 @@
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
+ 
+-#define VIB_MAX_LEVEL_mV(vib)	(vib->drv2_addr ? 3544 : 3100)
+-#define VIB_MIN_LEVEL_mV(vib)	(vib->drv2_addr ? 1504 : 1200)
+-#define VIB_PER_STEP_mV(vib)	(vib->drv2_addr ? 8 : 100)
++#define VIB_MAX_LEVEL_mV(vib)	((vib)->regs->drv2_mask ? 3544 : 3100)
++#define VIB_MIN_LEVEL_mV(vib)	((vib)->regs->drv2_mask ? 1504 : 1200)
++#define VIB_PER_STEP_mV(vib)	((vib)->regs->drv2_mask ? 8 : 100)
+ #define VIB_MAX_LEVELS(vib) \
+ 	(VIB_MAX_LEVEL_mV(vib) - VIB_MIN_LEVEL_mV(vib) + VIB_PER_STEP_mV(vib))
+ 
+@@ -107,7 +107,8 @@
+ 		vib->level /= VIB_PER_STEP_mV(vib);
+ 
+ 	if (on)
+-		val |= (vib->level << regs->drv_shift) & regs->drv_mask;
++		val = (val & ~regs->drv_mask) |
++		      ((vib->level << regs->drv_shift) & regs->drv_mask);
+ 	else
+ 		val &= ~regs->drv_mask;
+ 
+@@ -159,6 +160,8 @@
+ 		vib->level = VIB_MIN_LEVEL_mV(vib);
+ 	}
+ 
++	vib->level = min(vib->level, VIB_MAX_LEVEL_mV(vib));
++
+ 	pm8xxx_vib_set(vib, vib->active);
+ }
+ 

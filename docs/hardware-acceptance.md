@@ -508,3 +508,7 @@ Native r50 passes a bounded 4 MiB direct-read control with the expected read sec
 ## November 10 native camera switching and USB coexistence
 
 Installed r50 and libcamera `99990.7.1-r2` pass alternating front/rear raw capture and reopen. Five sessions, including full-resolution rear, deliver 120 contiguous RAW10 frames with 88 validated hardware color-bar frames. Both sensors runtime-suspend after close. High-speed USB stays configured, Sway stays active, and the battery reports discharging. The final boot and package hashes match. This adds capture, reopen and USB coexistence evidence. System suspend, sustained video, active charging and lens/flash qualification remain open. [Native evidence](../evidence/2026-11-10-camera-r50-reopen.json)
+
+## November 10 native vibrator integration
+
+The Sxmo profile now resolves the PM8226 event path and supplies a usable strength. Three short pulses have measured enable intervals, a 2.1 V programmed target and an accelerometer response. The normal Sxmo environment-loader invocation works as the graphical user and leaves the actuator off. The candidate driver fixes have host and ARM evidence, with physical testing pending. Tactile quality, new-session inheritance, notifications and system suspend remain open. The stock LED GPIO conflicts with the panel negative-enable pin and needs separate wiring verification. [Evidence](../evidence/2026-11-10-vibrator-r50-integration.json)

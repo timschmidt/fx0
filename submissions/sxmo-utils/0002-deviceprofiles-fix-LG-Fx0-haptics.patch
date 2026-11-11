@@ -1,0 +1,9 @@
+--- a/scripts/deviceprofiles/sxmo_deviceprofile_lg,madai.sh
++++ b/scripts/deviceprofiles/sxmo_deviceprofile_lg,madai.sh
+@@ -10,3 +10,6 @@
+ # make gestures register reliably.
+ export SXMO_LISGD_THRESHOLD="60"
+ export LISGD_EDGE_SIZE="2.4"
++
++export SXMO_VIBRATE_DEV="/dev/input/by-path/platform-fc4cf000.spmi-platform-fc4cf000.spmi:pm8226@1:vibrator@c000-event"
++export SXMO_VIBRATE_STRENGTH="39168"

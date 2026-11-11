@@ -1,6 +1,6 @@
 # sxmo-utils draft submission
 
-One patch for [sxmo-utils](https://git.sr.ht/~mil/sxmo-utils), based on
+Two patches for [sxmo-utils](https://git.sr.ht/~mil/sxmo-utils), based on
 `master` at `303c755e88d2a25c01bdbc5b46aba1939318f839` (fetched October 31,
 2026). Sxmo takes patches by email to `~mil/sxmo-devel@lists.sr.ht`. **Not
 sent:** sending needs the owner's approval and Signed-off-by.
@@ -18,3 +18,12 @@ needed, so it is not part of the patch.
 Checks: `sh -n` and shellcheck (Alpine 3.24) are clean. On the phone the same
 variables, used from `/usr/local/bin`, give working Sxmo gestures and buttons;
 the owner confirmed input under the GLES2 session.
+
+The [haptics follow-up](0002-deviceprofiles-fix-LG-Fx0-haptics.patch) exports
+the board's persistent PM8226 input path and strength 39168. The native Sxmo
+environment loader and installed utility pass as the graphical user. The
+uncorrected r50 driver programs a 2.1 V target at that strength, and a
+separate kernel candidate restores the intended range. The two profile
+exports are installed locally. Existing long-lived session processes need
+a new session to inherit them. System suspend and tactile qualification
+remain open. [Measurements and scope](../../diagnostics/vibrator/README.md)

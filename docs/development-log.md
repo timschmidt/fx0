@@ -5159,3 +5159,7 @@ The owner confirmed display and touch on the installed r50 boot that followed th
 ### Native r50 camera switching, reopen and USB coexistence
 
 The IMX132 and IMX179 alternate across four captures, then the rear sensor captures at full resolution. All five deliver contiguous RAW10 frames. The rear preset pattern clears during libcamera startup, and enabling it once capture starts yields valid bars. In total 88 patterned frames pass, and both sensors runtime-suspend after close. High-speed USB remains configured with the battery discharging. The postflight confirms the original boot and package hashes, idle sensors and no retained frame files. [Evidence](../evidence/2026-11-10-camera-r50-reopen.json)
+
+### PM8226 vibrator mapping and Sxmo profile
+
+Native testing finds a missing default event path and an ineffective implicit strength. The corrected profile works through Sxmo's environment loader as the graphical user. Exact PMIC reads show a 2.1 V programmed target at magnitude 39168 and bounded 150, 300 and 600 ms enable intervals. The source audit finds the wrong range predicate, a maximum-endpoint wrap and stale active drive bits. A separate driver candidate passes 768 sanitizer cases, independent regression controls and a W=1 ARM object build. The native kernel stays r50. The stock LP5521 entry also conflicts with the display on GPIO112. [Evidence](../evidence/2026-11-10-vibrator-r50-integration.json)

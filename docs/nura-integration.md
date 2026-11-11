@@ -88,3 +88,7 @@ prefix and unused partition tail remained unchanged. The configuration is now
 package-owned. Default `nmcli device wifi hotspot` succeeds after reboot with
 the generated profile still at `pmf=0`. See
 [package/update evidence](../evidence/2026-11-06-hotspot-package-installed.json).
+
+## Fx0 Sxmo haptics profile
+
+The existing `/usr/local/bin/sxmo_deviceprofile_lg,madai.sh` now exports the persistent PM8226 vibrator event path and strength 39168. The original profile is backed up on the phone. A graphical-user command through Sxmo's normal environment loader activates the vibrator and returns it off. The file remains a local device-profile override covered by the expanded upstream draft. The current long-lived session has its previous inherited environment, and next-session startup qualification remains open. [Procedure and evidence](../diagnostics/vibrator/README.md)
