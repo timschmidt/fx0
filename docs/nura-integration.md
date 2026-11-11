@@ -7,7 +7,8 @@ upgrades, 31 installations, 13 removals and one downgrade. Both retain the
 native world's ten exact signed-control checksum holds, including the custom
 kernel and peripheral packages. Solver success does not establish current-edge
 hardware compatibility. No phone repository, index, trust key or package was
-changed. The already staged eight-package Sxmo r7 proposal remains separate.
+changed. That audit made no native changes; the separately authorized eight-package
+Sxmo r7 transaction below has since completed.
 See the [audit scope and results](../diagnostics/kernel-maintenance/README.md)
 and [evidence](../evidence/2026-11-11-kernel-maintenance-6.18.63.json).
 
@@ -110,4 +111,14 @@ The existing `/usr/local/bin/sxmo_deviceprofile_lg,madai.sh` now exports the per
 The installed `/usr/bin/sxmo_notifs.sh` has a backed-up local correction to handle close-write and atomic move events instead of attributes. The original is retained at `/var/tmp/fx0-notifications-01/sxmo_notifs.before.sh`. The login user's `sxmo/hooks/lg,madai/sxmo_hook_notification.sh` requests one 300 ms pulse and respects `.novibrate`. Only `superctl`'s notification service restarts; the existing Sway session stays active. Normal/muted/re-enabled real notifications pass, including exact Dunst replies, PMIC timing and cleanup. The APK database is unchanged: this file correction and user hook still need reproducible package/configuration integration for the final installation. [Repair and rollback](../diagnostics/sxmo-notifications/README.md)
 
 
-**r7 packaging candidate:** The signed reproducible [Sxmo r7 manifest](../manifests/sxmo-utils-r7.json) now packages the profile and board notification hook and selects shared device hooks below user overrides. A temporary native probe of the exact packaged loader and helper passes normal/muted/re-enabled notifications. Both full source builds produce identical APKs, and offline resolution plans only the eight Sxmo upgrades. The phone still runs r6 with the existing local files; current phone/host backups and an isolated exact restoration rehearsal now pass. The controller and eight-package plan are staged and native preflight passes. Normal package deployment and retirement of the two superseded overrides await explicit approval after automatic review rejected the launch; no installation or service restart occurs. Later-session qualification remains open. [Preparation evidence](../evidence/2026-11-10-sxmo-r7-deployment-preparation.json)
+**r7 installed, 2026-11-11:** The reproducible signed package now owns the
+profile, notification correction and board hook. The explicitly authorized
+transaction upgrades exactly eight packages, with an exercised exact r6 rollback
+and corrected successful retry. Normal package hooks write byte-identical r50
+boot images; the installed kernel remains r50. The two superseded overrides are
+backed up and retired. Fresh sessions inherit the packaged profile/hooks, and
+real normal/muted/re-enabled notifications pass. A dependent user gesture
+wrapper is migrated to resolve the packaged profile while retaining `-r 25`;
+it starts automatically after reboot and the owner confirms display/touch.
+Final configuration reproduction, lock and suspend remain open.
+[Native evidence](../evidence/2026-11-11-sxmo-r7-and-vibrator-ram.json)

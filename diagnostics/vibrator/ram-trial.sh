@@ -37,8 +37,10 @@ module_set() {
 guard 0; module_set ''
 mkdir -m 700 /tmp/vibrator-trial || fail 'already attempted'
 printf 'VIBRATOR_RAM_BEGIN %s\n' "$(cat /proc/sys/kernel/random/boot_id)"
+insmod /modules/evdev.ko || fail 'signed evdev load'
+guard 0; module_set evdev
 insmod /modules/pm8xxx-vibrator.ko || fail 'signed module load'
-guard 4096; module_set pm8xxx_vibrator
+guard 4096; module_set "$(printf 'pm8xxx_vibrator\nevdev')"
 count=0; event=
 for node in /sys/class/input/event*/device/name; do
     [ -r "$node" ] || continue
@@ -53,10 +55,12 @@ done
 [ "$count" -eq 1 ] || fail 'vibrator input count'
 printf 'VIBRATOR_RAM_INPUT %s\n' "$event"
 /bin/vibrator-pulses "$event" || fail 'pulse and intensity checks'
-guard 4096; module_set pm8xxx_vibrator
+guard 4096; module_set "$(printf 'pm8xxx_vibrator\nevdev')"
 rmmod pm8xxx_vibrator || fail 'module removal'
-guard 4096; module_set ''
+guard 4096; module_set evdev
 for node in /sys/class/input/event*/device/name; do
     [ ! -r "$node" ] || [ "$(cat "$node")" != pm8xxx_vib_ffmemless ] || fail 'input remains'
 done
+rmmod evdev || fail 'evdev removal'
+guard 4096; module_set ''
 printf 'VIBRATOR_RAM_PASS\n'

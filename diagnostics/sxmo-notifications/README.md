@@ -1,6 +1,10 @@
 # Fx0 Sxmo notifications
 
-Installed `sxmo-utils-1.18.1-r6` watches attribute events while its writer first
+**Current installation:** all eight Sxmo packages are now `1.18.1-r7`. The
+packaged profile, notification fix and board hook replace the earlier local
+repairs described below. See the native-install section at the end.
+
+The original installed `sxmo-utils-1.18.1-r6` watches attribute events while its writer first
 touches an empty file. A real-inotify control deletes a partial notification
 before the writer finishes. The pinned newer master source adds close-write
 but retains the attribute race. Dispatch after close-write or atomic move
@@ -38,7 +42,8 @@ and removes its own history entry and notification file.
 Both enabled cases use code 21, a programmed 2.1 V target on uncorrected r50.
 All finish off. This is electrical notification-path qualification; analogue
 voltage, visual/tactile acceptance, lock and system suspend remain open.
-The source-range-corrected kernel module remains unbooted.
+The later corrected-driver RAM result is recorded in the
+[vibrator diagnostic](../vibrator/README.md#working-port-ram-result-2026-11-11).
 
 ## Regression fixture
 
@@ -63,7 +68,11 @@ acceptance fixture. The upstream test body passed, but its outer wrapper had
 a cleanup-name collision; separately verified cleanup removed the remaining
 two-file payload directory.
 
-## Rollback
+## Historical r6 local-repair rollback
+
+The following procedure applies only to the old r6 local repair. It is not
+the r7 package rollback; r7 retains exact signed r6 APKs and captured files
+under `/var/lib/fx0-rollback/sxmo-r7-02`.
 
 Run in the graphical user's existing Sxmo environment after verifying that the
 installed script/hook still match the evidence. Stop only the notification
@@ -132,10 +141,10 @@ messages; both isolated process groups and FIFOs are verified cleaned up.
 
 Offline resolution against the current r50 database upgrades exactly the eight
 installed Sxmo packages to r7. The three audio dependency subpackages remain
-empty metadata packages with their existing dependency definitions. r7 is **not
-installed**. The r6 local correction and user overrides remain active.
+empty metadata packages with their existing dependency definitions. At that preparation stage r7 was not installed. The native transaction below
+supersedes that state.
 
-Current deployment preparation now captures all 331 installed Sxmo paths,
+The earlier deployment preparation captures all 331 installed Sxmo paths,
 both local overrides, the APK database/scripts/triggers, world, full boot tree,
 matching modules and GPT copies. The 115,140,636-byte archive matches on the
 phone and host. A raw original boot-partition copy stays on the phone only.
@@ -155,9 +164,9 @@ setting passes.
 
 The native preflight rechecks original boot/payload/backup bytes and all 16 APK
 signatures. The live native simulation still selects exactly eight upgrades.
-The controller and exact plan are staged under
-`/var/lib/fx0-rollback/sxmo-r7-01`. On approval, a persistent systemd unit with a
-sleep/shutdown inhibitor will run normal APK hooks, preserve the original world
+The original controller and exact plan were staged under
+`/var/lib/fx0-rollback/sxmo-r7-01`. That original plan proposed a persistent
+systemd unit with a sleep/shutdown inhibitor to run normal APK hooks, preserve the original world
 root set, retire only the two backed-up overrides, update the supervisor PATH
 and restart only the notification service. It will verify all 333 candidate
 payload paths, existing input/scale/gesture settings, boot readback and three
@@ -166,11 +175,8 @@ captured local files, exact database/world and prior notification PATH. The
 controller checks state before launch; an observation timeout must never trigger
 a second launch.
 
-Automatic approval review rejected the native transaction because the earlier
-UPower approval does not authorize this Sxmo update. No controller or install
-unit ran. Explicit Sxmo installation approval is pending; r6, its local repairs
-and installed r50 remain active. Later-session input/display/touch and
-lock/suspend qualification remain open.
+Automatic approval review originally rejected the launch. The owner's later
+explicit phone-update approval authorized the native installation below.
 
 The initial USB upload stalled with only a verified 163,840-byte prefix. The
 same boot continued over its existing Wi-Fi address with the original pinned
@@ -178,3 +184,37 @@ SSH host identity. Exact-prefix resume and the complete 1,764,905-byte input
 hash passed, followed by the verified backup transfer. No network profile,
 route, DNS or host connection configuration changed. USB bulk-transfer
 reliability remains open. [Preparation evidence](../../evidence/2026-11-10-sxmo-r7-deployment-preparation.json)
+
+## Native r7 installation and gesture migration (2026-11-11)
+
+The authorized eight-package update is installed with normal APK hooks. The
+first attempt passed package installation but failed its notification PATH
+check. Its automatic rollback restored the exact r6 payload, database, world,
+overrides and original boot/module hashes. The supervisor's startup environment
+overrides its mutable global environment store; changing that store could not
+change PATH for the new child. Five isolated native cases verify that behavior.
+The corrected transaction temporarily supplies service-specific PATH for the
+notification restart, then restores the exact packaged service bytes and reloads
+its configuration. Four host wrapper cases check restoration and refusal paths.
+The retry succeeds and all 333 candidate paths verify. Only those eight package
+versions/control identities change; the other 767 packages and world match.
+
+Normal APK hooks regenerate and flash byte-identical r50 boot images during
+installation, rollback and retry. Kernel r50 remains installed. The profile and
+notification user overrides are retired into verified rollback storage; fresh
+Sway, supervisor and notification processes inherit the packaged hooks on later
+ordinary boots. Normal/muted/re-enabled notifications deliver once each, return
+the PMIC off, and leave no owned notification, history or mute files.
+
+A fresh-session gesture regression exposed an existing user lisgd wrapper that
+still sourced the retired `/usr/local/bin` profile. Its original bytes are
+backed up on host and phone. Replacing only that source path with
+`$(command -v sxmo_deviceprofile_lg,madai.sh)` retains the custom `-r 25`,
+threshold 60, edge size 2.4 and gesture mappings. Only the gesture service was
+restarted; no input-driver reset, calibration or synthetic touch was used.
+The owner subsequently reports working touch and confirms display/touch again
+after the next boot. That boot automatically starts lisgd with the touchscreen
+open. Raw capture windows were not aligned with the owner's swipes and do not
+provide a separate event-level pass. The custom rate wrapper still needs a
+final configuration migration decision; lock/suspend qualification stays open.
+[Native evidence](../../evidence/2026-11-11-sxmo-r7-and-vibrator-ram.json)

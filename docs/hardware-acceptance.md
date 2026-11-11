@@ -8,7 +8,14 @@ Use these statuses: `unverified`, `identified`, `in progress`, `blocked`, `faile
 
 For each result record the exact image hash, source revisions, package manifest, unit revision, power source, battery condition, procedure, observations, log/artifact reference, and date. Keep identifiers and original logs privately; publish reviewed evidence under `evidence/` when available.
 
-**Current phone state: restored r50, booted with zero taint.** Exact boot
+**Current phone state: r50 with Sxmo 1.18.1-r7.** The authorized update and
+exact rollback/retry are recorded in the [November 11 native evidence](../evidence/2026-11-11-sxmo-r7-and-vibrator-ram.json). The migrated user gesture hook starts
+on a fresh boot, and the owner confirms display/touch on that return. The
+corrected vibrator passes its full bounded RAM worker with off state and both
+modules unloaded; installed r50 still uses its original driver. Final combined
+kernel, suspend and reliability acceptance remain open.
+
+**Restored-r50 baseline, booted with zero taint.** Exact boot
 readback, 300–787.2MHz limits, the programmed 1.15V APC target, raw IMU reads
 and pre-trial zero L2 state are verified. The initial reboot after r51
 installation reached Qualcomm9008; a later boot after reconnection passed
@@ -38,10 +45,8 @@ baseline. Its complete host ARM build, 464 module signatures/dependency graphs,
 linked CFI/trust checks, 31 selected unit cases and two regression controls pass.
 The Fx0 DTB is byte-identical to r50. These host checks alone do not qualify a
 physical boot or newer peripheral candidates. The separate distribution package
-result is recorded above. The phone still runs
-r50 with Sxmo r6; its original boot, package database/world, running services
-and idle hardware are checked in the read-only postflight. The latest physical
-display/touch confirmation remains pending. Stable/edge userspace audits are
+result is recorded above. That maintenance-phase postflight retained r50/r6.
+The later authorized Sxmo update above supersedes that package state. Stable/edge userspace audits are
 dependency projections only. See
 [maintenance evidence](../evidence/2026-11-11-kernel-maintenance-6.18.63.json).
 
@@ -569,3 +574,24 @@ boot/package hashes, services and idle hardware remain intact. Temporary
 receivers and RAM files are removed. Fastboot readback/BOOT, root cause and
 long-term USB/reboot reliability remain open.
 [Procedure and evidence](../diagnostics/usb-native-bulk/README.md)
+
+## November 11 native Sxmo and corrected vibrator RAM result
+
+Exactly eight Sxmo r7 packages are installed. The first deployment's PATH check
+fails and its automatic r6 rollback verifies exact restoration; the corrected
+retry and later fresh sessions pass all 333 payload paths, original r50 boot
+and modules, unchanged world and other 767 packages. An existing user gesture
+wrapper depended on the retired local profile; migrating its source lookup
+restores daemon startup while preserving its custom options. Owner display/touch
+confirmation follows and also passes on the subsequent r50/r7 boot.
+
+Working-port Fastboot transfers now verify complete image readback before one
+RAM BOOT. After correcting the missing signed evdev dependency and adding RAM
+result capture independent of kernel logging limits, the corrected vibrator
+passes 150/300/600 ms pulses, active codes 24 → 17 → 22, final off holds and
+unload of both modules with expected external-module taint 4096. The independent
+180-second timer returns to installed r50/r7; original hashes, fresh-session
+services and owner display/touch confirmation pass on this newest return.
+This does not qualify tactile
+quality, analogue voltage, suspend, the separate 6.18.63 artifact or a combined
+final installation. [Evidence](../evidence/2026-11-11-sxmo-r7-and-vibrator-ram.json)

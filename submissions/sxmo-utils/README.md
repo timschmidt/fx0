@@ -47,4 +47,7 @@ do not add an empty PATH entry. Seven real-loader fixture cases pass; the
 packaged loader/profile/hook and rebuilt utility also pass a temporary native
 notification probe. All four drafts apply in order with zero fuzz. The matching
 1.18.1 r7 package candidate builds twice with 14 byte-identical signed APKs;
-the installed phone remains on r6 with its local overrides. [Package scope](../../diagnostics/sxmo-notifications/README.md#reproducible-r7-package-candidate)
+the authorized native installation now runs all eight r7 packages, with an
+exercised exact r6 rollback and fresh-session qualification. The dependent
+custom user gesture wrapper now resolves the packaged profile and retains
+its `-r 25` option. The upstream drafts remain unsent. [Package scope](../../diagnostics/sxmo-notifications/README.md#reproducible-r7-package-candidate)

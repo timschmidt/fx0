@@ -1,0 +1,147 @@
+{
+  "recorded_UTC": "2026-11-11T08:34:06.160704+00:00",
+  "recipe_commit": "8c60fa379d6377a08dd9c894010942cf0dfd9c43",
+  "source_package_manifest": "manifests/sxmo-utils-r7.json",
+  "owner_authorization": "You have approval to update the phone",
+  "installed_version": "1.18.1-r7",
+  "package_count": 8,
+  "other_767_package_versions_and_control_identities_unchanged": true,
+  "world_unchanged": true,
+  "payload_paths_verified": 333,
+  "first_attempt": {
+    "normal_package_install_completed": true,
+    "notification_PATH_check_failed": true,
+    "automatic_r6_rollback_verified": true,
+    "exact_original_payload_and_APK_database_world_restored": true,
+    "original_boot_and_all_modules_match": true,
+    "only_own_failed_unit_reset_after_capture": true
+  },
+  "supervisor_root_cause": {
+    "package": "superd=0.7.1-r32",
+    "source_commit": "b8b1278f84548260a7a09905bd055bd69f11b117",
+    "startup_environment_overrides_mutable_store": true,
+    "service_environment_wins": true,
+    "isolated_native_cases": 5
+  },
+  "successful_retry": {
+    "normal_APK_hooks": true,
+    "temporary_notification_service_PATH": true,
+    "service_file_exact_package_bytes_restored": true,
+    "only_notification_service_restarted": true,
+    "Sway_PID_unchanged_during_install": true,
+    "boot_partition_writes": "Normal hooks during r7 install, r6 rollback and r7 retry; all three write byte-identical original r50 boot images",
+    "original_boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "kernel_package_unchanged": true,
+    "retired_overrides": [
+      "/usr/local/bin/sxmo_deviceprofile_lg,madai.sh",
+      "/home/user/.config/sxmo/hooks/lg,madai/sxmo_hook_notification.sh"
+    ],
+    "rollback_storage": "/var/lib/fx0-rollback/sxmo-r7-02",
+    "host_and_native_backup_sha256": "f4c0fd30ef5b898dbb16703e435c37f476050f61d3acfe00d404cb0345bac573"
+  },
+  "fresh_session": {
+    "boot_id": "0d2abb9d-6e99-44f0-af61-833b7a30dda5",
+    "profile_and_board_hooks_inherited": true,
+    "packaged_executable_resolution": {
+      "sxmo_deviceprofile_lg,madai.sh": "/usr/bin/sxmo_deviceprofile_lg,madai.sh",
+      "sxmo_hook_notification.sh": "/usr/share/sxmo/default_hooks/lg,madai/sxmo_hook_notification.sh"
+    },
+    "notifications": [
+      {
+        "label": "r7-fresh-enabled",
+        "muted": false,
+        "notification_bus_calls": 1,
+        "notification_id": 2,
+        "writer_exit": 0,
+        "samples": 177,
+        "enabled_samples": 41,
+        "PMIC_drive_code": 21,
+        "programmed_target_mV": 2100,
+        "enable_duration_bounds_ms": [
+          292.06,
+          305.42
+        ],
+        "PMIC_off_after": true
+      },
+      {
+        "label": "r7-fresh-muted",
+        "muted": true,
+        "notification_bus_calls": 1,
+        "notification_id": 3,
+        "writer_exit": 0,
+        "samples": 174,
+        "enabled_samples": 0,
+        "PMIC_off_after": true
+      },
+      {
+        "label": "r7-fresh-reenabled",
+        "muted": false,
+        "notification_bus_calls": 1,
+        "notification_id": 4,
+        "writer_exit": 0,
+        "samples": 178,
+        "enabled_samples": 43,
+        "PMIC_drive_code": 21,
+        "programmed_target_mV": 2100,
+        "enable_duration_bounds_ms": [
+          295.9,
+          311.67
+        ],
+        "PMIC_off_after": true
+      }
+    ],
+    "owned_notifications_history_mute_cleaned": true
+  },
+  "gesture_migration": {
+    "path": "/home/user/.config/sxmo/hooks/sxmo_hook_lisgdstart.sh",
+    "original_sha256": "fb379c58fd9137a0d92c40eb7c519251673c059d67af10fa57ccfc273296c970",
+    "candidate_sha256": "ae842d96d221a222aa10267c22b4a9c5f503f12891de5c639fce384761cf8441",
+    "native_backup": "/var/lib/fx0-rollback/sxmo-r7-02/lisgd-hook-before.sh",
+    "host_backup_verified": true,
+    "old_hook_control_failed_at_retired_path": true,
+    "full_candidate_hook_with_mocked_lisgd_passed": true,
+    "preserved_rate_argument_25": true,
+    "preserved_threshold_60_and_edge_2_4": true,
+    "only_gesture_service_restarted": true,
+    "Sway_and_notification_PIDs_unchanged": true,
+    "kernel_or_sysfs_touch_configuration_writes": false,
+    "user_gesture_hook_configuration_changed": true
+  },
+  "gesture_auto_started_after_reboot": true,
+  "owner_after_repair_confirmation": {
+    "recorded_UTC": "2026-11-11T07:56:19.055531+00:00",
+    "native_boot_id": "f1784d3e-766c-4136-a3e3-b0945d059e20",
+    "status": "confirmed",
+    "answer": "Touch worked during requested swipes",
+    "display_status": "Owner previously reports display works on this same boot",
+    "source": "Direct owner message: You asked me to swipe several times, and touch worked that time.",
+    "gesture_hook_migrated": true,
+    "gesture_service_opened_touchscreen": true,
+    "capture_window_alignment_not_claimed": true
+  },
+  "owner_subsequent_return_confirmation": {
+    "recorded_UTC": "2026-11-11T08:27:12.079246+00:00",
+    "native_boot_id": "a3d10bd9-f141-452e-b7fd-eb1b4fc13a99",
+    "status": "confirmed",
+    "answer": "Display and touch work",
+    "display_confirmed": true,
+    "touch_confirmed": true,
+    "source": "Owner response to corrected vibrator RAM return display/touch question",
+    "gesture_hook_migrated": true
+  },
+  "latest_return_physical_UI": {
+    "recorded_UTC": "2026-11-11T08:34:06.105939+00:00",
+    "native_boot_id": "0d2abb9d-6e99-44f0-af61-833b7a30dda5",
+    "status": "confirmed",
+    "answer": "Display and touch work",
+    "display_confirmed": true,
+    "touch_confirmed": true,
+    "source": "Owner response after complete vibrator RAM return; applies only to this native boot"
+  },
+  "upstream_drafts_sent": false,
+  "limits": [
+    "Custom -r 25 user wrapper remains outside packaged profile; final configuration reproduction remains open",
+    "Owner swipe timing is not aligned to raw capture windows; no separate event-level pass inferred",
+    "Lock, suspend, tactile quality and final reinstall remain open"
+  ]
+}

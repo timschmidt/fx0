@@ -5261,3 +5261,26 @@ metadata rejects. Empty-database ARM resolution passes. This is source/package
 qualification only: no native install hooks, RAM boot, new kernel/module loading
 or phone configuration changes occur.
 [Evidence](../evidence/2026-11-11-kernel-maintenance-6.18.63-alpine.json)
+
+### Native Sxmo r7, dependent gesture hook and vibrator RAM completion
+
+Owner phone-update approval authorizes the eight-package Sxmo r7 transaction.
+A notification PATH assertion triggers an exact automatic r6 rollback. Pinned
+superd source and isolated native cases explain startup-environment precedence;
+a service-specific temporary PATH allows the corrected retry, followed by exact
+service-file restoration. Normal APK hooks flash byte-identical r50 boot images
+on installation, rollback and retry. Independent checks verify all 333 candidate
+paths, unchanged other 767 package identities/world, original boot and modules.
+
+A later boot exposes the user gesture wrapper's hardcoded retired profile path.
+Its source lookup is migrated with backups while retaining custom options;
+lisgd starts automatically on the next boot and the owner confirms display/touch.
+Real packaged normal/muted/re-enabled notification checks pass in fresh sessions.
+
+On working USB port 1-7, vibrator RAM image transfer/readback and BOOT succeed.
+The first run lacks modular evdev, the second has incomplete rate-limited logs,
+and the third captures the complete worker in RAM: 152/303/607 ms at code24,
+active 24 → 17 → 22, off holds, zero worker exit and both modules unloaded.
+The original 180-second return remains independent. Installed r50 keeps its
+original driver; broader power, tactile, combined-image and reliability gates
+remain open. [Evidence](../evidence/2026-11-11-sxmo-r7-and-vibrator-ram.json)

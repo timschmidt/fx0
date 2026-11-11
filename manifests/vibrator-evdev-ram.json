@@ -1,0 +1,218 @@
+{
+  "recorded_UTC": "2026-11-11T08:34:06.161282+00:00",
+  "physical_result": {
+    "recorded_UTC": "2026-11-11T08:31:04.699370+00:00",
+    "RAM_boot_id": "3029c701-a19e-43b8-b5a0-c48af38eba40",
+    "image_sha256": "766d5acce1d602817ff1b3b0b7fa1d5fca732c21efb6b2b1acf0d255ae5f9892",
+    "exact_runtime_kernel_notes_verified": true,
+    "installed_boot_partition_readback_unchanged_in_RAM": true,
+    "worker_exit_status": 0,
+    "worker_completed_uptime_seconds": 12.54,
+    "pulses": [
+      {
+        "requested_ms": 150,
+        "observed_ms": 152,
+        "drive_code": 24,
+        "enabled_samples": 29
+      },
+      {
+        "requested_ms": 300,
+        "observed_ms": 303,
+        "drive_code": 24,
+        "enabled_samples": 58
+      },
+      {
+        "requested_ms": 600,
+        "observed_ms": 607,
+        "drive_code": 24,
+        "enabled_samples": 116
+      }
+    ],
+    "holds": [
+      {
+        "code": 0,
+        "duration_ms": 100,
+        "matched_samples": 11
+      },
+      {
+        "code": 24,
+        "duration_ms": 150,
+        "matched_samples": 15
+      },
+      {
+        "code": 17,
+        "duration_ms": 150,
+        "matched_samples": 15
+      },
+      {
+        "code": 22,
+        "duration_ms": 150,
+        "matched_samples": 15
+      },
+      {
+        "code": 0,
+        "duration_ms": 100,
+        "matched_samples": 10
+      },
+      {
+        "code": 0,
+        "duration_ms": 100,
+        "matched_samples": 11
+      }
+    ],
+    "programmed_target_mV": 2400,
+    "active_levels": [
+      24,
+      17,
+      22
+    ],
+    "final_off_holds": 2,
+    "both_modules_unloaded_at_worker_exit": true,
+    "expected_external_module_taint": 4096,
+    "independent_snapshot_no_modules_or_worker": true,
+    "helper_PASS": true,
+    "worker_PASS": true,
+    "artifacts_sha256": {
+      "HTTP-22-vibrator.log": "dc644ef4727b7fcbb9442506afa3bc4f5d5691bd8ba029addb5e9632f409c987",
+      "HTTP-22-vibrator-result.txt": "15eb162f53770bf90e5528a4306c075863677e7f62d437bf684eedf769879db7",
+      "HTTP-22-vibrator-state.txt": "6c8b846b42133686176cf3ae13e0ec1d835e4fab3bbef15ee235e9a5cf756d9f"
+    },
+    "scope": "Bounded physical RAM electrical/register timing, active drive changes, stop and unload; analogue voltage, tactile quality and suspend unqualified"
+  },
+  "physical_boot": true,
+  "native_driver_installation": false,
+  "original_return_timer_seconds": 180,
+  "prior_working_port_attempts": [
+    {
+      "base": "local/vibrator-working-port-01",
+      "RAM_boot_id": "fe8e114d-eab3-4a1f-8aab-d16e89dcfd3c",
+      "result": "No input character device because evdev was modular and absent; no pulses",
+      "return_to_r50_r7_verified": true,
+      "controller_SSH_poll_timeout_handled_by_read_only_resumed_observation": true
+    },
+    {
+      "base": "local/vibrator-working-port-02",
+      "RAM_boot_id": "ebc0dbca-2609-4d38-81f4-75d5c268245c",
+      "result": "Three pulses and active codes24/17 captured; tail missing at ten-message devkmsg burst limit; completion not inferred",
+      "log_loss_analysis": {
+        "recorded_UTC": "2026-11-11T08:22:27.620790+00:00",
+        "source_commit": "5624c0158e00149c03f6d1ae53f96092015274bd",
+        "source_files_sha256": {
+          "kernel/printk/printk.c": "a3275de85bf4f4e9779bd115c91989501a8cdc25bcf59fa46bf074a5c4425f0f",
+          "include/linux/ratelimit_types.h": "64a3e42f62e01ea44f00c936f3dbf1ae7314a0cc1726151aeefc54b3b0b187aa"
+        },
+        "source_default_devkmsg": "ratelimit",
+        "source_per_open_file_burst": 10,
+        "source_interval_seconds": 5,
+        "source_suppressed_write_returns_original_length": true,
+        "visible_user_records_in_worker_window": 10,
+        "first_user_microseconds": 9680524,
+        "last_user_microseconds": 11865976,
+        "last_visible_user_message": "VIBRATOR_HOLD code=17 duration_ms=150 matched_samples=15",
+        "initialization_and_worker_share_inherited_devkmsg_file_description": true,
+        "interpretation": "Exact burst boundary supports log suppression; does not prove unobserved helper completion, off state or module removal",
+        "physical_complete_worker_result": false,
+        "next_diagnostic": "Separate RAM log, atomic exit/module result and independent 20-second process snapshot"
+      },
+      "return_to_r50_r7_verified": true
+    }
+  ],
+  "transfer": {
+    "USB_port": "1-7",
+    "payload_bytes": 6512640,
+    "readback_byte_exact": true,
+    "BOOT_attempts": 1,
+    "independent_timer_return_captured": true,
+    "all_owned_child_processes_reaped": true,
+    "host_routes_resolver_root_index_unchanged": true,
+    "owned_volatile_network_profile_removed": true
+  },
+  "native_return": {
+    "boot_id": "0d2abb9d-6e99-44f0-af61-833b7a30dda5",
+    "kernel": "6.18.59-fx0-dmp",
+    "taint": 0,
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "APK_database_sha256": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1",
+    "world_sha256": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+    "all_original_boot_files_and_modules_match": true,
+    "systemd": "running",
+    "failed_units": [],
+    "pending_jobs": [],
+    "gesture_auto_started_and_touchscreen_open": true,
+    "physical_UI": {
+      "recorded_UTC": "2026-11-11T08:34:06.105939+00:00",
+      "native_boot_id": "0d2abb9d-6e99-44f0-af61-833b7a30dda5",
+      "status": "confirmed",
+      "answer": "Display and touch work",
+      "display_confirmed": true,
+      "touch_confirmed": true,
+      "source": "Owner response after complete vibrator RAM return; applies only to this native boot"
+    }
+  },
+  "limits": [
+    "No installation of corrected vibrator module or Linux6.18.63",
+    "Register target is not measured analogue voltage",
+    "Tactile quality, suspend, long reliability and combined final kernel remain open",
+    "USB port root cause and unrestricted payload reliability remain unresolved"
+  ],
+  "image_preparation_receipt": {
+    "image_path": "local/vibrator-ram-03/fx0-r50-vibrator-ram.img",
+    "image_sha256": "766d5acce1d602817ff1b3b0b7fa1d5fca732c21efb6b2b1acf0d255ae5f9892",
+    "image_bytes": 6512640,
+    "kernel_sha256": "32610058b1d03c1e16df671be169ded43aae7b2f46224d3bea82f3c5751c5416",
+    "DTB_sha256": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+    "kernel_notes_sha256": "4f06fdf8e457f624843467942399cf6ca7d7c552ecca6c108f0f5f29752a7e3a",
+    "module_sha256": "e6fcc77e6db441e399f335b178f6a0583c8b7c38833484f1a50f2c88f84b0210",
+    "evdev_module_sha256": "4eb13729c1c267b4d883959774d21b39e5c584b518df9d60b8ffa900b0efd525",
+    "module_expected_taint": 4096,
+    "ramdisk_entries": 21,
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\" module.sig_enforce=1",
+    "return_timer_seconds": 180,
+    "worker_delay_seconds": 8,
+    "unmodified_base_entries": 8,
+    "unchanged_original_timer": true,
+    "vibrator_node": "/soc/spmi@fc4cf000/pm8226@1/vibrator@c000",
+    "entries_sha256": {
+      "bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dev": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sys": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tmp": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "www": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bin/busybox": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+      "bin/sh": "9d75f0d7c398df565d7ac04c6819b62d6d8f9560f5eb4672596ecd8f7e96ae91",
+      "bin/serve-http": "0ce3d5f2f963d5f2acedbc1a87968f2d330419f695ede496b61847fca6650330",
+      "init": "417914b87d0e7b161c122c766e32ab7205b7bb2564d10c965612259d590e3bc5",
+      "etc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modules": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modules/evdev.ko": "4eb13729c1c267b4d883959774d21b39e5c584b518df9d60b8ffa900b0efd525",
+      "modules/pm8xxx-vibrator.ko": "e6fcc77e6db441e399f335b178f6a0583c8b7c38833484f1a50f2c88f84b0210",
+      "bin/vibrator-pulses": "abc83e25bceb0ed1701f474c13d3b29c71912f8575afe0ae752a3560b96afcd2",
+      "bin/vibrator-ram": "4e576249bae744480e2f22c60f46455b03feb3b84add597f1989061adc65aa2d",
+      "bin/vibrator-log": "63ca2b13aca7a95a9e969cae331ff03635937a7aeeeaefcc5958d2c7adadb8a4",
+      "bin/vibrator-snapshot": "caadd9748b8e7d6d8500cdee99a92eafeb06d58b70f1073d647f0212d5eb0700",
+      "etc/fx0-vibrator-trial": "594eb2dc85d0fcc27dbd3629388529cc67703687faf7a9b7004a7249d43d720f",
+      "etc/fx0-vibrator-notes.sha256": "a8196cd5e1a8bb63d99b1b8cd2d25ff658440a62f5d89d99a0deb07d78a09590",
+      "etc/fx0-vibrator-inputs.sha256": "3da3755bf3254ad1d6b7c10a591c0fb002aef4562d6ba1f3e792ae275bae4475"
+    },
+    "physical_boot": false,
+    "worker_output_saved_in_RAM": true,
+    "atomic_worker_exit_and_module_state": true,
+    "independent_state_snapshot_seconds": 20
+  },
+  "host_preflight_verification": {
+    "image_SHA256": "766d5acce1d602817ff1b3b0b7fa1d5fca732c21efb6b2b1acf0d255ae5f9892",
+    "image_bytes": 6512640,
+    "Android_checksum_and_CPIO_verified": true,
+    "CPIO_entries": 21,
+    "kernel_DTB_cmdline_modules_worker_and_pulse_helper_unchanged": true,
+    "original_180_second_timer_byte_exact": true,
+    "only_init_changes_are_logged_worker_and_read_only_20_second_snapshot": true,
+    "ARM_BusyBox_syntax_passed_for_all_five_scripts": true,
+    "full_RAM_log_atomic_exit_and_module_state_available_over_allowlisted_HTTP": true,
+    "no_kernel_logging_policy_change": true,
+    "host_logging_and_HTTP_cases": 4,
+    "physical_boot": false
+  },
+  "receipt_scope": "Nested preparation receipts retain their pre-boot physical_boot=false values. This manifest records the subsequent physical boot and complete worker result."
+}

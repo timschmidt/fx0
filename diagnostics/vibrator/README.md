@@ -56,7 +56,8 @@ The actual driver functions pass 768 host ASan/UBSan speed/layout cases.
 Leak detection is disabled because the host tracing environment prevents
 LeakSanitizer operation. The W=1 ARM object and strict checkpatch pass. The
 test covers voltage selection, driver level and legacy drive fields.
-PMI632 high-byte encoding is outside its scope. The corrected module remains uninstalled and unbooted. Its predicted code at strength 39168 is 24,
+PMI632 high-byte encoding is outside its scope. The corrected module remains uninstalled; the later RAM result below qualifies
+its bounded pulse, active-level and unload behavior. Its predicted code at strength 39168 is 24,
 corresponding to the stock 2.4 V target. The October 31 evidence's 2.4 V
 description at this strength was an inference from the intended mapping.
 The new exact PMIC read supersedes that inference for uncorrected r50.
@@ -78,8 +79,7 @@ DT properties, RAM mounts, temperature, module set and input parent. Its
 at code 24, then active code changes 24 → 17 → 22 and stop. It reads the
 PMIC registers and stops on unexpected drive values. The host fixture runs
 the actual helper with mocked hardware and rejects overdrive; the static
-ARM executable rejects invalid arguments before device access. These are
-host checks, with no physical corrected-driver result yet.
+ARM executable rejects invalid arguments before device access. Those were host checks; the later working-port trial below adds the physical result.
 
 The physical attempt used the installed `fx0-pon-reboot` lk2nd, 16 KiB
 host requests and 5 ms pacing. It completed 85 data requests (1,392,640
@@ -105,3 +105,29 @@ Sxmo's existing `.novibrate` flag. Real normal/muted/re-enabled notifications
 reach Dunst once each; the enabled cases program code 21 and return off,
 and the muted case has no enabled samples. [Repair, rollback and evidence](../sxmo-notifications/README.md)
 Tactile quality and system suspend remain open.
+
+## Working-port RAM result (2026-11-11)
+
+On the qualified host USB port `1-7`, full image transfer and byte-exact
+readback now succeed. The first RAM run exposed a harness omission:
+reconstructed r50 has `CONFIG_INPUT_EVDEV=m`, so the input character device
+was absent. The corrected image loads its matching signed in-tree evdev
+module before the signed external vibrator module and unloads them in reverse
+order. It retains signature enforcement and the original 180-second return.
+
+The next run captures three pulses but loses its log tail at exactly ten
+user messages. The pinned kernel's default `/dev/kmsg` per-open-file limit is
+ten messages per five seconds and suppressed writes still report success.
+That supports logging loss, without proving that run's unobserved completion.
+The following image saves worker output to a RAM file, an atomic exit/module
+result, and an independent read-only 20-second snapshot. An allowlisted HTTP
+server exports those files. Four host cases check full output, failed-worker
+status and allowed/missing HTTP responses without changing kernel log policy.
+
+The instrumented physical run records 150/300/600 ms requests as 152/303/607 ms,
+all at drive code 24 (a programmed 2.4 V target). Active changes 24 → 17 → 22
+match 15 samples each; both final off holds match. The helper and worker report
+PASS, exit status is zero, both modules are removed, and taint is the expected
+4096 from the external module. This is a bounded RAM result, not analogue
+voltage, tactile-quality, system-suspend or final installed-kernel acceptance.
+[Evidence](../../evidence/2026-11-11-sxmo-r7-and-vibrator-ram.json)
