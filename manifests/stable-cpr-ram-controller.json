@@ -1,0 +1,188 @@
+{
+  "recorded_UTC": "2026-11-11T14:35:39.570545+00:00",
+  "purpose": "Prepared stable CPR RAM controller with owned processes and serial evidence; physical entry remains gated",
+  "controller": {
+    "path": "diagnostics/cpu-cpr-runtime/stable_ram.py",
+    "sha256": "bb7090f1c2b8e4fc695c05a294e0f226230efe5eae936e57a622c33f858036c4",
+    "exact_profile_release": "6.18.63-fx0-cpr-nfc-alpine",
+    "image_sha256": "ef74c1beec542aa6eaaf7f30c98e15b4c3fb3db1de5853359251ef569643aa85",
+    "image_bytes": 6244352,
+    "helper_sha256": {
+      "diagnostics/cpu-cpr-runtime/register-stable.sh": "294afc69c1f1394a60cf3f910fc94e3529e7728c5da8ad2f935607dcc5436527",
+      "diagnostics/cpu-cpr-runtime/stable_ram.py": "bb7090f1c2b8e4fc695c05a294e0f226230efe5eae936e57a622c33f858036c4",
+      "local/nura_client.py": "2e3ea2075d953b2c1d349f95d8ab2e804de2be4dd79eb3b2da25382634014670",
+      "scripts/boot_fx0_ram.py": "fea54ce86d19f1a51665446095e9ae3dce60b34a0f38bfc70f7764f5611409b6",
+      "scripts/transfer_fx0_ram.py": "f402151d94422c895632276ec996b2a47f29dfa6269ddd4c7739b64fc1b5299c"
+    },
+    "CLI_modes": [
+      "--check local inputs only",
+      "--run one owned trial",
+      "--observe challenged child only"
+    ],
+    "saved_PID_files_not_authoritative": true,
+    "owned_child_objects_retained_until_wait": true,
+    "helpers_have_no_children": true,
+    "one_BOOT_request_only": true,
+    "uncertain_acknowledgements_not_replayed": true,
+    "pre_BOOT_recovery_only_after_children_terminal_and_bootloader_identity": true,
+    "after_BOOT_only_independent_timer_and_native_return_observed": true,
+    "temporary_network_profiles_created": false,
+    "explicit_frequency_or_voltage_requests": []
+  },
+  "host_tests": {
+    "checked_UTC": "2026-11-11T14:35:15.963879+00:00",
+    "tests": 14,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "source_sha256": "bb7090f1c2b8e4fc695c05a294e0f226230efe5eae936e57a622c33f858036c4",
+    "test_sha256": "26b43a4b7e5dee72209f0ab67b8074ed47907a52a51b1815bc40b4eb55c52377",
+    "owned_real_child_lifecycle_cases": 14,
+    "gate_mutation_cases": 23,
+    "optimized_Python_gate_case": true,
+    "PTY_observer_cases": 2,
+    "serial_parser_cases": 6,
+    "readback_and_watcher_failures_forbid_BOOT": true,
+    "uncertain_reboot_or_BOOT_acknowledgements_never_replay": true,
+    "pre_BOOT_recovery_waits_all_owned_children": true,
+    "saved_PID_file_and_os_kill_never_used_for_liveness": true,
+    "guarded_registration_source_and_image_unchanged": true,
+    "real_USB_or_reboot_exercised": false
+  },
+  "read_only_native_probe": {
+    "checked_UTC": "2026-11-11T14:34:13.151468+00:00",
+    "read_only": true,
+    "controller_source_sha256": "bb7090f1c2b8e4fc695c05a294e0f226230efe5eae936e57a622c33f858036c4",
+    "native_probe_source_sha256": "ef0b70be3be0a52f5009726f8fdab586bd8520940f1b6d7d0b80e930740c99be",
+    "expected": {
+      "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+      "kernel": "6.18.59-fx0-dmp",
+      "raw_boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+      "files_sha256": {
+        "/boot/boot.img": "85e4906004c0f40a9ba2c137ffe635f86f23b2434825d69c3f5990240ba1b579",
+        "/boot/initramfs": "acc24300e6b931f84cc8244f9006663cf33fa84a3f34930d06c72f3f109e8992",
+        "/etc/apk/world": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+        "/boot/vmlinuz": "7e896bb7c3fc80d7d8c8306a659fa57c1bcb3924ec2aaf37b77924e23c274417",
+        "/lib/apk/db/installed": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1"
+      }
+    },
+    "actual": {
+      "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+      "kernel": "6.18.59-fx0-dmp",
+      "raw_boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+      "files_sha256": {
+        "/boot/vmlinuz": "7e896bb7c3fc80d7d8c8306a659fa57c1bcb3924ec2aaf37b77924e23c274417",
+        "/boot/initramfs": "acc24300e6b931f84cc8244f9006663cf33fa84a3f34930d06c72f3f109e8992",
+        "/boot/boot.img": "85e4906004c0f40a9ba2c137ffe635f86f23b2434825d69c3f5990240ba1b579",
+        "/lib/apk/db/installed": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1",
+        "/etc/apk/world": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023"
+      },
+      "taint": 0,
+      "systemd": "running",
+      "failed_units": "",
+      "jobs": "",
+      "Sway_count": 1,
+      "gesture_count": 1,
+      "sensor_proxy": "active",
+      "APC_registers": {
+        "0x1740": 1,
+        "0x1741": 115
+      },
+      "governor": "schedutil",
+      "available_frequencies": [
+        300000,
+        384000,
+        600000,
+        787200
+      ],
+      "temperatures_mC": [
+        39000,
+        40000
+      ]
+    },
+    "all_native_preconditions_match": true,
+    "current_UI_confirmation_pending": true,
+    "phone_mutations": false
+  },
+  "protected_actual_entry": {
+    "checked_UTC": "2026-11-11T14:35:16.018667+00:00",
+    "actual_entrypoint_executed": true,
+    "invocation_mode": "--run",
+    "exit_code": 1,
+    "exact_native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "expected_failure": "Current native display/touch confirmation is pending",
+    "external_process_socket_private_identity_and_USB_calls": [],
+    "trial_directory_created": false,
+    "phone_command_sent": false,
+    "controller_sha256": "bb7090f1c2b8e4fc695c05a294e0f226230efe5eae936e57a622c33f858036c4",
+    "plan_sha256": "6b4bedf89d43de59ca09ebca6283bdb70a2bee164237ccb131d0fad1371d3935"
+  },
+  "current_r50_entry_plan": {
+    "path": "local/stable-cpr-ram-controller-01/plan-r50-pending.json",
+    "sha256": "6b4bedf89d43de59ca09ebca6283bdb70a2bee164237ccb131d0fad1371d3935",
+    "native_expected": {
+      "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+      "kernel": "6.18.59-fx0-dmp",
+      "raw_boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+      "files_sha256": {
+        "/boot/boot.img": "85e4906004c0f40a9ba2c137ffe635f86f23b2434825d69c3f5990240ba1b579",
+        "/boot/initramfs": "acc24300e6b931f84cc8244f9006663cf33fa84a3f34930d06c72f3f109e8992",
+        "/etc/apk/world": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+        "/boot/vmlinuz": "7e896bb7c3fc80d7d8c8306a659fa57c1bcb3924ec2aaf37b77924e23c274417",
+        "/lib/apk/db/installed": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1"
+      }
+    },
+    "owner_confirmation_path": "local/kernel-native-6.18.63-trial-03/owner-display-touch-return.json",
+    "owner_confirmation_status": "pending",
+    "trial_directory": "local/stable-cpr-ram-controller-01/trial-r50-01",
+    "directory_created": false
+  },
+  "serial_evidence_required": [
+    "Per-trial challenge and pinned image before one registration command",
+    "Expected kernel release and new candidate boot UUID",
+    "Guarded registration pass and zero exit code",
+    "Zero taint and original raw boot partition SHA256",
+    "Exact live kernel return-timer message at or after 180 seconds",
+    "No captured panic, Oops, CFI failure or CPU warning",
+    "New native boot matching payload/package/PMIC/service/thermal checks"
+  ],
+  "prepared_image_manifest": "manifests/kernel-cpr-nfc-6.18.63-alpine.json",
+  "image_header_payloads_and_timer_unchanged": true,
+  "currently_installed_kernel": "r50",
+  "currently_installed_Sxmo": "1.18.1-r7",
+  "physical_trial_launched": false,
+  "real_USB_entry_or_recovery_exercised": false,
+  "phone_mutations_this_phase": false,
+  "current_physical_UI_confirmation": false,
+  "next_phone_action": "After exact current-return display/touch confirmation, perform the already-approved prepared r1 native installation and persistent-boot qualification. Then create a fresh native baseline, owner receipt, plan and trial directory for this controller.",
+  "remaining": [
+    "Exact current-return physical UI result",
+    "Prepared r1 native update hooks and persistent boot qualification",
+    "Real combined stable CPR startup/registration/timed return and physical recovery",
+    "Later CPU OPPs, load, thermal/physical rails, suspend and reliability",
+    "Stable NFC operations, remaining hardware/currency and current maintainer submission work"
+  ],
+  "audio_testing_excluded": true,
+  "full_bringup": "active",
+  "source_docstring_only_correction": {
+    "old_sha256": "2113bd8566485828dbf06d73dde2d7dde0062d534bf79dcabc55105a791c0888",
+    "new_sha256": "bb7090f1c2b8e4fc695c05a294e0f226230efe5eae936e57a622c33f858036c4",
+    "executable_AST_identical_after_removing_module_docstring": true,
+    "reason": "Clarify that the internal observer accesses diagnostic USB serial; --run owns the entry workflow and --check is local only.",
+    "previous_receipts_retained": "local/stable-cpr-ram-controller-01/attempt01",
+    "unpublished_first_evidence_draft_retained": true
+  },
+  "local_r3_profile_validation_with_synthetic_owner_UUID": {
+    "checked_UTC": "2026-11-11T14:35:39.396233+00:00",
+    "actual_r3_image_receipt_payload_and_helpers_verified": true,
+    "owner_boot_UUID_synthetic": "00000000-0000-4000-8000-000000000001",
+    "synthetic_owner_removed": true,
+    "current_real_native_boot_not_authorized": true,
+    "backend_constructed": false,
+    "external_calls": [],
+    "private_USB_identity_read": false,
+    "trial_directory_created": false,
+    "controller_sha256": "bb7090f1c2b8e4fc695c05a294e0f226230efe5eae936e57a622c33f858036c4",
+    "plan_sha256": "6b4bedf89d43de59ca09ebca6283bdb70a2bee164237ccb131d0fad1371d3935"
+  }
+}

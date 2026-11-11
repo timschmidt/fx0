@@ -5436,3 +5436,29 @@ No phone write or boot occurs. Native r1 installation still awaits the current
 r50 return's physical UI result; combined stable hardware qualification and
 the broader bringup remain open.
 [Evidence](../evidence/2026-11-11-cpr-nfc-stable-6.18.63.json)
+
+
+### Owned stable CPR RAM entry and serial observation
+
+Prepare the complete r3 registration-trial controller with one atomic private
+directory reservation. Retain actual transfer/observer child handles, require
+exact readback and a live observer before BOOT, and never replay an uncertain
+reboot or BOOT acknowledgement. Before-BOOT recovery waits for all owned
+children and a synchronized bootloader identity reply. After BOOT, only the
+independent timer/native return is observed.
+
+Use challenged USB serial without changing host networking. Require the
+guarded registration proof, new candidate boot UUID, zero taint, original raw
+boot hash and the live kernel return-timer message at or after 180 seconds.
+Reject later panic/CFI faults and early or incomplete returns. Fourteen host
+tests exercise real child processes and pseudo-terminals plus gate, readback,
+acknowledgement, native recovery and replay failures.
+
+The exact native read-only probe passes on the unchanged r50 return, including
+five boot/package/world hashes, graphical/input services and the 1.15 V PMIC
+target. The actual entrypoint rejects the pending physical UI result before
+any private identity read, child launch, socket connection, USB open or trial
+directory. No phone entry, transfer, BOOT or package change occurs. After the
+approved r1 native update qualifies, this trial needs a fresh baseline and
+owner receipt. Hardware qualification and the full bringup remain open.
+[Evidence](../evidence/2026-11-11-stable-cpr-ram-controller.json)
