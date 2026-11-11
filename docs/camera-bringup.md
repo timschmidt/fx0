@@ -413,3 +413,7 @@ on the boost.
 9. Complete libcamera/Nura integration, processing/tuning, stills/video, user-facing selection and sustained capture. Re-run final acceptance on the maintained installed image and prepare focused upstream series with measured hardware evidence.
 
 No capture-driver or sensor-driver functionality is claimed from this audit or its build/negative-guard tests. See [the sanitized evidence](../evidence/2026-10-29-camera-source-audit.json) for exact inputs, artifacts and remaining gates.
+
+## Native r50 camera switching and reopen
+
+Two front and two binned rear sessions complete in alternating order with high-speed USB networking and Sway active. Each delivers 24 contiguous RAW10 frames and 17–19 consecutive valid hardware color-bar frames. A separate full-resolution rear session delivers another 24 frames, 16 of them with consecutive valid bars. The pre-launch rear color-bar control clears during libcamera startup. Setting it during streaming produces the expected pattern. Both sensors runtime-suspend after every close. The pattern controls, enabled media links, installed boot hash and package hashes check out afterward, with no new CAMSS, IOMMU or display faults. The battery was discharging throughout. Active charging, system suspend/resume, lens control and full camera acceptance remain open. [Procedure and evidence](../diagnostics/camera-reopen/README.md)

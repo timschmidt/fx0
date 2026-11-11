@@ -5155,3 +5155,7 @@ The stock Fastboot controller verifies MADAI 0.5, launches the pinned temporary 
 ### Passive RMTFS RAM image and r50 display and touch
 
 The owner confirmed display and touch on the installed r50 boot that followed the NFC timeout. The passive RMTFS image uses the exact installed r50 kernel and the verified RFSA DTB with MSS disabled. The signed QRTR core passes 119 imported-symbol checks. Two builds match byte for byte, retain the 180-second return timer and pass the local observer and worker fixtures. The stock Fastboot pair and physical RMTFS trial remain open. [Evidence](../evidence/2026-11-10-rmtfs-passive-ram.json)
+
+### Native r50 camera switching, reopen and USB coexistence
+
+The IMX132 and IMX179 alternate across four captures, then the rear sensor captures at full resolution. All five deliver contiguous RAW10 frames. The rear preset pattern clears during libcamera startup, and enabling it once capture starts yields valid bars. In total 88 patterned frames pass, and both sensors runtime-suspend after close. High-speed USB remains configured with the battery discharging. The postflight confirms the original boot and package hashes, idle sensors and no retained frame files. [Evidence](../evidence/2026-11-10-camera-r50-reopen.json)

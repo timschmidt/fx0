@@ -504,3 +504,7 @@ and RF/PM/firmware behavior remain unqualified.
 ## November 10 microSD observation and bias comparison
 
 Native r50 passes a bounded 4 MiB direct-read control with the expected read sectors, 18 SDHCI completions, zero GPIO37 interrupts and zero written sectors. A stock-matched bias candidate is prepared with a matching pull-up control, exact retained r50 kernel and the independent RAM return timer. The vendor bias difference is a hypothesis for the fsync-associated interrupt burst. Card insertion/removal, writeback and suspend still need physical comparison. [Procedure and evidence](../diagnostics/microsd/README.md)
+
+## November 10 native camera switching and USB coexistence
+
+Installed r50 and libcamera `99990.7.1-r2` pass alternating front/rear raw capture and reopen. Five sessions, including full-resolution rear, deliver 120 contiguous RAW10 frames with 88 validated hardware color-bar frames. Both sensors runtime-suspend after close. High-speed USB stays configured, Sway stays active, and the battery reports discharging. The final boot and package hashes match. This adds capture, reopen and USB coexistence evidence. System suspend, sustained video, active charging and lens/flash qualification remain open. [Native evidence](../evidence/2026-11-10-camera-r50-reopen.json)
