@@ -2,10 +2,11 @@
 
 This candidate updates the r50 feature baseline to stable Linux 6.18.63.
 It has complete host and Alpine source-package builds with selected
-regression coverage. Physical boot qualification remains open.
+regression coverage. The later r1 package now passes a full native-OS RAM boot,
+including owner-confirmed display and touch; persistent installation remains open.
 The installed phone remains Linux 6.18.59-r50 with Sxmo r7. A later
 6.18.63-r1 package includes the vibrator fixes and passes a separate RAM test;
-it has not replaced the installed kernel.
+it has not replaced the installed kernel. See the native-OS RAM section below.
 
 The [manifest](../../manifests/kernel-maintenance-6.18.63.json) pins the
 [published source](https://github.com/timschmidt/fx0-linux/tree/29edb2b9893edd18c445a648081b12038a033d51),
@@ -168,3 +169,55 @@ mapped rootless namespace to access its owned key; those stops are retained.
 The host-only native-database plan replaces only the kernel's exact control
 hold and selects one kernel upgrade. It does not install the package or run
 native hooks. Both APK identities are recorded in the manifest.
+
+
+## Native-OS RAM trial
+
+The same signed `6.18.63-r1` kernel and DTB now boot the installed native root
+with Sway, Superd, gestures, UPower and the sensor proxy. Signature enforcement
+remains enabled and taint stays zero. The owner confirms display and touch
+while SSH still identifies the candidate boot. All 478 module/metadata files
+(464 signed modules) match the APK in a temporary 64 MiB RAM mount over the
+module search path. This verifies their bytes and the modules needed at startup;
+it does not physically load every module. Installed boot files, kernel metadata,
+APK database and world remain unchanged. The native root remains writable for
+normal logs and session state.
+
+Normal mkinitfs runs in a private mount namespace against the candidate module
+tree. A capture-only boot-deploy shim prevents a flash. The resulting native
+initramfs retains its ordinary init scripts, root discovery and 19 matching boot
+modules. The complete compressed ramdisk ends below the inherited framebuffer.
+A small prefix arms a static return helper before ordinary init; a cleanup hook
+verifies and mounts the RAM module copy and places return units only in `/run`.
+The exact helper survives switch_root, and the runtime timer is active at the
+six-minute deadline. The seven-minute helper is a fallback, without a hard-lockup
+recovery claim. Its actual deadline is not exercised by a normal timer return.
+
+Two early attempts return before native startup. Instrumented pstore proves
+that the exact kernel and foreground helper check pass, but BusyBox cannot
+launch a background process with an initially absent `/dev/null`. Creating the
+character device before that launch fixes the wrapper. A QEMU regression uses
+the actual native ARM BusyBox: the missing-device case exits 2, and the present
+case succeeds. Earlier archived r50 panic buffers are unrelated to this failure.
+The return helper has 13 host cases; the module overlay has four tests covering
+six success/failure fixtures, including corruption before and after copying.
+
+Real packaged notifications pass enabled, muted and re-enabled cases with
+corrected drive code 24 (2.4 V programmed target), final PMIC off and cleaned
+notification/mute state. CPU policy, thermal readings, raw MPU6515 accel/gyro,
+Sway's active 720×1280 DSI output and Wi-Fi connectivity are observed. These
+short reads do not qualify suspend, analogue voltage, calibration, all OPPs,
+long reliability, camera operation, NFC integration or GPU rendering quality.
+
+Startup initially waits for NTP. The established temporary DNS fallback runs
+and removes its addition, but its saved-profile byte-identity assertion fails
+while NetworkManager activates Wi-Fi. Exact profile preservation is therefore
+not claimed for this attempt. Later native checks find the original active
+router DNS and no fallback address in active or saved DNS settings; NTP and
+systemd reach healthy states. A read-only verifier also initially uses the wrong
+DSI PHY sysfs name; discovery confirms `fd922a00.phy`, with `power/control=auto`.
+
+The [native RAM evidence](../../evidence/2026-11-11-native-kernel-6.18.63-ram.json)
+records the trial and return separately. Normal kernel installation/update
+hooks and integration of the later CPU/CPR and NFC work remain open. Audio is
+excluded.

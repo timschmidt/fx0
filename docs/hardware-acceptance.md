@@ -617,3 +617,23 @@ No NFC driver module or controller command runs, so earlier r58 cold lifecycle
 passes do not qualify the r59 callback layout, open removal, NCI or tags/RF.
 The r59 return verifies r50/r7 integrity and owner display/touch.
 [Evidence](../evidence/2026-11-11-stable-vibrator-and-nfc-r59-startup.json)
+
+
+## November 11 native-OS stable-kernel RAM trial
+
+The exact Linux 6.18.63-r1 package kernel boots the normal native root with all
+matching module files mounted from RAM. Zero taint, signature enforcement,
+original installed boot/database/world, automatic gesture startup and runtime
+return guards pass. The owner confirms display and touch during this exact
+candidate boot. Three packaged notification checks pass at corrected drive
+code 24, with mute, cleanup and final-off behavior verified. Sway reports an
+active 720×1280 DSI output; raw MPU6515 reads and Wi-Fi connectivity are observed.
+Persistent kernel installation, update hooks, wider peripheral behavior,
+suspend and reliability remain open. A normal writable native root is used.
+
+Two initial early returns are traced to missing `/dev/null` in the RAM wrapper;
+the actual ARM BusyBox regression reproduces the problem and verifies its fix.
+NTP eventually completes. The temporary DNS fallback is absent afterward, but
+its saved-profile byte-preservation assertion fails during network activation;
+exact saved-profile byte identity is not claimed for that trial.
+[Evidence](../evidence/2026-11-11-native-kernel-6.18.63-ram.json)

@@ -5309,3 +5309,30 @@ Controller/RF/open-teardown, full installed stable boot and wider acceptance
 remain open. An unanswered official input-maintainer ref query is explicitly
 stopped; current upstream submission-base readiness is not claimed.
 [Evidence](../evidence/2026-11-11-stable-vibrator-and-nfc-r59-startup.json)
+
+
+### Full native-OS RAM boot of the stable 6.18.63 package
+
+Prepare a native mkinitfs preview in a private mount namespace, with candidate
+modules and a capture-only boot-deploy shim. Preserve ordinary init/root
+discovery, then add an early static return helper and a hash-verified RAM module
+mount. No kernel APK installation or boot partition flash occurs in this phase.
+
+The first two attempts return early. Instrumented pstore proves foreground
+helper validation passes and BusyBox then fails to launch the background helper
+because `/dev/null` is absent. The actual native ARM BusyBox reproduces both the
+failure and successful minimal fix. The third image reaches the normal Sway
+session with zero taint, signature enforcement, all 478 matching module files,
+a surviving exact return helper and an active runtime timer. Original installed
+boot files, package database, world and kernel metadata match. The owner confirms
+display/touch during this candidate boot, with its UUID immediately rechecked.
+
+Enabled/muted/re-enabled packaged notifications pass at code24 with off/cleanup.
+Sway DSI output, sensors, temperatures, CPU policy and Wi-Fi are observed.
+NTP startup completes after an attempted temporary DNS fallback; its profile
+byte-identity assertion fails during Wi-Fi activation, so that property remains
+unproved. Later checks verify the fallback address is absent from active and
+saved DNS. A wrong PHY name in a read-only health verifier is corrected to
+`fd922a00.phy`. Persistent installation, update hooks, later CPU/CPR/NFC
+integration and wider acceptance remain open.
+[Evidence](../evidence/2026-11-11-native-kernel-6.18.63-ram.json)
