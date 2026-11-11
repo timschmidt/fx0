@@ -347,3 +347,7 @@ The [RMTFS discovery candidate](../diagnostics/modem-control/rmtfs-discovery.md)
 ## 2026-11-10 RMTFS daemon lifecycle
 
 The daemon now holds one remoteproc power reference across QRTR reconnects and serves requests while its serialized state worker completes. Nineteen lifecycle cases, thirty-five memory checks and fifteen selected protocol regressions pass on host sanitizers and ARM/QEMU. A fresh read-only sample confirms the installed r50/r5 baseline and disabled modem. The prepared offline probe is still awaiting the current physical display and touch result. [Lifecycle scope and evidence](../diagnostics/modem-control/rmtfs-lifecycle.md)
+
+## 2026-11-10 passive RMTFS RAM image
+
+The owner confirmed display and touch on the installed r50 boot after the NFC transfer timeout. A separate RAM image combines the exact native kernel, signed QRTR core and the verified RFSA reservation with MSS disabled. The worker checks local RMTFS publication and withdrawal with an empty read-only RAM storage directory. The image rebuilt byte for byte and remains unstaged. Live RFSA and firmware qualification remain open. [Trial and evidence](../diagnostics/modem-control/rmtfs-passive-ram.md)

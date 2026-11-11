@@ -5151,3 +5151,7 @@ After fresh r50 display and touch confirmation, the XZ4 data transfer completed 
 ### Temporary lk2nd transport trial controller
 
 The stock Fastboot controller verifies MADAI 0.5, launches the pinned temporary lk2nd once, and checks a fresh USB generation before transferring the same r59 XZ3 payload in either arm. Recovery requires a terminal child and preserves separate download and readback counts. The offline comparator verifies matched receipts, port, speed and exact readback hashes. Twenty new tests and 18 existing transfer tests pass. The current r50 boot reports the original 500 mA programmed limit. The physical pair awaits stock Fastboot entry. [Trial procedure](../diagnostics/ram-transfer/lk2nd-single-td.md)
+
+### Passive RMTFS RAM image and r50 display and touch
+
+The owner confirmed display and touch on the installed r50 boot that followed the NFC timeout. The passive RMTFS image uses the exact installed r50 kernel and the verified RFSA DTB with MSS disabled. The signed QRTR core passes 119 imported-symbol checks. Two builds match byte for byte, retain the 180-second return timer and pass the local observer and worker fixtures. The stock Fastboot pair and physical RMTFS trial remain open. [Evidence](../evidence/2026-11-10-rmtfs-passive-ram.json)

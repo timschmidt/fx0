@@ -64,6 +64,24 @@ def check_imports(imports, exports):
             raise ValueError('Missing or mismatched imported CRC: ' + name)
 
 
+def kernel_exports(image, symbols):
+    start = symbols['_text']
+    exports = {}
+    for suffix in ['', '_gpl']:
+        table, end = symbols['__start___ksymtab' + suffix], symbols['__stop___ksymtab' + suffix]
+        crcs, crcs_end = symbols['__start___kcrctab' + suffix], symbols['__stop___kcrctab' + suffix]
+        assert (end - table) % 12 == 0 and (end - table) // 12 == (crcs_end - crcs) // 4
+        for index in range((end - table) // 12):
+            address = table + index * 12
+            name_pointer = struct.unpack_from('<I', image, address - start + 4)[0] - start
+            assert 0 <= name_pointer < len(image)
+            name = image[name_pointer:].split(b'\0', 1)[0].decode()
+            assert re.fullmatch(r'[A-Za-z_][A-Za-z_0-9]*', name) and name not in exports
+            assert symbols['__ksymtab_' + name] == address
+            exports[name] = struct.unpack_from('<I', image, crcs - start + index * 4)[0]
+    return exports
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--inputs', required=True, type=Path)
@@ -111,19 +129,7 @@ def main():
             assert path.read_bytes() == data
         else:
             path.write_bytes(data)
-    exports = {}
-    for suffix in ['', '_gpl']:
-        table, end = symbols['__start___ksymtab' + suffix], symbols['__stop___ksymtab' + suffix]
-        crcs, crcs_end = symbols['__start___kcrctab' + suffix], symbols['__stop___kcrctab' + suffix]
-        assert (end - table) % 12 == 0 and (end - table) // 12 == (crcs_end - crcs) // 4
-        for index in range((end - table) // 12):
-            address = table + index * 12
-            name_pointer = struct.unpack_from('<I', image, address - start + 4)[0] - start
-            assert 0 <= name_pointer < len(image)
-            name = image[name_pointer:].split(b'\0', 1)[0].decode()
-            assert re.fullmatch(r'[A-Za-z_][A-Za-z_0-9]*', name) and name not in exports
-            assert symbols['__ksymtab_' + name] == address
-            exports[name] = struct.unpack_from('<I', image, crcs - start + index * 4)[0]
+    exports = kernel_exports(image, symbols)
     kernel_exports_count = len(exports)
     modules = base / 'modules'
     modules.mkdir(exist_ok=False)
