@@ -12,6 +12,24 @@ patches also carry the AI-assistance disclosure and `Assisted-by: LLM`
 trailer required by the target tree's `Documentation/process/coding-assistants.rst`,
 and no Signed-off-by, which the owner adds before sending.
 
+## 2026-11-11 vibrator drafts on the current input tree
+
+The three PM8xxx voltage/active-strength fixes now have
+[unsigned review material](../submissions/pm8xxx-vibrator/README.md) based on
+input `master`/`next` at `8e16f8bbf1bd528975fd6f4081eaf00513c1d83e`.
+The base and all three prefixes pass ARM `W=1` object builds with KCFI and
+compressed DWARF5; each patch passes strict checkpatch with only sign-off
+checking disabled. The existing 768-case actual-C fixtures are byte-identical
+and their earlier sanitizer results are reused. Earlier Fx0 RAM tests cover
+the same voltage functions; this full maintainer kernel has not been linked
+or booted, and PMI632 upper-byte encoding remains outside the fixtures.
+
+The pinned current tree requires AI-assistance disclosure in the cover letter
+or changelog, and prohibits agents from adding sign-offs or sending patches.
+This bundle follows those current rules; the older draft requirements described
+above belong to their respective pinned trees. Human review/certification and
+additional physical qualification remain. No email or PR was sent.
+
 ## Prepared, not sent
 
 | Change | Target | Material |

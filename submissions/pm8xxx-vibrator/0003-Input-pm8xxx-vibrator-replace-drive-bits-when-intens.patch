@@ -1,0 +1,33 @@
+From cc01b2298aec8bf692d61f41a896f76dc62ab643 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Wed, 11 Nov 2026 03:38:40 -0500
+Subject: [RFC PATCH 3/3] Input: pm8xxx-vibrator - replace drive bits when
+ intensity changes
+
+reg_vib_drv caches the previous drive field. ORing a new level into this
+value retains old bits when intensity changes without first stopping the
+effect. For example, changing drive code 24 to 17 programs code 25.
+
+Clear the old drive field before inserting the new level, preserving the
+unrelated register bits. This lets an active effect decrease its drive
+strength as requested.
+
+Fixes: 11205bb63e5c ("Input: add support for pm8xxx based vibrator driver")
+---
+ drivers/input/misc/pm8xxx-vibrator.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/input/misc/pm8xxx-vibrator.c b/drivers/input/misc/pm8xxx-vibrator.c
+index e1d69089d4bd..d4fdb5652584 100644
+--- a/drivers/input/misc/pm8xxx-vibrator.c
++++ b/drivers/input/misc/pm8xxx-vibrator.c
+@@ -107,7 +107,8 @@ static int pm8xxx_vib_set(struct pm8xxx_vib *vib, bool on)
+ 		vib->level /= VIB_PER_STEP_mV(vib);
+ 
+ 	if (on)
+-		val |= (vib->level << regs->drv_shift) & regs->drv_mask;
++		val = (val & ~regs->drv_mask) |
++		      ((vib->level << regs->drv_shift) & regs->drv_mask);
+ 	else
+ 		val &= ~regs->drv_mask;
+ 

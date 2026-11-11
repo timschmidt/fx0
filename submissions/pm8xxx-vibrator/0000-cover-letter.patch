@@ -1,0 +1,73 @@
+From cc01b2298aec8bf692d61f41a896f76dc62ab643 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Wed, 11 Nov 2026 10:16:48 -0500
+Subject: [RFC PATCH 0/3] pm8xxx-vibrator voltage and active-strength fixes
+
+TEMPORARY HUMAN REVIEW NOTE -- remove before sending:
+Unsigned drafts only. Review the code, test scope and recipients, then add
+your own DCO sign-off if you can certify the contribution. Check your mail
+client using Documentation/process/email-clients.rst. No message has been
+sent. The current input tree prohibits AI agents from adding sign-offs or
+sending submissions themselves.
+
+Suggested To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Suggested Cc: linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+              linux-kernel@vger.kernel.org
+The accompanying maintainer-lookup.json retains the script's patch-specific
+Fixes-origin contacts for human review as well.
+
+These three independent functional fixes address incorrect rumble voltage
+selection and strength changes in pm8xxx-vibrator. The affected code is
+present at input master/next 8e16f8bbf1bd528975fd6f4081eaf00513c1d83e.
+
+The drv2 address contains the peripheral base even on variants without a
+second drive field, so testing that address chooses the wrong voltage
+range. The inclusive scaling formula also exceeds the maximum at full
+speed. Finally, ORing the new drive level into the cached register retains
+old drive bits when an effect changes strength without stopping. The
+patches select the range from the register layout, clamp the endpoint, and
+replace the drive field. Each patch includes its introducing Fixes commit.
+
+Validation:
+- Clang 21.1.8 ARM W=1 object builds pass for the unmodified base and all
+  three prefixes, with KCFI and full compressed DWARF5. No C compiler
+  diagnostics. The adapted Fx0 config produces two olddefconfig notices
+  converting old modular IPV6/NETFILTER_NETLINK settings to current types.
+- All five actual-C host fixtures are byte-identical to the earlier
+  qualified stable fixtures: 768 ASan/UBSan speed/variant cases pass, and
+  the original plus three independent regression controls fail. Those
+  unchanged tests are reused rather than rerun. PMI632 upper-byte encoding
+  is outside their coverage; no fix for that behavior is claimed here.
+- Strict checkpatch passes each patch with zero findings; only the DCO
+  sign-off check is disabled for these unsigned drafts. Every exported
+  prefix replays to the expected complete Git tree.
+- Earlier signed Fx0 PM8226 RAM tests exercise the same fixed voltage
+  functions: active codes 24 -> 17 -> 22, then off and module removal. They
+  use the existing Fx0 integration kernel and board support. Other PMIC
+  variants have host coverage only. This current maintainer kernel has
+  not been fully linked, packaged or booted, and GCC was not tested.
+
+No driver prerequisites are needed to apply the series. Hardware testing
+requires the separately maintained Fx0 integration support. The current
+tree's devm_kzalloc_obj allocation API is retained unchanged. Human review,
+DCO certification, and any additional maintainer-requested testing remain.
+
+AI assistance: OpenAI Codex assisted the original analysis/implementation,
+the current-tree rebase, Fixes investigation, tests, and draft text. Prompt
+summary: continue Fx0 bringup, prepare the existing three vibrator fixes
+against the current input tree, preserve attribution and validated behavior,
+and report exact build/physical limits. The long-session context supplied
+earlier source and test receipts; their hashes and equivalence were checked.
+These are ordinary haptic functionality bugs; no security-boundary violation
+has been identified. Leave that classification to human review.
+
+Timothy Schmidt (3):
+  Input: pm8xxx-vibrator - select voltage range from register layout
+  Input: pm8xxx-vibrator - clamp the inclusive maximum voltage
+  Input: pm8xxx-vibrator - replace drive bits when intensity changes
+
+ drivers/input/misc/pm8xxx-vibrator.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+
+base-commit: 8e16f8bbf1bd528975fd6f4081eaf00513c1d83e

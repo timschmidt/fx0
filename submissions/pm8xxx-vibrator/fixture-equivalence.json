@@ -1,0 +1,41 @@
+{
+  "all_five_C_fixtures_byte_identical": true,
+  "fixtures": [
+    {
+      "label": "control",
+      "generated_C_sha256": "789255b3872ee83829dcedc05a8022bf0aef9470dbc6476f14e749eb1b45f8a1",
+      "prior_fixture": "local/kernel-vibrator-6.18.63-01/voltage-fixture/control.c",
+      "prior_returncode": -6
+    },
+    {
+      "label": "candidate",
+      "generated_C_sha256": "3f742b99062bcc3307c41ada324655beb7781beca18987a2cef49b5c637a03ad",
+      "prior_fixture": "local/kernel-vibrator-6.18.63-01/voltage-fixture/candidate.c",
+      "prior_returncode": 0
+    },
+    {
+      "label": "wrong-range",
+      "generated_C_sha256": "895c9807a2ed7bf2fd7b3f611ebe5ac4632cb4eead2bce7c43c046049975f386",
+      "prior_fixture": "local/kernel-vibrator-6.18.63-01/voltage-fixture/wrong-range.c",
+      "prior_returncode": -6
+    },
+    {
+      "label": "missing-limit",
+      "generated_C_sha256": "7280ea13f63d00b8ab52ef662fb23292694f1d63957a7d05d507cdba71bb0f98",
+      "prior_fixture": "local/kernel-vibrator-6.18.63-01/voltage-fixture/missing-limit.c",
+      "prior_returncode": -6
+    },
+    {
+      "label": "stale-drive",
+      "generated_C_sha256": "b5dd614cc13ed0532d8874ea68fd42b2713f28a13270c00716cdc9b8379bdc34",
+      "prior_fixture": "local/kernel-vibrator-6.18.63-01/voltage-fixture/stale-drive.c",
+      "prior_returncode": -6
+    }
+  ],
+  "earlier_verification": "local/kernel-vibrator-6.18.63-01/voltage-fixture/verification.json",
+  "earlier_verification_sha256": "9f24ccb4224e8bb2734024a5f6ea630f585b03d3c5836da84f7892f03f549c82",
+  "ASan_UBSan_cases_reused": 768,
+  "tests_rerun": false,
+  "scope": "Actual voltage selection, driver level and legacy drive fields. PMI632 high-byte encoding remains outside this check.",
+  "allocation_API_outside_fixture_requires_current_tree_object_build": true
+}

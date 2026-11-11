@@ -5462,3 +5462,37 @@ directory. No phone entry, transfer, BOOT or package change occurs. After the
 approved r1 native update qualifies, this trial needs a fresh baseline and
 owner receipt. Hardware qualification and the full bringup remain open.
 [Evidence](../evidence/2026-11-11-stable-cpr-ram-controller.json)
+
+
+### Current input-tree vibrator review drafts
+
+Verify the primary input maintainer tree and official mirror agree on
+`8e16f8bbf1bd528975fd6f4081eaf00513c1d83e`, with a later successful primary
+recheck. The mirror's later connection failure is retained separately.
+All three vibrator bugs remain in this tree. Rebase the qualified fixes
+without changing its newer allocation API; locate each introducing commit
+and add a specific Fixes explanation. Read the current AGENTS/README coding
+assistant procedure and its complete required process documents. Preserve
+unsigned drafts and disclose AI assistance for human review.
+
+The base and all three prefixes pass ARM object builds with Clang 21.1.8,
+`W=1`, KCFI and full compressed DWARF5, without compiler diagnostics. Retain
+the sparse-checkout setup failures and two configuration-conversion notices.
+Verify 18,251 present tracked source paths against their Git blobs/modes,
+without inspecting runtime private keys. Each exported patch passes strict
+checkpatch with only the sign-off check disabled; each exported prefix replays
+to the expected complete Git tree using a separate index.
+
+All five actual-C fixtures match the earlier qualified fixtures byte for byte;
+reuse their 768 ASan/UBSan cases and independent regression-control results.
+Earlier signed Fx0 PM8226 RAM trials cover the same voltage functions, but
+this maintainer kernel is not fully linked or booted. PMI632 upper-byte
+encoding, other PMIC hardware and GCC remain outside this qualification.
+Export a cover letter, patch series, current recipient lookup and exact test
+receipts. No email or PR is sent.
+
+The phone remains on r50/Sxmo r7. The owner's latest reply confirms the earlier
+6.18.63 RAM boot; it does not answer the separate current-return UI check.
+No phone mutation or native update occurs. The prepared approved r1 update
+remains the next phone action after that exact current-boot result.
+[Evidence](../evidence/2026-11-11-vibrator-input-drafts.json)
