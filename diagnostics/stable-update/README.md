@@ -5,7 +5,8 @@ v26.06/Alpine v3.24 indexes have independently verified RSA signatures against
 the native public trust keys. An altered index stream is rejected. The
 [plan](plan.json) selects 30 upgrades, preserving all ten exact signed-control
 holds and all eight Sxmo r7 packages. The [host solver](solver-context.json) is
-apk3.0.9; the phone runs apk3.0.8. Native solver and hook execution remain open.
+apk3.0.9; the phone runs apk3.0.8. Its exact ARM solver is tested under QEMU
+below; execution in the installed OS and native hooks remain open.
 
 All [30 candidate APKs](verified-packages.json), totaling 15,903,143 bytes,
 match authenticated index control checksums. Independent RSA, signed payload
@@ -52,6 +53,40 @@ private fixture is removed and the actual systemd unit exits successfully.
 The live database, world and raw boot remain unchanged. Host and native tests
 use isolated directories; the helper explicitly refuses `/` as a restore root.
 Power loss and a crash during an individual write are not qualified.
+
+## Exact phone APK solver under ARM emulation
+
+The [runtime closure](native-apk-runtime.json) contains the exact phone APK
+3.0.8, libapk, musl loader, OpenSSL and zlib: six ARM32 hard-float ELF files and
+two symlinks. Every file matches the payload of its exact, signature-verified
+installed package. All interpreter and NEEDED entries resolve inside the
+fixture. Package archive names are normalized through the captured usrmerge
+aliases before byte comparison. Only whitelisted software is read from the
+phone; private runtime keys are excluded.
+
+The [ARM rehearsal](native-apk-rehearsal.json) explicitly invokes QEMU10.1.5
+inside an offline, read-only container with a 1 GiB RAM work filesystem. The
+phone's ARM APK3.0.8 performs actual five-package and full 30-package updates.
+Each updates APK itself to ARM3.0.9; file-backed recovery returns it to ARM3.0.8
+and restores all original 775 package versions and signed control identities.
+The world, ten holds and eight Sxmo packages are preserved by the complete
+update. The same 5,784-path, hard-link, metadata, interruption and path-safety
+checks pass. A missing libapk loader control fails as expected. No host binfmt
+registration is changed.
+
+The [ARM verify controls](native-apk-controls.json), run in a separate 128 MiB
+RAM fixture, accept the signed musl archive and reject both a valid-gzip altered
+control with BAD signature and a valid-tar altered payload with an integrity
+error. This pairs the rejections with an accepted archive using the same
+ARM3.0.8 command and runtime. The [fresh phone postflight](native-apk-postflight.json)
+retains r50 boot747e87fe, original boot/database/world/repositories, healthy
+Sway and gestures, systemd running and taint0. This phase writes no phone files.
+
+These are exact ARM userspace binaries executing through emulation on the host
+kernel. Native package hooks, real trigger dispatch, service continuity and
+live transaction recovery remain unqualified. The native-directory label test
+above and this solver test establish different parts of the recovery plan;
+neither supplies the remaining installed-OS transaction evidence.
 
 ## Native activation remains open
 

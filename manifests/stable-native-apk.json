@@ -1,0 +1,399 @@
+{
+  "recorded_UTC": "2026-11-11T20:32:55.144546+00:00",
+  "subject": "Exact installed ARM APK3.0.8 solver and verified runtime under QEMU",
+  "runtime_capture": {
+    "archive_sha256": "0ad858d00da676bc10ccaea89e0e49ddce8b0e93051d8e775fae3656b9ac099e",
+    "archive_bytes": 2433812,
+    "paths": 8,
+    "coherent_before_after": true,
+    "native_file_writes": false,
+    "recorded_UTC": "2026-11-11T20:19:59.867667+00:00",
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "APK_and_libapk_match_previous_capture": true
+  },
+  "runtime_closure": {
+    "recorded_UTC": "2026-11-11T20:24:55.702111+00:00",
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "public_software_only": true,
+    "runtime_archive_sha256": "0ad858d00da676bc10ccaea89e0e49ddce8b0e93051d8e775fae3656b9ac099e",
+    "regular_ELF_files": 6,
+    "symlinks": 2,
+    "authenticated_original_packages": [
+      {
+        "package": "apk-tools",
+        "version": "3.0.8-r0",
+        "package_sha256": "a526c8db2e2e547031c433a784db8e9fa31150c80087697b8a791b7ce567aa14",
+        "index_control_checksum": "Q1p99N0NVp1NVzVvB8GEH/AoPvZyg=",
+        "exact_native_payload_paths": [
+          "/usr/sbin/apk"
+        ],
+        "exact_native_ELF_payload_bytes_match": true
+      },
+      {
+        "package": "libapk",
+        "version": "3.0.8-r0",
+        "package_sha256": "1c90bf6a02fec11537b61fd9fde7dbb1ba709062a240182925b7d04acdfaa15e",
+        "index_control_checksum": "Q13N/mSB2wwyUGxh7WhuslZGo9rUY=",
+        "exact_native_payload_paths": [
+          "/usr/lib/libapk.so.3.0.0"
+        ],
+        "exact_native_ELF_payload_bytes_match": true
+      },
+      {
+        "package": "zlib",
+        "version": "1.3.2-r1",
+        "package_sha256": "4a4077c3243a6dfd5e16df20ecbe100acd72ab24eab32c91790ec1eb32d23053",
+        "index_control_checksum": "Q1FOY+KclBk4aBBTf5WApGotNv5kM=",
+        "exact_native_payload_paths": [
+          "/usr/lib/libz.so.1.3.2"
+        ],
+        "exact_native_ELF_payload_bytes_match": true
+      },
+      {
+        "package": "musl",
+        "version": "1.2.6-r3",
+        "package_sha256": "9fca75b09538f9788b1ca800d56cd93dd4d584fac76a57c959666a9a0b93d397",
+        "index_control_checksum": "Q17kIR5F0eM1i7LLyk+n/wt0IPV64=",
+        "exact_native_payload_paths": [
+          "/usr/lib/ld-musl-armhf.so.1"
+        ],
+        "exact_native_ELF_payload_bytes_match": true
+      },
+      {
+        "package": "libssl3",
+        "version": "3.5.9-r0",
+        "package_sha256": "0236ecfa1a2a1fc819938d83709ecacb3c9f7ef131c29128226fd3fb68fb44eb",
+        "index_control_checksum": "Q1R2pWbteC3r2ISlEqxFpYyhZc6hk=",
+        "exact_native_payload_paths": [
+          "/usr/lib/libssl.so.3"
+        ],
+        "exact_native_ELF_payload_bytes_match": true
+      },
+      {
+        "package": "libcrypto3",
+        "version": "3.5.9-r0",
+        "package_sha256": "4bbfb11194ac706ff0c6997a2a4633cf238332f9a4b563d8435167ebd19aa8db",
+        "index_control_checksum": "Q1IBhppAhTRiN8QihS7kEWm8JCP90=",
+        "exact_native_payload_paths": [
+          "/usr/lib/libcrypto.so.3"
+        ],
+        "exact_native_ELF_payload_bytes_match": true
+      }
+    ],
+    "complete_signed_payload_match": true,
+    "ARM_ELF_dependency_closure": {
+      "/usr/lib/ld-musl-armhf.so.1": {
+        "needed": [],
+        "interpreter": null,
+        "ARM_ELF32_hard_float": true,
+        "resolved_needed": {}
+      },
+      "/usr/lib/libapk.so.3.0.0": {
+        "needed": [
+          "libssl.so.3",
+          "libcrypto.so.3",
+          "libz.so.1",
+          "libc.musl-armv7.so.1"
+        ],
+        "interpreter": null,
+        "ARM_ELF32_hard_float": true,
+        "resolved_needed": {
+          "libssl.so.3": "/usr/lib/libssl.so.3",
+          "libcrypto.so.3": "/usr/lib/libcrypto.so.3",
+          "libz.so.1": "/usr/lib/libz.so.1.3.2",
+          "libc.musl-armv7.so.1": "/usr/lib/ld-musl-armhf.so.1"
+        }
+      },
+      "/usr/lib/libcrypto.so.3": {
+        "needed": [
+          "libc.musl-armv7.so.1"
+        ],
+        "interpreter": null,
+        "ARM_ELF32_hard_float": true,
+        "resolved_needed": {
+          "libc.musl-armv7.so.1": "/usr/lib/ld-musl-armhf.so.1"
+        }
+      },
+      "/usr/lib/libssl.so.3": {
+        "needed": [
+          "libcrypto.so.3",
+          "libc.musl-armv7.so.1"
+        ],
+        "interpreter": null,
+        "ARM_ELF32_hard_float": true,
+        "resolved_needed": {
+          "libcrypto.so.3": "/usr/lib/libcrypto.so.3",
+          "libc.musl-armv7.so.1": "/usr/lib/ld-musl-armhf.so.1"
+        }
+      },
+      "/usr/lib/libz.so.1.3.2": {
+        "needed": [
+          "libc.musl-armv7.so.1"
+        ],
+        "interpreter": null,
+        "ARM_ELF32_hard_float": true,
+        "resolved_needed": {
+          "libc.musl-armv7.so.1": "/usr/lib/ld-musl-armhf.so.1"
+        }
+      },
+      "/usr/sbin/apk": {
+        "needed": [
+          "libapk.so.3.0.0",
+          "libz.so.1",
+          "libc.musl-armv7.so.1"
+        ],
+        "interpreter": "/lib/ld-musl-armhf.so.1",
+        "ARM_ELF32_hard_float": true,
+        "resolved_needed": {
+          "libapk.so.3.0.0": "/usr/lib/libapk.so.3.0.0",
+          "libz.so.1": "/usr/lib/libz.so.1.3.2",
+          "libc.musl-armv7.so.1": "/usr/lib/ld-musl-armhf.so.1"
+        },
+        "resolved_interpreter": "/usr/lib/ld-musl-armhf.so.1"
+      }
+    },
+    "all_NEEDED_and_interpreter_paths_resolved": true,
+    "emulator_version": "qemu-arm version 10.1.5 (qemu-10.1.5-1.fc43)",
+    "emulator_sha256": "173253722d7582d578073332d8c0c355c2d48c3eceba0672ea93beddb36aa75d",
+    "native_changes": false,
+    "native_hook_execution": false
+  },
+  "additional_exact_runtime_package_verification": {
+    "recorded_UTC": "2026-11-11T20:23:53.930933+00:00",
+    "verified_packages": 3,
+    "packages": [
+      {
+        "package": "musl",
+        "version": "1.2.6-r3",
+        "sha256": "9fca75b09538f9788b1ca800d56cd93dd4d584fac76a57c959666a9a0b93d397",
+        "bytes": 390078,
+        "index_control_checksum": "Q17kIR5F0eM1i7LLyk+n/wt0IPV64=",
+        "exact_current_installed_control_match": true,
+        "signer": "alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+        "signer_public_key_sha256": "ebe717d228555aa58133c202314a451f81e71f174781fd7ff8d8970d6cfa60da",
+        "independent_RSA_verified": true,
+        "compressed_payload_SHA256_verified": true,
+        "payload_present": true,
+        "APK_verify_returncode": 0
+      },
+      {
+        "package": "libssl3",
+        "version": "3.5.9-r0",
+        "sha256": "0236ecfa1a2a1fc819938d83709ecacb3c9f7ef131c29128226fd3fb68fb44eb",
+        "bytes": 341363,
+        "index_control_checksum": "Q1R2pWbteC3r2ISlEqxFpYyhZc6hk=",
+        "exact_current_installed_control_match": true,
+        "signer": "alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+        "signer_public_key_sha256": "ebe717d228555aa58133c202314a451f81e71f174781fd7ff8d8970d6cfa60da",
+        "independent_RSA_verified": true,
+        "compressed_payload_SHA256_verified": true,
+        "payload_present": true,
+        "APK_verify_returncode": 0
+      },
+      {
+        "package": "libcrypto3",
+        "version": "3.5.9-r0",
+        "sha256": "4bbfb11194ac706ff0c6997a2a4633cf238332f9a4b563d8435167ebd19aa8db",
+        "bytes": 1554077,
+        "index_control_checksum": "Q1IBhppAhTRiN8QihS7kEWm8JCP90=",
+        "exact_current_installed_control_match": true,
+        "signer": "alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+        "signer_public_key_sha256": "ebe717d228555aa58133c202314a451f81e71f174781fd7ff8d8970d6cfa60da",
+        "independent_RSA_verified": true,
+        "compressed_payload_SHA256_verified": true,
+        "payload_present": true,
+        "APK_verify_returncode": 0
+      }
+    ],
+    "negative_controls": [
+      {
+        "kind": "valid_gzip_altered_control",
+        "independent_RSA_rejected": true,
+        "APK_rejected": true,
+        "authenticated_index_checksum_mismatch": true
+      },
+      {
+        "kind": "valid_tar_gzip_altered_payload_body",
+        "authenticated_datahash_rejected": true,
+        "APK_rejected": true,
+        "signature_and_control_unchanged": true
+      }
+    ],
+    "archive_bytes": 2285518,
+    "public_trust_keys_only": true,
+    "private_keys_read_or_used": false,
+    "packages_installed_or_executed": false,
+    "phone_mutations": false,
+    "rollback_and_native_hooks_qualified": false
+  },
+  "ARM_rehearsal": {
+    "recorded_UTC": "2026-11-11T20:27:31.433060+00:00",
+    "scope": "Exact signed native ARM APK3.0.8/runtime under QEMU userspace emulation; no phone or ARM kernel execution",
+    "native_ARM_version_observations": [
+      {
+        "phase": "original-native-runtime",
+        "output": "apk-tools 3.0.8-r0, compiled for armv7.",
+        "returncode": 0
+      },
+      {
+        "phase": "after-partial-upgrade",
+        "output": "apk-tools 3.0.9-r0, compiled for armv7.",
+        "returncode": 0
+      },
+      {
+        "phase": "file-backed-recovery",
+        "output": "apk-tools 3.0.8-r0, compiled for armv7.",
+        "returncode": 0
+      },
+      {
+        "phase": "after-complete-upgrade",
+        "output": "apk-tools 3.0.9-r0, compiled for armv7.",
+        "returncode": 0
+      },
+      {
+        "phase": "file-backed-recovery",
+        "output": "apk-tools 3.0.8-r0, compiled for armv7.",
+        "returncode": 0
+      },
+      {
+        "phase": "file-backed-recovery",
+        "output": "apk-tools 3.0.8-r0, compiled for armv7.",
+        "returncode": 0
+      }
+    ],
+    "native_ARM_corruption_controls": [
+      {
+        "kind": "altered-control",
+        "actual_ARM_apk_3_0_8_rejected": true,
+        "returncode": 1
+      },
+      {
+        "kind": "altered-payload",
+        "actual_ARM_apk_3_0_8_rejected": true,
+        "returncode": 1
+      }
+    ],
+    "missing_runtime_library_rejected": true,
+    "complete_signed_runtime_payload_match": true,
+    "runtime_archive_sha256": "0ad858d00da676bc10ccaea89e0e49ddce8b0e93051d8e775fae3656b9ac099e",
+    "emulator_sha256": "173253722d7582d578073332d8c0c355c2d48c3eceba0672ea93beddb36aa75d",
+    "emulator_version": "qemu-arm version 10.1.5 (qemu-10.1.5-1.fc43)",
+    "host_binfmt_registration_changed": false,
+    "native_package_hooks_exercised": false,
+    "native_source_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "captured_paths_verified": 5784,
+    "original_packages_restored": 775,
+    "selected_packages_upgraded": 30,
+    "partial_transaction_packages": 5,
+    "operations": [
+      {
+        "phase": "load-local-signed-indexes",
+        "returncode": 0,
+        "owned_child_reaped": true,
+        "native_hooks_disabled": true,
+        "network_disabled": true
+      },
+      {
+        "phase": "partial-upgrade",
+        "returncode": 0,
+        "owned_child_reaped": true,
+        "native_hooks_disabled": true,
+        "network_disabled": true
+      },
+      {
+        "phase": "complete-upgrade",
+        "returncode": 0,
+        "owned_child_reaped": true,
+        "native_hooks_disabled": true,
+        "network_disabled": true
+      }
+    ],
+    "partial_full_and_interrupted_restore_passed": true,
+    "file_bytes_modes_UID_GID_mtime_symlinks_absence_and_hardlinks_verified": true,
+    "hardlink_aliases_verified": 254,
+    "unexpected_user_xattr_removed": true,
+    "canonical_parent_escape_rejected": true,
+    "unknown_descendant_preserved_and_restore_refused": true,
+    "raw_boot_recovery_regular_RAM_file_only": true,
+    "first_512KiB_preserved": true,
+    "SELinux_labels_captured": 939,
+    "SELinux_labels_not_applied_on_host": true,
+    "native_hooks_exercised": false,
+    "native_package_installation": false,
+    "native_boot_partition_written": false,
+    "native_rollback_qualified": false
+  },
+  "ARM_verify_controls": {
+    "scope": "Exact signed native ARM APK3.0.8 verify under explicit QEMU, isolated filesystem and no network",
+    "version": "apk-tools 3.0.8-r0, compiled for armv7.",
+    "results": [
+      {
+        "case": "good",
+        "returncode": 0,
+        "input_sha256": "9fca75b09538f9788b1ca800d56cd93dd4d584fac76a57c959666a9a0b93d397"
+      },
+      {
+        "case": "altered_control",
+        "returncode": 1,
+        "input_sha256": "773a4a8de44117745adff64240d508cf97d43f2b870677d69cad68ad52ce4e3c"
+      },
+      {
+        "case": "altered_payload",
+        "returncode": 1,
+        "input_sha256": "6855551a2a7398c95f47eef1c3c947193c13ed93d711970fbed616132dcededd"
+      }
+    ],
+    "signed_archive_accepted": true,
+    "valid_gzip_altered_control_signature_rejected": true,
+    "valid_tar_gzip_altered_payload_integrity_rejected": true,
+    "runtime_archive_sha256": "0ad858d00da676bc10ccaea89e0e49ddce8b0e93051d8e775fae3656b9ac099e",
+    "emulator_sha256": "173253722d7582d578073332d8c0c355c2d48c3eceba0672ea93beddb36aa75d",
+    "private_keys_read": false,
+    "native_changes": false,
+    "package_hooks_executed": false
+  },
+  "native_postflight": {
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "kernel": "6.18.59-fx0-dmp",
+    "files_sha256": {
+      "/lib/apk/db/installed": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1",
+      "/etc/apk/world": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+      "/etc/apk/repositories": "37534543d9a1defca831a5b104f2e871f363555df8b817ec8a54b59d1138562a",
+      "/dev/mmcblk0p15": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921"
+    },
+    "systemd": "running",
+    "taint": 0,
+    "sway_running": true,
+    "gesture_daemon_running": true,
+    "MemAvailable_bytes": 809586688,
+    "backup_filesystem_free_bytes": 7565053952,
+    "SELinux_enforcement": "interface absent",
+    "physical_display_touch_for_current_return": "pending",
+    "native_package_or_boot_change": false,
+    "recorded_UTC": "2026-11-11T20:30:09.557590+00:00"
+  },
+  "complete_signed_runtime_payload_match": true,
+  "usrmerge_archive_alias_normalization_verified": true,
+  "first_inspection_stop": {
+    "recorded_UTC": "2026-11-11T20:24:55.430381+00:00",
+    "status": "stopped",
+    "reason": "Archive uses sbin/apk; captured native usrmerge canonical path is usr/sbin/apk. Alias normalization missing before payload comparison.",
+    "payload_mismatch_proved": false,
+    "native_changes": false
+  },
+  "actual_host_kernel_and_QEMU_userspace": true,
+  "actual_ARM_kernel_execution": false,
+  "native_hooks_triggers_or_live_recovery_qualified": false,
+  "power_loss_or_mid_write_crash_qualified": false,
+  "interruption_scope": "Injected exception after 930 completed path operations",
+  "native_file_writes": false,
+  "native_package_or_boot_changes": false,
+  "host_binfmt_registration_changed": false,
+  "runtime_private_keys_accessed": false,
+  "current_return_physical_UI_pending": true,
+  "persistent_r1_then_fresh_baseline_required": true,
+  "all_owned_processes_terminal": true,
+  "upstream_messages_sent": 0,
+  "audio_testing": false,
+  "full_bringup": "active"
+}
