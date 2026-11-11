@@ -64,3 +64,19 @@ The first unconfirmed r59 request falls in the compressed kernel. The new XZ4 im
 ## lk2nd request-size comparison
 
 Two temporary lk2nd images isolate the 32 KiB versus 16 KiB Fastboot request limit. Their raw ARM binaries differ only in four limit-immediate bytes, and their board table and configuration match. Sixteen mocked framing cases pass. Physical comparison will use the same previously stalled r59 payload. [Build and comparison](lk2nd-single-td.md)
+
+
+## Native Linux comparison and working physical port
+
+A same-boot, same-cable A/B/A comparison reproduces payload-sensitive native
+USB upload failure on `1-14`, passes on `1-7`, and fails again after returning
+to `1-14`. The periodic-pattern controls pass on both ports. On `1-7`, ordinary
+4 MiB SSH upload, 16 MiB pseudorandom raw upload and the exact 6,330,368-byte
+r59 XZ4 image as unexecuted data all pass their full hashes with no sampled
+transmit errors. The owner restores `1-7`; installed r50/r6 remains unchanged.
+
+Use the freshly identified working path for later trials, including the same
+`--usb-port 1-7` for both temporary lk2nd arms. No bootloader transfer or Linux
+BOOT occurs in this comparison. A common cause for the native and Fastboot
+failures, or reliable Fastboot operation on the new path, is not yet proved.
+[Procedure, controls and limitations](../usb-native-bulk/README.md)

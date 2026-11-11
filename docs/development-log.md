@@ -5195,3 +5195,19 @@ intact. A stalled USB upload is recovered over existing pinned-identity Wi-Fi
 with exact-prefix/hash verification, without reboot or network changes. USB
 bulk reliability and the native installation/session gates remain open.
 [Evidence](../evidence/2026-11-10-sxmo-r7-deployment-preparation.json)
+
+
+### Native USB payload and physical-port comparison
+
+The original high-speed port `1-14` passes periodic 4 MiB raw uploads but stalls
+pseudorandom data on both crossed TCP ports, with transmit watchdog/errors and
+TCP retransmission. The identical entropy passes Wi-Fi SSH; USB download also
+passes. Pacing and a 4 KiB acknowledged window do not cure USB SSH upload.
+With the owner moving the same cable to `1-7` on the same controller and boot,
+periodic/entropy 4 MiB, ordinary SSH upload, 16 MiB entropy and the exact r59 XZ4
+image as unexecuted data all pass full hashes with zero sampled TX errors.
+Returning to `1-14` reproduces the entropy failure; the owner restores `1-7`.
+All owned processes/listeners and RAM data are cleaned up, with current r50/r6,
+boot, services and staged-but-unstarted Sxmo update intact. Physical Fastboot
+qualification and the underlying USB-path cause remain open.
+[Evidence](../evidence/2026-11-11-usb-native-bulk.json)
