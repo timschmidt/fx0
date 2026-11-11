@@ -135,11 +135,46 @@ installed Sxmo packages to r7. The three audio dependency subpackages remain
 empty metadata packages with their existing dependency definitions. r7 is **not
 installed**. The r6 local correction and user overrides remain active.
 
-Before deployment, capture current package-owned files, database/scripts/triggers,
-world, boot and the local profile/user hook on the phone and host; verify an
-exact restoration rehearsal. Then run the normal eight-package transaction,
-including its normal hooks, and verify boot readback and installed payloads.
-Retire only the backed-up profile and notification overrides after the packaged
-loader selects their replacements. Recheck real notifications, existing input
-settings and a later session startup. These deployment, rollback and subsequent
-session gates remain open. [Candidate evidence](../../evidence/2026-11-10-sxmo-r7-arm-candidate.json)
+Current deployment preparation now captures all 331 installed Sxmo paths,
+both local overrides, the APK database/scripts/triggers, world, full boot tree,
+matching modules and GPT copies. The 115,140,636-byte archive matches on the
+phone and host. A raw original boot-partition copy stays on the phone only.
+All eight candidate and eight exact original r6 APK signatures verify against
+the current native trust store. Original r6 signed control checksums match the
+installed database.
+
+An isolated chroot copied from the current snapshot upgrades the eight packages,
+retires the two overrides, downgrades to the original r6 APKs and restores the
+captured local notification correction, overrides, database and world. All 331
+package paths, ownership, modes, captured xattrs and original capability absence
+match. All other installed package versions and signed control checksums match.
+This rehearsal disables hooks and ARM execution; live hook behavior and native
+rollback remain untested. The first rehearsal lacked the target architecture
+file and failed before installation; a fresh chroot with the native `armv7`
+setting passes.
+
+The native preflight rechecks original boot/payload/backup bytes and all 16 APK
+signatures. The live native simulation still selects exactly eight upgrades.
+The controller and exact plan are staged under
+`/var/lib/fx0-rollback/sxmo-r7-01`. On approval, a persistent systemd unit with a
+sleep/shutdown inhibitor will run normal APK hooks, preserve the original world
+root set, retire only the two backed-up overrides, update the supervisor PATH
+and restart only the notification service. It will verify all 333 candidate
+payload paths, existing input/scale/gesture settings, boot readback and three
+real notification cases. Failure invokes the original r6 APKs and restores the
+captured local files, exact database/world and prior notification PATH. The
+controller checks state before launch; an observation timeout must never trigger
+a second launch.
+
+Automatic approval review rejected the native transaction because the earlier
+UPower approval does not authorize this Sxmo update. No controller or install
+unit ran. Explicit Sxmo installation approval is pending; r6, its local repairs
+and installed r50 remain active. Later-session input/display/touch and
+lock/suspend qualification remain open.
+
+The initial USB upload stalled with only a verified 163,840-byte prefix. The
+same boot continued over its existing Wi-Fi address with the original pinned
+SSH host identity. Exact-prefix resume and the complete 1,764,905-byte input
+hash passed, followed by the verified backup transfer. No network profile,
+route, DNS or host connection configuration changed. USB bulk-transfer
+reliability remains open. [Preparation evidence](../../evidence/2026-11-10-sxmo-r7-deployment-preparation.json)

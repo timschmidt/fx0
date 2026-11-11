@@ -5178,3 +5178,20 @@ Real inotify reproduces lost partial notifications in installed Sxmo 1.18.1. The
 ### Signed reproducible Sxmo r7 candidate and native payload probe
 
 The r7 recipe preserves the installed r6 hotspot changes and packages the Fx0 profile, completed-write notification fix and board hook. Shared device hooks load below user hooks and above generic defaults; seven real-loader cases pass. Two full ARM source builds produce 14 byte-identical native-trusted APKs, with repository and metadata tamper controls. Payload comparison finds only the intended profile/hook additions, loader/notification changes and four unchanged-source rebuilt helpers. Offline current-r50 resolution plans exactly eight Sxmo upgrades. A temporary native probe executes five exact APK payloads: the installed-loader control misses the board hook, while the packaged loader passes normal/muted/re-enabled notifications and measured 300 ms pulses. The original boot, installed files, database/world, real notification monitor and Sway remain intact. r7 deployment and override retirement remain pending. [Evidence](../evidence/2026-11-10-sxmo-r7-arm-candidate.json)
+
+
+### Sxmo r7 current backups and exact rollback preparation
+
+Current phone and host backups match, including all 331 installed Sxmo paths,
+the two overrides, real APK v3 database files, world, boot and matching modules.
+Sixteen APK signatures and the original r6 signed checksums pass. A fresh
+isolated chroot with the native architecture upgrades to r7 and restores r6,
+all captured paths/metadata, local corrections and exact database/world bytes;
+normal hooks and ARM execution are excluded from that rehearsal. The staged
+persistent controller passes the native preflight and eight-package simulation.
+Automatic approval review rejects the actual installation pending explicit
+Sxmo approval. No install unit starts; r6, r50, services and overrides remain
+intact. A stalled USB upload is recovered over existing pinned-identity Wi-Fi
+with exact-prefix/hash verification, without reboot or network changes. USB
+bulk reliability and the native installation/session gates remain open.
+[Evidence](../evidence/2026-11-10-sxmo-r7-deployment-preparation.json)

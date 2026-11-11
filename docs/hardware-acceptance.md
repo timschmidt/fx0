@@ -522,3 +522,17 @@ The installed notification monitor loses a partial record in a real-inotify cont
 ## November 10 Sxmo r7 packaging candidate
 
 Fourteen signed ARM/noarch APKs reproduce byte for byte, preserve r6 hotspot payloads and pass current-trust/tamper, source and ABI checks. A temporary native probe of the exact package loader/profile/hook/helper passes the installed-loader control and normal/muted/re-enabled notification cases. Both real daemons retain their PIDs; original r50 boot, package database/world and idle hardware match postflight. This adds candidate packaging and native payload evidence. The installed package remains r6; package transaction/rollback, override retirement, subsequent-session input/visual checks and lock/suspend remain open. [Evidence](../evidence/2026-11-10-sxmo-r7-arm-candidate.json)
+
+
+## November 10 Sxmo r7 deployment preparation
+
+Current phone/host backups and an isolated exact r7-to-r6 restoration rehearsal
+pass, including all 331 package paths, two overrides and APK database/world
+bytes. The rehearsal excludes native hooks and ARM execution. Native preflight
+verifies all 16 candidate/rollback signatures, unchanged boot/payload and the
+same eight-package simulation. The controller is staged, but automatic approval
+review requires explicit Sxmo installation approval. No installation or service
+restart occurs; installed r6 and r50 remain. USB bulk upload stalls again;
+pinned-identity Wi-Fi completes exact-prefix resume and backup transfer on the
+same boot. Native deployment, later-session UI, lock/suspend and USB reliability
+remain open. [Evidence](../evidence/2026-11-10-sxmo-r7-deployment-preparation.json)
