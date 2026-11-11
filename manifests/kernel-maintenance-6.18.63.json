@@ -1,0 +1,105 @@
+{
+  "recorded_UTC": "2026-11-11T06:15:49.478618+00:00",
+  "purpose": "Host-built stable maintenance candidate preserving the r50 feature baseline",
+  "source_repository": "https://github.com/timschmidt/fx0-linux.git",
+  "source_branch": "maintenance/fx0-6.18.63-r50",
+  "source_commit": "29edb2b9893edd18c445a648081b12038a033d51",
+  "source_remote_ref_verified": true,
+  "source_parents": [
+    "5624c0158e00149c03f6d1ae53f96092015274bd",
+    "1cdda838e8475edf89b73ff0cc952005dd0b1fa7"
+  ],
+  "upstream_verified_tags": [
+    {
+      "tag": "v6.18.59",
+      "tag_object": "16d7cd88b5357b25076bceaa37f011b79f4939d0",
+      "commit": "1253a6aa5d104312bf0992afacc15220ae35bdf9",
+      "signer_fingerprint": "647F28654894E3BD457199BE38DBBDC86092693E"
+    },
+    {
+      "tag": "v6.18.63",
+      "tag_object": "c5452ba98cfe761a0f44a56d4caf96556a9b9070",
+      "commit": "1cdda838e8475edf89b73ff0cc952005dd0b1fa7",
+      "signer_fingerprint": "647F28654894E3BD457199BE38DBBDC86092693E"
+    }
+  ],
+  "stable_commits_integrated": 1989,
+  "r50_integration_base": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+  "complete_r50_overlay_files": 18,
+  "all_r50_overlay_files_preserved": true,
+  "manual_resolution": "Retain r50 cfg/secured guard; add stable PM runtime get/error/put to legacy context-probe fault clear",
+  "configuration": "configs/linux-6.18.63-fx0-r50-maint.armv7",
+  "configuration_sha256": "f841237c44add32498f7ea71b1ba700e99bacad7481c20af18f64a22e09a3e40",
+  "release": "6.18.63-fx0-r50-maint",
+  "host_build": {
+    "compiler": "Clang 21.1.8 Fedora 6",
+    "linker": "LLD 18.1.8",
+    "build_user": "fx0",
+    "build_host": "maintenance",
+    "build_version": "1",
+    "build_timestamp": "2026-11-11 00:00:00 UTC",
+    "full_ARM_build_passed": true,
+    "overlap_ARM_W1_passed": true,
+    "artifacts_sha256": {
+      "arch/arm/boot/zImage": "48c74b7c6a3ab437adc3ca38c981f6fbdd427e5196a18080d7fb8721b900ccd1",
+      "vmlinux": "c9d3cfb2bbd784683b823991b2f7af58ca5f713b8735da517f3949f77d9e194c",
+      "Module.symvers": "320b1d48e30781260728adf0ed370c7b3127484f53336ed1905bd96719135180",
+      ".config": "f841237c44add32498f7ea71b1ba700e99bacad7481c20af18f64a22e09a3e40",
+      "certs/signing_key.x509": "a79e6302df492743ea4f5776b78b862979d94ff6d90890f29f4f482c8801ccb5",
+      "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+      "modules.order": "80970f53911e4d3b504dd0c2941e3e36a82e8ba79366cb010e450d28bde06f17"
+    },
+    "configuration_differences": [
+      " CC_VERSION_TEXT \"clang version 21.1.8 (Fedora 21.1.8-4.fc43)\" -> \"clang version 21.1.8 (Fedora 21.1.8-6.fc43)\"",
+      " LOCALVERSION \"-fx0-dmp\" -> \"-fx0-r50-maint\"",
+      " RUSTC_LLVM_VERSION 210103 -> 220108",
+      " RUSTC_VERSION 109200 -> 109801",
+      "+RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS y"
+    ]
+  },
+  "validation": {
+    "positive_unit_cases": 31,
+    "iommu_negative_controls": 2,
+    "modules_signed_and_verified": 464,
+    "module_dependencies": {
+      "verified_modules": 464,
+      "declared_dependency_edges": 385,
+      "transitive_dependency_edges": 567,
+      "all_modules_dep_entries_match_module_metadata": true,
+      "modules_dep_sha256": "fd84f711abe7f02170c677e0dedd849e43e7efdece794a38360fec32fb1f77a0",
+      "scope": "Dependency metadata only; signatures, ABI, runtime loading and install hooks separate"
+    },
+    "linked": {
+      "verified_UTC": "2026-11-11T05:57:35.623291+00:00",
+      "release": "6.18.63-fx0-r50-maint",
+      "ELF": "ARM32 little-endian",
+      "GNU_build_id": "ac37b285916c1ea8ea5d8f190f117f9f564abfb2",
+      "CFI_type_ids_handler_and_object_flags_verified": true,
+      "undefined_symbols_equal_r50": [
+        "         U __bpf_callback_fn",
+        "         U __bpf_prog_runX",
+        "         w efi_attr_config_table",
+        "         w efi_attr_fw_vendor",
+        "         w efi_attr_runtime"
+      ],
+      "embedded_runtime_trust_list_exact_generated_certificate": true,
+      "certificate_sha256": "a79e6302df492743ea4f5776b78b862979d94ff6d90890f29f4f482c8801ccb5",
+      "all_464_module_verifier_certificate_matches_runtime_trust": true,
+      "wrong_build_certificate_rejected": true,
+      "new_module_private_key": "Generated and used by Kbuild; audit checks mode only, never inspects or exports contents",
+      "private_key_mode": "0600",
+      "uncompressed_kernel_footprint_bytes": 21499728,
+      "footprint_plus_load_offset_below_0x02000000": true,
+      "zImage_header_magic_verified": true,
+      "r50_DTB_byte_identical": true,
+      "physical_boot": false,
+      "native_installation": false
+    },
+    "r50_DTB_byte_identical": true
+  },
+  "private_signing_key": "Generated and used by Kbuild; never inspected or exported by the audit; mode 0600",
+  "distribution_source_package_built": false,
+  "physical_boot": false,
+  "native_installation": false,
+  "later_CPR_NFC_vibrator_candidates_incorporated": false
+}

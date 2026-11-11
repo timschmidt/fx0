@@ -5211,3 +5211,34 @@ All owned processes/listeners and RAM data are cleaned up, with current r50/r6,
 boot, services and staged-but-unstarted Sxmo update intact. Physical Fastboot
 qualification and the underlying USB-path cause remain open.
 [Evidence](../evidence/2026-11-11-usb-native-bulk.json)
+
+### Linux 6.18.63 maintenance source and software currency audit
+
+Authenticated upstream tags bracket 1,989 stable commits. The published
+maintenance merge preserves the complete r50 overlay and resolves the IOMMU
+context-probe overlap by retaining its secured/configured guard while adding
+stable runtime-power/error handling for the legacy path. Five actual-block
+sanitizer cases pass; the old unpowered path and removed-guard controls fail.
+The preparer's receipt inventory now includes the plain unified header addition,
+with a regression that fails the older helper. All 18 r50 overlay files retain
+their original bytes.
+
+The full ARM build links with CFI. All 464 staged modules pass signatures,
+release and dependency checks against the actual embedded certificate; wrong
+certificate and altered payload/signature controls reject. Selected driver,
+binding and preparer tests total 31 passing cases. The ordinary DTB is identical
+to r50; its four-byte CPU-bin cell is selected explicitly in the binding fixture,
+whose later-CPR default remains eight bytes. The source is published at
+`29edb2b9893edd18c445a648081b12038a033d51`. No Alpine package or physical boot
+is claimed for this new build.
+
+Nine repository indexes pass independent native-key signature verification.
+Host simulations find 30 stable upgrades and 486 edge actions while retaining
+ten exact signed-control checksum holds. Equal wlroots versions have different
+signed control identities; payload equivalence is not determined. Local APK
+catalog availability is not used as cryptographic acceptance evidence. The
+official earlier systemd/old-kernel startup warning is marked fixed since
+262-r3; current edge runtime on Fx0 is still untested. The read-only phone
+postflight retains r50/r6, original boot/database/world, services and idle
+hardware. Sxmo r7 installation approval and the current physical UI check remain
+pending. [Evidence](../evidence/2026-11-11-kernel-maintenance-6.18.63.json)

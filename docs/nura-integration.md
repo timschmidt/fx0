@@ -1,5 +1,16 @@
 # Nura integration layer
 
+**Currency audit, 2026-11-11:** Nura still advertises v26.06 as stable.
+Fresh host-only simulations using independently authenticated repository
+indexes find 30 stable upgrades. The edge projection has 486 actions: 441
+upgrades, 31 installations, 13 removals and one downgrade. Both retain the
+native world's ten exact signed-control checksum holds, including the custom
+kernel and peripheral packages. Solver success does not establish current-edge
+hardware compatibility. No phone repository, index, trust key or package was
+changed. The already staged eight-package Sxmo r7 proposal remains separate.
+See the [audit scope and results](../diagnostics/kernel-maintenance/README.md)
+and [evidence](../evidence/2026-11-11-kernel-maintenance-6.18.63.json).
+
 **Update 2026-11-01:** `device-lg-madai` now replaces `device-qcom-msm8226` on
 the phone and carries the deviceinfo, kernel cmdline, initramfs modules and
 speaker UCM. The local deviceinfo, cmdline and module overrides are gone

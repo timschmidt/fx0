@@ -68,6 +68,19 @@ class KernelPreparationTests(unittest.TestCase):
             self.prepare()
         self.assertEqual((self.source/'version').read_text(),'three\n')
 
+    def test_mixed_patch_records_plain_unified_added_header(self):
+        patch = self.root/'first.diff'
+        patch.write_text(patch.read_text() +
+                         '--- /dev/null\n+++ b/added-helper.h\n'
+                         '@@ -0,0 +1,2 @@\n+#define FIXTURE_VALUE 7\n+\n')
+        self.manifest['sha256']['first.diff'] = PREPARE.digest(patch)
+        report = self.prepare('r50')
+        self.assertEqual(set(report['files_sha256']), {'version', 'added-helper.h'})
+        self.assertEqual(report['files_sha256']['added-helper.h'],
+                         hashlib.sha256(b'#define FIXTURE_VALUE 7\n\n').hexdigest())
+        self.assertEqual((self.source/'added-helper.h').read_bytes(),
+                         b'#define FIXTURE_VALUE 7\n\n')
+
     def test_r50_profile_excludes_followup(self):
         report = self.prepare('r50')
         self.assertEqual((self.source/'version').read_text(),'two\n')

@@ -49,12 +49,21 @@ def prepare(source, profile, manifest_path, root=ROOT):
         if digest(patch) != manifest['sha256'][path]:
             raise ValueError(f'Patch checksum mismatch: {path}')
         headers = re.findall(r'^diff --git a/(\S+) b/(\S+)$', patch.read_text(), re.M)
-        if not headers:
-            raise ValueError(f'No file changes in patch: {path}')
         for before, after in headers:
             if before != after:
                 raise ValueError(f'Renames are not supported: {path}')
             changed.add(relative_path(after))
+        # A patch can contain plain unified sections after Git-style sections.
+        # Let Git parse every destination rather than inventorying only the
+        # optional "diff --git" headers.
+        entries = run(['git', 'apply', '--numstat', '-z', '--', patch], source)
+        if not entries:
+            raise ValueError(f'No file changes in patch: {path}')
+        for entry in entries.rstrip('\0').split('\0'):
+            added, removed, target = entry.split('\t', 2)
+            if not target or not added.isdecimal() or not removed.isdecimal():
+                raise ValueError(f'Unsupported patch change: {path}')
+            changed.add(relative_path(target))
         patches.append(patch)
 
     config = manifest['configuration']

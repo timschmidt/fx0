@@ -1,5 +1,21 @@
 # Building Fx0 diagnostic images
 
+## Linux 6.18.63 maintenance build (2026-11-11)
+
+The [maintenance manifest](../manifests/kernel-maintenance-6.18.63.json) pins
+the published source, configuration and host build artifacts. It merges the
+authenticated stable release into the reconstructed r50 feature baseline.
+The complete ARM kernel links, all 464 staged modules verify against its
+embedded certificate, and the ordinary Fx0 DTB remains byte-identical to r50.
+This is a Fedora Clang build; an Alpine source-package build and physical RAM
+boot are still required. Later CPR, NFC and vibrator candidates are separate.
+See the [build and validation procedure](../diagnostics/kernel-maintenance/README.md).
+
+The integration preparer now inventories mixed Git/plain unified patches via
+`git apply --numstat -z`. Historical r50 receipts omitted the appended
+`cpr-voltage.h` addition even though it was applied and compiled. New receipts
+cover all 18 resulting files; the original source bytes are preserved.
+
 Current installed phone: restored **6.18.59-r50**, with working display/touch,
 taint zero and the original four CPU rates. The source reconstruction below
 uses its running configuration and the pinned pre-DMP integration commit.

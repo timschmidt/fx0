@@ -26,6 +26,17 @@ gates remain open; hotspot installed Sxmo recovery passes two bounded cycles; br
 evidence](../evidence/2026-11-06-mpu6515-dmp-20-consecutive-wakes.json).
 Audio testing remains excluded.
 
+November 11 maintenance preparation merges Linux 6.18.63 into the r50 feature
+baseline. Its complete host ARM build, 464 module signatures/dependency graphs,
+linked CFI/trust checks, 31 selected unit cases and two regression controls pass.
+The Fx0 DTB is byte-identical to r50. These results do not qualify a physical
+boot, distribution APK or newer peripheral candidates. The phone still runs
+r50 with Sxmo r6; its original boot, package database/world, running services
+and idle hardware are checked in the read-only postflight. The latest physical
+display/touch confirmation remains pending. Stable/edge userspace audits are
+dependency projections only. See
+[maintenance evidence](../evidence/2026-11-11-kernel-maintenance-6.18.63.json).
+
 November 8 reconstructed-r50 RAM baseline: two boots return to installed r50
 with an unchanged boot-partition hash, four CPUs online and taint zero. The
 second captures the timed return and 22 USB HTTP status/log pairs; the owner
