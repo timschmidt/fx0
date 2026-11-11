@@ -10,12 +10,16 @@ ROOT=Path(__file__).resolve().parents[1]
 SCRIPT=ROOT/'diagnostics/cpu-cpr-runtime/register-alpine.sh'
 
 class AlpineRegistrationTests(unittest.TestCase):
- def run_case(self,fault=None):
+ SCRIPT=SCRIPT
+ KERNEL='6.18.59-fx0-cpr-observe-alpine'
+ MARKER='alpine-r55-registration'
+ PASS_MARKER='ALPINE_CPR_REGISTRATION_PASS'
+ def run_case(self,fault=None,kernel=None):
   with tempfile.TemporaryDirectory() as directory:
    base=Path(directory);system=base/'root';binary=base/'bin';binary.mkdir()
    def put(name,value):
     p=system/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(value)
-   put('etc/fx0-cpr-trial','alpine-r55-registration\n')
+   put('etc/fx0-cpr-trial',self.MARKER+'\n')
    put('sys/module/module/parameters/sig_enforce','Y\n')
    put('sys/module/cpufreq/parameters/default_governor','userspace\n')
    put('proc/modules','');put('proc/sys/kernel/tainted','0\n');(system/'tmp').mkdir()
@@ -26,7 +30,7 @@ class AlpineRegistrationTests(unittest.TestCase):
    for zone in range(2):put(f'sys/class/thermal/thermal_zone{zone}/temp','40000\n')
    put('modules/cpufreq_userspace.ko','fake userspace module');put('modules/cpufreq-dt.ko','fake driver module')
    put('etc/fx0-cpr-modules.sha256',''.join(hashlib.sha256((system/'modules'/name).read_bytes()).hexdigest()+'  '+str(system/'modules'/name)+'\n' for name in ['cpufreq_userspace.ko','cpufreq-dt.ko']))
-   (binary/'uname').write_text('#!/bin/sh\nprintf "%s\\n" "${TEST_UNAME:-6.18.59-fx0-cpr-observe-alpine}"\n');(binary/'uname').chmod(0o755)
+   (binary/'uname').write_text('#!/bin/sh\nprintf "%s\\n" "${TEST_UNAME:-'+self.KERNEL+'}"\n');(binary/'uname').chmod(0o755)
    (binary/'insmod').write_text('''#!/usr/bin/env python3
 import os,sys
 from pathlib import Path
@@ -56,6 +60,7 @@ if module=='cpufreq_dt':
    if fault=='kernel':env['TEST_UNAME']='6.18.59-fx0-dmp'
    if fault=='Fedora_kernel':env['TEST_UNAME']='6.18.59-fx0-cpr-observe'
    if fault=='r54_kernel':env['TEST_UNAME']='6.18.59-fx0-cpr-runtime'
+   if kernel is not None:env['TEST_UNAME']=kernel
    if fault=='taint':put('proc/sys/kernel/tainted','512\n')
    if fault=='online':put('sys/devices/system/cpu/online','0-2\n')
    if fault=='policy':(system/'sys/devices/system/cpu/cpufreq/policy0').mkdir(parents=True)
@@ -85,7 +90,7 @@ if module=='cpufreq_dt':
    if fault=='driver_load':env['TEST_INSMOD_FAIL']='cpufreq-dt.ko'
    if fault=='fallback':env['TEST_GOVERNOR']='schedutil'
    if fault=='post_applied':env['TEST_POST_APPLIED']='1'
-   text=SCRIPT.read_text()
+   text=self.SCRIPT.read_text()
    # Rewrite only filesystem roots; run the real shell control flow and tools.
    text=re.sub(r'/(?:sys|proc|etc|modules|tmp)/',lambda match:str(system)+match.group(),text)
    actual=base/'register-alpine.sh';actual.write_text(text)
@@ -94,18 +99,18 @@ if module=='cpufreq_dt':
    return result,calls
  def test_registration_and_preflight_failures(self):
   result,calls=self.run_case();self.assertEqual(result.returncode,0,result.stderr)
-  self.assertEqual(calls,['cpufreq_userspace.ko','cpufreq-dt.ko']);self.assertIn('ALPINE_CPR_REGISTRATION_PASS',result.stdout)
+  self.assertEqual(calls,['cpufreq_userspace.ko','cpufreq-dt.ko']);self.assertIn(self.PASS_MARKER,result.stdout)
   for fault in ['kernel','Fedora_kernel','r54_kernel','marker','signature','default','modules','policy','digest','target','control','clock','taint','online','temperature','temperature_invalid','temperature_missing','MX','MX_duplicate','PLL','applied','allowed','loop']:
    with self.subTest(fault=fault):
     result,calls=self.run_case(fault);self.assertNotEqual(result.returncode,0);self.assertEqual(calls,[])
  def test_load_failure_and_post_registration_rejection(self):
   for fault,expected in [('userspace_silent',['cpufreq_userspace.ko']),('driver_silent',['cpufreq_userspace.ko','cpufreq-dt.ko']),('userspace_load',['cpufreq_userspace.ko']),('driver_load',['cpufreq_userspace.ko','cpufreq-dt.ko']),('fallback',['cpufreq_userspace.ko','cpufreq-dt.ko']),('post_applied',['cpufreq_userspace.ko','cpufreq-dt.ko'])]:
    with self.subTest(fault=fault):
-    result,calls=self.run_case(fault);self.assertNotEqual(result.returncode,0);self.assertEqual(calls,expected);self.assertNotIn('ALPINE_CPR_REGISTRATION_PASS',result.stdout)
+    result,calls=self.run_case(fault);self.assertNotEqual(result.returncode,0);self.assertEqual(calls,expected);self.assertNotIn(self.PASS_MARKER,result.stdout)
  def test_bootstrap_drift_after_registration_rejected(self):
   for fault in ['post_MX','post_PLL','post_temperature','post_clock','post_online','post_taint']:
    with self.subTest(fault=fault):
-    result,calls=self.run_case(fault);self.assertNotEqual(result.returncode,0);self.assertEqual(calls,['cpufreq_userspace.ko','cpufreq-dt.ko']);self.assertNotIn('ALPINE_CPR_REGISTRATION_PASS',result.stdout)
+    result,calls=self.run_case(fault);self.assertNotEqual(result.returncode,0);self.assertEqual(calls,['cpufreq_userspace.ko','cpufreq-dt.ko']);self.assertNotIn(self.PASS_MARKER,result.stdout)
     message={'post_MX':'bootstrap MX vote absent or changed','post_PLL':'CPU PLL enable count changed','post_temperature':'temperature outside bounds','post_clock':'CPU mux not at 300 MHz','post_online':'CPU topology changed','post_taint':'kernel tainted'}[fault]
     self.assertIn(message,result.stderr)
 if __name__=='__main__':unittest.main()

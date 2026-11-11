@@ -5410,3 +5410,29 @@ boot. The newest owner answer concerns the already-confirmed r1 RAM boot;
 the current r50 return's physical UI result remains pending. Native r1
 installation and stable NFC hardware qualification remain open.
 [Evidence](../evidence/2026-11-11-nfc-stable-6.18.63.json)
+
+
+### Combined CPU/CPR, NFC and vibrator source on stable Linux 6.18.63
+
+Carry the 29 remaining CPU/CPR commits onto the stable NFC/vibrator branch,
+preserving original authors and commit references. Correct the obsolete
+qualification-target comment, continuation alignment, branch braces and
+MAINTAINERS ordering. Forty-five current callback-model tests pass after the
+cleanup. The original historical fixture failure and its passing current
+superset are recorded explicitly.
+
+Prepare a distinct normal `6.18.63-r3` source package with both ordinary and
+CPR qualification DTBs. Seven binding documents and 42 compiled-board/schema
+tests pass, retaining NFC wiring and conservative ordinary CPU/domain
+semantics. The Alpine-native dtc fixture needs its explicit musl loader; only
+the two affected classes resume. A new release-pinned registration script
+passes the shell-model checks and rejects old build families before loading.
+
+Record the final diff's 15 reviewed style findings without claiming a clean
+maintainer submission series. A deep shared-repository object chain also
+stops the new recipe checkout before edits; flatten only that new checkout's
+alternate references and resume successfully. Existing checkouts stay intact.
+No phone write or boot occurs. Native r1 installation still awaits the current
+r50 return's physical UI result; combined stable hardware qualification and
+the broader bringup remain open.
+[Evidence](../evidence/2026-11-11-cpr-nfc-stable-6.18.63.json)
