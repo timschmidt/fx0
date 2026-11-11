@@ -8,8 +8,8 @@ import dtschema
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = Path(os.environ.get('FX0_NFC_SCHEMA', ROOT / 'local/nfc-preparation/processed-schema.json'))
-DTB = ROOT / 'build/fx0-nfc-preparation/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb'
-BASELINE = ROOT / 'build/fx0-r50-reconstruction/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb'
+DTB = Path(os.environ.get('FX0_NFC_DTB', ROOT / 'build/fx0-nfc-preparation/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb'))
+BASELINE = Path(os.environ.get('FX0_NFC_BASELINE_DTB', ROOT / 'build/fx0-r50-reconstruction/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb'))
 
 
 class NxpNciBindingTests(unittest.TestCase):

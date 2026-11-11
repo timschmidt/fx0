@@ -5385,3 +5385,28 @@ RAM-qualified parameter through the actual generator, without changing live
 configuration. Native installation and persistent reboot qualification await
 the newest return's display/touch confirmation; no older answer is reused.
 [Evidence](../evidence/2026-11-11-native-kernel-controller.json)
+
+
+### NFC source and normal package on stable Linux 6.18.63
+
+Integrate the six remaining r59 NFC commits onto stable 6.18.63 plus the
+qualified vibrator fixes. Stable already contains the exact failed-probe IRQ
+cleanup from Griffin Kroah-Hartman, so preserve its attribution without
+duplicating the patch. Final NFC/NCI source matches r59; conservative CPU/CPR
+wiring and the vibrator driver remain intact.
+
+Build the separate normal `6.18.63-r2` Alpine package with a fresh module
+certificate. All 91,269 compiled source paths match published Git, 468 module
+signatures/import CRCs/dependencies pass, CFI and full compressed DWARF remain,
+and the signed APK passes offline resolution plus altered-metadata rejection.
+Five schema/compiled-board tests and 12 sanitizer host tests pass; six commits
+pass strict checkpatch. The new NFC ABI differs from both older r58/r59
+families, which must not be mixed. A supplementary audit's initial assumption
+about weak KCFI symbols is corrected to check actual ARM callback type words;
+no compiled artifact changes.
+
+Publish the source and recipe branches. This phase performs no phone write or
+boot. The newest owner answer concerns the already-confirmed r1 RAM boot;
+the current r50 return's physical UI result remains pending. Native r1
+installation and stable NFC hardware qualification remain open.
+[Evidence](../evidence/2026-11-11-nfc-stable-6.18.63.json)

@@ -2,6 +2,7 @@
 import os
 from pathlib import Path
 import re
+import shlex
 import subprocess
 import tempfile
 import unittest
@@ -35,7 +36,7 @@ struct clk {int votes,error;};
 struct gpio_desc {char name;int value;};
 struct i2c_client;
 struct nci_dev;
-struct nxp_nci_i2c_phy {struct i2c_client *i2c_dev;struct nci_dev *ndev;struct clk *ref_clk;bool ref_clk_enabled;struct gpio_desc *gpiod_fw,*gpiod_en;int hard_fault;};
+struct nxp_nci_i2c_phy {struct i2c_client *i2c_dev;struct nci_dev *ndev;struct clk *ref_clk;bool ref_clk_enabled;bool irq_requested;struct gpio_desc *gpiod_fw,*gpiod_en;int hard_fault;};
 struct nxp_nci_phy_ops {int (*set_mode)(void *,enum nxp_nci_mode);};
 struct nxp_nci_info {void *phy_id;const struct nxp_nci_phy_ops *phy_ops;enum nxp_nci_mode mode;int info_lock;};
 struct nci_dev {struct nxp_nci_info *info;};
@@ -156,9 +157,12 @@ class NxpNciClockTests(unittest.TestCase):
         source = base / 'clock.c'
         source.write_text(code)
         cls.binary = base / 'clock'
-        subprocess.run(['cc', '-std=gnu11', '-O2', '-Wall', '-Wextra', '-Werror',
-                        '-Wno-unused-function', str(source), '-o', str(cls.binary)],
-                       check=True, capture_output=True, text=True)
+        command = shlex.split(os.environ.get('CC', 'cc'))
+        command += ['-std=gnu11', '-O2', '-Wall', '-Wextra', '-Werror',
+                    '-Wno-unused-function']
+        command += shlex.split(os.environ.get('FX0_NFC_TEST_CFLAGS', ''))
+        command += [str(source), '-o', str(cls.binary)]
+        subprocess.run(command, check=True, capture_output=True, text=True)
 
     @classmethod
     def tearDownClass(cls):
