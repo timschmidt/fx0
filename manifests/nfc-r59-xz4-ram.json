@@ -97,5 +97,41 @@
   "exact_relink_and_image_reproduction": true,
   "one_use_entry_prepared": true,
   "physical_transfer_or_BOOT": false,
-  "USB_timeout_root_cause_identified": false
+  "USB_timeout_root_cause_identified": false,
+  "physical_attempt": {
+    "recorded_UTC": "2026-11-11T00:31:29.072570+00:00",
+    "encoding": "XZ4",
+    "image_sha256": "6ccb35ccfc6637902951314f47b61a9925c33eb5b8d163ec1c3b0db8fe1c7020",
+    "image_bytes": 6330368,
+    "entry_native_boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "entry_display_and_touch_passed": true,
+    "download_confirmed_bytes": 671744,
+    "last_unconfirmed_request": {
+      "sequence": 44,
+      "UTC": "2026-11-11T00:23:36.098214+00:00",
+      "event": "failed",
+      "elapsed_seconds": 30.293762010987848,
+      "error_type": "TimeoutError",
+      "errno": 110,
+      "actual_bytes": null,
+      "phase": "download-data",
+      "direction": "OUT",
+      "requested_bytes": 16384,
+      "offset": 671744
+    },
+    "full_readback": false,
+    "BOOT_sent": false,
+    "NFC_startup_checker_run": false,
+    "native_return_boot_id": "aaae9e0c-cf40-4d6a-a394-6182790cbed6",
+    "original_boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "native_display_and_touch_after_return": {
+      "native_boot_id": "aaae9e0c-cf40-4d6a-a394-6182790cbed6",
+      "status": "pending on this newest native return",
+      "question": "The phone is back on installed r50 after the XZ4 transfer timed out, and its services and boot image check out. Do display and touch work on this newest boot?",
+      "recorded_UTC": "2026-11-11T00:30:09.026482+00:00"
+    },
+    "evidence": "evidence/2026-11-10-nfc-r59-xz4-transfer-timeout.json"
+  },
+  "physical_stage_or_boot_executed": true,
+  "physical_R59_startup_verified": false
 }

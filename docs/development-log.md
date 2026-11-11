@@ -5143,3 +5143,7 @@ The ChipIdea candidate keeps the PM8226 input at 100 mA until the host acknowled
 ### Matched USB budget RAM images and fresh r50 UI check
 
 The 6,010,880-byte control and managed images share one moduleless ARM kernel and a 180-second initramfs. Explicitly disabling the original modular drivers fixes the first full build's oversized kernel. The image parser and linked ARM decompressor pass, alongside 24 reader and endpoint checks and nine trace fixtures. The fresh native r50 display and touch check and NFC preflight also pass. The images are prepared for physical validation. [Evidence](../evidence/2026-11-10-smbb-usb-budget-ram.json)
+
+### r59 XZ4 transfer on the installed bootloader
+
+After fresh r50 display and touch confirmation, the XZ4 data transfer completed 41 of the 16 KiB requests before timing out at 656 KiB. It passed the original 512 KiB failure offset. Terminal recovery returned to installed r50 and UPower r5. A resumed read-only postflight verified the original boot hash, installed files, services, idle NFC and 1.15 V APC target. The next transport comparison uses the prepared temporary lk2nd pair with the same r59 payload. [Physical evidence](../evidence/2026-11-10-nfc-r59-xz4-transfer-timeout.json)

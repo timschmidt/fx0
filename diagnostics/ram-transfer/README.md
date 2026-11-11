@@ -22,8 +22,9 @@ immediately. Partial IN readback remains allowed within the requested bounds;
 the final length, status and exact payload comparison are still required.
 
 The append stream is flushed for live observation; it is not fsynced per event
-and does not promise survival of host power loss. Added logging changes host
-timing and is unqualified on hardware. A logging error also stops transfer.
+and does not promise survival of host power loss. The XZ4 hardware attempt
+records the complete prefix and the terminal timeout. Logging adds host work.
+A logging error also stops transfer.
 Do not attach a live syscall tracer to a blocked transfer: an earlier attachment
 interrupted its syscall. Observation expiry never authorizes a reset or retry.
 Recovery still requires authoritative terminal controllers and absent PIDs,
@@ -49,16 +50,15 @@ The installed bootloader's reviewed USB sources exactly match commit
 `079eebe745de650df02e92fd9ca8d9fec5110c56`. The selected host journal shows no
 disconnect or reported controller error during the latest stalled download.
 That limited record does not identify the root cause. No bootloader change,
-kernel failure or reliable transport claim follows. The current physical UI
-question remains pending before another entry.
+kernel failure or reliable transport claim follows. The next physical entry needs the display and touch check for its current boot.
 
 See [evidence](../../evidence/2026-11-09-ram-transfer-journal.json) and the
-[latest failed attempt](../../evidence/2026-11-09-nfc-r59-transfer-timeout.json).
+[first failed attempt](../../evidence/2026-11-09-nfc-r59-transfer-timeout.json).
 
 
 ## Alternate r59 encoding
 
-The first unconfirmed r59 request falls in the compressed kernel. The new XZ4 image changes 16,325 bytes in that 16 KiB frame while preserving the decoded kernel, appended DTB and compressed initramfs. The exact r59 ARM decompressor verifies all three encodings under QEMU. Physical transfer qualification remains open. [Encoding and verification](r59-xz4.md)
+The first unconfirmed r59 request falls in the compressed kernel. The new XZ4 image changes 16,325 bytes in that 16 KiB frame while preserving the decoded kernel, appended DTB and compressed initramfs. The exact r59 ARM decompressor verifies all three encodings under QEMU. On hardware XZ4 passes the original 512 KiB offset, then times out at 656 KiB before readback or BOOT. Both first-unconfirmed requests fall in their respective compressed kernels. [Encoding and verification](r59-xz4.md) · [Physical attempt](../../evidence/2026-11-10-nfc-r59-xz4-transfer-timeout.json)
 
 
 ## lk2nd request-size comparison

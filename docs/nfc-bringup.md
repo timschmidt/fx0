@@ -426,3 +426,14 @@ unqualified. See [trial evidence](../evidence/2026-11-09-nfc-r59-transfer-timeou
 ## November 10 r59 alternate RAM encoding
 
 The r59 XZ4 candidate changes the kernel bytes at the first unconfirmed download frame. The exact r59 ARM decompressor verifies the same runtime Image, and the DTB, initramfs and timer are identical. The new 6,330,368-byte image and separate entry helpers are prepared for a future moduleless trial. Transfer reliability, startup and controller qualification remain open. [Encoding verification](../diagnostics/ram-transfer/r59-xz4.md)
+
+## November 10 XZ4 physical transfer and return
+
+The same installed lk2nd completed 656 KiB of the XZ4 image. The full write
+at the former 512 KiB stall succeeded. The 42nd 16 KiB payload request timed
+out after 30.29 seconds, with delivery unknown. The identified USB reset
+and normal reboot followed terminal transfer and stage processes. Installed
+r50 and UPower r5 return with the original boot hash, released NFC pins and
+the same 1.15 V APC target. A transient SSH timeout required resuming
+read-only postflight on the same restored boot. r59 startup remains open.
+[Transfer and return evidence](../evidence/2026-11-10-nfc-r59-xz4-transfer-timeout.json)
