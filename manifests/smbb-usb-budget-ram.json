@@ -1,0 +1,35 @@
+{
+  "subject": "Matched Fx0 USB input budget RAM images",
+  "kernel_source_commit": "2457eebe0bb67bcb5eccee7916650629cc4e9bf0",
+  "kernel_build_id": "e9b7cdf0c44521a36dbf8cb647765af7b41b4948",
+  "kernel_release": "6.18.59-fx0-usb-budget-ram",
+  "kernel_sha256": "15233ba6897805823de057f9bce1dcd87d602c0850375bfc115634e712dca1b3",
+  "kernel_text_to_end_bytes_including_BSS": 21481256,
+  "common_ramdisk_sha256": "157bcd171eca3abf27d8535c69bf152795c56b05790b349cc2dd1ed372c9e1f2",
+  "images": {
+    "control": {
+      "file": "fx0-usb-budget-control-ram.img",
+      "bytes": 6010880,
+      "sha256": "4e4e13a10b2f04dee61b488b25603e81a3535cfe2416e86252d2036796e1a091",
+      "DTB_sha256": "514ef904e5f8f4f8254aab68e587eb673ed0b208ea105392c876cdbff7028b12",
+      "local_path": "local/smbb-usb-budget-ram-01/images/fx0-usb-budget-control-ram.img"
+    },
+    "managed": {
+      "file": "fx0-usb-budget-managed-ram.img",
+      "bytes": 6010880,
+      "sha256": "1079c0bf6ce53ce0f853d584dc9a417eefc980f5137e6adddcdcee7d32423c05",
+      "DTB_sha256": "e7eb031381e85a8877b6fffc59f905455eaf680d62ddcc5dab199f0848734c5c",
+      "local_path": "local/smbb-usb-budget-ram-01/images/fx0-usb-budget-managed-ram.img"
+    }
+  },
+  "managed_DTB_additions": [
+    "power-supplies = <0x29>;",
+    "qcom,usb-gadget-current-limit;"
+  ],
+  "independent_return_timer_seconds": 180,
+  "module_support_disabled": true,
+  "battery_charging_inhibited_for_comparison": true,
+  "native_display_and_touch_confirmed": true,
+  "staged_or_booted": false,
+  "physical_USB_current_measured": false
+}

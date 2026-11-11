@@ -1,0 +1,19 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+export LC_ALL=C
+root=${1:-/www}
+read -r method resource protocol || exit
+case "$method $resource" in
+    'GET /status.txt') file=$root/status.txt ;;
+    'GET /trace.txt') file=$root/trace.txt ;;
+    *) file= ;;
+esac
+while IFS= read -r header; do
+    case "$header" in ''|"$(printf '\r')") break ;; esac
+done
+if test -z "$file" || ! content=$(cat "$file" 2>/dev/null); then
+    printf 'HTTP/1.0 404 Not Found\r\nContent-Length: 0\r\nConnection: close\r\n\r\n'
+    exit
+fi
+printf 'HTTP/1.0 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %s\r\nConnection: close\r\n\r\n%s\n' \
+    "$((${#content} + 1))" "$content"

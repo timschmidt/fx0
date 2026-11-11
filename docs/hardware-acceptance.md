@@ -493,9 +493,12 @@ probing the phone. A separate waiter state filename fixes it; the successful
 read-only postflight and the failed wrapper records are both retained. No
 additional reboot or device action follows from that correction.
 
-The new return has its own pending physical display/touch question. r59 startup,
-NCI communication/open teardown, RF/PM/firmware behavior and full bringup remain
-unqualified. See [trial evidence](../evidence/2026-11-09-nfc-r59-transfer-timeout.json).
+A fresh native read and owner confirmation now verify display and touch on this
+exact r50 return. The read-only preflight also rechecks the original boot hash,
+UPower r5 and the idle NFC pins. r59 startup, NCI communication/open teardown
+and RF/PM/firmware behavior remain unqualified.
+[Timeout evidence](../evidence/2026-11-09-nfc-r59-transfer-timeout.json) ·
+[Fresh native check](../evidence/2026-11-10-smbb-usb-budget-ram.json)
 
 
 ## November 10 microSD observation and bias comparison

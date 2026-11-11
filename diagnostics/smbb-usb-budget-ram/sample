@@ -1,0 +1,56 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+set -eu
+
+sys=${1:-/sys}
+reader=${2:-/bin/usb-budget-registers}
+usb=$sys/class/power_supply/smbb-usbin
+battery=$sys/class/power_supply/smbb-bif
+controller=$sys/class/udc/ci_hdrc.0
+gadget=$sys/kernel/config/usb_gadget/fx0-budget
+map=$sys/kernel/debug/regmap/0-00
+charger=$sys/firmware/devicetree/base/soc/spmi@fc4cf000/pm8226@0/charger@1000
+
+parent=$(readlink -f "$usb/device")
+case "$parent" in */0-00/*charger*) ;; *) exit 1 ;; esac
+test "$(cat "$map/range")" = 0-ffff
+test -d "$charger"
+
+mode=control
+if test -e "$charger/qcom,usb-gadget-current-limit"; then
+    mode=managed
+fi
+state=$(cat "$controller/state")
+case "$state" in
+    'not attached') state=not_attached ;;
+    'reconnecting'|'attached'|'powered'|'default'|'addressed'|'configured'|'suspended') ;;
+    *) exit 1 ;;
+esac
+speed=$(cat "$controller/current_speed")
+case "$speed" in 'UNKNOWN'|'unknown'|'high-speed'|'full-speed') ;; *) exit 1 ;; esac
+bound=0
+if test -e "$gadget/UDC"; then
+    case "$(cat "$gadget/UDC")" in
+        ci_hdrc.0) bound=1 ;;
+        '') ;;
+        *) exit 1 ;;
+    esac
+fi
+case "$(cat "$battery/charge_behaviour")" in
+    *'[inhibit-charge]'*) charging=inhibited ;;
+    *'[auto]'*) charging=auto ;;
+    *) exit 1 ;;
+esac
+online=$(cat "$usb/online")
+present=$(cat "$battery/present")
+limit=$(cat "$usb/input_current_limit")
+legacy=$(cat "$usb/charge_control_limit")
+for bit in "$online" "$present"; do
+    case "$bit" in 0|1) ;; *) exit 1 ;; esac
+done
+for value in "$limit" "$legacy"; do
+    case "$value" in ''|*[!0-9]*) exit 1 ;; esac
+done
+registers=$("$reader" "$map/registers")
+printf 'mode=%s state=%s speed=%s bound=%s online=%s battery=%s charging=%s input_uA=%s legacy_uA=%s %s\n' \
+    "$mode" "$state" "$speed" "$bound" "$online" "$present" "$charging" "$limit" "$legacy" "$registers"

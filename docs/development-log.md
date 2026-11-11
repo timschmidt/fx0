@@ -5139,3 +5139,7 @@ Verified the active native USB configuration and its programmed 500 mA SMBB sele
 ### PM8226 automatic USB gadget budget candidate
 
 The ChipIdea candidate keeps the PM8226 input at 100 mA until the host acknowledges a successful configuration status stage and then applies the requested budget up to 500 mA. It connects the generic-PHY peripheral path to the USB power supply with a managed device link. Both ARM configurations, the Madai DTB and the callback and policy suites pass. The code is unbooted. [Patch, scope and verification](../diagnostics/smbb-charging-policy/usb-gadget-budget.md)
+
+### Matched USB budget RAM images and fresh r50 UI check
+
+The 6,010,880-byte control and managed images share one moduleless ARM kernel and a 180-second initramfs. Explicitly disabling the original modular drivers fixes the first full build's oversized kernel. The image parser and linked ARM decompressor pass, alongside 24 reader and endpoint checks and nine trace fixtures. The fresh native r50 display and touch check and NFC preflight also pass. The images are prepared for physical validation. [Evidence](../evidence/2026-11-10-smbb-usb-budget-ram.json)

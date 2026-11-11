@@ -725,3 +725,7 @@ A native read-only check verifies the configured 500 mA high-speed gadget and th
 ### Automatic USB gadget budget candidate
 
 The Madai controller now has a source candidate that routes gadget budgets to the verified PM8226 USB input actuator. It defaults to 100 mA and waits for successful USB configuration status completion before requesting up to 500 mA. The worker handles bus suspend, resume and detach. Managed sysfs limits are read-only and a battery-absent suspend retains 100 mA input. ARM object and DTB builds and actual-source host fixtures pass. Physical bus timing, VBUS-valid behavior during suspend, input current and wall charging remain open. [USB budget candidate](../diagnostics/smbb-charging-policy/usb-gadget-budget.md)
+
+### Timed RAM comparison for USB input budgeting
+
+A single moduleless ARM kernel now supplies matched control and managed RAM images. The DTBs differ only in the charger opt-in and controller reference. Both keep battery charging inhibited, use the same 500 mA and 300 mA NCM phases, and return after 180 seconds. The linked decompressor reproduces the kernel byte for byte. The verified images and fixed-register reader are ready for on-device current and suspend measurement. [RAM comparison and evidence](../diagnostics/smbb-usb-budget-ram/README.md)
