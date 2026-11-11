@@ -8,7 +8,13 @@ Use these statuses: `unverified`, `identified`, `in progress`, `blocked`, `faile
 
 For each result record the exact image hash, source revisions, package manifest, unit revision, power source, battery condition, procedure, observations, log/artifact reference, and date. Keep identifiers and original logs privately; publish reviewed evidence under `evidence/` when available.
 
-**Current phone state: r50 with Sxmo 1.18.1-r7.** The authorized update and
+**Current phone state: r50 with Sxmo 1.18.1-r7.** The later Linux 6.18.63-r1
+vibrator package now has a zero-taint RAM result, while the matching r59 NFC
+family passes its first moduleless startup. These are separate artifacts and
+do not qualify a combined installed image.
+[Latest evidence](../evidence/2026-11-11-stable-vibrator-and-nfc-r59-startup.json)
+
+**Installed Sxmo baseline:** The authorized update and
 exact rollback/retry are recorded in the [November 11 native evidence](../evidence/2026-11-11-sxmo-r7-and-vibrator-ram.json). The migrated user gesture hook starts
 on a fresh boot, and the owner confirms display/touch on that return. The
 corrected vibrator passes its full bounded RAM worker with off state and both
@@ -595,3 +601,19 @@ services and owner display/touch confirmation pass on this newest return.
 This does not qualify tactile
 quality, analogue voltage, suspend, the separate 6.18.63 artifact or a combined
 final installation. [Evidence](../evidence/2026-11-11-sxmo-r7-and-vibrator-ram.json)
+
+## November 11 stable package-kernel and r59 NFC startup
+
+The signed Linux6.18.63-r1 kernel and its matching in-tree evdev/vibrator modules
+boot in RAM with signature enforcement and taint zero. The complete worker
+passes three pulse durations, active intensity changes, final off holds and
+removal of both modules. A separate independent snapshot confirms completion.
+The exact original return timer remains unchanged. This is a first physical
+result for the stable package kernel; full native UI/driver/update-hook and
+combined-feature qualification remain open.
+
+Separately, corrected-family r59 NFC moduleless startup and timed return pass.
+No NFC driver module or controller command runs, so earlier r58 cold lifecycle
+passes do not qualify the r59 callback layout, open removal, NCI or tags/RF.
+The r59 return verifies r50/r7 integrity and owner display/touch.
+[Evidence](../evidence/2026-11-11-stable-vibrator-and-nfc-r59-startup.json)

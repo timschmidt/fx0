@@ -437,3 +437,16 @@ r50 and UPower r5 return with the original boot hash, released NFC pins and
 the same 1.15 V APC target. A transient SSH timeout required resuming
 read-only postflight on the same restored boot. r59 startup remains open.
 [Transfer and return evidence](../evidence/2026-11-10-nfc-r59-xz4-transfer-timeout.json)
+
+## November 11 r59 startup on the working USB path
+
+The exact corrected-family r59 moduleless image now boots after full transfer
+and byte-exact readback on port 1-7. Its real read-only checker passes with zero
+taint, no modules, the expected unbound QUP3 PN547 client, unclaimed NFC pins,
+low VEN/FIRM and zero reference-clock votes. Runtime notes match the built r59
+kernel; the original timer returns to installed r50/Sxmo r7. Native integrity,
+automatic gestures, notifications and owner display/touch confirmation pass.
+This closes the r59 startup gate that was blocked by transfer failures. It does
+not exercise the r59 transport callback, NCI commands, open removal or RF/tag
+behavior; those stages still need matching-family trials.
+[Evidence](../evidence/2026-11-11-stable-vibrator-and-nfc-r59-startup.json)

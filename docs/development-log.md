@@ -5284,3 +5284,28 @@ active 24 → 17 → 22, off holds, zero worker exit and both modules unloaded.
 The original 180-second return remains independent. Installed r50 keeps its
 original driver; broader power, tactile, combined-image and reliability gates
 remain open. [Evidence](../evidence/2026-11-11-sxmo-r7-and-vibrator-ram.json)
+
+### Stable 6.18.63 vibrator package and r59 NFC startup
+
+Three separate driver commits carry the RAM-qualified range, endpoint and
+active-bit fixes onto stable6.18.63. The driver is byte-identical to the tested
+r50 source and passes 768 ASan/UBSan cases plus independent regression controls.
+A normal Alpine6.18.63-r1 source build retains CFI and full compressed DWARF.
+All 91,269 compiled source paths, embedded trust, APK and 464 module signatures,
+import CRCs and dependencies verify. A read-only log-prefix assertion stops the
+first audit; correction resumes without repeating the build or passed debug check.
+
+The exact signed-APK kernel/DTB and in-tree evdev/vibrator modules pass the
+file-logged RAM worker with zero taint: 152/303/602 ms, active 24 → 17 → 22,
+final off and both modules unloaded. The first independent image check assumes
+a different timer implementation; the corrected check verifies the unchanged
+qualified baseline timer, including its actual post-mount placement.
+
+While the source build runs, the unchanged r59 moduleless NFC image completes
+transfer/readback and its first physical startup. Its one read-only checker
+passes identity, signature, topology, thermal, unbound-client, pin and clock
+guards, then returns by timer. r50/r7 integrity and owner display/touch pass.
+Controller/RF/open-teardown, full installed stable boot and wider acceptance
+remain open. An unanswered official input-maintainer ref query is explicitly
+stopped; current upstream submission-base readiness is not claimed.
+[Evidence](../evidence/2026-11-11-stable-vibrator-and-nfc-r59-startup.json)

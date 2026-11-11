@@ -3,7 +3,9 @@
 This candidate updates the r50 feature baseline to stable Linux 6.18.63.
 It has complete host and Alpine source-package builds with selected
 regression coverage. Physical boot qualification remains open.
-The installed phone remains Linux 6.18.59-r50 with Sxmo r6.
+The installed phone remains Linux 6.18.59-r50 with Sxmo r7. A later
+6.18.63-r1 package includes the vibrator fixes and passes a separate RAM test;
+it has not replaced the installed kernel.
 
 The [manifest](../../manifests/kernel-maintenance-6.18.63.json) pins the
 [published source](https://github.com/timschmidt/fx0-linux/tree/29edb2b9893edd18c445a648081b12038a033d51),
@@ -87,9 +89,9 @@ The [earlier systemd startup issue](https://nura.eco/edge/2026/10/04/System-may-
 is reported fixed since 262-r3. Current edge is 262.2-r0; that old warning is
 not evidence that it is blocked. Fx0 edge runtime remains unqualified.
 No native index refresh, repository/trust change, package installation or
-reboot occurs in this phase. A base-system upgrade still needs its own complete
-rollback preparation and approval. The pending eight-package Sxmo r7 proposal
-does not authorize these broader upgrades.
+reboot occurs in this phase. A base-system upgrade still needs complete rollback preparation and runtime
+qualification. The later owner phone-update approval and completed Sxmo r7
+transaction are recorded separately; no broad stable/edge upgrade has run.
 
 The [evidence](../../evidence/2026-11-11-kernel-maintenance-6.18.63.json)
 preserves prior input hashes and fresh build/audit receipts. Guarded RAM
@@ -122,3 +124,47 @@ and uses a fresh build home, preserving earlier source trees and signing keys.
 The existing buildroot/dependency caches are reused; this is not a fresh-bootstrap
 or reproducibility claim. No native package, kernel or service changes occur.
 See [package evidence](../../evidence/2026-11-11-kernel-maintenance-6.18.63-alpine.json).
+
+## Stable vibrator integration and first package-kernel RAM boot
+
+Three separate [source commits](https://github.com/timschmidt/fx0-linux/tree/c69b017cd9af9c589aeb921f901987fb26c55a4d)
+select the PMIC range from register layout, clamp the inclusive maximum and
+replace cached drive bits on active intensity changes. The resulting driver
+is byte-identical to the physically tested r50 candidate. On the stable source,
+768 host ASan/UBSan speed/layout cases pass; the original and each independently
+reverted correction fail. Strict checkpatch reports no warnings.
+
+The [normal Alpine recipe](https://github.com/timschmidt/fx0-pmaports/tree/b32a54f534c38103b935a30a324ae1d1aa08e74a)
+builds `6.18.63-r1`, release `6.18.63-fx0-vibrator-alpine`, in a fresh build home.
+The exact archive and all 91,269 compiled source paths match published Git.
+Actual community configuration, nonpermissive CFI, full compressed DWARF,
+embedded certificate, APK signature and altered-metadata rejection pass.
+All 464 signed in-tree modules match the kernel's ABI and dependency graph.
+A log-prefix parser initially stops artifact collection; correcting that
+read-only audit resumes after the already-passed config/debug check.
+
+The RAM image uses the signed APK's exact kernel, DTB and matching evdev/vibrator
+modules, with signature enforcement and expected taint zero. Full file-based
+worker capture records 152/303/602 ms for 150/300/600 ms requests, active codes
+24 → 17 → 22, final off holds and ordinary removal of both modules. The worker
+exits zero and the independent snapshot finds no modules or worker. The exact
+original 180-second timer remains before worker and USB setup; it starts after
+the baseline pseudo-filesystem mounts, so it is not hard-lockup recovery proof.
+The first image-verifier attempt incorrectly assumed a newer timer syntax and
+placement; the corrected verifier checks the frozen baseline without modifying
+its image. Installed-kernel update hooks, full native Sway boot, final combined
+CPU/NFC integration, suspend and reliability remain open.
+[Package and physical evidence](../../evidence/2026-11-11-stable-vibrator-and-nfc-r59-startup.json)
+
+The isolated source build signs its output with a builder key absent from the
+phone's trust store. A separate phone-installation copy uses standard
+`abuild-sign` and the development key already trusted by the phone. Its
+compressed control and data streams remain byte-identical; only the signature
+header changes. The original build APK is retained. Independent RSA and APK
+checks against the freshly rechecked native key set pass and altered control
+metadata rejects. No trust key is imported and key storage stays read-only.
+Signing setup initially needs an explicit build architecture, then the existing
+mapped rootless namespace to access its owned key; those stops are retained.
+The host-only native-database plan replaces only the kernel's exact control
+hold and selects one kernel upgrade. It does not install the package or run
+native hooks. Both APK identities are recorded in the manifest.

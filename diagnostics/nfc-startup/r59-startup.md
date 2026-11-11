@@ -1,5 +1,19 @@
 # Matching r59 moduleless RAM startup preparation
 
+**Physical startup now passes (2026-11-11):** on working USB port `1-7`, the
+exact prepared XZ3 image transfers and reads back completely before one BOOT.
+The checker runs once and exits zero on RAM boot
+`e00b83d5-9cd7-4e80-92d9-9dbcb7d40f31`. Runtime notes match r59, with signature
+enforcement, schedutil, four CPUs, zero taint and no modules or CPUfreq policy.
+The correct QUP3 client is unbound at Linux bus address `1-0028`; logical QUP
+number and assigned Linux bus number are distinct. Pins 20/21/22 are unclaimed,
+VEN/FIRM are low and reference-clock votes are 0/0/0 at 19.2 MHz. The original
+timer returns at 181.626278 seconds. Installed r50/r7 boot, package/world,
+modules, gesture startup and notification checks pass; the owner confirms
+display and touch on that exact return. No NFC bus, GPIO, RF or firmware action
+occurs. Registration, NCI communication, open teardown, tags/RF and PM remain
+unqualified for r59. [Physical evidence](../../evidence/2026-11-11-stable-vibrator-and-nfc-r59-startup.json)
+
 This image prepares the first startup of the independently built
 `6.18.59-fx0-nfc-open-teardown-alpine` family. It contains no NFC/CPU modules,
 firmware or registration worker. Its startup result checks kernel identity,
@@ -10,7 +24,8 @@ The [manifest](../../manifests/nfc-open-teardown-startup-ram.json) records the
 exact image, linked notes, certificate, DTB and source APK. A fresh post-r5
 display/touch answer permits a new native preflight and staging attempt. That
 download times out after 524,288 completed bytes, before verified readback or
-BOOT. The image remains unbooted; no startup checker runs on hardware.
+BOOT. At that earlier checkpoint the image remained unbooted and no startup checker
+ran on hardware. The November 11 working-port result above supersedes it.
 Terminal-only identified recovery returns to installed r50 with UPower r5
 automatically active. See [attempt and return evidence](../../evidence/2026-11-09-nfc-r59-transfer-timeout.json).
 The older cold-trial question is preserved separately; the new native return

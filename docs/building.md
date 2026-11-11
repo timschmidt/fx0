@@ -1048,3 +1048,21 @@ isolated weakened guards are detected. See [procedure](../diagnostics/nfc-startu
 The entry refuses the pending exact-native UI result before client import,
 then requires a fresh native preflight if that gate passes. The current image
 is unstaged/unbooted; new-family runtime and recovery acceptance remain open.
+
+## Linux 6.18.63 with the qualified vibrator corrections
+
+[Source](https://github.com/timschmidt/fx0-linux/tree/c69b017cd9af9c589aeb921f901987fb26c55a4d)
+and [recipe](https://github.com/timschmidt/fx0-pmaports/tree/b32a54f534c38103b935a30a324ae1d1aa08e74a)
+produce normal Alpine `6.18.63-r1`, release `6.18.63-fx0-vibrator-alpine`.
+Use [the pinned input configuration](../configs/linux-6.18.63-fx0-vibrator-alpine.armv7)
+and [measured manifest](../manifests/kernel-vibrator-6.18.63-alpine.json).
+All compiled source paths, linked trust/CFI, full compressed DWARF, APK and
+464 signed modules/import CRCs/dependencies verify. A fresh build home preserves
+all earlier artifacts and signing keys; cached buildroots/dependencies are
+reused, so this is not a reproducible or fresh-bootstrap build claim.
+
+The exact packaged kernel/DTB and in-tree vibrator/evdev modules pass a bounded
+RAM test with zero taint and complete pulse/off/unload results. Full installed
+OS/update-hook acceptance remains separate. Do not mix this release's modules
+with r50 or with the earlier maintenance package.
+[Evidence](../evidence/2026-11-11-stable-vibrator-and-nfc-r59-startup.json)

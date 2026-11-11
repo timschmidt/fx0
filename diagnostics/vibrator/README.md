@@ -131,3 +131,22 @@ PASS, exit status is zero, both modules are removed, and taint is the expected
 4096 from the external module. This is a bounded RAM result, not analogue
 voltage, tactile-quality, system-suspend or final installed-kernel acceptance.
 [Evidence](../../evidence/2026-11-11-sxmo-r7-and-vibrator-ram.json)
+
+## Linux 6.18.63 normal package and zero-taint RAM result
+
+The fixes are now three source commits on the maintained r50 feature baseline.
+The normal signed Alpine `6.18.63-r1` package builds with its own kernel/module
+identity. Its compiled source, CFI, full DWARF, trust, 464 module signatures,
+import CRCs and dependency graph verify. This package's exact kernel, DTB and
+in-tree evdev/vibrator modules pass the same bounded RAM pulse and unload test
+with zero taint. Requests 150/300/600 ms measure 152/303/602 ms at code24; active
+24 → 17 → 22 and final off holds pass. The worker returns zero and both modules
+are absent at completion and in the later independent snapshot.
+
+[`ram-trial-stable.sh`](ram-trial-stable.sh) differs from the earlier worker
+only in the pinned release, permit and in-tree taint expectation. It retains
+all mount, temperature, notes, payload, module-set and input-parent guards.
+This adds a stable package-kernel RAM result; installed r50 still uses the old
+driver. Full native update, tactile quality, analogue voltage, system suspend,
+long reliability and the final combined image remain open.
+[Evidence](../../evidence/2026-11-11-stable-vibrator-and-nfc-r59-startup.json)
