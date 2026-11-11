@@ -5496,3 +5496,42 @@ The phone remains on r50/Sxmo r7. The owner's latest reply confirms the earlier
 No phone mutation or native update occurs. The prepared approved r1 update
 remains the next phone action after that exact current-boot result.
 [Evidence](../evidence/2026-11-11-vibrator-input-drafts.json)
+
+
+### NFC removal drafts against the actual maintainer fixes branch
+
+Read current NFC routing from MAINTAINERS: David Heidelberg's Codeberg tree,
+with the NXP driver itself orphaned. Verify its live default `for-next` tip
+is Linux 7.3-rc3 and its `for-linus` tip is
+`b61732f47316d45f27706db7812950145d3327b5`, dated September 23. Recheck both
+advertisements unchanged. Compare with the newer input tree as well: the
+removal problems remain, while allocation helpers changed. Preserve its
+existing protocol support, ENXIO handling, firmware copy and ID-table changes.
+
+Prepare two unsigned fixes on the advertised fixes branch: unregister without
+holding the mode mutex, then retain receive for the closing reset and drain
+it before state is freed. Track successful IRQ ownership. Locate both original
+introducing commits and include Fixes plus the Assisted-by tag required by
+this pinned tree. Keep clock/binding/board features separate, and do not export
+the older intermediate receive-before-unregister transition.
+
+Six host tests pass nine modeled cases and reject six independent controls
+under ASan/UBSan. The recursive-lock control reaches the actual close callback's
+mutex check; sixteen actual driver/NCI callback bodies stay intact. The source
+and models cover reset, close, pending receive, optional callbacks and failed
+IRQ ownership, without operating hardware or a live kernel endpoint.
+
+The base and both prefixes compile matching core/I2C/firmware cohorts: nine
+ARM objects with Clang 21.1.8, W=1, KCFI and full compressed DWARF5, without
+compiler diagnostics. Inspect the actual callback type words, verify 18,129
+present tracked source paths against Git, pass strict checkpatch with only
+sign-off checking disabled, and replay both exported prefix trees exactly.
+Retain the stopped broad shared clone, model-parser/unused-mock setup failures,
+individual-file overlay correction and configuration conversion notices.
+
+Export the review bundle and current recipient lookup. Full kernel/module and
+broader networking builds, GCC, real IRQ/NCI timing, concurrent firmware, RF/PM,
+and human review/certification remain open. No upstream message, phone mutation
+or kernel installation occurs. The approved r1 native update still awaits the
+separate current-r50 physical display/touch answer; full bringup remains active.
+[Evidence](../evidence/2026-11-11-nfc-remove-drafts.json)

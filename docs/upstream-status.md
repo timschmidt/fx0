@@ -30,6 +30,26 @@ This bundle follows those current rules; the older draft requirements described
 above belong to their respective pinned trees. Human review/certification and
 additional physical qualification remain. No email or PR was sent.
 
+## 2026-11-11 NFC removal drafts on the advertised fixes branch
+
+The two [NXP removal drafts](../submissions/nxp-nci-remove/README.md) target
+the NFC maintainer's Codeberg `for-linus` tip
+`b61732f47316d45f27706db7812950145d3327b5`. Both advertised NFC branch tips
+are older than the newer input tree checked above; that newer source still
+contains the same removal problems. The series preserves intervening upstream
+changes, separates clock/binding/board features, and avoids exporting the
+intermediate ordering that stopped receive before the closing reset.
+
+Six host tests pass nine modeled lifecycle cases and reject six independent
+regression controls. Matching core/I2C/firmware objects pass `W=1` on the base
+and both prefixes: nine ARM objects with KCFI and compressed DWARF5. Strict
+checkpatch and exported-tree replay pass. The pinned NFC tree requires the
+included `Assisted-by: LLM` tags and prohibits agent-added DCO sign-offs.
+
+These remain review drafts. Full kernel/module and broader networking config
+builds, GCC, physical open/unregister/IRQ timing, concurrent firmware, RF/PM
+and human certification remain open. No email or PR was sent.
+
 ## Prepared, not sent
 
 | Change | Target | Material |

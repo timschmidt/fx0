@@ -1,0 +1,908 @@
+{
+  "recorded_UTC": "2026-11-11T16:05:19.020181+00:00",
+  "purpose": "NXP NCI removal review drafts on the advertised NFC fixes branch; no clock/board features",
+  "source": {
+    "repository": "https://codeberg.org/linux-nfc/linux.git",
+    "base_branch": "for-linus",
+    "upstream_base": "b61732f47316d45f27706db7812950145d3327b5",
+    "draft_tip": "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea",
+    "draft_tree": "d814069a8f8140ac4b2364b59d0248a99ab61e80",
+    "mapping": [
+      {
+        "draft": "22d32fc708be6b7d045e9fbc5114e3dc5a44a2a3",
+        "source_commits": [
+          "3be72fe7a5fb16f74494023b134ce1f2654bff40"
+        ],
+        "changed_paths": [
+          "drivers/nfc/nxp-nci/core.c"
+        ],
+        "unsigned": true,
+        "Assisted_by_LLM": true
+      },
+      {
+        "draft": "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea",
+        "source_commits": [
+          "a5ac56697b9332f3dfa7918341920eb0e252516c",
+          "7bbe33bd97b6f57a05de33ce8dcceba6942352a3"
+        ],
+        "changed_paths": [
+          "drivers/nfc/nxp-nci/core.c",
+          "drivers/nfc/nxp-nci/i2c.c",
+          "drivers/nfc/nxp-nci/nxp-nci.h"
+        ],
+        "unsigned": true,
+        "Assisted_by_LLM": true
+      }
+    ],
+    "selected_source_inventory": "local/nfc-upstream-01/selected-source-inventory.json",
+    "present_tracked_paths_verified": 18129,
+    "source_topic_branch": "submit/nxp-nci-remove-v1",
+    "source_topic_branch_public": false,
+    "public_material": "submissions/nxp-nci-remove",
+    "current_advertised_base_is_latest_mainline_claim": false,
+    "optional_clock_binding_and_board_changes_included": false,
+    "complete_kernel_history_copied_to_coordination_repository": false
+  },
+  "routing": {
+    "evidence": "MAINTAINERS at current input master 8e16f8bbf1bd528975fd6f4081eaf00513c1d83e",
+    "NFC_maintainer": "David Heidelberg <david@ixit.cz>",
+    "NFC_list": "oe-linux-nfc@lists.linux.dev",
+    "NFC_repository": "https://codeberg.org/linux-nfc/linux.git",
+    "NXP_NCI_status": "Orphan; route through maintained NFC subsystem",
+    "source_of_authority": "local/vibrator-upstream-01/fetch-attempt01/source/MAINTAINERS"
+  },
+  "reference_recheck": {
+    "recorded_UTC": "2026-11-11T15:59:20.551422+00:00",
+    "URL": "https://codeberg.org/linux-nfc/linux.git/info/refs?service=git-upload-pack",
+    "returncode": 0,
+    "all_advertised_refs_unchanged": true,
+    "selected_fix_base": "b61732f47316d45f27706db7812950145d3327b5",
+    "feature_branch": "fd73f4a6659897191fa0d40695fe370925dd3780",
+    "advertisement_sha256": "a3ff74e2bdc2119c5f8bcad247c80826f454ebeb81008d0687c059e4a85dc746",
+    "initial_selection_UTC": "2026-11-11T15:33:57.907556+00:00"
+  },
+  "maintainer_base_metadata": [
+    {
+      "branch": "for-next",
+      "commit": "fd73f4a6659897191fa0d40695fe370925dd3780",
+      "tree": "cbae8a48f2303e6f3b038bd8b28a9052a6dfd91e",
+      "author_date": "2026-09-13T14:38:02-07:00",
+      "committer_date": "2026-09-13T14:38:02-07:00",
+      "subject": "Linux 7.3-rc3",
+      "AGENTS": [],
+      "source_paths": 96035
+    },
+    {
+      "branch": "for-linus",
+      "commit": "b61732f47316d45f27706db7812950145d3327b5",
+      "tree": "06aeba1d322d0ca2e1712cf57edccacad8fd9d68",
+      "author_date": "2026-09-23T09:26:27+05:30",
+      "committer_date": "2026-09-23T22:13:18+02:00",
+      "subject": "nfc: pn533: fix OOB read in pn533_acr122_is_rx_frame_valid()",
+      "AGENTS": [],
+      "source_paths": 96035
+    }
+  ],
+  "newer_input_comparison": {
+    "newer_input_base": "8e16f8bbf1bd528975fd6f4081eaf00513c1d83e",
+    "files": [
+      {
+        "path": "drivers/nfc/nxp-nci/core.c",
+        "for_linus_sha256": "936450937f0ba03fae1b3b583dac5d55f42b84ada9db3b9e9c8e07abad0ab465",
+        "newer_input_sha256": "0d7feb6132d63f4e0ed511b7630a4af2c99db676d6947c683b6c53dd0349aa3a",
+        "identical": false
+      },
+      {
+        "path": "drivers/nfc/nxp-nci/i2c.c",
+        "for_linus_sha256": "e39c2376de94941480bf20c0c571de705d96b81cd707dee618ca379754ed23c2",
+        "newer_input_sha256": "5f82182c153c596340970458f836547da662e2e146407aac861916e5f940a707",
+        "identical": false
+      },
+      {
+        "path": "drivers/nfc/nxp-nci/nxp-nci.h",
+        "for_linus_sha256": "35c6d4b1a00f9234fc63763d1b937c9c974c38b384ae04cd43aa805206e29344",
+        "newer_input_sha256": "35c6d4b1a00f9234fc63763d1b937c9c974c38b384ae04cd43aa805206e29344",
+        "identical": true
+      },
+      {
+        "path": "drivers/nfc/nxp-nci/firmware.c",
+        "for_linus_sha256": "327ba53a852fc89887f52a5fdc6b8ef06179599bc1ba5a1cf548dc76302f2a04",
+        "newer_input_sha256": "327ba53a852fc89887f52a5fdc6b8ef06179599bc1ba5a1cf548dc76302f2a04",
+        "identical": true
+      },
+      {
+        "path": "net/nfc/nci/core.c",
+        "for_linus_sha256": "4cd2987d79d078e24c49537bd86847219e90cb063bbf7f760b0a72221805c2c4",
+        "newer_input_sha256": "4cd2987d79d078e24c49537bd86847219e90cb063bbf7f760b0a72221805c2c4",
+        "identical": true
+      },
+      {
+        "path": "net/nfc/nci/rsp.c",
+        "for_linus_sha256": "f46b3f78238f81329184c9fb1fec26c1473bd4ba0d53b0b974ae8b2635f83718",
+        "newer_input_sha256": "6b3e2edc612548226d2f1849149011264fc0d9ee89e308f24135dd32d00e07e3",
+        "identical": false
+      }
+    ]
+  },
+  "preserved_upstream_changes": [
+    "ISO15693 protocol support",
+    "ENXIO IRQ handling",
+    "Firmware strscpy",
+    "ID-table updates",
+    "Failed IRQ probe cleanup"
+  ],
+  "original_bug_commits": {
+    "core_lock_origin": {
+      "commit": "dece45855a8b0d1dcf48eb01d0822070ded6a4c8",
+      "subject": "NFC: nxp-nci: Add support for NXP NCI chips",
+      "unregister_and_free_inside_info_lock": true
+    },
+    "IRQ_lifetime_origin": {
+      "commit": "6be88670fc59d50426f90f734a36b90e1de7d148",
+      "subject": "NFC: nxp-nci_i2c: Add I2C support to NXP NCI driver",
+      "remove_function": "static int nxp_nci_i2c_remove(struct i2c_client *client)\n{\n\tstruct nxp_nci_i2c_phy *phy = i2c_get_clientdata(client);\n\n\tnxp_nci_remove(phy->ndev);\n\tfree_irq(client->irq, phy);\n\n\treturn 0;\n}\n"
+    },
+    "already_upstream_failed_probe_cleanup": "56345cea6a30dc7a1b036d5fb7900434b4a4c5e8",
+    "newer_input_still_has_removal_bugs": true
+  },
+  "intermediate_receive_before_unregister_transition_not_exported": true,
+  "style": {
+    "unsigned": true,
+    "only_signoff_check_disabled": true,
+    "results": [
+      {
+        "patch": "0001-nfc-nxp-nci-unregister-without-holding-the-mode-mute.patch",
+        "argv": [
+          "perl",
+          "scripts/checkpatch.pl",
+          "--strict",
+          "--no-signoff",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/unsigned-fix-drafts/0001-nfc-nxp-nci-unregister-without-holding-the-mode-mute.patch"
+        ],
+        "returncode": 0,
+        "output": "total: 0 errors, 0 warnings, 0 checks, 19 lines checked\n\n/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/unsigned-fix-drafts/0001-nfc-nxp-nci-unregister-without-holding-the-mode-mute.patch has no obvious style problems and is ready for submission.\n"
+      },
+      {
+        "patch": "0002-nfc-nxp-nci-drain-receive-before-freeing-the-NCI-dev.patch",
+        "argv": [
+          "perl",
+          "scripts/checkpatch.pl",
+          "--strict",
+          "--no-signoff",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/unsigned-fix-drafts/0002-nfc-nxp-nci-drain-receive-before-freeing-the-NCI-dev.patch"
+        ],
+        "returncode": 0,
+        "output": "total: 0 errors, 0 warnings, 0 checks, 63 lines checked\n\n/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/unsigned-fix-drafts/0002-nfc-nxp-nci-drain-receive-before-freeing-the-NCI-dev.patch has no obvious style problems and is ready for submission.\n"
+      }
+    ]
+  },
+  "host_tests": {
+    "tests": 6,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "terminal_exit_code": 0,
+    "terminal_tool_session": 71993,
+    "source_sha256": "c0d2a504d2a6549d6ad1e4f7429aede265f4d053cebd217020199d5996d045c3",
+    "shared_test_sha256": "eec80367e44e4941c46e23b9ef0ee10e97372b7065cc004c796a2b4c1f1ac413",
+    "shared_harness_sha256": "dde96d77761f47b6cd4babbec947f90692395cf5d4e71c2482d10dae8b7093ad",
+    "actual_driver_and_NCI_callback_bodies_preserved": true,
+    "modeled_positive_cases": 9,
+    "independent_regression_controls": 6,
+    "recursive_close_lock_control_reaches_actual_mutex_assertion": true,
+    "fixture_receipt": "local/nfc-upstream-01/host-fixture/verification.json",
+    "fixture_receipt_sha256": "22ab114f850b5de42657933b9c41a926782ed786e7ffd63e44ffd3c8fe99c380",
+    "hardware_operations": false
+  },
+  "modeled_case_results": {
+    "actual_driver_and_NCI_callback_bodies_preserved": true,
+    "clock_feature_included": false,
+    "host_ASan_UBSan": true,
+    "modeled_positive_cases": 9,
+    "independent_regression_controls": 6,
+    "real_kernel_or_hardware_operations": false,
+    "concurrent_firmware_timing_modeled": false,
+    "fixture_sha256": "678642d77358f377c2f3d221078b91b3a154ee4863cc61f513ad0d06b0db3a6f",
+    "results": [
+      {
+        "label": "candidate",
+        "mode": "cold",
+        "returncode": 0,
+        "expected_success": true,
+        "stdout": "cold: events=QQQUID reset_tx=0 reset_ack=0 reset_timeout=0 IRQ_drain=1"
+      },
+      {
+        "label": "candidate",
+        "mode": "cold_pending_irq",
+        "returncode": 0,
+        "expected_success": true,
+        "stdout": "cold_pending_irq: events=QQQUID reset_tx=0 reset_ack=0 reset_timeout=0 IRQ_drain=1"
+      },
+      {
+        "label": "candidate",
+        "mode": "firmware_pending_irq",
+        "returncode": 0,
+        "expected_success": true,
+        "stdout": "firmware_pending_irq: events=QQQUID reset_tx=0 reset_ack=0 reset_timeout=0 IRQ_drain=1"
+      },
+      {
+        "label": "candidate",
+        "mode": "probe_irq_failure",
+        "returncode": 0,
+        "expected_success": true,
+        "stdout": "probe_irq_failure: events=QQQUD reset_tx=0 reset_ack=0 reset_timeout=0 IRQ_drain=0"
+      },
+      {
+        "label": "candidate",
+        "mode": "open_timeout_pending_irq",
+        "returncode": 0,
+        "expected_success": true,
+        "stdout": "open_timeout_pending_irq: events=TXQQQUID reset_tx=1 reset_ack=0 reset_timeout=1 IRQ_drain=1"
+      },
+      {
+        "label": "candidate",
+        "mode": "open",
+        "returncode": 0,
+        "expected_success": true,
+        "stdout": "open: events=TAQQQUID reset_tx=1 reset_ack=1 reset_timeout=0 IRQ_drain=1"
+      },
+      {
+        "label": "candidate",
+        "mode": "open_pending_irq",
+        "returncode": 0,
+        "expected_success": true,
+        "stdout": "open_pending_irq: events=TAQQQUID reset_tx=1 reset_ack=1 reset_timeout=0 IRQ_drain=1"
+      },
+      {
+        "label": "candidate",
+        "mode": "open_data_exchange",
+        "returncode": 0,
+        "expected_success": true,
+        "stdout": "open_data_exchange: events=TAQQQUID reset_tx=1 reset_ack=1 reset_timeout=0 IRQ_drain=1"
+      },
+      {
+        "label": "candidate",
+        "mode": "core_legacy",
+        "returncode": 0,
+        "expected_success": true,
+        "stdout": "core_legacy: events=QQQUD reset_tx=0 reset_ack=0 reset_timeout=0 IRQ_drain=0"
+      },
+      {
+        "label": "unregister-under-lock",
+        "mode": "open",
+        "returncode": 1,
+        "expected_success": false,
+        "stdout": ""
+      },
+      {
+        "label": "drain-before-reset",
+        "mode": "open",
+        "returncode": 1,
+        "expected_success": false,
+        "stdout": "open: events=ITXQQQUD reset_tx=1 reset_ack=0 reset_timeout=1 IRQ_drain=1"
+      },
+      {
+        "label": "drain-after-free",
+        "mode": "cold_pending_irq",
+        "returncode": 1,
+        "expected_success": false,
+        "stdout": ""
+      },
+      {
+        "label": "lock-during-drain",
+        "mode": "cold_pending_irq",
+        "returncode": 1,
+        "expected_success": false,
+        "stdout": ""
+      },
+      {
+        "label": "missing-stop-wiring",
+        "mode": "cold",
+        "returncode": 1,
+        "expected_success": false,
+        "stdout": ""
+      },
+      {
+        "label": "unowned-IRQ-release",
+        "mode": "probe_irq_failure",
+        "returncode": 1,
+        "expected_success": false,
+        "stdout": ""
+      }
+    ]
+  },
+  "ARM_prefix_object_checks": {
+    "prefixes": [
+      {
+        "label": "base",
+        "commit": "b61732f47316d45f27706db7812950145d3327b5",
+        "argv": [
+          "bwrap",
+          "--unshare-all",
+          "--die-with-parent",
+          "--clearenv",
+          "--setenv",
+          "PATH",
+          "/usr/bin:/bin",
+          "--setenv",
+          "LC_ALL",
+          "C",
+          "--setenv",
+          "PYTHONDONTWRITEBYTECODE",
+          "1",
+          "--setenv",
+          "KBUILD_BUILD_USER",
+          "fx0-validation",
+          "--setenv",
+          "KBUILD_BUILD_HOST",
+          "host",
+          "--ro-bind",
+          "/usr",
+          "/usr",
+          "--symlink",
+          "usr/bin",
+          "/bin",
+          "--symlink",
+          "usr/sbin",
+          "/sbin",
+          "--symlink",
+          "usr/lib",
+          "/lib",
+          "--symlink",
+          "usr/lib64",
+          "/lib64",
+          "--dev",
+          "/dev",
+          "--proc",
+          "/proc",
+          "--tmpfs",
+          "/tmp",
+          "--ro-bind",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/source-attempt02",
+          "/source",
+          "--bind",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/arm-prefix-attempt02-base",
+          "/output",
+          "--ro-bind",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/prefix-sources-attempt02/base/core.c",
+          "/source/drivers/nfc/nxp-nci/core.c",
+          "--ro-bind",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/prefix-sources-attempt02/base/i2c.c",
+          "/source/drivers/nfc/nxp-nci/i2c.c",
+          "--ro-bind",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/prefix-sources-attempt02/base/nxp-nci.h",
+          "/source/drivers/nfc/nxp-nci/nxp-nci.h",
+          "--ro-bind",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/prefix-sources-attempt02/base/firmware.c",
+          "/source/drivers/nfc/nxp-nci/firmware.c",
+          "--chdir",
+          "/output",
+          "make",
+          "-j4",
+          "-C",
+          "/source",
+          "O=/output",
+          "ARCH=arm",
+          "LLVM=1",
+          "CROSS_COMPILE=arm-linux-gnueabi-",
+          "HOSTLDFLAGS=-fuse-ld=lld",
+          "LOCALVERSION=",
+          "W=1",
+          "drivers/nfc/nxp-nci/core.o",
+          "drivers/nfc/nxp-nci/i2c.o",
+          "drivers/nfc/nxp-nci/firmware.o"
+        ],
+        "returncode": 0,
+        "objects": {
+          "core": {
+            "sha256": "41a50d5ef48ea15f90eb7a884177285718fa862ff50febf923fcde3f06a4fcc5",
+            "KCFI": true,
+            "DWARF5_zlib": true
+          },
+          "i2c": {
+            "sha256": "d7e3b22635406f9c6accf0fd4ea40b06ad564f0fe970ce9712a536210ba9c7f9",
+            "KCFI": true,
+            "DWARF5_zlib": true
+          },
+          "firmware": {
+            "sha256": "46145077c68eaa9ec2d6314ef259c46bae3e92feb086feebb00230e1dde6d628",
+            "KCFI": true,
+            "DWARF5_zlib": true
+          }
+        }
+      },
+      {
+        "label": "patch-1",
+        "commit": "22d32fc708be6b7d045e9fbc5114e3dc5a44a2a3",
+        "argv": [
+          "bwrap",
+          "--unshare-all",
+          "--die-with-parent",
+          "--clearenv",
+          "--setenv",
+          "PATH",
+          "/usr/bin:/bin",
+          "--setenv",
+          "LC_ALL",
+          "C",
+          "--setenv",
+          "PYTHONDONTWRITEBYTECODE",
+          "1",
+          "--setenv",
+          "KBUILD_BUILD_USER",
+          "fx0-validation",
+          "--setenv",
+          "KBUILD_BUILD_HOST",
+          "host",
+          "--ro-bind",
+          "/usr",
+          "/usr",
+          "--symlink",
+          "usr/bin",
+          "/bin",
+          "--symlink",
+          "usr/sbin",
+          "/sbin",
+          "--symlink",
+          "usr/lib",
+          "/lib",
+          "--symlink",
+          "usr/lib64",
+          "/lib64",
+          "--dev",
+          "/dev",
+          "--proc",
+          "/proc",
+          "--tmpfs",
+          "/tmp",
+          "--ro-bind",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/source-attempt02",
+          "/source",
+          "--bind",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/arm-prefix-attempt02-patch-1",
+          "/output",
+          "--ro-bind",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/prefix-sources-attempt02/patch-1/core.c",
+          "/source/drivers/nfc/nxp-nci/core.c",
+          "--ro-bind",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/prefix-sources-attempt02/patch-1/i2c.c",
+          "/source/drivers/nfc/nxp-nci/i2c.c",
+          "--ro-bind",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/prefix-sources-attempt02/patch-1/nxp-nci.h",
+          "/source/drivers/nfc/nxp-nci/nxp-nci.h",
+          "--ro-bind",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/prefix-sources-attempt02/patch-1/firmware.c",
+          "/source/drivers/nfc/nxp-nci/firmware.c",
+          "--chdir",
+          "/output",
+          "make",
+          "-j4",
+          "-C",
+          "/source",
+          "O=/output",
+          "ARCH=arm",
+          "LLVM=1",
+          "CROSS_COMPILE=arm-linux-gnueabi-",
+          "HOSTLDFLAGS=-fuse-ld=lld",
+          "LOCALVERSION=",
+          "W=1",
+          "drivers/nfc/nxp-nci/core.o",
+          "drivers/nfc/nxp-nci/i2c.o",
+          "drivers/nfc/nxp-nci/firmware.o"
+        ],
+        "returncode": 0,
+        "objects": {
+          "core": {
+            "sha256": "ae538f2950e0eb3766e060b13d59786d1584823eed0c06d8106684f395b43d1b",
+            "KCFI": true,
+            "DWARF5_zlib": true
+          },
+          "i2c": {
+            "sha256": "d7e3b22635406f9c6accf0fd4ea40b06ad564f0fe970ce9712a536210ba9c7f9",
+            "KCFI": true,
+            "DWARF5_zlib": true
+          },
+          "firmware": {
+            "sha256": "46145077c68eaa9ec2d6314ef259c46bae3e92feb086feebb00230e1dde6d628",
+            "KCFI": true,
+            "DWARF5_zlib": true
+          }
+        }
+      }
+    ],
+    "final_qualified_objects": {
+      "commands": [
+        {
+          "name": "olddefconfig",
+          "argv": [
+            "bwrap",
+            "--unshare-all",
+            "--die-with-parent",
+            "--clearenv",
+            "--setenv",
+            "PATH",
+            "/usr/bin:/bin",
+            "--setenv",
+            "LC_ALL",
+            "C",
+            "--setenv",
+            "PYTHONDONTWRITEBYTECODE",
+            "1",
+            "--setenv",
+            "KBUILD_BUILD_USER",
+            "fx0-validation",
+            "--setenv",
+            "KBUILD_BUILD_HOST",
+            "host",
+            "--ro-bind",
+            "/usr",
+            "/usr",
+            "--symlink",
+            "usr/bin",
+            "/bin",
+            "--symlink",
+            "usr/sbin",
+            "/sbin",
+            "--symlink",
+            "usr/lib",
+            "/lib",
+            "--symlink",
+            "usr/lib64",
+            "/lib64",
+            "--dev",
+            "/dev",
+            "--proc",
+            "/proc",
+            "--tmpfs",
+            "/tmp",
+            "--ro-bind",
+            "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/source-attempt02",
+            "/source",
+            "--bind",
+            "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/arm-current-fixes",
+            "/output",
+            "--chdir",
+            "/output",
+            "make",
+            "-j4",
+            "-C",
+            "/source",
+            "O=/output",
+            "ARCH=arm",
+            "LLVM=1",
+            "CROSS_COMPILE=arm-linux-gnueabi-",
+            "HOSTLDFLAGS=-fuse-ld=lld",
+            "LOCALVERSION=",
+            "W=1",
+            "olddefconfig"
+          ],
+          "returncode": 0
+        },
+        {
+          "name": "object",
+          "argv": [
+            "bwrap",
+            "--unshare-all",
+            "--die-with-parent",
+            "--clearenv",
+            "--setenv",
+            "PATH",
+            "/usr/bin:/bin",
+            "--setenv",
+            "LC_ALL",
+            "C",
+            "--setenv",
+            "PYTHONDONTWRITEBYTECODE",
+            "1",
+            "--setenv",
+            "KBUILD_BUILD_USER",
+            "fx0-validation",
+            "--setenv",
+            "KBUILD_BUILD_HOST",
+            "host",
+            "--ro-bind",
+            "/usr",
+            "/usr",
+            "--symlink",
+            "usr/bin",
+            "/bin",
+            "--symlink",
+            "usr/sbin",
+            "/sbin",
+            "--symlink",
+            "usr/lib",
+            "/lib",
+            "--symlink",
+            "usr/lib64",
+            "/lib64",
+            "--dev",
+            "/dev",
+            "--proc",
+            "/proc",
+            "--tmpfs",
+            "/tmp",
+            "--ro-bind",
+            "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/source-attempt02",
+            "/source",
+            "--bind",
+            "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/arm-current-fixes",
+            "/output",
+            "--chdir",
+            "/output",
+            "make",
+            "-j4",
+            "-C",
+            "/source",
+            "O=/output",
+            "ARCH=arm",
+            "LLVM=1",
+            "CROSS_COMPILE=arm-linux-gnueabi-",
+            "HOSTLDFLAGS=-fuse-ld=lld",
+            "LOCALVERSION=",
+            "W=1",
+            "drivers/nfc/nxp-nci/core.o",
+            "drivers/nfc/nxp-nci/i2c.o",
+            "drivers/nfc/nxp-nci/firmware.o"
+          ],
+          "returncode": 0
+        }
+      ],
+      "compiler": "clang version 21.1.8 (Fedora 21.1.8-6.fc43)",
+      "read_only_source": true,
+      "source_commit": "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea",
+      "signed_or_packaged": false,
+      "phone_commands": 0,
+      "objects": {
+        "core": {
+          "sha256": "a0eaf8f4e8078c42096a86dd4d19820783e104533ee8dd54887e93318512e45e",
+          "ARM_ELF32": true,
+          "KCFI": true,
+          "DWARF5_zlib": true
+        },
+        "i2c": {
+          "sha256": "204d589f8c6d1d69c2e1aa26fa48ee2776ce0855bd8c15c27ce69351809c2b10",
+          "ARM_ELF32": true,
+          "KCFI": true,
+          "DWARF5_zlib": true
+        },
+        "firmware": {
+          "sha256": "8f8e4b8d5a40c5fd3bcfb5c413e0b5a9696a189b89352a5603037d5fdc75b48c",
+          "ARM_ELF32": true,
+          "KCFI": true,
+          "DWARF5_zlib": true
+        }
+      },
+      "config_sha256": "693cbac5b0281252158c0f68a313adeb505469b21216154a24cebea849ad2a1b"
+    },
+    "all_three_prefixes_passed": true,
+    "ARM_objects": 9,
+    "full_kernel_or_module_link": false,
+    "phone_commands": 0
+  },
+  "actual_object_inspection": {
+    "objects": {
+      "core": {
+        "sha256": "a0eaf8f4e8078c42096a86dd4d19820783e104533ee8dd54887e93318512e45e",
+        "ARM_ELF32": true,
+        "actual_callback_type_words": {
+          "nxp_nci_open": "0x38bb7c0c",
+          "nxp_nci_close": "0x38bb7c0c",
+          "nxp_nci_send": "0xaf1f2f41"
+        },
+        "KCFI_flag_retained": true,
+        "DWARF_version": 5,
+        "compressed_debug_info": true
+      },
+      "i2c": {
+        "sha256": "204d589f8c6d1d69c2e1aa26fa48ee2776ce0855bd8c15c27ce69351809c2b10",
+        "ARM_ELF32": true,
+        "actual_callback_type_words": {
+          "nxp_nci_i2c_probe": "0x0c5e2bbf",
+          "nxp_nci_i2c_irq_thread_fn": "0xd2f00be1",
+          "nxp_nci_i2c_remove": "0xa8cfcee2",
+          "nxp_nci_i2c_set_mode": "0xe2683a27",
+          "nxp_nci_i2c_write": "0x505261ea",
+          "nxp_nci_i2c_stop_rx": "0x0ef81b7d"
+        },
+        "KCFI_flag_retained": true,
+        "DWARF_version": 5,
+        "compressed_debug_info": true
+      },
+      "firmware": {
+        "sha256": "8f8e4b8d5a40c5fd3bcfb5c413e0b5a9696a189b89352a5603037d5fdc75b48c",
+        "ARM_ELF32": true,
+        "actual_callback_type_words": {
+          "nxp_nci_fw_work": "0xa607748c"
+        },
+        "KCFI_flag_retained": true,
+        "DWARF_version": 5,
+        "compressed_debug_info": true
+      }
+    },
+    "full_kernel_or_module_link": false,
+    "objects_are_not_loadable_modules": true
+  },
+  "exported_patch_replay": {
+    "base": "b61732f47316d45f27706db7812950145d3327b5",
+    "patches": [
+      {
+        "patch": "0001-nfc-nxp-nci-unregister-without-holding-the-mode-mute.patch",
+        "sha256": "d8f90a8098b4f4b0410e2894ea1dddc37beac19963d967e02b98ebc77c8c4dd5",
+        "tree": "08f73fbed59199bf141a2cbe5e59b823e6dc3177",
+        "expected_commit": "22d32fc708be6b7d045e9fbc5114e3dc5a44a2a3"
+      },
+      {
+        "patch": "0002-nfc-nxp-nci-drain-receive-before-freeing-the-NCI-dev.patch",
+        "sha256": "b6337fc62ae83b6ccdbc633e71ba48de1d2f6b1987d36ab2c0b35d0b2addb8c5",
+        "tree": "d814069a8f8140ac4b2364b59d0248a99ab61e80",
+        "expected_commit": "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea"
+      }
+    ],
+    "all_exported_prefix_trees_match": true,
+    "separate_index": true,
+    "unchanged_promised_objects_not_fetched": true,
+    "write_tree_option": "--missing-ok",
+    "unsigned": true,
+    "Assisted_by_LLM": true
+  },
+  "current_tree_instructions": {
+    "recorded_UTC": "2026-11-11T15:45:15.816040+00:00",
+    "base": "b61732f47316d45f27706db7812950145d3327b5",
+    "AGENTS_files": [],
+    "README_requires_coding_assistant_procedure": true,
+    "whole_process_content_covered": true,
+    "prior_whole_read_receipt": "local/vibrator-upstream-01/instruction-reading-progress.json",
+    "complete_version_diff": "local/nfc-upstream-01/complete-process-version-diff.log",
+    "documents": [
+      {
+        "path": "README",
+        "sha256": "d9e6892ff2c83807c34f4aeb06bff724068803d0e03470bfb81a8f5cbde5f090",
+        "coverage": "Complete current document read directly"
+      },
+      {
+        "path": "COPYING",
+        "sha256": "fb5a425bd3b3cd6071a3a9aff9909a859e7c1158d54d32e07658398cd67eb6a0",
+        "coverage": "Previously read whole document has identical bytes"
+      },
+      {
+        "path": "Documentation/process/coding-assistants.rst",
+        "sha256": "507f4beeeca27be242dda6da7bb18723aeeff06296f01fb54f597aea855523fe",
+        "coverage": "Complete current document read directly"
+      },
+      {
+        "path": "Documentation/process/development-process.rst",
+        "sha256": "f24d59021efe8f62eca826b750c89b5d4907af4068657cbfa690e04cbadc6950",
+        "coverage": "Previously read whole document has identical bytes"
+      },
+      {
+        "path": "Documentation/process/generated-content.rst",
+        "sha256": "828f797e5827530bf23c61f9d893f36aa48c2bff01d2001e0b48ecf21dc6bc2f",
+        "coverage": "Previously read whole document has identical bytes"
+      },
+      {
+        "path": "Documentation/process/threat-model.rst",
+        "sha256": "2ca392f6b448b6ff39a6c7bbeab133f0c005470cd19a026bb4cbe59a7df6b30b",
+        "coverage": "Previously read whole document has identical bytes"
+      },
+      {
+        "path": "Documentation/process/coding-style.rst",
+        "sha256": "332454d2ab9a0462dd9f292c52291cf3b5e1afcd638aa06df15f557c47a126f5",
+        "coverage": "Previously read whole document has identical bytes"
+      },
+      {
+        "path": "Documentation/process/submitting-patches.rst",
+        "sha256": "d8192ff9d09e394e63d724a2201ca1bf5a7d64c8c3ab404294992914272c821a",
+        "coverage": "Previously read whole version plus complete unfiltered version diff, covering all changed text"
+      },
+      {
+        "path": "Documentation/process/license-rules.rst",
+        "sha256": "635a61aa47349007033c64fcdf403d33be35040b62284494bbbd4a9b546ec06d",
+        "coverage": "Previously read whole document has identical bytes"
+      },
+      {
+        "path": "Documentation/process/security-bugs.rst",
+        "sha256": "0918dcfa7979f348c9004bf3ce6e183507367185fe69f4e0c7688521e9346f40",
+        "coverage": "Previously read whole document has identical bytes"
+      },
+      {
+        "path": "Documentation/process/1.Intro.rst",
+        "sha256": "c5629639400e09746b930fe189fc177f83954b5787a8e1b23bd79ecdb50f0a0a",
+        "coverage": "Previously read whole version plus complete unfiltered version diff, covering all changed text"
+      },
+      {
+        "path": "Documentation/process/2.Process.rst",
+        "sha256": "ce1b20d903d7db6aaad404e1476f1d8ec3b975760906f5499978dba2cc3eee57",
+        "coverage": "Previously read whole version plus complete unfiltered version diff, covering all changed text"
+      },
+      {
+        "path": "Documentation/process/3.Early-stage.rst",
+        "sha256": "ed0f6c5944280a5f8a89e266c17a1830dc8b2077e144f15157863f15e6fef58c",
+        "coverage": "Previously read whole version plus complete unfiltered version diff, covering all changed text"
+      },
+      {
+        "path": "Documentation/process/4.Coding.rst",
+        "sha256": "cf1bae31184c5b8fc89495a3ce3d105e0172522514f66d0bc6c3e87e21876585",
+        "coverage": "Previously read whole document has identical bytes"
+      },
+      {
+        "path": "Documentation/process/5.Posting.rst",
+        "sha256": "a2557b981f0d8d54a910abf56edce82bd833e6b5924be2f9b6ee5226f172b115",
+        "coverage": "Previously read whole version plus complete unfiltered version diff, covering all changed text"
+      },
+      {
+        "path": "Documentation/process/6.Followthrough.rst",
+        "sha256": "dd219cb271bfd2b72890350a897ae91408c376e01b6569762965dc5ee2bb60fe",
+        "coverage": "Previously read whole version plus complete unfiltered version diff, covering all changed text"
+      },
+      {
+        "path": "Documentation/process/7.AdvancedTopics.rst",
+        "sha256": "f5b2c6470aaf5b8de93062cb6429330ccf46dd84bb1d514c49c43f4cdd6ffc68",
+        "coverage": "Previously read whole version plus complete unfiltered version diff, covering all changed text"
+      },
+      {
+        "path": "Documentation/process/8.Conclusion.rst",
+        "sha256": "a60430109d7b517d78d92189c30797c5639dcbd4e0bae0629aea62c4fda54b61",
+        "coverage": "Previously read whole document has identical bytes"
+      },
+      {
+        "path": "Documentation/process/changes.rst",
+        "sha256": "f436f0e051c2c3a7728de92efa3ddeb20275817f43cd65eab75bd8b039349bfc",
+        "coverage": "Previously read whole version plus complete unfiltered version diff, covering all changed text"
+      },
+      {
+        "path": "Documentation/process/code-of-conduct.rst",
+        "sha256": "49da8480786d906685172ace9b860d53d78f2783f6da1e5bb6f8889dbe5352ff",
+        "coverage": "Previously read whole document has identical bytes"
+      },
+      {
+        "path": "Documentation/process/maintainer-netdev.rst",
+        "sha256": "c226411ae52c5dc51dd48aa5d3d159d1ebdc70b94223143b2e29d785b9ce3c3d",
+        "coverage": "Complete current document read directly"
+      }
+    ],
+    "Assisted_by_LLM_required": true,
+    "agent_DCO_signoff_forbidden": true,
+    "upstream_sending_forbidden": true,
+    "no_subagents_requested": true
+  },
+  "preparation_stops_retained": [
+    "Owned broad shared clone stopped after inspecting its live upload-pack/pack child tree; selected-tip fetch succeeded",
+    "Clock-model helper parser and unused mock in the missing-wiring control corrected before final qualification",
+    "An initial scratch test pass note was corrected against actual failed terminal output before publication",
+    "Initial directory overlay hid Kconfig; individual C/header overlays preserve build metadata"
+  ],
+  "current_full_kernel_or_module_link": false,
+  "GCC_tested": false,
+  "networking_allyesconfig_or_allmodconfig_full_builds": false,
+  "current_hardware_open_remove_or_RF_PM_tested": false,
+  "NCI_2_notification_timing_tested": false,
+  "real_timeout_or_IRQ_timing_tested": false,
+  "concurrent_firmware_download_tested": false,
+  "private_operations_ABI_changed": true,
+  "loadable_modules_or_package_produced": false,
+  "remaining": [
+    "Human review/DCO certification and issue classification",
+    "Full kernel/module, broader networking configuration and GCC builds",
+    "Complete matching module cohort and ABI/signature validation before any module trial",
+    "Physical open/unregister/receive timing, firmware concurrency, RF, suspend and reliability",
+    "Separate optional-clock binding/driver and Fx0 board submission work",
+    "Human-controlled upstream sending"
+  ],
+  "issue_scope": "Driver cleanup/lifetime corrections; no exploitability or severity claim, classification left for human review",
+  "native_read_only_identity": {
+    "recorded_UTC": "2026-11-11T16:03:30.371266+00:00",
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "kernel": "6.18.59-fx0-dmp",
+    "read_only": true,
+    "phone_mutations": false,
+    "physical_display_touch_status": "pending for this native return",
+    "earlier_owner_answer_scope": "RAM candidate efc27030-bb41-4763-ba02-fa0808fc7fa4"
+  },
+  "phone_mutations": false,
+  "native_installation_launched": false,
+  "current_return_UI_pending": true,
+  "next_phone_action": "Exact current-r50 display/touch answer, then the already-approved prepared r1 native update and persistent-boot qualification",
+  "upstream_messages_sent": 0,
+  "audio_testing_excluded": true,
+  "full_bringup": "active"
+}

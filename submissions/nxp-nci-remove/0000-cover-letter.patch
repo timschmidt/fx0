@@ -1,0 +1,86 @@
+From 2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Wed, 11 Nov 2026 10:54:02 -0500
+Subject: [RFC PATCH net 0/2] nxp-nci removal locking and receive lifetime
+
+TEMPORARY HUMAN REVIEW NOTE -- remove before sending:
+Unsigned review drafts. Review the code, contacts and validation limits,
+then add your own DCO sign-off if you can certify the contribution. Check
+your mail client with Documentation/process/email-clients.rst. No message
+has been sent. The pinned tree prohibits agents from adding sign-offs or
+sending submissions, and requires the included Assisted-by: LLM tags.
+
+Suggested To: David Heidelberg <david@ixit.cz>
+Suggested Cc: oe-linux-nfc@lists.linux.dev, linux-kernel@vger.kernel.org
+The patch-specific get_maintainer.pl results also identify the Fixes-origin
+contributors; review those addresses before sending.
+
+The NFC maintainer's advertised for-linus tip is
+b61732f47316d45f27706db7812950145d3327b5, dated 2026-09-23. The primary
+advertisement was rechecked on 2026-11-11. Its for-next branch still points
+to Linux 7.3-rc3. This series targets the advertised fixes branch, without
+assuming it is the latest mainline. The relevant problems also remain in
+the newer input tree at 8e16f8bbf1bd528975fd6f4081eaf00513c1d83e; its
+intervening NFC changes are allocation-helper conversions.
+
+Removing an open controller calls nci_unregister_device(), which invokes
+the driver's close callback. Holding info_lock across unregister causes
+recursive acquisition of that mutex. Patch 1 moves unregister outside it.
+
+The I2C IRQ must also be drained before NCI state is freed, while remaining
+available for the closing CORE_RESET response. Patch 2 adds an optional
+transport stop_rx callback between unregister and final cleanup/free. It
+tracks successful IRQ registration so the existing probe-error unwind
+does not release an unowned IRQ. No intermediate patch that drains receive
+before unregister is exported.
+
+The series changes only the driver core, I2C transport and private header.
+It preserves upstream ISO15693 support, ENXIO handling, firmware strscpy,
+ID-table changes, and the existing failed-probe cleanup. Optional reference
+clock support, its binding and the Fx0 board description are separate work.
+
+Validation:
+- Six host tests pass nine lifecycle cases and reject six independent
+  ordering, recursive-lock, callback-wiring and IRQ-ownership controls under
+  AddressSanitizer/UndefinedBehaviorSanitizer. Sixteen actual driver/NCI
+  callback bodies and their actual type/table wiring are retained. Only
+  clock-related model state is omitted for this clock-free fixes series.
+- The tests model services, queues, scheduling, the completion wait and an
+  NCI 1.x reset response. They exercise no hardware or live kernel endpoint.
+  Real elapsed timeout, NCI 2.x notification timing, concurrent firmware
+  work and physical IRQ timing are not qualified.
+- Clang 21.1.8 ARM W=1 core/I2C/firmware object checks pass on the base and
+  both prefixes: nine objects, no compiler diagnostics. KCFI and compressed
+  DWARF5 remain enabled, with actual callback type words inspected. Adapting
+  the earlier Fx0 config emits two olddefconfig conversion notices for
+  IPV6 and NETFILTER_NETLINK.
+- Strict checkpatch reports zero findings on both patches, with only DCO
+  sign-off checking disabled. Both exported prefix trees replay exactly.
+
+Full kernel/module links, GCC, networking allyesconfig/allmodconfig builds,
+and hardware open/unregister, RF, suspend and reliability remain untested.
+Earlier Fx0 cold-lifecycle results do not qualify this open-removal path.
+The private operations layout changes, so any eventual module qualification
+must rebuild and validate the complete matching module cohort.
+
+AI assistance: OpenAI Codex assisted analysis, implementation, the split
+from the existing Fx0 integration fixes, original Fixes investigation,
+tests, and draft text. Prompt summary: continue full Fx0 bringup, check the
+actual current NFC receiving tree and newer source, separate removal fixes
+from clock/board features, and state exact test and hardware limits. The
+long-session source and test context was checked against pinned inputs.
+This is driver cleanup/lifetime work; no exploitability or severity claim
+is made. Leave the issue classification and any further report to human
+review. Human certification and additional validation remain before sending.
+
+Timothy Schmidt (2):
+  nfc: nxp-nci: unregister without holding the mode mutex
+  nfc: nxp-nci: drain receive before freeing the NCI device
+
+ drivers/nfc/nxp-nci/core.c    | 13 +++++++++----
+ drivers/nfc/nxp-nci/i2c.c     | 16 +++++++++++++++-
+ drivers/nfc/nxp-nci/nxp-nci.h |  1 +
+ 3 files changed, 25 insertions(+), 5 deletions(-)
+
+
+base-commit: b61732f47316d45f27706db7812950145d3327b5
