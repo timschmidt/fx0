@@ -260,3 +260,56 @@ partition no-op, incomplete initial reads and corrupt readback. No test writes
 a physical block device. Native installation, hooks and persistent reboot
 qualification remain ahead, after the pending exact-return display/touch check.
 [Preparation evidence](../../evidence/2026-11-11-native-kernel-update-preparation.json)
+
+
+## Native update controller qualification
+
+The [controller](install_native.py) now pins the exact signed candidate,
+rollback archive, 52 native tool/configuration/key inputs, original package
+state and bootloader prefix. `--check` completes on the real r50 phone without
+installing a package or writing a partition. The installation path requires the
+owner's display/touch confirmation for that exact boot and a dedicated systemd
+service. A separate owner-required native preflight reaches and rejects the
+pending UI assertion; no installation status or persistent configuration is
+created. Installed r50/Sxmo r7 remains healthy with original hashes and taint zero.
+
+The controller changes only the kernel's signed-control world hold, adds a
+standard signature-enforcement drop-in and invokes normal offline APK hooks.
+It checks all 545 candidate payload hashes, all 243 ordinary native initramfs
+payloads, the generated Android image, raw image readback, retained artifacts
+and unchanged other 774 package identities. A terminal failure restores the
+signed r50 package, complete captured tree and APK state, and verified boot tail
+after the unchanged 512 KiB lk2nd prefix. Unexpected unrelated package changes
+or live hooks prevent restoration writes. The launcher never repeats a service
+start after an uncertain acknowledgement and does not automatically reboot.
+
+The package config permits unsigned modules by default; the successful RAM
+trial forced signatures through `module.sig_enforce=1`. The planned persistent
+boot retains that tested setting through
+`/etc/kernel-cmdline.d/90-fx0-module-signatures.conf`. The actual native generator
+adds exactly that token in a private mount namespace, preserving all other
+arguments and leaving the live generator output/configuration unchanged.
+The file's original absence and parent directory metadata are recorded for
+rollback. The ordinary boot image retains root discovery and contains no RAM
+trial token, helper, module overlay or return timer.
+
+Four host fixtures execute the actual controller with three real APK
+transactions. The success case verifies the candidate. A forced failure after
+complete candidate verification restores all 2,595 captured paths and original
+boot bytes. Pending owner UI and a changed prefix both refuse before mutation.
+Physical devices and services are modeled, native hooks are disabled, preview
+outputs model generated boot files, and SELinux labels are not applied on the
+host. An initial fixture stop reveals the host/native SELinux label difference;
+the corrected test binding retains actual mode/UID/GID checks without changing
+the production controller.
+
+Six separate parser tests reject header/address/digest/padding corruption,
+hidden command-line payload, truncated images, extra RAM-wrapper archives and
+invalid/duplicate archive paths. A read-only service on the phone proves the
+actual cgroup barrier: after the direct child exits, a descendant in a new
+process group still blocks completion until it exits naturally. The source
+waits for owned hooks on errors and signals. Its service uses process-only stop
+signals and no finite stop timeout; normal update hooks are still unexercised.
+This is not power-loss or hard-lockup qualification. Native SELinux restoration
+and persistent reboot acceptance remain open. No audio test runs.
+[Controller evidence](../../evidence/2026-11-11-native-kernel-controller.json)

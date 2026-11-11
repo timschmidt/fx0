@@ -5360,3 +5360,28 @@ mismatch and write only the kernel tail. Eleven host tests pass, including short
 writes and corrupt readback. Active hook processes also prevent rollback writes. No physical partition
 write or native installation occurs. The newest r50 display/touch answer remains pending; older answers are
 not reused. [Evidence](../evidence/2026-11-11-native-kernel-update-preparation.json)
+
+
+### Native stable-kernel installation controller
+
+Implement and stage the hash-pinned native controller. The real phone passes
+its complete read-only preflight; an owner-required check rejects specifically
+at the still-pending exact-boot UI assertion. Original r50/Sxmo r7 boot, package
+and world hashes remain intact, with healthy services and zero taint.
+
+Four isolated fixtures run the actual controller: candidate verification,
+forced rollback after full candidate verification, pending owner and changed
+prefix. Three APK transactions run with native hooks disabled; the forced
+rollback restores all 2,595 captured paths and raw boot bytes in regular file
+fixtures. The first fixture stops on host/native SELinux label differences;
+correcting only that test binding completes all cases. Six parser tests add
+independent corruption and extra-archive rejection.
+
+A real read-only systemd probe verifies the dedicated cgroup and detects a
+new-session descendant after its parent's process group disappears. It waits
+for natural termination and the unit is collected. Normal kernel update hooks
+are not invoked. The planned signature-enforcement drop-in adds exactly the
+RAM-qualified parameter through the actual generator, without changing live
+configuration. Native installation and persistent reboot qualification await
+the newest return's display/touch confirmation; no older answer is reused.
+[Evidence](../evidence/2026-11-11-native-kernel-controller.json)
