@@ -5,8 +5,9 @@ v26.06/Alpine v3.24 indexes have independently verified RSA signatures against
 the native public trust keys. An altered index stream is rejected. The
 [plan](plan.json) selects 30 upgrades, preserving all ten exact signed-control
 holds and all eight Sxmo r7 packages. The [host solver](solver-context.json) is
-apk3.0.9; the phone runs apk3.0.8. Its exact ARM solver is tested under QEMU
-below; execution in the installed OS and native hooks remain open.
+apk3.0.9; the phone runs apk3.0.8. Its exact ARM solver now passes under QEMU
+and on the phone kernel in a private chroot. Live-OS transaction, service
+continuity and rollback acceptance remain open.
 
 All [30 candidate APKs](verified-packages.json), totaling 15,903,143 bytes,
 match authenticated index control checksums. Independent RSA, signed payload
@@ -82,11 +83,48 @@ ARM3.0.8 command and runtime. The [fresh phone postflight](native-apk-postflight
 retains r50 boot747e87fe, original boot/database/world/repositories, healthy
 Sway and gestures, systemd running and taint0. This phase writes no phone files.
 
-These are exact ARM userspace binaries executing through emulation on the host
-kernel. Native package hooks, real trigger dispatch, service continuity and
-live transaction recovery remain unqualified. The native-directory label test
-above and this solver test establish different parts of the recovery plan;
-neither supplies the remaining installed-OS transaction evidence.
+This emulation cohort executes exact ARM userspace binaries on the host
+kernel. It does not execute the phone kernel or native hooks. The following
+cohort supplies private phone-kernel hook evidence; live-OS service and
+transaction acceptance still require separate qualification.
+
+## Normal hooks on the phone kernel in a private chroot
+
+The [native boundary probes](native-hook-isolation.json) verify read-only OS,
+kernel-tunable and cgroup mounts, an owned writable backup subtree, no visible
+boot block device, loopback-only networking and NoNewPrivileges. A second
+probe exercises ownership, setuid mode and SELinux/user attributes, then actual
+native chroot, shell, APK3.0.8 and strace execution. The
+[BusyBox interpreter proof](native-hook-runtime.json) matches both binaries and
+the installed trigger body to exact signed packages; their dependencies are
+covered by the verified musl runtime.
+
+The [native transaction](native-hook-rehearsal.json) runs all 30 upgrades on
+Linux6.18.59-fx0-dmp without QEMU or --no-scripts, inside the private chroot.
+The [execve proof](native-hook-execution.json) verifies the OpenSSH and libheif
+post-upgrade arguments, the BusyBox trigger directories and both BusyBox
+installers. All eight observed processes exit0. The actual version comparisons
+are greater-than, and no service-restart command executes. All children have been
+reaped and the actual unit cgroup contains only the controller before recovery.
+
+The update preserves the world, ten holds and eight Sxmo packages, and reaches
+ARM APK3.0.9. Recovery restores the original 775 package identities, ARM
+APK3.0.8 and all 5,784 captured paths, including 939 SELinux labels and 254
+hard-link aliases. The private root is removed. The unit uses 400 MiB maximum
+memory, no swap, 50% of one CPU and a 25-minute deadline; its successful
+termination is verified in the current-boot systemd journal, independently of
+unloaded-unit default exit fields. The [outside-unit postflight](native-hook-postflight.json)
+retains the original live boot/database/world/repositories, healthy Sway and
+gestures, systemd running and taint0. Only private test inputs and logs remain.
+
+The trace identifies the APK executor directory at /usr/lib/apk/exec. Its live
+state is an empty root-owned 0755 directory. The [next backup requirements](native-hook-next-backup.json)
+add its metadata and complete membership to the fresh post-r1 snapshot. An
+optional whole-private-tree membership sample was correctly refused after
+cleanup; no full generated-state inventory is claimed. Normal-hook failure
+recovery, power loss, mid-write crashes, live service continuity and live-OS
+transaction rollback remain unqualified. This successful isolated transaction
+does not replace those acceptance steps.
 
 ## Native activation remains open
 
@@ -95,9 +133,9 @@ Their historical version branches are false for the installed versions in
 [host comparisons](hook-condition-review.json). A conservative review of all
 15 installed trigger rows matches only BusyBox for this selected file set;
 all 319 destinations from the two installed BusyBox binaries are covered.
-Native trigger dispatch, hook execution, service continuity and recovery of an
-actual live transaction remain unqualified. Isolated restoration success does
-not qualify that controller or authorize skipping its ownership checks.
+Private native hook and trigger execution now pass for this exact version
+set. Live service continuity, failure recovery and the live transaction
+controller remain unqualified; its ownership checks remain required.
 
 The [postflight](backup-postflight.json) confirms the same r50 boot747e87fe,
 original boot/database/world/repositories, systemd running, taint0, Sway and

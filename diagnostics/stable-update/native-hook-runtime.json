@@ -1,0 +1,35 @@
+{
+  "recorded_UTC": "2026-11-11T20:47:10.191575+00:00",
+  "binaries": [
+    {
+      "package": "busybox",
+      "version": "1.37.0-r31",
+      "package_sha256": "032c499bfa5ea22944fc8ffce2aa5d0603f1f8810f91b73c453d053692fe2f32",
+      "native_path": "/usr/bin/busybox",
+      "native_ELF_sha256": "df4dd71f89214032872e60328f3af03faf35e344f6fa5493656d8775d35e930c",
+      "exact_signed_payload_match": true,
+      "needed": [
+        "libc.musl-armv7.so.1"
+      ],
+      "interpreter": "/lib/ld-musl-armhf.so.1",
+      "all_dependencies_in_verified_runtime": true
+    },
+    {
+      "package": "busybox-extras",
+      "version": "1.37.0-r31",
+      "package_sha256": "6ca5c2ba1e828c402fa5f0154773e368a8e34b452c979e74d12547a848a0ab71",
+      "native_path": "/usr/bin/busybox-extras",
+      "native_ELF_sha256": "44b97c8f93afc998068bae3c800bbcb27c3c79561c325d59dfdcd9389f3be512",
+      "exact_signed_payload_match": true,
+      "needed": [
+        "libc.musl-armv7.so.1"
+      ],
+      "interpreter": "/lib/ld-musl-armhf.so.1",
+      "all_dependencies_in_verified_runtime": true
+    }
+  ],
+  "original_installed_trigger_matches_signed_package": true,
+  "trigger_sha256": "c7840b111dd82669de2074ea3c7e345c063928db2bbff650a81289777b3ff98f",
+  "native_file_writes": false,
+  "private_keys_read": false
+}
