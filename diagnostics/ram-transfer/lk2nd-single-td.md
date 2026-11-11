@@ -49,7 +49,43 @@ The first timeout leaves delivery of its final request unknown. Terminal
 status and the existing recovery procedure govern return to native before a
 separate trial. A Linux BOOT is unnecessary for the transfer comparison.
 
-Both images remain host artifacts. The current display and touch baseline,
-physical transfer comparison and the cause of the timeout remain pending.
-[Manifest](../../manifests/lk2nd-fastboot-single-td.json) ·
-[Evidence](../../evidence/2026-11-10-lk2nd-fastboot-single-td.json)
+## Run the comparison
+
+The host runner verifies all three pinned images before USB work. Use the
+current r50 display and touch check as the native baseline. For each arm,
+power the phone fully off, unplug USB, then hold Volume Up while reconnecting
+the same cable to the same host port. The runner queries the selected device
+for stock product `MADAI` and protocol `0.5` before issuing a temporary boot.
+It verifies a fresh USB device generation and the temporary
+`fx0-usb-td-pair` version. Both temporary builds report that version, so
+the launch receipt identifies which image ran.
+
+```sh
+runner=diagnostics/ram-transfer/run-lk2nd-td-trial.py
+base=local/lk2nd-td-physical
+python3 "$runner" --check-inputs
+python3 "$runner" --arm control --usb-port 1-14 --output "$base/control"
+# Verify the native return, then enter stock Fastboot again.
+python3 "$runner" --arm single_td --usb-port 1-14 --output "$base/single-td"
+python3 "$runner" --compare "$base/control" "$base/single-td"
+```
+
+Each arm runs one transfer of the original 6,809,600-byte XZ3 r59 image
+with 16 KiB host requests and 5 ms pacing. A completed transfer requires
+exact readback. The runner preserves the process receipts, separate download
+and readback counts, and any unconfirmed request. It waits for the transfer
+process to exit before touching USB again. A terminal timeout gets one
+identified USB reset, followed by verification of the temporary loader and a
+normal reboot. A successful readback goes directly to the normal reboot.
+The receipt verifies native USB re-enumeration. Check r50 boot files and
+services separately after each arm.
+
+The offline comparison checks both launch receipts, the common payload,
+port, negotiated speed, host settings, nonoverlapping session times and
+readback hashes. It reports each outcome independently. It cannot establish
+what happened on the wire during an unconfirmed request.
+
+The controller and comparison pass 20 host tests, alongside 18 existing
+transfer tests. Both physical sessions remain pending. [Image manifest](../../manifests/lk2nd-fastboot-single-td.json) ·
+[Build evidence](../../evidence/2026-11-10-lk2nd-fastboot-single-td.json) ·
+[Trial preparation](../../evidence/2026-11-10-lk2nd-fastboot-td-trial-preparation.json)

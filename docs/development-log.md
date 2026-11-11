@@ -5147,3 +5147,7 @@ The 6,010,880-byte control and managed images share one moduleless ARM kernel an
 ### r59 XZ4 transfer on the installed bootloader
 
 After fresh r50 display and touch confirmation, the XZ4 data transfer completed 41 of the 16 KiB requests before timing out at 656 KiB. It passed the original 512 KiB failure offset. Terminal recovery returned to installed r50 and UPower r5. A resumed read-only postflight verified the original boot hash, installed files, services, idle NFC and 1.15 V APC target. The next transport comparison uses the prepared temporary lk2nd pair with the same r59 payload. [Physical evidence](../evidence/2026-11-10-nfc-r59-xz4-transfer-timeout.json)
+
+### Temporary lk2nd transport trial controller
+
+The stock Fastboot controller verifies MADAI 0.5, launches the pinned temporary lk2nd once, and checks a fresh USB generation before transferring the same r59 XZ3 payload in either arm. Recovery requires a terminal child and preserves separate download and readback counts. The offline comparator verifies matched receipts, port, speed and exact readback hashes. Twenty new tests and 18 existing transfer tests pass. The current r50 boot reports the original 500 mA programmed limit. The physical pair awaits stock Fastboot entry. [Trial procedure](../diagnostics/ram-transfer/lk2nd-single-td.md)

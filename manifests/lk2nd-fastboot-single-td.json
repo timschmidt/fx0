@@ -34,5 +34,28 @@
   },
   "framing_cases_passed": 16,
   "physical_boot_or_transfer": false,
-  "USB_timeout_root_cause_identified": false
+  "USB_timeout_root_cause_identified": false,
+  "trial_controller": {
+    "path": "diagnostics/ram-transfer/run-lk2nd-td-trial.py",
+    "sha256": "a66655e35bfceab8b16ed3382bd52f0a1538f5e427627912c55326050f1024b5",
+    "test_path": "tests/test_lk2nd_td_trial.py",
+    "tests_passed": 20,
+    "existing_transfer_tests_passed": 18,
+    "stock_product": "MADAI",
+    "stock_protocol": "0.5",
+    "temporary_lk2nd_version": "fx0-usb-td-pair",
+    "host_request_bytes": 16384,
+    "host_pace_ms": 5,
+    "payload": {
+      "image_path": "local/nfc-open-teardown-startup/fx0-nfc-r59-moduleless-xz3-ram.img",
+      "image_sha256": "0fff381eeb94f8ce8673404a3fb5d896e4767c0d9fb2eb3a942b00cb70980dce",
+      "image_bytes": 6809600
+    },
+    "stock_launch_and_fresh_USB_generation": true,
+    "exact_readback_required_for_verified_outcome": true,
+    "timeout_recovery_requires_terminal_child": true,
+    "Linux_BOOT_sent": false,
+    "physical_stock_entry_or_pair_run": false,
+    "evidence": "evidence/2026-11-10-lk2nd-fastboot-td-trial-preparation.json"
+  }
 }
