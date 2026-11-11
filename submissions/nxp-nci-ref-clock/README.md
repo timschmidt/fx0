@@ -43,11 +43,35 @@ that build proof; its schema is checked separately. The
 [ELF inspection](object-inspection.json) verifies 18 actual callback type words,
 matching across both cohorts, and actual compressed DWARF5 sections.
 
+## Full normal kernel and module qualification
+
+[Complete base and clock builds](full-build-comparison.json) now pass normal ARM
+`zImage modules` plus full module installation staging in bounded RAM. Each
+verifies all 457 signed modules, complete dependencies, actual embedded kernel
+certificate, nonpermissive KCFI and compressed DWARF5. The base checks 24,811
+imported CRCs; the clock tip checks 24,817. The six extra I2C imports are existing
+clock/error APIs. Exported CRCs remain identical, unlike the separate removal
+series whose transport operations layout changes.
+
+Both full builds contain the same 233 warning lines, with none added or removed.
+Actual wrong-build certificate pairs reject; correct pairs pass. See the
+[base](full-build-base.json), [clock](full-build-clock.json),
+[signatures](full-module-signatures.json), [ABI](full-module-ABI.json) and
+[dependencies](full-module-dependencies.json) receipts. These remain standalone
+host builds, without distro packaging or a receiving-tree Madai boot.
+
+[Signed-payload comparison](module-payload-observation.json) finds 454 unchanged
+module payloads; the two NFC modules and MSM differ. A
+[generator probe](msm-generator-observation.json) reproduces hash-seed-dependent
+MSM header ordering with identical C tokens/macros. The original MSM payloads
+were not exported, so exact section attribution remains unproven. Byte
+reproducibility is not claimed; matching-cohort signature/ABI qualification passes.
+
 ## Remaining qualification
 
-These objects are not loadable modules. Full clock-series kernel/module links,
-broader configurations, GCC, physical clock/open/firmware/RF/PM and reliability
-remain open. Earlier 6.18 cold-start results do not qualify this receiving-tree
+The earlier object artifacts are not loadable modules; the later full builds
+qualify the normal matching module cohorts. Broader configurations, GCC, physical
+clock/open/firmware/RF/PM and reliability remain open. Earlier 6.18 cold-start results do not qualify this receiving-tree
 feature. Separate removal-series `allmodconfig` attempts under GCC and Clang
 failed in unchanged upstream code; their receipts do not qualify this branch.
 

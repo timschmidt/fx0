@@ -5604,3 +5604,33 @@ with small receipts on the workspace. The resulting schema run passes. Keep
 Disk B read-only. No phone mutation, upstream email/PR or audio test occurs;
 the approved native update still awaits the separate current-return UI answer.
 [Evidence](../evidence/2026-11-11-nfc-clock-drafts.json)
+
+
+### Clock full cohorts and current stable userspace artifacts
+
+Complete full normal ARM kernel/module builds on NFC for-next base `fd73f4a66598` and clock
+`8616767b2b9e` in bounded RAM, verifying each complete selected source inventory.
+All457 modules verify against each actual embedded certificate and dependency
+graph; imported CRC checks total 24,811 on base and24,817 on clock. The six new
+I2C imports use existing clock/error exports, so exported CRCs remain identical.
+Both builds have the same 233 warnings, with none added or removed. Real matching
+certificate pairs pass; both wrong-build pairs reject. No phone boot is implied.
+
+Compare payload hashes separately from signatures: 454 payloads match, while the
+two NFC modules and MSM differ. Source inspection and two seeded executions prove
+MSM header-order variation in C++-guarded generator output with identical C tokens.
+The original MSM payloads were not retained, so exact section attribution remains
+unproven and byte reproducibility is not claimed. Preserve that limitation.
+
+Refresh the host-only stable projection from the current r50/Sxmo r7 database.
+Four authenticated indexes still select30 upgrades, retaining ten exact holds
+and all eight Sxmo packages. All30 candidate APKs match authenticated control identities,
+RSA signatures and compressed payload hashes. Valid-gzip altered control and
+valid-tar altered payload tests reject. Stage21 original APKs from native/host
+caches and supported URLs, verifying exact installed identities and corruption
+controls. Nine originals remain absent; full targeted backup/rollback and native
+hooks remain unqualified. Inventory 2,678 old and 2,688 new files plus actual hooks.
+Fresh native readback finds the original database/world/repositories, r50 boot,
+systemd running and taint0. No native updates, reboot, upstream email/PR or audio
+test occurs. The approved kernel update still awaits current-return UI data.
+[Evidence](../evidence/2026-11-11-clock-full-and-stable-update.json)

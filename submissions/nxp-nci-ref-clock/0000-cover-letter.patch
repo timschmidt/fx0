@@ -28,9 +28,18 @@ Validation:
   its schema is checked separately. Both exported prefix trees replay exactly.
 - Both patches pass strict checkpatch, with only sign-off checking disabled.
 
-Full kernel/module links, GCC, broader configs and physical open/clock/firmware,
-RF, suspend and reliability remain unqualified. These objects are not modules
-or a qualified phone image. No upstream message or PR has been sent.
+Full normal ARM kernel/module builds now pass on base and clock tip with all
+457 signed modules, full dependencies and 24,811/24,817 imported CRC checks.
+Both have the same 233 warning lines; exported CRCs remain identical. Actual
+wrong-build certificate pairs reject. Complete receipts accompany the drafts.
+The module payload comparison also observes an MSM difference with unchanged
+source/config; independent header-generator ordering varies by Python hash seed
+while C tokens match. Original MSM binaries were not retained for exact section
+attribution, so no byte-reproducibility claim is made.
+
+GCC, broader configs and physical open/clock/firmware, RF, suspend and reliability
+remain unqualified. Earlier object artifacts are not modules; these host builds
+are not a distro package or qualified phone image. No upstream message or PR has been sent.
 
 AI assistance: OpenAI Codex assisted adaptation, analysis, implementation,
 testing and documentation. The unsigned drafts retain Assisted-by: LLM.

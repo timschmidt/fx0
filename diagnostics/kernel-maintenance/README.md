@@ -313,3 +313,17 @@ signals and no finite stop timeout; normal update hooks are still unexercised.
 This is not power-loss or hard-lockup qualification. Native SELinux restoration
 and persistent reboot acceptance remain open. No audio test runs.
 [Controller evidence](../../evidence/2026-11-11-native-kernel-controller.json)
+
+
+## Current r7 stable userspace preparation
+
+The later [stable-update plan](../stable-update/README.md) captures the current
+r50/Sxmo r7 database and independently authenticates four freshly fetched stable
+indexes. The host solver still selects 30 upgrades and preserves ten exact holds
+plus all eight Sxmo r7 packages. All30 candidate archives and 21 original rollback
+archives pass index/current-installed identity, RSA, datahash and APK checks.
+Nine originals, a complete targeted backup and tested rollback remain missing.
+This supersedes the old r6-input projection for stable preparation, without
+installing anything or qualifying edge/native hooks. The phone remains healthy
+on the exact original r50 boot. Standing phone-update approval already exists;
+the exact-current-return physical UI answer still gates the prepared kernel update.

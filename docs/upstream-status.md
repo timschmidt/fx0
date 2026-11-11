@@ -151,3 +151,14 @@ Both stop in byte-identical upstream code on base and candidate; complete
 warning comparison and broad qualification remain open. No warning suppression
 or configuration override was added. `allyesconfig` is still untested.
 [Evidence](../evidence/2026-11-11-nfc-clock-drafts.json)
+
+
+The later [clock full-build comparison](../submissions/nxp-nci-ref-clock/full-build-comparison.json)
+passes both normal ARM kernels and all 457 modules, with identical 233 warnings,
+no changed export CRCs and actual wrong-certificate rejection. Standalone host
+qualification does not establish a Madai boot, broader configs or hardware.
+An extra MSM payload difference remains without exact original section attribution;
+the generator independently varies header order with matching C tokens. A
+[fresh stable update preparation](../diagnostics/stable-update/README.md) verifies
+all 30 candidate APKs and 21 originals; rollback and native activation remain open.
+[Evidence](../evidence/2026-11-11-clock-full-and-stable-update.json)
