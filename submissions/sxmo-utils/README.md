@@ -1,6 +1,6 @@
 # sxmo-utils draft submission
 
-Two patches for [sxmo-utils](https://git.sr.ht/~mil/sxmo-utils), based on
+Three patches for [sxmo-utils](https://git.sr.ht/~mil/sxmo-utils), based on
 `master` at `303c755e88d2a25c01bdbc5b46aba1939318f839` (fetched October 31,
 2026). Sxmo takes patches by email to `~mil/sxmo-devel@lists.sr.ht`. **Not
 sent:** sending needs the owner's approval and Signed-off-by.
@@ -24,6 +24,17 @@ the board's persistent PM8226 input path and strength 39168. The native Sxmo
 environment loader and installed utility pass as the graphical user. The
 uncorrected r50 driver programs a 2.1 V target at that strength, and a
 separate kernel candidate restores the intended range. The two profile
-exports are installed locally. Existing long-lived session processes need
-a new session to inherit them. System suspend and tactile qualification
-remain open. [Measurements and scope](../../diagnostics/vibrator/README.md)
+exports are installed locally and the next native Sway session inherits
+both. System suspend and tactile qualification remain open. [Measurements and scope](../../diagnostics/vibrator/README.md)
+
+
+The [notification completion draft](0003-notifs-dispatch-after-write-completion.patch)
+removes attribute-triggered dispatch from the pinned master source. A real-inotify
+fixture reproduces partial-file deletion and checks seven complete deliveries
+without empty or early dispatch. All three patches apply in order with zero
+fuzz. The installed 1.18.1 script also needs close-write monitoring and removal
+of its premature touch; that release-specific correction and an opt-in Fx0 user
+haptics hook are maintained in [the diagnostic](../../diagnostics/sxmo-notifications/README.md).
+The real phone passes normal, muted and re-enabled notifications, including
+Dunst replies and PMIC timing. The user hook is outside this upstream patch.
+The drafts remain unsent.

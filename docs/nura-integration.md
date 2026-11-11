@@ -92,3 +92,8 @@ the generated profile still at `pmf=0`. See
 ## Fx0 Sxmo haptics profile
 
 The existing `/usr/local/bin/sxmo_deviceprofile_lg,madai.sh` now exports the persistent PM8226 vibrator event path and strength 39168. The original profile is backed up on the phone. A graphical-user command through Sxmo's normal environment loader activates the vibrator and returns it off. The file remains a local device-profile override covered by the expanded upstream draft. The next native boot after the vibrator transfer timeout verifies that Sway inherits the device path and strength. The original boot, module and package hashes remain intact. The corrected driver RAM image did not reach BOOT. [Recovery evidence](../evidence/2026-11-10-vibrator-ram-transfer-timeout.json) [Procedure and evidence](../diagnostics/vibrator/README.md)
+
+
+## Fx0 notification haptics and write completion
+
+The installed `/usr/bin/sxmo_notifs.sh` has a backed-up local correction to handle close-write and atomic move events instead of attributes. The original is retained at `/var/tmp/fx0-notifications-01/sxmo_notifs.before.sh`. The login user's `sxmo/hooks/lg,madai/sxmo_hook_notification.sh` requests one 300 ms pulse and respects `.novibrate`. Only `superctl`'s notification service restarts; the existing Sway session stays active. Normal/muted/re-enabled real notifications pass, including exact Dunst replies, PMIC timing and cleanup. The APK database is unchanged: this file correction and user hook still need reproducible package/configuration integration for the final installation. [Repair and rollback](../diagnostics/sxmo-notifications/README.md)

@@ -95,3 +95,13 @@ DNS fallback lets NTP synchronize and startup finish. The fallback is removed,
 restoring the prior DNS and routes without modifying a saved profile or
 restarting a service. A fresh visual check remains pending; no new driver
 acceptance is inferred from recovery. [Evidence](../../evidence/2026-11-10-vibrator-ram-transfer-timeout.json)
+
+
+## Notification integration
+
+The native notification monitor now waits for completed writes or atomic
+moves. A board-specific user hook requests one 300 ms pulse and respects
+Sxmo's existing `.novibrate` flag. Real normal/muted/re-enabled notifications
+reach Dunst once each; the enabled cases program code 21 and return off,
+and the muted case has no enabled samples. [Repair, rollback and evidence](../sxmo-notifications/README.md)
+Tactile quality and system suspend remain open.
