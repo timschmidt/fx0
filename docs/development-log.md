@@ -5336,3 +5336,27 @@ saved DNS. A wrong PHY name in a read-only health verifier is corrected to
 `fd922a00.phy`. Persistent installation, update hooks, later CPU/CPR/NFC
 integration and wider acceptance remain open.
 [Evidence](../evidence/2026-11-11-native-kernel-6.18.63-ram.json)
+
+
+### Stable-kernel update backup and rollback preparation
+
+On the unchanged healthy r50/Sxmo r7 return, retain the trusted r50 APK and
+capture a fresh 2,595-path boot/modules/kernel/APK/world snapshot plus the full
+32 MiB boot partition. Phone and encrypted host copies match; five SELinux
+directory labels are captured separately. Native backup files are synced.
+
+A network-disabled host container upgrades to 6.18.63-r1 and downgrades to r50
+with hooks disabled, verifies all 545 candidate payloads and restores all
+original snapshot paths and package identities. An obsolete APK option stops
+the first attempt before payload writes; the corrected fresh attempt passes.
+The real native solver also selects only the kernel upgrade in a private mount
+namespace, leaving live database/world/raw boot unchanged. Its guard is corrected
+to honor boot-deploy's default `boot` partition for an empty setting.
+
+Independent raw-image inspection finds `/boot/boot.img` byte-identical at the
+512 KiB offset preserved by installed boot-deploy; the first conservative bound
+incorrectly assumed 1 MiB. New rollback guards refuse prefix/size/checksum/offset
+mismatch and write only the kernel tail. Eleven host tests pass, including short
+writes and corrupt readback. Active hook processes also prevent rollback writes. No physical partition
+write or native installation occurs. The newest r50 display/touch answer remains pending; older answers are
+not reused. [Evidence](../evidence/2026-11-11-native-kernel-update-preparation.json)

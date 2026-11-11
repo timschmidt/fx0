@@ -221,3 +221,42 @@ The [native RAM evidence](../../evidence/2026-11-11-native-kernel-6.18.63-ram.js
 records the trial and return separately. Normal kernel installation/update
 hooks and integration of the later CPU/CPR and NFC work remain open. Audio is
 excluded.
+
+
+## Native update backup and rollback preparation
+
+The qualified `6.18.63-r1` candidate remains uninstalled. A fresh r50/Sxmo r7
+snapshot captures 2,595 paths covering `/boot`, all installed module trees,
+kernel metadata, APK database/scripts/triggers and world. The 147,347,436-byte
+archive and complete 32 MiB boot partition match on the phone and encrypted
+host filesystem. Modes, ownership and file contents verify independently;
+five SELinux directory labels are recorded separately for native restoration.
+The matching signed r50 rollback APK is retained on both systems. Public APK
+keys match the current native set. Backup files and their directory are synced.
+
+An isolated host rehearsal performs a real APK upgrade and downgrade with
+native hooks disabled. All 545 candidate payload files match, the other 774
+package versions/control identities stay unchanged, and restoration verifies
+all 2,595 original paths and all 775 original package identities. It does not
+run ARM helpers, exercise native update hooks or set SELinux labels on the
+host. The first attempt stops before installation because APK 3.0.9 rejects an
+obsolete downgrade option; the fresh corrected attempt uses the explicit local
+APK and exact signed-control world constraint.
+
+The native solver independently selects exactly one upgrade in a private mount
+namespace with a proposed world. Original live database, world and raw boot
+hashes remain unchanged. Its initial post-solver guard assumes an explicitly
+set boot partition; the real boot-deploy code defaults an empty setting to
+`boot`, and the corrected read-only check finishes without repeating the solver.
+
+The existing `/boot/boot.img` matches the raw partition at byte 524,288.
+The installed boot-deploy function preserves that lk2nd prefix when updating
+at this offset. A first read-only layout bound incorrectly assumed at least
+1 MiB; inspection corrects the bound without a device write. The planned
+rollback restores the verified kernel-and-tail bytes after the unchanged
+prefix. Eleven transaction/boot-tail tests cover update and rollback failures,
+short writes, missing progress, checksum/size/offset/prefix rejection, unchanged
+partition no-op, incomplete initial reads and corrupt readback. No test writes
+a physical block device. Native installation, hooks and persistent reboot
+qualification remain ahead, after the pending exact-return display/touch check.
+[Preparation evidence](../../evidence/2026-11-11-native-kernel-update-preparation.json)
