@@ -1,0 +1,831 @@
+{
+  "recorded_UTC": "2026-11-12T00:01:58.401676+00:00",
+  "subject": "Actual ARM APK hook-execution failure and captured-state recovery, expanded commit-state guard and time64 helper correction",
+  "backup_capture": {
+    "recorded_UTC": "2026-11-11T22:53:40.511574+00:00",
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "kernel": "6.18.59-fx0-dmp",
+    "manifest_sha256": "6f0bee055d3df428816c05639adbed879d22851a0234772e1145d2866a2e58bc",
+    "manifest_bytes": 3162661,
+    "combined_paths": 6351,
+    "prior_paths_reverified": 5785,
+    "added_paths": 566,
+    "new_file_payload_bytes": 337130,
+    "SELinux_label_paths": 1479,
+    "directory_memberships": 40,
+    "actual_lock_types_verified_before_after": [
+      "FLOCK",
+      "POSIX"
+    ],
+    "lock_file_hashed_through_held_descriptor": true,
+    "phone_manifest": "/var/lib/fx0-rollback/stable-executor-recovery-03/manifest.private.json",
+    "phone_copy_verified": true,
+    "existing_large_payload_archives_reused": true,
+    "native_package_or_boot_changes": false,
+    "host_and_phone_manifest_copies_verified": true,
+    "all_prior_rows_preserved": true,
+    "private_configuration_payloads_and_metadata_kept_private": true,
+    "restoration_v2_not_yet_qualified": true,
+    "live_OS_transaction_qualified": false
+  },
+  "backup_v2_subsequently_qualified_by_native_recovery": true,
+  "rejected_initial_lock_capture": {
+    "recorded_UTC": "2026-11-11T21:42:12.870474+00:00",
+    "accepted": false,
+    "reason": "Hashing the lock path through another open/close can release traditional POSIX locks; dual-lock continuity was not proved. Full data checks and flock do not replace that required proof.",
+    "native_manifest_retained": "/var/lib/fx0-rollback/stable-executor-recovery-01/manifest.private.json",
+    "source_and_receipts_preserved": true,
+    "native_package_or_boot_changes": false
+  },
+  "lock_regression": {
+    "recorded_UTC": "2026-11-11T21:42:13.006166+00:00",
+    "Linux_other_descriptor_close_releases_POSIX_lock_reproduced": true,
+    "flock_survives_other_descriptor_close": true,
+    "pread_through_held_descriptor_preserves_both_locks": true,
+    "actual_proc_locks_observed": true
+  },
+  "package_and_directory_coverage": {
+    "candidate_member_types": {
+      "directory": 211,
+      "symlink": 10,
+      "file": 2424,
+      "hardlink": 254
+    },
+    "uncovered_nondirectory_payload_members": [],
+    "scope": "All candidate payload types, including tar hardlinks"
+  },
+  "commit_payload_authentication": {
+    "recorded_UTC": "2026-11-11T23:01:53.958148+00:00",
+    "packages": [
+      {
+        "package": "postmarketos-base-systemd",
+        "version": "77-r0",
+        "archive_sha256": "933ceb73608a294dfb22f92b4f55db779ff02f874d360980c46594a4c6ccc471",
+        "exact_installed_and_authenticated_index_control": "Q178YE0LFIGAiFhoySOiKJLF4SG+4=",
+        "trusted_index_sha256": "c52a218aeb8dd67b2c3bb7bece1280609f1859f2b276ea850b0f4780f84545b4",
+        "signed_control_datahash_verified": true,
+        "captured_native_payload_bytes_match": true,
+        "native_path": "/etc/apk/commit_hooks.d/postmarketos-base-systemd",
+        "signer": "pmos@local-6a1cc0d6.rsa.pub",
+        "signer_in_existing_native_trust": false,
+        "individual_RSA_signature_verified": false,
+        "ordinary_APK_verify_returncode": 1,
+        "trust_basis": "Existing trusted signed index and exact installed control checksum authenticate the control/payload chain; historical archive signer unavailable, not accepted as a native installer archive"
+      },
+      {
+        "package": "treescan",
+        "version": "0.1-r0",
+        "archive_sha256": "4a43c233172270107b04f8438b24cb880c38ca006f8bd8ccf49989bbcd56e2fb",
+        "exact_installed_and_authenticated_index_control": "Q1JFbX40hRcXMCTUYRgvA5taFhrbI=",
+        "trusted_index_sha256": "2ff9bc4a4e4f19e643c01ead0a87f0c574014921ef1347834e33c70e649b7811",
+        "signed_control_datahash_verified": true,
+        "captured_native_payload_bytes_match": true,
+        "native_path": "/usr/bin/treescan",
+        "signer": "alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+        "signer_in_existing_native_trust": true,
+        "individual_RSA_signature_verified": true,
+        "ordinary_APK_verify_returncode": 0,
+        "trust_basis": "Existing native signer plus authenticated index"
+      }
+    ],
+    "authenticated_index_and_control_payload_chains_verified": 2,
+    "individual_RSA_verified_packages": 1,
+    "negative_controls": [
+      {
+        "kind": "valid_gzip_altered_control",
+        "authenticated_index_control_rejected": true
+      },
+      {
+        "kind": "valid_tar_gzip_altered_payload",
+        "authenticated_control_datahash_rejected": true
+      }
+    ],
+    "native_trust_keys_added": false,
+    "native_packages_installed": false,
+    "purpose": "Authenticate captured installed helper bytes; historical-signer archive is not proposed for installation"
+  },
+  "coreutils_runtime_closure": {
+    "exact_signed_payload_matches": [
+      {
+        "package": "coreutils",
+        "native_paths": [
+          "/usr/bin/coreutils"
+        ],
+        "exact_signed_payload_match": true
+      },
+      {
+        "package": "acl-libs",
+        "native_paths": [
+          "/usr/lib/libacl.so.1.1.2302"
+        ],
+        "exact_signed_payload_match": true
+      },
+      {
+        "package": "libattr",
+        "native_paths": [
+          "/usr/lib/libattr.so.1.1.2502"
+        ],
+        "exact_signed_payload_match": true
+      },
+      {
+        "package": "utmps-libs",
+        "native_paths": [
+          "/usr/lib/libutmps.so.0.1.3.3"
+        ],
+        "exact_signed_payload_match": true
+      },
+      {
+        "package": "skalibs-libs",
+        "native_paths": [
+          "/usr/lib/libskarnet.so.2.15.0.0"
+        ],
+        "exact_signed_payload_match": true
+      }
+    ],
+    "dependency_closure": {
+      "/usr/bin/coreutils": {
+        "needed": {
+          "libcrypto.so.3": "/usr/lib/libcrypto.so.3",
+          "libacl.so.1": "/usr/lib/libacl.so.1.1.2302",
+          "libattr.so.1": "/usr/lib/libattr.so.1.1.2502",
+          "libutmps.so.0.1": "/usr/lib/libutmps.so.0.1.3.3",
+          "libc.musl-armv7.so.1": "/usr/lib/ld-musl-armhf.so.1"
+        },
+        "interpreter": "/usr/lib/ld-musl-armhf.so.1"
+      },
+      "/usr/lib/libacl.so.1.1.2302": {
+        "needed": {
+          "libc.musl-armv7.so.1": "/usr/lib/ld-musl-armhf.so.1"
+        },
+        "interpreter": null
+      },
+      "/usr/lib/libattr.so.1.1.2502": {
+        "needed": {
+          "libc.musl-armv7.so.1": "/usr/lib/ld-musl-armhf.so.1"
+        },
+        "interpreter": null
+      },
+      "/usr/lib/libskarnet.so.2.15.0.0": {
+        "needed": {
+          "libc.musl-armv7.so.1": "/usr/lib/ld-musl-armhf.so.1"
+        },
+        "interpreter": null
+      },
+      "/usr/lib/libutmps.so.0.1.3.3": {
+        "needed": {
+          "libskarnet.so.2.15": "/usr/lib/libskarnet.so.2.15.0.0",
+          "libc.musl-armv7.so.1": "/usr/lib/ld-musl-armhf.so.1"
+        },
+        "interpreter": null
+      }
+    },
+    "all_dependencies_in_this_or_verified_prior_runtime": true,
+    "native_changes": false
+  },
+  "fault_selector_probe": {
+    "unit": {
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "Result": "success",
+      "ExecMainCode": "0",
+      "ExecMainStatus": "0"
+    },
+    "worker_result": {
+      "status": "passed",
+      "package_transaction_executed": false,
+      "live_OS_files_written": false,
+      "control_returncode": 0,
+      "injected_returncode": 126,
+      "exact_chroot_target_execve_EIO_injected_once": true,
+      "target_created_after_tracer_started": true,
+      "selector_is_exact_tracee_relative_path": true,
+      "earlier_shell_and_chmod_execs_not_injected": true,
+      "actual_ARM_kernel": "6.18.59-fx0-dmp",
+      "native_strace_version": "strace -- version 6.19",
+      "all_owned_children_reaped": true,
+      "private_fixture_removed": true
+    },
+    "current_boot_success_journal": true,
+    "journal_success_realtime_microseconds": "1794436083383365",
+    "recorded_UTC": "2026-11-11T22:31:49.167734+00:00",
+    "passed": true,
+    "unloaded_unit_default_exit_fields_not_used_as_exit_proof": true
+  },
+  "native_failure_recovery": {
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "unit": {
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "Result": "success",
+      "ExecMainCode": "0",
+      "ExecMainStatus": "0",
+      "MemoryCurrent": "[not set]",
+      "CPUUsageNSec": "[not set]"
+    },
+    "worker_result": {
+      "started_UTC": "2026-11-11T23:46:01.046162+00:00",
+      "status": "passed",
+      "live_root_restored": false,
+      "native_package_installation": false,
+      "actual_ARM_kernel": true,
+      "QEMU_used": false,
+      "private_fixture_removed": true,
+      "APK_returncode": 1,
+      "owned_APK_tracer_reaped": true,
+      "APK_parent_reported_failure": true,
+      "actual_controlled_hook_exec_failure": true,
+      "hook_failure_kind": "execve EIO before OpenSSH post-upgrade body",
+      "global_commit_hook_preflight_returncode": 0,
+      "global_commit_inventory_generated_before_failure": true,
+      "treescan_unit_identities_verified": true,
+      "treescan_mtime_values_unreliable": true,
+      "generated_tracker_sha256": "1272be5bbada3373b3feb881eac6aa1c700ab0c8e9ebbe17ae1d764df8362958",
+      "changed_package_identities": 30,
+      "failure_database_parse": null,
+      "APK_binary_changed_after_failure": true,
+      "known_stale_executor_file_injected": true,
+      "owned_executor_paths_removed": 1,
+      "captured_paths_verified": 6351,
+      "SELinux_labels_verified": 1479,
+      "directory_memberships_verified": 40,
+      "generated_state_namespace_restored": true,
+      "hardlink_aliases_verified": 254,
+      "original_775_packages_recovered": true,
+      "recovered_ARM_APK_version": "3.0.8-r0",
+      "live_DB_world_unchanged": true,
+      "hooks_terminal_before_restore": true,
+      "exact_signed_coreutils_runtime_verified": true,
+      "live_OS_transaction_qualified": false,
+      "finished_UTC": "2026-11-11T23:57:48.235003+00:00"
+    },
+    "current_boot_success_journal": true,
+    "journal_success_realtime_microseconds": "1794441469378541",
+    "observed_UTC": "2026-11-11T23:58:00.974288+00:00",
+    "passed": true,
+    "unloaded_unit_default_exit_fields_not_used_as_exit_proof": true
+  },
+  "transaction_properties": [
+    "Type=exec",
+    "KillMode=control-group",
+    "MemorySwapMax=0",
+    "CPUQuota=50%",
+    "Nice=10",
+    "IOWeight=10",
+    "UMask=0077",
+    "PrivateDevices=yes",
+    "PrivateNetwork=yes",
+    "PrivateTmp=yes",
+    "ProtectSystem=strict",
+    "ProtectHome=yes",
+    "ProtectKernelTunables=yes",
+    "ProtectKernelModules=yes",
+    "ProtectControlGroups=yes",
+    "NoNewPrivileges=yes",
+    "RuntimeMaxSec=1500",
+    "MemoryMax=400M",
+    "TimeoutStopSec=30",
+    "ReadWritePaths=/var/lib/fx0-rollback/stable-executor-recovery-03"
+  ],
+  "trace_and_namespace_verification": {
+    "raw_files": {
+      "status.json": {
+        "bytes": 1442,
+        "sha256": "2db0de2ae6b63e6bcd4a298e10022223ba25d58636d86bc63c928969eac6106f"
+      },
+      "index-load.log": {
+        "bytes": 232,
+        "sha256": "7491d158aa7b847a8ecff1b21acc429d877c1357c83c5b0cb317980c07ee3788"
+      },
+      "precommit.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "precommit.exec.trace": {
+        "bytes": 1539,
+        "sha256": "1b266d97662621b362d5312a0a42c308a0d719e360d670b7e2e6db20236fe634"
+      },
+      "upgrade.log": {
+        "bytes": 2280,
+        "sha256": "0945fdf307faa4244c7a29983f0646bfa069b05995d962c4c186bfb939990af6"
+      },
+      "exec.trace": {
+        "bytes": 2251,
+        "sha256": "1cc2a16d8840edf8665964990c645b567edc5a36a61b8576fbe5c8c8e04fb149"
+      },
+      "namespace-inventory.private.json": {
+        "bytes": 1212242,
+        "sha256": "79b10e8fe6c2b31af1fa108cc85f5be274cef02a7c86d0f0f5363a3ab359b087"
+      },
+      "initial-namespace.private.json": {
+        "bytes": 378393,
+        "sha256": "5dcf413ada12fd773edf22d780335a34620d330c886392c5220143ec100996ba"
+      },
+      "preflight-inventory.private": {
+        "bytes": 42029,
+        "sha256": "c76d789dfac41ca0b2778deee76e4ef8a588d5ae89a65ea1e6ca8a4f07b0474a"
+      }
+    },
+    "controlled_faults": 1,
+    "fault_syscall": "execve",
+    "fault_errno": "EIO",
+    "fault_phase": "before OpenSSH post-upgrade body",
+    "precommit_successful_exec_paths": [
+      "/usr/sbin/chroot",
+      "/etc/apk/commit_hooks.d/postmarketos-base-systemd",
+      "/usr/bin/dirname",
+      "/usr/bin/mkdir",
+      "/usr/bin/treescan",
+      "/usr/bin/treescan"
+    ],
+    "precommit_processes_exited_zero": 5,
+    "precommit_stderr_empty": true,
+    "initial_namespace_paths": 6372,
+    "after_failure_namespace_paths": 6379,
+    "final_namespace_paths": 6372,
+    "unrestored_missing_paths": 0,
+    "unrestored_generated_paths": 0,
+    "known_stale_executor_artifact_injected": true,
+    "known_owned_executor_paths_removed": 1,
+    "raw_namespaces_logs_and_generated_inventories_kept_private": true
+  },
+  "retained_native_failed_attempts": [
+    {
+      "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+      "unit": {
+        "LoadState": "loaded",
+        "ActiveState": "failed",
+        "SubState": "failed",
+        "Result": "exit-code",
+        "ExecMainCode": "1",
+        "ExecMainStatus": "1",
+        "MemoryCurrent": "[not set]",
+        "CPUUsageNSec": "197247111000"
+      },
+      "worker_result": {
+        "started_UTC": "2026-11-11T23:15:47.636423+00:00",
+        "status": "failed",
+        "live_root_restored": false,
+        "native_package_installation": false,
+        "actual_ARM_kernel": true,
+        "QEMU_used": false,
+        "private_fixture_removed": false,
+        "error": "AssertionError: /etc/apk/commit_hooks.d/postmarketos-base-systemd: line 6: dirname: not found\n/etc/apk/commit_hooks.d/postmarketos-base-systemd: line 6: mkdir: not found\n",
+        "finished_UTC": "2026-11-11T23:22:21.565096+00:00"
+      },
+      "current_boot_success_journal": false,
+      "journal_success_realtime_microseconds": null,
+      "observed_UTC": "2026-11-11T23:22:37.037869+00:00",
+      "passed": false,
+      "unloaded_unit_default_exit_fields_not_used_as_exit_proof": true
+    },
+    {
+      "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+      "unit": {
+        "LoadState": "loaded",
+        "ActiveState": "failed",
+        "SubState": "failed",
+        "Result": "exit-code",
+        "ExecMainCode": "1",
+        "ExecMainStatus": "1",
+        "MemoryCurrent": "[not set]",
+        "CPUUsageNSec": "219037483000"
+      },
+      "worker_result": {
+        "started_UTC": "2026-11-11T23:32:29.701364+00:00",
+        "status": "failed",
+        "live_root_restored": false,
+        "native_package_installation": false,
+        "actual_ARM_kernel": true,
+        "QEMU_used": false,
+        "private_fixture_removed": false,
+        "APK_returncode": 1,
+        "owned_APK_tracer_reaped": true,
+        "APK_parent_reported_failure": true,
+        "error": "AssertionError: ",
+        "finished_UTC": "2026-11-11T23:39:47.097610+00:00"
+      },
+      "current_boot_success_journal": false,
+      "journal_success_realtime_microseconds": null,
+      "observed_UTC": "2026-11-11T23:39:51.294432+00:00",
+      "passed": false,
+      "unloaded_unit_default_exit_fields_not_used_as_exit_proof": true
+    }
+  ],
+  "treescan_source": {
+    "repository": "https://github.com/kaniini/treescan",
+    "ref": "v0.1",
+    "path": "treescan.c",
+    "git_blob_sha1": "7357cabcab06ce1e694c5b2f9c0c632cbbe26694",
+    "sha256": "751ce453d9b96199b65dd30aa2ac80ec2f099f7f35d3f974013fb8bde426208a",
+    "native_package_source_version": "0.1-r0",
+    "fix": "Use PRIdMAX and intmax_t for time_t in printf; preserve all scanning behavior",
+    "initial_build_approval_review_error": "Bad Request; review could not complete; command not executed",
+    "toolchain_mounts_read_only": true,
+    "private_key_roots_not_mounted": true
+  },
+  "treescan_build": {
+    "recorded_UTC": "2026-11-11T23:49:39.222231+00:00",
+    "compiles": [
+      {
+        "variant": "original",
+        "returncode": 1,
+        "command": [
+          "bwrap",
+          "--unshare-all",
+          "--die-with-parent",
+          "--clearenv",
+          "--ro-bind",
+          "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_native/usr",
+          "/usr",
+          "--ro-bind",
+          "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_native/lib",
+          "/lib",
+          "--ro-bind",
+          "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_native/bin",
+          "/bin",
+          "--ro-bind",
+          "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_native/sbin",
+          "/sbin",
+          "--ro-bind",
+          "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_buildroot_armv7/usr",
+          "/target/usr",
+          "--ro-bind",
+          "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_buildroot_armv7/lib",
+          "/target/lib",
+          "--proc",
+          "/proc",
+          "--dev",
+          "/dev",
+          "--size",
+          "16777216",
+          "--tmpfs",
+          "/tmp",
+          "--ro-bind",
+          "/home/tim/Documents/GitHub/fx0/local/treescan-mtime-01",
+          "/src",
+          "--bind",
+          "/home/tim/Documents/GitHub/fx0/local/treescan-mtime-01/build",
+          "/build",
+          "--setenv",
+          "PATH",
+          "/usr/bin:/bin",
+          "--chdir",
+          "/build",
+          "/usr/bin/armv7-alpine-linux-musleabihf-gcc",
+          "--sysroot=/target",
+          "-isystem",
+          "/target/usr/include",
+          "-B/target/usr/lib/",
+          "-L/target/usr/lib",
+          "-std=gnu23",
+          "-Os",
+          "-fPIE",
+          "-pie",
+          "-Wall",
+          "-Wextra",
+          "-Wformat=2",
+          "-Werror=format",
+          "/src/treescan-original.c",
+          "-o",
+          "/build/treescan-original"
+        ]
+      },
+      {
+        "variant": "fixed",
+        "returncode": 0,
+        "command": [
+          "bwrap",
+          "--unshare-all",
+          "--die-with-parent",
+          "--clearenv",
+          "--ro-bind",
+          "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_native/usr",
+          "/usr",
+          "--ro-bind",
+          "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_native/lib",
+          "/lib",
+          "--ro-bind",
+          "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_native/bin",
+          "/bin",
+          "--ro-bind",
+          "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_native/sbin",
+          "/sbin",
+          "--ro-bind",
+          "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_buildroot_armv7/usr",
+          "/target/usr",
+          "--ro-bind",
+          "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_buildroot_armv7/lib",
+          "/target/lib",
+          "--proc",
+          "/proc",
+          "--dev",
+          "/dev",
+          "--size",
+          "16777216",
+          "--tmpfs",
+          "/tmp",
+          "--ro-bind",
+          "/home/tim/Documents/GitHub/fx0/local/treescan-mtime-01",
+          "/src",
+          "--bind",
+          "/home/tim/Documents/GitHub/fx0/local/treescan-mtime-01/build",
+          "/build",
+          "--setenv",
+          "PATH",
+          "/usr/bin:/bin",
+          "--chdir",
+          "/build",
+          "/usr/bin/armv7-alpine-linux-musleabihf-gcc",
+          "--sysroot=/target",
+          "-isystem",
+          "/target/usr/include",
+          "-B/target/usr/lib/",
+          "-L/target/usr/lib",
+          "-std=gnu23",
+          "-Os",
+          "-fPIE",
+          "-pie",
+          "-Wall",
+          "-Wextra",
+          "-Wformat=2",
+          "-Werror=format",
+          "/src/treescan-fixed.c",
+          "-o",
+          "/build/treescan-fixed"
+        ]
+      }
+    ],
+    "original_format_mismatch_rejected": true,
+    "fixed_format_strict_build_passed": true,
+    "ELF_sha256": "91ce5c8154c4245dfdc0c6354915c3156996eadcb8c07349aae04917fa31820d",
+    "native_packages_changed": false,
+    "private_keys_used": false
+  },
+  "treescan_native_test": {
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "unit": {
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "ExecMainStatus": "0"
+    },
+    "current_boot_success_journal": true,
+    "result": {
+      "status": "passed",
+      "finished_UTC": "2026-11-11T23:51:32.984555+00:00",
+      "actual_ARM_execution": true,
+      "QEMU_used": false,
+      "synthetic_timestamp_values": [
+        -1,
+        0,
+        1,
+        2147483647,
+        2147483648,
+        4102444800
+      ],
+      "synthetic_metadata_entries": 9,
+      "three_repeats_identical": true,
+      "actual_systemd_entries": [
+        463,
+        82
+      ],
+      "original_incorrect_entries": [
+        463,
+        82
+      ],
+      "independent_python_stat_comparison": true,
+      "missing_directory_failure_verified": true,
+      "fixture_removed": true,
+      "native_packages_installed": false,
+      "installed_treescan_replaced": false
+    },
+    "passed": true
+  },
+  "treescan_correction_installed": false,
+  "revised_kernel_controller": {
+    "native_staging": {
+      "preflight": {
+        "read_only_preflight_passed": true,
+        "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+        "owner_UI_status": "pending",
+        "native_installation": false,
+        "boot_partition_written": false
+      },
+      "files_sha256": {
+        "install_native_v2.py": "26d6ed2577c616053126cb176192df9721128e4b038d028ebd4c83f24f85a873",
+        "commit_state.py": "d7892e84ae61de779cff579a8e162b6260e8270db55ff0541013b48176fe00fd",
+        "commit-state.private.json": "d7b4b85503f9423aa045afe0214de0d0632472ca1330ef0f04a7ff2bc021ec4a",
+        "install-plan-preflight-02.json": "db0f06f43c823a681b98bdb12b0af9757acbcde1867a7bb01846e66eac360b62",
+        "probe-commit-state.py": "4e490cf924df774f01ef5dfd7f62a1cfe2b3c852288962aa7d9cc1505fd72bd2"
+      },
+      "staged_revision": 2,
+      "native_installation": false
+    },
+    "host_fixtures": {
+      "controller_cases": [
+        {
+          "case": "success",
+          "passed": true,
+          "final_stage": "updated-and-verified",
+          "actual_APK_transactions": 1,
+          "candidate_payload_files_verified": 545,
+          "normal_initramfs_payloads_verified": 243,
+          "original_snapshot_paths_restored": null,
+          "boot_target_is_regular_fixture_file": true,
+          "physical_hardware_or_native_hooks_exercised": false,
+          "SELinux_labels_not_applied_on_host": true
+        },
+        {
+          "case": "post-verify-failure",
+          "passed": true,
+          "final_stage": "rolled-back",
+          "actual_APK_transactions": 2,
+          "candidate_payload_files_verified": 545,
+          "normal_initramfs_payloads_verified": 243,
+          "original_snapshot_paths_restored": 2595,
+          "boot_target_is_regular_fixture_file": true,
+          "physical_hardware_or_native_hooks_exercised": false,
+          "SELinux_labels_not_applied_on_host": true
+        },
+        {
+          "case": "pending-owner",
+          "passed": true,
+          "final_stage": "preflight-refused",
+          "actual_APK_transactions": 0,
+          "candidate_payload_files_verified": 0,
+          "normal_initramfs_payloads_verified": 0,
+          "original_snapshot_paths_restored": null,
+          "boot_target_is_regular_fixture_file": true,
+          "physical_hardware_or_native_hooks_exercised": false,
+          "SELinux_labels_not_applied_on_host": true
+        },
+        {
+          "case": "wrong-prefix",
+          "passed": true,
+          "final_stage": "preflight-refused",
+          "actual_APK_transactions": 0,
+          "candidate_payload_files_verified": 0,
+          "normal_initramfs_payloads_verified": 0,
+          "original_snapshot_paths_restored": null,
+          "boot_target_is_regular_fixture_file": true,
+          "physical_hardware_or_native_hooks_exercised": false,
+          "SELinux_labels_not_applied_on_host": true
+        }
+      ],
+      "all_passed": true,
+      "actual_APK_transactions": 3,
+      "native_controller_source_unmodified": true,
+      "bindings_replaced": [
+        "Native hardware and service identity",
+        "Physical block device replaced by regular fixture file",
+        "Native runtime tool hashes",
+        "SELinux labels",
+        "APK hooks disabled; known preview outputs model generated boot/initramfs"
+      ],
+      "owner_pending_and_changed_prefix_refused_before_mutation": true,
+      "full_candidate_verification_before_forced_rollback": true,
+      "actual_controller_archive_and_boot_tail_restoration_passed": true,
+      "native_installation": false,
+      "commit_inventory_and_executor_recovery_included": true,
+      "global_commit_hook_execution_modeled_on_host": true
+    },
+    "native_commit_state_probe": {
+      "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+      "unit": {
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "ExecMainStatus": "0"
+      },
+      "current_boot_success_journal": true,
+      "result": {
+        "status": "passed",
+        "finished_UTC": "2026-11-11T23:57:44.536848+00:00",
+        "actual_native_execution": true,
+        "full_native_captured_paths_verified": 582,
+        "full_native_directory_memberships_verified": 38,
+        "actual_SELinux_labels_restored": true,
+        "active_hooks_and_unknown_artifacts_refused_without_restoration": true,
+        "known_script_and_inventory_recovery_verified": true,
+        "private_namespace_restored": true,
+        "private_fixture_removed": true,
+        "live_root_restored": false,
+        "native_kernel_installation": false
+      },
+      "passed": true
+    },
+    "pending_UI_refusal": {
+      "refused_before_phone_commands": true,
+      "returncode": 1,
+      "missing_current_native_UI_confirmation": true,
+      "controller_sha256": "26d6ed2577c616053126cb176192df9721128e4b038d028ebd4c83f24f85a873"
+    },
+    "validation": {
+      "returncode": 0,
+      "commands": [
+        {
+          "command": [
+            "python3",
+            "-B",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "tests",
+            "-p",
+            "test_kernel_commit_state.py",
+            "-v"
+          ],
+          "returncode": 0
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "tests",
+            "-p",
+            "test_kernel_update_transaction.py",
+            "-v"
+          ],
+          "returncode": 0
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "tests",
+            "-p",
+            "test_kernel_native_validation.py",
+            "-v"
+          ],
+          "returncode": 0
+        }
+      ],
+      "controller_sha256": "26d6ed2577c616053126cb176192df9721128e4b038d028ebd4c83f24f85a873",
+      "commit_state_helper_sha256": "d7892e84ae61de779cff579a8e162b6260e8270db55ff0541013b48176fe00fd",
+      "phone_mutations": false
+    },
+    "inherited_scope": {
+      "prior_controller_sha256": "0eec79d01a34d837dfa61256f2c75116242e601d78d460a3e9a5062b95e2aa7d",
+      "revised_controller_sha256": "26d6ed2577c616053126cb176192df9721128e4b038d028ebd4c83f24f85a873",
+      "unchanged_methods_sha256": {
+        "set_install_scope": "91f11d30d5a65f52ee9c127ba2c159e59c00a7109affe06cbac5394ec999d9cf",
+        "hooks_terminal": "8c60e17f1d389c86ff4c1bd1ec7fea003bb31ba1e84897e62343d68bc08bfc99",
+        "run_apk": "1670e8f1757dc48cb78267e481da9bf1c846f508da033c51c7e65da871bbda6e",
+        "verify_device": "e03e487aef5fd64447fa39e31cda3fb0706bf1fbe2834f9868b3e1f3487f1177",
+        "verify_identity": "07b98d4f8690b90fc1a3878329a47bfc9eaff319d448a66d876c79e51aee8d3f",
+        "verify_package_state": "b5455220762b8c6e7282c3eaf5886b7f8c90b0f436289a79b043cddb043722fd"
+      },
+      "prior_actual_cgroup_probe": "local/kernel-native-6.18.63-controller-01/native-scope-probe.json",
+      "actual_cgroup_and_hook_waiting_methods_unchanged": true
+    },
+    "launch_path": "local/kernel-native-6.18.63-controller-02/launch-install.py",
+    "old_controller_launch_superseded": true
+  },
+  "postflight": {
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "kernel": "6.18.59-fx0-dmp",
+    "files_sha256": {
+      "/lib/apk/db/installed": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1",
+      "/etc/apk/world": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+      "/etc/apk/repositories": "37534543d9a1defca831a5b104f2e871f363555df8b817ec8a54b59d1138562a",
+      "/dev/mmcblk0p15": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921"
+    },
+    "systemd": "running",
+    "taint": 0,
+    "sway_running": true,
+    "gesture_daemon_running": true,
+    "MemAvailable_bytes": 831512576,
+    "backup_filesystem_free_bytes": 7531216896,
+    "SELinux_enforcement": "interface absent",
+    "physical_display_touch_for_current_return": "pending",
+    "native_package_or_boot_change": false,
+    "recorded_UTC": "2026-11-11T23:59:55.007043+00:00"
+  },
+  "all_owned_test_units_terminal": true,
+  "captured_private_state_recovery_qualified": true,
+  "live_OS_transaction_qualified": false,
+  "arbitrary_hook_body_failure_qualified": false,
+  "power_loss_or_mid_write_crash_qualified": false,
+  "full_live_OS_namespace_qualified": false,
+  "native_package_or_boot_changes": false,
+  "native_backup_files_added": true,
+  "installed_kernel_remains": "r50",
+  "current_return_physical_UI_pending": true,
+  "standing_phone_update_and_GitHub_push_approval": true,
+  "raw_backup_configuration_namespaces_logs_and_traces_kept_private": true,
+  "runtime_private_keys_read_hashed_or_exported": false,
+  "audio_testing": false,
+  "upstream_messages_sent": 0,
+  "full_bringup": "active"
+}
