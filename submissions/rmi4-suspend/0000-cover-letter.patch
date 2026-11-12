@@ -1,0 +1,54 @@
+From e33d4f520c20cf3002183ad0bd1d31df61f226a2 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Wed, 11 Nov 2026 20:49:59 -0500
+Subject: [PATCH 0/1] Input: rmi4 - retain resume after a failed sleep command
+
+A failed RMI sleep command currently leaves the I2C supplies disabled while
+returning an error from system suspend. The PM core does not mark this device
+suspended and therefore skips its resume callback. Complete the callback after
+powering down, matching the runtime-suspend behavior, so ordinary resume and
+unwind after another device fails can restore the transport.
+
+This is an unsigned review draft based on Input master/next at
+8e16f8bbf1bd528975fd6f4081eaf00513c1d83e. It adapts the downstream fix
+6d3c6c42f7bbfcc93dfac4e46da6debe23e4f3bd without requiring the downstream
+reset-GPIO or panel-follower additions. The receiving tree's allocation and
+power-management APIs are preserved; only system suspend changes.
+
+Validation:
+- 119 lifecycle cases using the extracted actual four I2C transport callbacks
+  pass ASan and UBSan. The original code and four independent regression
+  controls fail the expected behavioral assertions. The PM-core decision is
+  source-checked and modeled; this fixture does not execute the kernel PM core.
+- Unmodified base and draft ARM objects compile with Clang 21.1.8, W=1, KCFI
+  and full zlib-compressed DWARF5 without diagnostics. All four callback type
+  words match. The normalized configuration is byte-identical.
+- Strict checkpatch passes with only sign-off checking disabled. The exported
+  patch replays to the exact draft tree.
+
+Earlier Fx0 s2idle testing exercised the same return-value fix together with
+separate touch-panel and MDP5 changes. It does not qualify this standalone
+maintainer tree. Full kernel/module links, this tree's physical boot and suspend,
+other RMI hardware and regulator-disable failures remain unqualified. Resume
+supply and RMI-function errors are preserved and exercised by the host fixture.
+
+This draft was prepared with an AI coding assistant. Human review and DCO
+certification are pending. No Signed-off-by or Tested-by tag is added by the
+assistant. No email or upstream PR has been sent.
+
+Suggested primary recipient: Dmitry Torokhov <dmitry.torokhov@gmail.com>.
+Suggested lists: linux-input@vger.kernel.org, linux-kernel@vger.kernel.org.
+The current get_maintainer output also names historical Fixes authors; those
+addresses should be checked by the human submitter before mailing.
+
+Timothy Schmidt (1):
+  Input: rmi4 - complete suspend after powering down I2C transport
+
+ drivers/input/rmi4/rmi_i2c.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+
+base-commit: 8e16f8bbf1bd528975fd6f4081eaf00513c1d83e
+-- 
+2.56.0
+
