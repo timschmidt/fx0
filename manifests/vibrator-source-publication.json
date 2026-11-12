@@ -1,0 +1,182 @@
+{
+  "recorded_UTC": "2026-11-12T02:40:44.391686+00:00",
+  "subject": "Publish the exact qualified vibrator review commits with complete-object export replay",
+  "source_publication": {
+    "recorded_UTC": "2026-11-12T02:34:45.827995+00:00",
+    "repository": "https://github.com/timschmidt/fx0-linux.git",
+    "branch": "refs/heads/submit/pm8xxx-vibrator-voltage-v1",
+    "commit": "cc01b2298aec8bf692d61f41a896f76dc62ab643",
+    "tree": "dc14fad7615c6efcdfb494e1e0b87f75247bac87",
+    "remote_ref_verified": true,
+    "force": false,
+    "exact_existing_commits_published": true,
+    "author_headers": [
+      {
+        "draft": "35ba93b296077e032feb98fd6ff22d72423f3840",
+        "original": "7066eda348e47581aea911d19bdc4c67385b8782",
+        "exact_author_header_preserved": true
+      },
+      {
+        "draft": "aa3287187d99f770f76b09fada9fae1531838b9e",
+        "original": "05eae43e8aaf8accba4870cd608174f6d3710d0a",
+        "exact_author_header_preserved": true
+      },
+      {
+        "draft": "cc01b2298aec8bf692d61f41a896f76dc62ab643",
+        "original": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+        "exact_author_header_preserved": true
+      }
+    ],
+    "original_review_worktree_HEAD_and_index_unchanged": true,
+    "unsigned_review_draft": true,
+    "human_review_and_DCO_pending": true,
+    "tool_session": 71043,
+    "actual_tool_terminal_exit_code": 0,
+    "actual_systemd_result": "success",
+    "actual_main_status": "0/SUCCESS",
+    "actual_service_runtime_seconds": 5.068,
+    "actual_memory_peak_reported": "505.1M",
+    "actual_swap_reported": "0B",
+    "memory_cap_bytes": 1073741824,
+    "full_receiving_kernel_or_module_link": false,
+    "exact_tree_physical_boot": false,
+    "upstream_email_or_PR_sent": false,
+    "phone_changes": false,
+    "standing_fx0_GitHub_push_approval_used": true
+  },
+  "source_verification": {
+    "recorded_UTC": "2026-11-12T02:30:38.127511+00:00",
+    "base": "8e16f8bbf1bd528975fd6f4081eaf00513c1d83e",
+    "tip": "cc01b2298aec8bf692d61f41a896f76dc62ab643",
+    "tree": "dc14fad7615c6efcdfb494e1e0b87f75247bac87",
+    "reachable_commits": 66,
+    "reachable_objects": 143015,
+    "missing_reachable_objects": 0,
+    "exact_driver_sha256": "fe8cd178d0f205a7c8b7655ae37c7827fa5de93c27ffbaf52f553495b4e6ecd1",
+    "receiving_tree_policy_paths_verified": 20,
+    "all_three_commit_hunks_match_qualified_original_fixes": true,
+    "original_and_receiving_diff_identity": [
+      {
+        "draft": "35ba93b296077e032feb98fd6ff22d72423f3840",
+        "stable_original": "7066eda348e47581aea911d19bdc4c67385b8782",
+        "stable_diff_sha256": "71043de5d697a39303583c8dd7ac6bbd0653a2ada43951a1b3a7b29e9340b9a1",
+        "receiving_tree_diff_sha256": "beec9ebe10af802c0345bc634ad81c7249528dba252e82993b80fc7dab07ff5a",
+        "all_non_index_diff_bytes_identical": true,
+        "complete_files_differ_only_by_expected_allocation_API": true
+      },
+      {
+        "draft": "aa3287187d99f770f76b09fada9fae1531838b9e",
+        "stable_original": "05eae43e8aaf8accba4870cd608174f6d3710d0a",
+        "stable_diff_sha256": "d8f67b614f5c2f3b4e5e05943a53e4a7f12048e9a84a4923317484066113d6e4",
+        "receiving_tree_diff_sha256": "937f27bd2b2a5ac25ecb73ec270d67fa46380a9317856727cefe9daf36f935d3",
+        "all_non_index_diff_bytes_identical": true,
+        "complete_files_differ_only_by_expected_allocation_API": true
+      },
+      {
+        "draft": "cc01b2298aec8bf692d61f41a896f76dc62ab643",
+        "stable_original": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+        "stable_diff_sha256": "3f5ad7ae92858a3559d70537937a42bf834afa6a521b1d00e877e836074ce210",
+        "receiving_tree_diff_sha256": "74664b39e5112556f75a39124f1aa68164e98e9f58fead1168ed53e6d410de93",
+        "all_non_index_diff_bytes_identical": true,
+        "complete_files_differ_only_by_expected_allocation_API": true
+      }
+    ],
+    "four_existing_ARM_prefix_builds_verified": true,
+    "final_ARM_callback_type_words": {
+      "pm8xxx_vib_probe": "0xc7f8c87c",
+      "pm8xxx_work_handler": "0xa607748c",
+      "pm8xxx_vib_close": "0x24407a15",
+      "pm8xxx_vib_play_effect": "0x45e29aee",
+      "pm8xxx_vib_suspend": "0x2a703c0b",
+      "init_module": "0x6fbb3035",
+      "cleanup_module": "0xe5c47d60"
+    },
+    "existing_768_ASan_UBSan_cases_reused": true,
+    "original_and_three_regressions_rejected_by_behavioral_assertions": true,
+    "old_tests_rerun": false,
+    "LeakSanitizer_coverage_claimed": false,
+    "previous_fixture_scope": "Actual voltage selection, driver level and legacy drive fields. PMI632 high-byte encoding remains outside this check.",
+    "strict_style_checks_verified": true,
+    "complete_object_export_replay": [
+      {
+        "patch": "0001-Input-pm8xxx-vibrator-select-voltage-range-from-regi.patch",
+        "sha256": "09ce796dd5d38321a8c460e4a95cc2f04215d76fba6f43ea70678eb6a2b1f901",
+        "exact_tree": "50f70d7d2136dcba142e7bc9fcc257127618f504"
+      },
+      {
+        "patch": "0002-Input-pm8xxx-vibrator-clamp-the-inclusive-maximum-vo.patch",
+        "sha256": "6d4ec56a7aaae90b0079383f7e6fd192f7c377fea569e93edd81aa04fa3a0336",
+        "exact_tree": "fab4b2cfb86451e95abf8816b9c0f33d8cee8746"
+      },
+      {
+        "patch": "0003-Input-pm8xxx-vibrator-replace-drive-bits-when-intens.patch",
+        "sha256": "3d156bd518d4feb4462d78b7ead00761c2f0f82c4a72f898ab0bb4a29f7b268e",
+        "exact_tree": "dc14fad7615c6efcdfb494e1e0b87f75247bac87"
+      }
+    ],
+    "missing_ok_option_used": false,
+    "stronger_replay_reason": "Historical replay allowed promised objects to remain missing; the recovered graph now permits ordinary write-tree",
+    "original_review_worktree_HEAD_and_index_unchanged": {
+      "HEAD": "e33d4f520c20cf3002183ad0bd1d31df61f226a2",
+      "index_sha256": "06a5aea715b6d108a383f03635de22388c083e5149ce17dab43e3f4b55776529"
+    },
+    "existing_receipts_sha256": {
+      "local/vibrator-upstream-01/draft-series.json": "7f3418ed9b835f35121907a134650af5f0cd63f0969833693ab4ed5f37ba7655",
+      "local/vibrator-upstream-01/prefix-object-checks.json": "03a9ab8d237244033af4c63428902ea5feec2c425ee99792b35fb322baae24d0",
+      "local/vibrator-upstream-01/fixture-equivalence.json": "1ad4c0f41aaa7f2644efe0b22e086d3a7c0d279df6661e7a7f3b12996ac35e27",
+      "local/vibrator-upstream-01/draft-checkpatch.json": "4322c645a9638f9d1d03e83dc69dc7d47c37fa98454b182ebc053691ddd9ee7a",
+      "local/vibrator-upstream-01/export-replay.json": "0cc979eba46771930c298cdbee0ff8bbc11aa69f5c6471dbb218b8a1992737e9",
+      "local/vibrator-upstream-01/final-object-inspection.json": "3df8484b01a33effed9e53d78cc586010743a4074cf3372b85246596ef3492a8",
+      "local/vibrator-upstream-01/instruction-reading-progress.json": "9c535f443721dbb062fabfd7aa1e4cebe0e415008425043407653a1d60ffbdd0"
+    },
+    "full_kernel_or_module_link": false,
+    "exact_tree_physical_boot": false,
+    "agent_added_DCO_signoffs": false,
+    "human_review_pending": true,
+    "upstream_messages_sent": 0,
+    "phone_changes": false
+  },
+  "upstream_ref_check": {
+    "recorded_UTC": "2026-11-12T02:28:43.918075+00:00",
+    "refs": {
+      "master": "8e16f8bbf1bd528975fd6f4081eaf00513c1d83e",
+      "next": "8e16f8bbf1bd528975fd6f4081eaf00513c1d83e",
+      "for-linus": "9def7caa2e55d0c5708385ae0d0039e9eaa26c47"
+    },
+    "primary_and_official_mirror_match": true,
+    "qualified_base_still_current": true,
+    "primary_body_sha256": "0514444b0ffd1fc01d41c58485dce095be7d08cc56e4abfdb34158ff1d97d1d6",
+    "mirror_body_sha256": "d50e6d51de67f396ccf273d4aec671fc19ebdf130e18a7820b0d7472afcd70d6"
+  },
+  "existing_qualification_reused": true,
+  "full_receiving_kernel_or_module_link": false,
+  "exact_tree_physical_boot": false,
+  "PMI632_upper_byte_encoding_qualified": false,
+  "other_PMIC_physical_coverage": false,
+  "GCC_qualified": false,
+  "human_review_and_DCO_pending": true,
+  "upstream_messages_sent": 0,
+  "native_package_or_boot_changes": false,
+  "all_owned_phase_processes_terminal": true,
+  "original_RMI_review_worktree_HEAD_and_index_preserved": true,
+  "last_native_postflight_recorded_UTC": "2026-11-12T02:12:59.386883+00:00",
+  "last_inspected_native_kernel": "6.18.59-fx0-dmp",
+  "last_inspected_native_systemd": "running",
+  "phase_phone_commands": 0,
+  "phase_phone_mutations": false,
+  "current_return_physical_UI_pending": false,
+  "current_UI_question_refreshed_this_phase": true,
+  "current_return_UI_confirmed": true,
+  "current_return_UI_confirmation_recorded_UTC": "2026-11-12T02:40:12.675361+00:00",
+  "already_approved_kernel_installer_revision_02_still_prepared": true,
+  "vibrator_full_builds_started": false,
+  "host_MemAvailable_bytes": 5211734016,
+  "vibrator_full_build_start_threshold_bytes": 17179869184,
+  "no_compiler_or_security_configuration_reduced": true,
+  "historical_hardware_scope": "Earlier Fx0 PM8226 integration RAM trials; not this standalone receiving tree",
+  "DiskB_read_only": true,
+  "runtime_private_keys_read_hashed_or_exported": false,
+  "standing_fx0_GitHub_push_and_phone_update_approval": true,
+  "audio_testing": false,
+  "full_bringup": "active"
+}
