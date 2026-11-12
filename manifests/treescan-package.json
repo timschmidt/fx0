@@ -1,0 +1,369 @@
+{
+  "recorded_UTC": "2026-11-12T00:48:21.668871+00:00",
+  "subject": "Normal signed ARM treescan time64 candidate, native executable checks and signed-repository simulation",
+  "upstream_recipe": {
+    "repository": "https://github.com/alpinelinux/aports",
+    "path": "main/treescan/APKBUILD",
+    "installed_package_recipe_commit": "535e786f0fa4f4023c459e7161f4cfd35c83ff7e",
+    "installed_and_current_recipe_blob": "bd01d188336f4eb9f5182232ec7960139ebd1183",
+    "current_recipe_version": "0.1-r0",
+    "source_sha512": "cc39fa98b422efe7cfe7770eb69763d8a48e1da02278c175abcf55b98069674789ba85c595f9546f4d3b662200a50d550f91028b1a77591e19cf4087825aa765",
+    "packaging_change": "Retain original build/package functions; fix time64 printf and add regression checks",
+    "normal_ARM_package_build_pending": true,
+    "phone_installation_pending": true
+  },
+  "source_archive": {
+    "requested_URL": "https://distfiles.alpinelinux.org/distfiles/v3.24/treescan-0.1.tar.gz",
+    "final_URL": "https://distfiles.alpinelinux.org/distfiles/v3.24/treescan-0.1.tar.gz",
+    "archive_bytes": 1606,
+    "sha256": "fbb502a68bec80534671c7b6d79e7e301e86fbcc58c475150c92be5d2ab4c242",
+    "sha512": "cc39fa98b422efe7cfe7770eb69763d8a48e1da02278c175abcf55b98069674789ba85c595f9546f4d3b662200a50d550f91028b1a77591e19cf4087825aa765",
+    "pinned_upstream_recipe_checksum_verified": true,
+    "source_files": {
+      "treescan-0.1/LICENSE": {
+        "bytes": 670,
+        "sha256": "15c3271c38312477102ea46e149493dc1d6cdf7cb45c2c775b99dca793d8e768"
+      },
+      "treescan-0.1/Makefile": {
+        "bytes": 277,
+        "sha256": "36635cf688eea562b6f49a55668a83fdc058080333f546d1ce34c8c74b2d312f"
+      },
+      "treescan-0.1/treescan.c": {
+        "bytes": 1498,
+        "sha256": "751ce453d9b96199b65dd30aa2ac80ec2f099f7f35d3f974013fb8bde426208a"
+      }
+    },
+    "exact_previously_tested_original_C_source": true
+  },
+  "zero_context_patch_verification": {
+    "applied_without_fuzz": true,
+    "exact_native_tested_source_match": true,
+    "patch_sha256": "4ac55f372af02e2237e006a4c88089f0319943b48a2a4fb93b7041ece3ab92d6"
+  },
+  "recipe_publication": {
+    "recorded_UTC": "2026-11-12T00:39:02.976816+00:00",
+    "repository": "https://github.com/timschmidt/fx0-pmaports.git",
+    "branch": "refs/heads/integration/fx0-treescan-time64",
+    "commit": "e58c455e3c0d88f443f449fabcea3eed57b75a93",
+    "remote_ref_verified": true,
+    "local_clone_clean": true,
+    "recipe_bundle_sha256": "7c0c555d14a6abcdbd698aa4921a22f7b23cac55cbe14259e59e2a481584136b",
+    "upstream_messages_sent": 0,
+    "standing_fx0_push_approval_used": true
+  },
+  "build": {
+    "name": "treescan-0.1-r1.apk",
+    "bytes": 3680,
+    "sha256": "24f63c20f7197468a005b08c023242e70c491edb40c965372c540d70736ddf11",
+    "recipe_commit": "e58c455e3c0d88f443f449fabcea3eed57b75a93",
+    "actual_source_files": {
+      "treescan.c": {
+        "bytes": 1517,
+        "sha256": "0717332adb69a5a2daf3d68546a0870b9d6a7b864674430b104340b4363e81ab"
+      },
+      "Makefile": {
+        "bytes": 277,
+        "sha256": "36635cf688eea562b6f49a55668a83fdc058080333f546d1ce34c8c74b2d312f"
+      },
+      "LICENSE": {
+        "bytes": 670,
+        "sha256": "15c3271c38312477102ea46e149493dc1d6cdf7cb45c2c775b99dca793d8e768"
+      },
+      "treescan": {
+        "bytes": 10708,
+        "sha256": "1246c57e34d6977c4d00d214a835d2fff134c414aa11e0970e0fa69cc39f901d"
+      }
+    },
+    "source_C_matches_previously_native_tested_fix": true,
+    "ordinary_ARM_abuild": true,
+    "crossdirect_disabled": true,
+    "private_keys_exported": false
+  },
+  "build_controller": {
+    "started_UTC": "2026-11-12T00:22:31.828681+00:00",
+    "command": [
+      "podman",
+      "--root",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/podman-storage",
+      "--runroot",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/podman-run",
+      "--storage-driver",
+      "vfs",
+      "--cgroup-manager",
+      "cgroupfs",
+      "run",
+      "--rm",
+      "--name",
+      "fx0-treescan-package-02",
+      "--privileged",
+      "--network",
+      "none",
+      "--security-opt",
+      "label=disable",
+      "--cgroups=disabled",
+      "--tmpfs",
+      "/ram:rw,size=2147483648,mode=1777",
+      "--tmpfs",
+      "/pmb:rw,size=134217728,mode=755",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-treescan:/pmaports:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/src/pmbootstrap:/pmbootstrap:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/diagnostics/rootless-native-build/pmbootstrap-with-recipe-provenance.py:/pmb-repro:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/pmbootstrap.cfg:/pmb-config:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/kernel-runtime-package/pmb/work/apk.static:/apk-static:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/treescan-package-01/work-version:/work-version:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/treescan-package-01/workdir.cfg:/base-workdir.cfg:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/treescan-package-01/distfiles/treescan-0.1.tar.gz:/source-archive:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/treescan-mtime-01/treescan-fixed.c:/expected-fixed-C:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/treescan-package-01/build-container.sh:/build-container.sh:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/treescan-package-01:/audit:rw",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/local/treescan-package-01/export:/export:rw",
+      "--volume",
+      "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/config_abuild:/trusted-abuild:ro",
+      "--volume",
+      "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_native:/bases/chroot_native:ro",
+      "--volume",
+      "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/chroot_buildroot_armv7:/bases/chroot_buildroot_armv7:ro",
+      "--volume",
+      "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/cache_apk_armv7:/bases/cache_apk_armv7:ro",
+      "--volume",
+      "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/cache_apk_x86_64:/bases/cache_apk_x86_64:ro",
+      "--volume",
+      "/tmp/fx0-storage/pmbootstrap-rootless-upower/work/config_apk_keys:/bases/config_apk_keys:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-cpr-6.18.63/.git/objects:/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-cpr-6.18.63/.git/objects:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-runtime/.git/objects:/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-runtime/.git/objects:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc/.git/objects:/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc/.git/objects:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc-teardown/.git/objects:/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc-teardown/.git/objects:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc-open-teardown/.git/objects:/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc-open-teardown/.git/objects:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-maintenance-6.18.63/.git/objects:/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-maintenance-6.18.63/.git/objects:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-vibrator-6.18.63/.git/objects:/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-vibrator-6.18.63/.git/objects:ro",
+      "--volume",
+      "/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc-6.18.63/.git/objects:/home/tim/Documents/GitHub/fx0/worktrees/pmaports-fx0-nfc-6.18.63/.git/objects:ro",
+      "6213355c8ea96806ce237d1ca509cfda6b5db33acff2d9addb80501baa6f2301",
+      "/bin/sh",
+      "/build-container.sh"
+    ],
+    "recipe_commit": "e58c455e3c0d88f443f449fabcea3eed57b75a93",
+    "DiskB_mounts_read_only": true,
+    "old_build_homes_hidden": true,
+    "private_key_reads_limited_to_ordinary_signing": true,
+    "phone_operations": false,
+    "PID": 3795670,
+    "returncode": 0,
+    "owned_child_reaped": true,
+    "finished_UTC": "2026-11-12T00:22:42.874067+00:00"
+  },
+  "package_verification": {
+    "recorded_UTC": "2026-11-12T00:25:17.264416+00:00",
+    "archive_sha256": "24f63c20f7197468a005b08c023242e70c491edb40c965372c540d70736ddf11",
+    "version": "0.1-r1",
+    "arch": "armv7",
+    "recipe_commit": "e58c455e3c0d88f443f449fabcea3eed57b75a93",
+    "signer": "pmos@local-6ae3f5f3.rsa.pub",
+    "signer_already_in_native_trust": true,
+    "independent_RSA_verified": true,
+    "signed_control_payload_hash_verified": true,
+    "ordinary_APK_verify_returncode": 0,
+    "negative_controls": [
+      {
+        "kind": "valid_tar_gzip_altered_control",
+        "ordinary_APK_rejected": true,
+        "returncode": 1
+      },
+      {
+        "kind": "valid_tar_gzip_altered_payload",
+        "ordinary_APK_rejected": true,
+        "returncode": 1
+      }
+    ],
+    "packaged_ELF_sha256": "933ebbc4bfe8017a5a6e39bc97d76a499cfaecf5598bacde68744a69206ad4a0",
+    "packaged_ELF_bytes": 5344,
+    "mode": 493,
+    "needed": [
+      "libc.musl-armv7.so.1"
+    ],
+    "all_dependencies_in_verified_native_runtime": true,
+    "embedded_package_scripts": false,
+    "ordinary_ARM_build_checks_passed": true,
+    "compiled_without_format_warnings": true,
+    "original_rollback_archive": "local/stable-executor-recovery-01/runtime-packages/treescan-0.1-r0.apk",
+    "native_package_installed": false,
+    "private_keys_read_by_verifier": false
+  },
+  "native_package_file_verification_and_add_simulation": {
+    "version": "apk-tools 3.0.8-r0, compiled for armv7.",
+    "verify_returncode": 0,
+    "simulation_returncode": 0,
+    "simulated_package_actions": [
+      "treescan"
+    ],
+    "live_DB_world_and_boot_unchanged": true,
+    "actual_package_installation": false
+  },
+  "native_packaged_executable": {
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "unit": {
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "ExecMainStatus": "0"
+    },
+    "current_boot_success_journal": true,
+    "result": {
+      "status": "passed",
+      "finished_UTC": "2026-11-12T00:26:21.630344+00:00",
+      "actual_ARM_execution": true,
+      "QEMU_used": false,
+      "synthetic_timestamp_values": [
+        -1,
+        0,
+        1,
+        2147483647,
+        2147483648,
+        4102444800
+      ],
+      "synthetic_metadata_entries": 9,
+      "three_repeats_identical": true,
+      "actual_systemd_entries": [
+        463,
+        82
+      ],
+      "original_incorrect_entries": [
+        463,
+        82
+      ],
+      "independent_python_stat_comparison": true,
+      "missing_directory_failure_verified": true,
+      "fixture_removed": true,
+      "native_packages_installed": false,
+      "installed_treescan_replaced": false
+    },
+    "passed": true
+  },
+  "signed_repository": {
+    "index_sha256": "0a4a578a2e36909a43f29b1b7cd46a4082b6b9a7e4f3161a80381c73b97516e0",
+    "package_sha256": "24f63c20f7197468a005b08c023242e70c491edb40c965372c540d70736ddf11",
+    "package_control_checksum": "Q1ReYHEKb42riq9D9r5JZ4CWKD8I4=",
+    "package_count": 1,
+    "package": "treescan",
+    "version": "0.1-r1",
+    "arch": "armv7",
+    "signer": "pmos@local-6ae3f5f3.rsa.pub",
+    "existing_native_trusted_signer": true,
+    "independent_RSA_verified": true,
+    "altered_valid_tar_gzip_index_rejected": true,
+    "archive_and_index_control_identity_match": true,
+    "package_bytes_unchanged": true
+  },
+  "native_repository_upgrade_simulation": {
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "command": [
+      "/sbin/apk",
+      "--no-interactive",
+      "--no-network",
+      "--repository",
+      "/var/lib/fx0-rollback/treescan-package-01/repository",
+      "upgrade",
+      "--simulate",
+      "treescan"
+    ],
+    "native_APK_version": "apk-tools 3.0.8-r0, compiled for armv7.",
+    "returncode": 0,
+    "simulated_package_actions": [
+      "treescan"
+    ],
+    "index_sha256": "0a4a578a2e36909a43f29b1b7cd46a4082b6b9a7e4f3161a80381c73b97516e0",
+    "package_sha256": "24f63c20f7197468a005b08c023242e70c491edb40c965372c540d70736ddf11",
+    "world_selection_preserved_by_upgrade_command": true,
+    "world_database_and_raw_boot_unchanged": true,
+    "actual_package_installation": false,
+    "index_and_candidate_staged_in_private_backup_directory": true,
+    "stdout_bytes": 74,
+    "stderr_bytes": 0,
+    "log_sha256": "5a1f61afeac08f1b02fe9747d8a581d936dc2c72889add57822d89f34beeb5a1",
+    "recorded_UTC": "2026-11-12T00:43:21.177899+00:00"
+  },
+  "postflight": {
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "kernel": "6.18.59-fx0-dmp",
+    "files_sha256": {
+      "/lib/apk/db/installed": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1",
+      "/etc/apk/world": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+      "/etc/apk/repositories": "37534543d9a1defca831a5b104f2e871f363555df8b817ec8a54b59d1138562a",
+      "/dev/mmcblk0p15": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921"
+    },
+    "systemd": "running",
+    "taint": 0,
+    "sway_running": true,
+    "gesture_daemon_running": true,
+    "MemAvailable_bytes": 820219904,
+    "backup_filesystem_free_bytes": 7531163648,
+    "SELinux_enforcement": "interface absent",
+    "physical_display_touch_for_current_return": "pending",
+    "native_package_or_boot_change": false,
+    "recorded_UTC": "2026-11-12T00:41:17.503160+00:00"
+  },
+  "normal_build_reused_stored_roots": true,
+  "DiskB_build_roots_and_key_configuration_read_only": true,
+  "build_source_homes_fresh": true,
+  "build_writable_overlays_in_container_RAM": true,
+  "existing_native_trust_keys_added": false,
+  "agent_read_hashed_or_exported_runtime_private_key_material": false,
+  "normal_signing_tool_key_use": true,
+  "original_rollback_archive": {
+    "package": "treescan",
+    "version": "0.1-r0",
+    "archive_sha256": "4a43c233172270107b04f8438b24cb880c38ca006f8bd8ccf49989bbcd56e2fb",
+    "exact_installed_and_authenticated_index_control": "Q1JFbX40hRcXMCTUYRgvA5taFhrbI=",
+    "trusted_index_sha256": "2ff9bc4a4e4f19e643c01ead0a87f0c574014921ef1347834e33c70e649b7811",
+    "signed_control_datahash_verified": true,
+    "captured_native_payload_bytes_match": true,
+    "native_path": "/usr/bin/treescan",
+    "signer": "alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+    "signer_in_existing_native_trust": true,
+    "individual_RSA_signature_verified": true,
+    "ordinary_APK_verify_returncode": 0,
+    "trust_basis": "Existing native signer plus authenticated index"
+  },
+  "local_candidate": "local/treescan-package-01/export/treescan-0.1-r1.apk",
+  "local_repository": "local/treescan-package-01/repository",
+  "native_candidate_directory": "/var/lib/fx0-rollback/treescan-package-01",
+  "native_package_or_boot_changes": false,
+  "candidate_installed": false,
+  "actual_live_package_update_hooks_and_rollback_qualified": false,
+  "clean_toolchain_rebuild_qualified": false,
+  "all_architectures_qualified": false,
+  "actual_native_test_fixture_removed": true,
+  "all_owned_build_and_test_processes_terminal": true,
+  "raw_native_logs_kept_private": true,
+  "kernel_transition_required_before_installation": true,
+  "fresh_post_kernel_backup_and_simulation_required": true,
+  "kernel_installer_revision_02_prepared": true,
+  "old_kernel_installer_revision_01_launch_superseded": true,
+  "current_return_physical_UI_pending": true,
+  "standing_phone_update_and_fx0_GitHub_push_approval": true,
+  "installed_kernel_remains": "r50",
+  "Sxmo": "1.18.1-r7",
+  "UPower": "r5",
+  "audio_testing": false,
+  "upstream_messages_sent": 0,
+  "full_bringup": "active"
+}
