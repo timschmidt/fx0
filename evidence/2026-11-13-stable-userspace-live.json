@@ -1,0 +1,354 @@
+{
+  "recorded_UTC": "2026-11-13T05:23:45.561476+00:00",
+  "subject": "Successful native stable userspace update after exact-source qualification",
+  "prior_checkpoint": "evidence/2026-11-13-stable-symlink-timestamps.json",
+  "prior_checkpoint_is_historical": true,
+  "source_sha256": {
+    "diagnostics/stable-update/stable_transaction.py": "c82c7081bc45272796b08593d13f394a9dfc7d5f43283bb3dc387bec37b2dbed",
+    "diagnostics/stable-update/apk_payload_ownership.py": "1668a38cc1d9976103d5aae5dc922637b0d762ca309b18407def8aeefe407f87",
+    "diagnostics/stable-update/qualify_stable_transaction.py": "3ea8f967787fd7dbe40eca8cf10e85b46c3f5fde72031772967087b7ff86ba10",
+    "diagnostics/stable-update/verify_stable_userspace.py": "3b746ac9dd0858eb7e9fac325818074eb20751992662077396fadf33a12be840",
+    "tests/test_stable_userspace_transaction.py": "a07b1766b711a198c3fa2985bb132878f85b8ccab0b37b8e32e8cea19e6a3a40",
+    "tests/test_apk_payload_ownership.py": "d481ae0e790a28c25253564c4d8168a44259566a99dc4e9d182fd604c0c29c4e",
+    "manifests/stable-userspace-transaction-scope-03.json": "543794c39a150a26044f806285893c82c76f7ac5ddd6a926188cdf0025eacc80"
+  },
+  "host_tests": {
+    "recorded_UTC": "2026-11-13T03:53:29.254735+00:00",
+    "passed": true,
+    "tests": 26
+  },
+  "native_qualification": {
+    "unit": "fx0-stable-userspace-qualification-03.service",
+    "terminal_unit": {
+      "ActiveState": "inactive",
+      "MainPID": "0",
+      "Result": "success",
+      "ControlGroup": ""
+    },
+    "no_remaining_cgroup_processes": true,
+    "current_boot_PID1_success": true,
+    "native_status_sha256": "5933bac57cb0f9665fd6dee5d9b4c0a6ff6c44f580533c634efe4152d3dba9fd",
+    "all_staged_sources_exact": true,
+    "result": {
+      "status": "passed",
+      "live_OS_transaction": false,
+      "actual_ARM_kernel": true,
+      "QEMU_used": false,
+      "audio_testing": false,
+      "private_fixture_removed": false,
+      "started_UTC": "2026-11-13T03:55:27.171199+00:00",
+      "fixture_reuse": {
+        "prior_run_terminal": true,
+        "prior_7002_path_rollback_verified": true,
+        "prior_namespace_and_all_cached_inputs_verified": true,
+        "prior_failure_preserved": true
+      },
+      "success": {
+        "retained_distro_paths_immutable": 3,
+        "stage": "updated-and-verified",
+        "selected_candidate_identities_verified": 30,
+        "protected_745_identities_preserved": true,
+        "unit_timestamps": 545,
+        "world_exact": true
+      },
+      "synthetic_executor": {
+        "synthetic": true,
+        "signed_body_sha256": "dfb17d0362c0eae1230da18cf337a329c962e03cde8ce6690c5af4851c352a68",
+        "all_owned_hooks_terminal_before_insertion": true,
+        "recognised_and_removed": true
+      },
+      "normal_recovery": {
+        "recovered_paths": 7002,
+        "recovered_memberships": 701,
+        "original_775_identities": true,
+        "hardlink_aliases": 254,
+        "unit_timestamps": 545,
+        "APK_lock_inode_preserved": true
+      },
+      "failures": [
+        {
+          "name": "hook-exec-failure",
+          "terminal_stage": "rolled-back",
+          "recovered_paths": 7002,
+          "recovered_memberships": 701,
+          "original_775_identities": true,
+          "APK_lock_inode_preserved": true,
+          "injected_before_OpenSSH_hook_body": true,
+          "injected_after_actual_commit_and_inventory": false
+        },
+        {
+          "name": "post-commit-failure",
+          "terminal_stage": "rolled-back",
+          "recovered_paths": 7002,
+          "recovered_memberships": 701,
+          "original_775_identities": true,
+          "APK_lock_inode_preserved": true,
+          "injected_before_OpenSSH_hook_body": false,
+          "injected_after_actual_commit_and_inventory": true
+        }
+      ],
+      "controller_sha256": "c82c7081bc45272796b08593d13f394a9dfc7d5f43283bb3dc387bec37b2dbed",
+      "scope_sha256": "543794c39a150a26044f806285893c82c76f7ac5ddd6a926188cdf0025eacc80",
+      "same_source_success_and_two_failure_recoveries": true,
+      "normal_APK_hooks_and_trust_retained": true,
+      "recovery_write_files": 2708,
+      "recovery_directory_metadata": 133,
+      "guarded_paths": 7002,
+      "guarded_memberships": 701,
+      "protected_other_identities": 745,
+      "hardlink_aliases": 254,
+      "SELinux_label_paths": 1480,
+      "complete_private_namespace_verified": true,
+      "normal_trace_no_key_generation_tool_execution_observed": true,
+      "actual_live_hashes_unchanged": true,
+      "live_transaction_still_not_started": true,
+      "all_owned_processes_terminal": true,
+      "private_fixture_retained": true,
+      "abrupt_power_loss_and_stop_matrix_qualified": false,
+      "finished_UTC": "2026-11-13T04:52:57.286868+00:00"
+    }
+  },
+  "separate_live_preflight": {
+    "unit": "fx0-stable-userspace-live-check-03.service",
+    "passed": true,
+    "current_boot_PID1_success": true,
+    "observed_UTC": "2026-11-13T05:03:35.957803+00:00"
+  },
+  "observed_live_service_permissions": {
+    "check": {
+      "active_namespace_captured": true,
+      "no_new_privileges": true,
+      "module_loading_capability_absent": true,
+      "real_module_directory_mode": 493,
+      "observed_UTC": "2026-11-13T04:56:49.409332+00:00",
+      "boot_device_read_only": true,
+      "kernel_modules_and_boot_read_only": true,
+      "public_keys_repositories_and_hooks_read_only": true,
+      "backups_and_staged_sources_read_only": true,
+      "only_transaction_state_writable_within_backup_parent": true
+    },
+    "install": {
+      "active_namespace_captured": true,
+      "no_new_privileges": true,
+      "module_loading_capability_absent": true,
+      "real_module_directory_mode": 493,
+      "observed_UTC": "2026-11-13T05:04:38.155953+00:00",
+      "boot_device_read_only": true,
+      "kernel_modules_and_boot_read_only": true,
+      "public_keys_repositories_and_hooks_read_only": true,
+      "backups_and_staged_sources_read_only": true,
+      "only_transaction_state_writable_within_backup_parent": true
+    }
+  },
+  "live_update": {
+    "unit": "fx0-stable-userspace-live-03.service",
+    "terminal_unit": {
+      "ActiveState": "inactive",
+      "MainPID": "0",
+      "Result": "success",
+      "ControlGroup": ""
+    },
+    "current_boot_PID1_success": true,
+    "no_remaining_cgroup_processes": true,
+    "native_status_sha256": "1eab26e4d2dfe86adb2a58034d69d1b3668fb916632e1bbe23de12b21c3847c8",
+    "all_staged_sources_exact": true,
+    "result": {
+      "stage": "updated-and-verified",
+      "live_OS_transaction": true,
+      "automatic_reboot": false,
+      "started_UTC": "2026-11-13T05:06:14.792519+00:00",
+      "history": [
+        {
+          "stage": "version-terminal",
+          "UTC": "2026-11-13T05:08:16.064044+00:00"
+        },
+        {
+          "stage": "verify-all-candidates-terminal",
+          "UTC": "2026-11-13T05:08:20.903167+00:00"
+        },
+        {
+          "stage": "load-local-indexes-terminal",
+          "UTC": "2026-11-13T05:08:27.012324+00:00"
+        },
+        {
+          "stage": "simulate-terminal",
+          "UTC": "2026-11-13T05:08:33.591492+00:00"
+        },
+        {
+          "stage": "preflight-verified",
+          "UTC": "2026-11-13T05:10:30.140306+00:00"
+        },
+        {
+          "stage": "installing",
+          "UTC": "2026-11-13T05:10:30.156688+00:00"
+        },
+        {
+          "stage": "upgrade-terminal",
+          "UTC": "2026-11-13T05:10:48.166508+00:00"
+        },
+        {
+          "stage": "version-upgraded-terminal",
+          "UTC": "2026-11-13T05:10:48.226677+00:00"
+        },
+        {
+          "stage": "refresh-inventory-terminal",
+          "UTC": "2026-11-13T05:13:44.910897+00:00"
+        },
+        {
+          "stage": "installed-hooks-terminal",
+          "UTC": "2026-11-13T05:13:46.079310+00:00"
+        },
+        {
+          "stage": "candidate-verified",
+          "UTC": "2026-11-13T05:16:34.672833+00:00"
+        },
+        {
+          "stage": "updated-and-verified",
+          "UTC": "2026-11-13T05:16:34.706350+00:00"
+        }
+      ],
+      "package_parent_returncode": 0,
+      "all_owned_process_groups_terminal": true,
+      "baseline_paths": 7002,
+      "memberships": 701,
+      "candidate_signatures_verified": 30,
+      "mutable_files": 2708,
+      "mutable_directory_metadata": 133,
+      "native_installation_started": true,
+      "upgrade_window_ns": [
+        1794546630170306634,
+        1794546648166345174
+      ],
+      "owned_executor_files_removed": [],
+      "baseline_paths_guarded": 7002,
+      "memberships_guarded": 701,
+      "other_package_identities_unchanged": 745,
+      "selected_candidate_identities_verified": 30,
+      "world_exact": true,
+      "unit_entries_and_timestamps_verified": 545,
+      "boot_written": false
+    }
+  },
+  "independent_postflight": {
+    "recorded_UTC": "2026-11-13T05:18:57.782804+00:00",
+    "kernel": "6.18.63-fx0-vibrator-alpine",
+    "package_version": "6.18.63-r1",
+    "taint": 0,
+    "kernel_notes_sha256": "05292e44d9f13de78b5ebf602b0b3f9ff22b7820d765f6e796cf3473beee4377",
+    "signature_enforcement": "Y",
+    "persistent_signature_cmdline": true,
+    "native_trial_marker": false,
+    "return_timer": false,
+    "modules_on_persistent_storage": true,
+    "candidate_payload_files_verified": 545,
+    "candidate_module_files_verified": 464,
+    "initramfs_payload_entries_verified": 243,
+    "other_post_treescan_package_identities_unchanged": 745,
+    "intended_kernel_treescan_and_30_stable_identity_changes_only": true,
+    "stable_candidate_payload_paths_verified": 2685,
+    "retained_distro_payload_paths_verified": 3,
+    "stable_archive_signatures_verified": 30,
+    "stable_APK_version": "apk-tools 3.0.9-r0, compiled for armv7.",
+    "treescan_package_version": "0.1-r1",
+    "treescan_ELF_sha256": "933ebbc4bfe8017a5a6e39bc97d76a499cfaecf5598bacde68744a69206ad4a0",
+    "unit_inventory_paths_verified": 545,
+    "installed_treescan_scans_verified": true,
+    "installed_world_exact": true,
+    "boot_image_sha256": "ee851c81968b86a80b47eb2e5c2f07d9d4298cffa17c9347e437036c128e2c64",
+    "raw_boot_sha256": "44dfbb6c64148071d2983dd053d7c04b02f21f9200dc917ee70455f3b40a65c2",
+    "bootloader_prefix_preserved": true,
+    "original_r50_backups_still_verified": true,
+    "systemd": "running",
+    "gesture_touchscreen_open": true,
+    "display_PM_auto": {
+      "fd900000.display-subsystem": "auto",
+      "fd928000.iommu": "auto",
+      "fd922800.dsi": "auto",
+      "fd922a00.phy": "auto"
+    },
+    "CPUs_online": "0-3",
+    "temperatures_mC": {
+      "thermal_zone1": 44000,
+      "thermal_zone0": 44000
+    },
+    "serious_kernel_warnings": [],
+    "audio_testing": false,
+    "read_only": true,
+    "observed_UTC": "2026-11-13T05:19:00.551781+00:00",
+    "actual_staged_source_sha256": "3b746ac9dd0858eb7e9fac325818074eb20751992662077396fadf33a12be840",
+    "live_unit_terminal_journal_rechecked": true
+  },
+  "installed_timestamp_checks": {
+    "passed": true,
+    "actual_installed_executable": true,
+    "negative_and_2038_and_2100_timestamps": true,
+    "stdout": "Timestamp, recursion, symlink and missing-directory checks passed",
+    "observed_UTC": "2026-11-13T05:17:34.733468+00:00",
+    "actual_staged_source_sha256": "07f2d5e3b75290b4b434e60d53782cc4e35edf4421a463b3c1a300f6a1c00b83",
+    "live_unit_terminal_journal_rechecked": true
+  },
+  "stable_currency": {
+    "recorded_UTC": "2026-11-13T05:21:33.143395+00:00",
+    "installed_package_count": 775,
+    "native_public_trust_keys_unchanged_since_prior_audit": true,
+    "modified_signed_index_stream_rejected": true,
+    "protected_custom_packages_not_selected": true,
+    "action_counts": {},
+    "isolated_database_and_world_unchanged": true,
+    "host_only": true,
+    "native_index_refresh": false,
+    "native_repository_or_trust_change": false,
+    "native_package_installation": false,
+    "pending_changes": 0,
+    "exact_custom_holds_preserved": 10,
+    "Sxmo_packages_preserved": 8,
+    "repositories": [
+      {
+        "requested_index": "https://mirror.postmarketos.org/postmarketos/extra-repos/systemd/v26.06/armv7/APKINDEX.tar.gz",
+        "final_URL": "https://mirror.nura.eco/postmarketos/extra-repos/systemd/v26.06/armv7/APKINDEX.tar.gz",
+        "sha256": "c52a218aeb8dd67b2c3bb7bece1280609f1859f2b276ea850b0f4780f84545b4",
+        "bytes": 22182,
+        "fetched_UTC": "2026-11-13T05:21:07.787954+00:00",
+        "signature_verified": true
+      },
+      {
+        "requested_index": "https://mirror.postmarketos.org/postmarketos/v26.06/armv7/APKINDEX.tar.gz",
+        "final_URL": "https://mirror.nura.eco/postmarketos/v26.06/armv7/APKINDEX.tar.gz",
+        "sha256": "6d7cdaf94e5af3d4a3b089de24831c0fd71c4f46d342c2f59c0dd245b3314f34",
+        "bytes": 68361,
+        "fetched_UTC": "2026-11-13T05:21:08.834300+00:00",
+        "signature_verified": true
+      },
+      {
+        "requested_index": "https://cdn.alpinelinux.org/v3.24/main/armv7/APKINDEX.tar.gz",
+        "final_URL": "https://cdn.alpinelinux.org/v3.24/main/armv7/APKINDEX.tar.gz",
+        "sha256": "c64e761dc08bc30512a04f9e61e29f80e557ac09dfb281704a5561793d6eae6d",
+        "bytes": 527152,
+        "fetched_UTC": "2026-11-13T05:21:09.386771+00:00",
+        "signature_verified": true
+      },
+      {
+        "requested_index": "https://cdn.alpinelinux.org/v3.24/community/armv7/APKINDEX.tar.gz",
+        "final_URL": "https://cdn.alpinelinux.org/v3.24/community/armv7/APKINDEX.tar.gz",
+        "sha256": "396c2762d15fef52f4235560b641ab4b2447964fd7e84d8195a1e60fa094bb93",
+        "bytes": 2316299,
+        "fetched_UTC": "2026-11-13T05:21:09.963780+00:00",
+        "signature_verified": true
+      }
+    ],
+    "release_source": "https://nura.eco/install/",
+    "latest_stable_release": "v26.06"
+  },
+  "owner_display_and_touch_confirmed_for_same_unchanged_boot": true,
+  "private_backups_and_runtime_keys_published": false,
+  "audio_testing": false,
+  "reboot": false,
+  "boot_write": false,
+  "limits": [
+    "Abrupt power loss and stop-signal matrix remain unqualified",
+    "The native qualification fixture proves scoped restoration; this live success did not invoke rollback",
+    "Physical UI confirmation preceded the userspace update; no post-update human UI observation is implied",
+    "Edge runtime, wider hardware, reliability and final upstream readiness remain open"
+  ],
+  "full_bringup": "active"
+}

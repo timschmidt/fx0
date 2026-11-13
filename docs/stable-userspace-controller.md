@@ -1,5 +1,52 @@
 # Stable userspace controller on the current r1 boot
 
+## Verified live checkpoint, November 13 UTC
+
+Revision 3 completed native success, normal recovery and both injected failure
+cohorts at 04:52:57 UTC. All three recoveries verified 7,002 captured paths,
+701 complete directory memberships and all 775 original package identities.
+The normal recovery additionally exercised a synthetic retained signed executor;
+its insertion and cleanup are test behavior, not a live incident. The hook
+failure occurred before the OpenSSH hook body; the other failure occurred
+after the real package commit and inventory refresh. PID1 recorded successful
+qualification completion, with no processes left in the unit's cgroup.
+
+A separate preflight passed in the actual live service environment. The
+live transaction started at 05:06:14 UTC and completed at 05:16:34 UTC with
+`updated-and-verified`, an actual current-boot PID1 success record and an
+empty cgroup. All thirty signed candidate identities match, the other 745
+identities and world remain unchanged, and 545 unit entries and timestamps
+verify. Normal signed APK hooks ran. Actual namespace inspection during
+both services verified read-only boot, kernel, modules, trust keys,
+repositories, commit hooks, retained distro files, backups and staged sources.
+There was no boot write, reboot or audio test.
+
+The independent postflight at 05:19 UTC verifies 2,685 signed candidate paths,
+three retained distro paths, all thirty archive signatures, 545 kernel files,
+464 modules, 243 initramfs entries, the boot image and original bootloader
+prefix. Signature enforcement is enabled and taint is zero. Installed treescan
+passes its negative, 2038/2100, recursion, symlink and missing-directory checks.
+Systemd is running, Sway and the gesture process remain active, the latter holds
+the touchscreen open, and there are no serious kernel warnings. The owner's
+physical display/touch confirmation preceded this update on the same boot;
+these process checks do not establish a new human UI observation.
+
+Fresh indexes fetched at 05:21 UTC authenticate with the existing native
+public trust keys. An altered index is rejected. Host APK simulation against
+the independently verified updated database proposes zero changes, preserving
+ten exact custom holds and all eight Sxmo packages. The official
+[installation page](https://nura.eco/install/) still identifies v26.06 as the
+latest stable release. This is a dated supported-repository currency result.
+
+The [live evidence](../evidence/2026-11-13-stable-userspace-live.json) and
+[manifest](../manifests/stable-userspace-live.json) pin the tested source,
+thirty package archives, terminal receipts and fresh indexes. Earlier failed
+qualification receipts remain unchanged. Abrupt power loss, the stop-signal
+matrix, edge runtime, wider hardware, reliability and final upstream readiness
+remain open.
+
+## Historical preparation checkpoint
+
 The current phone runs the accepted Linux 6.18.63-r1, treescan 0.1-r1,
 Sxmo r7 and UPower r5 installation. The owner confirmed display and touch
 for its November 13 UTC boot. Package database, world, repositories and
@@ -60,16 +107,16 @@ Qualification results must come from current unit state and PID1's
 current-boot journal; stored intent or unloaded-unit default fields do not
 establish success.
 
-Native controller qualification and live activation remain pending until
-their actual results are recorded. Abrupt power loss and the stop-signal
-matrix remain unqualified. Audio testing stays excluded. Full hardware,
-edge compatibility, reliability and upstream readiness remain open.
+At this preparation checkpoint native controller qualification and live
+activation were pending. The verified live checkpoint above records their
+subsequent results. Abrupt power loss and the stop-signal matrix remain
+unqualified. Audio testing stays excluded.
 
 The [checkpoint evidence](../evidence/2026-11-13-stable-controller-recovery.json)
 and [source manifest](../manifests/stable-userspace-controller-recovery.json)
 identify the actual running unit, verified backup and tested sources. The
-new native fixture has completed successfully; controller qualification is
-running and must be observed to its actual terminal result.
+new native fixture had completed successfully, while controller qualification
+was still running at that historical observation.
 
 
 ## Symlink timestamp correction and the second private rollback
@@ -101,8 +148,8 @@ all three retained distro paths independently of the controller helper.
 Revision 3 reuses the prior fixture only after checking the terminal recovery
 receipts, empty old cgroup, complete saved private namespace and all retained
 signed cache/input files. Its ordinary preflight still verifies the entire
-capture before package changes. The success and two failure cohorts are
-running in `fx0-stable-userspace-qualification-03.service`. This is a private
-qualification, with no live update or reboot. See the
-[current evidence](../evidence/2026-11-13-stable-symlink-timestamps.json) and
+capture before package changes. The success and two failure cohorts were
+running in `fx0-stable-userspace-qualification-03.service` at the recorded
+checkpoint. That private qualification involved no live update or reboot.
+See the [historical evidence](../evidence/2026-11-13-stable-symlink-timestamps.json) and
 [revision 3 manifest](../manifests/stable-userspace-symlink-timestamps.json).

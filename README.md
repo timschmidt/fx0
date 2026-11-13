@@ -30,14 +30,15 @@ The device is available for development and flashing. No personal data needs to 
 
 ## Latest checkpoint
 
-The November 13 UTC checkpoint runs the accepted Linux 6.18.63-r1 kernel,
-treescan 0.1-r1, Sxmo r7 and UPower r5. Display and touch are confirmed for
-the current boot. A fresh recovery backup is verified on phone and host;
-revision 3 of the controller for thirty stable userspace updates is being
-qualified after two private runs recovered their original state. See
-[the current controller work](docs/stable-userspace-controller.md)
-and the [hardware acceptance record](docs/hardware-acceptance.md). Complete
-bringup remains open.
+The November 13 UTC checkpoint runs Linux 6.18.63-r1, treescan 0.1-r1,
+Sxmo r7 and UPower r5. Thirty stable userspace updates passed exact-source
+native qualification, live installation and independent payload/boot/service
+verification. Fresh signed stable indexes propose zero further changes,
+preserving the custom holds. No reboot or boot write occurred. Display and
+touch were confirmed earlier on this same boot. See the
+[update and recovery results](docs/stable-userspace-controller.md) and
+[hardware acceptance record](docs/hardware-acceptance.md). Full hardware,
+edge, reliability and upstream readiness remain open.
 
 ## October 31 baseline
 

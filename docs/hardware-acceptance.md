@@ -8,7 +8,18 @@ Use these statuses: `unverified`, `identified`, `in progress`, `blocked`, `faile
 
 For each result record the exact image hash, source revisions, package manifest, unit revision, power source, battery condition, procedure, observations, log/artifact reference, and date. Keep identifiers and original logs privately; publish reviewed evidence under `evidence/` when available.
 
-**Current phone state: r50 with Sxmo 1.18.1-r7.** The later Linux 6.18.63-r1
+**Current phone state, November 13 UTC:** persistent Linux 6.18.63-r1,
+treescan 0.1-r1, Sxmo 1.18.1-r7 and UPower r5. Thirty stable userspace
+updates pass native installation and independent signed payload, boot,
+module, unit inventory and service verification. Fresh authenticated stable
+indexes propose zero changes, with all custom holds preserved. Signature
+enforcement is enabled and taint is zero. The owner confirmed display and
+touch earlier on this same boot. No reboot or boot write occurs in this
+userspace transaction. This does not repeat the older per-feature hardware
+tests on the combined installation; those gates remain open.
+[Live update evidence](../evidence/2026-11-13-stable-userspace-live.json)
+
+**Historical r50 checkpoint with Sxmo 1.18.1-r7.** The later Linux 6.18.63-r1
 vibrator package now has a zero-taint RAM result, while the matching r59 NFC
 family passes its first moduleless startup. These are separate artifacts and
 do not qualify a combined installed image.

@@ -5695,3 +5695,36 @@ controlled failures are running in the private native unit; live service
 checks, installation and complete bringup remain open. No boot write, reboot
 or audio test occurs.
 [Evidence](../evidence/2026-11-13-stable-symlink-timestamps.json)
+
+### November 13 UTC: verified native stable userspace update
+
+Revision 3 completes native success, normal recovery and both injected failure
+cohorts with the exact frozen controller. All three recoveries restore and verify
+7,002 paths, 701 memberships and 775 original package identities. Retained signed
+executor coverage is explicitly synthetic. Preserve both earlier failed cohorts
+and their recovery receipts. Current-boot PID1 success and an empty cgroup prove
+actual qualification completion at 04:52:57 UTC.
+
+The separate actual-service preflight passes, then the live transaction completes
+at 05:16:34 UTC with normal signed APK hooks, thirty verified candidate identities,
+the other 745 identities unchanged, exact world and 545 unit timestamps. Namespace
+inspection confirms read-only boot, modules, kernel, trust keys, repositories,
+commit hooks, retained distro files, backups and staged sources. No boot write,
+reboot or audio test occurs. Independent postflight verifies the signed payloads,
+retained distro files, kernel/modules/initramfs, boot image/prefix and installed
+treescan timestamp behavior. Systemd is running, taint is zero and signature
+enforcement is enabled; display/gesture processes remain active without serious
+kernel warnings. Physical display/touch confirmation preceded the update on the
+same boot, so no new human UI observation is claimed.
+
+Fresh supported stable indexes fetched at 05:21 UTC authenticate with the existing
+public keys and reject an altered stream. A host-only simulation from the verified
+updated inventory proposes zero changes, retaining ten exact holds and eight Sxmo
+packages. The two owner-approved source commits, `ef4f560` and `e8afd85`, are
+published and independently verified on `integration/fx0-cpr-startup-evidence`.
+Their earlier evidence snapshots retain their original timestamps and limits.
+
+The current evidence records the actual native results. Abrupt power loss,
+stop-signal coverage, edge runtime, wider hardware, reliability and final upstream
+readiness remain open; the complete bringup goal stays active.
+[Live evidence](../evidence/2026-11-13-stable-userspace-live.json)
