@@ -57,21 +57,24 @@ baseline = verifier.database(original['lib/apk/db/installed'])
 current = verifier.database(Path('/lib/apk/db/installed').read_bytes())
 kernel_package = 'linux-postmarketos-qcom-msm8226'
 assert current.keys() == baseline.keys()
-stable = Path('/var/lib/fx0-rollback/stable-userspace-live-02')
-assert sha(stable/'scope.json')=='4e4472f4baeb245a4a7b6d2f4f24cbe4f779d10b8aee9f3ae5c971b6ed71d92d'
+stable = Path('/var/lib/fx0-rollback/stable-userspace-live-03')
+assert sha(stable/'scope.json')=='543794c39a150a26044f806285893c82c76f7ac5ddd6a926188cdf0025eacc80'
 stable_scope=json.loads((stable/'scope.json').read_text())
 stable_plan=json.loads((stable/'install-plan.json').read_text())
 stable_status=json.loads((stable/'install-status.json').read_text())
 assert stable_status['stage']=='updated-and-verified' and stable_status['all_owned_process_groups_terminal']
 assert stable_status['selected_candidate_identities_verified']==30 and stable_status['other_package_identities_unchanged']==745
 assert stable_status['world_exact'] and not stable_status['boot_written']
+upgrade_window=stable_status['upgrade_window_ns']
+assert len(upgrade_window)==2 and all(type(n) is int for n in upgrade_window)
+assert upgrade_window[0]<=upgrade_window[1]
 assert sha(stable/'stable_transaction.py')==stable_plan['controller_sha256']==stable_plan['qualified_controller_sha256']
 assert sha(stable/'update_transaction.py')==stable_plan['transaction_helper_sha256']
 assert sha(stable/'controller-qualification.json')==stable_plan['qualification_result_sha256']
 stable_qualified=json.loads((stable/'controller-qualification.json').read_text())
 assert stable_qualified['status']=='passed' and stable_qualified['same_source_success_and_two_failure_recoveries']
 assert stable_qualified['controller_sha256']==stable_plan['controller_sha256']
-assert stable_qualified['scope_sha256']=='4e4472f4baeb245a4a7b6d2f4f24cbe4f779d10b8aee9f3ae5c971b6ed71d92d'
+assert stable_qualified['scope_sha256']=='543794c39a150a26044f806285893c82c76f7ac5ddd6a926188cdf0025eacc80'
 assert sha('/lib/apk/db/installed')==stable_status['database_sha256']
 changed_packages = {kernel_package, 'treescan'} | set(stable_scope['new_identities'])
 assert len(changed_packages)==32
@@ -332,9 +335,13 @@ for paragraph in post_treescan_database.decode().split('\n\n'):
 assert set(old_config_checksums)==set(stable_scope['config_paths'])
 def matches_payload(name,row):
     path=actual_path(name);st=path.lstat()
-    assert (stat.S_IMODE(st.st_mode),st.st_uid,st.st_gid,st.st_mtime_ns)==(row['mode'],row['uid'],row['gid'],row['mtime_ns']),('Signed payload metadata differs',name)
-    if row['kind']=='symlink':assert stat.S_ISLNK(st.st_mode) and os.readlink(path)==row['target']
-    else:assert stat.S_ISREG(st.st_mode) and st.st_size==row['size'] and sha(path)==row['sha256']
+    assert (stat.S_IMODE(st.st_mode),st.st_uid,st.st_gid)==(row['mode'],row['uid'],row['gid']),('Signed payload metadata differs',name)
+    if row['kind']=='symlink':
+        assert stat.S_ISLNK(st.st_mode) and os.readlink(path)==row['target']
+        assert upgrade_window[0]<=st.st_mtime_ns<=upgrade_window[1],('Symlink timestamp outside owned APK command',name)
+    else:
+        assert st.st_mtime_ns==row['mtime_ns'],('Signed regular-file timestamp differs',name)
+        assert stat.S_ISREG(st.st_mode) and st.st_size==row['size'] and sha(path)==row['sha256']
     source=name.removesuffix('.apk-new')
     desired=fresh['paths'][source]['xattrs'] if fresh['paths'][source]['kind']!='absent' else stable_scope['new_file_xattrs'][source]
     assert {k:os.getxattr(path,k,follow_symlinks=False).hex() for k in os.listxattr(path,follow_symlinks=False)}==desired

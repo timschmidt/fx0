@@ -14,9 +14,9 @@ import shutil
 import signal
 
 run=Path(__file__).resolve().parent
-assert str(run)=='/var/lib/fx0-rollback/stable-userspace-qualification-02'
+assert str(run)=='/var/lib/fx0-rollback/stable-userspace-qualification-03'
 fixture=Path('/var/lib/fx0-rollback/stable-post-treescan-fixture-02');root=fixture/'root'
-unit='fx0-stable-userspace-qualification-02.service'
+unit='fx0-stable-userspace-qualification-03.service'
 state=dict(status='starting',live_OS_transaction=False,actual_ARM_kernel=True,QEMU_used=False,
     audio_testing=False,private_fixture_removed=False,started_UTC=datetime.datetime.now(datetime.timezone.utc).isoformat())
 ops=None
@@ -60,21 +60,35 @@ try:
             else:
                 assert re.fullmatch(r'APKINDEX\.[0-9a-f]{8}\.tar\.gz',path.name)
                 assert sha(path) in scope['index_sha256']
-    assert sha(fixture/'initial-namespace.private.json')==plan['prior_initial_namespace_sha256']
-    prior_initial=set(json.loads((fixture/'initial-namespace.private.json').read_text()))
+    # Reuse only the terminal prior run's fully recovered private fixture.
+    prior=Path('/var/lib/fx0-rollback/stable-userspace-qualification-02')
+    assert sha(prior/'status.json')==plan['prior_status_sha256']
+    assert sha(prior/'success.json')==plan['prior_success_sha256']
+    assert sha(prior/'initial-namespace.private.json')==plan['prior_initial_namespace_sha256']
+    prior_status=json.loads((prior/'status.json').read_text())
+    recovered=json.loads((prior/'success.json').read_text())
+    assert prior_status['status']=='failed' and prior_status['error'].startswith('RolledBack:')
+    assert recovered['stage']=='rolled-back' and recovered['recovered_paths']==7002 and recovered['recovered_memberships']==701
+    assert recovered['original_775_package_identities_recovered'] and recovered['all_owned_process_groups_terminal']
+    prior_group=Path('/sys/fs/cgroup/system.slice/fx0-stable-userspace-qualification-02.service')
+    assert not prior_group.exists() or not any(p.read_text().strip() for p in prior_group.rglob('cgroup.procs'))
+    prior_initial=set(json.loads((prior/'initial-namespace.private.json').read_text()))
     extra=namespace()-prior_initial
-    assert all(name.startswith('/.fixture-cache/') for name in extra)
-    assert not prior_initial-namespace();check_cache(root/'.fixture-cache')
-    inside=root/'.fixture-stable-controller';inside.mkdir(mode=0o700,exist_ok=False)
-    (inside/'cache').mkdir(mode=0o700)
+    assert all(name.startswith(('/.fixture-cache/','/.fixture-stable-controller/cache/')) for name in extra)
+    assert not prior_initial-namespace()
+    inside=root/'.fixture-stable-controller'
+    assert inside.is_dir() and not inside.is_symlink() and inside.stat().st_uid==0 and inside.stat().st_mode&0o777==0o700
+    assert (inside/'cache').is_dir() and not (inside/'cache').is_symlink()
+    check_cache(root/'.fixture-cache');check_cache(inside/'cache')
     for index,expected in enumerate(scope['index_sha256']):
-        directory=inside/'repos'/str(index)/'armv7';directory.mkdir(mode=0o700,parents=True)
-        src=fixture/'indexes'/('%d.tar.gz'%index);assert sha(src)==expected
-        shutil.copyfile(src,directory/'APKINDEX.tar.gz')
+        path=inside/'repos'/str(index)/'armv7/APKINDEX.tar.gz'
+        assert not path.is_symlink() and sha(path)==expected
     for row in scope['packages']:
-        name=row['package']+'-'+row['version']+'.apk';src=fixture/'packages'/name
-        assert sha(src)==row['sha256'];shutil.copyfile(src,inside/'repos'/str(row['repository'])/'armv7'/name)
-    (inside/'repositories').write_text(''.join('/.fixture-stable-controller/repos/'+str(i)+'\n' for i in range(4)))
+        path=inside/'repos'/str(row['repository'])/'armv7'/(row['package']+'-'+row['version']+'.apk')
+        assert not path.is_symlink() and sha(path)==row['sha256']
+    assert (inside/'repositories').read_text()==''.join('/.fixture-stable-controller/repos/'+str(i)+'\n' for i in range(4))
+    state['fixture_reuse']=dict(prior_run_terminal=True,prior_7002_path_rollback_verified=True,
+        prior_namespace_and_all_cached_inputs_verified=True,prior_failure_preserved=True)
     initial=namespace()
     with (run/'initial-namespace.private.json').open('x') as stream:json.dump(sorted(initial),stream);stream.write('\n')
     assert sha(run/'stable_transaction.py')==plan['controller_sha256']
@@ -87,6 +101,7 @@ try:
     ops=controller.execute(dict(base,status_name='success.json'),run)
     assert ops.state['stage']=='updated-and-verified' and ops.state['selected_candidate_identities_verified']==30
     assert ops.state['other_package_identities_unchanged']==745 and ops.state['unit_entries_and_timestamps_verified']==545
+    assert len(ops.state['upgrade_window_ns'])==2 and ops.state['upgrade_window_ns'][0]<=ops.state['upgrade_window_ns'][1]
     controller.atomic(run/'success-candidate.json',(json.dumps(ops.state,indent=2)+'\n').encode())
     state['success']=dict(retained_distro_paths_immutable=3,stage=ops.state['stage'],selected_candidate_identities_verified=30,
         protected_745_identities_preserved=True,unit_timestamps=545,world_exact=True)

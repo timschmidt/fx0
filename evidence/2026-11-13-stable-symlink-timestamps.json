@@ -1,0 +1,194 @@
+{
+  "recorded_UTC": "2026-11-13T04:14:02.933806+00:00",
+  "subject": "APK symlink creation timestamps in the stable userspace controller",
+  "previous_evidence": "evidence/2026-11-13-stable-controller-recovery.json",
+  "previous_evidence_sha256": "44b5a1660d61eef00a49e9a95a934a6a7c6477d28cb3c577bb44b087564119e3",
+  "prior_qualification": {
+    "native_boot_id": "6114df77-29f2-43ac-8ede-1ca72c743895",
+    "unit": {
+      "LoadState": "loaded",
+      "ActiveState": "failed",
+      "SubState": "failed",
+      "Result": "exit-code",
+      "ExecMainCode": "1",
+      "ExecMainStatus": "1",
+      "MemoryCurrent": "[not set]",
+      "CPUUsageNSec": "648344834000"
+    },
+    "worker_result": {
+      "status": "failed",
+      "live_OS_transaction": false,
+      "actual_ARM_kernel": true,
+      "QEMU_used": false,
+      "audio_testing": false,
+      "private_fixture_removed": false,
+      "started_UTC": "2026-11-13T03:22:46.338417+00:00",
+      "error": "RolledBack: ('Candidate payload differs from signed archive', '/usr/bin/ex')",
+      "finished_UTC": "2026-11-13T03:44:24.262367+00:00"
+    },
+    "current_boot_success_journal": false,
+    "journal_success_realtime_microseconds": null,
+    "observed_UTC": "2026-11-13T03:44:39.293620+00:00",
+    "passed": false,
+    "unloaded_unit_default_exit_fields_not_used_as_exit_proof": true
+  },
+  "prior_recovery": {
+    "boot_id": "6114df77-29f2-43ac-8ede-1ca72c743895",
+    "prior_unit": "fx0-stable-userspace-qualification-02.service",
+    "prior_directory": "/var/lib/fx0-rollback/stable-userspace-qualification-02",
+    "terminal_unit": {
+      "ActiveState": "failed",
+      "MainPID": "0",
+      "ControlGroup": ""
+    },
+    "no_remaining_cgroup_processes": true,
+    "prior_status_sha256": "a01026dc7e4996d50bc23a1aca4cb54ea6dba3f6b6eb5b5b5d76df85f7744cf7",
+    "prior_success_sha256": "520a1ed14f094be2f3ddc560bf7e3d2385c03c5e6eee626c96dba70bdb407267",
+    "prior_initial_namespace_sha256": "148fefab0ecceb2a1fccfad7863a595569eb78e3c85e90c7e0db5ad16c7e47ed",
+    "verified_recovered_paths": 7002,
+    "verified_recovered_memberships": 701,
+    "verified_original_775_identities": true,
+    "owned_fixture_root": "/var/lib/fx0-rollback/stable-post-treescan-fixture-02/root",
+    "observed_UTC": "2026-11-13T03:51:52.828567+00:00"
+  },
+  "owned_failure_reset": {
+    "only_owned_terminal_unit_reset": true,
+    "original_failure_receipts_unchanged": true,
+    "systemd": "running",
+    "live_package_changes": false,
+    "reboot": false,
+    "observed_UTC": "2026-11-13T03:54:01.155133+00:00"
+  },
+  "extraction_primary_sources": [
+    {
+      "URL": "https://gitlab.alpinelinux.org/alpine/apk-tools/-/raw/v3.0.8/src/fs_fsys.c",
+      "final_URL": "https://gitlab.alpinelinux.org/alpine/apk-tools/-/raw/v3.0.8/src/fs_fsys.c",
+      "file": "apk-3.0.8-fs_fsys.c",
+      "bytes": 10001,
+      "sha256": "835e6e8ca60a9ca50b864b18ae627b42fa722a97d282b1d715037fe82e0ee01c",
+      "fetched_UTC": "2026-11-13T03:42:27.581490+00:00"
+    },
+    {
+      "URL": "https://gitlab.alpinelinux.org/alpine/apk-tools/-/raw/v3.0.9/src/fs_fsys.c",
+      "file": "apk-3.0.9-fs_fsys.c",
+      "bytes": 10058,
+      "sha256": "af4ebff9be6a7151c0a1cccc736ae59404183519edaa81635dbcac6cf09b55cd",
+      "fetched_UTC": "2026-11-13T03:44:06.731601+00:00"
+    }
+  ],
+  "timestamp_contract": {
+    "regular_files": "exact signed archive timestamp",
+    "symlinks": "creation timestamp within actual owned APK command start/end, with exact signed target, mode, ownership and expected attributes",
+    "preserved_configuration": "exact captured metadata unless the signed replacement is installed",
+    "retained_distro_paths": "exact captured bytes, metadata, package ownership and replacement declarations"
+  },
+  "effective_incoming_symlinks": 9,
+  "host_tests": {
+    "recorded_UTC": "2026-11-13T03:53:29.254735+00:00",
+    "passed": true,
+    "tests": 26,
+    "controller_sha256": "c82c7081bc45272796b08593d13f394a9dfc7d5f43283bb3dc387bec37b2dbed",
+    "ownership_helper_sha256": "1668a38cc1d9976103d5aae5dc922637b0d762ca309b18407def8aeefe407f87",
+    "scope_sha256": "543794c39a150a26044f806285893c82c76f7ac5ddd6a926188cdf0025eacc80",
+    "results": [
+      {
+        "pattern": "test_stable_userspace_transaction.py",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "..................\n----------------------------------------------------------------------\nRan 18 tests in 0.090s\n\nOK\n"
+      },
+      {
+        "pattern": "test_apk_payload_ownership.py",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nOK\n"
+      }
+    ],
+    "actual_native_APK_qualification": false
+  },
+  "independent_ownership_parser": {
+    "recorded_UTC": "2026-11-13T03:57:33.126318+00:00",
+    "passed": true,
+    "actual_independent_verifier_source_sha256": "3b746ac9dd0858eb7e9fac325818074eb20751992662077396fadf33a12be840",
+    "archive_headers_parsed": 30,
+    "payload_paths_parsed": 2688,
+    "retained_owner_paths": {
+      "/etc/issue": "postmarketos-release",
+      "/etc/os-release": "postmarketos-release",
+      "/usr/lib/os-release": "postmarketos-release"
+    },
+    "same_parser_body_with_private_backup_path_relocated_only": true,
+    "live_file_verification": false,
+    "native_or_host_state_mutation": false
+  },
+  "current_qualification": {
+    "unit": "fx0-stable-userspace-qualification-03.service",
+    "status": "running; native forward update verified",
+    "latest_actual_observation": {
+      "native_boot_id": "6114df77-29f2-43ac-8ede-1ca72c743895",
+      "unit": {
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running",
+        "Result": "success",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "MemoryCurrent": "187625472",
+        "CPUUsageNSec": "555599882000"
+      },
+      "worker_result": {
+        "status": "qualifying scoped normal recovery with a labelled synthetic signed executor",
+        "live_OS_transaction": false,
+        "actual_ARM_kernel": true,
+        "QEMU_used": false,
+        "audio_testing": false,
+        "private_fixture_removed": false,
+        "started_UTC": "2026-11-13T03:55:27.171199+00:00",
+        "fixture_reuse": {
+          "prior_run_terminal": true,
+          "prior_7002_path_rollback_verified": true,
+          "prior_namespace_and_all_cached_inputs_verified": true,
+          "prior_failure_preserved": true
+        },
+        "success": {
+          "retained_distro_paths_immutable": 3,
+          "stage": "updated-and-verified",
+          "selected_candidate_identities_verified": 30,
+          "protected_745_identities_preserved": true,
+          "unit_timestamps": 545,
+          "world_exact": true
+        }
+      },
+      "current_boot_success_journal": false,
+      "journal_success_realtime_microseconds": null,
+      "observed_UTC": "2026-11-13T04:13:56.794683+00:00"
+    },
+    "private_fixture_root": "/var/lib/fx0-rollback/stable-post-treescan-fixture-02/root",
+    "fixture_reuse_after_verified_recovery": true,
+    "successful_native_forward_cohort": true
+  },
+  "source_sha256": {
+    "diagnostics/stable-update/stable_transaction.py": "c82c7081bc45272796b08593d13f394a9dfc7d5f43283bb3dc387bec37b2dbed",
+    "diagnostics/stable-update/apk_payload_ownership.py": "1668a38cc1d9976103d5aae5dc922637b0d762ca309b18407def8aeefe407f87",
+    "diagnostics/stable-update/qualify_stable_transaction.py": "3ea8f967787fd7dbe40eca8cf10e85b46c3f5fde72031772967087b7ff86ba10",
+    "diagnostics/stable-update/verify_stable_userspace.py": "3b746ac9dd0858eb7e9fac325818074eb20751992662077396fadf33a12be840",
+    "tests/test_stable_userspace_transaction.py": "a07b1766b711a198c3fa2985bb132878f85b8ccab0b37b8e32e8cea19e6a3a40",
+    "tests/test_apk_payload_ownership.py": "d481ae0e790a28c25253564c4d8168a44259566a99dc4e9d182fd604c0c29c4e",
+    "manifests/stable-userspace-transaction-scope-03.json": "543794c39a150a26044f806285893c82c76f7ac5ddd6a926188cdf0025eacc80"
+  },
+  "scope_manifest": "manifests/stable-userspace-transaction-scope-03.json",
+  "backup_manifest_sha256": "815afabfc4705e77ac322a39627503271425b1d21ea4ac9611696d47703ca4da",
+  "backup_archive_sha256": "813662124af17fafbccba10c575c56a2503716e3d1a9803e034af008c7a882b2",
+  "live_package_update": false,
+  "boot_write": false,
+  "reboot": false,
+  "audio_testing": false,
+  "private_payloads_published": false,
+  "full_bringup": "active",
+  "limits": [
+    "Native forward update passed; normal recovery and two controlled failure cohorts still running",
+    "Live namespace check and live update not performed",
+    "Abrupt power loss and stop matrix unqualified",
+    "Complete hardware, edge, reliability and upstream readiness open"
+  ]
+}

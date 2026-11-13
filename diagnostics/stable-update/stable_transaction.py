@@ -24,13 +24,13 @@ RELEASE='6.18.63-fx0-vibrator-alpine'
 BACKUP=Path('/var/lib/fx0-rollback/post-treescan-userspace-baseline-02')
 MANIFEST_SHA='815afabfc4705e77ac322a39627503271425b1d21ea4ac9611696d47703ca4da'
 ARCHIVE_SHA='813662124af17fafbccba10c575c56a2503716e3d1a9803e034af008c7a882b2'
-SCOPE_SHA='4e4472f4baeb245a4a7b6d2f4f24cbe4f779d10b8aee9f3ae5c971b6ed71d92d'
+SCOPE_SHA='543794c39a150a26044f806285893c82c76f7ac5ddd6a926188cdf0025eacc80'
 DB='/usr/lib/apk/db/installed'
 LOCK='/usr/lib/apk/db/lock'
 WORLD='/etc/apk/world'
 INVENTORY='/var/lib/systemd-apk/installed.units'
 EXECUTOR='/usr/lib/apk/exec'
-LIVE_WORK=Path('/var/lib/fx0-rollback/stable-userspace-live-02')
+LIVE_WORK=Path('/var/lib/fx0-rollback/stable-userspace-live-03')
 FIXTURE_ROOT=Path('/var/lib/fx0-rollback/stable-post-treescan-fixture-02/root')
 
 
@@ -95,7 +95,7 @@ class Snapshot:
             assert all(self.rows[name]['nlink']==len(names) for name in names),'Incomplete captured hardlink group'
         assert all(self.rows[n]['kind']=='directory' for n in self.directories)
         assert manifest['directory_membership'][EXECUTOR]==[]
-        self.lock_fd=None;self.lock_inode=None
+        self.lock_fd=None;self.lock_inode=None;self.install_window=None
         self.retained=scope.get('retained_owner_payloads',{})
         assert self.retained.keys()<=scope['candidate_payloads'].keys() & self.rows.keys()
         assert not self.retained.keys() & (self.files | self.directories), 'Retained owner files must be immutable'
@@ -319,10 +319,21 @@ class Snapshot:
         wanted={k:v for k,v in expected.items() if k not in {'apk_checksum','hardlink_to'}}
         if wanted['kind']=='absent':return actual==wanted
         wanted['xattrs']=self.desired_xattrs(name)
+        if wanted['kind']=='symlink':
+            # APK's fsys_file_extract deliberately preserves archive timestamps
+            # only for non-symlinks. Require creation during our owned upgrade.
+            if self.install_window is None:return False
+            start,end=self.install_window
+            if not start<=actual.get('mtime_ns',-1)<=end:return False
+            actual.pop('mtime_ns',None);wanted.pop('mtime_ns',None)
         return actual==wanted
 
     def verify_candidate(self):
         changes=self.verify(transaction=True)
+        if any(row['kind']=='symlink' for row in self.candidates.values()):
+            assert self.install_window is not None,'Missing owned APK timestamp window'
+            assert len(self.install_window)==2 and all(type(n) is int for n in self.install_window)
+            assert self.install_window[0]<=self.install_window[1],'Invalid owned APK timestamp window'
         for name in self.state_files:
             assert self.row(name)['xattrs']==self.desired_xattrs(name),('Transaction state policy label differs',name)
         unchanged=set(self.scope['config_upstream_unchanged'])
@@ -353,7 +364,8 @@ def load_snapshot(root,scope_path,*,allow_live=False):
     assert sha(scope_path)==SCOPE_SHA and sha(BACKUP/'manifest.private.json')==MANIFEST_SHA
     assert sha(BACKUP/'files.private.tar.gz')==ARCHIVE_SHA
     scope=json.loads(Path(scope_path).read_text());manifest=json.loads((BACKUP/'manifest.private.json').read_text())
-    assert scope['format']=='fx0-stable-userspace-scope-v2'
+    assert scope['format']=='fx0-stable-userspace-scope-v3'
+    assert scope['symlink_mtime_policy']=='creation-within-owned-upgrade-command'
     assert scope['baseline_manifest_sha256']==MANIFEST_SHA and scope['baseline_archive_sha256']==ARCHIVE_SHA
     assert manifest['boot_id']==BOOT and manifest['kernel']==RELEASE and manifest['private_key_files_excluded']
     assert len(manifest['paths'])==7002 and len(manifest['directory_membership'])==701
@@ -420,10 +432,16 @@ class StableUpdate:
         self.number+=1
         log=self.work/(self.status.stem+'-%02d-%s.log'%(self.number,phase))
         with log.open('xb') as stream:
+            started_ns=time.time_ns()
             child=subprocess.Popen(args,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True,cwd=self.root)
             self.children.append(child);code=child.wait()
             while not self.hooks_terminal():
                 self.record(phase+'-waiting-for-owned-descendants',package_parent_returncode=code);time.sleep(2)
+            finished_ns=time.time_ns()
+        if phase=='upgrade':
+            assert finished_ns>=started_ns,'Wall clock moved backwards during the owned APK upgrade'
+            self.snapshot.install_window=(started_ns,finished_ns)
+            self.state['upgrade_window_ns']=[started_ns,finished_ns]
         self.record(phase+'-terminal',package_parent_returncode=code,all_owned_process_groups_terminal=True)
         assert code==0,('Command failed',phase,code)
         if self.stopping and not self.recovering:raise RuntimeError('Stop requested after owned command reaped')

@@ -637,3 +637,20 @@ NTP eventually completes. The temporary DNS fallback is absent afterward, but
 its saved-profile byte-preservation assertion fails during network activation;
 exact saved-profile byte identity is not claimed for that trial.
 [Evidence](../evidence/2026-11-11-native-kernel-6.18.63-ram.json)
+
+## November 13 UTC: current-boot stable update recovery checkpoint
+
+The owner confirms display and touch on the current persistent Linux
+6.18.63-r1 boot, with treescan r1, Sxmo r7 and UPower r5. A fresh dual-lock
+capture and both private backup copies verify all 7,002 paths and 701
+memberships. A new private native fixture restores that capture, authenticates
+all thirty candidate packages and reproduces the host's thirty-upgrade
+simulation. Current supported indexes select the same signed identities.
+
+The corrected controller keeps the Nura release package's three retained
+files immutable, checking bytes, metadata, owner identity and replacement
+rules. Twenty-one host tests pass. Actual success and two controlled failure
+cohorts are running in a private native fixture. This is preparation evidence;
+no live stable upgrade, boot write, reboot or new hardware qualification is
+claimed. Complete bringup remains open.
+[Evidence](../evidence/2026-11-13-stable-controller-recovery.json)

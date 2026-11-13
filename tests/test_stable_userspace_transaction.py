@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import stat
 import tempfile
+import time
 import unittest
 
 SOURCE=Path(__file__).resolve().parents[1]/'diagnostics/stable-update/stable_transaction.py'
@@ -171,6 +172,51 @@ class RecoveryGuards(unittest.TestCase):
             with self.assertRaisesRegex(AssertionError,'Retained owner replacement metadata changed'):
                 snapshot.restore(hooks_terminal=True)
         self.assertEqual(self.target(self.a).read_bytes(),self.body)
+
+    def symlink_snapshot(self):
+        self.candidate()
+        self.target(self.new).unlink();self.target(self.new).symlink_to('owned')
+        expected=dict(kind='symlink',target='owned',mode=0o777,uid=os.getuid(),gid=os.getgid(),
+                      mtime_ns=1794000000000000000)
+        candidates=dict(self.scope['candidate_payloads']);candidates[self.new]=dict(expected=expected)
+        snapshot=controller.Snapshot(self.root,self.manifest,dict(self.scope,candidate_payloads=candidates),
+                                     {self.a:b'original signed software'})
+        now=time.time_ns();snapshot.install_window=(now-2_000_000_000,now+2_000_000_000)
+        return snapshot
+
+    def test_apk_symlink_creation_time_is_bound_to_owned_upgrade_not_archive_header(self):
+        snapshot=self.symlink_snapshot()
+        self.assertNotEqual(self.target(self.new).lstat().st_mtime_ns,snapshot.candidates[self.new]['mtime_ns'])
+        with snapshot.locked():self.assertTrue(snapshot.verify_candidate())
+
+    def test_symlink_timestamp_outside_owned_upgrade_is_rejected(self):
+        snapshot=self.symlink_snapshot();stamp=snapshot.install_window[0]-1_000_000_000
+        os.utime(self.target(self.new),ns=(stamp,stamp),follow_symlinks=False)
+        with snapshot.locked():
+            with self.assertRaisesRegex(AssertionError,'Candidate payload differs'):
+                snapshot.verify_candidate()
+
+    def test_missing_or_reversed_owned_timestamp_window_is_rejected(self):
+        snapshot=self.symlink_snapshot()
+        for window,error in [(None,'Missing owned APK timestamp window'),
+                             ((2,1),'Invalid owned APK timestamp window')]:
+            snapshot.install_window=window
+            with snapshot.locked():
+                with self.assertRaisesRegex(AssertionError,error):snapshot.verify_candidate()
+
+    def test_symlink_target_is_still_exact_inside_valid_upgrade_window(self):
+        snapshot=self.symlink_snapshot()
+        self.target(self.new).unlink();self.target(self.new).symlink_to('not-the-signed-target')
+        with snapshot.locked():
+            with self.assertRaisesRegex(AssertionError,'Unrecognised owned payload'):
+                snapshot.verify_candidate()
+
+    def test_regular_file_still_requires_exact_signed_archive_timestamp(self):
+        snapshot=self.symlink_snapshot();stamp=time.time_ns()
+        os.utime(self.target(self.a),ns=(stamp,stamp))
+        with snapshot.locked():
+            with self.assertRaisesRegex(AssertionError,'Candidate payload differs'):
+                snapshot.verify_candidate()
 
 
 if __name__=='__main__':unittest.main()

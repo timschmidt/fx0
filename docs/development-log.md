@@ -5634,3 +5634,64 @@ Fresh native readback finds the original database/world/repositories, r50 boot,
 systemd running and taint0. No native updates, reboot, upstream email/PR or audio
 test occurs. The approved kernel update still awaits current-return UI data.
 [Evidence](../evidence/2026-11-11-clock-full-and-stable-update.json)
+
+### November 13 UTC: fresh stable-update recovery and retained distro ownership
+
+Confirm the owner's display/touch answer for the current 6.18.63-r1 boot.
+Read back the unchanged database, world, repositories and boot bytes, with
+systemd running, taint zero and signature enforcement enabled. The previous
+qualification unit is absent and its known cgroup has no processes.
+
+Capture all 7,002 paths and 701 directory memberships again under both APK
+lock types. Verify archive payloads and all live metadata, including 254
+hardlink aliases and 1,480 SELinux labels. Verify all five private recovery
+files on the phone and host without reading runtime private keys. Retain the
+preceding backup and failed qualification receipts.
+
+Correct the exact controller's expectation for the three Nura release files
+retained by APK's replacement-priority rule. Derive ownership from the
+captured database and signed incoming controls; keep those files and their
+sidecars out of recovery writes. Check their original bytes, metadata,
+owner identity and replacement declarations. Twenty-one focused host tests
+pass. The fixed scope guards the complete capture and permits recovery of
+2,708 files and metadata on 133 directories.
+
+Authenticate four freshly fetched supported indexes with the existing native
+public trust keys. Current host simulation selects the same thirty versions
+and signed identities. Retain the host OpenSSL digest rejection and use the
+existing isolated Alpine OpenSSL for verification without changing policy.
+
+The new native private fixture restores and verifies the fresh capture,
+verifies its runtime against the live phone, accepts all thirty signed APKs
+and simulates exactly thirty upgrades. Require actual current-boot PID1
+success; unloaded-unit default fields are insufficient. The exact revised
+controller's success and two controlled failure cohorts are now running in
+`fx0-stable-userspace-qualification-02.service`, with the live OS read-only.
+No live package update, boot write, reboot or audio test occurs. Native
+controller qualification, live activation and full bringup remain open.
+[Evidence](../evidence/2026-11-13-stable-controller-recovery.json)
+
+### November 13 UTC: bound APK symlink times to the owned upgrade
+
+The second private exact-controller run commits thirty updates and completes
+normal hooks, then rejects Vim's `/usr/bin/ex` timestamp. Its scoped rollback
+verifies all 7,002 paths, 701 memberships, original 775 identities, hardlinks,
+labels and unit inventory. Harvest actual terminal status and the empty
+cgroup before resetting only this owned failed unit; preserve the failure.
+
+Read the exact APK 3.0.8 and 3.0.9 filesystem extractors. Both deliberately
+skip archive timestamps on symbolic links. Revision 3 retains exact signed
+regular-file mtimes and requires all nine incoming symlink creation times
+inside the actual owned APK command interval, including descendants. Signed
+targets, modes, owners and labels remain exact. Preserved configurations and
+retained distro files retain their exact captured metadata. All 26 focused
+host tests pass, including five new timestamp/target cases. The independent
+ownership parser also passes all 30 pinned archive controls.
+
+The third qualification reuses the fully recovered fixture only after
+verifying prior terminal receipts, namespace and signed caches. It still
+runs complete current-capture preflight checks. Actual success and both
+controlled failures are running in the private native unit; live service
+checks, installation and complete bringup remain open. No boot write, reboot
+or audio test occurs.
+[Evidence](../evidence/2026-11-13-stable-symlink-timestamps.json)
