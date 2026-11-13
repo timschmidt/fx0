@@ -84,5 +84,9 @@ corruption/change, parent escapes, unknown partials and bounded body buffering.
 The [native qualification](../evidence/2026-11-13-full-cold-private-replay.json)
 verifies all 26,582 captured paths, 2,438 directory memberships, 255 hardlink
 aliases and the exact 775-package database. It includes interruption after 5,000
-changes and resume in a fresh process. The separately running post-edge return
-requires its own completion and independent verification before acceptance.
+changes and resume in a fresh process. The separate return from a real 473-action edge upgrade also passes a new
+read-only verifier over the same complete safe scope. It preserves all 923
+introduced entries before removal, repairs the `/usr/sbin` directory migration,
+and restores the exact current 775-package database. That run retains both the
+512 MiB reserve and 64 MiB metadata allowance. Its resource bound separates net
+allocation growth from the scratch space needed to replace existing bodies.
