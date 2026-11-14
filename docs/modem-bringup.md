@@ -454,3 +454,19 @@ comparisons and dispatched inputs remain preserved. The source, lock, public
 verification keys and [rebuild commands](../diagnostics/modem-control/userspace-package-rebuild.md)
 are prepared for review with [sanitized evidence](../evidence/2026-11-14-modem-clean-bootstrap.json).
 They make no phone changes; physical modem/GNSS qualification remains open.
+
+## November 14: portable passive-trial control flow
+
+A generic [RAM-trial flow](../diagnostics/modem-control/passive-trial-flow.md)
+is prepared for public review with explicit single-use, known transfer-status
+and pre-BOOT reset checks. After the intent barrier, callback failures and
+interrupts still attempt observation and native verification without a BOOT,
+reset or reboot retry. Device adapters retain responsibility for current owner
+receipts, durable ownership, actual process reaping and independent return.
+
+All 14 callback tests pass from a clean review checkout and a three-file
+source-only export, with no ignored local tree or Git metadata needed by the
+export. The existing nine prepared controller source snapshots remain exact.
+The new module has not replaced that controller or dispatched a physical trial.
+Physical RFSA, USB console, automatic return and modem/GNSS remain open. See the
+[software-only portability evidence](../evidence/2026-11-14-passive-flow-portability.json).
