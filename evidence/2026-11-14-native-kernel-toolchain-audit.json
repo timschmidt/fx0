@@ -1,0 +1,30 @@
+{
+  "native_package_database_SHA256": "5227b5caf405a5db50ea9fb696f57388dd4ed98afd44e9f90234260b104f74cd",
+  "packages": 103,
+  "package_checksum_paths": 6237,
+  "checked_paths": 6236,
+  "symlink_targets_checked": 554,
+  "unchanged_package_bodies_or_links": 6233,
+  "all_checked_nonconfiguration_package_bodies_exact": true,
+  "three_source_explained_configuration_paths": [
+    "/etc/passwd",
+    "/etc/group",
+    "/etc/abuild.conf"
+  ],
+  "exact_account_changes": [
+    "BusyBox post-install creates klogd user/group",
+    "pmbootstrap creates UID/GID12345 pmos; retained build setup adds pmos to abuild"
+  ],
+  "exact_abuild_template_suffix_assignments": [
+    "CLEANUP=\"\"",
+    "ERROR_CLEANUP=\"\"",
+    "export JOBS=8"
+  ],
+  "baseline_config_source_APKs_verify_against_accepted_public_keys": true,
+  "busybox_postinstall_APK_verify_returncode": 0,
+  "excluded_credential_path_count": 1,
+  "credential_private_key_bodies_read_hashed_or_copied": false,
+  "read_only_retained_toolchain": true,
+  "phone_changes": false,
+  "scope": "Bodies/checksums of retained native toolchain against installed package metadata, with exact source-defined config setup exceptions; separate public-key mount fixture declared in standard builds05/06."
+}
