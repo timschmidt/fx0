@@ -1,0 +1,44 @@
+From 83d60105c3714e8f16eeb8188e978c6ee3b7cac7 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 13 Nov 2026 22:03:40 -0500
+Subject: [PATCH] systemd: order clock restoration through local-fs-pre.target
+
+Before=systemd-fsck@.service is not a wildcard dependency. systemd
+instantiates it with this unit's name, creating an unrelated
+systemd-fsck@swclock-offset-boot.service dependency rather than ordering
+against the filesystem instances which actually run.
+
+Pull in the passive local-fs-pre.target and order clock restoration before
+it. Filesystem fsck instances already order after this target. Retain the
+explicit root-filesystem check ordering.
+
+Reproduced with systemd-analyze verify using the actual dependency
+instructions, the host fsck template and two separate fsck instances.
+Both baseline and fixed graphs validate. The baseline references the
+spurious instance; the fixed graph queues the explicit local-fs-pre
+barrier and orders it after clock restoration and before both checks.
+The offline fixture substitutes only the clock command with true and
+never executes services or changes the system time.
+---
+ systemd/swclock-offset-boot.service.in | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/systemd/swclock-offset-boot.service.in b/systemd/swclock-offset-boot.service.in
+index e605e66..e26b86c 100644
+--- a/systemd/swclock-offset-boot.service.in
++++ b/systemd/swclock-offset-boot.service.in
+@@ -1,7 +1,8 @@
+ [Unit]
+ Description=Setting the system time according to an offset file
+ DefaultDependencies=no
+-Before=systemd-fsck-root.service systemd-fsck@.service
++Wants=local-fs-pre.target
++Before=systemd-fsck-root.service local-fs-pre.target
+ 
+ [Service]
+ Type=oneshot
+
+base-commit: 82a52fab5530509be47827931ccd884183ee2d1f
+-- 
+2.56.0
+

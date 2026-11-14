@@ -1,0 +1,119 @@
+{
+  "recorded_UTC": "2026-11-14T03:03:02.507980+00:00",
+  "maintainer_base": "82a52fab5530509be47827931ccd884183ee2d1f",
+  "official_repository": "https://gitlab.nura.eco/postmarketOS/swclock-offset",
+  "systemd_version": "systemd 258 (258.11-1.fc43)",
+  "both_offline_verify_returncodes_zero": true,
+  "baseline_spurious_fsck_instance_reproduced": true,
+  "fixed_explicitly_pulls_clock_barrier_before_both_distinct_fsck_instances": true,
+  "source_dependency_directives_not_modified_by_fixture": true,
+  "only_fixture_ExecStart_uses_true_instead_of_clock_setter": true,
+  "services_or_system_clock_not_executed_or_changed": true,
+  "current_phone_unit_unchanged": true,
+  "results": {
+    "baseline": {
+      "selected_units": {
+        "swclock-offset-boot.service": {
+          "Before": [
+            "systemd-fsck-root.service",
+            "systemd-fsck@swclock-offset-boot.service"
+          ],
+          "After": [
+            "system.slice",
+            "systemd-journald.socket"
+          ]
+        },
+        "systemd-fsck@dev-first.service": {
+          "Before": [
+            "systemd-quotacheck.service",
+            "shutdown.target"
+          ],
+          "After": [
+            "systemd-fsck-root.service",
+            "local-fs-pre.target",
+            "dev-first.device",
+            "system-systemd\\x2dfsck.slice",
+            "systemd-journald.socket"
+          ]
+        },
+        "systemd-fsck@dev-second.service": {
+          "Before": [
+            "systemd-quotacheck.service",
+            "shutdown.target"
+          ],
+          "After": [
+            "system-systemd\\x2dfsck.slice",
+            "systemd-fsck-root.service",
+            "local-fs-pre.target",
+            "dev-second.device",
+            "systemd-journald.socket"
+          ]
+        },
+        "local-fs-pre.target": {
+          "Before": [
+            "shutdown.target",
+            "systemd-fsck@swclock-offset-boot.service",
+            "systemd-fsck@dev-second.service",
+            "systemd-fsck@dev-first.service"
+          ]
+        }
+      },
+      "input_log_SHA256": "2073a664aed450a33b9d660943d7c93c7e3b09426c0d21b52ba28155e39962bb"
+    },
+    "fixed": {
+      "selected_units": {
+        "swclock-offset-boot.service": {
+          "Wants": [
+            "local-fs-pre.target"
+          ],
+          "Before": [
+            "local-fs-pre.target",
+            "systemd-fsck-root.service"
+          ],
+          "After": [
+            "systemd-journald.socket",
+            "system.slice"
+          ]
+        },
+        "systemd-fsck@dev-first.service": {
+          "Before": [
+            "shutdown.target",
+            "systemd-quotacheck.service"
+          ],
+          "After": [
+            "systemd-fsck-root.service",
+            "local-fs-pre.target",
+            "system-systemd\\x2dfsck.slice",
+            "systemd-journald.socket",
+            "dev-first.device"
+          ]
+        },
+        "systemd-fsck@dev-second.service": {
+          "Before": [
+            "shutdown.target",
+            "systemd-quotacheck.service"
+          ],
+          "After": [
+            "systemd-journald.socket",
+            "dev-second.device",
+            "systemd-fsck-root.service",
+            "local-fs-pre.target",
+            "system-systemd\\x2dfsck.slice"
+          ]
+        },
+        "local-fs-pre.target": {
+          "Before": [
+            "shutdown.target",
+            "systemd-fsck@dev-first.service",
+            "systemd-fsck@dev-second.service"
+          ],
+          "After": [
+            "swclock-offset-boot.service"
+          ]
+        }
+      },
+      "input_log_SHA256": "157b56ba7a3c4b4664109e2d0ae6f1fcee94f810b5b560eafdd3d6c3c21ea7cd"
+    }
+  },
+  "local_source_commit": "83d60105c3714e8f16eeb8188e978c6ee3b7cac7"
+}
