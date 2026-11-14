@@ -1,0 +1,85 @@
+{
+  "recorded_UTC": "2026-11-14T17:53:58.029014+00:00",
+  "state": "Bounded read-only power status investigation; electrical charging remains unqualified",
+  "accepted_installed_r1_boot_release_and_notes_match_before_and_after": true,
+  "root_requested": false,
+  "phone_configuration_or_service_lifecycle_writes": false,
+  "D_Bus_auto_activation": false,
+  "taint": 0,
+  "snapshots": {
+    "count": 2,
+    "separation_seconds": 3.464,
+    "same_whitelisted_values": true,
+    "values": [
+      {
+        "type": "Battery",
+        "present": "1",
+        "status": "Discharging",
+        "health": "Good",
+        "charge_type": "N/A"
+      },
+      {
+        "type": "Mains",
+        "online": "0"
+      },
+      {
+        "type": "USB",
+        "online": "1"
+      }
+    ],
+    "observed_read_errors": false,
+    "fields_sequential_not_atomic": true
+  },
+  "absent_battery_measurement_attributes": [
+    "capacity",
+    "temp",
+    "current_now",
+    "current_avg",
+    "voltage_now",
+    "energy_now",
+    "charge_now"
+  ],
+  "UPower": {
+    "service_active_running": true,
+    "display_device_present": false,
+    "kind": "unknown",
+    "state": "unknown",
+    "warning_level": "none",
+    "OnBattery": false,
+    "Percentage_Energy_EnergyRate": "Finite zeros on an absent/unknown display device; not physical measurements",
+    "all_eight_read_only_scalar_queries_succeeded": true
+  },
+  "service_scope_limit": "The specific sxmo_battery_monitor.service unit is not found in the SSH user manager; this does not establish whether another monitor process or manager is active.",
+  "package_version_query": {
+    "result": "TimeoutExpired",
+    "fresh_package_version_or_payload_audit": false
+  },
+  "source_analysis": {
+    "installed_kernel_source": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+    "fingerprints": [
+      {
+        "file": "drivers/power/supply/qcom_smbb.c",
+        "SHA256": "2441b2ba36d6bf95cc60339280beb6c7afbd4616ccbdd70ee1737971a001680d"
+      },
+      {
+        "file": "drivers/power/supply/power_supply_sysfs.c",
+        "SHA256": "46c00475024352f737eaf84001318b9c30606fc00849d63ca98518b4e3923fe8"
+      },
+      {
+        "file": "UPower-1.91.0/libupower-glib/up-types.h",
+        "SHA256": "e0ddce520981d666ed28cb3a79b87b033d06b5aff5aa0d97bf9ad45b6e79d037"
+      }
+    ],
+    "USB_online": "Cached charger-present and USB-valid flags, not measured battery current",
+    "health_Good": "Cached battery temperature-OK flag, not a temperature measurement or comprehensive safety certification",
+    "charge_type_N_A": "Kernel text for POWER_SUPPLY_CHARGE_TYPE_NONE; neither cached fast nor trickle flag is set at that read",
+    "Discharging": "Also the fallback status when no cached fast/trickle charge flag is set; does not independently measure negative battery current",
+    "current_and_voltage_max": "Configured/cached limits, not current_now or voltage_now measurements",
+    "causal_inference_limit": "IRQ-cached sequential properties do not prove one atomic charger state or explain why the charge flags are absent"
+  },
+  "physical_display_touch_confirmation": false,
+  "full_package_or_module_byte_reaudit": false,
+  "charging_SOC_current_thermal_or_source_loss_qualification": false,
+  "raw_telemetry_supply_names_boot_identifiers_credentials_or_logs_included": false,
+  "full_goal_complete": false
+}

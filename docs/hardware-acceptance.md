@@ -710,3 +710,14 @@ performed by this query. It made no reboot, stage, package or clock write, and
 it does not replace any trial's current operator receipt or full preflight.
 Raw telemetry and identifiers remain private.
 [Limited status evidence](../evidence/2026-11-14-native-readonly-status.json)
+
+The follow-up read-only power check repeats that state in two snapshots and
+reads charge type N/A, the kernel's text for no fast/trickle charge flag.
+UPower is already running and reports an absent/unknown display battery with
+no warning. No usable gauge measurements exist on this supply interface;
+these cached status flags do not determine electrical battery current or
+explain the absence of charging flags. No settings or services are changed.
+The package-version query times out, and no fresh package audit or physical
+display/touch check is claimed. Charging, current/SOC and thermal acceptance
+remain open.
+[Power follow-up evidence](../evidence/2026-11-14-power-readonly-investigation.json)

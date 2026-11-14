@@ -729,3 +729,28 @@ The Madai controller now has a source candidate that routes gadget budgets to th
 ### Timed RAM comparison for USB input budgeting
 
 A single moduleless ARM kernel now supplies matched control and managed RAM images. The DTBs differ only in the charger opt-in and controller reference. Both keep battery charging inhibited, use the same 500 mA and 300 mA NCM phases, and return after 180 seconds. The linked decompressor reproduces the kernel byte for byte. The verified images and fixed-register reader are ready for on-device current and suspend measurement. [RAM comparison and evidence](../diagnostics/smbb-usb-budget-ram/README.md)
+
+## November 14: installed-r1 read-only charging status
+
+Two bounded read-only snapshots on the accepted installed-r1 boot, about
+3.5 seconds apart, agree: USB online, battery present, health Good, status
+Discharging and charge type N/A. The installed-source SMBB driver maps N/A
+to no fast/trickle charge flag. Its Discharging fallback and USB-online flag
+do not measure battery current; Good reflects the cached temperature-OK flag.
+These sequential, IRQ-cached properties do not establish an atomic charger
+state or explain why the charge flags are absent. Current/voltage limits are
+configuration values, not current/voltage measurements.
+
+The battery interface exposes no capacity, temperature, current, voltage or
+remaining-energy/charge measurement. Already-running UPower reports an absent,
+unknown display battery and no warning; its finite zero percentage/energy
+fields are not physical measurements. Eight scalar queries succeed with
+D-Bus auto-activation disabled. The bounded package-version query times out,
+so this observation adds no fresh package-version or payload audit. A missing
+specific Sxmo unit in the SSH user manager does not establish whether another
+monitor process or manager is active.
+
+No charging limit, policy, service lifecycle, clock, package or boot setting
+is changed. Actual current/SOC, charging, thermal boundaries and source-loss
+behavior remain unqualified. Raw identities and telemetry stay private.
+[Read-only investigation evidence](../evidence/2026-11-14-power-readonly-investigation.json)
