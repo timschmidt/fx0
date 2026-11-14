@@ -1,0 +1,110 @@
+{
+  "recorded_UTC": "2026-11-14T17:02:31.569811+00:00",
+  "state": "PASS owned-child persistence-failure regression and public offline qualification; real trial undispatched",
+  "before_fix": {
+    "actual_exit_code": 1,
+    "test_methods": 1,
+    "failed_role_subcases": [
+      "transfer",
+      "observer",
+      "normal-reboot"
+    ],
+    "observation": "Actual owned Popen remained live after spawn journal failure",
+    "all_fixture_children_cleaned_after_failure": true,
+    "original_plan05_runtime_source_bytes_preserved": true
+  },
+  "corrected_contract": [
+    "Retain actual child handle before log close or journal persistence",
+    "On spawn failure terminate and bounded-wait that owned child before propagating failure",
+    "Do not replace an existing child role/handle",
+    "Finalize every directly owned child even after another cleanup fails",
+    "Keep cleanup receipts separate from original deadline/execution receipts",
+    "Hold the actual shared port flock through final child cleanup",
+    "Never emit a terminal success message if final cleanup fails",
+    "Preserve redacted failed exit status and restore original umask"
+  ],
+  "qualification_contexts": [
+    {
+      "name": "clean-review-checkout",
+      "actual_returncode": 0,
+      "passed_methods": 37,
+      "skipped": 0,
+      "ignored_local_program_tree_present": false
+    },
+    {
+      "name": "source-only-export",
+      "actual_returncode": 0,
+      "passed_methods": 37,
+      "skipped": 0,
+      "ignored_local_program_tree_present": false
+    }
+  ],
+  "public_source_files_SHA256": {
+    "diagnostics/kernel-maintenance/native-trial.md": "3d7f1209fb9682ea49948ddeb806b36cfa4a9762cd94759fc94b36aa95d65e8e",
+    "diagnostics/kernel-maintenance/native_trial_adapter.py": "d3e11d466cf86bcef252df9820d1e2e2c662e6fcdbc533cdb078f614645ab889",
+    "diagnostics/kernel-maintenance/native_trial_health_probe.py": "f7e5d35c3ed73743cac2892b50f90ec05b0190d7b296346bc5ae9d35d6792326",
+    "diagnostics/kernel-maintenance/native_trial_observer.py": "a69a3e2e1ab51ad6cb666bde324f171967e04aec92e8ee9cc5ec4fad9195d2d1",
+    "diagnostics/kernel-maintenance/native_trial_stage_probe.py": "be9f1993630cdaa9d52f1875372cba54183e24d70ab14f5add831e62e1f2500d",
+    "diagnostics/modem-control/passive_adapter.py": "ce40e5bbaacfffcc4db17396d9404d75b9e266f9d5277f565d7cccf230f96cb3",
+    "diagnostics/modem-control/passive_native_probe.py": "56fd575e52c6b5bd059cb0e1667053896e1e504cab389bf491d7df7f8e3e5488",
+    "diagnostics/modem-control/passive_runtime.py": "31629e68235fbb689c9e3ecb15bb7f230b790d9923af31c4ee6236219d2d0e08",
+    "diagnostics/modem-control/passive_trial.py": "24e5cd675f40f787298dbbf1ea0a21f46a2d39033512075b40e31bfb67e487f8",
+    "scripts/boot_fx0_ram.py": "fea54ce86d19f1a51665446095e9ae3dce60b34a0f38bfc70f7764f5611409b6",
+    "scripts/transfer_fx0_ram.py": "f402151d94422c895632276ec996b2a47f29dfa6269ddd4c7739b64fc1b5299c",
+    "tests/fixtures/native_adapter_child.py": "d9f6cbe8f24d8049aedcfa96d25aa6e4abb2dc2a15cf9f7fcfa0cd7ef0870b08",
+    "tests/native_adapter_fixture.py": "9d85af8afa32e4aaae4098fba8fc077dc298f6ae8b4283d512b6a0eb7d79f4b9",
+    "tests/test_native_adapter_bindings.py": "059adb38f7ce95bbf06d333488401c4184f25fcc7a10d3f2305b8724e61df52e",
+    "tests/test_native_adapter_faults.py": "7cebdcf7145187ed3e739545372999afa8791209686bb69a6c67567f6f59385b",
+    "tests/test_native_adapter_observer.py": "459f8e6eaf745daafb76bd374c5936e99aa4fb48ecd9294d92c6348534474f94",
+    "tests/test_native_adapter_plan.py": "5128c92d2dbb856d1a2c7db6645aed44ba17fe7d1d8301226bccd9d7c6d22dc8",
+    "tests/test_native_adapter_ownership.py": "002fcfe451dbafeeeac8f23394007be455140b8f7b67e45b9aa8f54c34a0c770"
+  },
+  "actual_terminal_tool_observations": [
+    {
+      "handle": 10146,
+      "returncode": 0,
+      "passed_methods": 37,
+      "scope": "final root suite"
+    },
+    {
+      "handle": 87753,
+      "returncode": 0,
+      "scope": "clean review and18-file source-only export,37 methods each"
+    }
+  ],
+  "actual_static_input_check": {
+    "plan_SHA256": "7b0526540fefae5941bf057224acfed506595f03983e8a35c41e2dcb2d09ace3",
+    "exit_code": 0,
+    "inputs_verified": true,
+    "credential_client_loaded": false,
+    "device_actions": false
+  },
+  "image_unchanged": {
+    "SHA256": "49c23a63402b645c49c55ffbd44f140c64ad0bba722170472891fa3b1a45f0d1",
+    "bytes": 17272832
+  },
+  "source_development_history": {
+    "initial_regression_proved_live_children": true,
+    "Python314_finally_return_warning_corrected_before_full_qualification": true,
+    "intermediate_source_snapshots_retained": true,
+    "prior_review_and_private_plans_unchanged_except_explicit_supersession_receipts": true
+  },
+  "console_capture_audit": {
+    "retained_first_r2_input": "Sanitized banner plus12 tail lines, not a fresh full console record",
+    "full_before_after_console_digests_missing_from_that_retained_receipt": true,
+    "reset_cause_proven": false
+  },
+  "root_index_unchanged": true,
+  "actual_device_providers_forbidden_by_default_in_tests": true,
+  "real_private_client_or_device_record_body_read_or_copied": false,
+  "phone_access": false,
+  "trial_dispatched": false,
+  "publication": false,
+  "full_goal_complete": false,
+  "limitations": [
+    "All USB/native responses are fixtures; no fresh phone audit or physical repeat occurred.",
+    "Uncertain cleanup uses an injected failure; actual uninterruptible I/O was not induced.",
+    "This covers the controller directly owned Popen roles, not a claim about every operating-system descendant.",
+    "Physical r2 startup/display/automatic return and the complete nonaudio bringup matrix remain open."
+  ]
+}

@@ -128,8 +128,62 @@ def adapter_type(context, services):
     wait_owned = services.get('wait_owned', services['runtime'].wait_owned)
     pause = services.get('time', common.time).sleep
     native_client = services['n']
+    processes = services.get('subprocess', common.subprocess)
 
     class Native(parent):
+        def _cleanup_child(self, name):
+            child = self.children[name]
+            if child.poll() is None:
+                try:
+                    child.terminate()
+                except ProcessLookupError:
+                    pass
+            receipt = wait_owned(child, 2)
+            # Keep the original execution/deadline result intact. A later
+            # successful cleanup must never erase an expired execution wait.
+            record = self.state['processes'].setdefault(name, {'PID': child.pid})
+            record['cleanup'] = receipt
+            return receipt
+
+        def spawn(self, name, command):
+            if name in self.children:
+                raise RuntimeError('Owned child role cannot be replaced or retried')
+            try:
+                with (context.workspace/(name + '.log')).open('xb') as log:
+                    child = processes.Popen([str(arg) for arg in command],
+                                            stdout=log, stderr=processes.STDOUT)
+                    # Own the handle before log close or persistence can fail.
+                    self.children[name] = child
+                    self.state['processes'][name] = {'PID': child.pid, 'started_UTC': now()}
+                self.save()
+                return child
+            except BaseException as error:
+                if name in self.children:
+                    self._cleanup_child(name)
+                    try:
+                        self.save(spawn_error_type=type(error).__name__)
+                    except BaseException:
+                        pass
+                raise
+
+        def close(self):
+            errors = []
+            try:
+                for name in self.children:
+                    try:
+                        self._cleanup_child(name)
+                    except BaseException as error:
+                        self.state['processes'].setdefault(name, {})['cleanup_error_type'] = type(error).__name__
+                        errors.append(error)
+                try:
+                    self.save(owned_child_cleanup_complete=not errors)
+                except BaseException as error:
+                    errors.append(error)
+            finally:
+                self.journal.close()
+            if errors:
+                raise errors[0]
+
         def preflight(self):
             super().preflight()
             probe = (context.root/'diagnostics/kernel-maintenance/native_trial_stage_probe.py').read_text()
@@ -198,32 +252,35 @@ def candidate_accepted(context, state):
 
 
 def main(argv=None):
-    phase, ops, previous_umask = 'plan', None, None
-    try:
-        parser = argparse.ArgumentParser(description=__doc__)
-        parser.add_argument('--plan', type=Path, required=True)
-        parser.add_argument('--plan-sha256', required=True)
-        parser.add_argument('--check-inputs', action='store_true')
-        args = parser.parse_args(argv)
-        context = Context(args.plan, args.plan_sha256)
-        phase = 'noncredential-inputs'
-        context.verify_inputs()
-        if args.check_inputs:
-            print(json.dumps({'inputs_verified': True, 'credential_client_loaded': False, 'device_actions': False}))
-            return 0
-        phase = 'operator-receipt'
-        context.check_operator()
-        phase = 'client-setup'
-        previous_umask = os.umask(0o077)
-        native = source_module(Path(context.plan['credential_client']), 'private_native_client')
-        boot = source_module(context.root/'scripts/boot_fx0_ram.py', 'qualified_boot_helper')
-        runtime = source_module(context.root/'diagnostics/modem-control/passive_runtime.py', 'qualified_runtime')
-        flow = source_module(context.root/'diagnostics/modem-control/passive_trial.py', 'qualified_flow')
-        phase = 'trial'
-        descriptor = os.open(Path(context.plan['port_lock_path']),
-                             os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW | os.O_CLOEXEC, 0o600)
-        with os.fdopen(descriptor, 'a') as stream:
-            fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    phase, ops, previous_umask, port_lock, terminal_message = 'plan', None, None, None, None
+
+    def execute():
+        nonlocal phase, ops, previous_umask, port_lock, terminal_message
+        try:
+            parser = argparse.ArgumentParser(description=__doc__)
+            parser.add_argument('--plan', type=Path, required=True)
+            parser.add_argument('--plan-sha256', required=True)
+            parser.add_argument('--check-inputs', action='store_true')
+            args = parser.parse_args(argv)
+            context = Context(args.plan, args.plan_sha256)
+            phase = 'noncredential-inputs'
+            context.verify_inputs()
+            if args.check_inputs:
+                print(json.dumps({'inputs_verified': True, 'credential_client_loaded': False, 'device_actions': False}))
+                return 0
+            phase = 'operator-receipt'
+            context.check_operator()
+            phase = 'client-setup'
+            previous_umask = os.umask(0o077)
+            native = source_module(Path(context.plan['credential_client']), 'private_native_client')
+            boot = source_module(context.root/'scripts/boot_fx0_ram.py', 'qualified_boot_helper')
+            runtime = source_module(context.root/'diagnostics/modem-control/passive_runtime.py', 'qualified_runtime')
+            flow = source_module(context.root/'diagnostics/modem-control/passive_trial.py', 'qualified_flow')
+            phase = 'trial'
+            descriptor = os.open(Path(context.plan['port_lock_path']),
+                                 os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW | os.O_CLOEXEC, 0o600)
+            port_lock = os.fdopen(descriptor, 'a')
+            fcntl.flock(port_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
             ops = adapter_type(context, {'n': native, 'boot': boot, 'runtime': runtime})()
             outcome = flow.Trial(ops).execute()
             candidate = candidate_accepted(context, ops.state)
@@ -231,25 +288,39 @@ def main(argv=None):
             ops.save(state='terminal', outcome=outcome, candidate_health_passed=candidate,
                      native_return_verified=True, owner_return_UI_confirmation_pending=True,
                      returncode=status, finished_UTC=now())
-            print(json.dumps({'state': 'terminal', 'candidate_passed': candidate,
-                              'native_return_verified': True, 'owner_UI_pending': True}))
+            terminal_message = {'state': 'terminal', 'candidate_passed': candidate,
+                                'native_return_verified': True, 'owner_UI_pending': True}
             return status
-    except SystemExit as error:
-        return error.code
-    except BaseException as error:
-        if ops is not None:
-            try:
-                ops.save(state='stopped for inspection', error_type=type(error).__name__, finished_UTC=now())
-            except BaseException:
-                pass
-        print(json.dumps({'state': 'rejected-or-stopped', 'phase': phase,
-                          'error_type': type(error).__name__, 'accepted': False}), file=sys.stderr)
-        return 1
+        except SystemExit as error:
+            return error.code
+        except BaseException as error:
+            if ops is not None:
+                try:
+                    ops.save(state='stopped for inspection', error_type=type(error).__name__, finished_UTC=now())
+                except BaseException:
+                    pass
+            print(json.dumps({'state': 'rejected-or-stopped', 'phase': phase,
+                              'error_type': type(error).__name__, 'accepted': False}), file=sys.stderr)
+            return 1
+
+    cleanup_failed = False
+    try:
+        status = execute()
     finally:
         if ops is not None:
-            ops.journal.close()
+            try:
+                ops.close()
+            except BaseException as error:
+                cleanup_failed = True
+                print(json.dumps({'state': 'cleanup-failed', 'phase': 'owned-child-cleanup',
+                                  'error_type': type(error).__name__, 'accepted': False}), file=sys.stderr)
+        if port_lock is not None:
+            port_lock.close()
         if previous_umask is not None:
             os.umask(previous_umask)
+    if not cleanup_failed and terminal_message is not None:
+        print(json.dumps(terminal_message))
+    return 1 if cleanup_failed else status
 
 
 if __name__ == '__main__':

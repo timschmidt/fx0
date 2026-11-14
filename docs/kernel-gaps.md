@@ -249,3 +249,21 @@ The physical repeat still needs its specific fresh availability response and
 full native/staged preflight. R2 startup/display/return and the complete bringup
 remain unqualified; R5 stays a later diagnostic with dispatch disabled.
 [Offline runtime evidence](../evidence/2026-11-14-native-r2-repeat-runtime.json)
+
+## November 14: owned-child cleanup across journal failures
+
+A regression with real disposable children reproduced a persistence-failure gap
+for transfer, observer and pre-BOOT normal-return roles: the exception could
+leave the just-created child live. The native adapter now retains the handle
+before log close or journal writes, terminates/reaps it on failed spawn and
+attempts final cleanup for every owned role. The shared port lock remains held
+through cleanup, original deadline receipts remain intact, and a cleanup error
+cannot emit terminal success. No new device recovery command is introduced.
+
+All 37 native plan, concrete callback/fault, observer and ownership test methods
+pass in both a clean review checkout and an 18-file source-only export. A static
+check of private plan06 verifies the unchanged r2 image without a client load
+or device action. Prior source snapshots and plans remain retained.
+The specific operator response and fresh native/staged preflight remain pending;
+no real attempt was claimed or dispatched.
+[Owned-child qualification evidence](../evidence/2026-11-14-native-child-ownership.json)

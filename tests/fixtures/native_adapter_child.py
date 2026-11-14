@@ -4,6 +4,8 @@ from pathlib import Path
 os.umask(0o077)
 role,case,mode=sys.argv[1:4]
 case=Path(case)
+if mode=='spawn-persistence-fault':
+    (case/(role+'-started')).write_text('owned child started');time.sleep(5);raise SystemExit(0)
 if role=='transfer':
     output=case/'transfer';output.mkdir()
     if mode in ['usb-timeout','other-transfer-error','parent-deadline']:

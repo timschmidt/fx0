@@ -77,6 +77,14 @@ live early helper, active normal return timer, running systemd/Sway/lisgd, the
 touch descriptor, four CPUs/governor/cap and serious kernel-log patterns.
 It records client exception types without copying credential-bearing text.
 
+Child handles are registered before log close or journal writes. A failed spawn
+write terminates and reaps that owned child with bounded waits. Finalization
+attempts cleanup for every owned child even when persistence remains unavailable
+or another child has uncertain status. Cleanup receipts remain separate from
+the original execution/deadline result. A role cannot replace an existing child.
+The shared port lock stays held through cleanup; a cleanup failure returns a
+failed status and cannot emit a successful terminal report.
+
 Candidate health, owned observer completion, installed r1 return verification
 and fresh physical display/touch confirmations are separate gates. Native
 return alone cannot qualify an unseen or unhealthy candidate. Parent acceptance
