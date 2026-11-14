@@ -35,3 +35,12 @@ A public certificate cannot perform that operation. Standard APK builds,
 repository signing, physical boot and update/recovery qualification are
 separate remaining work. The accepted phone was not changed by these
 host builds.
+
+The additional standard-r2-build-identity.json describes the separately
+qualified full abuild pair. It uses build version3, postmarketos host identity
+and the new recipe epoch. The original raw-pair identity remains unchanged.
+Signed outputs require the retained external credentials. The included public
+certificate is sufficient for the separate verified raw-kernel pair and for
+signature verification. Public-certificate-only compilation with this new
+standard profile has not been separately compared with its signed-build
+unstripped outputs.

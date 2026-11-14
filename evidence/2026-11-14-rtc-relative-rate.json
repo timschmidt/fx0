@@ -1,0 +1,54 @@
+{
+  "recorded_UTC": "2026-11-14T03:42:16.088692+00:00",
+  "boot_id": "6dbb410a-028d-4195-b41e-45f3482fa34d",
+  "measurements": [
+    {
+      "start_edge": 0,
+      "finish_edge": 0,
+      "RTC_seconds": 666,
+      "CLOCK_BOOTTIME_interval_lower": 666.0171499709995,
+      "CLOCK_BOOTTIME_interval_upper": 666.0328153230002,
+      "relative_rate_ppm_lower": -49.26982912145661,
+      "relative_rate_ppm_upper": -25.750044124639437
+    },
+    {
+      "start_edge": 0,
+      "finish_edge": 1,
+      "RTC_seconds": 667,
+      "CLOCK_BOOTTIME_interval_lower": 667.0188732040006,
+      "CLOCK_BOOTTIME_interval_upper": 667.0346284549996,
+      "relative_rate_ppm_lower": -51.91402893101049,
+      "relative_rate_ppm_upper": -28.294857550181796
+    },
+    {
+      "start_edge": 1,
+      "finish_edge": 0,
+      "RTC_seconds": 665,
+      "CLOCK_BOOTTIME_interval_lower": 665.0149067950006,
+      "CLOCK_BOOTTIME_interval_upper": 665.0300019760016,
+      "relative_rate_ppm_lower": -45.113718046496665,
+      "relative_rate_ppm_upper": -22.41573060735025
+    },
+    {
+      "start_edge": 1,
+      "finish_edge": 1,
+      "RTC_seconds": 666,
+      "CLOCK_BOOTTIME_interval_lower": 666.0166300280016,
+      "CLOCK_BOOTTIME_interval_upper": 666.031815108001,
+      "relative_rate_ppm_lower": -47.76815052864869,
+      "relative_rate_ppm_upper": -24.96938852847297
+    }
+  ],
+  "conservative_envelope_ppm": [
+    -51.91402893101049,
+    -22.41573060735025
+  ],
+  "interpretation": "Four overlapping interval-average RTC rates against CLOCK_BOOTTIME, with actual second-edge read uncertainty retained. Envelope is a union, not an artificially narrowed intersection.",
+  "NTPSynchronized_at_both_samples": true,
+  "clocks_counters_alarms_or_files_not_written": true,
+  "absolute_frequency_calibration_proven": false,
+  "cold_boot_retention_proven": false,
+  "long_term_standby_accuracy_proven": false,
+  "full_RTC_acceptance": false,
+  "source": "Two read-only RTC edges at each endpoint, 5ms polling, retained actual read brackets. Current accepted stable6dbb, NTP synchronized at both endpoints."
+}

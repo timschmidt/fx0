@@ -110,3 +110,71 @@ those complete changes with their verified source APKs and setup sources;
 blanket configuration exceptions are not accepted. The reusable auditor retains
 these differences and returns nonzero so a caller cannot mistake setup changes
 for an unqualified checksum pass.
+
+## Reproduced standard Fx0 6.18.63-r2 package
+
+Two independent builds of source `e7c72f8cb3c50a1ec089f96277b7d4b469212ba9`
+and recipe `f00296c79416dd3c9e8c647d4f24ec7e66684dc4` completed the full normal
+abuild pipeline, including repository indexing and index signing. The source
+commit is published. The recipe and this new result remain local review drafts
+until their additional publication is approved.
+
+[Standard build identity](../kernel-maintenance/repro-public-inputs/standard-r2-build-identity.json)
+records the source archive checksum, native toolchain identity, source path,
+configuration, UTC timestamp, version and public signer fingerprints. Its
+`3-postmarketos-qcom-msm8226` build version and recipe epoch differ from the
+separate raw-kernel comparison profile. Compare builds with the same profile.
+The public certificate in that directory is the certificate used by the
+separate verified raw-kernel comparison and by signature checks. Signed-module
+and APK reproduction uses the same retained signing credentials through their
+ordinary signing tools.
+
+Use the rootless native setup above with separate empty build HOME and tmp
+paths for each build. Keep the pinned native toolchain read-only, disable the
+compile cache, and mount the verified public source archive read-only. Provide
+the retained module signer at an absolute path inside the chroot and the APK
+signer through the normal abuild configuration/environment. Before abuild runs,
+make the selected APK signer's public key available in that build root's
+`/etc/apk/keys`. pmbootstrap ordinarily prepares its build keys. A read-only
+retained root needs an explicit read-only directory of public keys mounted
+there; chroot-relative key links require their normal mount targets.
+
+The qualified direct replay uses pmbootstrap's cross-native environment and
+actual command `abuild -d -D postmarketOS -f`. The pinned dependency toolchain
+has already been provisioned; `-d` delegates dependency setup to that existing
+pmbootstrap environment. Pass `ABUILD_LAST_COMMIT` as the clean recipe HEAD and
+`SOURCE_DATE_EPOCH` as that commit's timestamp before entering abuild. The recipe
+converts it to a native BusyBox-compatible UTC timestamp for every Kbuild phase.
+The normal pmbootstrap wrapper supplies the same provenance and forwards the
+optional module-signer path. No old source objects or shared compiler cache are
+used. Keep complete failed runs when a setup phase fails and use a new build
+workspace for the corrected run.
+
+Require both complete commands to exit zero. Compare every tracked source body,
+symlink and executable mode; all 464 unstripped modules, 63 DTBs, 26 generated
+graphics headers, kernel images, metadata, default CPIO, complete signed APK
+and signed repository index. Verify the actual community configuration and
+full compressed DWARF5, embedded certificate, linked CFI, all module CMS
+signatures/import CRCs/dependency edges, APK signatures and a normal offline
+ARMv7 resolution. Corrupted signed control, valid tar/gzip with altered kernel
+payload, modified module signatures/payloads and a wrong certificate must fail.
+
+[Measured results](../../evidence/2026-11-14-standard-kernel-APK-reproducible.json)
+record the identical 18,600,866-byte signed APK, 564 kernel-output comparisons,
+91,269 source paths checked in each build, 545 packaged files, all 464 module
+signatures and 25,309 import CRCs. Both signed repository indexes also match.
+The first two builds produced matching APK files but failed their final index
+step because the direct fixture omitted build-key setup. Those commands remain
+failed in the evidence. New empty builds with the recovered existing trusted
+signer and explicit public-key fixture pass completely. The audit's root-only
+usermode simulation and host SHA-1 policy stops are separately retained;
+ordinary-user resolution and the pinned native OpenSSL verifier pass.
+
+The two packaging notices retain the accepted module layout under `/lib` and
+recommend `noarch` because the architecture detector does not recognize the
+compressed images. Actual ELF checks establish ARM32. Existing community
+preferred-option notices are retained. This result qualifies clean standard
+package reproduction. The new APK is unbooted and uninstalled; its native
+update/recovery and whole hardware acceptance remain open. Its runtime release
+matches r1, so a future physical trial must verify exact kernel notes and
+matching payload identities rather than relying on `uname` alone.
