@@ -3,6 +3,11 @@
 Destination: [linux-msm/rmtfs](https://github.com/linux-msm/rmtfs), based on
 `b30a3eb38f9af283f18dbd3c7755653efc52c094`. Nothing has been sent upstream.
 
+The default-branch head was rechecked on November 14 and still matches this
+base. The later normal-package checkpoint below supersedes the earlier
+dependency/compiler provenance limitations; physical daemon, firmware and
+modem/GNSS qualification remain open.
+
 Proposed subject: `storage: validate handles and ranges before copying snapshots`
 
 The storage API can turn large offsets into out-of-bounds copies on 32-bit ARM,
@@ -25,9 +30,9 @@ control and verifies no backing writes in shadow mode. Full host and static ARM
 daemons build; only early invalid-option rejection is executed for the daemon.
 
 This remains draft material. Integrate the generic harness into the upstream
-test/build workflow and refresh the submission base before sending. Full daemon
-dependency provenance includes a retained libudev provider with `-dirty` recipe
-metadata, so hardware trial/promotion is not justified by this build. QMI/sector
+test/build workflow before sending. This earlier diagnostic build used a
+retained libudev provider with `-dirty` recipe metadata; the clean normal-package
+checkpoint below supersedes that dependency limitation. QMI/sector
 and shared-memory/lifecycle tests remain separate. No firmware or physical
 modem acceptance is claimed. See [scope and evidence](../../diagnostics/modem-control/rmtfs-userspace.md).
 
@@ -76,3 +81,26 @@ The [discovery patch](../../diagnostics/modem-control/rmtfs-device-discovery.pat
 ## Daemon lifecycle follow-up
 
 Serialize optional remoteproc start and stop in one worker, keep its power reference independent of QRTR reconnection, and service requests while state writes finish. Correct socket and remoteproc descriptor cleanup and report startup failures to the caller. Nineteen synthetic lifecycle cases and fifty selected regressions pass on both host and ARM. Live remoteproc and firmware behavior remain open. [Lifecycle patch and verification](../../diagnostics/modem-control/rmtfs-lifecycle.md)
+
+## November 14: clean normal-package checkpoint
+
+The full 18-file release and all source patches replay exactly, including
+RMTFS's actual Makefile rule with the patched distribution qmic generator.
+Clean signed Clang/LLD, musl, target GCC runtime and eudev inputs now build the
+normal QRTR/RMTFS packages. Two independent signed package runs agree, and a
+fresh bootstrap from signed public APKs reproduces all 13 qmic/QRTR/RMTFS
+package/index artifacts. No existing Alpine root or helper image is needed for
+that bootstrap/rebuild workflow. The earlier diagnostic builds remain retained.
+
+The actual signed ARM QRTR library passes 52 existing codec cases, and the
+normal ARM RMTFS program passes two bounded early CLI controls. The existing
+19 lifecycle, 35 memory and 15 selected protocol source cases also pass with
+the clean compiler cohort. The qmic upstream draft now includes generic output
+contracts; upstream integration of the RMTFS and QRTR harnesses remains open.
+The standard RMTFS unit manages remoteproc with `-s`; a first passive physical
+trial has a separately prepared configuration. These package/source checks
+establish no live RFSA mapping, remoteproc behavior, firmware or modem/GNSS pass.
+
+See [package evidence](../../evidence/2026-11-14-rmtfs-distribution-packages.json),
+[ARM regression evidence](../../evidence/2026-11-14-rmtfs-clean-arm-regressions.json)
+and [clean bootstrap evidence](../../evidence/2026-11-14-modem-clean-bootstrap.json).

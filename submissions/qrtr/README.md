@@ -20,9 +20,16 @@ dispatcher cases fail against the unchanged codec. Positive cases include
 unknown optional TLVs, reversed required fields, zero/maximum arrays and
 empty/maximum strings. No physical channel or provisioning data is used.
 
-Before submission, refresh the upstream base, split encoder/decoder concerns
-as appropriate, integrate generic tests into the upstream build, and review
+The upstream default-branch head was rechecked on November 14 and remains
+the base above. Before submission, split encoder/decoder concerns as
+appropriate, integrate generic tests into the upstream build, and review
 descriptor compatibility beyond the finite supplied tables. Resolve the RMTFS
 string generator's terminator allocation separately. This is not a complete
 codec security audit or hardware qualification. See
 [procedure and limits](../../diagnostics/modem-control/rmtfs-qmi.md).
+
+Normal signed distribution builds now use the complete QRTR 1.2 release;
+its seven library/header/license blobs match this draft's base. The actual
+signed ARM library passes the existing 52 codec cases. This closes the package
+and source-replay prerequisite, with generic upstream test integration still
+open. [Distribution evidence](../../evidence/2026-11-14-rmtfs-distribution-packages.json)
