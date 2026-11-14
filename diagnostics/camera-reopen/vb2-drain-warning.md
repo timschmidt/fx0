@@ -15,12 +15,18 @@ as tested. `analyze-core-trace.py` separately checks unique timestamp/byte-size
 matches for every delivered frame against core done and dequeue events. Its
 post-hoc result does not turn the failed worker into a passing qualification.
 
-The warning occurs 0.441 ms after the final core completion and 4.523 ms before
-its dequeue. At that completion the driver-owned count is zero and the queued
-count is one. The final four completions show owned counts 3, 2, 1, 0; no new
-buffer is queued to the driver after the warning. The last frame's stored
-timestamp precedes its actual core completion by 69.601 ms, so a printed camera
-frame timestamp must not be mistaken for a userspace delivery time.
+The earlier analysis reported 0.441 ms from final core completion to the
+warning's journal reception and 4.523 ms from that reception to dequeue.
+These cross-log receipt differences do not establish kernel emission order;
+that earlier interpretation is withdrawn. The [IRQ follow-up](vfe-irq-warning.md)
+separates the clocks and preserves the original observations.
+
+The final core completion has driver-owned count zero and queued count one.
+The final four completions show owned counts 3, 2, 1, 0. The last frame's
+stored timestamp precedes its actual core completion by 69.601 ms within the
+core trace's own clock. A printed frame timestamp is not a userspace delivery
+time. The original phase assignment to the second front session uses journal
+reception at coarse session resolution, rather than precise IRQ ordering.
 
 The pinned VFE41 handler dispatches register-update before write-master-done.
 The gen1 register-update callback releases a deferred last buffer and changes

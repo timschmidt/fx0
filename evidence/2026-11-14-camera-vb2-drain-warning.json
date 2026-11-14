@@ -221,11 +221,7 @@
     "message": "qcom-camss fda0ac00.camss: Missing ready buf 1 4!",
     "case": 2,
     "camera": "front",
-    "warning_after_last_core_done_ms": 0.441,
-    "last_dequeue_after_warning_ms": 4.523,
     "last_frame_timestamp_to_core_done_ms": 69.600859,
-    "warning_after_last_driver_queue_ms": 313.067,
-    "driver_queue_events_after_warning": 0,
     "last_core_done_queued_count": 1,
     "last_core_done_driver_owned_count": 0,
     "final_buffer_index": 3,
@@ -234,7 +230,11 @@
       2,
       1,
       0
-    ]
+    ],
+    "journal_reception_after_last_core_done_ms": 0.441,
+    "last_dequeue_relative_to_journal_reception_ms": 4.523,
+    "journal_reception_after_last_driver_queue_ms": 313.067,
+    "driver_queue_events_after_journal_reception": 0
   },
   "kernel_window": {
     "kernel_messages_checked": 1,
@@ -274,5 +274,6 @@
   "no_boot_package_module_firmware_changes": true,
   "no_driver_patch_applied": true,
   "new_commits_published": false,
-  "full_goal_complete": false
+  "full_goal_complete": false,
+  "timing_correction": "The journal warning timestamp was reception time. The earlier sub-millisecond cross-log emission-order interpretation is withdrawn; native IRQ follow-up separates printk and CLOCK_MONOTONIC domains. Original private artifacts and failed worker remain preserved."
 }

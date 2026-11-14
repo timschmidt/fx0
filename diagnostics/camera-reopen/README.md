@@ -116,3 +116,10 @@ requested buffers arrive. The worker still fails an unsupported V4L2-event
 expectation, and strict full-window classification rejects the warning.
 Separate core-trace analysis narrows the phase without claiming the cause or
 closing camera acceptance.
+
+The [IRQ-status follow-up](vfe-irq-warning.md) fixes the unsupported event
+expectation, validates all 120 buffers, and captures combined register-update
+and WM completion bits immediately before the warning. It also corrects the
+earlier use of journal reception timestamps for precise cross-log ordering.
+The warning still fails camera acceptance; direct state/callback evidence and
+a verified fix remain open.

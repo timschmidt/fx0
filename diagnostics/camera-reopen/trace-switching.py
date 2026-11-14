@@ -24,17 +24,18 @@ FRAME_RECORD = re.compile(r'\bseq:\s*(\d+)\s+bytesused:\s*(\d+)')
 FAULT = re.compile(r'underrun|context fault|iommu.*fault|kernel bug|oops:|watchdog|'
                    r'(?:camss|imx132|imx179|csid|csiphy|vfe|ispif|cci).*(?:error|fail|timeout|overflow)', re.I)
 NOTES_SHA = '05292e44d9f13de78b5ebf602b0b3f9ff22b7820d765f6e796cf3473beee4377'
-FRAME_PREFIX = 'fx0-camera-trace-switching-01-'
+FRAME_PREFIX = 'fx0-camera-irq-switching-01-'
 
 spec = importlib.util.spec_from_file_location('owned_helpers', Path(__file__).with_name('pause-queue-test.py'))
 helpers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(helpers)
 OwnedClient = helpers.OwnedClient
 from queue_trace import ROOT, TraceLease, private_json, parse_private_trace, verify_markers, recover_claim
+from irq_debug import DebugLease, recover_debug
 classifier_spec = importlib.util.spec_from_file_location('kernel_classifier', Path(__file__).with_name('check-kernel-window.py'))
 classifier = importlib.util.module_from_spec(classifier_spec)
 classifier_spec.loader.exec_module(classifier)
-INSTANCE = 'fx0-camera-switching-01'
+INSTANCE = 'fx0-camera-irq-switching-01'
 WORKLOAD = [('front', None), ('back', None), ('front', None), ('back', None), ('back', (3280, 2464, 4104))]
 
 
@@ -270,9 +271,9 @@ def alias_rows(rows):
         if token is not None:
             aliases.setdefault(token, 'owner' + str(len(aliases) + 1))
             row['owner_alias'] = aliases[token]
-        if row['event'].startswith('vb2_v4l2_'):
-            require(row['minor'] == 0, 'unexpected video minor in filtered trace')
-        elif row['event'].startswith('vb2_'):
+        require(row['event'] in ['tracing_mark_write', 'vb2_qbuf', 'vb2_dqbuf', 'vb2_buf_queue', 'vb2_buf_done'],
+                'unexpected event in four-family core trace')
+        if row['event'].startswith('vb2_'):
             require(row['type'] == 9, 'unexpected buffer type in filtered trace')
         output.append(row)
     require(all('owner_private' not in row for row in output), 'raw owner token retained')
@@ -290,20 +291,23 @@ def session_evidence(rows, captures):
         require(start < finish, 'session marker ordering')
         selected = [row for row in rows if start <= row['trace_ns'] <= finish]
         counts = {event: sum(row['event'] == event for row in selected)
-                  for event in ['vb2_qbuf', 'vb2_dqbuf', 'vb2_buf_queue', 'vb2_buf_done',
-                                'vb2_v4l2_buf_queue', 'vb2_v4l2_buf_done']}
-        require(all(count > 0 for count in counts.values()), 'session trace event family missing')
-        done = [row for row in selected if row['event'] == 'vb2_v4l2_buf_done']
+                  for event in ['vb2_qbuf', 'vb2_dqbuf', 'vb2_buf_queue', 'vb2_buf_done']}
+        require(all(count == FRAMES for count in counts.values()), 'session core trace accounting mismatch')
+        require(len(capture_result['frames_timed']) == FRAMES, 'delivered frame accounting mismatch')
         for frame in capture_result['frames_timed']:
-            matches = [row for row in done if row['sequence'] == frame['sequence']
-                       and 0 <= row['timestamp_ns'] - frame['timestamp_ns'] < 1000]
-            require(len(matches) == 1, 'delivered buffer lacks unique trace timestamp/sequence match')
+            for event in ['vb2_buf_done', 'vb2_dqbuf']:
+                matches = [row for row in selected if row['event'] == event
+                           and 0 <= row['timestamp_ns'] - frame['timestamp_ns'] < 1000
+                           and row['bytesused'] == frame['bytesused']]
+                require(len(matches) == 1, 'delivered buffer lacks unique core timestamp/size match')
         result.append({'case': index, 'start_trace_ns': start, 'end_trace_ns': finish,
                        'event_counts': counts, 'delivered_frames_matched': len(capture_result['frames_timed'])})
     return result
 
 
 def recover(workspace):
+    debug_claim = workspace / 'debug.claim.json'
+    debug = recover_debug(debug_claim) if debug_claim.exists() else {'not_created': True}
     record = workspace / 'trace.claim.json'
     trace = recover_claim(record) if record.exists() else {'not_created': True}
     require(not (ROOT / 'instances' / INSTANCE).exists(), 'owned trace instance remains')
@@ -332,7 +336,7 @@ def recover(workspace):
     require(all(read(path / 'device/power/runtime_status') == 'suspended' for path in nodes.values()), 'sensor remains active')
     require(all(pattern('/dev/' + path.name) == 0 for path in nodes.values()), 'test pattern remains enabled')
     require(not list(Path('/dev/shm').glob(FRAME_PREFIX + '*')), 'owned frame workspace remains')
-    private_json(workspace / 'stop-post.json', {'trace': trace, 'owned_instance_absent': True,
+    private_json(workspace / 'stop-post.json', {'debug': debug, 'trace': trace, 'owned_instance_absent': True,
                                              'owned_frames_absent': True, 'sensors_idle_patterns_off': True, 'patterns_restored_by_recovery': restored})
 
 
@@ -347,8 +351,9 @@ def trial(boot, workspace):
     report['idle_camera_owner_PIDs'] = idle_camera_owners()
     cursor = helpers.journal_anchor()
     lease = TraceLease(INSTANCE, workspace / 'trace.claim.json')
+    debug = DebugLease(workspace / 'debug.claim.json')
     try:
-        with lease:
+        with debug, lease:
             lease.start()
             try:
                 lease.marker('WORKLOAD_BEGIN')
@@ -388,6 +393,7 @@ def trial(boot, workspace):
         report['worker_error'] = type(error).__name__ + ': ' + str(error)
         raise
     finally:
+        report['debug_cleanup'] = debug.cleanup
         report['trace_cleanup'] = lease.cleanup
         report['buffer_sizing'] = lease.sizing
         report['kernel_messages'] = helpers.journal_after(cursor)

@@ -77,15 +77,16 @@ for warning in report['kernel_messages']:
     assert len(dequeues)==1
     queued=[r for r in selected if r['event']=='vb2_buf_queue' and r['trace_ns']<=when]
     last_queue=max(queued,key=lambda r:r['trace_ns'])
-    warnings.append({'message':warning['message'],'case':index,'camera':capture['camera'],'warning_ns':when,
+    warnings.append({'message':warning['message'],'case':index,'camera':capture['camera'],'warning_journal_reception_ns':when,
                      'last_core_done':last,'last_core_dequeue':dequeues[0],
-                     'warning_after_last_core_done_ms':(when-last['trace_ns'])/1e6,
-                     'last_dequeue_after_warning_ms':(dequeues[0]['trace_ns']-when)/1e6,
+                     'journal_reception_after_last_core_done_ms':(when-last['trace_ns'])/1e6,
+                     'last_dequeue_relative_to_journal_reception_ms':(dequeues[0]['trace_ns']-when)/1e6,
                      'last_frame_timestamp_to_core_done_ms':(last['trace_ns']-last['timestamp_ns'])/1e6,
-                     'warning_after_last_driver_queue_ms':(when-last_queue['trace_ns'])/1e6,
-                     'driver_queue_events_after_warning':sum(r['event']=='vb2_buf_queue' and r['trace_ns']>when for r in selected),
+                     'journal_reception_after_last_driver_queue_ms':(when-last_queue['trace_ns'])/1e6,
+                     'driver_queue_events_after_journal_reception':sum(r['event']=='vb2_buf_queue' and r['trace_ns']>when for r in selected),
                      'tail_core_counts':[{k:r[k] for k in ['event','trace_ns','index','queued_count','owned_by_driver']} for r in selected if r['event'] in ['vb2_buf_done','vb2_dqbuf']][-8:]})
 result={'analysis_kind':'post-hoc core trace correlation; original worker remains failed',
+        'warning_time_basis':'journal reception, not kernel emission; cross-log deltas do not prove emission order',
         'matched_delivered_frames_by_core_timestamp_and_size':matched_frames,
         'warning_contexts':warnings,'observation_SHA256':hashlib.sha256(source.read_bytes()).hexdigest(),'sessions':sessions,
         'vb2_count_semantics':'core snapshots only, not direct VFE internal state or proof of hardware frame counts',

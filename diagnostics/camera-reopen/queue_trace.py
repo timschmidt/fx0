@@ -11,8 +11,10 @@ import time
 EVENTS = {
     'vb2/vb2_qbuf': 'type == 9', 'vb2/vb2_dqbuf': 'type == 9',
     'vb2/vb2_buf_queue': 'type == 9', 'vb2/vb2_buf_done': 'type == 9',
-    'v4l2/vb2_v4l2_buf_queue': 'minor == 0', 'v4l2/vb2_v4l2_buf_done': 'minor == 0',
 }
+# Observe the unused V4L2 settings too, without enabling those uncalled events.
+OBSERVED_EVENTS = dict(EVENTS, **{
+    'v4l2/vb2_v4l2_buf_queue': 'minor == 0', 'v4l2/vb2_v4l2_buf_done': 'minor == 0'})
 ROOT = Path('/sys/kernel/tracing')
 
 
@@ -48,7 +50,7 @@ def settings(root, io, exclude=None):
     def one(directory):
         values = {name: io.read(directory / name) for name in
                   ['tracing_on', 'current_tracer', 'trace_clock', 'buffer_size_kb', 'buffer_subbuf_size_kb']}
-        for event in EVENTS:
+        for event in OBSERVED_EVENTS:
             for name in ['enable', 'filter']:
                 path = directory / 'events' / event / name
                 values['events/' + event + '/' + name] = io.read(path)

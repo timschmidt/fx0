@@ -1,0 +1,253 @@
+{
+  "recorded_UTC": "2026-11-14T22:47:19.903494+00:00",
+  "scope": "Native five-session VFE IRQ/core diagnostic; unsupported event expectation fixed; camera clean gate remains failed",
+  "boot_reference": "e134d38d",
+  "kernel_source_commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+  "kernel_release": "6.18.63-fx0-vibrator-alpine",
+  "kernel_package": "6.18.63-r1",
+  "as_tested_sources_SHA256": {
+    "trace-switching.py": "c382d618e51191c4269d1adfcb92d4e563df9858ef42cd1a87cb01aa80067e35",
+    "queue_trace.py": "9d5da10c56efb4a178f30b8d591833cfc2f0a053a836a63cc61b216c8f2c9736",
+    "irq_debug.py": "894b6e82de67e2eea361abae36bd339cf81e5aa191dbca8f08db32725e8e40ca",
+    "pause-queue-test.py": "8f53db9d50924dca85a89a05c5624ae7cda117cfd636fe50edc69c858a070b4b",
+    "check-kernel-window.py": "c5fd95d7cc8ed0b28f08e23f6038c469c3189f889b0fcdba570bbf171ddc1414"
+  },
+  "actual_worker_exit_status": 1,
+  "worker_error": null,
+  "core_buffer_validation_passed": true,
+  "clean_camera_gate_passed": false,
+  "delivered_buffers": 120,
+  "sampled_pattern_frames": 86,
+  "cases": [
+    {
+      "case": 0,
+      "camera": "front",
+      "geometry": [
+        1976,
+        1200
+      ],
+      "buffers": 24,
+      "pattern_frames": 17,
+      "matched_buffers": 24
+    },
+    {
+      "case": 1,
+      "camera": "back",
+      "geometry": [
+        1640,
+        1232
+      ],
+      "buffers": 24,
+      "pattern_frames": 18,
+      "matched_buffers": 24
+    },
+    {
+      "case": 2,
+      "camera": "front",
+      "geometry": [
+        1976,
+        1200
+      ],
+      "buffers": 24,
+      "pattern_frames": 18,
+      "matched_buffers": 24
+    },
+    {
+      "case": 3,
+      "camera": "back",
+      "geometry": [
+        1640,
+        1232
+      ],
+      "buffers": 24,
+      "pattern_frames": 17,
+      "matched_buffers": 24
+    },
+    {
+      "case": 4,
+      "camera": "back",
+      "geometry": [
+        3280,
+        2464
+      ],
+      "buffers": 24,
+      "pattern_frames": 16,
+      "matched_buffers": 24
+    }
+  ],
+  "core_trace": {
+    "no_lost_events": true,
+    "event_rows": 517,
+    "markers": 37,
+    "enabled_event_families": 4,
+    "unused_V4L2_families_enabled": false
+  },
+  "IRQ_analysis": {
+    "IRQ_status_messages": 239,
+    "IRQ_messages_by_journal_reception_case": [
+      36,
+      53,
+      35,
+      53,
+      62
+    ],
+    "matched_journal_and_kernel_records": 240,
+    "kernel_sequence_contiguous": true,
+    "warning_count": 1,
+    "warning_contexts": [
+      {
+        "message": "qcom-camss fda0ac00.camss: Missing ready buf 1 4!",
+        "reported_output_state": 4,
+        "missing_index": 1,
+        "kernel_sequence": 602,
+        "printk_timestamp_usec": 63677999965,
+        "preceding_IRQ": {
+          "status0_hex": "0x00000120",
+          "status1_hex": "0x20000000",
+          "reg_update_lines": [
+            "RDI0"
+          ],
+          "wm_done_indices": [
+            0
+          ],
+          "kernel_sequence": 601,
+          "printk_timestamp_usec": 63677999809
+        },
+        "adjacent_kernel_records": true,
+        "IRQ_to_warning_printk_usec": 156,
+        "reg_update_and_wm_done_bits_in_saved_status": true,
+        "case_by_journal_reception": 2
+      }
+    ],
+    "core_tails": [
+      {
+        "case": 0,
+        "camera": "front",
+        "last_four_core_owned_counts": [
+          3,
+          2,
+          1,
+          0
+        ],
+        "last_core_done_queued_count": 1,
+        "last_core_done_buffer_index": 3
+      },
+      {
+        "case": 1,
+        "camera": "back",
+        "last_four_core_owned_counts": [
+          3,
+          2,
+          1,
+          0
+        ],
+        "last_core_done_queued_count": 1,
+        "last_core_done_buffer_index": 3
+      },
+      {
+        "case": 2,
+        "camera": "front",
+        "last_four_core_owned_counts": [
+          3,
+          2,
+          1,
+          0
+        ],
+        "last_core_done_queued_count": 1,
+        "last_core_done_buffer_index": 3
+      },
+      {
+        "case": 3,
+        "camera": "back",
+        "last_four_core_owned_counts": [
+          3,
+          2,
+          1,
+          0
+        ],
+        "last_core_done_queued_count": 1,
+        "last_core_done_buffer_index": 3
+      },
+      {
+        "case": 4,
+        "camera": "back",
+        "last_four_core_owned_counts": [
+          2,
+          2,
+          1,
+          0
+        ],
+        "last_core_done_queued_count": 1,
+        "last_core_done_buffer_index": 3
+      }
+    ],
+    "cross_clock_microsecond_ordering_claimed": false,
+    "clock_basis": "Printk source timestamps and sequences for kernel log order; CLOCK_MONOTONIC for core trace; journal reception only for coarse session assignment.",
+    "limitations": "Saved status bits do not directly trace VFE state transitions or WM-to-line mappings; printk can perturb timing."
+  },
+  "kernel_window_classification": {
+    "kernel_messages_checked": 252,
+    "unresolved_diagnostics": [
+      {
+        "message": "qcom-camss fda0ac00.camss: Missing ready buf 1 4!",
+        "reason": "explicit kernel diagnostic"
+      }
+    ],
+    "clean_kernel_window": false
+  },
+  "corrected_timing_basis": {
+    "journal_reception_deltas_are_not_emission_order": true,
+    "earlier_exact_cross_log_ordering_withdrawn": true,
+    "later_calibration_samples": 12,
+    "CPUs_checked": 4,
+    "printk_minus_monotonic_lower_ms": -1814.24072,
+    "printk_minus_monotonic_upper_ms": -1814.082122,
+    "later_offset_not_applied_retroactively_to_capture": true,
+    "no_clock_or_RTC_setting_changes": true,
+    "source_reference": "https://www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html"
+  },
+  "source_assessment": {
+    "upstream_sha": "23c62304dde29abe92013d85910d03a77dada35d",
+    "four_relevant_functions_identical": true,
+    "pinned_file_urls": {
+      "camss-vfe-gen1.c": "https://github.com/torvalds/linux/blob/23c62304dde29abe92013d85910d03a77dada35d/drivers/media/platform/qcom/camss/camss-vfe-gen1.c",
+      "camss-vfe-4-1.c": "https://github.com/torvalds/linux/blob/23c62304dde29abe92013d85910d03a77dada35d/drivers/media/platform/qcom/camss/camss-vfe-4-1.c"
+    },
+    "scope": "Function-body comparison only; not full current stable/edge or maintainer-tree qualification"
+  },
+  "conclusion": "Adjacent printk records show RDI0 REG_UPDATE and WM0 completion in saved status, followed 156us later by the IDLE missing-ready warning. Source dispatches REG_UPDATE first. This strengthens the finite-drain ordering hypothesis; direct state/callback tracing and a verified fix are still needed.",
+  "lifecycle_qualification": {
+    "normal_and_injected_failure_cases": 2,
+    "debug_and_trace_restoration_passed": true
+  },
+  "host_export_checks": {
+    "debug_lease": 13,
+    "IRQ_evidence": 17,
+    "trace_lease_parser": 25,
+    "core_matching_and_RAW10": 14,
+    "actual_discovery": 10,
+    "real_owned_children": 11,
+    "kernel_classifier": 10
+  },
+  "cleanup": {
+    "debug_target_disabled": true,
+    "all_other_debug_settings_preserved": true,
+    "owned_trace_removed": true,
+    "global_other_trace_settings_preserved": true,
+    "owned_frames_deleted_from_phone_tmpfs": true,
+    "raw_frames_transferred": false,
+    "sensors_suspended_patterns_off": true,
+    "owned_service_inactive": true,
+    "owned_failed_flag_cleared_after_failure_receipts_preserved": true,
+    "independent_boot_package_config_hashes_unchanged": true,
+    "systemd_running_taint0": true,
+    "UI_and_gesture_PIDs_unchanged": true,
+    "private_staging_traces_claims_and_logs_retained": true,
+    "empty_private_flock_file_retained_to_preserve_lock_identity": true
+  },
+  "raw_owner_tokens_and_logs_excluded": true,
+  "no_driver_patch_applied": true,
+  "no_package_module_firmware_boot_changes": true,
+  "not_published": true,
+  "full_goal_complete": false
+}

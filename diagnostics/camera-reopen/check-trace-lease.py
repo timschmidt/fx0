@@ -17,7 +17,7 @@ def populate(path):
     for name, text in {'tracing_on': '1', 'current_tracer': 'nop', 'trace_clock': '[local] mono boot',
                        'buffer_subbuf_size_kb': '4', 'buffer_size_kb': '1408', 'trace': '# tracer: nop\n', 'trace_marker': ''}.items():
         (path / name).write_text(text)
-    for event in module.EVENTS:
+    for event in module.OBSERVED_EVENTS:
         folder = path / 'events' / event
         folder.mkdir(parents=True)
         (folder / 'enable').write_text('0')
@@ -184,12 +184,11 @@ text = '''# tracer: nop
 cam-7 [001] .... 12.000001: vb2_buf_queue: owner = deadbeef, queued = 4, owned_by_drv = 1, index = 0, type = 9, bytesused = 10, timestamp = 12000000000
 <idle>-0 [001] .... 12.033334: vb2_buf_done: owner = deadbeef, queued = 4, owned_by_drv = 0, index = 0, type = 9, bytesused = 10, timestamp = 12033333000
 worker-1 [000] .... 12.040000: tracing_mark_write: FX0_CAMERA CLOCK_PROBE mono_ns=12040000123
-cam-7 [001] .... 12.050000: vb2_v4l2_buf_done: minor=0 flags = DONE, timestamp = 12033333000, sequence = 3
 '''
 rows = module.parse_private_trace(text)
 assert rows[0]['owned_by_driver'] == 1 and rows[1]['owned_by_driver'] == 0
-assert rows[-1]['sequence'] == 3 and module.verify_markers(rows) == 1
-cases.append('queue/done/marker/V4L2 parsing and microsecond rounding')
+assert module.verify_markers(rows) == 1
+cases.append('queue/done/marker parsing and microsecond rounding')
 for bad in [text.replace('owned_by_drv = 1', 'owned_by_drv = bad'), text + 'CPU 0: LOST EVENTS\n',
             text.replace('vb2_buf_done:', 'unknown_event:'), text.replace('mono_ns=12040000123', 'mono_ns=99999999999')]:
     try:
