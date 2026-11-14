@@ -1,5 +1,10 @@
 # Experimental Fx0 charging policy
 
+The [Linux 6.18.63 port](current-kernel-port.md) carries the preserved foundation
+onto the reproducible kernel and adds child-probe/lifetime, actual Kconfig,
+current-DTB and source-only checks. It remains a host-qualified prototype;
+the historical RAM results below do not qualify the new combined source.
+
 The [Linux branch](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-charging-policy)
 connects the verified actuator and early firmware gate to a managed policy child.
 The [firmware branch](https://github.com/timschmidt/fx0-lk2nd/tree/integration/fx0-policy-profile)

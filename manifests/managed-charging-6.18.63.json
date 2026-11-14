@@ -1,0 +1,94 @@
+{
+  "subject": "Experimental managed SMBB charging foundation on reproducible Linux 6.18.63",
+  "source_repository": "https://github.com/timschmidt/fx0-linux",
+  "source_branch": "development/fx0-managed-charging-6.18.63-01",
+  "source_commit": "83564de797ccf907c45a4b711ebd21e8b18b2d5b",
+  "source_base": "e0e89468dcfc99500bcae40ce58bfa43fe570c15",
+  "reproducible_foundation": "e7c72f8cb3c50a1ec089f96277b7d4b469212ba9",
+  "required_voltage_manifest": "manifests/power-telemetry-prerequisite-6.18.63.json",
+  "firmware_repository": "https://github.com/timschmidt/fx0-lk2nd",
+  "paired_firmware_commit": "2ce757408f364ec6f1197b1d5d0be4128a309b1e",
+  "historical_managed_source": "2457eebe0bb67bcb5eccee7916650629cc4e9bf0",
+  "rebased_seven_commits": [
+    {
+      "original_number": 1,
+      "new_commit": "aef67594985dca86fff7e2f29cc289fe9e1cf0ae",
+      "returncode": 0,
+      "original_commit": "05bec5027f57dd80ae7edc38dcab225fb8327b81"
+    },
+    {
+      "original_number": 2,
+      "new_commit": "2da84994c7db5d568269ec2a5c7722f067e1edaa",
+      "returncode": 0,
+      "original_commit": "76b4a5fdd60b5a28eecb4e734d4ab76e0b607462"
+    },
+    {
+      "original_number": 3,
+      "new_commit": "a562539a0edc3dd61bfa7f1cf9a702c8ef7b02a1",
+      "returncode": 0,
+      "original_commit": "25d7524a6fbb3008c7c72be53f1cd5c38ecc2d68"
+    },
+    {
+      "original_number": 4,
+      "new_commit": "67913805952b616d026ebe38bc1a7ddf42382eb4",
+      "returncode": 0,
+      "original_commit": "03d9a01ddd53f87ce14fb3ec435b90367fa01f1f"
+    },
+    {
+      "original_number": 5,
+      "new_commit": "f40ec270f63de18a728ba2afe2ee69532a36b1e0",
+      "returncode": 0,
+      "original_commit": "9c1e50cecd5aee585729ba03333b9baf50f1903e"
+    },
+    {
+      "original_number": 6,
+      "new_commit": "eb57ff400ba64c7141a081126830baca678a2ed2",
+      "returncode": 0,
+      "original_commit": "09ada7bb9173ad43bba36f85ec6cb887a292954e"
+    },
+    {
+      "original_number": 7,
+      "new_commit": "83564de797ccf907c45a4b711ebd21e8b18b2d5b",
+      "returncode": 0,
+      "original_commit": "1f37b83f66f11aa1db2a8c49e451508ea374dac7"
+    }
+  ],
+  "source_series": "patches/linux-integration/managed-charging-6.18.63-series.patch",
+  "source_series_SHA256": "2e23521cbacbcaa0d422b277f55e5db82363c69801a7d96a8f94cf484467669b",
+  "required_config": {
+    "CHARGER_QCOM_SMBB": "y",
+    "CHARGER_QCOM_SMBB_POLICY": "y",
+    "IIO": "y"
+  },
+  "experimental_firmware_properties": [
+    "qcom,software-charge-control",
+    "qcom,boot-charge-inhibited",
+    "lg,battery-charge-profile"
+  ],
+  "binding_status": "Development proposal; not accepted upstream ABI",
+  "diagnostic_fixtures_SHA256": {
+    "diagnostics/smbb-charging-policy/check-model.py": "ebbaa5d8dabe406623a16b63cab73af27e026f10ea4aa20859a882df381f53ff",
+    "diagnostics/smbb-charging-policy/check-control.py": "fa326d28905722a9356803fd654b222facc3643f2b01ed6317673e80ced5526b",
+    "diagnostics/smbb-charging-policy/check-firmware-profile.py": "8273102c4e920342fbac116bcbff20bd14e2e06917a1ace3f0351def0e71ae56",
+    "diagnostics/smbb-charging-policy/check-lifetime.py": "48f69b429c415935b62516680befdf03b8f7e86e1550751f466ba677b2eb3a38",
+    "diagnostics/smbb-charge-guard/check.py": "91a3e48b12681afdf8912479491e868679f6e57e3ed2d4ae3b98d334498965db",
+    "diagnostics/lk2nd-battery-handoff/check.py": "2a6e2fed0898ba99ad2693b0745c6befd14dd704cbe7a3a0a71de6fe8c7741ba",
+    "diagnostics/lk2nd-charge-gate/check-gate.py": "ec9e876f13186d5171cd8f385144871a9d5c5fccea9f3cfe1476298e9aa6822b",
+    "diagnostics/lk2nd-charge-gate/check-spmi.py": "f6fd4679c49b3cf99f46cf3319d4938ca961681c144da0085d57116fd087dd1b"
+  },
+  "source_and_evidence_published": false,
+  "firmware_kernel_package_or_phone_updated": false,
+  "signed_combined_kernel_package_or_boot_image_prepared": false,
+  "full_battery_charging_or_thermal_acceptance": false,
+  "schema_tool_pins": [
+    "attrs==26.1.0",
+    "dtschema==2026.9",
+    "jsonschema==4.26.0",
+    "jsonschema-specifications==2025.9.1",
+    "pylibfdt==1.7.2.post2",
+    "referencing==0.37.0",
+    "rfc3987==1.3.8",
+    "rpds-py==2026.9.1",
+    "ruamel.yaml==0.19.1"
+  ]
+}

@@ -765,3 +765,18 @@ tested source from the public base. No phone access or candidate package/image
 build occurs. The runtime pack/firmware gate, BMS discrepancy, temperature and
 charging policy, USB budget port and physical power acceptance remain open.
 [Integration report and remaining gates](../diagnostics/vadc-battery-units/current-integration.md)
+
+## November 14: managed charging foundation port
+
+Seven preserved charger/control/policy commits now apply on the isolated
+6.18.63 voltage-prerequisite source, paired with the exact retained firmware
+profile/inhibition gate. Source and a 30-file export pass callback, LG model,
+firmware and new child-probe/PM/lifetime fixtures. Managed and legacy Kconfig
+profiles build their ARM charger objects without warnings. The current DTB
+passes the selected experimental schemas and firmware-hook checks with simulated
+pack/PMIC inputs; three W=1 warnings remain at unchanged eFuse/display definitions.
+
+No phone access, signed combined package, firmware/image update or physical
+charging qualification occurs. The r2 physical-base gate, ordered USB budget
+port, BMS discrepancy and complete electrical/thermal/reliability work remain
+open. [Port report](../diagnostics/smbb-charging-policy/current-kernel-port.md)
