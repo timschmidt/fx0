@@ -470,3 +470,21 @@ export. The existing nine prepared controller source snapshots remain exact.
 The new module has not replaced that controller or dispatched a physical trial.
 Physical RFSA, USB console, automatic return and modem/GNSS remain open. See the
 [software-only portability evidence](../evidence/2026-11-14-passive-flow-portability.json).
+
+## November 14: durable passive-trial ownership and bounded child waits
+
+The [Linux host runtime](../diagnostics/modem-control/passive-runtime.md)
+now provides an exclusive persistent attempt claim, file/directory-fsynced state
+and bounded waits on actual owned subprocesses. A parent deadline remains
+separate from a USB I/O timeout and cannot by itself authorize a USB reset.
+
+A fresh private adapter revision snapshots the canonical flow/runtime. Twelve
+offline callback/fault tests cover durable BOOT intent, terminal transfer
+recovery, observer failure, wrong native modules and operator/image/baseline
+refusal. Its fixture journals contain 23 actual owned-child terminal receipts;
+the deliberately uncertain-transfer control permits neither BOOT nor recovery.
+All 25 public flow/runtime test methods pass from a clean review checkout and a
+source-only export without ignored local source imports. The physical responses
+are substituted fixtures, not a fresh device audit. Both real trial workspaces
+remain undispatched, and the original nine source snapshots remain exact.
+[Offline qualification evidence](../evidence/2026-11-14-passive-adapter-runtime.json)

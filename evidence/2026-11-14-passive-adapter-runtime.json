@@ -1,0 +1,92 @@
+{
+  "recorded_UTC": "2026-11-14T14:55:09.362073+00:00",
+  "state": "PASS offline actual-adapter and runtime qualification; hardware unqualified",
+  "adapter_source_SHA256": {
+    "run.py": "8e79c0a894f1c3d55426549d81f1b29d9d88c6543e09608cfae98a8d6c03b7b5",
+    "flow.py": "24e5cd675f40f787298dbbf1ea0a21f46a2d39033512075b40e31bfb67e487f8",
+    "runtime.py": "31629e68235fbb689c9e3ecb15bb7f230b790d9923af31c4ee6236219d2d0e08"
+  },
+  "public_sources_SHA256": {
+    "diagnostics/modem-control/passive_runtime.py": "31629e68235fbb689c9e3ecb15bb7f230b790d9923af31c4ee6236219d2d0e08",
+    "tests/test_passive_runtime.py": "2024f87811950543e44e3f69f76105f45a5eca9ff2d768a4f88fc1b4fa1bd945"
+  },
+  "qualification_sources_SHA256": {
+    "test_adapter.py": "f6f637c0f3d2642055f59861b2ca9a49abc805a6931fd279c4c5a4a3692978a8",
+    "test_adapter_faults.py": "63192e17777b1edfbc1120df6bbf3f61b3a34b3cd4d85deaac456e34c9e16f08",
+    "fixture-child.py": "83046c5a37cb97b428d6a5f54711ea0b532cd0e3c97dd4122cfc65042574ae30"
+  },
+  "runtime_test_methods_passed": 11,
+  "actual_adapter_test_methods_passed": 8,
+  "supplementary_fault_test_methods_passed": 4,
+  "actual_terminal_tool_observations": [
+    {
+      "handle": 85694,
+      "returncode": 0,
+      "test_methods": 8
+    },
+    {
+      "handle": 46218,
+      "returncode": 0,
+      "test_methods": 4
+    }
+  ],
+  "actual_adapter_fixture_process_records": 24,
+  "actual_owned_child_terminal_receipts": 23,
+  "simulated_unreaped_status_control_records": 1,
+  "all_disposable_children_waited_or_cleaned_up_by_successful_tests": true,
+  "tested_policies": [
+    "Durable exclusive claim, state file/directory fsync and no workspace reuse",
+    "Owned parent deadlines and terminal status; no default successful code",
+    "Successful readback and durable intent before one BOOT callback",
+    "Parent process deadline cannot authorize USB reset, including a stale errno110 result",
+    "Known terminal transfer failure permits reviewed pre-BOOT normal return",
+    "Nonzero observer completion forbids candidate acceptance while native verification is attempted",
+    "Intent fsync failure cannot BOOT or retry",
+    "Unreaped transfer status forbids BOOT and recovery",
+    "Wrong operator answer/image/boot, expired/future receipt and mismatched baseline reject",
+    "Wrong native module cohort cannot pass postflight",
+    "Native return does not imply worker pass",
+    "Actual entry rejects absent owner receipt and optimized Python before device actions"
+  ],
+  "image_and_baseline_unchanged": true,
+  "operator_answer_scope_unchanged": true,
+  "old_prepared_source_snapshots_unchanged": 9,
+  "new_adapter_sources_pinned": 12,
+  "actual_native_device_audit_performed": false,
+  "all_device_transport_boundaries_replaced_by_forbidden_by_default_fixtures": true,
+  "physical_trial_dispatched": false,
+  "phone_access": false,
+  "root_index_unchanged": true,
+  "publication": false,
+  "limitations": [
+    "The device and USB responses are fixtures; no fresh native observation is claimed.",
+    "Unreaped status uses an injected failure; an actual uninterruptible USB process was not induced.",
+    "Storage power-loss, physical USB recovery, automatic RAM return and modem/GNSS remain unqualified."
+  ],
+  "private_device_record_read_or_credential_client_imported_by_tests": false,
+  "retained_native_metadata_and_prepared_image_used_as_offline_inputs": true,
+  "public_flow_and_runtime_portability": [
+    {
+      "name": "clean-review-checkout",
+      "actual_returncode": 0,
+      "test_methods": 25,
+      "skipped": 0,
+      "ignored_local_source_tree_present": false
+    },
+    {
+      "name": "source-only-export",
+      "actual_returncode": 0,
+      "test_methods": 25,
+      "skipped": 0,
+      "ignored_local_source_tree_present": false
+    }
+  ],
+  "public_source_export_files_SHA256": {
+    "diagnostics/modem-control/passive_trial.py": "24e5cd675f40f787298dbbf1ea0a21f46a2d39033512075b40e31bfb67e487f8",
+    "diagnostics/modem-control/passive-trial-flow.md": "f44c8f9c285ceb0f4f3203772b68dcff0440ae4ee5c4ef34e84bb16c28a873cd",
+    "tests/test_passive_trial_flow.py": "6875a4a54035bdac953ced7fae4e82a77fd00322d8b69a26fe9a07d90a5d1c6b",
+    "diagnostics/modem-control/passive_runtime.py": "31629e68235fbb689c9e3ecb15bb7f230b790d9923af31c4ee6236219d2d0e08",
+    "diagnostics/modem-control/passive-runtime.md": "476a25a0082e856a84a4e7f5e2bb829c957f69e6909569015fdf0de6cf1e2b30",
+    "tests/test_passive_runtime.py": "2024f87811950543e44e3f69f76105f45a5eca9ff2d768a4f88fc1b4fa1bd945"
+  }
+}
