@@ -9,7 +9,7 @@ import signal
 
 from queue_trace import ROOT, TraceLease, parse_private_trace, private_json, recover_claim, settings, NativeIO, verify_markers
 
-NAMES = ['fx0-camera-probe-normal-01', 'fx0-camera-probe-failure-01']
+NAMES = ['fx0-camera-probe-normal-02', 'fx0-camera-probe-failure-02']
 
 
 def identity(check_baseline=True):
@@ -61,6 +61,7 @@ def main():
                 report['cases'].append({'expected_setup_failure_rejected': True})
             assert lease.cleanup['instance_removed'] and lease.cleanup['global_and_other_settings_unchanged']
             report['cases'][-1]['cleanup'] = lease.cleanup
+            report['cases'][-1]['buffer_sizing'] = lease.sizing
         report['after_settings'] = settings(ROOT, NativeIO())
         assert report['after_settings'] == before
         report['passed'] = True

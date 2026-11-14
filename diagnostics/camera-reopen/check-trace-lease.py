@@ -15,7 +15,7 @@ spec.loader.exec_module(module)
 
 def populate(path):
     for name, text in {'tracing_on': '1', 'current_tracer': 'nop', 'trace_clock': '[local] mono boot',
-                       'buffer_size_kb': '1408', 'trace': '# tracer: nop\n', 'trace_marker': ''}.items():
+                       'buffer_subbuf_size_kb': '4', 'buffer_size_kb': '1408', 'trace': '# tracer: nop\n', 'trace_marker': ''}.items():
         (path / name).write_text(text)
     for event in module.EVENTS:
         folder = path / 'events' / event
@@ -27,12 +27,16 @@ def populate(path):
         (folder / 'format').write_text('\n'.join('field:int ' + name + ';' for name in names))
     stats = path / 'per_cpu/cpu0'
     stats.mkdir(parents=True)
+    (stats / 'buffer_size_kb').write_text('1408')
     (stats / 'stats').write_text('entries: 0\noverrun: 0\ncommit overrun: 0\ndropped events: 0\n')
 
 
 class ModelIO(module.NativeIO):
-    def __init__(self, fail=None):
+    def __init__(self, fail=None, capacity=None, cpu_capacity=None):
         self.fail = fail
+        self.capacity = capacity
+        self.cpu_capacity = cpu_capacity
+        self.event_enables = 0
 
     def mkdir(self, path):
         path.mkdir()
@@ -42,10 +46,20 @@ class ModelIO(module.NativeIO):
         shutil.rmtree(path)  # Model virtual files disappear when the instance is removed.
 
     def write(self, path, value):
+        if path.name == 'enable' and value == '1':
+            self.event_enables += 1
         if self.fail and path.as_posix().endswith(self.fail) and value == '1':
             raise OSError('injected event enable failure')
         if path.name == 'trace_clock':
             path.write_text('local [' + value + '] boot')
+        elif path.name == 'buffer_size_kb':
+            # Model ARM page payload, not ordinary-file echo of the request.
+            capacity = 4096 - 16
+            rounded = ((int(value) * 1024 + capacity - 1) // capacity * capacity) // 1024
+            text = self.capacity if self.capacity is not None else str(rounded)
+            path.write_text(text)
+            (path.parent / 'per_cpu/cpu0/buffer_size_kb').write_text(
+                self.cpu_capacity if self.cpu_capacity is not None else text)
         elif path.name == 'trace_marker':
             now = time.monotonic_ns()
             with (path.parent / 'trace').open('a') as stream:
@@ -89,6 +103,32 @@ for condition in ['success', 'setup-failure', 'enable-failure', 'body-failure', 
         assert not lease.path.exists() and module.settings(root, io) == before
         assert lease.cleanup['instance_removed'] and lease.cleanup['global_and_other_settings_unchanged']
         cases.append(condition + ': owned instance removed; other/global settings preserved')
+
+for capacity, cpu_capacity, accepted in [
+        ('256', None, True), ('257', None, True), ('258', None, True), ('259', None, True),
+        ('255', None, False), ('260', None, False), ('X', None, False),
+        ('258 (expanded: 1408)', None, False), ('258', '259', False)]:
+    with tempfile.TemporaryDirectory(prefix='fx0-trace-sizing-') as tmp:
+        root = Path(tmp)
+        populate(root)
+        (root / 'instances').mkdir()
+        workspace = root / 'private'
+        workspace.mkdir(mode=0o700)
+        io = ModelIO(capacity=capacity, cpu_capacity=cpu_capacity)
+        before = module.settings(root, io)
+        lease = module.TraceLease('fx0-camera-sizing', workspace / 'claim.json', root, io)
+        try:
+            with lease:
+                assert accepted
+        except ValueError:
+            assert not accepted
+            assert io.event_enables == 0
+        else:
+            assert accepted
+        assert not lease.path.exists() and module.settings(root, io) == before
+        claim = json.loads(lease.claim.read_text())
+        assert claim['buffer_sizing']['capacity_kib_readback'] == capacity
+        cases.append('buffer rounding/readback: ' + repr((capacity, cpu_capacity, accepted)))
 
 with tempfile.TemporaryDirectory(prefix='fx0-trace-collision-') as tmp:
     root = Path(tmp)

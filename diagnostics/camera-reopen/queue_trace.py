@@ -47,7 +47,7 @@ def private_json(path, value):
 def settings(root, io, exclude=None):
     def one(directory):
         values = {name: io.read(directory / name) for name in
-                  ['tracing_on', 'current_tracer', 'trace_clock', 'buffer_size_kb']}
+                  ['tracing_on', 'current_tracer', 'trace_clock', 'buffer_size_kb', 'buffer_subbuf_size_kb']}
         for event in EVENTS:
             for name in ['enable', 'filter']:
                 path = directory / 'events' / event / name
@@ -83,6 +83,21 @@ def no_loss(before, after):
                for cpu in before for name in ['overrun', 'commit overrun', 'dropped events'])
 
 
+def validate_buffer_sizing(sizing):
+    # Pinned kernel: DIV_ROUND_UP(request, subbuffer payload capacity),
+    # then ring_buffer_size() >> 10. Header bytes reduce payload capacity.
+    # Thus integer-KiB readback is >= request and < request + subbuffer KiB.
+    # Require the Fx0's default 4-KiB subbuffer and equal per-CPU readbacks.
+    require(sizing['requested_kib'] == 256, 'unexpected trace buffer request')
+    require(sizing['subbuffer_kib_readback'] == '4', 'unexpected trace subbuffer size')
+    value = sizing['capacity_kib_readback']
+    require(re.fullmatch(r'[0-9]+', value) is not None, 'invalid trace capacity readback')
+    require(256 <= int(value) < 260, 'trace capacity outside page-rounding bound')
+    cpus = sizing['per_cpu_capacity_kib_readback']
+    require(cpus and all(re.fullmatch(r'cpu[0-9]+', cpu) and capacity == value
+                         for cpu, capacity in cpus.items()), 'unequal/missing per-CPU trace capacities')
+
+
 class TraceLease:
     def __init__(self, name, claim, root=ROOT, io=None, fail_after_config=False):
         require(re.fullmatch(r'fx0-camera-[a-z0-9-]{1,40}', name), 'invalid owned instance name')
@@ -92,10 +107,11 @@ class TraceLease:
         self.fail_after_config = fail_after_config
         self.created = False
         self.cleanup = None
+        self.sizing = None
 
     def _save(self, state):
         private_json(self.claim, {'state': state, 'name': self.name, 'device': self.device,
-                                 'inode': self.inode, 'before_settings': self.before})
+                                 'inode': self.inode, 'before_settings': self.before, 'buffer_sizing': self.sizing})
 
     def _owned(self):
         require(self.created and self.path.is_dir() and not self.path.is_symlink(), 'owned instance missing')
@@ -127,7 +143,16 @@ class TraceLease:
             self._write('trace_clock', 'mono')
             require('[mono]' in self.io.read(self.path / 'trace_clock'), 'trace clock did not select mono')
             self._write('buffer_size_kb', '256')
-            require(self.io.read(self.path / 'buffer_size_kb') == '256', 'trace buffer size mismatch')
+            self.sizing = {
+                'requested_kib': 256,
+                'subbuffer_kib_readback': self.io.read(self.path / 'buffer_subbuf_size_kb'),
+                'capacity_kib_readback': self.io.read(self.path / 'buffer_size_kb'),
+                'per_cpu_capacity_kib_readback': {
+                    path.parent.name: self.io.read(path)
+                    for path in sorted((self.path / 'per_cpu').glob('cpu*/buffer_size_kb'))},
+            }
+            self._save('sizing captured; no event enabled yet')
+            validate_buffer_sizing(self.sizing)
             for event, expression in EVENTS.items():
                 text = self.io.read(self.path / 'events' / event / 'format')
                 fields = ['minor', 'timestamp', 'sequence'] if event.startswith('v4l2/') else [
@@ -195,7 +220,7 @@ class TraceLease:
         if not self.path.exists():
             self.created = False
         private_json(self.claim, {'state': 'cleanup finished', 'name': self.name, 'device': self.device,
-                                  'inode': self.inode, 'before_settings': self.before, 'cleanup': self.cleanup})
+                                  'inode': self.inode, 'before_settings': self.before, 'buffer_sizing': self.sizing, 'cleanup': self.cleanup})
         require(self.cleanup['instance_removed'] and unchanged and not errors, 'trace cleanup or configuration preservation failed')
 
     def __exit__(self, *_exception):
@@ -255,6 +280,7 @@ def recover_claim(claim, root=ROOT, io=None):
     record = json.loads(claim.read_text())
     lease = TraceLease(record['name'], claim, root, io)
     lease.before = record['before_settings']
+    lease.sizing = record.get('buffer_sizing')
     if lease.path.exists():
         lease.device, lease.inode = record['device'], record['inode']
         lease.created = True
