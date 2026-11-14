@@ -102,10 +102,17 @@ buffers across three 250 ms pauses and three unpaused controls. Four buffers
 complete during each stop, followed by a new completion 60–64 ms after resume.
 No kernel diagnostic recurs; neither the original warning nor the approximately
 one-second file-output gaps are explained. Existing vb2 trace events expose
-queue counters for the next diagnostic, but tracing has not been changed.
+queue counters for the next diagnostic, but at that point tracing had not been changed.
 
 The [full-thread follow-up](owned-group-stop.md) strengthens the first
 leader-state acknowledgement to a kernel group-stop notification plus checks of
 every live thread. Its matched native repeat observes both `cam` threads stopped
 and resumed in all three paused cases; all 144 buffers arrive with no new kernel
 messages. The original queue warning remains open.
+
+The [native vb2 trace follow-up](vb2-drain-warning.md) now reproduces the
+warning at the final buffer drain in the second front session. All 120
+requested buffers arrive. The worker still fails an unsupported V4L2-event
+expectation, and strict full-window classification rejects the warning.
+Separate core-trace analysis narrows the phase without claiming the cause or
+closing camera acceptance.

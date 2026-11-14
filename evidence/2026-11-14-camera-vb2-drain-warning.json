@@ -1,0 +1,278 @@
+{
+  "recorded_UTC": "2026-11-14T22:17:51.759694+00:00",
+  "scope": "Five-session sensor-bar workload with private vb2 core trace; warning localized to finite drain; original worker and clean camera gate remain failed",
+  "boot_reference": "e134d38d",
+  "kernel_release": "6.18.63-fx0-vibrator-alpine",
+  "kernel_package": "6.18.63-r1",
+  "kernel_source_commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+  "kernel_notes_SHA256": "05292e44d9f13de78b5ebf602b0b3f9ff22b7820d765f6e796cf3473beee4377",
+  "as_tested_worker_SHA256": "92b3bb5e51069f0136a9996f4da0d37df543e88065b6d19c04dddb6e68ea3614",
+  "as_tested_trace_library_SHA256": "3e37774b119bdb7d2573ab6bbebcd61d366adcd32e0dfa6c9246d71b4224bcf9",
+  "actual_worker_exit_status": 1,
+  "worker_passed": false,
+  "worker_error": "ValueError: session trace event family missing",
+  "failure_limitation": "Expected V4L2 vb2 event families absent; definitions/exports exist but no explicit call sites found in pinned kernel. Enabled minor filter is not established as the cause.",
+  "post_hoc_core_analysis": "Separate analysis; does not overwrite or accept failed worker report. Each delivered timestamp and byte size matched unique core done and dequeue events within its session.",
+  "matched_delivered_buffers": 120,
+  "patterned_frames_sampled": 87,
+  "cases": [
+    {
+      "case": 0,
+      "camera": "front",
+      "geometry": [
+        1976,
+        1200
+      ],
+      "delivered_buffers": 24,
+      "pattern_frames": 18,
+      "median_interval_ms": 69.599,
+      "maximum_interval_ms": 139.191,
+      "intervals_over_1_5_median": 1,
+      "trace_counts": {
+        "tracing_mark_write": 7,
+        "vb2_qbuf": 24,
+        "vb2_buf_queue": 24,
+        "vb2_buf_done": 24,
+        "vb2_dqbuf": 24
+      },
+      "long_intervals": [
+        {
+          "previous_sequence": 15,
+          "next_sequence": 16,
+          "interval_ms": 139.191,
+          "median_multiple": 1.9998994238422967,
+          "same_buffer_requeue_delay_ms": 34.015,
+          "minimum_core_owned_count_between": 3,
+          "core_zero_owned_snapshots_between": 0
+        }
+      ]
+    },
+    {
+      "case": 1,
+      "camera": "back",
+      "geometry": [
+        1640,
+        1232
+      ],
+      "delivered_buffers": 24,
+      "pattern_frames": 17,
+      "median_interval_ms": 33.272,
+      "maximum_interval_ms": 33.417,
+      "intervals_over_1_5_median": 0,
+      "trace_counts": {
+        "tracing_mark_write": 7,
+        "vb2_qbuf": 24,
+        "vb2_buf_queue": 24,
+        "vb2_buf_done": 24,
+        "vb2_dqbuf": 24
+      },
+      "long_intervals": []
+    },
+    {
+      "case": 2,
+      "camera": "front",
+      "geometry": [
+        1976,
+        1200
+      ],
+      "delivered_buffers": 24,
+      "pattern_frames": 18,
+      "median_interval_ms": 69.597,
+      "maximum_interval_ms": 69.749,
+      "intervals_over_1_5_median": 0,
+      "trace_counts": {
+        "tracing_mark_write": 7,
+        "vb2_qbuf": 24,
+        "vb2_buf_queue": 24,
+        "vb2_buf_done": 24,
+        "vb2_dqbuf": 24
+      },
+      "long_intervals": []
+    },
+    {
+      "case": 3,
+      "camera": "back",
+      "geometry": [
+        1640,
+        1232
+      ],
+      "delivered_buffers": 24,
+      "pattern_frames": 17,
+      "median_interval_ms": 33.275,
+      "maximum_interval_ms": 33.447,
+      "intervals_over_1_5_median": 0,
+      "trace_counts": {
+        "tracing_mark_write": 7,
+        "vb2_qbuf": 24,
+        "vb2_buf_queue": 24,
+        "vb2_buf_done": 24,
+        "vb2_dqbuf": 24
+      },
+      "long_intervals": []
+    },
+    {
+      "case": 4,
+      "camera": "back",
+      "geometry": [
+        3280,
+        2464
+      ],
+      "delivered_buffers": 24,
+      "pattern_frames": 17,
+      "median_interval_ms": 33.274,
+      "maximum_interval_ms": 1031.451,
+      "intervals_over_1_5_median": 8,
+      "trace_counts": {
+        "tracing_mark_write": 7,
+        "vb2_qbuf": 24,
+        "vb2_buf_queue": 24,
+        "vb2_buf_done": 24,
+        "vb2_dqbuf": 24
+      },
+      "long_intervals": [
+        {
+          "previous_sequence": 4,
+          "next_sequence": 5,
+          "interval_ms": 66.545,
+          "median_multiple": 1.9999098395143355,
+          "same_buffer_requeue_delay_ms": 115.804,
+          "minimum_core_owned_count_between": 1,
+          "core_zero_owned_snapshots_between": 0
+        },
+        {
+          "previous_sequence": 6,
+          "next_sequence": 7,
+          "interval_ms": 66.543,
+          "median_multiple": 1.9998497325238924,
+          "same_buffer_requeue_delay_ms": 109.795,
+          "minimum_core_owned_count_between": 1,
+          "core_zero_owned_snapshots_between": 0
+        },
+        {
+          "previous_sequence": 9,
+          "next_sequence": 10,
+          "interval_ms": 66.548,
+          "median_multiple": 2.0,
+          "same_buffer_requeue_delay_ms": 115.241,
+          "minimum_core_owned_count_between": 1,
+          "core_zero_owned_snapshots_between": 0
+        },
+        {
+          "previous_sequence": 11,
+          "next_sequence": 12,
+          "interval_ms": 66.544,
+          "median_multiple": 1.999879786019114,
+          "same_buffer_requeue_delay_ms": 108.976,
+          "minimum_core_owned_count_between": 1,
+          "core_zero_owned_snapshots_between": 0
+        },
+        {
+          "previous_sequence": 14,
+          "next_sequence": 15,
+          "interval_ms": 66.542,
+          "median_multiple": 1.999819679028671,
+          "same_buffer_requeue_delay_ms": 112.28,
+          "minimum_core_owned_count_between": 1,
+          "core_zero_owned_snapshots_between": 0
+        },
+        {
+          "previous_sequence": 17,
+          "next_sequence": 18,
+          "interval_ms": 66.543,
+          "median_multiple": 1.9998497325238924,
+          "same_buffer_requeue_delay_ms": 115.322,
+          "minimum_core_owned_count_between": 1,
+          "core_zero_owned_snapshots_between": 0
+        },
+        {
+          "previous_sequence": 19,
+          "next_sequence": 20,
+          "interval_ms": 66.542,
+          "median_multiple": 1.999819679028671,
+          "same_buffer_requeue_delay_ms": 100.876,
+          "minimum_core_owned_count_between": 1,
+          "core_zero_owned_snapshots_between": 0
+        },
+        {
+          "previous_sequence": 22,
+          "next_sequence": 23,
+          "interval_ms": 1031.451,
+          "median_multiple": 30.998707699705477,
+          "same_buffer_requeue_delay_ms": null,
+          "minimum_core_owned_count_between": 0,
+          "core_zero_owned_snapshots_between": 1
+        }
+      ]
+    }
+  ],
+  "private_trace": {
+    "event_rows": 517,
+    "markers": 37,
+    "no_lost_events": true,
+    "capacity_per_CPU_kib": 259,
+    "CPUs": 4,
+    "subbuffer_kib": 4,
+    "requested_kib": 256,
+    "four_core_events_each": 120,
+    "optional_V4L2_events_captured": 0,
+    "raw_owner_tokens_and_raw_trace_excluded": true
+  },
+  "warning": {
+    "message": "qcom-camss fda0ac00.camss: Missing ready buf 1 4!",
+    "case": 2,
+    "camera": "front",
+    "warning_after_last_core_done_ms": 0.441,
+    "last_dequeue_after_warning_ms": 4.523,
+    "last_frame_timestamp_to_core_done_ms": 69.600859,
+    "warning_after_last_driver_queue_ms": 313.067,
+    "driver_queue_events_after_warning": 0,
+    "last_core_done_queued_count": 1,
+    "last_core_done_driver_owned_count": 0,
+    "final_buffer_index": 3,
+    "final_core_done_owned_tail": [
+      3,
+      2,
+      1,
+      0
+    ]
+  },
+  "kernel_window": {
+    "kernel_messages_checked": 1,
+    "unresolved_diagnostics": [
+      {
+        "message": "qcom-camss fda0ac00.camss: Missing ready buf 1 4!",
+        "reason": "explicit kernel diagnostic"
+      }
+    ],
+    "clean_kernel_window": false
+  },
+  "original_warning_reproduced": true,
+  "original_warning_cause_resolved": false,
+  "clean_camera_regression_gate_passed": false,
+  "source_hypothesis": "Late/coalesced WM_DONE after STOPPING-to-IDLE final-buffer release; VFE41 dispatches REG_UPDATE before WM_DONE. IRQ status words were not captured, so exact cause and same-interrupt ordering remain unproven.",
+  "counter_semantics": "vb2 core snapshots are not direct VFE internal state or hardware frame-drop counters",
+  "export_checks": {
+    "trace_lease_and_parser": 25,
+    "switching_correlations_and_RAW10": 13,
+    "actual_discovery": 10,
+    "real_owned_children": 11,
+    "strict_kernel_classifier": 10
+  },
+  "cleanup": {
+    "instance_removed": true,
+    "global_and_other_trace_settings_unchanged": true,
+    "frames_deleted_from_phone_tmpfs": true,
+    "raw_frames_transferred": false,
+    "sensors_suspended_patterns_off": true,
+    "owned_service_inactive": true,
+    "owned_failed_flag_reset_only_after_receipts_preserved": true,
+    "taint_zero": true,
+    "services_healthy": true,
+    "boot_package_world_repositories_hashes_unchanged": true,
+    "Sway_and_gesture_PIDs_unchanged": true
+  },
+  "no_boot_package_module_firmware_changes": true,
+  "no_driver_patch_applied": true,
+  "new_commits_published": false,
+  "full_goal_complete": false
+}
