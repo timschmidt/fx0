@@ -239,7 +239,7 @@ child exits zero; native verification is still attempted after intent.
 All 29 plan, concrete callback/fault and observer tests pass in both a clean
 review checkout and a 17-file source-only export. Disposable host children are
 real, while all device responses are substituted. A real static check of the
-retained image and new private plan04 loads no credential client and performs
+retained image and new private plan05 loads no credential client and performs
 no device action. The initial test export and superseded pre-deadline plan03
 source bytes remain preserved.
 

@@ -1,5 +1,5 @@
 {
-  "recorded_UTC": "2026-11-14T16:48:19.990096+00:00",
+  "recorded_UTC": "2026-11-14T16:51:36.682468+00:00",
   "state": "PASS offline public unchanged-r2 controller/observer qualification; physical repeat undispatched",
   "prepared_image": {
     "SHA256": "49c23a63402b645c49c55ffbd44f140c64ad0bba722170472891fa3b1a45f0d1",
@@ -24,7 +24,7 @@
   ],
   "public_source_files_SHA256": {
     "diagnostics/kernel-maintenance/native-trial.md": "72e2ae134df18197642030ed7bc6423a760a1ee246ed4d7c56b9e462cf448b17",
-    "diagnostics/kernel-maintenance/native_trial_adapter.py": "439944088ea8811a1bc5cda7f25f7b211e302f2eb84099178e1c47ef4e12d758",
+    "diagnostics/kernel-maintenance/native_trial_adapter.py": "16af7a7b86a06032a18c7806fd30cd1991023381aea1fed8e7cf88f28eb5bf04",
     "diagnostics/kernel-maintenance/native_trial_health_probe.py": "f7e5d35c3ed73743cac2892b50f90ec05b0190d7b296346bc5ae9d35d6792326",
     "diagnostics/kernel-maintenance/native_trial_observer.py": "a69a3e2e1ab51ad6cb666bde324f171967e04aec92e8ee9cc5ec4fad9195d2d1",
     "diagnostics/kernel-maintenance/native_trial_stage_probe.py": "be9f1993630cdaa9d52f1875372cba54183e24d70ab14f5add831e62e1f2500d",
@@ -52,10 +52,15 @@
       "handle": 89031,
       "returncode": 0,
       "scope": "clean review and source-only17-file exports,29 methods each"
+    },
+    {
+      "handle": 34987,
+      "returncode": 0,
+      "scope": "Final EOF-corrected clean review and source-only17-file export;29 methods each"
     }
   ],
   "actual_static_input_check": {
-    "plan_SHA256": "69082490307d475a0a87abbbd011fbc34df6ecfe6e472912cd8f527f473dcacf",
+    "plan_SHA256": "ed32c350c1f2f852bdc04f65b86da2d474e427f1ae5e2e2b54d206dbb14aa569",
     "exit_code": 0,
     "inputs_verified": true,
     "credential_client_loaded": false,
@@ -101,6 +106,13 @@
       "reason": "Add explicit no-deadline condition even for actual observer status0",
       "old_plan_bytes_and_all_source_bytes_preserved": true,
       "superseded_by": "private plan04"
+    },
+    {
+      "revision": "private plan04 and ten runtime snapshots",
+      "reason": "Whitespace check found one extra EOF blank line; committed3b788d0 preserved, follow-up removes only whitespace",
+      "AST_identical": true,
+      "old_plan_and_all_source_bytes_preserved": true,
+      "superseded_by": "private plan05"
     }
   ],
   "original_r2_repeat_controller02_and_image_unchanged": true,
