@@ -155,6 +155,62 @@ with tempfile.TemporaryDirectory(prefix='fx0-owned-camera-') as tmp:
     finally:
         reap(child)
 
+    child = spawn(root / 'incomplete-stop')
+    try:
+        try:
+            with worker.OwnedClient(child) as owner:
+                real_states = owner._task_states
+                owner._task_states = lambda: real_states() | {-1: 'R'}
+                owner.pause()
+        except RuntimeError as error:
+            assert str(error) == 'owned child did not acknowledge stop'
+        else:
+            raise AssertionError('incomplete thread-stop observation accepted')
+        assert child.returncode is not None and owner.closed
+        cases.append('one running thread prevents acknowledgement and still cleans up')
+    finally:
+        reap(child)
+
+    ready = root / 'threads-ready'
+    code = '''
+import pathlib,threading,time,sys
+def work():
+ while True: time.sleep(.002)
+for i in range(7): threading.Thread(target=work,daemon=True).start()
+p=pathlib.Path(sys.argv[1]);q=p.with_suffix('.new');q.write_text('ready');q.replace(p)
+while True: time.sleep(.002)
+'''
+    child = subprocess.Popen([sys.executable, '-c', code, str(ready)], stdout=subprocess.DEVNULL,
+                             stderr=subprocess.DEVNULL, start_new_session=True)
+    try:
+        until(ready.exists)
+        with worker.OwnedClient(child) as owner:
+            owner.pause()
+            observed = owner.pause_observation
+            assert observed['kernel_group_stop_confirmed'] and observed['wait_status'] == signal.SIGSTOP
+            assert len(observed['thread_states']) == 8 and set(observed['thread_states'].values()) <= {'T', 't'}
+            owner.resume()
+            assert owner.resume_observation['all_live_threads_resumed']
+            assert len(owner.resume_observation['thread_states']) == 8
+        assert child.returncode is not None and owner.closed
+        cases.append('eight real threads and kernel group-stop notification checked before timing')
+    finally:
+        reap(child)
+
+    child = spawn(root / 'exit-while-stopped')
+    try:
+        owner = worker.OwnedClient(child)
+        owner.pause()
+        child.kill()
+        child.wait(timeout=2)
+        owner.resume()
+        assert owner.resume_observation['child_exited'] and not owner.resume_observation['all_live_threads_resumed']
+        owner.close()
+        assert owner.closed
+        cases.append('client killed while stopped is recorded as exited, never resumed')
+    finally:
+        reap(child)
+
     grandchild_pid = root / 'grandchild-pid'
     code = '''
 import pathlib,signal,subprocess,sys,time

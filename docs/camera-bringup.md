@@ -455,3 +455,11 @@ tracepoints with driver-owned buffer counts; an isolated instance has not yet
 been created or tested. The original switching workload needs queue/IRQ evidence
 before a driver fix or benign classification.
 [Pause experiment and limits](../diagnostics/camera-reopen/owned-pause.md)
+
+The pause worker's acknowledgement is subsequently strengthened from a primary
+task-state probe to the kernel group-stop notification and every live task's
+state. The matched six-case repeat observes both `cam` threads stopped and
+resumed, delivers another 144 buffers and preserves the baseline again. The
+first run and its narrower acknowledgement remain pinned separately. Neither
+repeat explains the original diagnostic or frame-file gaps.
+[Full-thread repeat](../diagnostics/camera-reopen/owned-group-stop.md)

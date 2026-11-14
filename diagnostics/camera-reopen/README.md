@@ -103,3 +103,9 @@ complete during each stop, followed by a new completion 60–64 ms after resume.
 No kernel diagnostic recurs; neither the original warning nor the approximately
 one-second file-output gaps are explained. Existing vb2 trace events expose
 queue counters for the next diagnostic, but tracing has not been changed.
+
+The [full-thread follow-up](owned-group-stop.md) strengthens the first
+leader-state acknowledgement to a kernel group-stop notification plus checks of
+every live thread. Its matched native repeat observes both `cam` threads stopped
+and resumed in all three paused cases; all 144 buffers arrive with no new kernel
+messages. The original queue warning remains open.

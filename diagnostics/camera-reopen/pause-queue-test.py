@@ -57,7 +57,7 @@ FRAME_RECORD = re.compile(r'\bseq:\s*(\d+)\s+bytesused:\s*(\d+)')
 NOTES_SHA = '05292e44d9f13de78b5ebf602b0b3f9ff22b7820d765f6e796cf3473beee4377'
 
 
-FRAME_PREFIX = 'fx0-camera-pause-r1-01-'
+FRAME_PREFIX = 'fx0-camera-pause-r1-02-'
 
 
 def require(condition, message):
@@ -254,6 +254,8 @@ class OwnedClient:
         require(0 < stop_timeout <= 2, 'invalid child cleanup deadline')
         require(child.poll() is None, 'child already exited')
         require(hasattr(os, 'pidfd_open') and hasattr(signal, 'pidfd_send_signal'), 'pidfd support required')
+        require(all(hasattr(os, name) for name in ['waitid', 'P_PIDFD', 'WSTOPPED', 'WNOWAIT', 'WNOHANG', 'CLD_STOPPED']),
+                'pidfd group-stop wait support required')
         self.child = child
         self.stop_timeout = stop_timeout
         self.paused = False
@@ -278,6 +280,21 @@ class OwnedClient:
         fields = self._stat()
         return (int(fields[1]), int(fields[2]), int(fields[3]), int(fields[19]))
 
+    def _task_states(self):
+        states = {}
+        for task in Path('/proc', str(self.child.pid), 'task').iterdir():
+            try:
+                text = (task / 'stat').read_text()
+            except FileNotFoundError:
+                continue
+            states[int(task.name)] = text[text.rindex(')') + 2:].split()[0]
+        require(self.child.pid in states, 'owned primary task disappeared')
+        return states
+
+    @staticmethod
+    def _live_states(states):
+        return {tid: state for tid, state in states.items() if state not in ('X', 'Z')}
+
     def _verify(self):
         require(not self.closed and self.child.poll() is None, 'owned child is not live')
         require(self._identity() == self.identity, 'owned child identity changed')
@@ -293,8 +310,13 @@ class OwnedClient:
         deadline = time.monotonic() + 1
         while time.monotonic() < deadline:
             self._verify()
-            if self._stat()[0] in ('T', 't'):
-                return
+            stopped = os.waitid(os.P_PIDFD, self.pidfd, os.WSTOPPED | os.WNOWAIT | os.WNOHANG)
+            if stopped is not None and stopped.si_pid == self.child.pid and stopped.si_code == os.CLD_STOPPED and stopped.si_status == signal.SIGSTOP:
+                states = self._live_states(self._task_states())
+                if states and all(state in ('T', 't') for state in states.values()):
+                    self.pause_observation = {'thread_states': states, 'wait_code': stopped.si_code,
+                                              'wait_status': stopped.si_status, 'kernel_group_stop_confirmed': True}
+                    return
             time.sleep(0.001)
         raise RuntimeError('owned child did not acknowledge stop')
 
@@ -309,10 +331,13 @@ class OwnedClient:
         deadline = time.monotonic() + 1
         while self.child.poll() is None and time.monotonic() < deadline:
             self._verify()
-            if self._stat()[0] not in ('T', 't'):
+            states = self._live_states(self._task_states())
+            if states and all(state not in ('T', 't') for state in states.values()):
+                self.resume_observation = {'thread_states': states, 'all_live_threads_resumed': True}
                 return
             time.sleep(0.001)
         require(self.child.poll() is not None, 'owned child did not acknowledge resume')
+        self.resume_observation = {'thread_states': {}, 'all_live_threads_resumed': False, 'child_exited': True}
 
     def close(self):
         if self.closed:
@@ -434,13 +459,21 @@ def capture_pause(directory, camera, inject_pause):
                         if inject_pause:
                             event('pause_request', completed=completed)
                             owned.pause()
-                            event('pause_acknowledged')
+                            observation = owned.pause_observation
+                            event('pause_acknowledged', live_thread_count=len(observation['thread_states']),
+                                  observed_thread_states=sorted(set(observation['thread_states'].values())),
+                                  kernel_group_stop_confirmed=observation['kernel_group_stop_confirmed'],
+                                  stop_wait_code=observation['wait_code'], stop_wait_status=observation['wait_status'])
                             try:
                                 time.sleep(0.250)
                             finally:
                                 event('resume_request')
                                 owned.resume()
-                                event('resume_acknowledged')
+                                observation = owned.resume_observation
+                                require(observation['all_live_threads_resumed'], 'client exited before resume observation')
+                                event('resume_acknowledged', live_thread_count=len(observation['thread_states']),
+                                      observed_thread_states=sorted(set(observation['thread_states'].values())),
+                                      all_live_threads_resumed=observation['all_live_threads_resumed'])
                         else:
                             event('unpaused_control', completed=completed)
                         intervention_done = True
@@ -486,6 +519,8 @@ def capture_pause(directory, camera, inject_pause):
 
 def trial_pause(boot, progress):
     require(hasattr(os, 'pidfd_open') and hasattr(signal, 'pidfd_send_signal'), 'native pidfd support required')
+    require(all(hasattr(os, name) for name in ['waitid', 'P_PIDFD', 'WSTOPPED', 'WNOWAIT', 'WNOHANG', 'CLD_STOPPED']),
+            'native group-stop wait support required')
     cursor = journal_anchor()
     report = {'initial': native_state(boot), 'cases': [], 'diagnostic_complete': False, 'clean_kernel_window': False}
     shm = Path('/dev/shm')

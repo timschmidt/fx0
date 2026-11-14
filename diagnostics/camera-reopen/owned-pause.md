@@ -60,7 +60,9 @@ session continues to run during the targeted pause. Seven checks validate the
 pause-window classification, ten sensor discovery and fourteen metadata timing.
 All 39 checks also pass from a five-file export without ignored local helpers.
 
-The exact native worker is `pause-queue-test.py`. Its separately owned service
+The exact historical native worker and helper hashes are pinned to coordination
+commit `8d39111b882db01d647aea11ce7516a6a2db59e6`. The current `pause-queue-test.py` contains the
+stronger follow-up below; use the tested commit to reproduce the first source. Its separately owned service
 has a 90-second runtime cap, a 15-second stop cap and a 512 MiB memory limit.
 Exit 0 reports completion of the planned experiment, separate from kernel-window
 cleanliness or complete camera acceptance. New diagnostics other than the known
@@ -94,3 +96,6 @@ video, sensor-delay metadata, active charging, system suspend, lens/flash functi
 and final combined-image acceptance remain open. The separate r2 repeat and r6
 physical gates are unchanged.
 [Sanitized measurements](../../evidence/2026-11-14-camera-owned-pause.json)
+
+The [full-thread group-stop follow-up](owned-group-stop.md) preserves this first
+run and repeats the matched cases with stronger stop/resume acknowledgement.
