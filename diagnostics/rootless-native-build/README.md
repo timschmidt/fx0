@@ -26,6 +26,24 @@ mount/network configuration. The failed build process must be terminal before
 retry, and its logs must be retained. This fixture change does not alter kernel
 source, configuration or hardware qualification.
 
+For the reproducible Fx0 kernel recipe, the optional
+`FX0_KERNEL_MODULE_SIGNING_KEY` environment variable names an absolute path
+inside the build chroot. The provenance wrapper forwards that path to the
+actual abuild environment. Mount the retained signing key and certificate
+read-only at that path; the ordinary Kbuild signer consumes them. The wrapper
+does not open key bodies. Leave the variable unset to use the recipe's normal
+automatically generated development key. Repeated signed builds require the
+same retained module signer, package signer, recipe commit/epoch, source archive,
+configuration and toolchain.
+
+Do not use a vanished temporary-directory alias as evidence that a signer has
+been lost. Reconcile the original mounted build location using public key
+fingerprints and private-file metadata. Use the existing trusted signer in
+place through the normal signing tool. Export public keys and signed artifacts;
+keep private keys on their retained storage. A change in compressed source
+archive bytes requires checking the server archive against Git and pinning its
+actual checksum in a new recipe revision.
+
 The normal copied-APKBUILD layout produces `commit = -dirty`: abuild's path-based
 Git lookup cannot identify the copied root-level APKBUILD at its original tracked
 path. The wrapper here verifies the expected repository HEAD and a clean tree,
@@ -66,3 +84,12 @@ Use a private network namespace as in the tested default Podman/pasta setup.
 Host-network mode prevents the ordinary `/sys` bind in this user-namespace
 configuration. The wrapper propagates pmbootstrap's return status, so setup
 failures stop before export rather than falling through to package inspection.
+
+The optional-path forwarding check in `check-provenance-wrapper.py` runs in a
+networkless disposable container with the real pinned `/pmbootstrap` source and
+clean `/pmaports` checkout. Mount the wrapper at `/test-inputs/wrapper.py` and an
+empty writable result directory at `/results`, then set `EXPECTED_RECIPE` to the
+checkout's exact HEAD and run the check with Python. It covers the absent
+option, a quoted absolute path containing spaces, rejected relative/newline
+paths, non-abuild call preservation and return-status propagation. Its final
+pmbootstrap main/chroot calls are captured; it does not build or read keys.
