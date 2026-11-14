@@ -11,6 +11,14 @@ uninstalled. The installed r1 return passes independent boot, signed-payload,
 module, key and process-mapping checks.
 [Trial and verified return](../evidence/2026-11-14-reproducible-r2-first-ram-trial.json)
 
+On this accepted r1 boot, five camera sessions deliver 120 RAW10 buffers,
+including full-resolution rear, and pass sampled color-bar and reopen checks.
+The independent kernel window finds one CAMSS missing-ready-buffer diagnostic
+that the worker matcher missed. Clean camera regression remains open; temporary
+frames and controls are cleaned up and baseline boot/package hashes still match.
+This does not qualify active charging, system suspend or the r6 combination.
+[Current camera evidence](../evidence/2026-11-14-camera-current-r1-reopen.json)
+
 The earlier stable boot `6dbb410a` passed 20 consecutive physical DMP wakes
 and a masked-motion RTC control, with recovered quaternion samples, zero new
 MDP5 faults and owner-confirmed display/touch. Those cycles belong to that

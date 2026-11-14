@@ -36,3 +36,57 @@ consecutive patterned frames. These captures establish switching and reopen
 with configured high-speed USB while the battery was discharging. Charging
 and system suspend remain separate physical gates.
 [Native evidence](../../evidence/2026-11-10-camera-r50-reopen.json)
+
+## November 14 installed r1 regression
+
+The new `current-test.py` pins installed Linux `6.18.63-fx0-vibrator-alpine`,
+its linked notes and the accepted 775-package database. Sensor discovery checks
+the driver/model, address and firmware node rather than requiring I2C bus 3;
+this boot enumerates both sensors on bus 2. The actual discovery function passes
+three renumbered inventories and rejects seven mismatches, including from a
+two-file export:
+
+```sh
+python3 diagnostics/camera-reopen/check-current-discovery.py
+```
+
+The physical worker ran in one owned service with a 90-second runtime limit,
+a separate stop deadline and a 512 MiB memory limit. It completed front, binned
+rear, front, binned rear and full-resolution rear sessions: 24 delivered buffers
+per session, 120 total. The 88 consecutive patterned frames pass the existing
+four-RGGB-site/eight-bar check at three rows per frame. This samples the pattern;
+it does not validate every pixel.
+
+**The clean regression gate failed.** The independent full launch window found
+`qcom-camss fda0ac00.camss: Missing ready buf 1 4!`. The old worker's text matcher
+missed this diagnostic, so its `passed` field only describes its narrower checks.
+Do not use that field as complete camera acceptance. The new independent
+classifier rejects this actual window and also retains unfamiliar camera
+diagnostics when their severity is absent or above informational level:
+
+```sh
+python3 diagnostics/camera-reopen/check-kernel-window.py --self-test
+python3 diagnostics/camera-reopen/check-kernel-window.py /private/postflight.json
+```
+
+The second command intentionally exits 1 for this run. In the unchanged r1/r6
+source, state 4 is `VFE_OUTPUT_IDLE`; the ISR reports ready-buffer index 1 absent
+and returns before assigning a timestamp, sequence or completion. Queue draining
+and a late interrupt are a hypothesis, not an established explanation. Contiguous
+delivered-buffer sequences do not rule out hardware drops because this driver
+increments its sequence only when a ready buffer exists. Per-session monotonic
+timing and retained `cam` stdout are required to locate the warning relative to
+start, capture and stop before changing the driver or accepting it as harmless.
+
+Both sensors runtime-suspended after every close and both pattern controls
+returned to zero. USB remained configured at high speed in every capture sample;
+Sway and the gesture process remained unchanged. The service exited 0 and was
+stopped, all owned frame directories were removed, taint remained zero, and the
+independent postflight matches the accepted boot-file/package/world/repository
+hashes. Raw frames stayed in temporary phone RAM and were not transferred.
+
+The battery reported discharging, so active charging is unqualified. System
+suspend, sustained capture, complete pixel integrity, scene quality, lens/flash
+functions and final-image acceptance remain open. No reboot, package, firmware
+or boot write occurred. The separate r2 repeat and r6 physical gates are unchanged.
+[Current r1 observations and unresolved diagnostic](../../evidence/2026-11-14-camera-current-r1-reopen.json)

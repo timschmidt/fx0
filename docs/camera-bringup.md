@@ -417,3 +417,21 @@ No capture-driver or sensor-driver functionality is claimed from this audit or i
 ## Native r50 camera switching and reopen
 
 Two front and two binned rear sessions complete in alternating order with high-speed USB networking and Sway active. Each delivers 24 contiguous RAW10 frames and 17–19 consecutive valid hardware color-bar frames. A separate full-resolution rear session delivers another 24 frames, 16 of them with consecutive valid bars. The pre-launch rear color-bar control clears during libcamera startup. Setting it during streaming produces the expected pattern. Both sensors runtime-suspend after every close. The pattern controls, enabled media links, installed boot hash and package hashes check out afterward, with no new CAMSS, IOMMU or display faults. The battery was discharging throughout. Active charging, system suspend/resume, lens control and full camera acceptance remain open. [Procedure and evidence](../diagnostics/camera-reopen/README.md)
+
+## November 14 installed r1 regression and queue diagnostic
+
+The accepted `e134d38d` boot delivers another 120 RAW10 buffers over alternating
+front/binned-rear sessions and a full-resolution rear session. Eighty-eight
+consecutive patterned frames pass the sampled RGGB checks. Both sensors suspend
+after every close, controls return to zero and temporary frames are removed.
+The boot file and accepted package metadata remain unchanged; USB, Sway and the
+gesture process stay available with taint zero.
+
+The independent full kernel window finds one CAMSS `Missing ready buf 1 4!`
+diagnostic, which the historical worker matcher missed. The clean regression
+gate is therefore open despite successful transfer/reopen checks. State 4 is
+VFE idle in both the installed r1 and newer r6 source. A late interrupt while
+draining buffers is unproven; per-session timing and retained capture logs are
+needed. Delivered V4L2 sequences alone cannot exclude hardware drops. This run
+does not qualify active charging, system suspend, every-pixel integrity or the
+unbooted r6 combination. [Evidence and limits](../evidence/2026-11-14-camera-current-r1-reopen.json)
