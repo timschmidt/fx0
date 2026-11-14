@@ -49,7 +49,9 @@ explicitly unverified. No property table was invented to silence those warnings.
 
 ## Procedure and evidence checks
 
-`timed-queue-test.py` is the exact worker used here. It retains monotonic events
+`timed-queue-test.py` differs from the tested worker only by removal of trailing
+blank lines at EOF. The evidence pins the tested commit and both source hashes;
+all preceding bytes and the parsed AST match. It retains monotonic events
 for process start/exit, observed completions, pattern enable/restore and analysis.
 It preserves raw `cam` text in its private JSON report and retains prioritized
 kernel messages per case and across discovery/capture. A known IDLE missing-ready
