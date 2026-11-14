@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
 """Exercise actual camera discovery against renumbered and inconsistent sysfs fixtures."""
+import argparse
 import importlib.util
 import json
 from pathlib import Path
 import tempfile
 
-source = Path(__file__).with_name('current-test.py')
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--worker', type=Path, default=Path(__file__).with_name('current-test.py'))
+source = parser.parse_args().worker
 spec = importlib.util.spec_from_file_location('camera_current', source)
 worker = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(worker)

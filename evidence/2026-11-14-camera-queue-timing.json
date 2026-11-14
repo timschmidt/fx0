@@ -1,0 +1,2241 @@
+{
+  "recorded_UTC": "2026-11-14T20:47:14.565603+00:00",
+  "scope": "Current-r1 finite full-resolution rear capture timing experiment; original VFE queue warning remains unresolved",
+  "boot_reference": "e134d38d",
+  "kernel_release": "6.18.63-fx0-vibrator-alpine",
+  "kernel_package": "6.18.63-r1",
+  "kernel_source_commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+  "kernel_notes_SHA256": "05292e44d9f13de78b5ebf602b0b3f9ff22b7820d765f6e796cf3473beee4377",
+  "libcamera_version": "99990.7.1-r2",
+  "actual_worker_exit_status": 0,
+  "diagnostic_complete": true,
+  "previous_idle_ready_buffer_warning_reproduced": false,
+  "previous_clean_camera_gate_now_satisfied": false,
+  "original_warning_reference": "evidence/2026-11-14-camera-current-r1-reopen.json",
+  "no_kernel_messages_in_this_full_preflight_launch_capture_cleanup_window": true,
+  "capture_mode_width_height_stride": [
+    3280,
+    2464,
+    4104
+  ],
+  "total_delivered_buffers": 144,
+  "consecutive_sampled_pattern_frames_in_three_file_cases": 51,
+  "discard_cases_pixel_validated": false,
+  "groups": [
+    {
+      "write_frames": true,
+      "sessions": 3,
+      "delivered_buffers": 72,
+      "buffer_intervals": 69,
+      "intervals_above_1_5_session_median": 23,
+      "maximum_interval_ns": 1064842000
+    },
+    {
+      "write_frames": false,
+      "sessions": 3,
+      "delivered_buffers": 72,
+      "buffer_intervals": 69,
+      "intervals_above_1_5_session_median": 1,
+      "maximum_interval_ns": 998392000
+    }
+  ],
+  "cases": [
+    {
+      "case_index": 0,
+      "write_frames": true,
+      "frames": 24,
+      "cam_exit_status": 0,
+      "transfer_checks_passed": true,
+      "consecutive_pattern_frames": 19,
+      "median_interval_ns": 33278000,
+      "intervals_ns": [
+        33770000,
+        33273000,
+        33270000,
+        1031533000,
+        33260000,
+        33278000,
+        33270000,
+        33279000,
+        132544000,
+        33282000,
+        33263000,
+        66445000,
+        33275000,
+        66541000,
+        33276000,
+        33269000,
+        66554000,
+        33282000,
+        33264000,
+        66659000,
+        33270000,
+        33277000,
+        1031539000
+      ],
+      "intervals_over_1_5_median": [
+        3,
+        8,
+        11,
+        13,
+        16,
+        19,
+        22
+      ],
+      "kernel_messages": [],
+      "test_pattern_restored": true,
+      "sensors_PM_after_close": {
+        "front": "suspended",
+        "back": "suspended"
+      },
+      "power_during_capture": {
+        "USB_online": "1",
+        "gadget_state": "configured",
+        "USB_speed": "high-speed",
+        "battery_status": "Discharging"
+      },
+      "minimum_interval_ns": 33260000,
+      "maximum_interval_ns": 1031539000,
+      "frame_records": [
+        {
+          "printed_fps": 0.0,
+          "sequence": 0,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 872539961
+        },
+        {
+          "printed_fps": 29.61,
+          "sequence": 1,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 906309961
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 2,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 939582961
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 3,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 972852961
+        },
+        {
+          "printed_fps": 0.97,
+          "sequence": 4,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2004385961
+        },
+        {
+          "printed_fps": 30.07,
+          "sequence": 5,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2037645961
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 6,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2070923961
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 7,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2104193961
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 8,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2137472961
+        },
+        {
+          "printed_fps": 7.54,
+          "sequence": 9,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2270016961
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 10,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2303298961
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 11,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2336561961
+        },
+        {
+          "printed_fps": 15.05,
+          "sequence": 12,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2403006961
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 13,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2436281961
+        },
+        {
+          "printed_fps": 15.03,
+          "sequence": 14,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2502822961
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 15,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2536098961
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 16,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2569367961
+        },
+        {
+          "printed_fps": 15.03,
+          "sequence": 17,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2635921961
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 18,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2669203961
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 19,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2702467961
+        },
+        {
+          "printed_fps": 15.0,
+          "sequence": 20,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2769126961
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 21,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2802396961
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 22,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2835673961
+        },
+        {
+          "printed_fps": 0.97,
+          "sequence": 23,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 3867212961
+        }
+      ],
+      "events": [
+        {
+          "name": "case_begin",
+          "from_case_begin_ns": 0
+        },
+        {
+          "name": "cam_spawn_request",
+          "from_case_begin_ns": 140700653
+        },
+        {
+          "name": "cam_spawn_returned",
+          "from_case_begin_ns": 143577548
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 0,
+          "from_case_begin_ns": 144572468
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 1,
+          "from_case_begin_ns": 958185619
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 2,
+          "from_case_begin_ns": 1004574175
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 3,
+          "from_case_begin_ns": 1091615101
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 4,
+          "from_case_begin_ns": 1135301245
+        },
+        {
+          "name": "pattern_enable_begin",
+          "completed": 4,
+          "from_case_begin_ns": 1154877828
+        },
+        {
+          "name": "pattern_enable_end",
+          "completed": 4,
+          "from_case_begin_ns": 1199666917
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 5,
+          "from_case_begin_ns": 2096505847
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 6,
+          "from_case_begin_ns": 2173881427
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 7,
+          "from_case_begin_ns": 2217682731
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 8,
+          "from_case_begin_ns": 2262849485
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 9,
+          "from_case_begin_ns": 2329759282
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 10,
+          "from_case_begin_ns": 2374048879
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 11,
+          "from_case_begin_ns": 2418934376
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 12,
+          "from_case_begin_ns": 2463270172
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 13,
+          "from_case_begin_ns": 2507939622
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 14,
+          "from_case_begin_ns": 2552906528
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 15,
+          "from_case_begin_ns": 2598167711
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 16,
+          "from_case_begin_ns": 2643852187
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 17,
+          "from_case_begin_ns": 2689810315
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 18,
+          "from_case_begin_ns": 2735224836
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 19,
+          "from_case_begin_ns": 2781428178
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 20,
+          "from_case_begin_ns": 2827777358
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 21,
+          "from_case_begin_ns": 2873538919
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 22,
+          "from_case_begin_ns": 2919301573
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 23,
+          "from_case_begin_ns": 2941829636
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 24,
+          "from_case_begin_ns": 3929396462
+        },
+        {
+          "name": "cam_exit_observed",
+          "returncode": 0,
+          "from_case_begin_ns": 4127020153
+        },
+        {
+          "name": "pattern_restore_begin",
+          "from_case_begin_ns": 4127415944
+        },
+        {
+          "name": "pattern_restore_end",
+          "from_case_begin_ns": 4171915338
+        },
+        {
+          "name": "case_analysis_end",
+          "from_case_begin_ns": 5769210379
+        }
+      ]
+    },
+    {
+      "case_index": 1,
+      "write_frames": false,
+      "frames": 24,
+      "cam_exit_status": 0,
+      "transfer_checks_passed": true,
+      "consecutive_pattern_frames": null,
+      "median_interval_ns": 33274000,
+      "intervals_ns": [
+        33167000,
+        33274000,
+        33271000,
+        33274000,
+        33275000,
+        33269000,
+        33311000,
+        33236000,
+        34295000,
+        32249000,
+        998392000,
+        33289000,
+        33259000,
+        33277000,
+        33274000,
+        33267000,
+        33273000,
+        33274000,
+        33273000,
+        33279000,
+        33052000,
+        33274000,
+        33274000
+      ],
+      "intervals_over_1_5_median": [
+        10
+      ],
+      "kernel_messages": [],
+      "test_pattern_restored": true,
+      "sensors_PM_after_close": {
+        "front": "suspended",
+        "back": "suspended"
+      },
+      "power_during_capture": {
+        "USB_online": "1",
+        "gadget_state": "configured",
+        "USB_speed": "high-speed",
+        "battery_status": "Discharging"
+      },
+      "minimum_interval_ns": 32249000,
+      "maximum_interval_ns": 998392000,
+      "frame_records": [
+        {
+          "printed_fps": 0.0,
+          "sequence": 0,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 769044108
+        },
+        {
+          "printed_fps": 30.15,
+          "sequence": 1,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 802211108
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 2,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 835485108
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 3,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 868756108
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 4,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 902030108
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 5,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 935305108
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 6,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 968574108
+        },
+        {
+          "printed_fps": 30.02,
+          "sequence": 7,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1001885108
+        },
+        {
+          "printed_fps": 30.09,
+          "sequence": 8,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1035121108
+        },
+        {
+          "printed_fps": 29.16,
+          "sequence": 9,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1069416108
+        },
+        {
+          "printed_fps": 31.01,
+          "sequence": 10,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1101665108
+        },
+        {
+          "printed_fps": 1.0,
+          "sequence": 11,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2100057108
+        },
+        {
+          "printed_fps": 30.04,
+          "sequence": 12,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2133346108
+        },
+        {
+          "printed_fps": 30.07,
+          "sequence": 13,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2166605108
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 14,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2199882108
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 15,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2233156108
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 16,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2266423108
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 17,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2299696108
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 18,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2332970108
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 19,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2366243108
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 20,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2399522108
+        },
+        {
+          "printed_fps": 30.26,
+          "sequence": 21,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2432574108
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 22,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2465848108
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 23,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2499122108
+        }
+      ],
+      "events": [
+        {
+          "name": "case_begin",
+          "from_case_begin_ns": 0
+        },
+        {
+          "name": "cam_spawn_request",
+          "from_case_begin_ns": 135456564
+        },
+        {
+          "name": "cam_spawn_returned",
+          "from_case_begin_ns": 139431716
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 0,
+          "from_case_begin_ns": 140725498
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 1,
+          "from_case_begin_ns": 795020765
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 2,
+          "from_case_begin_ns": 816717505
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 3,
+          "from_case_begin_ns": 841760528
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 4,
+          "from_case_begin_ns": 884975566
+        },
+        {
+          "name": "pattern_enable_begin",
+          "completed": 4,
+          "from_case_begin_ns": 905284095
+        },
+        {
+          "name": "pattern_enable_end",
+          "completed": 6,
+          "from_case_begin_ns": 945209729
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 6,
+          "from_case_begin_ns": 970053111
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 7,
+          "from_case_begin_ns": 992286844
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 8,
+          "from_case_begin_ns": 1014040408
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 9,
+          "from_case_begin_ns": 1057949840
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 10,
+          "from_case_begin_ns": 1080052215
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 11,
+          "from_case_begin_ns": 1123981074
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 12,
+          "from_case_begin_ns": 2123842379
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 13,
+          "from_case_begin_ns": 2148122986
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 14,
+          "from_case_begin_ns": 2172422917
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 15,
+          "from_case_begin_ns": 2221457059
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 16,
+          "from_case_begin_ns": 2246284034
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 17,
+          "from_case_begin_ns": 2297146713
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 18,
+          "from_case_begin_ns": 2322265101
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 19,
+          "from_case_begin_ns": 2347083222
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 20,
+          "from_case_begin_ns": 2372424220
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 21,
+          "from_case_begin_ns": 2420468130
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 22,
+          "from_case_begin_ns": 2442706915
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 23,
+          "from_case_begin_ns": 2487101359
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 24,
+          "from_case_begin_ns": 2509460616
+        },
+        {
+          "name": "cam_exit_observed",
+          "returncode": 0,
+          "from_case_begin_ns": 2693780225
+        },
+        {
+          "name": "pattern_restore_begin",
+          "from_case_begin_ns": 2694192840
+        },
+        {
+          "name": "pattern_restore_end",
+          "from_case_begin_ns": 2757406920
+        },
+        {
+          "name": "case_analysis_end",
+          "from_case_begin_ns": 2760250950
+        }
+      ]
+    },
+    {
+      "case_index": 2,
+      "write_frames": true,
+      "frames": 24,
+      "cam_exit_status": 0,
+      "transfer_checks_passed": true,
+      "consecutive_pattern_frames": 16,
+      "median_interval_ns": 33274000,
+      "intervals_ns": [
+        33182000,
+        33253000,
+        33293000,
+        33269000,
+        66541000,
+        33166000,
+        33272000,
+        66660000,
+        33259000,
+        66557000,
+        33261000,
+        66554000,
+        33273000,
+        33277000,
+        66540000,
+        33274000,
+        66544000,
+        33259000,
+        33291000,
+        66547000,
+        33268000,
+        33254000,
+        1031361000
+      ],
+      "intervals_over_1_5_median": [
+        4,
+        7,
+        9,
+        11,
+        14,
+        16,
+        19,
+        22
+      ],
+      "kernel_messages": [],
+      "test_pattern_restored": true,
+      "sensors_PM_after_close": {
+        "front": "suspended",
+        "back": "suspended"
+      },
+      "power_during_capture": {
+        "USB_online": "1",
+        "gadget_state": "configured",
+        "USB_speed": "high-speed",
+        "battery_status": "Discharging"
+      },
+      "minimum_interval_ns": 33166000,
+      "maximum_interval_ns": 1031361000,
+      "frame_records": [
+        {
+          "printed_fps": 0.0,
+          "sequence": 0,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 783694727
+        },
+        {
+          "printed_fps": 30.14,
+          "sequence": 1,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 816876727
+        },
+        {
+          "printed_fps": 30.07,
+          "sequence": 2,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 850129727
+        },
+        {
+          "printed_fps": 30.04,
+          "sequence": 3,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 883422727
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 4,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 916691727
+        },
+        {
+          "printed_fps": 15.03,
+          "sequence": 5,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 983232727
+        },
+        {
+          "printed_fps": 30.15,
+          "sequence": 6,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1016398727
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 7,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1049670727
+        },
+        {
+          "printed_fps": 15.0,
+          "sequence": 8,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1116330727
+        },
+        {
+          "printed_fps": 30.07,
+          "sequence": 9,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1149589727
+        },
+        {
+          "printed_fps": 15.02,
+          "sequence": 10,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1216146727
+        },
+        {
+          "printed_fps": 30.07,
+          "sequence": 11,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1249407727
+        },
+        {
+          "printed_fps": 15.03,
+          "sequence": 12,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1315961727
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 13,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1349234727
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 14,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1382511727
+        },
+        {
+          "printed_fps": 15.03,
+          "sequence": 15,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1449051727
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 16,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1482325727
+        },
+        {
+          "printed_fps": 15.03,
+          "sequence": 17,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1548869727
+        },
+        {
+          "printed_fps": 30.07,
+          "sequence": 18,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1582128727
+        },
+        {
+          "printed_fps": 30.04,
+          "sequence": 19,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1615419727
+        },
+        {
+          "printed_fps": 15.03,
+          "sequence": 20,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1681966727
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 21,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1715234727
+        },
+        {
+          "printed_fps": 30.07,
+          "sequence": 22,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1748488727
+        },
+        {
+          "printed_fps": 0.97,
+          "sequence": 23,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2779849727
+        }
+      ],
+      "events": [
+        {
+          "name": "case_begin",
+          "from_case_begin_ns": 0
+        },
+        {
+          "name": "cam_spawn_request",
+          "from_case_begin_ns": 148795075
+        },
+        {
+          "name": "cam_spawn_returned",
+          "from_case_begin_ns": 151721555
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 0,
+          "from_case_begin_ns": 152899969
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 1,
+          "from_case_begin_ns": 861924732
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 2,
+          "from_case_begin_ns": 906323291
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 3,
+          "from_case_begin_ns": 950567001
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 4,
+          "from_case_begin_ns": 994946132
+        },
+        {
+          "name": "pattern_enable_begin",
+          "completed": 4,
+          "from_case_begin_ns": 1017970301
+        },
+        {
+          "name": "pattern_enable_end",
+          "completed": 5,
+          "from_case_begin_ns": 1062800381
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 6,
+          "from_case_begin_ns": 1088941608
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 7,
+          "from_case_begin_ns": 1133285008
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 8,
+          "from_case_begin_ns": 1177566168
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 9,
+          "from_case_begin_ns": 1222025821
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 10,
+          "from_case_begin_ns": 1266525580
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 11,
+          "from_case_begin_ns": 1333756584
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 12,
+          "from_case_begin_ns": 1378698542
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 13,
+          "from_case_begin_ns": 1423522267
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 14,
+          "from_case_begin_ns": 1468645427
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 15,
+          "from_case_begin_ns": 1513362482
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 16,
+          "from_case_begin_ns": 1558782525
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 17,
+          "from_case_begin_ns": 1604205067
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 18,
+          "from_case_begin_ns": 1649791676
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 19,
+          "from_case_begin_ns": 1695314533
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 20,
+          "from_case_begin_ns": 1740735617
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 21,
+          "from_case_begin_ns": 1786152638
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 22,
+          "from_case_begin_ns": 1831794196
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 23,
+          "from_case_begin_ns": 1877097361
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 24,
+          "from_case_begin_ns": 2857524903
+        },
+        {
+          "name": "cam_exit_observed",
+          "returncode": 0,
+          "from_case_begin_ns": 3064674771
+        },
+        {
+          "name": "pattern_restore_begin",
+          "from_case_begin_ns": 3064857588
+        },
+        {
+          "name": "pattern_restore_end",
+          "from_case_begin_ns": 3102457279
+        },
+        {
+          "name": "case_analysis_end",
+          "from_case_begin_ns": 4749960622
+        }
+      ]
+    },
+    {
+      "case_index": 3,
+      "write_frames": false,
+      "frames": 24,
+      "cam_exit_status": 0,
+      "transfer_checks_passed": true,
+      "consecutive_pattern_frames": null,
+      "median_interval_ns": 33279000,
+      "intervals_ns": [
+        33487000,
+        33283000,
+        33252000,
+        33161000,
+        33177000,
+        33279000,
+        33574000,
+        33175000,
+        33272000,
+        33280000,
+        33266000,
+        33069000,
+        33479000,
+        33292000,
+        33048000,
+        33394000,
+        33372000,
+        33052000,
+        33483000,
+        33270000,
+        33066000,
+        33476000,
+        33289000
+      ],
+      "intervals_over_1_5_median": [],
+      "kernel_messages": [],
+      "test_pattern_restored": true,
+      "sensors_PM_after_close": {
+        "front": "suspended",
+        "back": "suspended"
+      },
+      "power_during_capture": {
+        "USB_online": "1",
+        "gadget_state": "configured",
+        "USB_speed": "high-speed",
+        "battery_status": "Discharging"
+      },
+      "minimum_interval_ns": 33048000,
+      "maximum_interval_ns": 33574000,
+      "frame_records": [
+        {
+          "printed_fps": 0.0,
+          "sequence": 0,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 727757609
+        },
+        {
+          "printed_fps": 29.86,
+          "sequence": 1,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 761244609
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 2,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 794527609
+        },
+        {
+          "printed_fps": 30.07,
+          "sequence": 3,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 827779609
+        },
+        {
+          "printed_fps": 30.16,
+          "sequence": 4,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 860940609
+        },
+        {
+          "printed_fps": 30.14,
+          "sequence": 5,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 894117609
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 6,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 927396609
+        },
+        {
+          "printed_fps": 29.78,
+          "sequence": 7,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 960970609
+        },
+        {
+          "printed_fps": 30.14,
+          "sequence": 8,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 994145609
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 9,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1027417609
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 10,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1060697609
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 11,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1093963609
+        },
+        {
+          "printed_fps": 30.24,
+          "sequence": 12,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1127032609
+        },
+        {
+          "printed_fps": 29.87,
+          "sequence": 13,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1160511609
+        },
+        {
+          "printed_fps": 30.04,
+          "sequence": 14,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1193803609
+        },
+        {
+          "printed_fps": 30.26,
+          "sequence": 15,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1226851609
+        },
+        {
+          "printed_fps": 29.95,
+          "sequence": 16,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1260245609
+        },
+        {
+          "printed_fps": 29.97,
+          "sequence": 17,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1293617609
+        },
+        {
+          "printed_fps": 30.26,
+          "sequence": 18,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1326669609
+        },
+        {
+          "printed_fps": 29.87,
+          "sequence": 19,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1360152609
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 20,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1393422609
+        },
+        {
+          "printed_fps": 30.24,
+          "sequence": 21,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1426488609
+        },
+        {
+          "printed_fps": 29.87,
+          "sequence": 22,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1459964609
+        },
+        {
+          "printed_fps": 30.04,
+          "sequence": 23,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1493253609
+        }
+      ],
+      "events": [
+        {
+          "name": "case_begin",
+          "from_case_begin_ns": 0
+        },
+        {
+          "name": "cam_spawn_request",
+          "from_case_begin_ns": 138554872
+        },
+        {
+          "name": "cam_spawn_returned",
+          "from_case_begin_ns": 142620494
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 0,
+          "from_case_begin_ns": 143772659
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 1,
+          "from_case_begin_ns": 753460879
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 2,
+          "from_case_begin_ns": 776795525
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 3,
+          "from_case_begin_ns": 800273872
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 4,
+          "from_case_begin_ns": 847247652
+        },
+        {
+          "name": "pattern_enable_begin",
+          "completed": 4,
+          "from_case_begin_ns": 873936913
+        },
+        {
+          "name": "pattern_enable_end",
+          "completed": 7,
+          "from_case_begin_ns": 933943675
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 8,
+          "from_case_begin_ns": 964824812
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 9,
+          "from_case_begin_ns": 1012705020
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 10,
+          "from_case_begin_ns": 1034531972
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 11,
+          "from_case_begin_ns": 1082674374
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 12,
+          "from_case_begin_ns": 1106633307
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 13,
+          "from_case_begin_ns": 1131054178
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 14,
+          "from_case_begin_ns": 1179787116
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 15,
+          "from_case_begin_ns": 1204670707
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 16,
+          "from_case_begin_ns": 1253334372
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 17,
+          "from_case_begin_ns": 1278022334
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 18,
+          "from_case_begin_ns": 1303118482
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 19,
+          "from_case_begin_ns": 1353510107
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 20,
+          "from_case_begin_ns": 1378674487
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 21,
+          "from_case_begin_ns": 1404260023
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 22,
+          "from_case_begin_ns": 1454559146
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 23,
+          "from_case_begin_ns": 1479744880
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 24,
+          "from_case_begin_ns": 1505264893
+        },
+        {
+          "name": "cam_exit_observed",
+          "returncode": 0,
+          "from_case_begin_ns": 1755545269
+        },
+        {
+          "name": "pattern_restore_begin",
+          "from_case_begin_ns": 1755901163
+        },
+        {
+          "name": "pattern_restore_end",
+          "from_case_begin_ns": 1804686707
+        },
+        {
+          "name": "case_analysis_end",
+          "from_case_begin_ns": 1807509121
+        }
+      ]
+    },
+    {
+      "case_index": 4,
+      "write_frames": true,
+      "frames": 24,
+      "cam_exit_status": 0,
+      "transfer_checks_passed": true,
+      "consecutive_pattern_frames": 16,
+      "median_interval_ns": 33292000,
+      "intervals_ns": [
+        33180000,
+        33268000,
+        33260000,
+        33282000,
+        66532000,
+        33295000,
+        33160000,
+        66541000,
+        33381000,
+        66544000,
+        33281000,
+        66541000,
+        33271000,
+        33167000,
+        66656000,
+        33248000,
+        66571000,
+        33251000,
+        33292000,
+        66528000,
+        33292000,
+        33263000,
+        1064842000
+      ],
+      "intervals_over_1_5_median": [
+        4,
+        7,
+        9,
+        11,
+        14,
+        16,
+        19,
+        22
+      ],
+      "kernel_messages": [],
+      "test_pattern_restored": true,
+      "sensors_PM_after_close": {
+        "front": "suspended",
+        "back": "suspended"
+      },
+      "power_during_capture": {
+        "USB_online": "1",
+        "gadget_state": "configured",
+        "USB_speed": "high-speed",
+        "battery_status": "Discharging"
+      },
+      "minimum_interval_ns": 33160000,
+      "maximum_interval_ns": 1064842000,
+      "frame_records": [
+        {
+          "printed_fps": 0.0,
+          "sequence": 0,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 751890969
+        },
+        {
+          "printed_fps": 30.14,
+          "sequence": 1,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 785070969
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 2,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 818338969
+        },
+        {
+          "printed_fps": 30.07,
+          "sequence": 3,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 851598969
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 4,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 884880969
+        },
+        {
+          "printed_fps": 15.03,
+          "sequence": 5,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 951412969
+        },
+        {
+          "printed_fps": 30.03,
+          "sequence": 6,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 984707969
+        },
+        {
+          "printed_fps": 30.16,
+          "sequence": 7,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1017867969
+        },
+        {
+          "printed_fps": 15.03,
+          "sequence": 8,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1084408969
+        },
+        {
+          "printed_fps": 29.96,
+          "sequence": 9,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1117789969
+        },
+        {
+          "printed_fps": 15.03,
+          "sequence": 10,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1184333969
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 11,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1217614969
+        },
+        {
+          "printed_fps": 15.03,
+          "sequence": 12,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1284155969
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 13,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1317426969
+        },
+        {
+          "printed_fps": 30.15,
+          "sequence": 14,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1350593969
+        },
+        {
+          "printed_fps": 15.0,
+          "sequence": 15,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1417249969
+        },
+        {
+          "printed_fps": 30.08,
+          "sequence": 16,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1450497969
+        },
+        {
+          "printed_fps": 15.02,
+          "sequence": 17,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1517068969
+        },
+        {
+          "printed_fps": 30.07,
+          "sequence": 18,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1550319969
+        },
+        {
+          "printed_fps": 30.04,
+          "sequence": 19,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1583611969
+        },
+        {
+          "printed_fps": 15.03,
+          "sequence": 20,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1650139969
+        },
+        {
+          "printed_fps": 30.04,
+          "sequence": 21,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1683431969
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 22,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1716694969
+        },
+        {
+          "printed_fps": 0.94,
+          "sequence": 23,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 2781536969
+        }
+      ],
+      "events": [
+        {
+          "name": "case_begin",
+          "from_case_begin_ns": 0
+        },
+        {
+          "name": "cam_spawn_request",
+          "from_case_begin_ns": 123507204
+        },
+        {
+          "name": "cam_spawn_returned",
+          "from_case_begin_ns": 126055132
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 0,
+          "from_case_begin_ns": 126980208
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 1,
+          "from_case_begin_ns": 815021378
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 2,
+          "from_case_begin_ns": 859443479
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 3,
+          "from_case_begin_ns": 925842172
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 4,
+          "from_case_begin_ns": 970327295
+        },
+        {
+          "name": "pattern_enable_begin",
+          "completed": 4,
+          "from_case_begin_ns": 993035415
+        },
+        {
+          "name": "pattern_enable_end",
+          "completed": 5,
+          "from_case_begin_ns": 1037843307
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 6,
+          "from_case_begin_ns": 1063970731
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 7,
+          "from_case_begin_ns": 1108537211
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 8,
+          "from_case_begin_ns": 1152990927
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 9,
+          "from_case_begin_ns": 1197595428
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 10,
+          "from_case_begin_ns": 1242153054
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 11,
+          "from_case_begin_ns": 1286699637
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 12,
+          "from_case_begin_ns": 1331503831
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 13,
+          "from_case_begin_ns": 1376079737
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 14,
+          "from_case_begin_ns": 1420893411
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 15,
+          "from_case_begin_ns": 1465816045
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 16,
+          "from_case_begin_ns": 1533584355
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 17,
+          "from_case_begin_ns": 1579152839
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 18,
+          "from_case_begin_ns": 1624368814
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 19,
+          "from_case_begin_ns": 1670031935
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 20,
+          "from_case_begin_ns": 1715463384
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 21,
+          "from_case_begin_ns": 1761061869
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 22,
+          "from_case_begin_ns": 1806103933
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 23,
+          "from_case_begin_ns": 1851223916
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 24,
+          "from_case_begin_ns": 2838289132
+        },
+        {
+          "name": "cam_exit_observed",
+          "returncode": 0,
+          "from_case_begin_ns": 3027649755
+        },
+        {
+          "name": "pattern_restore_begin",
+          "from_case_begin_ns": 3027853979
+        },
+        {
+          "name": "pattern_restore_end",
+          "from_case_begin_ns": 3072240923
+        },
+        {
+          "name": "case_analysis_end",
+          "from_case_begin_ns": 4677724739
+        }
+      ]
+    },
+    {
+      "case_index": 5,
+      "write_frames": false,
+      "frames": 24,
+      "cam_exit_status": 0,
+      "transfer_checks_passed": true,
+      "consecutive_pattern_frames": null,
+      "median_interval_ns": 33271000,
+      "intervals_ns": [
+        33292000,
+        33191000,
+        33356000,
+        33185000,
+        33235000,
+        33188000,
+        33481000,
+        33293000,
+        33050000,
+        33481000,
+        33339000,
+        33201000,
+        33271000,
+        33298000,
+        33264000,
+        33271000,
+        33054000,
+        33480000,
+        33276000,
+        33283000,
+        33276000,
+        33268000,
+        33056000
+      ],
+      "intervals_over_1_5_median": [],
+      "kernel_messages": [],
+      "test_pattern_restored": true,
+      "sensors_PM_after_close": {
+        "front": "suspended",
+        "back": "suspended"
+      },
+      "power_during_capture": {
+        "USB_online": "1",
+        "gadget_state": "configured",
+        "USB_speed": "high-speed",
+        "battery_status": "Discharging"
+      },
+      "minimum_interval_ns": 33050000,
+      "maximum_interval_ns": 33481000,
+      "frame_records": [
+        {
+          "printed_fps": 0.0,
+          "sequence": 0,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 694897755
+        },
+        {
+          "printed_fps": 30.04,
+          "sequence": 1,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 728189755
+        },
+        {
+          "printed_fps": 30.13,
+          "sequence": 2,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 761380755
+        },
+        {
+          "printed_fps": 29.98,
+          "sequence": 3,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 794736755
+        },
+        {
+          "printed_fps": 30.13,
+          "sequence": 4,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 827921755
+        },
+        {
+          "printed_fps": 30.09,
+          "sequence": 5,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 861156755
+        },
+        {
+          "printed_fps": 30.13,
+          "sequence": 6,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 894344755
+        },
+        {
+          "printed_fps": 29.87,
+          "sequence": 7,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 927825755
+        },
+        {
+          "printed_fps": 30.04,
+          "sequence": 8,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 961118755
+        },
+        {
+          "printed_fps": 30.26,
+          "sequence": 9,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 994168755
+        },
+        {
+          "printed_fps": 29.87,
+          "sequence": 10,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1027649755
+        },
+        {
+          "printed_fps": 29.99,
+          "sequence": 11,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1060988755
+        },
+        {
+          "printed_fps": 30.12,
+          "sequence": 12,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1094189755
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 13,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1127460755
+        },
+        {
+          "printed_fps": 30.03,
+          "sequence": 14,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1160758755
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 15,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1194022755
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 16,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1227293755
+        },
+        {
+          "printed_fps": 30.25,
+          "sequence": 17,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1260347755
+        },
+        {
+          "printed_fps": 29.87,
+          "sequence": 18,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1293827755
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 19,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1327103755
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 20,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1360386755
+        },
+        {
+          "printed_fps": 30.05,
+          "sequence": 21,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1393662755
+        },
+        {
+          "printed_fps": 30.06,
+          "sequence": 22,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1426930755
+        },
+        {
+          "printed_fps": 30.25,
+          "sequence": 23,
+          "bytesused": 10112256,
+          "timestamp_from_case_begin_ns": 1459986755
+        }
+      ],
+      "events": [
+        {
+          "name": "case_begin",
+          "from_case_begin_ns": 0
+        },
+        {
+          "name": "cam_spawn_request",
+          "from_case_begin_ns": 119212879
+        },
+        {
+          "name": "cam_spawn_returned",
+          "from_case_begin_ns": 122117899
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 0,
+          "from_case_begin_ns": 123272043
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 1,
+          "from_case_begin_ns": 697172810
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 2,
+          "from_case_begin_ns": 744186590
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 3,
+          "from_case_begin_ns": 767677282
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 4,
+          "from_case_begin_ns": 815196805
+        },
+        {
+          "name": "pattern_enable_begin",
+          "completed": 4,
+          "from_case_begin_ns": 846327896
+        },
+        {
+          "name": "pattern_enable_end",
+          "completed": 7,
+          "from_case_begin_ns": 896045286
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 7,
+          "from_case_begin_ns": 922729964
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 8,
+          "from_case_begin_ns": 946517122
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 9,
+          "from_case_begin_ns": 970524181
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 10,
+          "from_case_begin_ns": 1018795232
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 11,
+          "from_case_begin_ns": 1043100632
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 12,
+          "from_case_begin_ns": 1067361135
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 13,
+          "from_case_begin_ns": 1116061729
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 14,
+          "from_case_begin_ns": 1140367025
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 15,
+          "from_case_begin_ns": 1165414318
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 16,
+          "from_case_begin_ns": 1215002173
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 17,
+          "from_case_begin_ns": 1239836232
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 18,
+          "from_case_begin_ns": 1265314943
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 19,
+          "from_case_begin_ns": 1315678755
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 20,
+          "from_case_begin_ns": 1340784384
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 21,
+          "from_case_begin_ns": 1363022180
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 22,
+          "from_case_begin_ns": 1412942231
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 23,
+          "from_case_begin_ns": 1437982649
+        },
+        {
+          "name": "stdout_completion_count",
+          "count": 24,
+          "from_case_begin_ns": 1488263230
+        },
+        {
+          "name": "cam_exit_observed",
+          "returncode": 0,
+          "from_case_begin_ns": 1732055477
+        },
+        {
+          "name": "pattern_restore_begin",
+          "from_case_begin_ns": 1732414444
+        },
+        {
+          "name": "pattern_restore_end",
+          "from_case_begin_ns": 1779694481
+        },
+        {
+          "name": "case_analysis_end",
+          "from_case_begin_ns": 1783105296
+        }
+      ]
+    }
+  ],
+  "timing_scope": "VFE buffer-completion timestamps printed by cam, not an independent sensor frame counter. Median-based threshold is descriptive. Contiguous delivered sequences cannot exclude hardware drops.",
+  "observed_result": "File-writing cases have 23/69 intervals above 1.5 times their session median, discard cases1/69. Two later discard cases have no such interval; all three file cases include approximately one-second intervals.",
+  "causal_limit": "Writing is associated with longer completion intervals in this small fixed-order experiment. It does not prove queue state, the original diagnostic cause, a driver defect, or that all physical frames arrived.",
+  "source_consistency": "Gen1 code cycles frame-drop period between30/31 and changes patterns when buffers run out. Long intervals near30-32 nominal frame periods are consistent with that mechanism; no runtime queue or IRQ trace proves it here.",
+  "retained_libcamera_warnings": [
+    "CameraSensor camera_sensor_legacy.cpp:502 'imx132 2-0036': No sensor delays found in static properties. Assuming unverified defaults.",
+    "CameraSensorProperties camera_sensor_properties.cpp:554 No static properties available for 'imx132'",
+    "CameraSensorProperties camera_sensor_properties.cpp:556 Please consider updating the camera sensor properties database"
+  ],
+  "warning_scope": "IMX132 lacks static sensor properties/delay metadata during camera inventory; defaults are explicitly unverified. This experiment does not supply measured delays or suppress those warnings.",
+  "cam_stdout_and_per_case_monotonic_events_retained_privately": true,
+  "source_only_discovery_cases": 10,
+  "source_only_timed_evidence_cases": 14,
+  "source_only_exports_passed": true,
+  "all_sensor_pattern_controls_zero_after": true,
+  "both_sensors_suspended_after_each_case": true,
+  "owned_service_stopped": true,
+  "temporary_frame_directories_remaining": 0,
+  "kernel_taint_after": 0,
+  "systemd_and_selected_services_healthy": true,
+  "Sway_and_gesture_processes_unchanged": true,
+  "boot_file_package_DB_world_repositories_match_accepted_reference": {
+    "/lib/apk/db/installed": "b106cfa76000084e240f6b1e40496a06b52f5d1820593364f8b13bfb54c9665f",
+    "/etc/apk/world": "8dcb9d843a2805ae9ab8fe925fc34f9b95c7beef798c5019617d8720cb52c64a",
+    "/etc/apk/repositories": "37534543d9a1defca831a5b104f2e871f363555df8b817ec8a54b59d1138562a",
+    "/boot/boot.img": "ee851c81968b86a80b47eb2e5c2f07d9d4298cffa17c9347e437036c128e2c64"
+  },
+  "USB_state_during_case_samples": "Configured high-speed and online",
+  "battery_status_during_capture": "Discharging",
+  "battery_health_after": "Good",
+  "raw_frames_transferred_or_published": false,
+  "reboots": 0,
+  "package_firmware_or_boot_changes": false,
+  "new_kernel_patch_prepared_or_deployed": false,
+  "next_step": "Use a separate bounded diagnostic to distinguish ordinary buffer starvation from late/duplicate IRQs, preserving per-stage logs and controls. A brief explicitly owned cam-client pause with matched no-pause controls can create known backpressure without frame-file writes; prove child ownership and resume/kill cleanup before any such run.",
+  "full_camera_or_bringup_acceptance_complete": false,
+  "r2_repeat_or_r6_physical_gate_satisfied": false,
+  "source_and_new_evidence_published": false,
+  "public_helpers_SHA256": {
+    "diagnostics/camera-reopen/timed-queue-test.py": "3973312a293d88d35aff8cb1da2660df142eb88cb2d017a16c95ed5f382e3571",
+    "diagnostics/camera-reopen/check-current-discovery.py": "00ed1dd5c340313f354ec70272847eabc07c9ccdf77bf7c84941d7571dcae396",
+    "diagnostics/camera-reopen/check-timed-evidence.py": "8b88c9ed2b3475441114179ad6b35e65ff75b2796febda36a1ba4c7d89a6a346"
+  }
+}

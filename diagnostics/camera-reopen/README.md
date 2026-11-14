@@ -90,3 +90,9 @@ suspend, sustained capture, complete pixel integrity, scene quality, lens/flash
 functions and final-image acceptance remain open. No reboot, package, firmware
 or boot write occurred. The separate r2 repeat and r6 physical gates are unchanged.
 [Current r1 observations and unresolved diagnostic](../../evidence/2026-11-14-camera-current-r1-reopen.json)
+
+The subsequent [six-case timing comparison](queue-timing.md) retains capture
+stdout and completion timestamps while alternating frame-file output and discard.
+All 144 buffers arrive, but writing is associated with longer completion gaps.
+The missing-ready warning does not repeat and remains unresolved. The comparison
+adds timing evidence without closing the original clean-regression gate.

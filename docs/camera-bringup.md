@@ -435,3 +435,12 @@ draining buffers is unproven; per-session timing and retained capture logs are
 needed. Delivered V4L2 sequences alone cannot exclude hardware drops. This run
 does not qualify active charging, system suspend, every-pixel integrity or the
 unbooted r6 combination. [Evidence and limits](../evidence/2026-11-14-camera-current-r1-reopen.json)
+
+Six subsequent full-resolution rear cases alternate frame-file writing and
+discard and retain all completion timestamps and capture stdout. All 144 buffers
+arrive; writing cases have 23/69 intervals above 1.5 times their session median,
+discard cases 1/69. Two later discard cases maintain about 33.3 ms without such
+gaps. The original queue warning does not repeat. This establishes neither its
+cause nor absence of hardware drops; a controlled backpressure experiment remains
+needed. Cleanup and accepted baseline hashes pass again.
+[Timing measurements and procedure](../diagnostics/camera-reopen/queue-timing.md)
