@@ -695,3 +695,18 @@ cohorts are running in a private native fixture. This is preparation evidence;
 no live stable upgrade, boot write, reboot or new hardware qualification is
 claimed. Complete bringup remains open.
 [Evidence](../evidence/2026-11-13-stable-controller-recovery.json)
+
+## November 14: limited live status observation
+
+An unprivileged read-only query over the existing pinned SSH connection matches
+the accepted installed-r1 boot, release and linked notes. Systemd reports running;
+Sway and lisgd are present and taint is zero. The supply interfaces report USB
+online, battery present with Good health and Discharging status, and mains
+offline. These are point-in-time status values for follow-up, not a charging
+fault diagnosis or power-policy acceptance.
+
+No physical display/touch check or complete package/module byte audit was
+performed by this query. It made no reboot, stage, package or clock write, and
+it does not replace any trial's current operator receipt or full preflight.
+Raw telemetry and identifiers remain private.
+[Limited status evidence](../evidence/2026-11-14-native-readonly-status.json)

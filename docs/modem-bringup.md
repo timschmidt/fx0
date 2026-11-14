@@ -525,3 +525,19 @@ This is the prepared accepted-r1 diagnostic, not a new historical kernel build
 or physical acceptance. All three real trial workspaces remain undispatched
 without operator receipts, and the earlier source snapshots stay exact.
 [Public image rebuild evidence](../evidence/2026-11-14-passive-r1-public-image-rebuild.json)
+
+## November 14: passive-r1 child ownership and receipt gates
+
+A [fresh passive entry](../diagnostics/modem-control/passive-owned-adapter.md)
+keeps the existing image and borrows the exact qualified child ownership
+methods. Native-specific callbacks do not enter its inheritance chain. It keeps
+passive preflight, one-shot serial worker and 400-second observation behavior,
+while holding the port lock through bounded cleanup and rejecting status0 after
+an observer deadline. Complete matching worker/native-return receipts are
+required; absent USB generations cannot compare equal.
+
+Both a clean review checkout and a 19-file source-only export pass 29 adapter
+and nine serial test methods. Private plan04's static check loads no private
+client and takes no device action. All earlier source rosters, the native-r2
+plan and both image profiles stay unchanged. No passive trial was dispatched.
+[Owned passive entry evidence](../evidence/2026-11-14-passive-owned-runtime.json)

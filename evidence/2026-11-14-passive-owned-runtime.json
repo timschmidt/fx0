@@ -1,0 +1,135 @@
+{
+  "recorded_UTC": "2026-11-14T17:44:29.807931+00:00",
+  "state": "PASS passive-r1 owned-child entry qualification; physical RAM trial undispatched",
+  "portable_qualification": [
+    {
+      "name": "clean-review-checkout",
+      "steps": [
+        {
+          "pattern": "test_passive_owned_*.py",
+          "actual_returncode": 0,
+          "passed_methods": 29,
+          "skipped": 0
+        },
+        {
+          "pattern": "test_rmtfs_passive_serial.py",
+          "actual_returncode": 0,
+          "passed_methods": 9,
+          "skipped": 0
+        }
+      ],
+      "passed_methods": 38,
+      "ignored_local_program_tree_present": false
+    },
+    {
+      "name": "source-only-export",
+      "steps": [
+        {
+          "pattern": "test_passive_owned_*.py",
+          "actual_returncode": 0,
+          "passed_methods": 29,
+          "skipped": 0
+        },
+        {
+          "pattern": "test_rmtfs_passive_serial.py",
+          "actual_returncode": 0,
+          "passed_methods": 9,
+          "skipped": 0
+        }
+      ],
+      "passed_methods": 38,
+      "ignored_local_program_tree_present": false
+    }
+  ],
+  "public_source_files_SHA256": {
+    "diagnostics/kernel-maintenance/native_trial_adapter.py": "d3e11d466cf86bcef252df9820d1e2e2c662e6fcdbc533cdb078f614645ab889",
+    "diagnostics/modem-control/passive-owned-adapter.md": "6b2fcacc6ca89b58fd648c498fb39556463331b6f80ca722f8af03a0a1ec5a61",
+    "diagnostics/modem-control/passive_adapter.py": "ce40e5bbaacfffcc4db17396d9404d75b9e266f9d5277f565d7cccf230f96cb3",
+    "diagnostics/modem-control/passive_native_probe.py": "56fd575e52c6b5bd059cb0e1667053896e1e504cab389bf491d7df7f8e3e5488",
+    "diagnostics/modem-control/passive_observer.py": "92d6b3fa38e6e49aa269501515482fcec70d0597437c124585fe21376b91d365",
+    "diagnostics/modem-control/passive_owned_adapter.py": "7d68517c58a688a540c88542f0c0c37ff7c5543d75d0bd64760b2c120589eaee",
+    "diagnostics/modem-control/passive_runtime.py": "31629e68235fbb689c9e3ecb15bb7f230b790d9923af31c4ee6236219d2d0e08",
+    "diagnostics/modem-control/passive_serial.py": "10b25ff8149a448beca26e42b32ba5d15c1602c73089e422dfacc89253639660",
+    "diagnostics/modem-control/passive_trial.py": "24e5cd675f40f787298dbbf1ea0a21f46a2d39033512075b40e31bfb67e487f8",
+    "scripts/boot_fx0_ram.py": "fea54ce86d19f1a51665446095e9ae3dce60b34a0f38bfc70f7764f5611409b6",
+    "scripts/transfer_fx0_ram.py": "f402151d94422c895632276ec996b2a47f29dfa6269ddd4c7739b64fc1b5299c",
+    "tests/fixtures/passive_owned_child.py": "ed1fcc379196179653ebf26158c7856655feaa36ab3001876406ea3c2fe0ee95",
+    "tests/passive_owned_fixture.py": "aab0276cecc7119dde5cdabe057b35abb4a2a77dc1740c9dd1745aab92f39a1f",
+    "tests/test_passive_owned_bindings.py": "4a82ca4560aa289abed9e65b71c749788c14427b2230271e88f015a2f7cb7266",
+    "tests/test_passive_owned_evidence.py": "19aaf5911bf7a346a770300ef3c0635e8bbfaa7870e4d45b97fc6ce2fdd9b9ff",
+    "tests/test_passive_owned_faults.py": "951d02d10670965338ba03ba2ecd5a91565980906fe21ce3146a2f91222bcd79",
+    "tests/test_passive_owned_ownership.py": "ffcb0ca49284cc532a47e61be75a0d4ba5be5687cbf88d4d759f01f2d47d1b34",
+    "tests/test_passive_owned_plan.py": "0809484a22a51c780ad8203474dad19935b522a6c7029d983ceae83c353915f5",
+    "tests/test_rmtfs_passive_serial.py": "d71fa9640be3efc3040acaf125c102bc027f0463be0f53f953b40ee2a5b6c83d"
+  },
+  "actual_terminal_tool_observations": [
+    {
+      "handle": 14052,
+      "returncode": 0,
+      "passed_methods": 29,
+      "scope": "final profile/control/ownership/evidence suite"
+    },
+    {
+      "handle": 64089,
+      "returncode": 0,
+      "scope": "clean review and19-file source-only export;29 adapter plus9 serial methods per context"
+    }
+  ],
+  "actual_static_input_check": {
+    "plan_SHA256": "635e7ee595ea72b363a9309b663259939640156b28bce6ef090669b8e65e6dd4",
+    "exit_code": 0,
+    "inputs_verified": true,
+    "credential_client_loaded": false,
+    "device_actions": false
+  },
+  "image_unchanged": {
+    "SHA256": "428779913614a376bd40844bf80b10d004de0571d721b1bb29b85b68f31d4f53",
+    "bytes": 6785024
+  },
+  "shared_ownership": {
+    "methods": [
+      "_cleanup_child",
+      "spawn",
+      "close"
+    ],
+    "method_code_objects_identical_to_qualified_native_factory": true,
+    "native_specific_class_or_callbacks_in_passive_MRO": false,
+    "parent_execution_deadlines_seconds": {
+      "transfer": 180,
+      "observer": 400,
+      "normal-reboot": 45
+    },
+    "shared_port_lock_held_through_cleanup": true,
+    "original_deadline_receipts_retained": true,
+    "failed_cleanup_cannot_emit_terminal_success": true
+  },
+  "worker_acceptance_requires": [
+    "Owned observer actually reaped with status0 and no execution deadline expiry",
+    "Terminal closed serial observation with native USB return",
+    "Expected r1 release/linked notes and a distinct RAM boot",
+    "Complete passed worker status0 with exact six observed/expected RFSA/local-publication/withdrawal markers",
+    "Positive actual native USB generation matching the serial observation",
+    "Independent installed-r1 full byte/service return checks; fresh physical UI remains separate"
+  ],
+  "review_history": {
+    "old_entry_and_all_frozen_source_rosters_unchanged": true,
+    "native_r2_current_plan06_sources_unchanged": true,
+    "explicit_missing_generation_control_added_after_code_review": true,
+    "pre_control_source_retained": true,
+    "no_credential_client_or_device_record_body_opened_hashed_or_copied_by_static_checks_or_tests": true
+  },
+  "old_passive_plan03_superseded_for_live_dispatch_but_bytes_and_sources_retained": true,
+  "real_operator_receipt_or_trial_claim_created": false,
+  "root_index_unchanged": true,
+  "test_device_providers_forbidden_by_default": true,
+  "physical_trial_dispatched": false,
+  "phone_access_by_this_qualification": false,
+  "publication": false,
+  "full_goal_complete": false,
+  "limitations": [
+    "All RAM/USB/native responses are substituted fixtures; host children and owned exit statuses are real.",
+    "Uncertain child status is an injected control, not induced uninterruptible hardware I/O.",
+    "RFSA mapping, local publication/withdrawal, serial console and automatic return remain physically unqualified.",
+    "The complete nonaudio bringup matrix, new-kernel installation/update/recovery and current stable/edge acceptance remain open."
+  ]
+}
