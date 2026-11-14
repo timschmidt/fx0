@@ -267,3 +267,24 @@ or device action. Prior source snapshots and plans remain retained.
 The specific operator response and fresh native/staged preflight remain pending;
 no real attempt was claimed or dispatched.
 [Owned-child qualification evidence](../evidence/2026-11-14-native-child-ownership.json)
+
+## November 14: bounded private console capture prepared
+
+A [read-only capture workflow](../diagnostics/kernel-maintenance/native-console.md)
+now binds selected pstore records to independently accepted native boot/notes,
+opens fixed paths without symlink following, bounds per-file/total bytes and
+checks double-read stability. Raw data stays in private capture files. Before
+capture requires the specific current operator gate; after capture requires the
+claimed trial's verified native return. Neither phase executes the RAM trial.
+
+Nineteen tests pass in both a clean review checkout and a 17-file source-only
+export. The real plan/source-lock static check performs no client load or device
+action. The catalog matches all15 linked R5 formats from four verified source
+files. Offline replay recognizes the retained first-r2 tail's fault message at
+6.164901s while leaving fresh-boot attribution and reset cause unproven.
+
+Comparison uses complete stable record hashes and distinguishes unchanged, new,
+changed, missing and inconclusive data. Summaries contain known signals rather
+than arbitrary raw lines. No new console capture, stage or boot occurred.
+The native runtime plan, images and prior source snapshots remain unchanged.
+[Console workflow qualification evidence](../evidence/2026-11-14-native-console-capture.json)

@@ -1,0 +1,104 @@
+{
+  "format": 1,
+  "source_commit": "de5568bfc81f221984b8e82519af9a15b00b5b6f",
+  "qualified_source_SHA256": {
+    "arch/arm/mm/dma-mapping.c": "c21433a683e52a68dbb9a594d37a4f46660cec487d4578d2fae41e81f66c07d6",
+    "drivers/base/platform.c": "6ce7b3d57799109691dd30589f3de7dc45c8feafba55a4836fc3f5597b345fe3",
+    "drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c": "fbad155a1c14bf97f86c48c11cd375d1816c4a47142817f853dd563f7d436096",
+    "drivers/iommu/arm/arm-smmu/qcom_iommu.c": "7662fd9a7b21c30fc4314c4f739cdfd03fd175d25aa3e08fc5ff2d9b7d510d93"
+  },
+  "sites": [
+    {
+      "id": "legacy-attach-enter",
+      "source": "arch/arm/mm/dma-mapping.c",
+      "format": "fx0-handoff-02: legacy-attach-enter type=%u\n",
+      "source_line": 1655
+    },
+    {
+      "id": "legacy-attach-done",
+      "source": "arch/arm/mm/dma-mapping.c",
+      "format": "fx0-handoff-02: legacy-attach-done ret=%d\n",
+      "source_line": 1660
+    },
+    {
+      "id": "platform-dma-enter",
+      "source": "drivers/base/platform.c",
+      "format": "fx0-handoff-02: platform-dma-enter managed=%d\n",
+      "source_line": 1421
+    },
+    {
+      "id": "platform-dma-of-done",
+      "source": "drivers/base/platform.c",
+      "format": "fx0-handoff-02: platform-dma-of-done ret=%d\n",
+      "source_line": 1431
+    },
+    {
+      "id": "kms-init-enter",
+      "source": "drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c",
+      "format": "fx0-handoff-02: kms-init-enter\n",
+      "source_line": 506
+    },
+    {
+      "id": "quiesce-writes-enter",
+      "source": "drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c",
+      "format": "fx0-handoff-02: quiesce-writes-enter\n",
+      "source_line": 529
+    },
+    {
+      "id": "quiesce-writes-done",
+      "source": "drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c",
+      "format": "fx0-handoff-02: quiesce-writes-done\n",
+      "source_line": 538
+    },
+    {
+      "id": "kms-vm-enter",
+      "source": "drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c",
+      "format": "fx0-handoff-02: kms-vm-enter\n",
+      "source_line": 540
+    },
+    {
+      "id": "kms-vm-done",
+      "source": "drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c",
+      "format": "fx0-handoff-02: kms-vm-done ret=%d\n",
+      "source_line": 543
+    },
+    {
+      "id": "mdp5-probe-enter",
+      "source": "drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c",
+      "format": "fx0-handoff-02: mdp5-probe-enter\n",
+      "source_line": 820
+    },
+    {
+      "id": "ctx-program-enter",
+      "source": "drivers/iommu/arm/arm-smmu/qcom_iommu.c",
+      "format": "fx0-handoff-02: ctx-program-enter asid=%u\n",
+      "source_line": 542
+    },
+    {
+      "id": "ctx-program-done",
+      "source": "drivers/iommu/arm/arm-smmu/qcom_iommu.c",
+      "format": "fx0-handoff-02: ctx-program-done asid=%u\n",
+      "source_line": 548
+    },
+    {
+      "id": "iommu-attach-enter",
+      "source": "drivers/iommu/arm/arm-smmu/qcom_iommu.c",
+      "format": "fx0-handoff-02: iommu-attach-enter type=%u old_type=%u\n",
+      "source_line": 615
+    },
+    {
+      "id": "iommu-init-done",
+      "source": "drivers/iommu/arm/arm-smmu/qcom_iommu.c",
+      "format": "fx0-handoff-02: iommu-init-done ret=%d\n",
+      "source_line": 627
+    },
+    {
+      "id": "identity-enter",
+      "source": "drivers/iommu/arm/arm-smmu/qcom_iommu.c",
+      "format": "fx0-handoff-02: identity-enter old_type=%u skip=%d\n",
+      "source_line": 656
+    }
+  ],
+  "scope": "Exactly the linked qualified R5 logging strings; no reset-cause inference",
+  "compiled_messages_verified": true
+}
