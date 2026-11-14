@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
 """Check the actual timed parser and correlation on malformed and delayed evidence."""
+import argparse
 import importlib.util
 import json
 from pathlib import Path
 
-source = Path(__file__).with_name('timed-queue-test.py')
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--worker', type=Path, default=Path(__file__).with_name('timed-queue-test.py'))
+source = parser.parse_args().worker
 spec = importlib.util.spec_from_file_location('timed_camera', source)
 worker = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(worker)

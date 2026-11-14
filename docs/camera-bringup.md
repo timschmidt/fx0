@@ -444,3 +444,14 @@ gaps. The original queue warning does not repeat. This establishes neither its
 cause nor absence of hardware drops; a controlled backpressure experiment remains
 needed. Cleanup and accepted baseline hashes pass again.
 [Timing measurements and procedure](../diagnostics/camera-reopen/queue-timing.md)
+
+Three controlled 250 ms stops of the owned raw-capture client and three unpaused
+controls each complete all 24 requested buffers. Four buffers complete during
+each stop; the next new completion follows resume by 60–64 ms. There are no new
+kernel messages, but this does not reproduce the earlier IDLE warning or the
+file-writing experiment's approximately one-second gaps. Cleanup and accepted
+baseline hashes pass again. Read-only inspection confirms existing vb2 queue
+tracepoints with driver-owned buffer counts; an isolated instance has not yet
+been created or tested. The original switching workload needs queue/IRQ evidence
+before a driver fix or benign classification.
+[Pause experiment and limits](../diagnostics/camera-reopen/owned-pause.md)

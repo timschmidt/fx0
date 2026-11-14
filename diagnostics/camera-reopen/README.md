@@ -96,3 +96,10 @@ stdout and completion timestamps while alternating frame-file output and discard
 All 144 buffers arrive, but writing is associated with longer completion gaps.
 The missing-ready warning does not repeat and remains unresolved. The comparison
 adds timing evidence without closing the original clean-regression gate.
+
+The [owned-client pause experiment](owned-pause.md) then delivers another 144
+buffers across three 250 ms pauses and three unpaused controls. Four buffers
+complete during each stop, followed by a new completion 60–64 ms after resume.
+No kernel diagnostic recurs; neither the original warning nor the approximately
+one-second file-output gaps are explained. Existing vb2 trace events expose
+queue counters for the next diagnostic, but tracing has not been changed.
