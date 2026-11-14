@@ -78,3 +78,11 @@ active normal services and matching bootloader/GPT readbacks. The exact tested
 commit is pinned separately from a later comment-only clarification in
 [the manifest](../../manifests/firmware-charge-gate.json). See
 [hardware evidence](../../evidence/2026-10-30-firmware-charge-gate.json).
+
+## Exact paired firmware rebuild
+
+The later managed-policy firmware at `2ce757408f36` now has a fresh reproducible
+rebuild and linked-image audit. All 491 retained outputs match across the two
+empty builds and the public-helper run; the image also matches the retained
+historical policy-trial firmware. See the [reproduction procedure](rebuild-paired-firmware.md)
+for source/tool pins, corruption controls and the remaining physical gates.

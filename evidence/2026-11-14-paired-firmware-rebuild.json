@@ -1,0 +1,97 @@
+{
+  "recorded_UTC": "2026-11-14T20:02:18.848258+00:00",
+  "scope": "Host-only reproducible rebuild of exact existing paired charging firmware; no new phone or combined r6 qualification",
+  "firmware_repository": "https://github.com/timschmidt/fx0-lk2nd",
+  "firmware_commit": "2ce757408f364ec6f1197b1d5d0be4128a309b1e",
+  "paired_current_kernel_commit": "f71b29239d140872c4970d8381f5d297a604c6da",
+  "actual_build_returncodes": [
+    0,
+    0,
+    0
+  ],
+  "independent_empty_build_outputs": 2,
+  "additional_public_build_helper_run": true,
+  "source_Git_blob_link_and_executable_mode_paths_verified": 2898,
+  "source_test_private_key_body_excluded": [
+    "lk2nd/certs/verity.pk8"
+  ],
+  "source_test_signing_directory_hidden_in_build": true,
+  "source_and_tools_readonly": true,
+  "network_enabled": false,
+  "signing_enabled": false,
+  "SOURCE_DATE_EPOCH": 1793385591,
+  "tools": {
+    "arm-none-eabi-gcc": {
+      "SHA256": "91d6bc40c8f7d5a1307108afcb07a96b295da37560bd460cce393cda287d38d3",
+      "resolved_path": "/usr/bin/arm-none-eabi-gcc",
+      "version": "arm-none-eabi-gcc (Fedora 15.2.0-1.fc43) 15.2.0"
+    },
+    "arm-none-eabi-ld": {
+      "SHA256": "2b1f8fc024b94adcbdfa47997b83d1a77111a25acb44c131ade834303ad96c41",
+      "resolved_path": "/usr/bin/arm-none-eabi-ld",
+      "version": "GNU ld (Fedora 2.45-5.fc43) 2.45"
+    },
+    "gcc": {
+      "SHA256": "94c86a2a6caf1a4fe421e70cbfea8ac55ad2cd8b602e5ffcf5e933a9c000ace4",
+      "resolved_path": "/usr/bin/gcc",
+      "version": "gcc (GCC) 15.3.1 20260722 (Red Hat 15.3.1-1)"
+    },
+    "ld.bfd": {
+      "SHA256": "94b66369093eb7c46aead3bd61bc012546a2bdc10a3c03003180c582745119b7",
+      "resolved_path": "/usr/bin/ld.bfd",
+      "version": "GNU ld version 2.45.1-5.fc43"
+    },
+    "make": {
+      "SHA256": "2dadfb9212573afcddc183353794f2fb22ef3df0afffd700ca93a905ad79f2f5",
+      "resolved_path": "/usr/bin/make",
+      "version": "GNU Make 4.4.1"
+    },
+    "dtc": {
+      "SHA256": "87bbdc70ad9d716914628feeb82f6dc872ae316cc5360de1d4e6d177c44c6813",
+      "resolved_path": "/usr/bin/dtc",
+      "version": "Version: DTC 1.7.2"
+    },
+    "python3": {
+      "SHA256": "e5c6e9f7342cc22734b05ea3c34dd4a1543c7079b086f21b400595bc3583fd0c",
+      "resolved_path": "/usr/bin/python3.14",
+      "version": "Python 3.14.8"
+    },
+    "bwrap": {
+      "SHA256": "818a496e1a330a041df30684dfe7b024e91834337cab1d8a0d8ede894675c914",
+      "resolved_path": "/usr/bin/bwrap",
+      "version": "bubblewrap 0.12.0"
+    }
+  },
+  "identical_output_files_each_build": 491,
+  "output_manifest_SHA256": "fa32f6e8b535f098d94b24119f2e5db9b650b4fe23b9683f72f5eea293d509d2",
+  "linked_and_image_checks": {
+    "DT_hook_count": 10,
+    "battery_profile_and_charge_gate_registered": true,
+    "battery_detection_registered": true,
+    "firmware_version": "next-2ce7574-20261030",
+    "image_bytes": 315408,
+    "image_SHA256": "20775e2f7ba7dee2b8cecf36e9c9aab22b38536fe3eb321f7cca7336759df482",
+    "complete_image_payload_and_header_digest_verified": true,
+    "raw_binary_matches_allocated_ELF_contents": true,
+    "built_Fx0_DTB_in_boot_payload": true,
+    "negative_controls_rejected": 4,
+    "physical_boot_qualified": false
+  },
+  "identical_to_retained_historical_policy_trial_firmware": true,
+  "historical_evidence": "evidence/2026-10-30-smbb-native-policy.json",
+  "historical_kernel_commit": "2457eebe0bb67bcb5eccee7916650629cc4e9bf0",
+  "new_combined_r6_hardware_result_inferred": false,
+  "inherited_linker_warning": "One RWX LOAD-segment warning in each build; unchanged one-segment firmware layout",
+  "first_isolation_attempt": "Preserved failure: isolated host linker alternative missing; corrected by exposing only its ld.bfd target",
+  "initial_successful_pair": "Preserved build02/build03 main outputs matched, but auxiliary MBN outputs were transient inside the namespace. Final pair explicitly retains APPSBOOTHEADER_DIR=/out.",
+  "public_helpers_SHA256": {
+    "diagnostics/lk2nd-charge-gate/build-paired-firmware.py": "7f4ff4e14c96298401dcce2d9db66d957f52e5559ea5819648ab643be651ad71",
+    "diagnostics/lk2nd-charge-gate/check-linked-firmware.py": "50e010f303aedb10e5c67fcfbacc76d0a02b01b6d564799918af951102303053"
+  },
+  "private_keys_or_credentials_used": false,
+  "firmware_binary_published": false,
+  "phone_access": false,
+  "firmware_flashing": false,
+  "physical_SPMI_timeout_USB_budget_thermal_suspend_charging_qualification": false,
+  "full_bringup_complete": false
+}
