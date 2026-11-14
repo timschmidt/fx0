@@ -488,3 +488,20 @@ source-only export without ignored local source imports. The physical responses
 are substituted fixtures, not a fresh device audit. Both real trial workspaces
 remain undispatched, and the original nine source snapshots remain exact.
 [Offline qualification evidence](../evidence/2026-11-14-passive-adapter-runtime.json)
+
+## November 14: public passive-r1 adapter and private input plan
+
+The [concrete adapter, observer and native probe](../diagnostics/modem-control/passive-adapter.md)
+now run from public source with explicit private inputs. The plan pins eight
+runtime sources and the prepared image, excludes credential bodies from its
+hash roster, and requires a fresh specific operator receipt before loading the
+private client. The prior private controllers remain frozen.
+
+All 56 targeted test methods pass in both a clean review checkout and a
+source-only export, without ignored local controller imports. Twelve additional
+offline binding/fault methods use the retained image and baseline with device
+responses substituted. A real static input check verifies the prepared image
+and plan without loading credentials or taking a device action. Three real
+workspaces remain undispatched without an operator receipt. Physical RFSA,
+USB console, automatic return and modem/GNSS qualification remain open.
+[Public adapter qualification evidence](../evidence/2026-11-14-public-passive-adapter.json)
