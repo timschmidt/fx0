@@ -1,0 +1,274 @@
+{
+  "recorded_UTC": "2026-11-14T13:16:09.973783+00:00",
+  "scope": "Host-only clean bootstrap and normal distribution-package rebuild; no phone operation or physical modem qualification",
+  "source_files_SHA256": {
+    "diagnostics/modem-control/bootstrap-userspace-roots.py": "9b27460b77ab9de01cfb450576b1ba408b4bec58e6be0a0f5832d07b6d8202dd",
+    "diagnostics/modem-control/build-userspace-package.py": "c5a9933301b6d49219f9438db453688aeac72d99062eb6a5ede2ceb4810ccc70",
+    "manifests/modem-userspace-build.json": "d77577c38cedecacce77bd5570e2e0477e809df0b4d2310963b20505ca6a9982"
+  },
+  "initial_trust": {
+    "verified_UTC": "2026-11-14T12:21:22.410147+00:00",
+    "URL": "https://cdn.alpinelinux.org/alpine/v3.24/main/x86_64/apk-tools-static-3.0.9-r0.apk",
+    "APK_SHA256": "0a1a0682375f66a83b7b903f6e4638ccfe312547d50d336b5f2be9fc391281be",
+    "binary_SHA256": "9de54b4e3ea869a999842e716c9342e1b359566b161879d5002b715ed1c3a2f3",
+    "binary_bytes": 5475048,
+    "source_commit": "13685e8f2cf1c103cbba2fb9efcfcf19f4918df0",
+    "detached_signature_member": "sbin/apk.static.SIGN.RSA.sha256.alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub",
+    "trusted_public_key": "alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub",
+    "trusted_public_key_SHA256": "207e4696d3c05f7cb05966aee557307151f1f00217af4143c1bcaf33b8df733f",
+    "detached_RSA_SHA256_verified_with_host_OpenSSL": true,
+    "matches_already_qualified_pmbootstrap_bootstrap_binary": true,
+    "phone_changes": false
+  },
+  "preexisting_Alpine_root_or_container_image_required": false,
+  "rootless_UID_mapping": "podman unshare; normal pmos UID/GID12345 account",
+  "bootstrap_profiles": [
+    {
+      "profile": "base",
+      "bootstrap_source_SHA256": "9b27460b77ab9de01cfb450576b1ba408b4bec58e6be0a0f5832d07b6d8202dd",
+      "started_UTC": "2026-11-14T13:13:31.480715+00:00",
+      "finished_UTC": "2026-11-14T13:13:36.098954+00:00",
+      "actual_returncode": 0,
+      "roots": [
+        {
+          "role": "native",
+          "package_count": 75,
+          "database_SHA256": "d0b6abd9ddefa8cafe589c63d86fad913d57bda59036d7d519ec57889a5ca214",
+          "payload_audit": {
+            "checked_paths": 4470,
+            "symlinks_checked": 94,
+            "credential_paths_excluded": [
+              "/etc/shadow"
+            ],
+            "configuration_mismatches": [
+              "/etc/abuild.conf",
+              "/etc/group",
+              "/etc/passwd"
+            ],
+            "all_other_package_payloads_exact": true
+          }
+        },
+        {
+          "role": "target",
+          "package_count": 28,
+          "database_SHA256": "c68e7666a78e8aa2081ba3fbc279364ebfe8b9c2e0aedeaf32f947571f020694",
+          "payload_audit": {
+            "checked_paths": 2891,
+            "symlinks_checked": 34,
+            "credential_paths_excluded": [],
+            "configuration_mismatches": [],
+            "all_other_package_payloads_exact": true
+          }
+        }
+      ]
+    },
+    {
+      "profile": "qmic",
+      "bootstrap_source_SHA256": "9b27460b77ab9de01cfb450576b1ba408b4bec58e6be0a0f5832d07b6d8202dd",
+      "started_UTC": "2026-11-14T13:10:02.168213+00:00",
+      "finished_UTC": "2026-11-14T13:10:06.996486+00:00",
+      "actual_returncode": 0,
+      "roots": [
+        {
+          "role": "native",
+          "package_count": 76,
+          "database_SHA256": "d6c42a82e26c3f4ed137c9b8f0edd67942d87aef1b54cc60a5d7fdea48b9d42f",
+          "payload_audit": {
+            "checked_paths": 4472,
+            "symlinks_checked": 95,
+            "credential_paths_excluded": [
+              "/etc/shadow"
+            ],
+            "configuration_mismatches": [
+              "/etc/abuild.conf",
+              "/etc/group",
+              "/etc/passwd"
+            ],
+            "all_other_package_payloads_exact": true
+          }
+        },
+        {
+          "role": "target",
+          "package_count": 28,
+          "database_SHA256": "c68e7666a78e8aa2081ba3fbc279364ebfe8b9c2e0aedeaf32f947571f020694",
+          "payload_audit": {
+            "checked_paths": 2891,
+            "symlinks_checked": 34,
+            "credential_paths_excluded": [],
+            "configuration_mismatches": [],
+            "all_other_package_payloads_exact": true
+          }
+        }
+      ]
+    },
+    {
+      "profile": "rmtfs",
+      "bootstrap_source_SHA256": "9b27460b77ab9de01cfb450576b1ba408b4bec58e6be0a0f5832d07b6d8202dd",
+      "started_UTC": "2026-11-14T13:11:15.113134+00:00",
+      "finished_UTC": "2026-11-14T13:11:20.116701+00:00",
+      "actual_returncode": 0,
+      "roots": [
+        {
+          "role": "native",
+          "package_count": 76,
+          "database_SHA256": "33b5ea116d005bec7f2f1ba7eb6696418415b1c17c29b8397f19a124bce02180",
+          "payload_audit": {
+            "checked_paths": 4472,
+            "symlinks_checked": 94,
+            "credential_paths_excluded": [
+              "/etc/shadow"
+            ],
+            "configuration_mismatches": [
+              "/etc/abuild.conf",
+              "/etc/group",
+              "/etc/passwd"
+            ],
+            "all_other_package_payloads_exact": true
+          }
+        },
+        {
+          "role": "target",
+          "package_count": 30,
+          "database_SHA256": "b9957522104ae4a11660d25b10d5eb8b0fe099b47fe4cec363ede2864f11ed41",
+          "payload_audit": {
+            "checked_paths": 2896,
+            "symlinks_checked": 36,
+            "credential_paths_excluded": [],
+            "configuration_mismatches": [],
+            "all_other_package_payloads_exact": true
+          }
+        }
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "package": "qmic",
+      "actual_returncode": 0,
+      "started_UTC": "2026-11-14T13:10:53.376315+00:00",
+      "finished_UTC": "2026-11-14T13:10:54.263723+00:00",
+      "recipe_commit": "ddba0e12b7667a29df359e68d37ebdf222f501ef",
+      "launcher_SHA256": "c5a9933301b6d49219f9438db453688aeac72d99062eb6a5ede2ceb4810ccc70",
+      "root_DB_SHA256": {
+        "native": "d6c42a82e26c3f4ed137c9b8f0edd67942d87aef1b54cc60a5d7fdea48b9d42f"
+      },
+      "all_signed_artifacts_byte_identical_to_qualified_reference": true,
+      "artifacts": {
+        "qmic-1.0-r2.apk": {
+          "bytes": 11898,
+          "SHA256": "1e281a0eb72d7796111a52ccf169e1f3334f4b4c35f86727b49f5cc600385e39"
+        },
+        "APKINDEX.tar.gz": {
+          "bytes": 1065,
+          "SHA256": "1e7c845ea9f7d64f7e56637e2d9c1785f2cfb50fcaf4271cd9e87e67bfca4989"
+        }
+      }
+    },
+    {
+      "package": "qrtr",
+      "actual_returncode": 0,
+      "started_UTC": "2026-11-14T13:15:09.299662+00:00",
+      "finished_UTC": "2026-11-14T13:15:11.666909+00:00",
+      "recipe_commit": "3b2f30decd987cbb6ad14259e64189ef2092dc1c",
+      "launcher_SHA256": "c5a9933301b6d49219f9438db453688aeac72d99062eb6a5ede2ceb4810ccc70",
+      "root_DB_SHA256": {
+        "native": "d0b6abd9ddefa8cafe589c63d86fad913d57bda59036d7d519ec57889a5ca214",
+        "target": "c68e7666a78e8aa2081ba3fbc279364ebfe8b9c2e0aedeaf32f947571f020694"
+      },
+      "all_signed_artifacts_byte_identical_to_qualified_reference": true,
+      "artifacts": {
+        "APKINDEX.tar.gz": {
+          "bytes": 1322,
+          "SHA256": "1ed7325e923e2a3e57b622a6112415e788d9b4d1a9d9c2d3f2bfa0e127fd4a4b"
+        },
+        "qrtr-libs-1.2-r2.apk": {
+          "bytes": 8229,
+          "SHA256": "a79033a3b571c451c50a60963d38ae4ae8598109fc7eed54a2acc0935deba056"
+        },
+        "qrtr-doc-1.2-r2.apk": {
+          "bytes": 2424,
+          "SHA256": "4cf47cdc422ed8f26f1a9c2908dcfb55f01df8bcaa015211ccd65ad8fbe49202"
+        },
+        "qrtr-dev-1.2-r2.apk": {
+          "bytes": 3659,
+          "SHA256": "9f9d0ff1bf65f93e75ca65821a4822832e30ca7b6bde66e5acf785654638ce70"
+        },
+        "qrtr-1.2-r2.apk": {
+          "bytes": 7675,
+          "SHA256": "64666d090e6dbb61c75a44e4f0a2d5a7ce64f04442b7fa6fac1511d28d4f6c46"
+        }
+      }
+    },
+    {
+      "package": "rmtfs",
+      "actual_returncode": 0,
+      "started_UTC": "2026-11-14T13:12:01.076152+00:00",
+      "finished_UTC": "2026-11-14T13:12:02.413149+00:00",
+      "recipe_commit": "3b2f30decd987cbb6ad14259e64189ef2092dc1c",
+      "launcher_SHA256": "c5a9933301b6d49219f9438db453688aeac72d99062eb6a5ede2ceb4810ccc70",
+      "root_DB_SHA256": {
+        "native": "33b5ea116d005bec7f2f1ba7eb6696418415b1c17c29b8397f19a124bce02180",
+        "target": "b9957522104ae4a11660d25b10d5eb8b0fe099b47fe4cec363ede2864f11ed41"
+      },
+      "all_signed_artifacts_byte_identical_to_qualified_reference": true,
+      "artifacts": {
+        "rmtfs-1.3-r1.apk": {
+          "bytes": 14690,
+          "SHA256": "bfab3df30eb12485fc5aa826fb736a4b1a5eaf101a9523d9c31fc3837d547042"
+        },
+        "rmtfs-openrc-1.3-r1.apk": {
+          "bytes": 2123,
+          "SHA256": "0b0f840b7bf4e4997f8e1f7654ff138ef129db36d38cb00bd5ad06e23d271d63"
+        },
+        "APKINDEX.tar.gz": {
+          "bytes": 1333,
+          "SHA256": "525f8a5c09509baaf9f68fa9818c4c8994914b494189a7dc6b630f0a296a717f"
+        },
+        "rmtfs-doc-1.3-r1.apk": {
+          "bytes": 2417,
+          "SHA256": "b5664f4b2ae0b518818bd75319e31ba93ff086c7c5d40e5189f9dc5f1d08b037"
+        },
+        "rmtfs-udev-1.3-r1.apk": {
+          "bytes": 2121,
+          "SHA256": "e70d72349b03936c39853c8cd2fe09886eb689fc27b9fcab306f2bae3173427c"
+        },
+        "rmtfs-systemd-1.3-r1.apk": {
+          "bytes": 1882,
+          "SHA256": "38288b06d17d1194797968db66d6c786c1ad61a98b626b8ae779fb17e4ca5b1e"
+        }
+      }
+    }
+  ],
+  "compression_control": {
+    "minimal_native_root_without_pigz_qmic_APK_identical": false,
+    "minimal_native_root_qmic_uncompressed_data_tar_identical": true,
+    "minimal_native_root_qmic_executable_and_installed_payload_identical": true,
+    "cause": "abuild selects pigz when installed; compression differs with BusyBox gzip",
+    "resolved_by": "separate fresh qmic native root with the pinned normal signed pigz2.8-r1 APK",
+    "earlier_attempts_preserved": true
+  },
+  "focused_root_integrity_tests": {
+    "tests_passed": 6,
+    "test_source": "tests/test_modem_userspace_build.py",
+    "scope": [
+      "root-internal absolute directory links",
+      "link-byte checksums and tampering",
+      "regular payload tampering",
+      "parent-link escape rejection",
+      "shadow-body exclusion before open",
+      "changed package database or account setup rejection"
+    ]
+  },
+  "private_signer_body_read_hashed_or_copied_by_workflow_helpers": false,
+  "normal_APK_signer_readonly_in_place": true,
+  "credentials_or_private_images_published": false,
+  "phone_access": false,
+  "hardware_qualification": false,
+  "limitations": [
+    "Historical signed-APK byte identity requires the original signer; other signers need a separately qualified lock.",
+    "Repository URLs are not immutable snapshots; retain the signed public caches.",
+    "The ARM Clang profile ignores inherited -fstack-clash-protection and -fno-plt flags.",
+    "Root integrity is audited at bootstrap; freeze roots and rebootstrap rather than editing them.",
+    "Package recipes and this review remain local pending publication approval."
+  ]
+}

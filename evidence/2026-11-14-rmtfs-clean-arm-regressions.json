@@ -1,0 +1,431 @@
+{
+  "recorded_UTC": "2026-11-14T10:19:25.581924+00:00",
+  "scope": "Existing RMTFS synthetic source fixtures repeated with the attributable Clang ARM compiler cohort used for normal packages",
+  "recipe_commit": "3b2f30decd987cbb6ad14259e64189ef2092dc1c",
+  "package_evidence": "evidence/2026-11-14-rmtfs-distribution-packages.json",
+  "compiler": "Clang/LLD22.1.3 with clean signed target GCC15.2.0 runtime objects",
+  "unchanged_existing_tests": true,
+  "total_passed": 69,
+  "total_failed": 0,
+  "suites": [
+    {
+      "suite": "lifecycle",
+      "passed": 19,
+      "failed": 0,
+      "compiled_binary_SHA256": "17da4f13622576e23526b5f9f94cf6f8185504105421fbb970be6742972ad800",
+      "all_inputs_rechecked": true,
+      "ARM_EABI_hardfloat": true,
+      "cases": [
+        {
+          "case": "passive",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "invalid-cli",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "memory-failure",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "storage-failure",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "state-missing",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "nested-directory-failure",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "pipe-failure",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "worker-failure",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "qrtr-open-failure",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "publish-failure",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "pending-shutdown",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "start-error",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "start-short",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "managed-shutdown",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "driver-fallback",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "reconnect",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "reconnect-failure",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "stop-error",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "stop-short",
+          "returncode": 0,
+          "fixture_unchanged": true,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "memory",
+      "passed": 35,
+      "failed": 0,
+      "compiled_binary_SHA256": "7918fa7e47b71861142e8d0554264dbb7416d72cdce8f7f81f2fa31f5c55f441",
+      "all_inputs_rechecked": true,
+      "ARM_EABI_hardfloat": true,
+      "cases": [
+        {
+          "case": "mapped-roundtrip",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "fd-roundtrip",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "mapped-wide-roundtrip",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "fd-wide-roundtrip",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "mapped-zero",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "fd-zero",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "allocation",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "mapped-below",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "fd-below",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "mapped-cross-end",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "fd-cross-end",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "mapped-past-end",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "fd-past-end",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "mapped-negative",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "fd-negative",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "mapped-null-buffer",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "fd-null-buffer",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "empty-region",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "wrapped-region",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "invalid-fd",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "fd-offset-limit",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "mapped-size-limit",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "null-region",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "io-mapped-read",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "io-mapped-write",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "io-mapped-reject-read",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "io-mapped-reject-write",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "io-mapped-zero-write",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "io-mapped-empty-write",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "io-fd-read",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "io-fd-write",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "io-fd-reject-read",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "io-fd-reject-write",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "io-fd-zero-write",
+          "returncode": 0,
+          "passed": true
+        },
+        {
+          "case": "io-fd-empty-write",
+          "returncode": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "protocol",
+      "passed": 15,
+      "failed": 0,
+      "compiled_binary_SHA256": "a2b7771626925be4b07890c6b77b61f89f52821a813a396635cbd6c5b76e172c",
+      "all_inputs_rechecked": true,
+      "ARM_EABI_hardfloat": true,
+      "cases": [
+        {
+          "case": "open-reuse",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "close-verbose",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "error-valid",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "allocation-global",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "allocation-oversize",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "read-multiple",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "write-shadow",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "read-far",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "write-far",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "read-max-sector",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "sync-error",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "memory-invalid",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "memory-read-error",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "memory-short",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        },
+        {
+          "case": "zero-sectors",
+          "returncode": 0,
+          "backing_unchanged": true,
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "actual_packaged_QRTR_codec_cases_separately_passed": 52,
+  "all_2896_target_sysroot_paths_exact_to_signed_package_checksums": true,
+  "network_isolated": true,
+  "sysfs_remoteproc_memory_storage_and_transport_synthetic": true,
+  "fixture_backing_preserved_where_required": true,
+  "package_sources_and_compiler_roots_mounted_readonly": true,
+  "private_keys_or_credentials_read_hashed_or_copied": false,
+  "phone_actions": 0,
+  "physical_daemon_startup_RFSA_firmware_modem_GNSS_qualification": false,
+  "full_bringup_complete": false
+}

@@ -376,3 +376,81 @@ The daemon now holds one remoteproc power reference across QRTR reconnects and s
 ## 2026-11-10 passive RMTFS RAM image
 
 The owner confirmed display and touch on the installed r50 boot after the NFC transfer timeout. A separate RAM image combines the exact native kernel, signed QRTR core and the verified RFSA reservation with MSS disabled. The worker checks local RMTFS publication and withdrawal with an empty read-only RAM storage directory. The image rebuilt byte for byte and remains unstaged. Live RFSA and firmware qualification remain open. [Trial and evidence](../diagnostics/modem-control/rmtfs-passive-ram.md)
+
+## November 14: distribution build-host generator and complete source replay
+
+The patched qmic generator now has two clean normal abuild runs for the x86_64
+build host, including its enabled output-contract checks, BSD license,
+signed APK and signed repository index. Both artifacts are byte-identical.
+The packaged program passes both output fixtures. First-fixture and last-fixture
+mismatches, generator failure and valid-format package corruption are rejected.
+All 28 source files and the existing 22-key fixture are verified independently.
+This qualifies a build-host prerequisite, with ARM deployment separate.
+
+Complete official RMTFS 1.3 and QRTR 1.2 archives match the stable Alpine
+checksums and all 18/40 Git files, modes and links. The seven QRTR library,
+header and license blobs used by the older tests are unchanged in the stable
+release. All seven existing source patches replay without fuzz. RMTFS's actual
+Makefile rule now uses the packaged generator and reproduces the exact daemon
+and library source bytes used by the earlier lifecycle, memory and protocol
+fixtures. The previously omitted upstream install inputs are restored in a new
+workspace; earlier tested subsets and failed attempts remain preserved.
+
+At that checkpoint, normal target packages remained open. Native daemon startup,
+RFSA mapping, firmware ownership and physical modem/GNSS qualification remain
+open after the package checks below. These host checks make no phone changes.
+
+## November 14: reproducible ARM QRTR and RMTFS packages
+
+Two normal signed abuild runs now pass for QRTR 1.2-r2 and RMTFS 1.3-r1.
+Each pair produces byte-identical APKs and repository indexes: four QRTR APKs
+and five RMTFS APKs. All 40/18 release-source paths match their qualified source
+cohorts, including RMTFS's actual qmic regeneration and exact generated-file
+contracts. The 14 QRTR and seven RMTFS raw ELF outputs also match between runs.
+Independent RSA, payload data hash, signed index, altered-signature and ARM
+hard-float ABI checks pass. Distribution service files, rules, BSD licenses and
+maintainer attribution are preserved.
+
+The build profile uses signed Clang/LLD 22.1.3, clean target GCC 15.2.0 runtime
+objects and binutils 2.45.1. All 104 original toolchain APKs have verified
+signatures and full matching source-commit metadata. Package bodies match at
+7,360 paths, with three build-account/configuration differences reconciled
+exactly to signed defaults. The earlier signed ARM cross-GCC packages declare
+dirty source metadata; that attempt remains retained and is excluded from this
+profile. Clang reports the standard GCC options `-fstack-clash-protection` and
+`-fno-plt` as unused on ARM; those options have no effect in this profile.
+
+The actual signed ARM QRTR library passes all 52 existing synthetic codec cases
+under QEMU. The signed RMTFS program loads its normal QRTR/libudev dependencies
+and passes two early CLI rejection cases without opening devices or sockets.
+The existing 19 lifecycle, 35 memory and 15 selected protocol source fixtures
+also pass under ARM/QEMU with this compiler cohort. Their input and compiled
+binary hashes are independently rechecked, along with all 2,896 package-owned
+paths in the final development sysroot. These checks use synthetic sysfs,
+remoteproc, memory, storage and transport; physical daemon startup, RFSA mapping
+and modem/GNSS hardware remain open.
+The standard service includes `-s` remoteproc management; the first passive
+physical trial requires its own reviewed service configuration.
+
+The recipe is local at `3b2f30decd987cbb6ad14259e64189ef2092dc1c` and remains
+unpublished. No phone operation occurs. See the
+[sanitized package evidence](../evidence/2026-11-14-rmtfs-distribution-packages.json)
+and the [new ARM regression evidence](../evidence/2026-11-14-rmtfs-clean-arm-regressions.json).
+
+## November 14: clean bootstrap of distribution build roots
+
+Public host helpers now bootstrap fresh roots directly from authenticated
+`apk.static` and normal signed APK caches. They require no existing Alpine
+root or helper container image. The generator, QRTR and RMTFS then build with
+the same normal abuild recipes and read-only input/signing mounts. All 13
+signed APK/index artifacts match the independently qualified references byte
+for byte. Six root-integrity and credential-exclusion controls pass.
+
+The minimal native root initially reproduced qmic's uncompressed payload but
+not its compressed package bytes: the reference abuild had selected pigz.
+A separate fresh root now pins that signed compressor explicitly. The base
+and RMTFS cross roots retain their original compression profiles. All failed
+comparisons and dispatched inputs remain preserved. The source, lock, public
+verification keys and [rebuild commands](../diagnostics/modem-control/userspace-package-rebuild.md)
+are prepared for review with [sanitized evidence](../evidence/2026-11-14-modem-clean-bootstrap.json).
+They make no phone changes; physical modem/GNSS qualification remains open.
