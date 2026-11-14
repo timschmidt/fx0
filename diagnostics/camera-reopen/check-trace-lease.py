@@ -15,15 +15,26 @@ spec.loader.exec_module(module)
 
 def populate(path):
     for name, text in {'tracing_on': '1', 'current_tracer': 'nop', 'trace_clock': '[local] mono boot',
+                       'set_ftrace_filter': '#### all functions enabled ####',
+                       'set_ftrace_notrace': '#### no functions disabled ####',
+                       'set_ftrace_pid': 'no pid', 'set_ftrace_notrace_pid': 'no pid',
+                       'trace_options': 'print-parent\ncontext-info\nnosym-offset\nnosym-addr',
                        'buffer_subbuf_size_kb': '4', 'buffer_size_kb': '1408', 'trace': '# tracer: nop\n', 'trace_marker': ''}.items():
         (path / name).write_text(text)
+    options = path / 'options'
+    options.mkdir()
+    for name, value in {'print-parent':'1','sym-offset':'0','sym-addr':'0','context-info':'1',
+                        'func_stack_trace':'0','func-no-repeats':'0','func-args':'0'}.items():
+        (options/name).write_text(value)
     for event in module.OBSERVED_EVENTS:
         folder = path / 'events' / event
         folder.mkdir(parents=True)
         (folder / 'enable').write_text('0')
         (folder / 'filter').write_text('none')
-        names = ['minor', 'timestamp', 'sequence'] if event.startswith('v4l2/') else [
-            'owner', 'queued_count', 'owned_by_drv_count', 'index', 'type', 'timestamp']
+        names = (['irq','name'] if event.endswith('irq_handler_entry') else
+                 ['irq','ret'] if event.endswith('irq_handler_exit') else
+                 ['minor','timestamp','sequence'] if event.startswith('v4l2/') else
+                 ['owner','queued_count','owned_by_drv_count','index','type','timestamp'])
         (folder / 'format').write_text('\n'.join('field:int ' + name + ';' for name in names))
     stats = path / 'per_cpu/cpu0'
     stats.mkdir(parents=True)
@@ -32,11 +43,12 @@ def populate(path):
 
 
 class ModelIO(module.NativeIO):
-    def __init__(self, fail=None, capacity=None, cpu_capacity=None):
+    def __init__(self, fail=None, capacity=None, cpu_capacity=None, callback_fault=None):
         self.fail = fail
         self.capacity = capacity
         self.cpu_capacity = cpu_capacity
         self.event_enables = 0
+        self.callback_fault = callback_fault
 
     def mkdir(self, path):
         path.mkdir()
@@ -50,7 +62,17 @@ class ModelIO(module.NativeIO):
             self.event_enables += 1
         if self.fail and path.as_posix().endswith(self.fail) and value == '1':
             raise OSError('injected event enable failure')
-        if path.name == 'trace_clock':
+        if path.name == 'set_ftrace_filter':
+            assert value == '\n'.join(name + ':mod:qcom_camss' for name in module.FUNCTION_COUNTS) + '\n'
+            selected = [name + ' [qcom_camss]' for name, count in module.FUNCTION_COUNTS.items() for _ in range(count)]
+            if self.callback_fault == 'bad-filter':selected.append('unrelated [other]')
+            path.write_text('\n'.join(selected))
+        elif path.name == 'current_tracer' and value == 'function':
+            if self.callback_fault == 'tracer-failure':raise OSError('injected tracer selection failure')
+            path.write_text(value)
+            if self.callback_fault == 'shared-flag':
+                (path.parent/'options/func-no-repeats').write_text('1')
+        elif path.name == 'trace_clock':
             path.write_text('local [' + value + '] boot')
         elif path.name == 'buffer_size_kb':
             # Model ARM page payload, not ordinary-file echo of the request.
@@ -130,6 +152,34 @@ for capacity, cpu_capacity, accepted in [
         assert claim['buffer_sizing']['capacity_kib_readback'] == capacity
         cases.append('buffer rounding/readback: ' + repr((capacity, cpu_capacity, accepted)))
 
+for condition in ['normal','setup-failure','enable-failure','bad-filter','tracer-failure','shared-flag','abandoned']:
+    with tempfile.TemporaryDirectory(prefix='fx0-callback-model-') as tmp:
+        root=Path(tmp);populate(root);(root/'instances').mkdir()
+        other=root/'instances/other';other.mkdir();populate(other)
+        workspace=root/'private';workspace.mkdir(mode=0o700)
+        io=ModelIO(fail='irq_handler_entry/enable' if condition=='enable-failure' else None,
+                   callback_fault=condition)
+        before=module.settings(root,io)
+        lease=module.TraceLease('fx0-camera-callback-model',workspace/'claim.json',root,io,
+                               fail_after_config=condition=='setup-failure',callbacks=True)
+        try:
+            if condition=='abandoned':
+                lease.__enter__()
+                result=module.recover_claim(lease.claim,root,io)
+                assert result['instance_removed']
+            else:
+                with lease:
+                    assert io.read(lease.path/'current_tracer')=='function'
+                    assert len(lease.callback_config['selected'])==12
+                    assert all(io.read(lease.path/'events'/event/'enable')=='1' for event in module.IRQ_EVENTS)
+        except (ValueError,RuntimeError,OSError):
+            assert condition not in ['normal','abandoned']
+        else:assert condition in ['normal','abandoned']
+        assert not lease.path.exists() and module.settings(root,io)==before
+        claim=json.loads(lease.claim.read_text())
+        assert claim['callbacks'] is True and claim['cleanup']['instance_removed']
+        cases.append('callback ownership/restoration: '+condition)
+
 with tempfile.TemporaryDirectory(prefix='fx0-trace-collision-') as tmp:
     root = Path(tmp)
     populate(root)
@@ -197,5 +247,22 @@ for bad in [text.replace('owned_by_drv = 1', 'owned_by_drv = bad'), text + 'CPU 
         cases.append('malformed/unknown/lost/clock-mismatch evidence rejected')
     else:
         raise AssertionError('bad trace evidence accepted')
+callback_text = """cam-7 [000] d.h. 12.000000: irq_handler_entry: irq=95 name=fda0ac00.camss_msm_vfe0
+cam-7 [000] d.h. 12.000000: vfe_isr [qcom_camss] <-__handle_irq_event_percpu
+cam-7 [000] d.h. 12.000000: vfe_isr_reg_update [qcom_camss] <-vfe_isr [qcom_camss]
+cam-7 [000] d.h. 12.000001: vfe_isr_wm_done [qcom_camss] <-vfe_isr [qcom_camss]
+cam-7 [000] d.h. 12.000002: irq_handler_exit: irq=95 ret=handled
+"""
+parsed=module.parse_private_trace(callback_text)
+assert [r['event'] for r in parsed]==['irq_handler_entry','function','function','function','irq_handler_exit']
+assert [r['trace_order'] for r in parsed]==[1,2,3,4,5] and all(r['cpu']==0 for r in parsed)
+cases.append('IRQ/callback parsing preserves CPU and emission order at timestamp ties')
+for bad in [callback_text.replace('irq=95','irq=96'),callback_text.replace('ret=handled','ret=unhandled'),
+            callback_text.replace('camss_msm_vfe0','camss_msm_vfe1'),
+            callback_text.replace('<-vfe_isr [qcom_camss]','<-0xdeadbeef'),
+            callback_text.replace('vfe_isr_reg_update [qcom_camss]','unselected [qcom_camss]')]:
+    try:module.parse_private_trace(bad)
+    except ValueError:cases.append('unexpected IRQ/function evidence rejected')
+    else:raise AssertionError('bad callback trace accepted')
 print(json.dumps({'trace_lease_model_and_parser_cases': len(cases), 'cases': cases,
                   'real_kernel_tracefs_modified': False, 'native_lifecycle_still_required': True}, indent=2))

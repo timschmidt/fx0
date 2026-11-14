@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 """Owned tracefs instance and private vb2 trace decoding for the pinned camera tests."""
 import hashlib
+from collections import Counter
 import json
 import os
 from pathlib import Path
@@ -12,8 +13,10 @@ EVENTS = {
     'vb2/vb2_qbuf': 'type == 9', 'vb2/vb2_dqbuf': 'type == 9',
     'vb2/vb2_buf_queue': 'type == 9', 'vb2/vb2_buf_done': 'type == 9',
 }
+IRQ_EVENTS = {'irq/irq_handler_entry': 'irq == 95', 'irq/irq_handler_exit': 'irq == 95'}
+FUNCTION_COUNTS = {'vfe_isr': 8, 'vfe_isr_reg_update': 2, 'vfe_isr_wm_done': 2}
 # Observe the unused V4L2 settings too, without enabling those uncalled events.
-OBSERVED_EVENTS = dict(EVENTS, **{
+OBSERVED_EVENTS = dict(EVENTS, **IRQ_EVENTS, **{
     'v4l2/vb2_v4l2_buf_queue': 'minor == 0', 'v4l2/vb2_v4l2_buf_done': 'minor == 0'})
 ROOT = Path('/sys/kernel/tracing')
 
@@ -49,7 +52,8 @@ def private_json(path, value):
 def settings(root, io, exclude=None):
     def one(directory):
         values = {name: io.read(directory / name) for name in
-                  ['tracing_on', 'current_tracer', 'trace_clock', 'buffer_size_kb', 'buffer_subbuf_size_kb']}
+                  ['tracing_on', 'current_tracer', 'trace_clock', 'buffer_size_kb', 'buffer_subbuf_size_kb',
+                   'set_ftrace_filter', 'set_ftrace_notrace', 'set_ftrace_pid', 'set_ftrace_notrace_pid', 'trace_options']}
         for event in OBSERVED_EVENTS:
             for name in ['enable', 'filter']:
                 path = directory / 'events' / event / name
@@ -101,19 +105,23 @@ def validate_buffer_sizing(sizing):
 
 
 class TraceLease:
-    def __init__(self, name, claim, root=ROOT, io=None, fail_after_config=False):
+    def __init__(self, name, claim, root=ROOT, io=None, fail_after_config=False, callbacks=False):
         require(re.fullmatch(r'fx0-camera-[a-z0-9-]{1,40}', name), 'invalid owned instance name')
         self.root, self.name, self.claim = Path(root), name, Path(claim)
         self.path = self.root / 'instances' / name
         self.io = io or NativeIO()
         self.fail_after_config = fail_after_config
+        self.callbacks = callbacks
+        self.events = dict(EVENTS, **IRQ_EVENTS) if callbacks else EVENTS
+        self.callback_config = None
         self.created = False
         self.cleanup = None
         self.sizing = None
 
     def _save(self, state):
         private_json(self.claim, {'state': state, 'name': self.name, 'device': self.device,
-                                 'inode': self.inode, 'before_settings': self.before, 'buffer_sizing': self.sizing})
+                                 'inode': self.inode, 'before_settings': self.before, 'buffer_sizing': self.sizing,
+                                 'callbacks': self.callbacks, 'callback_config': self.callback_config})
 
     def _owned(self):
         require(self.created and self.path.is_dir() and not self.path.is_symlink(), 'owned instance missing')
@@ -155,17 +163,20 @@ class TraceLease:
             }
             self._save('sizing captured; no event enabled yet')
             validate_buffer_sizing(self.sizing)
-            for event, expression in EVENTS.items():
+            for event, expression in self.events.items():
                 text = self.io.read(self.path / 'events' / event / 'format')
-                fields = ['minor', 'timestamp', 'sequence'] if event.startswith('v4l2/') else [
-                    'owner', 'queued_count', 'owned_by_drv_count', 'index', 'type', 'timestamp']
+                fields = (['irq', 'name'] if event.endswith('irq_handler_entry') else
+                          ['irq', 'ret'] if event.endswith('irq_handler_exit') else
+                          ['owner', 'queued_count', 'owned_by_drv_count', 'index', 'type', 'timestamp'])
                 require(all(re.search(r'field:[^;]*\b' + field + r';', text) for field in fields),
                         'trace event format differs: ' + event)
                 self._write('events/' + event + '/filter', expression)
                 require(self.io.read(self.path / 'events' / event / 'filter') == expression, 'trace filter mismatch')
+            if self.callbacks:
+                self._configure_callbacks()
             if self.fail_after_config:
                 raise RuntimeError('injected failure before event enable')
-            for event in EVENTS:
+            for event in self.events:
                 self._write('events/' + event + '/enable', '1')
                 require(self.io.read(self.path / 'events' / event / 'enable') == '1', 'event enable mismatch')
             self._save('configured; stopped')
@@ -174,6 +185,37 @@ class TraceLease:
             if self.created:
                 self.close()
             raise
+
+    def _configure_callbacks(self):
+        for field in ['set_ftrace_pid', 'set_ftrace_notrace_pid']:
+            require(self.io.read(self.path / field) in ('', 'no pid'), 'unexpected own function PID filter')
+        excluded = self.io.read(self.path / 'set_ftrace_notrace')
+        require(not [line for line in excluded.splitlines() if line and not line.startswith('#')],
+                'unexpected own function exclusion')
+        selectors = '\n'.join(name + ':mod:qcom_camss' for name in FUNCTION_COUNTS) + '\n'
+        self._write('set_ftrace_filter', selectors)
+        selected = self.io.read(self.path / 'set_ftrace_filter').splitlines()
+        names = []
+        for line in selected:
+            match = re.fullmatch(r'(vfe_isr(?:_reg_update|_wm_done)?) \[qcom_camss\]', line)
+            require(match is not None, 'unexpected function selected')
+            names.append(match[1])
+        require(dict(Counter(names)) == FUNCTION_COUNTS, 'function selection count differs from pinned r1')
+        # These are per-array formatting flags. Never write shared func_* flags.
+        for option, value in [('print-parent', '1'), ('sym-offset', '0'), ('sym-addr', '0'), ('context-info', '1')]:
+            self._write('options/' + option, value)
+            require(self.io.read(self.path / 'options' / option) == value, 'own trace formatting mismatch')
+        self._write('current_tracer', 'function')
+        require(self.io.read(self.path / 'current_tracer') == 'function', 'function tracer did not select')
+        function_flags = {}
+        for option in ['func_stack_trace', 'func-no-repeats', 'func-args']:
+            path = self.path / 'options' / option
+            if path.is_file():
+                function_flags[option] = self.io.read(path)
+                require(function_flags[option] == '0', 'shared function flag configured; never alter it')
+        self.callback_config = {'selected': selected, 'shared_function_flags_read_only': function_flags,
+                                'tracer': 'function', 'irq_filter': 95}
+        self._save('callbacks configured; stopped')
 
     def start(self):
         self._write('trace', '')
@@ -207,7 +249,7 @@ class TraceLease:
             return
         self._owned()
         errors = []
-        for relative, value in [('tracing_on', '0')] + [('events/' + event + '/enable', '0') for event in EVENTS] + [('current_tracer', 'nop')]:
+        for relative, value in [('tracing_on', '0')] + [('events/' + event + '/enable', '0') for event in self.events] + [('current_tracer', 'nop')]:
             try:
                 self._write(relative, value)
             except OSError as error:
@@ -222,30 +264,48 @@ class TraceLease:
         if not self.path.exists():
             self.created = False
         private_json(self.claim, {'state': 'cleanup finished', 'name': self.name, 'device': self.device,
-                                  'inode': self.inode, 'before_settings': self.before, 'buffer_sizing': self.sizing, 'cleanup': self.cleanup})
+                                  'inode': self.inode, 'before_settings': self.before, 'buffer_sizing': self.sizing, 'callbacks': self.callbacks,
+                                  'callback_config': self.callback_config, 'cleanup': self.cleanup})
         require(self.cleanup['instance_removed'] and unchanged and not errors, 'trace cleanup or configuration preservation failed')
 
     def __exit__(self, *_exception):
         self.close()
 
 
-LINE = re.compile(r'(?P<seconds>\d+)\.(?P<fraction>\d+):\s+(?:(?:vb2|v4l2):)?(?P<event>[a-zA-Z0-9_]+):\s*(?P<payload>.*)$')
+LINE = re.compile(r'\[(?P<cpu>\d+)\]\s+.*?(?P<seconds>\d+)\.(?P<fraction>\d+):\s+(?P<body>.*)$')
+EVENT_LINE = re.compile(r'(?:(?:vb2|v4l2|irq):)?(?P<event>[a-zA-Z0-9_]+):\s*(?P<payload>.*)$')
+FUNCTION_LINE = re.compile(r'(vfe_isr(?:_reg_update|_wm_done)?)(?: \[qcom_camss\])?\s+<-(?P<caller>[a-zA-Z_][a-zA-Z0-9_.]*)(?: \[[a-zA-Z0-9_]+\])?$')
 VB2 = re.compile(r'^owner\s*=\s*([^,]+),\s*queued\s*=\s*(\d+),\s*owned_by_drv\s*=\s*(-?\d+),\s*index\s*=\s*(\d+),\s*type\s*=\s*(\d+),\s*bytesused\s*=\s*(\d+),\s*timestamp\s*=\s*(\d+)$')
 
 
 def parse_private_trace(text):
     rows = []
-    allowed = {name.split('/')[1] for name in EVENTS}
+    allowed = {name.split('/')[1] for name in dict(EVENTS, **IRQ_EVENTS)}
     for number, line in enumerate(text.splitlines(), 1):
         if not line.strip() or line.lstrip().startswith('#'):
             continue
         match = LINE.search(line)
         require(match is not None, 'unrecognized trace line ' + str(number))
-        seconds, fraction, event, payload = match.group('seconds', 'fraction', 'event', 'payload')
+        seconds, fraction = match.group('seconds', 'fraction')
+        body = match['body']
+        parsed = EVENT_LINE.fullmatch(body)
+        function = FUNCTION_LINE.fullmatch(body) if parsed is None else None
+        require(parsed is not None or function is not None, 'unexpected trace payload')
+        event = parsed['event'] if parsed else 'function'
+        payload = parsed['payload'] if parsed else body
         require(len(fraction) <= 9, 'unexpected trace timestamp precision')
         row = {'trace_ns': int(seconds) * 1_000_000_000 + int(fraction.ljust(9, '0')), 'event': event,
-               'trace_resolution_ns': 10 ** (9 - len(fraction))}
-        if event == 'tracing_mark_write':
+               'trace_resolution_ns': 10 ** (9 - len(fraction)), 'cpu': int(match['cpu']), 'trace_order': number}
+        if event == 'function':
+            row.update(function=function[1], caller=function['caller'])
+        elif event == 'irq_handler_entry':
+            entry = re.fullmatch(r'irq=95 name=fda0ac00\.camss_msm_vfe0', payload)
+            require(entry is not None, 'unexpected IRQ entry')
+            row.update(irq=95, handler='fda0ac00.camss_msm_vfe0')
+        elif event == 'irq_handler_exit':
+            require(payload == 'irq=95 ret=handled', 'unexpected IRQ exit')
+            row.update(irq=95, handled=True)
+        elif event == 'tracing_mark_write':
             marker = re.fullmatch(r'FX0_CAMERA ([A-Z0-9_]+) mono_ns=(\d+)', payload)
             require(marker is not None, 'unexpected instance marker')
             row.update(marker=marker[1], marker_mono_ns=int(marker[2]))
@@ -263,7 +323,7 @@ def parse_private_trace(text):
             row.update(owner_private=owner.strip(), queued_count=int(queued), owned_by_driver=int(owned),
                        index=int(index), type=int(kind), bytesused=int(used), timestamp_ns=int(timestamp))
         rows.append(row)
-    return sorted(rows, key=lambda row: row['trace_ns'])
+    return sorted(rows, key=lambda row: (row['trace_ns'], row['trace_order']))
 
 
 def verify_markers(rows):
@@ -280,9 +340,10 @@ def recover_claim(claim, root=ROOT, io=None):
     claim = Path(claim)
     require(not claim.parent.stat().st_mode & 0o077 and not claim.is_symlink(), 'recovery claim must be private')
     record = json.loads(claim.read_text())
-    lease = TraceLease(record['name'], claim, root, io)
+    lease = TraceLease(record['name'], claim, root, io, callbacks=record.get('callbacks', False))
     lease.before = record['before_settings']
     lease.sizing = record.get('buffer_sizing')
+    lease.callback_config = record.get('callback_config')
     if lease.path.exists():
         lease.device, lease.inode = record['device'], record['inode']
         lease.created = True

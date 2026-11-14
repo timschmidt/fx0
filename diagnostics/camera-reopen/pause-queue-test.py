@@ -215,6 +215,7 @@ def journal_after(cursor):
         row = json.loads(line)
         require(isinstance(row.get('MESSAGE'), str), 'nontext kernel journal message')
         rows.append({'monotonic_usec': int(row['__MONOTONIC_TIMESTAMP']),
+                     'source_printk_usec': int(row['_SOURCE_MONOTONIC_TIMESTAMP']),
                      'priority': int(row['PRIORITY']), 'message': row['MESSAGE']})
     return rows
 

@@ -24,7 +24,7 @@ FRAME_RECORD = re.compile(r'\bseq:\s*(\d+)\s+bytesused:\s*(\d+)')
 FAULT = re.compile(r'underrun|context fault|iommu.*fault|kernel bug|oops:|watchdog|'
                    r'(?:camss|imx132|imx179|csid|csiphy|vfe|ispif|cci).*(?:error|fail|timeout|overflow)', re.I)
 NOTES_SHA = '05292e44d9f13de78b5ebf602b0b3f9ff22b7820d765f6e796cf3473beee4377'
-FRAME_PREFIX = 'fx0-camera-irq-switching-01-'
+FRAME_PREFIX = 'fx0-camera-callback-switching-01-'
 
 spec = importlib.util.spec_from_file_location('owned_helpers', Path(__file__).with_name('pause-queue-test.py'))
 helpers = importlib.util.module_from_spec(spec)
@@ -35,7 +35,7 @@ from irq_debug import DebugLease, recover_debug
 classifier_spec = importlib.util.spec_from_file_location('kernel_classifier', Path(__file__).with_name('check-kernel-window.py'))
 classifier = importlib.util.module_from_spec(classifier_spec)
 classifier_spec.loader.exec_module(classifier)
-INSTANCE = 'fx0-camera-irq-switching-01'
+INSTANCE = 'fx0-camera-callback-switching-01'
 WORKLOAD = [('front', None), ('back', None), ('front', None), ('back', None), ('back', (3280, 2464, 4104))]
 
 
@@ -271,7 +271,8 @@ def alias_rows(rows):
         if token is not None:
             aliases.setdefault(token, 'owner' + str(len(aliases) + 1))
             row['owner_alias'] = aliases[token]
-        require(row['event'] in ['tracing_mark_write', 'vb2_qbuf', 'vb2_dqbuf', 'vb2_buf_queue', 'vb2_buf_done'],
+        require(row['event'] in ['tracing_mark_write', 'vb2_qbuf', 'vb2_dqbuf', 'vb2_buf_queue', 'vb2_buf_done',
+                                 'irq_handler_entry', 'irq_handler_exit', 'function'],
                 'unexpected event in four-family core trace')
         if row['event'].startswith('vb2_'):
             require(row['type'] == 9, 'unexpected buffer type in filtered trace')
@@ -350,7 +351,8 @@ def trial(boot, workspace):
     require(available >= 400 * 1024, 'insufficient memory headroom')
     report['idle_camera_owner_PIDs'] = idle_camera_owners()
     cursor = helpers.journal_anchor()
-    lease = TraceLease(INSTANCE, workspace / 'trace.claim.json')
+    report['kernel_cursor_private'] = cursor
+    lease = TraceLease(INSTANCE, workspace / 'trace.claim.json', callbacks=True)
     debug = DebugLease(workspace / 'debug.claim.json')
     try:
         with debug, lease:
@@ -396,6 +398,7 @@ def trial(boot, workspace):
         report['debug_cleanup'] = debug.cleanup
         report['trace_cleanup'] = lease.cleanup
         report['buffer_sizing'] = lease.sizing
+        report['callback_config'] = lease.callback_config
         report['kernel_messages'] = helpers.journal_after(cursor)
         report['kernel_classification'] = classifier.classify(report['kernel_messages'])
         report['owned_frame_workspaces_after'] = len(list(shm.glob(FRAME_PREFIX + '*')))

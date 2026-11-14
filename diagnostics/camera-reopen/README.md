@@ -123,3 +123,10 @@ and WM completion bits immediately before the warning. It also corrects the
 earlier use of journal reception timestamps for precise cross-log ordering.
 The warning still fails camera acceptance; direct state/callback evidence and
 a verified fix remain open.
+
+The [callback-order capture](vfe-callback-order.md) records final core
+completion inside register-update before the saved write-master completion
+is dispatched in the same IRQ. Complete IRQ/log streams associate by ordinal
+without cross-clock timestamp conversion. The warning still fails camera
+acceptance; a source fix must preserve idle acknowledgment and queued-buffer
+ownership for both empty and replenished drains.

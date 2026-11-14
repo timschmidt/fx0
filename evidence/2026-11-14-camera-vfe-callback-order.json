@@ -1,0 +1,221 @@
+{
+  "recorded_UTC": "2026-11-14T23:20:38.179964+00:00",
+  "scope": "Native callback witness for the coalesced REG_UPDATE/WM_DONE final-drain path; fix and clean camera acceptance remain open",
+  "boot_reference": "e134d38d",
+  "kernel_release": "6.18.63-fx0-vibrator-alpine",
+  "kernel_package": "6.18.63-r1",
+  "kernel_source_commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+  "as_tested_sources_SHA256": {
+    "queue_trace.py": "c60fcebb37d019508a04564589eaed66176aab0e26297f34c6868d676ded7e92",
+    "trace-switching.py": "6998b59ae46b992e8f018c2cc35c8468667963fd03b2b6cbd6f94b9abf643a2f",
+    "pause-queue-test.py": "cf3007d40e62d89eb8eecb1bb5ae4124dd27de0263cf51964078403380f30a13",
+    "irq_debug.py": "894b6e82de67e2eea361abae36bd339cf81e5aa191dbca8f08db32725e8e40ca",
+    "check-kernel-window.py": "c5fd95d7cc8ed0b28f08e23f6038c469c3189f889b0fcdba570bbf171ddc1414",
+    "callback_evidence.py": "55abddc15cf6f17df08d564a81c97541b4f4a52b06b060418ae5ffa3a2daebf6"
+  },
+  "actual_worker_exit_status": 1,
+  "worker_error": null,
+  "core_validation_passed": true,
+  "clean_camera_gate_passed": false,
+  "delivered_buffers": 120,
+  "sampled_pattern_frames": 87,
+  "cases": [
+    {
+      "case": 0,
+      "camera": "front",
+      "geometry": [
+        1976,
+        1200
+      ],
+      "buffers": 24,
+      "pattern_frames": 18,
+      "core_matches": 24
+    },
+    {
+      "case": 1,
+      "camera": "back",
+      "geometry": [
+        1640,
+        1232
+      ],
+      "buffers": 24,
+      "pattern_frames": 18,
+      "core_matches": 24
+    },
+    {
+      "case": 2,
+      "camera": "front",
+      "geometry": [
+        1976,
+        1200
+      ],
+      "buffers": 24,
+      "pattern_frames": 18,
+      "core_matches": 24
+    },
+    {
+      "case": 3,
+      "camera": "back",
+      "geometry": [
+        1640,
+        1232
+      ],
+      "buffers": 24,
+      "pattern_frames": 17,
+      "core_matches": 24
+    },
+    {
+      "case": 4,
+      "camera": "back",
+      "geometry": [
+        3280,
+        2464
+      ],
+      "buffers": 24,
+      "pattern_frames": 16,
+      "core_matches": 24
+    }
+  ],
+  "lossless_trace": {
+    "rows": 1488,
+    "event_counts": {
+      "tracing_mark_write": 37,
+      "irq_handler_entry": 236,
+      "function": 499,
+      "irq_handler_exit": 236,
+      "vb2_qbuf": 120,
+      "vb2_buf_queue": 120,
+      "vb2_buf_done": 120,
+      "vb2_dqbuf": 120
+    },
+    "function_counts": {
+      "vfe_isr": 236,
+      "vfe_isr_reg_update": 142,
+      "vfe_isr_wm_done": 121
+    },
+    "all_core_completions_inside_IRQ95": 120,
+    "selected_symbols_including_duplicates": 12,
+    "shared_function_flags_read_only": {
+      "func_stack_trace": "0",
+      "func-no-repeats": "0"
+    }
+  },
+  "callback_analysis": {
+    "IRQ_spans": 236,
+    "VFE41_IRQ_prints": 236,
+    "all_spans_have_one_handler_entry": true,
+    "saved_bits_match_callback_counts": true,
+    "complete_serial_streams_associated_by_ordinal": true,
+    "warning_contexts": [
+      {
+        "message": "qcom-camss fda0ac00.camss: Missing ready buf 1 4!",
+        "reported_output_state": 4,
+        "case": 2,
+        "camera": "front",
+        "IRQ_ordinal": 117,
+        "IRQ_kernel_sequence": 850,
+        "warning_kernel_sequence": 851,
+        "saved_status": {
+          "status0_hex": "0x00000120",
+          "status1_hex": "0x20000000",
+          "reg_update_lines": [
+            "RDI0"
+          ],
+          "wm_done_indices": [
+            0
+          ]
+        },
+        "IRQ_to_warning_printk_usec": 202,
+        "final_core_done_between_reg_update_and_wm_entry": true,
+        "events_in_mono_clock": [
+          {
+            "event": "irq_handler_entry",
+            "relative_trace_usec": 0.0,
+            "trace_order": 819
+          },
+          {
+            "event": "vfe_isr",
+            "relative_trace_usec": 13.0,
+            "trace_order": 820
+          },
+          {
+            "event": "vfe_isr_reg_update",
+            "relative_trace_usec": 121.0,
+            "trace_order": 821
+          },
+          {
+            "event": "vb2_buf_done",
+            "relative_trace_usec": 139.0,
+            "trace_order": 822,
+            "index": 3,
+            "queued_count": 1,
+            "owned_by_driver": 0
+          },
+          {
+            "event": "vfe_isr_wm_done",
+            "relative_trace_usec": 219.0,
+            "trace_order": 823
+          },
+          {
+            "event": "irq_handler_exit",
+            "relative_trace_usec": 374.0,
+            "trace_order": 824
+          }
+        ]
+      }
+    ],
+    "warning_count": 1,
+    "cross_clock_timestamp_conversion_used": false,
+    "contract": "One debug print at sole VFE41 handler entry; complete serial IRQ95 spans; lossless trace; contiguous and matched kernel/journal records.",
+    "limitations": "Callback entries, core completions and IRQ boundaries are traced; VFE memory state and MMIO writes are not directly traced."
+  },
+  "kernel_ring_and_journal_records_matched": 237,
+  "kernel_window_classification": {
+    "kernel_messages_checked": 237,
+    "unresolved_diagnostics": [
+      {
+        "message": "qcom-camss fda0ac00.camss: Missing ready buf 1 4!",
+        "reason": "explicit kernel diagnostic"
+      }
+    ],
+    "clean_kernel_window": false
+  },
+  "interpretation": "The IRQ snapshot carries REG_UPDATE and WM0 completion. Within its mono-clock span, final core completion occurs between register-update and WM callback entries, with owned count zero. The gen1 source releases last_buffer in STOPPING then sets IDLE in register-update; subsequent dispatch of saved WM completion reaches Missing ready buf. Memory state and MMIO writes are not directly traced.",
+  "no_cross_clock_timestamp_conversion": true,
+  "clock_basis": "IRQ/callback/core order uses one mono trace plus preserved CPU record order. Source IRQ prints and complete serial spans are associated by ordinal under the pinned sole-handler once-per-entry logging contract. Printk intervals stay in printk time.",
+  "native_lifecycle_cases": 2,
+  "exported_host_checks": {
+    "trace_lease_and_parser": 38,
+    "callback_evidence": 17,
+    "debug_lease": 13,
+    "IRQ_evidence": 17,
+    "core_matching_and_RAW10": 14,
+    "actual_discovery": 10,
+    "real_owned_children": 11,
+    "strict_kernel_classifier": 10
+  },
+  "cleanup": {
+    "debug_target_and_all_other_debug_settings_restored": true,
+    "owned_trace_removed": true,
+    "global_other_filters_PID_filters_and_trace_options_restored": true,
+    "owned_frames_deleted_on_phone": true,
+    "raw_frames_transferred": false,
+    "sensors_suspended_patterns_off": true,
+    "owned_service_inactive": true,
+    "owned_failed_flag_cleared_only_after_receipts_preserved": true,
+    "boot_package_world_repository_hashes_unchanged": true,
+    "systemd_running_taint0": true,
+    "UI_and_gesture_PIDs_unchanged": true
+  },
+  "next_fix_requirements": [
+    "Exercise actual gen1 transitions with empty drain and buffers requeued while STOPPING",
+    "Handle coalesced saved WM status without prematurely completing a fresh buffer",
+    "Preserve hardware-idle acknowledgment before final-buffer return",
+    "Preserve diagnostics for unexplained active-output missing buffers; do not merely lower severity or ignore all IDLE events"
+  ],
+  "runtime_instrumentation_only": true,
+  "installed_kernel_driver_and_boot_unchanged": true,
+  "raw_owner_tokens_and_logs_excluded": true,
+  "not_published": true,
+  "full_goal_complete": false
+}
