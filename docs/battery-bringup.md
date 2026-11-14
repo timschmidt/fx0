@@ -754,3 +754,14 @@ No charging limit, policy, service lifecycle, clock, package or boot setting
 is changed. Actual current/SOC, charging, thermal boundaries and source-loss
 behavior remain unqualified. Raw identities and telemetry stay private.
 [Read-only investigation evidence](../evidence/2026-11-14-power-readonly-investigation.json)
+
+## November 14: processed-voltage prerequisite on the reproducible kernel
+
+An isolated Linux 6.18.63 source revision now carries the preserved processed
+VADC battery-voltage prerequisite. Both host contexts pass 84 actual callback
+and consumer cases; compiled channel tables preserve the other 92 records, and
+the W=1 ARM object builds without warnings. The review patch reproduces the
+tested source from the public base. No phone access or candidate package/image
+build occurs. The runtime pack/firmware gate, BMS discrepancy, temperature and
+charging policy, USB budget port and physical power acceptance remain open.
+[Integration report and remaining gates](../diagnostics/vadc-battery-units/current-integration.md)

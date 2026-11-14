@@ -1,0 +1,77 @@
+{
+  "recorded_UTC": "2026-11-14T18:12:08.789833+00:00",
+  "state": "Isolated processed-voltage source prerequisite qualified on host; full battery/charging integration remains open",
+  "source_commit": "e0e89468dcfc99500bcae40ce58bfa43fe570c15",
+  "source_base": "e7c72f8cb3c50a1ec089f96277b7d4b469212ba9",
+  "source_patch_manifest": "manifests/power-telemetry-prerequisite-6.18.63.json",
+  "candidate_driver_exact_match_to_preserved_and_fresh_public_historical_prerequisite": true,
+  "preserved_policy_and_firmware_source_files_verified": 12,
+  "relevant_installed_r1_and_reproducible_base_source_files_byte_identical": 6,
+  "host_checks": {
+    "contexts": [
+      "isolated sparse source checkout",
+      "seven-file source-only export"
+    ],
+    "unit_conversion_precision_legacy_raw_error_cases_each_context": 84,
+    "registered_channels_each_metadata_table": 94,
+    "new_processed_voltage_interfaces": [
+      6,
+      48
+    ],
+    "other_channel_records_preserved": 92,
+    "original_callback_fails_functionally_in_both_contexts": true,
+    "missing_advertisement_changed_battery_prescale_and_unrelated_channel_mutations_rejected": true,
+    "ASan_UBSan_enabled": true,
+    "sanitizer_or_compile_errors_in_qualified_runs": false,
+    "ignored_local_program_tree_required": false
+  },
+  "ARM_object": {
+    "W1_build_returncode": 0,
+    "warning_lines": 0,
+    "compiler_identity_from_ELF_comment": "Alpine clang version 22.1.3",
+    "ELF32_little_endian_ARM": true,
+    "SHA256": "df88aeb4dfaea6f46279985af6de33721c3e68b2131052866aaddc3e7da0cf78",
+    "bytes": 84660,
+    "retained_previously_audited_toolchain_and_prepared_kernel_mounted_read_only": true,
+    "fresh_toolchain_package_database_identity_checked": true,
+    "fresh_full_toolchain_payload_reaudit": false,
+    "original_config_symbol_versions_and_VADC_object_unchanged": true,
+    "network_enabled": false,
+    "module_or_APK_signing_performed": false
+  },
+  "patch_replay": {
+    "public_base_apply_check_and_apply_returncodes": [
+      0,
+      0
+    ],
+    "all_four_exported_kernel_inputs_match_tested_candidate": true
+  },
+  "remaining_integration": [
+    "BMS/current calibration and live/background discrepancy",
+    "Runtime removable-pack identification and verified early firmware inhibition",
+    "Temperature conversion/fault handling and managed charging policy/supplier/suspend lifetime",
+    "Ordered USB budget rebase and physical negotiation/current/suspend/source-loss checks",
+    "Valid/stale/fault/recovery telemetry through UPower and the user interface",
+    "Normal signed combined package, physical RAM boot/return, install/recovery and full power/reliability acceptance"
+  ],
+  "older_USB_patch_checks": {
+    "standalone_patches_tested": 3,
+    "standalone_apply_failures": 3,
+    "ordered_port_impossible_claimed": false,
+    "foundation_missing_from_current_base": true
+  },
+  "excluded_attempts": [
+    "Initial default-sandbox LeakSanitizer failures; original baseline compile failed on unused val2 before functional execution. Initial recorder incorrectly marked that compile failure expected; it is excluded.",
+    "First ARM container returncode2 from missing temporary device nodes and external-object target path; no candidate object produced. Fresh corrected attempt succeeds."
+  ],
+  "private_key_bodies_read_hashed_or_copied": false,
+  "phone_access_or_firmware_charging_BMS_USB_policy_writes": false,
+  "kernel_package_for_candidate_built": false,
+  "candidate_image_assembled_staged_or_booted": false,
+  "existing_trial_sources_plans_and_console_lock_unchanged": true,
+  "root_index_unchanged": true,
+  "new_physical_UI_or_electrical_accuracy_or_charging_acceptance": false,
+  "source_or_evidence_published": false,
+  "maintainer_messages_sent": false,
+  "full_goal_complete": false
+}
