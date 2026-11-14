@@ -505,3 +505,23 @@ and plan without loading credentials or taking a device action. Three real
 workspaces remain undispatched without an operator receipt. Physical RFSA,
 USB console, automatic return and modem/GNSS qualification remain open.
 [Public adapter qualification evidence](../evidence/2026-11-14-public-passive-adapter.json)
+
+## November 14: public rebuild of the prepared passive-r1 image
+
+The [locked image workflow](../diagnostics/modem-control/passive-r1-image-rebuild.md)
+now rebuilds the return/observer helpers and RFSA DTB, selects exact material
+bytes from eight authenticated APK archives and assembles the complete image.
+Its public source requires explicit build roots and archives; ignored controller
+programs, stock dumps and the installed private initramfs are not inputs.
+
+Both a clean review checkout and a 26-file source-only export pass the full
+workflow. Each compiles six helper/harness jobs, runs four ARM/QEMU controls,
+reproduces both DTBs, produces two images byte-identical to the independently
+qualified original and passes 13 input/worker tests. Existing output directories
+are rejected without changing their contents. The first incomplete source-only
+roster and namespace-denied helper attempt remain preserved.
+
+This is the prepared accepted-r1 diagnostic, not a new historical kernel build
+or physical acceptance. All three real trial workspaces remain undispatched
+without operator receipts, and the earlier source snapshots stay exact.
+[Public image rebuild evidence](../evidence/2026-11-14-passive-r1-public-image-rebuild.json)
