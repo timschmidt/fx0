@@ -44,3 +44,12 @@ certificate is sufficient for the separate verified raw-kernel pair and for
 signature verification. Public-certificate-only compilation with this new
 standard profile has not been separately compared with its signed-build
 unstripped outputs.
+
+The standard-nfc-r4-build-identity.json profile records the new NFC pair:
+6.18.63-r4, 468 modules, 568 byte-identical outputs and complete signed APK/index
+equality. Get its NFC configuration from recipe 854f1e47670f4dcb8094a26a0a0c54c4263f699a.
+Use the exact source path, epoch, version5 identity and retained signers in that
+profile. The evidence records module/notes identities because older NFC
+preparations use the same release string. Four unchanged community preferred
+configuration notices remain recorded; the actual checker accepts the config.
+This cohort has no physical boot, NFC, native install or recovery qualification.

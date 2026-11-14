@@ -1,5 +1,30 @@
 # Fx0 PN547 NFC preparation
 
+## November 14: reproducible maintained NFC package
+
+The published deterministic NFC source
+`68b0a4f369ed767b0c8061284d0017ed63f158ec` now has two clean normal abuild runs
+including APK and repository-index signing. Local recipe
+`854f1e47670f4dcb8094a26a0a0c54c4263f699a` produces 6.18.63-r4 under
+`6.18.63-fx0-nfc-alpine`. Both complete signed APKs/indexes and all 568 raw
+outputs are byte-identical; all 91,269 tracked source paths match in each build.
+
+All 468 module signatures and 25,577 imported CRCs pass, along with complete
+dependencies, embedded trust, nonpermissive CFI, full compressed DWARF5,
+community configuration, five compiled-node binding tests and independent
+RSA/corruption controls. NFC callback type words and the current core/I2C
+probe CRC match. There are no compiler warnings; the two inherited abuild
+notices are retained in the evidence. The first comparator attempt lacked the
+build ownership namespace; its failure and inputs remain preserved.
+
+This is a new host-qualified cohort, unbooted and uninstalled. Its release
+string matches an older NFC preparation, so identity checks must include
+kernel notes, package checksum and the entire module manifest; reuse of that
+older module family is invalid. RF/tag/userspace/PM, actual open/reset/remove,
+native update/recovery and the full hardware matrix remain open. The package
+retains the conservative CPU setup and does not include the separate disabled
+modem/RMTFS DT candidate. [Qualification evidence](../evidence/2026-11-14-reproducible-nfc-r4-package.json)
+
 The native r50 kernel has NFC disabled. A read-only baseline on November 8
 finds QUP3 disabled with no children, GPIO10/11/20/21/22 unclaimed and an
 `AF_NFC` socket rejected with `EAFNOSUPPORT`. The module list is unchanged by
