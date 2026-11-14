@@ -1,5 +1,30 @@
 # Modem and GNSS bringup
 
+## November 14: maintained-source description checks
+
+The disabled MSM8926 modem/supply description and RMTFS reservation now pass
+their existing host verifiers on Linux 6.18.63 NFC source
+`68b0a4f369ed767b0c8061284d0017ed63f158ec`. All 9,954 required DT/schema/header
+files match their Git bodies, modes and links before and after the checks.
+The source checkout was sparse; a separate complete fixture supplies those
+inputs without changing the published source or earlier failed attempts.
+
+The stock-derived L3/L8/S5 mapping passes actual enabled-copy schema checks,
+wrong-supply and enabled-S5 controls, and rejection of the obsolete external
+BHS property. The combined RMTFS description preserves the reserved union and
+changes only the five expected properties relative to that modem description.
+Address, client, gap, overlap and missing-client controls are rejected. There
+are no new DTC warnings or selected schema diagnostics. MSS and S5 stay disabled.
+The maintained driver explicitly disables automatic firmware boot.
+
+This closes host description compatibility with the maintained source; it
+establishes no physical voltage, RFSA mapping, RMTFS daemon startup, modem
+firmware, RF or GNSS result. The candidate is unbooted and unpackaged. Existing
+r50 RAM images remain separate historical preparations. A maintained-kernel
+physical trial needs a matching image/module cohort and current return guards.
+No SIM prevents final cellular qualification only.
+[Maintained-source evidence](../evidence/2026-11-14-maintained-modem-rmtfs-description.json)
+
 Native r50 has no active modem. Its live `/soc/remoteproc@fc880000` node is
 disabled and inherits `qcom,msm8226-mss-pil`. Only WCNSS and ADSP remote
 processors run. ModemManager is active, but its already-running D-Bus object
