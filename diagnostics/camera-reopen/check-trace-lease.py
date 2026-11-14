@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
+"""Check lease ownership/failure paths with a tracefs model and the real parser."""
+import importlib.util
+import json
+from pathlib import Path
+import shutil
+import tempfile
+import time
+
+spec = importlib.util.spec_from_file_location('queue_trace', Path(__file__).with_name('queue_trace.py'))
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+
+
+def populate(path):
+    for name, text in {'tracing_on': '1', 'current_tracer': 'nop', 'trace_clock': '[local] mono boot',
+                       'buffer_size_kb': '1408', 'trace': '# tracer: nop\n', 'trace_marker': ''}.items():
+        (path / name).write_text(text)
+    for event in module.EVENTS:
+        folder = path / 'events' / event
+        folder.mkdir(parents=True)
+        (folder / 'enable').write_text('0')
+        (folder / 'filter').write_text('none')
+        names = ['minor', 'timestamp', 'sequence'] if event.startswith('v4l2/') else [
+            'owner', 'queued_count', 'owned_by_drv_count', 'index', 'type', 'timestamp']
+        (folder / 'format').write_text('\n'.join('field:int ' + name + ';' for name in names))
+    stats = path / 'per_cpu/cpu0'
+    stats.mkdir(parents=True)
+    (stats / 'stats').write_text('entries: 0\noverrun: 0\ncommit overrun: 0\ndropped events: 0\n')
+
+
+class ModelIO(module.NativeIO):
+    def __init__(self, fail=None):
+        self.fail = fail
+
+    def mkdir(self, path):
+        path.mkdir()
+        populate(path)
+
+    def rmdir(self, path):
+        shutil.rmtree(path)  # Model virtual files disappear when the instance is removed.
+
+    def write(self, path, value):
+        if self.fail and path.as_posix().endswith(self.fail) and value == '1':
+            raise OSError('injected event enable failure')
+        if path.name == 'trace_clock':
+            path.write_text('local [' + value + '] boot')
+        elif path.name == 'trace_marker':
+            now = time.monotonic_ns()
+            with (path.parent / 'trace').open('a') as stream:
+                stream.write(f'worker-1 [000] .... {now // 1_000_000_000}.{now % 1_000_000_000:09d}: tracing_mark_write: {value}')
+        else:
+            path.write_text(value)
+
+
+cases = []
+for condition in ['success', 'setup-failure', 'enable-failure', 'body-failure', 'loss']:
+    with tempfile.TemporaryDirectory(prefix='fx0-trace-model-') as tmp:
+        root = Path(tmp)
+        populate(root)
+        (root / 'instances').mkdir()
+        other = root / 'instances/other-trace'
+        other.mkdir()
+        populate(other)
+        workspace = root / 'private'
+        workspace.mkdir(mode=0o700)
+        io = ModelIO(fail='vb2_buf_queue/enable' if condition == 'enable-failure' else None)
+        before = module.settings(root, io)
+        lease = module.TraceLease('fx0-camera-model', workspace / 'claim.json', root, io,
+                                  fail_after_config=condition == 'setup-failure')
+        try:
+            with lease:
+                lease.start()
+                lease.marker('CLOCK_PROBE')
+                if condition == 'body-failure':
+                    raise RuntimeError('injected body failure')
+                if condition == 'loss':
+                    (lease.path / 'per_cpu/cpu0/stats').write_text('overrun: 1\ncommit overrun: 0\ndropped events: 0\n')
+                text, result = lease.stop_dump(workspace / 'private.trace')
+                rows = module.parse_private_trace(text)
+                assert module.verify_markers(rows) == 1
+                assert result['no_lost_events'] is (condition != 'loss')
+                assert (workspace / 'private.trace').stat().st_mode & 0o077 == 0
+        except (RuntimeError, OSError):
+            assert condition in ['setup-failure', 'enable-failure', 'body-failure']
+        else:
+            assert condition in ['success', 'loss']
+        assert not lease.path.exists() and module.settings(root, io) == before
+        assert lease.cleanup['instance_removed'] and lease.cleanup['global_and_other_settings_unchanged']
+        cases.append(condition + ': owned instance removed; other/global settings preserved')
+
+with tempfile.TemporaryDirectory(prefix='fx0-trace-collision-') as tmp:
+    root = Path(tmp)
+    populate(root)
+    (root / 'instances').mkdir()
+    existing = root / 'instances/fx0-camera-existing'
+    existing.mkdir()
+    populate(existing)
+    workspace = root / 'private'
+    workspace.mkdir(mode=0o700)
+    before = module.settings(root, ModelIO())
+    try:
+        with module.TraceLease('fx0-camera-existing', workspace / 'claim.json', root, ModelIO()):
+            raise AssertionError('existing instance entered')
+    except ValueError:
+        pass
+    assert existing.is_dir() and module.settings(root, ModelIO()) == before
+    cases.append('existing instance rejected without writes/removal')
+
+for name in ['../global', '/absolute', 'fx0-camera-../escape', 'unowned-name']:
+    try:
+        module.TraceLease(name, Path('/tmp/not-created'))
+    except ValueError:
+        cases.append('invalid name rejected: ' + name)
+    else:
+        raise AssertionError('invalid name accepted')
+
+with tempfile.TemporaryDirectory(prefix='fx0-trace-recovery-') as tmp:
+    root = Path(tmp)
+    populate(root)
+    (root / 'instances').mkdir()
+    workspace = root / 'private'
+    workspace.mkdir(mode=0o700)
+    io = ModelIO()
+    lease = module.TraceLease('fx0-camera-recovery', workspace / 'claim.json', root, io)
+    lease.__enter__()
+    record = json.loads(lease.claim.read_text())
+    bad = record | {'inode': record['inode'] + 1}
+    module.private_json(lease.claim, bad)
+    try:
+        module.recover_claim(lease.claim, root, io)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError('wrong recovery inode accepted')
+    assert lease.path.is_dir()
+    module.private_json(lease.claim, record)
+    result = module.recover_claim(lease.claim, root, io)
+    assert result['instance_removed'] and result['global_and_other_settings_unchanged']
+    cases.append('abandoned owned lease recovered; mismatched inode rejected untouched')
+
+text = '''# tracer: nop
+cam-7 [001] .... 12.000001: vb2_buf_queue: owner = deadbeef, queued = 4, owned_by_drv = 1, index = 0, type = 9, bytesused = 10, timestamp = 12000000000
+<idle>-0 [001] .... 12.033334: vb2_buf_done: owner = deadbeef, queued = 4, owned_by_drv = 0, index = 0, type = 9, bytesused = 10, timestamp = 12033333000
+worker-1 [000] .... 12.040000: tracing_mark_write: FX0_CAMERA CLOCK_PROBE mono_ns=12040000123
+cam-7 [001] .... 12.050000: vb2_v4l2_buf_done: minor=0 flags = DONE, timestamp = 12033333000, sequence = 3
+'''
+rows = module.parse_private_trace(text)
+assert rows[0]['owned_by_driver'] == 1 and rows[1]['owned_by_driver'] == 0
+assert rows[-1]['sequence'] == 3 and module.verify_markers(rows) == 1
+cases.append('queue/done/marker/V4L2 parsing and microsecond rounding')
+for bad in [text.replace('owned_by_drv = 1', 'owned_by_drv = bad'), text + 'CPU 0: LOST EVENTS\n',
+            text.replace('vb2_buf_done:', 'unknown_event:'), text.replace('mono_ns=12040000123', 'mono_ns=99999999999')]:
+    try:
+        module.verify_markers(module.parse_private_trace(bad))
+    except ValueError:
+        cases.append('malformed/unknown/lost/clock-mismatch evidence rejected')
+    else:
+        raise AssertionError('bad trace evidence accepted')
+print(json.dumps({'trace_lease_model_and_parser_cases': len(cases), 'cases': cases,
+                  'real_kernel_tracefs_modified': False, 'native_lifecycle_still_required': True}, indent=2))
