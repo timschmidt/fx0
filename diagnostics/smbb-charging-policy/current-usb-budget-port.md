@@ -49,7 +49,7 @@ shapes and forbidden managed-budget combinations are tested directly against
 the processed schemas. A false-schema diagnostic can omit the property name;
 acceptance checks its actual error/value/schema and the independent contract suite.
 
-## Normal package preparation
+## Normal package qualification
 
 The new recipe is revision 6 with release
 `6.18.63-fx0-power-policy-alpine`. Its only configuration changes from the
@@ -58,11 +58,43 @@ All 91,271 archived Git bodies, link targets and executable modes verify.
 The checksum pins a local Git archive with deterministic gzip; a published
 GitHub archive representation has not been verified for these unpublished heads.
 
-Two normal offline abuild/Kbuild runs have started in separate empty workspaces.
-Retained keys are read in place by the normal signers; the launcher does not
-inspect, hash or copy private-key bodies. Package byte equality, complete linked
-output/module/ABI/signature validation, native trust and payload audits remain
-pending at this checkpoint. Successful object builds do not substitute for them.
+Two normal offline abuild/Kbuild runs completed in separate empty workspaces.
+Retained keys were read in place by the normal signers. The launcher and audits
+did not inspect, hash or copy private-key bodies. All eleven host audit stages
+passed, checking 91,271 source paths in each build and byte equality across 564
+outputs, including 464 modules and all 63 DTBs. The signed APKs and repository
+indexes are also byte-identical.
+
+The audit verifies full compressed DWARF5, nonpermissive CFI, the embedded public
+trust certificate, all module CMS signatures, 25,309 imported-symbol CRCs and
+module dependency closure. Ordinary board checks and the 14-case USB/power
+binding contract pass. The other 62 DTBs match the reproducible base; the Fx0
+DTB matches the independently checked power/USB board fixture. Independent APK
+and index RSA verification and valid-format metadata/payload corruption controls
+pass, as does offline ARMv7 package resolution without installation or hooks.
+
+The actual community configuration check passes with four inherited preferred
+option notices. Normal builds have no compiler warning or error lines and retain
+two abuild notices about `/lib` packaging and architecture detection. The native
+OpenSSL root audit verifies 6,236 noncredential paths and 554 symlinks, retaining
+the three known setup differences in abuild/account configuration. It excludes
+credentials and does not query the phone's current trust store.
+
+`CONFIG_MODULE_SIG_FORCE` remains disabled as in the retained input. A future
+boot must supply `module.sig_enforce=1` and verify runtime enforcement. Signing
+and host trust-list checks do not establish that runtime result.
+
+This qualification uses the deterministic local archive pinned by recipe
+`5b863dcb43f9eac6965b7b7f6160266d252b3712`. A public-download recipe still
+requires publishing the reviewed source, independently fetching and verifying
+the actual server archive against Git, repinning its representation and
+requalifying the resulting recipe. The local checksum must not be presented as
+a verified GitHub archive checksum.
+
+[Full package evidence](../../evidence/2026-11-14-power-policy-standard-package.json)
+records exact artifact hashes, build identity, module manifest digest and scope.
+The [module file manifest](../../evidence/2026-11-14-power-policy-module-files.json)
+contains all 478 packaged module and metadata file hashes.
 
 No source or recipe is published by this work, and the phone is untouched.
 The failed r2 physical-base gate remains open. The exact paired firmware gate,
