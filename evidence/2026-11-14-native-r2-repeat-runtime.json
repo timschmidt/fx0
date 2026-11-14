@@ -1,0 +1,123 @@
+{
+  "recorded_UTC": "2026-11-14T16:48:19.990096+00:00",
+  "state": "PASS offline public unchanged-r2 controller/observer qualification; physical repeat undispatched",
+  "prepared_image": {
+    "SHA256": "49c23a63402b645c49c55ffbd44f140c64ad0bba722170472891fa3b1a45f0d1",
+    "bytes": 17272832,
+    "unchanged_from_original_failed_trial": true
+  },
+  "portable_qualification": [
+    {
+      "name": "clean-review-checkout",
+      "actual_returncode": 0,
+      "passed_methods": 29,
+      "skipped": 0,
+      "ignored_local_program_tree_present": false
+    },
+    {
+      "name": "source-only-export",
+      "actual_returncode": 0,
+      "passed_methods": 29,
+      "skipped": 0,
+      "ignored_local_program_tree_present": false
+    }
+  ],
+  "public_source_files_SHA256": {
+    "diagnostics/kernel-maintenance/native-trial.md": "72e2ae134df18197642030ed7bc6423a760a1ee246ed4d7c56b9e462cf448b17",
+    "diagnostics/kernel-maintenance/native_trial_adapter.py": "439944088ea8811a1bc5cda7f25f7b211e302f2eb84099178e1c47ef4e12d758",
+    "diagnostics/kernel-maintenance/native_trial_health_probe.py": "f7e5d35c3ed73743cac2892b50f90ec05b0190d7b296346bc5ae9d35d6792326",
+    "diagnostics/kernel-maintenance/native_trial_observer.py": "a69a3e2e1ab51ad6cb666bde324f171967e04aec92e8ee9cc5ec4fad9195d2d1",
+    "diagnostics/kernel-maintenance/native_trial_stage_probe.py": "be9f1993630cdaa9d52f1875372cba54183e24d70ab14f5add831e62e1f2500d",
+    "diagnostics/modem-control/passive_adapter.py": "ce40e5bbaacfffcc4db17396d9404d75b9e266f9d5277f565d7cccf230f96cb3",
+    "diagnostics/modem-control/passive_native_probe.py": "56fd575e52c6b5bd059cb0e1667053896e1e504cab389bf491d7df7f8e3e5488",
+    "diagnostics/modem-control/passive_runtime.py": "31629e68235fbb689c9e3ecb15bb7f230b790d9923af31c4ee6236219d2d0e08",
+    "diagnostics/modem-control/passive_trial.py": "24e5cd675f40f787298dbbf1ea0a21f46a2d39033512075b40e31bfb67e487f8",
+    "scripts/boot_fx0_ram.py": "fea54ce86d19f1a51665446095e9ae3dce60b34a0f38bfc70f7764f5611409b6",
+    "scripts/transfer_fx0_ram.py": "f402151d94422c895632276ec996b2a47f29dfa6269ddd4c7739b64fc1b5299c",
+    "tests/fixtures/native_adapter_child.py": "36e8d380c865b83f2b08677b4b342da66ba049768c4902c9234a326ff25d1b07",
+    "tests/native_adapter_fixture.py": "9d85af8afa32e4aaae4098fba8fc077dc298f6ae8b4283d512b6a0eb7d79f4b9",
+    "tests/test_native_adapter_bindings.py": "059adb38f7ce95bbf06d333488401c4184f25fcc7a10d3f2305b8724e61df52e",
+    "tests/test_native_adapter_faults.py": "7cebdcf7145187ed3e739545372999afa8791209686bb69a6c67567f6f59385b",
+    "tests/test_native_adapter_observer.py": "459f8e6eaf745daafb76bd374c5936e99aa4fb48ecd9294d92c6348534474f94",
+    "tests/test_native_adapter_plan.py": "5128c92d2dbb856d1a2c7db6645aed44ba17fe7d1d8301226bccd9d7c6d22dc8"
+  },
+  "actual_terminal_tool_observations": [
+    {
+      "handle": 99926,
+      "returncode": 0,
+      "methods_passed": 29,
+      "scope": "complete root suite after observer deadline correction"
+    },
+    {
+      "handle": 89031,
+      "returncode": 0,
+      "scope": "clean review and source-only17-file exports,29 methods each"
+    }
+  ],
+  "actual_static_input_check": {
+    "plan_SHA256": "69082490307d475a0a87abbbd011fbc34df6ecfe6e472912cd8f527f473dcacf",
+    "exit_code": 0,
+    "inputs_verified": true,
+    "credential_client_loaded": false,
+    "device_actions": false
+  },
+  "runtime": {
+    "mandatory_public_source_files": 10,
+    "mandatory_private_workspace_inputs": 4,
+    "durable_exclusive_attempt_claim": true,
+    "current_operator_image_boot_expiry_gate_before_client_import": true,
+    "transfer_parent_deadline_seconds": 180,
+    "observer_parent_deadline_seconds": 1100,
+    "normal_pre_BOOT_return_parent_deadline_seconds": 45,
+    "observer_readonly_loop_window_seconds": 1000,
+    "observer_own_marker_and_fsynced_state": true,
+    "status0_after_parent_deadline_rejected": true,
+    "actual_owned_child_reaping_required": true,
+    "parent_deadline_never_authorizes_USB_reset": true
+  },
+  "qualified_behaviors": [
+    "Actual concrete inherited transport and native-specific stage guard with forbidden-by-default offline providers",
+    "Single durable BOOT intent and no BOOT/reset retry after uncertainty",
+    "Observer failure/deadline still attempts full installed-r1 postflight",
+    "Fresh staged module manifest failure prevents bootloader entry",
+    "Native return alone does not imply candidate health",
+    "Wrong/incomplete candidate health or changed candidate boot forbids acceptance",
+    "Candidate/return boot identities and owned observer terminal status must match",
+    "Private client exception messages and tracebacks are excluded from CLI/observer outputs",
+    "Wrong owner/image/boot, expired/future owner and input/source/plan drift reject",
+    "Optimized Python rejects before device/private-client execution",
+    "Actual child with SIGTERM status0 after deadline cannot qualify candidate"
+  ],
+  "preserved_revisions": [
+    {
+      "revision": "initial exported fixture",
+      "actual_exit_code": 1,
+      "reason": "Fixture used PUBLIC.wait_ssh instead of inherited PUBLIC.common.wait_ssh",
+      "runtime_factory_constructed": false,
+      "test_only_correction": true
+    },
+    {
+      "revision": "private plan03 and ten runtime source snapshots",
+      "reason": "Add explicit no-deadline condition even for actual observer status0",
+      "old_plan_bytes_and_all_source_bytes_preserved": true,
+      "superseded_by": "private plan04"
+    }
+  ],
+  "original_r2_repeat_controller02_and_image_unchanged": true,
+  "original_passive_trial_sources_and_plan_unchanged": true,
+  "all_real_repeat_and_passive_workspaces_without_receipt_or_dispatch": true,
+  "real_private_device_record_or_client_body_read_hashed_or_copied_by_static_checks_or_tests": false,
+  "root_index_unchanged": true,
+  "phone_access": false,
+  "new_native_audit_performed": false,
+  "trial_dispatched": false,
+  "publication": false,
+  "full_goal_complete": false,
+  "limitations": [
+    "All native/USB/SSH responses are fixtures; no fresh phone observation is claimed.",
+    "This update keeps the exact r2 image and does not fix or explain its earlier display/IOMMU failure.",
+    "Actual staged-module preflight and current specific operator availability remain required.",
+    "Fresh physical candidate and returned display/touch confirmation, automatic return, kernel installation/update/recovery and the complete nonaudio hardware matrix remain open.",
+    "R5 dispatch remains disabled until the unchanged-r2 repeat has an accepted new native return and its distinct later trial is reviewed."
+  ]
+}

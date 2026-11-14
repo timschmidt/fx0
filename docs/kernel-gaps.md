@@ -226,3 +226,26 @@ No image was staged or booted. The reset cause and physical return remain
 unproven; tracing can change timing.
 [Trial sources and limits](../diagnostics/kernel-maintenance/display-handoff-trial/README.md)
 and [host preparation evidence](../evidence/2026-11-14-display-handoff-private-ram-preparation.json).
+
+## November 14: durable unchanged-r2 repeat controller
+
+A new [native repeat adapter](../diagnostics/kernel-maintenance/native-trial.md)
+keeps the exact original r2 image while reusing the qualified durable attempt
+journal, shared port lock, bounded owned-child waits and single-BOOT flow. Its
+native observer has separate candidate-health and installed-return evidence.
+An expired parent deadline rejects candidate acceptance even when the actual
+child exits zero; native verification is still attempted after intent.
+
+All 29 plan, concrete callback/fault and observer tests pass in both a clean
+review checkout and a 17-file source-only export. Disposable host children are
+real, while all device responses are substituted. A real static check of the
+retained image and new private plan04 loads no credential client and performs
+no device action. The initial test export and superseded pre-deadline plan03
+source bytes remain preserved.
+
+Controller02, the failed trial, the unchanged image and all passive source
+snapshots remain exact. No operator receipt or real attempt claim was created.
+The physical repeat still needs its specific fresh availability response and
+full native/staged preflight. R2 startup/display/return and the complete bringup
+remain unqualified; R5 stays a later diagnostic with dispatch disabled.
+[Offline runtime evidence](../evidence/2026-11-14-native-r2-repeat-runtime.json)
