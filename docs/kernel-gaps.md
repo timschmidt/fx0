@@ -203,3 +203,26 @@ passes five boundary/selection tests; no fuse word or unverified offset was
 read. Voltage/corner plans and APC/CPR control must be validated before any
 higher OPP is enabled. See [implementation gates](msm8226-cpu-performance.md)
 and [audit evidence](../evidence/2026-11-06-cpu-speedbin-audit.json).
+
+## November 14: R5 private RAM image prepared, not dispatched
+
+The qualified handoff-trace package now has two identical private RAM images,
+17,272,832 bytes each. Its separate return helper uses the R5 release/token and
+420-second absolute BOOTTIME deadline, with a 360-second normal systemd return.
+The ordinary init remains intact. The release change requires 60 module-path
+renames, all 19 early module replacements and all 14 matching metadata files;
+183 unrelated original records remain byte exact.
+
+Independent Android/newc/GNU cpio checks, four actual ARM image controls and
+systemd unit verification pass. Eight transformation/overlay test methods pass
+in both a clean review checkout and an 11-file source-only export. Their mounts,
+native state and reboot are fixtures. Private images, initramfs, command line
+and raw logs remain excluded from source review.
+
+The unchanged r2 repeat remains the first physical diagnostic step. R5's
+private preparation plan disables dispatch and requires a new accepted baseline
+after that repeat, its own operator availability and a reviewed controller.
+No image was staged or booted. The reset cause and physical return remain
+unproven; tracing can change timing.
+[Trial sources and limits](../diagnostics/kernel-maintenance/display-handoff-trial/README.md)
+and [host preparation evidence](../evidence/2026-11-14-display-handoff-private-ram-preparation.json).

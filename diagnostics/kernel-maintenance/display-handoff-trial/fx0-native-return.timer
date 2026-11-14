@@ -1,0 +1,11 @@
+[Unit]
+Description=Return from the temporary Fx0 native kernel trial
+DefaultDependencies=no
+ConditionKernelVersion=6.18.63-fx0-handoff-trace-alpine
+ConditionKernelCommandLine=fx0.native_trial=display-handoff-r5-01
+Before=timers.target
+
+[Timer]
+OnBootSec=360s
+AccuracySec=1s
+Unit=fx0-native-return.service
