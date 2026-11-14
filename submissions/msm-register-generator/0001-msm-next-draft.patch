@@ -1,0 +1,46 @@
+From 419aa84ededad458323d607eefaed6f76f8bd0cb Mon Sep 17 00:00:00 2001
+From: Emma Anholt <anholt@igalia.com>
+Date: Fri, 13 Nov 2026 20:43:05 -0500
+Subject: [PATCH] drm/msm: Make register usage header generation deterministic
+
+The register generator iterates a Python set when collecting per-variant
+usage arrays. Different hash seeds change the order of the generated C++
+templates. A C consumer also gets different header checksums in DWARF,
+which changes msm.ko and its build ID in otherwise identical builds.
+
+Backport Emma Anholt's Mesa change, "freedreno: Ensure that the
+generated pack headers are stable between builds.", by sorting variants
+before collecting usage arrays. Preserve every array key and register
+offset.
+
+Five hash seeds produce two distinct baseline headers on the Fx0 source
+and three on current mainline. Each fixed generator produces one header;
+all array contents and all other declarations remain unchanged.
+
+The original Mesa change was marked Generated-by: LLM. Codex assisted
+this Linux reproduction, backport validation and commit description.
+
+Fixes: 5acf49119630 ("drm/msm: import gen_header.py script from Mesa")
+Link: https://gitlab.freedesktop.org/mesa/mesa/-/commit/c09c414563fc0fe6788f28ee7a35522ab21d0ed5
+---
+ drivers/gpu/drm/msm/registers/gen_header.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
+index d3b56a9d84fb..5a738a2ad173 100644
+--- a/drivers/gpu/drm/msm/registers/gen_header.py
++++ b/drivers/gpu/drm/msm/registers/gen_header.py
+@@ -816,7 +816,7 @@ class Parser(object):
+                         if reg == vreg:
+                             d[(usage, sanitize_variant(variant))].append(reg)
+                 else:
+-                    for variant in self.variants:
++                    for variant in sorted(self.variants):
+                         d[(usage, sanitize_variant(variant))].append(reg)
+ 
+         print("#ifdef __cplusplus")
+
+base-commit: d024361c631b3f020a26c07d683e5103404b0fbf
+-- 
+2.56.0
+

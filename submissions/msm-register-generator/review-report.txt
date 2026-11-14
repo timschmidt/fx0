@@ -1,0 +1,45 @@
+LOCAL DRAFT: REGISTER GENERATOR REPRODUCIBILITY
+
+Prospective recipients (review before sending):
+Rob Clark <robin.clark@oss.qualcomm.com>
+Dmitry Baryshkov <lumag@kernel.org>
+linux-arm-msm@vger.kernel.org
+freedreno@lists.freedesktop.org
+dri-devel@lists.freedesktop.org
+
+Before sending, review the patch and configure the email client as described
+in Documentation/process/email-clients.rst. No report or patch has been sent.
+Human DCO review and sign-off are not added by this assistant.
+
+The real generator on Linux mainline 97d73c8251226cf27cc6656b4c542869bb8c69fa
+iterates an unordered Python variant set. Changing PYTHONHASHSEED changes
+C++ usage-array declaration order in generated a6xx.xml.h. On the qualified
+Fx0 source, otherwise matching builds produced different msm.ko files in
+.debug_line and their derived GNU build IDs; all other MSM module sections
+were equal. This is a build reproducibility issue, not a demonstrated
+kernel security boundary violation.
+
+Mesa already fixed this with Emma Anholt's c09c414563fc0fe6788f28ee7a35522ab21d0ed5,
+"freedreno: Ensure that the generated pack headers are stable between builds."
+The local draft backports that exact one-line sort and preserves authorship.
+The original Mesa commit records LLM assistance. Codex assisted the local
+reproduction, validation, backport message and this report.
+
+Reproduction and verification:
+Run verify-generator.py with --before pointing to the unmodified generator,
+--after to the patched generator, --registers to that kernel's
+ drivers/gpu/drm/msm/registers directory, and --output to a new JSON file.
+The check launches each real generator with five explicit Python hash seeds.
+It requires multiple baseline outputs, one fixed output, identical array
+keys and values, and byte-identical declarations outside those arrays.
+Stable source: 10 processes, 2 baseline outputs, 1 fixed output, 4 arrays.
+Mainline source: 10 processes, 3 baseline outputs, 1 fixed output, 18 arrays.
+
+The mainline draft passes strict checkpatch source checks. --no-tree is used
+because the checkout is sparse; --no-signoff reflects the current upstream
+coding-assistants.rst prohibition on AI agents adding human DCO certification.
+The primary draft is based directly on current msm-next
+d024361c631b3f020a26c07d683e5103404b0fbf. Its generator passes the same actual
+10-process check; the earlier mainline-based draft is retained separately.
+Complete clean Fx0 builds 03/04 are running; their byte equality is unproven.
+No physical kernel update or package/signing acceptance follows from this draft.
