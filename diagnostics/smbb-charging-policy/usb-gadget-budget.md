@@ -1,5 +1,9 @@
 # Fx0 USB gadget input budget
 
+The [6.18.63 port](current-usb-budget-port.md) applies this series after the
+current managed charging foundation, checks the real Kconfig feature guards
+and prepares a distinct normal package build. The physical gates remain open.
+
 The candidate routes ChipIdea USB gadget current requests to the verified
 PM8226 USB input actuator. Apply the actuator, bindings and budget patches
 in that order to Linux commit `2457eebe0bb67bcb5eccee7916650629cc4e9bf0`.

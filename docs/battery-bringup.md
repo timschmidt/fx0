@@ -780,3 +780,20 @@ No phone access, signed combined package, firmware/image update or physical
 charging qualification occurs. The r2 physical-base gate, ordered USB budget
 port, BMS discrepancy and complete electrical/thermal/reliability work remain
 open. [Port report](../diagnostics/smbb-charging-policy/current-kernel-port.md)
+
+## November 14: current-kernel USB budget port and r6 preparation
+
+The three preserved USB actuator/binding/gadget patches now apply after the
+current managed charging foundation. Callback and lifecycle regressions pass
+in source and a 16-file export. Managed/legacy ARM objects and an independently
+verified minimal no-power-supply profile compile; two USB metadata corrections
+make the selected document/schema checks clean. Fourteen property-contract cases
+cover valid and malformed PHY tuples, role flags and managed-budget restrictions.
+The board retains three W=1 warnings in unchanged eFuse/display definitions.
+
+All 91,271 archived source bodies, link targets and executable modes verify.
+A unique 6.18.63-r6 power-policy recipe is prepared and two normal offline
+abuilds have started in empty workspaces. Full package equality, signatures,
+ABI and payload audits remain pending. No phone or publication change occurs;
+electrical USB/charging/BMS, the r2 physical base and full acceptance remain open.
+[Current USB port report](../diagnostics/smbb-charging-policy/current-usb-budget-port.md)
