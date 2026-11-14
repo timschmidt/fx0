@@ -58,5 +58,11 @@ RTC time agrees with the synchronized wall clock within a second. This
 qualifies service execution on that reboot; it does not establish wall-time
 restoration before NTP or cold/long-term retention. See
 [execution evidence](../../evidence/2026-11-14-swclock-warm-service-execution.json).
-Native transaction/recovery qualification and a boot with the fixed unit
-remain open, along with full RTC and hardware acceptance.
+The signed pair now passes four native transaction/recovery cases with the
+production-shaped 1,929-path guard set, complete 775-package record restoration
+and unchanged offset. A separate killed inventory writer covers the fixed
+sidecar recovery rule. Production read-only checks and the original-package
+PID1 reload/enqueue rehearsal pass. See [native qualification](../../evidence/2026-11-14-swclock-native-transaction-qualification.json)
+and the [exact controller reference](../../diagnostics/native-swclock-update/README.md).
+The phone still has r0; fixed-unit installation/boot, pre-NTP restoration,
+cold/long-term RTC retention and full hardware acceptance remain open.

@@ -1,5 +1,35 @@
 # LG Fx0 hardware acceptance
 
+## Current checkpoint: November 14 UTC
+
+The accepted installation is Linux 6.18.63-r1 on boot `e134d38d`, with the
+775-package stable baseline, signature enforcement enabled and taint zero.
+The owner confirms display and touch on this boot. The first reproducible r2
+RAM trial returned before candidate SSH or desktop; its retained console ends
+at a display IOMMU fault. The cause is unproven, and r2 remains unqualified and
+uninstalled. The installed r1 return passes independent boot, signed-payload,
+module, key and process-mapping checks.
+[Trial and verified return](../evidence/2026-11-14-reproducible-r2-first-ram-trial.json)
+
+The earlier stable boot `6dbb410a` passed 20 consecutive physical DMP wakes
+and a masked-motion RTC control, with recovered quaternion samples, zero new
+MDP5 faults and owner-confirmed display/touch. Those cycles belong to that
+boot; they have not been repeated on `e134d38d`. The 50 mixed-peripheral
+cycles, battery standby and 24-hour soak remain open.
+[DMP evidence](../evidence/2026-11-14-stable-dmp-wake-regression.json)
+
+The clock ordering package passes two identical signed builds and native
+four-case update/file recovery with all 1,929 production-shaped guards. The
+original-package production preflight and PID1 reload/enqueue rehearsal also
+pass without changing the clock invocation, core process IDs or offset file.
+The original 0.3.0-r0 packages remain installed. Installation of the fixed unit,
+a boot with it, pre-NTP wall restoration and cold/long-term retention remain
+open. [Native qualification](../evidence/2026-11-14-swclock-native-transaction-qualification.json)
+
+Historical rows below retain their original image and test scope. Completion
+requires the full nonaudio matrix on the final combined image. Audio remains
+excluded; no SIM blocks final cellular tests only.
+
 ## Status and evidence
 
 All entries initially have status **unverified**. No physical test result is implied by source availability. Record two distinct results for each function: the stock baseline and the current Nura candidate. An implementation commit or device-node enumeration alone is not a functional pass.
@@ -8,7 +38,7 @@ Use these statuses: `unverified`, `identified`, `in progress`, `blocked`, `faile
 
 For each result record the exact image hash, source revisions, package manifest, unit revision, power source, battery condition, procedure, observations, log/artifact reference, and date. Keep identifiers and original logs privately; publish reviewed evidence under `evidence/` when available.
 
-**Current phone state, November 13 UTC:** persistent Linux 6.18.63-r1,
+**November 13 userspace update checkpoint (historical):** persistent Linux 6.18.63-r1,
 treescan 0.1-r1, Sxmo 1.18.1-r7 and UPower r5. Thirty stable userspace
 updates pass native installation and independent signed payload, boot,
 module, unit inventory and service verification. Fresh authenticated stable
@@ -251,7 +281,7 @@ open. See [rebuild evidence](../evidence/2026-11-08-kernel-reconstruction.json).
 | Charging | Correct input/charge limits; plug/unplug, termination, temperature response, power-off charging as supported | In progress: RAM firmware gate and Linux managed policy now validate runtime profile/sensors, user inhibition and supplier loss while USB HTTP stays available. Forced supplier rebind needs explicit drivers_probe. Model/fault/quiesce/ABI tests and ARM builds pass; actual thermal boundaries, system suspend, watchdog timing, USB negotiation, current accuracy, termination and powered-off charging remain open. BTC stays conservative; the policy remains RAM-only and installed r50 is unchanged. See [native policy evidence](../evidence/2026-10-30-smbb-native-policy.json) |
 | Thermal management | Sensors and trip behavior; sustained CPU/GPU/media loads; throttling and recovery | Partial observation only: r49 reports two CPU zones with passive 75°C/critical 110°C trips; bounded 30 s four-core load peaks at reported 47°C and recovers without changing policy. Sensor accuracy, sustained mixed loads and actual throttling remain unqualified ([evidence](../evidence/2026-11-06-cpu-thermal-bounded-r49.json)) |
 | Suspend and wake | Verified sleep state; measured unplugged consumption; buttons, RTC and required MPU-6515M DMP interrupt wake, plus other supported event wake sources | In progress (r19, 2026-11-01): s2idle works. 20 of 20 RTC-woken 20 s suspend/resume cycles pass with touch, display, Wi-Fi, ADSP/WCNSS and sound back each time; owner confirms Sxmo and touch after resume, and the power key wakes it (owner-tested). Fixed on the way: the in-cell touchscreen now follows the panel (it hung the I2C bus once the display went off) and MDP5 hwpipe state after resume. No cpuidle states yet, so no measured savings; Sxmo lock/screen-off states and current draw remain ([evidence](../evidence/2026-11-01-s2idle-touch-mdp5.json)). 2026-11-02: CPU idle standalone power collapse works on all four cores (local-timer-stop broadcast fix, kernel r44); about 90% of idle time collapsed, s2idle still succeeds ([evidence](../evidence/2026-11-02-cpuidle-spc.json)) |
-| Clock and RTC | Correct timekeeping, time synchronization, suspend continuity and alarm behavior as supported | In progress (2026-11-14 UTC): the installed swclock-offset 0.3.0-r0 scripts and enabled systemd units retain a software wall-clock offset, consistent with stock disabling raw-counter writes. Current RTC plus the saved offset agrees with system time within 1.06 seconds. Raw RTC date 1970 alone does not establish a clock fault. The same-boot masked DMP control demonstrates RTC wake; accuracy, cold/warm retention and complete boot/shutdown execution qualification remain open ([read-only reconciliation](../evidence/2026-11-14-rtc-software-offset-reconciliation.json)). |
+| Clock and RTC | Correct timekeeping, time synchronization, suspend continuity and alarm behavior as supported | Partial (November 14 UTC): signed swclock-offset 0.3.0-r0 remains installed. Prior-boot PID1 shutdown completion and current-boot clock invocation exit 0/MainPID 0/empty cgroup are proved; corrected RTC agrees with synchronized wall time within one second ([execution](../evidence/2026-11-14-swclock-warm-service-execution.json)). A separate 665–667 s sample gives -51.914 to -22.416 ppm relative to CLOCK_BOOTTIME, with read uncertainty; it does not establish absolute accuracy. Native fixed-package transaction/recovery and baseline manager rehearsal pass ([qualification](../evidence/2026-11-14-swclock-native-transaction-qualification.json)); fixed-unit installation/boot, pre-NTP wall restoration, cold retention and long-term accuracy remain open. |
 | Power-off and restart | Clean shutdown, restart, low-battery handling and repeatable subsequent boot | Unverified |
 | Speaker | Playback, volume, amplifier behavior, supported rates, no persistent distortion and suspend recovery | In progress (audio probe kernel): mainline QDSP6 + SLIMbus + new WCD9306 component play to the speaker: worked on installed r14 (owner-confirmed), but since then the speaker is silent on most boots with every software indicator normal; under investigation ([regression evidence](../evidence/2026-11-01-speaker-regression-open.json)); volume range, rates and suspend pending ([evidence](../evidence/2026-11-01-speaker-installed.json)) ([evidence](../evidence/2026-10-31-first-speaker-playback.json)) |
 | Earpiece | Playback and telephone routing, volume, proximity interaction and call transitions | Unverified |
@@ -283,8 +313,8 @@ open. See [rebuild evidence](../evidence/2026-11-08-kernel-reconstruction.json).
 | Voice calls | Incoming/outgoing, DTMF, earpiece/mic, speakerphone, headset, Bluetooth, proximity, suspend wake | Blocked without SIM/network |
 | Network modes | Bands and modes supported by this device/network; airplane mode; VoLTE/IMS only if supported | Blocked for network qualification |
 | UI integration | Keyboard, rotation, lock/unlock, notifications, camera/audio selection and console recovery | Native Wayland/Sxmo terminal and keyboard physically work using Pixman; installed r2 orientation passes. A physical-trace-driven gesture profile passes synthetic replay on installed r3; physical close/open retest passes; remaining integration tests pending |
-| Updates | Current packages; kernel actually changes after update; DTB/initramfs deployment; recovery to known-good image | Partial: repository refresh/upgrade audited earlier; native r3 replacement and subsequent boot pass; saved native16 fallback fails startup acceptance. Frozen-r3 rescue/menu repair pass across the kernel r4 upgrade. UPower r4 installation, native CLI/services and regenerated artifacts pass; the later sensor diagnostic returns to a fresh r4/UPower r4 boot. UPower r5 is now installed on r50 with matching daemon, native startup/CLI checks and byte-identical boot readback after normal hooks. No whole-system currency claim. Live package/root rollback and final-layout update tests remain pending. See [UPower evidence](../evidence/2026-10-30-upower-telemetry-r4.json) and [return boot](../evidence/2026-10-30-sensor-ownership-and-id.json) |
-| Final storage layout | Full restoration coverage/rehearsal before repartition; one maximum-capacity native root and minimum justified extra partitions; external SD removable | In progress: host-only 14.30 GiB ext4/GPT preview and offset-aware updater source checks pass; factory-stock rehearsal, minimum retained-partition audit and all physical migration/update/recovery tests remain open |
+| Updates | Current packages; kernel actually changes after update; DTB/initramfs deployment; recovery to known-good image | Partial: native stable userspace upgrades and exact rollback pass, and the full current edge transaction returns to the original stable 775-package fixture with independent cross-boot recovery verification. Two fresh signed reproducible kernel builds pass host checks, but the first r2 RAM boot fails before desktop and returns to verified installed r1 ([trial](../evidence/2026-11-14-reproducible-r2-first-ram-trial.json)). The clock pair passes isolated native transaction/recovery and original-package production checks; live installation awaits specific approval. Current kernel installation/recovery and final combined acceptance remain open. |
+| Final storage layout | Full restoration coverage/rehearsal before repartition; one maximum-capacity native root and minimum justified extra partitions; external SD removable | Historical factory restoration and final-layout stock/native return passed before consolidation. The current GPT matches the final design, with original firmware/calibration entries retained and the maximum native root. Removable SD remains separate. Current combined-image storage reliability and SD writeback/removal/suspend acceptance remain open ([factory rehearsal](../evidence/2026-10-31-factory-stock-rehearsal.json), [final layout](../evidence/2026-10-31-final-storage-layout.json), [stock/native return](../evidence/2026-11-01-stock-rollback-from-final-layout.json)). |
 
 ## Reliability qualification
 

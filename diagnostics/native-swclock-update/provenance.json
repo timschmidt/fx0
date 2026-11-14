@@ -1,0 +1,27 @@
+{
+  "native_controller_SHA256": "05269c291f744bf6d9203314b8683caa061e4a5bc57f0b74cbcbf9b1b918425c",
+  "source_hashes": {
+    "apk_actions.py": "994dcb5b0cb7affe5322a8927925df0100032ed924c1d5e0d0b757ec616eec09",
+    "snapshot_core.py": "d04677854e6fb28855db2bff4fa12ae81b434bcde065d8ee34d449996d909599",
+    "manager_policy.py": "43d4bc7707e3bc18e1292db65eaa6cac49259b68d10cb5bca3a3a7a265a6247f",
+    "test_clock_guards.py": "01ac506e14571d8a6f81ac4971987cb3e6974996661f5d8b402bc79481f9f306",
+    "recovery_controller.py": "81bbad6f600fc10844dcb4f42738bee6aaa28fd71f194ed89682cb6267d06c86",
+    "update_transaction.py": "62c41c46c495f5de30b40f2e0373bbd1f93558c5c3466e893989f8b32d37c9dc",
+    "clock_transaction.py": "05269c291f744bf6d9203314b8683caa061e4a5bc57f0b74cbcbf9b1b918425c",
+    "test_manager_policy.py": "8a832df53757bb36cbb575defde7983e195ba8cd243d7965a8d4b6226c70a91a"
+  },
+  "native_evidence": "../../evidence/2026-11-14-swclock-native-transaction-qualification.json",
+  "private_capture_inputs_required": true,
+  "private_backup_manifest_archive_and_offset_bodies_excluded": true,
+  "manager_policy_is_pure_tested_component": true,
+  "recovery_entry_wrapper_staged_but_not_executed": true,
+  "qualified_recovery_methods_unchanged": true,
+  "partial_inventory_method_AST_exact_previous_SIGKILL_component": true,
+  "live_fixed_package_installation": false,
+  "portable_component_checks": {
+    "command": "python3 -B -m unittest discover -s diagnostics/native-swclock-update -p 'test_*.py' -v",
+    "test_count": 9,
+    "returncode": 0,
+    "native_complete_775_record_fixture_is_separate": true
+  }
+}
