@@ -93,3 +93,20 @@ checkout's exact HEAD and run the check with Python. It covers the absent
 option, a quoted absolute path containing spaces, rejected relative/newline
 paths, non-abuild call preservation and return-status propagation. Its final
 pmbootstrap main/chroot calls are captured; it does not build or read keys.
+
+`audit-native-toolchain.py --native-root /path/to/native --report /new/report.json`
+checks package-owned file bodies and symlink targets against the retained APK
+database. It resolves absolute links within the native root, excludes credential
+and private-key paths, refuses an existing report, and returns nonzero for any
+unreconciled difference. It reads no signer keys and does not modify the root.
+Its database checksum is an input identity; it does not independently establish
+package signatures or trust a new build signer.
+
+For the pinned 103-package toolchain, 6,236 paths are checked. The 6,233 unchanged
+bodies or links include the compiler, linker, signer and packaging tools. The
+three differences are the exact build-account setup in passwd/group and the
+standard abuild template plus the declared JOBS and cleanup assignments. Compare
+those complete changes with their verified source APKs and setup sources;
+blanket configuration exceptions are not accepted. The reusable auditor retains
+these differences and returns nonzero so a caller cannot mistake setup changes
+for an unqualified checksum pass.
