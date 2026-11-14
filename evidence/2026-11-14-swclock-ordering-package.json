@@ -1,0 +1,87 @@
+{
+  "recorded_UTC": "2026-11-14T05:38:26.566182+00:00",
+  "recipe_commit": "ca9dd83b1241f9059ac1242068bb1d1453a942e3",
+  "maintainer_base": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
+  "upstream_clock_fix_draft": "83d60105c3714e8f16eeb8188e978c6ee3b7cac7",
+  "source_archive_SHA512": "7779deaf688dd25b9abe8161c8a0651d11b1a44785ff4495a1c4a8b9ba2108a9e73c47cbdb3f8669c4e2e85bea884145f66311c9ce674c1464538695a9852dc0",
+  "artifacts": [
+    {
+      "file": "APKINDEX.tar.gz",
+      "bytes": 1235,
+      "SHA256": "32c059ddb7b3dbd77c6e10a1a99c78aa507fd799e0e1e58f28bf02251427ddfe",
+      "two_independent_clean_builds_byte_identical": true,
+      "independent_RSA_signature_valid": true,
+      "altered_signed_bytes_rejected": true
+    },
+    {
+      "file": "swclock-offset-0.3.0-r1.apk",
+      "bytes": 2540,
+      "SHA256": "7d6b7f913ffbe0af69b8771a6be2734e52017ce59031879f7bfcbe7f8d224acd",
+      "two_independent_clean_builds_byte_identical": true,
+      "independent_RSA_signature_valid": true,
+      "altered_signed_bytes_rejected": true,
+      "package": "swclock-offset",
+      "architecture": "noarch",
+      "control_identity": "Q1ooP9zcGn5rN/t+y/r1Qeu+r4hPA=",
+      "payload_files": 2,
+      "dependencies": [
+        "/bin/sh"
+      ]
+    },
+    {
+      "file": "swclock-offset-openrc-0.3.0-r1.apk",
+      "bytes": 2677,
+      "SHA256": "799e4fdf5a74c906597a188fd835eb98cc37602e1677457d1d1a2c79f49fff2c",
+      "two_independent_clean_builds_byte_identical": true,
+      "independent_RSA_signature_valid": true,
+      "altered_signed_bytes_rejected": true,
+      "package": "swclock-offset-openrc",
+      "architecture": "noarch",
+      "control_identity": "Q1Nbyxie0inGh63UfkNbNhoreOsXI=",
+      "payload_files": 2,
+      "dependencies": [
+        "/bin/sh"
+      ]
+    },
+    {
+      "file": "swclock-offset-systemd-0.3.0-r1.apk",
+      "bytes": 2048,
+      "SHA256": "e4434d98ff3d4a73c89b98517305182afbf010067aa4790e7d0f2eba7d0b2c0f",
+      "two_independent_clean_builds_byte_identical": true,
+      "independent_RSA_signature_valid": true,
+      "altered_signed_bytes_rejected": true,
+      "package": "swclock-offset-systemd",
+      "architecture": "noarch",
+      "control_identity": "Q1Op62WkD5oncXXYP0Eh4od57wj8Y=",
+      "payload_files": 3,
+      "dependencies": []
+    }
+  ],
+  "changed_installed_payload_files": [
+    "usr/lib/systemd/system/swclock-offset-boot.service"
+  ],
+  "unchanged_main_package_removal_hook_exact": true,
+  "independent_signature_and_valid_format_altered_service_payload_rejection": true,
+  "signature_trust_key_SHA256": "d03c2c7d83f402a9fd24c844063c7286bcd73c25ccf8211b24776a126ee5ce87",
+  "native_ARMv7_APK_version": "apk-tools 3.0.9-r1, compiled for armv7.",
+  "native_full775_database_solver_actions": [
+    [
+      "swclock-offset",
+      "0.3.0-r0",
+      "0.3.0-r1"
+    ],
+    [
+      "swclock-offset-systemd",
+      "0.3.0-r0",
+      "0.3.0-r1"
+    ]
+  ],
+  "native_simulation_returncode": 0,
+  "normal_installed_world_and_DB_unchanged": true,
+  "actual_old_and_new_package_unit_offline_manager_two_fsck_graph_passed": true,
+  "clock_and_fsck_jobs_executed_by_graph_test": false,
+  "native_transaction_and_recovery_qualified": false,
+  "fixed_package_installed_or_booted": false,
+  "public_source_recipe_publication_pending_owner_approval": true,
+  "maintainer_messages_sent": false
+}

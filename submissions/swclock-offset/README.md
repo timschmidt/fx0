@@ -37,6 +37,26 @@ disposable container. The baseline/draft offline checks and the reusable
 reproducer all pass. Earlier restricted-sandbox and fixture-command setup
 failures are retained privately; they did not execute services or clock code.
 
-This is source and offline-manager qualification. The phone still has its
-original 0.3.0-r0 package and unit. Real boot/shutdown execution, RTC accuracy,
-cold/warm offset retention and the full hardware matrix remain open.
+The stable pmaports recipe draft `ca9dd83b1241f9059ac1242068bb1d1453a942e3`
+starts from the current v26.06 maintainer head
+`2a8621d64d91647f7362eac59e7cdc091ff2bba8` and carries this patch as
+0.3.0-r1. Two fresh normal abuild runs produce identical signed main, OpenRC
+and systemd APKs and an identical signed index. Independent signature and
+valid-format altered-payload rejection checks pass. Only the installed boot
+unit changes; scripts, the shutdown unit and removal hook remain byte exact.
+
+The actual old and new packaged units pass the offline manager regression
+with two filesystem checks. On the phone, APK 3.0.9-r1 resolves exactly the
+main and systemd upgrades using an isolated copy of its current 775-package
+database. The OpenRC subpackage is not selected. These checks install nothing.
+See [package evidence](../../evidence/2026-11-14-swclock-ordering-package.json).
+
+The phone retains its original 0.3.0-r0 packages. A completed warm reboot
+now has actual prior-boot PID1 shutdown success records and a current boot
+invocation with exit status 0, MainPID 0 and no remaining cgroup. Corrected
+RTC time agrees with the synchronized wall clock within a second. This
+qualifies service execution on that reboot; it does not establish wall-time
+restoration before NTP or cold/long-term retention. See
+[execution evidence](../../evidence/2026-11-14-swclock-warm-service-execution.json).
+Native transaction/recovery qualification and a boot with the fixed unit
+remain open, along with full RTC and hardware acceptance.
