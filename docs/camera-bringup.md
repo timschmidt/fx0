@@ -229,6 +229,16 @@ clocks are not a blocker. Three pieces remain:
    and compilation only. MSM8226 resources, board changes and physical acceptance
    on this base remain open. The saved-completion VFE fix stays on its separate
    media-fixes branch; no phone changes or maintainer contact were made.
+
+   The follow-up [MSM8226 media support draft](../submissions/camss-msm8226-current-media/README.md)
+   at `d1eaeaee06f7b1977e563034b9ae1f021b8c0752` retains this Kconfig change
+   and adds the existing binding and resources, including the later VFE AXI
+   rate/matcher fix. Complete native ARM/ARM64 components, direct binding and
+   compiled-example checks, and ten schema rejection controls pass. The binding
+   is unchanged from the integration version; regulator entries use the current
+   structure while preserving zero unspecified load. Current-base VFE IOMMU,
+   MMCC, common DTS and Fx0 board/sensor dependencies remain open. This is host
+   support qualification and does not inherit old integration hardware results.
 3. **VFE 4.0 against the 4.1 operations.** The vendor driver has
    MSM8226-specific VFE versions and VBIF setup. Audit reset, interrupts,
    write masters, RDI and bus/QoS before reusing `vfe_ops_4_1`.

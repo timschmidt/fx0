@@ -1,0 +1,49 @@
+From 2f2e63bfa2902eb11bab4f4107a274e2ed6a8368 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 14 Nov 2026 21:21:31 -0500
+Subject: [PATCH 1/3] media: qcom: camss: Allow the ARM IOMMU DMA backend
+
+32-bit ARM provides its IOMMU DMA mapping backend through
+ARM_DMA_USE_IOMMU. IOMMU_DMA is unavailable on this architecture, so the
+CAMSS dependency currently excludes its native Qualcomm configuration.
+
+Accept either DMA backend while retaining the ARCH_QCOM requirement and
+the existing COMPILE_TEST alternative. This prepares native ARM32 driver
+selection; platform resources and board support are separate changes.
+
+Refresh the existing integration change 9d46e4575ea1 against media next.
+The Kconfig engine enables native ARM32 CAMSS with COMPILE_TEST disabled,
+keeps native ARM64 selection unchanged, and rejects native selection
+without either DMA backend or without ARCH_QCOM. Complete ARM and ARM64
+CAMSS components compile with W=1 and incompatible function pointer
+warnings treated as errors. These checks do not establish hardware DMA
+operation or provide MSM8226 resources.
+
+The original change was developed with Claude Opus 5.5. This refresh and
+its host qualification used OpenAI Codex assistance. Human review and
+DCO certification remain pending.
+
+Original integration attribution credits Claude Opus 5.5
+<noreply@anthropic.com> as a co-author.
+---
+ drivers/media/platform/qcom/camss/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/media/platform/qcom/camss/Kconfig b/drivers/media/platform/qcom/camss/Kconfig
+index b51745c94..abb63aebe 100644
+--- a/drivers/media/platform/qcom/camss/Kconfig
++++ b/drivers/media/platform/qcom/camss/Kconfig
+@@ -2,7 +2,7 @@ config VIDEO_QCOM_CAMSS
+ 	tristate "Qualcomm V4L2 Camera Subsystem driver"
+ 	depends on V4L_PLATFORM_DRIVERS
+ 	depends on VIDEO_DEV
+-	depends on (ARCH_QCOM && IOMMU_DMA) || COMPILE_TEST
++	depends on (ARCH_QCOM && (IOMMU_DMA || ARM_DMA_USE_IOMMU)) || COMPILE_TEST
+ 	select MEDIA_CONTROLLER
+ 	select VIDEO_V4L2_SUBDEV_API
+ 	select VIDEOBUF2_DMA_SG
+
+base-commit: 3fc9303dba01676c2090768126e5327e341b7761
+-- 
+2.56.0
+

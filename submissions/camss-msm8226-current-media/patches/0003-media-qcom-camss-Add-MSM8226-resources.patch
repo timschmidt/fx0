@@ -1,0 +1,202 @@
+From d1eaeaee06f7b1977e563034b9ae1f021b8c0752 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 14 Nov 2026 21:35:24 -0500
+Subject: [PATCH 3/3] media: qcom: camss: Add MSM8226 resources
+
+Describe two two-phase CSIPHYs, two CSID 4.1 instances, one ISPIF and one
+VFE using the existing legacy operations. Omit MSM8916's separate CAMSS
+AHB clock and use the MSM8226 VFE clock levels from 37.5 to 400 MHz.
+
+Keep the later integration change that scales the VFE AXI clock to
+266.67 MHz. Add vfe_axi to the clock-name matcher so its nonzero rate
+table is used. Other existing platforms have zero-only vfe_axi tables;
+the clock-level guard continues to exclude them.
+
+Refresh commit f8a7ccc43396 ("media: qcom: camss: Add MSM8226 resources"),
+rebased as 680a10f798d0, and AXI follow-up d1f8047db385. Adapt the entries
+to the current
+regulator_bulk_data format with a vdda supply and default zero load,
+preserving the integration's unspecified-load behavior. Do not copy a
+new load requirement from a different SoC.
+
+Both native ARM and ARM64 complete CAMSS components build with W=1 and
+incompatible function pointer warnings treated as errors. Clock,
+register and interrupt names agree with the binding. The vendor VFE 4.0
+uses the reused 4.1 operations in the existing integration; hardware
+acceptance on this media-next base remains open. Board and IOMMU support
+are separate dependencies.
+
+Original integration attribution credits Claude Opus 5.5
+<noreply@anthropic.com> as a co-author. This refresh and host qualification
+used OpenAI Codex assistance. Human review and DCO remain pending.
+---
+ drivers/media/platform/qcom/camss/camss-vfe.c |   1 +
+ drivers/media/platform/qcom/camss/camss.c     | 126 ++++++++++++++++++
+ 2 files changed, 127 insertions(+)
+
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 2680a9914..25b0865e4 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -914,6 +914,7 @@ static int vfe_match_clock_names(struct vfe_device *vfe,
+ 	return (!strcmp(clock->name, vfe_name) ||
+ 		!strcmp(clock->name, vfe_lite_name) ||
+ 		!strcmp(clock->name, "vfe_lite") ||
++		!strcmp(clock->name, "vfe_axi") ||
+ 		!strcmp(clock->name, "camnoc_axi") ||
+ 		!strcmp(clock->name, "camnoc_rt_axi"));
+ }
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index c54185c93..47f040186 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -162,6 +162,120 @@ static const struct camss_subdev_resources vfe_res_8x16[] = {
+ 	}
+ };
+ 
++/* MSM8226: the MSM8916 blocks without the separate CAMSS AHB clock. */
++static const struct camss_subdev_resources csiphy_res_8x26[] = {
++	/* CSIPHY0 */
++	{
++		.regulators = {},
++		.clock = { "top_ahb", "ispif_ahb", "csiphy0_timer" },
++		.clock_rate = { { 0 },
++				{ 0 },
++				{ 100000000, 200000000 } },
++		.reg = { "csiphy0", "csiphy0_clk_mux" },
++		.interrupt = { "csiphy0" },
++		.csiphy = {
++			.id = 0,
++			.hw_ops = &csiphy_ops_2ph_1_0,
++			.formats = &csiphy_formats_8x16
++		}
++	},
++
++	/* CSIPHY1 */
++	{
++		.regulators = {},
++		.clock = { "top_ahb", "ispif_ahb", "csiphy1_timer" },
++		.clock_rate = { { 0 },
++				{ 0 },
++				{ 100000000, 200000000 } },
++		.reg = { "csiphy1", "csiphy1_clk_mux" },
++		.interrupt = { "csiphy1" },
++		.csiphy = {
++			.id = 1,
++			.hw_ops = &csiphy_ops_2ph_1_0,
++			.formats = &csiphy_formats_8x16
++		}
++	}
++};
++
++static const struct camss_subdev_resources csid_res_8x26[] = {
++	/* CSID0 */
++	{
++		.regulators = { { .supply = "vdda" } },
++		.clock = { "top_ahb", "ispif_ahb", "csi0_ahb",
++			   "csi0", "csi0_phy", "csi0_pix", "csi0_rdi" },
++		.clock_rate = { { 0 },
++				{ 0 },
++				{ 0 },
++				{ 100000000, 200000000 },
++				{ 0 },
++				{ 0 },
++				{ 0 } },
++		.reg = { "csid0" },
++		.interrupt = { "csid0" },
++		.csid = {
++			.hw_ops = &csid_ops_4_1,
++			.parent_dev_ops = &vfe_parent_dev_ops,
++			.formats = &csid_formats_4_1
++		}
++	},
++
++	/* CSID1 */
++	{
++		.regulators = { { .supply = "vdda" } },
++		.clock = { "top_ahb", "ispif_ahb", "csi1_ahb",
++			   "csi1", "csi1_phy", "csi1_pix", "csi1_rdi" },
++		.clock_rate = { { 0 },
++				{ 0 },
++				{ 0 },
++				{ 100000000, 200000000 },
++				{ 0 },
++				{ 0 },
++				{ 0 } },
++		.reg = { "csid1" },
++		.interrupt = { "csid1" },
++		.csid = {
++			.hw_ops = &csid_ops_4_1,
++			.parent_dev_ops = &vfe_parent_dev_ops,
++			.formats = &csid_formats_4_1
++		}
++	},
++};
++
++static const struct camss_subdev_resources ispif_res_8x26 = {
++	/* ISPIF */
++	.clock = { "top_ahb", "ispif_ahb",
++		   "csi0", "csi0_pix", "csi0_rdi",
++		   "csi1", "csi1_pix", "csi1_rdi" },
++	.clock_for_reset = { "vfe0", "csi_vfe0" },
++	.reg = { "ispif", "csi_clk_mux" },
++	.interrupt = { "ispif" },
++};
++
++static const struct camss_subdev_resources vfe_res_8x26[] = {
++	/* VFE0 */
++	{
++		.regulators = {},
++		.clock = { "top_ahb", "vfe0", "csi_vfe0",
++			   "vfe_ahb", "vfe_axi" },
++		.clock_rate = { { 0 },
++				{ 37500000, 50000000, 60000000, 80000000,
++				  100000000, 109090000, 133330000, 150000000,
++				  200000000, 228570000, 266670000, 320000000,
++				  400000000 },
++				{ 0 },
++				{ 0 },
++				{ 266670000 } },
++		.reg = { "vfe0" },
++		.interrupt = { "vfe0" },
++		.vfe = {
++			.line_num = 3,
++			.hw_ops = &vfe_ops_4_1,
++			.formats_rdi = &vfe_formats_rdi_8x16,
++			.formats_pix = &vfe_formats_pix_8x16
++		}
++	}
++};
++
+ static const struct camss_subdev_resources csiphy_res_8x39[] = {
+ 	/* CSIPHY0 */
+ 	{
+@@ -5576,6 +5690,17 @@ static void camss_remove(struct platform_device *pdev)
+ 	camss_genpd_cleanup(camss);
+ }
+ 
++static const struct camss_resources msm8226_resources = {
++	.version = CAMSS_8x16,
++	.csiphy_res = csiphy_res_8x26,
++	.csid_res = csid_res_8x26,
++	.ispif_res = &ispif_res_8x26,
++	.vfe_res = vfe_res_8x26,
++	.csiphy_num = ARRAY_SIZE(csiphy_res_8x26),
++	.csid_num = ARRAY_SIZE(csid_res_8x26),
++	.vfe_num = ARRAY_SIZE(vfe_res_8x26),
++};
++
+ static const struct camss_resources msm8916_resources = {
+ 	.version = CAMSS_8x16,
+ 	.csiphy_res = csiphy_res_8x16,
+@@ -5810,6 +5935,7 @@ static const struct camss_resources x1e80100_resources = {
+ };
+ 
+ static const struct of_device_id camss_dt_match[] = {
++	{ .compatible = "qcom,msm8226-camss", .data = &msm8226_resources },
+ 	{ .compatible = "qcom,msm8916-camss", .data = &msm8916_resources },
+ 	{ .compatible = "qcom,msm8939-camss", .data = &msm8939_resources },
+ 	{ .compatible = "qcom,msm8953-camss", .data = &msm8953_resources },
+-- 
+2.56.0
+

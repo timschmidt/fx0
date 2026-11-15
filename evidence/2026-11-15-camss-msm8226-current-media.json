@@ -1,0 +1,418 @@
+{
+  "recorded_UTC": "2026-11-15T02:39:52.812395+00:00",
+  "source_base": "3fc9303dba01676c2090768126e5327e341b7761",
+  "source_head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+  "source_tree": "05957b7e2a8b2bd79271716b626915f0ff979dbc",
+  "source_files_SHA256": {
+    "drivers/media/platform/qcom/camss/camss.c": "cffd2781e5cdc9c9c8daf62b7777c7a183233475837c9cdc5b7537f50f2121f5",
+    "drivers/media/platform/qcom/camss/camss-vfe.c": "9c90cb0cd79cebd177068ff2a876e1930d37e5778147b80a0f648cea7e756a4b",
+    "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml": "0888da8dda271d056495c3e5c41bbbfd097b2170c8272fe6b9b5a24696a192bf"
+  },
+  "source_parent_Kconfig": "2f2e63bfa2902eb11bab4f4107a274e2ed6a8368",
+  "source_branch": "development/camss-msm8226-media-next-02",
+  "original_commits": [
+    {
+      "sha": "0d997632754888debc0f7b25fec2dbc59104ca74",
+      "parent": "df3ff68984d8048c2433c751b35aec06d90bdc8a",
+      "author": {
+        "name": "Timothy Schmidt",
+        "email": "timschmidt@gmail.com",
+        "date": "2026-10-31T09:30:04Z"
+      },
+      "message": "dt-bindings: media: Add the MSM8226 CAMSS\n\nMSM8226 has the CSIPHY, CSID, ISPIF and VFE blocks of MSM8916 at the same\noffsets and interrupts, without the separate CAMSS AHB clock.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+    },
+    {
+      "sha": "f8a7ccc43396a809eb935100aa6db70a7defa3a3",
+      "parent": "0d997632754888debc0f7b25fec2dbc59104ca74",
+      "author": {
+        "name": "Timothy Schmidt",
+        "email": "timschmidt@gmail.com",
+        "date": "2026-10-31T09:30:05Z"
+      },
+      "message": "media: qcom: camss: Add MSM8226 resources\n\nDescribe MSM8226 with the MSM8916 operations: two 2-phase CSIPHYs, two CSID\n4.1 instances, one ISPIF and one VFE. Drop the separate CAMSS AHB clock,\nwhich MSM8226 lacks, and use the MSM8226 VFE clock rates (37.5 to 400 MHz).\n\nThe vendor kernel treats the MSM8226 VFE as version 4.0 with its own VBIF\nsetup; reusing the 4.1 operations is still to be verified on hardware.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+    },
+    {
+      "sha": "8203cfa85fcefda97defbc1e9a98317eedf1d2b9",
+      "parent": "f8a7ccc43396a809eb935100aa6db70a7defa3a3",
+      "author": {
+        "name": "Timothy Schmidt",
+        "email": "timschmidt@gmail.com",
+        "date": "2026-10-31T09:30:05Z"
+      },
+      "message": "ARM: dts: qcom: msm8226: Describe the CAMSS\n\nAdd the camera subsystem with its clocks, interrupts, VFE GDSC and the VFE\nIOMMU. It stays disabled until a board connects sensors or uses the CSID\ntest pattern generator.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+    }
+  ],
+  "AXI_followup": "d1f8047db3854e5b6ba309b3ac0e130224b11136",
+  "source_adaptation": "Use regulator_bulk_data.supply with default init_load_uA=0, preserving prior unspecified load. Keep later266.67MHz AXI rate and matching helper.",
+  "builds": {
+    "arm": {
+      "config_SHA256": "7e784f6d14d9a0178016f136c658d09271ba97952e613863167621bf6b338580",
+      "objects": {
+        "camss-csid-340.o": "a393526ed0ea54b1993a1cbe460beed1707eb890a8e8ad5f1ae1a0e121721cc8",
+        "camss-csid-4-1.o": "f6c0a7d3e5ea03118081d6b8e7321241e5130ecb1382221ac907a85084e84e3f",
+        "camss-csid-4-7.o": "de93f18d40ae1a4e60e1c1b4a3f183be5d7cc847a393e706a52800d74b1ea8e4",
+        "camss-csid-680.o": "d6b3212156e195f312c89cde5f088de2119caee86d372223ffcc04223e6e8adc",
+        "camss-csid-gen2.o": "654925f71a81c3ad380ed704a828cc632f86f5c2ddc328ba0974d2e12853f4c0",
+        "camss-csid-gen3.o": "7ff74cbf58adefe84499640ee338ed1254855247712bfc86c435a46b9b3402a8",
+        "camss-csid.o": "3e36468c984f36c1d1518f99109f7ca91f19bcacb31e83783ac5ce585c80fc82",
+        "camss-csiphy-2ph-1-0.o": "46db7a9b67158beb79ae00a1facc73880d67f233192271949e99431ae66c1385",
+        "camss-csiphy-3ph-1-0.o": "17899181a1cd09a327837b258dd1026d3ecac048158ad2eede47d0395f03f3ec",
+        "camss-csiphy.o": "89d2065c56855f7ced1c03e99763f7be949b4309250d2590498d28b9edf8393e",
+        "camss-format.o": "20e26ea6e3fc5692fe91efe4ed5d54352f526cc0fcbed68b5828f87e3b246312",
+        "camss-ispif.o": "bae7403c8e53aa8b1a06dd4ce92bb98e1bc977909a2c47fd1e5b0a376291416f",
+        "camss-tpg-gen1.o": "171010d83846268b3090d8d39fa2d9e6d13e7b5292ff05d62757e822a7cc4d97",
+        "camss-tpg.o": "fb9ebbfaa2e8ccf5767de4eb00378d3d3f7d8145e98906ddde222eaf0eba0aff",
+        "camss-vfe-17x.o": "0bc89c4d976d5b49a8d629ae6aa833d3856fb209217533f574358c3ef02c7700",
+        "camss-vfe-340.o": "38f16963e8cf869b92522232d2c023c9fd9bc9462e4bba13cfda9c61bc896310",
+        "camss-vfe-4-1.o": "0e930720e7abdd82831395ac60c863370c3c443a50475416f14c2c4a9be977cf",
+        "camss-vfe-4-7.o": "14b889e5f3800a4f1f0c76307b7a55e94cb9d69b927db0182849ad4a536cf84a",
+        "camss-vfe-4-8.o": "8d2df4ab444473420076b4b357403e2cbc73a35c3c2cba6bf8508dfd1c46324d",
+        "camss-vfe-480.o": "63180e18e057432dc1ab44fbbea170c57101b854029dcf8fcb87ca7da9980969",
+        "camss-vfe-680.o": "df4c3ddb43d8575c76653762ae5b1a810a6ea4e51663305f1afeb1e6677506b7",
+        "camss-vfe-gen1.o": "60430130231c105a18e413cca09bea5b479a247f1fd4136158b212269528240b",
+        "camss-vfe-gen3.o": "846e35eed2d5b433ebb0824c50daa583f2937615f855f2e84a61bf023aeb2ec9",
+        "camss-vfe-vbif.o": "a32b4b259fad4d49ae4c43683cdc203f4b360eec191ade50e8be744640e0774a",
+        "camss-vfe.o": "d4255a71d3f2e780325cd071908b52f7c8a57f5c2e71caa435c4a69497756b9a",
+        "camss-video.o": "e06dd03c1381d8c9dd7d9c45c177d9fe1003baed07beae67da27bc8c76060201",
+        "camss.o": "80508782ccc6fe7fb0fa71e84c66bd3121b9decc23b0a8a9a175c1fe0092579f",
+        "qcom-camss.o": "222b49cade6dfc7b8369fdefed7d5648dd636b2bb29e75d7c4d72a6f3b3b40e1"
+      },
+      "COMPILE_TEST": false,
+      "phone_access": false,
+      "signers_required": false,
+      "scope": "Complete native CAMSS component; no full kernel, package, module load or hardware acceptance",
+      "returncodes": [
+        0,
+        0,
+        0
+      ],
+      "warning_error_lines": 0
+    },
+    "arm64": {
+      "config_SHA256": "b35c15cc73aeeac4dfb6bda205a979069cd8d69c3aa113ffce8a97c72210d5b6",
+      "objects": {
+        "camss-csid-340.o": "9d0ff07907d99ec2ab61ec581d1d90e8c3526777eaeb70de6d48e60f56e5e54b",
+        "camss-csid-4-1.o": "26f2e4c9bbb0c5a3965715363dd3bde09a255b89a66344255f2f7fab7f72ab95",
+        "camss-csid-4-7.o": "d88bd8d96f252adfc2e6f8cfa6b3f9cc05f715657e8b512d1402198afecb3bd7",
+        "camss-csid-680.o": "503e95a738130ce148f0f3a9fbe6fb6630db51c4cdb06f57616edf36a1f58b68",
+        "camss-csid-gen2.o": "3a6bd92ecc97a4b7ba3cf722dab5e241599fddfe1767a42b69bf0654e91cdc23",
+        "camss-csid-gen3.o": "9deb02a22ad80aab201157969fe0e8e70a66920d5b4bc50e84e4607b7a479b0e",
+        "camss-csid.o": "bea51ee20101c1e67f8c3f3d4d17f4c6bb8858e6c2eb79cb99ac33f31f91faf1",
+        "camss-csiphy-2ph-1-0.o": "d80aa7489257807b9ff2249d554044b2b3b5c4cc177a9cd86a2d73e19f9bad63",
+        "camss-csiphy-3ph-1-0.o": "8fc09e2e3b0d31a998897119a47c54659da0e3ff8b06f18463a5937416d59b8a",
+        "camss-csiphy.o": "ce0b074fd1bcc363e6c70872303a660400e6a609ecfc8d668ed3a4b85e0c608c",
+        "camss-format.o": "1f7343a691e6bf0a1f35da3c96f19aa0a8e8dcbae59697a2ec7334dabce93380",
+        "camss-ispif.o": "3483b387d3ba2492898648fea7258db74451294d4b9a546bfc01c04fd1ebfc31",
+        "camss-tpg-gen1.o": "afd2cc15bddedc3c73f7dac605eb8815dd4436d43bf7c91a2e651cb228f2ba63",
+        "camss-tpg.o": "dc35a6dfcdc9a6e5fb9fe782672a47831d99d355c6122213cfb60cfbd17fefd3",
+        "camss-vfe-17x.o": "d90e0db8b9a659edca23ae60eeb4d51a56bbfda22f2a4918fee315ffeb715f28",
+        "camss-vfe-340.o": "c9a8044db8c24383db9316c5cb788c351460b84cdd87580dbd680b80d70ad458",
+        "camss-vfe-4-1.o": "465c47789d45f89730f472938b1639817fbb81fa9ec03601d0b4e1ea196fcbab",
+        "camss-vfe-4-7.o": "6fcf43ef51b7822c62cefa1144d0a960da1bbee69babd41d4357d4eb9530a66d",
+        "camss-vfe-4-8.o": "505549cdf28aee8b38b1df66af8289f043b46d040849be33f53f2a7cda950da4",
+        "camss-vfe-480.o": "50ef88dafaa22f71d96343e05d70f1ef5f6414eab8804afa2180163ef43bac6b",
+        "camss-vfe-680.o": "0bc03cac37d53c678870f0ded98a574c6a1a66d3c9fd5e839219eddfa2cab03e",
+        "camss-vfe-gen1.o": "202fe46c23b5566913b353ad8b72ec69b2d6c9b588673ae15c9e3a278322f139",
+        "camss-vfe-gen3.o": "cc34527d9a97e5e1adc25d25595653b53cc1a06e1014851c881fc39290a6cf1d",
+        "camss-vfe-vbif.o": "201f8bcb90ce7720cc1a77fc947875c8f0d543d01e4c52bc5080e5143eb610f1",
+        "camss-vfe.o": "92c47840a3b944a7f1513c8cde77fb8dd357dfbd78828cd4463c20b50888b28e",
+        "camss-video.o": "ed00941af2cd751b22bd1354bd938f92ba7211eaca3e22e9211296af988f8219",
+        "camss.o": "47498f6c08246a0bf02ab13728dc99c4b3794ea1f9389a7700484f3b88045f37",
+        "qcom-camss.o": "37ad59f037f795d765d8c8d9b56323d55d327ca5a7abc0a6afa3672d952fa6b0"
+      },
+      "COMPILE_TEST": false,
+      "phone_access": false,
+      "signers_required": false,
+      "scope": "Complete native CAMSS component; no full kernel, package, module load or hardware acceptance",
+      "returncodes": [
+        0,
+        0,
+        0
+      ],
+      "warning_error_lines": 0
+    }
+  },
+  "schema": {
+    "kernel_target_returncode": 0,
+    "dtschema": "2026.9",
+    "initial_optional_yamllint_skipped": true,
+    "direct_checks": {
+      "wheels_SHA256": {
+        "pyyaml-6.0.3-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": "c458b6d084f9b935061bc36216e8a69a7e293a2f1e68bf956dcd9e6cbcd143f5",
+        "yamllint-1.37.1-py3-none-any.whl": "364f0d79e81409f591e323725e6a9f4504c8699ddf2d7263d8d2b539cd66a583",
+        "pathspec-1.1.1-py3-none-any.whl": "a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189"
+      },
+      "checks": [
+        {
+          "name": "yamllint",
+          "returncode": 0,
+          "output_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "document",
+          "returncode": 0,
+          "output_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "example",
+          "returncode": 0,
+          "output_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    "direct_kernel_dt_check_style_returncode": 0,
+    "direct_kernel_dt_check_style_output_empty": true,
+    "retained_schema_environment_changed": false
+  },
+  "contract": {
+    "passed": true,
+    "example_SHA256": "456b5bb1ff0afe89811550b97aa64d2d5734640285b224630251795d3de7f7ce",
+    "binding_SHA256": "0888da8dda271d056495c3e5c41bbbfd097b2170c8272fe6b9b5a24696a192bf",
+    "source_SHA256": "cffd2781e5cdc9c9c8daf62b7777c7a183233475837c9cdc5b7537f50f2121f5",
+    "ordinary_example_schema_passed": true,
+    "negative_controls": [
+      "truncated clocks",
+      "truncated clock-names",
+      "truncated interrupts",
+      "truncated interrupt-names",
+      "truncated reg",
+      "truncated reg-names",
+      "missing iommus",
+      "missing vdda-supply",
+      "missing power-domains",
+      "incorrect clock name"
+    ],
+    "resource_names_agree_with_binding": {
+      "clock-names": [
+        "csi0",
+        "csi0_ahb",
+        "csi0_phy",
+        "csi0_pix",
+        "csi0_rdi",
+        "csi1",
+        "csi1_ahb",
+        "csi1_phy",
+        "csi1_pix",
+        "csi1_rdi",
+        "csi_vfe0",
+        "csiphy0_timer",
+        "csiphy1_timer",
+        "ispif_ahb",
+        "top_ahb",
+        "vfe0",
+        "vfe_ahb",
+        "vfe_axi"
+      ],
+      "reg-names": [
+        "csi_clk_mux",
+        "csid0",
+        "csid1",
+        "csiphy0",
+        "csiphy0_clk_mux",
+        "csiphy1",
+        "csiphy1_clk_mux",
+        "ispif",
+        "vfe0"
+      ],
+      "interrupt-names": [
+        "csid0",
+        "csid1",
+        "csiphy0",
+        "csiphy1",
+        "ispif",
+        "vfe0"
+      ]
+    },
+    "scope": "Compiled example and declarative resource contract only; no board or hardware acceptance",
+    "phone_access": false
+  },
+  "AXI_rate_inventory": [
+    {
+      "resources": "vfe_res_8x16",
+      "clock_names": [
+        "top_ahb",
+        "vfe0",
+        "csi_vfe0",
+        "vfe_ahb",
+        "vfe_axi",
+        "ahb"
+      ],
+      "vfe_axi_rates": [
+        0
+      ]
+    },
+    {
+      "resources": "vfe_res_8x26",
+      "clock_names": [
+        "top_ahb",
+        "vfe0",
+        "csi_vfe0",
+        "vfe_ahb",
+        "vfe_axi"
+      ],
+      "vfe_axi_rates": [
+        266670000
+      ]
+    },
+    {
+      "resources": "vfe_res_8x39",
+      "clock_names": [
+        "top_ahb",
+        "ispif_ahb",
+        "vfe0",
+        "csi_vfe0",
+        "vfe_ahb",
+        "vfe_axi",
+        "ahb"
+      ],
+      "vfe_axi_rates": [
+        0
+      ]
+    },
+    {
+      "resources": "vfe_res_8x96",
+      "clock_names": [
+        "top_ahb",
+        "ahb",
+        "vfe0",
+        "csi_vfe0",
+        "vfe_ahb",
+        "vfe0_ahb",
+        "vfe_axi",
+        "vfe0_stream"
+      ],
+      "vfe_axi_rates": [
+        0
+      ]
+    },
+    {
+      "resources": "vfe_res_8x96",
+      "clock_names": [
+        "top_ahb",
+        "ahb",
+        "vfe1",
+        "csi_vfe1",
+        "vfe_ahb",
+        "vfe1_ahb",
+        "vfe_axi",
+        "vfe1_stream"
+      ],
+      "vfe_axi_rates": [
+        0
+      ]
+    },
+    {
+      "resources": "vfe_res_660",
+      "clock_names": [
+        "throttle_axi",
+        "top_ahb",
+        "ahb",
+        "vfe0",
+        "csi_vfe0",
+        "vfe_ahb",
+        "vfe0_ahb",
+        "vfe_axi",
+        "vfe0_stream"
+      ],
+      "vfe_axi_rates": [
+        0
+      ]
+    },
+    {
+      "resources": "vfe_res_660",
+      "clock_names": [
+        "throttle_axi",
+        "top_ahb",
+        "ahb",
+        "vfe1",
+        "csi_vfe1",
+        "vfe_ahb",
+        "vfe1_ahb",
+        "vfe_axi",
+        "vfe1_stream"
+      ],
+      "vfe_axi_rates": [
+        0
+      ]
+    }
+  ],
+  "draft_checks": {
+    "head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+    "tree": "05957b7e2a8b2bd79271716b626915f0ff979dbc",
+    "checks": [
+      {
+        "patch": "0001-media-qcom-camss-Allow-the-ARM-IOMMU-DMA-backend.patch",
+        "check": "style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0
+      },
+      {
+        "patch": "0001-media-qcom-camss-Allow-the-ARM-IOMMU-DMA-backend.patch",
+        "check": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0
+      },
+      {
+        "patch": "0002-dt-bindings-media-Add-the-MSM8226-CAMSS.patch",
+        "check": "style",
+        "returncode": 1,
+        "errors": 0,
+        "warnings": 1
+      },
+      {
+        "patch": "0002-dt-bindings-media-Add-the-MSM8226-CAMSS.patch",
+        "check": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 1
+      },
+      {
+        "patch": "0002-dt-bindings-media-Add-the-MSM8226-CAMSS.patch",
+        "check": "style-advisory-reviewed",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0
+      },
+      {
+        "patch": "0003-media-qcom-camss-Add-MSM8226-resources.patch",
+        "check": "style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0
+      },
+      {
+        "patch": "0003-media-qcom-camss-Add-MSM8226-resources.patch",
+        "check": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0
+      }
+    ],
+    "maintainer_lookup_returncode": 0,
+    "separate_VFE_bugfix_apply_check_returncode": 0
+  },
+  "MAINTAINERS_existing_CAMSS_patterns": [
+    "Documentation/admin-guide/media/qcom_camss.rst",
+    "Documentation/devicetree/bindings/media/qcom,*camss*",
+    "drivers/media/platform/qcom/camss/"
+  ],
+  "patches_SHA256": {
+    "0002-dt-bindings-media-Add-the-MSM8226-CAMSS.patch": "1067f4fc1c8e26c9f889f099df39e995b28620e0b9e8fd41b0835f9679d21ee3",
+    "0001-media-qcom-camss-Allow-the-ARM-IOMMU-DMA-backend.patch": "e967768f22a9001787d9ec428fe24d0826d5dee51b12fca0662a5d764802879c",
+    "0003-media-qcom-camss-Add-MSM8226-resources.patch": "d853fd85f4f8a719708c504772b98140baa53b2486833784b92bc9a3db5e3fb1"
+  },
+  "published": false,
+  "phone_access": false,
+  "maintainer_contact": false,
+  "human_DCO_pending": true,
+  "full_kernel_or_package_built": false,
+  "board_DTB_qualified": false,
+  "new_RAM_image_prepared": false,
+  "hardware_qualified": false,
+  "VFE_saved_completion_fix_included": false,
+  "DTS_added": false,
+  "DTS_missing_dependency": "Current base lacks VFE IOMMU node; do not add dangling phandle or use existing display/GPU IOMMU.",
+  "contract_entry_SHA256": "564071609066918e921c70fd904537a88d0f9528d1cdf8ef833b41e52eb5fa65"
+}
