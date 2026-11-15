@@ -1,0 +1,33 @@
+From 98c74353484ff86647981255feead867f821a907 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+Date: Sat, 14 Nov 2026 23:22:44 -0500
+Subject: [PATCH 1/2] dt-bindings: remoteproc: qcom,wcnss-pil: Add WCN3660A
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Describe WCN3660A as a distinct RF variant. Its regulator requirements
+match WCN3620/WCN3680; keep its identity distinct from WCN3680.
+
+Refresh Matti Lehtimäki's original implementation from 9587367f58f6
+on the current remoteproc integration base. Keep current upstream
+allocation/error handling and all pre-existing RF entries unchanged.
+
+Refreshed with OpenAI Codex assistance. Human review and DCO
+certification remain pending.
+---
+ Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+index a55e55f5f..3ef24133e 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+@@ -117,6 +117,7 @@ properties:
+         enum:
+           - qcom,wcn3620
+           - qcom,wcn3660
++          - qcom,wcn3660a
+           - qcom,wcn3660b
+           - qcom,wcn3680
+ 

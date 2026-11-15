@@ -1,0 +1,684 @@
+{
+  "date": "2026-11-15",
+  "sources": {
+    "RF-source.json": {
+      "base": "3035b6708f61259c93a368238e206dcec313e584",
+      "head": "ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf",
+      "tree": "4dfb0967c76284a745874497040af7e17cd691e9",
+      "commits": [
+        {
+          "head": "98c74353484ff86647981255feead867f821a907",
+          "original": "9587367f58f661ee3d0615dcbaf0635a40b7ab92",
+          "path": "Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml",
+          "SHA256": "6cc5f4223b7049ee96a4a12c2c8a4444eae79c319cff026cb041cd9a231837e9"
+        },
+        {
+          "head": "ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf",
+          "original": "5519845f0bd841d1b00873202ab20f00425a2977",
+          "path": "drivers/remoteproc/qcom_wcnss_iris.c",
+          "SHA256": "471cc075dc7eb14e4220db9389df4ab8bcb7417616fda29add9c5c1970d5a91a"
+        }
+      ],
+      "original_author_preserved": "Matti Lehtim\u00e4ki",
+      "human_DCO_pending": true,
+      "agent_added_Signed_off_by": false,
+      "published": false
+    },
+    "regulator-fix-final-source.json": {
+      "base": "9db31edf92dde1f3c98008bd5f88e859d14324cc",
+      "head": "962a507202bac5ecd7c7e37a77e0de32a122f598",
+      "tree": "bd28baa6bb8bd8b2e93370307e78f767d0d0c23a",
+      "original": "61c60256c94ab5a11cca2bee7dcb161d0cad2e2c",
+      "Fixes": "3dbc90b9c22ea96e37bf55f6011e63b5123ec668",
+      "source_SHA256": "e195a10af6a872d81410a92792679f5627b5bad1445b176a2394ad5434d6483d",
+      "agent_added_Signed_off_by": false,
+      "published": false,
+      "branch": "development/wcnss-regulators-current-rproc-fixes-02",
+      "compiled_head": "cf4dcd70c1887c88c2d537d136196a73043bdae0",
+      "compiled_tree_identical": true,
+      "older_guidance_reviewed_before_final_draft": true,
+      "Assisted_by_LLM_required_and_added": true,
+      "original_premature_draft_preserved": "cf4dcd70c1887c88c2d537d136196a73043bdae0",
+      "ASan_UBSan_final_helper_identical": true
+    },
+    "wireless-source.json": {
+      "base": "5dbf2415ca9821a611d09308e3b29d2c37e7cd77",
+      "head": "2dc038c6fa74e00ddb265b274103c46894c2541a",
+      "tree": "165f268dd266007bbf98121ae167f62ea1528e6e",
+      "original": "3cc8fd9f585196030a39ab3eccc57f435efe682b",
+      "source_SHA256": "77f416e14a0acf34cd956d3f84b8302e1d8c92dd94018f0183bd5a0a52800182",
+      "original_author": "Matti Lehtim\u00e4ki",
+      "Assisted_by_required_and_added": false,
+      "agent_added_Signed_off_by": false,
+      "published": false
+    },
+    "WCNSS-DTS-source.json": {
+      "parent": "6155789433f4c828677b67b9d47c22b2a8547aba",
+      "base": "ae2005cea2e4f84692268e54199bb03f5c6f4558",
+      "head": "c3bd956de3414d28aa8273e2a4c746134a4811d3",
+      "tree": "59a9f5e35932e8e4eb56976b663224a1629b8370",
+      "original_commits": [
+        "c8d156a3bee34980e1cfcc2c5c3a69e8a50390ca",
+        "b2512c53f0355e2e9bb07c43759974f7895c466f"
+      ],
+      "original_authorship": [
+        "Bartosz Dudziak",
+        "Matti Lehtim\u00e4ki",
+        "Timothy Schmidt"
+      ],
+      "original_Claude_credit_preserved": true,
+      "nodes": [
+        {
+          "node": "wcnss_region: wcnss@d200000 {",
+          "SHA256": "de29d021795d16b2f42ec1eaf71e8fd65c5a35958a141bef4981282bba53fb1a",
+          "same_except_current_RPMPD_name": true
+        },
+        {
+          "node": "smp2p-wcnss {",
+          "SHA256": "f380c85727c18255b5ed4c4640283f8782088a6d94b47063ef51e950339cf4fc",
+          "same_except_current_RPMPD_name": true
+        },
+        {
+          "node": "pronto: remoteproc@fb204000 {",
+          "SHA256": "ead5d5ed5f5f1d8a0c3c1606403b2d310bbd0b4090bf80d7fdbde2bf9c617521",
+          "same_except_current_RPMPD_name": true
+        }
+      ],
+      "files": {
+        "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi": "42c441e717aff94b80457d59963d77e3d2ee3d1b211c862dfc51c0f962614201",
+        "arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts": "6297065a553c38354c2c077fd744c150db0fd66af2c915556cb543e401cb2afe",
+        "arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts": "2289abb61f947ea83661b8b126654191bcb072d985f1135927c750d97f82f7fb"
+      },
+      "agent_added_Signed_off_by": false,
+      "published": false
+    }
+  },
+  "source_patches": 5,
+  "native_component_qualifications": [
+    {
+      "source_head": "ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf",
+      "source_tree": "4dfb0967c76284a745874497040af7e17cd691e9",
+      "config_SHA256": "fcbd6c6e54285b032be4bd9bfe2997c1f9b82677843185f6a982fd7380ffec93",
+      "objects": {
+        "drivers/remoteproc/qcom_wcnss.o": "38938f0d630bdffbe97af0704574544638917be0a551a1728cbafbb132ecc25a",
+        "drivers/remoteproc/qcom_wcnss_iris.o": "77c20f8b9bc89fffb07380ed1e12db71da4f0adea79f5444630fc7d0ee572125",
+        "drivers/remoteproc/qcom_wcnss_pil.o": "4581b307168875018a1158c10d40cbd165beeb964679c8229172f35cd6f98b84"
+      },
+      "native": true,
+      "COMPILE_TEST": false,
+      "kind": "RF",
+      "arch": "arm",
+      "qualified_controller": "RF-arm-build-controller.json",
+      "component_objects": 3
+    },
+    {
+      "source_head": "ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf",
+      "source_tree": "4dfb0967c76284a745874497040af7e17cd691e9",
+      "config_SHA256": "b35c15cc73aeeac4dfb6bda205a979069cd8d69c3aa113ffce8a97c72210d5b6",
+      "objects": {
+        "drivers/remoteproc/qcom_wcnss.o": "a03ebb8d91f0b1428f8816745bb37d43407f506a0a9e7f408959ca12e838d9c2",
+        "drivers/remoteproc/qcom_wcnss_iris.o": "3d83868d66a5b17ae59e55b9f22eb0b4e7d684eb1c1a0a01f9871a0acc9c1ade",
+        "drivers/remoteproc/qcom_wcnss_pil.o": "d5d4f10a13116f2eee6957f9ee352f34b9a23ffe399eb9f46d42f033d8fd69c5"
+      },
+      "native": true,
+      "COMPILE_TEST": false,
+      "kind": "RF",
+      "arch": "arm64",
+      "qualified_controller": "RF-arm64-build-controller.json",
+      "component_objects": 3
+    },
+    {
+      "source_head": "cf4dcd70c1887c88c2d537d136196a73043bdae0",
+      "source_tree": "bd28baa6bb8bd8b2e93370307e78f767d0d0c23a",
+      "config_SHA256": "75c8a5b5dff577ba9119cd4faf31cad753d435559a68994c296af85e69a6eb33",
+      "objects": {
+        "drivers/remoteproc/qcom_wcnss.o": "de440e5679e7431d249a31bf6184ca9c8748d538e06f646371b6c38be4e37a68",
+        "drivers/remoteproc/qcom_wcnss_iris.o": "b2fde7fb16839ecadfd8347805be8cd537fabf55824eb6e8ed0db50c96655ac6",
+        "drivers/remoteproc/qcom_wcnss_pil.o": "46c0c6f947c0a4867b96ae28503d2761983bc8c28431370757c4fab725704f2c"
+      },
+      "native": true,
+      "COMPILE_TEST": false,
+      "kind": "regulators",
+      "arch": "arm",
+      "qualified_controller": "regulators-arm-build-controller.json",
+      "component_objects": 3
+    },
+    {
+      "source_head": "cf4dcd70c1887c88c2d537d136196a73043bdae0",
+      "source_tree": "bd28baa6bb8bd8b2e93370307e78f767d0d0c23a",
+      "config_SHA256": "ec1ccafa1832ff3cfedc3b0a76375f8caefc27f2b1b59458a4f85b7a707a4035",
+      "objects": {
+        "qcom_wcnss.o": "daec087e1d23801859b4f83cf8fea79a6e63537411111ddf866a9cdff96a88f2",
+        "qcom_wcnss_iris.o": "1f348ecfc4ddd62ee205fdbbe5c6ee003829a02639e1aa26639a26155e20842f",
+        "qcom_wcnss_pil.o": "b9945d80c38abf2dfd919e9265102aeba35a2b8aab0733b128d61b4783de21b9"
+      },
+      "native": true,
+      "COMPILE_TEST": false,
+      "kind": "regulators",
+      "arch": "arm64",
+      "qualified_controller": "regulators-arm64-resume-controller.json",
+      "component_objects": 3
+    },
+    {
+      "source_head": "2dc038c6fa74e00ddb265b274103c46894c2541a",
+      "source_tree": "165f268dd266007bbf98121ae167f62ea1528e6e",
+      "config_SHA256": "fe1a02434ae863cc15c76deda29cc5c56505670eee50aae1d606445543c348f2",
+      "objects": {
+        "debug.o": "f8ad0fd3d0c0387b3f98c4db7c1d96d502940bf8ebf6e99ae0c6b50f5cfbeb31",
+        "dxe.o": "4dab1a7e732e2774a6c407f711d1f3b15293ebbe1c03e9562019ddfc54a66387",
+        "smd.o": "44d324a2e813392273a3efd45d98d3b865bf1e5e317de2ee36e2b1b93d2ff726",
+        "main.o": "aaf33ae0db9fc2a581096ee3613ae353a510f506b644648ac84ff521b4642454",
+        "wcn36xx.o": "bb1a45a3414d5659132f0061b81666957ae09e8646c94067d0729e2e0f67bb73",
+        "pmc.o": "02c8e973c4d66a5d79871731d7a51eaa0354098768f269ceb4c656b01422109f",
+        "txrx.o": "dee1614d667ae43ddfc4a495a5a1a7b95bccde8ffde1af94d6a4feb513950ea3",
+        "firmware.o": "cbf3d89e68e3a88340e9be7a52fe614da8873c175a5edfc79ab0264fb3f3e007"
+      },
+      "native": true,
+      "COMPILE_TEST": false,
+      "kind": "wireless",
+      "arch": "arm",
+      "qualified_controller": "wireless-arm-verification-supplement.json",
+      "component_objects": 8
+    },
+    {
+      "source_head": "2dc038c6fa74e00ddb265b274103c46894c2541a",
+      "source_tree": "165f268dd266007bbf98121ae167f62ea1528e6e",
+      "config_SHA256": "a109238fd7ac3281c08f1586896df9a6a1e56a00553ca27062bc478301301079",
+      "objects": {
+        "debug.o": "60f86917eeedcb8bc0e2dc2e8fea8fcd599f55c9c287f7444e2c3458da214120",
+        "dxe.o": "b56e28c39fa1f994aef3c853f5c2f3dbc2481f0c20e4c06548f13f541fa565fa",
+        "smd.o": "b372f61f04d40e08e7da748dd45087446d756d53d2da045ab4bc0fbfbc1afc11",
+        "main.o": "3ce857e54c344f6f5d4f3b0974238a1c931b6b2a9c0ac95d98aa57ea8eb4df58",
+        "wcn36xx.o": "4d2cc3af3d4d06179818b53e5b859a70bfa087a66703777aeae6a11432af60c0",
+        "pmc.o": "9668dcf0c31dd3f216dbd730d54475662cd10c468900c3ef91365f1aecd9d2d4",
+        "txrx.o": "f928e8c15bdffa454a91d5d3bec46344c053cad2ac11e3ea23a7f6580f4cc7e1",
+        "firmware.o": "3825e01a6d3722791329263aa198df92ccc8e300292f53c40fead960c7977288"
+      },
+      "native": true,
+      "COMPILE_TEST": false,
+      "kind": "wireless",
+      "arch": "arm64",
+      "qualified_controller": "wireless-arm64-resume-controller.json",
+      "component_objects": 8
+    }
+  ],
+  "native_component_objects": 28,
+  "RF_binding_ordinary_check_passed": true,
+  "DTS_validation_head": "2a681d3c53cb7ae592d0b808d2a72bfdb655982e",
+  "schema_imports": [
+    {
+      "source_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "path": "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml",
+      "SHA256": "ca4eb31b957da834eaf9ccab3f993df1db34ebd186b0795d63f91460681d3f63"
+    },
+    {
+      "source_head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+      "path": "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml",
+      "SHA256": "0888da8dda271d056495c3e5c41bbbfd097b2170c8272fe6b9b5a24696a192bf"
+    },
+    {
+      "source_head": "ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf",
+      "path": "Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml",
+      "SHA256": "6cc5f4223b7049ee96a4a12c2c8a4444eae79c319cff026cb041cd9a231837e9"
+    }
+  ],
+  "source_DTS_and_validation_identical": true,
+  "retained_18_board_baseline_hash_reverified": true,
+  "baseline_rebuilt": false,
+  "DTS_qualification": {
+    "passed": true,
+    "source_head": "c3bd956de3414d28aa8273e2a4c746134a4811d3",
+    "checker_SHA256": "1d4748cd4ba7341727041ddad5c6431427f5058b30e293f3e52b9624d490c4f9",
+    "board_count": 18,
+    "comparisons": [
+      {
+        "board": "qcom/msm8226-motorola-falcon.dtb",
+        "existing_nodes_preserved": 288,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "3740af35dbe56853380a07f328ff404d1c253b030e1222ee0f77bc092e80be79"
+      },
+      {
+        "board": "qcom/msm8226-motorola-titan.dtb",
+        "existing_nodes_preserved": 281,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "64e4b12667a23f00bbb620c7a857bc3475138e7426724d8c6454614092006245"
+      },
+      {
+        "board": "qcom/msm8926-sony-xperia-yukon-eagle.dtb",
+        "existing_nodes_preserved": 285,
+        "new_nodes": [
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "050a30fc06c580a8e4bd4df023b3a9d28dd07f487adf8181b6630a5b8c6cbb28"
+      },
+      {
+        "board": "qcom/qcom-apq8026-asus-sparrow.dtb",
+        "existing_nodes_preserved": 278,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "25143e80fb2a6d9ed0e61c5c75318c6a700ad1092b995daa7fe81f460d7c5252"
+      },
+      {
+        "board": "qcom/qcom-apq8026-huawei-sturgeon.dtb",
+        "existing_nodes_preserved": 286,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "ff99b88bba2e32c67302043f53268388c7042598d8e8a598850bb4ec7701c223"
+      },
+      {
+        "board": "qcom/qcom-apq8026-lg-lenok.dtb",
+        "existing_nodes_preserved": 287,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "b65442a72f6656c0c3ed9dc420547097fba3473312778027b7183adc358a6401"
+      },
+      {
+        "board": "qcom/qcom-apq8026-samsung-matisse-wifi.dtb",
+        "existing_nodes_preserved": 299,
+        "new_nodes": [
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "431f8c35704ba7594b5d276a13c1d1242e169b9df18b50c0105782ed158bf273"
+      },
+      {
+        "board": "qcom/qcom-apq8026-samsung-milletwifi.dtb",
+        "existing_nodes_preserved": 302,
+        "new_nodes": [
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "0eba4bbc73d7b63b837add700e8bc312fe305b95dcf849ef80bf8c6c03a7bc86"
+      },
+      {
+        "board": "qcom/qcom-msm8226-microsoft-dempsey.dtb",
+        "existing_nodes_preserved": 277,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "1486fe07b7246ad49d8dd0114bd605c8ef3b86c63704e15d2b926aa3332436a1"
+      },
+      {
+        "board": "qcom/qcom-msm8226-microsoft-makepeace.dtb",
+        "existing_nodes_preserved": 277,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "cb166c92ec6bfdfd8ff2f71156257412e7d3f14fd9f33c9e0b86eda1ce23c4a7"
+      },
+      {
+        "board": "qcom/qcom-msm8226-microsoft-moneypenny.dtb",
+        "existing_nodes_preserved": 276,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "62054cc0e05d99ed9cc7ad02df803982ce51be828f52c17f871bbad26a4fca59"
+      },
+      {
+        "board": "qcom/qcom-msm8226-samsung-ms013g.dtb",
+        "existing_nodes_preserved": 287,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "9cc2208041b162c251be63e2dfd6314229c9842e2395c3966da064750c380961"
+      },
+      {
+        "board": "qcom/qcom-msm8226-samsung-s3ve3g.dtb",
+        "existing_nodes_preserved": 210,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "f40964d764114169c1c6a6c407bfeeec869607b63a478bb3db8c3ab6a282a5d5"
+      },
+      {
+        "board": "qcom/qcom-msm8926-htc-memul.dtb",
+        "existing_nodes_preserved": 287,
+        "new_nodes": [
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "8c7d21e5980aa8f3542fa1a7e0325e63150972058ddddfa120a466a02644a1a6"
+      },
+      {
+        "board": "qcom/qcom-msm8926-microsoft-superman-lte.dtb",
+        "existing_nodes_preserved": 277,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "252c971aee03773476af61bc8f94ddf2a98bcd851522d9a74f547e8574c411c1"
+      },
+      {
+        "board": "qcom/qcom-msm8926-microsoft-tesla.dtb",
+        "existing_nodes_preserved": 278,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "ae1ff1b172e311bdce4e537a1d44fc8f9ba0c5131092061604ff5958a8edfd31"
+      },
+      {
+        "board": "qcom/qcom-msm8926-motorola-peregrine.dtb",
+        "existing_nodes_preserved": 285,
+        "new_nodes": [
+          "/reserved-memory/wcnss@d200000",
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "358e92b41e5cbc966ccf635c7900c35cea87162c50c114853c8dc238feb80c21"
+      },
+      {
+        "board": "qcom/qcom-msm8926-samsung-matisselte.dtb",
+        "existing_nodes_preserved": 297,
+        "new_nodes": [
+          "/smp2p-wcnss",
+          "/smp2p-wcnss/master-kernel",
+          "/smp2p-wcnss/slave-kernel",
+          "/soc/remoteproc@fb204000",
+          "/soc/remoteproc@fb204000/iris",
+          "/soc/remoteproc@fb204000/smd-edge",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/bluetooth",
+          "/soc/remoteproc@fb204000/smd-edge/wcnss/wifi"
+        ],
+        "SHA256": "18931493128d796717ecf3d5f8136a82e9ef18344036acfaf9378899b2d31de4"
+      }
+    ],
+    "existing_board_WCNSS_overrides": [
+      {
+        "board": "qcom/msm8926-sony-xperia-yukon-eagle.dtb",
+        "reg": [
+          [
+            220200960,
+            5955584
+          ]
+        ],
+        "all_original_properties_preserved": true
+      },
+      {
+        "board": "qcom/qcom-apq8026-samsung-matisse-wifi.dtb",
+        "reg": [
+          [
+            220200960,
+            7340032
+          ]
+        ],
+        "all_original_properties_preserved": true
+      },
+      {
+        "board": "qcom/qcom-apq8026-samsung-milletwifi.dtb",
+        "reg": [
+          [
+            220200960,
+            7340032
+          ]
+        ],
+        "all_original_properties_preserved": true
+      },
+      {
+        "board": "qcom/qcom-msm8926-htc-memul.dtb",
+        "reg": [
+          [
+            220200960,
+            6619136
+          ]
+        ],
+        "all_original_properties_preserved": true
+      },
+      {
+        "board": "qcom/qcom-msm8926-samsung-matisselte.dtb",
+        "reg": [
+          [
+            220200960,
+            7340032
+          ]
+        ],
+        "all_original_properties_preserved": true
+      }
+    ],
+    "existing_nodes_and_all_reserved_ranges_preserved": true,
+    "new_default_regions": 13,
+    "no_new_actual_reserved_memory_overlap": true,
+    "existing_DTC_warnings": 56,
+    "new_DTC_warnings": 0,
+    "direct_targeted_schemas_empty": true,
+    "ordinary_enabled_RF_binding_example_WCN3660A_passed": true,
+    "schema_controls": [
+      {
+        "name": "unknown-RF-compatible",
+        "returncode": 0,
+        "expected_property_diagnostic_verified": true
+      },
+      {
+        "name": "invalid-SMP2P-smem-count",
+        "returncode": 0,
+        "expected_property_diagnostic_verified": true
+      },
+      {
+        "name": "invalid-SMD-edge-type",
+        "returncode": 0,
+        "expected_property_diagnostic_verified": true
+      },
+      {
+        "name": "invalid-WCNSS-channel",
+        "returncode": 0,
+        "expected_property_diagnostic_verified": true
+      },
+      {
+        "name": "invalid-WiFi-IRQ-name",
+        "returncode": 0,
+        "expected_property_diagnostic_verified": true
+      }
+    ],
+    "platform_controls": [
+      "wrong-WiFi-trigger",
+      "swapped-SMEM-items",
+      "wrong-SMP2P-doorbell",
+      "wrong-SMD-pid",
+      "wrong-RF-identity",
+      "reserved-WCNSS-overlap"
+    ],
+    "disabled_common_nodes_preserved": true,
+    "board_enabled_supplies_or_current_Fx0_qualified": false,
+    "runtime_or_hardware_qualified": false,
+    "phone_access": false
+  },
+  "regulator_reproducer": {
+    "baseline": {
+      "cases": 8,
+      "correct": 2,
+      "wrong": 6,
+      "error_controls": 16
+    },
+    "fixed": {
+      "cases": 8,
+      "correct": 8,
+      "wrong": 0,
+      "error_controls": 16
+    },
+    "source_extracted": true,
+    "ASan_UBSan": true,
+    "host_interfaces_emulated": true,
+    "hardware_qualified": false
+  },
+  "historical_Fixes_proven": true,
+  "strict_checkpatch_with_dependencies_zero_errors_warnings_checks": 5,
+  "strict_full_check_only_human_signoff_missing": true,
+  "agent_added_Signed_off_by": false,
+  "human_DCO_pending": true,
+  "regular_regulator_bug_not_security_claim": true,
+  "source_only_replay_pending": false,
+  "combined_current_runtime_kernel_qualified": false,
+  "current_Fx0_DTB_qualified": false,
+  "published": false,
+  "maintainer_contact": false,
+  "phone_access_for_this_WCNSS_qualification": false,
+  "original_r2_failure_resolved": false,
+  "earlier_attempts_preserved": {
+    "config_seed_ARM64_DRM_PANEL_corrected_to_boolean_y": true,
+    "wireless_verifier_original_nine_object_assumption_corrected_to_actual_eight": true,
+    "regulator_initial_draft_before_full_older_guidance_audit_preserved": true,
+    "final_regulator_metadata_Assisted_by_LLM_added_after_audit_tree_unchanged": true,
+    "initial_fixture_Wextra_missing_field_initializers_reconciled_to_kernel_normal_W1": true,
+    "DTS_checkpatch_without_RF_binding_dependency_warning_preserved": true,
+    "public_export_bare_object_path_verifier_failure_corrected_without_rebuild": true
+  },
+  "clean_review_and_source_only_DTB_replays_passed": true,
+  "exported_regulator_ASan_UBSan_passed": {
+    "cases": 8,
+    "correct": 8,
+    "wrong": 0,
+    "error_controls": 16
+  },
+  "DTS_config_matches_retained_baseline": true,
+  "read_only_wcnss_source_export_contains_no_client_device_or_credentials": true
+}

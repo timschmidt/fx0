@@ -1,0 +1,158 @@
+{
+  "original_common_and_PMIC_prerequisites": [
+    {
+      "commit": "c8d156a3bee34980e1cfcc2c5c3a69e8a50390ca",
+      "author": "Bartosz Dudziak <bartosz.dudziak@snejp.pl>",
+      "subject": "ARM: dts: qcom: msm8226: Add wcnss remoteproc node",
+      "current_base_ported": "c3bd956de3414d28aa8273e2a4c746134a4811d3"
+    },
+    {
+      "commit": "b2512c53f0355e2e9bb07c43759974f7895c466f",
+      "author": "Timothy Schmidt <timschmidt@gmail.com>",
+      "subject": "ARM: dts: qcom: msm8226: Use level triggers for the WCNSS DXE interrupts",
+      "current_base_ported": "c3bd956de3414d28aa8273e2a4c746134a4811d3"
+    },
+    {
+      "commit": "dad2d15ff6bac5213e9665627997abe5013b4607",
+      "author": "Timothy Schmidt <timschmidt@gmail.com>",
+      "subject": "ARM: dts: qcom: msm8226: Describe the GPU IOMMU",
+      "current_base_ported": "6155789433f4c828677b67b9d47c22b2a8547aba"
+    },
+    {
+      "commit": "6c99f06487157c3bf8f1ed58e22125fba3266fce",
+      "author": "Timothy Schmidt <timschmidt@gmail.com>",
+      "subject": "ARM: dts: qcom: msm8226: Describe the display IOMMU and enable it on Fx0",
+      "current_base_ported": "3379290a7d7fa2ac831e13b66b21be26d41eabed (common description only; Fx0 board unchanged)"
+    },
+    {
+      "commit": "abe11294089af215e9613de912d4a6e4628356de",
+      "author": "Timothy Schmidt <timschmidt@gmail.com>",
+      "subject": "ARM: dts: qcom: msm8226: Describe secured display IOMMU contexts",
+      "current_base_ported": "3379290a7d7fa2ac831e13b66b21be26d41eabed (common description only; Fx0 board unchanged)"
+    },
+    {
+      "commit": "7e5f8f6b2250693737f3a1c60c9db77c773338e4",
+      "author": "Timothy Schmidt <timschmidt@gmail.com>",
+      "subject": "ARM: dts: qcom: pm8226: Label the PON node",
+      "current_base_ported": false
+    },
+    {
+      "commit": "cbfe7bb0e361e110bfba5ad0bf1104acd1ab205e",
+      "author": "Timothy Schmidt <timschmidt@gmail.com>",
+      "subject": "leds: flash: Add torch support for first-generation Qualcomm PMIC flash",
+      "current_base_ported": false
+    },
+    {
+      "commit": "6c896e708b2ba1926c204236a3dbc3860a4e619d",
+      "author": "Timothy Schmidt <timschmidt@gmail.com>",
+      "subject": "ARM: dts: qcom: msm8226: probe the ADSP APR core service (experiment)",
+      "current_base_ported": false
+    },
+    {
+      "commit": "be15b668b3ab83d8850b696f580167b46e3ccd44",
+      "author": "Timothy Schmidt <timschmidt@gmail.com>",
+      "subject": "ARM: dts: qcom: msm8226: Add the SLIMbus NGD and its BAM",
+      "current_base_ported": false
+    },
+    {
+      "commit": "68ac6144c11a31404f836ac5dcee43dae5081eea",
+      "author": "Timothy Schmidt <timschmidt@gmail.com>",
+      "subject": "ARM: dts: qcom: msm8226: Describe the QDSP6 audio services",
+      "current_base_ported": false
+    },
+    {
+      "commit": "51a6d15339f21d3ebe7070be23a5ceda90eab4ce",
+      "author": "Timothy Schmidt <timschmidt@gmail.com>",
+      "subject": "ARM: dts: qcom: msm8226: Add the QDSP6 ASM front-end DAIs",
+      "current_base_ported": false
+    },
+    {
+      "commit": "8cfcb0fedcd91c324553872591831ecd5ffaffb4",
+      "author": "Timothy Schmidt <timschmidt@gmail.com>",
+      "subject": "ARM: dts: qcom: msm8226: set the CCI source clock rate",
+      "current_base_ported": false
+    },
+    {
+      "commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+      "author": "Timothy Schmidt <timschmidt@gmail.com>",
+      "subject": "ARM: dts: qcom: msm8226: Add the standalone power collapse idle state",
+      "current_base_ported": false
+    }
+  ],
+  "after_camera_common_nodes_unresolved_labels": [
+    "apr",
+    "gpu_iommu",
+    "mdp_iommu",
+    "pm8226_flash",
+    "pm8226_pon",
+    "pronto",
+    "q6afedai",
+    "q6asmdai",
+    "q6routing",
+    "slim_msm",
+    "slimbam"
+  ],
+  "DTC_immediate_missing_labels": [
+    "pronto",
+    "gpu_iommu",
+    "mdp_iommu",
+    "pm8226_pon",
+    "pm8226_flash",
+    "apr",
+    "slimbam",
+    "slim_msm"
+  ],
+  "enabled_Fx0_qualification": false,
+  "board_source_preserved": true,
+  "audio_testing_excluded_but_existing_board_content_preserved": true,
+  "further_binding_and_runtime_dependencies": [
+    "Fx0 panel and RMI reset/panel sequencing",
+    "IMX179 and IMX132 sensor bindings/drivers",
+    "PM8226 torch and PON spare reboot support",
+    "SMBB software/gadget limits and Fx0 charging policy",
+    "raw QFPROM/CPR support and CPU/idle details",
+    "MMCC MCLK/AXI, native CAMSS, full VFE IOMMU and VFE completion fix",
+    "DMA cache alignment and RDI geometry comparison with current upstream"
+  ],
+  "scope": "Inventory of retained board dependencies; no current-base board port or runtime qualification",
+  "after_display_GPU_IOMMU_nodes_unresolved_labels": [
+    "apr",
+    "pm8226_flash",
+    "pm8226_pon",
+    "pronto",
+    "q6afedai",
+    "q6asmdai",
+    "q6routing",
+    "slim_msm",
+    "slimbam"
+  ],
+  "after_display_GPU_DTC_immediate_missing_labels": [
+    "pronto",
+    "pm8226_pon",
+    "pm8226_flash",
+    "apr",
+    "slimbam",
+    "slim_msm"
+  ],
+  "source_parent_camera_DTS": "92faf0cd70bcf96a71cd554e64a87670a0b70a9f",
+  "display_GPU_DTS_head": "6155789433f4c828677b67b9d47c22b2a8547aba",
+  "after_WCNSS_unresolved_labels": [
+    "apr",
+    "pm8226_flash",
+    "pm8226_pon",
+    "q6afedai",
+    "q6asmdai",
+    "q6routing",
+    "slim_msm",
+    "slimbam"
+  ],
+  "after_WCNSS_DTC_immediate_missing_labels": [
+    "pm8226_pon",
+    "pm8226_flash",
+    "apr",
+    "slimbam",
+    "slim_msm"
+  ],
+  "WCNSS_DTS_head": "c3bd956de3414d28aa8273e2a4c746134a4811d3",
+  "unchanged_complete_Fx0_board_SHA256": "36b2a733ba62b94371e018f20f3b318bd57732a3469c1db0a85428f196ca4c0a"
+}

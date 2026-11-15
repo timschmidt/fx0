@@ -1,0 +1,33 @@
+From ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+Date: Sat, 14 Nov 2026 23:22:44 -0500
+Subject: [PATCH 2/2] remoteproc: qcom_wcnss: Add WCN3660A RF support
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Use the WCN3680 regulator/XO data for WCN3660A, retaining a distinct
+compatible for wireless-driver RF classification and capabilities.
+
+Refresh Matti Lehtimäki's original implementation from 5519845f0bd8
+on the current remoteproc integration base. Keep current upstream
+allocation/error handling and all pre-existing RF entries unchanged.
+
+Refreshed with OpenAI Codex assistance. Human review and DCO
+certification remain pending.
+---
+ drivers/remoteproc/qcom_wcnss_iris.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/remoteproc/qcom_wcnss_iris.c b/drivers/remoteproc/qcom_wcnss_iris.c
+index 2b89b4db6..a1442451c 100644
+--- a/drivers/remoteproc/qcom_wcnss_iris.c
++++ b/drivers/remoteproc/qcom_wcnss_iris.c
+@@ -97,6 +97,7 @@ void qcom_iris_disable(struct qcom_iris *iris)
+ static const struct of_device_id iris_of_match[] = {
+ 	{ .compatible = "qcom,wcn3620", .data = &wcn3620_data },
+ 	{ .compatible = "qcom,wcn3660", .data = &wcn3660_data },
++	{ .compatible = "qcom,wcn3660a", .data = &wcn3680_data },
+ 	{ .compatible = "qcom,wcn3660b", .data = &wcn3680_data },
+ 	{ .compatible = "qcom,wcn3680", .data = &wcn3680_data },
+ 	{}

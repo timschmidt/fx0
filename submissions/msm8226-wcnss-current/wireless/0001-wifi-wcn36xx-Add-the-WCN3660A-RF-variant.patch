@@ -1,0 +1,34 @@
+From 2dc038c6fa74e00ddb265b274103c46894c2541a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+Date: Sat, 14 Nov 2026 23:30:22 -0500
+Subject: [PATCH] wifi: wcn36xx: Add the WCN3660A RF variant
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Classify WCN3660A with WCN3660/WCN3660B, retaining the distinct
+compatible required by its power configuration. Do not classify it
+as WCN3680, which enables VHT capabilities.
+
+Refresh Matti Lehtimäki's original implementation from 3cc8fd9f5851
+on the current wireless integration base. All other resource handling
+and current upstream allocation changes remain unchanged.
+
+Refreshed with OpenAI Codex assistance. Human review and DCO
+certification remain pending.
+---
+ drivers/net/wireless/ath/wcn36xx/main.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/wireless/ath/wcn36xx/main.c b/drivers/net/wireless/ath/wcn36xx/main.c
+index ad8a4bd91..0bbe8cf06 100644
+--- a/drivers/net/wireless/ath/wcn36xx/main.c
++++ b/drivers/net/wireless/ath/wcn36xx/main.c
+@@ -1538,6 +1538,7 @@ static int wcn36xx_platform_get_resources(struct wcn36xx *wcn,
+ 		if (of_device_is_compatible(iris_node, "qcom,wcn3620"))
+ 			wcn->rf_id = RF_IRIS_WCN3620;
+ 		if (of_device_is_compatible(iris_node, "qcom,wcn3660") ||
++		    of_device_is_compatible(iris_node, "qcom,wcn3660a") ||
+ 		    of_device_is_compatible(iris_node, "qcom,wcn3660b"))
+ 			wcn->rf_id = RF_IRIS_WCN3660;
+ 		if (of_device_is_compatible(iris_node, "qcom,wcn3680"))

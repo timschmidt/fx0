@@ -1,0 +1,10 @@
+{
+  "commit": "3dbc90b9c22ea96e37bf55f6011e63b5123ec668",
+  "parent": "8c952807c2cebd5e9e9b37146c9383229794c129",
+  "message": "3dbc90b9c22ea96e37bf55f6011e63b5123ec668\nremoteproc: qcom_wcnss: Fix handling the lack of PD regulators in v3\nremoteproc: qcom_wcnss: Fix handling the lack of PD regulators in v3\n\nThe changes introduced to handle single power domain platforms have\nswapped the info pointer increment from num_pd_vregs to num_pds, which\nwould shift the info pointer past the end of the array for pronto-v3,\nwhich does not list power domain regulators in vregs.\n\nThis showed up as a difference between GCC- and LLVM-compiled kernels\non SDM632 devices, where only with LLVM one would get the\n\"regulator request with no identifier\" error, because the out-of-bounds\nmemory ended up being zeroed. Fix by skipping the increment when there\nare more power domains than regulators.\n\nSigned-off-by: Val Packett <val@packett.cool>\nFixes: 65991ea8a6d1 (\"remoteproc: qcom_wcnss: Handle platforms with only single power domain\")\nReviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>\nFixes: 65991ea8a6d1 (\"remoteproc: qcom_wcnss: Handle platforms with only  single power domain\")\nLink: https://lore.kernel.org/r/20260201210230.911220-1-val@packett.cool\nSigned-off-by: Bjorn Andersson <andersson@kernel.org>\n\n",
+  "parent_source_SHA256": "ea6e3d7a552297ad29829fb1668a0fb2fc109ff9c0610b24f15fcddfb9e0178d",
+  "introduced_source_SHA256": "7451f92a859c84d4fd69d3dc6408eacc3854ced5545a91cf2dc7133adf25c7e3",
+  "bad_guard_absent_before_present_after": true,
+  "actual_official_parent_and_commit_objects_verified": true,
+  "classification": "regular regulator-selection regression, no security claim"
+}
