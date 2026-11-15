@@ -1,0 +1,83 @@
+{
+  "recorded_UTC": "2026-11-15T00:41:21.047128+00:00",
+  "mainline_repository": "torvalds/linux",
+  "mainline_commit": "23c62304dde29abe92013d85910d03a77dada35d",
+  "candidate_source_commit": "250e7412a5a15068b2a2fe32b57b66c300c91b5f",
+  "candidate_source_parent": "f71b29239d140872c4970d8381f5d297a604c6da",
+  "scope": "Exact candidate patch applies to seven complete source files fetched at the verified mainline pin; extracted host production-function regression only",
+  "files": [
+    {
+      "file": "camss-vfe-17x.c",
+      "SHA256": "2d2be5778b778236de57b835c45e4db6e54f56bff419f6da7546c7927642b642",
+      "Git_blob": "62c2405359a06bb9553e44ad83388a5ebd9270be",
+      "entire_file_identical_to_candidate_parent": true,
+      "URL": "https://github.com/torvalds/linux/blob/23c62304dde29abe92013d85910d03a77dada35d/drivers/media/platform/qcom/camss/camss-vfe-17x.c",
+      "patched_SHA256": "640c805e22532a74daa3819491a131dbf6fb04a9c18caa4c291ba387083a6ede"
+    },
+    {
+      "file": "camss-vfe-4-1.c",
+      "SHA256": "b2aa4150cddedd87c6be180a70d44d9a86eba75a8022f36533537c0d0aa47be7",
+      "Git_blob": "9cf1ccdb2fe7ca9bf89b746af836e1035b457a8f",
+      "entire_file_identical_to_candidate_parent": false,
+      "URL": "https://github.com/torvalds/linux/blob/23c62304dde29abe92013d85910d03a77dada35d/drivers/media/platform/qcom/camss/camss-vfe-4-1.c",
+      "patched_SHA256": "fc0b57c7024b989ec85799dc9fa751b903afd47738d6d9ab5862ad4537cb0d08"
+    },
+    {
+      "file": "camss-vfe-4-7.c",
+      "SHA256": "50f4f0eecbab9b9b1359bd35bcf574ce5ece9b0e5d01103d924681cfaa7b3e58",
+      "Git_blob": "76729607db02dab835251b8df27e92dff20f8116",
+      "entire_file_identical_to_candidate_parent": true,
+      "URL": "https://github.com/torvalds/linux/blob/23c62304dde29abe92013d85910d03a77dada35d/drivers/media/platform/qcom/camss/camss-vfe-4-7.c",
+      "patched_SHA256": "d50d0a534d0eec0dfa2fa1655a4a7f34759026d9f300e5ac9f1adbeffb541dc5"
+    },
+    {
+      "file": "camss-vfe-4-8.c",
+      "SHA256": "d95684c0f18b53ec0d7385fd0a62d5757db1d02cd7bcddcf9ee7e9b8ef7b1eb1",
+      "Git_blob": "b2f7d855d8dd0f3abe1259bfdce775bfa095c978",
+      "entire_file_identical_to_candidate_parent": true,
+      "URL": "https://github.com/torvalds/linux/blob/23c62304dde29abe92013d85910d03a77dada35d/drivers/media/platform/qcom/camss/camss-vfe-4-8.c",
+      "patched_SHA256": "eebd60bb1b73d05a085f2880dbe9aa581410d75cb995e31810b86dd33ea142fa"
+    },
+    {
+      "file": "camss-vfe-gen1.c",
+      "SHA256": "4ea6d35ea13ef50cc25b5bdc00ecb92361bc8b69da5828186989368d442f22ba",
+      "Git_blob": "d84a375e331878acec839966513553eb534b08ce",
+      "entire_file_identical_to_candidate_parent": false,
+      "URL": "https://github.com/torvalds/linux/blob/23c62304dde29abe92013d85910d03a77dada35d/drivers/media/platform/qcom/camss/camss-vfe-gen1.c",
+      "patched_SHA256": "7c75b5fe859b270f477bc0746af50679a031579b0a4ccca67712ebe8b2396280"
+    },
+    {
+      "file": "camss-vfe.c",
+      "SHA256": "a736786adf7327abb2234feea2a61231be4683302848ee0489cb8dd58c7ae7b4",
+      "Git_blob": "ad09593f580280a26565ff94d8f5630deee998d8",
+      "entire_file_identical_to_candidate_parent": false,
+      "URL": "https://github.com/torvalds/linux/blob/23c62304dde29abe92013d85910d03a77dada35d/drivers/media/platform/qcom/camss/camss-vfe.c",
+      "patched_SHA256": "a736786adf7327abb2234feea2a61231be4683302848ee0489cb8dd58c7ae7b4"
+    },
+    {
+      "file": "camss-vfe.h",
+      "SHA256": "6879bfd289381821ab1a0cfe21b94eb014b7a4d96e6c7930531a839a298019f7",
+      "Git_blob": "ae9dad353a3783cc0c9945e58167573b48441067",
+      "entire_file_identical_to_candidate_parent": false,
+      "URL": "https://github.com/torvalds/linux/blob/23c62304dde29abe92013d85910d03a77dada35d/drivers/media/platform/qcom/camss/camss-vfe.h",
+      "patched_SHA256": "c8e48aec003f5f2243ef6011c64681b5930270563987ab5cac97871605e9e0f9"
+    }
+  ],
+  "all_fetched_file_Git_blob_hashes_verified": true,
+  "exact_six_file_patch_check_and_application_returncodes": [
+    0,
+    0
+  ],
+  "ASan_UBSan_passed": true,
+  "positive_scenarios_per_dispatcher": 28,
+  "positive_dispatcher_executions": 84,
+  "negative_controls": 15,
+  "current_baseline_full_file_differences_preserved": true,
+  "full_mainline_kernel_or_ARM_build": false,
+  "appropriate_media_maintainer_base_verified": false,
+  "official_media_repository_read_failure": "Advertised refs could not be verified; independent HTTP/2 and HTTP/1.1 attempts ended during transport",
+  "hardware_or_runtime_CFI_qualification": false,
+  "phone_access": false,
+  "published": false,
+  "maintainer_contact": false
+}

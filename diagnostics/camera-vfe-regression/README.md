@@ -50,3 +50,11 @@ The original native buffers and callbacks remain in
 and a CFI-enabled ARM CAMSS component build do not qualify a full kernel,
 signed package, module load, camera DMA or physical recovery. A fresh complete
 package build and a separately gated phone trial are still required.
+
+[Current mainline source applicability](mainline-applicability.md) passes the
+source-only sanitizer regression at a verified mainline pin.
+[Fresh r7 package preparation](../../evidence/2026-11-15-camera-vfe-r7-package-preparation.json)
+pins the final source with an unchanged input configuration and two separate
+normal signed builds. Builds and the twelve independent audit stages must
+finish successfully before package qualification can be claimed. The
+unchanged-r2 repeat/return and distinct candidate operator gates remain open.
