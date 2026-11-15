@@ -26,3 +26,10 @@ Human review and certification, physical qualification and publication remain
 open.
 
 [Sanitized maintainer-base evidence](../../evidence/2026-11-15-camera-vfe-media-fixes-port.json)
+
+The native ARM32 dependency workaround already exists in the Fx0 integration
+at `9d46e4575ea176699386bbb0dc988c6abbf26705` (earlier draft `3a68ec4c8322`).
+Media `next` at `3fc9303dba01676c2090768126e5327e341b7761` still has the
+same unextended dependency as this fixes base. It needs a separate current-base
+configuration/platform-support refresh, alongside review of the MSM8226
+resources. This VFE bug-fix draft does not introduce that pre-existing gap.

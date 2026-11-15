@@ -41,7 +41,11 @@ audit validates all 725 archive entries, numeric root ownership, exact
 recipe modes, known PAX fields, timestamps and all 545 data-file checksums.
 Membership, ownership, modes and PAX structure match both builds and the
 retained r6 fixture. The message is retained; its original cause remains
-unproven and build-tool follow-up remains open. A silent build is not claimed.
+unproven. A later [native client diagnostic](../fakeroot-client-receive/README.md)
+reproduces the exact message through one interrupted receive, with successful
+retry and unchanged fixture metadata/archive bytes. That establishes one
+nonfatal mechanism; it does not identify the original cause or qualify every
+notice. A silent original build is not claimed.
 
 The source archive is a locally deterministic Git export with every body,
 link target and executable mode verified. The final GitHub server archive

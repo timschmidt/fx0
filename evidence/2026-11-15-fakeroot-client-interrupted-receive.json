@@ -1,0 +1,45 @@
+{
+  "recorded_UTC": "2026-11-15T02:03:01.190162+00:00",
+  "native_fakeroot": "1.37.2-r0",
+  "host_strace": "strace -- version 7.2",
+  "case_returncodes": [
+    0,
+    0
+  ],
+  "exact_notice_count": {
+    "control": 0,
+    "client_EINTR": 1
+  },
+  "one_owned_client_receive_returned_EINTR": true,
+  "same_receive_retried_successfully": true,
+  "daemon_not_traced_or_interrupted": true,
+  "explicit_owned_target_handshake_and_attach_verified": true,
+  "fake_ownership_and_modes_exact": true,
+  "real_payload_owner_unchanged": 12345,
+  "tar_metadata_entries": 3,
+  "tar_bytes_identical": true,
+  "tar_SHA256": "8fc5d7be788a844b2c2320fa4ae6867f2ae347466cd3645c3d78a16f1c642cc9",
+  "owned_processes_reaped_and_targets_gone": true,
+  "known_nonfatal_client_EINTR_mechanism_verified": true,
+  "real_signal_delivery_tested": false,
+  "original_package_diagnostic_cause_proven": false,
+  "all_fakeroot_notices_proven_benign": false,
+  "native_database_unchanged": true,
+  "signers_mounted": false,
+  "phone_access": false,
+  "scope": "Actual installed native client and daemon with one owned receive error; not a replay or causal trace of the original abuild run",
+  "passed": true,
+  "source_SHA256": {
+    "diagnostics/fakeroot-client-receive/prepare.py": "26cfc571ff2c73ba2a4de2d7bdf85024db04a5699b5f06858442d7e26dc81008",
+    "diagnostics/fakeroot-client-receive/run.py": "6f9dd35378108e416c0cf5fa753724f7760f43cb7154202cf19d3edaf2e78add",
+    "diagnostics/fakeroot-client-receive/verify.py": "da36bbfbb1d38a4b141ad15e3673b60665d4467a348f716fa0c71d841143f6ff",
+    "diagnostics/fakeroot-client-receive/inputs/dispatch.py": "353045a244f30d63e7a27ca95754d5f890b2616d3175e5add5ff9748b08e620a",
+    "diagnostics/fakeroot-client-receive/inputs/fixture.py": "8c749960cd7fb592696f7a8147f445933b905b028321499c7fa737f9032b0c14"
+  },
+  "earlier_all_process_injection_failed_and_preserved": true,
+  "earlier_invalid_attach_option_control_failed_and_preserved": true,
+  "qualified_r7_APK_SHA256": "5b53d7b7b21605f248b33d9ae457b0cf31424563cf2d85ffd1b1c050f805dd28",
+  "original_qualified_packages_and_signatures_unchanged": true,
+  "source_and_recipe_publication": false,
+  "full_bringup_complete": false
+}
