@@ -1,0 +1,19 @@
+{
+  "command": [
+    "make",
+    "O=$WORKSPACE/local/qfprom-nvmem-current-01/arm-out",
+    "ARCH=arm",
+    "LLVM=-21",
+    "W=1",
+    "-j2",
+    "DT_SCHEMA_FILES=nvmem/qcom,qfprom.yaml",
+    "dt_binding_check"
+  ],
+  "started_UTC": "2026-11-15T22:12:29.902963+00:00",
+  "finished_UTC": "2026-11-15T22:13:31.903239+00:00",
+  "returncode": 0,
+  "diagnostics": [],
+  "passed": true,
+  "log_SHA256": "3101afb309db762cfc8e1a5d56bf4e9478683f5297c858020b6206f58268bd29",
+  "phone_access": false
+}

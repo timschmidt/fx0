@@ -1,0 +1,94 @@
+{
+  "started_UTC": "2026-11-15T22:11:25.104009+00:00",
+  "source_head": "6628e7d4c6b25c8d18f1345e3a20d21829aae7e4",
+  "source_tree": "7edfdd0dec052f7d7336ba6b65a1a9cc78df95ca",
+  "frozen_working_files": {
+    "drivers/nvmem/qfprom.c": "be965da41124bbb36ee32710d6c07d14a41cf1ea42df58fff7eae77794449b43",
+    "Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml": "a8e795bcf911ebb62755e30d5020e2ea45390ec84136745681d629e42e756ed4"
+  },
+  "native": true,
+  "COMPILE_TEST": false,
+  "stages": [
+    {
+      "stage": "options",
+      "command": [
+        "$WORKSPACE/worktrees/linux-qfprom-nvmem-current-01/scripts/config",
+        "--file",
+        "$WORKSPACE/local/qfprom-nvmem-current-01/arm-out/.config",
+        "-d",
+        "COMPILE_TEST",
+        "-e",
+        "NVMEM",
+        "-e",
+        "NVMEM_SYSFS",
+        "-e",
+        "GPIOLIB",
+        "-e",
+        "REGULATOR",
+        "-e",
+        "OF",
+        "-e",
+        "NVMEM_QCOM_QFPROM"
+      ],
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "config",
+      "command": [
+        "make",
+        "O=$WORKSPACE/local/qfprom-nvmem-current-01/arm-out",
+        "ARCH=arm",
+        "LLVM=-21",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "W=1",
+        "-j2",
+        "olddefconfig"
+      ],
+      "returncode": 0,
+      "log_SHA256": "a6b5418df7d91fa9b35eeb005aaf0bb7170572279a0ed49adf750b53e3ea781c"
+    },
+    {
+      "stage": "prepare",
+      "command": [
+        "make",
+        "O=$WORKSPACE/local/qfprom-nvmem-current-01/arm-out",
+        "ARCH=arm",
+        "LLVM=-21",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "W=1",
+        "-j2",
+        "modules_prepare"
+      ],
+      "returncode": 0,
+      "log_SHA256": "96c56c12e2425b3ee16855e941ebad2c199970df32fe02472894b58ffacc62ba"
+    },
+    {
+      "stage": "component",
+      "command": [
+        "make",
+        "O=$WORKSPACE/local/qfprom-nvmem-current-01/arm-out",
+        "ARCH=arm",
+        "LLVM=-21",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "W=1",
+        "-j2",
+        "drivers/nvmem/qfprom.o",
+        "drivers/nvmem/core.o"
+      ],
+      "returncode": 0,
+      "log_SHA256": "db99d724c1f0ac0fd817fb306bb4dd00d8ad69f94da4545d5786306edf158789"
+    }
+  ],
+  "launcher_SHA256": "95f5a4ac5605e0bb9deb6c2ec7bb10eb33ef138c351abf6e2ea610f3d107c456",
+  "phone_access": false,
+  "state": "terminal success",
+  "config_SHA256": "5ff51e92d32054cb7078c6b514efa0f2bc151cd3cbe00be0ef8bb2bac890833d",
+  "passed": true,
+  "returncode": 0,
+  "objects": {
+    "drivers/nvmem/qfprom.o": "31768125b3cf5ca52a58f9d86178d0b546ae9276ddfd6359ece39bfad9cca83f",
+    "drivers/nvmem/core.o": "2dcd1378a3a7e52b3a5e7845e96661f5a10a14d1f4295b56a13095e845abde6d"
+  },
+  "finished_UTC": "2026-11-15T22:11:37.247054+00:00"
+}
