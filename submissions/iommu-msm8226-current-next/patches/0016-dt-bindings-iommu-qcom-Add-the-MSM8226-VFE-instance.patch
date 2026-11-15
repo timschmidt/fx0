@@ -1,0 +1,36 @@
+From 737bcac93d0e86b00c7241538226bc04cb70b678 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 31 Oct 2026 05:25:54 -0400
+Subject: [PATCH 16/20] dt-bindings: iommu: qcom: Add the MSM8226 VFE instance
+
+Original integration rationale and historical observations follow. These
+observations do not qualify hardware on this refreshed base.
+
+The MSM8226 camera (VFE) SMMU is OS-managed like the GPU instance and
+uses an additional clock while its context banks are programmed.
+
+Original integration AI credit: Claude Opus 5.5 <noreply@anthropic.com>.
+
+Refreshed from integration source
+fc02f5ac7fa2154598d29eccef8d7c1af9cec06a. Current-base adaptation and
+host qualification used OpenAI Codex. Human review and new DCO
+certification remain pending.
+---
+ Documentation/devicetree/bindings/iommu/qcom,iommu.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
+index fb59945c2..32e1acb82 100644
+--- a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
++++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
+@@ -32,6 +32,7 @@ properties:
+           - const: qcom,msm-iommu-v2
+       - enum:
+           - qcom,msm8226-gpu-iommu
++          - qcom,msm8226-vfe-iommu
+           - qcom,msm8226-mdp-iommu
+           - qcom,msm8974-gpu-iommu
+           - qcom,msm8974-mdp-iommu
+-- 
+2.56.0
+

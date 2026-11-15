@@ -1,0 +1,800 @@
+{
+  "recorded_UTC": "2026-11-15T03:17:26.913205+00:00",
+  "base": "2cf4be57b301ed2d7af82e70cff5dfd96894d8de",
+  "head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+  "tree": "0270168921fa5cd918dcb8871537a5054ca0d2e4",
+  "source_branch": "development/iommu-msm8226-current-next-03",
+  "source_files_SHA256": {
+    "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml": "ca4eb31b957da834eaf9ccab3f993df1db34ebd186b0795d63f91460681d3f63",
+    "drivers/iommu/arm/Kconfig": "7cbd7e2f9b065a06162bc39a55c04849dd4c7615652781831f2c1ba4ecec0bce",
+    "drivers/iommu/arm/arm-smmu/qcom_iommu.c": "a83c92d675f27e2c2d89e1c7017a686b90057edadfdf7a8e8b8129980aadc0fd",
+    "drivers/iommu/arm/arm-smmu/arm-smmu.h": "5a6ce236192f248d480836203b04026c0d4a115bfe82e66fa8919c7ea6801cab"
+  },
+  "official_refs": {
+    "checked_UTC": "2026-11-15T02:44:43.353474+00:00",
+    "official_repository": "https://git.kernel.org/pub/scm/linux/kernel/git/iommu/linux.git",
+    "next": "2cf4be57b301ed2d7af82e70cff5dfd96894d8de",
+    "qualcomm/msm": "6628e7d4c6b25c8d18f1345e3a20d21829aae7e4",
+    "fetch": "exact next commit from official repository",
+    "source_tree": "840554440aef942334f2800bf8a5ebe2347e7364",
+    "phone_access": false
+  },
+  "source_series": [
+    {
+      "commit": "075f463f60fea8cba251b4ddfd5c1b6fb31854b7",
+      "original": "772813c92b768086cad84c34642ace7f9d6068c3",
+      "author": "Dmitry Baryshkov",
+      "subject": "iommu: arm-smmu: add global register definitions used by the QSMMU"
+    },
+    {
+      "commit": "f0ca0cc68fd4332ff95032fa4e85aa5259bff467",
+      "original": "5c8adf91fca50ad615f60f52b54ebb2a49ee5d30",
+      "author": "Dmitry Baryshkov",
+      "subject": "dt-bindings: iommu: qcom,iommu: document the MSM8974 IOMMUs"
+    },
+    {
+      "commit": "12383f2dfbd7ff6972b568116c64ff007fa61f81",
+      "original": "c809378460767d57c2689eb46b8f30e2e365bcb1",
+      "author": "Dmitry Baryshkov",
+      "subject": "iommu: qcom_iommu: extract context bank programming into a helper"
+    },
+    {
+      "commit": "e77e50ee173e1dd0889289d418ba62066d0de650",
+      "original": "e627f8707ea7b1ce29926062f65cb4ae4e8d9983",
+      "author": "Dmitry Baryshkov",
+      "subject": "iommu: qcom_iommu: support the short-descriptor pagetable format"
+    },
+    {
+      "commit": "02ddb92d563634b6dad988cfd458256fb1abaa92",
+      "original": "366914d363874a8086e27e363902acfe45371b3d",
+      "author": "Dmitry Baryshkov",
+      "subject": "iommu: qcom_iommu: handle the SMMU global register space"
+    },
+    {
+      "commit": "8c2239a251021f66e2cb019508399eb44a83453b",
+      "original": "b7ec95eb0aaba84d94e4dfdf2dffefdb9e22227c",
+      "author": "Dmitry Baryshkov",
+      "subject": "iommu: qcom_iommu: support non-TZ-managed instances"
+    },
+    {
+      "commit": "6893a8ad85b64a691b8e11a7ca8ea7b6603c7d55",
+      "original": "7a2c169b805edf37b98226c02a6ad0138f6051ea",
+      "author": "Dmitry Baryshkov",
+      "subject": "iommu: qcom_iommu: restore context bank state after power collapse"
+    },
+    {
+      "commit": "1e17bb6ffeb401a7a8ea458cdcd0eff47f396ac5",
+      "original": "5ec3d506e6021c44672c8531ce646378e5fc9b56",
+      "author": "Dmitry Baryshkov",
+      "subject": "iommu: qcom_iommu: halt the micro-MMU while programming context banks"
+    },
+    {
+      "commit": "84d034fe994fe51cd3ab54d7764a189a645cba65",
+      "original": "32fda8691719c053c7e22a51755bde2a38fc9552",
+      "author": "Dmitry Baryshkov",
+      "subject": "iommu: qcom_iommu: allow faulting transactions to terminate"
+    },
+    {
+      "commit": "bebdd6943ef8f0612e4e2e2d8d55c019a7f9d4ae",
+      "original": "2407435a40542b068a2732acf0005d99a69220bb",
+      "author": "Dmitry Baryshkov",
+      "subject": "iommu: qcom_iommu: program BFP (prefetch) settings"
+    },
+    {
+      "commit": "c210b7e9fd13d941a366b75fde3194f17c103b9c",
+      "original": "a29fb8276519f52b8a5e63f6b1d156ca2105e73f",
+      "author": "Dmitry Baryshkov",
+      "subject": "iommu: qcom_iommu: add the MSM8974 instances"
+    },
+    {
+      "commit": "78a4021bd500f723bf85847b3f95e09352ab7eb5",
+      "original": "32fd8a21c5a39cb3378cc530877472b208558349",
+      "author": "Timothy Schmidt",
+      "subject": "dt-bindings: iommu: qcom: Add the MSM8226 display instance"
+    },
+    {
+      "commit": "f8048f86c324708bb3e6e347e04c4f252b2b3732",
+      "original": "b506b8cd827d546d05e3332b77a2d4a4a29abe83",
+      "author": "Timothy Schmidt",
+      "subject": "iommu: qcom_iommu: Add the MSM8226 display configuration"
+    },
+    {
+      "commit": "851ffeac126fa489538ebd9d72a6c0dc5037e7f4",
+      "original": "ca397d0f4501ab85eeab906fd9b49527566f6bd9",
+      "author": "Timothy Schmidt",
+      "subject": "dt-bindings: iommu: qcom: Add the MSM8226 GPU instance"
+    },
+    {
+      "commit": "7caeb9222af4323a8fc9644c22971f6ee3d33159",
+      "original": "60fa2a06552bb98e447d52d31aa8f36723bafe46",
+      "author": "Timothy Schmidt",
+      "subject": "iommu: qcom_iommu: Add the MSM8226 GPU configuration"
+    },
+    {
+      "commit": "737bcac93d0e86b00c7241538226bc04cb70b678",
+      "original": "fc02f5ac7fa2154598d29eccef8d7c1af9cec06a",
+      "author": "Timothy Schmidt",
+      "subject": "dt-bindings: iommu: qcom: Add the MSM8226 VFE instance"
+    },
+    {
+      "commit": "bab30541737604b82086d38f2e885ea84e7fde6b",
+      "original": "669336246d0da8ff0b80513c3bef847de98c4d44",
+      "author": "Timothy Schmidt",
+      "subject": "iommu: qcom_iommu: Add the MSM8226 VFE configuration"
+    },
+    {
+      "commit": "e027123e5810a8c8d7247a309acf54d26c45e36e",
+      "original": "05834c037143a566676c57d765e6cc4145873a3f",
+      "author": "Timothy Schmidt",
+      "subject": "iommu: qcom_iommu: Map the MSM8226 VFE stream IDs"
+    },
+    {
+      "commit": "abfeb63bfc9204afbe209a1d3c7425eeb27e96b4",
+      "original": null,
+      "author": "Timothy Schmidt",
+      "subject": "dt-bindings: iommu: qcom: Describe global resources and the VFE example"
+    },
+    {
+      "commit": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original": null,
+      "author": "Timothy Schmidt",
+      "subject": "iommu: qcom_iommu: Guard optional global address calculation"
+    }
+  ],
+  "builds": {
+    "arm": {
+      "config_SHA256": "fcbd6c6e54285b032be4bd9bfe2997c1f9b82677843185f6a982fd7380ffec93",
+      "objects": {
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.o": "a0816d6b2818e5736de7148a3ac0b2792b357b84a13fb1fd1cafb50f82841582",
+        "drivers/iommu/io-pgtable-arm-v7s.o": "cd1010bd5a512c623a84394839280747d757e2ea0c0b0c4db6337f9afcd882cd"
+      },
+      "COMPILE_TEST": false,
+      "signers_required": false,
+      "scope": "Complete driver and pagetable backend objects; no full kernel, boot, runtime PM or hardware acceptance",
+      "returncodes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "warnings_errors": 0
+    },
+    "arm64": {
+      "config_SHA256": "b35c15cc73aeeac4dfb6bda205a979069cd8d69c3aa113ffce8a97c72210d5b6",
+      "objects": {
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.o": "bbd1ac4425d8a4ace9f0f2992dc2489cff7b776d1cd494d849d335813f5bca07",
+        "drivers/iommu/io-pgtable-arm-v7s.o": "2676e673965f3de993f7fc74cc9214050936e5d6fb2e319edbfbc7d629184883"
+      },
+      "COMPILE_TEST": false,
+      "signers_required": false,
+      "scope": "Complete driver and pagetable backend objects; no full kernel, boot, runtime PM or hardware acceptance",
+      "returncodes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "warnings_errors": 0
+    }
+  },
+  "binding_contract": {
+    "passed": true,
+    "positive_schema_cases": 3,
+    "schema_rejection_controls": [
+      "missing reg",
+      "missing ranges",
+      "only one clock",
+      "incorrect clock name",
+      "incorrect iommu cells",
+      "incorrect context compatible",
+      "missing context IRQ",
+      "undocumented property"
+    ],
+    "actual_VFE_context_banks": 3,
+    "VFE_stream_to_context_pairs": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "VFE_prefetch_registers_within_declared_global_window": 18,
+    "example_SHA256": "5e7051d7463fff62e90da22c06a48b81a1384bbb3101ac4060505fe6e0fe8fe5",
+    "driver_SHA256": "a83c92d675f27e2c2d89e1c7017a686b90057edadfdf7a8e8b8129980aadc0fd",
+    "legacy_optional_local_region_preserved": true,
+    "scope": "Compiled examples, schema and platform-data contract; no board DTB or hardware acceptance",
+    "phone_access": false
+  },
+  "schema": {
+    "ordinary_kernel_target_returncode": 0,
+    "direct_checks": [
+      {
+        "name": "yamllint",
+        "returncode": 0,
+        "output_empty": true
+      },
+      {
+        "name": "doc",
+        "returncode": 0,
+        "output_empty": true
+      },
+      {
+        "name": "dt-style",
+        "returncode": 0,
+        "output_empty": true
+      },
+      {
+        "name": "example",
+        "returncode": 0,
+        "output_empty": true
+      }
+    ],
+    "diagnostic_lines": 0
+  },
+  "halt_qualification": {
+    "source_SHA256": "0a9b9d0a9024597f16cf7667af92e41428806c856fec410ca8bbd5e824850383",
+    "helper_SHA256": "316d13e4695975b70f5a79f9aa398447c7b68a8dfc61c9693f96bd5c7babfa8e",
+    "stages": [
+      {
+        "name": "candidate-compile",
+        "returncode": 0
+      },
+      {
+        "name": "negative-compile",
+        "returncode": 0
+      },
+      {
+        "name": "candidate-run",
+        "returncode": 0
+      },
+      {
+        "name": "negative-halt",
+        "returncode": -6
+      },
+      {
+        "name": "negative-unhalt",
+        "returncode": -6
+      }
+    ],
+    "fixture_scope": "Copied production helpers; minimal structs and owned emulated MMIO, no kernel ABI or hardware acceptance",
+    "phone_access": false,
+    "passed": true,
+    "positive_cases": 4,
+    "rejected_original_behavior_controls": 2,
+    "ASan_UBSan": true,
+    "runtime_hardware_test": false
+  },
+  "halt_final_source_binding": {
+    "final_source_SHA256": "a83c92d675f27e2c2d89e1c7017a686b90057edadfdf7a8e8b8129980aadc0fd",
+    "helper_SHA256": "316d13e4695975b70f5a79f9aa398447c7b68a8dfc61c9693f96bd5c7babfa8e",
+    "same_executed_production_helpers": true,
+    "only_other_source_formatting_changed": true
+  },
+  "draft_checks": {
+    "head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+    "checks": [
+      {
+        "patch": "0001-iommu-arm-smmu-add-global-register-definitions-used-.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0001-iommu-arm-smmu-add-global-register-definitions-used-.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0001-iommu-arm-smmu-add-global-register-definitions-used-.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0002-dt-bindings-iommu-qcom-iommu-document-the-MSM8974-IO.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0002-dt-bindings-iommu-qcom-iommu-document-the-MSM8974-IO.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0002-dt-bindings-iommu-qcom-iommu-document-the-MSM8974-IO.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0003-iommu-qcom_iommu-extract-context-bank-programming-in.patch",
+        "mode": "strict",
+        "returncode": 1,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 1
+      },
+      {
+        "patch": "0003-iommu-qcom_iommu-extract-context-bank-programming-in.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0003-iommu-qcom_iommu-extract-context-bank-programming-in.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0004-iommu-qcom_iommu-support-the-short-descriptor-pageta.patch",
+        "mode": "strict",
+        "returncode": 1,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 1
+      },
+      {
+        "patch": "0004-iommu-qcom_iommu-support-the-short-descriptor-pageta.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0004-iommu-qcom_iommu-support-the-short-descriptor-pageta.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0005-iommu-qcom_iommu-handle-the-SMMU-global-register-spa.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0005-iommu-qcom_iommu-handle-the-SMMU-global-register-spa.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0005-iommu-qcom_iommu-handle-the-SMMU-global-register-spa.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0006-iommu-qcom_iommu-support-non-TZ-managed-instances.patch",
+        "mode": "strict",
+        "returncode": 1,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 15
+      },
+      {
+        "patch": "0006-iommu-qcom_iommu-support-non-TZ-managed-instances.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0006-iommu-qcom_iommu-support-non-TZ-managed-instances.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0007-iommu-qcom_iommu-restore-context-bank-state-after-po.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0007-iommu-qcom_iommu-restore-context-bank-state-after-po.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0007-iommu-qcom_iommu-restore-context-bank-state-after-po.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0008-iommu-qcom_iommu-halt-the-micro-MMU-while-programmin.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0008-iommu-qcom_iommu-halt-the-micro-MMU-while-programmin.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0008-iommu-qcom_iommu-halt-the-micro-MMU-while-programmin.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0009-iommu-qcom_iommu-allow-faulting-transactions-to-term.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0009-iommu-qcom_iommu-allow-faulting-transactions-to-term.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0009-iommu-qcom_iommu-allow-faulting-transactions-to-term.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0010-iommu-qcom_iommu-program-BFP-prefetch-settings.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0010-iommu-qcom_iommu-program-BFP-prefetch-settings.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0010-iommu-qcom_iommu-program-BFP-prefetch-settings.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0011-iommu-qcom_iommu-add-the-MSM8974-instances.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0011-iommu-qcom_iommu-add-the-MSM8974-instances.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0011-iommu-qcom_iommu-add-the-MSM8974-instances.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0012-dt-bindings-iommu-qcom-Add-the-MSM8226-display-insta.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0012-dt-bindings-iommu-qcom-Add-the-MSM8226-display-insta.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0012-dt-bindings-iommu-qcom-Add-the-MSM8226-display-insta.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0013-iommu-qcom_iommu-Add-the-MSM8226-display-configurati.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0013-iommu-qcom_iommu-Add-the-MSM8226-display-configurati.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0013-iommu-qcom_iommu-Add-the-MSM8226-display-configurati.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0014-dt-bindings-iommu-qcom-Add-the-MSM8226-GPU-instance.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0014-dt-bindings-iommu-qcom-Add-the-MSM8226-GPU-instance.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0014-dt-bindings-iommu-qcom-Add-the-MSM8226-GPU-instance.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0015-iommu-qcom_iommu-Add-the-MSM8226-GPU-configuration.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0015-iommu-qcom_iommu-Add-the-MSM8226-GPU-configuration.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0015-iommu-qcom_iommu-Add-the-MSM8226-GPU-configuration.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0016-dt-bindings-iommu-qcom-Add-the-MSM8226-VFE-instance.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0016-dt-bindings-iommu-qcom-Add-the-MSM8226-VFE-instance.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0016-dt-bindings-iommu-qcom-Add-the-MSM8226-VFE-instance.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0017-iommu-qcom_iommu-Add-the-MSM8226-VFE-configuration.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0017-iommu-qcom_iommu-Add-the-MSM8226-VFE-configuration.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0017-iommu-qcom_iommu-Add-the-MSM8226-VFE-configuration.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0018-iommu-qcom_iommu-Map-the-MSM8226-VFE-stream-IDs.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0018-iommu-qcom_iommu-Map-the-MSM8226-VFE-stream-IDs.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0018-iommu-qcom_iommu-Map-the-MSM8226-VFE-stream-IDs.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0019-dt-bindings-iommu-qcom-Describe-global-resources-and.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0019-dt-bindings-iommu-qcom-Describe-global-resources-and.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0019-dt-bindings-iommu-qcom-Describe-global-resources-and.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0020-iommu-qcom_iommu-Guard-optional-global-address-calcu.patch",
+        "mode": "strict",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0020-iommu-qcom_iommu-Guard-optional-global-address-calcu.patch",
+        "mode": "reviewed-style",
+        "returncode": 0,
+        "errors": 0,
+        "warnings": 0,
+        "checks": 0
+      },
+      {
+        "patch": "0020-iommu-qcom_iommu-Guard-optional-global-address-calcu.patch",
+        "mode": "submission",
+        "returncode": 1,
+        "errors": 1,
+        "warnings": 0,
+        "checks": 0
+      }
+    ],
+    "reviewed_CamelCase": "Only existing architectural ARM_SMMU register naming is excluded; all indentation and other checks remain enabled."
+  },
+  "patches_SHA256": {
+    "0003-iommu-qcom_iommu-extract-context-bank-programming-in.patch": "686371e8fea3a052fbf29006efed1c3f4aeae444541ad113fa0cc0cc42bfd567",
+    "0012-dt-bindings-iommu-qcom-Add-the-MSM8226-display-insta.patch": "c11c5f353f07e8932edd0cb3fb2eb3adcea93777abdfbae1d7e5dedc7a0eff6a",
+    "0002-dt-bindings-iommu-qcom-iommu-document-the-MSM8974-IO.patch": "962517a1ad373570cafbad4bd2ed32ca24dd0a58c0ceb6f3ea3ac55b81959d9e",
+    "0007-iommu-qcom_iommu-restore-context-bank-state-after-po.patch": "c97ab7315b5be14b2fb2a2f0a22a368974fddbcc277361214951c7b4e21ffd9d",
+    "0017-iommu-qcom_iommu-Add-the-MSM8226-VFE-configuration.patch": "212552034ac6b19daa1210d6595e63ae6cf7256ec56d133698827b38ede1aeb9",
+    "0020-iommu-qcom_iommu-Guard-optional-global-address-calcu.patch": "782abb9c26e46b21c30a24e582c473cf833f3f1ea5854b3d0353f714a3061a84",
+    "0014-dt-bindings-iommu-qcom-Add-the-MSM8226-GPU-instance.patch": "33fc29779ba38f5228f8a4dacaacfd22ba847803bf273d71db269234203c0849",
+    "0009-iommu-qcom_iommu-allow-faulting-transactions-to-term.patch": "d2f8db20b9d6eefb98551aa355844e3d95d04588925c8971a7317d489920b6b4",
+    "0019-dt-bindings-iommu-qcom-Describe-global-resources-and.patch": "9d1ef8ba1e7992123bdf4c8ee4ac18bef6d9b0a11991e58e52d70f057825f436",
+    "0010-iommu-qcom_iommu-program-BFP-prefetch-settings.patch": "6ce957d710dae30ecd7e316ca4e2ad2c28025c420b1da8a6623cb3597153896c",
+    "0018-iommu-qcom_iommu-Map-the-MSM8226-VFE-stream-IDs.patch": "e36f292e0fb405b1e61958d47b5abf94f820e9304ba73335338da2b8fcf4db4a",
+    "0013-iommu-qcom_iommu-Add-the-MSM8226-display-configurati.patch": "0668a4bf0c943589842f8f1d40b1f46d5d4aaf32d0fab57d79dfa91ec97dd957",
+    "0016-dt-bindings-iommu-qcom-Add-the-MSM8226-VFE-instance.patch": "5733bab4cac8a6cd19653b9fb80fa6ad8a2aa44f1973c8a42f83c0bf5ca313b0",
+    "0015-iommu-qcom_iommu-Add-the-MSM8226-GPU-configuration.patch": "7726cf9d18fef9f0dce25b9a5c840c8862a887593946b6cf881680045b083fb0",
+    "0004-iommu-qcom_iommu-support-the-short-descriptor-pageta.patch": "33652c851b394a79ad3169bc82365357ee1a34f9145786d03231c023313d51e8",
+    "0011-iommu-qcom_iommu-add-the-MSM8974-instances.patch": "b8c4d87f3c87adf8729bc588790db800d78d6249420a5c9f6819446be4727fa2",
+    "0001-iommu-arm-smmu-add-global-register-definitions-used-.patch": "13bf47e050ca52989e3a1f2d5a0d9ed282d8738e5bf8bdb533d8e995030703a8",
+    "0005-iommu-qcom_iommu-handle-the-SMMU-global-register-spa.patch": "a42c7b344f135c75a38151e827997f7bff648f22b8cf64e74dcd275afce38ffd",
+    "0006-iommu-qcom_iommu-support-non-TZ-managed-instances.patch": "b447b3cfba4be1747b4e94ebec9a752902efc3c5eb34a1295763de691bf26dd2",
+    "0008-iommu-qcom_iommu-halt-the-micro-MMU-while-programmin.patch": "8def83aac6dea32843410c360b6c9b3f0c841f26ec2bf98b349af4916091b7a6"
+  },
+  "diagnostic_source_SHA256": {
+    "check-halt.py": "b43f6c8b7c67cc28954cc126006da6a58909ff5a609b3963f92a1716ea004cec",
+    "check-binding.py": "b2ca60a43a0fdaf5d07660b3dc700aea2090c182ed3aab1634c2918ea298fe27"
+  },
+  "published": false,
+  "phone_access": false,
+  "maintainer_contact": false,
+  "human_DCO_pending": true,
+  "full_kernel_or_package_built": false,
+  "board_DTB_qualified": false,
+  "runtime_hardware_qualified": false,
+  "new_RAM_image_prepared": false
+}

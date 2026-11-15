@@ -1,0 +1,74 @@
+From f0ca0cc68fd4332ff95032fa4e85aa5259bff467 Mon Sep 17 00:00:00 2001
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Sun, 9 Aug 2026 23:15:40 +0300
+Subject: [PATCH 02/20] dt-bindings: iommu: qcom,iommu: document the MSM8974
+ IOMMUs
+
+Original integration rationale and historical observations follow. These
+observations do not qualify hardware on this refreshed base.
+
+MSM8974 has several IOMMU instances, based on ARM SMMU v1 spec.
+Nevertheless, the combination of implementation-specific registers and
+the way TZ and hypervisor protect those instances make them not
+compatible with the normal ARM SMMU programming sequences (nor with the
+MSM8916 and later programming interfaces).
+
+Add per-instance compatibles for the display, Venus and GPU MSM8974
+IOMMU instances. The per-instance (rather than per-SoC) compatibles let
+the driver carry the per-instance prefetch tuning tables and stream ID
+maps, which are not derivable from the hardware. Document the extended
+meaning of a missing qcom,iommu-secure-id and of reg on these instances.
+
+Original integration AI credit: Claude:claude-fable-5.
+
+Refreshed from integration source
+5c8adf91fca50ad615f60f52b54ebb2a49ee5d30. Current-base adaptation and
+host qualification used OpenAI Codex. Human review and new DCO
+certification remain pending.
+---
+ .../devicetree/bindings/iommu/qcom,iommu.yaml    | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
+index 93a489025..43dffe41e 100644
+--- a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
++++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
+@@ -30,6 +30,10 @@ properties:
+               - qcom,msm8953-iommu
+               - qcom,msm8976-iommu
+           - const: qcom,msm-iommu-v2
++      - enum:
++          - qcom,msm8974-gpu-iommu
++          - qcom,msm8974-mdp-iommu
++          - qcom,msm8974-venus-iommu
+ 
+   clocks:
+     minItems: 2
+@@ -50,13 +54,23 @@ properties:
+ 
+   reg:
+     maxItems: 1
++    description:
++      For instances using the qcom,msm-iommu-v1/-v2 fallbacks, the
++      optional "SMMU local" register region used for interrupt routing
++      configuration. For instances with per-instance compatibles, the
++      SMMU global register space, used for stream mapping configuration
++      on non-secured instances and for the implementation-defined
++      prefetch registers on all instances.
+ 
+   ranges: true
+ 
+   qcom,iommu-secure-id:
+     $ref: /schemas/types.yaml#/definitions/uint32
+     description:
+-      The SCM secure ID of the IOMMU instance.
++      The SCM secure ID of the IOMMU instance. When absent on instances
++      with per-instance compatibles, the instance is not managed by the
++      secure world and the OS programs the whole global register space
++      (stream mapping included) directly.
+ 
+   '#address-cells':
+     const: 1
+-- 
+2.56.0
+

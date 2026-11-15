@@ -1,0 +1,117 @@
+From abfeb63bfc9204afbe209a1d3c7425eeb27e96b4 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 15 Nov 2026 03:00:34 +0000
+Subject: [PATCH 19/20] dt-bindings: iommu: qcom: Describe global resources and
+ the VFE example
+
+Describe the distinction between fallback-compatible
+secure-world-managed instances and per-instance global resources.
+Require the global register region for each newly supported instance,
+matching the driver probe. Add the existing integration MSM8226 VFE node
+as a binding example so the three clocks, three context banks and
+OS-managed path are compiled and validated alongside the legacy example.
+
+The example retains integration platform data; it does not establish
+hardware acceptance on this base. Prepared with OpenAI Codex assistance.
+Human review and DCO certification remain pending.
+
+Use documented MMCC indices in the second example to avoid conflicting
+clock-header macro namespaces when both SoC examples share one DTS.
+---
+ .../devicetree/bindings/iommu/qcom,iommu.yaml | 69 +++++++++++++++++--
+ 1 file changed, 65 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
+index 32e1acb82..6381107f8 100644
+--- a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
++++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
+@@ -10,10 +10,15 @@ maintainers:
+   - Konrad Dybcio <konradybcio@kernel.org>
+ 
+ description: |
+-  Qualcomm "B" family devices which are not compatible with arm-smmu have
+-  a similar looking IOMMU, but without access to the global register space
+-  and optionally requiring additional configuration to route context IRQs
+-  to non-secure vs secure interrupt line.
++  Qualcomm legacy IOMMUs are not compatible with the generic arm-smmu
++  programming interface. Instances using the msm-iommu-v1/v2 fallbacks
++  expose an optional local register region for interrupt routing, with
++  global configuration managed by the secure world.
++
++  Instances identified by per-instance compatibles expose the global
++  register space for implementation-specific prefetch settings. When
++  qcom,iommu-secure-id is absent on these instances, the OS also manages
++  the global stream mappings and configuration.
+ 
+ properties:
+   compatible:
+@@ -121,6 +126,22 @@ required:
+   - '#size-cells'
+   - '#iommu-cells'
+ 
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,msm8226-gpu-iommu
++              - qcom,msm8226-mdp-iommu
++              - qcom,msm8226-vfe-iommu
++              - qcom,msm8974-gpu-iommu
++              - qcom,msm8974-mdp-iommu
++              - qcom,msm8974-venus-iommu
++    then:
++      required:
++        - reg
++
+ additionalProperties: false
+ 
+ examples:
+@@ -147,3 +168,43 @@ examples:
+         interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
+       };
+     };
++
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++
++    vfe_iommu: iommu@fda44000 {
++      compatible = "qcom,msm8226-vfe-iommu";
++      reg = <0xfda44000 0x2600>;
++      #address-cells = <1>;
++      #size-cells = <1>;
++      #iommu-cells = <1>;
++      ranges = <0 0xfda4c000 0x3000>;
++
++      /* MMCC indices from dt-bindings/clock/qcom,mmcc-msm8974.h. */
++      clocks = <&mmcc 90>, /* CAMSS_VFE_VFE_AHB_CLK */
++               <&mmcc 91>, /* CAMSS_VFE_VFE_AXI_CLK */
++               <&mmcc 85>; /* CAMSS_TOP_AHB_CLK */
++      clock-names = "iface", "bus", "tbu";
++      power-domains = <&mmcc 3>; /* CAMSS_VFE_GDSC */
++
++      /* VFE0 */
++      iommu-ctx@0 {
++        compatible = "qcom,msm-iommu-v1-ns";
++        reg = <0x0 0x1000>;
++        interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>;
++      };
++
++      /* VFE1 */
++      iommu-ctx@1000 {
++        compatible = "qcom,msm-iommu-v1-ns";
++        reg = <0x1000 0x1000>;
++        interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>;
++      };
++
++      /* CPP */
++      iommu-ctx@2000 {
++        compatible = "qcom,msm-iommu-v1-ns";
++        reg = <0x2000 0x1000>;
++        interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>;
++      };
++    };
+-- 
+2.56.0
+

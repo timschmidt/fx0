@@ -1,0 +1,156 @@
+From c210b7e9fd13d941a366b75fde3194f17c103b9c Mon Sep 17 00:00:00 2001
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Sun, 9 Aug 2026 23:15:50 +0300
+Subject: [PATCH 11/20] iommu: qcom_iommu: add the MSM8974 instances
+
+Original integration rationale and historical observations follow. These
+observations do not qualify hardware on this refreshed base.
+
+All the infrastructure for driving the MSM8974 IOMMUs is in place, but
+no instance uses it yet, so the GPU, display, video codec and camera
+blocks still cannot be put behind their IOMMUs.
+
+Add the per-instance configurations for the five MSM8974 IOMMUs. MDP and
+Venus are TZ-secured (SCM secure IDs 1 and 0), so only their context
+banks are programmed, like on MSM8916. GPU is fully OS-managed. The
+stream ID maps come from the downstream MSM8974-v2 DT. All instances use
+the short-descriptor pagetable format with the AFE quirk.
+
+All instances terminate faulting transactions rather than stalling them,
+as downstream does. The display IOMMU also halts the micro-MMU while its
+context banks are programmed: a hung GPU cannot drain, so halting it
+during GPU recovery resets the SoC.
+
+Verified on the APQ8074 dragonboard: kmscube on the Adreno 330 renders
+through the GPU IOMMU (119 frames offscreen, freedreno FD330) and MDP5
+scanout works through the MDP IOMMU.
+
+Original integration AI credit: Claude:claude-fable-5.
+
+Refreshed from integration source
+a29fb8276519f52b8a5e63f6b1d156ca2105e73f. Current-base adaptation and
+host qualification used OpenAI Codex. Human review and new DCO
+certification remain pending.
+---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 102 ++++++++++++++++++++++++
+ 1 file changed, 102 insertions(+)
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 266b3de8d..febb59e72 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -1187,9 +1187,111 @@ static const struct dev_pm_ops qcom_iommu_pm_ops = {
+ 				pm_runtime_force_resume)
+ };
+ 
++static const struct qcom_iommu_bfb_reg msm8974_gpu_bfb[] = {
++	{ 0x04c, 0x00000003 },
++	{ 0x050, 0x00000000 },
++	{ 0x514, 0x00000004 },
++	{ 0x540, 0x00000010 },
++	{ 0x56c, 0x00000000 },
++	{ 0x0ac, 0x00000000 },
++	{ 0x15c, 0x00000000 },
++	{ 0x20c, 0x00000020 },
++	{ 0x314, 0x00000000 },
++	{ 0x394, 0x00000001 },
++	{ 0x414, 0x00000081 },
++	{ 0x008, 0x00000000 },
++};
++
++static const struct qcom_iommu_sid msm8974_gpu_sids[] = {
++	{ .cbndx = 0, .sid = 0 },	/* GFX3D_USER */
++	{ .cbndx = 1, .sid = 1 },	/* GFX3D_PRIV */
++};
++
++static const struct qcom_iommu_cfg msm8974_gpu_cfg = {
++	.no_stall = true,
++	.fmt = ARM_V7S,
++	.no_afe = true,
++	.ctx_restore = true,
++	.bfb = msm8974_gpu_bfb,
++	.num_bfb = ARRAY_SIZE(msm8974_gpu_bfb),
++	.sids = msm8974_gpu_sids,
++	.num_sids = ARRAY_SIZE(msm8974_gpu_sids),
++};
++
++static const struct qcom_iommu_bfb_reg msm8974_mdp_bfb[] = {
++	{ 0x04c, 0xffffffff },
++	{ 0x050, 0x00000000 },
++	{ 0x514, 0x00000004 },
++	{ 0x540, 0x00000010 },
++	{ 0x56c, 0x00000000 },
++	{ 0x0ac, 0x00006800 },
++	{ 0x15c, 0x00006221 },
++	{ 0x20c, 0x00016231 },
++	{ 0x314, 0x00000000 },
++	{ 0x394, 0x00000034 },
++	{ 0x414, 0x00000074 },
++	{ 0x008, 0x00000000 },
++	{ 0x00c, 0x00000000 },
++	{ 0x010, 0x00000000 },
++	{ 0x014, 0x00000000 },
++	{ 0x018, 0x00000000 },
++	{ 0x01c, 0x00000000 },
++	{ 0x020, 0x00000000 },
++};
++
++static const struct qcom_iommu_cfg msm8974_mdp_cfg = {
++	.halt = true,
++	.no_stall = true,
++	.fmt = ARM_V7S,
++	.no_afe = true,
++	.ctx_restore = true,
++	.bfb = msm8974_mdp_bfb,
++	.num_bfb = ARRAY_SIZE(msm8974_mdp_bfb),
++};
++
++static const struct qcom_iommu_bfb_reg msm8974_venus_bfb[] = {
++	{ 0x04c, 0xffffffff },
++	{ 0x050, 0xffffffff },
++	{ 0x514, 0x00000004 },
++	{ 0x540, 0x00000008 },
++	{ 0x56c, 0x00000000 },
++	{ 0x0ac, 0x00013205 },
++	{ 0x15c, 0x00004000 },
++	{ 0x20c, 0x00014020 },
++	{ 0x314, 0x00000000 },
++	{ 0x394, 0x00000094 },
++	{ 0x414, 0x00000114 },
++	{ 0x008, 0x00000000 },
++	{ 0x00c, 0x00000000 },
++	{ 0x010, 0x00000000 },
++	{ 0x014, 0x00000000 },
++	{ 0x018, 0x00000000 },
++	{ 0x01c, 0x00000000 },
++	{ 0x020, 0x00000000 },
++	{ 0x024, 0x00000000 },
++	{ 0x028, 0x00000000 },
++	{ 0x02c, 0x00000000 },
++	{ 0x030, 0x00000000 },
++	{ 0x034, 0x00000000 },
++	{ 0x038, 0x00000000 },
++};
++
++static const struct qcom_iommu_cfg msm8974_venus_cfg = {
++	.halt = true,
++	.no_stall = true,
++	.fmt = ARM_V7S,
++	.no_afe = true,
++	.ctx_restore = true,
++	.bfb = msm8974_venus_bfb,
++	.num_bfb = ARRAY_SIZE(msm8974_venus_bfb),
++};
++
+ static const struct of_device_id qcom_iommu_of_match[] = {
+ 	{ .compatible = "qcom,msm-iommu-v1" },
+ 	{ .compatible = "qcom,msm-iommu-v2" },
++	{ .compatible = "qcom,msm8974-gpu-iommu", .data = &msm8974_gpu_cfg },
++	{ .compatible = "qcom,msm8974-mdp-iommu", .data = &msm8974_mdp_cfg },
++	{ .compatible = "qcom,msm8974-venus-iommu", .data = &msm8974_venus_cfg },
+ 	{ /* sentinel */ }
+ };
+ 
+-- 
+2.56.0
+

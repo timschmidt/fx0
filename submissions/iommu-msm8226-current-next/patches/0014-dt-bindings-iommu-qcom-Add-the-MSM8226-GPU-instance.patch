@@ -1,0 +1,37 @@
+From 851ffeac126fa489538ebd9d72a6c0dc5037e7f4 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 30 Oct 2026 21:58:40 -0400
+Subject: [PATCH 14/20] dt-bindings: iommu: qcom: Add the MSM8226 GPU instance
+
+Original integration rationale and historical observations follow. These
+observations do not qualify hardware on this refreshed base.
+
+Document the MSM8226 GPU IOMMU and allow the optional translation unit
+clock that the driver already requests as "tbu". The MSM8226 GPU SMMU
+needs the GPU core clock while its registers are programmed.
+
+Original integration AI credit: Claude Opus 5.5 <noreply@anthropic.com>.
+
+Refreshed from integration source
+ca397d0f4501ab85eeab906fd9b49527566f6bd9. Current-base adaptation and
+host qualification used OpenAI Codex. Human review and new DCO
+certification remain pending.
+---
+ Documentation/devicetree/bindings/iommu/qcom,iommu.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
+index 8e6979893..fb59945c2 100644
+--- a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
++++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
+@@ -31,6 +31,7 @@ properties:
+               - qcom,msm8976-iommu
+           - const: qcom,msm-iommu-v2
+       - enum:
++          - qcom,msm8226-gpu-iommu
+           - qcom,msm8226-mdp-iommu
+           - qcom,msm8974-gpu-iommu
+           - qcom,msm8974-mdp-iommu
+-- 
+2.56.0
+

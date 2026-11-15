@@ -1,0 +1,187 @@
+From 12383f2dfbd7ff6972b568116c64ff007fa61f81 Mon Sep 17 00:00:00 2001
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Sun, 9 Aug 2026 23:15:42 +0300
+Subject: [PATCH 03/20] iommu: qcom_iommu: extract context bank programming
+ into a helper
+
+Original integration rationale and historical observations follow. These
+observations do not qualify hardware on this refreshed base.
+
+qcom_iommu_init_domain() programs the context bank registers inline,
+with values computed on the spot, so no record of the programmed state
+is kept. The MSM8974 QSMMU instances about to be supported sit in MMSS
+GDSCs and lose the context bank state whenever the power domain
+collapses, which requires the driver to reprogram the banks at runtime
+resume.
+
+Stash the computed register values in struct qcom_iommu_ctx and move the
+programming sequence into a new qcom_iommu_program_ctx() helper that can
+later be replayed from the resume path. No functional change.
+
+Original integration AI credit: Claude:claude-fable-5.
+
+Refreshed from integration source
+c809378460767d57c2689eb46b8f30e2e365bcb1. Current-base adaptation and
+host qualification used OpenAI Codex. Human review and new DCO
+certification remain pending.
+---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 86 ++++++++++++++-----------
+ 1 file changed, 50 insertions(+), 36 deletions(-)
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 21d18ce67..85fd4e3d4 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -61,6 +61,11 @@ struct qcom_iommu_ctx {
+ 	bool			 secured_ctx;
+ 	u8			 asid;      /* asid and ctx bank # are 1:1 */
+ 	struct iommu_domain	*domain;
++	/* programmed context bank state */
++	u64			 ttbr0;
++	u32			 tcr[2];
++	u32			 mair[2];
++	u32			 sctlr;
+ };
+ 
+ struct qcom_iommu_domain {
+@@ -167,7 +172,7 @@ static void qcom_iommu_tlb_inv_range_nosync(unsigned long iova, size_t size,
+ }
+ 
+ static void qcom_iommu_tlb_flush_walk(unsigned long iova, size_t size,
+-				      size_t granule, void *cookie)
++				     size_t granule, void *cookie)
+ {
+ 	qcom_iommu_tlb_inv_range_nosync(iova, size, granule, false, cookie);
+ 	qcom_iommu_tlb_sync(cookie);
+@@ -213,6 +218,32 @@ static irqreturn_t qcom_iommu_fault(int irq, void *dev)
+ 	return IRQ_HANDLED;
+ }
+ 
++static void qcom_iommu_program_ctx(struct qcom_iommu_dev *qcom_iommu,
++				   struct qcom_iommu_ctx *ctx)
++{
++	/* Disable context bank before programming */
++	iommu_writel(ctx, ARM_SMMU_CB_SCTLR, 0);
++
++	/* Clear context bank fault address fault status registers */
++	iommu_writel(ctx, ARM_SMMU_CB_FAR, 0);
++	iommu_writel(ctx, ARM_SMMU_CB_FSR, ARM_SMMU_CB_FSR_FAULT);
++
++	/* TTBRs */
++	iommu_writeq(ctx, ARM_SMMU_CB_TTBR0, ctx->ttbr0);
++	iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
++
++	/* TCR */
++	iommu_writel(ctx, ARM_SMMU_CB_TCR2, ctx->tcr[1]);
++	iommu_writel(ctx, ARM_SMMU_CB_TCR, ctx->tcr[0]);
++
++	/* MAIRs (stage-1 only) */
++	iommu_writel(ctx, ARM_SMMU_CB_S1_MAIR0, ctx->mair[0]);
++	iommu_writel(ctx, ARM_SMMU_CB_S1_MAIR1, ctx->mair[1]);
++
++	/* SCTLR */
++	iommu_writel(ctx, ARM_SMMU_CB_SCTLR, ctx->sctlr);
++}
++
+ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 				  struct qcom_iommu_dev *qcom_iommu,
+ 				  struct device *dev)
+@@ -267,32 +298,13 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 			continue;
+ 		}
+ 
+-		/* Disable context bank before programming */
+-		iommu_writel(ctx, ARM_SMMU_CB_SCTLR, 0);
++		ctx->ttbr0 = pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
++			     FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid);
++		ctx->tcr[0] = arm_smmu_lpae_tcr(&pgtbl_cfg) | ARM_SMMU_TCR_EAE;
++		ctx->tcr[1] = arm_smmu_lpae_tcr2(&pgtbl_cfg);
++		ctx->mair[0] = pgtbl_cfg.arm_lpae_s1_cfg.mair;
++		ctx->mair[1] = pgtbl_cfg.arm_lpae_s1_cfg.mair >> 32;
+ 
+-		/* Clear context bank fault address fault status registers */
+-		iommu_writel(ctx, ARM_SMMU_CB_FAR, 0);
+-		iommu_writel(ctx, ARM_SMMU_CB_FSR, ARM_SMMU_CB_FSR_FAULT);
+-
+-		/* TTBRs */
+-		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
+-				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
+-				FIELD_PREP(ARM_SMMU_TTBRn_ASID, ctx->asid));
+-		iommu_writeq(ctx, ARM_SMMU_CB_TTBR1, 0);
+-
+-		/* TCR */
+-		iommu_writel(ctx, ARM_SMMU_CB_TCR2,
+-				arm_smmu_lpae_tcr2(&pgtbl_cfg));
+-		iommu_writel(ctx, ARM_SMMU_CB_TCR,
+-			     arm_smmu_lpae_tcr(&pgtbl_cfg) | ARM_SMMU_TCR_EAE);
+-
+-		/* MAIRs (stage-1 only) */
+-		iommu_writel(ctx, ARM_SMMU_CB_S1_MAIR0,
+-				pgtbl_cfg.arm_lpae_s1_cfg.mair);
+-		iommu_writel(ctx, ARM_SMMU_CB_S1_MAIR1,
+-				pgtbl_cfg.arm_lpae_s1_cfg.mair >> 32);
+-
+-		/* SCTLR */
+ 		reg = ARM_SMMU_SCTLR_CFIE | ARM_SMMU_SCTLR_CFRE |
+ 		      ARM_SMMU_SCTLR_AFE | ARM_SMMU_SCTLR_TRE |
+ 		      ARM_SMMU_SCTLR_M | ARM_SMMU_SCTLR_S1_ASIDPNE |
+@@ -301,7 +313,9 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 		if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
+ 			reg |= ARM_SMMU_SCTLR_E;
+ 
+-		iommu_writel(ctx, ARM_SMMU_CB_SCTLR, reg);
++		ctx->sctlr = reg;
++
++		qcom_iommu_program_ctx(qcom_iommu, ctx);
+ 
+ 		ctx->domain = domain;
+ 	}
+@@ -389,8 +403,8 @@ static int qcom_iommu_attach_dev(struct iommu_domain *domain,
+ }
+ 
+ static int qcom_iommu_identity_attach(struct iommu_domain *identity_domain,
+-				      struct device *dev,
+-				      struct iommu_domain *old)
++				     struct device *dev,
++				     struct iommu_domain *old)
+ {
+ 	struct qcom_iommu_domain *qcom_domain;
+ 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+@@ -445,8 +459,8 @@ static int qcom_iommu_map(struct iommu_domain *domain, unsigned long iova,
+ }
+ 
+ static size_t qcom_iommu_unmap(struct iommu_domain *domain, unsigned long iova,
+-			       size_t pgsize, size_t pgcount,
+-			       struct iommu_iotlb_gather *gather)
++			      size_t pgsize, size_t pgcount,
++			      struct iommu_iotlb_gather *gather)
+ {
+ 	size_t ret;
+ 	unsigned long flags;
+@@ -547,7 +561,7 @@ static struct iommu_device *qcom_iommu_probe_device(struct device *dev)
+ }
+ 
+ static int qcom_iommu_of_xlate(struct device *dev,
+-			       const struct of_phandle_args *args)
++			      const struct of_phandle_args *args)
+ {
+ 	struct qcom_iommu_dev *qcom_iommu;
+ 	struct platform_device *iommu_pdev;
+@@ -713,10 +727,10 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	ret = devm_request_irq(dev, irq,
+-			       qcom_iommu_fault,
+-			       IRQF_SHARED,
+-			       "qcom-iommu-fault",
+-			       ctx);
++			      qcom_iommu_fault,
++			      IRQF_SHARED,
++			      "qcom-iommu-fault",
++			      ctx);
+ 	if (ret)
+ 		return ret;
+ 
+-- 
+2.56.0
+

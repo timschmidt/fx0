@@ -1,0 +1,90 @@
+From 075f463f60fea8cba251b4ddfd5c1b6fb31854b7 Mon Sep 17 00:00:00 2001
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Sun, 9 Aug 2026 23:15:41 +0300
+Subject: [PATCH 01/20] iommu: arm-smmu: add global register definitions used
+ by the QSMMU
+
+Original integration rationale and historical observations follow. These
+observations do not qualify hardware on this refreshed base.
+
+The MSM8974 QSMMU support about to be added to qcom_iommu has to program
+the SMMU global register space itself, and several of the architectural
+registers and fields it needs are missing from arm-smmu.h: the secure
+configuration and fault registers sCR2, sGFAR and sGFSRRESTORE, the sCR0
+SMCFCFG and STALLD fields and the S2CR NSCFG and MEMATTR fields.
+
+Add them, sorted by their register offset and bit positions.
+
+Original integration AI credit: Claude:claude-fable-5.
+
+Refreshed from integration source
+772813c92b768086cad84c34642ace7f9d6068c3. Current-base adaptation and
+host qualification used OpenAI Codex. Human review and new DCO
+certification remain pending.
+---
+ drivers/iommu/arm/arm-smmu/arm-smmu.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+index 26d2e33cd..d597ef8c4 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+@@ -26,11 +26,13 @@
+ /* Configuration registers */
+ #define ARM_SMMU_GR0_sCR0		0x0
+ #define ARM_SMMU_sCR0_VMID16EN		BIT(31)
++#define ARM_SMMU_sCR0_SMCFCFG		BIT(21)
+ #define ARM_SMMU_sCR0_BSU		GENMASK(15, 14)
+ #define ARM_SMMU_sCR0_FB		BIT(13)
+ #define ARM_SMMU_sCR0_PTM		BIT(12)
+ #define ARM_SMMU_sCR0_VMIDPNE		BIT(11)
+ #define ARM_SMMU_sCR0_USFCFG		BIT(10)
++#define ARM_SMMU_sCR0_STALLD		BIT(8)
+ #define ARM_SMMU_sCR0_GCFGFIE		BIT(5)
+ #define ARM_SMMU_sCR0_GCFGFRE		BIT(4)
+ #define ARM_SMMU_sCR0_EXIDENABLE	BIT(3)
+@@ -38,6 +40,8 @@
+ #define ARM_SMMU_sCR0_GFRE		BIT(1)
+ #define ARM_SMMU_sCR0_CLIENTPD		BIT(0)
+ 
++#define ARM_SMMU_GR0_sCR2		0x8
++
+ /* Auxiliary Configuration register */
+ #define ARM_SMMU_GR0_sACR		0x10
+ 
+@@ -80,9 +84,13 @@
+ #define ARM_SMMU_ID7_MAJOR		GENMASK(7, 4)
+ #define ARM_SMMU_ID7_MINOR		GENMASK(3, 0)
+ 
++#define ARM_SMMU_GR0_sGFAR		0x40
++
+ #define ARM_SMMU_GR0_sGFSR		0x48
+ #define ARM_SMMU_sGFSR_USF		BIT(1)
+ 
++#define ARM_SMMU_GR0_sGFSRRESTORE	0x4c
++
+ #define ARM_SMMU_GR0_sGFSYNR0		0x50
+ #define ARM_SMMU_GR0_sGFSYNR1		0x54
+ #define ARM_SMMU_GR0_sGFSYNR2		0x58
+@@ -110,12 +118,16 @@ enum arm_smmu_s2cr_privcfg {
+ 	S2CR_PRIVCFG_UNPRIV,
+ 	S2CR_PRIVCFG_PRIV,
+ };
++
++#define ARM_SMMU_S2CR_NSCFG		GENMASK(19, 18)
+ #define ARM_SMMU_S2CR_TYPE		GENMASK(17, 16)
+ enum arm_smmu_s2cr_type {
+ 	S2CR_TYPE_TRANS,
+ 	S2CR_TYPE_BYPASS,
+ 	S2CR_TYPE_FAULT,
+ };
++
++#define ARM_SMMU_S2CR_MEMATTR		GENMASK(15, 12)
+ #define ARM_SMMU_S2CR_EXIDVALID		BIT(10)
+ #define ARM_SMMU_S2CR_CBNDX		GENMASK(7, 0)
+ 
+
+base-commit: 2cf4be57b301ed2d7af82e70cff5dfd96894d8de
+-- 
+2.56.0
+

@@ -1,0 +1,65 @@
+From 1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 15 Nov 2026 03:00:34 +0000
+Subject: [PATCH 20/20] iommu: qcom_iommu: Guard optional global address
+ calculation
+
+Legacy instances have no per-instance configuration or global base. The
+halt helpers currently add the micro-MMU offset to the NULL global base
+before checking whether the helper is needed. An ASan/UBSan host fixture
+executing the extracted production helper reports a nonzero offset from
+a null pointer on that legacy path.
+
+Derive the register address only after the configuration and halt guards
+in both helpers. Keep the programmed path and all MMIO operations
+intact. This addresses the imported integration feature; it is not a
+claim that the new feature already exists in the current upstream IOMMU
+base.
+
+Fixes: 5ec3d506e602 ("iommu: qcom_iommu: halt the micro-MMU while programming context banks")
+
+Prepared with OpenAI Codex assistance. Human review and DCO
+certification remain pending. Host memory emulation does not qualify
+hardware operation.
+---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 754f40c86..f2f7ac78d 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -387,12 +387,14 @@ static int qcom_iommu_reset_ns(struct qcom_iommu_dev *qcom_iommu)
+  */
+ static void qcom_iommu_halt(struct qcom_iommu_dev *qcom_iommu)
+ {
+-	void __iomem *reg = qcom_iommu->global_base + QCOM_IOMMU_MICRO_MMU_CTRL;
++	void __iomem *reg;
+ 	u32 val;
+ 
+ 	if (!qcom_iommu->cfg || !qcom_iommu->cfg->halt)
+ 		return;
+ 
++	reg = qcom_iommu->global_base + QCOM_IOMMU_MICRO_MMU_CTRL;
++
+ 	writel_relaxed(readl_relaxed(reg) | MICRO_MMU_CTRL_HALT_REQ, reg);
+ 
+ 	if (readl_poll_timeout(reg, val, val & MICRO_MMU_CTRL_IDLE, 0, 100000))
+@@ -401,11 +403,13 @@ static void qcom_iommu_halt(struct qcom_iommu_dev *qcom_iommu)
+ 
+ static void qcom_iommu_unhalt(struct qcom_iommu_dev *qcom_iommu)
+ {
+-	void __iomem *reg = qcom_iommu->global_base + QCOM_IOMMU_MICRO_MMU_CTRL;
++	void __iomem *reg;
+ 
+ 	if (!qcom_iommu->cfg || !qcom_iommu->cfg->halt)
+ 		return;
+ 
++	reg = qcom_iommu->global_base + QCOM_IOMMU_MICRO_MMU_CTRL;
++
+ 	writel_relaxed(readl_relaxed(reg) & ~MICRO_MMU_CTRL_HALT_REQ, reg);
+ }
+ 
+-- 
+2.56.0
+

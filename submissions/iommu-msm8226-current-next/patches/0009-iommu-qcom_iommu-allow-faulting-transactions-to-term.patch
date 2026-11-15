@@ -1,0 +1,59 @@
+From 84d034fe994fe51cd3ab54d7764a189a645cba65 Mon Sep 17 00:00:00 2001
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Sun, 9 Aug 2026 23:15:48 +0300
+Subject: [PATCH 09/20] iommu: qcom_iommu: allow faulting transactions to
+ terminate
+
+Original integration rationale and historical observations follow. These
+observations do not qualify hardware on this refreshed base.
+
+Context banks are programmed with SCTLR.CFCFG, which selects the stall
+model: rather than terminating, a faulting transaction is held pending a
+write to CB_RESUME. Held transactions stop the micro-MMU draining, and
+anything that waits for the front-end to quiesce - the halt handshake,
+and TLBSYNC - waits on exactly that.
+
+Not every instance wants the stall model, and some cannot tolerate it.
+Add a per-instance no_stall flag that clears CFCFG so faults terminate
+instead. CFRE and CFIE are untouched, so faults are still reported
+through the existing interrupt handler; only the stall goes away, and
+with it the handler's RESUME write becomes a formality.
+
+No instance sets the flag yet.
+
+Original integration AI credit: Claude:claude-opus-5.
+
+Refreshed from integration source
+32fda8691719c053c7e22a51755bde2a38fc9552. Current-base adaptation and
+host qualification used OpenAI Codex. Human review and new DCO
+certification remain pending.
+---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index e10816b8f..07f61ab3b 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -76,6 +76,8 @@ struct qcom_iommu_cfg {
+ 	bool				 ctx_restore;
+ 	/* the micro-MMU must be halted while its registers are programmed */
+ 	bool				 halt;
++	/* faulting transactions must terminate rather than stall */
++	bool				 no_stall;
+ 	const struct qcom_iommu_sid	*sids;	/* one SMR slot per entry */
+ 	unsigned int			 num_sids;
+ };
+@@ -500,6 +502,9 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 		if (qcom_iommu->cfg && qcom_iommu->cfg->no_afe)
+ 			reg &= ~ARM_SMMU_SCTLR_AFE;
+ 
++		if (qcom_iommu->cfg && qcom_iommu->cfg->no_stall)
++			reg &= ~ARM_SMMU_SCTLR_CFCFG;
++
+ 		ctx->sctlr = reg;
+ 
+ 		qcom_iommu_program_ctx(qcom_iommu, ctx);
+-- 
+2.56.0
+

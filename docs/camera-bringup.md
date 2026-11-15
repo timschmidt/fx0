@@ -239,6 +239,16 @@ clocks are not a blocker. Three pieces remain:
    structure while preserving zero unspecified load. Current-base VFE IOMMU,
    MMCC, common DTS and Fx0 board/sensor dependencies remain open. This is host
    support qualification and does not inherit old integration hardware results.
+
+   The separate [current-next IOMMU foundation](../submissions/iommu-msm8226-current-next/README.md)
+   is now at `1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23`, based on official
+   IOMMU `next` `2cf4be57b301ed2d7af82e70cff5dfd96894d8de`. It includes the full
+   driver prerequisites, three VFE stream IDs and the existing platform tables.
+   Native ARM/ARM64 driver/backend objects, ordinary compiled binding examples,
+   eight schema rejection controls and extracted halt-helper sanitizer checks
+   pass. A reproduced null-base calculation in the imported halt feature is
+   corrected. This unsigned source draft does not qualify a board, translation,
+   power collapse or hardware on that base; MMCC, DTS and physical gates remain.
 3. **VFE 4.0 against the 4.1 operations.** The vendor driver has
    MSM8226-specific VFE versions and VBIF setup. Audit reset, interrupts,
    write masters, RDI and bus/QoS before reusing `vfe_ops_4_1`.

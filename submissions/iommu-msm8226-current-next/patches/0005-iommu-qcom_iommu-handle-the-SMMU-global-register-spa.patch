@@ -1,0 +1,138 @@
+From 02ddb92d563634b6dad988cfd458256fb1abaa92 Mon Sep 17 00:00:00 2001
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Sun, 9 Aug 2026 23:15:44 +0300
+Subject: [PATCH 05/20] iommu: qcom_iommu: handle the SMMU global register
+ space
+
+Original integration rationale and historical observations follow. These
+observations do not qualify hardware on this refreshed base.
+
+On msm8974 the OS has to access the SMMU global register space: the
+non-secured instances need it fully programmed and even the TZ-managed
+ones expose OS-writable implementation-defined registers in it. The
+driver only knows about the msm8916-style "SMMU local" region in
+resource 0, and has no accessors for the global space.
+
+For instances with a per-instance configuration, treat resource 0 as the
+global register space and require it. Never perform the SMMU_INTR_SEL_NS
+write on such instances - offset 0x2000 from the global base is the
+implementation-defined MICRO_MMU_CTRL halt request register on this IP,
+not the interrupt select of the separate msm8916-style local region.
+Provide gr0/gr1 accessors for the following changes.
+
+Do not clear the FSR of the context banks at probe time on such
+instances either: they sit in MMSS power domains which may well be off
+at that point, and an access to an unpowered register block stalls the
+bus. Skipping the clear is safe and preferable to powering the domain up
+for it. Safe, because a collapsed context bank has no active logic: it
+can neither latch a fault nor assert its interrupt, so the window the
+probe-time clear protects against on msm8916 does not exist while the
+domain is off, and the first runtime resume fully reprograms the context
+bank - including the FSR - before translation is enabled, so any fault
+state the bootloader left behind is wiped before it could matter.
+Preferable, because taking a runtime PM reference just for the clear
+would be a power cycle with no lasting effect (the cleared state is lost
+again when the domain collapses after the put), and the get/put pair is
+actively harmful for the MDP instance: at IOMMU probe time the display
+is still scanning out from bootloader-configured state with no kernel
+driver holding the MDSS GDSC, so the final put would power the scanout
+domain off mid-boot. The same treatment already exists for the
+TZ-secured contexts, which skip the clear for banks the OS cannot reach.
+
+Original integration AI credit: Claude:claude-fable-5.
+
+Refreshed from integration source
+366914d363874a8086e27e363902acfe45371b3d. Current-base adaptation and
+host qualification used OpenAI Codex. Human review and new DCO
+certification remain pending.
+---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 44 ++++++++++++++++++++++---
+ 1 file changed, 39 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 67ef36fd2..ca508e7c4 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -34,6 +34,9 @@
+ 
+ #define SMMU_INTR_SEL_NS     0x2000
+ 
++/* GR1 sits one 4K page above GR0 on the msm8974 QSMMU */
++#define QCOM_IOMMU_GR1			0x1000
++
+ enum qcom_iommu_clk {
+ 	CLK_IFACE,
+ 	CLK_BUS,
+@@ -57,6 +60,7 @@ struct qcom_iommu_dev {
+ 	const struct qcom_iommu_cfg *cfg;
+ 	struct clk_bulk_data clks[CLK_NUM];
+ 	void __iomem		*local_base;
++	void __iomem		*global_base;
+ 	u32			 sec_id;
+ 	u8			 max_asid;
+ 	struct qcom_iommu_ctx	*ctxs[];   /* indexed by asid */
+@@ -130,6 +134,26 @@ iommu_readq(struct qcom_iommu_ctx *ctx, unsigned reg)
+ 	return readq_relaxed(ctx->base + reg);
+ }
+ 
++static inline void
++qcom_iommu_gr0_write(struct qcom_iommu_dev *qcom_iommu, unsigned int reg,
++		     u32 val)
++{
++	writel_relaxed(val, qcom_iommu->global_base + reg);
++}
++
++static inline u32
++qcom_iommu_gr0_read(struct qcom_iommu_dev *qcom_iommu, unsigned int reg)
++{
++	return readl_relaxed(qcom_iommu->global_base + reg);
++}
++
++static inline void
++qcom_iommu_gr1_write(struct qcom_iommu_dev *qcom_iommu, unsigned int reg,
++		     u32 val)
++{
++	writel_relaxed(val, qcom_iommu->global_base + QCOM_IOMMU_GR1 + reg);
++}
++
+ static void qcom_iommu_tlb_sync(void *cookie)
+ {
+ 	struct qcom_iommu_domain *qcom_domain = cookie;
+@@ -749,9 +773,10 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
+ 		ctx->secured_ctx = true;
+ 
+ 	/* clear IRQs before registering fault handler, just in case the
+-	 * boot-loader left us a surprise:
++	 * boot-loader left us a surprise.  Instances with a power domain
++	 * may not be accessible yet; they are reset at first resume.
+ 	 */
+-	if (!ctx->secured_ctx) {
++	if (!ctx->secured_ctx && !qcom_iommu->cfg) {
+ 		ret = pm_runtime_resume_and_get(dev->parent);
+ 		if (ret)
+ 			return ret;
+@@ -845,9 +870,18 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	if (res) {
+-		qcom_iommu->local_base = devm_ioremap_resource(dev, res);
+-		if (IS_ERR(qcom_iommu->local_base))
+-			return PTR_ERR(qcom_iommu->local_base);
++		if (qcom_iommu->cfg) {
++			qcom_iommu->global_base = devm_ioremap_resource(dev, res);
++			if (IS_ERR(qcom_iommu->global_base))
++				return PTR_ERR(qcom_iommu->global_base);
++		} else {
++			qcom_iommu->local_base = devm_ioremap_resource(dev, res);
++			if (IS_ERR(qcom_iommu->local_base))
++				return PTR_ERR(qcom_iommu->local_base);
++		}
++	} else if (qcom_iommu->cfg) {
++		return dev_err_probe(dev, -EINVAL,
++				     "missing global register space\n");
+ 	}
+ 
+ 	clk = devm_clk_get(dev, "iface");
+-- 
+2.56.0
+

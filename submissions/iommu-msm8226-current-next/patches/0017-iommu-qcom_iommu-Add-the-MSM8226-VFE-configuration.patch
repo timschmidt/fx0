@@ -1,0 +1,76 @@
+From bab30541737604b82086d38f2e885ea84e7fde6b Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 31 Oct 2026 05:25:54 -0400
+Subject: [PATCH 17/20] iommu: qcom_iommu: Add the MSM8226 VFE configuration
+
+Original integration rationale and historical observations follow. These
+observations do not qualify hardware on this refreshed base.
+
+Add the MSM8226 camera SMMU with the prefetch (BFB) values of its vendor
+vfe_iommu description. Like the MDP and GPU instances it halts while
+context banks are programmed and restores them after power collapse.
+
+Original integration AI credit: Claude Opus 5.5 <noreply@anthropic.com>.
+
+Refreshed from integration source
+669336246d0da8ff0b80513c3bef847de98c4d44. Current-base adaptation and
+host qualification used OpenAI Codex. Human review and new DCO
+certification remain pending.
+---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 33 +++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 3a03b3cb7..3abd34a83 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -1248,6 +1248,38 @@ static const struct qcom_iommu_cfg msm8226_gpu_cfg = {
+ 	.num_sids = ARRAY_SIZE(msm8974_gpu_sids),
+ };
+ 
++/* Values from the MSM8226 vendor vfe_iommu description. */
++static const struct qcom_iommu_bfb_reg msm8226_vfe_bfb[] = {
++	{ 0x04c, 0xffffffff },
++	{ 0x050, 0x00000000 },
++	{ 0x514, 0x00000004 },
++	{ 0x540, 0x00000008 },
++	{ 0x56c, 0x00000000 },
++	{ 0x314, 0x00000000 },
++	{ 0x394, 0x0000001b },
++	{ 0x414, 0x0000005b },
++	{ 0x0ac, 0x00000000 },
++	{ 0x15c, 0x0000001b },
++	{ 0x20c, 0x0000002b },
++	{ 0x008, 0x00000000 },
++	{ 0x00c, 0x00000000 },
++	{ 0x010, 0x00000000 },
++	{ 0x014, 0x00000000 },
++	{ 0x018, 0x00000000 },
++	{ 0x01c, 0x00000000 },
++	{ 0x020, 0x00000000 },
++};
++
++static const struct qcom_iommu_cfg msm8226_vfe_cfg = {
++	.halt = true,
++	.no_stall = true,
++	.fmt = ARM_V7S,
++	.no_afe = true,
++	.ctx_restore = true,
++	.bfb = msm8226_vfe_bfb,
++	.num_bfb = ARRAY_SIZE(msm8226_vfe_bfb),
++};
++
+ static const struct qcom_iommu_bfb_reg msm8226_mdp_bfb[] = {
+ 	{ 0x04c, 0xffffffff },
+ 	{ 0x050, 0x00000000 },
+@@ -1353,6 +1385,7 @@ static const struct of_device_id qcom_iommu_of_match[] = {
+ 	{ .compatible = "qcom,msm8974-gpu-iommu", .data = &msm8974_gpu_cfg },
+ 	{ .compatible = "qcom,msm8226-gpu-iommu", .data = &msm8226_gpu_cfg },
+ 	{ .compatible = "qcom,msm8226-mdp-iommu", .data = &msm8226_mdp_cfg },
++	{ .compatible = "qcom,msm8226-vfe-iommu", .data = &msm8226_vfe_cfg },
+ 	{ .compatible = "qcom,msm8974-mdp-iommu", .data = &msm8974_mdp_cfg },
+ 	{ .compatible = "qcom,msm8974-venus-iommu", .data = &msm8974_venus_cfg },
+ 	{ /* sentinel */ }
+-- 
+2.56.0
+
