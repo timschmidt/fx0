@@ -1,0 +1,123 @@
+{
+  "started_UTC": "2026-11-15T22:39:07.301064+00:00",
+  "source_head": "48fe5a7834cc10081887d7bcd9ff0a4cadc3fa8c",
+  "source_tree": "8a05714e8f6d70b200b23f8c675012c9613109a8",
+  "frozen_working_files": {
+    "drivers/media/i2c/imx132.c": "f23d6417c2d3eab4472ee4f5b2ee6e46b20ae1732b92c3b801195ffd4ddca49e",
+    "drivers/media/i2c/imx179.c": "7df16f0f902f2b221719821260abe14c7727b49eaf2373b710a72e7c99c90d84",
+    "drivers/media/i2c/Kconfig": "343e92bf54172908821b2a2602c32655a7c79ecc400dd8a2f77612335ee8060e",
+    "drivers/media/i2c/Makefile": "e3ba9bd8b91302b2139ab45ab9fb487a1c7e7eaed7d5c1fdacc6c554f0e4464b",
+    "Documentation/devicetree/bindings/media/i2c/sony,imx132.yaml": "e9be34a0e50ac9369065372cbf4b2078e513e7f4db25b46faf61ea8e0d4a995d",
+    "Documentation/devicetree/bindings/media/i2c/sony,imx179.yaml": "1c204736d076c70a045088d5be4c66a0a5256da6a7a5e3a69c5cbcc246dfea89",
+    "MAINTAINERS": "f72ef45e4fd59367c7d08ac122d84445814cb4dedf8241afd6eb88179a97b5d5"
+  },
+  "native": true,
+  "COMPILE_TEST": false,
+  "stages": [
+    {
+      "stage": "options",
+      "command": [
+        "$WORKSPACE/worktrees/linux-fx0-sensors-media-current-01/scripts/config",
+        "--file",
+        "$WORKSPACE/local/fx0-sensors-media-current-01/arm64-out/.config",
+        "-d",
+        "COMPILE_TEST",
+        "-e",
+        "GPIOLIB",
+        "-e",
+        "REGULATOR",
+        "-e",
+        "OF",
+        "-e",
+        "PM",
+        "-e",
+        "I2C",
+        "-e",
+        "MEDIA_SUPPORT",
+        "-e",
+        "MEDIA_CAMERA_SUPPORT",
+        "-e",
+        "VIDEO_DEV",
+        "-e",
+        "VIDEO_CAMERA_SENSOR",
+        "-e",
+        "MEDIA_CONTROLLER",
+        "-e",
+        "VIDEO_V4L2_SUBDEV_API",
+        "-m",
+        "VIDEO_IMX132",
+        "-m",
+        "VIDEO_IMX179"
+      ],
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "config",
+      "command": [
+        "make",
+        "O=$WORKSPACE/local/fx0-sensors-media-current-01/arm64-out",
+        "ARCH=arm64",
+        "LLVM=-21",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "W=1",
+        "-j2",
+        "olddefconfig"
+      ],
+      "returncode": 0,
+      "log_SHA256": "7c887367ecb29dc2e634e616da88eaf5f6225175a03e61d9ffe7caed30298667"
+    },
+    {
+      "stage": "prepare",
+      "command": [
+        "make",
+        "O=$WORKSPACE/local/fx0-sensors-media-current-01/arm64-out",
+        "ARCH=arm64",
+        "LLVM=-21",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "W=1",
+        "-j2",
+        "modules_prepare"
+      ],
+      "returncode": 0,
+      "log_SHA256": "6a1fbf1b203b1ddff9000a631b437a7dd5ac4da2dd9b2a0521b0fcf9c58de5c1"
+    },
+    {
+      "stage": "component",
+      "command": [
+        "make",
+        "O=$WORKSPACE/local/fx0-sensors-media-current-01/arm64-out",
+        "ARCH=arm64",
+        "LLVM=-21",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "W=1",
+        "-j2",
+        "drivers/media/i2c/imx132.o",
+        "drivers/media/i2c/imx179.o",
+        "drivers/media/v4l2-core/v4l2-subdev.o",
+        "drivers/media/v4l2-core/v4l2-cci.o",
+        "drivers/media/v4l2-core/v4l2-common.o",
+        "drivers/media/v4l2-core/v4l2-fwnode.o",
+        "drivers/media/v4l2-core/v4l2-ctrls-core.o"
+      ],
+      "returncode": 0,
+      "log_SHA256": "7b18d4afb9207b9a5af0a0d21423ae697febe84b12b5e6db0bee63b839239562"
+    }
+  ],
+  "launcher_SHA256": "baf635181760c994ec91cc8c51a06c1e30864e091123b67ba060cc1504893175",
+  "phone_access": false,
+  "state": "terminal success",
+  "config_SHA256": "932eaae201a5b4d9ba03b2bb0354405df4f7b4b4d6e7a41ae9f835db2b134696",
+  "passed": true,
+  "returncode": 0,
+  "objects": {
+    "drivers/media/i2c/imx132.o": "5a4ea909af3cbe80245a641860848ba42f850e0a2cf2e16bb2ba5e5d88763e40",
+    "drivers/media/i2c/imx179.o": "f130e66c8ae1b18d968077132fe4a9246c3600fffda322a75f9bba3d9d7c9bff",
+    "drivers/media/v4l2-core/v4l2-subdev.o": "cdbac0adbd1f0880968d01bbc717cb4c4cb4e96187c93c03083acdaba19649e7",
+    "drivers/media/v4l2-core/v4l2-cci.o": "b3809044306c9dbde1837855830bef69a23f745faf33bc509dd2347568db6a3f",
+    "drivers/media/v4l2-core/v4l2-common.o": "14fe24b288752c9f1b236dfaa55ee62c29cad98c17e4f5a98161af4f645a8c9f",
+    "drivers/media/v4l2-core/v4l2-fwnode.o": "e82f1831c37e45b58d787ddac5fde8dbb6ad55c2e1ae5946e1ec4e18b41b9f9d",
+    "drivers/media/v4l2-core/v4l2-ctrls-core.o": "ec79e2dd82ca51d97a75e2af7e34776f3bddfaf1d995b5e77da9ca574101544e"
+  },
+  "finished_UTC": "2026-11-15T22:39:21.325908+00:00"
+}

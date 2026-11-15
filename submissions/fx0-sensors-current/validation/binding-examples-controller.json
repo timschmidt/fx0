@@ -1,0 +1,19 @@
+{
+  "command": [
+    "make",
+    "O=$WORKSPACE/local/fx0-sensors-media-current-01/arm-out",
+    "ARCH=arm",
+    "LLVM=-21",
+    "W=1",
+    "-j2",
+    "DT_SCHEMA_FILES=media/i2c/sony,imx132.yaml:media/i2c/sony,imx179.yaml",
+    "dt_binding_check"
+  ],
+  "started_UTC": "2026-11-15T22:41:21.316954+00:00",
+  "finished_UTC": "2026-11-15T22:42:27.835271+00:00",
+  "returncode": 0,
+  "diagnostics": [],
+  "passed": true,
+  "log_SHA256": "934b2faec6587b87602c99b871b91e308aaf89606c203491549c87d69088db4d",
+  "phone_access": false
+}

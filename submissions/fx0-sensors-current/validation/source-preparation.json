@@ -1,0 +1,85 @@
+{
+  "base": "48fe5a7834cc10081887d7bcd9ff0a4cadc3fa8c",
+  "legacy_source": "250e7412a5a15068b2a2fe32b57b66c300c91b5f",
+  "original_sources": [
+    {
+      "path": "drivers/media/i2c/imx132.c",
+      "original_SHA256": "2d7cd21cec290bb48a2f3f23e7b024bf22fd647314352aa8586ad92a38a56bc8"
+    },
+    {
+      "path": "Documentation/devicetree/bindings/media/i2c/sony,imx132.yaml",
+      "original_SHA256": "e9be34a0e50ac9369065372cbf4b2078e513e7f4db25b46faf61ea8e0d4a995d"
+    },
+    {
+      "path": "drivers/media/i2c/imx179.c",
+      "original_SHA256": "6ae0131bbd2c8642c03f9091c0d352608ae643195cd3c424e120a08af960906c"
+    },
+    {
+      "path": "Documentation/devicetree/bindings/media/i2c/sony,imx179.yaml",
+      "original_SHA256": "1c204736d076c70a045088d5be4c66a0a5256da6a7a5e3a69c5cbcc246dfea89"
+    }
+  ],
+  "original_commits": [
+    {
+      "sha": "6776d3a5415a6ac9a0754796f105528cb1b84727",
+      "author": "Timothy Schmidt",
+      "email": "timschmidt@gmail.com",
+      "date": "2026-10-31T06:13:25-04:00",
+      "message": "dt-bindings: media: i2c: Add Sony IMX179\n\nThe IMX179 is an 8 MP CMOS sensor with four MIPI CSI-2 data lanes, used\nas the rear camera of the LG Fx0.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n\n"
+    },
+    {
+      "sha": "46f1cedb2a38bd824bd7337de08049a9ceabe664",
+      "author": "Timothy Schmidt",
+      "email": "timschmidt@gmail.com",
+      "date": "2026-10-31T06:13:25-04:00",
+      "message": "media: i2c: Add Sony IMX179 driver\n\nAdd a V4L2 driver for the Sony IMX179 with one full-resolution 3280x2464\nRAW10 mode on four lanes at 30 frames/s from a 24 MHz clock (648 Mbit/s\nper lane). The register sequence follows NVIDIA's GPLv2 Tegra imx179.c.\nIt provides exposure, analogue gain, vertical blanking and the SMIA test\npattern controls.\n\nThe Bayer order (RGGB) and the analogue gain mapping are assumptions\nuntil checked on hardware. Build-tested only.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n\n"
+    },
+    {
+      "sha": "d591d5456fda2200187ed82ce4878ad15aeb48e2",
+      "author": "Timothy Schmidt",
+      "email": "timschmidt@gmail.com",
+      "date": "2026-10-31T06:21:29-04:00",
+      "message": "media: i2c: imx179: Set the input clock to 24 MHz if needed\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n\n"
+    },
+    {
+      "sha": "496160b7977d307a952f465d788133db8726d45e",
+      "author": "Timothy Schmidt",
+      "email": "timschmidt@gmail.com",
+      "date": "2026-10-31T06:32:40-04:00",
+      "message": "media: i2c: imx179: Match the 0x8179 chip ID\n\nThe sensor reports 0x8179 at register 0x0002, as the LG Fx0 vendor\ndescription also expects.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n\n"
+    },
+    {
+      "sha": "5371aa4768c8c6353a207d670045a3663f455438",
+      "author": "Timothy Schmidt",
+      "email": "timschmidt@gmail.com",
+      "date": "2026-11-01T20:06:29-05:00",
+      "message": "media: i2c: imx179: Report the crop rectangles\n\nlibcamera reads the pixel array and crop rectangles through the\nselection API and falls back to defaults with errors when the sensor\nhas none. The driver's only mode reads out the whole 3280x2464 active\narray, so report that for the crop, crop default, crop bounds and native\nsize targets.\n\nThis patch was prepared with the help of an AI coding assistant; the\nchange was reviewed and tested on hardware by the submitter.\n\nAssisted-by: Claude:claude-opus-5-5 checkpatch\n\n"
+    },
+    {
+      "sha": "5ff9bed4160f7c9c8950c603ebbb369e41cd47fb",
+      "author": "Timothy Schmidt",
+      "email": "timschmidt@gmail.com",
+      "date": "2026-11-01T20:55:18-05:00",
+      "message": "media: i2c: imx179: Add a 2x2 binned 1640x1232 mode\n\nThe driver offers only the full 3280x2464 readout. Software ISPs such\nas libcamera's soft ISP then process about one frame per second on\nsmall SoCs, which makes the auto-exposure loop slow and the preview\nunusable.\n\nAdd a 1640x1232 mode that bins the whole array 2x2, as the original\nAndroid system's preview mode does. It keeps the PLL, lane and timing\nsettings and the full-resolution minimum frame length, so it also runs\nat about 30 frames/s. Split the register list into common settings and\nthe per-mode output size and binning, track the active mode, and derive\nthe vblank and exposure ranges from its height.\n\nThis patch was prepared with the help of an AI coding assistant; the\nchange was reviewed and tested on hardware by the submitter.\n\nAssisted-by: Claude:claude-opus-5-5 checkpatch\n\n"
+    },
+    {
+      "sha": "a3ce062e9cf94b81d4674fc0a7ca2ef68aa05543",
+      "author": "Timothy Schmidt",
+      "email": "timschmidt@gmail.com",
+      "date": "2026-11-01T21:59:29-05:00",
+      "message": "dt-bindings: media: i2c: Add Sony IMX132\n\nAdd a binding for the Sony IMX132, a 2.4 megapixel CMOS image sensor\nwith a 1976x1200 active array and a one- or two-lane MIPI CSI-2 output.\n\nThis patch was prepared with the help of an AI coding assistant; the\nchange was reviewed and tested on hardware by the submitter.\n\nAssisted-by: Claude:claude-opus-5-5 checkpatch\n\n"
+    },
+    {
+      "sha": "b671973c0a6c9d5f9c029a1328263a68e287374c",
+      "author": "Timothy Schmidt",
+      "email": "timschmidt@gmail.com",
+      "date": "2026-11-01T22:02:43-05:00",
+      "message": "media: i2c: Add Sony IMX132 driver\n\nAdd a V4L2 subdevice driver for the Sony IMX132, the front camera of\nthe LG Fx0. It supports one 1976x1200 RAW10 mode on a single CSI-2 lane\nwith exposure, analogue gain, vertical blanking and test pattern\ncontrols, and runtime PM.\n\nThe register sequence follows NVIDIA's GPLv2 Tegra imx132.c. The lane\nselection (0x3301) and the VT divider that depends on the lane count\n(0x30a4) follow the AtomISP imx driver, whose clock code also gives the\npixel rate: 24 MHz / 2 * 33 = 396 Mbit/s on one lane, 39.6 Mpixel/s.\n\nThis patch was prepared with the help of an AI coding assistant; the\nchange was reviewed and tested on hardware by the submitter.\n\nAssisted-by: Claude:claude-opus-5-5 checkpatch\n\n"
+    }
+  ],
+  "mechanical_API_change": "client-info argument on set_fmt/get_selection only",
+  "native_modes_and_register_tables_preserved": true,
+  "maintainer_entries_proposed_for_human_review": true,
+  "phone_access": false,
+  "published": false
+}

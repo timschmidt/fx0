@@ -1,0 +1,54 @@
+[
+  {
+    "sensor": "imx132",
+    "registers_constants_modes_and_structures_byte_identical": true,
+    "unchanged_function_tokens": [
+      "imx132_update_exposure_range",
+      "imx132_set_ctrl",
+      "imx132_init_controls",
+      "imx132_fill_format",
+      "imx132_init_state",
+      "imx132_enum_mbus_code",
+      "imx132_enum_frame_size",
+      "imx132_enable_streams",
+      "imx132_power_on",
+      "imx132_power_off",
+      "imx132_identify",
+      "imx132_check_endpoint",
+      "imx132_probe",
+      "imx132_remove"
+    ],
+    "only_function_behavior_changes": [
+      "set_format rejects ACTIVE while streaming",
+      "disable_streams retains PM reference after failed standby"
+    ],
+    "signature_only_change": "get_selection and set_format receive unused current client-info argument",
+    "candidate_SHA256": "f23d6417c2d3eab4472ee4f5b2ee6e46b20ae1732b92c3b801195ffd4ddca49e"
+  },
+  {
+    "sensor": "imx179",
+    "registers_constants_modes_and_structures_byte_identical": true,
+    "unchanged_function_tokens": [
+      "imx179_update_exposure_range",
+      "imx179_set_ctrl",
+      "imx179_init_controls",
+      "imx179_fill_format",
+      "imx179_init_state",
+      "imx179_enum_mbus_code",
+      "imx179_enum_frame_size",
+      "imx179_enable_streams",
+      "imx179_power_on",
+      "imx179_power_off",
+      "imx179_identify",
+      "imx179_check_endpoint",
+      "imx179_probe",
+      "imx179_remove"
+    ],
+    "only_function_behavior_changes": [
+      "set_format rejects ACTIVE while streaming",
+      "disable_streams retains PM reference after failed standby"
+    ],
+    "signature_only_change": "get_selection and set_format receive unused current client-info argument",
+    "candidate_SHA256": "7df16f0f902f2b221719821260abe14c7727b49eaf2373b710a72e7c99c90d84"
+  }
+]

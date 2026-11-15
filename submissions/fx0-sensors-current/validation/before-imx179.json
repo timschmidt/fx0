@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "sensor": "imx179",
+  "cases": 231,
+  "broken": 6,
+  "stop_failures": 4,
+  "format_failures": 2,
+  "expected_result_verified": true,
+  "driver_SHA256": "95c4912ba8b671ce39b1f0b62c3e25f92f095385db151e365c90c2393616e166",
+  "source_SHA256": {
+    "drivers/base/power/runtime.c": "5dbdc812c08bab6c40efc24d893b2cb1f2d3d4abedacd297aace57c4984f0d70",
+    "drivers/media/v4l2-core/v4l2-subdev.c": "8a77ad04e325fc7fb611ea32610380647d51538666aa1fcf6c1a2206287f9b7f",
+    "drivers/media/v4l2-core/v4l2-cci.c": "eec4bcf6b4706132d101076b913399e3efb9ae597864769aee028abb86826622",
+    "drivers/media/v4l2-core/v4l2-common.c": "bec87aef52b928b6cc20d58ef7782cafd0d7596889b6ee72dd4a18655bed9528",
+    "include/media/v4l2-common.h": "9ac73adea6a813a55c12200af4de678077a33a0108b49fbc53344cacc7e712ed",
+    "include/media/v4l2-cci.h": "e35668c31a6023137605baee81b53e4b4f0c9a7e6943da219cf4b3aaa807018f",
+    "include/linux/math.h": "e0437f2850ef21b25d7f574830d2213cfc97441883624577d7bf1fd7e61adcf1"
+  },
+  "fixture_SHA256": "4a1a6cfe90ae9f85f8123e8f8bc257da119d213b34ee2542b71c69703401aa7b",
+  "actual_sensor_stream_control_format_power_functions_executed": true,
+  "actual_V4L2_stream_CCI_nearest_size_PM_count_helpers_executed": true,
+  "transport_locks_control_cache_power_resources_and_full_PM_mocked": true,
+  "regulator_disable_failure_GPIO_failure_ioctl_layer_and_hardware_qualified": false,
+  "host_Linux_UAPI_headers_used_for_fixture_types": true,
+  "phone_access": false
+}
