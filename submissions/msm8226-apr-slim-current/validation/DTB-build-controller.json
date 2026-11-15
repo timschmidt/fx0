@@ -1,0 +1,78 @@
+{
+  "source_head": "f2441b94a1d87da121d34c82e5180fde99907dba",
+  "validation_head": "72780be1f7b3edef520b945c37d421a466b19b0a",
+  "schema_imports": [
+    {
+      "head": "fd6cf007ad8277756da9f5af3d9c21c93a6e8dfe",
+      "path": "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml",
+      "SHA256": "ca4eb31b957da834eaf9ccab3f993df1db34ebd186b0795d63f91460681d3f63"
+    },
+    {
+      "head": "fd6cf007ad8277756da9f5af3d9c21c93a6e8dfe",
+      "path": "Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml",
+      "SHA256": "84267e35e4777e5c246f425ba79cda5d0acb8af7bc5c0fb5870977319c50cb78"
+    },
+    {
+      "head": "fd6cf007ad8277756da9f5af3d9c21c93a6e8dfe",
+      "path": "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml",
+      "SHA256": "0888da8dda271d056495c3e5c41bbbfd097b2170c8272fe6b9b5a24696a192bf"
+    },
+    {
+      "head": "fd6cf007ad8277756da9f5af3d9c21c93a6e8dfe",
+      "path": "Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml",
+      "SHA256": "ac56849e50412e19d9fd174a2b4eefe9e16b223b1ba875965e339f7cb64445cc"
+    },
+    {
+      "head": "fd6cf007ad8277756da9f5af3d9c21c93a6e8dfe",
+      "path": "Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml",
+      "SHA256": "6cc5f4223b7049ee96a4a12c2c8a4444eae79c319cff026cb041cd9a231837e9"
+    }
+  ],
+  "schema_filters": "soc/qcom/qcom,apr.yaml:soc/qcom/qcom,apr-services.yaml:sound/qcom,q6:slimbus/:dma/qcom,bam-dma.yaml:remoteproc/qcom,wcnss-pil.yaml:leds/qcom,pm8941-flash-led.yaml:power/reset/qcom,pon.yaml:mfd/qcom,spmi-pmic.yaml:soc/qcom/qcom,wcnss.yaml:soc/qcom/qcom,smp2p.yaml:remoteproc/qcom,smd-edge.yaml:reserved-memory/:media/qcom,msm8226-camss.yaml:iommu/qcom,iommu.yaml:display/msm/gpu.yaml",
+  "inherited_board_targets": [
+    "qcom/msm8226-motorola-falcon.dtb",
+    "qcom/msm8226-motorola-titan.dtb",
+    "qcom/msm8926-sony-xperia-yukon-eagle.dtb",
+    "qcom/qcom-apq8026-asus-sparrow.dtb",
+    "qcom/qcom-apq8026-huawei-sturgeon.dtb",
+    "qcom/qcom-apq8026-lg-lenok.dtb",
+    "qcom/qcom-apq8026-samsung-matisse-wifi.dtb",
+    "qcom/qcom-apq8026-samsung-milletwifi.dtb",
+    "qcom/qcom-msm8226-microsoft-dempsey.dtb",
+    "qcom/qcom-msm8226-microsoft-makepeace.dtb",
+    "qcom/qcom-msm8226-microsoft-moneypenny.dtb",
+    "qcom/qcom-msm8226-samsung-ms013g.dtb",
+    "qcom/qcom-msm8226-samsung-s3ve3g.dtb",
+    "qcom/qcom-msm8926-htc-memul.dtb",
+    "qcom/qcom-msm8926-microsoft-superman-lte.dtb",
+    "qcom/qcom-msm8926-microsoft-tesla.dtb",
+    "qcom/qcom-msm8926-motorola-peregrine.dtb",
+    "qcom/qcom-msm8926-samsung-matisselte.dtb"
+  ],
+  "DTBs": {
+    "qcom/msm8226-motorola-falcon.dtb": "4f1f933fd51a862284310cccb1433da9d1cf0c852f5b1acb226b51bec4050622",
+    "qcom/msm8226-motorola-titan.dtb": "13bd8f6f8b9de69d8811f9140f9dcb691c86b29858953f107bb9a1f809d8df8e",
+    "qcom/msm8926-sony-xperia-yukon-eagle.dtb": "7d32fd784faa46e2ca8c3c1c7ae8a9e161d2469c1595480cb6e8eb64c3bd9960",
+    "qcom/qcom-apq8026-asus-sparrow.dtb": "4c6fdb3c694357d186a3d032ccd96e7bba4df2a17985d72b7c2c3bea8130e852",
+    "qcom/qcom-apq8026-huawei-sturgeon.dtb": "a107209a162e036f2086831cbd18e8c85e92073cfbec0cfa5c26f6f1834ac6f1",
+    "qcom/qcom-apq8026-lg-lenok.dtb": "f4d38f477d34d42c57d57f3db3b93aaeef9de990b141355bbbd001d4ad866b39",
+    "qcom/qcom-apq8026-samsung-matisse-wifi.dtb": "c12265e99eb33479bc4f2c277bd172e99ad150a4d4cc55e2a7e83d210bbe2243",
+    "qcom/qcom-apq8026-samsung-milletwifi.dtb": "baa7869f5312c22c0a7fcea3b1d7bd3d32de035f396f06340221411920b4203c",
+    "qcom/qcom-msm8226-microsoft-dempsey.dtb": "991776bc54d2b8e1d69c0ff45fbf206caf32c2065ad2919d43c62bee00250d06",
+    "qcom/qcom-msm8226-microsoft-makepeace.dtb": "5c9ab72730d2993d636013fa2100905d77641e47d0c92e8b16054e2f84dd1a5e",
+    "qcom/qcom-msm8226-microsoft-moneypenny.dtb": "7252e5f2512c15577867e9504e17bd6d8686a69a6935e5ccb02c9854bea8968e",
+    "qcom/qcom-msm8226-samsung-ms013g.dtb": "92bff701f0a45780d8ccc7d48eca8d4e9c5d3677b85ca65a949b65bcf5f510bf",
+    "qcom/qcom-msm8226-samsung-s3ve3g.dtb": "c6a6773c4b6b696efb45ccfa51fdaf975044ae2590e386a0da23bac209789cde",
+    "qcom/qcom-msm8926-htc-memul.dtb": "e7746384dfddb56e8a9b6d820a17640a4491e51e25d23cef5fe1639b1326c200",
+    "qcom/qcom-msm8926-microsoft-superman-lte.dtb": "3835c0b13ea47b7f058d95b2d254529481af84a195bd9a6552ad8a6bb20f6619",
+    "qcom/qcom-msm8926-microsoft-tesla.dtb": "977a5f139d93be8c8772fa04f1c0ca196d3da73081551b8dad2a8e497d785390",
+    "qcom/qcom-msm8926-motorola-peregrine.dtb": "fb2c53ed1159cefba4f8f0158befc85eabb456b94725eb7eb48f5db46ae7e583",
+    "qcom/qcom-msm8926-samsung-matisselte.dtb": "dbb84cdb6e49bd102fdde6a59c496b13a588c23334b61e76e513ab34a7471f8b",
+    "qcom/qcom-msm8926-lg-madai.dtb": "c9cba4a019eb80eb5baddd366cefc9ec2f2bb89616d3d47a6ee99dc55498db65"
+  },
+  "config_SHA256": "36c68b90e96f42a4eeaaa5bd902e67793fd68e5321e215a08e4742cc2c065aa4",
+  "unchanged_full_Fx0_board_SHA256": "36b2a733ba62b94371e018f20f3b318bd57732a3469c1db0a85428f196ca4c0a",
+  "full_board_schema_and_platform_qualified": false,
+  "runtime_or_hardware_qualified": false,
+  "source_head_final": "a7ba24173e4618ace25b68ec36991fb08b7b552e"
+}

@@ -1,0 +1,45 @@
+From a7ba24173e4618ace25b68ec36991fb08b7b552e Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 31 Oct 2026 19:59:26 -0400
+Subject: [PATCH 4/4] ARM: dts: qcom: msm8226: describe the ASM front-end DAIs
+
+Describe the three original ASM front-end DAIs beneath their existing APR
+service. Keep their original zero-based identifiers.
+
+Adapted from the original implementation linked below. Original authors:
+Timothy Schmidt and Claude Opus 5.5. Only the common SoC description is
+carried; the complete Fx0 board is preserved separately without the early
+experiment.
+
+Current-tree refresh and validation prepared with OpenAI Codex assistance.
+Audio execution testing is excluded; current hardware validation is
+pending.
+
+Link: https://github.com/timschmidt/fx0-linux/commit/51a6d15339f21d3ebe7070be23a5ceda90eab4ce
+---
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+index a997024a4..57f20d367 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+@@ -1745,6 +1745,18 @@ q6asmdai: dais {
+ 							#address-cells = <1>;
+ 							#size-cells = <0>;
+ 							#sound-dai-cells = <1>;
++
++							dai@0 {
++								reg = <0>;
++							};
++
++							dai@1 {
++								reg = <1>;
++							};
++
++							dai@2 {
++								reg = <2>;
++							};
+ 						};
+ 					};
+ 
