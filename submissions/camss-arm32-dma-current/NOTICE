@@ -1,0 +1,16 @@
+The source snapshots retain the Linux kernel's original SPDX identifiers
+and copyright notices. Extracted fixtures combine GPL-2.0 kernel functions
+with GPL-2.0-only ARM DMA code, and are distributed under GPL-2.0-only.
+Original notices are repeated at the beginning of each extracted fixture.
+
+The model scaffolding, extractor and replay tool were prepared with OpenAI
+Codex (GPT-6) assistance for this bringup. SG objects, VB2 lookups, IOMMU
+allocation/mapping and core services are synthetic. Host Linux UAPI
+videodev2.h provides format constants; these are not kernel-native headers.
+
+Timothy Schmidt authored the original 9d46e4575ea1 Kconfig integration and
+8fe23bfec791 DMA changes, developed with Claude Opus 5.5, credited in the
+original history as a co-author <noreply@anthropic.com>. The current proposal
+folds the DMA prerequisite into ARM32 support and adapts the guard to actual
+adjacent DMA ranges. Existing source copyright notices remain intact.
+No agent Signed-off-by tag is supplied. Human DCO review is pending.

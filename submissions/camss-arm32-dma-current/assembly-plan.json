@@ -1,0 +1,710 @@
+{
+  "parent": "0996a0fbab5498883460e2b00517c4f51c729508",
+  "branch": "integration/fx0-runtime-prerequisites-current-01",
+  "source_repository": "worktrees/linux-fx0-runtime-prerequisites-current-01",
+  "groups": [
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "base": "2cf4be57b301ed2d7af82e70cff5dfd96894d8de",
+      "head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23"
+    },
+    {
+      "group": "MMCC",
+      "repository": "linux-mmcc-axi-current-next-01",
+      "base": "fbfe0c4beecfbd0e2958d91e5c95ff189bc489a0",
+      "head": "443ed6739ab718fe75284baf182eaee4c7ded5c1"
+    },
+    {
+      "group": "CAMSS",
+      "repository": "linux-camss-msm8226-media-next-01",
+      "base": "3fc9303dba01676c2090768126e5327e341b7761",
+      "head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752"
+    },
+    {
+      "group": "VFE-completion",
+      "repository": "linux-camss-media-fixes-02",
+      "base": "b1466305390c6368148cf456278139ef4deebe89",
+      "head": "032b7e62149cd493fef5a46a448c8c46d7b20816"
+    },
+    {
+      "group": "PMIC-LED",
+      "repository": "linux-pm8226-torch-leds-next-01",
+      "base": "4e88404a72e5e26720539e5555c383069cefb486",
+      "head": "11be4e3efab2332b352187cfa13d67f1340d81da"
+    },
+    {
+      "group": "PMIC-MFD",
+      "repository": "linux-pm8226-parent-mfd-next-02",
+      "base": "c92739a23a80f5f0a7c6f3c10aa792102d252ac4",
+      "head": "64dde42de6c14287c91522602ab4737020db93d3"
+    },
+    {
+      "group": "WCNSS-RF",
+      "repository": "linux-wcn3660a-rproc-current-01",
+      "base": "3035b6708f61259c93a368238e206dcec313e584",
+      "head": "ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf"
+    },
+    {
+      "group": "WCNSS-regulators",
+      "repository": "linux-wcnss-regulators-rproc-fixes-01",
+      "base": "9db31edf92dde1f3c98008bd5f88e859d14324cc",
+      "head": "962a507202bac5ecd7c7e37a77e0de32a122f598"
+    },
+    {
+      "group": "WCNSS-wireless",
+      "repository": "linux-wcn3660a-wireless-current-01",
+      "base": "5dbf2415ca9821a611d09308e3b29d2c37e7cd77",
+      "head": "2dc038c6fa74e00ddb265b274103c46894c2541a"
+    }
+  ],
+  "commits": [
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "075f463f60fea8cba251b4ddfd5c1b6fb31854b7",
+      "subject": "iommu: arm-smmu: add global register definitions used by the QSMMU",
+      "patch": "01-IOMMU.patch",
+      "patch_SHA256": "adfe41e108af7c792a3d4ffb4501e37bd29621103f1fa7b03dcaf255e59dc580",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/arm-smmu.h"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "f0ca0cc68fd4332ff95032fa4e85aa5259bff467",
+      "subject": "dt-bindings: iommu: qcom,iommu: document the MSM8974 IOMMUs",
+      "patch": "02-IOMMU.patch",
+      "patch_SHA256": "2da72acb476d1178f06d3c09475bd7d42c2e879da29abc7549c138ef65eb431e",
+      "paths": [
+        "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml"
+      ],
+      "already_identical_binding_paths": [
+        "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml"
+      ],
+      "skip_entire_commit": true
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "12383f2dfbd7ff6972b568116c64ff007fa61f81",
+      "subject": "iommu: qcom_iommu: extract context bank programming into a helper",
+      "patch": "03-IOMMU.patch",
+      "patch_SHA256": "399cb023979587733d38b1592bcd668f4df4faf20908f40f44ea49f76ccf7873",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "e77e50ee173e1dd0889289d418ba62066d0de650",
+      "subject": "iommu: qcom_iommu: support the short-descriptor pagetable format",
+      "patch": "04-IOMMU.patch",
+      "patch_SHA256": "bfc512ba01f025034c0cbc376e8aa3dbcfe971284cf7798627e7553fd50d9104",
+      "paths": [
+        "drivers/iommu/arm/Kconfig",
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "02ddb92d563634b6dad988cfd458256fb1abaa92",
+      "subject": "iommu: qcom_iommu: handle the SMMU global register space",
+      "patch": "05-IOMMU.patch",
+      "patch_SHA256": "ff752edfa56806a5467a4d12726611b28743d003effc4f65c3d114054bcb73a5",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "8c2239a251021f66e2cb019508399eb44a83453b",
+      "subject": "iommu: qcom_iommu: support non-TZ-managed instances",
+      "patch": "06-IOMMU.patch",
+      "patch_SHA256": "d9fe304b158d55f990b5806baa9d84e45836fb220f66a4c051d27df4ad234ddd",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "6893a8ad85b64a691b8e11a7ca8ea7b6603c7d55",
+      "subject": "iommu: qcom_iommu: restore context bank state after power collapse",
+      "patch": "07-IOMMU.patch",
+      "patch_SHA256": "010781d0649b759452ad08dff9a95d55306e02aea39ab14dbe80b18768f05e79",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "1e17bb6ffeb401a7a8ea458cdcd0eff47f396ac5",
+      "subject": "iommu: qcom_iommu: halt the micro-MMU while programming context banks",
+      "patch": "08-IOMMU.patch",
+      "patch_SHA256": "ab35e438e07f13112b1654e82d9edf5efc21af231645da3cb6572a2773bf85d8",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "84d034fe994fe51cd3ab54d7764a189a645cba65",
+      "subject": "iommu: qcom_iommu: allow faulting transactions to terminate",
+      "patch": "09-IOMMU.patch",
+      "patch_SHA256": "d78f521cab643581592103c43d44d413e25f8a209e225b5278c74b34859b395a",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "bebdd6943ef8f0612e4e2e2d8d55c019a7f9d4ae",
+      "subject": "iommu: qcom_iommu: program BFP (prefetch) settings",
+      "patch": "10-IOMMU.patch",
+      "patch_SHA256": "86c29a2c6daf524f2f24a52ddf6a263701cf19a6ffdf7ac3a768ce48510a294a",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "c210b7e9fd13d941a366b75fde3194f17c103b9c",
+      "subject": "iommu: qcom_iommu: add the MSM8974 instances",
+      "patch": "11-IOMMU.patch",
+      "patch_SHA256": "20ce07eb06b6b453635bdc6c1d51a144499ba4732e22b8fe60c6f01acc2d4afe",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "78a4021bd500f723bf85847b3f95e09352ab7eb5",
+      "subject": "dt-bindings: iommu: qcom: Add the MSM8226 display instance",
+      "patch": "12-IOMMU.patch",
+      "patch_SHA256": "f08bae77b42c52c0f1698ccd7e7f857f113a24771bff445be3732bf8e7588ce5",
+      "paths": [
+        "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml"
+      ],
+      "already_identical_binding_paths": [
+        "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml"
+      ],
+      "skip_entire_commit": true
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "f8048f86c324708bb3e6e347e04c4f252b2b3732",
+      "subject": "iommu: qcom_iommu: Add the MSM8226 display configuration",
+      "patch": "13-IOMMU.patch",
+      "patch_SHA256": "79615aad828a67a41362b49e55efb426397ac359daed4d36c047c504c48913d2",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "851ffeac126fa489538ebd9d72a6c0dc5037e7f4",
+      "subject": "dt-bindings: iommu: qcom: Add the MSM8226 GPU instance",
+      "patch": "14-IOMMU.patch",
+      "patch_SHA256": "b46ff805b32439e62de1f7fe55f2d59e0207a20f55b788f1c6dc78ebd95cf0a2",
+      "paths": [
+        "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml"
+      ],
+      "already_identical_binding_paths": [
+        "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml"
+      ],
+      "skip_entire_commit": true
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "7caeb9222af4323a8fc9644c22971f6ee3d33159",
+      "subject": "iommu: qcom_iommu: Add the MSM8226 GPU configuration",
+      "patch": "15-IOMMU.patch",
+      "patch_SHA256": "9379b2e8d758edeef47788cc95d805e19813cb058daa8e1e32925960b4f50d36",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "737bcac93d0e86b00c7241538226bc04cb70b678",
+      "subject": "dt-bindings: iommu: qcom: Add the MSM8226 VFE instance",
+      "patch": "16-IOMMU.patch",
+      "patch_SHA256": "00a017bab6824a0b838b14499ea1743a71b384a68bb55088c686281286e471e0",
+      "paths": [
+        "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml"
+      ],
+      "already_identical_binding_paths": [
+        "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml"
+      ],
+      "skip_entire_commit": true
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "bab30541737604b82086d38f2e885ea84e7fde6b",
+      "subject": "iommu: qcom_iommu: Add the MSM8226 VFE configuration",
+      "patch": "17-IOMMU.patch",
+      "patch_SHA256": "6505331d5665ff791296e77a95ec4c07f575e23c3a83d01333810659d4e6a3d5",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "e027123e5810a8c8d7247a309acf54d26c45e36e",
+      "subject": "iommu: qcom_iommu: Map the MSM8226 VFE stream IDs",
+      "patch": "18-IOMMU.patch",
+      "patch_SHA256": "fc251fb579264802e5432181022e7d1a9f532aeb2767a40b9224303fb2f03579",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "abfeb63bfc9204afbe209a1d3c7425eeb27e96b4",
+      "subject": "dt-bindings: iommu: qcom: Describe global resources and the VFE example",
+      "patch": "19-IOMMU.patch",
+      "patch_SHA256": "eac540b0d5ef5af5550e03e55edf1619cd53b35c2eb06da3547f8949de00014c",
+      "paths": [
+        "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml"
+      ],
+      "already_identical_binding_paths": [
+        "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml"
+      ],
+      "skip_entire_commit": true
+    },
+    {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "original_commit": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "subject": "iommu: qcom_iommu: Guard optional global address calculation",
+      "patch": "20-IOMMU.patch",
+      "patch_SHA256": "5025a81408707a56940ab3dda25f1f34bb184d13cf3b5e73dbf788d4d9b03749",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "MMCC",
+      "repository": "linux-mmcc-axi-current-next-01",
+      "qualified_head": "443ed6739ab718fe75284baf182eaee4c7ded5c1",
+      "original_commit": "85faf3b206a2d1c01ae4ef3220260b2eaa7b7623",
+      "subject": "clk: qcom: mmcc-msm8974: Use the M/N counter for camera MCLKs",
+      "patch": "21-MMCC.patch",
+      "patch_SHA256": "9510144b3e8ddb682b025be01eefce9be3346af5f0ab2727e5aeb2c37eca6545",
+      "paths": [
+        "drivers/clk/qcom/mmcc-msm8974.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "MMCC",
+      "repository": "linux-mmcc-axi-current-next-01",
+      "qualified_head": "443ed6739ab718fe75284baf182eaee4c7ded5c1",
+      "original_commit": "443ed6739ab718fe75284baf182eaee4c7ded5c1",
+      "subject": "clk: qcom: mmcc-msm8974: Propagate VFE AXI rate requests",
+      "patch": "22-MMCC.patch",
+      "patch_SHA256": "9fe2a24fd3235f8c7c892e27327687f486e82a0d8963c7c51755216615f5d193",
+      "paths": [
+        "drivers/clk/qcom/mmcc-msm8974.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "CAMSS",
+      "repository": "linux-camss-msm8226-media-next-01",
+      "qualified_head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+      "original_commit": "2f2e63bfa2902eb11bab4f4107a274e2ed6a8368",
+      "subject": "media: qcom: camss: Allow the ARM IOMMU DMA backend",
+      "patch": "23-CAMSS.patch",
+      "patch_SHA256": "b722829adeae0ee3b2801057ba92ddf9f3d433a6d03576efeeb779eccdc59303",
+      "paths": [
+        "drivers/media/platform/qcom/camss/Kconfig"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "CAMSS",
+      "repository": "linux-camss-msm8226-media-next-01",
+      "qualified_head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+      "original_commit": "015aa2b549fb3a6357d808aa0969ee55b120468a",
+      "subject": "dt-bindings: media: Add the MSM8226 CAMSS",
+      "patch": "24-CAMSS.patch",
+      "patch_SHA256": "a420ac5a6ee42e8e380a6bc1ae7476c9964b91fdce80ceb68c530220d69b2db3",
+      "paths": [
+        "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml"
+      ],
+      "already_identical_binding_paths": [
+        "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml"
+      ],
+      "skip_entire_commit": true
+    },
+    {
+      "group": "CAMSS",
+      "repository": "linux-camss-msm8226-media-next-01",
+      "qualified_head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+      "original_commit": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+      "subject": "media: qcom: camss: Add MSM8226 resources",
+      "patch": "25-CAMSS.patch",
+      "patch_SHA256": "780fdd9aadeaf92753b6c59d453da5554fe69ee7ea5a17311f308fcc7c5a916d",
+      "paths": [
+        "drivers/media/platform/qcom/camss/camss-vfe.c",
+        "drivers/media/platform/qcom/camss/camss.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "VFE-completion",
+      "repository": "linux-camss-media-fixes-02",
+      "qualified_head": "032b7e62149cd493fef5a46a448c8c46d7b20816",
+      "original_commit": "032b7e62149cd493fef5a46a448c8c46d7b20816",
+      "subject": "media: qcom: camss: consume saved completions after gen1 idle ack",
+      "patch": "26-VFE-completion.patch",
+      "patch_SHA256": "57152f40b447ff8feeb5e13f035c06e83586e15576642d0a7863a5a7167e3913",
+      "paths": [
+        "drivers/media/platform/qcom/camss/camss-vfe-17x.c",
+        "drivers/media/platform/qcom/camss/camss-vfe-4-1.c",
+        "drivers/media/platform/qcom/camss/camss-vfe-4-7.c",
+        "drivers/media/platform/qcom/camss/camss-vfe-4-8.c",
+        "drivers/media/platform/qcom/camss/camss-vfe-gen1.c",
+        "drivers/media/platform/qcom/camss/camss-vfe.h"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "PMIC-LED",
+      "repository": "linux-pm8226-torch-leds-next-01",
+      "qualified_head": "11be4e3efab2332b352187cfa13d67f1340d81da",
+      "original_commit": "29397734bc703ffe399b958e3e5779b0d01b8179",
+      "subject": "dt-bindings: leds: Describe first-generation Qualcomm torch LEDs",
+      "patch": "27-PMIC-LED.patch",
+      "patch_SHA256": "0f0939e428eee6559c6c722bf6e2bc0a27bf6c4397903e0d6aeab155c839833f",
+      "paths": [
+        "Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml",
+        "MAINTAINERS"
+      ],
+      "already_identical_binding_paths": [
+        "Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml"
+      ],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "PMIC-LED",
+      "repository": "linux-pm8226-torch-leds-next-01",
+      "qualified_head": "11be4e3efab2332b352187cfa13d67f1340d81da",
+      "original_commit": "11be4e3efab2332b352187cfa13d67f1340d81da",
+      "subject": "leds: flash: Support first-generation Qualcomm PMIC torch mode",
+      "patch": "28-PMIC-LED.patch",
+      "patch_SHA256": "503b049e5a21553b515b672f543fd4ea82179d118cc018a83e076fe54e6c9df0",
+      "paths": [
+        "MAINTAINERS",
+        "drivers/leds/flash/Kconfig",
+        "drivers/leds/flash/Makefile",
+        "drivers/leds/flash/leds-qcom-flash-v1.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "PMIC-MFD",
+      "repository": "linux-pm8226-parent-mfd-next-02",
+      "qualified_head": "64dde42de6c14287c91522602ab4737020db93d3",
+      "original_commit": "64dde42de6c14287c91522602ab4737020db93d3",
+      "subject": "dt-bindings: mfd: qcom,spmi-pmic: Allow first-generation torch LEDs",
+      "patch": "29-PMIC-MFD.patch",
+      "patch_SHA256": "efb16132eced3a2a03f63395428bdf3b52a31560ea26cc65b87baecb6bf49ed1",
+      "paths": [
+        "Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml"
+      ],
+      "already_identical_binding_paths": [
+        "Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml"
+      ],
+      "skip_entire_commit": true
+    },
+    {
+      "group": "WCNSS-RF",
+      "repository": "linux-wcn3660a-rproc-current-01",
+      "qualified_head": "ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf",
+      "original_commit": "98c74353484ff86647981255feead867f821a907",
+      "subject": "dt-bindings: remoteproc: qcom,wcnss-pil: Add WCN3660A",
+      "patch": "30-WCNSS-RF.patch",
+      "patch_SHA256": "9f59a1b74c8e83d66db00e9cccd09f46f41a06bef896c43af7a87fe90451cc54",
+      "paths": [
+        "Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml"
+      ],
+      "already_identical_binding_paths": [
+        "Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml"
+      ],
+      "skip_entire_commit": true
+    },
+    {
+      "group": "WCNSS-RF",
+      "repository": "linux-wcn3660a-rproc-current-01",
+      "qualified_head": "ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf",
+      "original_commit": "ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf",
+      "subject": "remoteproc: qcom_wcnss: Add WCN3660A RF support",
+      "patch": "31-WCNSS-RF.patch",
+      "patch_SHA256": "5190072b4a1c1ae55c2776878c40017f44707903e97ba57171167a7a0a5fa87a",
+      "paths": [
+        "drivers/remoteproc/qcom_wcnss_iris.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "WCNSS-regulators",
+      "repository": "linux-wcnss-regulators-rproc-fixes-01",
+      "qualified_head": "962a507202bac5ecd7c7e37a77e0de32a122f598",
+      "original_commit": "962a507202bac5ecd7c7e37a77e0de32a122f598",
+      "subject": "remoteproc: qcom_wcnss: Request PD regulators on Pronto v1/v2",
+      "patch": "32-WCNSS-regulators.patch",
+      "patch_SHA256": "f025ccb45002dabbfccf5592d13acf53a029e711ed65900e6d34255e406003b1",
+      "paths": [
+        "drivers/remoteproc/qcom_wcnss.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    },
+    {
+      "group": "WCNSS-wireless",
+      "repository": "linux-wcn3660a-wireless-current-01",
+      "qualified_head": "2dc038c6fa74e00ddb265b274103c46894c2541a",
+      "original_commit": "2dc038c6fa74e00ddb265b274103c46894c2541a",
+      "subject": "wifi: wcn36xx: Add the WCN3660A RF variant",
+      "patch": "33-WCNSS-wireless.patch",
+      "patch_SHA256": "e6c9de2bce89fe1b9a64be30bab2845928242d29386fd95e0bf53afd197d1255",
+      "paths": [
+        "drivers/net/wireless/ath/wcn36xx/main.c"
+      ],
+      "already_identical_binding_paths": [],
+      "skip_entire_commit": false
+    }
+  ],
+  "qualified_final_files": {
+    "drivers/iommu/arm/arm-smmu/arm-smmu.h": {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "SHA256": "5a6ce236192f248d480836203b04026c0d4a115bfe82e66fa8919c7ea6801cab"
+    },
+    "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml": {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "SHA256": "ca4eb31b957da834eaf9ccab3f993df1db34ebd186b0795d63f91460681d3f63"
+    },
+    "drivers/iommu/arm/arm-smmu/qcom_iommu.c": {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "SHA256": "a83c92d675f27e2c2d89e1c7017a686b90057edadfdf7a8e8b8129980aadc0fd"
+    },
+    "drivers/iommu/arm/Kconfig": {
+      "group": "IOMMU",
+      "repository": "linux-iommu-msm8226-next-01",
+      "qualified_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "SHA256": "7cbd7e2f9b065a06162bc39a55c04849dd4c7615652781831f2c1ba4ecec0bce"
+    },
+    "drivers/clk/qcom/mmcc-msm8974.c": {
+      "group": "MMCC",
+      "repository": "linux-mmcc-axi-current-next-01",
+      "qualified_head": "443ed6739ab718fe75284baf182eaee4c7ded5c1",
+      "SHA256": "d94814f12781f96c9be7c978e2ea66dcd42f9d276a80d38069beca074dea46eb"
+    },
+    "drivers/media/platform/qcom/camss/Kconfig": {
+      "group": "CAMSS",
+      "repository": "linux-camss-msm8226-media-next-01",
+      "qualified_head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+      "SHA256": "48a7726e2f0741917ad624b43c4564a61a9a5246674688a28aaf6dd5d693180c"
+    },
+    "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml": {
+      "group": "CAMSS",
+      "repository": "linux-camss-msm8226-media-next-01",
+      "qualified_head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+      "SHA256": "0888da8dda271d056495c3e5c41bbbfd097b2170c8272fe6b9b5a24696a192bf"
+    },
+    "drivers/media/platform/qcom/camss/camss-vfe.c": {
+      "group": "CAMSS",
+      "repository": "linux-camss-msm8226-media-next-01",
+      "qualified_head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+      "SHA256": "9c90cb0cd79cebd177068ff2a876e1930d37e5778147b80a0f648cea7e756a4b"
+    },
+    "drivers/media/platform/qcom/camss/camss.c": {
+      "group": "CAMSS",
+      "repository": "linux-camss-msm8226-media-next-01",
+      "qualified_head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+      "SHA256": "cffd2781e5cdc9c9c8daf62b7777c7a183233475837c9cdc5b7537f50f2121f5"
+    },
+    "drivers/media/platform/qcom/camss/camss-vfe-17x.c": {
+      "group": "VFE-completion",
+      "repository": "linux-camss-media-fixes-02",
+      "qualified_head": "032b7e62149cd493fef5a46a448c8c46d7b20816",
+      "SHA256": "640c805e22532a74daa3819491a131dbf6fb04a9c18caa4c291ba387083a6ede"
+    },
+    "drivers/media/platform/qcom/camss/camss-vfe-4-1.c": {
+      "group": "VFE-completion",
+      "repository": "linux-camss-media-fixes-02",
+      "qualified_head": "032b7e62149cd493fef5a46a448c8c46d7b20816",
+      "SHA256": "fc0b57c7024b989ec85799dc9fa751b903afd47738d6d9ab5862ad4537cb0d08"
+    },
+    "drivers/media/platform/qcom/camss/camss-vfe-4-7.c": {
+      "group": "VFE-completion",
+      "repository": "linux-camss-media-fixes-02",
+      "qualified_head": "032b7e62149cd493fef5a46a448c8c46d7b20816",
+      "SHA256": "d50d0a534d0eec0dfa2fa1655a4a7f34759026d9f300e5ac9f1adbeffb541dc5"
+    },
+    "drivers/media/platform/qcom/camss/camss-vfe-4-8.c": {
+      "group": "VFE-completion",
+      "repository": "linux-camss-media-fixes-02",
+      "qualified_head": "032b7e62149cd493fef5a46a448c8c46d7b20816",
+      "SHA256": "eebd60bb1b73d05a085f2880dbe9aa581410d75cb995e31810b86dd33ea142fa"
+    },
+    "drivers/media/platform/qcom/camss/camss-vfe-gen1.c": {
+      "group": "VFE-completion",
+      "repository": "linux-camss-media-fixes-02",
+      "qualified_head": "032b7e62149cd493fef5a46a448c8c46d7b20816",
+      "SHA256": "7c75b5fe859b270f477bc0746af50679a031579b0a4ccca67712ebe8b2396280"
+    },
+    "drivers/media/platform/qcom/camss/camss-vfe.h": {
+      "group": "VFE-completion",
+      "repository": "linux-camss-media-fixes-02",
+      "qualified_head": "032b7e62149cd493fef5a46a448c8c46d7b20816",
+      "SHA256": "c8e48aec003f5f2243ef6011c64681b5930270563987ab5cac97871605e9e0f9"
+    },
+    "Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml": {
+      "group": "PMIC-LED",
+      "repository": "linux-pm8226-torch-leds-next-01",
+      "qualified_head": "11be4e3efab2332b352187cfa13d67f1340d81da",
+      "SHA256": "84267e35e4777e5c246f425ba79cda5d0acb8af7bc5c0fb5870977319c50cb78"
+    },
+    "MAINTAINERS": {
+      "group": "PMIC-LED",
+      "repository": "linux-pm8226-torch-leds-next-01",
+      "qualified_head": "11be4e3efab2332b352187cfa13d67f1340d81da",
+      "SHA256": "03f5c9c55a6098ea104eb00d454e473bd6f251289e7fe5c1d89e676dfa815f2a"
+    },
+    "drivers/leds/flash/Kconfig": {
+      "group": "PMIC-LED",
+      "repository": "linux-pm8226-torch-leds-next-01",
+      "qualified_head": "11be4e3efab2332b352187cfa13d67f1340d81da",
+      "SHA256": "feea92213f348da02c751ff8989724744b7fd260b5e74d6c94d6f1a0826c40b8"
+    },
+    "drivers/leds/flash/Makefile": {
+      "group": "PMIC-LED",
+      "repository": "linux-pm8226-torch-leds-next-01",
+      "qualified_head": "11be4e3efab2332b352187cfa13d67f1340d81da",
+      "SHA256": "1746dfe3a64a78f9159377b1816fb4f206558ce51c325ffa8a12c6548ded25d3"
+    },
+    "drivers/leds/flash/leds-qcom-flash-v1.c": {
+      "group": "PMIC-LED",
+      "repository": "linux-pm8226-torch-leds-next-01",
+      "qualified_head": "11be4e3efab2332b352187cfa13d67f1340d81da",
+      "SHA256": "84bd9da282faf95b7381d06614c7c56bc0c2c13b56a74aebc3fd1a704c213430"
+    },
+    "Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml": {
+      "group": "PMIC-MFD",
+      "repository": "linux-pm8226-parent-mfd-next-02",
+      "qualified_head": "64dde42de6c14287c91522602ab4737020db93d3",
+      "SHA256": "ac56849e50412e19d9fd174a2b4eefe9e16b223b1ba875965e339f7cb64445cc"
+    },
+    "Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml": {
+      "group": "WCNSS-RF",
+      "repository": "linux-wcn3660a-rproc-current-01",
+      "qualified_head": "ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf",
+      "SHA256": "6cc5f4223b7049ee96a4a12c2c8a4444eae79c319cff026cb041cd9a231837e9"
+    },
+    "drivers/remoteproc/qcom_wcnss_iris.c": {
+      "group": "WCNSS-RF",
+      "repository": "linux-wcn3660a-rproc-current-01",
+      "qualified_head": "ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf",
+      "SHA256": "471cc075dc7eb14e4220db9389df4ab8bcb7417616fda29add9c5c1970d5a91a"
+    },
+    "drivers/remoteproc/qcom_wcnss.c": {
+      "group": "WCNSS-regulators",
+      "repository": "linux-wcnss-regulators-rproc-fixes-01",
+      "qualified_head": "962a507202bac5ecd7c7e37a77e0de32a122f598",
+      "SHA256": "e195a10af6a872d81410a92792679f5627b5bad1445b176a2394ad5434d6483d"
+    },
+    "drivers/net/wireless/ath/wcn36xx/main.c": {
+      "group": "WCNSS-wireless",
+      "repository": "linux-wcn3660a-wireless-current-01",
+      "qualified_head": "2dc038c6fa74e00ddb265b274103c46894c2541a",
+      "SHA256": "77f416e14a0acf34cd956d3f84b8302e1d8c92dd94018f0183bd5a0a52800182"
+    }
+  },
+  "all_board_sources_to_remain_unchanged": true,
+  "missing_LTS_and_overlay_features_still_require_review": true,
+  "phone_access": false,
+  "published": false
+}

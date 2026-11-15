@@ -1,0 +1,116 @@
+From 053ff674a48f79e6ee414f4da7135aff3437099a Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 14 Nov 2026 21:21:31 -0500
+Subject: [PATCH] media: qcom: camss: Support the ARM IOMMU DMA backend
+
+Native 32-bit Qualcomm platforms use ARM_DMA_USE_IOMMU rather than
+IOMMU_DMA. Allow that backend without relaxing ARCH_QCOM or changing the
+existing COMPILE_TEST alternative.
+
+ARM's IOMMU mapper merges input entries only up to the device's maximum
+segment size, which defaults to 64 KiB. Larger images can therefore map
+to separately allocated DMA ranges with gaps between them. VFE write
+masters consume a base address per plane and cannot follow those gaps.
+
+Raise the maximum segment size before registering capture devices. Check
+that adjacent mapped DMA segments cover sizeimage before accepting a
+buffer. Permit adjacent segments and an unused noncontiguous tail rather
+than requiring exactly one segment or rejecting oversized imports.
+Keep the existing single-plane NV chroma address calculation unchanged.
+
+Fold the DMA prerequisite into the ARM32 feature introduction. This
+refreshes integration changes 9d46e4575ea1 and 8fe23bfec791, and replaces
+the Kconfig-only proposal 2f2e63bfa290 on media-committers next.
+
+A host model executes the actual ARM mapper, platform DMA defaults,
+DMA parameter helpers and CAMSS buffer initialization/preparation. Its
+synthetic IOVA allocator leaves gaps between separately mapped chunks.
+The model has 14 failed checks before this change and none afterward;
+removing the segment limit or range guard causes failures. It also
+checks adjacent imports, sufficient contiguous prefixes, plane isolation,
+chroma offsets and mapper failures. It does not execute the full probe,
+real VB2 allocation, hardware DMA or image capture. Native ARM and ARM64
+CAMSS components build with W=1 and no new warnings. Physical V4L2
+compliance and camera integrity remain pending.
+
+The original changes by Timothy Schmidt were developed with Claude Opus
+5.5, credited as a co-author <noreply@anthropic.com> in their history.
+OpenAI Codex (GPT-6) adapted the current feature and range checks, wrote
+the host model, and performed local build and regression qualification.
+Human review and DCO certification remain pending.
+---
+ drivers/media/platform/qcom/camss/Kconfig     |  2 +-
+ .../media/platform/qcom/camss/camss-video.c   | 23 ++++++++++++++++++-
+ drivers/media/platform/qcom/camss/camss.c     |  3 +++
+ 3 files changed, 26 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/camss/Kconfig b/drivers/media/platform/qcom/camss/Kconfig
+index b51745c942..abb63aebe5 100644
+--- a/drivers/media/platform/qcom/camss/Kconfig
++++ b/drivers/media/platform/qcom/camss/Kconfig
+@@ -2,7 +2,7 @@ config VIDEO_QCOM_CAMSS
+ 	tristate "Qualcomm V4L2 Camera Subsystem driver"
+ 	depends on V4L_PLATFORM_DRIVERS
+ 	depends on VIDEO_DEV
+-	depends on (ARCH_QCOM && IOMMU_DMA) || COMPILE_TEST
++	depends on (ARCH_QCOM && (IOMMU_DMA || ARM_DMA_USE_IOMMU)) || COMPILE_TEST
+ 	select MEDIA_CONTROLLER
+ 	select VIDEO_V4L2_SUBDEV_API
+ 	select VIDEOBUF2_DMA_SG
+diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+index 0852eb6f13..c6a576ba18 100644
+--- a/drivers/media/platform/qcom/camss/camss-video.c
++++ b/drivers/media/platform/qcom/camss/camss-video.c
+@@ -155,13 +155,34 @@ static int video_buf_init(struct vb2_buffer *vb)
+ 	const struct v4l2_pix_format_mplane *format =
+ 						&video->active_fmt.fmt.pix_mp;
+ 	struct sg_table *sgt;
+-	unsigned int i;
++	struct scatterlist *s;
++	dma_addr_t expected;
++	unsigned long size;
++	unsigned int i, j;
+ 
+ 	for (i = 0; i < format->num_planes; i++) {
+ 		sgt = vb2_dma_sg_plane_desc(vb, i);
+ 		if (!sgt)
+ 			return -EFAULT;
+ 
++		/* Adjacent DMA segments may cover one linear image plane. */
++		expected = sg_dma_address(sgt->sgl);
++		size = 0;
++		for_each_sgtable_dma_sg(sgt, s, j) {
++			if (sg_dma_address(s) != expected)
++				break;
++			size += sg_dma_len(s);
++			if (size >= format->plane_fmt[i].sizeimage)
++				break;
++			expected += sg_dma_len(s);
++		}
++		if (size < format->plane_fmt[i].sizeimage) {
++			dev_err_ratelimited(video->camss->dev,
++					    "Buffer plane %u is not contiguous\n",
++					    i);
++			return -EFAULT;
++		}
++
+ 		buffer->addr[i] = sg_dma_address(sgt->sgl);
+ 	}
+ 
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index c54185c93a..8c76e8a193 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -5478,6 +5478,9 @@ static int camss_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_genpd_cleanup;
+ 
++	/* VFE write masters need a linear DMA range per image plane. */
++	dma_set_max_seg_size(dev, UINT_MAX);
++
+ 	camss->media_dev.dev = camss->dev;
+ 	strscpy(camss->media_dev.model, "Qualcomm Camera Subsystem",
+ 		sizeof(camss->media_dev.model));
+-- 
+2.56.0
+
