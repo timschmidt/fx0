@@ -1,0 +1,107 @@
+{
+  "recorded_UTC": "2026-11-15T00:10:36.994901+00:00",
+  "scope": "Source fix candidate and host/component checks for native gen1 coalesced completion witness; no full package or physical candidate qualification",
+  "physical_witness_review_commit": "9ee32cef06b4b6e0425539e58004107a3e4a8122",
+  "baseline_kernel_commit": "f71b29239d140872c4970d8381f5d297a604c6da",
+  "installed_native_source_commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+  "six_affected_baseline_paths_identical_to_native_source": true,
+  "final_kernel_review_commit": "250e7412a5a15068b2a2fe32b57b66c300c91b5f",
+  "final_kernel_review_branch": "development/fx0-vfe-coalesced-completion-02",
+  "compiled_kernel_source_commit": "d2caf06a30e67781175fb90ad953f5440d3dfcb5",
+  "identical_git_tree": "9a3bec66b22c9cf60d78634487904b0139e9087f",
+  "final_revision_changes_only_commit_message_spelling": true,
+  "original_compiled_source_and_failed_style_artifacts_retained": true,
+  "change": "Return the old output WM-index mask under output_lock when gen1 register-update handles STOPPING. Consume saved WM bits and that PIX composite event in the 4.1/4.7/4.8 IRQ batch; retain ordering, fresh queued buffers, unrelated output completions and later diagnostics. 17x returns zero.",
+  "host_regression": {
+    "production_functions_and_types_extracted": true,
+    "source_dispatchers": [
+      "4.1",
+      "4.7",
+      "4.8"
+    ],
+    "scenarios_per_dispatcher": 28,
+    "positive_dispatcher_executions": 84,
+    "negative_controls": 15,
+    "address_and_undefined_behavior_sanitizers": true,
+    "sanitizers_disabled": false,
+    "baseline_empty_drain_rejected": true,
+    "baseline_fresh_buffer_consumption_rejected": true,
+    "IDLE_only_guard_rejected": true,
+    "blanket_IRQ_reorder_rejected_by_ack_requirement": true,
+    "blanket_WM_suppression_rejected_by_normal_completion": true,
+    "queue_after_unlock_and_WM_reassignment_checked": true,
+    "PIX_and_unrelated_output_scopes_checked": true,
+    "limitations": "MMIO, locks, time and completion endpoints are host fakes; this is source bookkeeping/interleaving coverage, not DMA/SMP/hardware validation"
+  },
+  "earlier_harness_attempt": {
+    "outcome": "Baseline pending-buffer path hit the total-return check before the specific fresh-buffer check. Diagnostic check order was corrected in a fresh attempt; generated C and initial runner retained. Production fix unchanged.",
+    "later_unsanitized_pass": {
+      "scenarios_per_dispatcher": 24,
+      "executions": 72,
+      "negative_controls": 15
+    }
+  },
+  "ARM_component": {
+    "target": "drivers/media/platform/qcom/camss/qcom-camss.o",
+    "format": "ELF32 little-endian ARM relocatable",
+    "compiler": "clang version 21.1.8 (Fedora 21.1.8-6.fc43)",
+    "LLVM_suffix": "-21",
+    "config_prepare_compile_exit_codes": [
+      0,
+      0,
+      0
+    ],
+    "object_SHA256": "cdbe76cc7f780351c536d3e37188b67b8e126e3029a13f22a60a02c78a5d3498",
+    "input_config_SHA256": "26ff4814e2a2f840cdd7cd5bf3b9d216798a62c4e81567b5a4e4734a27521371",
+    "built_config_SHA256": "49f87d293d96e196f1fcbfe74117833662b79df732b7c0e6053f1e8d32c53dd4",
+    "CFI_compiler_flags": [
+      "-fsanitize=kcfi",
+      "-fsanitize-cfi-icall-experimental-normalize-integers"
+    ],
+    "provider_type_words": {
+      "camss-vfe-gen1.o": "0xe8f4cf55",
+      "camss-vfe-17x.o": "0xe8f4cf55"
+    },
+    "baseline_void_type_words": {
+      "camss-vfe-gen1.o": "0xf0f6e568",
+      "camss-vfe-17x.o": "0xf0f6e568"
+    },
+    "caller_type_checks": {
+      "camss-vfe-4-1.o": {
+        "new_callback_CFI_constant_present": true
+      },
+      "camss-vfe-4-7.o": {
+        "new_callback_CFI_constant_present": true
+      },
+      "camss-vfe-4-8.o": {
+        "new_callback_CFI_constant_present": true
+      },
+      "camss-vfe-17x.o": {
+        "new_callback_CFI_constant_present": true
+      }
+    },
+    "static_CFI_basis": "ARM object entry-minus-4 type words and matching reconstructed MOVW/MOVT check constants in each IRQ dispatcher",
+    "compiler_warnings_or_errors": false,
+    "linker_derived_config_difference_recorded": true,
+    "configuration_scope": "LLD18 to LLD21 capability-derived fields; no claim of byte-identical full package configuration",
+    "full_package_or_runtime_CFI_qualification": false,
+    "module_signer_key_generated_or_used": false
+  },
+  "checkpatch": {
+    "signed_patch_returncode": 0,
+    "errors": 0,
+    "warnings": 0,
+    "DCO_trailer_present": true,
+    "signed_patch_SHA256": "77d458459b879abddc183566a700a57beb6490d604c92e55c730d6ac1fb26e59"
+  },
+  "not_yet_qualified": [
+    "Complete normal package recipe and two clean signed rebuilds from final review pin",
+    "Import/ABI/ELF/package and boot-image validation",
+    "Separately gated physical candidate boot, pixel/queue regression and verified return",
+    "Current maintainer-base review/port and operator-approved publication/submission scope"
+  ],
+  "phone_access_this_turn": false,
+  "installed_packages_modules_and_boot_untouched": true,
+  "new_commits_published": false,
+  "full_goal_complete": false
+}

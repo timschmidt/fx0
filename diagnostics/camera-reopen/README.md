@@ -130,3 +130,9 @@ is dispatched in the same IRQ. Complete IRQ/log streams associate by ordinal
 without cross-clock timestamp conversion. The warning still fails camera
 acceptance; a source fix must preserve idle acknowledgment and queued-buffer
 ownership for both empty and replenished drains.
+
+The [gen1 source-fix candidate](../camera-vfe-regression/qualification.md)
+consumes saved WM status after register-update resets the output. Extracted-C
+regressions cover fresh pending buffers and acknowledgment ordering, and an
+ARM CAMSS component compile checks the updated CFI contract. Package and
+physical camera qualification remain open; nothing is deployed.
