@@ -1,0 +1,386 @@
+{
+  "format_version": 1,
+  "input_fixes": {
+    "base": "ce8010f11f3ea62f8675e9bc921ee485aef82019",
+    "head": "0671b67481a1eaf61c8db1b19b1834ae130c7a47",
+    "branch": "fixes/rmi4-poweroff-suspend-input-01"
+  },
+  "input_next": {
+    "base": "ab13b5fc808e043a13f861a7c1c2ba8173c22b84",
+    "head": "75f0dd5b051c1b1cda53eb84726b3cb13e6a8552",
+    "tree": "aeeb60e19ec544da261f936af70ba785fda6dd48",
+    "branch": "development/rmi4-panel-input-next-02",
+    "compiled_head": "e1cd66d24b38946ab127f2777052605a0c91a63d",
+    "every_intermediate_tree_identical": true
+  },
+  "originals": {
+    "reset": "ff0d3662b8048c5017505770a776be149655a951",
+    "cleanup": "7297314a644fb1f7116b8c2e42817bc4108570fe",
+    "suspend": "6d3c6c42f7bbfcc93dfac4e46da6debe23e4f3bd",
+    "binding": "5adb175d66390ae6e08f5ad911f45c5447365aee",
+    "panel": "5a30fcb447dd944585135ca798506614a0a52181"
+  },
+  "fixtures": [
+    {
+      "name": "suspend-baseline",
+      "file": "fixtures/suspend-baseline.c",
+      "SHA256": "f1d5632db83bb88ed64c89e19f6805147aa40545217472036a1a5c484809b394",
+      "cases": 22,
+      "metric": "stranded",
+      "expected_failures": 4,
+      "expected_exit": 1,
+      "original_fixture_SHA256": "5a988cccd3af5871c189c6d91a831c8b22b7ff2e262311c4a1d6da687e871c3f",
+      "source_files_SHA256": {
+        "drivers/input/rmi4/rmi_i2c.c": "4009295ffe947250df24fd32c8204af6ac53fc58fe971f316a94f6e2153eabe9",
+        "drivers/input/rmi4/rmi_driver.c": "d994b8b1ad729c3da5bdf3127c5f3cc1d4018e8aa7d51a6bfe379f94a8e00678",
+        "drivers/base/power/main.c": "090b00587a6ee936060cd9b7dd4f49f5a42fbdf607c315037d21c8fe36de0db6"
+      },
+      "source_SHA256": null,
+      "core_SHA256": null
+    },
+    {
+      "name": "suspend-fixed",
+      "file": "fixtures/suspend-fixed.c",
+      "SHA256": "ee22c4feae9300b0ecf647dac98a4df51c13e5bff432806a809272f54671bd54",
+      "cases": 22,
+      "metric": "stranded",
+      "expected_failures": 0,
+      "expected_exit": 0,
+      "original_fixture_SHA256": "22357d4b399e7fa40fd38ffcd2bde6bea70d2e5bed77174e95a94b031b9f544b",
+      "source_files_SHA256": {
+        "drivers/input/rmi4/rmi_i2c.c": "8722ac0f8c350bae6df912b8992eff9f20277d428f7b57c952bdff2217948052",
+        "drivers/input/rmi4/rmi_driver.c": "d994b8b1ad729c3da5bdf3127c5f3cc1d4018e8aa7d51a6bfe379f94a8e00678",
+        "drivers/base/power/main.c": "090b00587a6ee936060cd9b7dd4f49f5a42fbdf607c315037d21c8fe36de0db6"
+      },
+      "source_SHA256": null,
+      "core_SHA256": null
+    },
+    {
+      "name": "panel-original",
+      "file": "fixtures/panel-original.c",
+      "SHA256": "f0fffeac48286d6dd2a0b0d07d3114c78c2cd7a60c3c08b19e5e80573a8a03f9",
+      "cases": 34,
+      "metric": "broken",
+      "expected_failures": 16,
+      "expected_exit": 1,
+      "original_fixture_SHA256": "f05f88b761a71df9ed1a18a017a4deb8bb0a995ee9ae9e9ba4115b895c53f8c6",
+      "source_files_SHA256": null,
+      "source_SHA256": "f62321684b6672e09f08eea0b3ddc27ce51a1670d2df971f4f499643b8a8455b",
+      "core_SHA256": "49e68fdb6ec51ef17d157bd31b5d021ba2c21e5809bfad1d7d3455c5e4b71474"
+    },
+    {
+      "name": "panel-adapted",
+      "file": "fixtures/panel-adapted.c",
+      "SHA256": "5c198470cd03287ab37487af13e9a438f7019460cca3d5ef67364b06e969971a",
+      "cases": 34,
+      "metric": "broken",
+      "expected_failures": 0,
+      "expected_exit": 0,
+      "original_fixture_SHA256": "6c3dc47d97cf7bb9bee7f65e99d0b18d779d9af166d049c574ef8914b9668d9d",
+      "source_files_SHA256": null,
+      "source_SHA256": "9f9bff7ff77cc7343fc10c8db1dc0c0f7a621b4ab1caa28dc26568208f3ac082",
+      "core_SHA256": "49e68fdb6ec51ef17d157bd31b5d021ba2c21e5809bfad1d7d3455c5e4b71474"
+    }
+  ],
+  "native_builds": [
+    {
+      "configuration": "arm",
+      "source_head": "0671b67481a1eaf61c8db1b19b1834ae130c7a47",
+      "source_tree": "c15e8f34fa9e20a65c46fab4329f8ed573ed14f8",
+      "config_SHA256": "6147e8b6149fd65a44a2c140423530a888acf4a6ebf9f15dc59a2b576d36beb3",
+      "native": true,
+      "COMPILE_TEST": false,
+      "objects": {
+        "drivers/input/rmi4/rmi_2d_sensor.o": "89763250d801f8202b5e017c852d88fb40c5e208fc6529f3d2560e04df3e33ae",
+        "drivers/input/rmi4/rmi_bus.o": "17aae502c78b70dbbb0d999c6d68ab096a03d95e46d037e2f25fb57e840e356c",
+        "drivers/input/rmi4/rmi_core.o": "bfcb090ed4e555da5b86e9982e7c0f39dd717409805604c3ed3ff26175ee69d1",
+        "drivers/input/rmi4/rmi_driver.o": "47a6faf5043d21035aec80b11591c084de44d8c12e09222d8c411f87eb1aa0a8",
+        "drivers/input/rmi4/rmi_f01.o": "bffb274b8bbf1310446d6a35c87441a9e3e294efb80f6259faa5d7ce54d86952",
+        "drivers/input/rmi4/rmi_f03.o": "3a5753eb9ff59ab5f586e325aa6c384e4fd189a4f981bd553876e688233815ca",
+        "drivers/input/rmi4/rmi_f11.o": "26c011f64316a70dd2af16c20ecc91c4c617b977cbed08f577d5b5d62269ea61",
+        "drivers/input/rmi4/rmi_f12.o": "2528dd50a57804af69ccb60801e11c1600bdbd6c87692adf8ce9aefff2a86694",
+        "drivers/input/rmi4/rmi_f30.o": "381d87119fc793d91a3536f0deb4545e46d4078b6dfde3d50e7a6ec35a224aaf",
+        "drivers/input/rmi4/rmi_f3a.o": "3a3c64ae8f0bdc3cb53e89fdb43d74fcec6519a1421606462c7e6be9dc005294",
+        "drivers/input/rmi4/rmi_i2c.o": "afab332f541c93e34d7c36a623cbde330603e12b349342537006d49cd79425ca"
+      },
+      "stages": [
+        {
+          "stage": "options",
+          "returncode": 0,
+          "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "stage": "config",
+          "returncode": 0,
+          "log_SHA256": "d96d883fc0ccf1057c17c287be25c7b023be38ce3f1c331e4522c8b77c2bbc25"
+        },
+        {
+          "stage": "prepare",
+          "returncode": 0,
+          "log_SHA256": "10a7331ebcb16d566155411af2a5ec2dbb46729425ec7e09b07635056462be33"
+        },
+        {
+          "stage": "component",
+          "returncode": 0,
+          "log_SHA256": "524c530fd2178757e4635b097a65babf085765bf9e6a89433500e926479ff7b2"
+        }
+      ],
+      "config": "configs/arm.config"
+    },
+    {
+      "configuration": "arm64",
+      "source_head": "0671b67481a1eaf61c8db1b19b1834ae130c7a47",
+      "source_tree": "c15e8f34fa9e20a65c46fab4329f8ed573ed14f8",
+      "config_SHA256": "2f04b15a32f9c54f6eac2cd798ab570e1e4376f8268760d15337c19e054f459d",
+      "native": true,
+      "COMPILE_TEST": false,
+      "objects": {
+        "drivers/input/rmi4/rmi_2d_sensor.o": "66c90fa9a5e339d16c164a58775971e17f9850333e86339eb764263495aa6ef0",
+        "drivers/input/rmi4/rmi_bus.o": "ce07c53f00323eedf9811ce81ddbd6997e1a63983b629c71d0a8846809a77299",
+        "drivers/input/rmi4/rmi_core.o": "5a01ceb69299e1d304849147b005989af6a3e08acec3a36d72b0a3997a8fa326",
+        "drivers/input/rmi4/rmi_driver.o": "0d033bed5add8f13050ff74d3c43096d03dc5554ebed9687214c3d287e6d400c",
+        "drivers/input/rmi4/rmi_f01.o": "c5e87ebcbe4c90102892613a2d0a36bc9c8d9557c23042d7409ecb3c8fffafbb",
+        "drivers/input/rmi4/rmi_f11.o": "55503c89257edd4e37136460802ce49b68f9f2c2178f8553e61fce1121f23ae7",
+        "drivers/input/rmi4/rmi_f12.o": "b3b4ab92edb9be8cbea84d56502f9f69885d4202f119333f5dec03972cc58dbd",
+        "drivers/input/rmi4/rmi_i2c.o": "6118b216a2a92f669e94c6014ddda504ac028391ab4657c1ebe347f5aa92c12f"
+      },
+      "stages": [
+        {
+          "stage": "options",
+          "returncode": 0,
+          "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "stage": "config",
+          "returncode": 0,
+          "log_SHA256": "b19b6fd538b32eab476c83f891d1017facc157620558fa2f17568d0e11226e61"
+        },
+        {
+          "stage": "prepare",
+          "returncode": 0,
+          "log_SHA256": "a6b9e12cff76f3ab52c9ebf5ccd424ffbdeb9010a5e39ac717336ed0331f4c03"
+        },
+        {
+          "stage": "component",
+          "returncode": 0,
+          "log_SHA256": "020fa80a6322a39b2ed1854b8b45e76029e2b7ccf28cf931071cbbe650ad0bd6"
+        }
+      ],
+      "config": "configs/arm64.config"
+    },
+    {
+      "configuration": "panel-arm-builtin",
+      "source_head": "e1cd66d24b38946ab127f2777052605a0c91a63d",
+      "source_tree": "aeeb60e19ec544da261f936af70ba785fda6dd48",
+      "config_SHA256": "d75a8e136e5efd4c944de1bf200e049d531e378f078e2d8a64b6d60870f8a9bd",
+      "native": true,
+      "COMPILE_TEST": false,
+      "objects": {
+        "drivers/input/rmi4/rmi_2d_sensor.o": "15527b6f9a66a454f3407acd39ba69a820b1df19aa564e8272cd1e2736b83b7e",
+        "drivers/input/rmi4/rmi_bus.o": "00c2504c99a44884cf8bb31c649e8f0bc8d2611dd643bca06681acd71a221798",
+        "drivers/input/rmi4/rmi_core.o": "9f8bbb4ec99d692bdedfd0eff0789f19518444676e1bc63bc34943702142bd20",
+        "drivers/input/rmi4/rmi_driver.o": "538cbaae2fba2231b91923e0dc1c374ea467fe71176b9b7d32b42afb54006e29",
+        "drivers/input/rmi4/rmi_f01.o": "b715e64c4421f0398170948c5dc38dd94a736f59722c790f7c50c14c12456f05",
+        "drivers/input/rmi4/rmi_f03.o": "6ac6e6e89380bdb50b5f31ef0a137140f9c7d2e61c79863aff4c4af70ae441b2",
+        "drivers/input/rmi4/rmi_f11.o": "6329f3b3bda806e718a09a8569b82bf2b0380874e9a178b89350ec38441a8953",
+        "drivers/input/rmi4/rmi_f12.o": "58eb94de5b5d4e45efd3ec238ac803e9770dc5e63f298aa274f0a35f51d462f1",
+        "drivers/input/rmi4/rmi_f30.o": "7639d5bc065b3a0c254c28c21317be5f11f905ea5bcd98832e52db002521e7b9",
+        "drivers/input/rmi4/rmi_f3a.o": "df5f798bfd2a0f82e42fde8d6e18be57a7e2503d3bf73a72ed3425e58c4ba74b",
+        "drivers/input/rmi4/rmi_i2c.o": "f1e63c1d23a922016808c89313bb7f41355fd290233f000891dd229cbb6bae0c"
+      },
+      "stages": [
+        {
+          "stage": "options",
+          "returncode": 0,
+          "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "stage": "config",
+          "returncode": 0,
+          "log_SHA256": "b27e2d3e68a2e842cbbd2f659bb713efb9da7e8ce5cbe457f229485e989d9cce"
+        },
+        {
+          "stage": "prepare",
+          "returncode": 0,
+          "log_SHA256": "e434e19d52b53fa5ef1a076af6eed86ef3d09d77d5ff3d7ba5fbeff8ace67c52"
+        },
+        {
+          "stage": "component",
+          "returncode": 0,
+          "log_SHA256": "16238bc4b4ddd482e896b4a62c2c0cd69656928d98234f068a78509255f24c50"
+        }
+      ],
+      "config": "configs/panel-arm-builtin.config"
+    },
+    {
+      "configuration": "panel-arm64-module",
+      "source_head": "e1cd66d24b38946ab127f2777052605a0c91a63d",
+      "source_tree": "aeeb60e19ec544da261f936af70ba785fda6dd48",
+      "config_SHA256": "0a2c81c4d4af2d69fc6b7349a10b33710ed691d9cc2c6473acbd13a89640463e",
+      "native": true,
+      "COMPILE_TEST": false,
+      "objects": {
+        "drivers/input/rmi4/rmi_2d_sensor.o": "febdb55e1d6519d56883c6bea406068a0814f538052213bcb916fd4864fc22c4",
+        "drivers/input/rmi4/rmi_bus.o": "aa87c14d17298e399b2078cdc5eb9fa88f1390752379de3d2bf2a25340e32217",
+        "drivers/input/rmi4/rmi_core.o": "36b0896f16bc4ed0a6ab8489d0162908269d9030f64d82eefa1175504866c8e0",
+        "drivers/input/rmi4/rmi_driver.o": "e229b761e079cb206a8d0bc521f2723d744b1ea35853509d8e05e6f52e1188bc",
+        "drivers/input/rmi4/rmi_f01.o": "6b4016855340178af574fbf65df070ef5961d4510112f016250baa612a52df1c",
+        "drivers/input/rmi4/rmi_f11.o": "67d9c7ce38c08a237d96a00286e66f53353588e539e5693dacdaeb4a160156f9",
+        "drivers/input/rmi4/rmi_f12.o": "c5755829aaa5993e73943caab735435edd475dd374845e67ff0191d26fc53415",
+        "drivers/input/rmi4/rmi_i2c.o": "3d04de918c44e4e8394aa2a3a854f04160a666da797166d2e9a28eb87924de41"
+      },
+      "stages": [
+        {
+          "stage": "options",
+          "returncode": 0,
+          "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "stage": "config",
+          "returncode": 0,
+          "log_SHA256": "84cd1f870e5ee231fa3901cfbdecfc2a4714a27d1b03e086cfcef114e127f6d2"
+        },
+        {
+          "stage": "prepare",
+          "returncode": 0,
+          "log_SHA256": "6632efe1cd958d8d53c0b2e7e2fb31514f52fd85e7dd8742cda691769fcea56d"
+        },
+        {
+          "stage": "component",
+          "returncode": 0,
+          "log_SHA256": "554a00d61e93adafa595137ba06a7568f8a5e2aa3aaa4f27252dcd567848194f"
+        }
+      ],
+      "config": "configs/panel-arm64-module.config"
+    },
+    {
+      "configuration": "panel-arm-disabled",
+      "source_head": "e1cd66d24b38946ab127f2777052605a0c91a63d",
+      "source_tree": "aeeb60e19ec544da261f936af70ba785fda6dd48",
+      "config_SHA256": "a199511d3ca4c06aa1a1509d9b2fb309cf64830a78407e26544265dcfa3b531c",
+      "native": true,
+      "COMPILE_TEST": false,
+      "objects": {
+        "drivers/input/rmi4/rmi_2d_sensor.o": "4a6f7e8c0bf8fb3f0c678ae9c149490f6f4a38d10f15c6021fa7ab3ca478259a",
+        "drivers/input/rmi4/rmi_bus.o": "635d5bbd63085fbfb81fd468b64f4a4a432b296c38b4992c188dacd2bbee21fd",
+        "drivers/input/rmi4/rmi_core.o": "32cedfce5945b14d8a3635fb1dd1c579fc06329323d6da198fd9cca7c7054a75",
+        "drivers/input/rmi4/rmi_driver.o": "0587579bf856d7906758e469cd970724ee50bf5d36b333812fb826a55efd5a6e",
+        "drivers/input/rmi4/rmi_f01.o": "2df7a13cac2c60d0c7e86d425f8bf0ff4e278076cac3538e6513a36cf5e69b95",
+        "drivers/input/rmi4/rmi_f03.o": "bb6d4d4434ddad23e0b46c7bbb6431947dab2a3d50deb1f87a97403a10e30079",
+        "drivers/input/rmi4/rmi_f11.o": "4c4de378ba02a7c9930edb0737bc921a7d183a0b405ee946a5fef02c1d75e9d1",
+        "drivers/input/rmi4/rmi_f12.o": "b593c68d97319899335e8633c6502179a7da743a8f66c7d5972adf8649619026",
+        "drivers/input/rmi4/rmi_f30.o": "29add08a2fe8d46d375a7cbf7e8150cd1867a659b50d6ca956644a3d3db1ed27",
+        "drivers/input/rmi4/rmi_f3a.o": "7c7cee80527dcbbc0dc82494187c03e8d676dd04adfe44ba576882ca59c1f74a",
+        "drivers/input/rmi4/rmi_i2c.o": "9d99baa4d7e23a16d3dd55661c177a5e890f2505f407d7e6848291deb3d6793d"
+      },
+      "stages": [
+        {
+          "stage": "options",
+          "returncode": 0,
+          "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "stage": "config",
+          "returncode": 0,
+          "log_SHA256": "cac813f9a152fb15271cfad1870918e97621e2a3293898004b2c2c5b802affb9"
+        },
+        {
+          "stage": "prepare",
+          "returncode": 0,
+          "log_SHA256": "3c900f44c862e98c5bd90c0221a2177f48056391896b50807b21e824c0c4a819"
+        },
+        {
+          "stage": "component",
+          "returncode": 0,
+          "log_SHA256": "4edc100939d3422c64a7e4e48bbc58c1d23d2276c85d1a6fc4bae18631d907a3"
+        }
+      ],
+      "config": "configs/panel-arm-disabled.config"
+    }
+  ],
+  "bindings": {
+    "complete_original_Fx0_DTB_SHA256": "c9cba4a019eb80eb5baddd366cefc9ec2f2bb89616d3d47a6ee99dc55498db65",
+    "board_rebuilt": false,
+    "original_board_modified": false,
+    "positive_cases": [
+      "complete-unchanged-Fx0",
+      "I2C-without-panel",
+      "SPI-without-panel"
+    ],
+    "rejected_controls": [
+      "panel-two-phandles",
+      "panel-string",
+      "panel-empty",
+      "SPI-with-panel",
+      "unknown-RMI-property"
+    ],
+    "ordinary_binding_examples_passed": true,
+    "schema_SHA256": "1aa949debae5657a4d090ee7daa5a711b4d87898b05050e912beb85d4ef9c876",
+    "checker_SHA256": "2292ee07dddb239ebff9592c306e50b15d76558abb2c1167a8923473df0a378d",
+    "only_RMI_schema_selected": true,
+    "full_board_schema_qualified": false,
+    "hardware_or_driver_runtime_qualified": false,
+    "passed": true
+  },
+  "lifecycle": {
+    "source_SHA256": "9f9bff7ff77cc7343fc10c8db1dc0c0f7a621b4ab1caa28dc26568208f3ac082",
+    "probe_action_order": [
+      "devm_gpiod_get_optional",
+      "regulator_bulk_enable",
+      "rmi_i2c->powered = true",
+      "rmi_i2c_regulator_bulk_disable",
+      "rmi_register_transport_device",
+      "rmi_i2c_unregister_transport",
+      "devm_drm_panel_add_follower"
+    ],
+    "devres_unwind": "follower removed before RMI transport unregister, then regulator release, then earlier GPIO descriptor release",
+    "actual_devres_executed": false,
+    "runtime_PM_enable_calls_in_RMI_sources": []
+  },
+  "strict_patch_checks_passed": 5,
+  "full_check_remaining": "Human sign-off missing from adapted suspend, binding and panel patches; unchanged Roman Vivchar reset sign-off retained.",
+  "new_agent_Signed_off_by": false,
+  "maintainers_contacted": false,
+  "published": false,
+  "phone_changed": false,
+  "full_goal_complete": false,
+  "limitations": [
+    "Host fixtures stub low-level I/O; real PM, DRM, devres and hardware are not executed.",
+    "Current RMI source does not enable runtime PM; interleavings are synthetic controls.",
+    "Successful regulator disable is assumed; real disable-failure recovery is unqualified.",
+    "Native component compilation does not establish a combined image or physical touchscreen result.",
+    "Only the RMI schema is selected for the complete Fx0 DTB; other full-board gaps remain.",
+    "Original r2 display-IOMMU fault and failed candidate qualifications remain unresolved."
+  ],
+  "exported_extraction_tools_qualified": [
+    {
+      "case": "suspend-portable-baseline-01",
+      "expected_failures": 4,
+      "metric": "stranded",
+      "passed": true,
+      "checker_SHA256": "c9072af1d9cf111d913953e564e1066f1b7dd90466679105bb5c1e28898bc110"
+    },
+    {
+      "case": "suspend-portable-fixed-01",
+      "expected_failures": 0,
+      "metric": "stranded",
+      "passed": true,
+      "checker_SHA256": "c9072af1d9cf111d913953e564e1066f1b7dd90466679105bb5c1e28898bc110"
+    },
+    {
+      "case": "panel-portable-original-01",
+      "expected_failures": 16,
+      "metric": "broken",
+      "passed": true,
+      "checker_SHA256": "46eab034836f73d4173f25aba79e625c99f4ebdff6c58a20e1c2ccf7d3e9eee0"
+    },
+    {
+      "case": "panel-portable-adapted-01",
+      "expected_failures": 0,
+      "metric": "broken",
+      "passed": true,
+      "checker_SHA256": "46eab034836f73d4173f25aba79e625c99f4ebdff6c58a20e1c2ccf7d3e9eee0"
+    }
+  ],
+  "Git_free_self_contained_replay_passed": true
+}

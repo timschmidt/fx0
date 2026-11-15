@@ -1,0 +1,295 @@
+From 75f0dd5b051c1b1cda53eb84726b3cb13e6a8552 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 1 Nov 2026 14:31:38 -0500
+Subject: [PATCH 4/4] Input: rmi4 - sequence an in-cell I2C touchscreen with
+ its panel
+
+An in-cell controller may stop answering I2C requests while its display
+panel is off. Register an optional DRM panel follower so the controller
+sleeps before panel unprepare and resumes after panel prepare. System
+sleep defers to these callbacks for a follower.
+
+Track regulator enable references through common power helpers, including
+runtime callbacks and cleanup. Runtime callbacks also defer to a followed
+panel. Keep existing warning-only handling of runtime function-resume
+errors while preserving regulator-enable errors. The current RMI driver
+does not enable runtime PM; synthetic callback controls verify consistent
+tracking if these callbacks are used.
+
+Retain devres ordering: unregister the follower before unregistering the
+RMI transport, then release supplies while the reset descriptor is valid.
+Assert reset before releasing supplies, including failed-probe cleanup.
+
+Adapt Timothy Schmidt's original panel change 5a30fcb447dd and reset
+cleanup 7297314a644f. Preserve their authorship and the panel change's
+Claude assistance attribution. Host ASan/UBSan tests exercise extracted
+callbacks with mocked I/O; no current-base hardware test is claimed.
+
+Original AI assistance used Claude:claude-opus-5-5 with checkpatch.
+Codex:GPT-6 assisted this current-tree adaptation and source-extracted
+ASan/UBSan qualification. The task was to preserve the original hardware
+description and sequencing while checking current APIs and error paths.
+---
+ drivers/input/rmi4/Kconfig   |   1 +
+ drivers/input/rmi4/rmi_i2c.c | 154 ++++++++++++++++++++++++++---------
+ 2 files changed, 116 insertions(+), 39 deletions(-)
+
+diff --git a/drivers/input/rmi4/Kconfig b/drivers/input/rmi4/Kconfig
+index 5db58fc9e11b..15f7534d6626 100644
+--- a/drivers/input/rmi4/Kconfig
++++ b/drivers/input/rmi4/Kconfig
+@@ -16,6 +16,7 @@ if RMI4_CORE
+ config RMI4_I2C
+ 	tristate "RMI4 I2C Support"
+ 	depends on I2C
++	depends on DRM || !DRM
+ 	help
+ 	  Say Y here if you want to support RMI4 devices connected to an I2C
+ 	  bus.
+diff --git a/drivers/input/rmi4/rmi_i2c.c b/drivers/input/rmi4/rmi_i2c.c
+index 30436dc5583a..21f7a82aaa0c 100644
+--- a/drivers/input/rmi4/rmi_i2c.c
++++ b/drivers/input/rmi4/rmi_i2c.c
+@@ -10,6 +10,7 @@
+ #include <linux/delay.h>
+ #include <linux/gpio/consumer.h>
+ #include <linux/regulator/consumer.h>
++#include <drm/drm_panel.h>
+ #include "rmi_driver.h"
+ 
+ #define BUFFER_SIZE_INCREMENT 32
+@@ -28,6 +29,10 @@
+  *
+  * @supplies: Array of voltage regulators
+  * @startup_delay: Milliseconds to pause after powering up the regulators
++ * @reset_gpio: Optional GPIO held asserted while the device is powered off
++ * @panel_follower: Callbacks for sequencing with an in-cell display panel
++ * @is_panel_follower: Whether system sleep defers sequencing to the panel
++ * @powered: Whether this driver holds the regulator enable references
+  */
+ struct rmi_i2c_xport {
+ 	struct rmi_transport_dev xport;
+@@ -42,6 +47,10 @@ struct rmi_i2c_xport {
+ 	struct regulator_bulk_data supplies[2];
+ 	u32 startup_delay;
+ 	struct gpio_desc *reset_gpio;
++
++	struct drm_panel_follower panel_follower;
++	bool is_panel_follower;
++	bool powered;
+ };
+ 
+ #define RMI_PAGE_SELECT_REGISTER 0xff
+@@ -189,8 +198,15 @@ static void rmi_i2c_regulator_bulk_disable(void *data)
+ {
+ 	struct rmi_i2c_xport *rmi_i2c = data;
+ 
++	if (!rmi_i2c->powered)
++		return;
++
++	if (rmi_i2c->reset_gpio)
++		gpiod_set_value_cansleep(rmi_i2c->reset_gpio, 1);
++
+ 	regulator_bulk_disable(ARRAY_SIZE(rmi_i2c->supplies),
+ 			       rmi_i2c->supplies);
++	rmi_i2c->powered = false;
+ }
+ 
+ static void rmi_i2c_unregister_transport(void *data)
+@@ -210,6 +226,74 @@ static void rmi_i2c_release_reset(struct rmi_i2c_xport *rmi_i2c)
+ 	msleep(rmi_i2c->startup_delay);
+ }
+ 
++static int rmi_i2c_power_off(struct rmi_i2c_xport *rmi_i2c, bool enable_wake)
++{
++	int ret;
++
++	if (!rmi_i2c->powered)
++		return 0;
++
++	ret = rmi_driver_suspend(rmi_i2c->xport.rmi_dev, enable_wake);
++	if (ret)
++		dev_warn(&rmi_i2c->client->dev,
++			 "Failed to suspend device: %d\n", ret);
++
++	if (rmi_i2c->reset_gpio)
++		gpiod_set_value_cansleep(rmi_i2c->reset_gpio, 1);
++
++	regulator_bulk_disable(ARRAY_SIZE(rmi_i2c->supplies),
++			       rmi_i2c->supplies);
++	rmi_i2c->powered = false;
++
++	return ret;
++}
++
++static int rmi_i2c_power_on(struct rmi_i2c_xport *rmi_i2c, bool clear_wake)
++{
++	int ret;
++
++	if (rmi_i2c->powered)
++		return 0;
++
++	ret = regulator_bulk_enable(ARRAY_SIZE(rmi_i2c->supplies),
++				    rmi_i2c->supplies);
++	if (ret)
++		return ret;
++
++	rmi_i2c->powered = true;
++	rmi_i2c_release_reset(rmi_i2c);
++
++	ret = rmi_driver_resume(rmi_i2c->xport.rmi_dev, clear_wake);
++	if (ret)
++		dev_warn(&rmi_i2c->client->dev,
++			 "Failed to resume device: %d\n", ret);
++
++	return ret;
++}
++
++static int rmi_i2c_panel_prepared(struct drm_panel_follower *follower)
++{
++	struct rmi_i2c_xport *rmi_i2c =
++		container_of(follower, struct rmi_i2c_xport, panel_follower);
++
++	return rmi_i2c_power_on(rmi_i2c, false);
++}
++
++static int rmi_i2c_panel_unpreparing(struct drm_panel_follower *follower)
++{
++	struct rmi_i2c_xport *rmi_i2c =
++		container_of(follower, struct rmi_i2c_xport, panel_follower);
++
++	rmi_i2c_power_off(rmi_i2c, false);
++
++	return 0;
++}
++
++static const struct drm_panel_follower_funcs rmi_i2c_panel_follower_funcs = {
++	.panel_prepared = rmi_i2c_panel_prepared,
++	.panel_unpreparing = rmi_i2c_panel_unpreparing,
++};
++
+ static int rmi_i2c_probe(struct i2c_client *client)
+ {
+ 	struct rmi_device_platform_data *pdata;
+@@ -255,6 +339,7 @@ static int rmi_i2c_probe(struct i2c_client *client)
+ 				       rmi_i2c->supplies);
+ 	if (error < 0)
+ 		return error;
++	rmi_i2c->powered = true;
+ 
+ 	error = devm_add_action_or_reset(&client->dev,
+ 					  rmi_i2c_regulator_bulk_disable,
+@@ -300,6 +385,20 @@ static int rmi_i2c_probe(struct i2c_client *client)
+ 	if (error)
+ 		return error;
+ 
++	/*
++	 * An in-cell touchscreen stops working while its panel is off, so
++	 * power it down before the panel and up after it.
++	 */
++	if (drm_is_panel_follower(&client->dev)) {
++		rmi_i2c->panel_follower.funcs = &rmi_i2c_panel_follower_funcs;
++		error = devm_drm_panel_add_follower(&client->dev,
++						    &rmi_i2c->panel_follower);
++		if (error)
++			return dev_err_probe(&client->dev, error,
++					     "failed to follow the panel\n");
++		rmi_i2c->is_panel_follower = true;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -307,17 +406,12 @@ static int rmi_i2c_suspend(struct device *dev)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct rmi_i2c_xport *rmi_i2c = i2c_get_clientdata(client);
+-	int ret;
+ 
+-	ret = rmi_driver_suspend(rmi_i2c->xport.rmi_dev, true);
+-	if (ret)
+-		dev_warn(dev, "Failed to suspend device: %d\n", ret);
++	/* The followed panel powers the device down and up */
++	if (rmi_i2c->is_panel_follower)
++		return 0;
+ 
+-	if (rmi_i2c->reset_gpio)
+-		gpiod_set_value_cansleep(rmi_i2c->reset_gpio, 1);
+-
+-	regulator_bulk_disable(ARRAY_SIZE(rmi_i2c->supplies),
+-			       rmi_i2c->supplies);
++	rmi_i2c_power_off(rmi_i2c, true);
+ 
+ 	/* Resume must restore power even if putting the device to sleep failed. */
+ 	return 0;
+@@ -327,37 +421,22 @@ static int rmi_i2c_resume(struct device *dev)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct rmi_i2c_xport *rmi_i2c = i2c_get_clientdata(client);
+-	int ret;
+ 
+-	ret = regulator_bulk_enable(ARRAY_SIZE(rmi_i2c->supplies),
+-				    rmi_i2c->supplies);
+-	if (ret)
+-		return ret;
+-
+-	rmi_i2c_release_reset(rmi_i2c);
++	if (rmi_i2c->is_panel_follower)
++		return 0;
+ 
+-	ret = rmi_driver_resume(rmi_i2c->xport.rmi_dev, true);
+-	if (ret)
+-		dev_warn(dev, "Failed to resume device: %d\n", ret);
+-
+-	return ret;
++	return rmi_i2c_power_on(rmi_i2c, true);
+ }
+ 
+ static int rmi_i2c_runtime_suspend(struct device *dev)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct rmi_i2c_xport *rmi_i2c = i2c_get_clientdata(client);
+-	int ret;
+ 
+-	ret = rmi_driver_suspend(rmi_i2c->xport.rmi_dev, false);
+-	if (ret)
+-		dev_warn(dev, "Failed to resume device: %d\n", ret);
++	if (rmi_i2c->is_panel_follower)
++		return 0;
+ 
+-	if (rmi_i2c->reset_gpio)
+-		gpiod_set_value_cansleep(rmi_i2c->reset_gpio, 1);
+-
+-	regulator_bulk_disable(ARRAY_SIZE(rmi_i2c->supplies),
+-			       rmi_i2c->supplies);
++	rmi_i2c_power_off(rmi_i2c, false);
+ 
+ 	return 0;
+ }
+@@ -368,17 +447,14 @@ static int rmi_i2c_runtime_resume(struct device *dev)
+ 	struct rmi_i2c_xport *rmi_i2c = i2c_get_clientdata(client);
+ 	int ret;
+ 
+-	ret = regulator_bulk_enable(ARRAY_SIZE(rmi_i2c->supplies),
+-				    rmi_i2c->supplies);
+-	if (ret)
+-		return ret;
+-
+-	rmi_i2c_release_reset(rmi_i2c);
++	if (rmi_i2c->is_panel_follower)
++		return 0;
+ 
+-	ret = rmi_driver_resume(rmi_i2c->xport.rmi_dev, false);
+-	if (ret)
+-		dev_warn(dev, "Failed to resume device: %d\n", ret);
++	ret = rmi_i2c_power_on(rmi_i2c, false);
++	if (!rmi_i2c->powered)
++		return ret;
+ 
++	/* Preserve the existing warning-only handling of function-resume errors. */
+ 	return 0;
+ }
+ 
+-- 
+2.56.0
+
