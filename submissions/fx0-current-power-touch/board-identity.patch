@@ -1,0 +1,35 @@
+From 51d9fd646b0a71a795c31c9903aec8e6e1d0610f Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 03:16:25 -0400
+Subject: [PATCH] dt-bindings: arm: qcom: Document the LG Fx0
+
+Add the LG Fx0 (Madai) to the MSM8926 compatible list. Its existing board
+description uses lg,madai followed by qcom,msm8926 and qcom,msm8226,
+matching the other MSM8926 handsets in this binding.
+
+The original local proposal by Timothy Schmidt is
+933d3593e3abf43752e0d7f858a0d9b98cb06744 ("dt-bindings: arm: qcom:
+Document LG Fx0"). Retain its author and date while carrying the same
+entry onto the current Qualcomm maintainer for-next tree.
+
+Prepared and checked with Codex:GPT-6 assistance. Human review and
+Developer Certificate of Origin sign-off remain pending.
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 7ffa4f699..95cb9bdb1 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -255,6 +255,7 @@ properties:
+       - items:
+           - enum:
+               - htc,memul
++              - lg,madai
+               - microsoft,superman-lte
+               - microsoft,tesla
+               - motorola,peregrine
+-- 
+2.56.0
+
