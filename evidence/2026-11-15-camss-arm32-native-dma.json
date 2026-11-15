@@ -1,0 +1,337 @@
+{
+  "recorded_UTC": "2026-11-15T02:24:03.602985+00:00",
+  "official_refs": {
+    "recorded_UTC": "2026-11-15T02:10:38.353397+00:00",
+    "official_repository": "https://git.linuxtv.org/media.git",
+    "official_branch": "next",
+    "verified_advertised_HEAD": "3fc9303dba01676c2090768126e5327e341b7761",
+    "verified_fixes_HEAD": "b1466305390c6368148cf456278139ef4deebe89",
+    "source_change": "Existing integration9d46 ARM_DMA_USE_IOMMU alternative",
+    "separate_VFE_bugfix_draft_unchanged": "032b7e62149cd493fef5a46a448c8c46d7b20816",
+    "fetch_method": "Exact officially advertised Git object from matching GitHub mirror; prior direct maintainer bulk pack transport was unreliable",
+    "phone_access": false,
+    "published": false
+  },
+  "source_head": "2f2e63bfa2902eb11bab4f4107a274e2ed6a8368",
+  "source_tree": "6dd0aafca2de9caa7465323f897879c9c4f3a9de",
+  "source_change_origin": "9d46e4575ea176699386bbb0dc988c6abbf26705",
+  "Kconfig_SHA256": "48a7726e2f0741917ad624b43c4564a61a9a5246674688a28aaf6dd5d693180c",
+  "seeds_SHA256": {
+    "arm": "7513ebefbacc5b636e74d19f66ead56af2035da4bdda92e2367ca7dfab66e718",
+    "arm64": "b35c15cc73aeeac4dfb6bda205a979069cd8d69c3aa113ffce8a97c72210d5b6"
+  },
+  "cases": [
+    {
+      "name": "baseline-arm",
+      "arch": "arm",
+      "observed": {
+        "ARM": "y",
+        "ARM64": "n",
+        "ARCH_QCOM": "y",
+        "ARM_DMA_USE_IOMMU": "y",
+        "IOMMU_DMA": "n",
+        "COMPILE_TEST": "n",
+        "VIDEO_QCOM_CAMSS": "n"
+      },
+      "expected": {
+        "ARM": "y",
+        "ARM64": "n",
+        "ARCH_QCOM": "y",
+        "ARM_DMA_USE_IOMMU": "y",
+        "IOMMU_DMA": "n",
+        "COMPILE_TEST": "n",
+        "VIDEO_QCOM_CAMSS": "n"
+      },
+      "config_SHA256": "fcbd6c6e54285b032be4bd9bfe2997c1f9b82677843185f6a982fd7380ffec93",
+      "passed": true
+    },
+    {
+      "name": "baseline-arm64",
+      "arch": "arm64",
+      "observed": {
+        "ARM": "n",
+        "ARM64": "y",
+        "ARCH_QCOM": "y",
+        "IOMMU_DMA": "y",
+        "COMPILE_TEST": "n",
+        "VIDEO_QCOM_CAMSS": "m"
+      },
+      "expected": {
+        "ARM": "n",
+        "ARM64": "y",
+        "ARCH_QCOM": "y",
+        "IOMMU_DMA": "y",
+        "COMPILE_TEST": "n",
+        "VIDEO_QCOM_CAMSS": "m"
+      },
+      "config_SHA256": "b35c15cc73aeeac4dfb6bda205a979069cd8d69c3aa113ffce8a97c72210d5b6",
+      "passed": true
+    },
+    {
+      "name": "candidate-arm",
+      "arch": "arm",
+      "observed": {
+        "ARM": "y",
+        "ARM64": "n",
+        "ARCH_QCOM": "y",
+        "ARM_DMA_USE_IOMMU": "y",
+        "IOMMU_DMA": "n",
+        "COMPILE_TEST": "n",
+        "VIDEO_QCOM_CAMSS": "m"
+      },
+      "expected": {
+        "ARM": "y",
+        "ARM64": "n",
+        "ARCH_QCOM": "y",
+        "ARM_DMA_USE_IOMMU": "y",
+        "IOMMU_DMA": "n",
+        "COMPILE_TEST": "n",
+        "VIDEO_QCOM_CAMSS": "m"
+      },
+      "config_SHA256": "7e784f6d14d9a0178016f136c658d09271ba97952e613863167621bf6b338580",
+      "passed": true
+    },
+    {
+      "name": "candidate-arm64",
+      "arch": "arm64",
+      "observed": {
+        "ARM": "n",
+        "ARM64": "y",
+        "ARCH_QCOM": "y",
+        "IOMMU_DMA": "y",
+        "COMPILE_TEST": "n",
+        "VIDEO_QCOM_CAMSS": "m"
+      },
+      "expected": {
+        "ARM": "n",
+        "ARM64": "y",
+        "ARCH_QCOM": "y",
+        "IOMMU_DMA": "y",
+        "COMPILE_TEST": "n",
+        "VIDEO_QCOM_CAMSS": "m"
+      },
+      "config_SHA256": "b35c15cc73aeeac4dfb6bda205a979069cd8d69c3aa113ffce8a97c72210d5b6",
+      "passed": true
+    },
+    {
+      "name": "native-without-DMA",
+      "arch": "arm",
+      "observed": {
+        "ARM": "y",
+        "ARCH_QCOM": "y",
+        "ARM_DMA_USE_IOMMU": "n",
+        "IOMMU_DMA": "n",
+        "COMPILE_TEST": "n",
+        "VIDEO_QCOM_CAMSS": "n"
+      },
+      "expected": {
+        "ARM": "y",
+        "ARCH_QCOM": "y",
+        "ARM_DMA_USE_IOMMU": "n",
+        "IOMMU_DMA": "n",
+        "COMPILE_TEST": "n",
+        "VIDEO_QCOM_CAMSS": "n"
+      },
+      "config_SHA256": "0c9208d3c7085560bcff2e1fc2ee7c71231f4f33128a51727cd0826507622e8b",
+      "passed": true
+    },
+    {
+      "name": "compile-only-without-DMA",
+      "arch": "arm",
+      "observed": {
+        "ARM": "y",
+        "ARCH_QCOM": "y",
+        "ARM_DMA_USE_IOMMU": "n",
+        "IOMMU_DMA": "n",
+        "COMPILE_TEST": "y",
+        "VIDEO_QCOM_CAMSS": "m"
+      },
+      "expected": {
+        "ARM": "y",
+        "ARCH_QCOM": "y",
+        "ARM_DMA_USE_IOMMU": "n",
+        "IOMMU_DMA": "n",
+        "COMPILE_TEST": "y",
+        "VIDEO_QCOM_CAMSS": "m"
+      },
+      "config_SHA256": "6a60f4a71e762fb3bd1daf91df25543e124a8815a57d8bd4d60beb78369b212e",
+      "passed": true
+    },
+    {
+      "name": "arm64-without-QCOM",
+      "arch": "arm64",
+      "observed": {
+        "ARM64": "y",
+        "ARCH_QCOM": "n",
+        "IOMMU_DMA": "y",
+        "COMPILE_TEST": "n",
+        "VIDEO_QCOM_CAMSS": "n"
+      },
+      "expected": {
+        "ARM64": "y",
+        "ARCH_QCOM": "n",
+        "IOMMU_DMA": "y",
+        "COMPILE_TEST": "n",
+        "VIDEO_QCOM_CAMSS": "n"
+      },
+      "config_SHA256": "8e123ac9fe79f63eb5cc77b4ac4b57d7ac0e0ba39a2c97affc1d799e93a07c9f",
+      "passed": true
+    }
+  ],
+  "builds": {
+    "arm": {
+      "returncodes": [
+        0,
+        0
+      ],
+      "config_SHA256": "7e784f6d14d9a0178016f136c658d09271ba97952e613863167621bf6b338580",
+      "objects": {
+        "camss-csid-340.o": "4b79cd15c8ab164740e7eff94eb0e84304da540510b7e06263dc14e11a0be3a3",
+        "camss-csid-4-1.o": "a0928840b35c45f5d902dabb7dcb49208efc68d9d14635a4d2b79619fd03176d",
+        "camss-csid-4-7.o": "d0e27a786e62b63ec0075045d2c36aedfc5d4fd5263a0c2825b935033ea32536",
+        "camss-csid-680.o": "bd798102ffb9a2bfeeb62a34dbad3da7c6bee6e163f7d766f35cb8f373b74f99",
+        "camss-csid-gen2.o": "6e05da4202ee787f95f41607421137c7a4c4156fe7a9acb50ce40109f6ed865e",
+        "camss-csid-gen3.o": "8abb7cf177cf91f44fd5363ef7a47970a616a105f873400a7198b44d01bbf65c",
+        "camss-csid.o": "7ca250119c31be07b2e7d52720e2006c2b3741547b5dbd12c93137cfb032d73f",
+        "camss-csiphy-2ph-1-0.o": "c8cc5797b9d622c1edb5d0efbfd83afe102779829aa629febc767504b92e4654",
+        "camss-csiphy-3ph-1-0.o": "7b8a3cb4bd74852fef2622745efa2514855ed2825958fd736acc336097057415",
+        "camss-csiphy.o": "df4698ffd0619af0950392b59e7472b64a3d3941a11a3eee82050a28ca7f1974",
+        "camss-format.o": "bceb32ae83196de59f4708270366866bb92b4b0ea3eefd924bb30bbdaa668419",
+        "camss-ispif.o": "7e885078a49b16b2efbdf81d4cc49c76e61ef5e392654039274c28f43958a964",
+        "camss-tpg-gen1.o": "d77cb24c82287440e5d7346e4c20cef1fd3b4c5f5c8d4f5065f11854f3f9cfe7",
+        "camss-tpg.o": "1251fb6f6be3a3d4417d94554abf81c99b6f151b1d3999c6d0921c3603bfc39f",
+        "camss-vfe-17x.o": "664b48ce0ec9a97e95425ce5f44bcc41b1d8e1fb72fda7a3c74bd962063a1df1",
+        "camss-vfe-340.o": "d39799698f4dc70d87fe02f0c938f781facd93670150fc0523830c498524745e",
+        "camss-vfe-4-1.o": "1994e8fe3d9f657a742acdbe94b9aa23b1874f7ff13c8d1f29bc2671a808da0f",
+        "camss-vfe-4-7.o": "1370c326ed37adf47d2249bb5e163c3eb5a31f59603908d5c10c6633331e529f",
+        "camss-vfe-4-8.o": "b23d8186470147411cb0f97ba81700537b7f0415dd75789a3ac13e64b7a9329d",
+        "camss-vfe-480.o": "ebb40f0c4edcda6bffe0556a36c78cac0c31e90d6b875c044f3d95efd5c45c2c",
+        "camss-vfe-680.o": "841e1139c720fb8fafdff0994a57f342a046eb25e0e4c2e7aa74e7ba6c122897",
+        "camss-vfe-gen1.o": "dc159ef335750126044bd231c2101e222b4d54dda9e65aabb5b4b52b7b78a3fb",
+        "camss-vfe-gen3.o": "2dcf589108d594337065fbe88469d206a3cb68a592cc4b0cd253848663b7c0eb",
+        "camss-vfe-vbif.o": "99b9ffb66123f8305279075bf913c0bc1dd13fab55089c1f8996bfbf2ba8c8aa",
+        "camss-vfe.o": "a55f9ffefb49b0cc66e138c95589f1a63647486fab0405e3214d82fb2860b560",
+        "camss-video.o": "0e0dd86a778310a2af04aa3a78c47aa78956abb597b379e0932e77005207d2b1",
+        "camss.o": "416451f74e0eeff5c5f336ee7e54556c5c0f2545a26105f6a6d9a3c18c5c41bf",
+        "qcom-camss.o": "2322c0a92b147fe67c638a1aa92875c1e112e9816a350be2fcaa24f432237e57"
+      },
+      "warning_error_lines": 0,
+      "COMPILE_TEST": false,
+      "private_signing_key_generated": false,
+      "LLVM": "-21",
+      "W": 1,
+      "KCFLAGS": "-Werror=incompatible-function-pointer-types",
+      "jobs": 4
+    },
+    "arm64": {
+      "returncodes": [
+        0,
+        0
+      ],
+      "config_SHA256": "b35c15cc73aeeac4dfb6bda205a979069cd8d69c3aa113ffce8a97c72210d5b6",
+      "objects": {
+        "camss-csid-340.o": "37bb33505bfb70124e7814f40d02220164affa2a1018f53da17ed8b3ee6c7652",
+        "camss-csid-4-1.o": "5172e6f4fd7c74fca2063eb9bbde6115356493374922b5a1aa6357b8c25edc8e",
+        "camss-csid-4-7.o": "0c189a6cc27151dd0c10498d6ada4f97eb1035f7e97bf545c30c65f6c8a97fd5",
+        "camss-csid-680.o": "550150089cefab724438f761b7527351f83b07b560e97643994b5a46de968f81",
+        "camss-csid-gen2.o": "e3194294ab0a33d2d795c46dbf6053aa823876f2b6959d040c65a81b661c2659",
+        "camss-csid-gen3.o": "4f7c0336697c3d0ad6553267ccfd9aca392cb235eda762c274c0805b4e26d5f2",
+        "camss-csid.o": "0c05171e4128eaeffb2be09cadcd4b1f36becd57d8cda7dadacd3387335f1cbd",
+        "camss-csiphy-2ph-1-0.o": "2e4a47d639163dafedd14f4833e0f5f7b3253ba4d26ce1661f75a34686913daa",
+        "camss-csiphy-3ph-1-0.o": "5db0ad3c563bf6046ba3e51d56e71d1d5de7679eb23665447e422a5fc45170c8",
+        "camss-csiphy.o": "945ddab48d1b7eed0dd6856b3ea0c8430c5b8d06749a08f917399c0882b61e68",
+        "camss-format.o": "6aae3466b08bf0e03bc39552ead965201614a10d8c5f4ace71e7a32907239706",
+        "camss-ispif.o": "4672b959d45972e677cb9de0568513fc17f9c38d74b34d22a584c8405f42ee4e",
+        "camss-tpg-gen1.o": "152566d376ca0340a7bad4b46732c36ae32a38da65fb6dd67a9c85b2546e63eb",
+        "camss-tpg.o": "526b84e6a5dfd6761aa5dd3cc4fd5232bfeb5ce77cb2dcea80c0ef0c5005362c",
+        "camss-vfe-17x.o": "9691d62c945e3266cbcd54e0cb26fa26039779bc450b5feda50c0f84939a4c8a",
+        "camss-vfe-340.o": "55bee3c7421c213a8f03ebd1fe9dfa0cc1147bfa89008f87e08b31c300c9b69c",
+        "camss-vfe-4-1.o": "6961365e635a8de7a76ce84796343095955ad0236d975c534b20dd29d970f06d",
+        "camss-vfe-4-7.o": "89c3b9d68d1caaf9bfa96dd66ddd285fb23b6ab9933f145ffdfdd1a464d763c2",
+        "camss-vfe-4-8.o": "36f9982819e187edaaa8a8622cbdfb0e64e270a2ff9f433c1f8664b2fbcf8368",
+        "camss-vfe-480.o": "6b633cc59df2eef0bb37357ffd379858556c6d8b89b66d753152374f81cc5ec3",
+        "camss-vfe-680.o": "2a1eadeeadf519f346d450b4aee15b682a9f592d1c1461397db74bf8ce99606c",
+        "camss-vfe-gen1.o": "6d8e12ddd1a1a2f72ec364576844d683334e7f0a918704710dd06b792a8d6487",
+        "camss-vfe-gen3.o": "81c19a0590a63a61c71b78895fa1b72bb013ac09ed5cee64583cee9c3d8cec5d",
+        "camss-vfe-vbif.o": "3f3699d22895d02257273cd3fc8a5643fb31eaa09d987e10ed455dc041585770",
+        "camss-vfe.o": "8fea3fd1d696419680e7ccf36363bce7858963da2b0fcaea9f703e1ab3bc1bc2",
+        "camss-video.o": "b49c47c593ca09dd7b726bcf9b589581c98eadbdf94d5d146ae1e0cfd8207829",
+        "camss.o": "60370c4ed8705b86b8637884ed81beb67339a8b2b251061a3a23f34a3e9eae1c",
+        "qcom-camss.o": "fe45cc68805cd2a281d5a089464918174b9285041386467cb9d77db5f21363ff"
+      },
+      "warning_error_lines": 0,
+      "COMPILE_TEST": false,
+      "private_signing_key_generated": false,
+      "LLVM": "-21",
+      "W": 1,
+      "KCFLAGS": "-Werror=incompatible-function-pointer-types",
+      "jobs": 4
+    }
+  },
+  "configuration_deltas": {
+    "arm": {
+      "CONFIG_VIDEOBUF2_CORE": {
+        "baseline": "n",
+        "candidate": "m"
+      },
+      "CONFIG_VIDEOBUF2_DMA_SG": {
+        "baseline": "n",
+        "candidate": "m"
+      },
+      "CONFIG_VIDEOBUF2_MEMOPS": {
+        "baseline": "n",
+        "candidate": "m"
+      },
+      "CONFIG_VIDEOBUF2_V4L2": {
+        "baseline": "n",
+        "candidate": "m"
+      },
+      "CONFIG_VIDEO_QCOM_CAMSS": {
+        "baseline": "n",
+        "candidate": "m"
+      }
+    },
+    "arm64": {}
+  },
+  "checks": {
+    "source_head": "2f2e63bfa2902eb11bab4f4107a274e2ed6a8368",
+    "source_tree": "6dd0aafca2de9caa7465323f897879c9c4f3a9de",
+    "checks": [
+      {
+        "name": "style",
+        "returncode": 0,
+        "output_SHA256": "f2bd93a10be4ea6c2acc883d61c0ade8cbd1ffa7b225fb70ba1dc11db0c59547"
+      },
+      {
+        "name": "submission",
+        "returncode": 1,
+        "output_SHA256": "6505a609535898fdbcecd5fef89986792c516ad51c693b63f04825015ca4ba47"
+      },
+      {
+        "name": "maintainers",
+        "returncode": 0,
+        "output_SHA256": "27db544cb74a9f09ddf40c0b988c68a5a40536cde3e0209a6ed9e25117c0d246"
+      },
+      {
+        "name": "separate-VFE-fix-apply",
+        "returncode": 0,
+        "output_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "initial_two_attribution_trailer_attempts_preserved": true,
+    "compiled_tree_identical_to_final_tree": true
+  },
+  "phone_access": false,
+  "hardware_qualified": false,
+  "full_kernel_or_package_built": false,
+  "VFE_bugfix_included": false,
+  "MSM8226_resources_included": false,
+  "published": false,
+  "maintainer_contact": false,
+  "human_DCO_certification_pending": true,
+  "patch_SHA256": "37c42d38c00a986b33e896901bbce0ee80bbbde154f1ff68559c0cc07199c394",
+  "toolchain": {
+    "clang-21": "clang version 21.1.8 (Fedora 21.1.8-6.fc43)",
+    "ld.lld-21": "LLD 21.1.8 (compatible with GNU linkers)"
+  }
+}

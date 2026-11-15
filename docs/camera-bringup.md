@@ -219,6 +219,16 @@ clocks are not a blocker. Three pieces remain:
    MSM8226 at all outside compile tests. `3a68ec4c8322` accepts either. Whether
    CAMSS's DMA works through the ARM IOMMU mapping is checked by the
    test-pattern run.
+
+   Current-base review (2026-11-15): the existing dependency change has an
+   [unsigned media-next refresh](../submissions/camss-arm32-native-dma/README.md)
+   at source `2f2e63bfa2902eb11bab4f4107a274e2ed6a8368`, based on officially
+   observed media `next` `3fc9303dba01676c2090768126e5327e341b7761`. Seven full
+   Kconfig cases and complete ARM/ARM64 CAMSS component builds pass, with native
+   `COMPILE_TEST` disabled and zero build warnings. This qualifies selection
+   and compilation only. MSM8226 resources, board changes and physical acceptance
+   on this base remain open. The saved-completion VFE fix stays on its separate
+   media-fixes branch; no phone changes or maintainer contact were made.
 3. **VFE 4.0 against the 4.1 operations.** The vendor driver has
    MSM8226-specific VFE versions and VBIF setup. Audit reset, interrupts,
    write masters, RDI and bus/QoS before reusing `vfe_ops_4_1`.
