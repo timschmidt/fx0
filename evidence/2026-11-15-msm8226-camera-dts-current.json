@@ -1,0 +1,692 @@
+{
+  "recorded_UTC": "2026-11-15T04:01:59.866922+00:00",
+  "source_branch": "development/msm8226-camera-dts-current-01",
+  "source_head": "92faf0cd70bcf96a71cd554e64a87670a0b70a9f",
+  "source_tree": "76488a59287c24ee68a4f8242d9f7164b2933e2c",
+  "source_base": "ae2005cea2e4f84692268e54199bb03f5c6f4558",
+  "official_ref": "arm32-for-7.5",
+  "validation_head": "1ac12dcd0ecd3a21c655fd61ac12cbf1953d4848",
+  "validation_tree": "9a194ebd6b98162f787d9a11b4d45e05fc8042f1",
+  "schema_only_imports": true,
+  "common_DTS_identical_in_source_and_validation": true,
+  "source_refresh": {
+    "base": "ae2005cea2e4f84692268e54199bb03f5c6f4558",
+    "commits": [
+      {
+        "original": "4245f34dee3c0277cda50242b3da4ce4d0bc8d12",
+        "refreshed": "62b844e0f29455515f4fafd0803914f08af06128",
+        "node_SHA256": "f5e738cacb6e985246ae3fbdbad6dd0da727e1b31c7abae0b6201b6e93ca0244",
+        "node_identical": true,
+        "signed_off_by_added": false
+      },
+      {
+        "original": "4968a6ce07881ff8bb4447c4661dee5b09bbf2e3",
+        "refreshed": "92faf0cd70bcf96a71cd554e64a87670a0b70a9f",
+        "node_SHA256": "ef706c50631c2cf87a5ba6dca1837a7e3f0e103f0b4975a72ba3c7bc096310a4",
+        "node_identical": true,
+        "signed_off_by_added": false
+      }
+    ],
+    "DTS_SHA256": "edab044fd9895bc6cf16bc70c00f1d62288a2932589528cbb8a41cf12f148d4d",
+    "scope": "Common disabled nodes only; enabled board and combined runtime not qualified"
+  },
+  "build": {
+    "started_UTC": "2026-11-15T03:55:21.027659+00:00",
+    "stages": [
+      {
+        "name": "baseline-checkout",
+        "command": [
+          "git",
+          "switch",
+          "--detach",
+          "ae2005cea2e4f84692268e54199bb03f5c6f4558"
+        ],
+        "returncode": 0,
+        "log_SHA256": "289b52e2264f455188d52bc9dc712e2c8d22fa38387605308d3875ae6793e655"
+      },
+      {
+        "name": "baseline-config",
+        "command": [
+          "make",
+          "O=local/msm8226-dts-current-01/baseline-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "-j2",
+          "olddefconfig"
+        ],
+        "returncode": 0,
+        "log_SHA256": "4d266907b431b0ddcb3ee87b161747880c8b0a0e514c90639b777c9bd74db2fb"
+      },
+      {
+        "name": "baseline-DTBs",
+        "command": [
+          "make",
+          "O=local/msm8226-dts-current-01/baseline-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "-j2",
+          "qcom/msm8226-motorola-falcon.dtb",
+          "qcom/msm8226-motorola-titan.dtb",
+          "qcom/msm8926-sony-xperia-yukon-eagle.dtb",
+          "qcom/qcom-apq8026-asus-sparrow.dtb",
+          "qcom/qcom-apq8026-huawei-sturgeon.dtb",
+          "qcom/qcom-apq8026-lg-lenok.dtb",
+          "qcom/qcom-apq8026-samsung-matisse-wifi.dtb",
+          "qcom/qcom-apq8026-samsung-milletwifi.dtb",
+          "qcom/qcom-msm8226-microsoft-dempsey.dtb",
+          "qcom/qcom-msm8226-microsoft-makepeace.dtb",
+          "qcom/qcom-msm8226-microsoft-moneypenny.dtb",
+          "qcom/qcom-msm8226-samsung-ms013g.dtb",
+          "qcom/qcom-msm8226-samsung-s3ve3g.dtb",
+          "qcom/qcom-msm8926-htc-memul.dtb",
+          "qcom/qcom-msm8926-microsoft-superman-lte.dtb",
+          "qcom/qcom-msm8926-microsoft-tesla.dtb",
+          "qcom/qcom-msm8926-motorola-peregrine.dtb",
+          "qcom/qcom-msm8926-samsung-matisselte.dtb"
+        ],
+        "returncode": 0,
+        "log_SHA256": "8fa1c70db780e252834eb6f2aa1d137a214dc1622e8eccd650b65a0ced54bd82"
+      },
+      {
+        "name": "candidate-checkout",
+        "command": [
+          "git",
+          "switch",
+          "-c",
+          "validation/msm8226-camera-dts-current-01",
+          "92faf0cd70bcf96a71cd554e64a87670a0b70a9f"
+        ],
+        "returncode": 0,
+        "log_SHA256": "7cc5df1a1d9b713ca4e96316a04b8e1145bb7487a6643289e3031620332300ee"
+      },
+      {
+        "name": "validation-stage",
+        "command": [
+          "git",
+          "add",
+          "--",
+          "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml",
+          "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml"
+        ],
+        "returncode": 0,
+        "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "validation-diff-check",
+        "command": [
+          "git",
+          "diff",
+          "--cached",
+          "--check"
+        ],
+        "returncode": 0,
+        "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "validation-commit",
+        "command": [
+          "git",
+          "commit",
+          "-F",
+          "local/msm8226-dts-current-01/validation-commit-message.txt"
+        ],
+        "returncode": 0,
+        "log_SHA256": "d7a96a6fcaf65942f6646da0bcde48dce85db6329fd9210bfa220dfef1c04957"
+      },
+      {
+        "name": "candidate-config",
+        "command": [
+          "make",
+          "O=local/msm8226-dts-current-01/candidate-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "-j2",
+          "olddefconfig"
+        ],
+        "returncode": 0,
+        "log_SHA256": "8f07268fbf1431446828780fd085afa93f204d089431def44def0f827c516b60"
+      },
+      {
+        "name": "candidate-bindings",
+        "command": [
+          "make",
+          "O=local/msm8226-dts-current-01/candidate-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "-j2",
+          "CHECK_DTBS=1",
+          "DT_SCHEMA_FILES=media/qcom,msm8226-camss.yaml:iommu/qcom,iommu.yaml",
+          "dt_binding_check"
+        ],
+        "returncode": 0,
+        "log_SHA256": "3f41f6dce1de1f7890afeea329fbe751c080b177a0c9c91a62fdf00f83283d65"
+      },
+      {
+        "name": "candidate-DTBs",
+        "command": [
+          "make",
+          "O=local/msm8226-dts-current-01/candidate-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "-j2",
+          "CHECK_DTBS=1",
+          "DT_SCHEMA_FILES=media/qcom,msm8226-camss.yaml:iommu/qcom,iommu.yaml",
+          "qcom/msm8226-motorola-falcon.dtb",
+          "qcom/msm8226-motorola-titan.dtb",
+          "qcom/msm8926-sony-xperia-yukon-eagle.dtb",
+          "qcom/qcom-apq8026-asus-sparrow.dtb",
+          "qcom/qcom-apq8026-huawei-sturgeon.dtb",
+          "qcom/qcom-apq8026-lg-lenok.dtb",
+          "qcom/qcom-apq8026-samsung-matisse-wifi.dtb",
+          "qcom/qcom-apq8026-samsung-milletwifi.dtb",
+          "qcom/qcom-msm8226-microsoft-dempsey.dtb",
+          "qcom/qcom-msm8226-microsoft-makepeace.dtb",
+          "qcom/qcom-msm8226-microsoft-moneypenny.dtb",
+          "qcom/qcom-msm8226-samsung-ms013g.dtb",
+          "qcom/qcom-msm8226-samsung-s3ve3g.dtb",
+          "qcom/qcom-msm8926-htc-memul.dtb",
+          "qcom/qcom-msm8926-microsoft-superman-lte.dtb",
+          "qcom/qcom-msm8926-microsoft-tesla.dtb",
+          "qcom/qcom-msm8926-motorola-peregrine.dtb",
+          "qcom/qcom-msm8926-samsung-matisselte.dtb"
+        ],
+        "returncode": 0,
+        "log_SHA256": "6ca0b33cd26d139786fe372d81ebbf41e192f42919ba98bf462eb4a54b1e22ba"
+      }
+    ],
+    "phone_access": false,
+    "runtime_driver_dependencies_imported": false,
+    "state": "terminal success",
+    "baseline": {
+      "head": "ae2005cea2e4f84692268e54199bb03f5c6f4558",
+      "config_SHA256": "36c68b90e96f42a4eeaaa5bd902e67793fd68e5321e215a08e4742cc2c065aa4",
+      "DTBs": {
+        "qcom/msm8226-motorola-falcon.dtb": "e0da36517770eba1d806f7e43abfe496f7491078b9a4f5dc231eb97ed5684d65",
+        "qcom/msm8226-motorola-titan.dtb": "74dca84762b43610263ac4e0b2706bc491887f3ec0d629ec527cc470c1643275",
+        "qcom/msm8926-sony-xperia-yukon-eagle.dtb": "1c0d681471f6701390182cfd402c8bb208b14b84c9b4b7b3ebd74fc4b7055795",
+        "qcom/qcom-apq8026-asus-sparrow.dtb": "e7a72c2f450c7c3108c02315818298887386ffe90aabc51e9249ed6bfcc0de82",
+        "qcom/qcom-apq8026-huawei-sturgeon.dtb": "3ca86ec94ae954587a5d4695afe68adffcda3ca52703393c0e1689b05351b613",
+        "qcom/qcom-apq8026-lg-lenok.dtb": "2bb909eb9dfa6137f416734b6190bef330821e4cda1038e2f1fce79ee45dabb5",
+        "qcom/qcom-apq8026-samsung-matisse-wifi.dtb": "cc7652040c5fbb5e5ce0780868b2bbd95f24230fd0e2ca4f06baf9ca72016759",
+        "qcom/qcom-apq8026-samsung-milletwifi.dtb": "6914ed5a710208e598093c2cc860cbddc315221b7a5de6662e89b2bef124f6b8",
+        "qcom/qcom-msm8226-microsoft-dempsey.dtb": "142852c668440be80183db3dc34dc8d3b7709da85d91a0fbe7c11228cc4da846",
+        "qcom/qcom-msm8226-microsoft-makepeace.dtb": "81eac72ae452d853c83fc14d80dd5b6228cff6a2205080c0fa203c37fe54c533",
+        "qcom/qcom-msm8226-microsoft-moneypenny.dtb": "8c047c3b475b237c05524739531fce50d79996f183a77feb77512cc990e1f7fd",
+        "qcom/qcom-msm8226-samsung-ms013g.dtb": "55e05a1ea9b60e95c56d46a58ec68a575decb8ca80f270a0580e9b965ecd4be2",
+        "qcom/qcom-msm8226-samsung-s3ve3g.dtb": "ec942fb507e579209dde502aa19e955d4383732f953114a3265ec67b8db2c667",
+        "qcom/qcom-msm8926-htc-memul.dtb": "7b6436ae52dd1c33b57dc5f9f59133c65d8f1f824be776e0ab77108f9ca81024",
+        "qcom/qcom-msm8926-microsoft-superman-lte.dtb": "4356f70a9fa85c169d1d21bf17213452fbc070e8aa9fbd59613e1de7bf9d7fbd",
+        "qcom/qcom-msm8926-microsoft-tesla.dtb": "9e0fa5bda3cef21725e8d4da7cd1622e27480f3eedf08259b49448d255a77e46",
+        "qcom/qcom-msm8926-motorola-peregrine.dtb": "ed97b728add9173de82f0525df51e20aa8baf3b9b0a1e2b67e81be607e1ed003",
+        "qcom/qcom-msm8926-samsung-matisselte.dtb": "267f0fd96ef5c299ad91898ba570305397b4ec7ff97f2b16c910fc1becf2cb75"
+      }
+    },
+    "schema_imports": [
+      {
+        "source_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+        "path": "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml",
+        "SHA256": "ca4eb31b957da834eaf9ccab3f993df1db34ebd186b0795d63f91460681d3f63"
+      },
+      {
+        "source_head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+        "path": "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml",
+        "SHA256": "0888da8dda271d056495c3e5c41bbbfd097b2170c8272fe6b9b5a24696a192bf"
+      }
+    ],
+    "validation_head": "1ac12dcd0ecd3a21c655fd61ac12cbf1953d4848",
+    "candidate": {
+      "head": "1ac12dcd0ecd3a21c655fd61ac12cbf1953d4848",
+      "config_SHA256": "36c68b90e96f42a4eeaaa5bd902e67793fd68e5321e215a08e4742cc2c065aa4",
+      "DTBs": {
+        "qcom/msm8226-motorola-falcon.dtb": "4b43412b1c9dacc3c7e24b43840b4d0ba55bd6452c9a9851383fcbc7728e1414",
+        "qcom/msm8226-motorola-titan.dtb": "bde92fcf64a8f04316670b0ef2a11ac31c6c3b2375cf9cb04defc80350017fa3",
+        "qcom/msm8926-sony-xperia-yukon-eagle.dtb": "e14b33b79259e63af641358a1f310170db27a89e4e0ad4bdbfa5617f873492ad",
+        "qcom/qcom-apq8026-asus-sparrow.dtb": "fd616deef1d7a5dde5f37f2a1403a55fb2d77b05c74a0c106b4ec00702f194ab",
+        "qcom/qcom-apq8026-huawei-sturgeon.dtb": "c343d2d5a6e3b4e657c8d76dbea0649103ef4c442f9ac80e88ef7b3fd7452d23",
+        "qcom/qcom-apq8026-lg-lenok.dtb": "58b9022f58a5660391e8fbfd13829200404025de03bb2102139504daca4fe877",
+        "qcom/qcom-apq8026-samsung-matisse-wifi.dtb": "b0b4f90a9d3f810e42eab4f59211eb6bcc6284798490e115d61e3dd8fd00c870",
+        "qcom/qcom-apq8026-samsung-milletwifi.dtb": "e4cc39ff25406c623be160a4f55e055ca15b7a0eb95293353000f1193ec1df33",
+        "qcom/qcom-msm8226-microsoft-dempsey.dtb": "fc79982aa53e06c4138b3e498c8d1544b0805d6720bb2e47cfbc0d32440354fc",
+        "qcom/qcom-msm8226-microsoft-makepeace.dtb": "eef5f993dff37968714279abeadea7c2b5cc3c43e47128395fefd9ccb0297b03",
+        "qcom/qcom-msm8226-microsoft-moneypenny.dtb": "f2c4838d0ffc826fe985eb400dd294c469325e6f529e0dc64ed9275af48d1988",
+        "qcom/qcom-msm8226-samsung-ms013g.dtb": "2d563c5286081b01406e99c2cf2b4e526bb72ae394d8fcc14c92acba288de085",
+        "qcom/qcom-msm8226-samsung-s3ve3g.dtb": "0065ac46f9071119498d5ee2baaf34eace4a625d85dc0e1163aa19a92ec0096b",
+        "qcom/qcom-msm8926-htc-memul.dtb": "fc2a87c8e2b5dcb5a6811f8e6d4fe2cfa1d482ffbdc34132cca3553b5084cd0b",
+        "qcom/qcom-msm8926-microsoft-superman-lte.dtb": "9286f89e65e71c4349c14e5e17de5c990ec3756cabdc82c5478e9c86590b845f",
+        "qcom/qcom-msm8926-microsoft-tesla.dtb": "fc033260b302cbb5cc51bf583f7e0c1e4c8ef3c5b555a0f5696ff99c10443dec",
+        "qcom/qcom-msm8926-motorola-peregrine.dtb": "467718895751fea85e031a1251184625e431a93b89d1aab4d796c208dd02d069",
+        "qcom/qcom-msm8926-samsung-matisselte.dtb": "8aefec8e2e9609285581bf5e84405b608712f88d09330dc648dc4c65469688d0"
+      }
+    },
+    "passed": true,
+    "returncode": 0,
+    "finished_UTC": "2026-11-15T03:56:36.879511+00:00"
+  },
+  "checks": {
+    "passed": true,
+    "board_count": 18,
+    "comparisons": [
+      {
+        "board": "qcom/msm8226-motorola-falcon.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 275,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "4b43412b1c9dacc3c7e24b43840b4d0ba55bd6452c9a9851383fcbc7728e1414"
+      },
+      {
+        "board": "qcom/msm8226-motorola-titan.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 268,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "bde92fcf64a8f04316670b0ef2a11ac31c6c3b2375cf9cb04defc80350017fa3"
+      },
+      {
+        "board": "qcom/msm8926-sony-xperia-yukon-eagle.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 272,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "e14b33b79259e63af641358a1f310170db27a89e4e0ad4bdbfa5617f873492ad"
+      },
+      {
+        "board": "qcom/qcom-apq8026-asus-sparrow.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 265,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "fd616deef1d7a5dde5f37f2a1403a55fb2d77b05c74a0c106b4ec00702f194ab"
+      },
+      {
+        "board": "qcom/qcom-apq8026-huawei-sturgeon.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 273,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "c343d2d5a6e3b4e657c8d76dbea0649103ef4c442f9ac80e88ef7b3fd7452d23"
+      },
+      {
+        "board": "qcom/qcom-apq8026-lg-lenok.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 274,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "58b9022f58a5660391e8fbfd13829200404025de03bb2102139504daca4fe877"
+      },
+      {
+        "board": "qcom/qcom-apq8026-samsung-matisse-wifi.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 286,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "b0b4f90a9d3f810e42eab4f59211eb6bcc6284798490e115d61e3dd8fd00c870"
+      },
+      {
+        "board": "qcom/qcom-apq8026-samsung-milletwifi.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 289,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "e4cc39ff25406c623be160a4f55e055ca15b7a0eb95293353000f1193ec1df33"
+      },
+      {
+        "board": "qcom/qcom-msm8226-microsoft-dempsey.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 264,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "fc79982aa53e06c4138b3e498c8d1544b0805d6720bb2e47cfbc0d32440354fc"
+      },
+      {
+        "board": "qcom/qcom-msm8226-microsoft-makepeace.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 264,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "eef5f993dff37968714279abeadea7c2b5cc3c43e47128395fefd9ccb0297b03"
+      },
+      {
+        "board": "qcom/qcom-msm8226-microsoft-moneypenny.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 263,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "f2c4838d0ffc826fe985eb400dd294c469325e6f529e0dc64ed9275af48d1988"
+      },
+      {
+        "board": "qcom/qcom-msm8226-samsung-ms013g.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 274,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "2d563c5286081b01406e99c2cf2b4e526bb72ae394d8fcc14c92acba288de085"
+      },
+      {
+        "board": "qcom/qcom-msm8226-samsung-s3ve3g.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 197,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "0065ac46f9071119498d5ee2baaf34eace4a625d85dc0e1163aa19a92ec0096b"
+      },
+      {
+        "board": "qcom/qcom-msm8926-htc-memul.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 274,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "fc2a87c8e2b5dcb5a6811f8e6d4fe2cfa1d482ffbdc34132cca3553b5084cd0b"
+      },
+      {
+        "board": "qcom/qcom-msm8926-microsoft-superman-lte.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 264,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "9286f89e65e71c4349c14e5e17de5c990ec3756cabdc82c5478e9c86590b845f"
+      },
+      {
+        "board": "qcom/qcom-msm8926-microsoft-tesla.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 265,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "fc033260b302cbb5cc51bf583f7e0c1e4c8ef3c5b555a0f5696ff99c10443dec"
+      },
+      {
+        "board": "qcom/qcom-msm8926-motorola-peregrine.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 272,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "467718895751fea85e031a1251184625e431a93b89d1aab4d796c208dd02d069"
+      },
+      {
+        "board": "qcom/qcom-msm8926-samsung-matisselte.dtb",
+        "existing_nodes_unchanged_after_schema_typed_phandle_resolution": 284,
+        "added_nodes": [
+          "/soc/camss@fda0ac00",
+          "/soc/camss@fda0ac00/ports",
+          "/soc/iommu@fda44000",
+          "/soc/iommu@fda44000/iommu-ctx@0",
+          "/soc/iommu@fda44000/iommu-ctx@1000",
+          "/soc/iommu@fda44000/iommu-ctx@2000"
+        ],
+        "candidate_SHA256": "8aefec8e2e9609285581bf5e84405b608712f88d09330dc648dc4c65469688d0"
+      }
+    ],
+    "ordinary_kernel_bindings_and_DTB_checks_passed": true,
+    "direct_targeted_schema_diagnostics_empty": true,
+    "existing_DTC_warning_count": 56,
+    "new_DTC_warnings": 0,
+    "rejection_controls": [
+      {
+        "name": "invalid-CAMSS-clock-name",
+        "returncode": 0,
+        "diagnostics": "local/msm8226-dts-current-01/actual-board-schema-controls-01/invalid-CAMSS-clock-name.dtb: camss@fda0ac00 (qcom,msm8226-camss): clock-names:0: 'top_ahb' was expected\n\tfrom schema $id: http://devicetree.org/schemas/media/qcom,msm8226-camss.yaml\nlocal/msm8226-dts-current-01/actual-board-schema-controls-01/invalid-CAMSS-clock-name.dtb: camss@fda0ac00 (qcom,msm8226-camss): clock-names: ['unrelated'] is too short\n\tfrom schema $id: http://devicetree.org/schemas/media/qcom,msm8226-camss.yaml\n"
+      },
+      {
+        "name": "invalid-VFE-clock-name",
+        "returncode": 0,
+        "diagnostics": "local/msm8226-dts-current-01/actual-board-schema-controls-01/invalid-VFE-clock-name.dtb: iommu@fda44000 (qcom,msm8226-vfe-iommu): clock-names:0: 'iface' was expected\n\tfrom schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml\nlocal/msm8226-dts-current-01/actual-board-schema-controls-01/invalid-VFE-clock-name.dtb: iommu@fda44000 (qcom,msm8226-vfe-iommu): clock-names: ['unrelated'] is too short\n\tfrom schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml\n"
+      },
+      {
+        "name": "invalid-VFE-context-compatible",
+        "returncode": 0,
+        "diagnostics": "local/msm8226-dts-current-01/actual-board-schema-controls-01/invalid-VFE-context-compatible.dtb: iommu@fda44000 (qcom,msm8226-vfe-iommu): iommu-ctx@0:compatible:0: 'qcom,unrelated-context' is not one of ['qcom,msm-iommu-v1-ns', 'qcom,msm-iommu-v1-sec', 'qcom,msm-iommu-v2-ns', 'qcom,msm-iommu-v2-sec']\n\tfrom schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml\n"
+      },
+      {
+        "name": "enabled-CAMSS-missing-board-supply",
+        "returncode": 0,
+        "diagnostics": "local/msm8226-dts-current-01/actual-board-schema-controls-01/enabled-CAMSS-missing-board-supply.dtb: camss@fda0ac00 (qcom,msm8226-camss): 'vdda-supply' is a required property\n\tfrom schema $id: http://devicetree.org/schemas/media/qcom,msm8226-camss.yaml\n"
+      },
+      {
+        "name": "invalid-CAMSS-register-count",
+        "returncode": 0,
+        "diagnostics": "local/msm8226-dts-current-01/actual-board-schema-controls-01/invalid-CAMSS-register-count.dtb: camss@fda0ac00 (qcom,msm8226-camss): reg: [[4255165440, 512]] is too short\n\tfrom schema $id: http://devicetree.org/schemas/media/qcom,msm8226-camss.yaml\n"
+      },
+      {
+        "name": "invalid-IOMMU-cell-count",
+        "returncode": 0,
+        "diagnostics": "local/msm8226-dts-current-01/actual-board-schema-controls-01/invalid-IOMMU-cell-count.dtb: iommu@fda44000 (qcom,msm8226-vfe-iommu): #iommu-cells: 1 was expected\n\tfrom schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml\n"
+      }
+    ],
+    "board_specific_supply_requirement_preserved": true,
+    "common_nodes_disabled": true,
+    "enabled_Fx0_board_qualified": false,
+    "runtime_or_hardware_qualified": false,
+    "phone_access": false
+  },
+  "portable_source_export": {
+    "command": [
+      "local/power-managed-port-01/schema-venv/bin/python",
+      "local/msm8226-dts-current-01/portable-diagnostic-export-01/check-DTBs.py",
+      "--inventory",
+      "local/msm8226-dts-current-01/portable-diagnostic-export-01/affected-boards.json",
+      "--baseline-build",
+      "local/msm8226-dts-current-01/baseline-out",
+      "--candidate-build",
+      "local/msm8226-dts-current-01/candidate-out",
+      "--baseline-log",
+      "local/msm8226-dts-current-01/baseline-DTBs.log",
+      "--candidate-log",
+      "local/msm8226-dts-current-01/candidate-DTBs.log",
+      "--binding-log",
+      "local/msm8226-dts-current-01/candidate-bindings.log",
+      "--output",
+      "local/msm8226-dts-current-01/portable-diagnostic-run-01"
+    ],
+    "returncode": 0,
+    "source_SHA256": "79c540f2e86019eceb9b34eca13faedd8a3cbb8f0c257e2e900294d15ec2df6b",
+    "export_identical": true
+  },
+  "style_without_dependencies": [
+    {
+      "head": "62b844e0f29455515f4fafd0803914f08af06128",
+      "checks": {
+        "strict": {
+          "returncode": 1,
+          "output": "WARNING: DT compatible string \"qcom,msm8226-vfe-iommu\" appears un-documented -- check ./Documentation/devicetree/bindings/\n#29: FILE: arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1313:\n+\t\t\tcompatible = \"qcom,msm8226-vfe-iommu\";\n\ntotal: 0 errors, 1 warnings, 0 checks, 44 lines checked\n\nNOTE: For some of the reported defects, checkpatch may be able to\n      mechanically convert to the typical style using --fix or --fix-inplace.\n\nlocal/msm8226-dts-current-01/0001.patch has style problems, please review.\n\nNOTE: If any of the errors are false positives, please report\n      them to the maintainer, see CHECKPATCH in MAINTAINERS.\n"
+        },
+        "full": {
+          "returncode": 1,
+          "output": "WARNING: DT compatible string \"qcom,msm8226-vfe-iommu\" appears un-documented -- check ./Documentation/devicetree/bindings/\n#29: FILE: arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1313:\n+\t\t\tcompatible = \"qcom,msm8226-vfe-iommu\";\n\nERROR: Missing Signed-off-by: line(s)\n\ntotal: 1 errors, 1 warnings, 0 checks, 44 lines checked\n\nNOTE: For some of the reported defects, checkpatch may be able to\n      mechanically convert to the typical style using --fix or --fix-inplace.\n\nlocal/msm8226-dts-current-01/0001.patch has style problems, please review.\n\nNOTE: If any of the errors are false positives, please report\n      them to the maintainer, see CHECKPATCH in MAINTAINERS.\n"
+        }
+      },
+      "maintainer_lookup_returncode": 0
+    },
+    {
+      "head": "92faf0cd70bcf96a71cd554e64a87670a0b70a9f",
+      "checks": {
+        "strict": {
+          "returncode": 1,
+          "output": "WARNING: DT compatible string \"qcom,msm8226-camss\" appears un-documented -- check ./Documentation/devicetree/bindings/\n#30: FILE: arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1286:\n+\t\t\tcompatible = \"qcom,msm8226-camss\";\n\ntotal: 0 errors, 1 warnings, 0 checks, 88 lines checked\n\nNOTE: For some of the reported defects, checkpatch may be able to\n      mechanically convert to the typical style using --fix or --fix-inplace.\n\nlocal/msm8226-dts-current-01/0002.patch has style problems, please review.\n\nNOTE: If any of the errors are false positives, please report\n      them to the maintainer, see CHECKPATCH in MAINTAINERS.\n"
+        },
+        "full": {
+          "returncode": 1,
+          "output": "WARNING: DT compatible string \"qcom,msm8226-camss\" appears un-documented -- check ./Documentation/devicetree/bindings/\n#30: FILE: arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1286:\n+\t\t\tcompatible = \"qcom,msm8226-camss\";\n\nERROR: Missing Signed-off-by: line(s)\n\ntotal: 1 errors, 1 warnings, 0 checks, 88 lines checked\n\nNOTE: For some of the reported defects, checkpatch may be able to\n      mechanically convert to the typical style using --fix or --fix-inplace.\n\nlocal/msm8226-dts-current-01/0002.patch has style problems, please review.\n\nNOTE: If any of the errors are false positives, please report\n      them to the maintainer, see CHECKPATCH in MAINTAINERS.\n"
+        }
+      },
+      "maintainer_lookup_returncode": 0
+    }
+  ],
+  "style_with_dependencies": [
+    {
+      "patch": "0001.patch",
+      "returncode": 0,
+      "output": "total: 0 errors, 0 warnings, 0 checks, 44 lines checked\n\nlocal/msm8226-dts-current-01/0001.patch has no obvious style problems and is ready for submission.\n"
+    },
+    {
+      "patch": "0002.patch",
+      "returncode": 0,
+      "output": "total: 0 errors, 0 warnings, 0 checks, 88 lines checked\n\nlocal/msm8226-dts-current-01/0002.patch has no obvious style problems and is ready for submission.\n"
+    }
+  ],
+  "full_submission_with_dependencies": [
+    {
+      "patch": "0001.patch",
+      "returncode": 1,
+      "output": "ERROR: Missing Signed-off-by: line(s)\n\ntotal: 1 errors, 0 warnings, 0 checks, 44 lines checked\n\nNOTE: For some of the reported defects, checkpatch may be able to\n      mechanically convert to the typical style using --fix or --fix-inplace.\n\nlocal/msm8226-dts-current-01/0001.patch has style problems, please review.\n\nNOTE: If any of the errors are false positives, please report\n      them to the maintainer, see CHECKPATCH in MAINTAINERS.\n"
+    },
+    {
+      "patch": "0002.patch",
+      "returncode": 1,
+      "output": "ERROR: Missing Signed-off-by: line(s)\n\ntotal: 1 errors, 0 warnings, 0 checks, 88 lines checked\n\nNOTE: For some of the reported defects, checkpatch may be able to\n      mechanically convert to the typical style using --fix or --fix-inplace.\n\nlocal/msm8226-dts-current-01/0002.patch has style problems, please review.\n\nNOTE: If any of the errors are false positives, please report\n      them to the maintainer, see CHECKPATCH in MAINTAINERS.\n"
+    }
+  ],
+  "Fx0_board": {
+    "source_SHA256": "36b2a733ba62b94371e018f20f3b318bd57732a3469c1db0a85428f196ca4c0a",
+    "unresolved_labels_after_common_nodes": [
+      "apr",
+      "gpu_iommu",
+      "mdp_iommu",
+      "pm8226_flash",
+      "pm8226_pon",
+      "pronto",
+      "q6afedai",
+      "q6asmdai",
+      "q6routing",
+      "slim_msm",
+      "slimbam"
+    ],
+    "current_include_probe": {
+      "board_unchanged": true,
+      "board_SHA256": "36b2a733ba62b94371e018f20f3b318bd57732a3469c1db0a85428f196ca4c0a",
+      "preprocess_returncode": 0,
+      "DTC_returncode": 1,
+      "expected_current_base_failure": true,
+      "current_common_include_path_verified": true,
+      "commands": [
+        [
+          "clang-21",
+          "-E",
+          "-nostdinc",
+          "-undef",
+          "-D__DTS__",
+          "-x",
+          "assembler-with-cpp",
+          "-Iworktrees/linux-msm8226-dts-validation-01/arch/arm/boot/dts/qcom",
+          "-Iworktrees/linux-msm8226-dts-validation-01/include",
+          "-Iworktrees/linux-msm8226-dts-validation-01/scripts/dtc/include-prefixes",
+          "local/msm8226-dts-current-01/Fx0-current-dependency-probe-02/qcom-msm8926-lg-madai.dts"
+        ],
+        [
+          "local/msm8226-dts-current-01/baseline-out/scripts/dtc/dtc",
+          "-I",
+          "dts",
+          "-O",
+          "dtb",
+          "-o",
+          "local/msm8226-dts-current-01/Fx0-current-dependency-probe-02/unqualified.dtb",
+          "local/msm8226-dts-current-01/Fx0-current-dependency-probe-02/complete-board.preprocessed.dts"
+        ]
+      ],
+      "diagnostics": "Error: local/msm8226-dts-current-01/Fx0-current-dependency-probe-02/qcom-msm8926-lg-madai.dts:251.1-8 Label or path pronto not found\nError: local/msm8226-dts-current-01/Fx0-current-dependency-probe-02/qcom-msm8926-lg-madai.dts:519.1-11 Label or path gpu_iommu not found\nError: local/msm8226-dts-current-01/Fx0-current-dependency-probe-02/qcom-msm8926-lg-madai.dts:523.1-11 Label or path mdp_iommu not found\nError: local/msm8226-dts-current-01/Fx0-current-dependency-probe-02/qcom-msm8926-lg-madai.dts:535.1-12 Label or path pm8226_pon not found\nError: local/msm8226-dts-current-01/Fx0-current-dependency-probe-02/qcom-msm8926-lg-madai.dts:580.1-14 Label or path pm8226_flash not found\nError: local/msm8226-dts-current-01/Fx0-current-dependency-probe-02/qcom-msm8926-lg-madai.dts:671.1-5 Label or path apr not found\nError: local/msm8226-dts-current-01/Fx0-current-dependency-probe-02/qcom-msm8926-lg-madai.dts:675.1-9 Label or path slimbam not found\nError: local/msm8226-dts-current-01/Fx0-current-dependency-probe-02/qcom-msm8926-lg-madai.dts:679.1-10 Label or path slim_msm not found\nFATAL ERROR: Syntax error parsing input tree\n",
+      "DTB_qualified": false
+    },
+    "original_include_probe_excluded": true,
+    "board_not_trimmed": true,
+    "DTB_qualified": false
+  },
+  "diagnostic_SHA256": "79c540f2e86019eceb9b34eca13faedd8a3cbb8f0c257e2e900294d15ec2df6b",
+  "all_jobs_terminal": true,
+  "published": false,
+  "human_DCO_pending": true,
+  "agent_added_Signed_off_by": false,
+  "phone_access": false,
+  "maintainer_contact": false,
+  "full_current_kernel_package_qualified": false,
+  "hardware_qualified": false,
+  "prior_r7_artifacts_and_trials_unchanged": true
+}

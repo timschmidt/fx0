@@ -259,6 +259,18 @@ clocks are not a blocker. Three pieces remain:
    CCF rounding fixture forwards the AXI request, with omission/error controls.
    These are local unsigned host qualifications. DTS, combined-image testing
    and physical acceptance remain open; the phone was not accessed.
+
+   The [current Qualcomm common camera DTS draft](../submissions/msm8226-camera-dts-current/README.md)
+   refreshes the disabled VFE IOMMU and CAMSS nodes at `92faf0cd70bc` on
+   `arm32-for-7.5` base `ae2005cea2e4`. All 18 actual upstream boards inheriting
+   the common description build and pass the targeted schemas with exact
+   qualified binding dependencies. Existing nodes compare unchanged after
+   resolving phandle references; the 56 upstream DTC warnings are unchanged.
+   Six malformed actual-board controls produce the expected diagnostics,
+   including an enabled CAMSS node without its board supply. The complete Fx0
+   board still fails on missing prerequisites, which are inventoried with their
+   original authors. Enabled Fx0, combined-image and physical acceptance remain
+   open. This source and review are local and unsigned; no phone access occurred.
 3. **VFE 4.0 against the 4.1 operations.** The vendor driver has
    MSM8226-specific VFE versions and VBIF setup. Audit reset, interrupts,
    write masters, RDI and bus/QoS before reusing `vfe_ops_4_1`.
