@@ -1,5 +1,5 @@
 {
-  "recorded_UTC": "2026-11-15T19:55:34.889619+00:00",
+  "recorded_UTC": "2026-11-15T20:14:58.692508+00:00",
   "component_heads": {
     "power_supply": "684f134cd498562f740c4df981343d87f4efb9f2",
     "USB": "b9f78a3ea07212ef27b36af01ac4d248aec69396",
@@ -126,7 +126,7 @@
       "passed": true
     }
   ],
-  "native_objects": 37,
+  "native_objects": 39,
   "sensor_policy_cases": 39,
   "sensor_policy_broken_controls_rejected": 3,
   "sanitizers": [
@@ -136,12 +136,37 @@
   "compiled_DTBs": 19,
   "unmodified_complete_Fx0_DTB_SHA256": "c9cba4a019eb80eb5baddd366cefc9ec2f2bb89616d3d47a6ee99dc55498db65",
   "component_policy_model_lifecycle_and_USB_suites_reused_by_exact_source_hash": true,
-  "combined_USB_worker_to_power_supply_actuator_host_chain_executed": false,
+  "combined_USB_worker_to_power_supply_actuator_host_chain_executed": true,
   "full_kernel_link_package_or_physical_qualification": false,
   "human_DCO_and_proposed_policy_maintainer_entry_review_pending": true,
   "phone_access_by_this_qualification": false,
   "maintainer_contact": false,
   "published": false,
   "audio_descriptions_retained": true,
-  "audio_execution_tests": false
+  "audio_execution_tests": false,
+  "previous_review_head": "6ccacb01e745dba0165e0c2182140c28b6a9e0e2",
+  "actual_power_supply_class_dispatch_executed_with_simulated_primitives": true,
+  "USB_provider_chain_cases": 131,
+  "USB_provider_chain_broken_controls_rejected": 3,
+  "additional_native_core_profiles": [
+    {
+      "source_head": "38b038c9742e288153e1dea553c0317233a80206",
+      "source_tree": "6e0ba1a3abbca093ab45e0c50010cb3e1eb23fd2",
+      "config_SHA256": "804869ae0644d8c5ce98ba891733a850255b30042bf6dda4a992e1ca66101b09",
+      "objects": {
+        "drivers/power/supply/power_supply_core.o": "097a235c57e9dad87347b08422742e69866d89eb6bcec631dd8055bc7632726e"
+      },
+      "passed": true
+    },
+    {
+      "source_head": "38b038c9742e288153e1dea553c0317233a80206",
+      "source_tree": "6e0ba1a3abbca093ab45e0c50010cb3e1eb23fd2",
+      "config_SHA256": "1cdec236962e699d17da1ed1c74727a18f0164acde01255e864a95cc9f76b9c3",
+      "objects": {
+        "drivers/power/supply/power_supply_core.o": "e07c50e3f88e6cfbcc3204e624709f255611a4d9dbdda53c9bdc9f0ee2bf655e"
+      },
+      "passed": true
+    }
+  ],
+  "native_kernel_link_or_physical_hardware_qualified": false
 }

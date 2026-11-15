@@ -1,0 +1,49 @@
+{
+  "started_UTC": "2026-11-15T20:14:23.182216+00:00",
+  "variants": [
+    {
+      "name": "candidate",
+      "returncode": 0,
+      "expected_result_verified": true,
+      "provider_C_SHA256": "d499367a928c429035c3e2f4d507a21d1d3bf0c1626b77d53d5bd67a3567c224",
+      "consumer_C_SHA256": "71bfaf2aae0fd8dc50873b0a9895f757d692a1237c424809893323e1f2bd7995"
+    },
+    {
+      "name": "wrong-budget-units",
+      "returncode": 1,
+      "expected_result_verified": true,
+      "provider_C_SHA256": "d499367a928c429035c3e2f4d507a21d1d3bf0c1626b77d53d5bd67a3567c224",
+      "consumer_C_SHA256": "1ce3b86a649266a840f104b084e964e497d8bc163ab6efa389c058e82d7a6213"
+    },
+    {
+      "name": "missing-core-removal-check",
+      "returncode": 1,
+      "expected_result_verified": true,
+      "provider_C_SHA256": "b0f4c4b53d59bb54ec5f5d564a13b0239b83c01a0d600c88a4c8793560c0afd6",
+      "consumer_C_SHA256": "71bfaf2aae0fd8dc50873b0a9895f757d692a1237c424809893323e1f2bd7995"
+    },
+    {
+      "name": "missing-suspend-readback",
+      "returncode": 1,
+      "expected_result_verified": true,
+      "provider_C_SHA256": "1c8071e5256d775fa85feec84d12ae0423f635983bb52d82eca44a0a00b1646e",
+      "consumer_C_SHA256": "71bfaf2aae0fd8dc50873b0a9895f757d692a1237c424809893323e1f2bd7995"
+    }
+  ],
+  "actual_ChipIdea_power_supply_class_and_SMBB_callbacks_linked": true,
+  "actual_power_supply_registration_driver_core_USB_workqueue_or_hardware_executed": false,
+  "source_SHA256": {
+    "drivers/usb/chipidea/udc.c": "c0c5d659ab803febd552d6e938117a0caec38763cb8e90262144d33e64c96d3c",
+    "drivers/power/supply/qcom_smbb.c": "27b8da14ae1b035731c35829a5809bc6bbd5797967413a95b7c95d25e2913741",
+    "drivers/power/supply/power_supply_core.c": "ffbe5cd60b084554e9bb555daca4abbfac3f3c8f4e0bee17de9afa85aa562297"
+  },
+  "checker_SHA256": "d6a89a5df5d93ccd5252fbcf4879f1d228857d4a72acc8ec99009f96b14453f6",
+  "support_SHA256": {
+    "chipidea-usb-budget-harness.c": "f6bca3df3da76bb2947384045fb333b3d4c5c4dab5f262a7074b88bba5dfc673",
+    "smbb-usb-input-harness.c": "bcc1f3f856b0b8d7ef8bdfa0bc3b1a5bbd65d1c0ad30a009b903c2ea8b79cf65"
+  },
+  "phone_access": false,
+  "cases": 131,
+  "passed": true,
+  "finished_UTC": "2026-11-15T20:14:26.006483+00:00"
+}

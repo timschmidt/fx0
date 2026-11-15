@@ -23,7 +23,7 @@ contains the validation-only schema/complete-board patch. The integration
 driver files match the independently qualified component versions byte for
 byte. `qualification.json` pins all original and applied commits.
 
-Two native Qualcomm profiles compiled 37 component objects with W=1 and
+Two native Qualcomm profiles compiled 39 component objects with W=1 and
 COMPILE_TEST disabled. This was component compilation, without a full kernel
 link, module postprocessing, package build or physical trial. All 19 ordinary
 platform DTBs match the prior APR results byte for byte. The full Fx0 board,
@@ -40,8 +40,16 @@ recovery and preserved inhibition votes. Three compiled broken variants must
 fail. The synthetic bus and kernel primitives are frozen in chain-support.json;
 ADC results, calibration references, work queues and PMIC registers are mocked.
 It does not execute actual registration, driver core, USB transactions or
-physical hardware. A combined actual USB-worker-to-provider host test remains
-to be added. Separate component callback tests do not establish that chain.
+physical hardware. The connected USB fixture adds 131 checks through the real ChipIdea budget
+callbacks, power-supply class dispatch and SMBB actuator in two linked C
+translation units. It reuses the 59 original consumer checks and adds current
+rounding, status completion, bus faults, absent-pack fallback and removal/use-
+count guards. Three separately compiled broken variants fail on their intended
+contracts. Synchronisation primitives, empty extension lists, reference counts,
+firmware lookup and the PMIC bus remain simulated. The full driver core and
+real USB transactions are not executed. The absent-pack zero-budget case keeps
+100 mA and reports ENODEV. Persistent bus failure can leave the prior selector;
+the test verifies the error report without claiming physical inhibition.
 
 Run the portable fixture without Git or a kernel build directory:
 
@@ -49,7 +57,13 @@ Run the portable fixture without Git or a kernel build directory:
 python3 -B check-sensor-policy-chain.py source --output /tmp/fx0-sensor-chain --negative-controls
 ```
 
-Use a fresh output path, Python 3, Clang and working ASan/UBSan runtimes.
+Run the connected USB fixture from the same source-only export:
+
+```sh
+python3 -B check-USB-provider-chain.py source --output /tmp/fx0-USB-chain --negative-controls
+```
+
+Use fresh output paths, Python 3, Clang and working ASan/UBSan runtimes.
 No network or phone is accessed. The exported source headers and driver bodies
 retain their original licenses and copyrights; GPL-2.0 text is included.
 Checksums cover every exported file in files.json.
