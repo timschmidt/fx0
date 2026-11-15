@@ -1,0 +1,47 @@
+{
+  "recorded_UTC": "2026-11-15T01:18:33.476092+00:00",
+  "package_SHA256": "5b53d7b7b21605f248b33d9ae457b0cf31424563cf2d85ffd1b1c050f805dd28",
+  "archive_entries": 725,
+  "all_numeric_owners_root": true,
+  "all_numeric_groups_root": true,
+  "all_directories_mode0755": true,
+  "exact_existing_recipe_executable_files": [
+    "boot/vmlinuz",
+    "usr/share/kernel/postmarketos-qcom-msm8226/kernel.release"
+  ],
+  "all_other_files_mode0644": true,
+  "no_links_or_special_files": true,
+  "all_PAX_headers_known_and_validated": true,
+  "per_file_SHA1_checks_verified_in_each_archive": 545,
+  "all_archive_mtimes_match_each_exact_recipe_epoch": true,
+  "complete_membership_ownership_modes_and_PAX_structure_match_pair_and_retained_r6": true,
+  "PAX_content_checksums_compared_to_actual_file_bytes_before_normalizing_for_cross_version_comparison": true,
+  "manifest_SHA256": "6e3e2c7857d414fd02dce8777d2a37b3d0879f7e59c69c6411f3eb3d75c3f020",
+  "negative_controls": [
+    "non-root uid rejected",
+    "non-root gid rejected",
+    "incorrect mode rejected"
+  ],
+  "retained_diagnostics": [
+    {
+      "build": "01",
+      "diagnostic_lines": [
+        {
+          "line": 7577,
+          "text": "libfakeroot internal error: payload not recognized!"
+        }
+      ]
+    },
+    {
+      "build": "02",
+      "diagnostic_lines": []
+    }
+  ],
+  "compiler_diagnostic_lines": 0,
+  "source_code_observation": "Pinned fakeroot1.37.2 communicate.c prints this text when no magic is found, including an interrupted msgrcv path which retries on EINTR. Original cause is not observed directly.",
+  "original_diagnostic_cause_proven": false,
+  "artifact_metadata_is_valid_despite_retained_diagnostic": true,
+  "native_toolchain_modified": false,
+  "phone_access": false,
+  "passed": true
+}

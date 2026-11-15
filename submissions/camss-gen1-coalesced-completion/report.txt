@@ -1,0 +1,63 @@
+TEMPORARY ROUTING NOTES: check the recipient list and email-client setup
+against Documentation/process/email-clients.rst. Remove this temporary
+section before any human submission. No message has been sent.
+
+Patch recipients from this exact maintainer base:
+"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Loic Poulain <loic.poulain@oss.qualcomm.com>
+Mauro Carvalho Chehab <mchehab@kernel.org>
+linux-media@vger.kernel.org
+linux-arm-msm@vger.kernel.org
+linux-kernel@vger.kernel.org
+
+The detailed report and host reproducer can be reviewed with the specific
+CAMSS maintainers first. Human review and DCO certification remain pending.
+
+CAMSS gen1 saved-completion ordering
+
+Affected current source: media fixes b1466305390c6368148cf456278139ef4deebe89
+(Linux 7.4-rc1). The same affected production functions were checked on
+mainline 23c62304dde29abe92013d85910d03a77dada35d and the stable 6.18.63
+integration parent f71b29239d140872c4970d8381f5d297a604c6da.
+
+An IRQ can save both REG_UPDATE and WM_DONE. The gen1 REG_UPDATE callback
+acknowledges a STOPPING output, returns its deferred final buffer, and can
+restart capture with pending buffers. The later WM_DONE dispatch still
+uses the old saved status, producing "Missing ready buf" when empty or
+consuming a fresh pending buffer. Native MSM8926 callback tracing observed
+the REG_UPDATE/final-buffer/WM order in one IRQ. No trust-boundary crossing
+or exploit has been demonstrated; this is an observed functional camera
+queue-ordering defect, with that classification left for human review.
+
+Triggering conditions: a gen1 output drains into STOPPING while the same
+saved interrupt status includes its register-update and old completion.
+Queued buffers can arrive during stopping or after the callback unlocks.
+The saved completion must not be applied to those replacement buffers.
+
+Reproducer status: the retained source-function harness extracts production
+types, queue operations, state transitions and each 4.1/4.7/4.8 dispatcher.
+On this exact maintainer source, all 84 ASan/UBSan executions and 15 baseline
+or unsafe-alternative controls pass. It uses fake MMIO and locking, so it
+does not validate real DMA or SMP behavior. The current maintainer ARM
+COMPILE_TEST CAMSS component compiles warning-free under W=1 with fatal
+incompatible callback types; static KCFI provider/caller consistency passes.
+A separate ARM64 CAMSS component builds warning-free with W=1 and KCFI
+using the native IOMMU_DMA path with COMPILE_TEST disabled. Both provider
+type words match the new ARM32 ISR type. This is build/API coverage.
+The patched hardware kernel has not been booted. The current CAMSS Kconfig
+requires IOMMU_DMA on native ARCH_QCOM, which excludes this ARM32 setup;
+COMPILE_TEST compile coverage does not resolve that separate gap.
+
+The proposed fix captures old WM indices under the output lock, then
+consumes only their saved WM/PIX completion bits. It preserves the required
+idle acknowledgment before final-buffer return and keeps unrelated/later
+completions and diagnostics active. The 17x callback returns zero under the
+extended ISR callback API. The initial VFE addition 4c98a5f57f90 already
+contains the same saved-status ordering and STOPPING restart behavior;
+that is static Fixes provenance, not a version-by-version hardware bisect.
+
+Codex (OpenAI) assisted in trace analysis, code/test drafting, compilation,
+CFI checks and changelog preparation. No maintainer contact, public source
+publication or phone change has occurred. A human must review and certify
+the DCO before this unsigned draft can be submitted.

@@ -1,0 +1,177 @@
+{
+  "scope": "Static LLVM22 A32 guard encoding; not runtime CFI or hardware qualification",
+  "type_word": "0xe8f4cf55",
+  "objects": [
+    {
+      "object": "camss-vfe-4-1.o",
+      "SHA256": "7d0ef599fdb1fd6b468b45fbdd56f99e558e5350fefd1ec523acbcc5e3f5432f",
+      "guards": [
+        {
+          "type_word": 3908357973,
+          "function_file_offset": 100,
+          "type_load_file_offset": 472,
+          "xor_instruction_file_offsets": [
+            476,
+            480,
+            484,
+            488
+          ],
+          "branch_file_offset": 492,
+          "trap_file_offset": 496,
+          "call_file_offset": 500,
+          "call_target_register": 2
+        }
+      ]
+    },
+    {
+      "object": "camss-vfe-4-7.o",
+      "SHA256": "029d25bcd395eff5789352b9f89b22e8b16525e1cb496f9cddacc45c7a728499",
+      "guards": [
+        {
+          "type_word": 3908357973,
+          "function_file_offset": 124,
+          "type_load_file_offset": 512,
+          "xor_instruction_file_offsets": [
+            516,
+            520,
+            524,
+            528
+          ],
+          "branch_file_offset": 532,
+          "trap_file_offset": 536,
+          "call_file_offset": 540,
+          "call_target_register": 2
+        }
+      ]
+    },
+    {
+      "object": "camss-vfe-4-8.o",
+      "SHA256": "5552a3e5d197c576663d0090955b4f49fb90e9a549abbf102ad71746a5c3cd56",
+      "guards": [
+        {
+          "type_word": 3908357973,
+          "function_file_offset": 124,
+          "type_load_file_offset": 512,
+          "xor_instruction_file_offsets": [
+            516,
+            520,
+            524,
+            528
+          ],
+          "branch_file_offset": 532,
+          "trap_file_offset": 536,
+          "call_file_offset": 540,
+          "call_target_register": 2
+        }
+      ]
+    },
+    {
+      "object": "camss-vfe-17x.o",
+      "SHA256": "72e6b77cc6e9f95b7534d1e8c796943f68e200de1c70f5e6e2667e0381986646",
+      "guards": [
+        {
+          "type_word": 3908357973,
+          "function_file_offset": 124,
+          "type_load_file_offset": 460,
+          "xor_instruction_file_offsets": [
+            464,
+            468,
+            472,
+            476
+          ],
+          "branch_file_offset": 480,
+          "trap_file_offset": 484,
+          "call_file_offset": 488,
+          "call_target_register": 2
+        }
+      ]
+    }
+  ],
+  "negative_controls": [
+    {
+      "object": "camss-vfe-4-1.o",
+      "rejected": "altered XOR immediate"
+    },
+    {
+      "object": "camss-vfe-4-1.o",
+      "rejected": "NE instead of EQ skip"
+    },
+    {
+      "object": "camss-vfe-4-1.o",
+      "rejected": "missing UDF trap"
+    },
+    {
+      "object": "camss-vfe-4-1.o",
+      "rejected": "different BLX target"
+    },
+    {
+      "object": "camss-vfe-4-7.o",
+      "rejected": "altered XOR immediate"
+    },
+    {
+      "object": "camss-vfe-4-7.o",
+      "rejected": "NE instead of EQ skip"
+    },
+    {
+      "object": "camss-vfe-4-7.o",
+      "rejected": "missing UDF trap"
+    },
+    {
+      "object": "camss-vfe-4-7.o",
+      "rejected": "different BLX target"
+    },
+    {
+      "object": "camss-vfe-4-8.o",
+      "rejected": "altered XOR immediate"
+    },
+    {
+      "object": "camss-vfe-4-8.o",
+      "rejected": "NE instead of EQ skip"
+    },
+    {
+      "object": "camss-vfe-4-8.o",
+      "rejected": "missing UDF trap"
+    },
+    {
+      "object": "camss-vfe-4-8.o",
+      "rejected": "different BLX target"
+    },
+    {
+      "object": "camss-vfe-17x.o",
+      "rejected": "altered XOR immediate"
+    },
+    {
+      "object": "camss-vfe-17x.o",
+      "rejected": "NE instead of EQ skip"
+    },
+    {
+      "object": "camss-vfe-17x.o",
+      "rejected": "missing UDF trap"
+    },
+    {
+      "object": "camss-vfe-17x.o",
+      "rejected": "different BLX target"
+    },
+    {
+      "object": "camss-vfe-4-1.o",
+      "rejected": "real old void-return caller"
+    },
+    {
+      "object": "camss-vfe-4-7.o",
+      "rejected": "real old void-return caller"
+    },
+    {
+      "object": "camss-vfe-4-8.o",
+      "rejected": "real old void-return caller"
+    },
+    {
+      "object": "camss-vfe-17x.o",
+      "rejected": "real old void-return caller"
+    }
+  ],
+  "negative_control_count": 20,
+  "passed": true,
+  "helper_SHA256": "88020545bfec8b67d780e3651b363612c2ad18ed006657810af3635ad3172027",
+  "entry_SHA256": "02ad0f6802d5bb5db01aa6a6db6c77700314ba7a34adb25e4d847fe67bd64465",
+  "full_package_stage": "The separate corrected camera stage verifies all four guards also survive the complete unstripped and signed/stripped module; this public entry checks its supplied objects only."
+}

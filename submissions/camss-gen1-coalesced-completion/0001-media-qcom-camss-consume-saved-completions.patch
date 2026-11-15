@@ -1,0 +1,275 @@
+From 032b7e62149cd493fef5a46a448c8c46d7b20816 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 14 Nov 2026 20:22:28 -0500
+Subject: [PATCH] media: qcom: camss: consume saved completions after gen1 idle
+ ack
+
+A gen1 IRQ can snapshot both REG_UPDATE and WM_DONE. When REG_UPDATE
+acknowledges a STOPPING output, it returns the deferred final buffer and
+can install fresh pending buffers. Dispatching WM_DONE from the same
+saved status then reports "Missing ready buf" on the idle output or
+consumes a newly installed buffer using a completion from the old stream.
+
+Keep the idle acknowledgment before returning the final buffer. Capture
+the old WM indices under output_lock and return that mask from the ISR
+reg_update callback. Consume only those WM completions and the matching
+PIX composite completion from this saved IRQ status in the 4.1, 4.7 and
+4.8 dispatchers. Keep unrelated and later completions active. Update the
+17x callback to return zero without changing its acknowledgment behavior.
+
+Native MSM8926 tracing established the callback order before this fix.
+An extracted production-function model passes 84 sanitizer executions
+and fifteen baseline/unsafe-alternative controls on this media base.
+The complete ARM CAMSS component builds with W=1 and KCFI under
+COMPILE_TEST. This does not establish a patched hardware boot or native
+ARM32 support under the current IOMMU_DMA Kconfig dependency.
+
+Codex (OpenAI) assisted with native trace analysis, fix and regression
+drafting, build/CFI checks and this description during Fx0 bringup.
+
+Fixes: 4c98a5f57f90 ("media: camss: Add VFE files")
+---
+ .../media/platform/qcom/camss/camss-vfe-17x.c  |  4 +++-
+ .../media/platform/qcom/camss/camss-vfe-4-1.c  | 17 +++++++++++++----
+ .../media/platform/qcom/camss/camss-vfe-4-7.c  | 17 +++++++++++++----
+ .../media/platform/qcom/camss/camss-vfe-4-8.c  | 17 +++++++++++++----
+ .../media/platform/qcom/camss/camss-vfe-gen1.c | 18 ++++++++++++++++--
+ drivers/media/platform/qcom/camss/camss-vfe.h  |  3 ++-
+ 6 files changed, 60 insertions(+), 16 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-17x.c b/drivers/media/platform/qcom/camss/camss-vfe-17x.c
+index 62c240535..cd36a106f 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-17x.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-17x.c
+@@ -442,7 +442,7 @@ static void vfe_isr_sof(struct vfe_device *vfe, enum vfe_line_id line_id)
+  * @vfe: VFE Device
+  * @line_id: VFE line
+  */
+-static void vfe_isr_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
++static u32 vfe_isr_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
+ {
+ 	struct vfe_output *output;
+ 	unsigned long flags;
+@@ -458,6 +458,8 @@ static void vfe_isr_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
+ 	}
+ 
+ 	spin_unlock_irqrestore(&vfe->output_lock, flags);
++
++	return 0;
+ }
+ 
+ /*
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+index 9cf1ccdb2..91e2054ab 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+@@ -893,6 +893,8 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ {
+ 	struct vfe_device *vfe = dev;
+ 	u32 value0, value1;
++	u32 stale_wm = 0;
++	bool stale_pix = false;
+ 	int i, j;
+ 
+ 	vfe->res->hw_ops->isr_read(vfe, &value0, &value1);
+@@ -910,8 +912,13 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 		vfe->isr_ops.halt_ack(vfe);
+ 
+ 	for (i = VFE_LINE_RDI0; i <= VFE_LINE_PIX; i++)
+-		if (value0 & VFE_0_IRQ_STATUS_0_line_n_REG_UPDATE(i))
+-			vfe->isr_ops.reg_update(vfe, i);
++		if (value0 & VFE_0_IRQ_STATUS_0_line_n_REG_UPDATE(i)) {
++			u32 stale = vfe->isr_ops.reg_update(vfe, i);
++
++			stale_wm |= stale;
++			if (i == VFE_LINE_PIX && stale)
++				stale_pix = true;
++		}
+ 
+ 	if (value0 & VFE_0_IRQ_STATUS_0_CAMIF_SOF)
+ 		vfe->isr_ops.sof(vfe, VFE_LINE_PIX);
+@@ -922,14 +929,16 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 
+ 	for (i = 0; i < MSM_VFE_COMPOSITE_IRQ_NUM; i++)
+ 		if (value0 & VFE_0_IRQ_STATUS_0_IMAGE_COMPOSITE_DONE_n(i)) {
+-			vfe->isr_ops.comp_done(vfe, i);
++			if (!stale_pix)
++				vfe->isr_ops.comp_done(vfe, i);
+ 			for (j = 0; j < ARRAY_SIZE(vfe->wm_output_map); j++)
+ 				if (vfe->wm_output_map[j] == VFE_LINE_PIX)
+ 					value0 &= ~VFE_0_IRQ_MASK_0_IMAGE_MASTER_n_PING_PONG(j);
+ 		}
+ 
+ 	for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++)
+-		if (value0 & VFE_0_IRQ_STATUS_0_IMAGE_MASTER_n_PING_PONG(i))
++		if ((value0 & VFE_0_IRQ_STATUS_0_IMAGE_MASTER_n_PING_PONG(i)) &&
++		    !(stale_wm & BIT(i)))
+ 			vfe->isr_ops.wm_done(vfe, i);
+ 
+ 	return IRQ_HANDLED;
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+index 76729607d..b55a7dd98 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+@@ -1037,6 +1037,8 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ {
+ 	struct vfe_device *vfe = dev;
+ 	u32 value0, value1;
++	u32 stale_wm = 0;
++	bool stale_pix = false;
+ 	int i, j;
+ 
+ 	vfe->res->hw_ops->isr_read(vfe, &value0, &value1);
+@@ -1054,8 +1056,13 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 		vfe->isr_ops.halt_ack(vfe);
+ 
+ 	for (i = VFE_LINE_RDI0; i < vfe->res->line_num; i++)
+-		if (value0 & VFE_0_IRQ_STATUS_0_line_n_REG_UPDATE(i))
+-			vfe->isr_ops.reg_update(vfe, i);
++		if (value0 & VFE_0_IRQ_STATUS_0_line_n_REG_UPDATE(i)) {
++			u32 stale = vfe->isr_ops.reg_update(vfe, i);
++
++			stale_wm |= stale;
++			if (i == VFE_LINE_PIX && stale)
++				stale_pix = true;
++		}
+ 
+ 	if (value0 & VFE_0_IRQ_STATUS_0_CAMIF_SOF)
+ 		vfe->isr_ops.sof(vfe, VFE_LINE_PIX);
+@@ -1066,14 +1073,16 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 
+ 	for (i = 0; i < MSM_VFE_COMPOSITE_IRQ_NUM; i++)
+ 		if (value0 & VFE_0_IRQ_STATUS_0_IMAGE_COMPOSITE_DONE_n(i)) {
+-			vfe->isr_ops.comp_done(vfe, i);
++			if (!stale_pix)
++				vfe->isr_ops.comp_done(vfe, i);
+ 			for (j = 0; j < ARRAY_SIZE(vfe->wm_output_map); j++)
+ 				if (vfe->wm_output_map[j] == VFE_LINE_PIX)
+ 					value0 &= ~VFE_0_IRQ_MASK_0_IMAGE_MASTER_n_PING_PONG(j);
+ 		}
+ 
+ 	for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++)
+-		if (value0 & VFE_0_IRQ_STATUS_0_IMAGE_MASTER_n_PING_PONG(i))
++		if ((value0 & VFE_0_IRQ_STATUS_0_IMAGE_MASTER_n_PING_PONG(i)) &&
++		    !(stale_wm & BIT(i)))
+ 			vfe->isr_ops.wm_done(vfe, i);
+ 
+ 	return IRQ_HANDLED;
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+index b2f7d855d..7b93d7c2f 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+@@ -967,6 +967,8 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ {
+ 	struct vfe_device *vfe = dev;
+ 	u32 value0, value1;
++	u32 stale_wm = 0;
++	bool stale_pix = false;
+ 	int i, j;
+ 
+ 	vfe->res->hw_ops->isr_read(vfe, &value0, &value1);
+@@ -984,8 +986,13 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 		vfe->isr_ops.halt_ack(vfe);
+ 
+ 	for (i = VFE_LINE_RDI0; i < vfe->res->line_num; i++)
+-		if (value0 & VFE_0_IRQ_STATUS_0_line_n_REG_UPDATE(i))
+-			vfe->isr_ops.reg_update(vfe, i);
++		if (value0 & VFE_0_IRQ_STATUS_0_line_n_REG_UPDATE(i)) {
++			u32 stale = vfe->isr_ops.reg_update(vfe, i);
++
++			stale_wm |= stale;
++			if (i == VFE_LINE_PIX && stale)
++				stale_pix = true;
++		}
+ 
+ 	if (value0 & VFE_0_IRQ_STATUS_0_CAMIF_SOF)
+ 		vfe->isr_ops.sof(vfe, VFE_LINE_PIX);
+@@ -996,14 +1003,16 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 
+ 	for (i = 0; i < MSM_VFE_COMPOSITE_IRQ_NUM; i++)
+ 		if (value0 & VFE_0_IRQ_STATUS_0_IMAGE_COMPOSITE_DONE_n(i)) {
+-			vfe->isr_ops.comp_done(vfe, i);
++			if (!stale_pix)
++				vfe->isr_ops.comp_done(vfe, i);
+ 			for (j = 0; j < ARRAY_SIZE(vfe->wm_output_map); j++)
+ 				if (vfe->wm_output_map[j] == VFE_LINE_PIX)
+ 					value0 &= ~VFE_0_IRQ_MASK_0_IMAGE_MASTER_n_PING_PONG(j);
+ 		}
+ 
+ 	for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++)
+-		if (value0 & VFE_0_IRQ_STATUS_0_IMAGE_MASTER_n_PING_PONG(i))
++		if ((value0 & VFE_0_IRQ_STATUS_0_IMAGE_MASTER_n_PING_PONG(i)) &&
++		    !(stale_wm & BIT(i)))
+ 			vfe->isr_ops.wm_done(vfe, i);
+ 
+ 	return IRQ_HANDLED;
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-gen1.c b/drivers/media/platform/qcom/camss/camss-vfe-gen1.c
+index d84a375e3..09cc2dd15 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-gen1.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-gen1.c
+@@ -538,12 +538,16 @@ static void vfe_isr_sof(struct vfe_device *vfe, enum vfe_line_id line_id)
+  * vfe_isr_reg_update - Process reg update interrupt
+  * @vfe: VFE Device
+  * @line_id: VFE line
++ *
++ * Return: WM indices to discard from the current IRQ snapshot.
+  */
+-static void vfe_isr_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
++static u32 vfe_isr_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
+ {
+ 	struct vfe_output *output;
+ 	struct vfe_line *line = &vfe->line[line_id];
+ 	unsigned long flags;
++	u32 stale_wm = 0;
++	unsigned int i;
+ 
+ 	spin_lock_irqsave(&vfe->output_lock, flags);
+ 	vfe->res->hw_ops->reg_update_clear(vfe, line_id);
+@@ -554,10 +558,18 @@ static void vfe_isr_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
+ 		output->wait_reg_update = 0;
+ 		complete(&output->reg_update);
+ 		spin_unlock_irqrestore(&vfe->output_lock, flags);
+-		return;
++		return 0;
+ 	}
+ 
+ 	if (output->state == VFE_OUTPUT_STOPPING) {
++		/*
++		 * A WM completion in this IRQ snapshot still refers to the old
++		 * buffers. Remember its indices before returning the last buffer
++		 * or installing buffers received while stopping.
++		 */
++		for (i = 0; i < output->wm_num; i++)
++			stale_wm |= BIT(output->wm_idx[i]);
++
+ 		/* Release last buffer when hw is idle */
+ 		if (output->last_buffer) {
+ 			vb2_buffer_done(&output->last_buffer->vb.vb2_buf,
+@@ -599,6 +611,8 @@ static void vfe_isr_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
+ 	}
+ 
+ 	spin_unlock_irqrestore(&vfe->output_lock, flags);
++
++	return stale_wm;
+ }
+ 
+ /*
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
+index ae9dad353..0638091c0 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.h
++++ b/drivers/media/platform/qcom/camss/camss-vfe.h
+@@ -125,7 +125,8 @@ struct vfe_hw_ops {
+ struct vfe_isr_ops {
+ 	void (*reset_ack)(struct vfe_device *vfe);
+ 	void (*halt_ack)(struct vfe_device *vfe);
+-	void (*reg_update)(struct vfe_device *vfe, enum vfe_line_id line_id);
++	/* WM indices whose saved completions belong to a drained output. */
++	u32 (*reg_update)(struct vfe_device *vfe, enum vfe_line_id line_id);
+ 	void (*sof)(struct vfe_device *vfe, enum vfe_line_id line_id);
+ 	void (*comp_done)(struct vfe_device *vfe, u8 comp);
+ 	void (*wm_done)(struct vfe_device *vfe, u8 wm);
+
+base-commit: b1466305390c6368148cf456278139ef4deebe89
+-- 
+2.56.0
+

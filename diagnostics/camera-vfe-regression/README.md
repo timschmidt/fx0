@@ -48,13 +48,18 @@ Thus a quiet log alone cannot satisfy the regression.
 The original native buffers and callbacks remain in
 [the callback witness](../camera-reopen/vfe-callback-order.md). Host regression
 and a CFI-enabled ARM CAMSS component build do not qualify a full kernel,
-signed package, module load, camera DMA or physical recovery. A fresh complete
-package build and a separately gated phone trial are still required.
+signed package, module load, camera DMA or physical recovery. The separate
+[normal package qualification](package-qualification.md) covers the r7 host
+artifact. A separately gated phone trial is still required.
 
 [Current mainline source applicability](mainline-applicability.md) passes the
 source-only sanitizer regression at a verified mainline pin.
 [Fresh r7 package preparation](../../evidence/2026-11-15-camera-vfe-r7-package-preparation.json)
-pins the final source with an unchanged input configuration and two separate
-normal signed builds. Builds and the twelve independent audit stages must
-finish successfully before package qualification can be claimed. The
-unchanged-r2 repeat/return and distinct candidate operator gates remain open.
+records the inputs before launch. The later
+[package qualification](package-qualification.md) records both completed
+normal signed builds, eleven ordinary stages and the corrected CAMSS stage,
+including its initial failure and the retained fakeroot notice. The
+[unsigned media-fixes draft](../../submissions/camss-gen1-coalesced-completion/README.md)
+has source-model and ARM/ARM64 component checks, with human DCO and physical
+acceptance still open. The unchanged-r2 repeat/return and distinct candidate
+operator gates remain required.

@@ -1,5 +1,10 @@
 # Gen1 source fix qualification checkpoint
 
+This is the earlier source/component checkpoint. The later
+[normal r7 package qualification](package-qualification.md) and
+[current media-base draft](../../submissions/camss-gen1-coalesced-completion/README.md)
+record the subsequent host work; physical acceptance remains open.
+
 The final kernel candidate is `250e7412a5a15068b2a2fe32b57b66c300c91b5f` on
 `development/fx0-vfe-coalesced-completion-02`. It consumes old saved WM status
 when a gen1 register-update resets a STOPPING output, before that status can

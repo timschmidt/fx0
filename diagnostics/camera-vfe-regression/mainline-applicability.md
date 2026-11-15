@@ -22,3 +22,9 @@ open. No publication or maintainer contact occurred.
 [Sanitized evidence](../../evidence/2026-11-15-camera-vfe-mainline-source-applicability.json)
 
 [Mainline gen1 source at the tested pin](https://github.com/torvalds/linux/blob/23c62304dde29abe92013d85910d03a77dada35d/drivers/media/platform/qcom/camss/camss-vfe-gen1.c)
+
+A subsequent [media maintainer-base draft](../../submissions/camss-gen1-coalesced-completion/README.md)
+resolves advertised ref discovery using Git protocol0 and verifies the full
+fixes checkout through matching Git objects. It adds actual ARM COMPILE_TEST
+and native-path ARM64 component builds; native ARM32 CAMSS configuration and
+physical acceptance remain open.

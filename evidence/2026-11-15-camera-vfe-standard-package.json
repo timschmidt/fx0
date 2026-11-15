@@ -1,0 +1,131 @@
+{
+  "recorded_UTC": "2026-11-15T01:19:41.376577+00:00",
+  "scope": "Complete host-only r7 camera-fix kernel package qualification with preserved power/USB cohort; physical boot and hardware acceptance remain open",
+  "source_commit": "250e7412a5a15068b2a2fe32b57b66c300c91b5f",
+  "source_base": "e7c72f8cb3c50a1ec089f96277b7d4b469212ba9",
+  "recipe_commit": "42b48f561ae26ed4bb95a4a5dd27ad6da50ffb16",
+  "paired_firmware_commit": "2ce757408f364ec6f1197b1d5d0be4128a309b1e",
+  "package": "linux-postmarketos-qcom-msm8226-6.18.63-r7.apk",
+  "kernel_release": "6.18.63-fx0-power-policy-alpine",
+  "SOURCE_DATE_EPOCH": 1794702522,
+  "actual_build_returncodes": [
+    0,
+    0
+  ],
+  "initial_audit_actual_returncode": 1,
+  "corrected_camera_stage_actual_returncode": 0,
+  "all_12_host_audit_stages_passed": true,
+  "audit_revision": "Eleven original successful stages plus corrected CAMSS stage; initial complete audit stopped at the added MOVW/MOVT-only checker",
+  "initial_failed_audit_and_successful_stages_preserved": true,
+  "accepted_CFI_check_encoding": "A32 type-word load, XOR immediate chain, BEQ over UDF, BLX to the same checked function",
+  "CFI_decoder_negative_controls": 20,
+  "full_unstripped_and_packaged_call_guards_match": true,
+  "signed_APK_SHA256": "5b53d7b7b21605f248b33d9ae457b0cf31424563cf2d85ffd1b1c050f805dd28",
+  "signed_APK_bytes": 18611147,
+  "signed_index_SHA256": "439fadb4e87b4cb27933c41242537f822f5712aa82f1521a2d55bdfd3ecba853",
+  "source_paths_verified_in_each_build": 91271,
+  "byte_identical_output_files": 564,
+  "zImage_SHA256": "3d236502bf03ae498f903e8c4d7b0115ed57cc8bf26ef2b50b317be8d7e10b05",
+  "uncompressed_Image_SHA256": "71e44b28355906eb0c7183abe2c92ac91b5ad54d5757bac88fca40287316b45a",
+  "kernel_notes": {
+    "bytes": 84,
+    "SHA256": "ea22a091de4790986906f9434babb1da36b65833aae81955efb3fb4922996eea"
+  },
+  "GNU_build_id": "c4c172576f0e94f6aa804f077bf7a5ee41a2b9da",
+  "uncompressed_kernel_footprint_bytes": 21499728,
+  "Fx0_DTB_SHA256": "55f6638948dc7a53c2663cf7516852d08754bcdeba97af1fe35b473c40fbe9ed",
+  "other_62_DTBS_identical_to_reproducible_base": true,
+  "Fx0_DTB_matches_independent_power_USB_board_fixture": true,
+  "module_count": 464,
+  "module_file_count": 478,
+  "module_manifest_SHA256": "6a520d7ab63b8d943a633d107bb786cfa80b3aabb14ac971cd6f3d3843146e93",
+  "module_manifest_encoding": "SHA256 of JSON list sorted by relative path, each path/bytes/SHA256 object, sort_keys=True and separators comma/colon",
+  "imported_symbol_CRC_checks": 25309,
+  "declared_dependency_edges": 385,
+  "transitive_dependency_edges": 567,
+  "all_module_CMS_signatures_ABI_and_dependencies_verified": true,
+  "full_compressed_DWARF5_nonpermissive_CFI_and_runtime_trust_list_certificate_verified": true,
+  "public_certificate_SHA256": "de086e266ec1d82ea17ebbd51f10242e591df3cf74e958e269bdd91b9176d370",
+  "CONFIG_MODULE_SIG_FORCE": "n",
+  "runtime_module_signature_enforcement": "Future boot requires module.sig_enforce=1 and a fresh runtime check; host audit does not qualify enforcement",
+  "community_actual_config_check_passed": true,
+  "ordinary_board_checks": 6,
+  "active_ordinary_schema_rejection_controls": 3,
+  "power_USB_binding_contract_cases": 14,
+  "actual_power_and_USB_ARM_objects_and_callbacks_in_full_link_verified": true,
+  "input_configuration_changes": [
+    "CONFIG_LOCALVERSION",
+    "CONFIG_CHARGER_QCOM_SMBB_POLICY=y"
+  ],
+  "independent_APK_and_index_RSA_and_valid_format_corruption_controls_passed": true,
+  "crypto_verification_uses_signed_native_OpenSSL": true,
+  "host_crypto_policy_changed": false,
+  "native_toolchain_noncredential_paths_rechecked": 6236,
+  "native_toolchain_symlinks_rechecked": 554,
+  "native_toolchain_only_three_known_setup_differences": true,
+  "shadow_or_private_signer_bodies_read_by_audits": false,
+  "compiler_warning_or_error_lines": 0,
+  "retained_noncompiler_build_tool_diagnostics": [
+    {
+      "build": "01",
+      "diagnostic_lines": [
+        {
+          "line": 7577,
+          "text": "libfakeroot internal error: payload not recognized!"
+        }
+      ]
+    },
+    {
+      "build": "02",
+      "diagnostic_lines": []
+    }
+  ],
+  "complete_archive_metadata_and_all_file_checksums_validated_after_fakeroot_notice": true,
+  "archive_metadata_entries": 725,
+  "archive_data_file_checksums": 545,
+  "fakeroot_diagnostic_cause_resolved": false,
+  "build_tool_diagnostic_followup_remains_open": true,
+  "inherited_abuild_notices": [
+    ">>> WARNING: linux-postmarketos-qcom-msm8226*: No arch specific binaries found so arch should probably be set to \"noarch\"",
+    ">>> WARNING: linux-postmarketos-qcom-msm8226*: Packages must not put anything under /lib, use /usr/lib instead"
+  ],
+  "community_preferred_option_notices": [
+    "WARNING:root:INFO: config: CONFIG_BTRFS_FS is preferably y, but currently m (category:filesystems)",
+    "WARNING:root:INFO: config: CONFIG_F2FS_FS is preferably y, but currently m (category:filesystems)",
+    "WARNING:root:INFO: config: CONFIG_USB_CONFIGFS is preferably m, but currently y (category:usb_gadgets)",
+    "WARNING:root:INFO: config: CONFIG_USB_F_FS is preferably m, but currently y (category:usb_gadgets)"
+  ],
+  "no_container_image_used_for_build_or_community_or_RSA_checks": true,
+  "prior_failed_preparations_preserved": true,
+  "frozen_audit_program_hashes_reverified": true,
+  "input_sources_and_build_outputs_exact_at_audit": true,
+  "root_index_unchanged": true,
+  "source_and_recipe_publication": false,
+  "source_archive_representation": "Locally deterministic git archive/gzip; actual public-server archive must be separately fetched, Git-verified and used to repin and requalify a public-download recipe",
+  "new_RAM_image_assembled_or_staged": false,
+  "phone_access": false,
+  "physical_boot_qualified": false,
+  "native_installation": false,
+  "unchanged_r2_repeat_remains_first_physical_diagnostic_step": true,
+  "hardware_USB_current_timing_charging_SOC_thermal_suspend_reliability_qualified": false,
+  "full_bringup_complete": false,
+  "camera_source_function_regression_bound_to_full_build": true,
+  "camera_host_positive_dispatcher_executions": 84,
+  "camera_host_negative_controls": 15,
+  "CAMSS_provider_CFI_words": {
+    "camss-vfe-gen1": "0xe8f4cf55",
+    "camss-vfe-17x": "0xe8f4cf55"
+  },
+  "CAMSS_checked_dispatchers": [
+    "camss-vfe-17x",
+    "camss-vfe-4-1",
+    "camss-vfe-4-7",
+    "camss-vfe-4-8"
+  ],
+  "CAMSS_packaged_module_SHA256": "8ed9f912f12a1275e4e8d0aacebbd36a87865995171d2e27a9f84f09fc9c534a",
+  "CAMSS_packaged_allocated_sections_exact": true,
+  "CAMSS_module_CMS_and_ABI_covered_by_full_verifiers": true,
+  "camera_runtime_CFI_module_load_or_physical_acceptance": false,
+  "candidate_pkgrel": 7,
+  "prior_r6_package_qualification_inherited": false
+}
