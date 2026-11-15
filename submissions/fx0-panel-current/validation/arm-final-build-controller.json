@@ -1,0 +1,101 @@
+{
+  "started_UTC": "2026-11-15T21:47:13.620935+00:00",
+  "source_head": "8357d00127efde090b81815527ead651744390c8",
+  "source_tree": "378596677c834fd4eed7a956f1d30050dea333a8",
+  "frozen_working_files": {
+    "drivers/gpu/drm/panel/panel-lg-fx0.c": "36de0c917fcaa8e4a050fede737c5cee2f13af217066e2ec67732bf1fc786814",
+    "drivers/gpu/drm/panel/Kconfig": "d5a57a076ce2f93cdc1837eab0f6262dbad7136f9a7bad74b7a38b2338915858",
+    "drivers/gpu/drm/panel/Makefile": "652532b330c0be060f48649876067ce078a4feb8f99848ee3093625453af78bb",
+    "Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml": "374818fdc8d203ec455761955302876896d475253de1bd4ab4f02581fdb602f5",
+    "MAINTAINERS": "4627a4f55118e5b08e6e1b11f1bae4a66602132eadfd7633b6d76ac4a0021172"
+  },
+  "native": true,
+  "COMPILE_TEST": false,
+  "stages": [
+    {
+      "stage": "options",
+      "command": [
+        "$WORKSPACE/worktrees/linux-fx0-panel-drm-current-01/scripts/config",
+        "--file",
+        "$WORKSPACE/local/fx0-panel-drm-current-01/arm-final-out/.config",
+        "-d",
+        "COMPILE_TEST",
+        "-e",
+        "GPIOLIB",
+        "-e",
+        "REGULATOR",
+        "-e",
+        "OF",
+        "-e",
+        "BACKLIGHT_CLASS_DEVICE",
+        "-e",
+        "DRM_MIPI_DSI",
+        "-e",
+        "DRM",
+        "-e",
+        "DRM_PANEL_LG_FX0"
+      ],
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "config",
+      "command": [
+        "make",
+        "O=$WORKSPACE/local/fx0-panel-drm-current-01/arm-final-out",
+        "ARCH=arm",
+        "LLVM=-21",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "W=1",
+        "-j2",
+        "olddefconfig"
+      ],
+      "returncode": 0,
+      "log_SHA256": "6c97fffda286b84a709bf042b45acc9428fae60f685ac852035cbf8f406089f5"
+    },
+    {
+      "stage": "prepare",
+      "command": [
+        "make",
+        "O=$WORKSPACE/local/fx0-panel-drm-current-01/arm-final-out",
+        "ARCH=arm",
+        "LLVM=-21",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "W=1",
+        "-j2",
+        "modules_prepare"
+      ],
+      "returncode": 0,
+      "log_SHA256": "e1ca4d105e04cc275ab2341caaeac9ce12a8c34c70aed2c0a470b0f295ff8b2e"
+    },
+    {
+      "stage": "component",
+      "command": [
+        "make",
+        "O=$WORKSPACE/local/fx0-panel-drm-current-01/arm-final-out",
+        "ARCH=arm",
+        "LLVM=-21",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "W=1",
+        "-j2",
+        "drivers/gpu/drm/panel/panel-lg-fx0.o",
+        "drivers/gpu/drm/drm_panel.o",
+        "drivers/gpu/drm/drm_mipi_dsi.o"
+      ],
+      "returncode": 0,
+      "log_SHA256": "33f3401fc80a4e08cb2f87c88a6e55a8e928394d6c305470f6854a47a55df23d"
+    }
+  ],
+  "launcher_SHA256": "9c5e194c8f5b5cfde7b4864a7547acfbec92794aafc2f86e0f24a955df9324e6",
+  "phone_access": false,
+  "state": "terminal success",
+  "config_SHA256": "a81af39393f6372d7024a1f42a7abc91421cd645feb935287dc1ef5c65b37800",
+  "passed": true,
+  "returncode": 0,
+  "objects": {
+    "drivers/gpu/drm/panel/panel-lg-fx0.o": "8f1945883d351317474c54c52be0047ee49958292f7e5898c4d0039fa33303c4",
+    "drivers/gpu/drm/drm_panel.o": "e0811963b448a28211a4308ca2f83a8f3fdaff67cf84163025da7a5f3c7a3f9a",
+    "drivers/gpu/drm/drm_mipi_dsi.o": "5754d2917a2fafde82842e399ffe5060780321b01dcbd98a5eb158b0bd1ed97e"
+  },
+  "finished_UTC": "2026-11-15T21:47:26.454083+00:00"
+}

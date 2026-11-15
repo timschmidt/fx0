@@ -1,0 +1,83 @@
+Panel fixtures and tools are GPL-2.0-only. The repository general license
+does not replace these source licenses. GPL-2.0-or-later portions are used
+under GPL version 2. The MIPI DSI source permission notice remains below.
+
+These fixtures contain extracted Linux functions with mocked surroundings.
+Original authorship and source IDs are retained in the patches and validation.
+Codex (GPT-6) assisted with adaptation, tests and this review package.
+
+drivers/gpu/drm/drm_panel.c
+// SPDX-License-Identifier: GPL-2.0-or-later
+/*
+ * Copyright (C) 2013, NVIDIA Corporation.  All rights reserved.
+ * Copyright (C) 2016 Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+ * Copyright (C) 2017 Broadcom
+ */
+
+drivers/regulator/core.c
+// SPDX-License-Identifier: GPL-2.0-or-later
+//
+// core.c  --  Voltage/Current Regulator framework.
+//
+// Copyright 2007, 2008 Wolfson Microelectronics PLC.
+// Copyright 2008 SlimLogic Ltd.
+//
+// Author: Liam Girdwood <lrg@slimlogic.co.uk>
+
+drivers/gpu/drm/drm_mipi_dsi.c
+/*
+ * MIPI DSI Bus
+ *
+ * Copyright (C) 2012-2013, Samsung Electronics, Co., Ltd.
+ * Andrzej Hajda <a.hajda@samsung.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sub license, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice (including the
+ * next paragraph) shall be included in all copies or substantial portions
+ * of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL
+ * THE COPYRIGHT HOLDERS, AUTHORS AND/OR ITS SUPPLIERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+include/drm/drm_mipi_dsi.h
+/* SPDX-License-Identifier: GPL-2.0-only */
+/*
+ * MIPI DSI Bus
+ *
+ * Copyright (C) 2012-2013, Samsung Electronics, Co., Ltd.
+ * Andrzej Hajda <a.hajda@samsung.com>
+ */
+
+include/video/mipi_display.h
+/* SPDX-License-Identifier: GPL-2.0-only */
+/*
+ * Defines for Mobile Industry Processor Interface (MIPI(R))
+ * Display Working Group standards: DSI, DCS, DBI, DPI
+ *
+ * Copyright (C) 2010 Guennadi Liakhovetski <g.liakhovetski@gmx.de>
+ * Copyright (C) 2006 Nokia Corporation
+ * Author: Imre Deak <imre.deak@nokia.com>
+ */
+
+drivers/gpu/drm/panel/panel-lg-fx0.c
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * LG Fx0 JDI in-cell panel, production board revisions.
+ * Initialization data and power sequencing derived from the LG madai kernel.
+ * Copyright (c) 2013, Code Aurora Forum. All rights reserved.
+ * Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2026 Timothy Schmidt
+ */

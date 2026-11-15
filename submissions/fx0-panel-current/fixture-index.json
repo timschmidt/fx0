@@ -1,0 +1,97 @@
+{
+  "fixtures": [
+    {
+      "kind": "power",
+      "path": "fixtures/power-baseline.c",
+      "SHA256": "f8119fd4d2846795d21c65a2ce3c85f1b34baf3617cd1f960b4b97e4172ab158",
+      "original_body_SHA256": "f25f02decb379b7e0e3bdfb94aa1fac1973de86eca67d3a2ce8fc6b76a0a7b12",
+      "broken": 8
+    },
+    {
+      "kind": "power",
+      "path": "fixtures/power-candidate.c",
+      "SHA256": "e8a1e578db09ae8cfd4bf19a41fe2867f6c185c1ebdb2706dd58c79f22b686a4",
+      "original_body_SHA256": "7cc09cc6d631c32007017c03da723906486bf97e6fe030d04d3323a72a9a9c7e",
+      "broken": 0
+    },
+    {
+      "kind": "power",
+      "path": "fixtures/power-missing-cleanup-retry.c",
+      "SHA256": "2b7f2e481dbd24b58564984a17d1356d8747faa94647820b342b78c00818b67b",
+      "original_body_SHA256": "1f91db48d584a767c6c7afbc05ae4468313705e140c9a8ffb36c4d82cf44327e",
+      "broken": 3
+    },
+    {
+      "kind": "power",
+      "path": "fixtures/power-hidden-unprepare-error.c",
+      "SHA256": "8926880bcaf88138e00476e36d61c1d3e5ff678df824e1892d6414e95f8e99ef",
+      "original_body_SHA256": "85fd5421fd0a6f01cf8ea016b37365d3ebd0628062ad5e65692820f99aae553a",
+      "broken": 5
+    },
+    {
+      "kind": "command",
+      "path": "fixtures/command-baseline.c",
+      "SHA256": "641de209695d056cc36e7021974d79f400e76001f7831cf9e473075d5c6d326f",
+      "original_body_SHA256": "4ae6357603b30cfa5bf0ca186e0fd8cc8819f30e4e92aa18c22176568662ee6b",
+      "differences": 0,
+      "export_suffix_is_comment_only": true
+    },
+    {
+      "kind": "command",
+      "path": "fixtures/command-candidate.c",
+      "SHA256": "f9a88fee2bcfb4d4598dfafc295106e335c82cacb147d1c2add464641ba73975",
+      "original_body_SHA256": "b2a8965afee4d721c697f776f703c01a7ba9c622c8cc993df1ee174cb6bc8aa5",
+      "differences": 0,
+      "export_suffix_is_comment_only": true
+    },
+    {
+      "kind": "command",
+      "path": "fixtures/command-mutant-command.c",
+      "SHA256": "64a55ee813ab5148a82dac13107154b381a215643d88115428074d7b8d5f9b9b",
+      "original_body_SHA256": "4389cee3e8f1248db303177e0b9adf1755a72c02abe5ee52fefac31acb73d4bf",
+      "differences": 15,
+      "export_suffix_is_comment_only": true
+    },
+    {
+      "kind": "command",
+      "path": "fixtures/command-mutant-wait.c",
+      "SHA256": "080cdaf9df6c9289fb34385577bbcb31063f4fd1bd6dd2e76bdb7d67d21323df",
+      "original_body_SHA256": "2ea5b3064d65ecde552688b78bb9cd5cef85e70fcec977c66d198cb860d823b2",
+      "differences": 1,
+      "export_suffix_is_comment_only": true
+    },
+    {
+      "kind": "command",
+      "path": "fixtures/command-mutant-order.c",
+      "SHA256": "4ea3533ab495b5054d1a7a5f65bd3b5c910aa28db9d597765702f7fe5668bc51",
+      "original_body_SHA256": "5a65d7bf0cf758a345bdafd3d3b7fa0a32ca42f2b6239290205488ed14f7df8b",
+      "differences": 3,
+      "export_suffix_is_comment_only": true
+    }
+  ],
+  "command_phases": [
+    [
+      "D 51ff",
+      "D 530c",
+      "D 5500",
+      "G b004",
+      "G ec29002c2b010000000000000000000000070900",
+      "G ee1c02020300100002000000000003",
+      "G c1406101",
+      "G c7000a16202c394352363e4b585a5f67000a16202c394352363e4b585a5f67",
+      "G c80000000000fc0000000000fc0000000000fc00",
+      "G d601",
+      "D 3600",
+      "G ca01709a95a298958f3f3f80800880083f08900c0c0a06040400c810103f3f3f3f",
+      "D 29",
+      "D 11",
+      "W 120"
+    ],
+    [
+      "D 28",
+      "W 20",
+      "D 10",
+      "W 80"
+    ]
+  ]
+}

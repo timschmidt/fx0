@@ -1,0 +1,74 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "name": "baseline",
+      "cases": 18,
+      "vendor_trace_differences": 0,
+      "intended_result_verified": true,
+      "fixture_SHA256": "4ae6357603b30cfa5bf0ca186e0fd8cc8819f30e4e92aa18c22176568662ee6b"
+    },
+    {
+      "name": "candidate",
+      "cases": 18,
+      "vendor_trace_differences": 0,
+      "intended_result_verified": true,
+      "fixture_SHA256": "b2a8965afee4d721c697f776f703c01a7ba9c622c8cc993df1ee174cb6bc8aa5"
+    },
+    {
+      "name": "mutant-command",
+      "cases": 18,
+      "vendor_trace_differences": 15,
+      "intended_result_verified": true,
+      "fixture_SHA256": "4389cee3e8f1248db303177e0b9adf1755a72c02abe5ee52fefac31acb73d4bf"
+    },
+    {
+      "name": "mutant-wait",
+      "cases": 18,
+      "vendor_trace_differences": 1,
+      "intended_result_verified": true,
+      "fixture_SHA256": "2ea5b3064d65ecde552688b78bb9cd5cef85e70fcec977c66d198cb860d823b2"
+    },
+    {
+      "name": "mutant-order",
+      "cases": 18,
+      "vendor_trace_differences": 3,
+      "intended_result_verified": true,
+      "fixture_SHA256": "5a65d7bf0cf758a345bdafd3d3b7fa0a32ca42f2b6239290205488ed14f7df8b"
+    }
+  ],
+  "expected_trace": [
+    "D 51ff",
+    "D 530c",
+    "D 5500",
+    "G b004",
+    "G ec29002c2b010000000000000000000000070900",
+    "G ee1c02020300100002000000000003",
+    "G c1406101",
+    "G c7000a16202c394352363e4b585a5f67000a16202c394352363e4b585a5f67",
+    "G c80000000000fc0000000000fc0000000000fc00",
+    "G d601",
+    "D 3600",
+    "G ca01709a95a298958f3f3f80800880083f08900c0c0a06040400c810103f3f3f3f",
+    "D 29",
+    "D 11",
+    "W 120",
+    "D 28",
+    "W 20",
+    "D 10",
+    "W 80"
+  ],
+  "input_SHA256": {
+    "worktrees/linux-fx0-panel-drm-current-01/drivers/gpu/drm/panel/panel-lg-fx0.c": "36de0c917fcaa8e4a050fede737c5cee2f13af217066e2ec67732bf1fc786814",
+    "local/fx0-panel-drm-current-01/before-panel.c": "546e94c9e41ff01d89943a52ffcaef263ea0104159ff336f45bb37e5f428fbde",
+    "worktrees/linux-fx0-panel-drm-current-01/include/drm/drm_mipi_dsi.h": "c3fed5a99539bca61d8fe00c19b5df0f94d511b43b2e8554614e7f3a330e35e3",
+    "worktrees/linux-fx0-panel-drm-current-01/drivers/gpu/drm/drm_mipi_dsi.c": "634ea3e6f848b725e758a8525e6ef93d5bc3068862f04a0d0c6514bee435d6b3",
+    "worktrees/linux-fx0-panel-drm-current-01/include/video/mipi_display.h": "36fc5778eda7503f25df5d75dcd8dd70e9bf7df20b387b3adcd05185391f23ab",
+    "src/vendor-linux/arch/arm/boot/dts/msm8226-lge-common/msm8226-lge-panel.dtsi": "6024e60bfe5e7e27b18842a04b0ea627dff7b6aa14a7b8c691855e755d0e81f2",
+    "src/vendor-linux/arch/arm/boot/dts/msm8226-madai/msm8226-madai-panel.dtsi": "5e68994d3be63375342b3c2aad8bb3085a140f90b66146169dc684ebc6fe9615"
+  },
+  "packet_types_or_host_timing_qualified": false,
+  "physical_display_qualified": false,
+  "actual_panel_functions_and_multi_helpers_executed": true,
+  "DSI_transport_and_sleep_mocked": true
+}
