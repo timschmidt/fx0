@@ -1,0 +1,368 @@
+{
+  "recorded_UTC": "2026-11-15T03:40:26.843277+00:00",
+  "official_repository": "https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git",
+  "advertised_refs": {
+    "clk-fixes-for-7.4": "60521e4ff9e7f1b41758f387842d73667a7f0410",
+    "clk-for-7.5": "fbfe0c4beecfbd0e2958d91e5c95ff189bc489a0"
+  },
+  "source_heads": {
+    "fixes": {
+      "commits": [
+        "747fd18ccba4e168ba63e254e977f160cab45756"
+      ],
+      "head": "747fd18ccba4e168ba63e254e977f160cab45756",
+      "base": "60521e4ff9e7f1b41758f387842d73667a7f0410",
+      "tree": "d975d7f2ee9842f5286219906fbca2107da6b2c2",
+      "clean": true,
+      "compiled_driver_unchanged": true
+    },
+    "next": {
+      "commits": [
+        "85faf3b206a2d1c01ae4ef3220260b2eaa7b7623",
+        "443ed6739ab718fe75284baf182eaee4c7ded5c1"
+      ],
+      "head": "443ed6739ab718fe75284baf182eaee4c7ded5c1",
+      "base": "fbfe0c4beecfbd0e2958d91e5c95ff189bc489a0",
+      "tree": "9cbc0b0988ccbd4ed40748a1cf1c037788774b4c",
+      "clean": true,
+      "compiled_driver_unchanged": true
+    }
+  },
+  "source_branches": {
+    "fixes": "development/mmcc-mclk-current-fixes-01",
+    "next": "development/mmcc-vfe-axi-current-next-01"
+  },
+  "fixtures": {
+    "baseline": {
+      "source_files_SHA256": {
+        "drivers/clk/qcom/mmcc-msm8974.c": "46ad8e4f81379276ed05bbeacd0b6558aa72fa75c7d437826ddafe499566bab2",
+        "drivers/clk/qcom/clk-rcg2.c": "b173e0f4d0b962f777c668422f5b1ca22137334b62de766f01f3ef5faf5d93b6",
+        "drivers/clk/qcom/common.c": "74290186fe8cb57e829fc30dddc5c70741649c77f0a0b630d6be6cb5e72a2892",
+        "drivers/clk/clk.c": "ceaf3d9447b5daf8fe9529b08f2dd6cec1e3c9dc145adb8d4de5194031150b3d",
+        "drivers/clk/qcom/clk-rcg.h": "128e149a3f94d356a16e294e0ba406452e2a47af0443396cc2ff078da7731e1d",
+        "drivers/clk/qcom/clk-branch.c": "d29259eb77a5d1d6a07adf4aa835588f8e04d1fa3c14be2b7d4162cce737abfa"
+      },
+      "expected_mnd": "broken",
+      "expected_axi": "broken",
+      "fixtures_SHA256": "3fb4ab7faa0f2e57350b2e654a6a78383eaddd8c9ca9a045286eed4bb06f712f",
+      "stages": [
+        {
+          "name": "compile",
+          "returncode": 0
+        },
+        {
+          "name": "run",
+          "returncode": 0
+        }
+      ],
+      "phone_access": false,
+      "scope": "Production descriptor/RCG/CCF-rounding code; owned regmap and table-backed parent emulation, no hardware or full CCF rate-change acceptance",
+      "observed": {
+        "rate_cases": 50,
+        "correct": 28,
+        "mismatches": 22,
+        "IO_error_cases": 2,
+        "width_controls": 0,
+        "AXI_rate": 100000000
+      },
+      "passed": true
+    },
+    "fixes": {
+      "source_files_SHA256": {
+        "drivers/clk/qcom/mmcc-msm8974.c": "e71c56bc40659299745f2eda2cbad4be1f709f2137135d91cc9128eea23e91ad",
+        "drivers/clk/qcom/clk-rcg2.c": "b173e0f4d0b962f777c668422f5b1ca22137334b62de766f01f3ef5faf5d93b6",
+        "drivers/clk/qcom/common.c": "74290186fe8cb57e829fc30dddc5c70741649c77f0a0b630d6be6cb5e72a2892",
+        "drivers/clk/clk.c": "ceaf3d9447b5daf8fe9529b08f2dd6cec1e3c9dc145adb8d4de5194031150b3d",
+        "drivers/clk/qcom/clk-rcg.h": "128e149a3f94d356a16e294e0ba406452e2a47af0443396cc2ff078da7731e1d",
+        "drivers/clk/qcom/clk-branch.c": "d29259eb77a5d1d6a07adf4aa835588f8e04d1fa3c14be2b7d4162cce737abfa"
+      },
+      "expected_mnd": "fixed",
+      "expected_axi": "broken",
+      "fixtures_SHA256": "1253641f836cf2c192df9ed78423d0e59fa929509789b014d54a4f24f15510ff",
+      "stages": [
+        {
+          "name": "compile",
+          "returncode": 0
+        },
+        {
+          "name": "run",
+          "returncode": 0
+        }
+      ],
+      "phone_access": false,
+      "scope": "Production descriptor/RCG/CCF-rounding code; owned regmap and table-backed parent emulation, no hardware or full CCF rate-change acceptance",
+      "observed": {
+        "rate_cases": 50,
+        "correct": 50,
+        "mismatches": 0,
+        "IO_error_cases": 5,
+        "width_controls": 4,
+        "AXI_rate": 100000000
+      },
+      "passed": true
+    },
+    "next": {
+      "source_files_SHA256": {
+        "drivers/clk/qcom/mmcc-msm8974.c": "d94814f12781f96c9be7c978e2ea66dcd42f9d276a80d38069beca074dea46eb",
+        "drivers/clk/qcom/clk-rcg2.c": "98a2743853b4c4bf11bdf3edba96d813092e100a9da96948008a4fd8bfba464d",
+        "drivers/clk/qcom/common.c": "74290186fe8cb57e829fc30dddc5c70741649c77f0a0b630d6be6cb5e72a2892",
+        "drivers/clk/clk.c": "ceaf3d9447b5daf8fe9529b08f2dd6cec1e3c9dc145adb8d4de5194031150b3d",
+        "drivers/clk/qcom/clk-rcg.h": "128e149a3f94d356a16e294e0ba406452e2a47af0443396cc2ff078da7731e1d",
+        "drivers/clk/qcom/clk-branch.c": "d29259eb77a5d1d6a07adf4aa835588f8e04d1fa3c14be2b7d4162cce737abfa"
+      },
+      "expected_mnd": "fixed",
+      "expected_axi": "fixed",
+      "fixtures_SHA256": "9d4e5d0bb41b8ed3d0c3496ecda0c9344163b6031de734dc690d48da12f4f4d0",
+      "stages": [
+        {
+          "name": "compile",
+          "returncode": 0
+        },
+        {
+          "name": "run",
+          "returncode": 0
+        }
+      ],
+      "phone_access": false,
+      "scope": "Production descriptor/RCG/CCF-rounding code; owned regmap and table-backed parent emulation, no hardware or full CCF rate-change acceptance",
+      "observed": {
+        "rate_cases": 50,
+        "correct": 50,
+        "mismatches": 0,
+        "IO_error_cases": 5,
+        "width_controls": 4,
+        "AXI_rate": 266666666
+      },
+      "passed": true
+    }
+  },
+  "builds": {
+    "fixes": {
+      "arm": {
+        "config_SHA256": "1849cd8f17dccda5406e9efdb27ecbe3e2c00292055976f04b456d6d0e8c23da",
+        "driver_SHA256": "e71c56bc40659299745f2eda2cbad4be1f709f2137135d91cc9128eea23e91ad",
+        "objects": {
+          "drivers/clk/qcom/mmcc-msm8974.o": "b44444ec500640343b484cdacdfb7428b6e72845aa17fd0a6360a7780c348160",
+          "drivers/clk/qcom/clk-rcg2.o": "7fade6da635e1eba835de9eed33b600bd3020f6f0b4e7d8f790b423c189dc222",
+          "drivers/clk/qcom/clk-branch.o": "e08a345b58674903afd4a2cb97b87f3b8e922c246ee4f9929cf1ae42cfca578f",
+          "drivers/clk/qcom/common.o": "dd58846049cbad509b01a5278d4b37040b454cd4e8c4d1130443ee2bb54f8b5e",
+          "drivers/clk/clk.o": "c966f262bcb92812c0f3d561cea9384e46091ab0c0a6842bc314852eedd48f0a"
+        },
+        "COMPILE_TEST": false,
+        "scope": "Native ARM driver and clock-path objects; ARM64 uses COMPILE_TEST. No full kernel, module-load or hardware acceptance",
+        "returncodes": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "warning_error_lines": 0
+      },
+      "arm64": {
+        "config_SHA256": "84f190ff893307bf79986efff12594909f2862282782d8a07f727f89b673cb97",
+        "driver_SHA256": "e71c56bc40659299745f2eda2cbad4be1f709f2137135d91cc9128eea23e91ad",
+        "objects": {
+          "drivers/clk/qcom/mmcc-msm8974.o": "93357c705d44394a324ef621eddcd6723d43a1b67644b0813a11cdee063afcbc",
+          "drivers/clk/qcom/clk-rcg2.o": "019e27645f319c0851e1f6d4c4b92f75b02403a79e1ee652a1e8defaa2036699",
+          "drivers/clk/qcom/clk-branch.o": "34b918b41947be434fbe049fa7f76730817c97e26e43852c07f6a7038e5798a2",
+          "drivers/clk/qcom/common.o": "3a984db26af474b609616ffa5fe41482008fdb58673e1069f0389d0f21790556",
+          "drivers/clk/clk.o": "eecf9816b8e5abebc98be0a936b758b68e58e56d0fda6eb8122b980d07696585"
+        },
+        "COMPILE_TEST": true,
+        "scope": "Native ARM driver and clock-path objects; ARM64 uses COMPILE_TEST. No full kernel, module-load or hardware acceptance",
+        "returncodes": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "warning_error_lines": 0
+      }
+    },
+    "next": {
+      "arm": {
+        "config_SHA256": "1849cd8f17dccda5406e9efdb27ecbe3e2c00292055976f04b456d6d0e8c23da",
+        "driver_SHA256": "d94814f12781f96c9be7c978e2ea66dcd42f9d276a80d38069beca074dea46eb",
+        "objects": {
+          "drivers/clk/qcom/mmcc-msm8974.o": "0d42c1a1a9047e2d89aa29329b15d9fd9035991294bf2721bb19cbac49b4ec68",
+          "drivers/clk/qcom/clk-rcg2.o": "2a8c196d9bbc1acabe1a220741d698d465a2b7660fce6aa692917d3b4d43f5dc",
+          "drivers/clk/qcom/clk-branch.o": "891602dbc27a715798b64bf0edf7de0686253e06f030ce9984a42e915c0f8d13",
+          "drivers/clk/qcom/common.o": "42b1745e70b87e10de74fcfc7072c3d1286de5ac405659efe38d9e6f8363c9d7",
+          "drivers/clk/clk.o": "e66c4260c6d2bfd73114f466969060c7e2548ed1c7a86ad5afd3213951630c4b"
+        },
+        "COMPILE_TEST": false,
+        "scope": "Native ARM driver and clock-path objects; ARM64 uses COMPILE_TEST. No full kernel, module-load or hardware acceptance",
+        "returncodes": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "warning_error_lines": 0
+      },
+      "arm64": {
+        "config_SHA256": "a0e9cda6bfeae5dc8a1be8c6f0eb14bc0c750b7455914443adb1cf3dc6b125a6",
+        "driver_SHA256": "d94814f12781f96c9be7c978e2ea66dcd42f9d276a80d38069beca074dea46eb",
+        "objects": {
+          "drivers/clk/qcom/mmcc-msm8974.o": "2a8a538f55225c1e1e03a7c5ff61b88c6d546b45ecb66498916247d1c49f6ea2",
+          "drivers/clk/qcom/clk-rcg2.o": "d9a57885d54aae6b23f3586719b87e09886b138304bcb307d21724531278ba0f",
+          "drivers/clk/qcom/clk-branch.o": "8d05e24953a02a01fbac2e570c7b557ccd3fe8b23a5928921eb3403677d5da5e",
+          "drivers/clk/qcom/common.o": "5a7079dc269f20ed1c33a55c06cc22aecb73d38f61bbff982c96076f35a4f2e1",
+          "drivers/clk/clk.o": "2ecb0b206e2757baca3d009c1ef55e62b6aa87102648240ae5bdd6cb322184dc"
+        },
+        "COMPILE_TEST": true,
+        "scope": "Native ARM driver and clock-path objects; ARM64 uses COMPILE_TEST. No full kernel, module-load or hardware acceptance",
+        "returncodes": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "warning_error_lines": 0
+      }
+    }
+  },
+  "draft_checks": {
+    "fixes": {
+      "head": "747fd18ccba4e168ba63e254e977f160cab45756",
+      "checks": [
+        {
+          "patch": "0001-clk-qcom-mmcc-msm8974-Use-the-M-N-counter-for-camera.patch",
+          "mode": "style",
+          "returncode": 0,
+          "errors": 0,
+          "warnings": 0,
+          "checks": 0
+        },
+        {
+          "patch": "0001-clk-qcom-mmcc-msm8974-Use-the-M-N-counter-for-camera.patch",
+          "mode": "submission",
+          "returncode": 1,
+          "errors": 1,
+          "warnings": 0,
+          "checks": 0
+        }
+      ],
+      "maintainer_lookup_returncode": 0
+    },
+    "next": {
+      "head": "443ed6739ab718fe75284baf182eaee4c7ded5c1",
+      "checks": [
+        {
+          "patch": "0001-clk-qcom-mmcc-msm8974-Use-the-M-N-counter-for-camera.patch",
+          "mode": "style",
+          "returncode": 0,
+          "errors": 0,
+          "warnings": 0,
+          "checks": 0
+        },
+        {
+          "patch": "0001-clk-qcom-mmcc-msm8974-Use-the-M-N-counter-for-camera.patch",
+          "mode": "submission",
+          "returncode": 1,
+          "errors": 1,
+          "warnings": 0,
+          "checks": 0
+        },
+        {
+          "patch": "0002-clk-qcom-mmcc-msm8974-Propagate-VFE-AXI-rate-request.patch",
+          "mode": "style",
+          "returncode": 0,
+          "errors": 0,
+          "warnings": 0,
+          "checks": 0
+        },
+        {
+          "patch": "0002-clk-qcom-mmcc-msm8974-Propagate-VFE-AXI-rate-request.patch",
+          "mode": "submission",
+          "returncode": 1,
+          "errors": 1,
+          "warnings": 0,
+          "checks": 0
+        }
+      ],
+      "maintainer_lookup_returncode": 0
+    }
+  },
+  "Fixes_introduction_proof": {
+    "commit": "d8b212014e69d6b6323773ce6898f224ef4ed0d6",
+    "subject": "clk: qcom: Add support for MSM8974's multimedia clock controller (MMCC)",
+    "clocks": [
+      {
+        "clock": "mclk0",
+        "MND_width_absent_at_intro": true
+      },
+      {
+        "clock": "mclk1",
+        "MND_width_absent_at_intro": true
+      },
+      {
+        "clock": "mclk2",
+        "MND_width_absent_at_intro": true
+      },
+      {
+        "clock": "mclk3",
+        "MND_width_absent_at_intro": true
+      }
+    ],
+    "original_helper_requires_nonzero_mnd_width_for_programming": true,
+    "original_helper_requires_nonzero_mnd_width_for_readback": true,
+    "original_sources_SHA256": {
+      "mmcc-msm8974.c": "aa3ccae5e26fde569891f1110d63336b5504702bd23eb88f0eff65b72aaf5313",
+      "clk-rcg2.c": "8725bd50ab25a43faa347c0cc1b32afb105df732da22aca97c03d564fcf495d8"
+    },
+    "primary_historical_git_objects_verified": true
+  },
+  "fixture_assumptions": {
+    "CLK_SET_RATE_PARENT_value_verified_against_source_header": true,
+    "header_SHA256": "53c3821fcd72126c98b6ae5cd52e424f960a8735ff5850e1815a428199129481",
+    "fixture_source_SHA256": {
+      "check-clock.py": "92fc5c57e7931c1b4d9fa23b6b60b2e4dff47d5779e849b8c6191048400c0067",
+      "fixture.h": "50f3076ed2d7514a64376fe80e4d7aef771272b2a406d020fc351ae438b99ede"
+    },
+    "parents_assumed_Hz": {
+      "XO": 19200000,
+      "GPLL0": 600000000,
+      "MMPLL0": 800000000
+    },
+    "fixture_limits": "Owned regmap emulation and table-backed CCF parent; no real clock, locking/exclusivity/range changes or CCF set-rate transaction is qualified."
+  },
+  "original_sources": [
+    {
+      "sha": "0bf18e8b12f670f5473879359a55f764ed1dd9f5",
+      "author": "Timothy Schmidt",
+      "email": "timschmidt@gmail.com",
+      "author_date": "2026-10-31T06:27:10-04:00"
+    },
+    {
+      "sha": "4422f09b605034aa706d10f20b999adb8f91b038",
+      "author": "Timothy Schmidt",
+      "email": "timschmidt@gmail.com",
+      "author_date": "2026-10-31T18:59:01-04:00"
+    },
+    {
+      "sha": "d8b212014e69d6b6323773ce6898f224ef4ed0d6",
+      "author": "Stephen Boyd",
+      "email": "sboyd@codeaurora.org",
+      "author_date": "2014-01-15T10:47:31-08:00"
+    }
+  ],
+  "patches_SHA256": {
+    "fixes/0001-clk-qcom-mmcc-msm8974-Use-the-M-N-counter-for-camera.patch": "1d22dbb96af01062f13a81520f0138283a72db8cadc0f454419fb733f25f9e41",
+    "next/0001-clk-qcom-mmcc-msm8974-Use-the-M-N-counter-for-camera.patch": "0f00d0c3dbb3f7a1d1b0b219e548bbd18596e99e2d7769f289a2e9ed5e1c7853",
+    "next/0002-clk-qcom-mmcc-msm8974-Propagate-VFE-AXI-rate-request.patch": "2a77ad78f9a07a99d53ffb75f178d285a4f702c7a43433c02c33dc6b409a17fb"
+  },
+  "diagnostics_SHA256": {
+    "check-clock.py": "92fc5c57e7931c1b4d9fa23b6b60b2e4dff47d5779e849b8c6191048400c0067",
+    "fixture.h": "50f3076ed2d7514a64376fe80e4d7aef771272b2a406d020fc351ae438b99ede"
+  },
+  "wrong_base_preflight_excluded": true,
+  "phone_access": false,
+  "published": false,
+  "maintainer_contact": false,
+  "human_DCO_pending": true,
+  "full_kernel_or_package_built": false,
+  "hardware_qualified": false,
+  "new_RAM_image_prepared": false,
+  "MND_only_driver_identical_on_both_bases": true
+}

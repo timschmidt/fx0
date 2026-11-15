@@ -249,6 +249,16 @@ clocks are not a blocker. Three pieces remain:
    pass. A reproduced null-base calculation in the imported halt feature is
    corrected. This unsigned source draft does not qualify a board, translation,
    power collapse or hardware on that base; MMCC, DTS and physical gates remain.
+
+   The [current-maintainer camera clock drafts](../submissions/mmcc-camera-clocks-current/README.md)
+   now cover the MCLK M/N fix (`747fd18ccba4` on clock fixes) and VFE AXI
+   propagation (`443ed6739ab7` on clock integration). The current baseline
+   reproduces 22 wrong MCLK results among 50 table cases; both corrected
+   candidates pass all 50. Native ARM32 and ARM64 compile-test builds of the
+   driver and clock-path components pass without warnings. The source-extracted
+   CCF rounding fixture forwards the AXI request, with omission/error controls.
+   These are local unsigned host qualifications. DTS, combined-image testing
+   and physical acceptance remain open; the phone was not accessed.
 3. **VFE 4.0 against the 4.1 operations.** The vendor driver has
    MSM8226-specific VFE versions and VBIF setup. Audit reset, interrupts,
    write masters, RDI and bus/QoS before reusing `vfe_ops_4_1`.
