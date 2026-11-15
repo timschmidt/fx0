@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "positive_cases": [
+    "static-complete-Fx0",
+    "runtime-profile-then-gate",
+    "runtime-gate-then-profile",
+    "legacy-PM8941-charger"
+  ],
+  "rejected_property_controls": [
+    {
+      "name": "managed-manual-limit",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "managed-wrong-variant",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "child-without-opt-in",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "runtime-without-opt-in",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "unknown-profile",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "reversed-channel-names",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "missing-voltage-channel",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "extra-channel",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "unknown-policy-property",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "nonboolean-opt-in",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "nonboolean-runtime-marker",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "two-batteries",
+      "expected_property_diagnostic_verified": true
+    }
+  ],
+  "exact_profile_controls": [
+    {
+      "name": "wrong-profile-voltage",
+      "generic_schema_rejected": false,
+      "exact_profile_contract_rejected": true,
+      "actual_probe_info_checks_separately_covered_by_lifetime_fixture": true
+    },
+    {
+      "name": "wrong-profile-capacity",
+      "generic_schema_rejected": false,
+      "exact_profile_contract_rejected": true,
+      "actual_probe_info_checks_separately_covered_by_lifetime_fixture": true
+    }
+  ],
+  "original_full_board_unchanged": true,
+  "original_DTB_SHA256": "c9cba4a019eb80eb5baddd366cefc9ec2f2bb89616d3d47a6ee99dc55498db65",
+  "processed_schema_SHA256": "a50ec48364ba0f53136f9da75ac5d9018ad07c201ae377c9bbe43f37b2ec8b23",
+  "checker_SHA256": "56d7ad0805b1f8ac069fc6ed785b00e1fb62bdd6b78aca842e4c01a8964d4c4c",
+  "selected_charger_policy_battery_schemas_only": true,
+  "full_board_schema_or_physical_hardware_qualified": false,
+  "simulated_firmware_profile_and_PMIC": true,
+  "phone_access": false
+}

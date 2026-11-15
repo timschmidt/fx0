@@ -1,0 +1,147 @@
+{
+  "recorded_UTC": "2026-11-15T19:55:34.889619+00:00",
+  "component_heads": {
+    "power_supply": "684f134cd498562f740c4df981343d87f4efb9f2",
+    "USB": "b9f78a3ea07212ef27b36af01ac4d248aec69396",
+    "IIO": "c951f0c851e35879691dd1cb5fda17941a13713f"
+  },
+  "assembly_base": "a7ba24173e4618ace25b68ec36991fb08b7b552e",
+  "integration_head": "e4a1fc9172de8b0bcbf1659b5f1df87d92af9122",
+  "validation_head": "38b038c9742e288153e1dea553c0317233a80206",
+  "applied_patches": [
+    {
+      "route": "power",
+      "original": "eaadbfb6a68d25d715c940b7aaf580406e7e7714",
+      "integration_commit": "da3564f343e5f1e032a8ee86f838597c7ecfa33d",
+      "patch_SHA256": "0252f600ce97fe01352b9342cb8d3972e1b6534fd778c3268bd5cb5e65c67202"
+    },
+    {
+      "route": "power",
+      "original": "00c4833786769902d9cbe6eb9f597062bc939b3d",
+      "integration_commit": "3202f7d4f6ee967254bdc1b8b54677570b83fe17",
+      "patch_SHA256": "32f6509d63d065b64de8495495f850e214e8a72da458e559645eb7fcfc7c8194"
+    },
+    {
+      "route": "power",
+      "original": "5622a5931f1730d4e0d86e368142db582e3579c1",
+      "integration_commit": "79617f20e1541f711438cc5c70602cddbc57439a",
+      "patch_SHA256": "0f453dfd5bdbd724eecff5df47067c1de5e50acec35bf42f7898817d1b0010df"
+    },
+    {
+      "route": "power",
+      "original": "aa0612550405d517beee26e9ba337844227ea3c4",
+      "integration_commit": "84eb746a0a75948a386d1d10e0fa898638e999df",
+      "patch_SHA256": "6452cd42e379c46d7dc411ab1613edc9e453f9cb9a89de32487a23d7cdec8b42"
+    },
+    {
+      "route": "power",
+      "original": "3bbea76c83dc474ff4766fe9be2fcbe32f0fe7c5",
+      "integration_commit": "f0aa795373e11246aa93d5d9644120e4128a7f09",
+      "patch_SHA256": "021717191f5d4072135b8094895da3c2efb70488fcc3cd478b3de2a2f06d5f3f"
+    },
+    {
+      "route": "power",
+      "original": "99b8032e634f2a26d7b8d16cfef82b82b934f37a",
+      "integration_commit": "39815af034e046b453d1a6894a4f5c01773011c8",
+      "patch_SHA256": "c92c84bf7b618925c3b3ba5d4e0e7b381dbd2517c353d9ef6c536b4f6d61f589"
+    },
+    {
+      "route": "power",
+      "original": "684f134cd498562f740c4df981343d87f4efb9f2",
+      "integration_commit": "2856363c8d9c2d302aba6ef7e3893c90189da42f",
+      "patch_SHA256": "8b2be6ed7113476e217b1a79fffe8d5de2eb54f3d0e6e4f7b0b20c4503fd5369"
+    },
+    {
+      "route": "USB",
+      "original": "220f7081ae5c08276320fdc8801db2706901ac6f",
+      "integration_commit": "96759024357b4f8c81880ed1b93b328bb215f667",
+      "patch_SHA256": "8f409a4ff070fdf3f3d09373e0aee9758f69ec1c5867783341bab5a555210a70"
+    },
+    {
+      "route": "USB",
+      "original": "b9f78a3ea07212ef27b36af01ac4d248aec69396",
+      "integration_commit": "dc62e4e47d5927ea0f9b2ea30f97d8cba88349e8",
+      "patch_SHA256": "6e653952490a10677b5722e94a5e89e91c9553569d890666e0917d3e262bfd9d"
+    },
+    {
+      "route": "IIO",
+      "original": "c951f0c851e35879691dd1cb5fda17941a13713f",
+      "integration_commit": "e4a1fc9172de8b0bcbf1659b5f1df87d92af9122",
+      "patch_SHA256": "98cf8803ca15d75ed515c01c5120e1a89103c4f45ddfa94275e12ed94dcfd731"
+    }
+  ],
+  "runtime_files_byte_identical_to_component_qualifications": true,
+  "native_profiles": [
+    {
+      "source_head": "38b038c9742e288153e1dea553c0317233a80206",
+      "source_tree": "6e0ba1a3abbca093ab45e0c50010cb3e1eb23fd2",
+      "config_SHA256": "804869ae0644d8c5ce98ba891733a850255b30042bf6dda4a992e1ca66101b09",
+      "objects": {
+        "drivers/iio/adc/qcom-spmi-vadc.o": "7000d206f9d15b82624a1f2dc9985fa4729e9e6acb5fc007983844df30181f5d",
+        "drivers/iio/adc/qcom-vadc-common.o": "2922a4281b86f5bda1c2f9d89fe536462d9d814bbc513bd4cdcf446a8c22af6b",
+        "drivers/iio/inkern.o": "0ee2c4e4c43e3f8855ccf050b55ea24d2da21ef998d375ff661b4a238eb5a720",
+        "drivers/power/supply/qcom_smbb.o": "4200b0a674160a8846e8a140da38c1c9b20b2a41d38ba265ad3293a2a80eb94a",
+        "drivers/usb/chipidea/ci_hdrc.o": "c30d3d9aa1274e6e8094d944eaa89499c0e823d42f38112564738d452f96eae9",
+        "drivers/usb/chipidea/ci_hdrc_imx.o": "e2a25e1eadc21dcd8e0038d65ace74794c221f82d8c9ca3d5d375776febf159d",
+        "drivers/usb/chipidea/ci_hdrc_msm.o": "90f346166e3ad9d4c98b26725e3926afe0b78ee70cb9f3983a6f829fe80c6c2e",
+        "drivers/usb/chipidea/ci_hdrc_npcm.o": "061bc68dfed7b8cb464a47361244f8a20d0b2e28347d26f44976164738c5a930",
+        "drivers/usb/chipidea/ci_hdrc_tegra.o": "4a8fc2eaffd709127992b62cac337b3ae1883e463ecacb1518f50803d298aed9",
+        "drivers/usb/chipidea/ci_hdrc_usb2.o": "bbf914ffd469d2432fcd5301ae93a740133b333435a01999d939a8d912063274",
+        "drivers/usb/chipidea/core.o": "327dd895c0834be51f748151552fbcc3c9e73c2a3e430e4a006cfb2ba0e94cf3",
+        "drivers/usb/chipidea/debug.o": "20ad357ba5d294b17704acbbbdbc523f64ae6c05ab1c49b8d36f476ba172f6db",
+        "drivers/usb/chipidea/host.o": "b89386612e0e14e3c46d99372b12be3378784fb9377090f2be26d2438618c6a7",
+        "drivers/usb/chipidea/otg.o": "aff63efc13e16a67a1ed8a1026c65683465014858fb5149408d0b235c49e0f9b",
+        "drivers/usb/chipidea/trace.o": "a1b0753b1ae1c68fcc32f74d79e595e91ce04553a705660583bd06e66f5b3a46",
+        "drivers/usb/chipidea/udc.o": "940618b38d33badee0e0b7143682643a2706eecbedad008777df915d83e810ef",
+        "drivers/usb/chipidea/ulpi.o": "9a355b5732a4512f7c27859adce50c6f4ce7865efed0bf7cdc124f1c3e0c4c28",
+        "drivers/usb/chipidea/usbmisc_imx.o": "f4b228f683f2fb7c433880e14259bd16cd775efdaa80c59bc8007e63c04a01dd"
+      },
+      "passed": true
+    },
+    {
+      "source_head": "38b038c9742e288153e1dea553c0317233a80206",
+      "source_tree": "6e0ba1a3abbca093ab45e0c50010cb3e1eb23fd2",
+      "config_SHA256": "1cdec236962e699d17da1ed1c74727a18f0164acde01255e864a95cc9f76b9c3",
+      "objects": {
+        "drivers/iio/adc/qcom-spmi-vadc.o": "041f74dfc7851b016a4498b3989e59436f7cb46fe03f87c68013169097c81f85",
+        "drivers/iio/adc/qcom-vadc-common.o": "b71eefbeefda7da4b0fdbce07c2385d1570dbff6d7bd91e25d0972d3bdf7fedc",
+        "drivers/iio/inkern.o": "5357a819b49837c80be2bc700a2e97bd5c896a0d6f67f95ae8b387886543e989",
+        "drivers/power/supply/qcom_smbb.o": "db589f87b160358866de9865b1c4962d94e9cf8fa657ff812285c7050e6c385a",
+        "drivers/usb/chipidea/ci_hdrc.o": "7d0f76649f82e1cc87f25feeb6d0be15b95f56aeb277c4af40836f327130c5f5",
+        "drivers/usb/chipidea/ci_hdrc_imx.o": "78b00d5739f356a59f7fbe3e9738f6f55c8d36dd3708a6271d8fe292255b1a01",
+        "drivers/usb/chipidea/ci_hdrc_msm.o": "0697278d77050589b695da53d5be8c5803097aaa722885552d0ac27217a1df7f",
+        "drivers/usb/chipidea/ci_hdrc_npcm.o": "cb1228d68efc0697b648d68b6c00ce013b8fdc08dd14acd1119677158d039700",
+        "drivers/usb/chipidea/ci_hdrc_pci.o": "0b390c85b4756c6fafdea3431d1a5509704e8874f2fea814e7cf2fb7886b9ffe",
+        "drivers/usb/chipidea/ci_hdrc_tegra.o": "c4a799374dc83f08ca33803e284a88c2b79f56768669e20150b1edb1087205d3",
+        "drivers/usb/chipidea/ci_hdrc_usb2.o": "8a6988a98d44c74841a03d8bf1e8cb32e6a69c714a197560c0c1785312cae017",
+        "drivers/usb/chipidea/core.o": "f2025f19229c20ec43bca902268e1449a55fca4c1dab8b8e54c51f3b38b55a67",
+        "drivers/usb/chipidea/debug.o": "f9a431232fec84037e61eee5d2e37d8db22a6822784f45eeab32b8742715c6a7",
+        "drivers/usb/chipidea/host.o": "a60c464478f7c6793296a69ac8d9d6829069004b6056268ff95d64879688fcf7",
+        "drivers/usb/chipidea/otg.o": "a72cf374a43e99d2b5378778660bb9cd0343d8914bc9defacdf1bf8682b7a541",
+        "drivers/usb/chipidea/trace.o": "93f9352241fffb9a04c743fd1ee7ed049f9e95f2dc13e25d273062a54765c8db",
+        "drivers/usb/chipidea/udc.o": "0cdc1d761ee499b44534cc6f92dd07737a4f96f186e7f6e77817759f5ed67e8e",
+        "drivers/usb/chipidea/ulpi.o": "4c046380f5d31a8a91b7a86f1e736c8efa17bda660999974e8754e30748783c8",
+        "drivers/usb/chipidea/usbmisc_imx.o": "694c2e394faab20c62f5316418f6b5726f36282de6fcebbeb085f2a434e0da4e"
+      },
+      "passed": true
+    }
+  ],
+  "native_objects": 37,
+  "sensor_policy_cases": 39,
+  "sensor_policy_broken_controls_rejected": 3,
+  "sanitizers": [
+    "ASan",
+    "UBSan"
+  ],
+  "compiled_DTBs": 19,
+  "unmodified_complete_Fx0_DTB_SHA256": "c9cba4a019eb80eb5baddd366cefc9ec2f2bb89616d3d47a6ee99dc55498db65",
+  "component_policy_model_lifecycle_and_USB_suites_reused_by_exact_source_hash": true,
+  "combined_USB_worker_to_power_supply_actuator_host_chain_executed": false,
+  "full_kernel_link_package_or_physical_qualification": false,
+  "human_DCO_and_proposed_policy_maintainer_entry_review_pending": true,
+  "phone_access_by_this_qualification": false,
+  "maintainer_contact": false,
+  "published": false,
+  "audio_descriptions_retained": true,
+  "audio_execution_tests": false
+}

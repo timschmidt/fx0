@@ -1,0 +1,54 @@
+From 99b8032e634f2a26d7b8d16cfef82b82b934f37a Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 14 Nov 2026 13:49:01 -0500
+Subject: [PATCH] dt-bindings: power: supply: qcom,smbb: describe
+ gadget-managed input
+
+Describe the explicit PM8226 opt-in for gadget-managed USB input limits.
+Initialize its input at the conservative budget and expose programmed
+and effective limits as read-only userspace attributes. Reject a
+conflicting manual USB limit and opt-in on unsupported charger variants.
+
+Carry the power-supply portion of Timothy Schmidt's d10a194d04f0 with
+Codex:GPT-6 assistance. The controller reference and consumer are a
+separate USB subsystem change.
+---
+ .../power/supply/qcom,pm8941-charger.yaml         | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml b/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml
+index 6db552f16..4b4044bb6 100644
+--- a/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml
++++ b/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml
+@@ -11,6 +11,14 @@ maintainers:
+ 
+ allOf:
+   - $ref: power-supply.yaml#
++  - if:
++      required:
++        - qcom,usb-gadget-current-limit
++    then:
++      properties:
++        compatible:
++          const: qcom,pm8226-charger
++        usb-charge-current-limit: false
+ 
+ properties:
+   qcom,software-charge-control:
+@@ -20,6 +28,13 @@ properties:
+       already be inhibited before native dependencies can defer probe. The
+       parent keeps charging off until its policy child validates fresh inputs.
+ 
++  qcom,usb-gadget-current-limit:
++    type: boolean
++    description: |
++      Let the USB gadget controller manage the PM8226 USB input limit.
++      Initialize the limit to 100000 uA and expose the effective and
++      programmed limits as read-only power supply attributes.
++
+   qcom,boot-charge-inhibited:
+     type: boolean
+     description: |
+-- 
+2.56.0
+

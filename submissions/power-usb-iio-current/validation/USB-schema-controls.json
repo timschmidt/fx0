@@ -1,0 +1,110 @@
+{
+  "cases": 14,
+  "results": [
+    {
+      "case": "complete-unchanged-Fx0",
+      "expected_valid": true,
+      "observed_valid": true,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "unmanaged-controller",
+      "expected_valid": true,
+      "observed_valid": true,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "managed-host",
+      "expected_valid": false,
+      "observed_valid": false,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "managed-OTG",
+      "expected_valid": false,
+      "observed_valid": false,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "managed-no-mode",
+      "expected_valid": false,
+      "observed_valid": false,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "managed-role-switch",
+      "expected_valid": false,
+      "observed_valid": false,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "two-suppliers",
+      "expected_valid": false,
+      "observed_valid": false,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "empty-supplier",
+      "expected_valid": false,
+      "observed_valid": false,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "string-supplier",
+      "expected_valid": false,
+      "observed_valid": false,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "PHY-missing-argument",
+      "expected_valid": false,
+      "observed_valid": false,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "PHY-extra-argument",
+      "expected_valid": false,
+      "observed_valid": false,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "unmanaged-role-flag",
+      "expected_valid": true,
+      "observed_valid": true,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "unmanaged-role-string",
+      "expected_valid": false,
+      "observed_valid": false,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    },
+    {
+      "case": "unmanaged-role-cells",
+      "expected_valid": false,
+      "observed_valid": false,
+      "expected_property_diagnostic_verified": true,
+      "expected_result_verified": true
+    }
+  ],
+  "passed": true,
+  "schema_SHA256": "a50ec48364ba0f53136f9da75ac5d9018ad07c201ae377c9bbe43f37b2ec8b23",
+  "checker_SHA256": "2dcdaddd0744b9c155dcfae263c780783ba6cc9d0a39aedd59b4b7793145ecb3",
+  "global_processed_property_type_catalog_required": true,
+  "malformed_role_flag_rejected_by_typed_DTB_decode": true,
+  "full_board_unfiltered_or_hardware_qualified": false,
+  "phone_access": false
+}

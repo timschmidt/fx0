@@ -1,0 +1,59 @@
+From 220f7081ae5c08276320fdc8801db2706901ac6f Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 14 Nov 2026 13:49:01 -0500
+Subject: [PATCH] dt-bindings: usb: chipidea: describe a gadget current-budget
+ supply
+
+Describe the optional charger reference used to forward USB gadget
+current requests to a USB input power supply. Require peripheral mode
+and exclude a role-switch controller when this reference is present.
+
+Carry the USB-controller portion of Timothy Schmidt's d10a194d04f0.
+The separate PM8226 provider binding and charging policy are dependencies
+of the Fx0 integration and are not part of this USB controller change.
+Codex:GPT-6 assisted the current-tree adaptation and qualification.
+---
+ .../devicetree/bindings/usb/ci-hdrc-usb2.yaml | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+index 620b56491..3c86cf6fa 100644
+--- a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
++++ b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+@@ -76,6 +76,14 @@ properties:
+     type: boolean
+     deprecated: true
+ 
++  power-supplies:
++    description:
++      Charger supplying the gadget through VBUS. The controller forwards
++      USB current requests to its USB input supply in peripheral mode
++      when using a generic PHY.
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    maxItems: 1
++
+   ulpi:
+     type: object
+     additionalProperties: false
+@@ -92,6 +100,18 @@ allOf:
+   - $ref: chipidea,usb2-common.yaml#
+   - $ref: usb-hcd.yaml#
+   - $ref: usb-drd.yaml#
++
++  - if:
++      required:
++        - power-supplies
++    then:
++      properties:
++        dr_mode:
++          const: peripheral
++        usb-role-switch: false
++      required:
++        - dr_mode
++
+   - if:
+       properties:
+         compatible:
+-- 
+2.56.0
+

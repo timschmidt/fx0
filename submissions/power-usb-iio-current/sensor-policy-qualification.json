@@ -1,0 +1,45 @@
+{
+  "started_UTC": "2026-11-15T19:51:55.141488+00:00",
+  "variants": [
+    {
+      "name": "candidate",
+      "returncode": 0,
+      "expected_result_verified": true,
+      "C_source_SHA256": "2f5341028450dae39237651ac2ebf880c784388a49ea0d296d8df4f5922761b1"
+    },
+    {
+      "name": "missing-advertisement",
+      "returncode": -6,
+      "expected_result_verified": true,
+      "C_source_SHA256": "b552f9dcdd842a4180a4026612d9c55ae2d4f5c3e1eaede94ffebb0a08922c44"
+    },
+    {
+      "name": "wrong-processed-denominator",
+      "returncode": -6,
+      "expected_result_verified": true,
+      "C_source_SHA256": "37049ac001ca61a14c450f67d5d25f4bd2fdd06bbdd8f2cd3642e0f433a5c814"
+    },
+    {
+      "name": "lost-consumer-precision",
+      "returncode": -6,
+      "expected_result_verified": true,
+      "C_source_SHA256": "6ebd7b688ea2ac5dd71d9ccc7c069063910056c47294ad0004aa1e57455fb535"
+    }
+  ],
+  "checker_SHA256": "815e7eccede8c970d5db64371152677f9e3c4505475bb13a884865174d5b0685",
+  "support_SHA256": "7c6f9d471b8594e922edd557029451b1057f97d653297f57ab9663cc72633c33",
+  "phone_access": false,
+  "hardware_and_kernel_driver_core_executed": false,
+  "conversion_IO_calibration_workqueues_and_PMIC_synthetic": true,
+  "actual_default_scaling_IIO_wrappers_and_policy_sampling_executed": true,
+  "source_file_SHA256": {
+    "drivers/iio/adc/qcom-spmi-vadc.c": "be99a15ed423cad4585d67de3dcf85d840b2200f929fae141e8b23a81468dcf2",
+    "drivers/iio/adc/qcom-vadc-common.c": "45925ae172504d62783374fbb37a13e0eb1fb9fc099dacfe9590c35b91de1910",
+    "drivers/iio/inkern.c": "d8877629bb34e01044d18024fb1f70c4aaeece3c992428bbc59e0c879af9552d",
+    "drivers/power/supply/qcom_smbb.c": "27b8da14ae1b035731c35829a5809bc6bbd5797967413a95b7c95d25e2913741",
+    "drivers/power/supply/qcom_smbb_policy.h": "528af44a2c469278115b105eb39a0eae188fe31960d7c2c7cc2250de1a8523fe"
+  },
+  "cases": 39,
+  "passed": true,
+  "finished_UTC": "2026-11-15T19:51:56.131837+00:00"
+}

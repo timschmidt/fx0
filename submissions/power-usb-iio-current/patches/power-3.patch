@@ -1,0 +1,137 @@
+From 5622a5931f1730d4e0d86e368142db582e3579c1 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 30 Oct 2026 14:47:33 -0400
+Subject: [PATCH] dt-bindings: power: supply: describe the Fx0 charging policy
+ proposal
+
+Describe the optional SMBB policy child and its two IIO voltage inputs.
+Require software-control opt-in for the policy, runtime charge-inhibit
+marker and selected pack profile. Identify the proposed TOCAD Madai
+profile without supplying a fallback for unknown packs.
+
+Preserve Timothy Schmidt's eb57ff400ba6 development interface, including
+its explicit experimental status. Codex:GPT-6 assisted this current-tree
+port. Runtime firmware must provide the identified battery data and a
+verified inhibited/conservative handoff; static board data cannot prove
+those hardware conditions.
+Propose narrow maintainer coverage using the existing binding owner;
+human review of that entry remains required.
+---
+ .../power/supply/lg,madai-charge-policy.yaml  | 38 +++++++++++++++++++
+ .../power/supply/qcom,pm8941-charger.yaml     | 30 +++++++++++++++
+ MAINTAINERS                                   |  6 +++
+ 3 files changed, 74 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/power/supply/lg,madai-charge-policy.yaml
+
+diff --git a/Documentation/devicetree/bindings/power/supply/lg,madai-charge-policy.yaml b/Documentation/devicetree/bindings/power/supply/lg,madai-charge-policy.yaml
+new file mode 100644
+index 000000000..64ffdda05
+--- /dev/null
++++ b/Documentation/devicetree/bindings/power/supply/lg,madai-charge-policy.yaml
+@@ -0,0 +1,38 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/power/supply/lg,madai-charge-policy.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: LG Fx0 charging policy development interface
++
++maintainers:
++  - Timothy Schmidt <timschmidt@gmail.com>
++
++description: |
++  Experimental policy child of the Fx0 SMBB charger. The parent remains bound
++  with battery charging inhibited while these managed suppliers are unavailable.
++  A runtime-identified TOCAD Madai profile and verified firmware charge-inhibit
++  handoff are required. The raw thermistor voltage is converted without endpoint
++  clamping. These properties are a development proposal, not a stable ABI.
++
++properties:
++  compatible:
++    const: lg,madai-charge-policy
++
++  io-channels:
++    items:
++      - description: Raw battery thermistor voltage, processed in millivolts
++      - description: Battery voltage sense channel
++
++  io-channel-names:
++    items:
++      - const: thermistor
++      - const: voltage
++
++required:
++  - compatible
++  - io-channels
++  - io-channel-names
++
++additionalProperties: false
+diff --git a/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml b/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml
+index ca4fb7fa0..6db552f16 100644
+--- a/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml
++++ b/Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml
+@@ -13,6 +13,27 @@ allOf:
+   - $ref: power-supply.yaml#
+ 
+ properties:
++  qcom,software-charge-control:
++    type: boolean
++    description: |
++      Experimental firmware-to-native software charging handoff. Charging must
++      already be inhibited before native dependencies can defer probe. The
++      parent keeps charging off until its policy child validates fresh inputs.
++
++  qcom,boot-charge-inhibited:
++    type: boolean
++    description: |
++      Runtime firmware marker generated only after verified charge inhibition
++      and conservative BTC configuration. Must not be authored in a static DT.
++
++  lg,battery-charge-profile:
++    $ref: /schemas/types.yaml#/definitions/string
++    const: tocad-madai
++    description: Runtime firmware-selected pack profile; no unknown-type fallback.
++
++  charge-policy:
++    $ref: lg,madai-charge-policy.yaml#
++
+   compatible:
+     enum:
+       - qcom,pm8226-charger
+@@ -140,6 +161,15 @@ properties:
+       or allow input voltage from external VBUS for charging. In the hardware, the supply for
+       this regulator comes from usb_otg_in-supply.
+ 
++dependencies:
++  charge-policy:
++    - qcom,software-charge-control
++  qcom,boot-charge-inhibited:
++    - qcom,software-charge-control
++  lg,battery-charge-profile:
++    - qcom,software-charge-control
++    - monitored-battery
++
+ required:
+   - compatible
+   - reg
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 93abbb315..aaf137dd1 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -15187,6 +15187,12 @@ S:	Maintained
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/hid/hid.git
+ F:	drivers/hid/hid-letsketch.c
+ 
++LG FX0 CHARGING POLICY
++M:	Timothy Schmidt <timschmidt@gmail.com>
++L:	linux-pm@vger.kernel.org
++S:	Maintained
++F:	Documentation/devicetree/bindings/power/supply/lg,madai-charge-policy.yaml
++
+ LG LAPTOP EXTRAS
+ M:	Matan Ziv-Av <matan@svgalib.org>
+ L:	platform-driver-x86@vger.kernel.org
+-- 
+2.56.0
+

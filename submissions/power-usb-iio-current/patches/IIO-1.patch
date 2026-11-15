@@ -1,0 +1,63 @@
+From c951f0c851e35879691dd1cb5fda17941a13713f Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 14 Nov 2026 13:06:58 -0500
+Subject: [PATCH] iio: adc: qcom-spmi-vadc: expose processed battery voltages
+
+Expose calibrated processed voltages for the existing VBAT_SNS and
+LR_MUX1_BAT_THERM raw channels. Keep their raw reads, names, types and
+prescale ratios, and leave all other channel records unchanged.
+
+For absolute calibration, return a fractional millivolt result with a
+denominator of 1000. This gives new processed interfaces the IIO voltage
+units while allowing processed-scale consumers to retain microvolt
+precision. Preserve existing processed behavior on legacy channels.
+
+Carry Timothy Schmidt's e0e89468dcfc and its preserved 2457eebe0bb6
+prerequisite onto the current IIO maintainer tree. Codex:GPT-6 assisted
+the port and actual-callback/channel-table ASan/UBSan qualification.
+This adds interfaces to raw-only inputs; physical accuracy and the
+combined charging policy remain separate qualification requirements.
+---
+ drivers/iio/adc/qcom-spmi-vadc.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/iio/adc/qcom-spmi-vadc.c b/drivers/iio/adc/qcom-spmi-vadc.c
+index d7a2df3c8..87ed0841c 100644
+--- a/drivers/iio/adc/qcom-spmi-vadc.c
++++ b/drivers/iio/adc/qcom-spmi-vadc.c
+@@ -466,6 +466,14 @@ static int vadc_read_raw(struct iio_dev *indio_dev,
+ 		if (ret)
+ 			break;
+ 
++		/* New battery voltage inputs use the IIO millivolt ABI. */
++		if (prop->calibration == VADC_CALIB_ABSOLUTE &&
++		    (chan->channel == VADC_VBAT_SNS ||
++		     chan->channel == VADC_LR_MUX1_BAT_THERM)) {
++			*val2 = 1000;
++			return IIO_VAL_FRACTIONAL;
++		}
++
+ 		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_RAW:
+ 		prop = &vadc->chan_props[chan->address];
+@@ -563,7 +571,7 @@ static const struct vadc_channels vadc_chans[] = {
+ 	VADC_CHAN_NO_SCALE(SPARE1_03, 1)
+ 	VADC_CHAN_NO_SCALE(USB_ID_MV, 1)
+ 	VADC_CHAN_VOLT(VCOIN, 1, SCALE_DEFAULT)
+-	VADC_CHAN_NO_SCALE(VBAT_SNS, 1)
++	VADC_CHAN_VOLT(VBAT_SNS, 1, SCALE_DEFAULT)
+ 	VADC_CHAN_VOLT(VSYS, 1, SCALE_DEFAULT)
+ 	VADC_CHAN_TEMP(DIE_TEMP, 0, SCALE_PMIC_THERM)
+ 	VADC_CHAN_VOLT(REF_625MV, 0, SCALE_DEFAULT)
+@@ -608,7 +616,7 @@ static const struct vadc_channels vadc_chans[] = {
+ 	VADC_CHAN_NO_SCALE(P_MUX15_1_3, 1)
+ 	VADC_CHAN_NO_SCALE(P_MUX16_1_3, 1)
+ 
+-	VADC_CHAN_NO_SCALE(LR_MUX1_BAT_THERM, 0)
++	VADC_CHAN_VOLT(LR_MUX1_BAT_THERM, 0, SCALE_DEFAULT)
+ 	VADC_CHAN_VOLT(LR_MUX2_BAT_ID, 0, SCALE_DEFAULT)
+ 	VADC_CHAN_NO_SCALE(LR_MUX3_XO_THERM, 0)
+ 	VADC_CHAN_NO_SCALE(LR_MUX4_AMUX_THM1, 0)
+-- 
+2.56.0
+
