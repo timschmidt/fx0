@@ -93,6 +93,16 @@ candidate/return boot identities. Once BOOT intent begins, failures observe the
 independent return and attempt full installed-r1 verification without another
 BOOT/reset/reboot command.
 
+Kernel error matching uses word boundaries for `BUG:`, `Oops:` and the IOMMU
+`fault` token. Normal `debug:`, `ramoops:` and IOMMU `Default domain type`
+announcements must not become errors. Genuine errors on a line containing
+those normal labels still count. The original completed repeat exposed these
+three false positives; its failed controller result and private observations
+are preserved. The corrected checker also rejects the real context fault in
+the retained first-trial tail. This changes host-side classification only;
+the r2 image and all remaining runtime checks are unchanged. A revised private
+plan binds the new checker, fresh installed-r1 baseline and operator receipt.
+
 The public fixtures use synthetic image/baseline profiles and block device
 providers by default. They run actual disposable host children, including a
 child that exits 0 on termination after deadline. Observer/native responses and

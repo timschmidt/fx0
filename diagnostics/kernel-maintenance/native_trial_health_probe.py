@@ -8,6 +8,21 @@ def sha(path):
         return hashlib.file_digest(stream,'sha256').hexdigest()
 def out(*command): return subprocess.check_output(command,text=True,timeout=15).strip()
 
+def kernel_pattern_counts(log):
+    """Count error tokens without matching normal debug/ramoops/default text."""
+    patterns = {
+        r'BUG:': r'\bBUG:',
+        r'Oops:': r'\bOops:',
+        r'Kernel panic': r'Kernel panic',
+        r'CFI failure': r'CFI failure',
+        r'soft lockup': r'soft lockup',
+        r'rcu.*stall': r'rcu.*stall',
+        r'mdp5.*underrun': r'mdp5.*underrun',
+        r'IOMMU.*fault': r'IOMMU.*\bfault\b',
+    }
+    return {name: len(re.findall(pattern, log, re.I))
+            for name, pattern in patterns.items()}
+
 def main():
     if sys.flags.optimize:raise RuntimeError('Optimized Python is forbidden')
     parser=argparse.ArgumentParser()
@@ -42,8 +57,7 @@ def main():
     for p in policies:
         assert (p/'scaling_governor').read_text().strip()=='schedutil' and (p/'scaling_max_freq').read_text().strip()=='787200'
     log=subprocess.check_output(['dmesg'],text=True)
-    patterns=[r'BUG:',r'Oops:',r'Kernel panic',r'CFI failure',r'soft lockup',r'rcu.*stall',r'mdp5.*underrun',r'IOMMU.*fault']
-    counts={pattern:len(re.findall(pattern,log,re.I)) for pattern in patterns};assert not any(counts.values()),counts
+    counts=kernel_pattern_counts(log);assert not any(counts.values()),counts
     print(json.dumps(dict(boot_id=boot,exact_r2_notes_verified=True,all478_new_module_metadata_files_verified=True,
         early_static_helper_alive_and_exact_binary=True,primary_return_timer_active=True,
         four_cpus_schedutil_787200_max=True,Sway_PID=int(sway),gesture_PID=int(gesture),touch_device_open=True,
