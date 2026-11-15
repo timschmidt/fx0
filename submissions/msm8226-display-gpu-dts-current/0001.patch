@@ -1,0 +1,70 @@
+From 3379290a7d7fa2ac831e13b66b21be26d41eabed Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 14 Nov 2026 23:05:54 -0500
+Subject: [PATCH] ARM: dts: qcom: msm8226: Describe the display IOMMU
+
+Describe the global register window, non-secure scanout bank and two
+secured context banks, MDP clocks, GDSC and SCM secure ID. Preserve the
+complete existing description and leave board enablement separate.
+
+Refresh the existing implementation from 6c99f0648715, abe11294089a
+onto the current Qualcomm ARM32 base, retaining the platform data.
+The display change combines its original context-bank follow-up; its Fx0
+board edits remain in the complete board awaiting its other prerequisites.
+
+Original implementation by Timothy Schmidt.
+Refreshed with OpenAI Codex
+assistance. Human review and DCO certification remain pending.
+---
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 35 ++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+index f5d40f0ab..7a5bbbd12 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+@@ -1282,6 +1282,41 @@ mdss_dsi0_phy: phy@fd922a00 {
+ 			};
+ 		};
+ 
++		mdp_iommu: iommu@fd928000 {
++			compatible = "qcom,msm8226-mdp-iommu";
++			reg = <0xfd928000 0x2600>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			#iommu-cells = <1>;
++			ranges = <0 0xfd930000 0x3000>;
++
++			clocks = <&mmcc MDSS_AHB_CLK>,
++				 <&mmcc MDSS_AXI_CLK>;
++			clock-names = "iface", "bus";
++			power-domains = <&mmcc MDSS_GDSC>;
++			qcom,iommu-secure-id = <1>;
++
++			status = "disabled";
++
++			iommu-ctx@0 {
++				compatible = "qcom,msm-iommu-v1-ns";
++				reg = <0x0 0x1000>;
++				interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
++			};
++
++			iommu-ctx@1000 {
++				compatible = "qcom,msm-iommu-v1-sec";
++				reg = <0x1000 0x1000>;
++				interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
++			};
++
++			iommu-ctx@2000 {
++				compatible = "qcom,msm-iommu-v1-sec";
++				reg = <0x2000 0x1000>;
++				interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
++			};
++		};
++
+ 		camss: camss@fda0ac00 {
+ 			compatible = "qcom,msm8226-camss";
+ 			reg = <0xfda0ac00 0x200>,
+-- 
+2.56.0
+

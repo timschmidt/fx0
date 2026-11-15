@@ -1,0 +1,705 @@
+{
+  "recorded_UTC": "2026-11-15T04:14:56.565307+00:00",
+  "source_refresh": {
+    "recorded_UTC": "2026-11-15T04:05:54.969334+00:00",
+    "source_repository": "worktrees/linux-fx0-dts-current-01",
+    "branch": "development/fx0-display-gpu-dts-current-01",
+    "head": "6155789433f4c828677b67b9d47c22b2a8547aba",
+    "tree": "e083554fc132534f9bd38fbf61327bade089b344",
+    "parent": "92faf0cd70bcf96a71cd554e64a87670a0b70a9f",
+    "official_base": "ae2005cea2e4f84692268e54199bb03f5c6f4558",
+    "official_ARM32_ref_reverified": "ae2005cea2e4f84692268e54199bb03f5c6f4558",
+    "official_ref_recheck_sandbox_DNS_failure_then_successful_escalated_read": true,
+    "commits": [
+      {
+        "head": "3379290a7d7fa2ac831e13b66b21be26d41eabed",
+        "original_commits": [
+          "6c99f06487157c3bf8f1ed58e22125fba3266fce",
+          "abe11294089af215e9613de912d4a6e4628356de"
+        ],
+        "node_SHA256": "71e46a943b2d99323ff721f83c0a6b92bfa0d9aad306b2202b1079d229b91d71",
+        "node_byte_identical": true,
+        "agent_added_Signed_off_by": false
+      },
+      {
+        "head": "6155789433f4c828677b67b9d47c22b2a8547aba",
+        "original_commits": [
+          "dad2d15ff6bac5213e9665627997abe5013b4607"
+        ],
+        "node_SHA256": "2106c8896d5b5184fbacd973776041474435b98c95c4157d86b3c6e37e66fd35",
+        "node_byte_identical": true,
+        "agent_added_Signed_off_by": false
+      }
+    ],
+    "common_DTS_SHA256": "75b72310cfde068515560a1c303a0a350e6be9517d8e4abb24bcef389f121247",
+    "guidance_hashes_verified": {
+      "README": "d9e6892ff2c83807c34f4aeb06bff724068803d0e03470bfb81a8f5cbde5f090",
+      "Documentation/process/coding-assistants.rst": "9e5b0b0141195df17150125b7c087a06fa38eacd4c96e03dd5eba0f27a56d17b",
+      "Documentation/process/coding-style.rst": "332454d2ab9a0462dd9f292c52291cf3b5e1afcd638aa06df15f557c47a126f5",
+      "Documentation/process/submitting-patches.rst": "7f7b46a27ffbc71654af03a07e55345229138a7f4d3b0c70bf736b2551100355",
+      "Documentation/process/generated-content.rst": "828f797e5827530bf23c61f9d893f36aa48c2bff01d2001e0b48ecf21dc6bc2f",
+      "Documentation/process/license-rules.rst": "635a61aa47349007033c64fcdf403d33be35040b62284494bbbd4a9b546ec06d",
+      "Documentation/process/threat-model.rst": "2ca392f6b448b6ff39a6c7bbeab133f0c005470cd19a026bb4cbe59a7df6b30b",
+      "Documentation/process/security-bugs.rst": "0918dcfa7979f348c9004bf3ce6e183507367185fe69f4e0c7688521e9346f40",
+      "Documentation/process/development-process.rst": "f24d59021efe8f62eca826b750c89b5d4907af4068657cbfa690e04cbadc6950",
+      "Documentation/process/submit-checklist.rst": "9157fdbc9e2323d6175e0e526e70105348f68ee731ac9a2d9aa6ce6a125d2412",
+      "Documentation/process/1.Intro.rst": "18e0275139d8d378a72eb8a4bdc688ac4ccdc831822862d9308bd598d7a7bad7",
+      "Documentation/process/2.Process.rst": "81e460ab193df312ae9d2384c5e467167223706fb67dbd7f75351e7b55596d0f",
+      "Documentation/process/3.Early-stage.rst": "929b76481c24484abd2cbbfe48805d992b73d25cf7a2ac2a6fe7b415ccb63cd1",
+      "Documentation/process/4.Coding.rst": "cf1bae31184c5b8fc89495a3ce3d105e0172522514f66d0bc6c3e87e21876585",
+      "Documentation/process/5.Posting.rst": "eb9e01452fa5715f17790288efb040154fe5e3c81550c9de2937fac583f2adc0",
+      "Documentation/process/6.Followthrough.rst": "d570e0096b0dfc472b9f731fdd1669bb441b46a80675aed45cf4af62fb58055b",
+      "Documentation/process/7.AdvancedTopics.rst": "58e2891fe77b1b285d085ee23e43938a8fcbd4db4e3e53c579c3ee582c137037",
+      "Documentation/process/8.Conclusion.rst": "a60430109d7b517d78d92189c30797c5639dcbd4e0bae0629aea62c4fda54b61"
+    },
+    "phone_access": false,
+    "published": false
+  },
+  "source_branch": "development/fx0-display-gpu-dts-current-01",
+  "source_head": "6155789433f4c828677b67b9d47c22b2a8547aba",
+  "source_tree": "e083554fc132534f9bd38fbf61327bade089b344",
+  "source_parent": "92faf0cd70bcf96a71cd554e64a87670a0b70a9f",
+  "source_base": "ae2005cea2e4f84692268e54199bb03f5c6f4558",
+  "validation_head": "aef6a192d40ab543206b0b7a3557bb7d8a90879f",
+  "validation_tree": "6bef853b787cfb5b12d3e45cbdbaad1523ee4e30",
+  "source_validation_common_DTS_identical": true,
+  "schema_only_imports": true,
+  "build": {
+    "started_UTC": "2026-11-15T04:06:44.203407+00:00",
+    "stages": [
+      {
+        "name": "candidate-checkout",
+        "command": [
+          "git",
+          "switch",
+          "-c",
+          "validation/fx0-display-gpu-dts-current-01",
+          "6155789433f4c828677b67b9d47c22b2a8547aba"
+        ],
+        "returncode": 0,
+        "log_SHA256": "3ef32ae2985268754166c854cb94fa1c8209533e3ba7a015760feaf375035d98"
+      },
+      {
+        "name": "validation-stage",
+        "command": [
+          "git",
+          "add",
+          "--",
+          "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml",
+          "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml"
+        ],
+        "returncode": 0,
+        "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "validation-diff-check",
+        "command": [
+          "git",
+          "diff",
+          "--cached",
+          "--check"
+        ],
+        "returncode": 0,
+        "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "validation-commit",
+        "command": [
+          "git",
+          "commit",
+          "-F",
+          "local/fx0-dts-current-01/validation-commit-message.txt"
+        ],
+        "returncode": 0,
+        "log_SHA256": "73ff070ae34a5583eeca5cbe492c4759e9f6ea6d0367eb666559b62c9d915967"
+      },
+      {
+        "name": "candidate-config",
+        "command": [
+          "make",
+          "O=local/fx0-dts-current-01/candidate-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "-j2",
+          "olddefconfig"
+        ],
+        "returncode": 0,
+        "log_SHA256": "2276b2ec070f5c5f24a5aaeed53a599da06a8b2fdf8c1aba8643bf80823f0b3a"
+      },
+      {
+        "name": "candidate-bindings",
+        "command": [
+          "make",
+          "O=local/fx0-dts-current-01/candidate-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "-j2",
+          "CHECK_DTBS=1",
+          "DT_SCHEMA_FILES=media/qcom,msm8226-camss.yaml:iommu/qcom,iommu.yaml:display/msm/gpu.yaml",
+          "dt_binding_check"
+        ],
+        "returncode": 0,
+        "log_SHA256": "ab600a7e90ad679bf0b5e26f62621e274ff8a7a3806a99af14896c799cbf9849"
+      },
+      {
+        "name": "candidate-DTBs",
+        "command": [
+          "make",
+          "O=local/fx0-dts-current-01/candidate-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "-j2",
+          "CHECK_DTBS=1",
+          "DT_SCHEMA_FILES=media/qcom,msm8226-camss.yaml:iommu/qcom,iommu.yaml:display/msm/gpu.yaml",
+          "qcom/msm8226-motorola-falcon.dtb",
+          "qcom/msm8226-motorola-titan.dtb",
+          "qcom/msm8926-sony-xperia-yukon-eagle.dtb",
+          "qcom/qcom-apq8026-asus-sparrow.dtb",
+          "qcom/qcom-apq8026-huawei-sturgeon.dtb",
+          "qcom/qcom-apq8026-lg-lenok.dtb",
+          "qcom/qcom-apq8026-samsung-matisse-wifi.dtb",
+          "qcom/qcom-apq8026-samsung-milletwifi.dtb",
+          "qcom/qcom-msm8226-microsoft-dempsey.dtb",
+          "qcom/qcom-msm8226-microsoft-makepeace.dtb",
+          "qcom/qcom-msm8226-microsoft-moneypenny.dtb",
+          "qcom/qcom-msm8226-samsung-ms013g.dtb",
+          "qcom/qcom-msm8226-samsung-s3ve3g.dtb",
+          "qcom/qcom-msm8926-htc-memul.dtb",
+          "qcom/qcom-msm8926-microsoft-superman-lte.dtb",
+          "qcom/qcom-msm8926-microsoft-tesla.dtb",
+          "qcom/qcom-msm8926-motorola-peregrine.dtb",
+          "qcom/qcom-msm8926-samsung-matisselte.dtb"
+        ],
+        "returncode": 0,
+        "log_SHA256": "3ca90faf9087ac9703749cb74b2a1ebf43bbc13ba0b2d74f6b3dce99fc0639a4"
+      }
+    ],
+    "phone_access": false,
+    "runtime_driver_dependencies_imported": false,
+    "retained_baseline": {
+      "head": "1ac12dcd0ecd3a21c655fd61ac12cbf1953d4848",
+      "config_SHA256": "36c68b90e96f42a4eeaaa5bd902e67793fd68e5321e215a08e4742cc2c065aa4",
+      "DTBs": {
+        "qcom/msm8226-motorola-falcon.dtb": "4b43412b1c9dacc3c7e24b43840b4d0ba55bd6452c9a9851383fcbc7728e1414",
+        "qcom/msm8226-motorola-titan.dtb": "bde92fcf64a8f04316670b0ef2a11ac31c6c3b2375cf9cb04defc80350017fa3",
+        "qcom/msm8926-sony-xperia-yukon-eagle.dtb": "e14b33b79259e63af641358a1f310170db27a89e4e0ad4bdbfa5617f873492ad",
+        "qcom/qcom-apq8026-asus-sparrow.dtb": "fd616deef1d7a5dde5f37f2a1403a55fb2d77b05c74a0c106b4ec00702f194ab",
+        "qcom/qcom-apq8026-huawei-sturgeon.dtb": "c343d2d5a6e3b4e657c8d76dbea0649103ef4c442f9ac80e88ef7b3fd7452d23",
+        "qcom/qcom-apq8026-lg-lenok.dtb": "58b9022f58a5660391e8fbfd13829200404025de03bb2102139504daca4fe877",
+        "qcom/qcom-apq8026-samsung-matisse-wifi.dtb": "b0b4f90a9d3f810e42eab4f59211eb6bcc6284798490e115d61e3dd8fd00c870",
+        "qcom/qcom-apq8026-samsung-milletwifi.dtb": "e4cc39ff25406c623be160a4f55e055ca15b7a0eb95293353000f1193ec1df33",
+        "qcom/qcom-msm8226-microsoft-dempsey.dtb": "fc79982aa53e06c4138b3e498c8d1544b0805d6720bb2e47cfbc0d32440354fc",
+        "qcom/qcom-msm8226-microsoft-makepeace.dtb": "eef5f993dff37968714279abeadea7c2b5cc3c43e47128395fefd9ccb0297b03",
+        "qcom/qcom-msm8226-microsoft-moneypenny.dtb": "f2c4838d0ffc826fe985eb400dd294c469325e6f529e0dc64ed9275af48d1988",
+        "qcom/qcom-msm8226-samsung-ms013g.dtb": "2d563c5286081b01406e99c2cf2b4e526bb72ae394d8fcc14c92acba288de085",
+        "qcom/qcom-msm8226-samsung-s3ve3g.dtb": "0065ac46f9071119498d5ee2baaf34eace4a625d85dc0e1163aa19a92ec0096b",
+        "qcom/qcom-msm8926-htc-memul.dtb": "fc2a87c8e2b5dcb5a6811f8e6d4fe2cfa1d482ffbdc34132cca3553b5084cd0b",
+        "qcom/qcom-msm8926-microsoft-superman-lte.dtb": "9286f89e65e71c4349c14e5e17de5c990ec3756cabdc82c5478e9c86590b845f",
+        "qcom/qcom-msm8926-microsoft-tesla.dtb": "fc033260b302cbb5cc51bf583f7e0c1e4c8ef3c5b555a0f5696ff99c10443dec",
+        "qcom/qcom-msm8926-motorola-peregrine.dtb": "467718895751fea85e031a1251184625e431a93b89d1aab4d796c208dd02d069",
+        "qcom/qcom-msm8926-samsung-matisselte.dtb": "8aefec8e2e9609285581bf5e84405b608712f88d09330dc648dc4c65469688d0"
+      }
+    },
+    "retained_baseline_rebuilt": false,
+    "state": "terminal success",
+    "schema_imports": [
+      {
+        "source_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+        "path": "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml",
+        "SHA256": "ca4eb31b957da834eaf9ccab3f993df1db34ebd186b0795d63f91460681d3f63"
+      },
+      {
+        "source_head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+        "path": "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml",
+        "SHA256": "0888da8dda271d056495c3e5c41bbbfd097b2170c8272fe6b9b5a24696a192bf"
+      }
+    ],
+    "validation_head": "aef6a192d40ab543206b0b7a3557bb7d8a90879f",
+    "candidate": {
+      "head": "aef6a192d40ab543206b0b7a3557bb7d8a90879f",
+      "config_SHA256": "36c68b90e96f42a4eeaaa5bd902e67793fd68e5321e215a08e4742cc2c065aa4",
+      "DTBs": {
+        "qcom/msm8226-motorola-falcon.dtb": "c582b7e287a467e732c56569f38863618bf6395a50bf3b0e3ff2247ef1cb1b9c",
+        "qcom/msm8226-motorola-titan.dtb": "8a24da22f6db4ff0008c9e2bb7765f38739104c94551683461e33cc3b1d3f8d7",
+        "qcom/msm8926-sony-xperia-yukon-eagle.dtb": "5310c0c117deb53eb71d18f657568f8d1a0580d4a2a94511295c582f57c1d2aa",
+        "qcom/qcom-apq8026-asus-sparrow.dtb": "a4be0a575b7dede28679f1ef35e23b4a2d2439322babae554e5c52cfecdc6772",
+        "qcom/qcom-apq8026-huawei-sturgeon.dtb": "f22351013ef33f258927e67fa5cadec9ca93a8c2a5cec5c56725d414824157bb",
+        "qcom/qcom-apq8026-lg-lenok.dtb": "79944dccdadd5fa743a41d2b3dc32e9f216d68afa911433740ffd1f777641120",
+        "qcom/qcom-apq8026-samsung-matisse-wifi.dtb": "8bbe26bf274e39c8abf5150877ac77d6370bf44be9cab623425964a6c26644e0",
+        "qcom/qcom-apq8026-samsung-milletwifi.dtb": "05dd87c0543f2a4c807288d22e8b6ff2562abe46b0723e1981e1417889571dd7",
+        "qcom/qcom-msm8226-microsoft-dempsey.dtb": "7bfdabadeba7506bfaf33b2a8c18f334a9650eb2b17b8decee34020a516de8d9",
+        "qcom/qcom-msm8226-microsoft-makepeace.dtb": "f24e06ddebc3bb612f239daf92d28c94d776f194da516a581d78e242345bd402",
+        "qcom/qcom-msm8226-microsoft-moneypenny.dtb": "5472e316254f456b69d32e3e17814da2f05144d8f007f46a579138231d860a80",
+        "qcom/qcom-msm8226-samsung-ms013g.dtb": "e43476f2d0bca09864094b9bcf6e9baee18d97ef1fba0eb4c3598fe0e2a2a171",
+        "qcom/qcom-msm8226-samsung-s3ve3g.dtb": "9458d034016b92ec3c1140169e64187c02da1b0c811526e53d100d805b269721",
+        "qcom/qcom-msm8926-htc-memul.dtb": "dd99c7cd04fad0540fcc5f481e2d79494e189c4608a4f3bc1cbc39f2a86b5834",
+        "qcom/qcom-msm8926-microsoft-superman-lte.dtb": "efcd021882635b09df4088dd9b9927b1434c0f81bfc98c77901e75db74d0aa3e",
+        "qcom/qcom-msm8926-microsoft-tesla.dtb": "3322b0b1b2ea892c83cc643125073968c6cb5bf6d75800d16fe56e66806f6581",
+        "qcom/qcom-msm8926-motorola-peregrine.dtb": "747c308a04245ee6aebb7fbb7e1b096caaf71e03320099b67e6f0fe4311ab5ec",
+        "qcom/qcom-msm8926-samsung-matisselte.dtb": "91d4b655b81835f5960b59162a4271231b65267c177909e3ad27da1a4a46d75e"
+      }
+    },
+    "passed": true,
+    "returncode": 0,
+    "finished_UTC": "2026-11-15T04:07:57.546565+00:00"
+  },
+  "retained18_board_baseline_hashes_reverified": true,
+  "baseline_rebuilt": false,
+  "configs_identical_and_unchanged": true,
+  "checks": {
+    "passed": true,
+    "board_count": 18,
+    "comparisons": [
+      {
+        "board": "qcom/msm8226-motorola-falcon.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 281,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "c582b7e287a467e732c56569f38863618bf6395a50bf3b0e3ff2247ef1cb1b9c"
+      },
+      {
+        "board": "qcom/msm8226-motorola-titan.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 274,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "8a24da22f6db4ff0008c9e2bb7765f38739104c94551683461e33cc3b1d3f8d7"
+      },
+      {
+        "board": "qcom/msm8926-sony-xperia-yukon-eagle.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 278,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "5310c0c117deb53eb71d18f657568f8d1a0580d4a2a94511295c582f57c1d2aa"
+      },
+      {
+        "board": "qcom/qcom-apq8026-asus-sparrow.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 271,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "a4be0a575b7dede28679f1ef35e23b4a2d2439322babae554e5c52cfecdc6772"
+      },
+      {
+        "board": "qcom/qcom-apq8026-huawei-sturgeon.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 279,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "f22351013ef33f258927e67fa5cadec9ca93a8c2a5cec5c56725d414824157bb"
+      },
+      {
+        "board": "qcom/qcom-apq8026-lg-lenok.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 280,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "79944dccdadd5fa743a41d2b3dc32e9f216d68afa911433740ffd1f777641120"
+      },
+      {
+        "board": "qcom/qcom-apq8026-samsung-matisse-wifi.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 292,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "8bbe26bf274e39c8abf5150877ac77d6370bf44be9cab623425964a6c26644e0"
+      },
+      {
+        "board": "qcom/qcom-apq8026-samsung-milletwifi.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 295,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "05dd87c0543f2a4c807288d22e8b6ff2562abe46b0723e1981e1417889571dd7"
+      },
+      {
+        "board": "qcom/qcom-msm8226-microsoft-dempsey.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 270,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "7bfdabadeba7506bfaf33b2a8c18f334a9650eb2b17b8decee34020a516de8d9"
+      },
+      {
+        "board": "qcom/qcom-msm8226-microsoft-makepeace.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 270,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "f24e06ddebc3bb612f239daf92d28c94d776f194da516a581d78e242345bd402"
+      },
+      {
+        "board": "qcom/qcom-msm8226-microsoft-moneypenny.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 269,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "5472e316254f456b69d32e3e17814da2f05144d8f007f46a579138231d860a80"
+      },
+      {
+        "board": "qcom/qcom-msm8226-samsung-ms013g.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 280,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "e43476f2d0bca09864094b9bcf6e9baee18d97ef1fba0eb4c3598fe0e2a2a171"
+      },
+      {
+        "board": "qcom/qcom-msm8226-samsung-s3ve3g.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 203,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "9458d034016b92ec3c1140169e64187c02da1b0c811526e53d100d805b269721"
+      },
+      {
+        "board": "qcom/qcom-msm8926-htc-memul.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 280,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "dd99c7cd04fad0540fcc5f481e2d79494e189c4608a4f3bc1cbc39f2a86b5834"
+      },
+      {
+        "board": "qcom/qcom-msm8926-microsoft-superman-lte.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 270,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "efcd021882635b09df4088dd9b9927b1434c0f81bfc98c77901e75db74d0aa3e"
+      },
+      {
+        "board": "qcom/qcom-msm8926-microsoft-tesla.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 271,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "3322b0b1b2ea892c83cc643125073968c6cb5bf6d75800d16fe56e66806f6581"
+      },
+      {
+        "board": "qcom/qcom-msm8926-motorola-peregrine.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 278,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "747c308a04245ee6aebb7fbb7e1b096caaf71e03320099b67e6f0fe4311ab5ec"
+      },
+      {
+        "board": "qcom/qcom-msm8926-samsung-matisselte.dtb",
+        "existing_nodes_preserved_except_disabled_GPU_attachment": 290,
+        "added_nodes": [
+          "/soc/iommu@fd928000",
+          "/soc/iommu@fd928000/iommu-ctx@0",
+          "/soc/iommu@fd928000/iommu-ctx@1000",
+          "/soc/iommu@fd928000/iommu-ctx@2000",
+          "/soc/iommu@fdb10000",
+          "/soc/iommu@fdb10000/iommu-ctx@0",
+          "/soc/iommu@fdb10000/iommu-ctx@1000"
+        ],
+        "candidate_SHA256": "91d4b655b81835f5960b59162a4271231b65267c177909e3ad27da1a4a46d75e"
+      }
+    ],
+    "ordinary_kernel_bindings_and_DTB_checks_passed": true,
+    "direct_targeted_schema_diagnostics_empty": true,
+    "existing_DTC_warning_count": 56,
+    "new_DTC_warnings": 0,
+    "schema_rejection_controls": [
+      {
+        "name": "invalid-MDP-clock-name",
+        "returncode": 0,
+        "diagnostics": "local/fx0-dts-current-01/DTB-checks-02/actual-board-schema-controls-01/invalid-MDP-clock-name.dtb: iommu@fd928000 (qcom,msm8226-mdp-iommu): clock-names:0: 'iface' was expected\n\tfrom schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml\nlocal/fx0-dts-current-01/DTB-checks-02/actual-board-schema-controls-01/invalid-MDP-clock-name.dtb: iommu@fd928000 (qcom,msm8226-mdp-iommu): clock-names: ['unrelated'] is too short\n\tfrom schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml\n"
+      },
+      {
+        "name": "invalid-GPU-IOMMU-clock-name",
+        "returncode": 0,
+        "diagnostics": "local/fx0-dts-current-01/DTB-checks-02/actual-board-schema-controls-01/invalid-GPU-IOMMU-clock-name.dtb: iommu@fdb10000 (qcom,msm8226-gpu-iommu): clock-names:0: 'iface' was expected\n\tfrom schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml\nlocal/fx0-dts-current-01/DTB-checks-02/actual-board-schema-controls-01/invalid-GPU-IOMMU-clock-name.dtb: iommu@fdb10000 (qcom,msm8226-gpu-iommu): clock-names: ['unrelated'] is too short\n\tfrom schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml\n"
+      },
+      {
+        "name": "invalid-MDP-context-compatible",
+        "returncode": 0,
+        "diagnostics": "local/fx0-dts-current-01/DTB-checks-02/actual-board-schema-controls-01/invalid-MDP-context-compatible.dtb: iommu@fd928000 (qcom,msm8226-mdp-iommu): iommu-ctx@0:compatible:0: 'qcom,unrelated-context' is not one of ['qcom,msm-iommu-v1-ns', 'qcom,msm-iommu-v1-sec', 'qcom,msm-iommu-v2-ns', 'qcom,msm-iommu-v2-sec']\n\tfrom schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml\n"
+      },
+      {
+        "name": "invalid-GPU-IOMMU-cell-count",
+        "returncode": 0,
+        "diagnostics": "local/fx0-dts-current-01/DTB-checks-02/actual-board-schema-controls-01/invalid-GPU-IOMMU-cell-count.dtb: iommu@fdb10000 (qcom,msm8226-gpu-iommu): #iommu-cells: 1 was expected\n\tfrom schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml\n"
+      },
+      {
+        "name": "invalid-Adreno-clock-count",
+        "returncode": 0,
+        "diagnostics": "local/fx0-dts-current-01/DTB-checks-02/actual-board-schema-controls-01/invalid-Adreno-clock-count.dtb: gpu@fdb00000 (qcom,adreno-305.18): clocks: [[0]] is too short\n\tfrom schema $id: http://devicetree.org/schemas/display/msm/gpu.yaml\n"
+      }
+    ],
+    "platform_contract_rejection_controls": [
+      "GPU-stream-outside-contexts",
+      "MDP-secured-bank-made-nonsecure",
+      "GPU-global-window-too-small",
+      "GPU-context-offset-changed"
+    ],
+    "schema_coverage_limits": [
+      {
+        "name": "invalid-GPU-context-IRQ-type",
+        "schema_returncode": 0,
+        "schema_diagnostics_empty": true,
+        "platform_contract_rejected": true
+      }
+    ],
+    "enabled_IOMMU_schema_only_positive_passed": true,
+    "IOMMU_driver_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+    "IOMMU_driver_SHA256": "a83c92d675f27e2c2d89e1c7017a686b90057edadfdf7a8e8b8129980aadc0fd",
+    "GPU_stream_context_pairs": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "MDP_prefetch_entries": 18,
+    "GPU_prefetch_entries": 12,
+    "MDP_security_and_SCM_ID_verified": true,
+    "common_nodes_and_GPU_disabled": true,
+    "enabled_Fx0_board_qualified": false,
+    "runtime_or_hardware_qualified": false,
+    "phone_access": false
+  },
+  "diagnostic_SHA256": "0807b4ff2f70559a0217d4bba8d4d000a315e05151401fb6d0d05d031b2e61f5",
+  "portable_source_export": {
+    "command": [
+      "local/power-managed-port-01/schema-venv/bin/python",
+      "local/fx0-dts-current-01/portable-diagnostic-export-01/check-DTBs.py",
+      "--inventory",
+      "local/fx0-dts-current-01/portable-diagnostic-export-01/affected-boards.json",
+      "--baseline-build",
+      "local/msm8226-dts-current-01/candidate-out",
+      "--candidate-build",
+      "local/fx0-dts-current-01/candidate-out",
+      "--baseline-log",
+      "local/msm8226-dts-current-01/candidate-DTBs.log",
+      "--candidate-log",
+      "local/fx0-dts-current-01/candidate-DTBs.log",
+      "--binding-log",
+      "local/fx0-dts-current-01/candidate-bindings.log",
+      "--iommu-source",
+      "worktrees/linux-iommu-msm8226-next-01",
+      "--output",
+      "local/fx0-dts-current-01/portable-diagnostic-run-01"
+    ],
+    "returncode": 0,
+    "source_SHA256": "0807b4ff2f70559a0217d4bba8d4d000a315e05151401fb6d0d05d031b2e61f5",
+    "export_identical": true,
+    "independent_source_export_using_retained_artifacts": true
+  },
+  "base_style_checks": [
+    {
+      "head": "3379290a7d7fa2ac831e13b66b21be26d41eabed",
+      "base_strict_returncode": 1,
+      "base_strict_output": "WARNING: DT compatible string \"qcom,msm8226-mdp-iommu\" appears un-documented -- check ./Documentation/devicetree/bindings/\n#31: FILE: arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1286:\n+\t\t\tcompatible = \"qcom,msm8226-mdp-iommu\";\n\ntotal: 0 errors, 1 warnings, 0 checks, 41 lines checked\n\nNOTE: For some of the reported defects, checkpatch may be able to\n      mechanically convert to the typical style using --fix or --fix-inplace.\n\nlocal/fx0-dts-current-01/0001.patch has style problems, please review.\n\nNOTE: If any of the errors are false positives, please report\n      them to the maintainer, see CHECKPATCH in MAINTAINERS.\n"
+    },
+    {
+      "head": "6155789433f4c828677b67b9d47c22b2a8547aba",
+      "base_strict_returncode": 1,
+      "base_strict_output": "WARNING: DT compatible string \"qcom,msm8226-gpu-iommu\" appears un-documented -- check ./Documentation/devicetree/bindings/\n#39: FILE: arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1509:\n+\t\t\tcompatible = \"qcom,msm8226-gpu-iommu\";\n\ntotal: 0 errors, 1 warnings, 0 checks, 44 lines checked\n\nNOTE: For some of the reported defects, checkpatch may be able to\n      mechanically convert to the typical style using --fix or --fix-inplace.\n\nlocal/fx0-dts-current-01/0002.patch has style problems, please review.\n\nNOTE: If any of the errors are false positives, please report\n      them to the maintainer, see CHECKPATCH in MAINTAINERS.\n"
+    }
+  ],
+  "dependent_style_checks": [
+    {
+      "strict": {
+        "returncode": 0,
+        "output": "total: 0 errors, 0 warnings, 0 checks, 41 lines checked\n\nlocal/fx0-dts-current-01/0001.patch has no obvious style problems and is ready for submission.\n"
+      },
+      "full": {
+        "returncode": 1,
+        "output": "ERROR: Missing Signed-off-by: line(s)\n\ntotal: 1 errors, 0 warnings, 0 checks, 41 lines checked\n\nNOTE: For some of the reported defects, checkpatch may be able to\n      mechanically convert to the typical style using --fix or --fix-inplace.\n\nlocal/fx0-dts-current-01/0001.patch has style problems, please review.\n\nNOTE: If any of the errors are false positives, please report\n      them to the maintainer, see CHECKPATCH in MAINTAINERS.\n"
+      }
+    },
+    {
+      "strict": {
+        "returncode": 0,
+        "output": "total: 0 errors, 0 warnings, 0 checks, 44 lines checked\n\nlocal/fx0-dts-current-01/0002.patch has no obvious style problems and is ready for submission.\n"
+      },
+      "full": {
+        "returncode": 1,
+        "output": "ERROR: Missing Signed-off-by: line(s)\n\ntotal: 1 errors, 0 warnings, 0 checks, 44 lines checked\n\nNOTE: For some of the reported defects, checkpatch may be able to\n      mechanically convert to the typical style using --fix or --fix-inplace.\n\nlocal/fx0-dts-current-01/0002.patch has style problems, please review.\n\nNOTE: If any of the errors are false positives, please report\n      them to the maintainer, see CHECKPATCH in MAINTAINERS.\n"
+      }
+    }
+  ],
+  "Fx0_current_include_probe": {
+    "unchanged_board_SHA256": "36b2a733ba62b94371e018f20f3b318bd57732a3469c1db0a85428f196ca4c0a",
+    "verified_current_common_include": true,
+    "unresolved_labels": [
+      "apr",
+      "pm8226_flash",
+      "pm8226_pon",
+      "pronto",
+      "q6afedai",
+      "q6asmdai",
+      "q6routing",
+      "slim_msm",
+      "slimbam"
+    ],
+    "DTC_immediate_missing_labels": [
+      "pronto",
+      "pm8226_pon",
+      "pm8226_flash",
+      "apr",
+      "slimbam",
+      "slim_msm"
+    ],
+    "commands": [
+      [
+        "clang-21",
+        "-E",
+        "-nostdinc",
+        "-undef",
+        "-D__DTS__",
+        "-x",
+        "assembler-with-cpp",
+        "-Iworktrees/linux-fx0-display-gpu-dts-validation-01/arch/arm/boot/dts/qcom",
+        "-Iworktrees/linux-fx0-display-gpu-dts-validation-01/include",
+        "-Iworktrees/linux-fx0-display-gpu-dts-validation-01/scripts/dtc/include-prefixes",
+        "local/fx0-dts-current-01/Fx0-dependency-probe-01/qcom-msm8926-lg-madai.dts"
+      ],
+      [
+        "local/fx0-dts-current-01/candidate-out/scripts/dtc/dtc",
+        "-I",
+        "dts",
+        "-O",
+        "dtb",
+        "-o",
+        "local/fx0-dts-current-01/Fx0-dependency-probe-01/unqualified.dtb",
+        "local/fx0-dts-current-01/Fx0-dependency-probe-01/complete-board.preprocessed.dts"
+      ]
+    ],
+    "preprocessor_returncode": 0,
+    "DTC_returncode": 1,
+    "diagnostics": "Error: local/fx0-dts-current-01/Fx0-dependency-probe-01/qcom-msm8926-lg-madai.dts:251.1-8 Label or path pronto not found\nError: local/fx0-dts-current-01/Fx0-dependency-probe-01/qcom-msm8926-lg-madai.dts:535.1-12 Label or path pm8226_pon not found\nError: local/fx0-dts-current-01/Fx0-dependency-probe-01/qcom-msm8926-lg-madai.dts:580.1-14 Label or path pm8226_flash not found\nError: local/fx0-dts-current-01/Fx0-dependency-probe-01/qcom-msm8926-lg-madai.dts:671.1-5 Label or path apr not found\nError: local/fx0-dts-current-01/Fx0-dependency-probe-01/qcom-msm8926-lg-madai.dts:675.1-9 Label or path slimbam not found\nError: local/fx0-dts-current-01/Fx0-dependency-probe-01/qcom-msm8926-lg-madai.dts:679.1-10 Label or path slim_msm not found\nFATAL ERROR: Syntax error parsing input tree\n",
+    "Fx0_DTB_qualified": false,
+    "board_not_trimmed": true,
+    "phone_access": false
+  },
+  "initial_generic_IRQ_schema_assumption_failure_preserved": {
+    "initial_checker_returncode": 1,
+    "assumption_rejected": "The generic IOMMU schema would reject a two-cell malformed GIC interrupt",
+    "observed": "The malformed IRQ decodes as two uint32 cells and is accepted by the generic context interrupts maxItems=1 contract, including with the parent enabled",
+    "resolution": "Retain this malformed-DTB control and require the independent exact MSM8226 platform contract to reject it; report schema coverage limits. Do not weaken or claim the generic binding validates GIC tuple values."
+  },
+  "human_DCO_pending": true,
+  "agent_added_Signed_off_by": false,
+  "published": false,
+  "phone_access": false,
+  "maintainer_contact": false,
+  "full_combined_current_kernel_package_or_Fx0_DTB_qualified": false,
+  "runtime_IOMMU_or_hardware_qualified": false,
+  "all_jobs_terminal": true,
+  "prior_r7_and_trial_gates_unchanged": true
+}

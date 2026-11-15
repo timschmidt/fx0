@@ -271,6 +271,17 @@ clocks are not a blocker. Three pieces remain:
    board still fails on missing prerequisites, which are inventoried with their
    original authors. Enabled Fx0, combined-image and physical acceptance remain
    open. This source and review are local and unsigned; no phone access occurred.
+
+   The [current display/GPU IOMMU DTS draft](../submissions/msm8226-display-gpu-dts-current/README.md)
+   at `6155789433f4` adds the existing MDP secured contexts and GPU context
+   attachment on that base. All 18 upstream boards keep GPU/display disabled;
+   their new DTBs pass targeted IOMMU/CAMSS/Adreno schemas with no new DTC
+   warnings. Existing nodes compare unchanged except the disabled GPU's intended
+   attachment. Driver/platform checks confirm MDP security/SCM ID, GPU streams
+   and prefetch-window bounds. A malformed IRQ accepted by the generic schema
+   is rejected by the independent platform check and recorded as a coverage
+   limit. The complete Fx0 still has nine unresolved prerequisite labels;
+   its board compilation and physical maintained-kernel acceptance remain open.
 3. **VFE 4.0 against the 4.1 operations.** The vendor driver has
    MSM8226-specific VFE versions and VBIF setup. Audit reset, interrupts,
    write masters, RDI and bus/QoS before reusing `vfe_ops_4_1`.
