@@ -1,0 +1,36 @@
+From 64dde42de6c14287c91522602ab4737020db93d3 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 15 Nov 2026 01:07:32 -0500
+Subject: [PATCH] dt-bindings: mfd: qcom,spmi-pmic: Allow first-generation
+ torch LEDs
+
+The PM8226/PM8941 torch peripheral has a distinct register layout and
+compatible from later SPMI flash controllers. Route led-controller
+children through exactly one of the two complete LED bindings.
+
+The new first-generation LED schema is an explicit dependency. Preserve
+every requirement of the later flash binding. Actual PM8226 board
+validation reproduces the missing parent path, and ordinary MFD plus
+both LED binding/examples pass with the exact dependency on the current
+MFD base.
+
+Prepared with OpenAI Codex assistance; human review and DCO pending.
+---
+ Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+index 7a889d888..c7e903039 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+@@ -175,7 +175,9 @@ patternProperties:
+ 
+   "^led-controller@[0-9a-f]+$":
+     type: object
+-    $ref: /schemas/leds/qcom,spmi-flash-led.yaml#
++    oneOf:
++      - $ref: /schemas/leds/qcom,pm8941-flash-led.yaml#
++      - $ref: /schemas/leds/qcom,spmi-flash-led.yaml#
+ 
+   "^nvram@[0-9a-f]+$":
+     type: object

@@ -1,0 +1,405 @@
+{
+  "date": "2026-11-15",
+  "sources": {
+    "LED_base": "4e88404a72e5e26720539e5555c383069cefb486",
+    "LED_head": "11be4e3efab2332b352187cfa13d67f1340d81da",
+    "LED_tree": "16ed0d2d2fc4bfaea40f3e9e4591f5ea95822484",
+    "LED_initial_metadata_draft_preserved": "7d0c912490cf65b5ca7d9b437895437e0c3ec687",
+    "LED_final_tree_equals_compiled_source": false,
+    "LED_source_roster_verified_against_build": true,
+    "DTS_parent": "c3bd956de3414d28aa8273e2a4c746134a4811d3",
+    "PON_commit": "99339fb06b6495a18d5454519354c414fa856244",
+    "DTS_head": "3c4dccb16e558b2100fdfb79cea0933cc8d223c7",
+    "DTS_tree": "cf5b07135332b31f32bad8fa8370610ff8bf7285",
+    "PON_initial_metadata_draft_preserved": "4c1d8a511c74d6b6c2b690a86c6f1400235912e3",
+    "original_flash_node_SHA256": "e71f0d9082e37b8b64d963ea7b8cacca6dd3d4afd1fed6ce1672dda6ac41162b",
+    "original_flash_node_byte_identical": true,
+    "published": false,
+    "human_DCO_pending": true,
+    "agent_added_Signed_off_by": false,
+    "LED_pre_maintainer_metadata_head": "cd49962003fff228fd1fc4b7d7865a9fbbb4798a",
+    "LED_compiled_tree": "ce1af291a2b4db20a83d46732f3c6f3dbe2e1a0d",
+    "LED_only_change_after_native_build": "MAINTAINERS",
+    "LED_binding_and_runtime_source_roster_still_identical_to_native_build": true,
+    "LED_branch": "development/pm8226-torch-current-leds-next-04",
+    "DTS_branch": "development/pm8226-pon-torch-dts-current-02",
+    "LED_pre_ordering_metadata_head": "338fbe6d433cb535aeaa3ddd0e8dcd9e4129e8b0",
+    "MFD_base": "c92739a23a80f5f0a7c6f3c10aa792102d252ac4",
+    "MFD_head": "64dde42de6c14287c91522602ab4737020db93d3",
+    "MFD_tree": "890fd66a2fee2e36a80d18f9a041c729eebab7c2",
+    "MFD_branch": "development/pm8226-torch-parent-mfd-next-01",
+    "MFD_source_repository": "worktrees/linux-pm8226-parent-mfd-next-02",
+    "MFD_parent_pristine_identical_across_MFD_LED_SoC_bases": true
+  },
+  "patches": 5,
+  "native_components": [
+    {
+      "base": "4e88404a72e5e26720539e5555c383069cefb486",
+      "source_files_SHA256": {
+        "drivers/leds/flash/leds-qcom-flash-v1.c": "84bd9da282faf95b7381d06614c7c56bc0c2c13b56a74aebc3fd1a704c213430",
+        "drivers/leds/flash/Kconfig": "feea92213f348da02c751ff8989724744b7fd260b5e74d6c94d6f1a0826c40b8",
+        "drivers/leds/flash/Makefile": "1746dfe3a64a78f9159377b1816fb4f206558ce51c325ffa8a12c6548ded25d3",
+        "Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml": "84267e35e4777e5c246f425ba79cda5d0acb8af7bc5c0fb5870977319c50cb78"
+      },
+      "native": true,
+      "COMPILE_TEST": false,
+      "config_SHA256": "030014b1dc1543ff35e6104c2c30e3e9239d3c67386de073551a146116196ca2",
+      "object_SHA256": "e24b8995e66df5ebcb5f3a1363cbd5378e5a98e7edb0fe805f1b2daa35652568",
+      "arch": "arm",
+      "object": "drivers/leds/flash/leds-qcom-flash-v1.o"
+    },
+    {
+      "base": "4e88404a72e5e26720539e5555c383069cefb486",
+      "source_files_SHA256": {
+        "drivers/leds/flash/leds-qcom-flash-v1.c": "84bd9da282faf95b7381d06614c7c56bc0c2c13b56a74aebc3fd1a704c213430",
+        "drivers/leds/flash/Kconfig": "feea92213f348da02c751ff8989724744b7fd260b5e74d6c94d6f1a0826c40b8",
+        "drivers/leds/flash/Makefile": "1746dfe3a64a78f9159377b1816fb4f206558ce51c325ffa8a12c6548ded25d3",
+        "Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml": "84267e35e4777e5c246f425ba79cda5d0acb8af7bc5c0fb5870977319c50cb78"
+      },
+      "native": true,
+      "COMPILE_TEST": false,
+      "config_SHA256": "53ea4782b18be30ff6a6cdee30e28c6ffe8554f620138b1cb3f1c31126b836db",
+      "object_SHA256": "0e76ed49d40386e70d794e88267b255f2a5f65894bbc5a2493e0be7fd555f96c",
+      "arch": "arm64",
+      "object": "drivers/leds/flash/leds-qcom-flash-v1.o"
+    }
+  ],
+  "source_extracted_host_fixture": {
+    "baseline": {
+      "off_error_cases": 5,
+      "off_correct": 0,
+      "off_wrong": 5,
+      "on_error_controls": 8,
+      "combined_on_cleanup_fault_correct": false,
+      "healthy_level_cases": 32,
+      "concurrent_callback_transactions": 400
+    },
+    "fixed": {
+      "off_error_cases": 5,
+      "off_correct": 5,
+      "off_wrong": 0,
+      "on_error_controls": 8,
+      "combined_on_cleanup_fault_correct": true,
+      "healthy_level_cases": 32,
+      "concurrent_callback_transactions": 400
+    },
+    "ASan_UBSan": true,
+    "host_interfaces_emulated": true,
+    "hardware_qualified": false
+  },
+  "DTS_qualification": {
+    "passed": true,
+    "source_head": "3c4dccb16e558b2100fdfb79cea0933cc8d223c7",
+    "checker_SHA256": "52658d2b8ada31a61a19b001f5e80293ec31b5521123e5609a071a5c6fdeb4cf",
+    "PMIC_affected_boards": 17,
+    "total_DTBs": 18,
+    "unaffected_byte_identical_controls": [
+      "qcom/qcom-msm8226-samsung-s3ve3g.dtb"
+    ],
+    "comparisons": [
+      {
+        "board": "qcom/msm8226-motorola-falcon.dtb",
+        "existing_nodes_preserved": 298,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "836ebf245ca85f92b4681cf583d015b5227afe7fb64c73d1a0902db7b53fbd3c"
+      },
+      {
+        "board": "qcom/msm8226-motorola-titan.dtb",
+        "existing_nodes_preserved": 291,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "a9e4958e1d546d665dfb2d4cbd0d2447f50647b7c2c54ab251acc6e4a0df6332"
+      },
+      {
+        "board": "qcom/msm8926-sony-xperia-yukon-eagle.dtb",
+        "existing_nodes_preserved": 294,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "6c671075d8bb794ee60ce7e5a53b5e0d2473da19918ec1885486f6c2b8678665"
+      },
+      {
+        "board": "qcom/qcom-apq8026-asus-sparrow.dtb",
+        "existing_nodes_preserved": 288,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "724f5c62be1227a9de352696bce2d4e9a94bb94756dcc5552103c8a69ed341c9"
+      },
+      {
+        "board": "qcom/qcom-apq8026-huawei-sturgeon.dtb",
+        "existing_nodes_preserved": 296,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "312e36412cf274990e311b0c830f46abbd9140cd3c902ce4e27bc0e26f621585"
+      },
+      {
+        "board": "qcom/qcom-apq8026-lg-lenok.dtb",
+        "existing_nodes_preserved": 297,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "7f0c2c93613efa7b7d38f22319f5d1d82778a73e886180f85aaaa20b0a16c570"
+      },
+      {
+        "board": "qcom/qcom-apq8026-samsung-matisse-wifi.dtb",
+        "existing_nodes_preserved": 308,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "ff38018ed2680961a99db91438c50b4f8f9e9ad6902179db6dd3eff6588fd076"
+      },
+      {
+        "board": "qcom/qcom-apq8026-samsung-milletwifi.dtb",
+        "existing_nodes_preserved": 311,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "85c507b90d442533af5139eee27945957f312342edb486f37d9262e31232cc30"
+      },
+      {
+        "board": "qcom/qcom-msm8226-microsoft-dempsey.dtb",
+        "existing_nodes_preserved": 287,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "9c4afa7916e5061b7a0edd9bd656880947d61cdc8fd69d3d3154cee620ccd872"
+      },
+      {
+        "board": "qcom/qcom-msm8226-microsoft-makepeace.dtb",
+        "existing_nodes_preserved": 287,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "3a90d0896540a92b0d3665b34ef382a47c22fc8d9d23cf024d519866dbb7f560"
+      },
+      {
+        "board": "qcom/qcom-msm8226-microsoft-moneypenny.dtb",
+        "existing_nodes_preserved": 286,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "a8a4d7fa1a0b4e4f99f5faf35ee201b0c4084a0dcd89ee6487fe2b8be835e821"
+      },
+      {
+        "board": "qcom/qcom-msm8226-samsung-ms013g.dtb",
+        "existing_nodes_preserved": 297,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "ce66a252d8beab3e9ea185c7a7409efafe11df1576b3a8e360063ba2a2cf57e3"
+      },
+      {
+        "board": "qcom/qcom-msm8226-samsung-s3ve3g.dtb",
+        "existing_nodes_preserved": 220,
+        "added_nodes": [],
+        "SHA256": "f40964d764114169c1c6a6c407bfeeec869607b63a478bb3db8c3ab6a282a5d5"
+      },
+      {
+        "board": "qcom/qcom-msm8926-htc-memul.dtb",
+        "existing_nodes_preserved": 296,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "23d693efcee11c1330ca2f595384c0480604d33056d50fd01d8a7954e0e420d7"
+      },
+      {
+        "board": "qcom/qcom-msm8926-microsoft-superman-lte.dtb",
+        "existing_nodes_preserved": 287,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "a5fcd7f556ddb9a83689f079ca4d95d49f6de7e7cab6b26bb7fde82183fa44e8"
+      },
+      {
+        "board": "qcom/qcom-msm8926-microsoft-tesla.dtb",
+        "existing_nodes_preserved": 288,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "d6664ac1031910ccbf0252cdda3f1d7fcf054a6938f5b34a528e6c17ed1e402b"
+      },
+      {
+        "board": "qcom/qcom-msm8926-motorola-peregrine.dtb",
+        "existing_nodes_preserved": 295,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "f2303bee5cd4228dc8da7582f2f23bdc773883a1b87c13052b77769d263cda4f"
+      },
+      {
+        "board": "qcom/qcom-msm8926-samsung-matisselte.dtb",
+        "existing_nodes_preserved": 306,
+        "added_nodes": [
+          "/soc/spmi@fc4cf000/pm8226@1/led-controller@d300"
+        ],
+        "SHA256": "5d31afb5e7bc384757fffbbc8f14468b957a5c132a218fc14e42cf425f6e0f4e"
+      }
+    ],
+    "all_existing_nodes_and_properties_preserved": true,
+    "PON_existing_properties_preserved": true,
+    "new_torch_nodes_disabled": 17,
+    "existing_DTC_warnings": 56,
+    "new_DTC_warnings": 0,
+    "direct_targeted_DTB_schemas_empty": true,
+    "enabled_ordinary_example_schema_controls": [
+      {
+        "name": "wrong-fallback",
+        "expected_property_diagnostic_verified": true
+      },
+      {
+        "name": "current-too-low",
+        "expected_property_diagnostic_verified": true
+      },
+      {
+        "name": "current-too-high",
+        "expected_property_diagnostic_verified": true
+      },
+      {
+        "name": "missing-current-limit",
+        "expected_property_diagnostic_verified": true
+      },
+      {
+        "name": "missing-LED",
+        "expected_property_diagnostic_verified": true
+      },
+      {
+        "name": "extra-LED",
+        "expected_property_diagnostic_verified": true
+      },
+      {
+        "name": "extra-register",
+        "expected_property_diagnostic_verified": true
+      }
+    ],
+    "additional_positive_example_cases": [
+      "PM8941-only",
+      "minimum-current",
+      "non-multiple-limit"
+    ],
+    "complete_current_Fx0_DTB_qualified": false,
+    "runtime_or_hardware_qualified": false,
+    "phone_access": false
+  },
+  "initial_validation_head": "2d2d46f49e419fea2655b537845b20f793bbabc1",
+  "final_validation_head": "fd6cf007ad8277756da9f5af3d9c21c93a6e8dfe",
+  "schema_imports": [
+    {
+      "source_head": "1d1963872f0f38d2c78aba1c97dc3ba01d6bbf23",
+      "path": "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml",
+      "SHA256": "ca4eb31b957da834eaf9ccab3f993df1db34ebd186b0795d63f91460681d3f63"
+    },
+    {
+      "source_head": "d1eaeaee06f7b1977e563034b9ae1f021b8c0752",
+      "path": "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml",
+      "SHA256": "0888da8dda271d056495c3e5c41bbbfd097b2170c8272fe6b9b5a24696a192bf"
+    },
+    {
+      "source_head": "ac7727e0a7ee1da9ef085045f1e9eeddb8b38baf",
+      "path": "Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml",
+      "SHA256": "6cc5f4223b7049ee96a4a12c2c8a4444eae79c319cff026cb041cd9a231837e9"
+    },
+    {
+      "source_head": "11be4e3efab2332b352187cfa13d67f1340d81da",
+      "path": "Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml",
+      "SHA256": "84267e35e4777e5c246f425ba79cda5d0acb8af7bc5c0fb5870977319c50cb78"
+    },
+    {
+      "source_head": "64dde42de6c14287c91522602ab4737020db93d3",
+      "path": "Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml",
+      "SHA256": "ac56849e50412e19d9fd174a2b4eefe9e16b223b1ba875965e339f7cb64445cc"
+    }
+  ],
+  "MFD_schema_qualified_on_own_base_with_exact_LED_dependency": true,
+  "MFD_LED_and_SoC_pristine_parent_and_later_LED_bindings_identical": true,
+  "parent_schema_uses_oneOf_two_complete_disjoint_LED_bindings": true,
+  "new_DTB_builds": 18,
+  "retained_WCNSS_baseline_hash_reverified_not_rebuilt": 18,
+  "schema_refresh_DTB_rebuilds": 0,
+  "all18_DTB_hashes_unchanged_through_schema_refresh": true,
+  "strict_patch_checks": [
+    {
+      "kind": "LED",
+      "patch": "0001-dt-bindings-leds-Describe-first-generation-Qualcomm-.patch",
+      "strict_no_signoff_passed": true,
+      "full_check_only_human_signoff_missing": true
+    },
+    {
+      "kind": "LED",
+      "patch": "0002-leds-flash-Support-first-generation-Qualcomm-PMIC-to.patch",
+      "strict_no_signoff_passed": true,
+      "full_check_only_human_signoff_missing": true
+    },
+    {
+      "kind": "MFD",
+      "patch": "0001-dt-bindings-mfd-qcom-spmi-pmic-Allow-first-generatio.patch",
+      "strict_no_signoff_passed": true,
+      "full_check_only_human_signoff_missing": true
+    },
+    {
+      "kind": "DTS",
+      "patch": "0001-ARM-dts-qcom-pm8226-Label-the-PON-node.patch",
+      "strict_no_signoff_passed": true,
+      "full_check_only_human_signoff_missing": true
+    },
+    {
+      "kind": "DTS",
+      "patch": "0002-ARM-dts-qcom-pm8226-Describe-the-torch-LED-controlle.patch",
+      "strict_no_signoff_passed": true,
+      "full_check_only_human_signoff_missing": true
+    }
+  ],
+  "current_Fx0_compile_probe": {
+    "unchanged_board_SHA256": "36b2a733ba62b94371e018f20f3b318bd57732a3469c1db0a85428f196ca4c0a",
+    "verified_current_PMIC_common_include": true,
+    "unresolved_labels": [
+      "apr",
+      "q6afedai",
+      "q6asmdai",
+      "q6routing",
+      "slim_msm",
+      "slimbam"
+    ],
+    "DTC_immediate_missing_labels": [
+      "apr",
+      "slimbam",
+      "slim_msm"
+    ],
+    "DTC_returncode": 1,
+    "preprocessor_returncode": 0,
+    "complete_board_preserved": true,
+    "current_Fx0_DTB_qualified": false,
+    "phone_access": false
+  },
+  "historical_basic_torch_hardware_evidence": "evidence/2026-10-31-kernel-r9-r10-and-torch.json",
+  "new_current_base_hardware_qualified": false,
+  "boost_flash_strobe_safety_limits_and_charging_interactions_qualified": false,
+  "source_only_replay_pending": false,
+  "all_sources_local_unpublished": true,
+  "maintainer_contact": false,
+  "agent_added_Signed_off_by": false,
+  "human_review_and_DCO_pending": true,
+  "phone_access_for_PMIC_qualification": false,
+  "earlier_attempts_preserved": {
+    "fixture_initial_missing_u32_typedef_compile_failure": true,
+    "original_five_off_failures_and_combined_cleanup_failure": true,
+    "initial_18_PM8226_board_assumption_corrected_to17_plus_control": true,
+    "initial_parent_schema_rejection_corrected_by_real_separate_MFD_dependency": true,
+    "earlier_metadata_only_drafts_preserved": true,
+    "MFD_clone_fetch_overlap_lock_failure_preserved_and_fixed_by_sequential_new_clone": true
+  },
+  "clean_review_and_source_only_DTB_replays_passed": true,
+  "exported_torch_ASan_UBSan_result": {
+    "off_error_cases": 5,
+    "off_correct": 5,
+    "off_wrong": 0,
+    "on_error_controls": 8,
+    "combined_on_cleanup_fault_correct": true,
+    "healthy_level_cases": 32,
+    "concurrent_callback_transactions": 400
+  }
+}

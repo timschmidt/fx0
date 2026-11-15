@@ -1,0 +1,27 @@
+From 99339fb06b6495a18d5454519354c414fa856244 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 15 Nov 2026 00:51:20 -0500
+Subject: [PATCH 1/2] ARM: dts: qcom: pm8226: Label the PON node
+
+Allow the complete existing Fx0 board to extend this node with its
+reboot modes. Refresh 7e5f8f6b2250 by Timothy Schmidt with Claude Opus
+5.5 assistance. No properties of the existing node change.
+
+Prepared with OpenAI Codex assistance; human review and DCO pending.
+---
+ arch/arm/boot/dts/qcom/pm8226.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/qcom/pm8226.dtsi b/arch/arm/boot/dts/qcom/pm8226.dtsi
+index abab3c6e2..eb83fa686 100644
+--- a/arch/arm/boot/dts/qcom/pm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/pm8226.dtsi
+@@ -41,7 +41,7 @@ pm8226_0: pm8226@0 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
+-		pon@800 {
++		pm8226_pon: pon@800 {
+ 			compatible = "qcom,pm8916-pon";
+ 			reg = <0x800>;
+ 

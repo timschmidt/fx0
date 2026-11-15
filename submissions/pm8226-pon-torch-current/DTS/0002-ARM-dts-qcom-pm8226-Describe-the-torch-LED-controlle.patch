@@ -1,0 +1,33 @@
+From 3c4dccb16e558b2100fdfb79cea0933cc8d223c7 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 15 Nov 2026 00:52:17 -0500
+Subject: [PATCH 2/2] ARM: dts: qcom: pm8226: Describe the torch LED controller
+
+Restore the complete disabled flash controller from cbfe7bb0e361,
+originally by Timothy Schmidt with Claude Opus 5.5 assistance. Preserve
+the existing compatible pair and register address; boards retain their
+original LED description and enablement.
+
+The first-generation LED binding and driver are separately routed
+dependencies. No board is enabled by this common description. Prepared
+with OpenAI Codex assistance; human review and DCO pending.
+---
+ arch/arm/boot/dts/qcom/pm8226.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/pm8226.dtsi b/arch/arm/boot/dts/qcom/pm8226.dtsi
+index eb83fa686..8b3e19f62 100644
+--- a/arch/arm/boot/dts/qcom/pm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/pm8226.dtsi
+@@ -183,5 +183,11 @@ pm8226_vib: vibrator@c000 {
+ 			reg = <0xc000>;
+ 			status = "disabled";
+ 		};
++
++		pm8226_flash: led-controller@d300 {
++			compatible = "qcom,pm8226-flash-led", "qcom,pm8941-flash-led";
++			reg = <0xd300>;
++			status = "disabled";
++		};
+ 	};
+ };
