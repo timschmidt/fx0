@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "missing-provider-registration",
+      "failures": 536,
+      "expected_case": "selected-0-api-0-state-0-descriptors-0-active-1-peer-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "missing-provider-barrier",
+      "failures": 536,
+      "expected_case": "selected-0-api-0-state-0-descriptors-0-active-1-peer-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "wrong-channel-barrier",
+      "failures": 664,
+      "expected_case": "selected-0-api-0-state-0-descriptors-0-active-1-peer-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "shared-tasklet-instead-of-channel",
+      "failures": 792,
+      "expected_case": "selected-0-api-0-state-0-descriptors-0-active-1-peer-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "missing-tasklet-drain",
+      "failures": 536,
+      "expected_case": "selected-0-api-0-state-0-descriptors-0-active-1-peer-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "barrier-under-channel-lock",
+      "failures": 536,
+      "expected_case": "selected-0-api-0-state-0-descriptors-0-active-1-peer-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "issued-descriptors-not-terminated",
+      "failures": 288,
+      "expected_case": "selected-0-api-0-state-3-descriptors-1-active-0-peer-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "synchronization-before-termination",
+      "failures": 120,
+      "expected_case": "selected-0-api-0-state-3-descriptors-1-active-0-peer-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "unsafe_lock_contract_logged_without_intentional_deadlock": true,
+  "all_kernel_services_and_DMA_synthetic": true,
+  "hardware_audio_network_or_phone_execution": false
+}

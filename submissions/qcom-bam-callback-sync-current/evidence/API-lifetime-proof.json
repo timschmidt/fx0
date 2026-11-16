@@ -1,0 +1,24 @@
+{
+  "drivers/dma/qcom/bam_dma.c": "8e3da480693b0a411c5163f31b3586fcaa4452b2134b99a6a340ec8361e7bff8",
+  "drivers/dma/virt-dma.c": "471a96dc86b8d79f65780874687f64f8deeccb93e98f616c67e57a6b206512f0",
+  "drivers/dma/virt-dma.h": "486b79fdd47474f515f418337f9a3d558262d60512497f94e6d53eafd9d4f73d",
+  "include/linux/dmaengine.h": "4d014946d30b753154a8f2ca95498398147d14fbf72e4b4f1a7368e8a2e8015a",
+  "board_DMA_connection": {
+    "path": "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi",
+    "SHA256": "f3167d36ca540ffdd6a67211a37e5b595a731c856f763b07a8cfdb5b18243cba",
+    "RX_TX_provider": "slimbam, channels 3 and 4",
+    "compatible": "qcom,bam-v1.4.0",
+    "controlled_remotely": true
+  },
+  "model_callback_list_detachment_is_synthetic": true,
+  "actual_vchan_complete_audited_but_not_executed": true,
+  "callback_body_location": "drivers/dma/virt-dma.c:vchan_complete",
+  "client_obligations": [
+    "Stop attached hardware before pipe reset/cancellation",
+    "Prevent new submissions including RX callback resubmission before DMA synchronization",
+    "Do not synchronize under the callback channel lock",
+    "Do not synchronize from atomic context or from a callback on the same channel"
+  ],
+  "NGD_RX_resubmission_master_external_transfer_and_stack_completion_lifetime_still_pending": true,
+  "physical_BAM_shutdown_or_firmware_handshake_qualified": false
+}

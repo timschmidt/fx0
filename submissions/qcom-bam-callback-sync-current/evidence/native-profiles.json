@@ -1,0 +1,126 @@
+{
+  "native-arm-01": {
+    "started_UTC": "2026-11-16T15:12:51.934593+00:00",
+    "kind": "bam",
+    "ARCH": "arm",
+    "candidate_diff_SHA256": "b2da2c8f7c0aed56c246517943b4f5a85264c7883cc96ad449af46e616c02c12",
+    "native": true,
+    "COMPILE_TEST": false,
+    "LLVM": "-21",
+    "W": 1,
+    "strict_function_pointer_diagnostics": true,
+    "source_head": "6628e7d4c6b25c8d18f1345e3a20d21829aae7e4",
+    "source_files": {
+      "drivers/dma/qcom/bam_dma.c": "8e3da480693b0a411c5163f31b3586fcaa4452b2134b99a6a340ec8361e7bff8",
+      "drivers/dma/virt-dma.c": "471a96dc86b8d79f65780874687f64f8deeccb93e98f616c67e57a6b206512f0",
+      "drivers/dma/dmaengine.c": "cf0f41020e56725abce313d07f47f779a2aff21f6cbf11a6aeec66b3f44ad8b5",
+      "drivers/dma/virt-dma.h": "486b79fdd47474f515f418337f9a3d558262d60512497f94e6d53eafd9d4f73d",
+      "drivers/dma/dmaengine.h": "512765bbfd56b0a574a033abc9a03825b4e0e6676bf1a7458c32de6383b690e7",
+      "include/linux/dmaengine.h": "4d014946d30b753154a8f2ca95498398147d14fbf72e4b4f1a7368e8a2e8015a"
+    },
+    "stages": [
+      {
+        "stage": "options",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "stage": "config",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "f73f47e51a3a1f871acbed1e62bbc4f0c10cf17d5a2889841269f90536bec0a3"
+      },
+      {
+        "stage": "prepare",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "a85614a9ae1cb2f90633fd604e476a9231294c8490c2509ade5b4cc43b032c6c"
+      },
+      {
+        "stage": "components",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "82b1cce4338ef5003833b0d6734aab3c27ed90de1d9ca84d3f33112af07f119e"
+      }
+    ],
+    "state": "terminal success",
+    "phone_access": false,
+    "feature_tristates": {
+      "DMA_ENGINE": "CONFIG_DMA_ENGINE=y",
+      "DMA_VIRTUAL_CHANNELS": "CONFIG_DMA_VIRTUAL_CHANNELS=y",
+      "QCOM_BAM_DMA": "CONFIG_QCOM_BAM_DMA=y"
+    },
+    "config_SHA256": "016207b4ad05fccfef89fce1fc92000d7920fd00b75725aa420126ac1c4478ec",
+    "passed": true,
+    "objects": {
+      "drivers/dma/qcom/bam_dma.o": "7a750f448ed196f32c698a4784ecdc8050305f3d87d11a3ca4ed36b8957da1f0",
+      "drivers/dma/virt-dma.o": "95d5f54ef05c37d1b27f4531cfca52f844d4bdbd343a2b2ca27f321a8a7c6c6a",
+      "drivers/dma/dmaengine.o": "c706eae67962b8b002dade8b12ff3091992c94139209bd90db7b0ea67d600317"
+    },
+    "owned_child_terminal_and_reaped": true,
+    "finished_UTC": "2026-11-16T15:13:01.176642+00:00"
+  },
+  "native-arm64-01": {
+    "started_UTC": "2026-11-16T15:12:51.935516+00:00",
+    "kind": "bam",
+    "ARCH": "arm64",
+    "candidate_diff_SHA256": "b2da2c8f7c0aed56c246517943b4f5a85264c7883cc96ad449af46e616c02c12",
+    "native": true,
+    "COMPILE_TEST": false,
+    "LLVM": "-21",
+    "W": 1,
+    "strict_function_pointer_diagnostics": true,
+    "source_head": "6628e7d4c6b25c8d18f1345e3a20d21829aae7e4",
+    "source_files": {
+      "drivers/dma/qcom/bam_dma.c": "8e3da480693b0a411c5163f31b3586fcaa4452b2134b99a6a340ec8361e7bff8",
+      "drivers/dma/virt-dma.c": "471a96dc86b8d79f65780874687f64f8deeccb93e98f616c67e57a6b206512f0",
+      "drivers/dma/dmaengine.c": "cf0f41020e56725abce313d07f47f779a2aff21f6cbf11a6aeec66b3f44ad8b5",
+      "drivers/dma/virt-dma.h": "486b79fdd47474f515f418337f9a3d558262d60512497f94e6d53eafd9d4f73d",
+      "drivers/dma/dmaengine.h": "512765bbfd56b0a574a033abc9a03825b4e0e6676bf1a7458c32de6383b690e7",
+      "include/linux/dmaengine.h": "4d014946d30b753154a8f2ca95498398147d14fbf72e4b4f1a7368e8a2e8015a"
+    },
+    "stages": [
+      {
+        "stage": "options",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "stage": "config",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "09df9c056ac8eded784463021f2214a6df06d1ca271f590d662f4caee2a10501"
+      },
+      {
+        "stage": "prepare",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "b8fb10267fe2df186232344a17a5b4efe22c47ff42941d0aeb6d7a42f10cab1c"
+      },
+      {
+        "stage": "components",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "4103ef53185395d0da452d73f3e69a7cb732368d421fdfcf635f0f2511bf52aa"
+      }
+    ],
+    "state": "terminal success",
+    "phone_access": false,
+    "feature_tristates": {
+      "DMA_ENGINE": "CONFIG_DMA_ENGINE=y",
+      "DMA_VIRTUAL_CHANNELS": "CONFIG_DMA_VIRTUAL_CHANNELS=y",
+      "QCOM_BAM_DMA": "CONFIG_QCOM_BAM_DMA=y"
+    },
+    "config_SHA256": "5717aa4f1f9daa34e681aa87f5903d5a237c3e6659da632a5825c08d6095e034",
+    "passed": true,
+    "objects": {
+      "drivers/dma/qcom/bam_dma.o": "5cea6da11b8dc87ca38f363ae646830b368be4a38d93abc40c3f47af120db32a",
+      "drivers/dma/virt-dma.o": "7fb83cb38cd6d79d4c29479427a309bd2486981ff8e642391db68b0fe21bd978",
+      "drivers/dma/dmaengine.o": "9e8f22bf97c4e7db53372c638ade078f2259fc1f3eed448bef82c7c323136224"
+    },
+    "owned_child_terminal_and_reaped": true,
+    "finished_UTC": "2026-11-16T15:13:02.669539+00:00"
+  }
+}

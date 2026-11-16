@@ -1,0 +1,15 @@
+{
+  "sha": "e7c0fe2a5c84b7bf4dcbbce30953b04b95e9dc09",
+  "subject": "dmaengine: add Qualcomm BAM dma driver",
+  "url": "https://github.com/torvalds/linux/commit/e7c0fe2a5c84b7bf4dcbbce30953b04b95e9dc09",
+  "original_driver_added": true,
+  "original_virtual_channel_callback_and_control_fragments": [
+    "+ * Perform DMA control command\n+ *\n+ */\n+static int bam_control(struct dma_chan *chan, enum dma_ctrl_cmd cmd,\n+\tunsigned long arg)\n+{\n+\tstruct bam_chan *bchan = to_bam_chan(chan);\n+\tstruct bam_device *bdev = bchan->bdev;",
+    "+\t\t\t * it gets restarted by the tasklet\n+\t\t\t */\n+\t\t\tif (!async_desc->num_desc)\n+\t\t\t\tvchan_cookie_complete(&async_desc->vd);\n+\t\t\telse\n+\t\t\t\tlist_add(&async_desc->vd.node,\n+\t\t\t\t\t&bchan->vc.desc_issued);\n+\t\t}",
+    "+\tbchan->id = index;\n+\tbchan->bdev = bdev;\n+\n+\tvchan_init(&bchan->vc, &bdev->common);\n+\tbchan->vc.desc_free = bam_dma_free_desc;\n+}\n+\n+static int bam_dma_probe(struct platform_device *pdev)",
+    "+\tbdev->common.device_alloc_chan_resources = bam_alloc_chan;\n+\tbdev->common.device_free_chan_resources = bam_free_chan;\n+\tbdev->common.device_prep_slave_sg = bam_prep_slave_sg;\n+\tbdev->common.device_control = bam_control;\n+\tbdev->common.device_issue_pending = bam_issue_pending;\n+\tbdev->common.device_tx_status = bam_tx_status;\n+\tbdev->common.dev = bdev->dev;\n+"
+  ],
+  "full_primary_commit_saved_privately": "original-driver-commit.json",
+  "full_diff_SHA256": "3a87576afd86c2e0c21fd95c86af5582744ef7278411d41d300feccd8e69902f",
+  "fixes_tag_verification": "Original driver used virt-dma completion callbacks and cancellation; source lacks the later device synchronization callback. The patch adds per-channel synchronization without changing termination/hardware reset semantics."
+}

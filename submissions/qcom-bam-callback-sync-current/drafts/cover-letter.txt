@@ -1,0 +1,16 @@
+Subject: [DRAFT] dmaengine: qcom: bam_dma: synchronize channel callbacks
+
+Add device_synchronize using vchan_synchronize on the selected channel. This
+waits for a completion tasklet that already detached descriptors when normal
+cancellation ran. Preserve existing reset and cancellation behavior, and do
+not synchronize an unrelated channel or the shared device tasklet.
+
+The model passes 256 cases/3,328 checks after 536 pre-change failures and
+rejects eight controls. Native ARM/ARM64 components and the incremental ARM
+kernel/459 signed modules pass their recorded checks. No physical DMA,
+firmware, audio, phone or network operations execute in qualification.
+
+Client producer closure, master/external transfer quiescence, RX resubmission,
+TX and response/TID lifetime, hardware shutdown ordering and physical acceptance
+remain open. Codex generated the patch/evidence; human review and DCO are
+pending. This is an unsent draft and grants no publication authorization.
