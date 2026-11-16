@@ -1,0 +1,46 @@
+From 3621db8f609490bccee6296f9b5ff7720c255447 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 00:38:02 -0500
+Subject: [PATCH] soc: qcom: spm: use a raw lock for the MSM8226 L2 map
+
+The fixed-range APC transaction runs on CPU0 in a synchronous IPI.
+Its SAW reads and writes use the map published by the L2 owner. Setting
+fast_io selects a spinlock_t, which is a sleeping lock on PREEMPT_RT;
+it does not request a raw lock.
+
+Set use_raw_spinlock so the owner publishes the non-sleeping map needed
+by the voltage transaction. Preserve the register allowlists, setup
+ordering, permanent ownership and publication checks. The PMIC parent
+map used by the same transaction requires the separate companion fix.
+
+The actual regmap selection and callbacks reproduce18 failed checks
+across the two old configurations; fixing only the L2 map leaves9.
+Both corrected configurations pass20 cases/149 checks, with two failing
+controls. The original L2 publication and no-voltage-write model passes.
+Four native ARM/ARM64 profiles, with and without PREEMPT_RT, compile
+24 related objects with W=1 and no diagnostics. Lock services and IPI
+context are synthetic; physical RT/lockdep acceptance is still pending.
+
+Codex generated this fix and qualification. Human review and DCO remain
+pending; no Signed-off-by is added.
+
+Fixes: b920df1379ab ("soc: qcom: spm: initialize the MSM8226 L2 arbiter master")
+---
+ drivers/soc/qcom/spm.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
+index c4a70565a..ebd32ad69 100644
+--- a/drivers/soc/qcom/spm.c
++++ b/drivers/soc/qcom/spm.c
+@@ -554,6 +554,7 @@ static const struct regmap_config spm_8226_l2_regmap_config = {
+ 	.reg_stride = 4,
+ 	.max_register = 0xffc,
+ 	.fast_io = true,
++	.use_raw_spinlock = true,
+ 	.rd_table = &spm_8226_l2_read_table,
+ 	.wr_table = &spm_8226_l2_write_table,
+ };
+-- 
+2.56.0
+

@@ -1,0 +1,46 @@
+From fb3593ced57b48edb0a0c17cf00df7df9d80bc47 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 00:38:06 -0500
+Subject: [PATCH] mfd: qcom-spmi-pmic: use a raw lock for atomic register
+ access
+
+The SPMI PMIC map advertises fast_io and is accessed by the SAW voltage
+callback from a synchronous CPU0 IPI. Its spinlock_t becomes a sleeping
+lock on PREEMPT_RT, so the PMIC access has an invalid wait context even
+when the SAW MMIO map itself uses a raw lock.
+
+Request a raw spinlock for the parent map. Keep the existing fast-I/O
+allocation policy and serialize all children through the same map.
+The SPMI register transport and PMIC arbiter callbacks remain unchanged.
+
+Executing the actual regmap selection and lock callbacks detects the
+regular lock and synthetic invalid IPI wait. The corrected L2 and PMIC
+maps pass20 cases/149 checks, while both deliberately broken controls
+fail. Native ARM and ARM64 PREEMPT_RT profiles on this fresh MFD base
+compile10 related objects with W=1 and no diagnostics. Four combined
+ARM/ARM64 RT and ordinary profiles also compile24 objects cleanly.
+This is source/model qualification; no physical RT/lockdep trial ran.
+
+Codex generated this fix and qualification. Human review and DCO remain
+pending; no Signed-off-by is added.
+
+Fixes: c3a973a770a1 ("mfd: Add support for Qualcomm SPMI PMICs")
+---
+ drivers/mfd/qcom-spmi-pmic.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
+index b4b178caf..db28a89ed 100644
+--- a/drivers/mfd/qcom-spmi-pmic.c
++++ b/drivers/mfd/qcom-spmi-pmic.c
+@@ -248,6 +248,7 @@ static const struct regmap_config spmi_regmap_config = {
+ 	.val_bits	= 8,
+ 	.max_register	= 0xffff,
+ 	.fast_io	= true,
++	.use_raw_spinlock = true,
+ };
+ 
+ static int pmic_spmi_probe(struct spmi_device *sdev)
+-- 
+2.56.0
+

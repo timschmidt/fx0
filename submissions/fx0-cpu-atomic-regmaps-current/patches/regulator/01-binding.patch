@@ -1,0 +1,77 @@
+From 3ac00fde512435fea5bb5416fedb35c3e51148d4 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:42:00 +0000
+Subject: [PATCH] dt-bindings: regulator: qcom: describe the fixed PM8226 SAW
+ range
+
+Describe the opt-in fixed-range SAW leader and its always-on PM8226 S2
+constraints. Legacy regulator descriptions retain their existing policy.
+
+Composite current-base port of Timothy Schmidt's Fx0 CPU bindings from
+790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original author and component
+date retained. Codex performed this maintainer-base port and qualification.
+The same binding bytes already pass the combined twenty-DTB full schema;
+standalone example/meta/lint qualification is recorded separately.
+Human DCO remains pending; no Signed-off-by is added.
+---
+ .../regulator/qcom,spmi-regulator.yaml        | 35 +++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+index aea849e8e..05f189af2 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+@@ -101,15 +101,50 @@ patternProperties:
+         description: SAW controlled gang slave. Will not be configured.
+         type: boolean
+ 
++      qcom,saw-fixed-range:
++        description:
++          PM8226 S2 uses its immutable power-on FTS2 voltage range through
++          the L2 SAW controller. Expose only that range, acknowledge voltage
++          commands and allow the PMIC slew time before returning success.
++          Requires an always-on rail, a SAW leader, an initialized Madai L2 master controller
++          and disabled hardware AVS.
++        type: boolean
++
+       qcom,saw-leader:
+         description:
+           SAW controlled gang leader. Will be configured as SAW regulator.
+         type: boolean
+ 
++    allOf:
++      - if:
++          required: ["qcom,saw-fixed-range"]
++        then:
++          required:
++            - qcom,saw-leader
++            - regulator-always-on
++          properties:
++            qcom,saw-slave: false
++
++  "^(?!s2$)(5vs[1-2]|(l|s)[1-9][0-9]?|lvs[1-4])$":
++    type: object
++    properties:
++      qcom,saw-fixed-range: false
++
+ required:
+   - compatible
+ 
+ allOf:
++  - if:
++      required: [s2]
++      properties:
++        s2:
++          required: ["qcom,saw-fixed-range"]
++    then:
++      required: ["qcom,saw-reg"]
++      properties:
++        compatible:
++          const: qcom,pm8226-regulators
++
+   - if:
+       properties:
+         compatible:
+-- 
+2.56.0
+

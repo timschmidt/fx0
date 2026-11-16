@@ -1,0 +1,23 @@
+{
+  "started_UTC": "2026-11-16T05:40:39.213855+00:00",
+  "base": "a2a6f6b0b394eda55bd3483ecafbdc8228819a98",
+  "binding_SHA256": "123cc228fa0a718a38e509c10518f5513c3704fe352129c4633739a23d0fa10c",
+  "phone_access": false,
+  "state": "terminal success",
+  "command": [
+    "make",
+    "O=<workspace>/local/fx0-cpu-maintainer-current-01/regulator-binding-out",
+    "ARCH=arm",
+    "LLVM=-21",
+    "W=1",
+    "-j2",
+    "DT_SCHEMA_FILES=regulator/qcom,spmi-regulator.yaml",
+    "dt_binding_check"
+  ],
+  "returncode": 0,
+  "diagnostics": [],
+  "passed": true,
+  "full_processed_schema_SHA256": "ab99aaf67b472a6579a8af6ad6dd540eeffe9ae480bcea484dc984b5cbfd7d9a",
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-16T05:41:40.053211+00:00"
+}
