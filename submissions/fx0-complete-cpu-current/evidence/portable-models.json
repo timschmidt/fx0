@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "patches": 11,
+  "model_test_methods": 45,
+  "model_results": {
+    "tests": 45,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": true
+  },
+  "standalone_sanitizer_compilations": 26,
+  "ctypes_shared_oracles_unsanitized": 7,
+  "calibration_cases": 4068,
+  "calibration_checks": 178907,
+  "calibration_controls_rejected": 3,
+  "numeric": {
+    "calibration-candidate": {
+      "cases": 4068,
+      "checks": 178907,
+      "failures": 0,
+      "returncode": 0,
+      "mutation": null,
+      "sanitizer_diagnostics": false,
+      "actual_header_SHA256": "8eecdff7fb43f484027b80eb2e7acc05ba435b26af978bb05f15bf751fd634b0",
+      "program_SHA256": "ae2abb3bda2a0c265d11b649e7c2270fc88458b631a614ec6838e24c6b2f7b17",
+      "independent_oracle": "compiled vendor property arrays and Python sequence",
+      "all_fuse_vectors_synthetic": true,
+      "physical_calibration_acceptance": false
+    },
+    "calibration-clock-selector": {
+      "cases": 4068,
+      "checks": 178907,
+      "failures": 455,
+      "returncode": 1,
+      "mutation": "clock-selector",
+      "sanitizer_diagnostics": false,
+      "actual_header_SHA256": "1d0756bcf72b78a5ef8cffe955b6c0c99273ef0cec1d278078e3bd7d55f55178",
+      "program_SHA256": "ae2abb3bda2a0c265d11b649e7c2270fc88458b631a614ec6838e24c6b2f7b17",
+      "independent_oracle": "compiled vendor property arrays and Python sequence",
+      "all_fuse_vectors_synthetic": true,
+      "physical_calibration_acceptance": false
+    },
+    "calibration-conditional-minimum": {
+      "cases": 4068,
+      "checks": 178907,
+      "failures": 28183,
+      "returncode": 1,
+      "mutation": "conditional-minimum",
+      "sanitizer_diagnostics": false,
+      "actual_header_SHA256": "391b3c258d09ded88176eed0a7966e43b63e7e509b724d0f0560ba8bc8e1fe83",
+      "program_SHA256": "ae2abb3bda2a0c265d11b649e7c2270fc88458b631a614ec6838e24c6b2f7b17",
+      "independent_oracle": "compiled vendor property arrays and Python sequence",
+      "all_fuse_vectors_synthetic": true,
+      "physical_calibration_acceptance": false
+    },
+    "calibration-read-error": {
+      "cases": 4068,
+      "checks": 178907,
+      "failures": 88,
+      "returncode": 1,
+      "mutation": "read-error",
+      "sanitizer_diagnostics": false,
+      "actual_header_SHA256": "81e4ec768911bbd4219d58894985f22867e78315742c6762fd79ada66b354764",
+      "program_SHA256": "ae2abb3bda2a0c265d11b649e7c2270fc88458b631a614ec6838e24c6b2f7b17",
+      "independent_oracle": "compiled vendor property arrays and Python sequence",
+      "all_fuse_vectors_synthetic": true,
+      "physical_calibration_acceptance": false
+    }
+  },
+  "Git_required": false,
+  "network_or_phone_access": false,
+  "unit_fuse_data": false,
+  "native_full_kernel_or_schema_builds_repeated": false,
+  "physical_CPU_or_PM_acceptance": false
+}

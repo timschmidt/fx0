@@ -1,0 +1,548 @@
+[
+  {
+    "sha": "3bfdc9d2da6a39a44e2d581f306c2804b79e1263",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T03:16:26-04:00",
+    "subject": "ARM: dts: qcom: Add initial LG Fx0 UART and USB description"
+  },
+  {
+    "sha": "8692198066593cbe439d57a2a744da903f273000",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T03:57:44-04:00",
+    "subject": "ARM: dts: qcom: lg-madai: Inherit the MSM8226 USB PHY sequence"
+  },
+  {
+    "sha": "0120a28ce18e07365b87f98cb9c80f0fd67304d8",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T03:59:29-04:00",
+    "subject": "ARM: dts: qcom: lg-madai: Describe the USB PHY supplies"
+  },
+  {
+    "sha": "0b14f2b4a562635c7a30a4019453419ec8a9dd77",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T04:14:42-04:00",
+    "subject": "ARM: dts: qcom: lg-madai: Reserve SMEM at the firmware address"
+  },
+  {
+    "sha": "2998cfb561ea1dceae4cd1cfbdcf0c0e30d3de0a",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T04:21:00-04:00",
+    "subject": "ARM: dts: qcom: lg-madai: Connect USB to the PMIC VBUS detector"
+  },
+  {
+    "sha": "f989c8036d7a737f74806c1ddab6e5b68f617a46",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T04:23:56-04:00",
+    "subject": "ARM: dts: qcom: lg-madai: Enable the internal eMMC controller"
+  },
+  {
+    "sha": "997b1a4497ba24c2d921c27ee8276def9d545002",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T04:50:08-04:00",
+    "subject": "ARM: dts: qcom: lg-madai: Preserve the stock firmware memory holes"
+  },
+  {
+    "sha": "52334e9f84c3e2425819f1ea20aa18eb42453e82",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T04:52:23-04:00",
+    "subject": "ARM: dts: qcom: lg-madai: Describe the battery VADC channels"
+  },
+  {
+    "sha": "b7575530db2d756ba1ad3e6e5757d3ac00494f1c",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T05:48:51-04:00",
+    "subject": "ARM: dts: qcom: lg-madai: Allow eMMC regulator load votes"
+  },
+  {
+    "sha": "dc2430e91f814477ccfaf22077a468235b30b096",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T07:02:23-04:00",
+    "subject": "dt-bindings: display: panel: Add LG Fx0 production panel"
+  },
+  {
+    "sha": "a22c81819da3102002a0975091245e8347723be1",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T07:02:23-04:00",
+    "subject": "drm/panel: Add LG Fx0 JDI in-cell panel support"
+  },
+  {
+    "sha": "c7e7c55d5ef10753429b68ce68db0888113018aa",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T07:02:23-04:00",
+    "subject": "ARM: dts: qcom: lg-madai: Describe the Synaptics touchscreen"
+  },
+  {
+    "sha": "141f281f0c6ac24b8635946f87e559bdf34c7fa6",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T07:02:23-04:00",
+    "subject": "ARM: dts: qcom: lg-madai: Connect the native DSI display and WLED"
+  },
+  {
+    "sha": "9ff315ebc274426f5630265c074c67b44c554f7d",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T07:05:23-04:00",
+    "subject": "ARM: dts: qcom: lg-madai: Match the WLED schema"
+  },
+  {
+    "sha": "6c99f06487157c3bf8f1ed58e22125fba3266fce",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T07:46:41-04:00",
+    "subject": "ARM: dts: qcom: msm8226: Describe the display IOMMU and enable it on Fx0"
+  },
+  {
+    "sha": "c639efe57266744ad70b1c071c965afe0c55f962",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T09:37:49-04:00",
+    "subject": "ARM: dts: qcom: lg-madai: Allow RMI firmware startup after reset"
+  },
+  {
+    "sha": "a2202e0ef85741a15b89c4e2464e2cf909584dca",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T13:46:16-04:00",
+    "subject": "ARM: dts: qcom: msm8926-madai: describe camera I/O supply"
+  },
+  {
+    "sha": "4bc8e90137d88e6a781842b925631714082be515",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T13:46:16-04:00",
+    "subject": "ARM: dts: qcom: msm8926-madai: enable camera control interface"
+  },
+  {
+    "sha": "476e36e72527b4115b656117634fb17a4b6e77dc",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T15:17:24-04:00",
+    "subject": "ARM: dts: qcom: msm8926-madai: keep the CPU PLL supply enabled"
+  },
+  {
+    "sha": "87d953b4a0ce9594a6a438579c1d2a489faaa00b",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T20:34:03-04:00",
+    "subject": "ARM: dts: qcom: msm8926: align Fx0 touch coordinates with its display"
+  },
+  {
+    "sha": "d80fe99314eb2499c9e04e32468ea5eafbc9e758",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T21:15:43-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: describe GPIO buttons"
+  },
+  {
+    "sha": "a82efa8482a9d1c3b40746fca0728debde1e9cfd",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-30T17:56:28-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: describe WCNSS"
+  },
+  {
+    "sha": "6fb0c0cae80bfb13d14214ee5daf94a15d4b70ef",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-30T21:53:27-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: enable the ADSP"
+  },
+  {
+    "sha": "4598182e1708f22a7e58c45e4479d15dc80b5f68",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-30T21:59:13-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Enable the GPU"
+  },
+  {
+    "sha": "962a378204d641b1af66b0bcf27c84c52d278815",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-31T03:16:05-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Add PON reboot modes"
+  },
+  {
+    "sha": "dcb8022d9633b84fa3ab800809771c72a8ad14b2",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-31T07:37:10-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Enable the microSD slot"
+  },
+  {
+    "sha": "25dd8e3eb0276e7a04de4d796f2c9ea24e61d56b",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-31T09:31:04-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Add the motion sensors and vibrator"
+  },
+  {
+    "sha": "209fa63907fe26b8bb06ba77cfc954bdbdb4f3e0",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-31T10:16:40-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Wait for the sensor I/O rail"
+  },
+  {
+    "sha": "7e05825f60c20ef9bd0fc4e6451764c030ae26a9",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-31T12:13:53-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Keep the eMMC first"
+  },
+  {
+    "sha": "cbfe7bb0e361e110bfba5ad0bf1104acd1ab205e",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-31T10:26:50-04:00",
+    "subject": "leds: flash: Add torch support for first-generation Qualcomm PMIC flash"
+  },
+  {
+    "sha": "d1d8b274a007fbb23b54ed6fb4ee896cc8a71a39",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-31T14:45:59-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Add the rear camera"
+  },
+  {
+    "sha": "6c896e708b2ba1926c204236a3dbc3860a4e619d",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-31T04:14:36-04:00",
+    "subject": "ARM: dts: qcom: msm8226: probe the ADSP APR core service (experiment)"
+  },
+  {
+    "sha": "8829fb14e773b88b15497ede748bae090d66dc5e",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-31T07:56:00-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Add the SLIMbus Tapan codec"
+  },
+  {
+    "sha": "cf1934081c14fdc992dc9c8e6f5002e882ff61e7",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-31T19:28:38-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Restore the VFE IOMMU node after merging"
+  },
+  {
+    "sha": "3144008db3b8481429ecb39abe6f9afe199b75ca",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-31T19:53:26-04:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Add the sound card and speaker"
+  },
+  {
+    "sha": "683f457c18f457a7f0f37e077f9682787a0d6f35",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-01T03:24:25-05:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Keep MDSS powered for the boot framebuffer"
+  },
+  {
+    "sha": "d02a6c3f57d2e9142756d034ee2e2b734000d256",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-01T05:06:49-05:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Describe the IMU core supply"
+  },
+  {
+    "sha": "6161d5c2ee3aef33d3a28a2791742920a7162167",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-01T05:06:49-05:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Add the IMU mounting matrix"
+  },
+  {
+    "sha": "5cd0d520ab727b73cdbc91e4692b9c5e45c86776",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-01T14:31:38-05:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Sequence the touchscreen with the panel"
+  },
+  {
+    "sha": "0fc0539b6f6e2fe96cf045be99a6d737e735989a",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-01T17:22:55-05:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Only hold the MDSS domain for the boot framebuffer"
+  },
+  {
+    "sha": "e9a5a8f1eb963bad0f8e3d0910e56f5a3e031de6",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-01T18:01:19-05:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Add microphone capture links"
+  },
+  {
+    "sha": "1d9b341caee8d2633933b68c5e24c51e9f377f09",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-01T18:40:54-05:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Add the codec buck supplies"
+  },
+  {
+    "sha": "4c36987daa8e77da4d98548108da674a99771904",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-01T20:06:29-05:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Mark the rear camera's location"
+  },
+  {
+    "sha": "ba69825901332021e6c93eac0b62dd6140b74d66",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-01T22:02:44-05:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Add the front camera"
+  },
+  {
+    "sha": "7ca2b9706cd86d844e757b88622f4ec3513a9653",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-02T13:54:41-05:00",
+    "subject": "ARM: dts: qcom: msm8926-lg-madai: Add camera rotation and compass mounting"
+  },
+  {
+    "sha": "5624c0158e00149c03f6d1ae53f96092015274bd",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-11T00:17:59-05:00",
+    "subject": "Reconstruct the checksum-pinned installed Fx0 r50 source overlay"
+  },
+  {
+    "sha": "858214239a80fba4bcdee77e979d5956a07cf7d9",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T18:15:17-05:00",
+    "subject": "ARM: dts: qcom: madai: describe PN547 NFC and its reference clock"
+  },
+  {
+    "sha": "15410741811ecb773007ab7833474531462658a8",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "pmdomain: qcom: cpr: decode MSM8926 calibration metadata"
+  },
+  {
+    "sha": "5730f1bf84e209d56f915052e4d9b098e083f579",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "dt-bindings: regulator: describe the PM8226 SAW fixed range"
+  },
+  {
+    "sha": "784fdcc90c31a5cf066fe50c9715c29b1a864b93",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "regulator: qcom-spmi: add the fixed-range PM8226 SAW provider"
+  },
+  {
+    "sha": "13223431b42b86ef25b1f9b750f6306fb6b17c3c",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "dt-bindings: soc: qcom: describe the MSM8226 L2 master owner"
+  },
+  {
+    "sha": "64c4a6c689a846994710b8101704649102e14ab1",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "soc: qcom: spm: register the MSM8226 L2 master owner"
+  },
+  {
+    "sha": "f122681c03047f0f76bc1db566d37ed7861ac15c",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "ARM: dts: qcom: madai: connect the L2 master and APC provider"
+  },
+  {
+    "sha": "37247370dd011d071c848a9c32d54b60a85d3a30",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "dt-bindings: regulator: require the PM8226 APC supply to stay on"
+  },
+  {
+    "sha": "fd9440e7cc772fcb4a235903d9261c414427fe7f",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "regulator: qcom-spmi: retain the always-on SAW APC supply"
+  },
+  {
+    "sha": "bad14fa4a9924b11f2d126175366cc44932e8b43",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "pmdomain: qcom: cpr: plan MSM8926 APC and MX voltages"
+  },
+  {
+    "sha": "c46c618b48352b2cae230b3f7fb5eeecb304b561",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "pmdomain: qcom: cpr: activate the MX floor before APC changes"
+  },
+  {
+    "sha": "ee0d63c4ed06ca6342b47108e93244a0d4fe134b",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "pmdomain: qcom: cpr: retry incomplete domain attachment"
+  },
+  {
+    "sha": "31e8772099fb47c0227a3d5858432b185543c676",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "pmdomain: qcom: cpr: map MSM8926 rates to calibrated corners"
+  },
+  {
+    "sha": "c0355e30bbf2da3b011de3c21c92e3de3a953656",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "pmdomain: qcom: cpr: acquire MSM8926 calibration atomically"
+  },
+  {
+    "sha": "fb88c61c59d40237eb1eaa8ead26405100580ece",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "dt-bindings: power: qcom: describe the MSM8926 CPR domain"
+  },
+  {
+    "sha": "9a517e9ae5a73390dc3b1cacf2af8e46866b169e",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "pmdomain: qcom: cpr: add the MSM8926 calibrated CPU domain"
+  },
+  {
+    "sha": "5d5301723566e2e679abede27e9c71782d90e7a3",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "regulator: qcom-spmi: restore uncertain SAW voltage writes"
+  },
+  {
+    "sha": "1fe88cc27626940f649f06d6f04d3b51b95e6c26",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "soc: qcom: smd-rpm: correlate replies with pending requests"
+  },
+  {
+    "sha": "e357bc35a392f9ed94fe518cb27bcacf96e646fc",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "pmdomain: qcom: cpr: confirm MX vote restoration after errors"
+  },
+  {
+    "sha": "399d51453d5a6560f326cc0a627b7baa8c82a086",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "pmdomain: qcom: cpr: restore feedback after recovered voltage errors"
+  },
+  {
+    "sha": "d5889e6914101a1b8fed6bc435d26c2e0a17a23c",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "dt-bindings: opp: describe calibrated MSM8926 CPU eligibility"
+  },
+  {
+    "sha": "ebe6be84cf97d9fdbe2160488e0b21b278f37dde",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "cpufreq: qcom-nvmem: attach MSM8926 CPUs to calibrated CPR"
+  },
+  {
+    "sha": "59860c83fca44b8165139d7182f5d29c74a9be02",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z",
+    "subject": "ARM: dts: qcom: add a separate Madai CPR qualification target"
+  },
+  {
+    "sha": "47fcd130ffe3d4d8361e20c516a766af8730dc51",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:42:00Z",
+    "subject": "pmdomain: qcom: cpr: normalize the MSM8926 startup clock"
+  },
+  {
+    "sha": "5cb324524110e0678e5532ab2d9378f144df8882",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:42:00Z",
+    "subject": "clk: qcom: verify MSM8226 CPU PLL and mux programming"
+  },
+  {
+    "sha": "07bcf4680431e1ad89921b308d6821beffb3b09e",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:42:00Z",
+    "subject": "pmdomain: qcom: cpr: guard APC changes with fresh parent rates"
+  },
+  {
+    "sha": "12ee21473c55f41af2207c9148291d12130bb539",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T12:27:21-05:00",
+    "subject": "pmdomain: qcom: cpr: identify MSM8926 probe failure stages"
+  },
+  {
+    "sha": "fb3a6f8dc52eb50cacbcd5395e4f795d14a9d39f",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T13:16:24-05:00",
+    "subject": "pmdomain: qcom: cpr: establish XO with the MSM8926 controller stopped"
+  },
+  {
+    "sha": "b17b65acd02189d85d6cb54efe51af32860111bb",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T13:32:54-05:00",
+    "subject": "pmdomain: qcom: cpr: verify disabled controls for the XO handoff"
+  },
+  {
+    "sha": "1aa67514f880ebc68940edcb899409bf89017d87",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T14:05:08-05:00",
+    "subject": "pmdomain: qcom: cpr: distinguish planned corners from APC targets"
+  },
+  {
+    "sha": "41f636c9f1475c35bac1f267f5685c755c80e8a4",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-11T08:25:19-05:00",
+    "subject": "ARM: dts: qcom: madai: clarify integrated CPR qualification target"
+  },
+  {
+    "sha": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "author_name": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-11T08:29:12-05:00",
+    "subject": "pmdomain: qcom: align the carried MSM8926 helpers"
+  }
+]

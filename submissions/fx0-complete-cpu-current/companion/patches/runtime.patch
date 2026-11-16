@@ -1,0 +1,42 @@
+From 9a45b7096c83954703f6852a948d838704fa8f63 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 00:04:15 -0500
+Subject: [PATCH] media: qcom: camss: select the MIPI D-PHY timing helper
+
+CAMSS calls phy_mipi_dphy_get_default_config_for_hsclk() from its
+PHY-API stream callback. The optional Qualcomm CSI2 PHY driver selects
+that helper, but its imply permits a configuration with that driver
+disabled. CAMSS then fails to link even on legacy-PHY boards because
+the PHY-API callback is compiled into the same driver.
+
+Select GENERIC_PHY_MIPI_DPHY directly for the caller. Keep the optional
+hardware PHY driver as an imply so legacy boards do not acquire an
+unnecessary hardware dependency.
+
+The combined native ARM build reproduced the undefined helper symbol
+with CAMSS built in and the hardware PHY disabled. Actual native
+Kconfig checks on fresh media-next reproduce the missing dependency
+for both built-in and modular CAMSS; the direct select supplies the
+helper in all six consumer/provider combinations.
+
+Codex generated this fix and its qualification. Human review and DCO
+certification remain pending; no Signed-off-by is added.
+
+Fixes: 0ee6c8a921b1 ("media: qcom: camss: Add support for PHY API devices")
+---
+ drivers/media/platform/qcom/camss/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/media/platform/qcom/camss/Kconfig b/drivers/media/platform/qcom/camss/Kconfig
+index abb63aebe5ed..a131b86cb199 100644
+--- a/drivers/media/platform/qcom/camss/Kconfig
++++ b/drivers/media/platform/qcom/camss/Kconfig
+@@ -8,4 +8,5 @@ config VIDEO_QCOM_CAMSS
+ 	select VIDEOBUF2_DMA_SG
+ 	select V4L2_FWNODE
+ 	select GENERIC_PHY
++	select GENERIC_PHY_MIPI_DPHY
+ 	imply PHY_QCOM_MIPI_CSI2
+-- 
+2.56.0
+

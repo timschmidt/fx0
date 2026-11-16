@@ -1,0 +1,94 @@
+{
+  "patches": [
+    {
+      "patch": "0001-MAINTAINERS-track-MSM8926-CPU-calibration-helpers.patch",
+      "returncode": 0,
+      "summary": [
+        "total: 0 errors, 0 warnings, 0 checks, 16 lines checked"
+      ]
+    },
+    {
+      "patch": "0002-dt-bindings-qcom-describe-MSM8926-CPU-and-CPR-contro.patch",
+      "returncode": 0,
+      "summary": [
+        "total: 0 errors, 0 warnings, 0 checks, 321 lines checked"
+      ]
+    },
+    {
+      "patch": "0003-pmdomain-qcom-add-MSM8926-calibration-and-planning-h.patch",
+      "returncode": 0,
+      "summary": [
+        "total: 0 errors, 0 warnings, 0 checks, 484 lines checked"
+      ]
+    },
+    {
+      "patch": "0004-soc-qcom-spm-initialize-the-MSM8226-L2-arbiter-maste.patch",
+      "returncode": 0,
+      "summary": [
+        "total: 0 errors, 0 warnings, 0 checks, 241 lines checked"
+      ]
+    },
+    {
+      "patch": "0005-regulator-qcom-spmi-retain-fixed-range-PM8226-APC-ow.patch",
+      "returncode": 0,
+      "summary": [
+        "total: 0 errors, 0 warnings, 0 checks, 487 lines checked"
+      ]
+    },
+    {
+      "patch": "0006-soc-qcom-smd-rpm-correlate-completion-with-each-requ.patch",
+      "returncode": 0,
+      "summary": [
+        "total: 0 errors, 0 warnings, 0 checks, 190 lines checked"
+      ]
+    },
+    {
+      "patch": "0007-pmdomain-qcom-retain-and-reconcile-the-APC-MX-depend.patch",
+      "returncode": 0,
+      "summary": [
+        "total: 0 errors, 0 warnings, 0 checks, 115 lines checked"
+      ]
+    },
+    {
+      "patch": "0008-clk-qcom-verify-MSM8226-CPU-PLL-and-mux-transitions.patch",
+      "returncode": 0,
+      "summary": [
+        "total: 0 errors, 0 warnings, 0 checks, 443 lines checked"
+      ]
+    },
+    {
+      "patch": "0009-pmdomain-qcom-port-the-calibrated-MSM8926-CPU-domain.patch",
+      "returncode": 0,
+      "summary": [
+        "total: 0 errors, 0 warnings, 0 checks, 1081 lines checked"
+      ]
+    },
+    {
+      "patch": "0010-cpufreq-qcom-nvmem-attach-MSM8926-CPUs-after-supplie.patch",
+      "returncode": 0,
+      "summary": [
+        "total: 0 errors, 0 warnings, 0 checks, 126 lines checked"
+      ]
+    },
+    {
+      "patch": "0011-ARM-dts-qcom-add-separate-Madai-CPU-qualification-ta.patch",
+      "returncode": 0,
+      "summary": [
+        "total: 0 errors, 0 warnings, 0 checks, 258 lines checked"
+      ]
+    }
+  ],
+  "ignored_types": [
+    "CAMELCASE",
+    "CONST_STRUCT",
+    "USLEEP_RANGE",
+    "FILE_PATH_CHANGES"
+  ],
+  "rationales": {
+    "CAMELCASE": "Qualcomm and regulator voltage-unit fields use uV; retained consistently",
+    "CONST_STRUCT": "Per-instance regulator_ops copy customized for always-on fixed-range SAW while retaining legacy operations",
+    "USLEEP_RANGE": "The42us PMIC mode delay executes in synchronous CPU0 IPI context and cannot sleep",
+    "FILE_PATH_CHANGES": "New helper/header paths covered by current subsystem patterns and explicit MAINTAINERS additions"
+  },
+  "bindings_driver_and_DTS_patches_separate": true
+}

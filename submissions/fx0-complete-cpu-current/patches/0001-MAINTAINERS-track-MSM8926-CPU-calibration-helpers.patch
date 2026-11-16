@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Wed, 11 Nov 2026 08:29:12 -0500
+Subject: [PATCH 01/11] MAINTAINERS: track MSM8926 CPU calibration helpers
+
+Extend the existing CPR and CPUfreq ownership patterns to cover the new
+private calibration helpers and shared eligibility headers.
+
+Composite port from Fx0 CPU source
+790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original component author and
+date retained; the scoped original source history is recorded in the
+qualification evidence. Port, current API merges, changelog and
+qualification used OpenAI Codex assistance.
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d94f9e8ad3d9..4d3e7ebc1b6d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -22926,7 +22926,9 @@ L:	linux-pm@vger.kernel.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
++F:	drivers/pmdomain/qcom/cpr*.h
+ F:	drivers/pmdomain/qcom/cpr.c
++F:	include/linux/soc/qcom/cpr.h
+ 
+ QUALCOMM CPUCP MAILBOX DRIVER
+ M:	Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+@@ -22942,6 +22944,7 @@ S:	Maintained
+ F:	Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+ F:	Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+ F:	drivers/cpufreq/qcom-cpufreq-nvmem.c
++F:	include/dt-bindings/opp/qcom,msm8926.h
+ 
+ QUALCOMM CRYPTO DRIVERS
+ M:	Bartosz Golaszewski <brgl@kernel.org>

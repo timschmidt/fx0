@@ -1,0 +1,178 @@
+[
+  {
+    "component": "ownership",
+    "head": "1d921d51748bcf8c37a478092d2e6c15c771091e",
+    "tree": "a02ac5cc5d76c9b625145312b0406c2e36ceb536",
+    "parent": "d62a924a72d73e2b19c1bd0d5d8fa754c8caf24e",
+    "paths": [
+      "MAINTAINERS"
+    ],
+    "original_author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_author_date": "2026-11-11T08:29:12-05:00",
+    "original_source": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "composite_port": true,
+    "subject": "MAINTAINERS: track MSM8926 CPU calibration helpers"
+  },
+  {
+    "component": "bindings",
+    "head": "e0a2fcfe2def697ff9b52ffe9348e792ad904ea1",
+    "tree": "3eab42e935602c7e929851c23682ffa90cff51d9",
+    "parent": "1d921d51748bcf8c37a478092d2e6c15c771091e",
+    "paths": [
+      "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml",
+      "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml",
+      "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml",
+      "Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml",
+      "Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml",
+      "include/dt-bindings/opp/qcom,msm8926.h"
+    ],
+    "original_author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_author_date": "2026-11-08T16:42:00Z",
+    "original_source": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "composite_port": true,
+    "subject": "dt-bindings: qcom: describe MSM8926 CPU and CPR control"
+  },
+  {
+    "component": "calibration",
+    "head": "93e671bc3c5dd81eadcabc9643620fb657baa269",
+    "tree": "78b0ae657b6aafc89e8e0f5015cbdf38e20ea982",
+    "parent": "e0a2fcfe2def697ff9b52ffe9348e792ad904ea1",
+    "paths": [
+      "drivers/pmdomain/qcom/cpr-msm8926-corner.h",
+      "drivers/pmdomain/qcom/cpr-msm8926-fuses.h",
+      "drivers/pmdomain/qcom/cpr-msm8926-voltage.h",
+      "drivers/pmdomain/qcom/cpr-msm8926.h"
+    ],
+    "original_author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_author_date": "2026-11-11T08:29:12-05:00",
+    "original_source": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "composite_port": true,
+    "subject": "pmdomain: qcom: add MSM8926 calibration and planning helpers"
+  },
+  {
+    "component": "L2",
+    "head": "b920df1379abff3982be5d1ece143eb7fd16c443",
+    "tree": "a0a6eb11ddbccfbe1c88d18333a6486cf2671719",
+    "parent": "93e671bc3c5dd81eadcabc9643620fb657baa269",
+    "paths": [
+      "drivers/soc/qcom/Kconfig",
+      "drivers/soc/qcom/spm.c",
+      "drivers/soc/qcom/spm-msm8226-l2.h"
+    ],
+    "original_author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_author_date": "2026-11-08T16:33:09Z",
+    "original_source": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "composite_port": true,
+    "subject": "soc: qcom: spm: initialize the MSM8226 L2 arbiter master"
+  },
+  {
+    "component": "APC",
+    "head": "cd316b91fc1e1049db8aa2f0bb94b640519977a4",
+    "tree": "4b32bb3e7149d103175a69de74366ba39fc4ae85",
+    "parent": "b920df1379abff3982be5d1ece143eb7fd16c443",
+    "paths": [
+      "drivers/regulator/qcom_spmi-regulator.c",
+      "drivers/regulator/qcom-spmi-saw-fts2.h"
+    ],
+    "original_author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_author_date": "2026-11-11T08:29:12-05:00",
+    "original_source": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "composite_port": true,
+    "subject": "regulator: qcom-spmi: retain fixed-range PM8226 APC ownership"
+  },
+  {
+    "component": "RPM",
+    "head": "82e051d499a6a20d8716fa4a5448cd222ece2bb1",
+    "tree": "857313cd4f6d4d37e017d1e5e9f768327dfe6616",
+    "parent": "cd316b91fc1e1049db8aa2f0bb94b640519977a4",
+    "paths": [
+      "drivers/soc/qcom/smd-rpm.c"
+    ],
+    "original_author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_author_date": "2026-11-08T16:33:09Z",
+    "original_source": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "composite_port": true,
+    "subject": "soc: qcom: smd-rpm: correlate completion with each request"
+  },
+  {
+    "component": "rails",
+    "head": "68cc2620dd9e8848770df5bb37077fa4d82afde3",
+    "tree": "fc21a2dae5838fb8e0b34e6ca045c65d911ba1c4",
+    "parent": "82e051d499a6a20d8716fa4a5448cd222ece2bb1",
+    "paths": [
+      "drivers/pmdomain/qcom/cpr-voltage.h"
+    ],
+    "original_author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_author_date": "2026-11-08T16:33:09Z",
+    "original_source": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "composite_port": true,
+    "subject": "pmdomain: qcom: retain and reconcile the APC MX dependency"
+  },
+  {
+    "component": "clocks",
+    "head": "617ae40348a79b6759cba86b20d5252c744e374c",
+    "tree": "80d26b58044d06970ee036c9c22e965f2254da90",
+    "parent": "68cc2620dd9e8848770df5bb37077fa4d82afde3",
+    "paths": [
+      "drivers/clk/qcom/a53-pll.c",
+      "drivers/clk/qcom/apcs-msm8916.c",
+      "drivers/clk/qcom/clk-pll.c",
+      "drivers/clk/qcom/clk-pll.h",
+      "drivers/clk/qcom/clk-regmap-mux-div.c",
+      "drivers/clk/qcom/clk-regmap-mux-div.h",
+      "drivers/clk/qcom/gcc-msm8974.c"
+    ],
+    "original_author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_author_date": "2026-11-08T16:42:00Z",
+    "original_source": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "composite_port": true,
+    "subject": "clk: qcom: verify MSM8226 CPU PLL and mux transitions"
+  },
+  {
+    "component": "domain",
+    "head": "4569dae3b15824cb1d1fa0e388ba727bd52d6102",
+    "tree": "40684b37ede0834a6b3235210b18ce800c29096a",
+    "parent": "617ae40348a79b6759cba86b20d5252c744e374c",
+    "paths": [
+      "drivers/pmdomain/qcom/Kconfig",
+      "drivers/pmdomain/qcom/cpr.c",
+      "include/linux/soc/qcom/cpr.h"
+    ],
+    "original_author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_author_date": "2026-11-11T08:29:12-05:00",
+    "original_source": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "composite_port": true,
+    "subject": "pmdomain: qcom: port the calibrated MSM8926 CPU domain"
+  },
+  {
+    "component": "cpufreq",
+    "head": "965b16234067d414526f98de418a15fd776cebf1",
+    "tree": "1c1e73a5d05dd30339268578d9209ab84e3a75bb",
+    "parent": "4569dae3b15824cb1d1fa0e388ba727bd52d6102",
+    "paths": [
+      "drivers/cpufreq/cpufreq-dt-platdev.c",
+      "drivers/cpufreq/qcom-cpufreq-nvmem.c"
+    ],
+    "original_author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_author_date": "2026-11-08T16:33:09Z",
+    "original_source": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "composite_port": true,
+    "subject": "cpufreq: qcom-nvmem: attach MSM8926 CPUs after supplier filtering"
+  },
+  {
+    "component": "boards",
+    "head": "57b4bd9ec2db78022e93be3c5bef3e9e25833f12",
+    "tree": "d702ba07047957db565de4facd1c616f7be73f8c",
+    "parent": "965b16234067d414526f98de418a15fd776cebf1",
+    "paths": [
+      "arch/arm/boot/dts/qcom/Makefile",
+      "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts",
+      "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts"
+    ],
+    "original_author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_author_date": "2026-11-11T08:25:19-05:00",
+    "original_source": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "composite_port": true,
+    "subject": "ARM: dts: qcom: add separate Madai CPU qualification target"
+  }
+]

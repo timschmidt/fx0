@@ -1,0 +1,373 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:42:00 +0000
+Subject: [PATCH 02/11] dt-bindings: qcom: describe MSM8926 CPU and CPR control
+
+Describe the CPU/domain OPP mask, full calibration rows, four owned
+clocks, fixed APC range and L2 PMIC arbiter master. Keep the ordinary
+and qualification targets distinct. All twenty compiled platform DTBs
+pass complete unfiltered schema validation.
+
+Composite port from Fx0 CPU source
+790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original component author and
+date retained; the scoped original source history is recorded in the
+qualification evidence. Port, current API merges, changelog and
+qualification used OpenAI Codex assistance.
+
+diff --git a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+index fd04d060c1de..8df9dd3ea6cb 100644
+--- a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
++++ b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+@@ -11,6 +11,24 @@ maintainers:
+ 
+ allOf:
+   - $ref: opp-v2-base.yaml#
++  - if:
++      properties:
++        compatible:
++          const: operating-points-v2-msm8926-cpu
++    then:
++      properties:
++        nvmem-cells: false
++      required:
++        - opp-shared
++      patternProperties:
++        '^opp-?[0-9]+$':
++          properties:
++            opp-microvolt: false
++          patternProperties:
++            '^opp-microvolt-speed[0-9]+-pvs[0-9]+$': false
++          required:
++            - opp-supported-hw
++            - required-opps
+ 
+ description: |
+   In certain Qualcomm Technologies, Inc. SoCs like APQ8096 and MSM8996,
+@@ -24,11 +42,18 @@ description: |
+   This is used to determine the voltage and frequency value for each OPP of
+   operating-points-v2 table when it is parsed by the OPP framework.
+ 
++  On MSM8926 the CPR provider reads the calibration and supplies the same
++  eligibility mask for both CPU and CPR domain OPP tables. Each CPU OPP
++  requires its matching CPR state, which owns voltage programming. Bits 0-13
++  correspond to the frequencies defined in dt-bindings/opp/qcom,msm8926.h;
++  this is a per-frequency mask, rather than a speed-bin index.
++
+ properties:
+   compatible:
+     enum:
+       - operating-points-v2-krait-cpu
+       - operating-points-v2-kryo-cpu
++      - operating-points-v2-msm8926-cpu
+ 
+   nvmem-cells:
+     description: |
+@@ -74,6 +99,10 @@ patternProperties:
+           2:  IPQ8065/IPQ8069
+           3-31:  unused
+ 
++          On MSM8926, each bit corresponds to one canonical frequency in
++          dt-bindings/opp/qcom,msm8926.h. Use one bit per OPP in both CPU and
++          CPR domain tables.
++
+           Other platforms use bits directly corresponding to speedbin index.
+ 
+       clock-latency-ns: true
+diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+index a30ef93213c0..64b7346b62b9 100644
+--- a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
++++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+@@ -24,6 +24,8 @@ patternProperties:
+     properties:
+       opp-level: true
+ 
++      opp-supported-hw: true
++
+       qcom,opp-fuse-level:
+         description: |
+           A positive value representing the fuse corner/level associated with
+diff --git a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+index 2fd2178d1fa5..b6e7b97f0654 100644
+--- a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
++++ b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+@@ -22,6 +22,7 @@ properties:
+     items:
+       - enum:
+           - qcom,qcs404-cpr
++          - qcom,msm8926-cpr
+       - const: qcom,cpr
+ 
+   reg:
+@@ -32,16 +33,19 @@ properties:
+     maxItems: 1
+ 
+   clocks:
+-    items:
+-      - description: Reference clock.
++    minItems: 1
++    maxItems: 4
+ 
+   clock-names:
+-    items:
+-      - const: ref
++    minItems: 1
++    maxItems: 4
+ 
+   vdd-apc-supply:
+     description: APC regulator supply.
+ 
++  vdd-mx-supply:
++    description: Memory rail dependency of the MSM8926 APC supply.
++
+   '#power-domain-cells':
+     const: 0
+ 
+@@ -50,41 +54,99 @@ properties:
+       A phandle to the OPP table containing the performance states
+       supported by the CPR power domain.
+ 
++  qcom,apcs-syscon:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: |
++      MSM8926 APCS syscon containing the CPR reference selector. The driver
++      requires bit 0 at offset 0x64 to select the 19.2 MHz XO source.
++
+   acc-syscon:
+     $ref: /schemas/types.yaml#/definitions/phandle
+     description: A phandle to the syscon used for writing ACC settings.
+ 
+   nvmem-cells:
+-    items:
+-      - description: Corner 1 quotient offset
+-      - description: Corner 2 quotient offset
+-      - description: Corner 3 quotient offset
+-      - description: Corner 1 initial voltage
+-      - description: Corner 2 initial voltage
+-      - description: Corner 3 initial voltage
+-      - description: Corner 1 quotient
+-      - description: Corner 2 quotient
+-      - description: Corner 3 quotient
+-      - description: Corner 1 ring oscillator
+-      - description: Corner 2 ring oscillator
+-      - description: Corner 3 ring oscillator
+-      - description: Fuse revision
++    minItems: 3
++    maxItems: 13
+ 
+   nvmem-cell-names:
+-    items:
+-      - const: cpr_quotient_offset1
+-      - const: cpr_quotient_offset2
+-      - const: cpr_quotient_offset3
+-      - const: cpr_init_voltage1
+-      - const: cpr_init_voltage2
+-      - const: cpr_init_voltage3
+-      - const: cpr_quotient1
+-      - const: cpr_quotient2
+-      - const: cpr_quotient3
+-      - const: cpr_ring_osc1
+-      - const: cpr_ring_osc2
+-      - const: cpr_ring_osc3
+-      - const: cpr_fuse_revision
++    minItems: 3
++    maxItems: 13
++
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: qcom,msm8926-cpr
++    then:
++      properties:
++        clocks:
++          items:
++            - description: Reference clock.
++            - description: CPU cluster clock, retained across CPU attachments.
++            - description: GPLL0 vote supplying the 300 MHz startup/notifier path.
++            - description: CPU PLL supplying the higher CPU rates.
++        clock-names:
++          items:
++            - const: ref
++            - const: cpu
++            - const: aux
++            - const: pll
++        acc-syscon: false
++        nvmem-cells:
++          items:
++            - description: Complete raw CPU/PVS row22 including the uplift selector
++            - description: Complete raw primary CPR row138
++            - description: Complete raw redundant CPR row139
++        nvmem-cell-names:
++          items:
++            - const: cpu_calibration
++            - const: cpr_primary
++            - const: cpr_redundant
++      required:
++        - vdd-mx-supply
++        - qcom,apcs-syscon
++    else:
++      properties:
++        clocks:
++          items:
++            - description: Reference clock.
++        clock-names:
++          items:
++            - const: ref
++        vdd-mx-supply: false
++        qcom,apcs-syscon: false
++        nvmem-cells:
++          items:
++            - description: Corner 1 quotient offset
++            - description: Corner 2 quotient offset
++            - description: Corner 3 quotient offset
++            - description: Corner 1 initial voltage
++            - description: Corner 2 initial voltage
++            - description: Corner 3 initial voltage
++            - description: Corner 1 quotient
++            - description: Corner 2 quotient
++            - description: Corner 3 quotient
++            - description: Corner 1 ring oscillator
++            - description: Corner 2 ring oscillator
++            - description: Corner 3 ring oscillator
++            - description: Fuse revision
++
++        nvmem-cell-names:
++          items:
++            - const: cpr_quotient_offset1
++            - const: cpr_quotient_offset2
++            - const: cpr_quotient_offset3
++            - const: cpr_init_voltage1
++            - const: cpr_init_voltage2
++            - const: cpr_init_voltage3
++            - const: cpr_quotient1
++            - const: cpr_quotient2
++            - const: cpr_quotient3
++            - const: cpr_ring_osc1
++            - const: cpr_ring_osc2
++            - const: cpr_ring_osc3
++            - const: cpr_fuse_revision
+ 
+ required:
+   - compatible
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+index aea849e8eadf..05f189af24e6 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+@@ -101,15 +101,50 @@ patternProperties:
+         description: SAW controlled gang slave. Will not be configured.
+         type: boolean
+ 
++      qcom,saw-fixed-range:
++        description:
++          PM8226 S2 uses its immutable power-on FTS2 voltage range through
++          the L2 SAW controller. Expose only that range, acknowledge voltage
++          commands and allow the PMIC slew time before returning success.
++          Requires an always-on rail, a SAW leader, an initialized Madai L2 master controller
++          and disabled hardware AVS.
++        type: boolean
++
+       qcom,saw-leader:
+         description:
+           SAW controlled gang leader. Will be configured as SAW regulator.
+         type: boolean
+ 
++    allOf:
++      - if:
++          required: ["qcom,saw-fixed-range"]
++        then:
++          required:
++            - qcom,saw-leader
++            - regulator-always-on
++          properties:
++            qcom,saw-slave: false
++
++  "^(?!s2$)(5vs[1-2]|(l|s)[1-9][0-9]?|lvs[1-4])$":
++    type: object
++    properties:
++      qcom,saw-fixed-range: false
++
+ required:
+   - compatible
+ 
+ allOf:
++  - if:
++      required: [s2]
++      properties:
++        s2:
++          required: ["qcom,saw-fixed-range"]
++    then:
++      required: ["qcom,saw-reg"]
++      properties:
++        compatible:
++          const: qcom,pm8226-regulators
++
+   - if:
+       properties:
+         compatible:
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+index c2f1f5946cfa..889c29614564 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+@@ -47,6 +47,14 @@ properties:
+           - qcom,apq8064-saw2-v1.1-cpu
+       - const: qcom,saw2
+ 
++  qcom,pmic-arbiter-master:
++    description:
++      Initialize the MSM8226 L2 controller as the shared APC PMIC arbiter
++      master and publish its register map to the PM8226 S2 regulator. This
++      mode leaves the low-power sequencer disabled and issues no voltage
++      commands during initialization. The owner must be built into the kernel.
++    type: boolean
++
+   reg:
+     items:
+       - description: Base address and size of the SPM register region
+@@ -62,6 +70,19 @@ required:
+   - compatible
+   - reg
+ 
++allOf:
++  - if:
++      required: ["qcom,pmic-arbiter-master"]
++    then:
++      properties:
++        compatible:
++          items:
++            - const: qcom,msm8226-saw2-v2.1-l2
++            - const: qcom,saw2
++        reg:
++          maxItems: 1
++        regulator: false
++
+ additionalProperties: false
+ 
+ examples:
+diff --git a/include/dt-bindings/opp/qcom,msm8926.h b/include/dt-bindings/opp/qcom,msm8926.h
+new file mode 100644
+index 000000000000..129f873b1996
+--- /dev/null
++++ b/include/dt-bindings/opp/qcom,msm8926.h
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++#ifndef __DT_BINDINGS_OPP_QCOM_MSM8926_H
++#define __DT_BINDINGS_OPP_QCOM_MSM8926_H
++
++/* Shared CPU/CPR opp-supported-hw bits, one per canonical frequency. */
++#define MSM8926_OPP_300000000	0x0001
++#define MSM8926_OPP_384000000	0x0002
++#define MSM8926_OPP_600000000	0x0004
++#define MSM8926_OPP_787200000	0x0008
++#define MSM8926_OPP_998400000	0x0010
++#define MSM8926_OPP_1094400000	0x0020
++#define MSM8926_OPP_1190400000	0x0040
++#define MSM8926_OPP_1305600000	0x0080
++#define MSM8926_OPP_1344000000	0x0100
++#define MSM8926_OPP_1401600000	0x0200
++#define MSM8926_OPP_1497600000	0x0400
++#define MSM8926_OPP_1593600000	0x0800
++#define MSM8926_OPP_1689600000	0x1000
++#define MSM8926_OPP_1785600000	0x2000
++
++#endif

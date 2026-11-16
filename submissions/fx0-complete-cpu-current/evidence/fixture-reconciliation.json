@@ -1,0 +1,14 @@
+{
+  "historical_superseded_models": [
+    "test_msm8926_domain",
+    "test_cpr_attach",
+    "test_cpr_startup_clock",
+    "test_cpr_reference_handoff"
+  ],
+  "replacement": "test_cpr_reference_disabled plus actual attachment case, as documented by the prior qualified CPU-runtime suite",
+  "current_API_service_changes": "Mock of_machine_get_match, of_machine_device_match and of_machine_get_match_data using the prior reference-counted OF service model",
+  "actual_kernel_functions_modified": false,
+  "source_kernel": "worktrees/linux-fx0-cpu-current-01",
+  "original_tests_untouched": true,
+  "sanitizers": false
+}
