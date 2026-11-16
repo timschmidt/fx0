@@ -1,0 +1,208 @@
+From 28b00a801a8ce03ab1d22eead3bccfa63d1eda5a Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 07:17:45 -0500
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: gate startup on child binding
+
+The parent owns the PDR and SSR notifications, so UP can queue startup
+while the child driver is unbound or after its QMI discovery probe fails.
+Child removal neither closes this admission path nor drains startup. A
+worker that has already begun its QMI wait can consequently initialize
+the controller after child PM and discovery have been torn down.
+
+Serialize child readiness and the last requested UP/DOWN state with
+ssr_lock. Only queue an admitted child, check admission before waiting,
+and check it again after reacquiring the mutex. Child removal closes the
+gate before cancelling startup outside the worker mutex. Preserve the
+last notification across unbind so a successful rebind can replay UP;
+an intervening DOWN suppresses it. Reset state and completions before
+starting the new discovery session.
+
+Track ownership of the one bootstrap runtime-PM reference. Drop it on
+probe failure or unbind if registration has not consumed it, and acquire
+it on DOWN only if needed. Include registered controllers in DOWN cleanup
+even if the existing resume error path left their state DOWN.
+
+A host model executes the exact child/parent, notifier, worker, enable,
+resume and core bookkeeping callbacks against synthetic services. Its
+42 cases and 461 checks cover failed/unbound probes, rebind replay,
+reference ownership and controlled wait/initialization interleavings.
+The immediate parent fails 57 checks; this change passes them all.
+Twelve independent negative controls are rejected. ARM and ARM64 native
+QCOM profiles build the NGD/core objects with LLVM 21, W=1 and strict
+callback diagnostics without new warnings.
+
+This does not add the initial already-running-DSP bootstrap. Master-work
+and DMA transfer quiescence, QMI late-service retry and power-up error
+propagation still need separate qualification. No phone, firmware or
+audio execution was performed. Codex generated the fix, host model and
+changelog; human review and DCO certification remain pending.
+
+Fixes: a899d324863a ("slimbus: qcom-ngd-ctrl: add Sub System Restart support")
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 68 +++++++++++++++++++++++++++++----
+ 1 file changed, 61 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index 0fa9c2675..6223cff59 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -175,6 +175,10 @@ struct qcom_slim_ngd_ctrl {
+ 	struct pdr_handle *pdr;
+ 	enum qcom_slim_ngd_state state;
+ 	bool registered;
++	/* Child admission and bootstrap PM ownership, protected by ssr_lock. */
++	bool child_ready;
++	bool up_requested;
++	bool pm_ref_held;
+ 	dma_addr_t rx_phys_base;
+ 	dma_addr_t tx_phys_base;
+ 	void *rx_base;
+@@ -1436,6 +1440,7 @@ static int qcom_slim_ngd_enable(struct qcom_slim_ngd_ctrl *ctrl, bool enable)
+ 		}
+ 
+ 		ctrl->registered = true;
++		ctrl->pm_ref_held = false;
+ 		pm_runtime_mark_last_busy(ctrl->ctrl.dev);
+ 		pm_runtime_put(ctrl->ctrl.dev);
+ 
+@@ -1530,11 +1535,10 @@ MODULE_DEVICE_TABLE(of, qcom_slim_ngd_dt_match);
+ 
+ static void qcom_slim_ngd_down(struct qcom_slim_ngd_ctrl *ctrl)
+ {
+-	mutex_lock(&ctrl->ssr_lock);
++	lockdep_assert_held(&ctrl->ssr_lock);
+ 	device_for_each_child(ctrl->ctrl.dev, NULL,
+ 			      qcom_slim_ngd_update_device_status);
+ 	qcom_slim_ngd_enable(ctrl, false);
+-	mutex_unlock(&ctrl->ssr_lock);
+ }
+ 
+ static void qcom_slim_ngd_up_worker(struct work_struct *work)
+@@ -1544,6 +1548,13 @@ static void qcom_slim_ngd_up_worker(struct work_struct *work)
+ 
+ 	ctrl = container_of(work, struct qcom_slim_ngd_ctrl, ngd_up_work);
+ 
++	mutex_lock(&ctrl->ssr_lock);
++	if (!ctrl->child_ready || !ctrl->up_requested) {
++		mutex_unlock(&ctrl->ssr_lock);
++		return;
++	}
++	mutex_unlock(&ctrl->ssr_lock);
++
+ 	/* Make sure qmi service is up before continuing */
+ 	ret = wait_for_completion_interruptible_timeout(&ctrl->qmi_up,
+ 							msecs_to_jiffies(MSEC_PER_SEC));
+@@ -1553,18 +1564,26 @@ static void qcom_slim_ngd_up_worker(struct work_struct *work)
+ 	}
+ 
+ 	mutex_lock(&ctrl->ssr_lock);
+-	qcom_slim_ngd_enable(ctrl, true);
++	if (ctrl->child_ready && ctrl->up_requested)
++		qcom_slim_ngd_enable(ctrl, true);
+ 	mutex_unlock(&ctrl->ssr_lock);
+ }
+ 
+ static int qcom_slim_ngd_ssr_pdr_notify(struct qcom_slim_ngd_ctrl *ctrl,
+ 					unsigned long action)
+ {
++	mutex_lock(&ctrl->ssr_lock);
+ 	switch (action) {
+ 	case QCOM_SSR_BEFORE_SHUTDOWN:
+ 	case SERVREG_SERVICE_STATE_DOWN:
+-		if (ctrl->state != QCOM_SLIM_NGD_CTRL_DOWN) {
+-			pm_runtime_get_noresume(ctrl->ctrl.dev);
++		ctrl->up_requested = false;
++		if (!ctrl->child_ready)
++			break;
++		if (ctrl->state != QCOM_SLIM_NGD_CTRL_DOWN || ctrl->registered) {
++			if (!ctrl->pm_ref_held) {
++				pm_runtime_get_noresume(ctrl->ctrl.dev);
++				ctrl->pm_ref_held = true;
++			}
+ 			ctrl->state = QCOM_SLIM_NGD_CTRL_DOWN;
+ 			qcom_slim_ngd_down(ctrl);
+ 			qcom_slim_ngd_exit_dma(ctrl);
+@@ -1572,11 +1591,14 @@ static int qcom_slim_ngd_ssr_pdr_notify(struct qcom_slim_ngd_ctrl *ctrl,
+ 		break;
+ 	case QCOM_SSR_AFTER_POWERUP:
+ 	case SERVREG_SERVICE_STATE_UP:
+-		schedule_work(&ctrl->ngd_up_work);
++		ctrl->up_requested = true;
++		if (ctrl->child_ready)
++			schedule_work(&ctrl->ngd_up_work);
+ 		break;
+ 	default:
+ 		break;
+ 	}
++	mutex_unlock(&ctrl->ssr_lock);
+ 
+ 	return NOTIFY_OK;
+ }
+@@ -1672,7 +1694,13 @@ static int qcom_slim_ngd_probe(struct platform_device *pdev)
+ 	struct qcom_slim_ngd_ctrl *ctrl = dev_get_drvdata(dev->parent);
+ 	int ret;
+ 
++	mutex_lock(&ctrl->ssr_lock);
++	ctrl->child_ready = false;
+ 	ctrl->ctrl.dev = dev;
++	ctrl->state = QCOM_SLIM_NGD_CTRL_DOWN;
++	reinit_completion(&ctrl->qmi_up);
++	reinit_completion(&ctrl->qmi.qmi_comp);
++	mutex_unlock(&ctrl->ssr_lock);
+ 
+ 	platform_set_drvdata(pdev, ctrl);
+ 	pm_runtime_use_autosuspend(dev);
+@@ -1680,14 +1708,28 @@ static int qcom_slim_ngd_probe(struct platform_device *pdev)
+ 	pm_runtime_set_suspended(dev);
+ 	pm_runtime_enable(dev);
+ 	pm_runtime_get_noresume(dev);
++	mutex_lock(&ctrl->ssr_lock);
++	ctrl->pm_ref_held = true;
++	mutex_unlock(&ctrl->ssr_lock);
+ 	ret = qcom_slim_ngd_qmi_svc_event_init(ctrl);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "QMI service registration failed:%d", ret);
++		mutex_lock(&ctrl->ssr_lock);
++		pm_runtime_put_noidle(dev);
++		ctrl->pm_ref_held = false;
++		mutex_unlock(&ctrl->ssr_lock);
+ 		pm_runtime_dont_use_autosuspend(dev);
+ 		pm_runtime_disable(dev);
++		return ret;
+ 	}
+ 
+-	return ret;
++	mutex_lock(&ctrl->ssr_lock);
++	ctrl->child_ready = true;
++	if (ctrl->up_requested)
++		schedule_work(&ctrl->ngd_up_work);
++	mutex_unlock(&ctrl->ssr_lock);
++
++	return 0;
+ }
+ 
+ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
+@@ -1805,10 +1847,22 @@ static void qcom_slim_ngd_remove(struct platform_device *pdev)
+ {
+ 	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
+ 
++	mutex_lock(&ctrl->ssr_lock);
++	ctrl->child_ready = false;
++	mutex_unlock(&ctrl->ssr_lock);
++	cancel_work_sync(&ctrl->ngd_up_work);
++
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
++	mutex_lock(&ctrl->ssr_lock);
+ 	qcom_slim_ngd_enable(ctrl, false);
+ 	qcom_slim_ngd_exit_dma(ctrl);
++	ctrl->state = QCOM_SLIM_NGD_CTRL_DOWN;
++	if (ctrl->pm_ref_held) {
++		pm_runtime_put_noidle(&pdev->dev);
++		ctrl->pm_ref_held = false;
++	}
++	mutex_unlock(&ctrl->ssr_lock);
+ 	qcom_slim_ngd_qmi_svc_event_deinit(&ctrl->qmi);
+ }
+ 

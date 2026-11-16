@@ -1,0 +1,35 @@
+DRAFT ONLY: human review and DCO certification required before sending.
+To: Srinivas Kandagatla <srini@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+    linux-kernel@vger.kernel.org
+Subject: [RFC PATCH 0/7] slimbus: qcom-ngd-ctrl: qualify child startup admission
+
+Parent SSR/PDR providers remain alive while the NGD child driver is unbound or
+its probe failed. The final patch gates notification-driven startup on child
+readiness and the last requested state, checks admission across the QMI wait,
+and closes admission before cancelling startup at child removal. It also
+balances bootstrap PM reference ownership and replays an observed UP on rebind.
+
+The first six patches preserve prior bookkeeping, parent startup-work and
+parent descriptor/device ownership prerequisites. The new composed model runs
+actual child removal inside parent unregister, replacing the earlier partial
+parent fixture for current admission evidence.
+
+Base: SLIMbus for-next 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4.
+Patches: patches/maintainer/01.patch through 07.patch.
+
+Forty-two synthetic lifecycle cases execute 461 checks: the immediate-parent
+baseline fails 57 and the candidate passes all. Twelve admission controls and
+thirteen earlier bookkeeping/resource controls are rejected. Eight native
+ARM/ARM64 objects compile without diagnostics. The integrated development ARM
+kernel and 459 signed modules build and stage with signature/dependency checks.
+All service and physical limits are documented in README.md. No phone, firmware,
+audio or network activity was performed by the tests.
+
+Initial DSP bootstrap, QMI late arrival/completion semantics, power-up error
+propagation and master/DMA transfer quiescence still need work. No complete
+physical rebind, maintained-LTS packaging or whole-device acceptance is claimed.
+
+Codex generated the fix, changelog, models and packet. Prior human attribution is
+preserved. No agent Signed-off-by is added. A human submitter must review and
+certify the series before sending. Nothing is published or sent to maintainers.
