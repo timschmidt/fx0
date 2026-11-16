@@ -1,0 +1,156 @@
+From b675a1d674f93c95d1198fbaf0bb29d64f9989d4 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 18:15:17 -0500
+Subject: [PATCH] nfc: nxp-nci: balance an optional reference clock across
+ modes
+
+Enable the optional reference clock before raising controller GPIOs and
+release its vote after entering cold mode. Propagate lookup and enable
+errors, keep the core cold after failed open, and allow a subsequent retry.
+Repeated active transitions keep one clock vote.
+
+Nine synthetic clock/probe cases and three deliberate regression controls
+check ordering, retry, optional resources and error propagation. Ten
+closing-reset/removal cases also pass with normal leak checking and
+fail-fast address/undefined sanitizers. Physical NFC is not qualified.
+
+Port of Timothy Schmidt's original implementation f10c7ef55dfa.
+Author and timestamp are preserved. The port, changelog and qualification
+used OpenAI Codex assistance. Human review and DCO certification remain
+pending. No agent Signed-off-by tag is added.
+---
+ drivers/nfc/nxp-nci/core.c |  6 +++--
+ drivers/nfc/nxp-nci/i2c.c  | 45 ++++++++++++++++++++++++--------------
+ 2 files changed, 33 insertions(+), 18 deletions(-)
+
+diff --git a/drivers/nfc/nxp-nci/core.c b/drivers/nfc/nxp-nci/core.c
+index 12e28d1b9..7cc1d21f5 100644
+--- a/drivers/nfc/nxp-nci/core.c
++++ b/drivers/nfc/nxp-nci/core.c
+@@ -25,7 +25,6 @@
+ 			       NFC_PROTO_FELICA_MASK | \
+ 			       NFC_PROTO_ISO14443_MASK | \
+ 			       NFC_PROTO_ISO14443_B_MASK | \
+-			       NFC_PROTO_ISO15693_MASK | \
+ 			       NFC_PROTO_NFC_DEP_MASK)
+ 
+ #define NXP_NCI_RF_PLL_UNLOCKED_NTF nci_opcode_pack(NCI_GID_RF_MGMT, 0x21)
+@@ -43,8 +42,11 @@ static int nxp_nci_open(struct nci_dev *ndev)
+ 		goto open_exit;
+ 	}
+ 
+-	if (info->phy_ops->set_mode)
++	if (info->phy_ops->set_mode) {
+ 		r = info->phy_ops->set_mode(info->phy_id, NXP_NCI_MODE_NCI);
++		if (r)
++			goto open_exit;
++	}
+ 
+ 	info->mode = NXP_NCI_MODE_NCI;
+ 
+diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
+index ff9850b83..f0f92e907 100644
+--- a/drivers/nfc/nxp-nci/i2c.c
++++ b/drivers/nfc/nxp-nci/i2c.c
+@@ -13,6 +13,7 @@
+  */
+ 
+ #include <linux/acpi.h>
++#include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/i2c.h>
+ #include <linux/interrupt.h>
+@@ -36,6 +37,8 @@ struct nxp_nci_i2c_phy {
+ 
+ 	struct gpio_desc *gpiod_en;
+ 	struct gpio_desc *gpiod_fw;
++	struct clk *ref_clk;
++	bool ref_clk_enabled;
+ 	bool irq_requested;
+ 
+ 	int hard_fault; /*
+@@ -48,13 +51,26 @@ static int nxp_nci_i2c_set_mode(void *phy_id,
+ 				    enum nxp_nci_mode mode)
+ {
+ 	struct nxp_nci_i2c_phy *phy = (struct nxp_nci_i2c_phy *) phy_id;
++	int r;
++
++	if (mode != NXP_NCI_MODE_COLD && !phy->ref_clk_enabled) {
++		r = clk_prepare_enable(phy->ref_clk);
++		if (r)
++			return r;
++		phy->ref_clk_enabled = true;
++	}
+ 
+ 	gpiod_set_value_cansleep(phy->gpiod_fw, (mode == NXP_NCI_MODE_FW) ? 1 : 0);
+ 	gpiod_set_value_cansleep(phy->gpiod_en, (mode != NXP_NCI_MODE_COLD) ? 1 : 0);
+ 	usleep_range(10000, 15000);
+ 
+-	if (mode == NXP_NCI_MODE_COLD)
++	if (mode == NXP_NCI_MODE_COLD) {
++		if (phy->ref_clk_enabled) {
++			clk_disable_unprepare(phy->ref_clk);
++			phy->ref_clk_enabled = false;
++		}
+ 		phy->hard_fault = 0;
++	}
+ 
+ 	return 0;
+ }
+@@ -244,14 +260,6 @@ static irqreturn_t nxp_nci_i2c_irq_thread_fn(int irq, void *phy_id)
+ 		if (info->mode == NXP_NCI_MODE_FW)
+ 			nxp_nci_fw_recv_frame(phy->ndev, NULL);
+ 	}
+-	if (r == -ENXIO) {
+-		/*
+-		 * -ENXIO may occur if the controller has not yet
+-		 * provided data after asserting IRQ.
+-		 */
+-		dev_dbg(&client->dev, "No data available yet\n");
+-		goto exit_irq_handled;
+-	}
+ 	if (r < 0) {
+ 		nfc_err(&client->dev, "Read failed with error %d\n", r);
+ 		goto exit_irq_handled;
+@@ -304,6 +312,11 @@ static int nxp_nci_i2c_probe(struct i2c_client *client)
+ 	phy->i2c_dev = client;
+ 	i2c_set_clientdata(client, phy);
+ 
++	phy->ref_clk = devm_clk_get_optional(dev, "ref");
++	if (IS_ERR(phy->ref_clk))
++		return dev_err_probe(dev, PTR_ERR(phy->ref_clk),
++				     "Failed to get reference clock\n");
++
+ 	r = devm_acpi_dev_add_driver_gpios(dev, acpi_nxp_nci_gpios);
+ 	if (r)
+ 		dev_dbg(dev, "Unable to add GPIO mapping table\n");
+@@ -364,22 +377,22 @@ static void nxp_nci_i2c_remove(struct i2c_client *client)
+ }
+ 
+ static const struct i2c_device_id nxp_nci_i2c_id_table[] = {
+-	{ .name = "nxp-nci_i2c" },
+-	{ }
++	{ "nxp-nci_i2c" },
++	{}
+ };
+ MODULE_DEVICE_TABLE(i2c, nxp_nci_i2c_id_table);
+ 
+ static const struct of_device_id of_nxp_nci_i2c_match[] = {
+-	{ .compatible = "nxp,nxp-nci-i2c" },
+-	{ }
++	{ .compatible = "nxp,nxp-nci-i2c", },
++	{}
+ };
+ MODULE_DEVICE_TABLE(of, of_nxp_nci_i2c_match);
+ 
+ #ifdef CONFIG_ACPI
+ static const struct acpi_device_id acpi_id[] = {
+-	{ .id = "NXP1001" },
+-	{ .id = "NXP1002" },
+-	{ .id = "NXP7471" },
++	{ "NXP1001" },
++	{ "NXP1002" },
++	{ "NXP7471" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(acpi, acpi_id);

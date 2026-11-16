@@ -1,0 +1,44 @@
+From 20ad39f09cddd4283f25cf4e49dafc0bda1548b4 Mon Sep 17 00:00:00 2001
+From: Kees Cook <kees+treewide@kernel.org>
+Date: Thu, 29 Oct 2026 06:16:33 +0000
+Subject: [PATCH] nfc: nxp-nci: retain current typed allocation interfaces
+
+Retain the typed devm allocations present in the current NFC maintainer
+source. This is the NFC driver subset of the allocation conversion
+credited to Kees Cook in upstream commit 4dd10fbbeb9c. Preserve all
+existing driver behavior and the original allocation author/date.
+
+OpenAI Codex performed this subset integration and qualification.
+Human review and DCO certification remain pending.
+---
+ drivers/nfc/nxp-nci/core.c | 2 +-
+ drivers/nfc/nxp-nci/i2c.c  | 3 +--
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/nfc/nxp-nci/core.c b/drivers/nfc/nxp-nci/core.c
+index 448e5a4e7..7e5b90e56 100644
+--- a/drivers/nfc/nxp-nci/core.c
++++ b/drivers/nfc/nxp-nci/core.c
+@@ -140,7 +140,7 @@ int nxp_nci_probe(void *phy_id, struct device *pdev,
+ 	struct nxp_nci_info *info;
+ 	int r;
+ 
+-	info = devm_kzalloc(pdev, sizeof(struct nxp_nci_info), GFP_KERNEL);
++	info = devm_kzalloc_obj(pdev, struct nxp_nci_info);
+ 	if (!info)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
+index 92ce096e9..9eec67c10 100644
+--- a/drivers/nfc/nxp-nci/i2c.c
++++ b/drivers/nfc/nxp-nci/i2c.c
+@@ -284,8 +284,7 @@ static int nxp_nci_i2c_probe(struct i2c_client *client)
+ 		return -ENODEV;
+ 	}
+ 
+-	phy = devm_kzalloc(&client->dev, sizeof(struct nxp_nci_i2c_phy),
+-			   GFP_KERNEL);
++	phy = devm_kzalloc_obj(&client->dev, struct nxp_nci_i2c_phy);
+ 	if (!phy)
+ 		return -ENOMEM;
+ 

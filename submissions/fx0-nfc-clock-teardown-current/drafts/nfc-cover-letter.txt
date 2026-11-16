@@ -1,0 +1,29 @@
+DRAFT ONLY: human review and DCO certification required before sending.
+To: David Heidelberg <david@ixit.cz>
+Cc: oe-linux-nfc@lists.linux.dev, netdev@vger.kernel.org,
+    devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [RFC PATCH 0/4] nfc: nxp-nci: qualify removal ordering and optional clock
+
+This series first removes the mode mutex from NCI unregister, then keeps
+receive live through its closing reset before draining it and freeing state.
+The last two patches describe and balance an optional external clock, and
+retain cold core state after failed open. The first two fixes can be reviewed
+independently of the clock feature. The platform DTS belongs to a separate
+Qualcomm series and is not part of the NFC maintainer topic.
+
+Base: NFC for-next 36aa7a403154e93c8d39dc07e87ef650e5a131fe.
+Patches: patches/maintainer/01.patch through 04.patch in this review packet.
+
+The original baseline fails nine modeled removal cases. The candidate passes
+ten lifecycle and nine clock/probe cases; nine deliberate regressions are
+rejected. Exact callback bodies run against synthetic services with fail-fast
+address/undefined sanitizers and normal leak checks. Eighteen native ARM and
+ARM64 objects compile without diagnostics. Firmware concurrency and physical
+NFC remain unqualified. An independent integrated ARM development kernel and
+459 signed modules build; no phone trial or installation is claimed.
+
+Timothy Schmidt's original commits and timestamps are retained in evidence.
+OpenAI Codex assisted the current port, changelogs, models and packaging.
+No AI Signed-off-by is added. The human submitter must review the patches,
+confirm routing and physical limitations, and supply their own DCO certification.
+Nothing has been sent to maintainers or published.

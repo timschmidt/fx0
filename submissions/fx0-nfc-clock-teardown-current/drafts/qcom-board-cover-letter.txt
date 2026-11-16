@@ -1,0 +1,26 @@
+DRAFT ONLY: human review and DCO certification required before sending.
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+    linux-kernel@vger.kernel.org
+Subject: [RFC PATCH] ARM: dts: qcom: madai: describe PN547 NFC and reference clock
+
+The board-only addition describes PN547 at address 0x28 on QUP3, its enable,
+firmware and rising-edge IRQ GPIOs, and the pin-controlled CXO_D1 reference
+clock. It retains all existing CPU, charging and USB descriptions.
+
+Patch: patches/runtime/06.patch. This integration patch is based on the Fx0
+runtime board description, which depends on the earlier attributed current
+Qualcomm/board submissions retained by this review branch. It is not a
+standalone patch on an unrelated mainline board baseline. The clock properties
+depend on patches/maintainer/03.patch in the separate NFC series. Submission
+must coordinate those dependencies and the final Qualcomm target.
+
+All 20 full DTBs pass unfiltered schema validation. Eighteen other boards are
+byte-identical. Both Madai variants pass wiring and clock negative controls;
+CPU OPP tables are preserved. Sixty prior DTC warnings are unchanged. This
+source has not been booted for NFC qualification.
+
+The original board addition is Timothy Schmidt's 858214239a80, with author and
+timestamp retained. OpenAI Codex assisted its current integration and tests.
+Human review, DCO certification and physical NFC acceptance remain pending.
+Nothing has been sent or published.
