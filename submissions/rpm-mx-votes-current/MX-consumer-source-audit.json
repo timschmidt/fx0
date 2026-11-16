@@ -1,0 +1,87 @@
+{
+  "runtime_head": "49cb297d9ca6c9134e8298c8ddc23f9e7f8be031",
+  "source_files": {
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "3f8af54ac46d06965779f46a0b83a52b8e3e1bf13edc3aa17d166cc5c3d6baa2",
+    "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi": "f3167d36ca540ffdd6a67211a37e5b595a731c856f763b07a8cfdb5b18243cba",
+    "drivers/remoteproc/qcom_wcnss.c": "e195a10af6a872d81410a92792679f5627b5bad1445b176a2394ad5434d6483d",
+    "drivers/regulator/core.c": "ca092fec3b3a47ede7add92ed28362b8d75b4a8866e74bc3415e962ad14284b1",
+    "drivers/pmdomain/qcom/cpr-voltage.h": "8ae79b9419e5096ec30ade91358739d75a224c3e25078dc8d09689bbe43028a8",
+    "drivers/pmdomain/qcom/cpr.c": "76e4287f16444f4e591fa1fcb6d75bb0d918c6f364f27b3ca2f1b8ff37510b08"
+  },
+  "vendor_files": {
+    "arch/arm/mach-msm/rpm-regulator-smd.c": "ac60ce38ce60478fcd8dbf4fbd39d0af70daafba30c8dd54aea210532de91a69",
+    "arch/arm/boot/dts/msm8226-regulator.dtsi": "8094713ffdc57aa961eb39b9f4934b3c196b16d8dc4a2138db78da61a0617438"
+  },
+  "erratum": {
+    "previous_audit": "local/fx0-rpm-regulator-sleep-current-01/deep-PM-source-audit.json",
+    "previous_audit_SHA256": "a3734df727c411f54851b16874d17c9f1f26ba99ad2a7b0b6ef4099af2e482cf",
+    "incorrect_consumer": "SDHCI",
+    "correct_consumer": "Pronto/WCNSS",
+    "sealed_parent_audit_and_archive_not_rewritten": true
+  },
+  "board_wiring": {
+    "Pronto_compatible": [
+      "qcom,pronto-v2-pil",
+      "qcom,pronto"
+    ],
+    "single_power_domain": "cx",
+    "vddmx_normal": "pm8226_l3",
+    "vddpx": "pm8226_l6",
+    "CPR_experimental_target": "pm8226_l3_ao",
+    "ordinary_target_source_unchanged": true
+  },
+  "constraint_conflict": {
+    "Pronto_v2_vddmx_min_uV": 1287500,
+    "Pronto_v2_vddmx_max_uV": 1287500,
+    "core_checks_disabled_consumer_requests": true,
+    "successful_start_releases_local_regulator_enable_reference": true,
+    "voltage_constraint_survives_handover": true,
+    "CPR_MX_max_uV": 1337500,
+    "shared_requests_above_1287500_rejected_EINVAL": true,
+    "actual_core_model_covers_48_floors_with_zero_and_one_enable_reference": true,
+    "original_shared_range_rejections": 8
+  },
+  "vendor_policy": {
+    "reference": "rpm_vreg_aggregate_params and rpm_vreg_aggregate_requests",
+    "enable_MAX": true,
+    "voltage_MAX_includes_disabled_cached_requests": true,
+    "load_SUM": true,
+    "active_and_sleep_voter_sets_separate": true,
+    "ACTIVE_fallback_when_no_SLEEP_values": true,
+    "CPR_vdd_mx_supplier": "pm8226_l3_ao",
+    "vendor_sleep_only_initialization_uV": 750000,
+    "vendor_750000_initialization_adopted_as_live_APC_sleep_policy": false
+  },
+  "candidate_policy": {
+    "opt_in_PM8226_L3_only": true,
+    "normal_and_AO_separate_core_constraint_domains": true,
+    "ACTIVE_MAX_of_both_cached_voltages": true,
+    "normal_only_SLEEP_policy": true,
+    "initial_SLEEP_established_before_FIRST_ACTIVE": true,
+    "cached_normal_changes_and_uncertain_failures_invalidate_SLEEP_cache": true,
+    "AO_suspend_callbacks_rejected": true,
+    "parent_owned_inline_slots_before_registration": true,
+    "no_peer_rdev_dereference": true,
+    "normal_sleep_overrides_preserved": true,
+    "live_CPR_floor_reasserted_on_uncertain_voltage_error": true
+  },
+  "scope_limits": [
+    "Logical services do not prove RPM firmware behavior, kernel concurrency or physical voltage safety",
+    "Multi-message ACTIVE/SLEEP changes are not atomic; full suspend preparation/abort/reentry rollback remains open",
+    "CPR/Pronto boot-order and inherited live APC/MX handover remain unqualified",
+    "Current L2 owner has no low-power sequence; CPU/SPM/SCM and RPM/MPM sleep topology remain incomplete",
+    "CPR deep-suspend guard remains; no device boot, radio, WiFi scan or firmware action occurred",
+    "SLIMbus hardware stop, suspend rollback, endpoint recovery and all other outstanding hardware/reproducibility/physical requirements remain"
+  ],
+  "security_classification": "Functional platform power-management prerequisite; no demonstrated security boundary violation or vulnerability claim",
+  "human_DCO_pending": true,
+  "phone_access": false,
+  "published": false,
+  "mainline_functions": {
+    "regulator_check_consumers": "d37372179bf9c8fb1c9c9939d58472634be37039c5eb583741735298ddec6795"
+  },
+  "vendor_functions": {
+    "rpm_vreg_aggregate_params": "177c99d94e4026cfdf5183585877517887354298c0ab1f73988fad1a27125ee5",
+    "rpm_vreg_aggregate_requests": "18ad912e6c204d925026e6b773ddd0446e523420754d3102164b36c26b5f243e"
+  }
+}

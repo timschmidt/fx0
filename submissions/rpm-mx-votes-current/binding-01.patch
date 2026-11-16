@@ -1,0 +1,76 @@
+From 8ebd895afd01e9ce896d9a75242f338f0c9cf11d Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 15:42:53 -0500
+Subject: [PATCH] regulator: dt-bindings: qcom: Describe PM8226 L3 active-only
+ voter
+
+CPR can require a higher MX floor while Pronto retains its fixed L3
+consumer request. Describe the optional l3-ao voter separately from l3
+so their consumer constraint ranges need not intersect. Both nodes vote
+on one physical LDO using maximum active voltage and enable requests;
+only the normal voter supplies the sleep policy.
+
+Require the normal l3 node with l3-ao, restrict the alias to PM8226 and
+reject suspend settings on the active-only node. Existing trees without
+the alias retain their current meaning.
+
+This is an opt-in feature prerequisite, not a fix to an existing upstream
+CPR board. Codex generated the change and its host qualification. Human
+review and DCO certification remain pending. Nothing has been submitted.
+---
+ .../regulator/qcom,smd-rpm-regulator.yaml     | 28 +++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+index 0d8bc9bf9..ed964ede5 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+@@ -45,6 +45,13 @@ description:
+   l11, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22, l23, l24, l25,
+   l26, l27, l28, lvs1
+ 
++  PM8226 also supports l3-ao as an active-only voter for the same physical
++  regulator as l3. When present, l3 and l3-ao have independent consumer
++  constraints. Their enable and voltage requests are combined using a maximum
++  for the active set. Only l3 contributes to the sleep set; explicit suspend
++  settings on l3 override its normal sleep vote. These nodes describe two
++  voters, not two independent physical supplies.
++
+   For pm8841, s1, s2, s3, s4, s5, s6, s7, s8
+ 
+   For pm8909, s1, s2, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13,
+@@ -115,6 +122,15 @@ properties:
+       - qcom,rpm-pmr735a-regulators
+       - qcom,rpm-pms405-regulators
+ 
++  l3-ao:
++    $ref: regulator.yaml#
++    description: PM8226 L3 active-only voter, paired with l3
++    properties:
++      regulator-state-mem: false
++      regulator-state-disk: false
++      regulator-state-standby: false
++    unevaluatedProperties: false
++
+ patternProperties:
+   ".*-supply$":
+     description: Input supply phandle(s) for this node
+@@ -126,6 +142,18 @@ patternProperties:
+ 
+ additionalProperties: false
+ 
++allOf:
++  - if:
++      properties:
++        compatible:
++          const: qcom,rpm-pm8226-regulators
++    then:
++      dependentRequired:
++        l3-ao: [l3]
++    else:
++      properties:
++        l3-ao: false
++
+ required:
+   - compatible
+ 

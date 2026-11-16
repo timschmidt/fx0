@@ -1,0 +1,12 @@
+UNSENT — human review and DCO certification pending
+Subject: [RFC PATCH 0/2] regulator: qcom_smd: paired PM8226 L3 active-only voter
+
+Pronto's retained fixed MX request prevents higher CPR floors in the experimental
+MSM8926 target. Give its CPU voter a separate constraint domain, aggregate active
+requests using the vendor MAX policy and retain the normal sleep policy. The
+binding/provider depend on the preceding standard sleep callbacks; the separate
+experimental board patch also needs the complete CPU and correlated RPM stack.
+
+Host models, native builds, full kernel/modules and board schemas pass. This
+does not qualify firmware, live boot handover, full suspend/abort or hardware.
+The deep-suspend guard remains. See README and dependencies for the exact scope.
