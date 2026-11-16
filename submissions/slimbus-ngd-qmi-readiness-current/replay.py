@@ -56,7 +56,7 @@ for name, topic in topics.items():
     for path in topic['snapshot_paths']:
         assert (tree / path).read_bytes() == (packet / 'candidate' / name / path).read_bytes(), path
 assert patch_count == 11
-expected = {'QMI': (50, 625, 67, [28, 8, 3, 3, 1, 17, 4, 4, 3, 49, 9, 1, 1, 2, 1, 2]),
+expected = {'QMI': (52, 653, 67, [28, 8, 3, 3, 1, 17, 4, 4, 3, 51, 9, 1, 1, 2, 1, 2]),
             'power': (626, 13284, 2435, [2427, 1818, 615, 915, 1184, 1220, 2433, 8, 915, 322, 16, 320]),
             'DMA': (85, 1150, 479, [79, 2, 83, 305, 151, 5, 124, 128, 16, 4, 4, 6, 1]),
             'ownership': (10, 114, 34, [5, 18, 14, 15, 12, 3]),
@@ -93,7 +93,7 @@ for label, source, before in [('before', packet / 'power-baseline', True), ('can
     assert receipt['PM_callback_latches_errors'] is True and receipt['cases'] == 626 and receipt['checks'] == 12708
     assert receipt['failures'] == (2652 if before else 0)
 assert json.loads((out / 'power-candidate/qualification.json').read_text())['PM_callback_latches_errors'] is False
-report = dict(passed=True, source_topics=2, patches=11, QMI_cases=50, QMI_checks=625, QMI_before_failures=67, QMI_candidate_failures=0, QMI_controls_rejected=16,
+report = dict(passed=True, source_topics=2, patches=11, QMI_cases=52, QMI_checks=653, QMI_before_failures=67, QMI_candidate_failures=0, QMI_controls_rejected=16,
     power_cases_per_PM_profile=626, power_current_checks=13284, power_current_before_failures=2435,
     power_current_candidate_failures=0, power_LTS_PM_checks=12708, power_LTS_PM_before_failures=2652,
     power_LTS_PM_candidate_failures=0, power_controls_rejected=12,

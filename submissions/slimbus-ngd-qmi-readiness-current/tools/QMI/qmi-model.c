@@ -217,7 +217,7 @@ static int qcom_slim_qmi_init(struct qcom_slim_ngd_ctrl *c, bool master)
  pthread_mutex_unlock(&model_lock);
  qmi_inits++; if (!discovery_live || !child.dev.pm_enabled) invalid_client_init++;
  unsigned node=atomic_load(&c->qmi.svc_info.sq_node),port=atomic_load(&c->qmi.svc_info.sq_port);
- if(!node||!port){invalid_endpoint_init++;return -ENODEV;}
+ if(!node&&!port){invalid_endpoint_init++;return -ENODEV;}
  connected_node=node;connected_port=port;
  if (qmi_error) return qmi_error;
  for (unsigned n = 0; n < 64; n++) if (!qmi_allocations[n]) {
@@ -415,6 +415,9 @@ int main(void)
  for(unsigned variant=0;variant<2;variant++){
   char label[80];snprintf(label,sizeof(label),"stale-delete-endpoint-component-%u",variant);reset_case(label);parent_up();if(!variant)services[1].node=services[0].node;else services[1].port=services[0].port;
   emit_new(1);emit_del(0);up();drain();live(1);finish();
+ }
+ for(unsigned zero=0;zero<2;zero++){
+  char label[80];snprintf(label,sizeof(label),"valid-zero-endpoint-component-%u",zero);reset_case(label);auto_service=false;parent_up();if(!zero)services[0].node=0;else services[0].port=0;emit_new(0);up();drain();live(0);finish();
  }
  reset_case("matching-delete-blocks-startup");parent_up();emit_del(0);up();drain();check(!qmi_inits && child.dev.usage==1,"deleted service cannot initialize a client");emit_new(1);drain();live(1);finish();
  reset_case("QMI-arrival-during-child-probe");UP_during_lookup=true;parent_up();drain();live(0);finish();

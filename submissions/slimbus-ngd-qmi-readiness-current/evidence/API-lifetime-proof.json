@@ -12,5 +12,10 @@
   "reason_for_wait_queue": "Completion counts are consumed, and complete_all reset requires draining waiters. A readiness predicate avoids resetting a completion concurrently with a waiter.",
   "discovery_handle_release_outside_SSR_lock_required": true,
   "client_handle_ops_have_no_server_callbacks": true,
-  "kernel_wait_queue_and_QMI_framework_not_executed_by_model": true
+  "kernel_wait_queue_and_QMI_framework_not_executed_by_model": true,
+  "QRTR_connect_path": "net/qrtr/af_qrtr.c",
+  "QRTR_connect_SHA256": "75dea092a5fa6fcc7e02bc2e7759d315b1728e2aa7fdf4e159b6dd486addc8ed",
+  "QRTR_connect_function": "static int qrtr_connect(struct socket *sock, struct sockaddr_unsized *saddr,\n\t\t\tint len, int flags)\n{\n\tDECLARE_SOCKADDR(struct sockaddr_qrtr *, addr, saddr);\n\tstruct qrtr_sock *ipc = qrtr_sk(sock->sk);\n\tstruct sock *sk = sock->sk;\n\tint rc;\n\n\tif (len < sizeof(*addr) || addr->sq_family != AF_QIPCRTR)\n\t\treturn -EINVAL;\n\n\tlock_sock(sk);\n\n\tsk->sk_state = TCP_CLOSE;\n\tsock->state = SS_UNCONNECTED;\n\n\trc = qrtr_autobind(sock);\n\tif (rc) {\n\t\trelease_sock(sk);\n\t\treturn rc;\n\t}\n\n\tipc->peer = *addr;\n\tsock->state = SS_CONNECTED;\n\tsk->sk_state = TCP_ESTABLISHED;\n\n\trelease_sock(sk);\n\n\treturn 0;\n}\n",
+  "single_zero_endpoint_component_accepted_by_connect": true,
+  "QMI_discovery_EOF_is_both_components_zero": true
 }

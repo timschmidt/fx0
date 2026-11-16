@@ -24,11 +24,11 @@ Qualification
 -------------
 
 * The composed model executes 22 exact driver/core callbacks plus the actual QMI
-  ops table. Fifty cases execute 625 checks. The immediate parent fails 67 checks;
+  ops table. Fifty-two cases execute 653 checks. The immediate parent fails 67 checks;
   the candidate passes all. Coverage includes discovery before/during/after child
   probe, expired/interrupted waits, repeated UP, matching/stale deletion, endpoint
   changes across a positive wait or admitted initialization, failed discovery,
-  child rebind, producer events during cancellation, parent errors and PDR cycles.
+  child rebind, producer events during cancellation, parent errors and PDR cycles. Valid zero node/port components are covered.
 * Sixteen independent controls fail: lost late retry, consumed readiness, missing
   post-wait readiness, unlocked endpoint updates, stale deletion or missing either
   endpoint component, open admission, cancellation under the mutex, producer

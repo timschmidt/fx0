@@ -34,6 +34,6 @@ for label,text,expected in controls:
  (a.output/(label+'-build.log')).write_text(c.stdout+c.stderr);assert c.returncode==0,c.stderr
  r=subprocess.run([str(binary)],env=env,capture_output=True,text=True,timeout=30);(a.output/(label+'.stdout')).write_text(r.stdout);(a.output/(label+'.stderr')).write_text(r.stderr);assert r.returncode==0,r.stderr
  assert not any(t in r.stderr for t in ['AddressSanitizer','LeakSanitizer','runtime error:','model invariant']),r.stderr
- j=json.loads(r.stdout);assert j['cases']==50 and j['checks']==625 and j['failures']>0 and expected+':' in r.stderr,(label,j,expected)
+ j=json.loads(r.stdout);assert j['cases']==52 and j['checks']==653 and j['failures']>0 and expected+':' in r.stderr,(label,j,expected)
  records.append(dict(control=label,failures=j['failures'],expected_case=expected,rejected=True,sanitizer_diagnostics=False))
 (a.output/'qualification.json').write_text(json.dumps(dict(passed=True,controls=records,normal_LSan_and_failfast_ASan_UBSan=True,invalid_sync_cancellation_logged_without_performing_deadlock=True,all_services_synthetic=True,hardware_audio_firmware_or_phone_execution=False),indent=2)+'\n');print(json.dumps(records))
