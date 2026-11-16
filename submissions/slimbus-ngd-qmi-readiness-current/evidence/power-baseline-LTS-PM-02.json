@@ -1,0 +1,33 @@
+{
+  "cases": 626,
+  "checks": 12708,
+  "failures": 2652,
+  "PM_callback_latches_errors": true,
+  "PM_profile": "local/fx0-slimbus-power-errors-current-01/PM-compat-6.18.63",
+  "whole_LTS_driver_or_kernel_backport_qualified": false,
+  "actual_callback_bodies_preserved": true,
+  "actual_function_bindings": {
+    "qcom_slim_ngd_post_rx_msgq": "81e52b6c17cbd59f50e987cf3dac76c96d63bcfe399ad4c81aaf00112b77ba1e",
+    "qcom_slim_ngd_init_rx_msgq": "fdd81fa75d1e6951fe5e035fa6517d99e2f86427ccb2167aadf2756280944efd",
+    "qcom_slim_ngd_init_tx_msgq": "9e5d974ba44c6f7ba89bd6e1fa79f74892c9d0ea42e5d2bb4f5f25bcf93ffc42",
+    "qcom_slim_ngd_init_dma": "699b03195b77839d032a9edb2d948cb19ec5604e9eac85f1330747ddb394f0bc",
+    "qcom_slim_ngd_exit_dma": "d5ea7064283b8fcc9ded0ea8a2da830973388baac89ab341bd147e69f57ff692",
+    "qcom_slim_ngd_setup": "c8fa7ff344a3a7df050ad7c6f3fb16c69c3475350fdade58714744370a9a99ee",
+    "qcom_slim_ngd_power_up": "481520f5b63234b0ddad1678a757724b836a0d1ef3a5061e431f372017d89118",
+    "qcom_slim_ngd_runtime_resume": "301b28eae80d6b63e0bbcc418c25ba5706cfe4bbd7e663dfb16a571bec504cae",
+    "qcom_slim_ngd_enable": "ec8433121215c7261e04df946e804c21e9b7ba0d2eadd935970b506ac7e608e5",
+    "qcom_slim_ngd_remove": "c2d63ba2da4a7ee7bcb9e0b5a1ea5496539ea4ef9b10fb019f40eb60c00c0fd3",
+    "slim_register_controller": "36c002146d34b275ad7c351290be3fb9bcfc25f0ae567aef32057cdb083bc816",
+    "slim_remove_device": "2927ebfae255e9a59df9e2b1d5798c3887672889c4b5cc608d2b0df42493251c",
+    "slim_ctrl_remove_device": "1252c938f7719213ad148b7886a275c986a236235665bd4030585726a6ab1fd8",
+    "slim_unregister_controller": "dc786c04b25d069564bdd2cebfd6a55def173e0143d81661f3d2b0c0d5c54903",
+    "rpm_callback": "6c09a40ba3b0579f2c8b5e6e435f9ce1990f92ec2f56438ac54e67c47b0e00a2"
+  },
+  "generated_model_SHA256": "8cf0fd35e4fbc460464485b50acc4a20baca963747b505feb43aaf28e93e410d",
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "DMA_MMIO_devres_completions_QMI_and_hardware_services_synthetic": true,
+  "no_callbacks_or_kernel_DMA_executed": true,
+  "fixture_keeps_allocations_alive_until_after_logical_audit": true,
+  "audio_execution": false,
+  "phone_access": false
+}

@@ -1,0 +1,22 @@
+{
+  "cases": 85,
+  "checks": 1150,
+  "failures": 479,
+  "actual_callback_bodies_preserved": true,
+  "actual_function_bindings": {
+    "qcom_slim_ngd_post_rx_msgq": "33df580a16b751ebb9eb61c84c9301e9f2f85b80e49a6c04d37be8bb1dbb0184",
+    "qcom_slim_ngd_init_rx_msgq": "3e3e7f73e4a300cc9e25604cdcbe4506b5049a67a983472389f03f027020dc57",
+    "qcom_slim_ngd_init_tx_msgq": "d0827fcf696420c0b4efa74c3b5c7464fd0c2046df53e61995cf7760f36e2661",
+    "qcom_slim_ngd_init_dma": "8bc47d48a302e74562d8b83db3a5174eddee11f304fd8afc8528b4650ab74333",
+    "qcom_slim_ngd_exit_dma": "d5ea7064283b8fcc9ded0ea8a2da830973388baac89ab341bd147e69f57ff692",
+    "qcom_slim_ngd_setup": "53f19688cb133b3e22ad10899fa133d993725b60be9995163514d12470258b1d",
+    "qcom_slim_ngd_power_up": "86573b53e37cf54bfc617541b592f9c863321dfc16aac6ff9754a3fe19d04d17"
+  },
+  "generated_model_SHA256": "b1b77e67e7521e53622f3a28673a3b0fa0655f9534804c5198c5d75bd94d46d2",
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "DMA_MMIO_devres_completions_QMI_and_hardware_services_synthetic": true,
+  "no_callbacks_or_kernel_DMA_executed": true,
+  "fixture_keeps_allocations_alive_until_after_logical_audit": true,
+  "audio_execution": false,
+  "phone_access": false
+}

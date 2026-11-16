@@ -1,0 +1,30 @@
+DRAFT ONLY: human review and DCO certification required before sending.
+To: Srinivas Kandagatla <srini@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+    linux-kernel@vger.kernel.org
+Subject: [RFC PATCH 0/10] slimbus: qcom-ngd-ctrl: retain QMI startup readiness
+
+The final patch replaces consumed discovery completion tokens with an explicit
+readiness/wait predicate, serializes endpoint updates and rechecks after waiting.
+Late service arrival requeues a requested UP. Stale deletion matches both endpoint
+components. DOWN and child closure notify waiters, and parent/child teardown closes
+admission before cancellation to exclude the newly added discovery producer.
+Nine previously qualified bookkeeping, lifetime, DMA and power fixes precede it.
+
+Base: SLIMbus for-next 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4.
+Patches: patches/maintainer/01.patch through 10.patch.
+
+A 22-callback logical model passes 50 cases and 625 checks after 67 parent
+failures; 16 new controls are rejected. Earlier power/DMA/bookkeeping/ownership
+suites and 37 independent controls remain effective. The retired overlapping
+interruption control and all fixture/kernel limits are documented in README.md.
+Native ARM/ARM64 objects compile without diagnostics. The integration kernel and
+459 signed modules build and stage with signature/dependency verification.
+
+Registered-client generation recovery, parent readiness, master/transfer
+quiescence, full failed-start/LTS recovery and initial DSP bootstrap remain open.
+No real QRTR, DMA, firmware, audio, phone or radio operations were performed.
+
+Codex generated the fix, tests and packet. No agent Signed-off-by is added; a human
+must review and certify the work before submission. Existing human attribution
+is preserved. Nothing is published or sent to maintainers.
