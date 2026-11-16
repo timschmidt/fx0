@@ -1,0 +1,20 @@
+{
+  "scope": "Dependency audit for the next runtime/enable error-recovery change; no additional source changes",
+  "current_driver": "4504da4ec4bcaf789fe92869be63528b2c211ea7",
+  "findings": [
+    "power_up now returns DMA setup failures, but runtime_resume returns zero and enable ignores both resume results; whole propagation remains open",
+    "Current maintainer PM rpm_resume does not latch callback failures into runtime_error; it restores RPM_SUSPENDED and returns the callback result. Do not assume older PM behavior or add unconditional pm_runtime_set_suspended reset",
+    "pm_runtime_resume may return a positive already-active success; enable must distinguish negative errors from nonnegative success",
+    "Before adding broad power-failure cleanup, account for master work queued by RX and its logical-address path, which may enter PM again; cancel/drain under ssr_lock or in a PM callback needs a dependency proof",
+    "Parent-managed coherent buffers are now bounded and reusable; channel teardown does not free them during child unbind or suspend. This avoids introducing buffer frees before external TX/master quiescence",
+    "RX callback resubmission errors, external TX admission and timeout completion lifetime remain outside the new setup fixture",
+    "No physical startup, resume, DMA or maintained-LTS acceptance follows from these host results"
+  ],
+  "current_PM_source_hashes": {
+    "worktrees/linux-slimbus-ngd-current-01/drivers/base/power/runtime.c": "5dbdc812c08bab6c40efc24d893b2cb1f2d3d4abedacd297aace57c4984f0d70",
+    "worktrees/linux-fx0-runtime-prerequisites-current-01/drivers/base/power/runtime.c": "5dbdc812c08bab6c40efc24d893b2cb1f2d3d4abedacd297aace57c4984f0d70"
+  },
+  "maintained_LTS_PM_semantics_must_be_inspected_before_port": true,
+  "phone_access": false,
+  "network_operations": false
+}

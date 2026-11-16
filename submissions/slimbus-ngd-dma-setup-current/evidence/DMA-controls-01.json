@@ -1,0 +1,99 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "unmanaged-buffers",
+      "failures": 79,
+      "expected_case": "setup-success",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "buffers-reallocated-every-session",
+      "failures": 2,
+      "expected_case": "suspend-resume-buffer-reuse",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "RX-before-TX",
+      "failures": 83,
+      "expected_case": "setup-success",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "missing-TX-unwind",
+      "failures": 305,
+      "expected_case": "allocation-error-1",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "stale-RX-channel",
+      "failures": 151,
+      "expected_case": "RX-error-5-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "stale-TX-channel",
+      "failures": 5,
+      "expected_case": "allocation-error-4",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "queued-RX-not-terminated",
+      "failures": 124,
+      "expected_case": "RX-error-5-1",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "RX-submit-errors-ignored",
+      "failures": 128,
+      "expected_case": "RX-error-6-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "setup-errors-discarded",
+      "failures": 16,
+      "expected_case": "power-setup-error-1-retained-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "retained-status-errors-discarded",
+      "failures": 4,
+      "expected_case": "power-setup-error-1-retained-1",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "capability-path-errors-discarded",
+      "failures": 4,
+      "expected_case": "power-setup-error-1-retained-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "live-pair-not-reused",
+      "failures": 6,
+      "expected_case": "repeated-setup",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "wrong-TX-allocation-error",
+      "failures": 1,
+      "expected_case": "allocation-error-4",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "all_services_synthetic": true,
+  "hardware_audio_firmware_or_phone_execution": false
+}

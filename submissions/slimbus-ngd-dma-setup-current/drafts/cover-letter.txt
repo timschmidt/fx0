@@ -1,0 +1,29 @@
+DRAFT ONLY: human review and DCO certification required before sending.
+To: Srinivas Kandagatla <srini@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+    linux-kernel@vger.kernel.org
+Subject: [RFC PATCH 0/8] slimbus: qcom-ngd-ctrl: qualify reusable DMA setup
+
+The final patch prepares TX before RX, handles partial descriptor failures,
+clears released channel pointers and unwinds the paired setup. Parent-managed
+coherent buffers are allocated once and reused across channel sessions, and
+power_up propagates DMA setup errors through both branches. The first seven
+patches retain prior bookkeeping, parent lifetime and child admission work.
+
+Base: SLIMbus for-next 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4.
+Patches: patches/maintainer/01.patch through 08.patch.
+
+The new logical DMA model executes seven exact driver callbacks, 85 cases and
+1,150 checks. The parent fails 479 checks; the final source passes all. Thirteen
+new and 25 prior controls are rejected. Native ARM/ARM64 objects compile without
+diagnostics, and the integration kernel and 459 signed modules build and stage
+with signature/dependency checks. README.md states the model and build limits.
+No DMA callbacks, physical DMA, firmware, audio or phone operations were executed.
+
+Full runtime/enable error recovery, master/external transfer admission and
+quiescence, QMI late arrival and initial startup still need work. This series
+does not claim complete physical DMA, unbind/rebind or whole-device acceptance.
+
+Codex generated the fix, models, changelog and packet. No agent Signed-off-by is
+added; a human must review and certify the work before submission. Existing human
+attribution is retained. Nothing is published or sent to maintainers.

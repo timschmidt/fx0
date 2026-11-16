@@ -1,0 +1,92 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "missing-worker-precheck",
+      "failures": 1,
+      "expected_case": "DOWN-before-queued-UP-runs",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "missing-worker-postcheck",
+      "failures": 3,
+      "expected_case": "interleave-action-0-worker-waiting",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "UP-queues-unbound",
+      "failures": 5,
+      "expected_case": "UP-before-bind",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "child-remove-leaves-admission-open",
+      "failures": 2,
+      "expected_case": "interleave-action-0-worker-waiting",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "child-remove-skips-cancel",
+      "failures": 1,
+      "expected_case": "remove-queued-UP",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "rebind-loses-UP",
+      "failures": 13,
+      "expected_case": "rebind-retains-last-UP",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "probe-failure-leaks-PM-reference",
+      "failures": 6,
+      "expected_case": "discovery-failure",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "remove-leaks-PM-reference",
+      "failures": 27,
+      "expected_case": "bound-idle-remove",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "registration-retains-PM-ownership",
+      "failures": 29,
+      "expected_case": "repeated-DOWN-after-UP",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "DOWN-skips-registered-failed-powerup",
+      "failures": 1,
+      "expected_case": "DOWN-after-registered-power-failure",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "probe-keeps-stale-completions",
+      "failures": 1,
+      "expected_case": "rebind-retains-last-UP",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "rebind-keeps-old-power-state",
+      "failures": 1,
+      "expected_case": "UP-while-unbound-rebind",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "all_services_synthetic": true,
+  "hardware_audio_firmware_or_phone_execution": false
+}

@@ -1,0 +1,184 @@
+From 4504da4ec4bcaf789fe92869be63528b2c211ea7 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 07:38:40 -0500
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: make DMA setup reusable and fallible
+
+RX setup starts descriptor processing before TX resources exist, even
+though an RX master-capability event can immediately queue TX work. RX
+prepare failure frees its coherent buffer without terminating submitted
+descriptors. Allocation failures leave released channel pointers behind,
+and TX setup failure leaves an already running RX session behind. RX
+submission errors and both setup return paths are ignored.
+
+The message buffers also have no normal teardown owner. Setup allocates
+them again after every channel restart or failed capability exchange,
+overwriting the previous pointers without freeing those allocations.
+
+Allocate coherent buffers once with parent-managed DMA allocation and
+reuse them across channel sessions. Parent removal drains its work before
+managed resources are released. Prepare TX before starting RX, propagate
+RX submission errors, terminate partially submitted RX before release,
+clear released channel pointers and unwind TX if RX initialization fails.
+Reuse an already prepared pair after a capability timeout. Return setup
+errors through both power-up branches before enabling the NGD queues.
+
+A host model executes seven exact setup/power callbacks against logical
+DMA, MMIO, completion and devres services. Its 85 cases and 1150 checks
+exercise every RX prepare/submit position, allocation faults, persistent
+failure, wake branches and repeated channel sessions. The parent fails
+479 checks and this change passes all. Thirteen independent controls are
+rejected. Earlier admission, ownership and bookkeeping suites pass.
+Eight native ARM/ARM64 NGD/core objects build with LLVM21, W=1 and strict
+callback diagnostics without warnings or errors.
+
+This does not qualify master-work or external transfer quiescence, nor
+propagate errors through runtime resume and controller enable yet. Those
+paths remain separate required work. No DMA callbacks, real hardware,
+firmware, audio or phone operations were executed by the model. Codex
+generated the fix, tests and changelog; human review and DCO are pending.
+
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 55 +++++++++++++++++++++++----------
+ 1 file changed, 38 insertions(+), 17 deletions(-)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index 6223cff59..867a9f94f 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -676,6 +676,8 @@ static int qcom_slim_ngd_post_rx_msgq(struct qcom_slim_ngd_ctrl *ctrl)
+ 		desc->desc->callback = qcom_slim_ngd_rx_msgq_cb;
+ 		desc->desc->callback_param = desc;
+ 		desc->desc->cookie = dmaengine_submit(desc->desc);
++		if (dma_submit_error(desc->desc->cookie))
++			return desc->desc->cookie;
+ 	}
+ 	dma_async_issue_pending(ctrl->dma_rx_channel);
+ 
+@@ -696,8 +698,9 @@ static int qcom_slim_ngd_init_rx_msgq(struct qcom_slim_ngd_ctrl *ctrl)
+ 	}
+ 
+ 	size = QCOM_SLIM_NGD_DESC_NUM * SLIM_MSGQ_BUF_LEN;
+-	ctrl->rx_base = dma_alloc_coherent(dev, size, &ctrl->rx_phys_base,
+-					   GFP_KERNEL);
++	if (!ctrl->rx_base)
++		ctrl->rx_base = dmam_alloc_coherent(dev, size, &ctrl->rx_phys_base,
++						    GFP_KERNEL);
+ 	if (!ctrl->rx_base) {
+ 		ret = -ENOMEM;
+ 		goto rel_rx;
+@@ -712,9 +715,10 @@ static int qcom_slim_ngd_init_rx_msgq(struct qcom_slim_ngd_ctrl *ctrl)
+ 	return 0;
+ 
+ rx_post_err:
+-	dma_free_coherent(dev, size, ctrl->rx_base, ctrl->rx_phys_base);
++	dmaengine_terminate_sync(ctrl->dma_rx_channel);
+ rel_rx:
+ 	dma_release_channel(ctrl->dma_rx_channel);
++	ctrl->dma_rx_channel = NULL;
+ 	return ret;
+ }
+ 
+@@ -734,10 +738,11 @@ static int qcom_slim_ngd_init_tx_msgq(struct qcom_slim_ngd_ctrl *ctrl)
+ 	}
+ 
+ 	size = ((QCOM_SLIM_NGD_DESC_NUM + 1) * SLIM_MSGQ_BUF_LEN);
+-	ctrl->tx_base = dma_alloc_coherent(dev, size, &ctrl->tx_phys_base,
+-					   GFP_KERNEL);
++	if (!ctrl->tx_base)
++		ctrl->tx_base = dmam_alloc_coherent(dev, size, &ctrl->tx_phys_base,
++						    GFP_KERNEL);
+ 	if (!ctrl->tx_base) {
+-		ret = -EINVAL;
++		ret = -ENOMEM;
+ 		goto rel_tx;
+ 	}
+ 
+@@ -749,22 +754,31 @@ static int qcom_slim_ngd_init_tx_msgq(struct qcom_slim_ngd_ctrl *ctrl)
+ 	return 0;
+ rel_tx:
+ 	dma_release_channel(ctrl->dma_tx_channel);
++	ctrl->dma_tx_channel = NULL;
+ 	return ret;
+ }
+ 
++static int qcom_slim_ngd_exit_dma(struct qcom_slim_ngd_ctrl *ctrl);
++
+ static int qcom_slim_ngd_init_dma(struct qcom_slim_ngd_ctrl *ctrl)
+ {
+ 	int ret = 0;
+ 
+-	ret = qcom_slim_ngd_init_rx_msgq(ctrl);
++	if (ctrl->dma_rx_channel && ctrl->dma_tx_channel)
++		return 0;
++
++	/* RX callbacks can queue master work that immediately needs TX. */
++	ret = qcom_slim_ngd_init_tx_msgq(ctrl);
+ 	if (ret) {
+-		dev_err(ctrl->dev, "rx dma init failed\n");
++		dev_err(ctrl->dev, "tx dma init failed\n");
+ 		return ret;
+ 	}
+ 
+-	ret = qcom_slim_ngd_init_tx_msgq(ctrl);
+-	if (ret)
+-		dev_err(ctrl->dev, "tx dma init failed\n");
++	ret = qcom_slim_ngd_init_rx_msgq(ctrl);
++	if (ret) {
++		dev_err(ctrl->dev, "rx dma init failed\n");
++		qcom_slim_ngd_exit_dma(ctrl);
++	}
+ 
+ 	return ret;
+ }
+@@ -1229,13 +1243,17 @@ static int qcom_slim_ngd_exit_dma(struct qcom_slim_ngd_ctrl *ctrl)
+ 	return 0;
+ }
+ 
+-static void qcom_slim_ngd_setup(struct qcom_slim_ngd_ctrl *ctrl)
++static int qcom_slim_ngd_setup(struct qcom_slim_ngd_ctrl *ctrl)
+ {
+ 	u32 cfg = readl_relaxed(ctrl->ngd->base);
++	int ret;
+ 
+ 	if (ctrl->state == QCOM_SLIM_NGD_CTRL_DOWN ||
+-		ctrl->state == QCOM_SLIM_NGD_CTRL_ASLEEP)
+-		qcom_slim_ngd_init_dma(ctrl);
++		ctrl->state == QCOM_SLIM_NGD_CTRL_ASLEEP) {
++		ret = qcom_slim_ngd_init_dma(ctrl);
++		if (ret)
++			return ret;
++	}
+ 
+ 	/* By default enable message queues */
+ 	cfg |= NGD_CFG_RX_MSGQ_EN;
+@@ -1246,6 +1264,8 @@ static void qcom_slim_ngd_setup(struct qcom_slim_ngd_ctrl *ctrl)
+ 		cfg |= NGD_CFG_ENABLE;
+ 
+ 	writel_relaxed(cfg, ctrl->ngd->base);
++
++	return 0;
+ }
+ 
+ static int qcom_slim_ngd_power_up(struct qcom_slim_ngd_ctrl *ctrl)
+@@ -1286,8 +1306,7 @@ static int qcom_slim_ngd_power_up(struct qcom_slim_ngd_ctrl *ctrl)
+ 			dev_info(ctrl->dev, "Subsys restart: ADSP active framer\n");
+ 			return 0;
+ 		}
+-		qcom_slim_ngd_setup(ctrl);
+-		return 0;
++		return qcom_slim_ngd_setup(ctrl);
+ 	}
+ 
+ 	/*
+@@ -1301,7 +1320,9 @@ static int qcom_slim_ngd_power_up(struct qcom_slim_ngd_ctrl *ctrl)
+ 
+ 	writel_relaxed(rx_msgq|SLIM_RX_MSGQ_TIMEOUT_VAL,
+ 				ngd->base + NGD_RX_MSGQ_CFG);
+-	qcom_slim_ngd_setup(ctrl);
++	ret = qcom_slim_ngd_setup(ctrl);
++	if (ret)
++		return ret;
+ 
+ 	time_left = wait_for_completion_timeout(&ctrl->reconf, HZ);
+ 	if (!time_left) {
