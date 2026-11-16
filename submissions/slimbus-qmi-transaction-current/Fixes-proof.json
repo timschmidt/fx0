@@ -1,0 +1,7 @@
+{
+  "commit": "917809e2280bb83994be8b642373fd941d40c407",
+  "url": "https://github.com/torvalds/linux/commit/917809e2280bb83994be8b642373fd941d40c407",
+  "subject": "slimbus: ngd: Add qcom SLIMBus NGD driver",
+  "original_power_helper": "static int qcom_slim_qmi_send_power_request(struct qcom_slim_ngd_ctrl *ctrl,\n\t\t\t\t\tstruct slimbus_power_req_msg_v01 *req)\n{\n\tstruct slimbus_power_resp_msg_v01 resp = { { 0, 0 } };\n\tstruct qmi_txn txn;\n\tint rc;\n\n\trc = qmi_txn_init(ctrl->qmi.handle, &txn,\n\t\t\t\tslimbus_power_resp_msg_v01_ei, &resp);\n\n\trc = qmi_send_request(ctrl->qmi.handle, NULL, &txn,\n\t\t\t\tSLIMBUS_QMI_POWER_REQ_V01,\n\t\t\t\tSLIMBUS_QMI_POWER_REQ_MAX_MSG_LEN,\n\t\t\t\tslimbus_power_req_msg_v01_ei, req);\n\tif (rc < 0) {\n\t\tdev_err(ctrl->dev, \"QMI send req fail %d\\n\", rc);\n\t\tqmi_txn_cancel(&txn);\n\t\treturn rc;\n\t}\n\n\trc = qmi_txn_wait(&txn, SLIMBUS_QMI_RESP_TOUT);\n\tif (rc < 0) {\n\t\tdev_err(ctrl->dev, \"QMI TXN wait fail: %d\\n\", rc);\n\t\treturn rc;\n\t}\n\n\t/* Check the response */\n\tif (resp.resp.result != QMI_RESULT_SUCCESS_V01) {\n\t\tdev_err(ctrl->dev, \"QMI request failed 0x%x\\n\",\n\t\t\tresp.resp.result);\n\t\treturn -EREMOTEIO;\n\t}\n\n\treturn 0;\n}\n",
+  "missing_init_error_guard_proven": true
+}

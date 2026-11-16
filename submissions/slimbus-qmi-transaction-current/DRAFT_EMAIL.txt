@@ -1,0 +1,9 @@
+UNSENT — human review and DCO certification pending
+Subject: [PATCH] slimbus: ngd: return transaction allocation errors before power requests
+
+qmi_txn_init() can fail before allocating a transaction ID. Return its errno
+before the power request is sent or the unallocated transaction is retired.
+Preserve zero and positive IDs. The same guard already exists in the
+select-instance helper. The attached standalone patch includes a pinned offline
+synthetic replay and native build evidence. Hardware stop and suspend recovery
+remain separate work; there has been no device or audio trial.

@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "name": "missing-init-guard",
+      "rejected": true,
+      "failures": 896,
+      "named_assertion": "invalid_sends == 0"
+    },
+    {
+      "name": "reject-positive-transaction-ID",
+      "rejected": true,
+      "failures": 1248,
+      "named_assertion": "ret == expected"
+    },
+    {
+      "name": "reject-ID-zero",
+      "rejected": true,
+      "failures": 412,
+      "named_assertion": "send_calls == (unsigned)(alloc_result >= 0)"
+    },
+    {
+      "name": "cancel-unallocated-transaction",
+      "rejected": true,
+      "failures": 288,
+      "named_assertion": "remove_calls == (unsigned)(alloc_result >= 0)"
+    },
+    {
+      "name": "replace-allocation-errno",
+      "rejected": true,
+      "failures": 96,
+      "named_assertion": "ret == expected"
+    }
+  ],
+  "all_services_synthetic": true,
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "no_real_network_or_device_execution": true
+}

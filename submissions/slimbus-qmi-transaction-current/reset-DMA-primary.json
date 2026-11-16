@@ -1,0 +1,40 @@
+{
+  "commit": {
+    "sha": "d77772538f00b7265deace6e77e555ee18365ad0",
+    "message": "slimbus: ngd: reset dma setup during runtime pm\n\nDuring suspend/resume NGD remote instance is power cycled along\nwith remotely controlled bam dma engine.\nSo Reset the dma configuration during this suspend resume path\nso that we are not dealing with any stale dma setup.\n\nWithout this transactions timeout after first suspend resume path.\n\nFixes: 917809e2280b (\"slimbus: ngd: Add qcom SLIMBus NGD driver\")\nCc: <stable@vger.kernel.org>\nSigned-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>\nLink: https://lore.kernel.org/r/20210809082428.11236-5-srinivas.kandagatla@linaro.org\nSigned-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>",
+    "url": "https://api.github.com/repos/torvalds/linux/commits/d77772538f00b7265deace6e77e555ee18365ad0",
+    "html_url": "https://github.com/torvalds/linux/commit/d77772538f00b7265deace6e77e555ee18365ad0",
+    "diff": "@@ -1080,7 +1080,8 @@ static void qcom_slim_ngd_setup(struct qcom_slim_ngd_ctrl *ctrl)\n {\n \tu32 cfg = readl_relaxed(ctrl->ngd->base);\n \n-\tif (ctrl->state == QCOM_SLIM_NGD_CTRL_DOWN)\n+\tif (ctrl->state == QCOM_SLIM_NGD_CTRL_DOWN ||\n+\t\tctrl->state == QCOM_SLIM_NGD_CTRL_ASLEEP)\n \t\tqcom_slim_ngd_init_dma(ctrl);\n \n \t/* By default enable message queues */\n@@ -1131,6 +1132,7 @@ static int qcom_slim_ngd_power_up(struct qcom_slim_ngd_ctrl *ctrl)\n \t\t\tdev_info(ctrl->dev, \"Subsys restart: ADSP active framer\\n\");\n \t\t\treturn 0;\n \t\t}\n+\t\tqcom_slim_ngd_setup(ctrl);\n \t\treturn 0;\n \t}\n \n@@ -1618,6 +1620,7 @@ static int __maybe_unused qcom_slim_ngd_runtime_suspend(struct device *dev)\n \tstruct qcom_slim_ngd_ctrl *ctrl = dev_get_drvdata(dev);\n \tint ret = 0;\n \n+\tqcom_slim_ngd_exit_dma(ctrl);\n \tif (!ctrl->qmi.handle)\n \t\treturn 0;\n ",
+    "files": [
+      {
+        "filename": "drivers/slimbus/qcom-ngd-ctrl.c",
+        "patch": "@@ -1080,7 +1080,8 @@ static void qcom_slim_ngd_setup(struct qcom_slim_ngd_ctrl *ctrl)\n {\n \tu32 cfg = readl_relaxed(ctrl->ngd->base);\n \n-\tif (ctrl->state == QCOM_SLIM_NGD_CTRL_DOWN)\n+\tif (ctrl->state == QCOM_SLIM_NGD_CTRL_DOWN ||\n+\t\tctrl->state == QCOM_SLIM_NGD_CTRL_ASLEEP)\n \t\tqcom_slim_ngd_init_dma(ctrl);\n \n \t/* By default enable message queues */\n@@ -1131,6 +1132,7 @@ static int qcom_slim_ngd_power_up(struct qcom_slim_ngd_ctrl *ctrl)\n \t\t\tdev_info(ctrl->dev, \"Subsys restart: ADSP active framer\\n\");\n \t\t\treturn 0;\n \t\t}\n+\t\tqcom_slim_ngd_setup(ctrl);\n \t\treturn 0;\n \t}\n \n@@ -1618,6 +1620,7 @@ static int __maybe_unused qcom_slim_ngd_runtime_suspend(struct device *dev)\n \tstruct qcom_slim_ngd_ctrl *ctrl = dev_get_drvdata(dev);\n \tint ret = 0;\n \n+\tqcom_slim_ngd_exit_dma(ctrl);\n \tif (!ctrl->qmi.handle)\n \t\treturn 0;\n "
+      }
+    ],
+    "repository_full_name": "torvalds/linux",
+    "comments": null,
+    "author": {
+      "login": "Srinivas-Kandagatla",
+      "name": null,
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/12392782?v=4",
+      "id": 12392782
+    },
+    "committer": {
+      "login": "gregkh",
+      "name": null,
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/14953?v=4",
+      "id": 14953
+    },
+    "created_at": "2021-08-13T08:22:30Z",
+    "git_author_email": null,
+    "display_url": "https://github.com/torvalds/linux/commit/d77772538f00b7265deace6e77e555ee18365ad0",
+    "display_title": "slimbus: ngd: reset dma setup during runtime pm"
+  },
+  "url": "https://github.com/torvalds/linux/commit/d77772538f00b7265deace6e77e555ee18365ad0",
+  "title": "slimbus: ngd: reset dma setup during runtime pm\n\nDuring suspend/resume NGD remote instance is power cycled along\nwith remotely controlled bam dma engine.\nSo Reset the dma configuration during this suspend resume path\nso that we are not dealing with any stale dma setup.\n\nWithout this transactions timeout after first suspend resume path.\n\nFixes: 917809e2280b (\"slimbus: ngd: Add qcom SLIMBus NGD driver\")\nCc: <stable@vger.kernel.org>\nSigned-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>\nLink: https://lore.kernel.org/r/20210809082428.11236-5-srinivas.kandagatla@linaro.org\nSigned-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>",
+  "diff": "@@ -1080,7 +1080,8 @@ static void qcom_slim_ngd_setup(struct qcom_slim_ngd_ctrl *ctrl)\n {\n \tu32 cfg = readl_relaxed(ctrl->ngd->base);\n \n-\tif (ctrl->state == QCOM_SLIM_NGD_CTRL_DOWN)\n+\tif (ctrl->state == QCOM_SLIM_NGD_CTRL_DOWN ||\n+\t\tctrl->state == QCOM_SLIM_NGD_CTRL_ASLEEP)\n \t\tqcom_slim_ngd_init_dma(ctrl);\n \n \t/* By default enable message queues */\n@@ -1131,6 +1132,7 @@ static int qcom_slim_ngd_power_up(struct qcom_slim_ngd_ctrl *ctrl)\n \t\t\tdev_info(ctrl->dev, \"Subsys restart: ADSP active framer\\n\");\n \t\t\treturn 0;\n \t\t}\n+\t\tqcom_slim_ngd_setup(ctrl);\n \t\treturn 0;\n \t}\n \n@@ -1618,6 +1620,7 @@ static int __maybe_unused qcom_slim_ngd_runtime_suspend(struct device *dev)\n \tstruct qcom_slim_ngd_ctrl *ctrl = dev_get_drvdata(dev);\n \tint ret = 0;\n \n+\tqcom_slim_ngd_exit_dma(ctrl);\n \tif (!ctrl->qmi.handle)\n \t\treturn 0;\n ",
+  "display_url": "https://github.com/torvalds/linux/commit/d77772538f00b7265deace6e77e555ee18365ad0",
+  "display_title": "slimbus: ngd: reset dma setup during runtime pm\n\nDuring suspend/resume NGD remote instance is power cycled along\nwith remotely controlled bam dma engine.\nSo Reset the dma configuration during this suspend resume path\nso that we are not dealing with any stale dma setup.\n\nWithout this transactions timeout after first suspend resume path.\n\nFixes: 917809e2280b (\"slimbus: ngd: Add qcom SLIMBus NGD driver\")\nCc: <stable@vger.kernel.org>\nSigned-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>\nLink: https://lore.kernel.org/r/20210809082428.11236-5-srinivas.kandagatla@linaro.org\nSigned-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>"
+}

@@ -1,0 +1,42 @@
+From a509c85422d0cd70a6bf65e778314d1b01a245ad Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 14:00:34 -0500
+Subject: [PATCH] slimbus: ngd: return transaction allocation errors before
+ power requests
+
+qmi_txn_init() returns a negative errno if IDR allocation fails. The
+power-request helper overwrites that result and sends an unregistered
+transaction, then waits for or cancels its truncated transaction ID.
+This can also remove an unrelated transaction with that ID.
+
+Return the allocation error before sending, waiting or cancelling.
+Accept both zero and positive transaction IDs, matching the existing
+select-instance helper.
+
+Codex generated the fix and a host model using six exact NGD/QMI
+callback bodies with logical IDR, completion and socket services.
+The model passes 576 cases and 7,008 checks after 896 baseline failures;
+five regression controls are rejected. Eight ARM/ARM64 objects build
+with LLVM21 W=1 and strict callback checks without diagnostics.
+No real QMI, DMA, audio, phone or network operations execute.
+Hardware stop ordering and failed-suspend rollback remain open.
+Human review and DCO certification remain pending.
+
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index eb983b6d1..d48240dad 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -411,6 +411,8 @@ static int qcom_slim_qmi_send_power_request(struct qcom_slim_ngd_ctrl *ctrl,
+ 
+ 	rc = qmi_txn_init(ctrl->qmi.handle, &txn,
+ 				slimbus_power_resp_msg_v01_ei, &resp);
++	if (rc < 0)
++		return rc;
+ 
+ 	rc = qmi_send_request(ctrl->qmi.handle, NULL, &txn,
+ 				SLIMBUS_QMI_POWER_REQ_V01,
