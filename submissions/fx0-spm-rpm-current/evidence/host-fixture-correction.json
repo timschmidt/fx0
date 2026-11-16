@@ -1,0 +1,9 @@
+{
+  "first_source_replay_passed": false,
+  "reason": "Host fixture supplied a null pointer for a zero-length libc memcpy, triggering host libc nonnull instrumentation under fail-fast UBSAN",
+  "correction": "Use a valid address for the zero-length synthetic payload; kernel source unchanged",
+  "earlier_recovering_UBSAN_fixture_gates_weaker": true,
+  "all45_CPU_methods_rechecked_with_fail_fast_sanitizers": true,
+  "portable_replay_second_attempt_passed": true,
+  "original_failure_log_retained_privately": true
+}

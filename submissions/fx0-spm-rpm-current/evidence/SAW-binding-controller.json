@@ -1,0 +1,23 @@
+{
+  "started_UTC": "2026-11-16T07:39:13.893619+00:00",
+  "base": "011c427b6d209eaa944ac758a0924fc768244228",
+  "binding_SHA256": "ff596a7d082d24acceade1bad26fb6c2e6e2cc4788e1a5bb4094211dc41aeef5",
+  "phone_access": false,
+  "state": "terminal success",
+  "command": [
+    "make",
+    "O=local/fx0-spm-rpm-current-01/SAW-binding-out",
+    "ARCH=arm",
+    "LLVM=-21",
+    "W=1",
+    "-j2",
+    "DT_SCHEMA_FILES=soc/qcom/qcom,saw2.yaml",
+    "dt_binding_check"
+  ],
+  "returncode": 0,
+  "diagnostics": [],
+  "passed": true,
+  "full_processed_schema_SHA256": "af428904449ceb4c4ece67c7114cd613128abc2ee2e726e773f564926b4bea2d",
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-16T07:40:28.360102+00:00"
+}

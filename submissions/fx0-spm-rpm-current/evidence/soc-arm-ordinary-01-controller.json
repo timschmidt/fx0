@@ -1,0 +1,61 @@
+{
+  "started_UTC": "2026-11-16T07:39:03.066711+00:00",
+  "ARCH": "arm",
+  "PREEMPT_RT": false,
+  "native": true,
+  "COMPILE_TEST": false,
+  "LLVM": "-21",
+  "W": 1,
+  "strict_function_pointer_diagnostics": true,
+  "source_head": "6aac62570471d483c08ca7d693ca283b3ffeb096",
+  "source_status": "",
+  "source_files": {
+    "drivers/soc/qcom/spm.c": "6989881ebcf1e14a51606ecd28a2f65a64ebfa261120fb0558484cb9e0cdcb3e",
+    "drivers/soc/qcom/smd-rpm.c": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+    "drivers/base/regmap/regmap.c": "b2871149ba67331effc7c1c9a44c3a7e84922b305954af6b9ecc0bcb640bf593",
+    "drivers/base/regmap/regmap-mmio.c": "101c7487aa11dff40528e6e3b990e260c9f6013c501b8280fd50c09e075f1bd7",
+    "drivers/mfd/syscon.c": "2d93e488b42bd7ed6ee2f6d0ec3fabbe201f8f98caae2d226564b64870164aec",
+    "drivers/rpmsg/rpmsg_core.c": "58b145327037a4c168c1453d09c798ee25288d9b06dff52fb24a4efa4edd92e4",
+    "drivers/rpmsg/qcom_smd.c": "13ffe4334b7a9be3f700eb100133aca7e7748e03a6671564b1f9124416ad0d90",
+    "drivers/firmware/qcom/qcom_scm.c": "8c421fd091e945e63f387bcfb08e6cd95a1b92cf892f4ad943b7d2cb97915e7e",
+    "drivers/soc/qcom/spm-msm8226-l2.h": "5cc4d9161aaf621ee236bc475e8265069e91b8ebc6dd0070f21a0e7a4659625d",
+    "drivers/soc/qcom/Kconfig": "3c9401d5b000b1bab7e2d8e0bfbd2136dffda744a1948610a42f2c79d256a16a"
+  },
+  "stages": [
+    {
+      "stage": "options",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "978aa074c9414a42cfd9dc88692d854bb2b8420f783e0a129c1b5fce42984898"
+    },
+    {
+      "stage": "prepare",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "a17d368b5bc1c2d1b43654ac612ffea488b9badcf4b0af9bd09d813b2adc2289"
+    },
+    {
+      "stage": "components",
+      "returncode": 0,
+      "diagnostics": [
+        "Warning: worktrees/linux-qcom-spm-rpm-current-01/drivers/rpmsg/qcom_smd.c:228 Excess struct member 'cb' description in 'qcom_smd_channel'",
+        "Warning: worktrees/linux-qcom-spm-rpm-current-01/drivers/rpmsg/qcom_smd.c:228 Excess struct member 'cb' description in 'qcom_smd_channel'"
+      ],
+      "log_SHA256": "4bbb5a1294ba302d844d67b2ace7e1c0cf519e35277712c1ce6e54868ef76325"
+    }
+  ],
+  "phone_access": false,
+  "state": "terminal failure",
+  "config_SHA256": "016207b4ad05fccfef89fce1fc92000d7920fd00b75725aa420126ac1c4478ec",
+  "passed": false,
+  "error_type": "AssertionError",
+  "error": "('components', 0, [\"Warning: worktrees/linux-qcom-spm-rpm-current-01/drivers/rpmsg/qcom_smd.c:228 Excess struct member 'cb' description in 'qcom_smd_channel'\", \"Warning: worktrees/linux-qcom-spm-rpm-current-01/drivers/rpmsg/qcom_smd.c:228 Excess struct member 'cb' description in 'qcom_smd_channel'\"])",
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-16T07:39:18.045750+00:00"
+}

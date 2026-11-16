@@ -1,0 +1,57 @@
+From 3ac85c2955fa2f65cde0a78279efe6b262b7e37e Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:42:00 +0000
+Subject: [PATCH] dt-bindings: soc: qcom: describe MSM8226 L2 arbiter ownership
+
+Describe the built-in SPM owner that initializes the shared APC arbiter
+and publishes its map to the PM8226 S2 regulator. Constrain the opt-in
+property to the MSM8226 L2 compatible and one resource; retain all other
+current compatibles and existing examples.
+
+Ported from the qualified Fx0 CPU source
+790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original author and date
+retained. Port and qualification used OpenAI Codex assistance. Physical
+bootstrap and deep power management remain open.
+---
+ .../bindings/soc/qcom/qcom,saw2.yaml          | 21 +++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+index c2f1f5946cf..889c2961456 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+@@ -47,6 +47,14 @@ properties:
+           - qcom,apq8064-saw2-v1.1-cpu
+       - const: qcom,saw2
+ 
++  qcom,pmic-arbiter-master:
++    description:
++      Initialize the MSM8226 L2 controller as the shared APC PMIC arbiter
++      master and publish its register map to the PM8226 S2 regulator. This
++      mode leaves the low-power sequencer disabled and issues no voltage
++      commands during initialization. The owner must be built into the kernel.
++    type: boolean
++
+   reg:
+     items:
+       - description: Base address and size of the SPM register region
+@@ -62,6 +70,19 @@ required:
+   - compatible
+   - reg
+ 
++allOf:
++  - if:
++      required: ["qcom,pmic-arbiter-master"]
++    then:
++      properties:
++        compatible:
++          items:
++            - const: qcom,msm8226-saw2-v2.1-l2
++            - const: qcom,saw2
++        reg:
++          maxItems: 1
++        regulator: false
++
+ additionalProperties: false
+ 
+ examples:
