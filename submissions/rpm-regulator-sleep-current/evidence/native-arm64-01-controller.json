@@ -1,0 +1,60 @@
+{
+  "started_UTC": "2026-11-16T19:42:32.680402+00:00",
+  "kind": "regulator",
+  "ARCH": "arm64",
+  "candidate_diff_SHA256": "df38b09c88bbcefb0a1236909fd7373ba3f18865a9a6ee9327a5e57be3ce4c54",
+  "native": true,
+  "COMPILE_TEST": false,
+  "LLVM": "-21",
+  "W": 1,
+  "strict_function_pointer_diagnostics": true,
+  "source_head": "a2a6f6b0b394eda55bd3483ecafbdc8228819a98",
+  "source_files": {
+    "drivers/regulator/qcom_smd-regulator.c": "2fa4ba2b83ae3cb0433905bfcf749d5de5693c46181768c753ee55f066729e0f",
+    "drivers/regulator/core.c": "ca092fec3b3a47ede7add92ed28362b8d75b4a8866e74bc3415e962ad14284b1",
+    "include/linux/regulator/driver.h": "59d148d34bc5bfce98c4a9abfb130c70ee487dd63de72d861d9f2ec5e3f8f1c1",
+    "include/linux/regulator/machine.h": "9535ab5e1e78fb63a14a1cda12e1e8bb6c17f7a9782a0dacb7a11cb76f85e2a7",
+    "include/linux/soc/qcom/smd-rpm.h": "33afc99246fea2c1136c07f7e0d61a3c56a065f0ae091c401322f9b3573dc73d"
+  },
+  "stages": [
+    {
+      "stage": "options",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "a40c396a728161b135eb4cae3f07bc376f53d5e3139ba7ba997e07df729b9be3"
+    },
+    {
+      "stage": "prepare",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "492e36621ef4e47e09b097d84083c5aed027808f68577e99865ecc65445c299a"
+    },
+    {
+      "stage": "components",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "481884bbd77a359ec38e74efcb858ceb322a52b79e5f88c8df16797a3d857cdc"
+    }
+  ],
+  "state": "terminal success",
+  "phone_access": false,
+  "feature_tristates": {
+    "REGULATOR": "CONFIG_REGULATOR=y",
+    "REGULATOR_QCOM_SMD_RPM": "CONFIG_REGULATOR_QCOM_SMD_RPM=y",
+    "QCOM_SMD_RPM": "CONFIG_QCOM_SMD_RPM=y"
+  },
+  "config_SHA256": "759aa7cb8c2481c83cbbd8ddd10ffdd6dc067e1db081df5f5dba24f146fde3a3",
+  "passed": true,
+  "objects": {
+    "drivers/regulator/qcom_smd-regulator.o": "9c3557d2ca7e42c584b37d9f5fb2d3ad25c74920e3efc021f07aca6acd76e30a",
+    "drivers/regulator/core.o": "ce4eb6cf2141d3bc7c711a83f397ed715ea39119f1a2e95b1f85ae0ff1c141e1"
+  },
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-16T19:42:52.906809+00:00"
+}

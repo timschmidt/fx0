@@ -1,0 +1,9 @@
+UNSENT — human review and DCO certification pending
+Subject: [PATCH] regulator: qcom_smd: support explicit sleep-set suspend votes
+
+Add standard regulator suspend voltage and enable/disable callbacks using the
+existing SMD RPM SLEEP_STATE API. Preserve active cache and dirty flags and
+propagate transport errors to regulator core. The attached logical replay and
+native evidence qualify the provider path, paired with the earlier reply-
+correlated RPM transport. Full CPU/MX/SPM/RPM sleep entry, rollback, wake topology
+and physical acceptance remain required. No real suspend or device trial occurred.

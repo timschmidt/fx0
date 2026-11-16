@@ -1,0 +1,8 @@
+{
+  "only_parent_difference": "Typed allocation spelling in rpm_reg_probe, outside the changed callbacks and operation tables",
+  "official_API": "devm_kzalloc_obj(&pdev->dev, *vreg)",
+  "runtime_API": "devm_kzalloc(&pdev->dev, sizeof(*vreg), GFP_KERNEL)",
+  "runtime_API_preserved": true,
+  "source_patch_and_model_unchanged": true,
+  "unified_diff": "--- official-regulator-base\n+++ runtime30\n@@ -1511,7 +1511,7 @@\n \t\treturn -ENODEV;\n \n \tfor_each_available_child_of_node_scoped(dev->of_node, node) {\n-\t\tvreg = devm_kzalloc_obj(&pdev->dev, *vreg);\n+\t\tvreg = devm_kzalloc(&pdev->dev, sizeof(*vreg), GFP_KERNEL);\n \t\tif (!vreg)\n \t\t\treturn -ENOMEM;\n \n"
+}

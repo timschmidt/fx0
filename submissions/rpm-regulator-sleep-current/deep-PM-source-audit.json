@@ -1,0 +1,117 @@
+{
+  "recorded_UTC": "2026-11-16T19:45:01.867183+00:00",
+  "runtime_parent": "d00affc04b7fd8f019e4094f5e34a517ef051be7",
+  "scope": "Complete deep-PM handoff requirements and standard regulator provider prerequisite; not system suspend acceptance",
+  "public_primary_documentation": "https://docs.kernel.org/driver-api/regulator.html",
+  "findings": [
+    {
+      "area": "Current CPR gate",
+      "finding": "cpr_pm_prepare rejects non-s2idle suspend on MSM8926 because the MX supplier has active-only RPM requests. The MSM8926 domain stays ALWAYS_ON with permanently live APC and MX votes. Removing this guard without a full handoff does not implement sleep."
+    },
+    {
+      "area": "MX resource ownership",
+      "finding": "The current CPR consumer uses PM8226 L3, also used by SDHCI. Its active vote is calibrated and ordered against APC. Vendor CPR uses the active-only L3 peer; a separate sleep-only peer has a 750000 uV initialization. That vendor number is primary source policy, not proof that the current permanently live APC configuration can safely lower MX to it."
+    },
+    {
+      "area": "Provider prerequisite",
+      "finding": "The current upstream SMD RPM regulator has no suspend voltage/enable/disable callbacks and sends only ACTIVE_STATE. Standard regulator callbacks can add explicit SLEEP_STATE requests without changing active caches, regulator bindings or DT policy. Regulator core invokes them during normal device suspend and propagates failures before later/noirq phases."
+    },
+    {
+      "area": "Sleep state is prepared policy",
+      "finding": "Standard core calls enable/disable before voltage. A successful sleep-enable request can therefore precede a failed voltage request. The provider primitive alone is not an atomic CPU/MX handoff or rollback proof, and must not be used to claim it is safe to enter sleep after an error."
+    },
+    {
+      "area": "RPM entry",
+      "finding": "Vendor lpm_system_prepare programs L2 mode, flushes queued RPM sleep requests and masks SMD receive interrupts, then programs MPM. Mainline MPM has a mailbox notification in its genpd power_off, but the current MSM8226 DT does not wire a CPU MPM/idle-state suspend topology and the current Qualcomm machine code provides no platform_suspend_ops. These are separate dependencies from the regulator provider."
+    },
+    {
+      "area": "L2 role",
+      "finding": "The current MSM8226 L2 SPM owner arbitrates voltage and explicitly has no L2 low-power sequence. CPU SPC code retains L2 and restores STBY after cpu_suspend. An acknowledged regulator SleepSet does not add cluster collapse, retention/restoration or wake-source plumbing."
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "worktrees/linux-fx0-runtime-prerequisites-current-01/drivers/pmdomain/qcom/cpr.c",
+      "start_line": 2180,
+      "end_line": 2190,
+      "SHA256": "76e4287f16444f4e591fa1fcb6d75bb0d918c6f364f27b3ca2f1b8ff37510b08",
+      "excerpt": "\n\tdrv->pd.power_off = cpr_power_off;\n\tdrv->pd.power_on = cpr_power_on;\n\tdrv->pd.set_performance_state = cpr_set_performance_state;\n\tdrv->pd.attach_dev = cpr_pd_attach_dev;\n\n\tif (drv->msm8926)\n\t\tdrv->pd.flags |= GENPD_FLAG_ALWAYS_ON | GENPD_FLAG_ACTIVE_WAKEUP;\n\n\tret = cpr_register_domain(drv);\n\tif (ret)\n"
+    },
+    {
+      "path": "worktrees/linux-fx0-runtime-prerequisites-current-01/drivers/pmdomain/qcom/cpr.c",
+      "start_line": 2216,
+      "end_line": 2262,
+      "SHA256": "76e4287f16444f4e591fa1fcb6d75bb0d918c6f364f27b3ca2f1b8ff37510b08",
+      "excerpt": "static int cpr_pm_prepare(struct device *dev)\n{\n\tstruct cpr_drv *drv = dev_get_drvdata(dev);\n\n\t/* Active-only MX requests do not establish an RPM sleep-state vote. */\n\tif (drv->msm8926 && pm_suspend_target_state != PM_SUSPEND_TO_IDLE)\n\t\treturn -EOPNOTSUPP;\n\treturn 0;\n}\n\nstatic int cpr_pm_suspend(struct device *dev)\n{\n\tstruct cpr_drv *drv = dev_get_drvdata(dev);\n\n\tif (!drv->msm8926)\n\t\treturn 0;\n\tguard(mutex)(&drv->lock);\n\tif (drv->corner && cpr_is_allowed(drv))\n\t\tcpr_corner_save(drv, drv->corner);\n\tcpr_ctl_disable(drv);\n\tdrv->suspended = true;\n\t/* Do not run feedback on assumed boot/resume voltage. */\n\tdrv->msm8926->applied = false;\n\treturn 0;\n}\n\nstatic int cpr_pm_resume(struct device *dev)\n{\n\tstruct cpr_drv *drv = dev_get_drvdata(dev);\n\tint ret;\n\n\tif (!drv->msm8926)\n\t\treturn 0;\n\tguard(mutex)(&drv->lock);\n\tret = cpr_config(drv);\n\tif (ret)\n\t\treturn ret;\n\tdrv->suspended = false;\n\t/* The next performance request establishes voltage before feedback. */\n\treturn 0;\n}\n\nstatic const struct dev_pm_ops cpr_pm_ops = {\n\t.prepare = cpr_pm_prepare,\n\t.suspend_late = cpr_pm_suspend,\n\t.resume_early = cpr_pm_resume,\n};\n"
+    },
+    {
+      "path": "worktrees/linux-fx0-runtime-prerequisites-current-01/drivers/regulator/qcom_smd-regulator.c",
+      "start_line": 42,
+      "end_line": 82,
+      "SHA256": "4148ae42b825fecf124e964e585f775597a77e99df83e274f7236d1640c32370",
+      "excerpt": "static int rpm_reg_write_active(struct qcom_rpm_reg *vreg)\n{\n\tstruct rpm_regulator_req req[3];\n\tint reqlen = 0;\n\tint ret;\n\n\tif (vreg->enabled_updated) {\n\t\treq[reqlen].key = cpu_to_le32(RPM_KEY_SWEN);\n\t\treq[reqlen].nbytes = cpu_to_le32(sizeof(u32));\n\t\treq[reqlen].value = cpu_to_le32(vreg->is_enabled);\n\t\treqlen++;\n\t}\n\n\tif (vreg->uv_updated && vreg->is_enabled) {\n\t\treq[reqlen].key = cpu_to_le32(RPM_KEY_UV);\n\t\treq[reqlen].nbytes = cpu_to_le32(sizeof(u32));\n\t\treq[reqlen].value = cpu_to_le32(vreg->uV);\n\t\treqlen++;\n\t}\n\n\tif (vreg->load_updated && vreg->is_enabled) {\n\t\treq[reqlen].key = cpu_to_le32(RPM_KEY_MA);\n\t\treq[reqlen].nbytes = cpu_to_le32(sizeof(u32));\n\t\treq[reqlen].value = cpu_to_le32(vreg->load / 1000);\n\t\treqlen++;\n\t}\n\n\tif (!reqlen)\n\t\treturn 0;\n\n\tret = qcom_rpm_smd_write(smd_vreg_rpm, QCOM_SMD_RPM_ACTIVE_STATE,\n\t\t\t\t vreg->type, vreg->id,\n\t\t\t\t req, sizeof(req[0]) * reqlen);\n\tif (!ret) {\n\t\tvreg->enabled_updated = 0;\n\t\tvreg->uv_updated = 0;\n\t\tvreg->load_updated = 0;\n\t}\n\n\treturn ret;\n}\n"
+    },
+    {
+      "path": "worktrees/linux-fx0-runtime-prerequisites-current-01/drivers/regulator/core.c",
+      "start_line": 1081,
+      "end_line": 1118,
+      "SHA256": "ca092fec3b3a47ede7add92ed28362b8d75b4a8866e74bc3415e962ad14284b1",
+      "excerpt": "static int __suspend_set_state(struct regulator_dev *rdev,\n\t\t\t       const struct regulator_state *rstate)\n{\n\tint ret = 0;\n\n\tif (rstate->enabled == ENABLE_IN_SUSPEND &&\n\t\trdev->desc->ops->set_suspend_enable)\n\t\tret = rdev->desc->ops->set_suspend_enable(rdev);\n\telse if (rstate->enabled == DISABLE_IN_SUSPEND &&\n\t\trdev->desc->ops->set_suspend_disable)\n\t\tret = rdev->desc->ops->set_suspend_disable(rdev);\n\telse /* OK if set_suspend_enable or set_suspend_disable is NULL */\n\t\tret = 0;\n\n\tif (ret < 0) {\n\t\trdev_err(rdev, \"failed to enabled/disable: %pe\\n\", ERR_PTR(ret));\n\t\treturn ret;\n\t}\n\n\tif (rdev->desc->ops->set_suspend_voltage && rstate->uV > 0) {\n\t\tret = rdev->desc->ops->set_suspend_voltage(rdev, rstate->uV);\n\t\tif (ret < 0) {\n\t\t\trdev_err(rdev, \"failed to set voltage: %pe\\n\", ERR_PTR(ret));\n\t\t\treturn ret;\n\t\t}\n\t}\n\n\tif (rdev->desc->ops->set_suspend_mode && rstate->mode > 0) {\n\t\tret = rdev->desc->ops->set_suspend_mode(rdev, rstate->mode);\n\t\tif (ret < 0) {\n\t\t\trdev_err(rdev, \"failed to set mode: %pe\\n\", ERR_PTR(ret));\n\t\t\treturn ret;\n\t\t}\n\t}\n\n\treturn ret;\n}\n\n"
+    },
+    {
+      "path": "worktrees/linux-fx0-runtime-prerequisites-current-01/drivers/regulator/core.c",
+      "start_line": 6331,
+      "end_line": 6354,
+      "SHA256": "ca092fec3b3a47ede7add92ed28362b8d75b4a8866e74bc3415e962ad14284b1",
+      "excerpt": " * regulator_suspend - prepare regulators for system wide suspend\n * @dev: ``&struct device`` pointer that is passed to _regulator_suspend()\n *\n * Configure each regulator with it's suspend operating parameters for state.\n *\n * Return: 0 on success or a negative error number on failure.\n */\nstatic int regulator_suspend(struct device *dev)\n{\n\tstruct regulator_dev *rdev = dev_to_rdev(dev);\n\tsuspend_state_t state = pm_suspend_target_state;\n\tint ret;\n\tconst struct regulator_state *rstate;\n\n\trstate = regulator_get_suspend_state_check(rdev, state);\n\tif (!rstate)\n\t\treturn 0;\n\n\tregulator_lock(rdev);\n\tret = __suspend_set_state(rdev, rstate);\n\tregulator_unlock(rdev);\n\n\treturn ret;\n}\n"
+    },
+    {
+      "path": "src/vendor-linux/arch/arm/boot/dts/msm8226-regulator.dtsi",
+      "start_line": 208,
+      "end_line": 233,
+      "SHA256": "8094713ffdc57aa961eb39b9f4934b3c196b16d8dc4a2138db78da61a0617438",
+      "excerpt": "\trpm-regulator-ldoa3 {\n\t\tstatus = \"okay\";\n\t\tpm8226_l3: regulator-l3 {\n\t\t\tregulator-name = \"8226_l3\";\n\t\t\tregulator-min-microvolt = <750000>;\n\t\t\tregulator-max-microvolt = <1337500>;\n\t\t\tstatus = \"okay\";\n\t\t};\n\t\tpm8226_l3_ao: regulator-3-ao {\n\t\t\tcompatible = \"qcom,rpm-regulator-smd\";\n\t\t\tregulator-name = \"8226_l3_ao\";\n\t\t\tqcom,set = <1>;\n\t\t\tregulator-min-microvolt = <750000>;\n\t\t\tregulator-max-microvolt = <1337500>;\n\t\t\tstatus = \"okay\";\n\t\t};\n\t\tpm8226_l3_so: regulator-l3-so {\n\t\t\tcompatible = \"qcom,rpm-regulator-smd\";\n\t\t\tregulator-name = \"8226_l3_so\";\n\t\t\tqcom,set = <2>;\n\t\t\tregulator-min-microvolt = <750000>;\n\t\t\tregulator-max-microvolt = <1337500>;\n\t\t\tqcom,init-voltage = <750000>;\n\t\t\tstatus = \"okay\";\n\t\t};\n\t};\n"
+    },
+    {
+      "path": "src/vendor-linux/arch/arm/mach-msm/lpm_levels.c",
+      "start_line": 340,
+      "end_line": 395,
+      "SHA256": "9c1f7fa6c2148e49c1af8e650c758b5926721398ee7626cfb57382ba9cd0167e",
+      "excerpt": "\tint dbg_mask;\n\tint ret;\n\tconst struct cpumask *nextcpu;\n\n\tspin_lock(&system_state->sync_lock);\n\tif (index < 0 ||\n\t\t\tnum_powered_cores != system_state->num_cores_in_sync) {\n\t\tspin_unlock(&system_state->sync_lock);\n\t\treturn;\n\t}\n\n\tif (from_idle) {\n\t\tdbg_mask = lpm_lvl_dbg_msk & MSM_LPM_LVL_DBG_IDLE_LIMITS;\n\t\tus = ktime_to_us(ktime_sub(bc->next_event, ktime_get()));\n\t\tnextcpu = bc->cpumask;\n\t} else {\n\t\tdbg_mask = lpm_lvl_dbg_msk & MSM_LPM_LVL_DBG_SUSPEND_LIMITS;\n\t\tnextcpu = cpumask_of(smp_processor_id());\n\t}\n\n\tlvl = &system_state->system_level[index];\n\n\tret = lpm_set_l2_mode(system_state, lvl->l2_mode);\n\n\tif (ret && ret != -ENXIO) {\n\t\tpr_warn(\"%s(): Cannot set L2 Mode %d, ret:%d\\n\",\n\t\t\t\t__func__, lvl->l2_mode, ret);\n\t\tgoto bail_system_sleep;\n\t}\n\n\tif (lvl->notify_rpm) {\n\t\tret = msm_rpm_enter_sleep(dbg_mask, nextcpu);\n\t\tif (ret) {\n\t\t\tpr_err(\"rpm_enter_sleep() failed with rc = %d\\n\", ret);\n\t\t\tgoto bail_system_sleep;\n\t\t}\n\n\n\t\tif (!from_idle)\n\t\t\tus = USEC_PER_SEC * msm_pm_sleep_time_override;\n\n\t\tdo_div(us, USEC_PER_SEC/SCLK_HZ);\n\t\tsclk = (uint32_t)us;\n\t\tmsm_mpm_enter_sleep(sclk, from_idle, nextcpu);\n\t}\n\tsystem_state->last_entered_cluster_index = index;\n\tspin_unlock(&system_state->sync_lock);\n\treturn;\n\nbail_system_sleep:\n\tif (default_l2_mode != system_state->system_level[index].l2_mode)\n\t\tlpm_set_l2_mode(system_state, default_l2_mode);\n\tspin_unlock(&system_state->sync_lock);\n}\n\nstatic void lpm_system_unprepare(struct lpm_system_state *system_state,\n"
+    },
+    {
+      "path": "src/vendor-linux/arch/arm/mach-msm/rpm-smd.c",
+      "start_line": 1291,
+      "end_line": 1318,
+      "SHA256": "3c49bf5fe06da5fb403d2f7bb89a5ab85a07a714648ab7b74414ea573463494c",
+      "excerpt": "/**\n * During power collapse, the rpm driver disables the SMD interrupts to make\n * sure that the interrupt doesn't wakes us from sleep.\n */\nint msm_rpm_enter_sleep(bool print, const struct cpumask *cpumask)\n{\n\tif (standalone)\n\t\treturn 0;\n\n\tmsm_rpm_flush_requests(print);\n\n\treturn smd_mask_receive_interrupt(msm_rpm_data.ch_info, true, cpumask);\n}\nEXPORT_SYMBOL(msm_rpm_enter_sleep);\n\n/**\n * When the system resumes from power collapse, the SMD interrupt disabled by\n * enter function has to reenabled to continue processing SMD message.\n */\nvoid msm_rpm_exit_sleep(void)\n{\n\tif (standalone)\n\t\treturn;\n\n\tsmd_mask_receive_interrupt(msm_rpm_data.ch_info, false, NULL);\n}\nEXPORT_SYMBOL(msm_rpm_exit_sleep);\n\n"
+    },
+    {
+      "path": "worktrees/linux-fx0-runtime-prerequisites-current-01/drivers/irqchip/irq-qcom-mpm.c",
+      "start_line": 295,
+      "end_line": 313,
+      "SHA256": "25b4e233d7263ab66c39d58b4125038073fa594d3b7b923d6b678404f4cff041",
+      "excerpt": "static int mpm_pd_power_off(struct generic_pm_domain *genpd)\n{\n\tstruct qcom_mpm_priv *priv = container_of(genpd, struct qcom_mpm_priv,\n\t\t\t\t\t\t  genpd);\n\tint i, ret;\n\n\tfor (i = 0; i < priv->reg_stride; i++)\n\t\tqcom_mpm_write(priv, MPM_REG_STATUS, i, 0);\n\n\t/* Notify RPM to write vMPM into HW */\n\tret = mbox_send_message(priv->mbox_chan, NULL);\n\tif (ret < 0)\n\t\treturn ret;\n\n\tmbox_client_txdone(priv->mbox_chan, 0);\n\n\treturn 0;\n}\n\n"
+    },
+    {
+      "path": "worktrees/linux-fx0-runtime-prerequisites-current-01/drivers/soc/qcom/spm.c",
+      "start_line": 299,
+      "end_line": 318,
+      "SHA256": "6989881ebcf1e14a51606ecd28a2f65a64ebfa261120fb0558484cb9e0cdcb3e",
+      "excerpt": "void spm_set_low_power_mode(struct spm_driver_data *drv,\n\t\t\t    enum pm_sleep_mode mode)\n{\n\tu32 start_index;\n\tu32 ctl_val;\n\n\t/* This owner supplies voltage arbitration, not L2 low-power sequences. */\n\tif (drv->reg_data->pmic_arbiter_master) {\n\t\tdev_warn_ratelimited(drv->dev, \"L2 master has no low-power sequence\\n\");\n\t\treturn;\n\t}\n\tstart_index = drv->reg_data->start_index[mode];\n\n\tctl_val = spm_register_read(drv, SPM_REG_SPM_CTL);\n\tctl_val &= ~(SPM_CTL_INDEX << SPM_CTL_INDEX_SHIFT);\n\tctl_val |= start_index << SPM_CTL_INDEX_SHIFT;\n\tctl_val |= SPM_CTL_EN;\n\tspm_register_write_sync(drv, SPM_REG_SPM_CTL, ctl_val);\n}\n\n"
+    }
+  ],
+  "required_before_full_handoff": [
+    "Standard sleep-set voltage/enable provider path with exact error propagation and preserved active state",
+    "Shared MX consumer requirements and an APC/MX sleep/wake voltage invariant, including failed preparation rollback",
+    "CPR feedback/IRQ quiescence and reestablishment of known APC/MX state on resume and abort",
+    "Actual CPU/L2 SPM low-power sequences, SCM/warm boot and platform suspend entry/exit ordering",
+    "MPM wake topology, pending wake/abort and RPM message/IRQ ownership across entry/exit",
+    "Maintained-LTS source and clean package reproducibility plus bounded physical suspend/wake/standby qualification"
+  ],
+  "provider_prerequisite_in_progress": true,
+  "full_deep_PM_RPM_sleep_vote_handoff_implemented": false,
+  "CPR_deep_suspend_guard_removed": false,
+  "no_phone_power_firmware_audio_radio_execution": true,
+  "network_scans_or_configuration_changes": false
+}

@@ -1,0 +1,118 @@
+From 27f50b0c8172ac8addc5616be9bc85137eff0ec3 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 14:46:26 -0500
+Subject: [PATCH] regulator: qcom_smd: support explicit sleep-set suspend votes
+
+The provider only sends active-set requests. Regulator core therefore
+has no callbacks for an explicit suspend voltage or enable state.
+
+Add synchronous sleep-set voltage, enable and disable callbacks using
+the existing SMD RPM API and resource key/value format. Preserve the
+active-state cache and its pending update flags, and return RPM errors
+to regulator core. Wire the callbacks to every existing voltage-capable
+operations table and enable/disable to the switch table.
+
+Codex generated this change and a host model composing 17 exact core,
+provider and reply-correlated RPM bodies plus five operations tables.
+It passes 6,310 cases and 77,934 checks after 6,516 baseline failures;
+14 fault controls are rejected. All 1,280 active-request trace bytes
+are unchanged. Four native ARM/ARM64 provider/core objects build with
+LLVM21 W=1 and strict callback checks without diagnostics.
+
+The model uses the earlier RPM reply-correlation prerequisite and
+logical transport, allocation, completion and regulator/PM services.
+It does not qualify a CPU/MX sleep handoff, rollback, L2 collapse or
+wake topology. Existing CPR deep-suspend rejection and DT policy remain
+unchanged. No real suspend, firmware, power hardware, phone, audio or
+network operations execute. Human review and DCO remain pending.
+---
+ drivers/regulator/qcom_smd-regulator.c | 42 ++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
+
+diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
+index 23ed594b5..033b4ac68 100644
+--- a/drivers/regulator/qcom_smd-regulator.c
++++ b/drivers/regulator/qcom_smd-regulator.c
+@@ -159,6 +159,34 @@ static int rpm_reg_set_load(struct regulator_dev *rdev, int load_uA)
+ 	return ret;
+ }
+ 
++static int rpm_reg_write_suspend(struct regulator_dev *rdev, u32 key, u32 value)
++{
++	struct qcom_rpm_reg *vreg = rdev_get_drvdata(rdev);
++	struct rpm_regulator_req req = {
++		.key = cpu_to_le32(key),
++		.nbytes = cpu_to_le32(sizeof(u32)),
++		.value = cpu_to_le32(value),
++	};
++
++	return qcom_rpm_smd_write(smd_vreg_rpm, QCOM_SMD_RPM_SLEEP_STATE,
++				 vreg->type, vreg->id, &req, sizeof(req));
++}
++
++static int rpm_reg_set_suspend_voltage(struct regulator_dev *rdev, int uV)
++{
++	return rpm_reg_write_suspend(rdev, RPM_KEY_UV, uV);
++}
++
++static int rpm_reg_set_suspend_enable(struct regulator_dev *rdev)
++{
++	return rpm_reg_write_suspend(rdev, RPM_KEY_SWEN, 1);
++}
++
++static int rpm_reg_set_suspend_disable(struct regulator_dev *rdev)
++{
++	return rpm_reg_write_suspend(rdev, RPM_KEY_SWEN, 0);
++}
++
+ static const struct regulator_ops rpm_smps_ldo_ops = {
+ 	.enable = rpm_reg_enable,
+ 	.disable = rpm_reg_disable,
+@@ -169,6 +197,9 @@ static const struct regulator_ops rpm_smps_ldo_ops = {
+ 	.set_voltage = rpm_reg_set_voltage,
+ 
+ 	.set_load = rpm_reg_set_load,
++	.set_suspend_voltage = rpm_reg_set_suspend_voltage,
++	.set_suspend_enable = rpm_reg_set_suspend_enable,
++	.set_suspend_disable = rpm_reg_set_suspend_disable,
+ };
+ 
+ static const struct regulator_ops rpm_smps_ldo_ops_fixed = {
+@@ -180,12 +211,17 @@ static const struct regulator_ops rpm_smps_ldo_ops_fixed = {
+ 	.set_voltage = rpm_reg_set_voltage,
+ 
+ 	.set_load = rpm_reg_set_load,
++	.set_suspend_voltage = rpm_reg_set_suspend_voltage,
++	.set_suspend_enable = rpm_reg_set_suspend_enable,
++	.set_suspend_disable = rpm_reg_set_suspend_disable,
+ };
+ 
+ static const struct regulator_ops rpm_switch_ops = {
+ 	.enable = rpm_reg_enable,
+ 	.disable = rpm_reg_disable,
+ 	.is_enabled = rpm_reg_is_enabled,
++	.set_suspend_enable = rpm_reg_set_suspend_enable,
++	.set_suspend_disable = rpm_reg_set_suspend_disable,
+ };
+ 
+ static const struct regulator_ops rpm_bob_ops = {
+@@ -195,6 +231,9 @@ static const struct regulator_ops rpm_bob_ops = {
+ 
+ 	.get_voltage = rpm_reg_get_voltage,
+ 	.set_voltage = rpm_reg_set_voltage,
++	.set_suspend_voltage = rpm_reg_set_suspend_voltage,
++	.set_suspend_enable = rpm_reg_set_suspend_enable,
++	.set_suspend_disable = rpm_reg_set_suspend_disable,
+ };
+ 
+ static const struct regulator_ops rpm_mp5496_ops = {
+@@ -205,6 +244,9 @@ static const struct regulator_ops rpm_mp5496_ops = {
+ 
+ 	.get_voltage = rpm_reg_get_voltage,
+ 	.set_voltage = rpm_reg_set_voltage,
++	.set_suspend_voltage = rpm_reg_set_suspend_voltage,
++	.set_suspend_enable = rpm_reg_set_suspend_enable,
++	.set_suspend_disable = rpm_reg_set_suspend_disable,
+ };
+ 
+ static const struct regulator_desc pma8084_hfsmps = {
