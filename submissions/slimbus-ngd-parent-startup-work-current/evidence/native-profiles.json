@@ -1,0 +1,126 @@
+{
+  "native-arm-01": {
+    "started_UTC": "2026-11-16T11:05:14.299575+00:00",
+    "kind": "slimbus",
+    "ARCH": "arm",
+    "native": true,
+    "COMPILE_TEST": false,
+    "LLVM": "-21",
+    "W": 1,
+    "strict_function_pointer_diagnostics": true,
+    "source_head": "8e559c7b1d8b481c77aaedd2eeb6ce358eecf404",
+    "source_files": {
+      "drivers/slimbus/qcom-ngd-ctrl.c": "d716e9806879fbbbb21ca01013ba98102ccdb210c25d1c5f18d7ace7882f505e",
+      "drivers/slimbus/core.c": "c72ae607ee25ca0f4367e4e8faf2d6e5885f0529c897c3647b20be78d6dda9f2",
+      "drivers/slimbus/messaging.c": "dc5230ee35acb9a34353b5d0c34c0b204a9a051a49b98ea3eaaef7c0c8f739b3",
+      "drivers/slimbus/stream.c": "ab021d46c335f1cdedbfea2f848a5e05b953df2c3bb67d6fbcef8285f67681da",
+      "drivers/slimbus/slimbus.h": "4455e398caa14edc0ebe71ff6ded1033d528657b318c79cd8af1fbc4fd4849e5",
+      "include/linux/slimbus.h": "12c364d9d0d5af13f5a88f67a97005828394416df0f45926178f88ef470dd8c7"
+    },
+    "stages": [
+      {
+        "stage": "options",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "stage": "config",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "de819a29f7c2a4412a53b4d47019cba9afe4e35a091614dbb3167e1ec5d4d385"
+      },
+      {
+        "stage": "prepare",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "b42c3972e7db3d915afc4e6a5dadcb48997f0017a8e7fa60e14a478258e6af32"
+      },
+      {
+        "stage": "components",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "9621c6220602fa95fed3249f8754b340984ad68f052c76523bad415a01f654b7"
+      }
+    ],
+    "state": "terminal success",
+    "phone_access": false,
+    "feature_tristates": {
+      "SLIMBUS": "CONFIG_SLIMBUS=y",
+      "SLIM_QCOM_NGD_CTRL": "CONFIG_SLIM_QCOM_NGD_CTRL=m",
+      "QCOM_RPROC_COMMON": "CONFIG_QCOM_RPROC_COMMON=m"
+    },
+    "config_SHA256": "ccd327722fc8cae9bbd21220e0ed2996d44f569ad16ed4f96d16e4bfae1a48ed",
+    "passed": true,
+    "objects": {
+      "drivers/slimbus/qcom-ngd-ctrl.o": "4fa3ba21440ce6b9b4eee0aae79c13c926079fc82441f5ea60683139ef495f5d",
+      "drivers/slimbus/core.o": "91bf57679a234cf73897bab8c7ace024ed6bd1e21fdbd86c3341e4b5dd2b320a",
+      "drivers/slimbus/messaging.o": "b5362920ef1ca56ac61db052ebba02863c77e2c2b0c3df1657f4afbea119ceb5",
+      "drivers/slimbus/stream.o": "5f52902ed618e422deeaed973da2eac819de88b6289900d7f4f51bc285a9808a"
+    },
+    "owned_child_terminal_and_reaped": true,
+    "finished_UTC": "2026-11-16T11:05:23.140390+00:00"
+  },
+  "native-arm64-01": {
+    "started_UTC": "2026-11-16T11:05:14.299826+00:00",
+    "kind": "slimbus",
+    "ARCH": "arm64",
+    "native": true,
+    "COMPILE_TEST": false,
+    "LLVM": "-21",
+    "W": 1,
+    "strict_function_pointer_diagnostics": true,
+    "source_head": "8e559c7b1d8b481c77aaedd2eeb6ce358eecf404",
+    "source_files": {
+      "drivers/slimbus/qcom-ngd-ctrl.c": "d716e9806879fbbbb21ca01013ba98102ccdb210c25d1c5f18d7ace7882f505e",
+      "drivers/slimbus/core.c": "c72ae607ee25ca0f4367e4e8faf2d6e5885f0529c897c3647b20be78d6dda9f2",
+      "drivers/slimbus/messaging.c": "dc5230ee35acb9a34353b5d0c34c0b204a9a051a49b98ea3eaaef7c0c8f739b3",
+      "drivers/slimbus/stream.c": "ab021d46c335f1cdedbfea2f848a5e05b953df2c3bb67d6fbcef8285f67681da",
+      "drivers/slimbus/slimbus.h": "4455e398caa14edc0ebe71ff6ded1033d528657b318c79cd8af1fbc4fd4849e5",
+      "include/linux/slimbus.h": "12c364d9d0d5af13f5a88f67a97005828394416df0f45926178f88ef470dd8c7"
+    },
+    "stages": [
+      {
+        "stage": "options",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "stage": "config",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "9d2bd1514cbc21ca01c2984491f9da0277654147bcc3366b43936b2d9981f177"
+      },
+      {
+        "stage": "prepare",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "aa550e0edd2aaa40fc83cab3afca53d7e5772180f46a5d310137aa815dd499fb"
+      },
+      {
+        "stage": "components",
+        "returncode": 0,
+        "diagnostics": [],
+        "log_SHA256": "f9f6ab8f2ec261005c397362dfe6b5a0c0ecbcf2e7673ce22c953ae25abe2a58"
+      }
+    ],
+    "state": "terminal success",
+    "phone_access": false,
+    "feature_tristates": {
+      "SLIMBUS": "CONFIG_SLIMBUS=y",
+      "SLIM_QCOM_NGD_CTRL": "CONFIG_SLIM_QCOM_NGD_CTRL=m",
+      "QCOM_RPROC_COMMON": "CONFIG_QCOM_RPROC_COMMON=m"
+    },
+    "config_SHA256": "36341148329ce036f254083158a8ea7082f4ce4a8103a09f80f269b087575566",
+    "passed": true,
+    "objects": {
+      "drivers/slimbus/qcom-ngd-ctrl.o": "646066b6cd293f37b1b07c5388b26ad629cbbed032d0ae61602d8aa2252d3c42",
+      "drivers/slimbus/core.o": "667460382632518dd42e901c8a69d64d9f6b5becd5b6e2e4643f82f8a0619c2f",
+      "drivers/slimbus/messaging.o": "b1e9ca4bb659c820d860dec5ddb4a0b26e14aecc70f5c983f0e166fe0acf3b79",
+      "drivers/slimbus/stream.o": "fe0901b212bb6810127907b6d8c51fbfde2003fd7c66bd6b031e22e4bc883334"
+    },
+    "owned_child_terminal_and_reaped": true,
+    "finished_UTC": "2026-11-16T11:05:24.731413+00:00"
+  }
+}

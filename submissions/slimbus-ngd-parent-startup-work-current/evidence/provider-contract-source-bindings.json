@@ -1,0 +1,14 @@
+{
+  "source_files": {
+    "drivers/soc/qcom/pdr_interface.c": "da13d7f202fbfe201b56d2a05fe6987e818110042485332da4808751d6e8c813",
+    "drivers/remoteproc/qcom_common.c": "59691a7bb2f24c88fd499f230f8fed9ed6dfee653a50025646e706a06adcee73",
+    "kernel/workqueue.c": "ef7689424b92dd2ed39f1a75cdfd047eb5903cd9c66b4e24a7f4a13cd55f6351"
+  },
+  "assumptions": {
+    "PDR_release": "Stops its notifier/locator/ack workqueues and releases QMI handles before return",
+    "SSR_unregister": "Uses SRCU notifier unregister",
+    "cancel_work_sync": "Quiesces queued/running work after producers stop; racing enqueues must be excluded"
+  },
+  "model": "pthread services implement these API contracts; actual kernel providers/workqueues are not executed",
+  "QMI_new_server_callback_does_not_queue_startup_in_current_source": true
+}

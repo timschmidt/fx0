@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "missing-detach-drain",
+      "failures": 10,
+      "expected_case": "remove-queued",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "late-detach-drain",
+      "failures": 7,
+      "expected_case": "remove-running",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "missing-probe-drain",
+      "failures": 6,
+      "expected_case": "probe-SSR-error-queued",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "late-probe-provider-stop",
+      "failures": 6,
+      "expected_case": "probe-SSR-error-PDR-inflight",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "pthread_services_synthetic": true,
+  "hardware_audio_firmware_or_phone_execution": false
+}
