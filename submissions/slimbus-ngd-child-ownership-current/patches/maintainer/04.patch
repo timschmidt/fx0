@@ -1,0 +1,45 @@
+From 8e559c7b1d8b481c77aaedd2eeb6ce358eecf404 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 06:04:04 -0500
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: stop PDR startup work before probe
+ unwind
+
+The PDR lookup runs before SSR notifier registration. If the latter
+fails, PDR may already have queued or started ngd_up_work. The existing
+unwind removes the NGD child before releasing the PDR provider, allowing
+both an in-flight callback and its startup work to outlive that child.
+
+Release PDR and drain startup work before unregistering the child. Jump
+to the workqueue cleanup afterward so the PDR handle is released once.
+Keep the earlier child-registration failure unwind unchanged.
+
+Six synthetic probe-unwind cases execute the exact parent and startup
+callbacks, with queued/running work and a provider callback completing
+at release. Ten ordering checks fail before this change and none fail
+afterward. Devices, providers and workqueues are pthread-backed models.
+Child-only unbind, master work, IRQ/DMA quiescence and physical acceptance
+remain separate work.
+
+OpenAI Codex implemented the fix, changelog and host qualification.
+Human review and DCO certification are pending.
+
+Fixes: 2a9d50e9ea40 ("slimbus: qcom-ngd-ctrl: Register callbacks after creating the ngd")
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index 8fadc5847..33a49451d 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1763,7 +1763,10 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ err_unregister_ngd:
++	pdr_handle_release(ctrl->pdr);
++	cancel_work_sync(&ctrl->ngd_up_work);
+ 	qcom_slim_ngd_unregister(ctrl);
++	goto err_destroy_mwq;
+ err_pdr_release:
+ 	pdr_handle_release(ctrl->pdr);
+ err_destroy_mwq:

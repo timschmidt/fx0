@@ -1,0 +1,40 @@
+From 2a8dd5b8e2a3993f74e1b86e7a7768e735c7e674 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 06:02:39 -0500
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: drain startup work before parent
+ detach
+
+PDR and SSR notifications queue ngd_up_work on the system workqueue.
+Releasing those providers stops new notifications, but already queued or
+running startup work can still use the NGD child while the parent remove
+path unregisters that child and releases its state.
+
+Cancel and join startup work after both notification providers have
+stopped and before unregistering the NGD child. Six synthetic parent
+removal cases execute the exact callbacks with queued work, a blocked
+running worker and callbacks finishing during provider release. Ten
+ordering checks fail before the change and none fail afterward. Devices,
+providers, QMI, DMA and the workqueue are models backed by pthreads.
+Child-only unbind, master work, IRQ/DMA quiescence and physical acceptance
+remain separate work.
+
+OpenAI Codex implemented the fix, changelog and host qualification.
+Human review and DCO certification are pending.
+
+Fixes: a899d324863a ("slimbus: qcom-ngd-ctrl: add Sub System Restart support")
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index a4eba5aa9..8fadc5847 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1778,6 +1778,7 @@ static void qcom_slim_ngd_ctrl_remove(struct platform_device *pdev)
+ 
+ 	pdr_handle_release(ctrl->pdr);
+ 	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
++	cancel_work_sync(&ctrl->ngd_up_work);
+ 
+ 	qcom_slim_ngd_unregister(ctrl);
+ 
