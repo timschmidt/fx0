@@ -1,0 +1,19 @@
+{
+  "paths": {
+    "drivers/dma/qcom/bam_dma.c": "8e3da480693b0a411c5163f31b3586fcaa4452b2134b99a6a340ec8361e7bff8",
+    "drivers/dma/virt-dma.c": "471a96dc86b8d79f65780874687f64f8deeccb93e98f616c67e57a6b206512f0",
+    "drivers/dma/virt-dma.h": "486b79fdd47474f515f418337f9a3d558262d60512497f94e6d53eafd9d4f73d",
+    "drivers/dma/dmaengine.h": "512765bbfd56b0a574a033abc9a03825b4e0e6676bf1a7458c32de6383b690e7",
+    "Documentation/driver-api/dmaengine/client.rst": "79c7337c11fefa65b9e15904847db79704046c51a5c9b295505203ad78b07975"
+  },
+  "DMA_submit_descriptor_owned_by_engine_after_return": true,
+  "cookie_retained_in_client_descriptor": true,
+  "completion_addresses_are_logical_tokens_never_dereferenced_by_fixture": true,
+  "current_BAM_vchan_submission_cookie_positive": true,
+  "negative_submission_errors_require_coordinated_response_TID_and_PM_ownership_followup": true,
+  "current_generic_submit_error_check_added": false,
+  "core_response_TID_PM_and_full_transfer_teardown_qualified": false,
+  "vchan_tx_submit": "dma_cookie_t vchan_tx_submit(struct dma_async_tx_descriptor *tx)\n{\n\tstruct virt_dma_chan *vc = to_virt_chan(tx->chan);\n\tstruct virt_dma_desc *vd = to_virt_desc(tx);\n\tunsigned long flags;\n\tdma_cookie_t cookie;\n\n\tspin_lock_irqsave(&vc->lock, flags);\n\tcookie = dma_cookie_assign(tx);\n\n\tlist_move_tail(&vd->node, &vc->desc_submitted);\n\tspin_unlock_irqrestore(&vc->lock, flags);\n\n\tdev_dbg(vc->chan.device->dev, \"vchan %p: txd %p[%x]: submitted\\n\",\n\t\tvc, vd, cookie);\n\n\treturn cookie;\n}\n",
+  "dma_cookie_assign": "static inline dma_cookie_t dma_cookie_assign(struct dma_async_tx_descriptor *tx)\n{\n\tstruct dma_chan *chan = tx->chan;\n\tdma_cookie_t cookie;\n\n\tcookie = chan->cookie + 1;\n\tif (cookie < DMA_MIN_COOKIE)\n\t\tcookie = DMA_MIN_COOKIE;\n\ttx->cookie = chan->cookie = cookie;\n\n\treturn cookie;\n}\n",
+  "vchan_tx_prep": "static inline struct dma_async_tx_descriptor *vchan_tx_prep(struct virt_dma_chan *vc,\n\tstruct virt_dma_desc *vd, unsigned long tx_flags)\n{\n\tunsigned long flags;\n\n\tdma_async_tx_descriptor_init(&vd->tx, &vc->chan);\n\tvd->tx.flags = tx_flags;\n\tvd->tx.tx_submit = vchan_tx_submit;\n\tvd->tx.desc_free = vchan_tx_desc_free;\n\n\tvd->tx_result.result = DMA_TRANS_NOERROR;\n\tvd->tx_result.residue = 0;\n\n\tspin_lock_irqsave(&vc->lock, flags);\n\tlist_add_tail(&vd->node, &vc->desc_allocated);\n\tspin_unlock_irqrestore(&vc->lock, flags);\n\n\treturn &vd->tx;\n}\n"
+}

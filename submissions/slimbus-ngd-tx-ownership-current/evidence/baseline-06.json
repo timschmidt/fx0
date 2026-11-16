@@ -1,0 +1,23 @@
+{
+  "cases": 1093,
+  "checks": 47497,
+  "failures": 2757,
+  "wire_FNV64": "22a535d8b1bfb156",
+  "wire_trace_SHA256": "2a559250271d63398ebfc2ba805da62d0417a7520bf8725ead3c209ab67015ca",
+  "wire_trace_bytes": 41147,
+  "actual_function_bindings": {
+    "qcom_slim_ngd_tx_msg_get": "92b1ae9040f0ddf98e2948e49669089a1e790b039064cad183652f8c6ca54edf",
+    "qcom_slim_ngd_tx_msg_dma_cb": "fe1c0341898db3b6ff2fc801d2d7a925b6d299daaecf29d742d7a43e0bd6808b",
+    "qcom_slim_ngd_tx_msg_post": "6b93d3066f2abb89687e2043bafed76b0e19418ea4c0290fbf3c59d4013293de",
+    "qcom_slim_ngd_xfer_msg": "27117f8f1d9d1513d0a482826e75974fd58c6ff93c49e02ea1e511b6fb3ed52d",
+    "slim_tid_txn": "05f709a128cd8cb2159ce60198741c1ab4a37666b696fa330f2a484706237f0e",
+    "slim_ec_txn": "cd51589b8fe8e0306465c54c38323e2d17d37825cf930220a880a283702bba39"
+  },
+  "actual_callback_bodies_preserved": true,
+  "generated_model_SHA256": "79a7998726a936e2f385dce593db7f9076700871ebdcb2aacf55632b30935e09",
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "completions_and_DMA_are_logical_services": true,
+  "completion_tokens_never_dereferenced_after_or_before_logical_frame_retirement": true,
+  "real_TID_response_core_PM_hardware_audio_network_or_phone_execution": false,
+  "whole_TX_TID_submission_failure_and_transport_quiescence_qualified": false
+}

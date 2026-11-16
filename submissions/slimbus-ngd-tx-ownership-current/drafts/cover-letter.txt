@@ -1,0 +1,16 @@
+Subject: [DRAFT] slimbus: qcom-ngd-ctrl: retire TX completion references
+
+Serialize reservation with TX submission, roll back local unsubmitted errors,
+clear completion references under the callback lock before return and preserve
+submitted buffers until DMA retirement. Keep cookies in client-owned storage.
+The local series includes eleven prerequisite patches plus this followup.
+
+The model passes 1,093 cases/47,497 checks after 2,757 pre-change failures and
+rejects twelve controls. All 41,147 synthetic packet bytes are unchanged.
+Native ARM/ARM64 components and the full incremental ARM kernel/459 signed
+modules pass their recorded checks. No physical DMA, audio or phone executes.
+
+Core response/TID/PM ownership, generic submit errors, RX/master/external
+transfer quiescence and hardware stop ordering remain required followup.
+Codex generated this fix/evidence; human review and DCO remain pending.
+This is an unsent draft and does not authorize publication or contact.

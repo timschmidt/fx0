@@ -1,0 +1,8 @@
+{
+  "prior_candidate": "candidate-05",
+  "prior_baseline": "baseline-04",
+  "reason": "An unchecked textual replacement added the output file but failed to insert trace recording. Inspection found both traces empty.",
+  "correction": "Use a unique checked insertion and require a nonempty trace larger than 10,000 bytes before qualification. Compare the actual byte streams and SHA256.",
+  "driver_source_changed": false,
+  "prior_empty_trace_not_accepted_as_packet_preservation": true
+}
