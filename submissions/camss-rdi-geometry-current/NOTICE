@@ -1,0 +1,23 @@
+The Linux source snapshots retain original SPDX tags and copyright
+notices. The vendor reference is exactly the public Madai kernel commit
+03aba4427a7666d57b5ae06d375e259ea337f351. Its functions are GPL version 2
+only, with the original complete notices preserved in sources/vendor.
+Extracted fixtures combine these sources under GPL-2.0-only; notices are
+repeated in their prefixes. Generated model services, operation stubs and
+replay/extraction tools are GPL-2.0-only.
+
+Timothy Schmidt authored integration80d26059f27d with Claude Opus 5.5,
+credited as a co-author <noreply@anthropic.com> in the original history.
+OpenAI Codex (GPT-6) ported the feature, added bounds and format limits,
+and prepared the models and qualification. No agent Signed-off-by is
+supplied; human kernel DCO certification remains pending.
+
+Model structures and state services are synthetic. Host Linux UAPI headers
+provide public V4L2 definitions; kernel ABI layout and full V4L2 IOCTL
+execution are not tested. Unrelated hardware operations use generated
+stubs. The address helper has an inherited unused line parameter. Frame-size
+enumeration has an inherited unused fh parameter; its height-limit logic
+changes in this feature. Only the unused-parameter diagnostic is scoped
+out for those two function bodies under the host-only -Wextra flag.
+Native W=1 builds use normal kernel warning policy and have no warnings.
+Full registration is not executed: only its RDI limit assignment is replayed.
