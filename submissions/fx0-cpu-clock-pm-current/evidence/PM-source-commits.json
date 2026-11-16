@@ -1,0 +1,139 @@
+[
+  {
+    "head": "00c86dbf3d745afb5fc7504ed26894b4dde736bc",
+    "patch": "01.patch",
+    "author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_date": "2026-11-08T16:33:09Z",
+    "subject": "firmware: qcom: scm: retain the legacy fuse API prerequisite",
+    "paths": [
+      "drivers/firmware/qcom/qcom_scm.c",
+      "drivers/firmware/qcom/qcom_scm.h",
+      "include/linux/firmware/qcom/qcom_scm.h"
+    ],
+    "ignored_types": [
+      "CAMELCASE",
+      "USLEEP_RANGE",
+      "FILE_PATH_CHANGES"
+    ],
+    "checkpatch_passed": true,
+    "human_DCO_pending": true,
+    "published": false
+  },
+  {
+    "head": "51b233bbc5200bb84d9fbf79ae5aa2abfe3882db",
+    "patch": "02.patch",
+    "author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_date": "2026-11-11T08:29:12-05:00",
+    "subject": "MAINTAINERS: cover MSM8926 CPR calibration and eligibility headers",
+    "paths": [
+      "MAINTAINERS"
+    ],
+    "ignored_types": [
+      "CAMELCASE",
+      "USLEEP_RANGE",
+      "FILE_PATH_CHANGES"
+    ],
+    "checkpatch_passed": true,
+    "human_DCO_pending": true,
+    "published": false
+  },
+  {
+    "head": "740bdd96b158b9d3b720bc688aee575875bb69c3",
+    "patch": "03.patch",
+    "author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_date": "2026-11-08T16:42:00Z",
+    "subject": "dt-bindings: qcom: describe MSM8926 calibrated CPU and CPR OPPs",
+    "paths": [
+      "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml",
+      "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml",
+      "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml",
+      "include/dt-bindings/opp/qcom,msm8926.h"
+    ],
+    "ignored_types": [
+      "CAMELCASE",
+      "USLEEP_RANGE",
+      "FILE_PATH_CHANGES"
+    ],
+    "checkpatch_passed": true,
+    "human_DCO_pending": true,
+    "published": false
+  },
+  {
+    "head": "15231a8be8d369bd6075846b4ad49fd767fcd01d",
+    "patch": "04.patch",
+    "author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_date": "2026-11-11T08:29:12-05:00",
+    "subject": "pmdomain: qcom: retain the MSM8926 calibration and planning helpers",
+    "paths": [
+      "drivers/pmdomain/qcom/cpr-msm8926-corner.h",
+      "drivers/pmdomain/qcom/cpr-msm8926-fuses.h",
+      "drivers/pmdomain/qcom/cpr-msm8926-voltage.h",
+      "drivers/pmdomain/qcom/cpr-msm8926.h"
+    ],
+    "ignored_types": [
+      "CAMELCASE",
+      "USLEEP_RANGE",
+      "FILE_PATH_CHANGES"
+    ],
+    "checkpatch_passed": true,
+    "human_DCO_pending": true,
+    "published": false
+  },
+  {
+    "head": "0f57ef0acc310c5887bfeac2e8a2a6f1db5f5429",
+    "patch": "05.patch",
+    "author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_date": "2026-11-11T08:29:12-05:00",
+    "subject": "pmdomain: qcom: retain APC and MX voltage reconciliation",
+    "paths": [
+      "drivers/pmdomain/qcom/cpr-voltage.h"
+    ],
+    "ignored_types": [
+      "CAMELCASE",
+      "USLEEP_RANGE",
+      "FILE_PATH_CHANGES"
+    ],
+    "checkpatch_passed": true,
+    "human_DCO_pending": true,
+    "published": false
+  },
+  {
+    "head": "71444b4ee5e0b590081567421d64ee04ed0b41e8",
+    "patch": "06.patch",
+    "author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_date": "2026-11-11T08:29:12-05:00",
+    "subject": "pmdomain: qcom: support the calibrated MSM8926 CPU domain",
+    "paths": [
+      "drivers/pmdomain/qcom/Kconfig",
+      "drivers/pmdomain/qcom/cpr.c",
+      "include/linux/soc/qcom/cpr.h"
+    ],
+    "ignored_types": [
+      "CAMELCASE",
+      "USLEEP_RANGE",
+      "FILE_PATH_CHANGES"
+    ],
+    "checkpatch_passed": true,
+    "human_DCO_pending": true,
+    "published": false
+  },
+  {
+    "head": "dbfb2599194a4812c671719ab8b2a1d1bace8101",
+    "patch": "07.patch",
+    "author": "Timothy Schmidt <timschmidt@gmail.com>",
+    "original_date": "2026-11-11T08:29:12-05:00",
+    "subject": "cpufreq: qcom-nvmem: wait for calibrated MSM8926 CPU suppliers",
+    "paths": [
+      "drivers/cpufreq/cpufreq-dt-platdev.c",
+      "drivers/cpufreq/qcom-cpufreq-nvmem.c"
+    ],
+    "ignored_types": [
+      "CAMELCASE",
+      "USLEEP_RANGE",
+      "FILE_PATH_CHANGES"
+    ],
+    "checkpatch_passed": true,
+    "human_DCO_pending": true,
+    "published": false
+  }
+]

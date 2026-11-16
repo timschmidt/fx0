@@ -1,0 +1,35 @@
+From 51b233bbc5200bb84d9fbf79ae5aa2abfe3882db Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Wed, 11 Nov 2026 08:29:12 -0500
+Subject: [PATCH] MAINTAINERS: cover MSM8926 CPR calibration and eligibility
+ headers
+
+Current-base composite port of the qualified CPU ownership extension.
+Original authorship retained; Codex performed the port and
+qualification. Human DCO remains pending.
+---
+ MAINTAINERS | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 222b7fc2c..104f7d8ab 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -23004,7 +23004,9 @@ L:	linux-pm@vger.kernel.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
++F:	drivers/pmdomain/qcom/cpr*.h
+ F:	drivers/pmdomain/qcom/cpr.c
++F:	include/linux/soc/qcom/cpr.h
+ 
+ QUALCOMM CPUCP MAILBOX DRIVER
+ M:	Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+@@ -23020,6 +23022,7 @@ S:	Maintained
+ F:	Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+ F:	Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+ F:	drivers/cpufreq/qcom-cpufreq-nvmem.c
++F:	include/dt-bindings/opp/qcom,msm8926.h
+ 
+ QUALCOMM CRYPTO DRIVERS
+ M:	Bartosz Golaszewski <brgl@kernel.org>

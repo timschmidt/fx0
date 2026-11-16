@@ -1,0 +1,148 @@
+{
+  "clock": {
+    "base": "59841a2d8757b951e8d93f92ffdfaa8c9503435f",
+    "head": "2d2d10f696666ebbb4ee563ba3876447826faad1",
+    "tree": "77614f2ccb9148a86cecffd6154438b4063fe483",
+    "paths": [
+      "drivers/clk/qcom/a53-pll.c",
+      "drivers/clk/qcom/apcs-msm8916.c",
+      "drivers/clk/qcom/clk-pll.c",
+      "drivers/clk/qcom/clk-pll.h",
+      "drivers/clk/qcom/clk-regmap-mux-div.c",
+      "drivers/clk/qcom/clk-regmap-mux-div.h",
+      "drivers/clk/qcom/gcc-msm8974.c"
+    ],
+    "commits": [
+      {
+        "head": "2d2d10f696666ebbb4ee563ba3876447826faad1",
+        "author": "Timothy Schmidt <timschmidt@gmail.com>",
+        "author_date": "2026-11-08T16:42:00Z",
+        "subject": "clk: qcom: verify MSM8226 CPU PLL and mux transitions",
+        "human_DCO_pending": true
+      }
+    ]
+  },
+  "PM": {
+    "base": "6f5c8ec9302c5ad8904dbdfe8cf2a538ff835572",
+    "head": "dbfb2599194a4812c671719ab8b2a1d1bace8101",
+    "tree": "6ca5e1274a944c18254e0b8799d3d1bdfbbada8e",
+    "paths": [
+      "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml",
+      "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml",
+      "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml",
+      "MAINTAINERS",
+      "drivers/cpufreq/cpufreq-dt-platdev.c",
+      "drivers/cpufreq/qcom-cpufreq-nvmem.c",
+      "drivers/firmware/qcom/qcom_scm.c",
+      "drivers/firmware/qcom/qcom_scm.h",
+      "drivers/pmdomain/qcom/Kconfig",
+      "drivers/pmdomain/qcom/cpr-msm8926-corner.h",
+      "drivers/pmdomain/qcom/cpr-msm8926-fuses.h",
+      "drivers/pmdomain/qcom/cpr-msm8926-voltage.h",
+      "drivers/pmdomain/qcom/cpr-msm8926.h",
+      "drivers/pmdomain/qcom/cpr-voltage.h",
+      "drivers/pmdomain/qcom/cpr.c",
+      "include/dt-bindings/opp/qcom,msm8926.h",
+      "include/linux/firmware/qcom/qcom_scm.h",
+      "include/linux/soc/qcom/cpr.h"
+    ],
+    "commits": [
+      {
+        "head": "00c86dbf3d745afb5fc7504ed26894b4dde736bc",
+        "author": "Timothy Schmidt <timschmidt@gmail.com>",
+        "author_date": "2026-11-08T16:33:09Z",
+        "subject": "firmware: qcom: scm: retain the legacy fuse API prerequisite",
+        "human_DCO_pending": true
+      },
+      {
+        "head": "51b233bbc5200bb84d9fbf79ae5aa2abfe3882db",
+        "author": "Timothy Schmidt <timschmidt@gmail.com>",
+        "author_date": "2026-11-11T08:29:12-05:00",
+        "subject": "MAINTAINERS: cover MSM8926 CPR calibration and eligibility headers",
+        "human_DCO_pending": true
+      },
+      {
+        "head": "740bdd96b158b9d3b720bc688aee575875bb69c3",
+        "author": "Timothy Schmidt <timschmidt@gmail.com>",
+        "author_date": "2026-11-08T16:42:00Z",
+        "subject": "dt-bindings: qcom: describe MSM8926 calibrated CPU and CPR OPPs",
+        "human_DCO_pending": true
+      },
+      {
+        "head": "15231a8be8d369bd6075846b4ad49fd767fcd01d",
+        "author": "Timothy Schmidt <timschmidt@gmail.com>",
+        "author_date": "2026-11-11T08:29:12-05:00",
+        "subject": "pmdomain: qcom: retain the MSM8926 calibration and planning helpers",
+        "human_DCO_pending": true
+      },
+      {
+        "head": "0f57ef0acc310c5887bfeac2e8a2a6f1db5f5429",
+        "author": "Timothy Schmidt <timschmidt@gmail.com>",
+        "author_date": "2026-11-11T08:29:12-05:00",
+        "subject": "pmdomain: qcom: retain APC and MX voltage reconciliation",
+        "human_DCO_pending": true
+      },
+      {
+        "head": "71444b4ee5e0b590081567421d64ee04ed0b41e8",
+        "author": "Timothy Schmidt <timschmidt@gmail.com>",
+        "author_date": "2026-11-11T08:29:12-05:00",
+        "subject": "pmdomain: qcom: support the calibrated MSM8926 CPU domain",
+        "human_DCO_pending": true
+      },
+      {
+        "head": "dbfb2599194a4812c671719ab8b2a1d1bace8101",
+        "author": "Timothy Schmidt <timschmidt@gmail.com>",
+        "author_date": "2026-11-11T08:29:12-05:00",
+        "subject": "cpufreq: qcom-nvmem: wait for calibrated MSM8926 CPU suppliers",
+        "human_DCO_pending": true
+      }
+    ]
+  },
+  "CPUfreq": {
+    "base": "285ad12ac4d485f15dc1c07edc0baa5cad70c98b",
+    "head": "50b0ef6870e9251e65949dbb7004c4760905d3a7",
+    "tree": "38e8839b6f1afb2b7e426725e3e44fd4527a9018",
+    "paths": [
+      "drivers/cpufreq/cpufreq-dt-platdev.c",
+      "drivers/cpufreq/qcom-cpufreq-nvmem.c",
+      "include/linux/soc/qcom/cpr.h"
+    ],
+    "commits": [
+      {
+        "head": "4725a2230d9ef1782a7042c8bf36a80e93c6f78b",
+        "author": "Timothy Schmidt <timschmidt@gmail.com>",
+        "author_date": "2026-11-11T08:29:12-05:00",
+        "subject": "soc: qcom: stage the CPR CPU eligibility query interface",
+        "human_DCO_pending": true
+      },
+      {
+        "head": "50b0ef6870e9251e65949dbb7004c4760905d3a7",
+        "author": "Timothy Schmidt <timschmidt@gmail.com>",
+        "author_date": "2026-11-11T08:29:12-05:00",
+        "subject": "cpufreq: qcom-nvmem: attach calibrated MSM8926 CPU suppliers",
+        "human_DCO_pending": true
+      }
+    ]
+  },
+  "runtime": {
+    "base": "76068f3c6a4ed1b37d4c7499d7b673e1872839d7",
+    "head": "70db7a1d84406980abb9e0050009a25e04fd02e4",
+    "tree": "1a436924dc5ab49033d803d5a2a85a39842db00c",
+    "paths": [
+      "drivers/clk/qcom/a53-pll.c",
+      "drivers/clk/qcom/apcs-msm8916.c",
+      "drivers/cpufreq/qcom-cpufreq-nvmem.c",
+      "drivers/firmware/qcom/qcom_scm.c",
+      "drivers/pmdomain/qcom/cpr.c"
+    ],
+    "commits": [
+      {
+        "head": "70db7a1d84406980abb9e0050009a25e04fd02e4",
+        "author": "Kees Cook <kees+treewide@kernel.org>",
+        "author_date": "2026-10-29T06:16:33Z",
+        "subject": "kernel: retain current typed allocation in the Fx0 CPU stack",
+        "human_DCO_pending": true
+      }
+    ]
+  }
+}

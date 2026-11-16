@@ -1,0 +1,152 @@
+From 70db7a1d84406980abb9e0050009a25e04fd02e4 Mon Sep 17 00:00:00 2001
+From: Kees Cook <kees+treewide@kernel.org>
+Date: Thu, 29 Oct 2026 06:16:33 +0000
+Subject: [PATCH] kernel: retain current typed allocation in the Fx0 CPU stack
+
+Apply the five-file subset of Kees Cook's 4dd10fbbeb9c typed devm
+allocation conversion retained by the current clock and PM ports.
+Keep all feature-specific CPU, calibration, clock and rail behavior.
+The flexible fuse-corner tail remains the final cpr_drv member and
+its typed allocation retains the exact descriptor-sized count.
+
+These source files match the qualified current maintainer ports.
+The ARM CPUfreq topic separately keeps its base's older flexible
+allocation interface; its enabled integration is qualified on PM-next.
+All previous current-runtime features and the raw-map fixes remain.
+
+Original allocator-conversion author/date retained from the public
+upstream commit. Codex performed this subset integration and its
+qualification. Human DCO remains pending; no Signed-off-by is added.
+---
+ drivers/clk/qcom/a53-pll.c           |  4 ++--
+ drivers/clk/qcom/apcs-msm8916.c      |  2 +-
+ drivers/cpufreq/qcom-cpufreq-nvmem.c |  3 +--
+ drivers/firmware/qcom/qcom_scm.c     |  6 +++---
+ drivers/pmdomain/qcom/cpr.c          | 20 ++++++++------------
+ 5 files changed, 15 insertions(+), 20 deletions(-)
+
+diff --git a/drivers/clk/qcom/a53-pll.c b/drivers/clk/qcom/a53-pll.c
+index 066039b44..ff638f5e5 100644
+--- a/drivers/clk/qcom/a53-pll.c
++++ b/drivers/clk/qcom/a53-pll.c
+@@ -60,7 +60,7 @@ static struct pll_freq_tbl *qcom_a53pll_get_freq_tbl(struct device *dev)
+ 	if (count <= 0)
+ 		return NULL;
+ 
+-	freq_tbl = devm_kcalloc(dev, count + 1, sizeof(*freq_tbl), GFP_KERNEL);
++	freq_tbl = devm_kzalloc_objs(dev, *freq_tbl, count + 1);
+ 	if (!freq_tbl)
+ 		return NULL;
+ 
+@@ -95,7 +95,7 @@ static int qcom_a53pll_probe(struct platform_device *pdev)
+ 	struct clk_init_data init = { };
+ 	int ret;
+ 
+-	pll = devm_kzalloc(dev, sizeof(*pll), GFP_KERNEL);
++	pll = devm_kzalloc_obj(dev, *pll);
+ 	if (!pll)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/clk/qcom/apcs-msm8916.c b/drivers/clk/qcom/apcs-msm8916.c
+index 6fdfe742c..83bed69cf 100644
+--- a/drivers/clk/qcom/apcs-msm8916.c
++++ b/drivers/clk/qcom/apcs-msm8916.c
+@@ -59,7 +59,7 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
+-	a53cc = devm_kzalloc(dev, sizeof(*a53cc), GFP_KERNEL);
++	a53cc = devm_kzalloc_obj(dev, *a53cc);
+ 	if (!a53cc)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index f13382990..a71681f60 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -524,8 +524,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 	if (!ret)
+ 		return -ENOENT;
+ 
+-	drv = devm_kzalloc(&pdev->dev, struct_size(drv, cpus, num_possible_cpus()),
+-		           GFP_KERNEL);
++	drv = devm_kzalloc_flex(&pdev->dev, *drv, cpus, num_possible_cpus());
+ 	if (!drv)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 5beb224e3..8d25f5aaa 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -2770,7 +2770,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 	int irq, ret;
+ 	int i;
+ 
+-	scm = devm_kzalloc(&pdev->dev, sizeof(*scm), GFP_KERNEL);
++	scm = devm_kzalloc_obj(&pdev->dev, *scm);
+ 	if (!scm)
+ 		return -ENOMEM;
+ 
+@@ -2839,8 +2839,8 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 
+ 	ret = qcom_scm_query_waitq_count(scm);
+ 	scm->wq_cnt = ret < 0 ? QCOM_SCM_DEFAULT_WAITQ_COUNT : ret;
+-	scm->waitq_comps = devm_kcalloc(&pdev->dev, scm->wq_cnt, sizeof(*scm->waitq_comps),
+-					GFP_KERNEL);
++	scm->waitq_comps = devm_kzalloc_objs(&pdev->dev, *scm->waitq_comps,
++					     scm->wq_cnt);
+ 	if (!scm->waitq_comps)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
+index 2811df3dd..e8dd64d82 100644
+--- a/drivers/pmdomain/qcom/cpr.c
++++ b/drivers/pmdomain/qcom/cpr.c
+@@ -1440,9 +1440,8 @@ static int cpr_corner_init(struct cpr_drv *drv, struct device *cpu_dev)
+ 	corner = drv->corners;
+ 	end = &corner[drv->num_corners - 1];
+ 
+-	cdata = devm_kcalloc(drv->dev, drv->num_corners,
+-			     sizeof(struct corner_data),
+-			     GFP_KERNEL);
++	cdata = devm_kzalloc_objs(drv->dev, struct corner_data,
++				  drv->num_corners);
+ 	if (!cdata)
+ 		return -ENOMEM;
+ 
+@@ -1574,9 +1573,8 @@ static const struct cpr_fuse *cpr_get_fuses(struct cpr_drv *drv)
+ 	struct cpr_fuse *fuses;
+ 	int i;
+ 
+-	fuses = devm_kcalloc(drv->dev, desc->num_fuse_corners,
+-			     sizeof(struct cpr_fuse),
+-			     GFP_KERNEL);
++	fuses = devm_kzalloc_objs(drv->dev, struct cpr_fuse,
++				  desc->num_fuse_corners);
+ 	if (!fuses)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -1924,9 +1922,8 @@ static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+ 		return -EINVAL;
+ 	}
+ 
+-	drv->corners = devm_kcalloc(drv->dev, drv->num_corners,
+-				    sizeof(*drv->corners),
+-				    GFP_KERNEL);
++	drv->corners = devm_kzalloc_objs(drv->dev, *drv->corners,
++					 drv->num_corners);
+ 	if (!drv->corners)
+ 		return -ENOMEM;
+ 	drv->corner = NULL;
+@@ -2105,9 +2102,8 @@ static int cpr_probe(struct platform_device *pdev)
+ 	    (!data->acc_desc && !data->cpr_desc->msm8926))
+ 		return -EINVAL;
+ 
+-	drv = devm_kzalloc(dev,
+-			struct_size(drv, fuse_corners, data->cpr_desc->num_fuse_corners),
+-			GFP_KERNEL);
++	drv = devm_kzalloc_flex(dev, *drv, fuse_corners,
++				data->cpr_desc->num_fuse_corners);
+ 	if (!drv)
+ 		return -ENOMEM;
+ 	drv->dev = dev;

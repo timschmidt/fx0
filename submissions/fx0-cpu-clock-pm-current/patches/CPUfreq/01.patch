@@ -1,0 +1,44 @@
+From 4725a2230d9ef1782a7042c8bf36a80e93c6f78b Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Wed, 11 Nov 2026 08:29:12 -0500
+Subject: [PATCH] soc: qcom: stage the CPR CPU eligibility query interface
+
+Use the exact public query interface from the calibrated CPR series.
+The ARM CPUfreq topic depends on that series for the enabled provider;
+without CONFIG_QCOM_CPR_MSM8926, its stub returns EOPNOTSUPP. The
+implementation and feature Kconfig remain with the PM controller.
+
+Original component author/date retained. Codex prepared this dependency
+for the fresh CPUfreq ARM base and its qualification. Human DCO remains
+pending; no Signed-off-by is added.
+---
+ include/linux/soc/qcom/cpr.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+ create mode 100644 include/linux/soc/qcom/cpr.h
+
+diff --git a/include/linux/soc/qcom/cpr.h b/include/linux/soc/qcom/cpr.h
+new file mode 100644
+index 000000000..da153c7fb
+--- /dev/null
++++ b/include/linux/soc/qcom/cpr.h
+@@ -0,0 +1,20 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef __LINUX_SOC_QCOM_CPR_H__
++#define __LINUX_SOC_QCOM_CPR_H__
++
++#include <linux/errno.h>
++#include <linux/kconfig.h>
++#include <linux/types.h>
++
++struct device;
++
++#if IS_ENABLED(CONFIG_QCOM_CPR_MSM8926)
++int qcom_cpr_msm8926_get_supported_hw(struct device *cpu, u32 *mask);
++#else
++static inline int qcom_cpr_msm8926_get_supported_hw(struct device *cpu, u32 *mask)
++{
++	return -EOPNOTSUPP;
++}
++#endif
++
++#endif

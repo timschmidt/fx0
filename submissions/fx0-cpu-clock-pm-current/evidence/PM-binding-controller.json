@@ -1,0 +1,23 @@
+{
+  "started_UTC": "2026-11-16T06:25:05.124844+00:00",
+  "base": "6f5c8ec9302c5ad8904dbdfe8cf2a538ff835572",
+  "binding_SHA256": "97ee6589da29592af33aba6c531e4e87187aa3fa0298c71d33f78c5e7af32f61",
+  "phone_access": false,
+  "state": "terminal success",
+  "command": [
+    "make",
+    "O=local/fx0-cpu-clock-pm-current-01/PM-binding-out",
+    "ARCH=arm",
+    "LLVM=-21",
+    "W=1",
+    "-j2",
+    "DT_SCHEMA_FILES=power/avs/qcom,cpr.yaml:opp/opp-v2-kryo-cpu.yaml:opp/opp-v2-qcom-level.yaml",
+    "dt_binding_check"
+  ],
+  "returncode": 0,
+  "diagnostics": [],
+  "passed": true,
+  "full_processed_schema_SHA256": "ea561c6bc3495cca45bf910c1e65c1d620ffa9908dec7b158cf0c2e29adefd7d",
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-16T06:26:10.176681+00:00"
+}
