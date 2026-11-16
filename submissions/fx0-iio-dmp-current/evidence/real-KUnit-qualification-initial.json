@@ -1,0 +1,54 @@
+{
+  "runs": [
+    {
+      "label": "format-baseline-01",
+      "returncode": 1,
+      "source_files": {
+        "drivers/iio/industrialio-core.c": "084e3a8f2b58c3e0708b078dbd282e37d859ead888e01ff9749a2891fb4ba0a1",
+        "drivers/iio/test/iio-test-format.c": "68aea77fd57eb4757db2ce6bae1ac461844638f8dc84536ef72262fcc8b7839c"
+      },
+      "diagnostics": [
+        {
+          "text": "Documentation/.renames.txt: warning: ignored by one of the .gitignore files",
+          "count": 1
+        },
+        {
+          "text": "$SOURCE/include/asm-generic/io.h:1209:55: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]",
+          "count": 412
+        },
+        {
+          "text": "clang-21: warning: argument unused during compilation: '-mno-3dnow' [-Wunused-command-line-argument]",
+          "count": 1
+        },
+        {
+          "text": "warning: unsafe strcpy() usage lacked '__write_overflow' symbol in $SOURCE/lib/test_fortify/write_overflow-strcpy-lit.c",
+          "count": 1
+        },
+        {
+          "text": "warning: unsafe strcpy() usage lacked '__write_overflow' symbol in $SOURCE/lib/test_fortify/write_overflow-strcpy.c",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "label": "format-candidate-01",
+      "returncode": 0,
+      "source_files": {
+        "drivers/iio/industrialio-core.c": "357f6f17a0a8a243dbba0657e8feee1ed22eeb42a26d3699fec31de36263e699",
+        "drivers/iio/test/iio-test-format.c": "68aea77fd57eb4757db2ce6bae1ac461844638f8dc84536ef72262fcc8b7839c"
+      },
+      "diagnostics": [
+        {
+          "text": "Documentation/.renames.txt: warning: ignored by one of the .gitignore files",
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "baseline_pass": 7,
+  "baseline_fail": 1,
+  "candidate_pass": 8,
+  "candidate_fail": 0,
+  "no_new_unique_build_diagnostics": true,
+  "phone_access": false
+}

@@ -1,0 +1,74 @@
+{
+    "name": "KUnit Test Group",
+    "sub_groups": [
+        {
+            "name": "iio-format",
+            "sub_groups": [],
+            "test_cases": [
+                {
+                    "name": "iio_test_iio_format_value_integer",
+                    "status": "PASS"
+                },
+                {
+                    "name": "iio_test_iio_format_value_fixedpoint",
+                    "status": "PASS"
+                },
+                {
+                    "name": "iio_test_iio_format_value_fractional",
+                    "status": "PASS"
+                },
+                {
+                    "name": "iio_test_iio_format_value_fractional_log2",
+                    "status": "PASS"
+                },
+                {
+                    "name": "iio_test_iio_format_value_tiny_fractional_log2",
+                    "status": "FAIL"
+                },
+                {
+                    "name": "iio_test_iio_format_value_multiple",
+                    "status": "PASS"
+                },
+                {
+                    "name": "iio_test_iio_format_value_integer_64",
+                    "status": "PASS"
+                },
+                {
+                    "name": "iio_test_iio_format_value_decimal_64",
+                    "status": "PASS"
+                }
+            ],
+            "misc": {
+                "tests": 8,
+                "passed": 7,
+                "failed": 1,
+                "crashed": 0,
+                "skipped": 0,
+                "errors": 0
+            },
+            "arch": "um",
+            "defconfig": "kunit_defconfig",
+            "build_environment": "$EVIDENCE/format-baseline-01-out",
+            "lab_name": null,
+            "kernel": null,
+            "job": null,
+            "git_branch": "kselftest"
+        }
+    ],
+    "test_cases": [],
+    "misc": {
+        "tests": 8,
+        "passed": 7,
+        "failed": 1,
+        "crashed": 0,
+        "skipped": 0,
+        "errors": 0
+    },
+    "arch": "um",
+    "defconfig": "kunit_defconfig",
+    "build_environment": "$EVIDENCE/format-baseline-01-out",
+    "lab_name": null,
+    "kernel": null,
+    "job": null,
+    "git_branch": "kselftest"
+}

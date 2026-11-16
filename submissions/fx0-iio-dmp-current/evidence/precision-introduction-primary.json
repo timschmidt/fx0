@@ -1,0 +1,6 @@
+{
+  "sha": "103d9fb907058e4eb052f4f7302d1b07eb6a7792",
+  "subject": "iio: Add a logarithmic fractional value type",
+  "url": "https://github.com/torvalds/linux/commit/103d9fb907058e4eb052f4f7302d1b07eb6a7792",
+  "diff": "@@ -397,6 +397,11 @@ static ssize_t iio_read_channel_info(struct device *dev,\n \t\tval2 = do_div(tmp, 1000000000LL);\n \t\tval = tmp;\n \t\treturn sprintf(buf, \"%d.%09u\\n\", val, val2);\n+\tcase IIO_VAL_FRACTIONAL_LOG2:\n+\t\ttmp = (s64)val * 1000000000LL >> val2;\n+\t\tval2 = do_div(tmp, 1000000000LL);\n+\t\tval = tmp;\n+\t\treturn sprintf(buf, \"%d.%09u\\n\", val, val2);\n \tdefault:\n \t\treturn 0;\n \t}\n@@ -314,6 +314,9 @@ static int iio_convert_raw_to_processed_unlocked(struct iio_channel *chan,\n \t\t*processed = div_s64(raw64 * (s64)scale_val * scale,\n \t\t\t\t     scale_val2);\n \t\tbreak;\n+\tcase IIO_VAL_FRACTIONAL_LOG2:\n+\t\t*processed = (raw64 * (s64)scale_val * scale) >> scale_val2;\n+\t\tbreak;\n \tdefault:\n \t\treturn -EINVAL;\n \t}\n@@ -58,5 +58,6 @@ enum iio_modifier {\n #define IIO_VAL_INT_PLUS_NANO 3\n #define IIO_VAL_INT_PLUS_MICRO_DB 4\n #define IIO_VAL_FRACTIONAL 10\n+#define IIO_VAL_FRACTIONAL_LOG2 11\n \n #endif /* _IIO_TYPES_H_ */"
+}
