@@ -1,0 +1,32 @@
+DRAFT ONLY: human review and DCO certification required before sending.
+To: Srinivas Kandagatla <srini@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+    linux-kernel@vger.kernel.org
+Subject: [RFC PATCH 0/2] slimbus: qcom-ngd-ctrl: balance registration bookkeeping
+
+This series requires a completed bounded QMI wait before startup, then tracks
+completed controller registration. Repeated UP reuses its QMI client and retains
+runtime wakeup while avoiding duplicate ID allocation and PM-reference drops.
+Failed registration unwinds its QMI client without dropping the bootstrap
+reference; disable unregisters only an owned controller.
+
+Base: SLIMbus for-next 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4.
+Patches: patches/maintainer/01.patch and 02.patch in this review packet.
+
+Ten exact NGD/core callback bodies execute in 21 synthetic cases with 152 checks.
+The unchanged baseline fails 48 checks and the final candidate fails none.
+Seven deliberate regressions are rejected, including an overly broad early
+guard that suppressed a registered controller's runtime wakeup. Normal leak
+checking and fail-fast address/undefined sanitizers report no diagnostics.
+Eight native ARM/ARM64 objects build without diagnostics with QCOM enabled,
+COMPILE_TEST disabled and the native module dependencies retained.
+
+QMI, PM, DMA, firmware and child-device services are models. Complete startup,
+teardown, repeated DOWN, firmware concurrency and power-up error propagation
+remain unqualified. An independent integrated development ARM kernel and 459
+signed modules build; no physical SLIMbus, audio or phone execution is claimed.
+
+OpenAI Codex identified and implemented the fixes, models, changelogs and packet.
+No agent Signed-off-by is added. The human submitter must review the changes,
+confirm routing and scope, and provide their own DCO certification. Nothing
+has been published or sent to maintainers.
