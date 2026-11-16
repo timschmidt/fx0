@@ -1,0 +1,71 @@
+From 7cdceb93fcca46e878bf4f3f7ab635fa5ea6fb7a Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 08:00:56 -0500
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: propagate resume errors before
+ registration
+
+Runtime resume records a failed power-up state but always returns success.
+Controller enable also ignores both the direct callback and PM framework
+resume results. An initial QMI, DMA setup or capability exchange failure
+can therefore expose a controller and consume its bootstrap PM reference
+before hardware startup has succeeded. Registered wake failures are hidden
+from their callers too.
+
+Return the power-up error from runtime resume and check both resume paths
+before registration. Unwind the new QMI client only for an unregistered
+controller, retaining its bootstrap reference for retry or removal. A
+failed wake of an already registered controller retains its registration
+and existing client. Accept nonnegative PM framework success, including
+its positive already-active result. Prepared DMA resources retain their
+existing ownership for retry and normal teardown.
+
+A host model composes 15 exact driver, core and PM callback bodies against
+logical DMA, MMIO, QMI, completion and PM services. Each of two PM profiles
+executes 626 cases: current PM passes 13284 checks after 2435 parent
+failures; the cached 6.18.63 PM callback passes 12708 after 2652 failures.
+The latter explicitly verifies hard-error latching and blocked retry; it
+does not qualify an LTS backport or its recovery. Twelve independent
+regression controls are rejected. Native ARM/ARM64 NGD/core objects build
+with LLVM21, W=1 and strict callback diagnostics without warnings/errors.
+
+Master-work and external-transfer quiescence, full failed-start recovery,
+late QMI service handling and initial bootstrap remain separate work.
+No real DMA, DMA callbacks, firmware, audio or phone operations ran. Codex
+generated the fix, tests and changelog; human review and DCO are pending.
+
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+Fixes: 94fe5f2b45c4 ("silmbus: ngd: register controller after power up.")
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index 867a9f94f..c6a5296d1 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1426,7 +1426,7 @@ static int qcom_slim_ngd_runtime_resume(struct device *dev)
+ 		ctrl->state = QCOM_SLIM_NGD_CTRL_AWAKE;
+ 	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int qcom_slim_ngd_enable(struct qcom_slim_ngd_ctrl *ctrl, bool enable)
+@@ -1446,9 +1446,14 @@ static int qcom_slim_ngd_enable(struct qcom_slim_ngd_ctrl *ctrl, bool enable)
+ 		complete(&ctrl->qmi.qmi_comp);
+ 		if (!pm_runtime_enabled(ctrl->ctrl.dev) ||
+ 			 !pm_runtime_suspended(ctrl->ctrl.dev))
+-			qcom_slim_ngd_runtime_resume(ctrl->ctrl.dev);
++			ret = qcom_slim_ngd_runtime_resume(ctrl->ctrl.dev);
+ 		else
+-			pm_runtime_resume(ctrl->ctrl.dev);
++			ret = pm_runtime_resume(ctrl->ctrl.dev);
++		if (ret < 0) {
++			if (!ctrl->registered)
++				qcom_slim_qmi_exit(ctrl);
++			return ret;
++		}
+ 
+ 		if (ctrl->registered)
+ 			return 0;

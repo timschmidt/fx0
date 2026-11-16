@@ -1,0 +1,30 @@
+DRAFT ONLY: human review and DCO certification required before sending.
+To: Srinivas Kandagatla <srini@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+    linux-kernel@vger.kernel.org
+Subject: [RFC PATCH 0/9] slimbus: qcom-ngd-ctrl: propagate startup resume errors
+
+The final patch returns power-up errors from runtime resume and checks both
+resume paths before controller registration. Failed initial wake releases its
+new QMI client while retaining the bootstrap PM reference; failed registered wake
+retains existing registration/client ownership. Nonnegative PM success is accepted.
+Eight prior bookkeeping, parent/child lifetime and DMA setup fixes precede it.
+
+Base: SLIMbus for-next 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4.
+Patches: patches/maintainer/01.patch through 09.patch.
+
+A 15-callback logical model exercises 626 cases in each of two PM profiles.
+Current PM passes 13,284 checks after 2,435 parent failures. The cached 6.18.63
+PM callback passes 12,708 after 2,652 failures, explicitly retaining its hard-error
+latch and blocked retry. This contrast is not an LTS driver/backport/recovery
+qualification. Twelve new and 38 prior controls are rejected. Native ARM/ARM64
+objects and the integration kernel/459 signed modules build and stage successfully.
+README.md states the exact modeled services and physical/build limits.
+
+Full failed-start recovery, master/external transfer quiescence, late QMI service
+handling, parent readiness and initial DSP bootstrap remain required work.
+No actual DMA, firmware, audio, phone or radio operations were performed.
+
+Codex generated the fix, models, changelog and packet. No agent Signed-off-by is
+added; a human must review and certify the work before submission. Existing human
+attribution remains. Nothing is published or sent to maintainers.
