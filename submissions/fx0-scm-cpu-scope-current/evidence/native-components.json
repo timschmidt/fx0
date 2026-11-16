@@ -1,0 +1,416 @@
+{
+  "SCM-native-arm-01": {
+    "started_UTC": "2026-11-16T03:43:52.679515+00:00",
+    "source_head": "e284de4dfc0132764ef0e051a7024932b130c5e7",
+    "source_tree": "632359def22ed6603a4a35a3cdd0f388a433766c",
+    "source_status": "M drivers/firmware/qcom/qcom_scm.c\n M drivers/firmware/qcom/qcom_scm.h\n M include/linux/firmware/qcom/qcom_scm.h",
+    "source_files": {
+      "drivers/firmware/qcom/qcom_scm.c": "735cc78b64dcecf7c21f3c11de605207ec59dd8d4a1a88d898eeaab7aa5cd561",
+      "drivers/firmware/qcom/qcom_scm.h": "f795c34f157a8d62c9ea2b9224835b985222805c56c37880593cb26589302cf9",
+      "include/linux/firmware/qcom/qcom_scm.h": "cfb572114d5f348659a48c98ff0c7e864fe86314e5ee1d9bcb613023409099eb",
+      "drivers/firmware/qcom/qcom_scm-legacy.c": "3a8b03927916ef6c287499af61fad887c813113096d02899a5e42631b71e39d8",
+      "drivers/firmware/qcom/qcom_scm-smc.c": "399d29d832d265c972a8c927669be7047800bce1d46b0452fe17a8b875bf1f2c"
+    },
+    "native": true,
+    "COMPILE_TEST": false,
+    "kind": "SCM",
+    "stages": [
+      {
+        "stage": "options",
+        "command": [
+          "$SOURCE/scripts/config",
+          "--file",
+          "$OUTPUT/SCM-native-arm-01-out/.config",
+          "-d",
+          "COMPILE_TEST",
+          "-e",
+          "ARCH_QCOM",
+          "-e",
+          "QCOM_SCM"
+        ],
+        "returncode": 0,
+        "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostics": []
+      },
+      {
+        "stage": "config",
+        "command": [
+          "make",
+          "O=$OUTPUT/SCM-native-arm-01-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "KCFLAGS=-Werror=incompatible-function-pointer-types",
+          "--jobserver-style=pipe",
+          "-j4",
+          "olddefconfig"
+        ],
+        "returncode": 0,
+        "log_SHA256": "06653183ab9bb31126fbc7c57a82610d96cd7460464caba0c685f9faf540153a",
+        "diagnostics": []
+      },
+      {
+        "stage": "prepare",
+        "command": [
+          "make",
+          "O=$OUTPUT/SCM-native-arm-01-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "KCFLAGS=-Werror=incompatible-function-pointer-types",
+          "--jobserver-style=pipe",
+          "-j4",
+          "modules_prepare"
+        ],
+        "returncode": 0,
+        "log_SHA256": "2543a5d04cb02cc4abacb59426feeee6b89617c6f4c36581c6a605c129884114",
+        "diagnostics": []
+      },
+      {
+        "stage": "components",
+        "command": [
+          "make",
+          "O=$OUTPUT/SCM-native-arm-01-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "KCFLAGS=-Werror=incompatible-function-pointer-types",
+          "--jobserver-style=pipe",
+          "-j4",
+          "drivers/firmware/qcom/qcom_scm.o",
+          "drivers/firmware/qcom/qcom_scm-legacy.o",
+          "drivers/firmware/qcom/qcom_scm-smc.o",
+          "drivers/firmware/qcom/qcom_tzmem.o"
+        ],
+        "returncode": 0,
+        "log_SHA256": "fc024faae979761079904750b4cea3307dc27bbdc333ee23a7d360b08d3392ab",
+        "diagnostics": []
+      }
+    ],
+    "launcher_SHA256": "c96aede256f9cbe6a1757bd82ed8d9e3ed75b98c136636ca1eaef1f4be4cd4ac",
+    "phone_access": false,
+    "state": "terminal success",
+    "config_SHA256": "ec4d64f8e299f0c0ce448b9f399abdc208fd8cc2a9b5afa2a68b4e6b319e88f0",
+    "passed": true,
+    "returncode": 0,
+    "objects": {
+      "drivers/firmware/qcom/qcom_scm.o": "ab6e78f86b05fff48eb322d1ba938d6fb0c04ba16dd98ffa13198086b2365f8e",
+      "drivers/firmware/qcom/qcom_scm-legacy.o": "8a09d7038034fda753c140d48d5e6e502a1ca3fd88096aee60e49c839b265be4",
+      "drivers/firmware/qcom/qcom_scm-smc.o": "294293630da2c29d79b009181ec3145e7aaba0c78732aa2411690caa874072c1",
+      "drivers/firmware/qcom/qcom_tzmem.o": "cc69adc10e149d55bdfb2d0a6768d529aa0a8dc3e0a5f47416291aed85484cef"
+    },
+    "finished_UTC": "2026-11-16T03:44:00.147651+00:00"
+  },
+  "SCM-native-arm64-02": {
+    "started_UTC": "2026-11-16T03:47:18.340414+00:00",
+    "source_head": "e284de4dfc0132764ef0e051a7024932b130c5e7",
+    "source_tree": "632359def22ed6603a4a35a3cdd0f388a433766c",
+    "source_status": "M drivers/firmware/qcom/qcom_scm.c\n M drivers/firmware/qcom/qcom_scm.h\n M include/linux/firmware/qcom/qcom_scm.h",
+    "source_files": {
+      "drivers/firmware/qcom/qcom_scm.c": "735cc78b64dcecf7c21f3c11de605207ec59dd8d4a1a88d898eeaab7aa5cd561",
+      "drivers/firmware/qcom/qcom_scm.h": "f795c34f157a8d62c9ea2b9224835b985222805c56c37880593cb26589302cf9",
+      "include/linux/firmware/qcom/qcom_scm.h": "cfb572114d5f348659a48c98ff0c7e864fe86314e5ee1d9bcb613023409099eb",
+      "drivers/firmware/qcom/qcom_scm-legacy.c": "3a8b03927916ef6c287499af61fad887c813113096d02899a5e42631b71e39d8",
+      "drivers/firmware/qcom/qcom_scm-smc.c": "399d29d832d265c972a8c927669be7047800bce1d46b0452fe17a8b875bf1f2c"
+    },
+    "native": true,
+    "COMPILE_TEST": false,
+    "kind": "SCM",
+    "stages": [
+      {
+        "stage": "options",
+        "command": [
+          "$SOURCE/scripts/config",
+          "--file",
+          "$OUTPUT/SCM-native-arm64-02-out/.config",
+          "-d",
+          "COMPILE_TEST",
+          "-e",
+          "ARCH_QCOM",
+          "-e",
+          "QCOM_SCM",
+          "-e",
+          "DRM_PANEL"
+        ],
+        "returncode": 0,
+        "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostics": []
+      },
+      {
+        "stage": "config",
+        "command": [
+          "make",
+          "O=$OUTPUT/SCM-native-arm64-02-out",
+          "ARCH=arm64",
+          "LLVM=-21",
+          "W=1",
+          "KCFLAGS=-Werror=incompatible-function-pointer-types",
+          "--jobserver-style=pipe",
+          "-j4",
+          "olddefconfig"
+        ],
+        "returncode": 0,
+        "log_SHA256": "e3f8b5c99e0e233a232c031372a61515c90a0c6312a0b202174a85adbccb6de9",
+        "diagnostics": []
+      },
+      {
+        "stage": "prepare",
+        "command": [
+          "make",
+          "O=$OUTPUT/SCM-native-arm64-02-out",
+          "ARCH=arm64",
+          "LLVM=-21",
+          "W=1",
+          "KCFLAGS=-Werror=incompatible-function-pointer-types",
+          "--jobserver-style=pipe",
+          "-j4",
+          "modules_prepare"
+        ],
+        "returncode": 0,
+        "log_SHA256": "3d729e8afdbf1c02665e37c11c156dd5ccead4f015e7e2c2b7e01833953979f4",
+        "diagnostics": []
+      },
+      {
+        "stage": "components",
+        "command": [
+          "make",
+          "O=$OUTPUT/SCM-native-arm64-02-out",
+          "ARCH=arm64",
+          "LLVM=-21",
+          "W=1",
+          "KCFLAGS=-Werror=incompatible-function-pointer-types",
+          "--jobserver-style=pipe",
+          "-j4",
+          "drivers/firmware/qcom/qcom_scm.o",
+          "drivers/firmware/qcom/qcom_scm-legacy.o",
+          "drivers/firmware/qcom/qcom_scm-smc.o",
+          "drivers/firmware/qcom/qcom_tzmem.o"
+        ],
+        "returncode": 0,
+        "log_SHA256": "158801cdb908fe3c1579574aa2f5e9e4132886eea8ecb6e8b4e1b8676e9e78e1",
+        "diagnostics": []
+      }
+    ],
+    "launcher_SHA256": "989a97050e80d2e2cd4a0a447f961fd5600583d342d0eed97916c390c8e5d7eb",
+    "phone_access": false,
+    "state": "terminal success",
+    "config_SHA256": "6f033c57380df2e2d18adb9d8df11d3be65cff3305092de85576287ee2d7a137",
+    "passed": true,
+    "returncode": 0,
+    "objects": {
+      "drivers/firmware/qcom/qcom_scm.o": "3ce03302a90ec3bfdd656a2efbd3bd6b0ffe418740c70438df7a87f7783eae31",
+      "drivers/firmware/qcom/qcom_scm-legacy.o": "8bced2d61eea3e7e9ac4f9c5bd72ab4fbe930e20a90408bca4153f25e769b03a",
+      "drivers/firmware/qcom/qcom_scm-smc.o": "30e6063df2a6d3115668de48a4366879fb4ce453bd9dc3b77bca7442a015c33b",
+      "drivers/firmware/qcom/qcom_tzmem.o": "ab284de05a29d2dd479b595a607440cbd7b9811a22a2cb335b97cfbc1d738963"
+    },
+    "finished_UTC": "2026-11-16T03:47:27.300790+00:00"
+  },
+  "SCM-integration-arm-01": {
+    "started_UTC": "2026-11-16T03:50:07.526464+00:00",
+    "source_head": "602d9d8588bced38898afd22d52399af6afff5bd",
+    "source_tree": "ce8817db8a9e4068850c7fdd590d3a3890b2c6de",
+    "source_status": "M drivers/firmware/qcom/qcom_scm.c\n M drivers/firmware/qcom/qcom_scm.h\n M include/linux/firmware/qcom/qcom_scm.h",
+    "source_files": {
+      "drivers/firmware/qcom/qcom_scm.c": "98b3236c4ffb94897f9874659b57f469cfaea6083e639ea5a4ec9463828afbbe",
+      "drivers/firmware/qcom/qcom_scm.h": "f795c34f157a8d62c9ea2b9224835b985222805c56c37880593cb26589302cf9",
+      "include/linux/firmware/qcom/qcom_scm.h": "b0e139426727997f8c8c08827266f6732289fd4cbb3dbed57ac8ba192a8be28b",
+      "drivers/firmware/qcom/qcom_scm-legacy.c": "3a8b03927916ef6c287499af61fad887c813113096d02899a5e42631b71e39d8",
+      "drivers/firmware/qcom/qcom_scm-smc.c": "399d29d832d265c972a8c927669be7047800bce1d46b0452fe17a8b875bf1f2c"
+    },
+    "native": true,
+    "COMPILE_TEST": false,
+    "kind": "SCM",
+    "stages": [
+      {
+        "stage": "options",
+        "command": [
+          "$SOURCE/scripts/config",
+          "--file",
+          "$OUTPUT/SCM-integration-arm-01-out/.config",
+          "-d",
+          "COMPILE_TEST",
+          "-e",
+          "ARCH_QCOM",
+          "-e",
+          "QCOM_SCM",
+          "-e",
+          "DRM_PANEL"
+        ],
+        "returncode": 0,
+        "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostics": []
+      },
+      {
+        "stage": "config",
+        "command": [
+          "make",
+          "O=$OUTPUT/SCM-integration-arm-01-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "KCFLAGS=-Werror=incompatible-function-pointer-types",
+          "--jobserver-style=pipe",
+          "-j4",
+          "olddefconfig"
+        ],
+        "returncode": 0,
+        "log_SHA256": "4d3a95a7b107173bcbf918830766c92409409822d1dbddbff9c22adfd5e12087",
+        "diagnostics": []
+      },
+      {
+        "stage": "prepare",
+        "command": [
+          "make",
+          "O=$OUTPUT/SCM-integration-arm-01-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "KCFLAGS=-Werror=incompatible-function-pointer-types",
+          "--jobserver-style=pipe",
+          "-j4",
+          "modules_prepare"
+        ],
+        "returncode": 0,
+        "log_SHA256": "cac59c2de2b3d4dd8e14abeed2780d4a107bc18ef3418048028fa340a7465e79",
+        "diagnostics": []
+      },
+      {
+        "stage": "components",
+        "command": [
+          "make",
+          "O=$OUTPUT/SCM-integration-arm-01-out",
+          "ARCH=arm",
+          "LLVM=-21",
+          "W=1",
+          "KCFLAGS=-Werror=incompatible-function-pointer-types",
+          "--jobserver-style=pipe",
+          "-j4",
+          "drivers/firmware/qcom/qcom_scm.o",
+          "drivers/firmware/qcom/qcom_scm-legacy.o",
+          "drivers/firmware/qcom/qcom_scm-smc.o",
+          "drivers/firmware/qcom/qcom_tzmem.o"
+        ],
+        "returncode": 0,
+        "log_SHA256": "f6637ce5b50522612249c8421d53feb038d95a53ee5159221f1455cb8cbf1478",
+        "diagnostics": []
+      }
+    ],
+    "launcher_SHA256": "989a97050e80d2e2cd4a0a447f961fd5600583d342d0eed97916c390c8e5d7eb",
+    "phone_access": false,
+    "state": "terminal success",
+    "config_SHA256": "0a690787ef9df896563b5eb64e6090f927097870690792ace2d04b9007b6a7cb",
+    "passed": true,
+    "returncode": 0,
+    "objects": {
+      "drivers/firmware/qcom/qcom_scm.o": "1e1b161ae28d17b6ee255c7f7086fa15e6023f5c2f148f920ef26cb7d86a6d14",
+      "drivers/firmware/qcom/qcom_scm-legacy.o": "8e348f712b4585f379ff00e8a66eff393d652c68e33586ecf2527d177196191d",
+      "drivers/firmware/qcom/qcom_scm-smc.o": "4c56ba9813bee3b7ade4592b8702f6739c69b4496292941f4ed5da475196e07d",
+      "drivers/firmware/qcom/qcom_tzmem.o": "fd4cdcff78c016fd3b9c4bbd8f80d7c8ef7f9f707bfb6cc35f3f1aefd964bc08"
+    },
+    "finished_UTC": "2026-11-16T03:50:15.532617+00:00"
+  },
+  "SCM-integration-arm64-01": {
+    "started_UTC": "2026-11-16T03:50:07.526464+00:00",
+    "source_head": "602d9d8588bced38898afd22d52399af6afff5bd",
+    "source_tree": "ce8817db8a9e4068850c7fdd590d3a3890b2c6de",
+    "source_status": "M drivers/firmware/qcom/qcom_scm.c\n M drivers/firmware/qcom/qcom_scm.h\n M include/linux/firmware/qcom/qcom_scm.h",
+    "source_files": {
+      "drivers/firmware/qcom/qcom_scm.c": "98b3236c4ffb94897f9874659b57f469cfaea6083e639ea5a4ec9463828afbbe",
+      "drivers/firmware/qcom/qcom_scm.h": "f795c34f157a8d62c9ea2b9224835b985222805c56c37880593cb26589302cf9",
+      "include/linux/firmware/qcom/qcom_scm.h": "b0e139426727997f8c8c08827266f6732289fd4cbb3dbed57ac8ba192a8be28b",
+      "drivers/firmware/qcom/qcom_scm-legacy.c": "3a8b03927916ef6c287499af61fad887c813113096d02899a5e42631b71e39d8",
+      "drivers/firmware/qcom/qcom_scm-smc.c": "399d29d832d265c972a8c927669be7047800bce1d46b0452fe17a8b875bf1f2c"
+    },
+    "native": true,
+    "COMPILE_TEST": false,
+    "kind": "SCM",
+    "stages": [
+      {
+        "stage": "options",
+        "command": [
+          "$SOURCE/scripts/config",
+          "--file",
+          "$OUTPUT/SCM-integration-arm64-01-out/.config",
+          "-d",
+          "COMPILE_TEST",
+          "-e",
+          "ARCH_QCOM",
+          "-e",
+          "QCOM_SCM",
+          "-e",
+          "DRM_PANEL"
+        ],
+        "returncode": 0,
+        "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostics": []
+      },
+      {
+        "stage": "config",
+        "command": [
+          "make",
+          "O=$OUTPUT/SCM-integration-arm64-01-out",
+          "ARCH=arm64",
+          "LLVM=-21",
+          "W=1",
+          "KCFLAGS=-Werror=incompatible-function-pointer-types",
+          "--jobserver-style=pipe",
+          "-j4",
+          "olddefconfig"
+        ],
+        "returncode": 0,
+        "log_SHA256": "26b06f03bd032598f09613e06d2ea669cf685d4d48df33cd787c2f265dbd66e8",
+        "diagnostics": []
+      },
+      {
+        "stage": "prepare",
+        "command": [
+          "make",
+          "O=$OUTPUT/SCM-integration-arm64-01-out",
+          "ARCH=arm64",
+          "LLVM=-21",
+          "W=1",
+          "KCFLAGS=-Werror=incompatible-function-pointer-types",
+          "--jobserver-style=pipe",
+          "-j4",
+          "modules_prepare"
+        ],
+        "returncode": 0,
+        "log_SHA256": "4e4ca14cc5ec933d245a8f43a320e9f13834bf00312c4a0a85e3f244910ad905",
+        "diagnostics": []
+      },
+      {
+        "stage": "components",
+        "command": [
+          "make",
+          "O=$OUTPUT/SCM-integration-arm64-01-out",
+          "ARCH=arm64",
+          "LLVM=-21",
+          "W=1",
+          "KCFLAGS=-Werror=incompatible-function-pointer-types",
+          "--jobserver-style=pipe",
+          "-j4",
+          "drivers/firmware/qcom/qcom_scm.o",
+          "drivers/firmware/qcom/qcom_scm-legacy.o",
+          "drivers/firmware/qcom/qcom_scm-smc.o",
+          "drivers/firmware/qcom/qcom_tzmem.o"
+        ],
+        "returncode": 0,
+        "log_SHA256": "30487daa834daa83054333d6dd89337d357bc25230b37b3d5330c31b4439cbd7",
+        "diagnostics": []
+      }
+    ],
+    "launcher_SHA256": "989a97050e80d2e2cd4a0a447f961fd5600583d342d0eed97916c390c8e5d7eb",
+    "phone_access": false,
+    "state": "terminal success",
+    "config_SHA256": "fd55f0fa84d45490d7c929a800690e75d69692e9719bfcc903f6a7db126aa29c",
+    "passed": true,
+    "returncode": 0,
+    "objects": {
+      "drivers/firmware/qcom/qcom_scm.o": "b43a625c368cba832f2498e76552ab37e021260a851d3c3b278bfa96d3a0a741",
+      "drivers/firmware/qcom/qcom_scm-legacy.o": "f886e3266a0270425cb1e47bcba38e1e86fe9c00baa108a4d412b17e577ff09d",
+      "drivers/firmware/qcom/qcom_scm-smc.o": "3da61e90502fd39cef61d6fafc74436139a7b9904c36a1576ae1e1b9223e15de",
+      "drivers/firmware/qcom/qcom_tzmem.o": "9f9115e9e78a31ca6c6c0fa0170506908805ffdbe43fefe44a47d8c25143d540"
+    },
+    "finished_UTC": "2026-11-16T03:50:16.919569+00:00"
+  }
+}

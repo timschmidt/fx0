@@ -1,0 +1,219 @@
+{
+  "official_remote": "https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git",
+  "official_branch": "drivers-for-7.4",
+  "source_base": "e284de4dfc0132764ef0e051a7024932b130c5e7",
+  "base_version": "7.3.0-rc1",
+  "source": {
+    "head": "fbf765bcbe7d25342de164647f0df50315a5d858",
+    "tree": "aca86902378c013a670c6be93cbabfece443fbeb",
+    "base": "e284de4dfc0132764ef0e051a7024932b130c5e7",
+    "branch": "development/qcom-scm-legacy-fuse-current-01",
+    "paths": [
+      "drivers/firmware/qcom/qcom_scm.c",
+      "drivers/firmware/qcom/qcom_scm.h",
+      "include/linux/firmware/qcom/qcom_scm.h"
+    ],
+    "clean": true,
+    "published": false
+  },
+  "integration": {
+    "head": "d62a924a72d73e2b19c1bd0d5d8fa754c8caf24e",
+    "tree": "f29c27fc76f7d02b937c0b6d3c78986426ae7786",
+    "parent": "602d9d8588bced38898afd22d52399af6afff5bd",
+    "branch": "integration/fx0-runtime-prerequisites-current-08",
+    "source_head": "fbf765bcbe7d25342de164647f0df50315a5d858",
+    "changed_paths": [
+      "drivers/firmware/qcom/qcom_scm.c",
+      "drivers/firmware/qcom/qcom_scm.h",
+      "include/linux/firmware/qcom/qcom_scm.h"
+    ],
+    "all_other_paths_preserved": true,
+    "clean": true,
+    "native_objects": 8,
+    "phone_access": false,
+    "published": false
+  },
+  "models": {
+    "wire": {
+      "cases": 667,
+      "checks": 34017,
+      "failures": 0,
+      "returncode": 0,
+      "actual_source_SHA256": "7469ba3f34e2f3eeb6c48193d3ffb4c8dce6904ebfb9aea900cf662f937032c7",
+      "program_SHA256": "6843e7b12878ad5ccdbcf9ebd6c2c3e4b18016b44f25eecd69db1ad44401cb0d",
+      "source_files": {
+        "drivers/firmware/qcom/qcom_scm.h": "f795c34f157a8d62c9ea2b9224835b985222805c56c37880593cb26589302cf9",
+        "drivers/firmware/qcom/qcom_scm.c": "735cc78b64dcecf7c21f3c11de605207ec59dd8d4a1a88d898eeaab7aa5cd561",
+        "drivers/firmware/qcom/qcom_scm-legacy.c": "3a8b03927916ef6c287499af61fad887c813113096d02899a5e42631b71e39d8",
+        "include/linux/arm-smccc.h": "3d16b7daacc727c1f9e0c1a304aab1f3d6c693511e2e9d204c61c4bfcf4d6114"
+      },
+      "mutation": null,
+      "sanitizer_diagnostics": false,
+      "actual_API_dispatcher_and_legacy_transport": true,
+      "allocation_DMA_SMC_PM_context_and_mutex_services_modeled": true,
+      "convention_detection_modeled": true,
+      "concurrency_or_real_firmware_acceptance": false,
+      "all_response_data_synthetic": true,
+      "phone_access": false
+    },
+    "API": {
+      "cases": 13,
+      "returncode": 0,
+      "passed": true,
+      "actual_function_SHA256": "ee373ef74fa744823d84607a9c942ef36464a265e5f294201d76df0e8ccdd1e4",
+      "program_SHA256": "1033354e99747768b2c4b9af74d6b557b6a6cf354c458375916e2d47970698cf",
+      "sanitizer_diagnostics": false,
+      "transport_captured_and_modeled": true,
+      "all_data_synthetic": true,
+      "phone_access": false
+    },
+    "wrong-command": {
+      "cases": 667,
+      "checks": 34017,
+      "failures": 1613,
+      "returncode": 1,
+      "actual_source_SHA256": "612a191bae0ab86f6496a2d681cb17adc5f9344edc0904028f084e6b739ea892",
+      "program_SHA256": "71b23783bae1be66409bcccc11ea0dc478232637918b689366ef7ad6cb0ea79f",
+      "source_files": {
+        "drivers/firmware/qcom/qcom_scm.h": "f795c34f157a8d62c9ea2b9224835b985222805c56c37880593cb26589302cf9",
+        "drivers/firmware/qcom/qcom_scm.c": "735cc78b64dcecf7c21f3c11de605207ec59dd8d4a1a88d898eeaab7aa5cd561",
+        "drivers/firmware/qcom/qcom_scm-legacy.c": "3a8b03927916ef6c287499af61fad887c813113096d02899a5e42631b71e39d8",
+        "include/linux/arm-smccc.h": "3d16b7daacc727c1f9e0c1a304aab1f3d6c693511e2e9d204c61c4bfcf4d6114"
+      },
+      "mutation": "wrong-command",
+      "sanitizer_diagnostics": false,
+      "actual_API_dispatcher_and_legacy_transport": true,
+      "allocation_DMA_SMC_PM_context_and_mutex_services_modeled": true,
+      "convention_detection_modeled": true,
+      "concurrency_or_real_firmware_acceptance": false,
+      "all_response_data_synthetic": true,
+      "phone_access": false
+    },
+    "swapped-words": {
+      "cases": 667,
+      "checks": 34017,
+      "failures": 480,
+      "returncode": 1,
+      "actual_source_SHA256": "192b22d6de91e196033ad1b3add4c44417a6d82fc3d9f76c8ece69b2fc48664b",
+      "program_SHA256": "56cf55c746492952e361ada344132afe4d664f87e2d713f6287746a8b523b44e",
+      "source_files": {
+        "drivers/firmware/qcom/qcom_scm.h": "f795c34f157a8d62c9ea2b9224835b985222805c56c37880593cb26589302cf9",
+        "drivers/firmware/qcom/qcom_scm.c": "735cc78b64dcecf7c21f3c11de605207ec59dd8d4a1a88d898eeaab7aa5cd561",
+        "drivers/firmware/qcom/qcom_scm-legacy.c": "3a8b03927916ef6c287499af61fad887c813113096d02899a5e42631b71e39d8",
+        "include/linux/arm-smccc.h": "3d16b7daacc727c1f9e0c1a304aab1f3d6c693511e2e9d204c61c4bfcf4d6114"
+      },
+      "mutation": "swapped-words",
+      "sanitizer_diagnostics": false,
+      "actual_API_dispatcher_and_legacy_transport": true,
+      "allocation_DMA_SMC_PM_context_and_mutex_services_modeled": true,
+      "convention_detection_modeled": true,
+      "concurrency_or_real_firmware_acceptance": false,
+      "all_response_data_synthetic": true,
+      "phone_access": false
+    },
+    "ignored-status": {
+      "cases": 667,
+      "checks": 34017,
+      "failures": 10,
+      "returncode": 1,
+      "actual_source_SHA256": "6bb380462de963d00c6d739b9e71e73bd4443dd67855923604daef779998f130",
+      "program_SHA256": "845d632fff27c49313c959768be89c80a5890266c3f9ef686cf3b24b934f7c55",
+      "source_files": {
+        "drivers/firmware/qcom/qcom_scm.h": "f795c34f157a8d62c9ea2b9224835b985222805c56c37880593cb26589302cf9",
+        "drivers/firmware/qcom/qcom_scm.c": "735cc78b64dcecf7c21f3c11de605207ec59dd8d4a1a88d898eeaab7aa5cd561",
+        "drivers/firmware/qcom/qcom_scm-legacy.c": "3a8b03927916ef6c287499af61fad887c813113096d02899a5e42631b71e39d8",
+        "include/linux/arm-smccc.h": "3d16b7daacc727c1f9e0c1a304aab1f3d6c693511e2e9d204c61c4bfcf4d6114"
+      },
+      "mutation": "ignored-status",
+      "sanitizer_diagnostics": false,
+      "actual_API_dispatcher_and_legacy_transport": true,
+      "allocation_DMA_SMC_PM_context_and_mutex_services_modeled": true,
+      "convention_detection_modeled": true,
+      "concurrency_or_real_firmware_acceptance": false,
+      "all_response_data_synthetic": true,
+      "phone_access": false
+    },
+    "early-output": {
+      "cases": 667,
+      "checks": 34017,
+      "failures": 5,
+      "returncode": 1,
+      "actual_source_SHA256": "b3c2f64baa5e18028f9a00a09afbced81c65a840c6c0a0a0cda91c45f2eeecbc",
+      "program_SHA256": "7c2616a0e0b4313f594bb94a7f173c9c6219a5012f66bf96ba945186a9fedfc1",
+      "source_files": {
+        "drivers/firmware/qcom/qcom_scm.h": "f795c34f157a8d62c9ea2b9224835b985222805c56c37880593cb26589302cf9",
+        "drivers/firmware/qcom/qcom_scm.c": "735cc78b64dcecf7c21f3c11de605207ec59dd8d4a1a88d898eeaab7aa5cd561",
+        "drivers/firmware/qcom/qcom_scm-legacy.c": "3a8b03927916ef6c287499af61fad887c813113096d02899a5e42631b71e39d8",
+        "include/linux/arm-smccc.h": "3d16b7daacc727c1f9e0c1a304aab1f3d6c693511e2e9d204c61c4bfcf4d6114"
+      },
+      "mutation": "early-output",
+      "sanitizer_diagnostics": false,
+      "actual_API_dispatcher_and_legacy_transport": true,
+      "allocation_DMA_SMC_PM_context_and_mutex_services_modeled": true,
+      "convention_detection_modeled": true,
+      "concurrency_or_real_firmware_acceptance": false,
+      "all_response_data_synthetic": true,
+      "phone_access": false
+    },
+    "nonlegacy": {
+      "cases": 667,
+      "checks": 34017,
+      "failures": 646,
+      "returncode": 1,
+      "actual_source_SHA256": "8783b5fa45c69f1e4790cfb5b9ca4d552e398ba0aec287bdc494e446f35b3ae4",
+      "program_SHA256": "f906af1cf55c543132d7ac43d1cbd1d4855113675106f49f84b73cee62a4bac8",
+      "source_files": {
+        "drivers/firmware/qcom/qcom_scm.h": "f795c34f157a8d62c9ea2b9224835b985222805c56c37880593cb26589302cf9",
+        "drivers/firmware/qcom/qcom_scm.c": "735cc78b64dcecf7c21f3c11de605207ec59dd8d4a1a88d898eeaab7aa5cd561",
+        "drivers/firmware/qcom/qcom_scm-legacy.c": "3a8b03927916ef6c287499af61fad887c813113096d02899a5e42631b71e39d8",
+        "include/linux/arm-smccc.h": "3d16b7daacc727c1f9e0c1a304aab1f3d6c693511e2e9d204c61c4bfcf4d6114"
+      },
+      "mutation": "nonlegacy",
+      "sanitizer_diagnostics": false,
+      "actual_API_dispatcher_and_legacy_transport": true,
+      "allocation_DMA_SMC_PM_context_and_mutex_services_modeled": true,
+      "convention_detection_modeled": true,
+      "concurrency_or_real_firmware_acceptance": false,
+      "all_response_data_synthetic": true,
+      "phone_access": false
+    },
+    "alignment": {
+      "cases": 667,
+      "checks": 34185,
+      "failures": 21,
+      "returncode": 1,
+      "actual_source_SHA256": "236451a7065ecabb20d02606d497ee18e502886eade08cf82744645b724ae511",
+      "program_SHA256": "5b7a24527d7cfa1056f1b3eeea42333eb36f64f02a89b8d5752a0c328d616039",
+      "source_files": {
+        "drivers/firmware/qcom/qcom_scm.h": "f795c34f157a8d62c9ea2b9224835b985222805c56c37880593cb26589302cf9",
+        "drivers/firmware/qcom/qcom_scm.c": "735cc78b64dcecf7c21f3c11de605207ec59dd8d4a1a88d898eeaab7aa5cd561",
+        "drivers/firmware/qcom/qcom_scm-legacy.c": "3a8b03927916ef6c287499af61fad887c813113096d02899a5e42631b71e39d8",
+        "include/linux/arm-smccc.h": "3d16b7daacc727c1f9e0c1a304aab1f3d6c693511e2e9d204c61c4bfcf4d6114"
+      },
+      "mutation": "alignment",
+      "sanitizer_diagnostics": false,
+      "actual_API_dispatcher_and_legacy_transport": true,
+      "allocation_DMA_SMC_PM_context_and_mutex_services_modeled": true,
+      "convention_detection_modeled": true,
+      "concurrency_or_real_firmware_acceptance": false,
+      "all_response_data_synthetic": true,
+      "phone_access": false
+    }
+  },
+  "native_profiles": 4,
+  "native_objects": 16,
+  "native_W1_diagnostics": 0,
+  "COMPILE_TEST": false,
+  "source_and_integration_programs_identical": true,
+  "complete_CPU_scope_required": true,
+  "later_candidate_delta_files": 54,
+  "CPU_and_shared_paths_requiring_reconciliation": 33,
+  "missing_later_feature_files": 10,
+  "full_kernel_package_boot_and_physical_qualification": false,
+  "phone_access": false,
+  "firmware_or_fuse_bytes_included": false,
+  "original_author_preserved": true,
+  "human_DCO_pending": true,
+  "published": false,
+  "maintainer_contact": false
+}
