@@ -1,0 +1,40 @@
+From 558956190b79b5322779106b0dce2205a4cb5212 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 09:04:12 -0400
+Subject: [PATCH 1/5] drm/msm/dsi/phy: preserve MSM8226 data-lane configuration
+
+The MSM8226 PHY configuration uses the common 28nm enable sequence,
+which writes zero to every data-lane CFG4 register. The pinned vendor
+msm8226-mdss.dtsi instead specifies 0, 5, 10 and 15 for those lanes.
+
+Use the existing MSM8226 quirk to retain those per-lane values. Keep
+the zero values on other variants and leave the clock lane unchanged.
+
+Port Timothy Schmidt's original Fx0 change to msm-fixes.
+The actual-source model compares the complete register-write sequence
+against the vendor lane bytes: 192 cases and 1056 checks pass, while
+the unpatched code and two regression controls fail. ARM and ARM64
+complete MSM components build with W=1 and no compiler diagnostics.
+PLL timing and physical display acceptance are not established by the
+model; these source changes have not been booted on the Fx0.
+
+Codex (GPT-6) assisted the current-source port and qualification.
+
+Fixes: 1531d0b9235e ("drm/msm/dsi: Add phy configuration for MSM8226")
+Assisted-by: LLM
+
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+index d00e415b9a99..3cbc40a5087c 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+@@ -827,7 +827,9 @@ static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy,
+ 		writel(0, base + REG_DSI_28nm_PHY_LN_CFG_1(i));
+ 		writel(0, base + REG_DSI_28nm_PHY_LN_CFG_2(i));
+ 		writel(0, base + REG_DSI_28nm_PHY_LN_CFG_3(i));
+-		writel(0, base + REG_DSI_28nm_PHY_LN_CFG_4(i));
++		writel(phy->cfg->quirks & DSI_PHY_28NM_QUIRK_PHY_8226 ?
++		       (i << 2) | i : 0,
++		       base + REG_DSI_28nm_PHY_LN_CFG_4(i));
+ 		writel(0, base + REG_DSI_28nm_PHY_LN_TEST_DATAPATH(i));
+ 		writel(0, base + REG_DSI_28nm_PHY_LN_DEBUG_SEL(i));
+ 		writel(0x1, base + REG_DSI_28nm_PHY_LN_TEST_STR_0(i));

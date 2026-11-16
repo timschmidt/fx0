@@ -1,0 +1,82 @@
+From aff3b3dbfeb3ddbae0e4dd7940abb16f7d8d5b26 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 1 Nov 2026 14:51:57 -0500
+Subject: [PATCH 3/5] drm/msm/mdp5: revalidate cached pipe ownership during
+ atomic check
+
+A saved plane state retains its cached hardware-pipe pointers when a
+subsequent disable releases the corresponding global assignments.
+Restoring the saved state can keep these pointers without recording
+ownership again. The following disable then tries to release an
+unowned pipe, warns and returns -EINVAL. A foreign owner must also
+not be released through a stale cached pointer.
+
+Obtain the transaction's global state before checking either cached
+pipe. Drop each cache entry whose owner is not this plane, allowing
+the existing assignment path to record the resource again. Preserve
+valid assignments and propagate global-state allocation/lock errors.
+
+Port Timothy Schmidt's original Fx0 ownership fix. The earlier
+Fixes tag named a PM callback move; the preceding callbacks already
+used the atomic suspend/resume helpers. Name the earlier disable-time
+pipe release instead, which creates the stale-cache transition.
+The original change credited Claude; Codex (GPT-6) assisted this port,
+provenance correction and actual-source sanitizer qualification.
+
+The targeted plane model passes 1638 checks over 234 cases, including
+three duplicate/disable/restore cycles, foreign owners, both cached
+pipes and error rollback. The unpatched code and three controls fail.
+ARM/ARM64 complete MSM components build with W=1 and no compiler
+warnings. Core locks, PM and SMP services are modeled; physical resume,
+concurrency and the original r2 fault remain unqualified.
+
+Fixes: adcbae310f9e ("drm/msm/mdp5: release hwpipe(s) for unused planes")
+Assisted-by: LLM
+
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+index 841f444a8d68..6efb8a42700b 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+@@ -158,6 +158,31 @@ static void mdp5_plane_cleanup_fb(struct drm_plane *plane,
+ 	msm_framebuffer_cleanup(fb, needed_dirtyfb);
+ }
+ 
++static int mdp5_plane_drop_stale_hwpipes(struct drm_plane_state *state)
++{
++	struct mdp5_plane_state *mdp5_state = to_mdp5_plane_state(state);
++	struct mdp5_global_state *global_state;
++	struct drm_plane **owners;
++
++	if (!mdp5_state->hwpipe && !mdp5_state->r_hwpipe)
++		return 0;
++
++	global_state = mdp5_get_global_state(state->state);
++	if (IS_ERR(global_state))
++		return PTR_ERR(global_state);
++
++	/* Saved plane state can outlive the pipe assignment it cached. */
++	owners = global_state->hwpipe.hwpipe_to_plane;
++	if (mdp5_state->hwpipe &&
++	    owners[mdp5_state->hwpipe->idx] != state->plane)
++		mdp5_state->hwpipe = NULL;
++	if (mdp5_state->r_hwpipe &&
++	    owners[mdp5_state->r_hwpipe->idx] != state->plane)
++		mdp5_state->r_hwpipe = NULL;
++
++	return 0;
++}
++
+ static int mdp5_plane_atomic_check_with_state(struct drm_crtc_state *crtc_state,
+ 					      struct drm_plane_state *state)
+ {
+@@ -176,6 +201,10 @@ static int mdp5_plane_atomic_check_with_state(struct drm_crtc_state *crtc_state,
+ 	DBG("%s: check (%d -> %d)", plane->name,
+ 			plane_enabled(old_state), plane_enabled(state));
+ 
++	ret = mdp5_plane_drop_stale_hwpipes(state);
++	if (ret)
++		return ret;
++
+ 	max_width = config->hw->lm.max_width << 16;
+ 	max_height = config->hw->lm.max_height << 16;
+ 

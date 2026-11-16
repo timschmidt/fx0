@@ -1,0 +1,33 @@
+{
+  "sha": "adcbae310f9ed84ef139e3fa6d7a7743d96c44c8",
+  "message": "drm/msm/mdp5: release hwpipe(s) for unused planes\n\nOtherwise, if userspace doesn't re-use a given plane, it's hwpipe(s)\ncould stay permanently assigned.\n\nSigned-off-by: Rob Clark <robdclark@gmail.com>",
+  "url": "https://api.github.com/repos/torvalds/linux/commits/adcbae310f9ed84ef139e3fa6d7a7743d96c44c8",
+  "html_url": "https://github.com/torvalds/linux/commit/adcbae310f9ed84ef139e3fa6d7a7743d96c44c8",
+  "diff": "@@ -445,6 +445,10 @@ static int mdp5_plane_atomic_check_with_state(struct drm_crtc_state *crtc_state,\n \t\t\tmdp5_pipe_release(state->state, old_hwpipe);\n \t\t\tmdp5_pipe_release(state->state, old_right_hwpipe);\n \t\t}\n+\t} else {\n+\t\tmdp5_pipe_release(state->state, mdp5_state->hwpipe);\n+\t\tmdp5_pipe_release(state->state, mdp5_state->r_hwpipe);\n+\t\tmdp5_state->hwpipe = mdp5_state->r_hwpipe = NULL;\n \t}\n \n \treturn 0;",
+  "files": [
+    {
+      "filename": "drivers/gpu/drm/msm/mdp/mdp5/mdp5_plane.c",
+      "patch": "@@ -445,6 +445,10 @@ static int mdp5_plane_atomic_check_with_state(struct drm_crtc_state *crtc_state,\n \t\t\tmdp5_pipe_release(state->state, old_hwpipe);\n \t\t\tmdp5_pipe_release(state->state, old_right_hwpipe);\n \t\t}\n+\t} else {\n+\t\tmdp5_pipe_release(state->state, mdp5_state->hwpipe);\n+\t\tmdp5_pipe_release(state->state, mdp5_state->r_hwpipe);\n+\t\tmdp5_state->hwpipe = mdp5_state->r_hwpipe = NULL;\n \t}\n \n \treturn 0;"
+    }
+  ],
+  "repository_full_name": "torvalds/linux",
+  "comments": null,
+  "author": {
+    "login": "robclark",
+    "name": null,
+    "email": null,
+    "avatar_url": "https://avatars.githubusercontent.com/u/48820?v=4",
+    "id": 48820
+  },
+  "committer": {
+    "login": "robclark",
+    "name": null,
+    "email": null,
+    "avatar_url": "https://avatars.githubusercontent.com/u/48820?v=4",
+    "id": 48820
+  },
+  "created_at": "2017-05-27T17:48:27Z",
+  "git_author_email": null,
+  "display_url": "https://github.com/torvalds/linux/commit/adcbae310f9ed84ef139e3fa6d7a7743d96c44c8",
+  "display_title": "drm/msm/mdp5: release hwpipe(s) for unused planes"
+}

@@ -1,0 +1,47 @@
+From ab0e7ad6509c537aeedef3e2b6d3e5e23410e2f7 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Sun, 15 Nov 2026 20:26:56 -0500
+Subject: [PATCH 4/5] drm/msm/mdp5: check both ownership maps for the right
+ pipe
+
+The two-pipe search checks old and new ownership for the left pipe,
+but accepts the next matching right pipe without checking either map.
+It can overwrite another plane's assignment or reuse a pipe released
+only in the current transaction, contrary to the allocator's existing
+restriction on immediate reuse.
+
+Apply the same two-map exclusion to each right-pipe candidate before
+checking type and priority. Preserve allocation failure when fewer than
+two eligible pipes remain.
+
+An actual-source model enumerates all 256 eight-pipe occupancy masks
+in old-only, new-only, mixed and released-in-new transactions. Combined
+with the cached-state tests, 1258 cases pass 20150 checks under address,
+undefined-behavior and leak sanitizers. The original allocator fails;
+controls dropping either map check fail as well. ARM/ARM64 complete
+MSM components build with W=1 and no compiler diagnostics.
+
+Codex (GPT-6) found and prepared this fix while qualifying the MDP5
+plane-state port. Synthetic core/lock/SMP services are used; physical
+source-split scanout and concurrent DRM commits are not established.
+This is a local unsigned draft for human review, with no agent DCO.
+
+Fixes: b14892801078 ("drm/msm/mdp5: Update mdp5_pipe_assign to spit out both planes")
+Assisted-by: LLM
+
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
+index 606e18973ea4..d21169101e83 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
+@@ -66,6 +66,11 @@ int mdp5_pipe_assign(struct drm_atomic_commit *s, struct drm_plane *plane,
+ 					struct mdp5_hw_pipe *r_cur =
+ 							mdp5_kms->hwpipes[j];
+ 
++					/* Both halves must be free in both states. */
++					if (new_state->hwpipe_to_plane[r_cur->idx] ||
++					    old_state->hwpipe_to_plane[r_cur->idx])
++						continue;
++
+ 					/* reject different types of hwpipes */
+ 					if (r_cur->caps != cur->caps)
+ 						continue;

@@ -1,0 +1,47 @@
+From 1b91b2b74e03479c49b76d99a4112f3d4ffa4cb7 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:33:09 +0000
+Subject: [PATCH 2/5] drm/msm/mdp5: flush staged scanout before starting video
+ timing
+
+Full modesets defer the CRTC flush until encoder enable, but the video
+encoder starts its timing engine before issuing that flush. The first
+scanout can therefore begin before the staged state reaches hardware.
+
+Move the existing start-enabled CTL commit before the timing-engine
+write, followed by the encoder-state update. Preserve command-mode
+handling and the remaining video enable and disable sequence.
+
+Port Timothy Schmidt's e13016e7cc2d integration patch. Actual CRTC,
+CTL and encoder functions pass 3121 model checks over 241 cases. The
+unpatched order and late-flush/no-start controls fail. Both native
+complete MSM components build with W=1 without compiler diagnostics.
+The model does not execute physical scanout or establish the cause of
+the original r2 IOMMU/display failure.
+
+Codex (GPT-6) assisted the current-source port and qualification.
+
+Fixes: f9cb8d8d836e ("drm/msm/mdp5: rework CTL START signal handling")
+Assisted-by: LLM
+
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
+index eaba3b2d73b5..eb6344647033 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
+@@ -164,12 +164,13 @@ static void mdp5_vid_encoder_enable(struct drm_encoder *encoder)
+ 	if (WARN_ON(mdp5_encoder->enabled))
+ 		return;
+ 
++	/* Flush the staged scanout before starting video timing. */
++	mdp5_ctl_commit(ctl, pipeline, mdp_ctl_flush_mask_encoder(intf), true);
++	mdp5_ctl_set_encoder_state(ctl, pipeline, true);
++
+ 	spin_lock_irqsave(&mdp5_encoder->intf_lock, flags);
+ 	mdp5_write(mdp5_kms, REG_MDP5_INTF_TIMING_ENGINE_EN(intfn), 1);
+ 	spin_unlock_irqrestore(&mdp5_encoder->intf_lock, flags);
+-	mdp5_ctl_commit(ctl, pipeline, mdp_ctl_flush_mask_encoder(intf), true);
+-
+-	mdp5_ctl_set_encoder_state(ctl, pipeline, true);
+ 
+ 	mdp5_encoder->enabled = true;
+ }

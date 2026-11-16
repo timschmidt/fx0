@@ -1,0 +1,341 @@
+{
+  "phy-baseline-01": {
+    "cases": 192,
+    "checks": 1056,
+    "failures": 144,
+    "returncode": 1,
+    "source_SHA256": "dfe285e8ddd30ea7f532ee9345324fdff13012fb8d1dbd8873c3bc4cb7b34bb9",
+    "before_SHA256": "dfe285e8ddd30ea7f532ee9345324fdff13012fb8d1dbd8873c3bc4cb7b34bb9",
+    "vendor_SHA256": "cc30e052d717b53e79cc52595653c739a57d1a864a4a910736fe64825307ba12",
+    "generated_header_SHA256": "a29be50f65c5c77f4457113b51b513ee32fc66b09a20d3fd63fdab3dd698447d",
+    "body_SHA256": "3dfd8191fbe49cce479ba505a67cf39cef4ae004cb1893feec9619971b016a5c",
+    "program_SHA256": "516e43a638e592067d078aece06d4b90c4d7c91d8e4da622be9e7828950c7b4a",
+    "vendor_lane_CFG4": [
+      0,
+      5,
+      10,
+      15
+    ],
+    "timing_calculation_and_MMIO_mocked": true,
+    "PLL_not_executed": true,
+    "mutation": null,
+    "sanitizer_diagnostics": false,
+    "physical_acceptance": false
+  },
+  "phy-candidate-01": {
+    "cases": 192,
+    "checks": 1056,
+    "failures": 0,
+    "returncode": 0,
+    "source_SHA256": "943c3dd49a335025bfd6cdcde958007186ee5014930ba2af55467d34b74d3d3d",
+    "before_SHA256": "dfe285e8ddd30ea7f532ee9345324fdff13012fb8d1dbd8873c3bc4cb7b34bb9",
+    "vendor_SHA256": "cc30e052d717b53e79cc52595653c739a57d1a864a4a910736fe64825307ba12",
+    "generated_header_SHA256": "a29be50f65c5c77f4457113b51b513ee32fc66b09a20d3fd63fdab3dd698447d",
+    "body_SHA256": "8fdc3fac2033353b11b51bca042784a800d1277558e90b293440b257038b1da1",
+    "program_SHA256": "9f6d4e3dc170da032a701442d0347028b06ee1a0f723d2d1b3450b10a8624075",
+    "vendor_lane_CFG4": [
+      0,
+      5,
+      10,
+      15
+    ],
+    "timing_calculation_and_MMIO_mocked": true,
+    "PLL_not_executed": true,
+    "mutation": null,
+    "sanitizer_diagnostics": false,
+    "physical_acceptance": false
+  },
+  "phy-unconditional-01": {
+    "cases": 192,
+    "checks": 1056,
+    "failures": 144,
+    "returncode": 1,
+    "source_SHA256": "943c3dd49a335025bfd6cdcde958007186ee5014930ba2af55467d34b74d3d3d",
+    "before_SHA256": "dfe285e8ddd30ea7f532ee9345324fdff13012fb8d1dbd8873c3bc4cb7b34bb9",
+    "vendor_SHA256": "cc30e052d717b53e79cc52595653c739a57d1a864a4a910736fe64825307ba12",
+    "generated_header_SHA256": "a29be50f65c5c77f4457113b51b513ee32fc66b09a20d3fd63fdab3dd698447d",
+    "body_SHA256": "2492a5662ca6cee7a4de3fdb0a83ce74e006696207a5d13b7294fd84b5cf0bc3",
+    "program_SHA256": "996bcc9106883a1d50cc0e458b35f23962c239bae56f172db0dda70fa34371cb",
+    "vendor_lane_CFG4": [
+      0,
+      5,
+      10,
+      15
+    ],
+    "timing_calculation_and_MMIO_mocked": true,
+    "PLL_not_executed": true,
+    "mutation": "unconditional",
+    "sanitizer_diagnostics": false,
+    "physical_acceptance": false
+  },
+  "phy-lane-value-01": {
+    "cases": 192,
+    "checks": 1056,
+    "failures": 144,
+    "returncode": 1,
+    "source_SHA256": "943c3dd49a335025bfd6cdcde958007186ee5014930ba2af55467d34b74d3d3d",
+    "before_SHA256": "dfe285e8ddd30ea7f532ee9345324fdff13012fb8d1dbd8873c3bc4cb7b34bb9",
+    "vendor_SHA256": "cc30e052d717b53e79cc52595653c739a57d1a864a4a910736fe64825307ba12",
+    "generated_header_SHA256": "a29be50f65c5c77f4457113b51b513ee32fc66b09a20d3fd63fdab3dd698447d",
+    "body_SHA256": "46514ce4a031083d615f7c64fc3acfeee2c47193885de6a4164accce5a38729e",
+    "program_SHA256": "a57e3f3658185a4b9713f6e4e37f6b6afae90b2a35c78bd05070ac9f99b37b00",
+    "vendor_lane_CFG4": [
+      0,
+      5,
+      10,
+      15
+    ],
+    "timing_calculation_and_MMIO_mocked": true,
+    "PLL_not_executed": true,
+    "mutation": "lane-value",
+    "sanitizer_diagnostics": false,
+    "physical_acceptance": false
+  },
+  "encoder-baseline-03": {
+    "cases": 241,
+    "checks": 3121,
+    "failures": 288,
+    "returncode": 1,
+    "source_files": {
+      "mdp5_encoder.c": "b4e04e6f2ce4eed9901aadd34413be22857aea56444a43da1a1cc094059580a4",
+      "mdp5_ctl.c": "a60f623eef929b007e9eba2e68056a9ce55d93143ac3870ec0ca1ec9d895c991",
+      "mdp5_crtc.c": "3b9e511330c1ec95c6e32899f3569156e392f2330aaa4dab55f5590447dd526b",
+      "mdp5_kms.h": "0a2a0cc3f04451800529b49d43ae4b416f3a7b0160b7a1ced09eff4db7878c8c"
+    },
+    "body_SHA256": "30be96d0471a74848bdcf17f3feb875803e8e05c4dabaef6429b6059259dd68a",
+    "program_SHA256": "aebec6f35eac35e3b0d015494002bb269a97126b6ee5a350b9911fa1d2742a8c",
+    "mutation": null,
+    "MMIO_frame_epochs_and_modeset_services_mocked": true,
+    "command_operations_mocked": true,
+    "actual_scanout_underrun_or_original_r2_fault_not_proven_fixed": true,
+    "sanitizer_diagnostics": false
+  },
+  "encoder-candidate-03": {
+    "cases": 241,
+    "checks": 3121,
+    "failures": 0,
+    "returncode": 0,
+    "source_files": {
+      "mdp5_encoder.c": "a7f21d2be9cfc049bdb53c4bc1d6ce88c80906cb9875910b3d901929129b1a0e",
+      "mdp5_ctl.c": "a60f623eef929b007e9eba2e68056a9ce55d93143ac3870ec0ca1ec9d895c991",
+      "mdp5_crtc.c": "3b9e511330c1ec95c6e32899f3569156e392f2330aaa4dab55f5590447dd526b",
+      "mdp5_kms.h": "0a2a0cc3f04451800529b49d43ae4b416f3a7b0160b7a1ced09eff4db7878c8c"
+    },
+    "body_SHA256": "abc3ebca94a25828544f7424000e0b6ea7680e7b2fad0b6fdc99acc02b805ebd",
+    "program_SHA256": "ab45a72b0eccc53d07e66758faa20f4c89b72fa7e546812eb8ee97b46a50a6a3",
+    "mutation": null,
+    "MMIO_frame_epochs_and_modeset_services_mocked": true,
+    "command_operations_mocked": true,
+    "actual_scanout_underrun_or_original_r2_fault_not_proven_fixed": true,
+    "sanitizer_diagnostics": false
+  },
+  "encoder-late-flush-03": {
+    "cases": 241,
+    "checks": 3121,
+    "failures": 288,
+    "returncode": 1,
+    "source_files": {
+      "mdp5_encoder.c": "a7f21d2be9cfc049bdb53c4bc1d6ce88c80906cb9875910b3d901929129b1a0e",
+      "mdp5_ctl.c": "a60f623eef929b007e9eba2e68056a9ce55d93143ac3870ec0ca1ec9d895c991",
+      "mdp5_crtc.c": "3b9e511330c1ec95c6e32899f3569156e392f2330aaa4dab55f5590447dd526b",
+      "mdp5_kms.h": "0a2a0cc3f04451800529b49d43ae4b416f3a7b0160b7a1ced09eff4db7878c8c"
+    },
+    "body_SHA256": "798e98cedf8ed78bb881e1a9ec2a16074b2b45b0d3ea14c636d2bcd757cf7b66",
+    "program_SHA256": "d1114cd517baa88415891d211dfe7695bd4d91abf24e20995badb053b35d9d4a",
+    "mutation": "late-flush",
+    "MMIO_frame_epochs_and_modeset_services_mocked": true,
+    "command_operations_mocked": true,
+    "actual_scanout_underrun_or_original_r2_fault_not_proven_fixed": true,
+    "sanitizer_diagnostics": false
+  },
+  "encoder-no-start-03": {
+    "cases": 241,
+    "checks": 3121,
+    "failures": 1008,
+    "returncode": 1,
+    "source_files": {
+      "mdp5_encoder.c": "a7f21d2be9cfc049bdb53c4bc1d6ce88c80906cb9875910b3d901929129b1a0e",
+      "mdp5_ctl.c": "a60f623eef929b007e9eba2e68056a9ce55d93143ac3870ec0ca1ec9d895c991",
+      "mdp5_crtc.c": "3b9e511330c1ec95c6e32899f3569156e392f2330aaa4dab55f5590447dd526b",
+      "mdp5_kms.h": "0a2a0cc3f04451800529b49d43ae4b416f3a7b0160b7a1ced09eff4db7878c8c"
+    },
+    "body_SHA256": "be6b8fe55f5529123feb5f92923181de31b5b73700e8ec0296580f2531b44124",
+    "program_SHA256": "d85e28be3f790caac3e5372315c73b1714214094a4acf288e40a4103aa89c38d",
+    "mutation": "no-start",
+    "MMIO_frame_epochs_and_modeset_services_mocked": true,
+    "command_operations_mocked": true,
+    "actual_scanout_underrun_or_original_r2_fault_not_proven_fixed": true,
+    "sanitizer_diagnostics": false
+  },
+  "plane-baseline-final-01": {
+    "cases": 1258,
+    "checks": 20614,
+    "failures": 1442,
+    "returncode": 1,
+    "source_files": {
+      "mdp5/mdp5_plane.c": "29a644312abd6c01dc8948fd82939bc0f284a98ba14a717dbd742793231d7213",
+      "mdp5/mdp5_kms.c": "13f2d9cdf54c7e47c11dcf8f7397e4413284dfec286ac770415b861e6cbadf03",
+      "mdp5/mdp5_pipe.c": "48ed06c5012cee77f33a9ed3730cbbb16872542bd7dda31aff6428e941b27471",
+      "mdp5/mdp5_pipe.h": "07e657fd74a7e3658b5d589565c1112af28657201f0509115f9b9babfbb4bee2",
+      "mdp_kms.h": "958a46c5956ad865d4e7f955d4a9623cc79339886f3c5d2b786b91298c68573a"
+    },
+    "body_SHA256": "a2bdb6b2ecfd55f22be27642e18bc746f4574f56a7b080b2a0e0c41fe88ef814",
+    "program_SHA256": "ac2b8088d43223bd6ac3ec8071e60aed9916b18b80da898440b925d17c4ceae5",
+    "mutation": null,
+    "core_private_state_lock_PM_and_SMP_services_modeled": true,
+    "full_DRM_IOCTL_registration_concurrency_or_physical_resume_not_qualified": true,
+    "sanitizer_diagnostics": false
+  },
+  "plane-candidate-final-01": {
+    "cases": 1258,
+    "checks": 20150,
+    "failures": 0,
+    "returncode": 0,
+    "source_files": {
+      "mdp5/mdp5_plane.c": "6a8444e6f596ada9b5b5e4b58f686c9abae22a206051f884ec16ae737b250bee",
+      "mdp5/mdp5_kms.c": "13f2d9cdf54c7e47c11dcf8f7397e4413284dfec286ac770415b861e6cbadf03",
+      "mdp5/mdp5_pipe.c": "9efa926f2796a0bb128e4159111962db534f83fb0bc70da05b27c1e03b9b7957",
+      "mdp5/mdp5_pipe.h": "07e657fd74a7e3658b5d589565c1112af28657201f0509115f9b9babfbb4bee2",
+      "mdp_kms.h": "958a46c5956ad865d4e7f955d4a9623cc79339886f3c5d2b786b91298c68573a"
+    },
+    "body_SHA256": "b623545f6cdfd509cd0bac78ef6e9bd57f8e360d6a5738c4c9daa58450391141",
+    "program_SHA256": "545d453d3bf275009dbcc33e2674595a035272c56f0b6a1710028c882a014f18",
+    "mutation": null,
+    "core_private_state_lock_PM_and_SMP_services_modeled": true,
+    "full_DRM_IOCTL_registration_concurrency_or_physical_resume_not_qualified": true,
+    "sanitizer_diagnostics": false
+  },
+  "plane-left-only-final-01": {
+    "cases": 1258,
+    "checks": 20150,
+    "failures": 120,
+    "returncode": 1,
+    "source_files": {
+      "mdp5/mdp5_plane.c": "6a8444e6f596ada9b5b5e4b58f686c9abae22a206051f884ec16ae737b250bee",
+      "mdp5/mdp5_kms.c": "13f2d9cdf54c7e47c11dcf8f7397e4413284dfec286ac770415b861e6cbadf03",
+      "mdp5/mdp5_pipe.c": "9efa926f2796a0bb128e4159111962db534f83fb0bc70da05b27c1e03b9b7957",
+      "mdp5/mdp5_pipe.h": "07e657fd74a7e3658b5d589565c1112af28657201f0509115f9b9babfbb4bee2",
+      "mdp_kms.h": "958a46c5956ad865d4e7f955d4a9623cc79339886f3c5d2b786b91298c68573a"
+    },
+    "body_SHA256": "a976f6c4dc551c686a0087abcc474aea7293631933b5d7a1b771eb17e228995e",
+    "program_SHA256": "cc2534e8628a25cd4aadee1340ce09e7398651d05934f1e37b5ae17299bf2752",
+    "mutation": "left-only",
+    "core_private_state_lock_PM_and_SMP_services_modeled": true,
+    "full_DRM_IOCTL_registration_concurrency_or_physical_resume_not_qualified": true,
+    "sanitizer_diagnostics": false
+  },
+  "plane-ignore-error-final-01": {
+    "cases": 1258,
+    "checks": 20150,
+    "failures": 84,
+    "returncode": 1,
+    "source_files": {
+      "mdp5/mdp5_plane.c": "6a8444e6f596ada9b5b5e4b58f686c9abae22a206051f884ec16ae737b250bee",
+      "mdp5/mdp5_kms.c": "13f2d9cdf54c7e47c11dcf8f7397e4413284dfec286ac770415b861e6cbadf03",
+      "mdp5/mdp5_pipe.c": "9efa926f2796a0bb128e4159111962db534f83fb0bc70da05b27c1e03b9b7957",
+      "mdp5/mdp5_pipe.h": "07e657fd74a7e3658b5d589565c1112af28657201f0509115f9b9babfbb4bee2",
+      "mdp_kms.h": "958a46c5956ad865d4e7f955d4a9623cc79339886f3c5d2b786b91298c68573a"
+    },
+    "body_SHA256": "e1a4001bafa64d9e71e25d3a201b5288ad20e7f8d4ad81ec3703e613cd00e94a",
+    "program_SHA256": "19abaf08664f0abec2c7630467512266f28e72a8eed5293991903bfec098f1be",
+    "mutation": "ignore-error",
+    "core_private_state_lock_PM_and_SMP_services_modeled": true,
+    "full_DRM_IOCTL_registration_concurrency_or_physical_resume_not_qualified": true,
+    "sanitizer_diagnostics": false
+  },
+  "plane-drop-owned-final-01": {
+    "cases": 1258,
+    "checks": 20150,
+    "failures": 234,
+    "returncode": 1,
+    "source_files": {
+      "mdp5/mdp5_plane.c": "6a8444e6f596ada9b5b5e4b58f686c9abae22a206051f884ec16ae737b250bee",
+      "mdp5/mdp5_kms.c": "13f2d9cdf54c7e47c11dcf8f7397e4413284dfec286ac770415b861e6cbadf03",
+      "mdp5/mdp5_pipe.c": "9efa926f2796a0bb128e4159111962db534f83fb0bc70da05b27c1e03b9b7957",
+      "mdp5/mdp5_pipe.h": "07e657fd74a7e3658b5d589565c1112af28657201f0509115f9b9babfbb4bee2",
+      "mdp_kms.h": "958a46c5956ad865d4e7f955d4a9623cc79339886f3c5d2b786b91298c68573a"
+    },
+    "body_SHA256": "37c672c662dd5cba826671bbb1ee21483ec222754497d04ab6da3f225e1911ef",
+    "program_SHA256": "4fd8c35a87d8f9a6061db7d68d391ffcd26b8fff155220d7f2d3374658813ed2",
+    "mutation": "drop-owned",
+    "core_private_state_lock_PM_and_SMP_services_modeled": true,
+    "full_DRM_IOCTL_registration_concurrency_or_physical_resume_not_qualified": true,
+    "sanitizer_diagnostics": false
+  },
+  "plane-right-old-only-final-01": {
+    "cases": 1258,
+    "checks": 20482,
+    "failures": 713,
+    "returncode": 1,
+    "source_files": {
+      "mdp5/mdp5_plane.c": "6a8444e6f596ada9b5b5e4b58f686c9abae22a206051f884ec16ae737b250bee",
+      "mdp5/mdp5_kms.c": "13f2d9cdf54c7e47c11dcf8f7397e4413284dfec286ac770415b861e6cbadf03",
+      "mdp5/mdp5_pipe.c": "9efa926f2796a0bb128e4159111962db534f83fb0bc70da05b27c1e03b9b7957",
+      "mdp5/mdp5_pipe.h": "07e657fd74a7e3658b5d589565c1112af28657201f0509115f9b9babfbb4bee2",
+      "mdp_kms.h": "958a46c5956ad865d4e7f955d4a9623cc79339886f3c5d2b786b91298c68573a"
+    },
+    "body_SHA256": "cb890e0e86539871bbd3c34110061e9018e24b68540f6661e1bf34d128f43ea4",
+    "program_SHA256": "7e866efe3fa43154614d6dc4891b2ab6e941440929bfb837f8db3c36be2419b0",
+    "mutation": "right-old-only",
+    "core_private_state_lock_PM_and_SMP_services_modeled": true,
+    "full_DRM_IOCTL_registration_concurrency_or_physical_resume_not_qualified": true,
+    "sanitizer_diagnostics": false
+  },
+  "plane-right-new-only-02": {
+    "cases": 1258,
+    "checks": 20354,
+    "failures": 265,
+    "returncode": 1,
+    "source_files": {
+      "mdp5/mdp5_plane.c": "6a8444e6f596ada9b5b5e4b58f686c9abae22a206051f884ec16ae737b250bee",
+      "mdp5/mdp5_kms.c": "13f2d9cdf54c7e47c11dcf8f7397e4413284dfec286ac770415b861e6cbadf03",
+      "mdp5/mdp5_pipe.c": "9efa926f2796a0bb128e4159111962db534f83fb0bc70da05b27c1e03b9b7957",
+      "mdp5/mdp5_pipe.h": "07e657fd74a7e3658b5d589565c1112af28657201f0509115f9b9babfbb4bee2",
+      "mdp_kms.h": "958a46c5956ad865d4e7f955d4a9623cc79339886f3c5d2b786b91298c68573a"
+    },
+    "body_SHA256": "454eecd70522e53854eac8cf280de2a5e34db37a82f8d57e786e1073d4f613b0",
+    "program_SHA256": "9dee6eebda130de8b0f2d4ec675fc4ff11c3972d0599305aa7e12ddb82338a53",
+    "mutation": "right-new-only",
+    "core_private_state_lock_PM_and_SMP_services_modeled": true,
+    "full_DRM_IOCTL_registration_concurrency_or_physical_resume_not_qualified": true,
+    "sanitizer_diagnostics": false
+  },
+  "plane-integration-01": {
+    "cases": 1258,
+    "checks": 20150,
+    "failures": 0,
+    "returncode": 0,
+    "source_files": {
+      "mdp5/mdp5_plane.c": "81c5575dab0026e7698f5f711dd1709e60056b306b6a42882321d1cc1ed53478",
+      "mdp5/mdp5_kms.c": "13f2d9cdf54c7e47c11dcf8f7397e4413284dfec286ac770415b861e6cbadf03",
+      "mdp5/mdp5_pipe.c": "9efa926f2796a0bb128e4159111962db534f83fb0bc70da05b27c1e03b9b7957",
+      "mdp5/mdp5_pipe.h": "07e657fd74a7e3658b5d589565c1112af28657201f0509115f9b9babfbb4bee2",
+      "mdp_kms.h": "958a46c5956ad865d4e7f955d4a9623cc79339886f3c5d2b786b91298c68573a"
+    },
+    "body_SHA256": "b623545f6cdfd509cd0bac78ef6e9bd57f8e360d6a5738c4c9daa58450391141",
+    "program_SHA256": "545d453d3bf275009dbcc33e2674595a035272c56f0b6a1710028c882a014f18",
+    "mutation": null,
+    "core_private_state_lock_PM_and_SMP_services_modeled": true,
+    "full_DRM_IOCTL_registration_concurrency_or_physical_resume_not_qualified": true,
+    "sanitizer_diagnostics": false
+  },
+  "encoder-integration-01": {
+    "cases": 241,
+    "checks": 3121,
+    "failures": 0,
+    "returncode": 0,
+    "source_files": {
+      "mdp5_encoder.c": "a7f21d2be9cfc049bdb53c4bc1d6ce88c80906cb9875910b3d901929129b1a0e",
+      "mdp5_ctl.c": "a60f623eef929b007e9eba2e68056a9ce55d93143ac3870ec0ca1ec9d895c991",
+      "mdp5_crtc.c": "04ad50e9b5a644c45beb300dcc155fd5ff36d329cb4886e98ced41209f7c2f0b",
+      "mdp5_kms.h": "0a2a0cc3f04451800529b49d43ae4b416f3a7b0160b7a1ced09eff4db7878c8c"
+    },
+    "body_SHA256": "abc3ebca94a25828544f7424000e0b6ea7680e7b2fad0b6fdc99acc02b805ebd",
+    "program_SHA256": "ab45a72b0eccc53d07e66758faa20f4c89b72fa7e546812eb8ee97b46a50a6a3",
+    "mutation": null,
+    "MMIO_frame_epochs_and_modeset_services_mocked": true,
+    "command_operations_mocked": true,
+    "actual_scanout_underrun_or_original_r2_fault_not_proven_fixed": true,
+    "sanitizer_diagnostics": false
+  }
+}

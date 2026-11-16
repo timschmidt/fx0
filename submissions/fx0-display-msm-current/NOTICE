@@ -1,0 +1,31 @@
+The Linux source snapshots retain their original SPDX and copyright
+notices. The MDP5 code includes work by The Linux Foundation and Red Hat;
+the 28nm PHY code retains its original Qualcomm/Linux Foundation notices.
+Kernel sources, extracted functions, synthetic model services and replay
+tools other than verify-generator.py use GPL-2.0-only. GPL text is included
+under LICENSES. Models do not reproduce kernel ABI layout.
+
+gen_header.py and verify-generator.py use MIT licensing. The original
+generator notice is preserved in each source snapshot. Register XML and
+generated register declarations retain the authorship and MIT-style
+permission notice in registers/freedreno_copyright.xml. That notice and
+the included MIT text apply to the generated headers as well. Original
+XML copyright and license elements are retained without modification.
+
+The vendor DTS is exactly the public Madai source commit
+03aba4427a7666d57b5ae06d375e259ea337f351. It retains The Linux Foundation's
+2013-2014 GPL version 2 only notice; vendor COPYING is included.
+
+Timothy Schmidt authored the original lane, encoder-ordering and cached
+plane-ownership changes. The ownership change credited Claude. Emma
+Anholt authored the original Mesa generator ordering change, marked
+Generated-by: LLM. Codex (GPT-6) prepared these current Linux ports,
+the new split-pipe ownership guard, synthetic services and qualification.
+No agent supplies a human DCO or Signed-off-by certification.
+
+Fixture extraction preserves actual function bodies. DRM/core state
+services, locks, PM transitions, SMP allocation, timing calculation and
+MMIO are modeled. The encoder uses synthetic flush/frame epochs rather
+than physical scanout. The PHY model does not execute its PLL. Models
+do not establish concurrency, full DRM IOCTL behavior, physical resume,
+the original r2 fault's cause or acceptance of a booted combined image.
