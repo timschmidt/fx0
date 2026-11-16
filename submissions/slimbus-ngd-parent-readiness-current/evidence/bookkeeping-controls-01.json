@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "duplicate-registration",
+      "failures": 24,
+      "expected_case": "duplicate-up-pm-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "unowned-unregister",
+      "failures": 2,
+      "expected_case": "disable-without-registration",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "early-PM-put",
+      "failures": 4,
+      "expected_case": "registration-error--12",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "missing-QMI-unwind",
+      "failures": 6,
+      "expected_case": "registration-error--12",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "duplicate-QMI-client",
+      "failures": 12,
+      "expected_case": "duplicate-up-pm-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "runtime-wake-suppressed",
+      "failures": 2,
+      "expected_case": "registered-runtime-resume-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "all_services_synthetic": true,
+  "hardware_or_audio_execution": false
+}

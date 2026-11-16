@@ -1,0 +1,15 @@
+{
+  "historical_control": "interrupted-wait-accepted",
+  "historical_suite": "bookkeeping",
+  "observed_current_result": {
+    "cases": 21,
+    "checks": 152,
+    "failures": 0
+  },
+  "reason": "A wait interruption is now modeled with service readiness false. The new post-wait readiness guard blocks initialization even when the older return-value guard is deliberately weakened. Preserve the real wait premise and retire the now-redundant control instead of manufacturing ready state.",
+  "source_ret_less_equal_zero_guard_still_present": true,
+  "current_bookkeeping_controls": 6,
+  "QMI_readiness_controls": 16,
+  "current_total_controls": 53,
+  "driver_source_changed": false
+}

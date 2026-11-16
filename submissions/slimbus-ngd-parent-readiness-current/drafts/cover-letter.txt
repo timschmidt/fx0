@@ -1,0 +1,18 @@
+Subject: [DRAFT] slimbus: qcom-ngd-ctrl: finish parent startup readiness
+
+PDR can report UP during parent probe, and child binding can finish during
+parent startup cancellation. Gate startup on independent parent and child
+readiness, publish parent readiness after final initialization and replay only
+the last eligible UP. Close parent admission before provider release and IRQ
+shutdown, notify waiters and cancel outside ssr_lock.
+
+The local series contains ten prerequisites plus this followup. The host model
+passes 71 cases/1,079 checks after 51 failures in the previous source. All 66
+current controls are rejected across startup and prerequisite suites. Native
+ARM/ARM64 components and the integrated kernel/459 signed modules pass.
+
+Master/external transfer quiescence, registered-client generation recovery,
+initial DSP bootstrap, LTS error recovery and physical acceptance remain open.
+No real QMI, DMA callback, firmware, audio or phone operations execute here.
+Codex generated the fix and evidence; human review and DCO remain pending.
+This is an unsent draft; no publication is authorized by its creation.
