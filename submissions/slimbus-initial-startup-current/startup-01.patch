@@ -1,0 +1,53 @@
+From 98cb5f2f7d49853d53b5f54db314f97a3eb031a3 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 31 Oct 2026 23:21:46 +0000
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: Bring the NGD up if the DSP is
+ already running
+
+The controller starts the NGD only from a DSP power-up notification (SSR
+or PDR). When the DSP boots before the driver loads, as the MSM8226 ADSP
+does, no notification follows and the bus never comes up; the driver then
+needs a DSP restart. Schedule the bring-up once at probe as well. The
+worker waits for the QMI SLIMbus service, so on a stopped DSP it times out
+and the later power-up notification brings the NGD up as before.
+
+[Codex port to the current parent/child admission model: initialize the
+startup request before discovery and notifier callbacks can run, rather
+than queueing a worker directly after IRQ enable. Existing readiness
+publication queues the attempt only after all parent and child resources
+are ready. Any explicit DOWN can revoke it before publication. A late
+QMI service or child bind replays the still-pending request.]
+
+Codex expanded the logical lifecycle model to 81 cases and 1,263 checks,
+including the already-running DSP, late QMI/child arrival, explicit DOWN,
+initial failures/retry and cancellation. The pre-port source fails 35
+checks. All 29 earlier and four new regression controls are rejected.
+Eight ARM/ARM64 objects build with LLVM21 W=1 and strict callback checking
+without diagnostics. Providers and scheduling remain synthetic; no
+firmware, audio, DMA, phone or network operations execute. Hardware stop,
+registered endpoint recovery, LTS recovery and physical acceptance remain
+open. Human review and DCO certification remain pending.
+
+Original-commit: fe063af17b097af73c8ca55609ca9ee3648ac1dc
+Co-authored-by: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index 7d346a1e4..059492ecc 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1952,6 +1952,12 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
+ 	ctrl->ctrl.xfer_msg = qcom_slim_ngd_xfer_msg;
+ 	ctrl->ctrl.wakeup = NULL;
+ 	ctrl->state = QCOM_SLIM_NGD_CTRL_DOWN;
++	/*
++	 * The DSP may already be running before this driver loads. Request an
++	 * initial startup, published only when the parent and child are ready.
++	 * A subsequent DOWN notification can revoke it before publication.
++	 */
++	WRITE_ONCE(ctrl->up_requested, true);
+ 
+ 	mutex_init(&ctrl->tx_lock);
+ 	mutex_init(&ctrl->dma_lock);

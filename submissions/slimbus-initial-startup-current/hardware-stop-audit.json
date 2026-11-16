@@ -1,0 +1,136 @@
+{
+  "scope": "Primary-source review of hardware stop and failed runtime suspend, not hardware qualification",
+  "source_topic": "076dcfd78c57bbf52484b5589fd1cdbd98802376",
+  "runtime_parent": "f86bacbe316cf448ab1109d117b092ac5dcb749c",
+  "primary_upstream_reset": {
+    "commit": "d77772538f00b7265deace6e77e555ee18365ad0",
+    "url": "https://github.com/torvalds/linux/commit/d77772538f00b7265deace6e77e555ee18365ad0",
+    "reason": "NGD remote instance and remotely controlled BAM lose state during power cycling; suspend/resume DMA reinitialization prevents stale setup and transaction timeouts",
+    "contract": "This explains DMA reset necessity and existing ordering, but does not prove attached hardware has become idle before the reset",
+    "maintainer_authorship": "Srinivas Kandagatla <srinivas.kandagatla@linaro.org>"
+  },
+  "source_evidence": [
+    {
+      "path": "worktrees/linux-slimbus-ngd-current-01/drivers/slimbus/qcom-ngd-ctrl.c",
+      "start_line": 1305,
+      "end_line": 1359,
+      "SHA256": "98a3f2057d4e71702628f37bc1c00c2a591d18f19ab454b0ad3247e0facc21b9",
+      "excerpt": "static int qcom_slim_ngd_exit_dma(struct qcom_slim_ngd_ctrl *ctrl)\n{\n\tunsigned long flags;\n\n\tmutex_lock(&ctrl->dma_lock);\n\tspin_lock_irqsave(&ctrl->tx_buf_lock, flags);\n\tWRITE_ONCE(ctrl->dma_ready, false);\n\tspin_unlock_irqrestore(&ctrl->tx_buf_lock, flags);\n\n\t/* The handshake worker has no PM dependency; notifications run separately. */\n\tcancel_work_sync(&ctrl->m_work);\n\t/* Admitted senders may still complete, but new senders see a closed gate. */\n\tmutex_lock(&ctrl->tx_lock);\n\tif (ctrl->dma_rx_channel) {\n\t\tdmaengine_terminate_sync(ctrl->dma_rx_channel);\n\t\tdma_release_channel(ctrl->dma_rx_channel);\n\t}\n\n\tif (ctrl->dma_tx_channel) {\n\t\tdmaengine_terminate_sync(ctrl->dma_tx_channel);\n\t\tdma_release_channel(ctrl->dma_tx_channel);\n\t}\n\n\tctrl->dma_tx_channel = ctrl->dma_rx_channel = NULL;\n\tmutex_unlock(&ctrl->tx_lock);\n\tmutex_unlock(&ctrl->dma_lock);\n\n\treturn 0;\n}\n\nstatic int qcom_slim_ngd_setup(struct qcom_slim_ngd_ctrl *ctrl)\n{\n\tu32 cfg;\n\tint ret = 0;\n\n\tmutex_lock(&ctrl->dma_lock);\n\tif (!READ_ONCE(ctrl->parent_ready) ||\n\t    !READ_ONCE(ctrl->child_ready) || !READ_ONCE(ctrl->up_requested) ||\n\t    !READ_ONCE(ctrl->qmi_ready)) {\n\t\tret = -ESHUTDOWN;\n\t\tgoto unlock;\n\t}\n\tcfg = readl_relaxed(ctrl->ngd->base);\n\tif (!READ_ONCE(ctrl->dma_ready)) {\n\t\tret = qcom_slim_ngd_init_dma(ctrl);\n\t\tif (ret)\n\t\t\tgoto unlock;\n\t}\n\n\tcfg |= NGD_CFG_RX_MSGQ_EN | NGD_CFG_TX_MSGQ_EN | NGD_CFG_ENABLE;\n\twritel_relaxed(cfg, ctrl->ngd->base);\nunlock:\n\tmutex_unlock(&ctrl->dma_lock);\n\treturn ret;\n}\n"
+    },
+    {
+      "path": "worktrees/linux-slimbus-ngd-current-01/drivers/slimbus/qcom-ngd-ctrl.c",
+      "start_line": 2062,
+      "end_line": 2080,
+      "SHA256": "98a3f2057d4e71702628f37bc1c00c2a591d18f19ab454b0ad3247e0facc21b9",
+      "excerpt": "static int __maybe_unused qcom_slim_ngd_runtime_suspend(struct device *dev)\n{\n\tstruct qcom_slim_ngd_ctrl *ctrl = dev_get_drvdata(dev);\n\tint ret = 0;\n\n\tqcom_slim_ngd_exit_dma(ctrl);\n\tif (!ctrl->qmi.handle)\n\t\treturn 0;\n\n\tret = qcom_slim_qmi_power_request(ctrl, false);\n\tif (ret && ret != -EBUSY)\n\t\tdev_info(ctrl->dev, \"slim resource not idle:%d\\n\", ret);\n\tif (!ret || ret == -ETIMEDOUT)\n\t\tctrl->state = QCOM_SLIM_NGD_CTRL_ASLEEP;\n\n\treturn ret;\n}\n\nstatic const struct dev_pm_ops qcom_slim_ngd_dev_pm_ops = {\n"
+    },
+    {
+      "path": "worktrees/linux-slimbus-ngd-current-01/drivers/dma/qcom/bam_dma.c",
+      "start_line": 746,
+      "end_line": 784,
+      "SHA256": "6d6f0ee7e29fc321e9b189983a0cfb6df7bf2a413ebf9240ee29d7948b36c801",
+      "excerpt": "static int bam_dma_terminate_all(struct dma_chan *chan)\n{\n\tstruct bam_chan *bchan = to_bam_chan(chan);\n\tstruct bam_async_desc *async_desc, *tmp;\n\tLIST_HEAD(head);\n\n\t/* remove all transactions, including active transaction */\n\tscoped_guard(spinlock_irqsave, &bchan->vc.lock) {\n\t\t/*\n\t\t * If we have transactions queued, then some might be committed to the\n\t\t * hardware in the desc fifo.  The only way to reset the desc fifo is\n\t\t * to do a hardware reset (either by pipe or the entire block).\n\t\t * bam_chan_init_hw() will trigger a pipe reset, and also reinit the\n\t\t * pipe.  If the pipe is left disabled (default state after pipe reset)\n\t\t * and is accessed by a connected hardware engine, a fatal error in\n\t\t * the BAM will occur.  There is a small window where this could happen\n\t\t * with bam_chan_init_hw(), but it is assumed that the caller has\n\t\t * stopped activity on any attached hardware engine.  Make sure to do\n\t\t * this first so that the BAM hardware doesn't cause memory corruption\n\t\t * by accessing freed resources.\n\t\t */\n\t\tif (!list_empty(&bchan->desc_list)) {\n\t\t\tasync_desc = list_first_entry(&bchan->desc_list,\n\t\t\t\t\t\t      struct bam_async_desc, desc_node);\n\t\t\tbam_chan_init_hw(bchan, async_desc->dir);\n\t\t}\n\n\t\tlist_for_each_entry_safe(async_desc, tmp,\n\t\t\t\t\t &bchan->desc_list, desc_node) {\n\t\t\tlist_add(&async_desc->vd.node, &bchan->vc.desc_issued);\n\t\t\tlist_del(&async_desc->desc_node);\n\t\t}\n\n\t\tvchan_get_all_descriptors(&bchan->vc, &head);\n\t}\n\n\tvchan_dma_desc_free_list(&bchan->vc, &head);\n\n\treturn 0;\n"
+    },
+    {
+      "path": "src/vendor-linux/drivers/slimbus/slim-msm-ngd.c",
+      "start_line": 295,
+      "end_line": 318,
+      "SHA256": "35e01b2f125e06dff86666047818f049fbf75c50e775f5b5ce21caa3a22cef77",
+      "excerpt": "\t\t * If the state was DOWN, SSR UP notification will take\n\t\t * care of putting the device in active state.\n\t\t */\n\t\tngd_slim_runtime_resume(dev->dev);\n\t}\n\tif ((txn->mc == (SLIM_MSG_CLK_PAUSE_SEQ_FLG |\n\t\t\tSLIM_MSG_MC_RECONFIGURE_NOW)) &&\n\t\t\tdev->state <= MSM_CTRL_IDLE) {\n\t\tmsm_slim_disconnect_endp(dev, &dev->rx_msgq,\n\t\t\t\t\t&dev->use_rx_msgqs);\n\t\tmsm_slim_disconnect_endp(dev, &dev->tx_msgq,\n\t\t\t\t\t&dev->use_tx_msgqs);\n\t\treturn msm_slim_qmi_power_request(dev, false);\n\t}\n\telse if (txn->mc & SLIM_MSG_CLK_PAUSE_SEQ_FLG)\n\t\treturn 0;\n\n\tif (txn->mt == SLIM_MSG_MT_CORE &&\n\t\t(txn->mc >= SLIM_MSG_MC_BEGIN_RECONFIGURATION &&\n\t\t txn->mc <= SLIM_MSG_MC_RECONFIGURE_NOW)) {\n\t\treturn 0;\n\t}\n\t/* If txn is tried when controller is down, wait for ADSP to boot */\n\tif (txn->mc != SLIM_USR_MC_REPORT_SATELLITE) {\n"
+    },
+    {
+      "path": "src/vendor-linux/drivers/slimbus/slim-msm.c",
+      "start_line": 836,
+      "end_line": 845,
+      "SHA256": "ad91b5a68043c2cf4dc5ec72d786eef61ae95cdd4d86c7ce2960b51b8e1344ae",
+      "excerpt": "void msm_slim_disconnect_endp(struct msm_slim_ctrl *dev,\n\t\t\t\t\tstruct msm_slim_endp *endpoint,\n\t\t\t\t\tenum msm_slim_msgq *msgq_flag)\n{\n\tif (*msgq_flag == MSM_MSGQ_ENABLED) {\n\t\tsps_disconnect(endpoint->sps);\n\t\t*msgq_flag = MSM_MSGQ_RESET;\n\t}\n}\n\n"
+    },
+    {
+      "path": "src/vendor-linux/drivers/slimbus/slim-msm-ngd.c",
+      "start_line": 782,
+      "end_line": 805,
+      "SHA256": "35e01b2f125e06dff86666047818f049fbf75c50e775f5b5ce21caa3a22cef77",
+      "excerpt": "static void ngd_slim_setup_msg_path(struct msm_slim_ctrl *dev)\n{\n\tif (dev->state == MSM_CTRL_DOWN) {\n\t\tmsm_slim_sps_init(dev, dev->bam_mem,\n\t\t\tNGD_BASE(dev->ctrl.nr,\n\t\t\tdev->ver) + NGD_STATUS, true);\n\t} else {\n\t\tif (dev->use_rx_msgqs == MSM_MSGQ_DISABLED)\n\t\t\tgoto setup_tx_msg_path;\n\t\tmsm_slim_connect_endp(dev, &dev->rx_msgq,\n\t\t\t\t&dev->rx_msgq_notify);\n\nsetup_tx_msg_path:\n\t\tif (dev->use_tx_msgqs == MSM_MSGQ_DISABLED)\n\t\t\treturn;\n\t\tmsm_slim_connect_endp(dev, &dev->tx_msgq,\n\t\t\t\tNULL);\n\t}\n}\n\nstatic void ngd_slim_rx(struct msm_slim_ctrl *dev, u8 *buf)\n{\n\tu8 mc, mt, len;\n\tint ret;\n"
+    },
+    {
+      "path": "src/vendor-linux/drivers/platform/msm/sps/sps.c",
+      "start_line": 1375,
+      "end_line": 1427,
+      "SHA256": "74394aca4ddb107e8a361d737118df902c9a5c6fe1256a931e8ac85b3a6be8fd",
+      "excerpt": "int sps_disconnect(struct sps_pipe *h)\n{\n\tstruct sps_pipe *pipe = h;\n\tstruct sps_pipe *check;\n\tstruct sps_bam *bam;\n\tint result;\n\n\tSPS_DBG2(\"sps:%s.\", __func__);\n\n\tif (pipe == NULL) {\n\t\tSPS_ERR(\"sps:Invalid pipe.\");\n\t\treturn SPS_ERROR;\n\t}\n\n\tbam = pipe->bam;\n\tif (bam == NULL) {\n\t\tSPS_ERR(\"sps:BAM device of this pipe is NULL.\");\n\t\treturn SPS_ERROR;\n\t}\n\n\tSPS_DBG2(\"sps:sps_disconnect: bam 0x%x src 0x%x dest 0x%x mode %s\",\n\t\t\tBAM_ID(bam),\n\t\t\tpipe->connect.source,\n\t\t\tpipe->connect.destination,\n\t\t\tpipe->connect.mode == SPS_MODE_SRC ? \"SRC\" : \"DEST\");\n\n\tresult = SPS_ERROR;\n\t/* Cross-check client with map table */\n\tif (pipe->connect.mode == SPS_MODE_SRC)\n\t\tcheck = pipe->map->client_src;\n\telse\n\t\tcheck = pipe->map->client_dest;\n\n\tif (check != pipe) {\n\t\tSPS_ERR(\"sps:Client context is corrupt\");\n\t\tgoto exit_err;\n\t}\n\n\t/* Disconnect the BAM pipe */\n\tmutex_lock(&bam->lock);\n\tresult = sps_rm_state_change(pipe, SPS_STATE_DISCONNECT);\n\tmutex_unlock(&bam->lock);\n\tif (result)\n\t\tgoto exit_err;\n\n\tsps_rm_config_init(&pipe->connect);\n\tresult = 0;\n\nexit_err:\n\n\treturn result;\n}\nEXPORT_SYMBOL(sps_disconnect);\n"
+    },
+    {
+      "path": "src/vendor-linux/drivers/platform/msm/sps/sps_bam.c",
+      "start_line": 936,
+      "end_line": 981,
+      "SHA256": "9ecd2d709ece5e1c51923d23e403307b40a787a7948029a2cc0dced50b5b79fc",
+      "excerpt": "int sps_bam_pipe_disconnect(struct sps_bam *dev, u32 pipe_index)\n{\n\tstruct sps_pipe *pipe;\n\tint result;\n\n\tif (pipe_index >= dev->props.num_pipes) {\n\t\tSPS_ERR(\"sps:Invalid BAM 0x%x pipe: %d\\n\", BAM_ID(dev),\n\t\t\t\tpipe_index);\n\t\treturn SPS_ERROR;\n\t}\n\n\t/* Deallocate and reset the BAM pipe */\n\tpipe = dev->pipes[pipe_index];\n\tif (BAM_PIPE_IS_ASSIGNED(pipe)) {\n\t\tif ((dev->pipe_active_mask & (1UL << pipe_index))) {\n\t\t\tlist_del(&pipe->list);\n\t\t\tdev->pipe_active_mask &= ~(1UL << pipe_index);\n\t\t}\n\t\tdev->pipe_remote_mask &= ~(1UL << pipe_index);\n\t\tif (pipe->connect.options & SPS_O_NO_DISABLE)\n\t\t\tSPS_DBG(\"sps:BAM 0x%x pipe %d exits\\n\", BAM_ID(dev),\n\t\t\t\tpipe_index);\n\t\telse\n\t\t\tbam_pipe_exit(dev->base, pipe_index, dev->props.ee);\n\t\tif (pipe->sys.desc_cache != NULL) {\n\t\t\tu32 size = pipe->num_descs * sizeof(void *);\n\t\t\tif (pipe->desc_size + size <= PAGE_SIZE)\n\t\t\t\tkfree(pipe->sys.desc_cache);\n\t\t\telse\n\t\t\t\tvfree(pipe->sys.desc_cache);\n\t\t\tpipe->sys.desc_cache = NULL;\n\t\t}\n\t\tdev->pipes[pipe_index] = BAM_PIPE_UNASSIGNED;\n\t\tpipe_clear(pipe);\n\t\tresult = 0;\n\t} else {\n\t\tresult = SPS_ERROR;\n\t}\n\n\tif (result)\n\t\tSPS_ERR(\"sps:BAM 0x%x pipe %d already disconnected\\n\",\n\t\t\tBAM_ID(dev), pipe_index);\n\n\treturn result;\n}\n\n"
+    },
+    {
+      "path": "src/vendor-linux/drivers/platform/msm/sps/bam.c",
+      "start_line": 1055,
+      "end_line": 1067,
+      "SHA256": "8734c7d2f38a6d62a95b08be305c01c90721a04b735a365c14ae42cf6b84bbaa",
+      "excerpt": "void bam_pipe_exit(void *base, u32 pipe, u32 ee)\n{\n\tSPS_DBG2(\"sps:%s:bam=0x%x(va).pipe=%d.\", __func__, (u32) base, pipe);\n\n\tbam_write_reg(base, P_IRQ_EN(pipe), 0);\n\n\t/* Disable the Pipe Interrupt at the BAM level */\n\tbam_write_reg_field(base, IRQ_SRCS_MSK_EE(ee), (1 << pipe), 0);\n\n\t/* Pipe Disable */\n\tbam_write_reg_field(base, P_CTRL(pipe), P_EN, 0);\n}\n\n"
+    },
+    {
+      "path": "src/vendor-linux/drivers/slimbus/slim-msm.c",
+      "start_line": 645,
+      "end_line": 650,
+      "SHA256": "ad91b5a68043c2cf4dc5ec72d786eef61ae95cdd4d86c7ce2960b51b8e1344ae",
+      "excerpt": "\tconfig->mode = SPS_MODE_SRC;\n\tconfig->source = dev->bam.hdl;\n\tconfig->destination = SPS_DEV_HANDLE_MEM;\n\tconfig->src_pipe_index = pipe_offset;\n\tconfig->options = SPS_O_DESC_DONE | SPS_O_ERROR |\n\t\t\t\tSPS_O_ACK_TRANSFERS | SPS_O_AUTO_ENABLE;\n"
+    },
+    {
+      "path": "src/vendor-linux/drivers/slimbus/slim-msm.c",
+      "start_line": 707,
+      "end_line": 714,
+      "SHA256": "ad91b5a68043c2cf4dc5ec72d786eef61ae95cdd4d86c7ce2960b51b8e1344ae",
+      "excerpt": "\tconfig->source = SPS_DEV_HANDLE_MEM;\n\tconfig->destination = dev->bam.hdl;\n\tconfig->dest_pipe_index = pipe_offset;\n\tconfig->src_pipe_index = 0;\n\tconfig->options = SPS_O_ERROR | SPS_O_NO_Q |\n\t\t\t\tSPS_O_ACK_TRANSFERS | SPS_O_AUTO_ENABLE;\n\n\t/* Allocate memory for the FIFO descriptors */\n"
+    }
+  ],
+  "findings": [
+    {
+      "area": "Vendor clock pause",
+      "finding": "Runtime suspend enters framework clock pause, but the vendor NGD transfer callback disconnects RX and TX SPS endpoints before its QMI inactive request. Returning success from framework pause therefore cannot establish idle for the modern driver; retaining endpoint handles also is not evidence of retaining a valid BAM configuration."
+    },
+    {
+      "area": "BAM precondition",
+      "finding": "Modern terminate_all resets/reinitializes a queued pipe. Its own comment requires attached hardware engine activity to have stopped first. Synchronizing software callbacks and closing RX admission does not prove this hardware condition."
+    },
+    {
+      "area": "Failed suspend",
+      "finding": "The current callback tears down DMA before checking the handle or sending QMI inactive. A failure leaves the framework active after DMA release; timeout additionally marks the driver asleep while returning an error. The new transaction-allocation guard prevents an invalid QMI request but deliberately leaves this state-recovery problem open."
+    },
+    {
+      "area": "Unverified sequences rejected",
+      "finding": "Neither preserving DMA across collapse, merely clearing NGD CFG enable bits, nor moving QMI inactive ahead of BAM cleanup has a verified quiescence/power-access contract in these reviewed sources. No sequence is implemented solely from register names or a synthetic model."
+    },
+    {
+      "area": "QMI allocation error",
+      "finding": "qmi_txn_init initializes a transaction but may fail to allocate an ID. It stores the negative errno into the u16 ID. Sending or cancelling despite this failure can use the wrong ID and retire an unrelated transaction. A two-line standalone negative-error guard is independently host-qualified."
+    },
+    {
+      "area": "SPS low-level trace corrects reset terminology",
+      "finding": "sps_disconnect -> resource-manager disconnect -> sps_bam_pipe_disconnect -> bam_pipe_exit. Despite the wrapper comments using reset, bam_pipe_exit masks pipe/EE interrupts and clears P_EN; it does not assert a reset bit or poll NGD idle. The SLIMbus RX/TX options omit SPS_O_NO_DISABLE, so this disable path is taken. It is not equivalent to modern bam_chan_init_hw pipe reset/reinitialization and does not provide the needed connected-engine stop proof."
+    }
+  ],
+  "required_before_stop_reordering": [
+    "A documented NGD producer-stop sequence and acknowledgment or idle predicate, including inflight RX/TX behavior",
+    "Proof of BAM register accessibility and safe reset/release ordering across QMI inactive success and ambiguous timeout",
+    "A rollback design distinguishing allocation/send/remote refusal/timeout, preserving framework and transport state and retry ownership",
+    "Composition with lifecycle mutex, PM-independent master work, independent slave notification, parent/child/QMI gates and SSR/PM barriers"
+  ],
+  "hardware_stop_qualified": false,
+  "failed_runtime_suspend_rollback_qualified": false,
+  "retaining_DMA_across_power_collapse_accepted": false,
+  "no_phone_QMI_DMA_audio_radio_execution": true,
+  "network_scans_or_changes": false,
+  "previous_audit": "local/fx0-slimbus-qmi-transaction-current-01/hardware-stop-audit.json",
+  "vendor_disconnect_trace_completed": true,
+  "registered_endpoint_recovery_audit": {
+    "source": "worktrees/linux-fx0-runtime-prerequisites-current-01/drivers/slimbus/qcom-ngd-ctrl.c",
+    "finding": "Discovery changes svc_info and requeues startup, but enable skips qmi_init for registered controllers; the previously connected client is retained. Full recovery must synchronize PM and active transactions/client lifetime and hardware DMA teardown, rather than silently accepting the newly advertised endpoint or merely adding a rejection guard.",
+    "recovery_qualified": false
+  },
+  "decision": "Keep hardware-stop and registered endpoint reconnection open. Restore original already-running-DSP bootstrap independently through existing parent/child/QMI/last-DOWN gates; this exercises the established startup path and does not invent a new stop sequence."
+}

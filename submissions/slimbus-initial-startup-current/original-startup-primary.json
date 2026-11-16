@@ -1,0 +1,40 @@
+{
+  "commit": {
+    "sha": "fe063af17b097af73c8ca55609ca9ee3648ac1dc",
+    "message": "slimbus: qcom-ngd-ctrl: Bring the NGD up if the DSP is already running\n\nThe controller starts the NGD only from a DSP power-up notification (SSR\nor PDR). When the DSP boots before the driver loads, as the MSM8226 ADSP\ndoes, no notification follows and the bus never comes up; the driver then\nneeds a DSP restart. Schedule the bring-up once at probe as well. The\nworker waits for the QMI SLIMbus service, so on a stopped DSP it times out\nand the later power-up notification brings the NGD up as before.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+    "url": "https://api.github.com/repos/timschmidt/fx0-linux/commits/fe063af17b097af73c8ca55609ca9ee3648ac1dc",
+    "html_url": "https://github.com/timschmidt/fx0-linux/commit/fe063af17b097af73c8ca55609ca9ee3648ac1dc",
+    "diff": "@@ -1674,6 +1674,13 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)\n \n \tenable_irq(irq);\n \n+\t/*\n+\t * The DSP may already be running, as when it boots before this driver\n+\t * loads, and then no power-up notification follows. Bring the NGD up\n+\t * now; the worker waits for the QMI service.\n+\t */\n+\tschedule_work(&ctrl->ngd_up_work);\n+\n \treturn 0;\n \n err_unregister_ngd:",
+    "files": [
+      {
+        "filename": "drivers/slimbus/qcom-ngd-ctrl.c",
+        "patch": "@@ -1674,6 +1674,13 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)\n \n \tenable_irq(irq);\n \n+\t/*\n+\t * The DSP may already be running, as when it boots before this driver\n+\t * loads, and then no power-up notification follows. Bring the NGD up\n+\t * now; the worker waits for the QMI service.\n+\t */\n+\tschedule_work(&ctrl->ngd_up_work);\n+\n \treturn 0;\n \n err_unregister_ngd:"
+      }
+    ],
+    "repository_full_name": "timschmidt/fx0-linux",
+    "comments": null,
+    "author": {
+      "login": "timschmidt",
+      "name": null,
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/273202?v=4",
+      "id": 273202
+    },
+    "committer": {
+      "login": "timschmidt",
+      "name": null,
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/273202?v=4",
+      "id": 273202
+    },
+    "created_at": "2026-10-31T23:28:15Z",
+    "git_author_email": null,
+    "display_url": "https://github.com/timschmidt/fx0-linux/commit/fe063af17b097af73c8ca55609ca9ee3648ac1dc",
+    "display_title": "slimbus: qcom-ngd-ctrl: Bring the NGD up if the DSP is already running"
+  },
+  "url": "https://github.com/timschmidt/fx0-linux/commit/fe063af17b097af73c8ca55609ca9ee3648ac1dc",
+  "title": "slimbus: qcom-ngd-ctrl: Bring the NGD up if the DSP is already running\n\nThe controller starts the NGD only from a DSP power-up notification (SSR\nor PDR). When the DSP boots before the driver loads, as the MSM8226 ADSP\ndoes, no notification follows and the bus never comes up; the driver then\nneeds a DSP restart. Schedule the bring-up once at probe as well. The\nworker waits for the QMI SLIMbus service, so on a stopped DSP it times out\nand the later power-up notification brings the NGD up as before.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "diff": "@@ -1674,6 +1674,13 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)\n \n \tenable_irq(irq);\n \n+\t/*\n+\t * The DSP may already be running, as when it boots before this driver\n+\t * loads, and then no power-up notification follows. Bring the NGD up\n+\t * now; the worker waits for the QMI service.\n+\t */\n+\tschedule_work(&ctrl->ngd_up_work);\n+\n \treturn 0;\n \n err_unregister_ngd:",
+  "display_url": "https://github.com/timschmidt/fx0-linux/commit/fe063af17b097af73c8ca55609ca9ee3648ac1dc",
+  "display_title": "slimbus: qcom-ngd-ctrl: Bring the NGD up if the DSP is already running\n\nThe controller starts the NGD only from a DSP power-up notification (SSR\nor PDR). When the DSP boots before the driver loads, as the MSM8226 ADSP\ndoes, no notification follows and the bus never comes up; the driver then\nneeds a DSP restart. Schedule the bring-up once at probe as well. The\nworker waits for the QMI SLIMbus service, so on a stopped DSP it times out\nand the later power-up notification brings the NGD up as before.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+}

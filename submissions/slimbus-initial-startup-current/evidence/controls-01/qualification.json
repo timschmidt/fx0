@@ -1,0 +1,240 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "late-service-not-requeued",
+      "failures": 35,
+      "expected_case": "service-after-expired-UP",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "readiness-consumed-by-worker",
+      "failures": 8,
+      "expected_case": "repeated-UP-retains-readiness",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "missing-post-wait-readiness",
+      "failures": 3,
+      "expected_case": "server-deleted-after-positive-wait",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "delete-endpoint-update-unlocked",
+      "failures": 3,
+      "expected_case": "delete-serialized-with-client-initialization",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "new-endpoint-update-unlocked",
+      "failures": 1,
+      "expected_case": "new-server-serialized-with-client-initialization",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "stale-delete-clears-latest-endpoint",
+      "failures": 17,
+      "expected_case": "old-delete-does-not-clear-replacement",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "delete-ignores-port",
+      "failures": 4,
+      "expected_case": "stale-delete-endpoint-component-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "delete-ignores-node",
+      "failures": 4,
+      "expected_case": "stale-delete-endpoint-component-1",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "stop-does-not-close-admission",
+      "failures": 1,
+      "expected_case": "cancel-wait-action-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "cancel-under-worker-mutex",
+      "failures": 80,
+      "expected_case": "service-before-UP",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "QMI-producer-ignores-child-gate",
+      "failures": 9,
+      "expected_case": "child-rebind-QMI-arrival-during-probe",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "QMI-producer-ignores-last-DOWN",
+      "failures": 3,
+      "expected_case": "new-service-after-DOWN-stays-idle",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "new-service-does-not-notify-waiters",
+      "failures": 1,
+      "expected_case": "service-arrives-during-wait",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "stop-does-not-notify-waiters",
+      "failures": 1,
+      "expected_case": "cancel-wait-action-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "DOWN-does-not-notify-waiters",
+      "failures": 1,
+      "expected_case": "cancel-wait-action-1",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "parent-cancel-leaves-QMI-producer-open",
+      "failures": 11,
+      "expected_case": "QMI-arrival-during-parent-cancel",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "QMI-producer-ignores-parent",
+      "failures": 6,
+      "expected_case": "partial-parent-QMI-after-UP",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "UP-producer-ignores-parent",
+      "failures": 21,
+      "expected_case": "partial-parent-probe-stage-1-last-DOWN-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "child-probe-ignores-parent",
+      "failures": 91,
+      "expected_case": "partial-parent-probe-stage-0-last-DOWN-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "worker-pre-wait-ignores-parent",
+      "failures": 1,
+      "expected_case": "closed-parent-forced-queued-worker",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "worker-post-wait-ignores-parent",
+      "failures": 3,
+      "expected_case": "parent-close-after-positive-wait",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "wait-ignores-parent-closure",
+      "failures": 1,
+      "expected_case": "cancel-wait-action-2",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "parent-stop-leaves-parent-open",
+      "failures": 11,
+      "expected_case": "parent-cancel-child-bind-producer-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "parent-stop-closes-only-child",
+      "failures": 4,
+      "expected_case": "parent-cancel-child-bind-producer-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "parent-stop-does-not-notify",
+      "failures": 3,
+      "expected_case": "cancel-wait-action-2",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "parent-stop-cancels-under-SSR",
+      "failures": 82,
+      "expected_case": "service-before-UP",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "parent-ready-published-before-child-registration",
+      "failures": 102,
+      "expected_case": "partial-parent-probe-stage-0-last-DOWN-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "parent-success-does-not-replay-UP",
+      "failures": 35,
+      "expected_case": "partial-parent-probe-stage-0-last-DOWN-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "DOWN-ignores-parent-closure",
+      "failures": 1,
+      "expected_case": "DOWN-during-parent-provider-release",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "missing-initial-fallback",
+      "failures": 35,
+      "expected_case": "initial-ready-without-UP",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "fallback-overwrites-explicit-DOWN",
+      "failures": 7,
+      "expected_case": "initial-DOWN-only-before-ready-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "fallback-not-preserved-until-child-bind",
+      "failures": 36,
+      "expected_case": "initial-child-bind-late",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "fallback-queued-before-parent-ready",
+      "failures": 186,
+      "expected_case": "initial-fallback-respects-parent-readiness",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "invalid_sync_cancellation_logged_without_performing_deadlock": true,
+  "all_services_synthetic": true,
+  "hardware_audio_firmware_or_phone_execution": false
+}

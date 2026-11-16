@@ -1,0 +1,10 @@
+UNSENT — human review and DCO certification pending
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: Bring the NGD up if the DSP is already running
+
+Restore Timothy Schmidt and Claude Opus 5.5's already-running-DSP startup fix
+through the current admission model. Initialize the request before callbacks;
+publish startup only after parent and child readiness, with explicit DOWN
+retaining priority. Late child/QMI arrival replays the pending request.
+The attached host-only lifecycle replay and native build evidence establish
+this software admission scope. Hardware stop and full recovery remain open;
+there has been no physical or audio trial.

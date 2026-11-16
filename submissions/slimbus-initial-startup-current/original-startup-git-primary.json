@@ -1,0 +1,35 @@
+{
+  "sha": "fe063af17b097af73c8ca55609ca9ee3648ac1dc",
+  "node_id": "C_kwDOVbeem9oAKGZlMDYzYWYxN2IwOTdhZjczYzhjYTU1NjA5Y2E5ZWUzNjQ4YWMxZGM",
+  "url": "https://api.github.com/repos/timschmidt/fx0-linux/git/commits/fe063af17b097af73c8ca55609ca9ee3648ac1dc",
+  "html_url": "https://github.com/timschmidt/fx0-linux/commit/fe063af17b097af73c8ca55609ca9ee3648ac1dc",
+  "author": {
+    "name": "Timothy Schmidt",
+    "email": "timschmidt@gmail.com",
+    "date": "2026-10-31T23:21:46Z"
+  },
+  "committer": {
+    "name": "Timothy Schmidt",
+    "email": "timschmidt@gmail.com",
+    "date": "2026-10-31T23:28:15Z"
+  },
+  "tree": {
+    "sha": "79a45e802fd9f1ef6ee1d25b90d96571235a1b93",
+    "url": "https://api.github.com/repos/timschmidt/fx0-linux/git/trees/79a45e802fd9f1ef6ee1d25b90d96571235a1b93"
+  },
+  "message": "slimbus: qcom-ngd-ctrl: Bring the NGD up if the DSP is already running\n\nThe controller starts the NGD only from a DSP power-up notification (SSR\nor PDR). When the DSP boots before the driver loads, as the MSM8226 ADSP\ndoes, no notification follows and the bus never comes up; the driver then\nneeds a DSP restart. Schedule the bring-up once at probe as well. The\nworker waits for the QMI SLIMbus service, so on a stopped DSP it times out\nand the later power-up notification brings the NGD up as before.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "parents": [
+    {
+      "sha": "8829fb14e773b88b15497ede748bae090d66dc5e",
+      "url": "https://api.github.com/repos/timschmidt/fx0-linux/git/commits/8829fb14e773b88b15497ede748bae090d66dc5e",
+      "html_url": "https://github.com/timschmidt/fx0-linux/commit/8829fb14e773b88b15497ede748bae090d66dc5e"
+    }
+  ],
+  "verification": {
+    "verified": false,
+    "reason": "unsigned",
+    "signature": null,
+    "payload": null,
+    "verified_at": null
+  }
+}
