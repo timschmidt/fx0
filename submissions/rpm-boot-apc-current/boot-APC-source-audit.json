@@ -1,0 +1,74 @@
+{
+  "runtime_head": "ebd3064be2f15da7d5143b9cc46560efb9073f53",
+  "source_files": {
+    "drivers/pmdomain/qcom/cpr.c": "76e4287f16444f4e591fa1fcb6d75bb0d918c6f364f27b3ca2f1b8ff37510b08",
+    "drivers/pmdomain/qcom/cpr-voltage.h": "8ae79b9419e5096ec30ade91358739d75a224c3e25078dc8d09689bbe43028a8",
+    "drivers/regulator/core.c": "ca092fec3b3a47ede7add92ed28362b8d75b4a8866e74bc3415e962ad14284b1",
+    "drivers/regulator/qcom_spmi-regulator.c": "3d449114af46b2e7160bae6cf1bcef5266b23d8e252e97132833f1e72882616c",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "3f8af54ac46d06965779f46a0b83a52b8e3e1bf13edc3aa17d166cc5c3d6baa2",
+    "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi": "f3167d36ca540ffdd6a67211a37e5b595a731c856f763b07a8cfdb5b18243cba"
+  },
+  "unchanged_relevant_functions": {
+    "machine_constraints_voltage": "ed8aabfb1af2c12389a4aefc1ba0e28638dbad6494ea9e3fd9f741a6bf20af58",
+    "regulator_get_voltage": "2c72ab5b37a95292fd44bb81a95327f84855bd9e83b914ea21ec3f85048480b0",
+    "regulator_set_voltage": "77da90f3fe5a55c275d495979383fecc8d4b647fe768aab50ba4eac3ae2b8fd7",
+    "regulator_late_cleanup": "a95ed624dd4f0988ca8592b9d7f483b00a3533586e74793599e883856cb4a0a4",
+    "cpr_msm8926_bootstrap_clock": "028a7c97e04f118c9dac8b755ea3c769293767abb1763cada5a48715980e9206",
+    "spmi_regulator_saw_fixed_get_voltage": "ecac0e2606813799c48b1947ee34e95d2d9ea225e039d9c8e299b49debf40689"
+  },
+  "previous_boot_gap": "Before CPU-domain attachment, Pronto normal L3 requests and core registration voltage clamps can run with an empty AO vote while APC remains live",
+  "actual_APC_observation": "Read the existing fixed-range PM8226 SAW/SPMI provider through regulator_get_voltage during RPM provider probe, outside any voter callback; no per-unit fuse is read by this change",
+  "locking": {
+    "regulator_get_voltage_and_set_voltage_take_dependent_ww_locks": true,
+    "dynamic_cross_provider_read_from_set_voltage_rejected_due_to_nested_dependency_locks": true,
+    "boot_probe_is_the_only_cross_provider_APC_read": true,
+    "no_APC_handle_or_peer_rdev_dereference_in_vote_callbacks": true
+  },
+  "dependency_graph": [
+    "guarded RPM regulator bank -> PM8226 S2/APC regulator provider -> raw PMIC and L2 SAW owner",
+    "CPR provider -> APC and RPM L3-AO regulators",
+    "CPU cpufreq/domain attachment -> CPR provider"
+  ],
+  "no_reverse_MX_supply_dependency_in_existing_APC_DTS": true,
+  "handoff_contract": {
+    "APC_read_and_AO_bounds_validated_before_any_registration": true,
+    "invalid_unreadable_or_above_ceiling_APC_fails_before_publication_or_RPC": true,
+    "temporary_ACTIVE_enable_and_AO_maximum_hold": true,
+    "SLEEP_unaffected": true,
+    "core_automatic_AO_boot_and_always_on_enables_rejected_when_guarded": true,
+    "threshold_ceil_boot_APC_to_12500_uV": true,
+    "guard_removed_only_after_enabled_covering_AO_vote_ACK": true,
+    "all_error_paths_keep_guard": true,
+    "existing_real_CPU_attach_rechecks_current_APC_before_calibrated_request_and_enable": true,
+    "CPR_retains_MX_reference_while_APC_can_remain_live": true,
+    "temporary_maximum_released_for_real_CPU_voltage_scaling": true
+  },
+  "host_evidence": {
+    "cases": 317,
+    "checks": 57600,
+    "before_checks": 34699,
+    "before_failures": 2180,
+    "after_failures": 0,
+    "boot_controls": 11,
+    "base_pair_cases": 3726,
+    "base_pair_checks": 202962,
+    "legacy_cases": 6310,
+    "legacy_checks": 77934,
+    "base_controls": 30,
+    "actual_boot_functions": 28,
+    "actual_ops_tables": 5,
+    "actual_catalogues": 1
+  },
+  "scope_limits": [
+    "Only the experimental CPU target opts in; ordinary board remains unchanged",
+    "Runtime services, voltage reads, firmware state, clocks, OF, devres, locks and RPC completions are logical in the host model",
+    "Source ordering proof does not establish firmware/bootloader electrical behavior or kernel concurrency",
+    "Boot APC outside the AO-supported ceiling fails closed; actual boot compatibility remains physically unqualified",
+    "Full prepare/abort/reentry and CPU/L2/SPM/SCM/RPM/MPM entry/wake topology remain incomplete",
+    "CPR deep-suspend guard remains; no device, firmware, audio or radio execution occurred",
+    "All seven original requirements, original r2 display fault resolution, full maintained-LTS packages/update/recovery and physical acceptance remain"
+  ],
+  "security_classification": "Functional platform power-sequencing defect; no demonstrated security-boundary violation",
+  "phone_access": false,
+  "published": false
+}

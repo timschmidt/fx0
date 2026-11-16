@@ -1,0 +1,38 @@
+From ebd3064be2f15da7d5143b9cc46560efb9073f53 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 16:28:56 -0500
+Subject: [PATCH] ARM: dts: qcom: Retain Madai boot MX until the CPR handoff
+
+The experimental target's separate MX voters still allow an early normal
+Pronto request before CPU-domain attachment retains its calibrated floor.
+Name the live APC supply for the RPM provider's boot-only validation and
+temporary ACTIVE hold. The paired provider releases the hold only after
+an acknowledged enabled AO request covers inherited APC. The existing CPU
+attach callback rechecks actual APC before that handoff.
+
+This depends on the boot-APC binding/provider and complete CPR bootstrap
+and reply-correlated RPM prerequisites. The ordinary board is unchanged.
+This adds no sleep policy, leaves the CPR deep-suspend guard in place and
+does not qualify firmware, hardware or full global suspend/abort/reentry.
+
+Fixes: 49cb297d9ca6 ("ARM: dts: qcom: Give Madai CPR a separate active-only MX voter")
+
+Codex generated this change and its host qualification. Human review and
+DCO certification remain pending. Nothing has been submitted.
+---
+ arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+index 6bb277582..96fc912b7 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+@@ -224,6 +224,8 @@ cpr: power-controller@f9018000 {
+ 
+ &rpm_requests {
+ 	regulators {
++		qcom,boot-apc-supply = <&pm8226_apc>;
++
+ 		pm8226_l3_ao: l3-ao {
+ 			regulator-min-microvolt = <750000>;
+ 			regulator-max-microvolt = <1337500>;

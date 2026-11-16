@@ -1,0 +1,66 @@
+From 6c9b8b686ea5080fae3b3fda3e40c99fb02db115 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 16:27:32 -0500
+Subject: [PATCH] regulator: dt-bindings: qcom: Describe an APC-aware PM8226
+ boot hold
+
+The live CPU APC rail can outlast bootloader handoff while Pronto requests
+its own lower MX floor before CPR attaches. Describe an optional boot APC
+supply for the paired PM8226 L3 voters so the provider can validate the
+inherited rail and establish a temporary maximum MX vote before either
+voter is registered.
+
+The CPU consumer hands off with an enabled AO request covering the rounded
+boot APC voltage and must retain that request while APC can remain live.
+The temporary vote contributes only to ACTIVE. Require explicit AO voltage
+bounds and exclude automatic boot-on/always-on enables from this handoff.
+Existing unguarded voters retain their previous meaning.
+
+Codex generated this change and its host qualification. Human review and
+DCO certification remain pending. No maintainer contact or publication.
+---
+ .../regulator/qcom,smd-rpm-regulator.yaml     | 28 +++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+index ed964ede5de9..5c34d5942489 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+@@ -132,4 +132,15 @@ properties:
+     unevaluatedProperties: false
+ 
++  qcom,boot-apc-supply:
++    description:
++      Live CPU APC supply whose boot voltage must be covered before the paired
++      PM8226 L3 voters can change the active MX request. Before registering
++      either voter, read and validate APC against l3-ao's voltage range. Hold
++      the l3-ao maximum as a temporary active enable and voltage request until
++      an enabled l3-ao request covers the rounded-up boot APC voltage. The CPU
++      consumer must establish and retain that covering request before changing
++      APC. This boot hold does not contribute to the sleep set. l3-ao must not
++      be enabled by boot-on or always-on constraints before consumer handoff.
++
+ patternProperties:
+   ".*-supply$":
+@@ -154,4 +165,21 @@ allOf:
+       properties:
+         l3-ao: false
++  - if:
++      required:
++        - qcom,boot-apc-supply
++    then:
++      required:
++        - l3
++        - l3-ao
++      properties:
++        compatible:
++          const: qcom,rpm-pm8226-regulators
++        l3-ao:
++          required:
++            - regulator-min-microvolt
++            - regulator-max-microvolt
++          properties:
++            regulator-boot-on: false
++            regulator-always-on: false
+ 
+ required:

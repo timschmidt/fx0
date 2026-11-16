@@ -1,0 +1,10 @@
+UNSENT — human review and DCO pending
+Subject: [RFC PATCH 0/2] regulator: qcom_smd: cover live APC during MX boot handoff
+
+Protect inherited live APC before registration or Pronto can lower the normal
+MX vote. Resolve/read APC only during provider probe, hold an ACTIVE maximum
+and enable, and hand off after a covering AO request is acknowledged. Preserve
+the hold on errors and permit dynamic voltage scaling after handoff. This
+depends on paired PM8226 L3 voters; the separate experimental board change also
+needs the complete CPR and correlated RPM prerequisites. Full suspend, hardware
+and firmware remain unqualified. See README and pinned offline replay.
