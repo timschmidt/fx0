@@ -1,0 +1,73 @@
+{
+  "started_UTC": "2026-11-16T23:03:40.361966+00:00",
+  "ARCH": "arm64",
+  "PREEMPT_RT": true,
+  "native": true,
+  "COMPILE_TEST": false,
+  "LLVM": "-21",
+  "W": 1,
+  "strict_function_pointer_diagnostics": true,
+  "source_head": "6aac62570471d483c08ca7d693ca283b3ffeb096",
+  "source_status": " M drivers/soc/qcom/spm-msm8226-l2.h\n M drivers/soc/qcom/spm.c\n M include/soc/qcom/spm.h\n",
+  "source_files": {
+    "drivers/soc/qcom/spm.c": "390e68429543ec84053ddcdcbee5d29464bdaddae7ccb66790224a42ab59459e",
+    "drivers/soc/qcom/smd-rpm.c": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+    "drivers/base/regmap/regmap.c": "b2871149ba67331effc7c1c9a44c3a7e84922b305954af6b9ecc0bcb640bf593",
+    "drivers/base/regmap/regmap-mmio.c": "101c7487aa11dff40528e6e3b990e260c9f6013c501b8280fd50c09e075f1bd7",
+    "drivers/mfd/syscon.c": "2d93e488b42bd7ed6ee2f6d0ec3fabbe201f8f98caae2d226564b64870164aec",
+    "drivers/rpmsg/rpmsg_core.c": "58b145327037a4c168c1453d09c798ee25288d9b06dff52fb24a4efa4edd92e4",
+    "drivers/rpmsg/qcom_smd.c": "13ffe4334b7a9be3f700eb100133aca7e7748e03a6671564b1f9124416ad0d90",
+    "drivers/firmware/qcom/qcom_scm.c": "8c421fd091e945e63f387bcfb08e6cd95a1b92cf892f4ad943b7d2cb97915e7e",
+    "drivers/soc/qcom/spm-msm8226-l2.h": "171e0f31ca6544c406879986787c084be73478ed55f581aae6b2e6254a91a242",
+    "drivers/soc/qcom/Kconfig": "3c9401d5b000b1bab7e2d8e0bfbd2136dffda744a1948610a42f2c79d256a16a",
+    "include/soc/qcom/spm.h": "deec829af9199df9fc00351621fb015a28c63af2a81cca549162010c090c26a4"
+  },
+  "stages": [
+    {
+      "stage": "options",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "ee3cd64ccf7caff37a24f10dd87325432fe2fb6c10dcbe3936c74b4ba2adb8fd"
+    },
+    {
+      "stage": "prepare",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "985140d761eaf6204ff24ded74bd6b84d8860bee3dd1568301c445fdeca1ceeb"
+    },
+    {
+      "stage": "components",
+      "returncode": 0,
+      "diagnostics": [
+        "Warning: <workspace>/worktrees/linux-qcom-spm-rpm-current-01/drivers/rpmsg/qcom_smd.c:228 Excess struct member 'cb' description in 'qcom_smd_channel'",
+        "Warning: <workspace>/worktrees/linux-qcom-spm-rpm-current-01/drivers/rpmsg/qcom_smd.c:228 Excess struct member 'cb' description in 'qcom_smd_channel'"
+      ],
+      "log_SHA256": "3d1b035e8e204e45e468de64a07437e2ec131cfdd1a1476092845a3247fc0bbc"
+    }
+  ],
+  "phone_access": false,
+  "state": "terminal success",
+  "config_SHA256": "8dc147c7be2b204d5ff7afb6ddc2f6144f00e43d45decc27c411e6fd788b6583",
+  "passed": true,
+  "objects": {
+    "drivers/soc/qcom/spm.o": "e3cf9d5dbaf38b761b704a6b35cf0dd26ec0435796dd47931acfae9f18f5026d",
+    "drivers/soc/qcom/smd-rpm.o": "4c6438705641ad4f24dc9672de6e8a1816ea5d1478159f78c5f752beb05037f5",
+    "drivers/base/regmap/regmap.o": "19433c776d1885b1878f847bd0200f523e1586f46557042911eb146b22839d8c",
+    "drivers/base/regmap/regmap-mmio.o": "c4216431268bfe3fb021aa74b142cb0364c025a4cbb007e59c693c2f3afc1866",
+    "drivers/mfd/syscon.o": "aebc1e6a0b8f95ecffcc41cc223ba72bafb2b9522880828899db49380dc0613d",
+    "drivers/rpmsg/rpmsg_core.o": "0f6e93b7fca662f214c82d16ba2a300da31a39ceac1f1c33e686c0b939446754",
+    "drivers/rpmsg/qcom_smd.o": "9a24b95ec7f148972322c2e3f50879a3bbaa526de61d39ec9e6e640b5b34176a",
+    "drivers/firmware/qcom/qcom_scm.o": "64188c1ffaa3a7fecf09e96f1d0c014a071822495e3c489a0132a36511b21e85"
+  },
+  "inherited_RPMsg_doc_warnings": 2,
+  "new_diagnostics": 0,
+  "diagnostics_suppressed": false,
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-16T23:03:54.013277+00:00"
+}

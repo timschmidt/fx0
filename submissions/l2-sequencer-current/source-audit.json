@@ -1,0 +1,28 @@
+{
+  "runtime_head": "a2c8886ef786995ce4e6e55836e7198272e9c2ad",
+  "source_files": {
+    "kernel/smp.c": "4a466335897438f79bfa97480063aeba127b31f742a8405568b9ec721d6f6490",
+    "drivers/regulator/qcom_spmi-regulator.c": "3d449114af46b2e7160bae6cf1bcef5266b23d8e252e97132833f1e72882616c",
+    "drivers/regulator/qcom-spmi-saw-fts2.h": "697f55bcbdefea453c790aa647a86b3028a35dbad241941dce44dfcdb1005d86",
+    "drivers/cpuidle/cpuidle-qcom-spm.c": "598937a870b165ebb9f6e629d434c24b48acef771c916e9032625038d3976e5b",
+    "kernel/power/suspend.c": "ab9b70861e1983e2891f0cdc776cc3aa851ff5d659a5dc9874347f9544bd41a7",
+    "drivers/pmdomain/qcom/cpr.c": "5f1440e94a343362f65f59f18ec61da647b41ce1a4dbabd4183cd80c4df355b6"
+  },
+  "vendor_reference": "src/vendor-linux/arch/arm/boot/dts/msm8226-v2-pm.dtsi; spm-v2.c (32 sequence words); spm_devices.c",
+  "APC_IPI_serialization": "APC setter runs synchronously on CPU0; local call executes with local IRQs saved, remote call in IPI context. The new L2 API requires CPU0 IRQs off and no online secondary for arming. No real kernel concurrency is qualified.",
+  "initialization": "All 21 sequence words loaded/read back before permanent syscon publication, with SPM_CTL zero. Master CFG/DLY/DATA setup remains unchanged; no VCTL, reset, AVS or mode-enable command is issued. Corrupt live master setup remains unsupported rather than repaired.",
+  "mode_error_contract": "Entry errors leave a verified disabled sequencer; disable is retried twice. Unreadable persistent disable and entry recovery are explicitly fatal. Invalid context performs no MMIO and does not imply ownership of existing state.",
+  "full_entry_remaining": [
+    "CPU SPM bounded programming and verified disarm are still required; existing void CPU API remains unchanged.",
+    "Global prepare/abort must quiesce CPR/CPUfreq and verify APC, MX/SO and clocks before any lower SLEEP request.",
+    "L2 cache clean, SCM L2_OFF and warm-resume/cache state handoff are not implemented by the backend.",
+    "RPM freeze/drain, IRQ-aware SLEEP context ownership and MPM wake topology remain incomplete.",
+    "The new API has no system-collapse caller; the CPR deep-suspend guard remains.",
+    "Firmware behavior, electrical effects, original r2 display/IOMMU fault and all physical acceptance remain unqualified."
+  ],
+  "SAWv2_voltage_protocol": "Do not treat boot PMIC_DATA0 low byte as a CPU wake voltage. Existing SAWv2 APC command updates VCTL and retains data slots, as the vendor v2 setter does.",
+  "all_seven_original_requirements_preserved": true,
+  "phone_access": false,
+  "published": false,
+  "maintainer_contact": false
+}

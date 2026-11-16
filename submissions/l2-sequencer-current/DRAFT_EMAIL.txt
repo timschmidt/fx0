@@ -1,0 +1,9 @@
+UNSENT — human review and DCO pending
+Subject: [RFC PATCH] soc: qcom: spm: add verified MSM8226 L2 programs
+
+Add the complete vendor L2 RET/GDHS/PC programs outside the CPU's smaller
+sequence table, verify loading before publication, and provide an explicit
+CPU0/IRQ-off fallible L2 mode API with verified disable on entry failure.
+Include source-bound fault models, native/build/module evidence and offline
+replay. The full CPU/APC/cache/SCM/RPM/MPM system entry path and physical
+acceptance remain incomplete; the CPR deep-suspend guard is retained.
