@@ -1,0 +1,28 @@
+{
+  "cases": 1022,
+  "checks": 41774,
+  "failures": 2061,
+  "actual_function_bindings": {
+    "qcom_slim_ngd_tx_msg_get": "c05f0b4edd7ed444b379df47c0f6fab72d5982ef1f00d1ec7575e1470d930e15",
+    "qcom_slim_ngd_tx_msg_put": "95cecc9befc6aedfa1362d0e63eb0aa9ae93faf42abf8b8fb9c15dd5c2d6ab5e",
+    "qcom_slim_ngd_tx_msg_dma_cb": "fe1c0341898db3b6ff2fc801d2d7a925b6d299daaecf29d742d7a43e0bd6808b",
+    "qcom_slim_ngd_tx_msg_post": "d1c5bbaef14efb40fdd80be35bbcdfdd02c9d2b7ce3b41ce0511070999050fc0",
+    "qcom_slim_ngd_xfer_msg": "ac7f390c559f8463826920ad6a09bd8544dffc85f9345c3c91180e7c68456e60",
+    "slim_tid_txn": "05f709a128cd8cb2159ce60198741c1ab4a37666b696fa330f2a484706237f0e",
+    "slim_ec_txn": "cd51589b8fe8e0306465c54c38323e2d17d37825cf930220a880a283702bba39",
+    "slim_alloc_txn_tid": "b9210b16953ae47f30a181d4e5521940b60a64e70adaee40b3b3752b86e1a85e",
+    "slim_free_txn_tid": "b4526adc13ae231809a3a095ea1acc144aada3e8a47dbbbdecfaf757134b6f68",
+    "slim_msg_response": "f1b5738897b063d8c5950b786097430f2bb1019ac8f2d50ea4f837d78b8afe6c",
+    "slim_do_transfer": "ed603964c823ade0f7549ace0a985769e874f4cc410c51adb2109287d29dd0c3",
+    "qcom_slim_ngd_xfer_msg_sync": "2df4e7711aec063c9827abc3e7840523f56ffd57aec7b0864b72c03947df188e"
+  },
+  "actual_callbacks_byte_exact": true,
+  "generated_model_SHA256": "bf6b12ee27b15c25c56bace226afb72147310e03bf5ddecf73b80944892a00fb",
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "IDR_PM_completion_DMA_and_response_services_synthetic": true,
+  "all_transaction_storage_retained_until_logical_lifetime_audit": true,
+  "completion_tokens_never_dereferenced": true,
+  "exported_async_stack_transaction_and_late_wire_TID_reuse_qualified": false,
+  "full_NGD_teardown_qualified": false,
+  "hardware_audio_phone_or_network_execution": false
+}

@@ -1,0 +1,121 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "response-accepts-unprepared-transaction",
+      "failures": 12,
+      "expected_case": "unprepared-early-response-kind-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "allocation-retains-old-ready-state",
+      "failures": 2,
+      "expected_case": "reused-prepared-state-is-cleared",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "cancellation-ignores-TID-identity",
+      "failures": 258,
+      "expected_case": "identity-preserving-retirement",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "response-copy-outside-transaction-lock",
+      "failures": 8,
+      "expected_case": "response-copy-versus-core-timeout",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "response-completion-outside-transaction-lock",
+      "failures": 192,
+      "expected_case": "kind-0-reply-1-fault-0-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "response-size-not-checked",
+      "failures": 30,
+      "expected_case": "kind-0-reply-7-fault-0-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "response-has-no-own-PM-reference",
+      "failures": 588,
+      "expected_case": "kind-0-reply-1-fault-0-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "duplicate-preparation-acquires-another-pin",
+      "failures": 3,
+      "expected_case": "duplicate-preparation-does-not-add-PM-pin",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "cancellation-drops-another-winners-pin",
+      "failures": 252,
+      "expected_case": "kind-0-reply-5-fault-0-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "response-does-not-release-its-pin",
+      "failures": 192,
+      "expected_case": "kind-0-reply-1-fault-0-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "cancellation-does-not-release-its-pin",
+      "failures": 362,
+      "expected_case": "kind-0-reply-0-fault-0-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "core-caller-vote-not-released",
+      "failures": 863,
+      "expected_case": "kind-0-reply-1-fault-0-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "NGD-caller-vote-not-released",
+      "failures": 131,
+      "expected_case": "kind-5-reply-3-fault-0-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "driver-ACK-TID-survives-local-return",
+      "failures": 414,
+      "expected_case": "kind-2-reply-0-fault-1-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "submission-errors-ignored",
+      "failures": 414,
+      "expected_case": "submit-error--12-kind-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "submission-error-collapsed-to-EIO",
+      "failures": 9,
+      "expected_case": "submit-error--12-kind-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "transaction_storage_kept_physically_live_and_invalid_copy_or_completion_logged": true,
+  "all_IDR_PM_completion_DMA_and_response_services_synthetic": true,
+  "hardware_audio_phone_or_network_execution": false
+}

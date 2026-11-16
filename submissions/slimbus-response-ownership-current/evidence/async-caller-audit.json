@@ -1,0 +1,17 @@
+{
+  "source_head": "4a79c6d2f879b92f86b643f4b14eacab3df457fe",
+  "references": [
+    {
+      "symbol": "slim_xfer_msg",
+      "C_source_references": "drivers/slimbus/messaging.c:271: * slim_xfer_msg() - Transfer a value info message on slim device\ndrivers/slimbus/messaging.c:281:int slim_xfer_msg(struct slim_device *sbdev, struct slim_val_inf *msg,\ndrivers/slimbus/messaging.c:320:EXPORT_SYMBOL_GPL(slim_xfer_msg);\ndrivers/slimbus/messaging.c:350:\treturn slim_xfer_msg(sdev, &msg, SLIM_MSG_MC_REQUEST_VALUE);\ndrivers/slimbus/messaging.c:393:\treturn slim_xfer_msg(sdev, &msg, SLIM_MSG_MC_CHANGE_VALUE);\n"
+    },
+    {
+      "symbol": "slim_do_transfer",
+      "C_source_references": "drivers/slimbus/sched.c:92:\tret = slim_do_transfer(ctrl, &txn);\ndrivers/slimbus/sched.c:100:\tret = slim_do_transfer(ctrl, &txn);\ndrivers/slimbus/sched.c:108:\tret = slim_do_transfer(ctrl, &txn);\ndrivers/slimbus/messaging.c:149: * slim_do_transfer() - Process a SLIMbus-messaging transaction\ndrivers/slimbus/messaging.c:161:int slim_do_transfer(struct slim_controller *ctrl, struct slim_msg_txn *txn)\ndrivers/slimbus/messaging.c:225:EXPORT_SYMBOL_GPL(slim_do_transfer);\ndrivers/slimbus/messaging.c:318:\treturn slim_do_transfer(ctrl, txn);\ndrivers/slimbus/stream.c:142:\treturn slim_do_transfer(sdev->ctrl, &txn);\ndrivers/slimbus/stream.c:158:\treturn slim_do_transfer(sdev->ctrl, &txn);\ndrivers/slimbus/stream.c:172:\tret = slim_do_transfer(sdev->ctrl, &txn);\ndrivers/slimbus/stream.c:179:\treturn slim_do_transfer(sdev->ctrl, &txn);\ndrivers/slimbus/stream.c:292:\treturn slim_do_transfer(sdev->ctrl, &txn);\ndrivers/slimbus/stream.c:328:\treturn slim_do_transfer(sdev->ctrl, &txn);\ndrivers/slimbus/stream.c:345:\treturn slim_do_transfer(sdev->ctrl, &txn);\ndrivers/slimbus/stream.c:377:\tret = slim_do_transfer(ctrl, &txn);\ndrivers/slimbus/stream.c:397:\treturn slim_do_transfer(ctrl, &txn);\ndrivers/slimbus/stream.c:425:\tret = slim_do_transfer(ctrl, &txn);\ndrivers/slimbus/stream.c:434:\treturn slim_do_transfer(ctrl, &txn);\n"
+    }
+  ],
+  "only_in_tree_public_read_write_wrappers_found_for_slim_xfer_msg": true,
+  "exported_async_request_stack_transaction_lifetime_remains_unqualified": true,
+  "external_module_callers_not_excluded": true,
+  "API_not_disabled_or_made_synchronous": true
+}

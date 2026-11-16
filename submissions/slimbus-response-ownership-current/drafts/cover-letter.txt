@@ -1,0 +1,18 @@
+Subject: [DRAFT] slimbus: serialize synchronous response retirement and PM
+
+Initialize response pointers before readiness publication. Hold txn_lock through
+response copy, TID retirement and completion; cancellation checks software owner
+identity. Keep the sender's PM reference until return and a separate response
+reference until the winning response/cancellation path. Retire NGD ACK TIDs
+before their local buffers return, and propagate submission errors before issue.
+
+The host response model passes 1,022 cases/41,774 checks after 2,061 pre-change
+failures and rejects sixteen controls. The TX regression passes 1,093/47,497 and
+twelve controls, with 41,147 unchanged packet bytes. Native ARM/ARM64 components
+and the incremental full ARM kernel/459 signed modules pass recorded checks.
+No real IDR/PM framework, DMA, audio, phone or network is executed.
+
+Exported asynchronous stack-transaction lifetime, late wire replies after TID
+reuse, full RX/master/external transfer quiescence and hardware stop ordering
+remain open. Codex generated the fix and evidence; human review and DCO remain
+pending. This is an unsent draft and authorizes no publication or contact.
