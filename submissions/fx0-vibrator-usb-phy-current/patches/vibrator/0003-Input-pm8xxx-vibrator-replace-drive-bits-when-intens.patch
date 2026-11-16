@@ -1,0 +1,37 @@
+From 3f472064a81440753ab736c9e3c96af7e0d79523 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Wed, 11 Nov 2026 03:38:40 -0500
+Subject: [PATCH 3/4] Input: pm8xxx-vibrator - replace drive bits when
+ intensity changes
+
+The cached drive value retains the previous field. ORing in a new
+level leaves old bits set when intensity decreases while enabled;
+changing code 24 to 17 can instead program 25.
+
+Clear the previous field before inserting the new level, preserving
+unrelated bits. Refresh Timothy Schmidt's existing Fx0 fix onto the
+verified current input-next source.
+
+Codex (GPT-6) assisted the port and expanded actual-source sanitizer
+model. With the complete series, the ascending/descending speed checks
+pass; reverting field replacement fails 15232 checks. Native ARM/ARM64
+vibrator and FF-helper objects compile with W=1 and no diagnostics.
+Core regmap/work services are modeled; full FF IOCTL behavior and
+physical acceptance of this current source remain unqualified.
+
+Fixes: 11205bb63e5c ("Input: add support for pm8xxx based vibrator driver")
+
+diff --git a/drivers/input/misc/pm8xxx-vibrator.c b/drivers/input/misc/pm8xxx-vibrator.c
+index e1d69089d4bd..d4fdb5652584 100644
+--- a/drivers/input/misc/pm8xxx-vibrator.c
++++ b/drivers/input/misc/pm8xxx-vibrator.c
+@@ -107,7 +107,8 @@ static int pm8xxx_vib_set(struct pm8xxx_vib *vib, bool on)
+ 		vib->level /= VIB_PER_STEP_mV(vib);
+ 
+ 	if (on)
+-		val |= (vib->level << regs->drv_shift) & regs->drv_mask;
++		val = (val & ~regs->drv_mask) |
++		      ((vib->level << regs->drv_shift) & regs->drv_mask);
+ 	else
+ 		val &= ~regs->drv_mask;
+ 

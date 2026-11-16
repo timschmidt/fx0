@@ -1,0 +1,33 @@
+{
+  "sha": "48c0687a322d54ac7e7a685c0b6db78d78f593af",
+  "message": "Input: pm8xxx-vibrator - correct VIB_MAX_LEVELS calculation\n\nThe output voltage is inclusive hence the max level calculation is\noff-by-one-step. Correct it.\n\niWhile we are at it also add a define for the step size instead of\nusing the magic value.\n\nFixes: 11205bb63e5c (\"Input: add support for pm8xxx based vibrator driver\")\nSigned-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>\nReviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>\nLink: https://lore.kernel.org/r/20240412-pm8xxx-vibrator-new-design-v10-1-0ec0ad133866@quicinc.com\nSigned-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>",
+  "url": "https://api.github.com/repos/torvalds/linux/commits/48c0687a322d54ac7e7a685c0b6db78d78f593af",
+  "html_url": "https://github.com/torvalds/linux/commit/48c0687a322d54ac7e7a685c0b6db78d78f593af",
+  "diff": "@@ -13,7 +13,8 @@\n \n #define VIB_MAX_LEVEL_mV\t(3100)\n #define VIB_MIN_LEVEL_mV\t(1200)\n-#define VIB_MAX_LEVELS\t\t(VIB_MAX_LEVEL_mV - VIB_MIN_LEVEL_mV)\n+#define VIB_PER_STEP_mV\t\t(100)\n+#define VIB_MAX_LEVELS\t\t(VIB_MAX_LEVEL_mV - VIB_MIN_LEVEL_mV + VIB_PER_STEP_mV)\n \n #define MAX_FF_SPEED\t\t0xff\n \n@@ -117,10 +118,10 @@ static void pm8xxx_work_handler(struct work_struct *work)\n \t\tvib->active = true;\n \t\tvib->level = ((VIB_MAX_LEVELS * vib->speed) / MAX_FF_SPEED) +\n \t\t\t\t\t\tVIB_MIN_LEVEL_mV;\n-\t\tvib->level /= 100;\n+\t\tvib->level /= VIB_PER_STEP_mV;\n \t} else {\n \t\tvib->active = false;\n-\t\tvib->level = VIB_MIN_LEVEL_mV / 100;\n+\t\tvib->level = VIB_MIN_LEVEL_mV / VIB_PER_STEP_mV;\n \t}\n \n \tpm8xxx_vib_set(vib, vib->active);",
+  "files": [
+    {
+      "filename": "drivers/input/misc/pm8xxx-vibrator.c",
+      "patch": "@@ -13,7 +13,8 @@\n \n #define VIB_MAX_LEVEL_mV\t(3100)\n #define VIB_MIN_LEVEL_mV\t(1200)\n-#define VIB_MAX_LEVELS\t\t(VIB_MAX_LEVEL_mV - VIB_MIN_LEVEL_mV)\n+#define VIB_PER_STEP_mV\t\t(100)\n+#define VIB_MAX_LEVELS\t\t(VIB_MAX_LEVEL_mV - VIB_MIN_LEVEL_mV + VIB_PER_STEP_mV)\n \n #define MAX_FF_SPEED\t\t0xff\n \n@@ -117,10 +118,10 @@ static void pm8xxx_work_handler(struct work_struct *work)\n \t\tvib->active = true;\n \t\tvib->level = ((VIB_MAX_LEVELS * vib->speed) / MAX_FF_SPEED) +\n \t\t\t\t\t\tVIB_MIN_LEVEL_mV;\n-\t\tvib->level /= 100;\n+\t\tvib->level /= VIB_PER_STEP_mV;\n \t} else {\n \t\tvib->active = false;\n-\t\tvib->level = VIB_MIN_LEVEL_mV / 100;\n+\t\tvib->level = VIB_MIN_LEVEL_mV / VIB_PER_STEP_mV;\n \t}\n \n \tpm8xxx_vib_set(vib, vib->active);"
+    }
+  ],
+  "repository_full_name": "torvalds/linux",
+  "comments": null,
+  "author": {
+    "login": "Fenglin Wu",
+    "name": "Fenglin Wu",
+    "email": null,
+    "avatar_url": null,
+    "id": null
+  },
+  "committer": {
+    "login": "dtor",
+    "name": null,
+    "email": null,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1047950?v=4",
+    "id": 1047950
+  },
+  "created_at": "2024-04-15T23:21:45Z",
+  "git_author_email": null,
+  "display_url": "https://github.com/torvalds/linux/commit/48c0687a322d54ac7e7a685c0b6db78d78f593af",
+  "display_title": "Input: pm8xxx-vibrator - correct VIB_MAX_LEVELS calculation"
+}

@@ -1,0 +1,209 @@
+{
+  "profiles": [
+    {
+      "label": "vibrator-arm-02",
+      "arch": "arm",
+      "native": true,
+      "COMPILE_TEST": false,
+      "source_head": "c00dff8f76eebc4e502bfd83d6b47b5172d952c7",
+      "source_tree": "7b18cb1b077c0b3e26153c40e10f157c80a0a645",
+      "source_files": {
+        "drivers/input/misc/pm8xxx-vibrator.c": "060d85b9047cc643863a23ca587739044452c746bdc1ed09cd191fc69a79165c",
+        "drivers/phy/qualcomm/phy-qcom-usb-hs.c": "ac27f1e86d8bb60d88bad7445971050a9c251726751f96394ce1561d47ea949a"
+      },
+      "config_SHA256": "fe12003b3b203a2503b7d829a30ff4e15d1b981d28800c69ee6964b9c159a8ef",
+      "objects": {
+        "drivers/input/misc/pm8xxx-vibrator.o": "afdaea3000a051319428983ff3e10c8936ea627eea996f4100f4a82e8a296d70",
+        "drivers/input/ff-memless.o": "c2f7c0b3c99d6ead461afef7d88a42f99128918287bef13eeffbd110c0b98b3b"
+      },
+      "diagnostics": [],
+      "FF_helper": "builtin",
+      "command": [
+        "make",
+        "O=<absolute-output>",
+        "ARCH=arm",
+        "LLVM=-21",
+        "W=1",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "--jobserver-style=pipe",
+        "-j4",
+        "modules_prepare",
+        "<recorded objects>"
+      ]
+    },
+    {
+      "label": "vibrator-arm64-01",
+      "arch": "arm64",
+      "native": true,
+      "COMPILE_TEST": false,
+      "source_head": "c00dff8f76eebc4e502bfd83d6b47b5172d952c7",
+      "source_tree": "7b18cb1b077c0b3e26153c40e10f157c80a0a645",
+      "source_files": {
+        "drivers/input/misc/pm8xxx-vibrator.c": "060d85b9047cc643863a23ca587739044452c746bdc1ed09cd191fc69a79165c",
+        "drivers/phy/qualcomm/phy-qcom-usb-hs.c": "ac27f1e86d8bb60d88bad7445971050a9c251726751f96394ce1561d47ea949a"
+      },
+      "config_SHA256": "3651bdcdf22f2ba8c39b475f40c52aac4d76b4aa60149dcd3cef0744d90c341c",
+      "objects": {
+        "drivers/input/misc/pm8xxx-vibrator.o": "3fcd9ba795077a79f05cfc443ca91f5ea8d03613b7e32959db14d5e6820be83f",
+        "drivers/input/ff-memless.o": "1e317246431b2c31d4e8a204b65f5df4c58d124c27329906edc2998d67daf551"
+      },
+      "diagnostics": [],
+      "FF_helper": "module",
+      "command": [
+        "make",
+        "O=<absolute-output>",
+        "ARCH=arm64",
+        "LLVM=-21",
+        "W=1",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "--jobserver-style=pipe",
+        "-j4",
+        "modules_prepare",
+        "<recorded objects>"
+      ]
+    },
+    {
+      "label": "usb-arm-02",
+      "arch": "arm",
+      "native": true,
+      "COMPILE_TEST": false,
+      "source_head": "6897842b900bd2cc0a6bd8cbd313f964c1bd5014",
+      "source_tree": "f08187d57cc4c04f33fa4f3267d8f87d45bd3ff0",
+      "source_files": {
+        "drivers/input/misc/pm8xxx-vibrator.c": "821d4a18b3cd754e77d811ee293f72fc6102a2a03bdffce04bb107f7dfe01d4e",
+        "drivers/phy/qualcomm/phy-qcom-usb-hs.c": "9c52cf38ab85e4a1879f54c0401d0da1cf6142998b8f8de38fd34698186c500f"
+      },
+      "config_SHA256": "9a9b4342892c43ff6322f9e7db8aa5ac3b1675fdb28293dbd5b6483e4e5dcc26",
+      "objects": {
+        "drivers/phy/qualcomm/phy-qcom-usb-hs.o": "9174c0f633b79e293b7dac3963135dd0a02d743b3c5a3a17da5774e7eba1295d",
+        "drivers/phy/phy-core.o": "6e31eea0d2fd864837b669e2fe3f2cd5044633ee35fd5b3f45de8ffe175f5cfd",
+        "drivers/usb/common/ulpi.o": "0ce7817f5334414f217472b63ea57075639debfe527ef566db252b0c9c563df7",
+        "drivers/usb/phy/phy-ulpi-viewport.o": "e7ca7435cb5be05ec79115f01bfc02d545cf35b5546cb381f3156e2e9a090368"
+      },
+      "diagnostics": [],
+      "FF_helper": "builtin",
+      "command": [
+        "make",
+        "O=<absolute-output>",
+        "ARCH=arm",
+        "LLVM=-21",
+        "W=1",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "--jobserver-style=pipe",
+        "-j4",
+        "modules_prepare",
+        "<recorded objects>"
+      ]
+    },
+    {
+      "label": "usb-arm64-02",
+      "arch": "arm64",
+      "native": true,
+      "COMPILE_TEST": false,
+      "source_head": "6897842b900bd2cc0a6bd8cbd313f964c1bd5014",
+      "source_tree": "f08187d57cc4c04f33fa4f3267d8f87d45bd3ff0",
+      "source_files": {
+        "drivers/input/misc/pm8xxx-vibrator.c": "821d4a18b3cd754e77d811ee293f72fc6102a2a03bdffce04bb107f7dfe01d4e",
+        "drivers/phy/qualcomm/phy-qcom-usb-hs.c": "9c52cf38ab85e4a1879f54c0401d0da1cf6142998b8f8de38fd34698186c500f"
+      },
+      "config_SHA256": "181742661552db91161255e970148d5022a8815b9d688a6a48c497979fb0e667",
+      "objects": {
+        "drivers/phy/qualcomm/phy-qcom-usb-hs.o": "ef40f1b01dfe0f6ae8ebe064dcbdb2201362ca05e1dfd46a05c4794bb83e6ddb",
+        "drivers/phy/phy-core.o": "58bded254416fc2d42a9e4f23bf5d4fb9a85c841ee9f3052bdd8b0c12bc5a055",
+        "drivers/usb/common/ulpi.o": "4ec3b32171b003f8fa6e9dd64282518ae2f3005cff0a0632f286a135fa90bbec",
+        "drivers/usb/phy/phy-ulpi-viewport.o": "b7374b7a3b261c50296b8bf5470fb78818cf45ad4275b1046246addad17411c1"
+      },
+      "diagnostics": [],
+      "FF_helper": "module",
+      "command": [
+        "make",
+        "O=<absolute-output>",
+        "ARCH=arm64",
+        "LLVM=-21",
+        "W=1",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "--jobserver-style=pipe",
+        "-j4",
+        "modules_prepare",
+        "<recorded objects>"
+      ]
+    },
+    {
+      "label": "integration-arm-01",
+      "arch": "arm",
+      "native": true,
+      "COMPILE_TEST": false,
+      "source_head": "76a08c219e84cc78324ba66c16dfd076e06a2c7b",
+      "source_tree": "ef1545044b38690a499cb185cf26ca91e7b3b3e7",
+      "source_files": {
+        "drivers/input/misc/pm8xxx-vibrator.c": "ea185476d931bc578f5c579c1a1d99d8d78953ade5045eef79db6bea46a2b64a",
+        "drivers/phy/qualcomm/phy-qcom-usb-hs.c": "9c52cf38ab85e4a1879f54c0401d0da1cf6142998b8f8de38fd34698186c500f"
+      },
+      "config_SHA256": "28b5ecc57ff4f3b839b13a6a1b3a2ad0a0f6a4acb9155f130e16b92395e98ede",
+      "objects": {
+        "drivers/input/misc/pm8xxx-vibrator.o": "1b7332fe05b0806f0faea0dd6667b784ee05bdb73f6929959420d70570056264",
+        "drivers/input/ff-memless.o": "c5220b34f9d5582c356dcdb66874ac71316ec87bd4d1dc4e50cccc839395364d",
+        "drivers/phy/qualcomm/phy-qcom-usb-hs.o": "3b184471e10da5027f4bf28e4369b7783946ac1df93609adfda816a18ac9f938",
+        "drivers/phy/phy-core.o": "af4c22478cd938d74c0be39929ff8fca69bf082118279922586bc9f35b66d6e9",
+        "drivers/usb/common/ulpi.o": "f849e90505bbf07e5539415955f349a51d7877a7dc1147728fe83caf55e12649",
+        "drivers/usb/phy/phy-ulpi-viewport.o": "e51c5aac63aae822ddefdb53c48ed618555fe234b318c7131a2a85a6476fa99f",
+        "drivers/base/regmap/regmap-spmi.o": "28ef06440099272b72066a341928f74468e59ce41a6bcd1b167a8d79107c7ca7",
+        "drivers/extcon/extcon.o": "bc5ade58946cc2dbd9b02e3c5c164f5614a102b3fc24ae4991cc1a80cedee10d"
+      },
+      "diagnostics": [],
+      "FF_helper": "builtin",
+      "command": [
+        "make",
+        "O=<absolute-output>",
+        "ARCH=arm",
+        "LLVM=-21",
+        "W=1",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "--jobserver-style=pipe",
+        "-j4",
+        "modules_prepare",
+        "<recorded objects>"
+      ]
+    },
+    {
+      "label": "integration-arm64-01",
+      "arch": "arm64",
+      "native": true,
+      "COMPILE_TEST": false,
+      "source_head": "76a08c219e84cc78324ba66c16dfd076e06a2c7b",
+      "source_tree": "ef1545044b38690a499cb185cf26ca91e7b3b3e7",
+      "source_files": {
+        "drivers/input/misc/pm8xxx-vibrator.c": "ea185476d931bc578f5c579c1a1d99d8d78953ade5045eef79db6bea46a2b64a",
+        "drivers/phy/qualcomm/phy-qcom-usb-hs.c": "9c52cf38ab85e4a1879f54c0401d0da1cf6142998b8f8de38fd34698186c500f"
+      },
+      "config_SHA256": "a58e4bb4afe5ec5ab19a4ca46acde73b35c8356f5a35929228d2bd001438600f",
+      "objects": {
+        "drivers/input/misc/pm8xxx-vibrator.o": "738d6c7e1116a74ace36e9d0f4a695c850fd732e25a55e46c1d5423e5a4915d8",
+        "drivers/input/ff-memless.o": "877e7a14860fc42880a62395a8ba03eaacf39b0a78fcf2f909bfd8a732935c9c",
+        "drivers/phy/qualcomm/phy-qcom-usb-hs.o": "8a36240d05995c6218d200b5dd0d95923e2bfcbc6934e5e3a452a4eca2f3e1b5",
+        "drivers/phy/phy-core.o": "36642485328fee1612c4527fbaa51ecb7e039d70a52df4fa82a0ef393866f5a1",
+        "drivers/usb/common/ulpi.o": "33e5b3f23931d734f81f57a8d420bfd83c67a56ee1a2f9599ea0706255eb7a77",
+        "drivers/usb/phy/phy-ulpi-viewport.o": "2111b8519a32b337a5ff3a42459575ddb32e53c5ee27497cbe79f78733634265",
+        "drivers/base/regmap/regmap-spmi.o": "710b60f08c8407713e2a4da80ebf067e5dfb4d8638a81889bc6850b6d98728ee",
+        "drivers/extcon/extcon.o": "58fc4d2eea098960dafdb63049a6a5835792f938c144494f96daeb1094522414"
+      },
+      "diagnostics": [],
+      "FF_helper": "module",
+      "command": [
+        "make",
+        "O=<absolute-output>",
+        "ARCH=arm64",
+        "LLVM=-21",
+        "W=1",
+        "KCFLAGS=-Werror=incompatible-function-pointer-types",
+        "--jobserver-style=pipe",
+        "-j4",
+        "modules_prepare",
+        "<recorded objects>"
+      ]
+    }
+  ],
+  "total_objects": 28,
+  "full_kernel_link_modpost_package_boot_or_physical_acceptance": false,
+  "initial_launcher_failures": "Two ARM profile assertions expected modular FF helper although existing selection makes it builtin; first USB ARM64 target used wrong viewport path. Corrected launcher preserves both supported configurations and uses drivers/usb/phy/phy-ulpi-viewport.o. Initial attempts remain private evidence; no kernel-source changes or warning suppression used."
+}

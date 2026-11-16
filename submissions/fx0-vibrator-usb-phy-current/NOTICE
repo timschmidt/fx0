@@ -1,0 +1,28 @@
+Linux driver snapshots retain original SPDX and copyright notices:
+Code Aurora Forum, 2010-2011, for pm8xxx-vibrator, and Linaro Ltd, 2016,
+for the USB HS PHY. The copied ULPI register header retains GPL-2.0
+licensing. SoC DTS snapshots retain their original Linux Foundation and
+other author notices. GPL version 2 text is supplied under LICENSES.
+Model services, extraction/replay programs and extracted functions use
+GPL-2.0-only. All original source notices are preserved without edits.
+
+Timothy Schmidt authored the three existing vibrator fixes and the
+zero-offset PHY change. The original PHY draft credited Claude Opus 5.5.
+Codex (GPT-6) refreshed these ports, found and prepared the separate
+PMI632 upper-field fix, and prepared the expanded models and evidence.
+No agent supplies human Signed-off-by or DCO certification.
+
+Models use synthetic core, regmap/work, firmware-property, resource,
+ULPI and notifier services. They retain actual driver function bodies.
+They do not test kernel ABI layout, concurrent execution, FF IOCTL core,
+electrical PHY tuning, USB transfers/OTG, physical haptics or system PM.
+The USB model scopes host -Wunused-parameter suppression only to two
+unchanged callback bodies with unused API parameters: set_mode/submode
+and vbus_notifier/ptr. Native W=1 retains normal kernel diagnostics.
+The set_mode callback is compiled but not executed by this replay.
+
+SoC snapshots are pinned to PHY-next commit
+6bdfbe223ed4735073c299a6645ebd3faac3f51f. The replay independently extracts
+and executes the three initialization sequences from MSM8226, MSM8916
+and MSM8939. Physical behavior of those current-source trees is not
+established by these source fixtures or the native object builds.

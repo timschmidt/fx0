@@ -1,0 +1,35 @@
+From 09cb9671e4f5b67f10421420da90570bb5784dac Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Wed, 11 Nov 2026 03:38:40 -0500
+Subject: [PATCH 2/4] Input: pm8xxx-vibrator - clamp the inclusive maximum
+ voltage
+
+The inclusive level formula adds a step before scaling by byte-sized
+speed. At maximum speed the voltage exceeds the variant maximum. On a
+legacy five-bit drive field, code 32 then wraps to zero.
+
+Clamp the scaled voltage before encoding it, retaining the existing
+inclusive distribution. Refresh Timothy Schmidt's original fix onto
+the verified current input-next source.
+
+Codex (GPT-6) assisted this port and expanded source-bound sanitizer
+checks. The complete series passes 86077 checks; removing this clamp
+fails 144 checks. Native ARM/ARM64 vibrator and FF-helper objects
+compile with W=1 and no diagnostics. This host evidence does not
+qualify a booted current-maintainer tree or physical force feedback.
+
+Fixes: 48c0687a322d ("Input: pm8xxx-vibrator - correct VIB_MAX_LEVELS calculation")
+
+diff --git a/drivers/input/misc/pm8xxx-vibrator.c b/drivers/input/misc/pm8xxx-vibrator.c
+index 26476a3e3837..e1d69089d4bd 100644
+--- a/drivers/input/misc/pm8xxx-vibrator.c
++++ b/drivers/input/misc/pm8xxx-vibrator.c
+@@ -159,6 +159,8 @@ static void pm8xxx_work_handler(struct work_struct *work)
+ 		vib->level = VIB_MIN_LEVEL_mV(vib);
+ 	}
+ 
++	vib->level = min(vib->level, VIB_MAX_LEVEL_mV(vib));
++
+ 	pm8xxx_vib_set(vib, vib->active);
+ }
+ 
