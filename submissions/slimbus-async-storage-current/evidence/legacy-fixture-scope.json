@@ -1,0 +1,28 @@
+{
+  "explicit_source_file_copies_only": true,
+  "fixtures": {
+    "QMI": [
+      "check-qmi.py",
+      "check-controls.py",
+      "qmi-model.c"
+    ],
+    "power": [
+      "check-power.py",
+      "check-controls.py",
+      "power-model.c"
+    ],
+    "bookkeeping": [
+      "check-lifecycle.py",
+      "check-controls.py",
+      "lifecycle-model.c"
+    ],
+    "TX": [
+      "check-tx.py",
+      "check-controls.py",
+      "tx-model.c"
+    ]
+  },
+  "new_transaction_helpers_synthetic_in_legacy_lifecycle_models": true,
+  "actual_transaction_helpers_separately_executed_in_response_model": true,
+  "no_claim_of_actual_kernel_framework_or_devices": true
+}

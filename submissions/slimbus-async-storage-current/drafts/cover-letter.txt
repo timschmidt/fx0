@@ -1,0 +1,20 @@
+Subject: [DRAFT] slimbus: own async response storage and cancellation
+
+Store independently allocated response records in the TID table so a response
+never dereferences a returned sender transaction. Snapshot response pointers,
+preserve retirement/PM ownership, add explicit asynchronous cancellation and
+reject duplicate active descriptors. Close TID admission and drain records
+before client removal; initialize transaction state before NGD RX starts.
+
+The host model passes 1,149 cases/44,419 checks after 102 pre-change failures
+and rejects 21 controls. Readiness, power, bookkeeping and TX regressions pass
+with another 59 controls and unchanged packet bytes. Eight native ARM/ARM64
+objects and the incremental ARM kernel/459 signed modules pass recorded checks.
+Services are synthetic; no physical DMA, firmware, audio or phone runs here.
+
+Checkpatch retains one inherited IDR initializer deprecation; the additional
+shallow-checkout Fixes warning is verified from the public primary commit diff.
+No compiler warnings are added. Late wire replies after TID reuse and complete
+RX/master/external-call and hardware shutdown remain open. Codex generated the
+fix and evidence. Human review/DCO remain pending. This draft is unsent and
+heads remain local and unpublished.

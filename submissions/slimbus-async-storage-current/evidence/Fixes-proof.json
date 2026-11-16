@@ -1,0 +1,8 @@
+{
+  "sha": "afbdcc7c384b0d446da08b1e0901dc176b41b9e0",
+  "subject": "slimbus: Add messaging APIs to slimbus framework",
+  "url": "https://github.com/torvalds/linux/commit/afbdcc7c384b0d446da08b1e0901dc176b41b9e0",
+  "primary_cached_diff_SHA256": "c4a046c694b59cd3baa50177fc1d64f141b575b357ac104d700e99d357b0c284",
+  "original_slim_xfer_msg_patch_lines": "+int slim_xfer_msg(struct slim_device *sbdev, struct slim_val_inf *msg,\n+\t\t  u8 mc)\n+{\n+\tDEFINE_SLIM_LDEST_TXN(txn_stack, mc, 6, sbdev->laddr, msg);\n+\tstruct slim_msg_txn *txn = &txn_stack;\n+\tstruct slim_controller *ctrl = sbdev->ctrl;\n+\tint ret;\n+\tu16 sl;\n+\n+\tif (!ctrl)\n+\t\treturn -EINVAL;\n+\n+\tret = slim_val_inf_sanity(ctrl, msg, mc);\n+\tif (ret)\n+\t\treturn ret;\n+\n+\tsl = slim_slicesize(msg->num_bytes);\n+\n+\tdev_dbg(ctrl->dev, \"SB xfer msg:os:%x, len:%d, MC:%x, sl:%x\\n\",\n+\t\tmsg->start_offset, msg->num_bytes, mc, sl);\n+\n+\ttxn->ec = ((sl | (1 << 3)) | ((msg->start_offset & 0xFFF) << 4));\n+\n+\tswitch (mc) {\n+\tcase SLIM_MSG_MC_REQUEST_CHANGE_VALUE:\n+\tcase SLIM_MSG_MC_CHANGE_VALUE:\n+\tcase SLIM_MSG_MC_REQUEST_CLEAR_INFORMATION:\n+\tcase SLIM_MSG_MC_CLEAR_INFORMATION:\n+\t\ttxn->rl += msg->num_bytes;\n+\tdefault:\n+\t\tbreak;\n+\t}\n+\n+\tif (slim_tid_txn(txn->mt, txn->mc))\n+\t\ttxn->rl++;\n+\n+\treturn slim_do_transfer(ctrl, txn);\n+}\n",
+  "original_stack_transaction_and_async_TID_storage_verified": true
+}

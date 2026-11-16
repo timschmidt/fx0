@@ -1,0 +1,17 @@
+WARNING:UNKNOWN_COMMIT_ID: Unknown commit id 'afbdcc7c384b', maybe rebased or not pulled?
+#40:
+Fixes: afbdcc7c384b ("slimbus: Add messaging APIs to slimbus framework")
+
+WARNING:DEPRECATED_API: Deprecated use of 'idr_init', prefer 'xa_init' instead
+#109: FILE: drivers/slimbus/messaging.c:34:
++	idr_init(&ctrl->tid_idr);
+
+total: 0 errors, 2 warnings, 0 checks, 347 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/home/tim/Documents/GitHub/fx0/local/fx0-slimbus-async-storage-current-01/async-01.patch has style problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.

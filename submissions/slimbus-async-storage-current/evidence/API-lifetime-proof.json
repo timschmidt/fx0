@@ -1,0 +1,23 @@
+{
+  "source_head": "09df5f3f458786af563c518b30e659bc768eb99a",
+  "source_files": {
+    "drivers/slimbus/core.c": "20a3d9f5a0f3ab6213847d0a01d6619cdba551ba577877a3155126355ed7ef43",
+    "drivers/slimbus/messaging.c": "b6985c18a762d387b9ece85cc7172d1206d2680a4c5691526f1a44a7241537dc",
+    "drivers/slimbus/qcom-ngd-ctrl.c": "fc70eff74ba74dc65e44f39969dea9a252745e160a4e1a024d56aee414949dcc",
+    "drivers/slimbus/slimbus.h": "175a1c88e0eea4ac0b7483986a6b96311efea0d6c0f4260f2d50417a7765a20e",
+    "include/linux/slimbus.h": "2fbce885402bae1c0a48fbe8bc79ee5c34edeb5958f4dac92b61c8fcd8dd8b84"
+  },
+  "IDR_slots_own_allocated_response_records": true,
+  "response_uses_snapshotted_buffer_length_and_completion": true,
+  "response_never_dereferences_sender_owner_pointer": true,
+  "owner_pointer_compared_only_while_sender_cancels_or_prepares": true,
+  "async_call_stays_asynchronous": true,
+  "missing_reply_requires_explicit_slim_cancel_msg": true,
+  "cancellation_must_follow_send_return_and_serialize_with_resubmission": true,
+  "descriptor_buffers_completion_live_through_send_return_and_reply_or_cancellation": true,
+  "controller_unregister_closes_TID_admission_and_drains_IDR_before_client_remove": true,
+  "client_remove_must_quiesce_callers_and_cancel_outstanding_async_requests": true,
+  "controller_DMA_RX_master_external_call_quiescence_qualified": false,
+  "old_wire_reply_after_numeric_TID_reuse_qualified": false,
+  "no_actual_kernel_IDR_PM_allocator_completion_device_or_DMA_execution": true
+}

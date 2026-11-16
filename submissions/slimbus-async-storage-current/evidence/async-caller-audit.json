@@ -1,0 +1,16 @@
+{
+  "source_head": "09df5f3f458786af563c518b30e659bc768eb99a",
+  "references": [
+    {
+      "symbol": "slim_xfer_msg",
+      "C_source_references": "drivers/slimbus/messaging.c:263: * @msg: Original request descriptor passed to slim_xfer_msg()\ndrivers/slimbus/messaging.c:265: * Call only after slim_xfer_msg() has returned, and serialize against a new\ndrivers/slimbus/messaging.c:426: * slim_xfer_msg() - Transfer a value info message on slim device\ndrivers/slimbus/messaging.c:436:int slim_xfer_msg(struct slim_device *sbdev, struct slim_val_inf *msg,\ndrivers/slimbus/messaging.c:475:EXPORT_SYMBOL_GPL(slim_xfer_msg);\ndrivers/slimbus/messaging.c:505:\treturn slim_xfer_msg(sdev, &msg, SLIM_MSG_MC_REQUEST_VALUE);\ndrivers/slimbus/messaging.c:548:\treturn slim_xfer_msg(sdev, &msg, SLIM_MSG_MC_CHANGE_VALUE);\n"
+    },
+    {
+      "symbol": "slim_cancel_msg",
+      "C_source_references": "drivers/slimbus/messaging.c:61: * must quiesce their callers and may use slim_cancel_msg() to synchronize with\ndrivers/slimbus/messaging.c:261: * slim_cancel_msg() - Retire an asynchronous elemental request\ndrivers/slimbus/messaging.c:274:int slim_cancel_msg(struct slim_device *sbdev, struct slim_val_inf *msg)\ndrivers/slimbus/messaging.c:301:EXPORT_SYMBOL_GPL(slim_cancel_msg);\n"
+    }
+  ],
+  "no_current_in_tree_async_caller_found": true,
+  "external_module_callers_not_excluded": true,
+  "API_not_disabled_or_made_blocking": true
+}
