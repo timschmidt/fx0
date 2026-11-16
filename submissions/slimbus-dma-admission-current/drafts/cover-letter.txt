@@ -1,0 +1,24 @@
+Subject: [DRAFT] slimbus: ngd: close software producers before DMA release
+
+Close RX rearm and master admission with the submit/issue sequence, serialize
+setup/release, and drain admitted TX before terminating channels. Keep PM-aware
+slave notification on independent system work so the master handshake queue
+can progress during resume. SSR/child teardown drains notification and PM work
+before releasing QMI/client resources. Preserve RX descriptor ownership and
+reject failed submissions before issue.
+
+The software model passes 96 cases/1,375 checks after 241 pre-change failures
+and rejects 28 controls. Prior response/lifecycle/PM/DMA/reference/TX checks
+pass with another 97 controls and unchanged packet bytes. Eight native objects
+and the incremental ARM kernel/459 signed modules pass recorded checks. All
+services remain synthetic; no physical DMA, firmware, audio or phone runs.
+
+This packet includes the separate BAM synchronization provider prerequisite at
+111abac8b92bce58b7fee7c9cc80a4e1498fe3c0, already in the paired runtime. Its
+unchanged callback model and eight controls are replayed as well. The packet
+replays three source topics, seventeen patches and 133 controls.
+
+The attached hardware engine's idle state before BAM reset is unproven. Failed
+suspend rollback, full recovery/endpoint generation and late wire replies after
+TID reuse remain open. Codex generated the fix/evidence. Human review and DCO
+remain pending. This draft is unsent and heads remain local and unpublished.

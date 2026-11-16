@@ -1,0 +1,429 @@
+From 09df5f3f458786af563c518b30e659bc768eb99a Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 12:22:05 -0500
+Subject: [PATCH] slimbus: own asynchronous response records independently of
+ senders
+
+slim_xfer_msg() submits a stack transaction and returns without waiting
+when the caller supplies a completion. The TID table currently retains
+that stack pointer for a later response. Closing synchronous timeout
+races does not keep an asynchronous sender frame alive.
+
+Allocate a response record per TID and snapshot its buffer, length and
+completion before publishing readiness. Retain the sender address only
+for software ownership comparison; response delivery never dereferences
+it. Preserve the existing serialization and separate response PM pin.
+Retire records on reply, send failure and synchronous timeout.
+
+Add explicit asynchronous cancellation for lost replies. It synchronizes
+with response copy/completion, rejects duplicate active descriptors and
+does not report a fabricated successful response. Document caller buffer
+lifetime and the requirement to serialize cancellation with resubmission.
+Close TID admission and drain records before client removal. Preserve
+transaction initialization across registration and initialize NGD before
+RX can start. Empty IDR allocation state is destroyed during shutdown.
+
+Codex identified the ownership gap and generated the fix and logical
+fixtures. Twenty-two exact callback/helper bodies pass 1,149 cases and
+44,419 checks, after 102 failures in the pre-change ownership model;
+twenty-one controls are rejected. Prior readiness, power, bookkeeping
+and TX regressions pass with synthetic services. Eight ARM/ARM64 objects
+build with LLVM21 W=1 and strict callback diagnostics without warnings.
+Checkpatch reports one inherited IDR API deprecation for moving its
+existing initializer; there are no other style diagnostics.
+
+Late wire replies after numeric TID reuse, full RX/master/external-call
+quiescence, hardware stop ordering and physical recovery remain open.
+No real DMA, firmware, audio, phone or network operations are exercised.
+Human review and DCO certification remain pending.
+
+Fixes: afbdcc7c384b ("slimbus: Add messaging APIs to slimbus framework")
+---
+ drivers/slimbus/core.c          |   7 +-
+ drivers/slimbus/messaging.c     | 201 ++++++++++++++++++++++++++++----
+ drivers/slimbus/qcom-ngd-ctrl.c |   1 +
+ drivers/slimbus/slimbus.h       |   7 ++
+ include/linux/slimbus.h         |   7 +-
+ 5 files changed, 197 insertions(+), 26 deletions(-)
+
+diff --git a/drivers/slimbus/core.c b/drivers/slimbus/core.c
+index ee6318e24..84b2caf51 100644
+--- a/drivers/slimbus/core.c
++++ b/drivers/slimbus/core.c
+@@ -263,11 +263,11 @@ int slim_register_controller(struct slim_controller *ctrl)
+ 		ctrl->max_cg = SLIM_MAX_CLK_GEAR;
+ 
+ 	ida_init(&ctrl->laddr_ida);
+-	idr_init(&ctrl->tid_idr);
++	slim_init_transactions(ctrl);
+ 	mutex_init(&ctrl->lock);
+ 	mutex_init(&ctrl->sched.m_reconf);
+ 	init_completion(&ctrl->sched.pause_comp);
+-	spin_lock_init(&ctrl->txn_lock);
++	slim_start_transactions(ctrl);
+ 
+ 	dev_dbg(ctrl->dev, "Bus [%s] registered:dev:%p\n",
+ 		ctrl->name, ctrl->dev);
+@@ -297,6 +297,9 @@ static int slim_ctrl_remove_device(struct device *dev, void *null)
+  */
+ int slim_unregister_controller(struct slim_controller *ctrl)
+ {
++	/* Stop response delivery before clients release their request buffers. */
++	slim_stop_transactions(ctrl);
++
+ 	/* Remove all clients */
+ 	device_for_each_child(ctrl->dev, NULL, slim_ctrl_remove_device);
+ 	ida_free(&ctrl_ida, ctrl->id);
+diff --git a/drivers/slimbus/messaging.c b/drivers/slimbus/messaging.c
+index 302918ae8..fd9a1eac5 100644
+--- a/drivers/slimbus/messaging.c
++++ b/drivers/slimbus/messaging.c
+@@ -7,6 +7,86 @@
+ #include <linux/pm_runtime.h>
+ #include "slimbus.h"
+ 
++/* Each IDR slot owns its response storage, never the sender's stack frame. */
++struct slim_pending_msg {
++	struct slim_msg_txn *owner;
++	struct slim_val_inf *msg_key;
++	struct completion *comp;
++	u8 *rbuf;
++	u8 num_bytes;
++	bool prepared;
++	bool asynchronous;
++};
++
++/**
++ * slim_init_transactions() - Initialize transaction state before RX starts
++ * @ctrl: Controller whose transaction state is to be initialized
++ *
++ * Call before publishing a controller to RX or message producers. Registration
++ * also calls this helper for controllers that do not need early messaging.
++ * Initialization and registration must be serialized by the controller driver.
++ */
++void slim_init_transactions(struct slim_controller *ctrl)
++{
++	if (ctrl->transactions_initialized)
++		return;
++
++	idr_init(&ctrl->tid_idr);
++	spin_lock_init(&ctrl->txn_lock);
++	ctrl->transactions_stopped = false;
++	ctrl->transactions_initialized = true;
++}
++EXPORT_SYMBOL_GPL(slim_init_transactions);
++
++/**
++ * slim_start_transactions() - Open transaction admission for registration
++ * @ctrl: Initialized controller
++ *
++ * The driver must serialize registration with controller teardown.
++ */
++void slim_start_transactions(struct slim_controller *ctrl)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&ctrl->txn_lock, flags);
++	ctrl->transactions_stopped = false;
++	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
++}
++
++/**
++ * slim_stop_transactions() - Close admission and retire pending responses
++ * @ctrl: Initialized controller being unregistered
++ *
++ * No completion is signalled for cancelled requests. Client remove callbacks
++ * must quiesce their callers and may use slim_cancel_msg() to synchronize with
++ * response delivery before releasing their buffers. Transport/DMA producers
++ * still need their own shutdown and synchronization.
++ */
++void slim_stop_transactions(struct slim_controller *ctrl)
++{
++	struct slim_pending_msg *pending;
++	unsigned long flags;
++	unsigned int refs = 0;
++	int id;
++
++	spin_lock_irqsave(&ctrl->txn_lock, flags);
++	ctrl->transactions_stopped = true;
++	idr_for_each_entry(&ctrl->tid_idr, pending, id) {
++		idr_remove(&ctrl->tid_idr, id);
++		refs += pending->prepared;
++		kfree(pending);
++	}
++	idr_destroy(&ctrl->tid_idr);
++	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
++
++	if (refs)
++		pm_runtime_mark_last_busy(ctrl->dev);
++	while (refs) {
++		refs--;
++		pm_runtime_put_autosuspend(ctrl->dev);
++	}
++}
++
+ /**
+  * slim_msg_response() - Deliver Message response received from a device to the
+  *			framework.
+@@ -23,29 +103,27 @@
+  */
+ void slim_msg_response(struct slim_controller *ctrl, u8 *reply, u8 tid, u8 len)
+ {
+-	struct slim_msg_txn *txn;
+-	struct slim_val_inf *msg;
++	struct slim_pending_msg *pending;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&ctrl->txn_lock, flags);
+-	txn = idr_find(&ctrl->tid_idr, tid);
+-	if (!txn || !txn->prepared)
++	pending = idr_find(&ctrl->tid_idr, tid);
++	if (!pending || !pending->prepared)
+ 		goto unlock;
+ 
+-	msg = txn->msg;
+-	if (!msg || !msg->rbuf || len > msg->num_bytes) {
++	if (!pending->rbuf || len > pending->num_bytes) {
+ 		dev_err(ctrl->dev, "Got response to invalid TID:%d, len:%d\n",
+ 				tid, len);
+ 		goto unlock;
+ 	}
+ 
+-	memcpy(msg->rbuf, reply, len);
++	memcpy(pending->rbuf, reply, len);
+ 	idr_remove(&ctrl->tid_idr, tid);
+-	if (txn->comp)
+-		complete(txn->comp);
++	if (pending->comp)
++		complete(pending->comp);
++	kfree(pending);
+ 	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
+ 
+-	/* The response owns the PM reference after retiring its TID. */
+ 	pm_runtime_mark_last_busy(ctrl->dev);
+ 	pm_runtime_put_autosuspend(ctrl->dev);
+ 	return;
+@@ -65,20 +143,30 @@ EXPORT_SYMBOL_GPL(slim_msg_response);
+  */
+ int slim_alloc_txn_tid(struct slim_controller *ctrl, struct slim_msg_txn *txn)
+ {
++	struct slim_pending_msg *pending;
+ 	unsigned long flags;
+-	int ret = 0;
++	int ret;
+ 
+-	spin_lock_irqsave(&ctrl->txn_lock, flags);
+ 	txn->prepared = false;
+ 	txn->tid = 0;
+-	ret = idr_alloc_cyclic(&ctrl->tid_idr, txn, 1,
+-				SLIM_MAX_TIDS, GFP_ATOMIC);
++	pending = kzalloc_obj(*pending, GFP_ATOMIC);
++	if (!pending)
++		return -ENOMEM;
++	pending->owner = txn;
++
++	spin_lock_irqsave(&ctrl->txn_lock, flags);
++	if (ctrl->transactions_stopped)
++		ret = -ESHUTDOWN;
++	else
++		ret = idr_alloc_cyclic(&ctrl->tid_idr, pending, 1,
++				       SLIM_MAX_TIDS, GFP_ATOMIC);
++	if (ret >= 0)
++		txn->tid = ret;
++	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
+ 	if (ret < 0) {
+-		spin_unlock_irqrestore(&ctrl->txn_lock, flags);
++		kfree(pending);
+ 		return ret;
+ 	}
+-	txn->tid = ret;
+-	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(slim_alloc_txn_tid);
+@@ -96,18 +184,38 @@ EXPORT_SYMBOL_GPL(slim_alloc_txn_tid);
+  */
+ int slim_prepare_txn(struct slim_controller *ctrl, struct slim_msg_txn *txn)
+ {
++	struct slim_pending_msg *pending, *other;
+ 	unsigned long flags;
+-	int ret = 0;
++	int id, ret = 0;
+ 
+ 	spin_lock_irqsave(&ctrl->txn_lock, flags);
+-	if (idr_find(&ctrl->tid_idr, txn->tid) != txn) {
++	pending = idr_find(&ctrl->tid_idr, txn->tid);
++	if (!pending || pending->owner != txn) {
+ 		ret = -EINVAL;
+-	} else if (txn->prepared) {
++	} else if (pending->prepared) {
+ 		ret = -EALREADY;
++	} else if (!txn->msg) {
++		ret = -EINVAL;
+ 	} else {
++		if (txn->msg->comp) {
++			idr_for_each_entry(&ctrl->tid_idr, other, id) {
++				if (other->asynchronous &&
++				    other->msg_key == txn->msg) {
++					ret = -EBUSY;
++					goto unlock;
++				}
++			}
++		}
++		pending->msg_key = txn->msg;
++		pending->rbuf = txn->msg->rbuf;
++		pending->num_bytes = txn->msg->num_bytes;
++		pending->comp = txn->comp;
++		pending->asynchronous = !!txn->msg->comp;
+ 		pm_runtime_get_noresume(ctrl->dev);
++		pending->prepared = true;
+ 		txn->prepared = true;
+ 	}
++unlock:
+ 	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
+ 
+ 	return ret;
+@@ -126,17 +234,21 @@ EXPORT_SYMBOL_GPL(slim_prepare_txn);
+  */
+ bool slim_free_txn_tid(struct slim_controller *ctrl, struct slim_msg_txn *txn)
+ {
++	struct slim_pending_msg *pending;
+ 	unsigned long flags;
+-	bool released = false;
++	bool released = false, prepared = false;
+ 
+ 	spin_lock_irqsave(&ctrl->txn_lock, flags);
+-	if (idr_find(&ctrl->tid_idr, txn->tid) == txn) {
++	pending = idr_find(&ctrl->tid_idr, txn->tid);
++	if (pending && pending->owner == txn) {
+ 		idr_remove(&ctrl->tid_idr, txn->tid);
++		prepared = pending->prepared;
++		kfree(pending);
+ 		released = true;
+ 	}
+ 	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
+ 
+-	if (released && txn->prepared) {
++	if (prepared) {
+ 		pm_runtime_mark_last_busy(ctrl->dev);
+ 		pm_runtime_put_autosuspend(ctrl->dev);
+ 	}
+@@ -145,6 +257,49 @@ bool slim_free_txn_tid(struct slim_controller *ctrl, struct slim_msg_txn *txn)
+ }
+ EXPORT_SYMBOL_GPL(slim_free_txn_tid);
+ 
++/**
++ * slim_cancel_msg() - Retire an asynchronous elemental request
++ * @sbdev: Device used to submit the request
++ * @msg: Original request descriptor passed to slim_xfer_msg()
++ *
++ * Call only after slim_xfer_msg() has returned, and serialize against a new
++ * submission using the same descriptor. Cancellation synchronizes with any
++ * response copy and completion already in progress. It does not signal the
++ * completion. After either return value below, response delivery no longer
++ * accesses this descriptor's buffers or completion.
++ *
++ * Return: 0 if cancelled, -ENOENT if already completed/cancelled, or -EINVAL
++ * for a missing controller or descriptor.
++ */
++int slim_cancel_msg(struct slim_device *sbdev, struct slim_val_inf *msg)
++{
++	struct slim_controller *ctrl = sbdev->ctrl;
++	struct slim_pending_msg *pending;
++	unsigned long flags;
++	int id, ret = -ENOENT;
++
++	if (!ctrl || !msg)
++		return -EINVAL;
++
++	spin_lock_irqsave(&ctrl->txn_lock, flags);
++	idr_for_each_entry(&ctrl->tid_idr, pending, id) {
++		if (!pending->asynchronous || pending->msg_key != msg)
++			continue;
++		idr_remove(&ctrl->tid_idr, id);
++		kfree(pending);
++		ret = 0;
++		break;
++	}
++	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
++	if (!ret) {
++		pm_runtime_mark_last_busy(ctrl->dev);
++		pm_runtime_put_autosuspend(ctrl->dev);
++	}
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(slim_cancel_msg);
++
+ /**
+  * slim_do_transfer() - Process a SLIMbus-messaging transaction
+  *
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index 81ecd446d..15dd94636 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1848,6 +1848,7 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
+ 	if (!ctrl)
+ 		return -ENOMEM;
+ 
++	slim_init_transactions(&ctrl->ctrl);
+ 	dev_set_drvdata(dev, ctrl);
+ 
+ 	ctrl->base = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
+diff --git a/drivers/slimbus/slimbus.h b/drivers/slimbus/slimbus.h
+index 6dd388285..21581eeac 100644
+--- a/drivers/slimbus/slimbus.h
++++ b/drivers/slimbus/slimbus.h
+@@ -372,6 +372,8 @@ struct slim_stream_runtime {
+  * @devices: Slim device list
+  * @tid_idr: tid id allocator
+  * @txn_lock: Lock to protect table of transactions
++ * @transactions_initialized: Transaction state initialized before RX starts.
++ * @transactions_stopped: Admission closed during controller teardown.
+  * @sched: scheduler structure used by the controller
+  * @xfer_msg: Transfer a message on this controller (this can be a broadcast
+  *	control/status message like data channel setup, or a unicast message
+@@ -424,6 +426,8 @@ struct slim_controller {
+ 	struct list_head	devices;
+ 	struct idr		tid_idr;
+ 	spinlock_t		txn_lock;
++	bool			transactions_initialized;
++	bool			transactions_stopped;
+ 	struct slim_sched	sched;
+ 	int			(*xfer_msg)(struct slim_controller *ctrl,
+ 					    struct slim_msg_txn *tx);
+@@ -439,6 +443,9 @@ struct slim_controller {
+ int slim_device_report_present(struct slim_controller *ctrl,
+ 			       struct slim_eaddr *e_addr, u8 *laddr);
+ void slim_report_absent(struct slim_device *sbdev);
++void slim_init_transactions(struct slim_controller *ctrl);
++void slim_start_transactions(struct slim_controller *ctrl);
++void slim_stop_transactions(struct slim_controller *ctrl);
+ int slim_register_controller(struct slim_controller *ctrl);
+ int slim_unregister_controller(struct slim_controller *ctrl);
+ void slim_msg_response(struct slim_controller *ctrl, u8 *reply, u8 tid, u8 l);
+diff --git a/include/linux/slimbus.h b/include/linux/slimbus.h
+index 1a2d3aa0e..801e1b572 100644
+--- a/include/linux/slimbus.h
++++ b/include/linux/slimbus.h
+@@ -102,7 +102,11 @@ struct slim_driver {
+  *		per SLIMbus spec
+  * @comp: completion for asynchronous operations, valid only if TID is
+  *	  required for transaction, like REQUEST operations.
+- *	  Rest of the transactions are synchronous anyway.
++ *	  Rest of the transactions are synchronous anyway. Keep this descriptor,
++ *	  buffers and completion valid until slim_xfer_msg() returns and the
++ *	  response completes or slim_cancel_msg() returns. Cancel a lost reply
++ *	  explicitly, including from client teardown, before releasing buffers.
++ *	  One asynchronous request may use a descriptor at a time.
+  */
+ struct slim_val_inf {
+ 	u16			start_offset;
+@@ -191,6 +195,7 @@ int slim_get_logical_addr(struct slim_device *sbdev);
+ #define SLIM_MSG_MC_REPLY_VALUE                  0x64
+ #define SLIM_MSG_MC_CHANGE_VALUE                 0x68
+ 
++int slim_cancel_msg(struct slim_device *sbdev, struct slim_val_inf *msg);
+ int slim_xfer_msg(struct slim_device *sbdev, struct slim_val_inf *msg,
+ 		  u8 mc);
+ int slim_readb(struct slim_device *sdev, u32 addr);

@@ -1,0 +1,206 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "RX-callback-ignores-closed-gate",
+      "failures_observed": 1,
+      "expected_assertion": "an already-dispatched RX callback cannot rearm after the close gate",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "RX-rearm-not-serialized-with-close",
+      "failures_observed": 2,
+      "expected_assertion": "no descriptor is issued between termination and callback synchronization",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "RX-master-queue-ignores-close",
+      "failures_observed": 2,
+      "expected_assertion": "a late master capability cannot enqueue after shutdown",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "TX-ignores-closed-admission",
+      "failures_observed": 2,
+      "expected_assertion": "new non-TID sends reject closed DMA before reserving a buffer",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "shutdown-does-not-close-RX-and-master",
+      "failures_observed": 98,
+      "expected_assertion": "RX and master admission close before channel termination",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "shutdown-does-not-drain-master",
+      "failures_observed": 11,
+      "expected_assertion": "DMA channels are released after callbacks, master work and active senders drain",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "shutdown-does-not-drain-active-sender",
+      "failures_observed": 3,
+      "expected_assertion": "an admitted sender can finish before shutdown releases its resources",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "master-drain-under-TX-mutex",
+      "failures_observed": 103,
+      "expected_assertion": "worker drains and callback locks preserve the required lock order",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "shutdown-resource-release-not-serialized",
+      "failures_observed": 4,
+      "expected_assertion": "overlapping stop operations serialize before releasing channels",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "setup-not-serialized-with-release",
+      "failures_observed": 93,
+      "expected_assertion": "shutdown serializes against setup before touching its channels",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "setup-ignores-parent-close",
+      "failures_observed": 2,
+      "expected_assertion": "setup rejects closed startup or concurrent shutdown admission",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "resume-enters-QMI-after-admission-close",
+      "failures_observed": 4,
+      "expected_assertion": "rejected resume never enters QMI powerup or reacquires DMA",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "RX-admission-published-before-batch-prepared",
+      "failures_observed": 192,
+      "expected_assertion": "failed setup never opens RX or master admission",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "RX-batch-writes-provider-cookie",
+      "failures_observed": 90,
+      "expected_assertion": "submitted descriptor cookies remain owned by the provider",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "RX-callback-writes-provider-cookie",
+      "failures_observed": 6,
+      "expected_assertion": "submitted descriptor cookies remain owned by the provider",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "RX-callback-issues-failed-submission",
+      "failures_observed": 4,
+      "expected_assertion": "failed callback preparation or submission never issues DMA",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "initial-RX-failure-leaks-TX-channel",
+      "failures_observed": 198,
+      "expected_assertion": "failed setup releases its partial channel pair",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "master-inlines-PM-dependent-notification",
+      "failures_observed": 7,
+      "expected_assertion": "PM-dependent notification stays outside the master handshake and closes with its producer",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "notification-uses-master-handshake-queue",
+      "failures_observed": 3,
+      "expected_assertion": "PM-dependent notification stays outside the master handshake and closes with its producer",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "master-publishes-notification-after-close",
+      "failures_observed": 4,
+      "expected_assertion": "a finishing master cannot publish new notification work after closure",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "queued-notification-ignores-closed-admission",
+      "failures_observed": 2,
+      "expected_assertion": "a queued notification cannot wake the controller after its admission closes",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "runtime-DMA-stop-drains-PM-dependent-work",
+      "failures_observed": 109,
+      "expected_assertion": "worker drains and callback locks preserve the required lock order",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "SSR-does-not-drain-notification",
+      "failures_observed": 1,
+      "expected_assertion": "client and QMI release follow producer drain",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "remove-does-not-drain-notification",
+      "failures_observed": 1,
+      "expected_assertion": "client and QMI release follow producer drain",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "SSR-forgets-PM-callback-barrier",
+      "failures_observed": 1,
+      "expected_assertion": "SSR shutdown waits for PM callbacks before freeing its QMI client",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "remove-forgets-PM-callback-barrier",
+      "failures_observed": 1,
+      "expected_assertion": "child removal observes its PM callback barrier",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "SSR-releases-client-before-DMA-drain",
+      "failures_observed": 1,
+      "expected_assertion": "client and QMI release follow producer drain",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "remove-releases-client-before-DMA-drain",
+      "failures_observed": 1,
+      "expected_assertion": "client and QMI release follow producer drain",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "concurrent_mutant_failure_counts_need_not_be_identical_between_runs": true,
+  "unsafe_lock_waits_detected_without_performing_deadlock": true,
+  "all_kernel_services_and_lifetime_observations_synthetic": true,
+  "physical_DMA_firmware_phone_or_network_execution": false
+}

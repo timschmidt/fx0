@@ -1,0 +1,26 @@
+{
+  "cases": 256,
+  "checks": 3328,
+  "failures": 0,
+  "actual_function_bindings": {
+    "dmaengine_terminate_async": "0eacd9f8404eab14c18ad3e050930ff364061b0d36df793ab4c36f63bac00b2b",
+    "dmaengine_synchronize": "d6bd359673d7ce6e00245d761f4e0fe892e21cdf47285a32cd69cd4d7ad6f103",
+    "dmaengine_terminate_sync": "220942dcdd60171a13427921b468cd19b58fafcf4e1d28ecdb9b9d00c1ad2484",
+    "vchan_get_all_descriptors": "cba3412e8dda8f245bdb710bf3f0e0129947f4b59a3c1db5eb2445149f1a4542",
+    "vchan_dma_desc_free_list": "ee77adc45206124228b4e16bece37ed9a60aa8ee608439d0d48b62e637d990b1",
+    "vchan_synchronize": "5fb41ea5159a6c98eed9eaf6af93963e4d61fde4eb8164a0bfda39b49a1079e9",
+    "bam_dma_terminate_all": "e482d93de4ed5d4d9f30c6653343b40795bc3263efa0f38957ec2c6eb92de305",
+    "bam_dma_synchronize": "0a9c741bfa412219489cfd6a7d2866f06d2209a808cc466b952d167dc5b4f9ae"
+  },
+  "actual_probe_assignments": [
+    "\tbdev->common.device_terminate_all = bam_dma_terminate_all;",
+    "\tbdev->common.device_synchronize = bam_dma_synchronize;"
+  ],
+  "callback_bodies_byte_exact": true,
+  "generated_model_SHA256": "848a0fd35b19e553e78debafc48f74757ba144dc505149ba6642b27b55c89cf5",
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "tasklet_scheduler_and_DMA_hardware_synthetic": true,
+  "callback_storage_retained_until_logical_audit": true,
+  "unsafe_lock_mutation_logged_without_intentional_deadlock": true,
+  "real_hardware_DMA_callback_audio_network_or_phone_execution": false
+}

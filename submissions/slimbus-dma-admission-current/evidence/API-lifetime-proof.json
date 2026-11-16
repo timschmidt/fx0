@@ -1,0 +1,27 @@
+{
+  "source_head": "076dcfd78c57bbf52484b5589fd1cdbd98802376",
+  "software_RX_rearm_and_master_queue_gate_serialized_through_submit_issue": true,
+  "setup_and_release_serialized_by_DMA_mutex": true,
+  "master_handshake_has_no_PM_dependent_notification": true,
+  "slave_notification_runs_on_distinct_system_work_queue": true,
+  "runtime_DMA_stop_does_not_wait_for_PM_dependent_slave_notification": true,
+  "SSR_and_child_remove_drain_notification_and_PM_before_QMI_clients": true,
+  "admitted_TX_drains_before_channel_termination": true,
+  "non_TID_TX_also_observes_close_gate": true,
+  "RX_cookies_owned_by_client_and_failed_submit_not_issued": true,
+  "attached_hardware_engine_stop_before_BAM_reset_proven": false,
+  "failed_runtime_suspend_rollback_and_complete_failure_recovery_qualified": false,
+  "late_wire_TID_generation_qualified": false,
+  "actual_kernel_workqueue_DMA_PM_or_physical_execution": false,
+  "primary_source_files": {
+    "drivers/slimbus/qcom-ngd-ctrl.c": "98a3f2057d4e71702628f37bc1c00c2a591d18f19ab454b0ad3247e0facc21b9",
+    "drivers/dma/qcom/bam_dma.c": "6d6f0ee7e29fc321e9b189983a0cfb6df7bf2a413ebf9240ee29d7948b36c801",
+    "include/linux/dmaengine.h": "4d014946d30b753154a8f2ca95498398147d14fbf72e4b4f1a7368e8a2e8015a",
+    "include/linux/pm_runtime.h": "1438ecfadd7cad95fdb9c7c0df23e2f2c380b1d854aed3a65c9ceaf52db905bb",
+    "include/linux/workqueue.h": "35606686a0a0acb1a36b05174c215ac9195e20bd0fd047c5ad5284bec0effcd6",
+    "drivers/base/power/runtime.c": "5dbdc812c08bab6c40efc24d893b2cb1f2d3d4abedacd297aace57c4984f0d70",
+    "Documentation/driver-api/dmaengine/client.rst": "79c7337c11fefa65b9e15904847db79704046c51a5c9b295505203ad78b07975"
+  },
+  "actual_BAM_provider_source": "worktrees/linux-fx0-runtime-prerequisites-current-01/drivers/dma/qcom/bam_dma.c",
+  "actual_BAM_provider_SHA256": "8e3da480693b0a411c5163f31b3586fcaa4452b2134b99a6a340ec8361e7bff8"
+}

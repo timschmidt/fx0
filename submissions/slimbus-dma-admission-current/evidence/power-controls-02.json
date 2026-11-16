@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "runtime-swallow-error",
+      "failures": 2427,
+      "expected_case": "initial-mode0-fault1-at0-error-5",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "direct-resume-result-ignored",
+      "failures": 1818,
+      "expected_case": "initial-mode0-fault1-at0-error-5",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "framework-resume-result-ignored",
+      "failures": 615,
+      "expected_case": "initial-mode3-fault1-at0-error-5",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "new-client-not-unwound",
+      "failures": 915,
+      "expected_case": "initial-mode0-fault1-at0-error-5",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "registered-client-dropped",
+      "failures": 1184,
+      "expected_case": "registered-mode0-fault1-at0-error-5",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "bootstrap-dropped-on-error",
+      "failures": 1220,
+      "expected_case": "initial-mode0-fault1-at0-error-5",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "registration-after-failed-wake",
+      "failures": 2433,
+      "expected_case": "initial-mode0-fault1-at0-error-5",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "positive-PM-result-rejected",
+      "failures": 8,
+      "expected_case": "positive-framework-success-noio0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "registered-runtime-wake-skipped",
+      "failures": 915,
+      "expected_case": "registered-mode0-fault1-at0-error-5",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "enable-error-flattened",
+      "failures": 322,
+      "expected_case": "initial-mode0-fault3-at0-error-5",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "runtime-error-flattened",
+      "failures": 320,
+      "expected_case": "initial-mode0-fault3-at0-error-5",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "all_services_synthetic": true,
+  "hardware_audio_firmware_or_phone_execution": false
+}
