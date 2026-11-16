@@ -1,0 +1,85 @@
+{
+  "started_UTC": "2026-11-16T22:22:10.834482+00:00",
+  "kind": "PM",
+  "ARCH": "arm",
+  "native": true,
+  "COMPILE_TEST": false,
+  "LLVM": "-21",
+  "W": 1,
+  "MSM8926_feature": true,
+  "strict_function_pointer_diagnostics": true,
+  "source_head": "dbfb2599194a4812c671719ab8b2a1d1bace8101",
+  "source_files": {
+    "drivers/pmdomain/qcom/cpr.c": "5f1440e94a343362f65f59f18ec61da647b41ce1a4dbabd4183cd80c4df355b6",
+    "drivers/pmdomain/core.c": "ccea3b2981876b9cb2e3014ca1496b2ea52658e308306a03a6b423995599702f",
+    "drivers/cpufreq/qcom-cpufreq-nvmem.c": "057aa7503494d8f17e2c5ab46742bff03c77507cf1bfb79168ba8408288fdf73",
+    "drivers/cpufreq/cpufreq-dt-platdev.c": "3cd25df0c59034667d9b3d8674fb8cb66c4a048c3a09d5980d5a886c2733de88",
+    "drivers/cpufreq/cpufreq-dt.c": "0a927d7ae4c11e8bd850f8247c4250dccd11c86c40f3ef5be78dccaa298693dd",
+    "drivers/cpufreq/cpufreq.c": "06c903f468d6947c798e645b1f71f50ddcbb89f4405a0516cd494b42e1321b21",
+    "drivers/opp/core.c": "dc25eb7ec019b8cff0e16c2d6b764f0cb6f71a59de57ea3ec94f3bc6d8d887cb",
+    "drivers/regulator/core.c": "ca092fec3b3a47ede7add92ed28362b8d75b4a8866e74bc3415e962ad14284b1",
+    "drivers/firmware/qcom/qcom_scm.c": "e4338edfaf81387a117f8ab44e626cd87db24f596d9194af5f2fe11e10fbc4b3",
+    "drivers/firmware/qcom/qcom_scm-smc.c": "399d29d832d265c972a8c927669be7047800bce1d46b0452fe17a8b875bf1f2c",
+    "drivers/firmware/qcom/qcom_scm-legacy.c": "3a8b03927916ef6c287499af61fad887c813113096d02899a5e42631b71e39d8",
+    "drivers/firmware/qcom/qcom_tzmem.c": "1853267acf81401448e8d0b68c8a34da85c275d886f953c317cc209eabf8d3cf",
+    "drivers/nvmem/core.c": "084e9432c854cd03fb8604e874b508a653061b92d2675840fdb0c3c256a3a1e1",
+    "drivers/nvmem/qfprom.c": "db979c91348c0572f6689238d1e5c1ccf2984e2a8ceb21715fddf8c750522dfa",
+    "drivers/pmdomain/qcom/cpr-msm8926.h": "8eecdff7fb43f484027b80eb2e7acc05ba435b26af978bb05f15bf751fd634b0",
+    "drivers/pmdomain/qcom/cpr-msm8926-fuses.h": "9af6b33fbf392237a9fa5b307a7487d73d4593301324af328169e4aeeb850f0e",
+    "drivers/pmdomain/qcom/cpr-msm8926-voltage.h": "702e0dbaba15acec11cb662698dd41470c91c6ec6cdf7b9c7cfbc8cbad790ead",
+    "drivers/pmdomain/qcom/cpr-msm8926-corner.h": "64bc80d033fd90c46eb40ced3840c64841b41f7f6d5ea5c19b97b81202550af0",
+    "drivers/pmdomain/qcom/cpr-voltage.h": "8ae79b9419e5096ec30ade91358739d75a224c3e25078dc8d09689bbe43028a8",
+    "drivers/pmdomain/qcom/cpr-sleep.h": "0b9c570a193f1a246a182219a32d76904b2297ff1e070933f192f37c9d90a3f1",
+    "drivers/pmdomain/qcom/Kconfig": "653a2a93b898404f0155b1801a05541c0304db973f671ee62a0360b5541bc640",
+    "include/linux/soc/qcom/cpr.h": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3",
+    "include/linux/firmware/qcom/qcom_scm.h": "b0e139426727997f8c8c08827266f6732289fd4cbb3dbed57ac8ba192a8be28b"
+  },
+  "stages": [
+    {
+      "stage": "options",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "e66bb981c530f2aaffc67859a7d0b3d4918ba153e95d24b6a5fa11e530366927"
+    },
+    {
+      "stage": "prepare",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "78ab27f63f1cc5405f1f525252465bb501a9d6971f9b4ab7476da05f20a6d142"
+    },
+    {
+      "stage": "components",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "4c85110500bd669b6ee0a3d58504ff1f025f738fac4a2dd2fc5e64516527b156"
+    }
+  ],
+  "state": "terminal success",
+  "phone_access": false,
+  "config_SHA256": "972ba8d9ad640e679fa4d00179c8545704d1981a6ca53376f61f1221337d654d",
+  "passed": true,
+  "objects": {
+    "drivers/pmdomain/qcom/cpr.o": "aec2b2bf8c0e38bebe79d117518753f47a1142c9d448a3c72775453622907149",
+    "drivers/pmdomain/core.o": "4be6502f96adcb650c80a90b60557150e1c1c3c68f706eabc25babf56dcb6390",
+    "drivers/cpufreq/qcom-cpufreq-nvmem.o": "3474b70827f0d1e351dc4447bc1407485adab5c32a665a2265ea3b67a41b5c83",
+    "drivers/cpufreq/cpufreq-dt-platdev.o": "a8e434a86f248c8d86babc4d86f07fac5e53ca3444ebd8b31080ebe8b5096791",
+    "drivers/cpufreq/cpufreq-dt.o": "100a459adfad18256b0a581232ff0ffd8b0b49af61eeddb597f1333b29a632d5",
+    "drivers/cpufreq/cpufreq.o": "bdd994ca1b5761017700d5b40a02df68d477eb1c93114b545271c54e81069504",
+    "drivers/opp/core.o": "2ecabb3f93033ff31ad111dd45c2ea43cea41e204408f96203cfc4007b42c68c",
+    "drivers/regulator/core.o": "3c6f7737be50f90887d5403575f9ac5a7770d92e8f9bcbf141c078afe82c1a0b",
+    "drivers/firmware/qcom/qcom_scm.o": "ab5336b404e15449baff7e8f58fdd51dcc2f9907be17792f326e6c635ead3186",
+    "drivers/firmware/qcom/qcom_scm-smc.o": "72221437eeb2b4f73b04033ccd2839a596cf47097c4916626c0fb5e094790d18",
+    "drivers/firmware/qcom/qcom_scm-legacy.o": "d29c32044c55051b951d6403043bede933e44237de4806f9b2eb0231851d8883",
+    "drivers/firmware/qcom/qcom_tzmem.o": "e3f2be85dd7aab3a0e54ea5ea14e28596cdbe9c0f3b723dc9fd520709b5e79cd",
+    "drivers/nvmem/core.o": "c6374c2e226b23a626a6cdefabddf3e6a7298036934bb6df650b2a84ee27cc3e",
+    "drivers/nvmem/qfprom.o": "f286dfcf648045d8bc30d033117592e4b69bd15aa208fd2ff4944c13f48ef29c"
+  },
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-16T22:22:26.596844+00:00"
+}

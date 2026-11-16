@@ -1,0 +1,70 @@
+From d2d0763fd351e568f4c290d55431b0a53bf4cbe4 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 17:29:48 -0500
+Subject: [PATCH] dt-bindings: regulator: qcom: Describe PM8226 L3 sleep-only
+ votes
+
+Describe the separate L3 sleep-only logical voter used by the vendor
+MSM8226 power topology. It combines with the normal L3 sleep policy and
+never contributes to ACTIVE. A CPU boot-APC guard retains an independent
+SLEEP ceiling until a covering sleep voter is acknowledged, and rearms
+that ceiling when the voter is released. Require normal L3 and forbid
+automatic enable or per-node suspend policy on the guarded CPU alias.
+
+Codex generated this change and its host qualification. Human review and
+DCO certification remain pending. Nothing has been submitted.
+---
+ .../regulator/qcom,smd-rpm-regulator.yaml     | 24 +++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+index 5c34d5942..9444c9945 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+@@ -53,4 +53,10 @@ description:
+   voters, not two independent physical supplies.
+ 
++  PM8226 l3-so is a sleep-only voter. Its cached requests are combined with
++  the normal l3 sleep policy using maximum voltage and enable requests.
++  It never contributes to the active set. With a boot APC supply, a separate
++  temporary sleep hold protects APC until a covering l3-so request is enabled
++  and acknowledged. Releasing that sleep voter rearms the protective hold.
++
+   For pm8841, s1, s2, s3, s4, s5, s6, s7, s8
+ 
+@@ -132,4 +138,13 @@ properties:
+     unevaluatedProperties: false
+ 
++  l3-so:
++    $ref: regulator.yaml#
++    description: PM8226 L3 sleep-only voter, paired with l3
++    properties:
++      regulator-state-mem: false
++      regulator-state-disk: false
++      regulator-state-standby: false
++    unevaluatedProperties: false
++
+   qcom,boot-apc-supply:
+     description:
+@@ -162,7 +177,9 @@ allOf:
+       dependentRequired:
+         l3-ao: [l3]
++        l3-so: [l3]
+     else:
+       properties:
+         l3-ao: false
++        l3-so: false
+   - if:
+       required:
+@@ -182,4 +199,11 @@ allOf:
+             regulator-boot-on: false
+             regulator-always-on: false
++        l3-so:
++          required:
++            - regulator-min-microvolt
++            - regulator-max-microvolt
++          properties:
++            regulator-boot-on: false
++            regulator-always-on: false
+ 
+ required:

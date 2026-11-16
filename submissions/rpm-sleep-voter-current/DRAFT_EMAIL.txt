@@ -1,0 +1,10 @@
+UNSENT — human review and DCO pending
+Subject: [RFC PATCH 0/4] qcom: retain an independent MSM8926 MX sleep guard
+
+Add a separate PM8226 L3 SLEEP voter and optional CPR sleep supplier so normal
+Pronto policy cannot remove the CPU's live-APC protection. Keep independent
+covering boot holds, acknowledged handoff and protective rearm on probe unwind.
+Only the separate experimental CPU board uses it. Source models, failure
+controls, native/kernel/module/DTB checks and offline replay are included.
+Full system power-collapse ordering, firmware/hardware and physical acceptance
+remain unqualified. The CPR deep-suspend guard stays in place.

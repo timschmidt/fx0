@@ -1,0 +1,92 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "name": "sleep-request-uses-active-set",
+      "rejected": true,
+      "failures": 3012,
+      "named_assertion": "get_unaligned_le32(p + 12) =="
+    },
+    {
+      "name": "sleep-request-errors-discarded",
+      "rejected": true,
+      "failures": 2808,
+      "named_assertion": "ret == (failed ? errors[mode] : 0)"
+    },
+    {
+      "name": "wrong-resource-ID",
+      "rejected": true,
+      "failures": 3012,
+      "named_assertion": "get_unaligned_le32(p + 20) =="
+    },
+    {
+      "name": "wrong-KVP-length",
+      "rejected": true,
+      "failures": 3012,
+      "named_assertion": "get_unaligned_le32(p + offset + 4) == 4"
+    },
+    {
+      "name": "sleep-clears-pending-active-cache",
+      "rejected": true,
+      "failures": 1960,
+      "named_assertion": "!memcmp(&before, &vreg, sizeof(vreg))"
+    },
+    {
+      "name": "suspend-disable-enables",
+      "rejected": true,
+      "failures": 1170,
+      "named_assertion": "value == (alloc_calls == 1 ?"
+    },
+    {
+      "name": "suspend-voltage-clamped-to-one-value",
+      "rejected": true,
+      "failures": 336,
+      "named_assertion": "value == (alloc_calls == 1 ?"
+    },
+    {
+      "name": "rpm_smps_ldo_ops-suspend-hooks-disconnected",
+      "rejected": true,
+      "failures": 1332,
+      "named_assertion": "alloc_calls == attempts"
+    },
+    {
+      "name": "rpm_smps_ldo_ops_fixed-suspend-hooks-disconnected",
+      "rejected": true,
+      "failures": 1332,
+      "named_assertion": "alloc_calls == attempts"
+    },
+    {
+      "name": "rpm_switch_ops-suspend-hooks-disconnected",
+      "rejected": true,
+      "failures": 1188,
+      "named_assertion": "alloc_calls == attempts"
+    },
+    {
+      "name": "rpm_bob_ops-suspend-hooks-disconnected",
+      "rejected": true,
+      "failures": 1332,
+      "named_assertion": "alloc_calls == attempts"
+    },
+    {
+      "name": "rpm_mp5496_ops-suspend-hooks-disconnected",
+      "rejected": true,
+      "failures": 1332,
+      "named_assertion": "alloc_calls == attempts"
+    },
+    {
+      "name": "unrelated-ACK-accepted",
+      "rejected": true,
+      "failures": 744,
+      "named_assertion": "ret == (failed ? errors[mode] : 0)"
+    },
+    {
+      "name": "previous-completion-not-reinitialized",
+      "rejected": true,
+      "failures": 272,
+      "named_assertion": "!c->done"
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "all_provider_and_transport_services_synthetic": true,
+  "no_device_network_or_real_suspend": true
+}

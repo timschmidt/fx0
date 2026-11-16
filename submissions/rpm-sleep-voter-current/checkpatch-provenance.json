@@ -1,0 +1,90 @@
+{
+  "passed": true,
+  "patches": [
+    {
+      "patch": "binding-01.patch",
+      "repository": "worktrees/linux-rpm-regulator-sleep-current-01",
+      "returncode": 0,
+      "source_diff_style_errors": 0,
+      "checks": 0,
+      "warnings": 0,
+      "warning": null
+    },
+    {
+      "patch": "provider-01.patch",
+      "repository": "worktrees/linux-rpm-regulator-sleep-current-01",
+      "returncode": 0,
+      "source_diff_style_errors": 0,
+      "checks": 0,
+      "warnings": 0,
+      "warning": null
+    },
+    {
+      "patch": "cpr-binding-01.patch",
+      "repository": "worktrees/linux-msm8926-cpr-pm-current-01",
+      "returncode": 0,
+      "source_diff_style_errors": 0,
+      "checks": 0,
+      "warnings": 0,
+      "warning": null
+    },
+    {
+      "patch": "cpr-provider-01.patch",
+      "repository": "worktrees/linux-msm8926-cpr-pm-current-01",
+      "returncode": 1,
+      "source_diff_style_errors": 0,
+      "checks": 0,
+      "warnings": 1,
+      "warning": "FILE_PATH_CHANGES: cpr-sleep.h already covered by cpr*.h"
+    },
+    {
+      "patch": "runtime-01.patch",
+      "repository": "worktrees/linux-fx0-cpu-current-01",
+      "returncode": 0,
+      "source_diff_style_errors": 0,
+      "checks": 0,
+      "warnings": 0,
+      "warning": null
+    },
+    {
+      "patch": "runtime-02.patch",
+      "repository": "worktrees/linux-fx0-cpu-current-01",
+      "returncode": 0,
+      "source_diff_style_errors": 0,
+      "checks": 0,
+      "warnings": 0,
+      "warning": null
+    },
+    {
+      "patch": "runtime-03.patch",
+      "repository": "worktrees/linux-fx0-cpu-current-01",
+      "returncode": 0,
+      "source_diff_style_errors": 0,
+      "checks": 0,
+      "warnings": 0,
+      "warning": null
+    },
+    {
+      "patch": "runtime-04.patch",
+      "repository": "worktrees/linux-fx0-cpu-current-01",
+      "returncode": 1,
+      "source_diff_style_errors": 0,
+      "checks": 0,
+      "warnings": 1,
+      "warning": "FILE_PATH_CHANGES: cpr-sleep.h already covered by cpr*.h"
+    },
+    {
+      "patch": "runtime-05.patch",
+      "repository": "worktrees/linux-fx0-cpu-current-01",
+      "returncode": 0,
+      "source_diff_style_errors": 0,
+      "checks": 0,
+      "warnings": 0,
+      "warning": null
+    }
+  ],
+  "diagnostic_categories_suppressed": [],
+  "agent_Signed_off_by_added": false,
+  "new_header_MAINTAINERS_pattern_already_present": "drivers/pmdomain/qcom/cpr*.h",
+  "raw_advisory_retained": true
+}

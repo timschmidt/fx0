@@ -1,0 +1,42 @@
+From ca964cab8969a5fefa649bcb00e7286e996bda37 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 17:31:54 -0500
+Subject: [PATCH] ARM: dts: qcom: Give Madai CPR an independent MX sleep guard
+
+Name a separate L3 sleep-only voter for the experimental CPU target. CPR
+retains its supported maximum while APC remains live, independently of
+ACTIVE scaling and Pronto's persistent normal sleep settings. The RPM
+provider retains independent boot holds and rearms the SLEEP hold when
+the CPU sleep consumer is released after a failed probe.
+
+This depends on the independent SO provider and optional CPR sleep guard.
+It does not lower the sleep request to the binding minimum, add full
+CPU/L2/RPM/MPM entry, or remove the existing CPR deep-suspend guard.
+The ordinary board and all other hardware targets are unchanged.
+
+Codex generated this change and its host qualification. Human review and
+DCO certification remain pending. Nothing has been submitted.
+---
+ arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+index 96fc912b7..92340f2bf 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+@@ -216,4 +216,5 @@ cpr: power-controller@f9018000 {
+ 		vdd-apc-supply = <&pm8226_apc>;
+ 		vdd-mx-supply = <&pm8226_l3_ao>;
++		vdd-mx-sleep-supply = <&pm8226_l3_so>;
+ 		#power-domain-cells = <0>;
+ 		operating-points-v2 = <&cpr_opp_table>;
+@@ -231,4 +232,9 @@ pm8226_l3_ao: l3-ao {
+ 			regulator-max-microvolt = <1337500>;
+ 		};
++
++		pm8226_l3_so: l3-so {
++			regulator-min-microvolt = <750000>;
++			regulator-max-microvolt = <1337500>;
++		};
+ 	};
+ };

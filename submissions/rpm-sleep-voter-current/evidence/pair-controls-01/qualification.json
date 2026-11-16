@@ -1,0 +1,105 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "name": "minimum-instead-of-maximum",
+      "rejected": true,
+      "failures": 4677,
+      "named_assertion": "fw[0].uV"
+    },
+    {
+      "name": "CPU-vote-omitted",
+      "rejected": true,
+      "failures": 4446,
+      "named_assertion": "fw[0].uV"
+    },
+    {
+      "name": "normal-vote-omitted",
+      "rejected": true,
+      "failures": 231,
+      "named_assertion": "fw[0].uV"
+    },
+    {
+      "name": "AO-vote-in-sleep",
+      "rejected": true,
+      "failures": 6663,
+      "named_assertion": "fw[1].enabled"
+    },
+    {
+      "name": "initial-sleep-not-established",
+      "rejected": true,
+      "failures": 5527,
+      "named_assertion": "fw[1].enabled"
+    },
+    {
+      "name": "cached-normal-sleep-not-invalidated",
+      "rejected": true,
+      "failures": 84,
+      "named_assertion": "fw[1].uV == f.pair.votes[0].uV"
+    },
+    {
+      "name": "failed-slot-not-restored",
+      "rejected": true,
+      "failures": 1092,
+      "named_assertion": "same_vote(f.pair.votes[actor], old[actor])"
+    },
+    {
+      "name": "failed-pair-error-discarded",
+      "rejected": true,
+      "failures": 2630,
+      "named_assertion": "ret == (failed ? errors[mode] : 0)"
+    },
+    {
+      "name": "AO-rewrites-normal-sleep",
+      "rejected": true,
+      "failures": 1584,
+      "named_assertion": "alloc_calls == (failed ? stage : required)"
+    },
+    {
+      "name": "load-addition-wraps",
+      "rejected": true,
+      "failures": 1,
+      "named_assertion": "fw[0].mA == UINT32_MAX / 1000"
+    },
+    {
+      "name": "partial-sleep-not-invalidated",
+      "rejected": true,
+      "failures": 1174,
+      "named_assertion": "!f.pair.sleep_initialized"
+    },
+    {
+      "name": "pair-mutex-omitted",
+      "rejected": true,
+      "failures": 9592,
+      "named_assertion": "expected_pair && expected_pair->lock.held"
+    },
+    {
+      "name": "wrong-resource-ID",
+      "rejected": true,
+      "failures": 9592,
+      "named_assertion": "get_unaligned_le32(p + 20) == 3"
+    },
+    {
+      "name": "normal-sleep-voltage-override-lost",
+      "rejected": true,
+      "failures": 1,
+      "named_assertion": "!fw[1].enabled && fw[1].uV == 750000"
+    },
+    {
+      "name": "unrelated-ACK-accepted",
+      "rejected": true,
+      "failures": 1271,
+      "named_assertion": "ret == (failed ? errors[mode] : 0)"
+    },
+    {
+      "name": "APC-raised-before-MX",
+      "rejected": true,
+      "failures": 76,
+      "named_assertion": "fw[QCOM_SMD_RPM_ACTIVE_STATE].uV >= min_uV"
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "only_deterministic_logical_services": true,
+  "kernel_concurrency_or_firmware_qualified": false,
+  "no_hardware_phone_firmware_radio_audio_or_network_execution": true
+}

@@ -1,0 +1,54 @@
+{
+  "source_head": "ca964cab8969a5fefa649bcb00e7286e996bda37",
+  "source_files": {
+    "drivers/regulator/core.c": "ca092fec3b3a47ede7add92ed28362b8d75b4a8866e74bc3415e962ad14284b1",
+    "drivers/base/power/main.c": "fcc83d8fa6be034ab1a6a420da209a4becdb8039d4c8005bcd4417a551e1b1ea",
+    "kernel/power/suspend.c": "ab9b70861e1983e2891f0cdc776cc3aa851ff5d659a5dc9874347f9544bd41a7",
+    "drivers/pmdomain/qcom/cpr.c": "5f1440e94a343362f65f59f18ec61da647b41ce1a4dbabd4183cd80c4df355b6",
+    "drivers/rpmsg/qcom_smd.c": "13ffe4334b7a9be3f700eb100133aca7e7748e03a6671564b1f9124416ad0d90",
+    "drivers/soc/qcom/spm.c": "6989881ebcf1e14a51606ecd28a2f65a64ebfa261120fb0558484cb9e0cdcb3e",
+    "drivers/cpuidle/cpuidle-qcom-spm.c": "598937a870b165ebb9f6e629d434c24b48acef771c916e9032625038d3976e5b"
+  },
+  "actual_functions": {
+    "__suspend_set_state": {
+      "path": "drivers/regulator/core.c",
+      "SHA256": "fa92882cf1ab51438468c7d66fefee4c6b9a1c29f69ffca74fa4407f1a1c0c59"
+    },
+    "regulator_suspend": {
+      "path": "drivers/regulator/core.c",
+      "SHA256": "96192495f885f8f880a9650c815731a3082dc276149a96083f063f53f54a43ce"
+    },
+    "regulator_resume": {
+      "path": "drivers/regulator/core.c",
+      "SHA256": "0ba9bc07436242f39aac9e92a90687e3bccbf911daf9cf3fadac04bb6ed9e733"
+    },
+    "device_suspend": {
+      "path": "drivers/base/power/main.c",
+      "SHA256": "a22e20257e4f47101cc3a1e596677779e7dc34236ab48eaa78165fd12bfc2284"
+    },
+    "device_resume": {
+      "path": "drivers/base/power/main.c",
+      "SHA256": "1453e2b75f768d47dc642b0a38b9904f2271d8ae25a3e6cc17760d098d4f676e"
+    },
+    "suspend_enter": {
+      "path": "kernel/power/suspend.c",
+      "SHA256": "4e2004c55ff3437a0c51a09569a1ee252431de6dc93eec6deb7f65235f7f2380"
+    }
+  },
+  "persistent_sleep_configuration": "Regulator class suspend can update SWEN before UV fails. Settings persist; this is not a generic regulator-core rollback defect. A failed device callback does not mark is_suspended, so its normal resume is skipped. No PM/core edit is made.",
+  "independent_ownership": "normal+AO aggregate ACTIVE; normal+SO aggregate SLEEP. Separate boot holds hand off on corresponding acknowledged enabled votes. SO release rearms the covering SLEEP hold, including uncertain failures and subsequent normal requests.",
+  "CPR": "Optional vdd-mx-sleep retains 1337500 uV after calibration/clock checks. Managed disable precedes put and retries once; two failures are explicitly fatal. Old DTs preserve behavior.",
+  "full_entry_still_open": [
+    "Global preparation and abort/restore must own any lower SLEEP request after verified CPU/APC state and CPR feedback/IRQ quiescence.",
+    "SMD synchronous replies need IRQs: prepare_late precedes noirq. A prepare_late failure skips platform resume_early and needs inline rollback.",
+    "L2 SPM currently only arbitrates voltage. Sequencer RAM, cache handoff, SCM L2_OFF and abort disarm are absent.",
+    "RPM freeze/drain, context handoff and MPM wake topology remain incomplete. No physical SLEEP entry is authorized."
+  ],
+  "vendor_reference": "src/vendor-linux/arch/arm/boot/dts/msm8226-regulator.dtsi defines separate l3 AO and SO voters. src/vendor-linux/arch/arm/boot/dts/msm8226-v2-pm.dtsi and arch/arm/mach-msm/msm-pm.c describe the unported system entry topology.",
+  "firmware_KVP_atomicity_qualified": false,
+  "MAINTAINERS_coverage": "Existing drivers/pmdomain/qcom/cpr*.h covers cpr-sleep.h; raw FILE_PATH_CHANGES advisory retained without suppression.",
+  "CPR_deep_suspend_guard_removed": false,
+  "full_deep_PM_entry_qualified": false,
+  "phone_access": false,
+  "published": false
+}
