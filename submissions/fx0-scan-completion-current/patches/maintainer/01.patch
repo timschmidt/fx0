@@ -1,0 +1,57 @@
+From ef58b655a303b854c02b105d210e60d4d9c004ed Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 30 Oct 2026 19:08:59 -0400
+Subject: [PATCH] wifi: cfg80211: deliver deferred scan completion after
+ shutdown
+
+Interface shutdown completes cfg80211's scan request and retains its
+netlink completion message for workqueue delivery. If the driver still
+owns the request, its later completion only frees the stale request and
+does not queue scan_done_wk. The retained message then keeps scan
+admission busy across subsequent interface cycles.
+
+Queue the existing worker whenever completion delivery is deferred.
+Keep the current request ownership, direct delivery and split-scan paths.
+The actual request-release, completion and worker functions reproduce
+52 failures across 30 synthetic lifecycle cases before this change.
+Workqueue, driver timing and message services are modeled; physical
+wireless and concurrency acceptance remain open.
+
+Port of Timothy Schmidt's original implementation
+34c341b9039342611d3ca644a9aa9593bdad1c89. Original author and timestamp
+are preserved. The original history credits Claude Opus 5.5 as co-author;
+that original metadata is retained in the review evidence. This port,
+changelog and qualification used OpenAI Codex assistance. Human review
+and DCO certification remain pending.
+
+Fixes: dab68a74e90b ("wifi: cfg80211: don't free driver-owned scan requests")
+---
+ net/wireless/scan.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 1c50a16c0..34aece185 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1194,10 +1194,18 @@ void ___cfg80211_scan_done(struct cfg80211_registered_device *rdev,
+ 	cfg80211_put_scan_req(rdev->scan_req);
+ 	rdev->scan_req = NULL;
+ 
+-	if (!send_message)
+-		rdev->scan_msg = msg;
+-	else
++	if (send_message) {
+ 		nl80211_send_scan_msg(rdev, msg);
++		return;
++	}
++
++	/*
++	 * The interface is going down; defer the message to the worker.
++	 * A driver that still owns the request no longer queues the worker
++	 * when it completes, so do it here or new scans stay blocked.
++	 */
++	rdev->scan_msg = msg;
++	wiphy_work_queue(&rdev->wiphy, &rdev->scan_done_wk);
+ }
+ 
+ void __cfg80211_scan_done(struct wiphy *wiphy, struct wiphy_work *wk)
