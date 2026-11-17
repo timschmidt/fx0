@@ -1,0 +1,92 @@
+{
+  "base": "1072eae2f428b3f237be3d06b11c1beb52d6e5ff",
+  "origins": [
+    {
+      "commit": "c3bd956de3414d28aa8273e2a4c746134a4811d3",
+      "author": "Bartosz Dudziak",
+      "subject": "ARM: dts: qcom: msm8226: Describe WCNSS",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "77a38560ae9e8b820e742df2a7fc56e30c402bba",
+      "author": "Matti Lehtim\u00e4ki",
+      "subject": "remoteproc: qcom_wcnss: Add WCN3660A RF support",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "e6ac7649341759bde8fd028e7db6d1f6c3316ae0",
+      "author": "Timothy Schmidt",
+      "subject": "remoteproc: qcom_wcnss: Request PD regulators on Pronto v1/v2",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "07eb1b7cff154595c7762fa563b0323754910a44",
+      "author": "Matti Lehtim\u00e4ki",
+      "subject": "wifi: wcn36xx: Add the WCN3660A RF variant",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "20ad39f09cddd4283f25cf4e49dafc0bda1548b4",
+      "author": "Kees Cook",
+      "subject": "nfc: nxp-nci: retain current typed allocation interfaces",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "87b848f087e6090ce643c4cb3c8952b0912a62a0",
+      "author": "Timothy Schmidt",
+      "subject": "nfc: nxp-nci: unregister without holding the mode mutex",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "fa457b1c9481446cf3bbb9d3d084ce58df1bbb14",
+      "author": "Timothy Schmidt",
+      "subject": "nfc: nxp-nci: drain receive before freeing the NCI device",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "46ebc8c8e5007281cee1802b84b1a48db78fa916",
+      "author": "Timothy Schmidt",
+      "subject": "dt-bindings: net: nfc: nxp,nci: describe an optional reference clock",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "b675a1d674f93c95d1198fbaf0bb29d64f9989d4",
+      "author": "Timothy Schmidt",
+      "subject": "nfc: nxp-nci: balance an optional reference clock across modes",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "16399fbb95dce776aa0d0f5ae7e21cc424b2ee03",
+      "author": "Timothy Schmidt",
+      "subject": "ARM: dts: qcom: madai: describe PN547 NFC and its reference clock",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    }
+  ],
+  "source_files": {
+    "Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml": "10b41badcb10b1d1ac70f621bbf43749f87beeb1a1a0b1fd42d9a36b347b994b",
+    "arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts": "46323c40f6659ba08e7c48a1dcbd94e9c1965bb0c1d40685792c30eca8a943f5",
+    "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi": "20f9aa62a67fa37b80344901a7497f0c35aa0144e81b7b6288cdd204d5bd9d1f",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts": "2289abb61f947ea83661b8b126654191bcb072d985f1135927c750d97f82f7fb",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "bea1ce365166bf4aa3d51a541c6651f52bec43b50d15de4dbe013c88c1fe465d",
+    "drivers/net/wireless/ath/wcn36xx/main.c": "eaae7348c6927d0cc2b73ff2ecec11158bcb061a17626511be347771e587d981",
+    "drivers/nfc/nxp-nci/core.c": "7de046887a4a0a6b7a82c745a0f7278f808aa90b49060e36fa39f008765157fc",
+    "drivers/nfc/nxp-nci/i2c.c": "1f6edcff01b9491016ae5b3891611c7d7b7edb295d905bd29bb72b7bf9c01372",
+    "drivers/nfc/nxp-nci/nxp-nci.h": "35c6d4b1a00f9234fc63763d1b937c9c974c38b384ae04cd43aa805206e29344",
+    "drivers/remoteproc/qcom_wcnss.c": "60ef28fdd9486d4a78866ea9a50bcf600dd6785fc61a6e2569ef1110bfa521cd",
+    "drivers/remoteproc/qcom_wcnss.h": "65ea9042e5dbdae2a9b1418a879a0194fc9153a3186203f149e43b59c67ed66d",
+    "drivers/remoteproc/qcom_wcnss_iris.c": "65cc94fbb59e1fe01d6db4b273ac2782a41ee7203c08be625d7f6c83eba22a34",
+    "net/nfc/nci/core.c": "a2a591c0492419601960efa4c996e971daee9629ce771de9c2f24892a8a98ae2",
+    "net/nfc/nci/rsp.c": "f46b3f78238f81329184c9fb1fec26c1473bd4ba0d53b0b974ae8b2635f83718"
+  },
+  "phone_access": false
+}

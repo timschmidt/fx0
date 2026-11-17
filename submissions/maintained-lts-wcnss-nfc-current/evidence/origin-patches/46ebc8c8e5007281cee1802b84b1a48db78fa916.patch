@@ -1,0 +1,45 @@
+commit 46ebc8c8e5007281cee1802b84b1a48db78fa916
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Sun Nov 8 18:15:16 2026 -0500
+Commit:     Codex <codex@openai.com>
+CommitDate: Mon Nov 16 05:06:43 2026 -0500
+
+    dt-bindings: net: nfc: nxp,nci: describe an optional reference clock
+    
+    Describe one external reference clock named ref. Require clocks and
+    clock-names together and retain existing clockless descriptions.
+    
+    Port of Timothy Schmidt's original implementation bca73ac16d42.
+    Author and timestamp are preserved. The port, changelog and qualification
+    used OpenAI Codex assistance. Human review and DCO certification remain
+    pending. No agent Signed-off-by tag is added.
+
+diff --git a/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml b/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+index 4f3847f64983..4dfb9690b2cf 100644
+--- a/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
++++ b/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+@@ -24,6 +24,13 @@ properties:
+   enable-gpios:
+     description: Output GPIO pin used for enabling/disabling the controller
+ 
++  clocks:
++    maxItems: 1
++    description: Optional external reference clock for the controller
++
++  clock-names:
++    const: ref
++
+   firmware-gpios:
+     description: Output GPIO pin used to enter firmware download mode
+ 
+@@ -39,6 +46,10 @@ required:
+   - interrupts
+   - reg
+ 
++dependencies:
++  clocks: [clock-names]
++  clock-names: [clocks]
++
+ additionalProperties: false
+ 
+ examples:

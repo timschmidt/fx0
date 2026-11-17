@@ -1,0 +1,90 @@
+commit 16399fbb95dce776aa0d0f5ae7e21cc424b2ee03
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Sun Nov 8 18:15:17 2026 -0500
+Commit:     Codex <codex@openai.com>
+CommitDate: Mon Nov 16 05:06:44 2026 -0500
+
+    ARM: dts: qcom: madai: describe PN547 NFC and its reference clock
+    
+    Enable QUP3 at 100 kHz, describe the PN547 at 0x28, and connect the
+    production GPIO21 rising IRQ, GPIO20 enable, GPIO22 firmware and
+    pin-controlled CXO_D1 reference clock. Keep the idle outputs low.
+    Retain all existing CPU, charging and USB policy descriptions.
+    
+    Port of Timothy Schmidt's board-only addition 858214239a80. Original
+    author and timestamp are preserved. OpenAI Codex assisted the port
+    and qualification. Physical NFC acceptance and human DCO are pending.
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+index 32494e6f33d8..fdbd0cd1bb63 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -7,6 +7,7 @@
+ 
+ #include "qcom-msm8226.dtsi"
+ #include "pm8226.dtsi"
++#include <dt-bindings/clock/qcom,rpmcc.h>
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/input/input.h>
+ #include <dt-bindings/leds/common.h>
+@@ -171,6 +172,30 @@ smem_region: smem@fa00000 {
+ };
+ 
+ &tlmm {
++	nfc_irq_default: nfc-irq-default-state {
++		pins = "gpio21";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-down;
++		output-disable;
++	};
++
++	nfc_enable_default: nfc-enable-default-state {
++		pins = "gpio20";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++		output-low;
++	};
++
++	nfc_firmware_default: nfc-firmware-default-state {
++		pins = "gpio22";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-disable;
++		output-low;
++	};
++
+ 	cam_mclk0_default: cam-mclk0-default-state {
+ 		pins = "gpio26";
+ 		function = "cam_mclk0";
+@@ -226,6 +251,29 @@ &blsp1_uart3 {
+ 	status = "okay";
+ };
+ 
++&blsp1_i2c3 {
++	clock-frequency = <100000>;
++	status = "okay";
++
++	nfc@28 {
++		compatible = "nxp,pn547", "nxp,nxp-nci-i2c";
++		reg = <0x28>;
++		interrupt-parent = <&tlmm>;
++		interrupts = <21 IRQ_TYPE_EDGE_RISING>;
++		enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
++		firmware-gpios = <&tlmm 22 GPIO_ACTIVE_HIGH>;
++		clocks = <&rpmcc RPM_SMD_CXO_D1_PIN>;
++		clock-names = "ref";
++		pinctrl-0 = <&nfc_irq_default &nfc_enable_default
++			     &nfc_firmware_default>;
++		pinctrl-names = "default";
++	};
++};
++
++&blsp1_i2c3_pins {
++	drive-strength = <8>;
++};
++
+ &mba_region {
+ 	status = "okay";
+ };

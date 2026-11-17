@@ -1,0 +1,66 @@
+{
+  "actual_driver_and_NCI_callback_bodies_preserved": true,
+  "clock_feature_included": false,
+  "host_ASan_UBSan_normal_LSan_failfast": true,
+  "modeled_cases": 9,
+  "failures": 9,
+  "results": [
+    {
+      "mode": "open",
+      "returncode": 1,
+      "stdout": "",
+      "assertion": "192: dev == &ndev && !info.info_lock.held"
+    },
+    {
+      "mode": "open_pending_irq",
+      "returncode": 1,
+      "stdout": "",
+      "assertion": "192: dev == &ndev && !info.info_lock.held"
+    },
+    {
+      "mode": "open_data_exchange",
+      "returncode": 1,
+      "stdout": "",
+      "assertion": "192: dev == &ndev && !info.info_lock.held"
+    },
+    {
+      "mode": "cold",
+      "returncode": 1,
+      "stdout": "",
+      "assertion": "192: dev == &ndev && !info.info_lock.held"
+    },
+    {
+      "mode": "cold_pending_irq",
+      "returncode": 1,
+      "stdout": "",
+      "assertion": "192: dev == &ndev && !info.info_lock.held"
+    },
+    {
+      "mode": "firmware_pending_irq",
+      "returncode": 1,
+      "stdout": "",
+      "assertion": "192: dev == &ndev && !info.info_lock.held"
+    },
+    {
+      "mode": "probe_irq_failure",
+      "returncode": 1,
+      "stdout": "",
+      "assertion": "192: dev == &ndev && !info.info_lock.held"
+    },
+    {
+      "mode": "core_legacy",
+      "returncode": 1,
+      "stdout": "",
+      "assertion": "192: dev == &ndev && !info.info_lock.held"
+    },
+    {
+      "mode": "open_timeout_pending_irq",
+      "returncode": 1,
+      "stdout": "",
+      "assertion": "192: dev == &ndev && !info.info_lock.held"
+    }
+  ],
+  "real_kernel_or_hardware_operations": false,
+  "concurrent_firmware_timing_modeled": false,
+  "fixture_SHA256": "7ecb1327b1053b2cf176a07ef8b11f2f42595fd6384f0c8ee6a1e3d9a4025ece"
+}

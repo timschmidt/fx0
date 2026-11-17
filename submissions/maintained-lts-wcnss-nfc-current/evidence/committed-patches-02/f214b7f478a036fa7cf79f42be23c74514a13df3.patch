@@ -1,0 +1,77 @@
+From f214b7f478a036fa7cf79f42be23c74514a13df3 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 18:15:16 -0500
+Subject: [PATCH] dt-bindings: net: nfc: nxp,nci: describe an optional
+ reference clock
+
+Carry the reviewed change into the maintained LTS tree. Preserve the
+original author, timestamp, source notices and assistance disclosures.
+Keep the existing LTS allocation, I2C ID and NCI interfaces. The
+optional clock reconciliation omits newer-base cleanup already absent
+from LTS.
+
+The actual NCI close/reset/receive/removal model reproduces nine wrong
+baseline cases and none of ten after repair. Nine optional-clock/probe
+cases and nine teardown/clock regression variants pass their
+contracts. WCNSS selection/classification is already present and
+tested separately. Sixty ARM, ARM64 and ARM64 RT native objects
+compile without diagnostics using nonpermissive CFI, including
+built-in/module and ACPI-off/on paths. All nineteen family DTBs pass
+the full schema; sixteen remain identical, and the three Madai
+variants gain only NFC and its bus/pin configuration. Seventy-five
+inherited DTC warnings are retained without a new diagnostic.
+
+Core services, locks, IRQ completion, bus, clocks and scheduling are
+modeled. Physical NFC/radio, concurrent firmware, complete driver core
+and final-image qualification remain open. Codex prepared the LTS port
+and qualification. Human DCO and owner/security review remain pending;
+no sign-off, phone action, Wi-Fi scan or publication is claimed.
+
+Original reviewed changelog and disclosures:
+
+Describe one external reference clock named ref. Require clocks and
+clock-names together and retain existing clockless descriptions.
+
+Port of Timothy Schmidt's original implementation bca73ac16d42. Author
+and timestamp are preserved. The port, changelog and qualification
+used OpenAI Codex assistance. Human review and DCO certification
+remain pending. No agent Signed-off-by tag is added.
+
+Backported from commit 46ebc8c8e500 ("dt-bindings: net: nfc: nxp,nci:
+describe an optional reference clock")
+---
+ .../devicetree/bindings/net/nfc/nxp,nci.yaml          | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml b/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+index 364b361511808..b47ba2e589b2b 100644
+--- a/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
++++ b/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+@@ -23,6 +23,13 @@ properties:
+   enable-gpios:
+     description: Output GPIO pin used for enabling/disabling the controller
+ 
++  clocks:
++    maxItems: 1
++    description: Optional external reference clock for the controller
++
++  clock-names:
++    const: ref
++
+   firmware-gpios:
+     description: Output GPIO pin used to enter firmware download mode
+ 
+@@ -38,6 +45,10 @@ required:
+   - interrupts
+   - reg
+ 
++dependencies:
++  clocks: [clock-names]
++  clock-names: [clocks]
++
+ additionalProperties: false
+ 
+ examples:
+-- 
+2.56.0
+

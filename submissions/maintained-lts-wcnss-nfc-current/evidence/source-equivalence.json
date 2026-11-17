@@ -1,0 +1,73 @@
+{
+  "passed": true,
+  "existing_equivalents": [
+    {
+      "origin": "c3bd956de3414d28aa8273e2a4c746134a4811d3",
+      "already_present": true,
+      "scope": "WCNSS memory/signaling/remoteproc/BT/Wi-Fi node blocks and board delete/recreation overrides",
+      "DTS_nodes": [
+        {
+          "node": "wcnss_region:",
+          "source_SHA256": "53a05fbeeec7bc05b9b7542808ec8d2f459e0cc36f3dbaf167fcac918f808eea"
+        },
+        {
+          "node": "smp2p-wcnss {",
+          "source_SHA256": "acb6e2803663bf7085a5ba4968ea3138331fa02e6b4d27e83cfd0d6b908126c4"
+        },
+        {
+          "node": "pronto:",
+          "source_SHA256": "88caba3b5b213b9349c78489560ad1f01690201f30e617b64d7edcc7a4c9afd2"
+        }
+      ],
+      "LTS_power_domain_alias_value_identical": true
+    },
+    {
+      "origin": "77a38560ae9e8b820e742df2a7fc56e30c402bba",
+      "already_present": true,
+      "scope": "Exact WCN3660A match and referenced regulator/XO data; newer allocation API retained out of LTS"
+    },
+    {
+      "origin": "e6ac7649341759bde8fd028e7db6d1f6c3316ae0",
+      "already_present": true,
+      "scope": "Exact selector and platform tables; eight healthy and sixteen allocation/regulator fault cases; prior helper rejected in six cases"
+    },
+    {
+      "origin": "07eb1b7cff154595c7762fa563b0323754910a44",
+      "already_present": true,
+      "scope": "Exact WCN3660A RF classification block; seven synthetic OF cases, wrong WCN3680 classification rejected"
+    }
+  ],
+  "inapplicable": {
+    "origin": "20ad39f09cddd4283f25cf4e49dafc0bda1548b4",
+    "classification": "newer typed-allocation API-only conversion inapplicable to LTS",
+    "LTS_macro_absent": true,
+    "current_typed_size_allocation_preserved": true
+  },
+  "changed_paths": [
+    "Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts",
+    "drivers/nfc/nxp-nci/core.c",
+    "drivers/nfc/nxp-nci/i2c.c",
+    "drivers/nfc/nxp-nci/nxp-nci.h"
+  ],
+  "source_files": {
+    "Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml": "88ee1c78274634957bf103f1d3c8cafd87e9bab73e54b4dbdd6dffb0dd771728",
+    "arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts": "46323c40f6659ba08e7c48a1dcbd94e9c1965bb0c1d40685792c30eca8a943f5",
+    "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi": "20f9aa62a67fa37b80344901a7497f0c35aa0144e81b7b6288cdd204d5bd9d1f",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts": "2289abb61f947ea83661b8b126654191bcb072d985f1135927c750d97f82f7fb",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "3f8af54ac46d06965779f46a0b83a52b8e3e1bf13edc3aa17d166cc5c3d6baa2",
+    "drivers/net/wireless/ath/wcn36xx/main.c": "eaae7348c6927d0cc2b73ff2ecec11158bcb061a17626511be347771e587d981",
+    "drivers/nfc/nxp-nci/core.c": "d7605b1dd057936a4c8b761ef59794f4f00a8e0cb35a6345e7a155f1739b4946",
+    "drivers/nfc/nxp-nci/i2c.c": "8bfca5bd71bbc446d41f4c093c01f6df8566976f7c9151d0251d70e1b701804e",
+    "drivers/nfc/nxp-nci/nxp-nci.h": "a7dd5a6f92321c2a2a057955a349fe78d3d65e08933db5a469433d7dac4d5e7f",
+    "drivers/remoteproc/qcom_wcnss.c": "60ef28fdd9486d4a78866ea9a50bcf600dd6785fc61a6e2569ef1110bfa521cd",
+    "drivers/remoteproc/qcom_wcnss.h": "65ea9042e5dbdae2a9b1418a879a0194fc9153a3186203f149e43b59c67ed66d",
+    "drivers/remoteproc/qcom_wcnss_iris.c": "65cc94fbb59e1fe01d6db4b273ac2782a41ee7203c08be625d7f6c83eba22a34",
+    "net/nfc/nci/core.c": "a2a591c0492419601960efa4c996e971daee9629ce771de9c2f24892a8a98ae2",
+    "net/nfc/nci/rsp.c": "f46b3f78238f81329184c9fb1fec26c1473bd4ba0d53b0b974ae8b2635f83718"
+  },
+  "all_unselected_driver_protocol_and_DTS_bytes_preserved": true,
+  "raw_clock_port_reconciled_to_absent_newer_base_cleanup": true,
+  "phone_access": false,
+  "radio_NFC_execution": false
+}

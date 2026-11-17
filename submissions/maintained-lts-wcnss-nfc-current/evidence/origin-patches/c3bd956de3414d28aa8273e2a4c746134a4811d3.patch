@@ -1,0 +1,170 @@
+commit c3bd956de3414d28aa8273e2a4c746134a4811d3
+Author:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+AuthorDate: Sat Nov 14 23:32:52 2026 -0500
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sat Nov 14 23:32:52 2026 -0500
+
+    ARM: dts: qcom: msm8226: Describe WCNSS
+    
+    Describe the WCNSS reserved memory, SMP2P signaling and Pronto remote
+    processor with its SMD control, Bluetooth and Wi-Fi children. Leave the
+    remote processor and control device disabled until a board supplies its
+    power rails and RF configuration.
+    
+    Preserve the original milletwifi and memul memory overrides through
+    delete/recreation, use the current RPMPD name, and retain level-high
+    Wi-Fi DXE interrupts from the existing integration correction.
+    
+    Refresh c8d156a3bee3, originally by Bartosz Dudziak with Matti Lehtimäki
+    co-development, and b2512c53f035 by Timothy Schmidt with Claude Opus 5.5
+    assistance. The WCN3660A binding/driver and wireless RF classification
+    remain explicit separately routed dependencies.
+    
+    Refreshed with OpenAI Codex assistance. Human review and DCO
+    certification remain pending.
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts b/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts
+index da0b5969c832..ba1db8025910 100644
+--- a/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts
++++ b/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts
+@@ -15,6 +15,7 @@
+ /delete-node/ &mba_region;
+ /delete-node/ &mpss_region;
+ /delete-node/ &smem_region;
++/delete-node/ &wcnss_region;
+ 
+ / {
+ 	model = "Samsung Galaxy Tab 4 8.0 Wi-Fi";
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+index 61d19a04b358..ae2f3f3fbced 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+@@ -231,6 +231,11 @@ mba_region: mba@d100000 {
+ 			status = "disabled";
+ 		};
+ 
++		wcnss_region: wcnss@d200000 {
++			reg = <0x0d200000 0xa00000>;
++			no-map;
++		};
++
+ 		adsp_region: adsp@dc00000 {
+ 			reg = <0x0dc00000 0x1900000>;
+ 			no-map;
+@@ -296,6 +301,32 @@ modem_smp2p_in: slave-kernel {
+ 		};
+ 	};
+ 
++	smp2p-wcnss {
++		compatible = "qcom,smp2p";
++		qcom,smem = <451>, <431>;
++
++		interrupt-parent = <&intc>;
++		interrupts = <GIC_SPI 143 IRQ_TYPE_EDGE_RISING>;
++
++		mboxes = <&apcs 18>;
++
++		qcom,local-pid = <0>;
++		qcom,remote-pid = <4>;
++
++		wcnss_smp2p_out: master-kernel {
++			qcom,entry-name = "master-kernel";
++
++			#qcom,smem-state-cells = <1>;
++		};
++
++		wcnss_smp2p_in: slave-kernel {
++			qcom,entry-name = "slave-kernel";
++
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
++
+ 	smsm {
+ 		compatible = "qcom,smsm";
+ 		#address-cells = <1>;
+@@ -738,6 +769,71 @@ rng@f9bff000 {
+ 			clock-names = "core";
+ 		};
+ 
++		pronto: remoteproc@fb204000 {
++			compatible = "qcom,pronto-v2-pil", "qcom,pronto";
++			reg = <0xfb204000 0x2000>, <0xfb202000 0x1000>, <0xfb21b000 0x3000>;
++			reg-names = "ccu", "dxe", "pmu";
++
++			memory-region = <&wcnss_region>;
++
++			interrupts-extended = <&intc GIC_SPI 149 IRQ_TYPE_EDGE_RISING>,
++					      <&wcnss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&wcnss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&wcnss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++					      <&wcnss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
++
++			power-domains = <&rpmpd RPMPD_VDDCX>;
++			power-domain-names = "cx";
++
++			qcom,smem-states = <&wcnss_smp2p_out 0>;
++			qcom,smem-state-names = "stop";
++
++			status = "disabled";
++
++			iris {
++				compatible = "qcom,wcn3660a";
++
++				clocks = <&rpmcc RPM_SMD_CXO_A1>;
++				clock-names = "xo";
++			};
++
++			smd-edge {
++				interrupts = <GIC_SPI 142 IRQ_TYPE_EDGE_RISING>;
++
++				mboxes = <&apcs 17>;
++				qcom,smd-edge = <6>;
++				qcom,remote-pid = <4>;
++
++				label = "pronto";
++
++				wcnss {
++					compatible = "qcom,wcnss";
++					qcom,smd-channels = "WCNSS_CTRL";
++					status = "disabled";
++
++					qcom,mmio = <&pronto>;
++
++					bluetooth {
++						compatible = "qcom,wcnss-bt";
++					};
++
++					wifi {
++						compatible = "qcom,wcnss-wlan";
++
++						interrupts = <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
++							     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
++						interrupt-names = "tx", "rx";
++
++						qcom,smem-states = <&apps_smsm 10>,
++								   <&apps_smsm 9>;
++						qcom,smem-state-names = "tx-enable",
++									"tx-rings-empty";
++					};
++				};
++			};
++		};
++
+ 		sram@fc190000 {
+ 			compatible = "qcom,msm8226-rpm-stats";
+ 			reg = <0xfc190000 0x10000>;
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts
+index cb571aa13c11..a1330b044f75 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts
+@@ -12,6 +12,7 @@
+ /delete-node/ &mba_region;
+ /delete-node/ &mpss_region;
+ /delete-node/ &smem_region;
++/delete-node/ &wcnss_region;
+ 
+ / {
+ 	model = "HTC One Mini 2";

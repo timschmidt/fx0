@@ -1,0 +1,173 @@
+{
+  "passed": true,
+  "state": "terminal success",
+  "source_files": {
+    "drivers/nfc/nxp-nci/core.c": "d7605b1dd057936a4c8b761ef59794f4f00a8e0cb35a6345e7a155f1739b4946",
+    "drivers/nfc/nxp-nci/firmware.c": "05714d7ad5e520c81db4a157c677b8b2c13d7f49327e2bca0167d4f9a2fa6cbc",
+    "drivers/nfc/nxp-nci/i2c.c": "8bfca5bd71bbc446d41f4c093c01f6df8566976f7c9151d0251d70e1b701804e",
+    "net/nfc/nci/core.c": "a2a591c0492419601960efa4c996e971daee9629ce771de9c2f24892a8a98ae2",
+    "net/nfc/nci/data.c": "f1fad23a0905943b1502031372f22b84ad6ee18d5ec0287b361eabe4e3b484f9",
+    "net/nfc/nci/lib.c": "9ad42e219105fa32548be6cd2a2edabd5a25a49ee1a5c082d1ada4350d8078fc",
+    "net/nfc/nci/ntf.c": "26fdeaf27106d766c6fba8d6d883ab88d33b837118104b5b03cb6c48a9b50b6e",
+    "net/nfc/nci/rsp.c": "f46b3f78238f81329184c9fb1fec26c1473bd4ba0d53b0b974ae8b2635f83718",
+    "net/nfc/nci/hci.c": "3f5bccec27d5a39e965c66f314d717bc31fc82704cefb95025ab63cc8197445d",
+    "drivers/remoteproc/qcom_wcnss.c": "60ef28fdd9486d4a78866ea9a50bcf600dd6785fc61a6e2569ef1110bfa521cd",
+    "drivers/remoteproc/qcom_wcnss_iris.c": "65cc94fbb59e1fe01d6db4b273ac2782a41ee7203c08be625d7f6c83eba22a34",
+    "drivers/soc/qcom/wcnss_ctrl.c": "3538cf87b05d1582e94c26da919efdd3756522a753d9b725455b14e089211430",
+    "drivers/net/wireless/ath/wcn36xx/main.c": "eaae7348c6927d0cc2b73ff2ecec11158bcb061a17626511be347771e587d981",
+    "drivers/net/wireless/ath/wcn36xx/dxe.c": "7433e2adf918ffbda8eb0f8ce4390f146bbb640df0153318bc12acb2d1763c3a",
+    "drivers/net/wireless/ath/wcn36xx/txrx.c": "5749ed7fdc588e398e040f99b28b2ec995a363bd4a7e76ed5c89b18876236bd7",
+    "drivers/net/wireless/ath/wcn36xx/smd.c": "18ba6a8df3e62e79fdd681c2f2c4e85440a1db2f69dfa0777c6021d8e0284739",
+    "drivers/net/wireless/ath/wcn36xx/pmc.c": "371a2c5917e559ea44d635199836dc24d4dff31ef907d75eaf3e85bfaa9c9a3e",
+    "drivers/net/wireless/ath/wcn36xx/debug.c": "983f5b5a45c9a6d9888944d5787619bd34fe7369bd6b994d1a1f1430e20c81a9",
+    "drivers/net/wireless/ath/wcn36xx/firmware.c": "17f05f92c51654a5e7d0bfef30ad77171e36b2c09ac22469131c686ff28038e6",
+    "drivers/net/wireless/ath/wcn36xx/testmode.c": "d202a83623a7e5ea30b9c9aa0666fe5c0b3433a3a03226f76a74dfccf5eb36d5"
+  },
+  "profiles": [
+    {
+      "profile": "arm-normal-NFC-WCNSS-y",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "ACPI": false,
+      "mode": "y",
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "95b56398fea300b5a6004f61e7b48d6f9e7cad3089f30c62f38a1d4dca80a3e4",
+      "objects": {
+        "drivers/nfc/nxp-nci/core.o": "4174b3aef58e3be0456bf43bc052e527656fe919470f478e7954a4e549e34fdf",
+        "drivers/nfc/nxp-nci/firmware.o": "0646ba6e4171331f35154677c8cb4d3b9a09ff54b7e28c41140a3ce51d271b84",
+        "drivers/nfc/nxp-nci/i2c.o": "276ea0c330a5e0ddca3d317167ec932233e0156564f9da92d785683e987045c2",
+        "net/nfc/nci/core.o": "238d132ad8032281b1bd0e5af6130cd3d094f9b11a250c6b1c7649f39f4e6ad9",
+        "net/nfc/nci/data.o": "52a4b5ccaceff1490e73162a54f2b1b1c87d4cb60b0a34e2fc838efc61163ac5",
+        "net/nfc/nci/lib.o": "5431c1ae2283d176979b5f2b9d73a450c382a9d0850a2d2d51cf452d822dcaa2",
+        "net/nfc/nci/ntf.o": "aecb355e8632ff7cf010f0888e9916e89924f77e7392ef6a874d67bf9cc26429",
+        "net/nfc/nci/rsp.o": "43303997489e2ed7d25020d367b0ab279e22821b7aff87aecaccbf1219061925",
+        "net/nfc/nci/hci.o": "8d9c57ab40348bf7fa4de4b6484d02f6c476ff9b2cdfaf6f065b958def1aa61c",
+        "drivers/remoteproc/qcom_wcnss.o": "e89ae1dcd865a8c94801815d3c1fabe453c25f5a52e0a9f1cb611db2ef01c21d",
+        "drivers/remoteproc/qcom_wcnss_iris.o": "2c56f6752a79e0fc47ea2c61201132814f6ed4e01d55cd5cfe7544e6237bdeeb",
+        "drivers/soc/qcom/wcnss_ctrl.o": "167f5baaa97ae26f90cebfad4d66aa35b54d505c689bdd80f9da4363ac00b3ff",
+        "drivers/net/wireless/ath/wcn36xx/main.o": "830208c4774d644d3489f43cdd33b8eff628367b2a6b1acf3d2fb58dd1bb7a4c",
+        "drivers/net/wireless/ath/wcn36xx/dxe.o": "a6c0abf69c75397a65aa61715fefe099e928321b5bc512376105c03fe2a6e43d",
+        "drivers/net/wireless/ath/wcn36xx/txrx.o": "0a199dcc73aee3778090e839cd811be25c133d932473d6d272504b8268b20663",
+        "drivers/net/wireless/ath/wcn36xx/smd.o": "bba20828c4595db6ba2f1a5993dab1fa8930290141e563f28e1c48b4ddb6f69f",
+        "drivers/net/wireless/ath/wcn36xx/pmc.o": "de0999050e8c4423203de7f567848d7f2b9e91a61e3041e714bf243d4ebc7893",
+        "drivers/net/wireless/ath/wcn36xx/debug.o": "fac13299d6746954e8503b7394089b772b7026e6328befa3367679ae7d9fd435",
+        "drivers/net/wireless/ath/wcn36xx/firmware.o": "e5dc05cccb6a07b0eadfcda2db191d113093d5b9170f27798a222939e32891e3",
+        "drivers/net/wireless/ath/wcn36xx/testmode.o": "38862af470beda552d4ecac18421b4199cddea248e28f0383c5ca6ac4618f20e"
+      }
+    },
+    {
+      "profile": "arm64-normal-NFC-WCNSS-m",
+      "ARCH": "arm64",
+      "PREEMPT_RT": false,
+      "ACPI": false,
+      "mode": "m",
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "607869a83f12d7956d274358398c588c6aed4603e777a39bc6968c16a1f00a13",
+      "objects": {
+        "drivers/nfc/nxp-nci/core.o": "e30d8d146817ec2e603bd3734908fcb2a68964369aa8a50ebdd7e2eb7e3d7efb",
+        "drivers/nfc/nxp-nci/firmware.o": "c04b5be4a440705c0e50e133ef53ee49572547aef182b94b1e65ae107063960a",
+        "drivers/nfc/nxp-nci/i2c.o": "453cc01180f5985a9f0502d21e96fbe5f9b9b302c2b2826458a24f0269712d23",
+        "net/nfc/nci/core.o": "8b5f8d50ae54c18d8caa292261693fa4b4ceb8c588bd3ebe92d391470feeeab2",
+        "net/nfc/nci/data.o": "8cf77ff0454c74c1a55817f60150f6734f1a26d607a912e236bf04096f46b344",
+        "net/nfc/nci/lib.o": "05ad7b1b4c04c8d64a83d98a56305c20f4583159d6b174835d74903e3b768cf7",
+        "net/nfc/nci/ntf.o": "fd92fd6c130d763d6c7fd6dbad4a9ecae8d421af2314638cca9acbc084eae05d",
+        "net/nfc/nci/rsp.o": "2ecdf585e41c521f2b3d75358933847fcb70b6e0fcf9157508840c66b60de5b9",
+        "net/nfc/nci/hci.o": "cff1f29bba1a4c0c469b12c40759ca2afec8f2933cf80896fcb378ed4d3e0149",
+        "drivers/remoteproc/qcom_wcnss.o": "955477231644a254db7d0ca20d1802a8f00ed0ecfdbd27e387585630367ef895",
+        "drivers/remoteproc/qcom_wcnss_iris.o": "9eaac92ae6af697a459a89128bd7736b096681fd16aee1ae10bbc29b181b0b9d",
+        "drivers/soc/qcom/wcnss_ctrl.o": "a210d51d4c149dee9631c60ccb9707495c341ede766a3e7e7ddfdd4535bf4b1b",
+        "drivers/net/wireless/ath/wcn36xx/main.o": "abfeb43d2510724391a4588c3ea3c1df45dff9c33504345edcee0ce7f757f1f0",
+        "drivers/net/wireless/ath/wcn36xx/dxe.o": "f7221358cf30fc388c8a6d1f57f6aa16d4c31c2e7ecbc91fbba1cdf34080e642",
+        "drivers/net/wireless/ath/wcn36xx/txrx.o": "dac42a9a9feca210871cd91a5aa7af794525cb7c8f9043a81352c3cd603618b5",
+        "drivers/net/wireless/ath/wcn36xx/smd.o": "b518348d6980c54c0a1ee7fc8a27be2348b2df4e73bf96600ef13713e47a3366",
+        "drivers/net/wireless/ath/wcn36xx/pmc.o": "56f7a0fe8d178eb5f213c628373881020776267a728a2a929ccc1726d2211fb7",
+        "drivers/net/wireless/ath/wcn36xx/debug.o": "d987aae79b24202b15917387e9e3ac4b5c7bba7ba1a0123ced877b1d5f746f67",
+        "drivers/net/wireless/ath/wcn36xx/firmware.o": "a0238e807b2c25a98b85cd7367a13df578998826f6d3acd8ec1b529aad249c3d",
+        "drivers/net/wireless/ath/wcn36xx/testmode.o": "36109f850f5178612b4ed2affb06f8af337402743e2b42dba28732600d2e00b6"
+      }
+    },
+    {
+      "profile": "arm64-rt-NFC-WCNSS-m",
+      "ARCH": "arm64",
+      "PREEMPT_RT": true,
+      "ACPI": true,
+      "mode": "m",
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "1f4a64939b7929c1f0e1841b325fb22c08a6380d37b0ff71bb1d41f595deec70",
+      "objects": {
+        "drivers/nfc/nxp-nci/core.o": "6b737b8fb105faba699e6d180ad3667ac7007f098a0bf300f701bc1c0205b37b",
+        "drivers/nfc/nxp-nci/firmware.o": "29430efafce3b277535a6c69cd0769aba73bcd60de62b07bb71ecf712bfbb9b4",
+        "drivers/nfc/nxp-nci/i2c.o": "b962a78bde411bbbba33c447885ee41222eb829b05e920c384195fdd55d37dd7",
+        "net/nfc/nci/core.o": "8c72627afa79b308dc6eafc77e8752eb6cddc2cb39a6b48f46a1f8186f680799",
+        "net/nfc/nci/data.o": "8ed6abddac4720c40de1933885e82c235ea8d934859bd6dee7322be5ed105318",
+        "net/nfc/nci/lib.o": "a2ad9e2d450b8f124df0f513608ddfe3cb08f97d95392c9bb8ec6015524630d2",
+        "net/nfc/nci/ntf.o": "96d7db28a2265b3676441938c026e09ca6e5079a5473fb9222821c2f1d0b3262",
+        "net/nfc/nci/rsp.o": "5c3c634cf573df06acd563840bef7dac2373405122e78e8b50594e81894f0f55",
+        "net/nfc/nci/hci.o": "4590f365865b0a9bbd7eb546a646a010fd4e1e9e8c017076eedee6eaa752be62",
+        "drivers/remoteproc/qcom_wcnss.o": "d8b4fd035ac5e4be4eb980518c45ef0f6de70f458f2f496e41b9cbb1be1843e9",
+        "drivers/remoteproc/qcom_wcnss_iris.o": "0c5a9657a9e083e8e5fe9798b9132958168362ec74283ea05850b409719b441f",
+        "drivers/soc/qcom/wcnss_ctrl.o": "87216e3f81b9967d063ca346449d756115f4a6b6787a33663cdc52ca26338230",
+        "drivers/net/wireless/ath/wcn36xx/main.o": "99c3f58999b6323b67c94b3278e9623757d1dbe45b15e4b087106985f76fd961",
+        "drivers/net/wireless/ath/wcn36xx/dxe.o": "c7b54137588168a7a66d94d34de9546e52c491b9e94aa6f58b4add97caef3c0b",
+        "drivers/net/wireless/ath/wcn36xx/txrx.o": "b6610f1237a2a7ebef41f36d614feb0725b2b66fa6246e6855c9ef9dfbaed8de",
+        "drivers/net/wireless/ath/wcn36xx/smd.o": "f79a09b4ba59d94560b1f73424cb6283947bc51ba48d6941514af29fd8377671",
+        "drivers/net/wireless/ath/wcn36xx/pmc.o": "131b0cffe8de41930f9d596b429654e74055501045e4dcfcb0a18ec3b00e7db3",
+        "drivers/net/wireless/ath/wcn36xx/debug.o": "f901b5048ec9fc0b63bd97c05d603a38c71f3be8354d3a83b7d1f82079a56824",
+        "drivers/net/wireless/ath/wcn36xx/firmware.o": "2103ec20391560e90def6604b9cbe4b94d2cd7ec798ef5514b7850b48337217f",
+        "drivers/net/wireless/ath/wcn36xx/testmode.o": "cc19cec98cb784781956953bdac67eb1328dca0c5d02785d8f22a683e79e37b9"
+      }
+    }
+  ],
+  "stages": [
+    {
+      "profile": "arm-normal-NFC-WCNSS-y",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "7386ef001035bd5bacffff0e9fdc9f461b462ff67c78326c262b3bee1897b6c0"
+    },
+    {
+      "profile": "arm-normal-NFC-WCNSS-y",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "5eee4d8cf6cad914904b5d04604d7c97c42af79390a2f24aa31dd9480e308cc2"
+    },
+    {
+      "profile": "arm64-normal-NFC-WCNSS-m",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "036a8b906823a965dcfe6e2fab70de0a489cc493e899a46e1b13089f2c16a1ca"
+    },
+    {
+      "profile": "arm64-normal-NFC-WCNSS-m",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "aba2447b65bdf2fd3e56280fa36de63d7b3a43b203c03999bbccbee0aec8ac80"
+    },
+    {
+      "profile": "arm64-rt-NFC-WCNSS-m",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "b83b922af455cf332df05618464a2f18aa1f2a81ee0280b836749813c61f9e29"
+    },
+    {
+      "profile": "arm64-rt-NFC-WCNSS-m",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "d2c29be1837455feb64f9a1adfb890fa82d51f3fd5d3b00a65137bfcbca771d4"
+    }
+  ],
+  "ARM32_RT_unsupported_not_counted": true,
+  "phone_access": false,
+  "wireless_or_NFC_execution": false,
+  "native_objects": 60,
+  "owned_child_terminal_and_reaped": true
+}

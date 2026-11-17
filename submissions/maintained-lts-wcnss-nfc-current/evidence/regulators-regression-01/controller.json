@@ -1,0 +1,39 @@
+{
+  "source_SHA256": "e7b1427896bed0d390a20d7dd9b515e545ed79267783c2009b29d02823ebc0a3",
+  "executed_helper_SHA256": "f2038a28529dba0f02c0ebf899dfb44b4145a6fd270eb64643b5cde6b3b7bc5f",
+  "fixture_SHA256": "15d982095f587ab9928b92c3e859e56d2957ebeab11f44735c3b5773abd35b47",
+  "commands": [
+    [
+      "clang-21",
+      "-std=gnu11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wno-missing-field-initializers",
+      "-g",
+      "-O1",
+      "-fsanitize=address,undefined",
+      "-fno-omit-frame-pointer",
+      "-DEXPECT_BROKEN=1",
+      "/home/tim/Documents/GitHub/fx0/local/fx0-lts-production-current-01/wcnss-nfc-01/regulators-regression-01/regulators.c",
+      "-o",
+      "/home/tim/Documents/GitHub/fx0/local/fx0-lts-production-current-01/wcnss-nfc-01/regulators-regression-01/regulators"
+    ],
+    [
+      "/home/tim/Documents/GitHub/fx0/local/fx0-lts-production-current-01/wcnss-nfc-01/regulators-regression-01/regulators"
+    ]
+  ],
+  "expectation": "broken",
+  "host_interfaces_emulated": true,
+  "hardware_qualified": false,
+  "phone_access": false,
+  "stage_0_returncode": 0,
+  "stage_1_returncode": 0,
+  "passed": true,
+  "result": {
+    "cases": 8,
+    "correct": 2,
+    "wrong": 6,
+    "error_controls": 16
+  }
+}

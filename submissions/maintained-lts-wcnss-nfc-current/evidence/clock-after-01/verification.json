@@ -1,0 +1,83 @@
+{
+  "actual_callback_bodies_preserved": true,
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "positive_cases": 9,
+  "independent_controls": 3,
+  "fixture_SHA256": "9cb8a1640d5e38d791588f1e4d22306ab990207b7ec429e5b9b01c5b4fd5d7d0",
+  "results": [
+    {
+      "label": "candidate",
+      "mode": "cycle",
+      "returncode": 0,
+      "expected_success": true
+    },
+    {
+      "label": "candidate",
+      "mode": "failure_retry",
+      "returncode": 0,
+      "expected_success": true
+    },
+    {
+      "label": "candidate",
+      "mode": "legacy_no_clock",
+      "returncode": 0,
+      "expected_success": true
+    },
+    {
+      "label": "candidate",
+      "mode": "missing_firmware_pin",
+      "returncode": 0,
+      "expected_success": true
+    },
+    {
+      "label": "candidate",
+      "mode": "firmware_clock_failure",
+      "returncode": 0,
+      "expected_success": true
+    },
+    {
+      "label": "candidate",
+      "mode": "probe_defer",
+      "returncode": 0,
+      "expected_success": true
+    },
+    {
+      "label": "candidate",
+      "mode": "probe_irq_failure",
+      "returncode": 0,
+      "expected_success": true
+    },
+    {
+      "label": "candidate",
+      "mode": "probe_DT",
+      "returncode": 0,
+      "expected_success": true
+    },
+    {
+      "label": "candidate",
+      "mode": "probe_ACPI",
+      "returncode": 0,
+      "expected_success": true
+    },
+    {
+      "label": "open-error-lost",
+      "mode": "failure_retry",
+      "returncode": 1,
+      "expected_success": false
+    },
+    {
+      "label": "clock-error-lost",
+      "mode": "firmware_clock_failure",
+      "returncode": 1,
+      "expected_success": false
+    },
+    {
+      "label": "clock-disable-missing",
+      "mode": "cycle",
+      "returncode": 1,
+      "expected_success": false
+    }
+  ],
+  "services_synthetic": true,
+  "phone_access": false
+}

@@ -1,0 +1,55 @@
+commit e6ac7649341759bde8fd028e7db6d1f6c3316ae0
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Sat Nov 14 23:26:30 2026 -0500
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sun Nov 15 18:07:09 2026 -0500
+
+    remoteproc: qcom_wcnss: Request PD regulators on Pronto v1/v2
+    
+    The v3 guard compares possible power domains with the number of non-PD
+    regulators. Pronto v1/v2 also have two possible domains and one non-PD
+    regulator, so the guard selects only the first table entry, vddcx.
+    It omits MX/PX for one attached domain and PX for two attached domains.
+    Legacy DTs without domains also lose MX/PX.
+    
+    Identify tables without PD regulators using num_pd_vregs directly,
+    retaining the v3 bounds protection and correct v1/v2 table selection.
+    
+    The source-extracted host fixture reproduces six wrong selections among
+    eight platform/domain cases before this change. Error injection covers
+    allocation and regulator-get failures. Real regulator hardware is untested.
+    
+    Refresh the existing implementation from 61c60256c94a, originally by
+    Timothy Schmidt with Claude Opus 5.5 assistance. This current-base refresh
+    and qualification used OpenAI Codex; human review and DCO are pending.
+    
+    Fixes: 3dbc90b9c22e ("remoteproc: qcom_wcnss: Fix handling the lack of PD regulators in v3")
+    
+    Assisted-by: LLM
+
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index c856a92af43c..fe64b568b16d 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -445,19 +445,15 @@ static int wcnss_init_regulators(struct qcom_wcnss *wcnss,
+ {
+ 	const struct wcnss_vreg_info *info = data->vregs;
+ 	struct regulator_bulk_data *bulk;
+-	size_t i, possible_pds = 0, num_vregs = data->num_vregs;
++	size_t i, num_vregs = data->num_vregs;
+ 	int ret;
+ 
+-	for (i = 0; i < WCNSS_MAX_PDS; i++)
+-		if (data->pd_names[i])
+-			possible_pds++;
+-
+ 	/*
+ 	 * If attaching the power domains suceeded we can skip requesting
+ 	 * the regulators for the power domains. For old device trees we need to
+ 	 * reserve extra space to manage them through the regulator interface.
+ 	 */
+-	if (possible_pds >= num_vregs) {
++	if (!data->num_pd_vregs) {
+ 		/* Do nothing if vregs do not include PD regulators (pronto-v3) */
+ 	} else if (wcnss->num_pds) {
+ 		info += wcnss->num_pds;

@@ -1,0 +1,135 @@
+From 9404515d4b8b40d01cfe47c2c40260781fffdb6f Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 18:15:17 -0500
+Subject: [PATCH] nfc: nxp-nci: balance an optional reference clock across
+ modes
+
+Carry the reviewed change into the maintained LTS tree. Preserve the
+original author, timestamp, source notices and assistance disclosures.
+Keep the existing LTS allocation, I2C ID and NCI interfaces. The
+optional clock reconciliation omits newer-base cleanup already absent
+from LTS.
+
+The actual NCI close/reset/receive/removal model reproduces nine wrong
+baseline cases and none of ten after repair. Nine optional-clock/probe
+cases and nine teardown/clock regression variants pass their
+contracts. WCNSS selection/classification is already present and
+tested separately. Sixty ARM, ARM64 and ARM64 RT native objects
+compile without diagnostics using nonpermissive CFI, including
+built-in/module and ACPI-off/on paths. All nineteen family DTBs pass
+the full schema; sixteen remain identical, and the three Madai
+variants gain only NFC and its bus/pin configuration. Seventy-five
+inherited DTC warnings are retained without a new diagnostic.
+
+Core services, locks, IRQ completion, bus, clocks and scheduling are
+modeled. Physical NFC/radio, concurrent firmware, complete driver core
+and final-image qualification remain open. Codex prepared the LTS port
+and qualification. Human DCO and owner/security review remain pending;
+no sign-off, phone action, Wi-Fi scan or publication is claimed.
+
+Original reviewed changelog and disclosures:
+
+Enable the optional reference clock before raising controller GPIOs
+and release its vote after entering cold mode. Propagate lookup and
+enable errors, keep the core cold after failed open, and allow a
+subsequent retry. Repeated active transitions keep one clock vote.
+
+Nine synthetic clock/probe cases and three deliberate regression
+controls check ordering, retry, optional resources and error
+propagation. Ten closing-reset/removal cases also pass with normal
+leak checking and fail-fast address/undefined sanitizers. Physical NFC
+is not qualified.
+
+Port of Timothy Schmidt's original implementation f10c7ef55dfa. Author
+and timestamp are preserved. The port, changelog and qualification
+used OpenAI Codex assistance. Human review and DCO certification
+remain pending. No agent Signed-off-by tag is added.
+
+Backported from commit b675a1d674f9 ("nfc: nxp-nci: balance an
+optional reference clock across modes")
+---
+ drivers/nfc/nxp-nci/core.c |  5 ++++-
+ drivers/nfc/nxp-nci/i2c.c  | 23 ++++++++++++++++++++++-
+ 2 files changed, 26 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/nfc/nxp-nci/core.c b/drivers/nfc/nxp-nci/core.c
+index 6ad840dc9ef57..0fba583e9f7ce 100644
+--- a/drivers/nfc/nxp-nci/core.c
++++ b/drivers/nfc/nxp-nci/core.c
+@@ -42,8 +42,11 @@ static int nxp_nci_open(struct nci_dev *ndev)
+ 		goto open_exit;
+ 	}
+ 
+-	if (info->phy_ops->set_mode)
++	if (info->phy_ops->set_mode) {
+ 		r = info->phy_ops->set_mode(info->phy_id, NXP_NCI_MODE_NCI);
++		if (r)
++			goto open_exit;
++	}
+ 
+ 	info->mode = NXP_NCI_MODE_NCI;
+ 
+diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
+index 29427d998d96f..1e2a4bec26e3d 100644
+--- a/drivers/nfc/nxp-nci/i2c.c
++++ b/drivers/nfc/nxp-nci/i2c.c
+@@ -13,6 +13,7 @@
+  */
+ 
+ #include <linux/acpi.h>
++#include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/i2c.h>
+ #include <linux/interrupt.h>
+@@ -36,6 +37,8 @@ struct nxp_nci_i2c_phy {
+ 
+ 	struct gpio_desc *gpiod_en;
+ 	struct gpio_desc *gpiod_fw;
++	struct clk *ref_clk;
++	bool ref_clk_enabled;
+ 	bool irq_requested;
+ 
+ 	int hard_fault; /*
+@@ -48,13 +51,26 @@ static int nxp_nci_i2c_set_mode(void *phy_id,
+ 				    enum nxp_nci_mode mode)
+ {
+ 	struct nxp_nci_i2c_phy *phy = (struct nxp_nci_i2c_phy *) phy_id;
++	int r;
++
++	if (mode != NXP_NCI_MODE_COLD && !phy->ref_clk_enabled) {
++		r = clk_prepare_enable(phy->ref_clk);
++		if (r)
++			return r;
++		phy->ref_clk_enabled = true;
++	}
+ 
+ 	gpiod_set_value_cansleep(phy->gpiod_fw, (mode == NXP_NCI_MODE_FW) ? 1 : 0);
+ 	gpiod_set_value_cansleep(phy->gpiod_en, (mode != NXP_NCI_MODE_COLD) ? 1 : 0);
+ 	usleep_range(10000, 15000);
+ 
+-	if (mode == NXP_NCI_MODE_COLD)
++	if (mode == NXP_NCI_MODE_COLD) {
++		if (phy->ref_clk_enabled) {
++			clk_disable_unprepare(phy->ref_clk);
++			phy->ref_clk_enabled = false;
++		}
+ 		phy->hard_fault = 0;
++	}
+ 
+ 	return 0;
+ }
+@@ -297,6 +313,11 @@ static int nxp_nci_i2c_probe(struct i2c_client *client)
+ 	phy->i2c_dev = client;
+ 	i2c_set_clientdata(client, phy);
+ 
++	phy->ref_clk = devm_clk_get_optional(dev, "ref");
++	if (IS_ERR(phy->ref_clk))
++		return dev_err_probe(dev, PTR_ERR(phy->ref_clk),
++				     "Failed to get reference clock\n");
++
+ 	r = devm_acpi_dev_add_driver_gpios(dev, acpi_nxp_nci_gpios);
+ 	if (r)
+ 		dev_dbg(dev, "Unable to add GPIO mapping table\n");
+-- 
+2.56.0
+
