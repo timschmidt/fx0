@@ -1,0 +1,76 @@
+From 37c004d4c826f348f0c84fd88a9630402ad90a5b Mon Sep 17 00:00:00 2001
+From: Wahid Khan <wahidzk0091@gmail.com>
+Date: Wed, 4 Nov 2026 21:14:50 +0000
+Subject: [PATCH] wifi: cfg80211: don't truncate the merged MBSSID profile
+ length
+
+Carry the exact added/removed source delta into maintained LTS. Keep the
+existing LTS cache, reference, profile parser and request ownership
+interfaces. Preserve the original author, date, source notices and
+assistance disclosures.
+
+Nineteen new real-kernel KUnit case instances exercise eighteen profile
+lengths through 1536 bytes and sixteen repeated rejected reports on an
+unregistered dummy wiphy. All pass after repair; fourteen fail on the
+baseline. Independent reference-only and length-only kernel controls
+fail thirteen and one case respectively. The existing completion path
+matches four reviewed function bodies and passes thirty synthetic
+lifecycle cases with two fault controls. Twelve ARM, ARM64 and ARM64 RT
+objects compile with W=1 and nonpermissive CFI, including WEXT-on/off
+and built-in/module paths.
+
+UML has no host networking devices or host filesystem driver. Its
+default public regulatory-certificate verification remains enabled;
+modules and private signing are disabled. Inherited UML null-pointer
+arithmetic and linker RWX warnings remain recorded. Physical wireless,
+scan requests, real driver concurrency and final-image acceptance are
+not exercised. Codex prepared the LTS port and qualification; genuine
+upstream trailers below are provenance, not new sign-offs for the port.
+Human DCO and owner/security review remain pending.
+
+Original reviewed changelog and upstream trailers:
+
+cfg80211_parse_mbssid_data() keeps the length of a non-transmitted BSSID
+profile in a u8. cfg80211_merge_profile() returns a size_t, and it
+concatenates a profile that is split over several Multiple BSSID
+elements, so the merged length can be well above 255 even though every
+single sub-element is at most 255 bytes long.
+
+The value is then cut to its low 8 bits. A 300 byte profile is handled
+as a 44 byte one: the elements after the cut are lost from the generated
+non-transmitted BSS, and if the Multiple BSSID-Index element lies past
+the cut the BSS is dropped altogether. Any AP in range can send such a
+profile.
+
+The multi-link code further down in the same file already uses a signed
+size type for the profile length. Do the same here, cfg80211_find_ie()
+and cfg80211_gen_new_ie() take a size_t anyway.
+
+Fixes: fe806e4992c9 ("cfg80211: support profile split between elements")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wahid Khan <wahidzk0091@gmail.com>
+Link: https://patch.msgid.link/20261104211451.693451-1-wahidzk0091@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+
+Backported from commit e0356a16e790 ("wifi: cfg80211: don't truncate the
+merged MBSSID profile length")
+---
+ net/wireless/scan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 3f9add3b8c2cc..c839101cfb7e5 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -2588,7 +2588,7 @@ cfg80211_parse_mbssid_data(struct wiphy *wiphy,
+ 		if (elem->data[0] < 1 || (int)elem->data[0] > 8)
+ 			continue;
+ 		for_each_element(sub, elem->data + 1, elem->datalen - 1) {
+-			u8 profile_len;
++			size_t profile_len;
+ 
+ 			if (sub->id != 0 || sub->datalen < 4) {
+ 				/* not a valid BSS profile */
+-- 
+2.56.0
+

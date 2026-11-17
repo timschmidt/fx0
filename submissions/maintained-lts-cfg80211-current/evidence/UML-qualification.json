@@ -1,0 +1,70 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "label": "after-03",
+      "tests": 19,
+      "passed": 19,
+      "failed": 0,
+      "rejected_reference_test_status": "PASS",
+      "source_files": {
+        "net/wireless/scan.c": "d97ae6567b88e1ec4c8c8de735a367a019c252647381438188919e255a36f39d",
+        "net/wireless/tests/scan.c": "9986184bb01749c511b4db3f8ebac887bb69801a37ddf0e46f8a333660a4b91d",
+        "net/wireless/tests/util.c": "2f488f75c5742bb213f10e4d827b948128d34bf8676ccfac50e4f5d0942a2d19",
+        "net/wireless/tests/util.h": "d17abbfcd79760f96ffd0ce02b058dbc8d58b80ef6aa92e7433b93a19c38b602"
+      }
+    },
+    {
+      "label": "before-03",
+      "tests": 19,
+      "passed": 5,
+      "failed": 14,
+      "rejected_reference_test_status": "FAIL",
+      "source_files": {
+        "net/wireless/scan.c": "cf6147afc391c8ae47b27d7b6bd208d385146e5d3087a2506f6aee79d6467ab7",
+        "net/wireless/tests/scan.c": "9986184bb01749c511b4db3f8ebac887bb69801a37ddf0e46f8a333660a4b91d",
+        "net/wireless/tests/util.c": "2f488f75c5742bb213f10e4d827b948128d34bf8676ccfac50e4f5d0942a2d19",
+        "net/wireless/tests/util.h": "d17abbfcd79760f96ffd0ce02b058dbc8d58b80ef6aa92e7433b93a19c38b602"
+      }
+    },
+    {
+      "label": "reference-only-01",
+      "tests": 19,
+      "passed": 6,
+      "failed": 13,
+      "rejected_reference_test_status": "PASS",
+      "source_files": {
+        "net/wireless/scan.c": "998d490c33bed0d1baf852e43a9fb7585868c32a618a016b375550cb467471cc",
+        "net/wireless/tests/scan.c": "9986184bb01749c511b4db3f8ebac887bb69801a37ddf0e46f8a333660a4b91d",
+        "net/wireless/tests/util.c": "2f488f75c5742bb213f10e4d827b948128d34bf8676ccfac50e4f5d0942a2d19",
+        "net/wireless/tests/util.h": "d17abbfcd79760f96ffd0ce02b058dbc8d58b80ef6aa92e7433b93a19c38b602"
+      }
+    },
+    {
+      "label": "length-only-01",
+      "tests": 19,
+      "passed": 18,
+      "failed": 1,
+      "rejected_reference_test_status": "FAIL",
+      "source_files": {
+        "net/wireless/scan.c": "b777ad7d891e808f489a8b295fda056d793d075d0e121550bbcc827b242d602d",
+        "net/wireless/tests/scan.c": "9986184bb01749c511b4db3f8ebac887bb69801a37ddf0e46f8a333660a4b91d",
+        "net/wireless/tests/util.c": "2f488f75c5742bb213f10e4d827b948128d34bf8676ccfac50e4f5d0942a2d19",
+        "net/wireless/tests/util.h": "d17abbfcd79760f96ffd0ce02b058dbc8d58b80ef6aa92e7433b93a19c38b602"
+      }
+    }
+  ],
+  "new_case_instances": 19,
+  "profile_lengths": 18,
+  "rejected_report_repetitions": 16,
+  "independent_kernel_controls": 2,
+  "valid_inputs_full_kernel_MBSSID_and_BSS_reference_paths": true,
+  "unregistered_dummy_wiphy_only": true,
+  "scan_requests_sent": false,
+  "concurrent_driver_or_physical_wireless_qualified": false,
+  "default_public_regdb_verification_preserved": true,
+  "private_signing_key_used": false,
+  "inherited_UML_null_pointer_arithmetic_and_RWX_linker_warnings_retained": true,
+  "native_ARM_and_ARM64_diagnostics_clean": true,
+  "phone_access": false
+}

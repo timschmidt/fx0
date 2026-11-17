@@ -1,0 +1,101 @@
+{
+  "sha": "3ea152f3f77eeffc37b2f4423688b4df9136f90c",
+  "node_id": "C_kwDOACN7MtoAKDNlYTE1MmYzZjc3ZWVmZmMzN2IyZjQ0MjM2ODhiNGRmOTEzNmY5MGM",
+  "commit": {
+    "author": {
+      "name": "Wahid Khan",
+      "email": "wahidzk0091@gmail.com",
+      "date": "2026-11-04T21:14:50Z"
+    },
+    "committer": {
+      "name": "Johannes Berg",
+      "email": "johannes.berg@intel.com",
+      "date": "2026-11-10T09:52:02Z"
+    },
+    "message": "wifi: cfg80211: don't truncate the merged MBSSID profile length\n\ncfg80211_parse_mbssid_data() keeps the length of a non-transmitted BSSID\nprofile in a u8. cfg80211_merge_profile() returns a size_t, and it\nconcatenates a profile that is split over several Multiple BSSID\nelements, so the merged length can be well above 255 even though every\nsingle sub-element is at most 255 bytes long.\n\nThe value is then cut to its low 8 bits. A 300 byte profile is handled\nas a 44 byte one: the elements after the cut are lost from the generated\nnon-transmitted BSS, and if the Multiple BSSID-Index element lies past\nthe cut the BSS is dropped altogether. Any AP in range can send such a\nprofile.\n\nThe multi-link code further down in the same file already uses a signed\nsize type for the profile length. Do the same here, cfg80211_find_ie()\nand cfg80211_gen_new_ie() take a size_t anyway.\n\nFixes: fe806e4992c9 (\"cfg80211: support profile split between elements\")\nCc: stable@vger.kernel.org\nSigned-off-by: Wahid Khan <wahidzk0091@gmail.com>\nLink: https://patch.msgid.link/20261104211451.693451-1-wahidzk0091@gmail.com\nSigned-off-by: Johannes Berg <johannes.berg@intel.com>",
+    "tree": {
+      "sha": "90bd741ee8167ede57cec7461362658d563bfb87",
+      "url": "https://api.github.com/repos/torvalds/linux/git/trees/90bd741ee8167ede57cec7461362658d563bfb87"
+    },
+    "url": "https://api.github.com/repos/torvalds/linux/git/commits/3ea152f3f77eeffc37b2f4423688b4df9136f90c",
+    "comment_count": 0,
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    }
+  },
+  "url": "https://api.github.com/repos/torvalds/linux/commits/3ea152f3f77eeffc37b2f4423688b4df9136f90c",
+  "html_url": "https://github.com/torvalds/linux/commit/3ea152f3f77eeffc37b2f4423688b4df9136f90c",
+  "comments_url": "https://api.github.com/repos/torvalds/linux/commits/3ea152f3f77eeffc37b2f4423688b4df9136f90c/comments",
+  "author": {
+    "login": "Wahid7852",
+    "id": 63857471,
+    "node_id": "MDQ6VXNlcjYzODU3NDcx",
+    "avatar_url": "https://avatars.githubusercontent.com/u/63857471?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/Wahid7852",
+    "html_url": "https://github.com/Wahid7852",
+    "followers_url": "https://api.github.com/users/Wahid7852/followers",
+    "following_url": "https://api.github.com/users/Wahid7852/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Wahid7852/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Wahid7852/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Wahid7852/subscriptions",
+    "organizations_url": "https://api.github.com/users/Wahid7852/orgs",
+    "repos_url": "https://api.github.com/users/Wahid7852/repos",
+    "events_url": "https://api.github.com/users/Wahid7852/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Wahid7852/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "committer": {
+    "login": "jmberg-intel",
+    "id": 96500427,
+    "node_id": "U_kgDOBcB6yw",
+    "avatar_url": "https://avatars.githubusercontent.com/u/96500427?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/jmberg-intel",
+    "html_url": "https://github.com/jmberg-intel",
+    "followers_url": "https://api.github.com/users/jmberg-intel/followers",
+    "following_url": "https://api.github.com/users/jmberg-intel/following{/other_user}",
+    "gists_url": "https://api.github.com/users/jmberg-intel/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/jmberg-intel/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/jmberg-intel/subscriptions",
+    "organizations_url": "https://api.github.com/users/jmberg-intel/orgs",
+    "repos_url": "https://api.github.com/users/jmberg-intel/repos",
+    "events_url": "https://api.github.com/users/jmberg-intel/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/jmberg-intel/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "parents": [
+    {
+      "sha": "5e25f6b1b18d507828f7bb4be9bdcd240fbb923d",
+      "url": "https://api.github.com/repos/torvalds/linux/commits/5e25f6b1b18d507828f7bb4be9bdcd240fbb923d",
+      "html_url": "https://github.com/torvalds/linux/commit/5e25f6b1b18d507828f7bb4be9bdcd240fbb923d"
+    }
+  ],
+  "stats": {
+    "total": 2,
+    "additions": 1,
+    "deletions": 1
+  },
+  "files": [
+    {
+      "sha": "1c50a16c0e9bea0bed89701a2584d833840a6296",
+      "filename": "net/wireless/scan.c",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2,
+      "blob_url": "https://github.com/torvalds/linux/blob/3ea152f3f77eeffc37b2f4423688b4df9136f90c/net%2Fwireless%2Fscan.c",
+      "raw_url": "https://github.com/torvalds/linux/raw/3ea152f3f77eeffc37b2f4423688b4df9136f90c/net%2Fwireless%2Fscan.c",
+      "contents_url": "https://api.github.com/repos/torvalds/linux/contents/net%2Fwireless%2Fscan.c?ref=3ea152f3f77eeffc37b2f4423688b4df9136f90c",
+      "patch": "@@ -2593,7 +2593,7 @@ cfg80211_parse_mbssid_data(struct wiphy *wiphy,\n \t\tif (elem->data[0] < 1 || (int)elem->data[0] > 8)\n \t\t\tcontinue;\n \t\tfor_each_element(sub, elem->data + 1, elem->datalen - 1) {\n-\t\t\tu8 profile_len;\n+\t\t\tsize_t profile_len;\n \n \t\t\tif (sub->id != 0 || sub->datalen < 4) {\n \t\t\t\t/* not a valid BSS profile */"
+    }
+  ]
+}

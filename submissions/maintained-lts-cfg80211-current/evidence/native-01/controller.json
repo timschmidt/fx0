@@ -1,0 +1,112 @@
+{
+  "passed": true,
+  "state": "terminal success",
+  "source_files": {
+    "net/wireless/scan.c": "d97ae6567b88e1ec4c8c8de735a367a019c252647381438188919e255a36f39d",
+    "net/wireless/core.c": "0dbcad816fc287495b7f1d348048cbd41829aff024a2449dd4574f2143eb7af6",
+    "net/wireless/nl80211.c": "84b8cbf570c7b96af565e3b1edcda9057fa2c8269e469ffceccec7363804be81",
+    "net/wireless/util.c": "5b909099044ed61134f435c827a23470771631c5217f55ab255614fb9d0e3cd1",
+    "net/wireless/core.h": "160dc2bb14b9f5d1c1e06f0e757fb7e218b0fbb00b9b0ae26b8a76b68c1b64d0",
+    "include/net/cfg80211.h": "bccd698032f5a7b9b88ec1026e8b9ce4d78697c8b185f8427b8c42d59c741442",
+    "include/linux/ieee80211.h": "0b2911ff00e711b92a7fb8f86092cada83d4eb0f45af46358fb19a0c00d8357e"
+  },
+  "profiles": [
+    {
+      "profile": "arm-normal-cfg80211-y",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "mode": "y",
+      "WEXT": true,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "d50b60631310907107f2d0e6cf719f6cd74e6918c3e6661a21e866a9bfcf0526",
+      "objects": {
+        "net/wireless/scan.o": "e2d3d438963ab140bb1e86b3aa5d1adb027e39587914e9c7cf89edaad4279c5a",
+        "net/wireless/core.o": "96afebcff3547784c36cfde8bedb4cebc0a2d79707a4abbaf434dc80f1fae9a1",
+        "net/wireless/nl80211.o": "ac17f8036b28b24679009c6262c648248f8cc59cdd044fb4f5c13196c42d1acf",
+        "net/wireless/util.o": "a84b420a0929ac911434b9b6992732df32179e7622af1ef194579f4fde9a216e"
+      }
+    },
+    {
+      "profile": "arm64-normal-cfg80211-m",
+      "ARCH": "arm64",
+      "PREEMPT_RT": false,
+      "mode": "m",
+      "WEXT": false,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "353842e2da283be444edbc948b7900671031cbb55e9b1f25d55ca830f2d85c15",
+      "objects": {
+        "net/wireless/scan.o": "7a5e2240bd432390b4d1878a31c9d0cde7cdb1fb6ca5abca4e021ce2ed8faf85",
+        "net/wireless/core.o": "058aa284c2e2c1f066b051773ad1aaea150efe32622a61a3de555f2d032b3e54",
+        "net/wireless/nl80211.o": "91891f6a41049b49baafb49592afb8c9ec01a41cf3c068e19e18b1bab7d6c4da",
+        "net/wireless/util.o": "ade991ad134bfb8af0388260a0b8f0fa1181227860b1014e45cb2fbf32f4b2d3"
+      }
+    },
+    {
+      "profile": "arm64-rt-cfg80211-m",
+      "ARCH": "arm64",
+      "PREEMPT_RT": true,
+      "mode": "m",
+      "WEXT": false,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "9e39bb6c27f436f1ca3a64e0bd0bd46d6b0dc2bdc6d171377208e50f02dd4bad",
+      "objects": {
+        "net/wireless/scan.o": "2db8f7ec74aadc85192cbe50b929c8ffe2965a5a23c45be91301f38f74f793c6",
+        "net/wireless/core.o": "f69682e6255d8ccf5340def5db42e6a95dbfdf23eabbbcc5a995996b068e621d",
+        "net/wireless/nl80211.o": "94eb5353ba23384d4915abb5a556c15de162e6348be767975ff8f7b8e6d61000",
+        "net/wireless/util.o": "dcf63ba086664d16d7b501f4a23592ae58997d7279d9809ba5afa6a4d2a51caa"
+      }
+    }
+  ],
+  "stages": [
+    {
+      "profile": "arm-normal-cfg80211-y",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "1dc96510ed92e217579100a5c80be246d6c037ab13f636e0909785a98eb92b3c"
+    },
+    {
+      "profile": "arm-normal-cfg80211-y",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "631a65abad7335e5e14d69673470ffc8b6824ef6fb607dd3ddcdfda3123a4d7f"
+    },
+    {
+      "profile": "arm64-normal-cfg80211-m",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "32df2e63c719e040aa7f4bfe8b2e32d1c920aca1c282a36439e4b7a1c7016921"
+    },
+    {
+      "profile": "arm64-normal-cfg80211-m",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "e9f73f5d7f591d90802f48c369008184f71e0dc59f5c54f0c0bafeec0a621db6"
+    },
+    {
+      "profile": "arm64-rt-cfg80211-m",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "a931d473ceec6bc267cf3b93dab8bda2564685d3c5656f895a2724164e6025c8"
+    },
+    {
+      "profile": "arm64-rt-cfg80211-m",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "a8e66ffe1c1b9984b349b8a05d4747bff4bd6c21ca0884bec5b268c4700a6fb4"
+    }
+  ],
+  "phone_access": false,
+  "radio_or_network_execution": false,
+  "ARM32_RT_unsupported_not_counted": true,
+  "native_objects": 12,
+  "owned_child_terminal_and_reaped": true
+}

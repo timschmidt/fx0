@@ -1,0 +1,69 @@
+From 5b451aafe5e094357b62296fc0bcadd4fa28d5cd Mon Sep 17 00:00:00 2001
+From: Zhao Li <enderaoelyther@gmail.com>
+Date: Wed, 28 Oct 2026 14:17:31 +0000
+Subject: [PATCH] wifi: cfg80211: release rejected nontransmitted BSS reference
+
+Carry the exact added/removed source delta into maintained LTS. Keep the
+existing LTS cache, reference, profile parser and request ownership
+interfaces. Preserve the original author, date, source notices and
+assistance disclosures.
+
+Nineteen new real-kernel KUnit case instances exercise eighteen profile
+lengths through 1536 bytes and sixteen repeated rejected reports on an
+unregistered dummy wiphy. All pass after repair; fourteen fail on the
+baseline. Independent reference-only and length-only kernel controls
+fail thirteen and one case respectively. The existing completion path
+matches four reviewed function bodies and passes thirty synthetic
+lifecycle cases with two fault controls. Twelve ARM, ARM64 and ARM64 RT
+objects compile with W=1 and nonpermissive CFI, including WEXT-on/off
+and built-in/module paths.
+
+UML has no host networking devices or host filesystem driver. Its
+default public regulatory-certificate verification remains enabled;
+modules and private signing are disabled. Inherited UML null-pointer
+arithmetic and linker RWX warnings remain recorded. Physical wireless,
+scan requests, real driver concurrency and final-image acceptance are
+not exercised. Codex prepared the LTS port and qualification; genuine
+upstream trailers below are provenance, not new sign-offs for the port.
+Human DCO and owner/security review remain pending.
+
+Original reviewed changelog and upstream trailers:
+
+Repeated MBSSID reports without an SSID can leak BSS entries outside the
+scan cache, where the BSS entry limit cannot account for them.
+
+__cfg80211_bss_update() returns a referenced BSS. If adding it to the
+transmitting BSS list fails, unlinking drops the cache reference, but
+the caller reference is lost when res is cleared.
+
+Release the caller reference before discarding the unlinked BSS.
+
+LLM assistance was used to find the bug and review.
+
+Fixes: 0b7808818cb9 ("wifi: cfg80211: fix BSS refcounting bugs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20261028141731.6185-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+
+Backported from commit 3bb006f3e3fb ("wifi: cfg80211: release rejected
+nontransmitted BSS reference")
+---
+ net/wireless/scan.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index cc40650d52d69..3f9add3b8c2cc 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -2445,6 +2445,7 @@ cfg80211_inform_single_bss_data(struct wiphy *wiphy,
+ 		if (cfg80211_add_nontrans_list(data->source_bss, &res->pub)) {
+ 			if (__cfg80211_unlink_bss(rdev, res)) {
+ 				rdev->bss_generation++;
++				bss_ref_put(rdev, res);
+ 				res = NULL;
+ 			}
+ 		}
+-- 
+2.56.0
+

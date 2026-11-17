@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "state": "terminal success",
+  "records": [
+    {
+      "label": "positive",
+      "cases": 30,
+      "checks": 146,
+      "failures": 0,
+      "delivered": 28,
+      "requests_freed": 43,
+      "returncode": 0,
+      "mutation": null,
+      "source_SHA256": "d97ae6567b88e1ec4c8c8de735a367a019c252647381438188919e255a36f39d",
+      "actual_functions": 4,
+      "work_messages_and_driver_timing_synthetic": true,
+      "physical_wireless_or_concurrency_acceptance": false,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "label": "no-deferred-work",
+      "cases": 30,
+      "checks": 146,
+      "failures": 52,
+      "delivered": 2,
+      "requests_freed": 43,
+      "returncode": 1,
+      "mutation": "no-deferred-work",
+      "source_SHA256": "d97ae6567b88e1ec4c8c8de735a367a019c252647381438188919e255a36f39d",
+      "actual_functions": 4,
+      "work_messages_and_driver_timing_synthetic": true,
+      "physical_wireless_or_concurrency_acceptance": false,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "label": "retain-delivered-message",
+      "cases": 30,
+      "checks": 146,
+      "failures": 26,
+      "delivered": 28,
+      "requests_freed": 43,
+      "returncode": 1,
+      "mutation": "retain-delivered-message",
+      "source_SHA256": "d97ae6567b88e1ec4c8c8de735a367a019c252647381438188919e255a36f39d",
+      "actual_functions": 4,
+      "work_messages_and_driver_timing_synthetic": true,
+      "physical_wireless_or_concurrency_acceptance": false,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "phone_access": false,
+  "scan_requests_sent": false,
+  "independent_controls": 2,
+  "owned_child_terminal_and_reaped": true
+}

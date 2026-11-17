@@ -1,0 +1,101 @@
+{
+  "sha": "f3c45d5b741a7d7586e639c2f55d2557029f2e1a",
+  "node_id": "C_kwDOACN7MtoAKGYzYzQ1ZDViNzQxYTdkNzU4NmU2MzljMmY1NWQyNTU3MDI5ZjJlMWE",
+  "commit": {
+    "author": {
+      "name": "Zhao Li",
+      "email": "enderaoelyther@gmail.com",
+      "date": "2026-10-28T14:17:31Z"
+    },
+    "committer": {
+      "name": "Johannes Berg",
+      "email": "johannes.berg@intel.com",
+      "date": "2026-11-10T09:17:55Z"
+    },
+    "message": "wifi: cfg80211: release rejected nontransmitted BSS reference\n\nRepeated MBSSID reports without an SSID can leak BSS entries outside the\nscan cache, where the BSS entry limit cannot account for them.\n\n__cfg80211_bss_update() returns a referenced BSS. If adding it to the\ntransmitting BSS list fails, unlinking drops the cache reference, but the\ncaller reference is lost when res is cleared.\n\nRelease the caller reference before discarding the unlinked BSS.\n\nLLM assistance was used to find the bug and review.\n\nFixes: 0b7808818cb9 (\"wifi: cfg80211: fix BSS refcounting bugs\")\nCc: stable@vger.kernel.org\nSigned-off-by: Zhao Li <enderaoelyther@gmail.com>\nLink: https://patch.msgid.link/20261028141731.6185-1-enderaoelyther@gmail.com\nSigned-off-by: Johannes Berg <johannes.berg@intel.com>",
+    "tree": {
+      "sha": "217b92663b88e471e39b7b94665379c651f5d5a8",
+      "url": "https://api.github.com/repos/torvalds/linux/git/trees/217b92663b88e471e39b7b94665379c651f5d5a8"
+    },
+    "url": "https://api.github.com/repos/torvalds/linux/git/commits/f3c45d5b741a7d7586e639c2f55d2557029f2e1a",
+    "comment_count": 0,
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    }
+  },
+  "url": "https://api.github.com/repos/torvalds/linux/commits/f3c45d5b741a7d7586e639c2f55d2557029f2e1a",
+  "html_url": "https://github.com/torvalds/linux/commit/f3c45d5b741a7d7586e639c2f55d2557029f2e1a",
+  "comments_url": "https://api.github.com/repos/torvalds/linux/commits/f3c45d5b741a7d7586e639c2f55d2557029f2e1a/comments",
+  "author": {
+    "login": "Lyther",
+    "id": 29906124,
+    "node_id": "MDQ6VXNlcjI5OTA2MTI0",
+    "avatar_url": "https://avatars.githubusercontent.com/u/29906124?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/Lyther",
+    "html_url": "https://github.com/Lyther",
+    "followers_url": "https://api.github.com/users/Lyther/followers",
+    "following_url": "https://api.github.com/users/Lyther/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Lyther/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Lyther/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Lyther/subscriptions",
+    "organizations_url": "https://api.github.com/users/Lyther/orgs",
+    "repos_url": "https://api.github.com/users/Lyther/repos",
+    "events_url": "https://api.github.com/users/Lyther/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Lyther/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "committer": {
+    "login": "jmberg-intel",
+    "id": 96500427,
+    "node_id": "U_kgDOBcB6yw",
+    "avatar_url": "https://avatars.githubusercontent.com/u/96500427?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/jmberg-intel",
+    "html_url": "https://github.com/jmberg-intel",
+    "followers_url": "https://api.github.com/users/jmberg-intel/followers",
+    "following_url": "https://api.github.com/users/jmberg-intel/following{/other_user}",
+    "gists_url": "https://api.github.com/users/jmberg-intel/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/jmberg-intel/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/jmberg-intel/subscriptions",
+    "organizations_url": "https://api.github.com/users/jmberg-intel/orgs",
+    "repos_url": "https://api.github.com/users/jmberg-intel/repos",
+    "events_url": "https://api.github.com/users/jmberg-intel/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/jmberg-intel/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "parents": [
+    {
+      "sha": "745f5d04395dfc4c311f443c7c04ccb00c436984",
+      "url": "https://api.github.com/repos/torvalds/linux/commits/745f5d04395dfc4c311f443c7c04ccb00c436984",
+      "html_url": "https://github.com/torvalds/linux/commit/745f5d04395dfc4c311f443c7c04ccb00c436984"
+    }
+  ],
+  "stats": {
+    "total": 1,
+    "additions": 1,
+    "deletions": 0
+  },
+  "files": [
+    {
+      "sha": "8f628cbcc8f57813171d89651a97d63f50e5eac0",
+      "filename": "net/wireless/scan.c",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1,
+      "blob_url": "https://github.com/torvalds/linux/blob/f3c45d5b741a7d7586e639c2f55d2557029f2e1a/net%2Fwireless%2Fscan.c",
+      "raw_url": "https://github.com/torvalds/linux/raw/f3c45d5b741a7d7586e639c2f55d2557029f2e1a/net%2Fwireless%2Fscan.c",
+      "contents_url": "https://api.github.com/repos/torvalds/linux/contents/net%2Fwireless%2Fscan.c?ref=f3c45d5b741a7d7586e639c2f55d2557029f2e1a",
+      "patch": "@@ -2453,6 +2453,7 @@ cfg80211_inform_single_bss_data(struct wiphy *wiphy,\n \t\tif (cfg80211_add_nontrans_list(data->source_bss, &res->pub)) {\n \t\t\tif (__cfg80211_unlink_bss(rdev, res)) {\n \t\t\t\trdev->bss_generation++;\n+\t\t\t\tbss_ref_put(rdev, res);\n \t\t\t\tres = NULL;\n \t\t\t}\n \t\t}"
+    }
+  ]
+}

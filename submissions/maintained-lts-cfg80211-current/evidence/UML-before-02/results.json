@@ -1,0 +1,140 @@
+{
+    "name": "KUnit Test Group",
+    "sub_groups": [
+        {
+            "name": "cfg80211-inform-bss",
+            "sub_groups": [
+                {
+                    "name": "test_inform_bss_mbssid_profile",
+                    "sub_groups": [],
+                    "test_cases": [
+                        {
+                            "name": "length_20",
+                            "status": "PASS"
+                        },
+                        {
+                            "name": "length_252",
+                            "status": "PASS"
+                        },
+                        {
+                            "name": "length_253",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_254",
+                            "status": "PASS"
+                        },
+                        {
+                            "name": "length_255",
+                            "status": "PASS"
+                        },
+                        {
+                            "name": "length_256",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_257",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_258",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_299",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_300",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_301",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_508",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_511",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_512",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_513",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_768",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_1024",
+                            "status": "FAIL"
+                        },
+                        {
+                            "name": "length_1536",
+                            "status": "FAIL"
+                        }
+                    ],
+                    "misc": {
+                        "tests": 18,
+                        "passed": 4,
+                        "failed": 14,
+                        "crashed": 0,
+                        "skipped": 0,
+                        "errors": 0
+                    },
+                    "arch": "um",
+                    "defconfig": "kunit_defconfig",
+                    "build_environment": "/home/tim/Documents/GitHub/fx0/local/fx0-lts-production-current-01/cfg80211-01/UML-before-01/out",
+                    "lab_name": null,
+                    "kernel": null,
+                    "job": null,
+                    "git_branch": "kselftest"
+                }
+            ],
+            "test_cases": [
+                {
+                    "name": "test_inform_bss_mbssid_rejected_refs",
+                    "status": "FAIL"
+                }
+            ],
+            "misc": {
+                "tests": 19,
+                "passed": 4,
+                "failed": 15,
+                "crashed": 0,
+                "skipped": 0,
+                "errors": 0
+            },
+            "arch": "um",
+            "defconfig": "kunit_defconfig",
+            "build_environment": "/home/tim/Documents/GitHub/fx0/local/fx0-lts-production-current-01/cfg80211-01/UML-before-01/out",
+            "lab_name": null,
+            "kernel": null,
+            "job": null,
+            "git_branch": "kselftest"
+        }
+    ],
+    "test_cases": [],
+    "misc": {
+        "tests": 19,
+        "passed": 4,
+        "failed": 15,
+        "crashed": 0,
+        "skipped": 0,
+        "errors": 0
+    },
+    "arch": "um",
+    "defconfig": "kunit_defconfig",
+    "build_environment": "/home/tim/Documents/GitHub/fx0/local/fx0-lts-production-current-01/cfg80211-01/UML-before-01/out",
+    "lab_name": null,
+    "kernel": null,
+    "job": null,
+    "git_branch": "kselftest"
+}

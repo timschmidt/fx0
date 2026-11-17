@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "source_files": {
+    "net/wireless/scan.c": "d97ae6567b88e1ec4c8c8de735a367a019c252647381438188919e255a36f39d",
+    "net/wireless/tests/scan.c": "9986184bb01749c511b4db3f8ebac887bb69801a37ddf0e46f8a333660a4b91d",
+    "net/wireless/tests/util.c": "2f488f75c5742bb213f10e4d827b948128d34bf8676ccfac50e4f5d0942a2d19",
+    "net/wireless/tests/util.h": "d17abbfcd79760f96ffd0ce02b058dbc8d58b80ef6aa92e7433b93a19c38b602",
+    "net/wireless/core.c": "0dbcad816fc287495b7f1d348048cbd41829aff024a2449dd4574f2143eb7af6",
+    "net/wireless/core.h": "160dc2bb14b9f5d1c1e06f0e757fb7e218b0fbb00b9b0ae26b8a76b68c1b64d0",
+    "net/wireless/nl80211.c": "84b8cbf570c7b96af565e3b1edcda9057fa2c8269e469ffceccec7363804be81",
+    "net/wireless/util.c": "5b909099044ed61134f435c827a23470771631c5217f55ab255614fb9d0e3cd1",
+    "include/net/cfg80211.h": "bccd698032f5a7b9b88ec1026e8b9ce4d78697c8b185f8427b8c42d59c741442",
+    "include/linux/ieee80211.h": "0b2911ff00e711b92a7fb8f86092cada83d4eb0f45af46358fb19a0c00d8357e"
+  },
+  "changed_paths": [
+    "net/wireless/scan.c",
+    "net/wireless/tests/scan.c"
+  ],
+  "original_exact_ports": [
+    "3bb006f3e3fbbff3b9a60d2769de2ef72f506373",
+    "e0356a16e7906611d6e22861b6ccc0c37a84b97d"
+  ],
+  "existing_equivalents": [
+    {
+      "origin": "6eae122beebf992534220850c0d60d9fca858b59",
+      "evidence": "lifecycle-source-binding.json and lifecycle-01/controller.json",
+      "scope": "Four actual completion/request ownership functions; synthetic work, messages and driver timing"
+    }
+  ],
+  "additional_qualification_test_changes": 1,
+  "real_kernel_MBSSID_case_instances": 19,
+  "full_cache_reference_and_profile_paths_exercised": true,
+  "driver_radio_concurrency_or_full_wireless_stack_qualified": false,
+  "physical_wireless_qualified": false,
+  "other_cfg80211_source_and_headers_preserved": true,
+  "DTS_and_schema_unchanged": true,
+  "previous_full19_schema_evidence_reusable": true,
+  "WiFi_scans": false,
+  "Replimat3_interaction": false,
+  "network_changes": false,
+  "phone_access": false
+}
