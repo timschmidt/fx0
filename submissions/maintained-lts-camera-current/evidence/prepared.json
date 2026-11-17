@@ -1,0 +1,97 @@
+{
+  "base": "007c1af504855ec4c6dd04a37c46fd96612e243d",
+  "origins": [
+    {
+      "commit": "729beb0cac4ff3aa081696ba9a8830cd703efdbb",
+      "author": "Timothy Schmidt",
+      "subject": "dt-bindings: media: i2c: Add Sony IMX179",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "ad5ba0e4807027e5ed9d8878e4c3d0700929e74f",
+      "author": "Timothy Schmidt",
+      "subject": "media: i2c: Add Sony IMX179 sensor support",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "4eaed716c9c0a63d8ea70af55e88f6ad2ba2a9d4",
+      "author": "Timothy Schmidt",
+      "subject": "dt-bindings: media: i2c: Add Sony IMX132",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "0996a0fbab5498883460e2b00517c4f51c729508",
+      "author": "Timothy Schmidt",
+      "subject": "media: i2c: Add Sony IMX132 sensor support",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "aa5fe30a0176c9c2004a501326c8fbd21a0c8a10",
+      "author": "Timothy Schmidt",
+      "subject": "media: qcom: camss: Allow the ARM IOMMU DMA backend",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "d549a473d9820b90888fecd267841783bc7dafec",
+      "author": "Timothy Schmidt",
+      "subject": "media: qcom: camss: Add MSM8226 resources",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "6e956fdc8c01cbda803f48f35988567eeb44038a",
+      "author": "Timothy Schmidt",
+      "subject": "media: qcom: camss: consume saved completions after gen1 idle ack",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "fdadb178ffed6ad81148bd7bc300ff46cbc220c2",
+      "author": "Timothy Schmidt",
+      "subject": "media: qcom: camss: Carry qualified ARM32 linear DMA ranges",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "f31e5cf93121786b7c2c4fa2fb5cd6307c916a26",
+      "author": "Timothy Schmidt",
+      "subject": "media: qcom: camss: Carry RDI geometry and height negotiation",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    },
+    {
+      "commit": "9a45b7096c83954703f6852a948d838704fa8f63",
+      "author": "Codex",
+      "subject": "media: qcom: camss: select the MIPI D-PHY timing helper",
+      "status": "applicability and functional-equivalence audit pending",
+      "maintained_backport": null
+    }
+  ],
+  "source_files": {
+    "Documentation/devicetree/bindings/media/i2c/sony,imx132.yaml": "e9be34a0e50ac9369065372cbf4b2078e513e7f4db25b46faf61ea8e0d4a995d",
+    "Documentation/devicetree/bindings/media/i2c/sony,imx179.yaml": "1c204736d076c70a045088d5be4c66a0a5256da6a7a5e3a69c5cbcc246dfea89",
+    "MAINTAINERS": "3b8418438978fb43d4febd8507f6a5438c200aa18ac82a92d0b2e2f1156a4cbb",
+    "drivers/media/i2c/Kconfig": "6080349bf69cff371cead960ad5e42343642eb158df8899777ede240e6180e60",
+    "drivers/media/i2c/Makefile": "7c2c7b71b474f3a93659c205e401fcba30340e40bbc6480a94718bc52ad8712e",
+    "drivers/media/i2c/imx132.c": "2d7cd21cec290bb48a2f3f23e7b024bf22fd647314352aa8586ad92a38a56bc8",
+    "drivers/media/i2c/imx179.c": "6ae0131bbd2c8642c03f9091c0d352608ae643195cd3c424e120a08af960906c",
+    "drivers/media/platform/qcom/camss/Kconfig": "c1a31be9a6af7f4e619a58a2716cde666083de82bc0b6cb990e6e8ed1bdae03e",
+    "drivers/media/platform/qcom/camss/camss-vfe-17x.c": "640c805e22532a74daa3819491a131dbf6fb04a9c18caa4c291ba387083a6ede",
+    "drivers/media/platform/qcom/camss/camss-vfe-4-1.c": "9578a63b58498f4afa0151d75878e5a55ae4bf404af8b31ba9b0afc80b74678f",
+    "drivers/media/platform/qcom/camss/camss-vfe-4-7.c": "d50d0a534d0eec0dfa2fa1655a4a7f34759026d9f300e5ac9f1adbeffb541dc5",
+    "drivers/media/platform/qcom/camss/camss-vfe-4-8.c": "eebd60bb1b73d05a085f2880dbe9aa581410d75cb995e31810b86dd33ea142fa",
+    "drivers/media/platform/qcom/camss/camss-vfe-gen1.c": "4d07bb0570a5224a91487e67194ee043a42f4489b8fcbc7784e6b597ba6648d3",
+    "drivers/media/platform/qcom/camss/camss-vfe-gen1.h": "c7745b3d73a261c9d14b0ada354a0f13d29d9b61f7491fd989ffe60b56f475d0",
+    "drivers/media/platform/qcom/camss/camss-vfe.c": "781a0ec91aaa75fe94552a796a760c01fe17e39b6b4b293347377ab24c09cdfa",
+    "drivers/media/platform/qcom/camss/camss-vfe.h": "5b8c23be000bbf04a9324f83b3358c6d80b8fc3057447f318bfc27ed9cfcaa5c",
+    "drivers/media/platform/qcom/camss/camss-video.c": "888fb76cb1c362d99336d3a7ae01147bf4f796a5708d4e234f7500f85bd1d69d",
+    "drivers/media/platform/qcom/camss/camss-video.h": "41486e598a4cf33fb7340810767b065cf4d31ba2d2f105462adbe83b54b5675f",
+    "drivers/media/platform/qcom/camss/camss.c": "eff176904f4eab68b270f5f14ae1ada86857daf2141eab52a5b1a012dcdca9be"
+  },
+  "phone_access": false
+}

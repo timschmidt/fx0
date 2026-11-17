@@ -1,0 +1,50 @@
+From 48a4bccabc1b15f2c4fe4b8671d31554bcfa1506 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 31 Oct 2026 06:13:25 -0400
+Subject: [PATCH] media: i2c: restore the proposed IMX179 maintainer entry
+
+The maintained LTS binding already matches the reviewed original.
+Restore its missing proposed maintainer entry; retain the binding
+bytes and the previous complete-family schema evidence. Owner review
+remains pending.
+
+The complete camera set builds 78 native ARM, ARM64 and ARM64 RT
+objects without W=1 diagnostics or permissive CFI. Source checksums
+match ELF line tables. Three source-only CAMSS partial links retain no
+unresolved MIPI timing helper; these are not final Kbuild module or
+kernel links. Low-level hardware, locks, full PM/driver core and
+capture are modeled or untested. Physical acceptance and the r2
+display fault remain open.
+
+Original proposals are by Timothy Schmidt with Claude Opus 5.5
+assistance; Codex (GPT-6) prepared this maintained-LTS reconciliation
+and qualification. Original author/date and all source/license notices
+are preserved. Human DCO and review remain pending; no sign-off, phone
+action or publication is claimed.
+
+Backported from commit 729beb0cac4f ("dt-bindings: media: i2c: Add
+Sony IMX179")
+---
+ MAINTAINERS | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9ef2967be2687..4f21ab9a11fb4 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -23951,6 +23951,12 @@ S:	Maintained
+ F:	drivers/ssb/
+ F:	include/linux/ssb/
+ 
++SONY IMX179 SENSOR DRIVER
++M:	Timothy Schmidt <timschmidt@gmail.com>
++L:	linux-media@vger.kernel.org
++S:	Maintained
++F:	Documentation/devicetree/bindings/media/i2c/sony,imx179.yaml
++
+ SONY IMX208 SENSOR DRIVER
+ M:	Sakari Ailus <sakari.ailus@linux.intel.com>
+ L:	linux-media@vger.kernel.org
+-- 
+2.56.0
+

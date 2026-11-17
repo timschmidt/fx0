@@ -1,0 +1,77 @@
+commit fdadb178ffed6ad81148bd7bc300ff46cbc220c2
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Sat Nov 14 21:21:31 2026 -0500
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sun Nov 15 18:31:27 2026 -0500
+
+    media: qcom: camss: Carry qualified ARM32 linear DMA ranges
+    
+    Carry the DMA prerequisites from current media proposal
+    053ff674a48f79e6ee414f4da7135aff3437099a into the combined Fx0
+    integration tree. Its ARM32 Kconfig change is already present here.
+    
+    Accept adjacent mapped segments that cover the actual image area and
+    leave unused tails unrestricted. Raise the mapper segment limit before
+    capture-device registration. Keep the separately qualified MSM8226
+    resources and VFE completion changes intact.
+    
+    Original integration changes 9d46e4575ea1 and 8fe23bfec791 are by
+    Timothy Schmidt with Claude Opus 5.5 co-author attribution. This current
+    port and host qualification used OpenAI Codex (GPT-6). Human review and
+    DCO certification remain pending. This integration is not hardware or
+    full-kernel acceptance and does not resolve the original r2 display fault.
+
+diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+index 0852eb6f1315..c6a576ba1850 100644
+--- a/drivers/media/platform/qcom/camss/camss-video.c
++++ b/drivers/media/platform/qcom/camss/camss-video.c
+@@ -155,13 +155,34 @@ static int video_buf_init(struct vb2_buffer *vb)
+ 	const struct v4l2_pix_format_mplane *format =
+ 						&video->active_fmt.fmt.pix_mp;
+ 	struct sg_table *sgt;
+-	unsigned int i;
++	struct scatterlist *s;
++	dma_addr_t expected;
++	unsigned long size;
++	unsigned int i, j;
+ 
+ 	for (i = 0; i < format->num_planes; i++) {
+ 		sgt = vb2_dma_sg_plane_desc(vb, i);
+ 		if (!sgt)
+ 			return -EFAULT;
+ 
++		/* Adjacent DMA segments may cover one linear image plane. */
++		expected = sg_dma_address(sgt->sgl);
++		size = 0;
++		for_each_sgtable_dma_sg(sgt, s, j) {
++			if (sg_dma_address(s) != expected)
++				break;
++			size += sg_dma_len(s);
++			if (size >= format->plane_fmt[i].sizeimage)
++				break;
++			expected += sg_dma_len(s);
++		}
++		if (size < format->plane_fmt[i].sizeimage) {
++			dev_err_ratelimited(video->camss->dev,
++					    "Buffer plane %u is not contiguous\n",
++					    i);
++			return -EFAULT;
++		}
++
+ 		buffer->addr[i] = sg_dma_address(sgt->sgl);
+ 	}
+ 
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index 47f04018643e..b586e5f33d6f 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -5592,6 +5592,9 @@ static int camss_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_genpd_cleanup;
+ 
++	/* VFE write masters need a linear DMA range per image plane. */
++	dma_set_max_seg_size(dev, UINT_MAX);
++
+ 	camss->media_dev.dev = camss->dev;
+ 	strscpy(camss->media_dev.model, "Qualcomm Camera Subsystem",
+ 		sizeof(camss->media_dev.model));

@@ -1,0 +1,191 @@
+{
+  "passed": true,
+  "recorded_UTC": "2026-11-17T13:15:18.523008+00:00",
+  "base": "007c1af504855ec4c6dd04a37c46fd96612e243d",
+  "head": "1072eae2f428b3f237be3d06b11c1beb52d6e5ff",
+  "source_repo": "worktrees/linux-fx0-lts-integration-current-01",
+  "commits": [
+    {
+      "origin_commit": "729beb0cac4ff3aa081696ba9a8830cd703efdbb",
+      "commit": "48a4bccabc1b15f2c4fe4b8671d31554bcfa1506",
+      "parent": "007c1af504855ec4c6dd04a37c46fd96612e243d",
+      "subject": "media: i2c: restore the proposed IMX179 maintainer entry",
+      "original_subject": "dt-bindings: media: i2c: Add Sony IMX179",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-10-31T06:13:25-04:00",
+      "paths": [
+        "MAINTAINERS"
+      ],
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "ad5ba0e4807027e5ed9d8878e4c3d0700929e74f",
+      "commit": "8532cf9fb1187d321fad2290009ff14b9a90787d",
+      "parent": "48a4bccabc1b15f2c4fe4b8671d31554bcfa1506",
+      "subject": "media: i2c: imx179: retain state after failed stream stop",
+      "original_subject": "media: i2c: Add Sony IMX179 sensor support",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-10-31T06:13:25-04:00",
+      "paths": [
+        "drivers/media/i2c/imx179.c",
+        "MAINTAINERS"
+      ],
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "4eaed716c9c0a63d8ea70af55e88f6ad2ba2a9d4",
+      "commit": "8e8c5105bb89cfac6acfdf1de5524cff10c6db96",
+      "parent": "8532cf9fb1187d321fad2290009ff14b9a90787d",
+      "subject": "media: i2c: restore the proposed IMX132 maintainer entry",
+      "original_subject": "dt-bindings: media: i2c: Add Sony IMX132",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-01T21:59:29-05:00",
+      "paths": [
+        "MAINTAINERS"
+      ],
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "0996a0fbab5498883460e2b00517c4f51c729508",
+      "commit": "302055ca74b29a4d67a61e2e740de6962b4e3e87",
+      "parent": "8e8c5105bb89cfac6acfdf1de5524cff10c6db96",
+      "subject": "media: i2c: imx132: retain state after failed stream stop",
+      "original_subject": "media: i2c: Add Sony IMX132 sensor support",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-01T22:02:43-05:00",
+      "paths": [
+        "drivers/media/i2c/imx132.c",
+        "MAINTAINERS"
+      ],
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "fdadb178ffed6ad81148bd7bc300ff46cbc220c2",
+      "commit": "77057f5b47de6acadce81c075d466ed30698b756",
+      "parent": "302055ca74b29a4d67a61e2e740de6962b4e3e87",
+      "subject": "media: qcom: camss: validate contiguous DMA plane coverage",
+      "original_subject": "media: qcom: camss: Carry qualified ARM32 linear DMA ranges",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-14T21:21:31-05:00",
+      "paths": [
+        "drivers/media/platform/qcom/camss/camss-video.c"
+      ],
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "f31e5cf93121786b7c2c4fa2fb5cd6307c916a26",
+      "commit": "1072eae2f428b3f237be3d06b11c1beb52d6e5ff",
+      "parent": "77057f5b47de6acadce81c075d466ed30698b756",
+      "subject": "media: qcom: camss: bound RDI geometry before buffer ownership",
+      "original_subject": "media: qcom: camss: Carry RDI geometry and height negotiation",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-10-31T08:46:22-04:00",
+      "paths": [
+        "drivers/media/platform/qcom/camss/camss-vfe-4-1.c",
+        "drivers/media/platform/qcom/camss/camss-vfe-gen1.c",
+        "drivers/media/platform/qcom/camss/camss-vfe-gen1.h",
+        "drivers/media/platform/qcom/camss/camss-vfe.c",
+        "drivers/media/platform/qcom/camss/camss-video.c",
+        "drivers/media/platform/qcom/camss/camss-video.h"
+      ],
+      "exact_added_removed_source_lines": false
+    }
+  ],
+  "existing_equivalents": [
+    {
+      "origin": "aa5fe30a0176c9c2004a501326c8fbd21a0c8a10",
+      "already_present": true,
+      "scope": "Exact ARM/backend dependency; actual full-Kconfig ARM and ARM64 built-in/module profiles all usable without COMPILE_TEST",
+      "evidence": "Kconfig-01/qualification.json"
+    },
+    {
+      "origin": "d549a473d9820b90888fecd267841783bc7dafec",
+      "already_present": true,
+      "resources": [
+        {
+          "name": "csiphy_res_8x26",
+          "current_SHA256": "29b85f800d68c3160f32fdbd8e8e29dd10cce8ecbada0abd793e8f605c7f50d5",
+          "experimental_SHA256": "29b85f800d68c3160f32fdbd8e8e29dd10cce8ecbada0abd793e8f605c7f50d5",
+          "normalized_regulator_supply_representation_only": true
+        },
+        {
+          "name": "csid_res_8x26",
+          "current_SHA256": "27310f64dbf44e8f33d98dbf60a32800ba6c0e367dc1c7787ab3baadf21bb7d8",
+          "experimental_SHA256": "acf396893aa2b1eef54808f9c6acaa713a6e801ccd796a87a2eca53bf85921c2",
+          "normalized_regulator_supply_representation_only": true
+        },
+        {
+          "name": "ispif_res_8x26",
+          "current_SHA256": "fe2ca3f48edee471af81b06cc5b649bdc345f657e90eabd7637319d4b2d06ab6",
+          "experimental_SHA256": "fe2ca3f48edee471af81b06cc5b649bdc345f657e90eabd7637319d4b2d06ab6",
+          "normalized_regulator_supply_representation_only": true
+        },
+        {
+          "name": "vfe_res_8x26",
+          "current_SHA256": "37d974f339c8d5cc1f5a97e57a3db4edf1be6f8605439b42dfd8485ec214d39a",
+          "experimental_SHA256": "37d974f339c8d5cc1f5a97e57a3db4edf1be6f8605439b42dfd8485ec214d39a",
+          "normalized_regulator_supply_representation_only": true
+        },
+        {
+          "name": "msm8226_resources",
+          "current_SHA256": "618d98b2ce32bdbe5a19bab24dcd11f91b240778d7bcae8fda87348184088ede",
+          "experimental_SHA256": "618d98b2ce32bdbe5a19bab24dcd11f91b240778d7bcae8fda87348184088ede",
+          "normalized_regulator_supply_representation_only": true
+        }
+      ],
+      "clock_match_function_identical_except_unrelated_newer_cam_noc_RT_clock": true,
+      "compatible_and_resource_counts_present": true,
+      "regulator_bulk_data_newer_API_not_imported": true
+    },
+    {
+      "origin": "6e956fdc8c01cbda803f48f35988567eeb44038a",
+      "already_present": true,
+      "scope": "Actual completion core/gen1/17x and all three dispatch functions byte-identical to reviewed original assembly; types and IRQ macros bound to LTS source",
+      "positive_cases": 84,
+      "negative_variants": 9,
+      "evidence": "completion-03/qualification.json"
+    }
+  ],
+  "inapplicable_origin": "9a45b7096c83954703f6852a948d838704fa8f63",
+  "source_files": {
+    "Documentation/devicetree/bindings/media/i2c/sony,imx132.yaml": "e9be34a0e50ac9369065372cbf4b2078e513e7f4db25b46faf61ea8e0d4a995d",
+    "Documentation/devicetree/bindings/media/i2c/sony,imx179.yaml": "1c204736d076c70a045088d5be4c66a0a5256da6a7a5e3a69c5cbcc246dfea89",
+    "MAINTAINERS": "d78275bb66ac05a0b34c7af0391558b6cc41ea635c43b18c5b371acff79bee0c",
+    "drivers/media/i2c/Kconfig": "6080349bf69cff371cead960ad5e42343642eb158df8899777ede240e6180e60",
+    "drivers/media/i2c/Makefile": "7c2c7b71b474f3a93659c205e401fcba30340e40bbc6480a94718bc52ad8712e",
+    "drivers/media/i2c/imx132.c": "67c28ebcdc7a32edbdcdc91ef2a39d30511531e18ed014fa85aaf5d8fd54d8f2",
+    "drivers/media/i2c/imx179.c": "4b1e0f030980e1c59d1eb9b1f1f790e49ac925138d01d7d47446170e9e49371e",
+    "drivers/media/platform/qcom/camss/Kconfig": "c1a31be9a6af7f4e619a58a2716cde666083de82bc0b6cb990e6e8ed1bdae03e",
+    "drivers/media/platform/qcom/camss/camss-vfe-17x.c": "640c805e22532a74daa3819491a131dbf6fb04a9c18caa4c291ba387083a6ede",
+    "drivers/media/platform/qcom/camss/camss-vfe-4-1.c": "83dbcf4a97f714be3f425208bf9493f68f26b89e032aa7197db74d073931f727",
+    "drivers/media/platform/qcom/camss/camss-vfe-4-7.c": "d50d0a534d0eec0dfa2fa1655a4a7f34759026d9f300e5ac9f1adbeffb541dc5",
+    "drivers/media/platform/qcom/camss/camss-vfe-4-8.c": "eebd60bb1b73d05a085f2880dbe9aa581410d75cb995e31810b86dd33ea142fa",
+    "drivers/media/platform/qcom/camss/camss-vfe-gen1.c": "b6462c08f3286ab73f1ff0b615803898ebe0e1ec148a42c1b4cb9b663fa398ef",
+    "drivers/media/platform/qcom/camss/camss-vfe-gen1.h": "49430f36b8f6bdc153139a29531a68c045c670aa786c0aa36da7ae140966abb8",
+    "drivers/media/platform/qcom/camss/camss-vfe.c": "0549bb5f759e4faa3fddcc045fd7d5c03fcba73b8897867be1615fef10e3a30a",
+    "drivers/media/platform/qcom/camss/camss-vfe.h": "5b8c23be000bbf04a9324f83b3358c6d80b8fc3057447f318bfc27ed9cfcaa5c",
+    "drivers/media/platform/qcom/camss/camss-video.c": "f1f7bf6c38f0c0a7d004102f57283942aedbfbef96345c9e19a02f92491b4613",
+    "drivers/media/platform/qcom/camss/camss-video.h": "acfaae2d85c220e7a4d2859ba6bce06033b7ec2990eb9df6d76b216c8bfb8982",
+    "drivers/media/platform/qcom/camss/camss.c": "eff176904f4eab68b270f5f14ae1ada86857daf2141eab52a5b1a012dcdca9be"
+  },
+  "working_tree_clean": true,
+  "reconciled_source_deltas": 6,
+  "exact_source_deltas": 0,
+  "native_objects": 78,
+  "focused_positive_cases": 6941,
+  "baseline_sensor_DMA_geometry_failures": 255,
+  "after_failures": 0,
+  "normal_DTS_and_schema_unchanged": true,
+  "current_full_kernel_link_qualified": false,
+  "physical_acceptance": false,
+  "human_DCO_pending": true,
+  "phone_access": false,
+  "published": false,
+  "full_goal_complete": false
+}

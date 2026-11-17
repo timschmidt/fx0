@@ -1,0 +1,77 @@
+From 77057f5b47de6acadce81c075d466ed30698b756 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 14 Nov 2026 21:21:31 -0500
+Subject: [PATCH] media: qcom: camss: validate contiguous DMA plane coverage
+
+The LTS probe already sets the mapper segment limit. Replace its
+overly strict single-segment guard with validation that adjacent
+mapped segments cover the image plane. Reject gaps and insufficient
+coverage, and leave unused tails unrestricted. Actual ARM mapper and
+buffer callbacks pass 46 synthetic checks; the previous guard fails
+five. Three targeted regressions fail six, eight and three checks
+respectively.
+
+The complete camera set builds 78 native ARM, ARM64 and ARM64 RT
+objects without W=1 diagnostics or permissive CFI. Source checksums
+match ELF line tables. Three source-only CAMSS partial links retain no
+unresolved MIPI timing helper; these are not final Kbuild module or
+kernel links. Low-level hardware, locks, full PM/driver core and
+capture are modeled or untested. Physical acceptance and the r2
+display fault remain open.
+
+Original proposals are by Timothy Schmidt with Claude Opus 5.5
+assistance; Codex (GPT-6) prepared this maintained-LTS reconciliation
+and qualification. Original author/date and all source/license notices
+are preserved. Human DCO and review remain pending; no sign-off, phone
+action or publication is claimed.
+
+Backported from commit fdadb178ffed ("media: qcom: camss: Carry
+qualified ARM32 linear DMA ranges")
+---
+ .../media/platform/qcom/camss/camss-video.c   | 23 +++++++++++++++----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+index 1429a05ca22b0..59b21b3a723d1 100644
+--- a/drivers/media/platform/qcom/camss/camss-video.c
++++ b/drivers/media/platform/qcom/camss/camss-video.c
+@@ -152,18 +152,31 @@ static int video_buf_init(struct vb2_buffer *vb)
+ 	const struct v4l2_pix_format_mplane *format =
+ 						&video->active_fmt.fmt.pix_mp;
+ 	struct sg_table *sgt;
+-	unsigned int i;
++	struct scatterlist *s;
++	dma_addr_t expected;
++	unsigned long size;
++	unsigned int i, j;
+ 
+ 	for (i = 0; i < format->num_planes; i++) {
+ 		sgt = vb2_dma_sg_plane_desc(vb, i);
+ 		if (!sgt)
+ 			return -EFAULT;
+ 
+-		/* The hardware writes each plane linearly from its base. */
+-		if (sgt->nents != 1) {
++		/* Adjacent DMA segments may cover one linear image plane. */
++		expected = sg_dma_address(sgt->sgl);
++		size = 0;
++		for_each_sgtable_dma_sg(sgt, s, j) {
++			if (sg_dma_address(s) != expected)
++				break;
++			size += sg_dma_len(s);
++			if (size >= format->plane_fmt[i].sizeimage)
++				break;
++			expected += sg_dma_len(s);
++		}
++		if (size < format->plane_fmt[i].sizeimage) {
+ 			dev_err_ratelimited(video->camss->dev,
+-					    "Buffer plane %u spans %u DMA segments\n",
+-					    i, sgt->nents);
++					    "Buffer plane %u is not contiguous\n",
++					    i);
+ 			return -EFAULT;
+ 		}
+ 
+-- 
+2.56.0
+

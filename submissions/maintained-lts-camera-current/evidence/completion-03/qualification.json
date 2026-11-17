@@ -1,0 +1,105 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "hw": "4-1",
+      "mutation": "none",
+      "cases": 28,
+      "failures": 0,
+      "program_SHA256": "32db0819d202874c5c674dcd632b273d80e5d8c6593669dc7a6f92fe93daee4b"
+    },
+    {
+      "hw": "4-1",
+      "mutation": "idle-guard",
+      "cases": 28,
+      "failures": 20,
+      "program_SHA256": "fa65c9998ff932132593ffae61d16ddb8984f24734fdc23ab16a021ce96b41d0"
+    },
+    {
+      "hw": "4-1",
+      "mutation": "irq-reorder",
+      "cases": 28,
+      "failures": 19,
+      "program_SHA256": "11cb2223bfac602bda8ad5d21412da1ec80b0a91331914c836c21a8cf2ff92e0"
+    },
+    {
+      "hw": "4-1",
+      "mutation": "drop-all-coalesced",
+      "cases": 28,
+      "failures": 7,
+      "program_SHA256": "97c44f5ba354abcc413ad84a27797ad1c0f21665c813d21e71fea8ce4972dd85"
+    },
+    {
+      "hw": "4-7",
+      "mutation": "none",
+      "cases": 28,
+      "failures": 0,
+      "program_SHA256": "e95ca7e5e872a96fdb297227f8d76e0073145836b4505146d84392e172252ff1"
+    },
+    {
+      "hw": "4-7",
+      "mutation": "idle-guard",
+      "cases": 28,
+      "failures": 20,
+      "program_SHA256": "e5dbf983caeff17977b559b205a4fb0f9d95ed1ab11fd9a54032e014ba2f2567"
+    },
+    {
+      "hw": "4-7",
+      "mutation": "irq-reorder",
+      "cases": 28,
+      "failures": 19,
+      "program_SHA256": "dc0bcdbc559620b6dccfcf38457b4a8233b038c73b46c98ca85199bc53f3794d"
+    },
+    {
+      "hw": "4-7",
+      "mutation": "drop-all-coalesced",
+      "cases": 28,
+      "failures": 7,
+      "program_SHA256": "088ba4929cd302ce03e4760be21052b845a7514a3d3ff12fb0dc0682974178a7"
+    },
+    {
+      "hw": "4-8",
+      "mutation": "none",
+      "cases": 28,
+      "failures": 0,
+      "program_SHA256": "e95ca7e5e872a96fdb297227f8d76e0073145836b4505146d84392e172252ff1"
+    },
+    {
+      "hw": "4-8",
+      "mutation": "idle-guard",
+      "cases": 28,
+      "failures": 20,
+      "program_SHA256": "e5dbf983caeff17977b559b205a4fb0f9d95ed1ab11fd9a54032e014ba2f2567"
+    },
+    {
+      "hw": "4-8",
+      "mutation": "irq-reorder",
+      "cases": 28,
+      "failures": 19,
+      "program_SHA256": "dc0bcdbc559620b6dccfcf38457b4a8233b038c73b46c98ca85199bc53f3794d"
+    },
+    {
+      "hw": "4-8",
+      "mutation": "drop-all-coalesced",
+      "cases": 28,
+      "failures": 7,
+      "program_SHA256": "088ba4929cd302ce03e4760be21052b845a7514a3d3ff12fb0dc0682974178a7"
+    }
+  ],
+  "source_files": {
+    "drivers/media/platform/qcom/camss/camss-vfe.c": "0549bb5f759e4faa3fddcc045fd7d5c03fcba73b8897867be1615fef10e3a30a",
+    "drivers/media/platform/qcom/camss/camss-vfe-gen1.c": "b6462c08f3286ab73f1ff0b615803898ebe0e1ec148a42c1b4cb9b663fa398ef",
+    "drivers/media/platform/qcom/camss/camss-vfe-17x.c": "640c805e22532a74daa3819491a131dbf6fb04a9c18caa4c291ba387083a6ede",
+    "drivers/media/platform/qcom/camss/camss-vfe-4-1.c": "83dbcf4a97f714be3f425208bf9493f68f26b89e032aa7197db74d073931f727",
+    "drivers/media/platform/qcom/camss/camss-vfe.h": "5b8c23be000bbf04a9324f83b3358c6d80b8fc3057447f318bfc27ed9cfcaa5c",
+    "drivers/media/platform/qcom/camss/camss-vfe-4-7.c": "d50d0a534d0eec0dfa2fa1655a4a7f34759026d9f300e5ac9f1adbeffb541dc5",
+    "drivers/media/platform/qcom/camss/camss-vfe-4-8.c": "eebd60bb1b73d05a085f2880dbe9aa581410d75cb995e31810b86dd33ea142fa"
+  },
+  "positive_cases": 84,
+  "negative_variants": 9,
+  "normal_LSan": true,
+  "failfast_UBSAN": true,
+  "locks_IRQ_buffers_MMIO_modeled": true,
+  "hardware": false,
+  "unchanged_wm_done_and_ISR_Wextra_sign_compare_diagnostics_scoped": true
+}

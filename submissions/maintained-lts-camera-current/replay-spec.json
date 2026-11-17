@@ -1,0 +1,283 @@
+{
+  "models": [
+    {
+      "name": "sensor-before-01-imx132",
+      "kind": "sensors",
+      "sensor": "imx132",
+      "source": "before",
+      "driver": "before/drivers/media/i2c/imx132.c",
+      "result": 3,
+      "checks": 147,
+      "fixture_SHA256": "e2ad8c775034d5f7d31d0f8be710d973c81e1021c60dd600a4431f3fbb3fc49e"
+    },
+    {
+      "name": "sensor-before-01-imx179",
+      "kind": "sensors",
+      "sensor": "imx179",
+      "source": "before",
+      "driver": "before/drivers/media/i2c/imx179.c",
+      "result": 6,
+      "checks": 231,
+      "fixture_SHA256": "11ae0d58b381db801f8d691fd2db079e56e6a8540bf85997ebe2df16123669f1"
+    },
+    {
+      "name": "DMA-before-03",
+      "kind": "DMA",
+      "source": "before",
+      "result": 5,
+      "checks": 46,
+      "fixture_SHA256": "1910e57f3a4325920d1b99f0da2fcfbbb1f7aa51111478edb31c38e25ea74ff0"
+    },
+    {
+      "name": "geometry-before-01",
+      "kind": "geometry",
+      "source": "before",
+      "result": 241,
+      "checks": 6433,
+      "fixture_SHA256": "946802acbf7720bf78d89a9b2f4a1404618e18b1a9b168ed641ac8d50870c77c"
+    },
+    {
+      "name": "sensor-final-imx132-none",
+      "kind": "sensors",
+      "source": "source",
+      "result": 0,
+      "checks": 147,
+      "fixture_SHA256": "561a0b5aa088edd763b82c128978574d66b9064cead373f66bbcdb462151c21e",
+      "sensor": "imx132",
+      "driver": "source/drivers/media/i2c/imx132.c"
+    },
+    {
+      "name": "sensor-final-imx132-stop",
+      "kind": "sensors",
+      "source": "source",
+      "result": 2,
+      "checks": 147,
+      "fixture_SHA256": "d26f0c2029350e43c0d6ffabbbad89b06aa90a8b0d778681493c36be5705c9c2",
+      "sensor": "imx132",
+      "driver": "mutants/mutant-imx132-stop.c"
+    },
+    {
+      "name": "sensor-final-imx132-format",
+      "kind": "sensors",
+      "source": "source",
+      "result": 1,
+      "checks": 147,
+      "fixture_SHA256": "f7552784cc4b66a0ac43e0a2b86596efd0391d9bb7ea0d89b6f040f1b5e11161",
+      "sensor": "imx132",
+      "driver": "mutants/mutant-imx132-format.c"
+    },
+    {
+      "name": "sensor-final-imx179-none",
+      "kind": "sensors",
+      "source": "source",
+      "result": 0,
+      "checks": 231,
+      "fixture_SHA256": "a263067f6a1ff03c17287df786d049d7b0290e5676acf29aa6c5afdf8a3f00a9",
+      "sensor": "imx179",
+      "driver": "source/drivers/media/i2c/imx179.c"
+    },
+    {
+      "name": "sensor-final-imx179-stop",
+      "kind": "sensors",
+      "source": "source",
+      "result": 4,
+      "checks": 231,
+      "fixture_SHA256": "d21b547eceb121d86f90526b1caf42da9b8027ca1db6b79e92781f8c3b9322d8",
+      "sensor": "imx179",
+      "driver": "mutants/mutant-imx179-stop.c"
+    },
+    {
+      "name": "sensor-final-imx179-format",
+      "kind": "sensors",
+      "source": "source",
+      "result": 2,
+      "checks": 231,
+      "fixture_SHA256": "ad552596d37231ddbcfac38cc214f65f384f4712bb7991757de1e915d88521d4",
+      "sensor": "imx179",
+      "driver": "mutants/mutant-imx179-format.c"
+    },
+    {
+      "name": "DMA-final-none",
+      "kind": "DMA",
+      "source": "source",
+      "result": 0,
+      "checks": 46,
+      "fixture_SHA256": "a6782f5bd1dc8497228a74cac8f9e37392004c831220f3a734a94bca18f3ad04"
+    },
+    {
+      "name": "DMA-final-no-limit",
+      "kind": "DMA",
+      "source": "source",
+      "result": 6,
+      "checks": 46,
+      "fixture_SHA256": "4b1bb93cda9051668865493c65cd3f8277ed33a2e0dc72e7342b9b25b49e92dd",
+      "mutation": "no-limit"
+    },
+    {
+      "name": "DMA-final-no-guard",
+      "kind": "DMA",
+      "source": "source",
+      "result": 8,
+      "checks": 46,
+      "fixture_SHA256": "b6ba9710c229154efe4cca10a34a98d9b0074492d9d9843a3374f4c59c861765",
+      "mutation": "no-guard"
+    },
+    {
+      "name": "DMA-final-single-segment",
+      "kind": "DMA",
+      "source": "source",
+      "result": 3,
+      "checks": 46,
+      "fixture_SHA256": "ac4041d4cc2a071c10058b5ad4ffb9c50d2974835ef868f9d7eb536d47f73849",
+      "mutation": "single-segment"
+    },
+    {
+      "name": "geometry-style-final-none",
+      "kind": "geometry",
+      "source": "source",
+      "result": 0,
+      "checks": 6433,
+      "fixture_SHA256": "64f956bfea952695a12a5c33e235583dd9cdd9637a3e6284dccca6fcefa3de87"
+    },
+    {
+      "name": "geometry-style-final-no-hook",
+      "kind": "geometry",
+      "source": "source",
+      "result": 1623,
+      "checks": 6433,
+      "fixture_SHA256": "ccea62fa74b333182e7846e49bada41b80e35d7e31f3fdca1f15f945c98c7713",
+      "mutation": "no-hook"
+    },
+    {
+      "name": "geometry-style-final-height",
+      "kind": "geometry",
+      "source": "source",
+      "result": 762,
+      "checks": 6433,
+      "fixture_SHA256": "f81292cebdeb6a8a5d53746aa75acdb43d9ef46581cf7a28602fc9077c2bc2ed",
+      "mutation": "height"
+    },
+    {
+      "name": "geometry-style-final-wm-index",
+      "kind": "geometry",
+      "source": "source",
+      "result": 1950,
+      "checks": 6433,
+      "fixture_SHA256": "82ded6dc6838c2cf022c930628a86c18986b6f68d35f6f302862d94c171e0b8c",
+      "mutation": "wm-index"
+    },
+    {
+      "name": "geometry-style-final-no-bounds",
+      "kind": "geometry",
+      "source": "source",
+      "result": 105,
+      "checks": 6433,
+      "fixture_SHA256": "5e758a14ed5d1136999455fc3b56ac8ed140df577081932bac89d2da53d40b28",
+      "mutation": "no-bounds"
+    },
+    {
+      "name": "geometry-style-final-no-limit",
+      "kind": "geometry",
+      "source": "source",
+      "result": 136,
+      "checks": 6433,
+      "fixture_SHA256": "aa30bf2cb1eaedc03fdb35aa8ae78f77af7d83d2e1ed621eca3b1ce7953f80e1",
+      "mutation": "no-limit"
+    },
+    {
+      "name": "geometry-style-final-no-propagation",
+      "kind": "geometry",
+      "source": "source",
+      "result": 88,
+      "checks": 6433,
+      "fixture_SHA256": "93c65d69c27dca7f420f728482b3c2766f10b87c7272931b8f2ac138f6dfb9b4",
+      "mutation": "no-propagation"
+    }
+  ],
+  "completion": [
+    {
+      "hw": "4-1",
+      "mutation": "none",
+      "cases": 28,
+      "failures": 0,
+      "program_SHA256": "32db0819d202874c5c674dcd632b273d80e5d8c6593669dc7a6f92fe93daee4b"
+    },
+    {
+      "hw": "4-1",
+      "mutation": "idle-guard",
+      "cases": 28,
+      "failures": 20,
+      "program_SHA256": "fa65c9998ff932132593ffae61d16ddb8984f24734fdc23ab16a021ce96b41d0"
+    },
+    {
+      "hw": "4-1",
+      "mutation": "irq-reorder",
+      "cases": 28,
+      "failures": 19,
+      "program_SHA256": "11cb2223bfac602bda8ad5d21412da1ec80b0a91331914c836c21a8cf2ff92e0"
+    },
+    {
+      "hw": "4-1",
+      "mutation": "drop-all-coalesced",
+      "cases": 28,
+      "failures": 7,
+      "program_SHA256": "97c44f5ba354abcc413ad84a27797ad1c0f21665c813d21e71fea8ce4972dd85"
+    },
+    {
+      "hw": "4-7",
+      "mutation": "none",
+      "cases": 28,
+      "failures": 0,
+      "program_SHA256": "e95ca7e5e872a96fdb297227f8d76e0073145836b4505146d84392e172252ff1"
+    },
+    {
+      "hw": "4-7",
+      "mutation": "idle-guard",
+      "cases": 28,
+      "failures": 20,
+      "program_SHA256": "e5dbf983caeff17977b559b205a4fb0f9d95ed1ab11fd9a54032e014ba2f2567"
+    },
+    {
+      "hw": "4-7",
+      "mutation": "irq-reorder",
+      "cases": 28,
+      "failures": 19,
+      "program_SHA256": "dc0bcdbc559620b6dccfcf38457b4a8233b038c73b46c98ca85199bc53f3794d"
+    },
+    {
+      "hw": "4-7",
+      "mutation": "drop-all-coalesced",
+      "cases": 28,
+      "failures": 7,
+      "program_SHA256": "088ba4929cd302ce03e4760be21052b845a7514a3d3ff12fb0dc0682974178a7"
+    },
+    {
+      "hw": "4-8",
+      "mutation": "none",
+      "cases": 28,
+      "failures": 0,
+      "program_SHA256": "e95ca7e5e872a96fdb297227f8d76e0073145836b4505146d84392e172252ff1"
+    },
+    {
+      "hw": "4-8",
+      "mutation": "idle-guard",
+      "cases": 28,
+      "failures": 20,
+      "program_SHA256": "e5dbf983caeff17977b559b205a4fb0f9d95ed1ab11fd9a54032e014ba2f2567"
+    },
+    {
+      "hw": "4-8",
+      "mutation": "irq-reorder",
+      "cases": 28,
+      "failures": 19,
+      "program_SHA256": "dc0bcdbc559620b6dccfcf38457b4a8233b038c73b46c98ca85199bc53f3794d"
+    },
+    {
+      "hw": "4-8",
+      "mutation": "drop-all-coalesced",
+      "cases": 28,
+      "failures": 7,
+      "program_SHA256": "088ba4929cd302ce03e4760be21052b845a7514a3d3ff12fb0dc0682974178a7"
+    }
+  ]
+}
