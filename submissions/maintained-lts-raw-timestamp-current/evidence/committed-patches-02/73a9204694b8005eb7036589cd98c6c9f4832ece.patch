@@ -1,0 +1,67 @@
+From 73a9204694b8005eb7036589cd98c6c9f4832ece Mon Sep 17 00:00:00 2001
+From: Shi Hao <i.shihao.999@gmail.com>
+Date: Mon, 16 Mar 2026 09:00:19 +0000
+Subject: [PATCH] iio: inv_sensors: correct timestamp comments
+
+Correct the theoretical-value and occurrence comments in the timestamp
+module. Scope the upstream spelling cleanup to this module.
+
+Carry the timestamp-module scope into maintained LTS together with the
+complete five-change alignment, measurement, estimate-cap and transition
+sequence. The two comment/type prerequisites are separate from runtime
+repairs and from the original 147-origin feature inventory. Unrelated
+common-driver spelling changes are excluded. Map Fixes references for
+the new sequence to their local backport commits; archived upstream
+metadata retains the original references. Document the new init field
+and omit a redundant blank line before a closing brace.
+
+The complete pure timestamp module and inline API pass 504 synthetic
+cases and 83780 checks with address, undefined-behavior and leak
+sanitizers. The baseline has 344 failed checks; seven behavioral
+regression controls fail as intended. MPU and ICM callers and the
+separate DMP/quaternion ABI are preserved. Full FIFO callbacks and
+physical timing are not replayed.
+
+The upstream algorithm still cannot satisfy both its minimum period and
+a shorter IRQ budget: a 500000 ns budget with a 980000 ns minimum
+produces a 480000 ns overshoot in a separate reproducer. Final timing,
+IRQ latency, sensor accuracy, full linking and normal APK acceptance
+remain open.
+
+Codex prepared this scoped LTS port and qualification. Original upstream
+trailers are retained provenance, not new sign-offs for the adaptation.
+Human DCO and final owner/security review remain pending.
+
+Link: https://github.com/torvalds/linux/commit/96f46405219d9bf62d9fab76e055e3b6059b0bd5
+
+Signed-off-by: Shi Hao <i.shihao.999@gmail.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+---
+ drivers/iio/common/inv_sensors/inv_sensors_timestamp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
+index 97526ba87b934..e0b10366ed2bf 100644
+--- a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
++++ b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
+@@ -154,7 +154,7 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,
+ 		valid = inv_update_chip_period(ts, period);
+ 	}
+ 
+-	/* no previous data, compute theoritical value from interrupt */
++	/* no previous data, compute theoretical value from interrupt */
+ 	if (ts->timestamp == 0) {
+ 		/* elapsed time: sensor period * sensor samples number */
+ 		interval = (int64_t)ts->period * (int64_t)sample_nb;
+@@ -185,7 +185,7 @@ void inv_sensors_timestamp_apply_odr(struct inv_sensors_timestamp *ts,
+ 
+ 	/*
+ 	 * After ODR change the time interval with the previous sample is
+-	 * undertermined (depends when the change occures). So we compute the
++	 * undertermined (depends when the change occurs). So we compute the
+ 	 * timestamp from the current interrupt using the new FIFO period, the
+ 	 * total number of samples and the current sample numero.
+ 	 */
+-- 
+2.56.0
+

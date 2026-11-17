@@ -1,0 +1,118 @@
+{
+  "base": "4e09950ec22dec00cc880cfc49eb70be6cd30fb2",
+  "stages": [
+    {
+      "origin": "96f46405219d9bf62d9fab76e055e3b6059b0bd5",
+      "prerequisite_only": true,
+      "excluded_unrelated_paths": [
+        "drivers/iio/common/cros_ec_sensors/cros_ec_sensors.c",
+        "drivers/iio/common/hid-sensors/hid-sensor-attributes.c",
+        "drivers/iio/common/ms_sensors/ms_sensors_i2c.c"
+      ],
+      "files": [
+        {
+          "path": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+          "before_SHA256": "d08b86ba3a786d7fdd1163305fdf0beb99ac591132edca0624042e0598273ea7",
+          "after_SHA256": "abc027f2d7fc5953c6f06d02631aaa1eddfdb1526e3cce5c0e50aa5f95581d9c"
+        }
+      ]
+    },
+    {
+      "origin": "1330597c7480611334977ff66878fd40b411fa41",
+      "prerequisite_only": true,
+      "excluded_unrelated_paths": [],
+      "files": [
+        {
+          "path": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+          "before_SHA256": "abc027f2d7fc5953c6f06d02631aaa1eddfdb1526e3cce5c0e50aa5f95581d9c",
+          "after_SHA256": "e7ffde56f6ae0141f2006fc3e6a2dbaade524fada3a8991c5d9338dc49858a9d"
+        },
+        {
+          "path": "include/linux/iio/common/inv_sensors_timestamp.h",
+          "before_SHA256": "6498747dc4bf48def77c5df4fb6f75d782a6e489da47108cac8239ec9d13f172",
+          "after_SHA256": "e895368234d77b3ebb603b413eaaf6cfd4f897009e5f1f6b89e37e1432b08bc4"
+        }
+      ]
+    },
+    {
+      "origin": "8f4b627656fa1767d8337a95849fe7c895b6f68a",
+      "prerequisite_only": false,
+      "excluded_unrelated_paths": [],
+      "files": [
+        {
+          "path": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+          "before_SHA256": "e7ffde56f6ae0141f2006fc3e6a2dbaade524fada3a8991c5d9338dc49858a9d",
+          "after_SHA256": "e79034ebecbe9fb66598375f3aa17648736e37981731e0c10b44c5ef3e7fb043"
+        }
+      ]
+    },
+    {
+      "origin": "82bd09ce4fd3b15680735eaeafe2e688901e3b00",
+      "prerequisite_only": false,
+      "excluded_unrelated_paths": [],
+      "files": [
+        {
+          "path": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+          "before_SHA256": "e79034ebecbe9fb66598375f3aa17648736e37981731e0c10b44c5ef3e7fb043",
+          "after_SHA256": "27d0d7de21620188d3b41e22432181a18e4b5b4536927de5c22970f061aa6e3e"
+        },
+        {
+          "path": "include/linux/iio/common/inv_sensors_timestamp.h",
+          "before_SHA256": "e895368234d77b3ebb603b413eaaf6cfd4f897009e5f1f6b89e37e1432b08bc4",
+          "after_SHA256": "c28ed1016e9bdabe05756f42e47714ba417401f505760c0715bdd314f5a4c30c"
+        }
+      ]
+    },
+    {
+      "origin": "b1c3c51b0916f7d1b2dceffc0e48abe185958825",
+      "prerequisite_only": false,
+      "excluded_unrelated_paths": [],
+      "files": [
+        {
+          "path": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+          "before_SHA256": "27d0d7de21620188d3b41e22432181a18e4b5b4536927de5c22970f061aa6e3e",
+          "after_SHA256": "aea2fa3ff75b96ef1a481afee191e4d8e6df12ae87b3aa95b67f1d286a2c2e45"
+        }
+      ]
+    },
+    {
+      "origin": "3785dffc7c68751a8429ae6dd75804c14a5a7c7a",
+      "prerequisite_only": false,
+      "excluded_unrelated_paths": [],
+      "files": [
+        {
+          "path": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+          "before_SHA256": "aea2fa3ff75b96ef1a481afee191e4d8e6df12ae87b3aa95b67f1d286a2c2e45",
+          "after_SHA256": "dbe5b7da38b7dfbc909f0c56394f623ebaaf0359874496b24628ba569fddca65"
+        },
+        {
+          "path": "include/linux/iio/common/inv_sensors_timestamp.h",
+          "before_SHA256": "c28ed1016e9bdabe05756f42e47714ba417401f505760c0715bdd314f5a4c30c",
+          "after_SHA256": "cb2a43416f3b921cfbe6c53599c9bbd360e1a0344915d35cca45d31140171a4e"
+        }
+      ],
+      "adaptation": "Document new init field; remove redundant blank before closing brace"
+    },
+    {
+      "origin": "0d695709ed380f1bc9303a91f57525d33766a07e",
+      "prerequisite_only": false,
+      "excluded_unrelated_paths": [],
+      "files": [
+        {
+          "path": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+          "before_SHA256": "dbe5b7da38b7dfbc909f0c56394f623ebaaf0359874496b24628ba569fddca65",
+          "after_SHA256": "a484ccadbcc8cf8c9346516e7fb3b1821aec81330146743cab6bd04febeb1a34"
+        }
+      ]
+    }
+  ],
+  "source_files": {
+    "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c": "a484ccadbcc8cf8c9346516e7fb3b1821aec81330146743cab6bd04febeb1a34",
+    "include/linux/iio/common/inv_sensors_timestamp.h": "cb2a43416f3b921cfbe6c53599c9bbd360e1a0344915d35cca45d31140171a4e"
+  },
+  "upstream_endpoint": "0d695709ed380f1bc9303a91f57525d33766a07e",
+  "endpoint_matches_except_init_documentation_and_blank_line": true,
+  "runtime_changes": 5,
+  "prerequisite_only_changes": 2,
+  "phone_access": false
+}

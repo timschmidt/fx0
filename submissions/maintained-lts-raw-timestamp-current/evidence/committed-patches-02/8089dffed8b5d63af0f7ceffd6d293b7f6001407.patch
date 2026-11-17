@@ -1,0 +1,74 @@
+From 8089dffed8b5d63af0f7ceffd6d293b7f6001407 Mon Sep 17 00:00:00 2001
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Date: Mon, 24 Aug 2026 15:16:58 +0000
+Subject: [PATCH] iio: inv_sensors: fix estimated value larger than interrupt
+ timestamp
+
+When interrupt timestamp interval is not valid, we use an estimated
+value that can in rare case be bigger than the interrupt timestamp. This
+is obviously wrong, so better use interrupt timestamp in this case.
+
+Fixes: 06a639729d0e ("iio: inv_sensors: better timestamp alignment when using watermark")
+Cc: stable@vger.kernel.org
+
+Carry the timestamp-module scope into maintained LTS together with the
+complete five-change alignment, measurement, estimate-cap and transition
+sequence. The two comment/type prerequisites are separate from runtime
+repairs and from the original 147-origin feature inventory. Unrelated
+common-driver spelling changes are excluded. Map Fixes references for
+the new sequence to their local backport commits; archived upstream
+metadata retains the original references. Document the new init field
+and omit a redundant blank line before a closing brace.
+
+The complete pure timestamp module and inline API pass 504 synthetic
+cases and 83780 checks with address, undefined-behavior and leak
+sanitizers. The baseline has 344 failed checks; seven behavioral
+regression controls fail as intended. MPU and ICM callers and the
+separate DMP/quaternion ABI are preserved. Full FIFO callbacks and
+physical timing are not replayed.
+
+The upstream algorithm still cannot satisfy both its minimum period and
+a shorter IRQ budget: a 500000 ns budget with a 980000 ns minimum
+produces a 480000 ns overshoot in a separate reproducer. Final timing,
+IRQ latency, sensor accuracy, full linking and normal APK acceptance
+remain open.
+
+Codex prepared this scoped LTS port and qualification. Original upstream
+trailers are retained provenance, not new sign-offs for the adaptation.
+Human DCO and final owner/security review remain pending.
+
+Link: https://github.com/torvalds/linux/commit/b1c3c51b0916f7d1b2dceffc0e48abe185958825
+
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+---
+ .../iio/common/inv_sensors/inv_sensors_timestamp.c    | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
+index 88a82d1370c50..8c9e81a77e688 100644
+--- a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
++++ b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
+@@ -167,11 +167,16 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,
+ 		valid = inv_validate_period(ts, period);
+ 	}
+ 
+-	/* if interrupt interval is valid, sync with interrupt timestamp */
++	/*
++	 * If interrupt interval is valid, sync with interrupt timestamp.
++	 * Otherwise, use estimated value while ensuring interrupt timestamp
++	 * remains the maximum possible value.
++	 */
++	period = inv_align_timestamp_it(ts, sample_nb);
+ 	if (valid)
+-		ts->period = inv_align_timestamp_it(ts, sample_nb);
++		ts->period = period;
+ 	else
+-		ts->period = ts->mult * ts->chip_period.val;
++		ts->period = min(ts->mult * ts->chip_period.val, period);
+ }
+ EXPORT_SYMBOL_NS_GPL(inv_sensors_timestamp_interrupt, "IIO_INV_SENSORS_TIMESTAMP");
+ 
+-- 
+2.56.0
+

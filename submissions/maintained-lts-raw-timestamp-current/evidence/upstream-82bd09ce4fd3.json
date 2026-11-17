@@ -1,0 +1,26 @@
+{
+  "commit": "82bd09ce4fd3b15680735eaeafe2e688901e3b00",
+  "url": "https://github.com/torvalds/linux/commit/82bd09ce4fd3b15680735eaeafe2e688901e3b00",
+  "author": {
+    "name": "Jean-Baptiste Maneyrol",
+    "email": "jean-baptiste.maneyrol@tdk.com",
+    "date": "2026-07-20T10:38:34Z"
+  },
+  "committer": {
+    "name": "Jonathan Cameron",
+    "email": "jonathan.cameron@oss.qualcomm.com",
+    "date": "2026-07-24T00:01:01Z"
+  },
+  "message": "iio: inv_sensors: improve period measurement by using a longer delay\n\nPeriod measurement can be difficult when using high sampling\nfrequency where the jitter criteria is hard to meet because of the\nsystem jitter.\n\nThis new version is using the delta time between 2 distant interrupts\nto measure an interval of at least 20ms. 20ms is a good compromise\nbetween the mitigation of system jitter and the delay to update\nperiod. This way we decorrelate the period measurement from the\ninterrupt timestamps syncing using only the 2 last interrupts.\n\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nSigned-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>",
+  "files": [
+    {
+      "filename": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+      "patch": "@@ -16,6 +16,9 @@\n #define INV_SENSORS_TIMESTAMP_MAX(_val, _jitter)\t\t\\\n \t(((_val) * (1000 + (_jitter))) / 1000)\n \n+/* minimum timestamp delta between 2 interrupts for measuring period (20ms) */\n+#define INV_SENSORS_MIN_IT_DELTA\t(20 * NSEC_PER_MSEC)\n+\n /* Add a new value inside an accumulator and update the estimate value */\n static void inv_update_acc(struct inv_sensors_timestamp_acc *acc, u32 val)\n {\n@@ -122,7 +125,7 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,\n \t\t\t\t     size_t sample_nb, s64 timestamp)\n {\n \tstruct inv_sensors_timestamp_interval *it;\n-\ts64 delta, interval;\n+\ts64 delta, delta_threshold, interval;\n \tu32 period;\n \tbool valid = false;\n \n@@ -136,15 +139,32 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,\n \t\tts->timestamp = timestamp - interval;\n \t}\n \n+\t/* update delta timestamps and estimated period */\n+\tit = &ts->delta;\n+\tts->delta_counter += sample_nb;\n+\tdelta = timestamp - it->up;\n+\tdelta_threshold = INV_SENSORS_TIMESTAMP_MIN(INV_SENSORS_MIN_IT_DELTA, ts->chip.jitter);\n+\tif (delta >= delta_threshold) {\n+\t\tit->lo = it->up;\n+\t\tit->up = timestamp;\n+\t\tif (it->lo != 0) {\n+\t\t\t/* compute period: delta time divided by number of samples */\n+\t\t\tdelta = it->up - it->lo;\n+\t\t\tperiod = div_s64(delta, ts->delta_counter);\n+\t\t\tinv_update_chip_period(ts, period);\n+\t\t}\n+\t\tts->delta_counter = 0;\n+\t}\n+\n \t/* update interrupt timestamp and compute chip and sensor periods */\n \tit = &ts->it;\n \tit->lo = it->up;\n \tit->up = timestamp;\n \tdelta = it->up - it->lo;\n \tif (it->lo != 0) {\n-\t\t/* compute period: delta time divided by number of samples */\n+\t\t/* compute period and check validity */\n \t\tperiod = div_s64(delta, sample_nb);\n-\t\tvalid = inv_update_chip_period(ts, period);\n+\t\tvalid = inv_validate_period(ts, period);\n \t}\n \n \t/* if interrupt interval is valid, sync with interrupt timestamp */"
+    },
+    {
+      "filename": "include/linux/iio/common/inv_sensors_timestamp.h",
+      "patch": "@@ -46,6 +46,8 @@ struct inv_sensors_timestamp_acc {\n  * @min_period:\t\tminimal acceptable clock period\n  * @max_period:\t\tmaximal acceptable clock period\n  * @it:\t\t\tinterrupts interval timestamps\n+ * @delta:\t\tinterval timestamps between several interrupts\n+ * @delta_counter:\tnumber of data samples in the delta interval\n  * @timestamp:\t\tstore last timestamp for computing next data timestamp\n  * @mult:\t\tcurrent internal period multiplier\n  * @new_mult:\t\tnew set internal period multiplier (not yet effective)\n@@ -57,6 +59,8 @@ struct inv_sensors_timestamp {\n \tu32 min_period;\n \tu32 max_period;\n \tstruct inv_sensors_timestamp_interval it;\n+\tstruct inv_sensors_timestamp_interval delta;\n+\tu32 delta_counter;\n \ts64 timestamp;\n \tu32 mult;\n \tu32 new_mult;\n@@ -88,6 +92,8 @@ static inline void inv_sensors_timestamp_reset(struct inv_sensors_timestamp *ts)\n \tconst struct inv_sensors_timestamp_interval interval_init = {0LL, 0LL};\n \n \tts->it = interval_init;\n+\tts->delta = interval_init;\n+\tts->delta_counter = 0;\n \tts->timestamp = 0;\n }\n "
+    }
+  ],
+  "source": "torvalds/linux via read-only GitHub API"
+}

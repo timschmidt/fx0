@@ -1,0 +1,25 @@
+{
+  "commit": "b1c3c51b0916f7d1b2dceffc0e48abe185958825",
+  "url": "https://github.com/torvalds/linux/commit/b1c3c51b0916f7d1b2dceffc0e48abe185958825",
+  "author": {
+    "name": "Jean-Baptiste Maneyrol",
+    "email": "jean-baptiste.maneyrol@tdk.com",
+    "date": "2026-08-24T15:16:58Z"
+  },
+  "committer": {
+    "name": "Jonathan Cameron",
+    "email": "jonathan.cameron@oss.qualcomm.com",
+    "date": "2026-08-31T01:17:56Z"
+  },
+  "message": "iio: inv_sensors: fix estimated value larger than interrupt timestamp\n\nWhen interrupt timestamp interval is not valid, we use an estimated value\nthat can in rare case be bigger than the interrupt timestamp. This is\nobviously wrong, so better use interrupt timestamp in this case.\n\nFixes: 8f4b627656fa (\"iio: inv_sensors: better timestamp alignment when using watermark\")\nCc: stable@vger.kernel.org\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nSigned-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>",
+  "files": [
+    {
+      "filename": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+      "patch": "@@ -167,11 +167,16 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,\n \t\tvalid = inv_validate_period(ts, period);\n \t}\n \n-\t/* if interrupt interval is valid, sync with interrupt timestamp */\n+\t/*\n+\t * If interrupt interval is valid, sync with interrupt timestamp.\n+\t * Otherwise, use estimated value while ensuring interrupt timestamp\n+\t * remains the maximum possible value.\n+\t */\n+\tperiod = inv_align_timestamp_it(ts, sample_nb);\n \tif (valid)\n-\t\tts->period = inv_align_timestamp_it(ts, sample_nb);\n+\t\tts->period = period;\n \telse\n-\t\tts->period = ts->mult * ts->chip_period.val;\n+\t\tts->period = min(ts->mult * ts->chip_period.val, period);\n }\n EXPORT_SYMBOL_NS_GPL(inv_sensors_timestamp_interrupt, \"IIO_INV_SENSORS_TIMESTAMP\");\n "
+    }
+  ],
+  "parents": [
+    "95e4eb426b4bd666fa2f37886c0ddf74a0cc6167"
+  ],
+  "source": "torvalds/linux via read-only GitHub API"
+}

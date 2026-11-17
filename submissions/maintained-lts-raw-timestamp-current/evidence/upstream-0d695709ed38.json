@@ -1,0 +1,22 @@
+{
+  "commit": "0d695709ed380f1bc9303a91f57525d33766a07e",
+  "url": "https://github.com/torvalds/linux/commit/0d695709ed380f1bc9303a91f57525d33766a07e",
+  "author": {
+    "name": "Jean-Baptiste Maneyrol",
+    "email": "jean-baptiste.maneyrol@tdk.com",
+    "date": "2026-10-20T16:28:47Z"
+  },
+  "committer": {
+    "name": "Jonathan Cameron",
+    "email": "jonathan.cameron@oss.qualcomm.com",
+    "date": "2026-11-02T00:39:30Z"
+  },
+  "message": "iio: inv_sensors: do not compute period estimation when updating odr\n\nWhen odr is updated, the delta between the interrupts will change and it\nwill lead to a bad period estimation.\n\nAvoid this by preventing the period estimation in this case.\n\nFixes: 82bd09ce4fd3 (\"iio: inv_sensors: improve period measurement by using a longer delay\")\nCc: stable@vger.kernel.org\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nSigned-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>",
+  "files": [
+    {
+      "filename": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+      "patch": "@@ -147,6 +147,12 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,\n \t/* update delta timestamps and estimated period */\n \tit = &ts->delta;\n \tts->delta_counter += sample_nb;\n+\t/* reset in case of odr change */\n+\tif (ts->new_mult) {\n+\t\tit->lo = 0;\n+\t\tit->up = 0;\n+\t\tts->delta_counter = 0;\n+\t}\n \tdelta = timestamp - it->up;\n \tdelta_threshold = INV_SENSORS_TIMESTAMP_MIN(INV_SENSORS_MIN_IT_DELTA, ts->chip.jitter);\n \tif (delta >= delta_threshold) {\n@@ -166,7 +172,7 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,\n \tit->lo = it->up;\n \tit->up = timestamp;\n \tdelta = it->up - it->lo;\n-\tif (it->lo != 0) {\n+\tif (it->lo != 0 && !ts->new_mult) {\n \t\t/* compute period and check validity */\n \t\tperiod = div_s64(delta, sample_nb);\n \t\tvalid = inv_validate_period(ts, period);"
+    }
+  ],
+  "source": "torvalds/linux via read-only GitHub API"
+}

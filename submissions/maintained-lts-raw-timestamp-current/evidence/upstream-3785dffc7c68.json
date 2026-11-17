@@ -1,0 +1,29 @@
+{
+  "commit": "3785dffc7c68751a8429ae6dd75804c14a5a7c7a",
+  "url": "https://github.com/torvalds/linux/commit/3785dffc7c68751a8429ae6dd75804c14a5a7c7a",
+  "author": {
+    "name": "Jean-Baptiste Maneyrol",
+    "email": "jean-baptiste.maneyrol@tdk.com",
+    "date": "2026-10-20T15:26:00Z"
+  },
+  "committer": {
+    "name": "Jonathan Cameron",
+    "email": "jonathan.cameron@oss.qualcomm.com",
+    "date": "2026-11-02T00:39:27Z"
+  },
+  "message": "iio: inv_sensors: prevent timestamps going back in time in transitions\n\nEnsure when computing first timestamp and when applying odr change,\nthat the next timestamp will not be lower than the previous one.\n\nThis way there is no risk to have a timestamp going back in time, meaning\nbeing lower than the previous one. It already can never happen without\na transition because we are generating timestamps by adding the period\nto the last timestamp.\n\nFixes: 0ecc363ccea7 (\"iio: make invensense timestamp module generic\")\nCc: stable@vger.kernel.org\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nSigned-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>",
+  "files": [
+    {
+      "filename": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+      "patch": "@@ -133,10 +133,15 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,\n \t\treturn;\n \n \t/* no previous data, compute theoretical value from interrupt */\n-\tif (ts->timestamp == 0) {\n+\tif (!ts->init) {\n \t\t/* elapsed time: sensor period * sensor samples number */\n \t\tinterval = (s64)ts->period * (s64)sample_nb;\n-\t\tts->timestamp = timestamp - interval;\n+\t\tdelta = timestamp - interval;\n+\t\t/* prevent next timestamp to be lower than the last one */\n+\t\tif ((delta + ts->period) > ts->timestamp)\n+\t\t\tts->timestamp = delta;\n+\t\tts->init = true;\n+\n \t}\n \n \t/* update delta timestamps and estimated period */\n@@ -184,7 +189,7 @@ void inv_sensors_timestamp_apply_odr(struct inv_sensors_timestamp *ts,\n \t\t\t\t     u32 fifo_period, size_t fifo_nb,\n \t\t\t\t     unsigned int fifo_no)\n {\n-\ts64 interval;\n+\ts64 interval, timestamp;\n \tu32 fifo_mult;\n \n \tif (ts->new_mult == 0)\n@@ -207,7 +212,10 @@ void inv_sensors_timestamp_apply_odr(struct inv_sensors_timestamp *ts,\n \t\tfifo_period = fifo_mult * ts->chip_period.val;\n \t\t/* computes time interval between interrupt and this sample */\n \t\tinterval = (s64)(fifo_nb - fifo_no) * (s64)fifo_period;\n-\t\tts->timestamp = ts->it.up - interval;\n+\t\ttimestamp = ts->it.up - interval;\n+\t\t/* prevent next timestamp to be lower than current one */\n+\t\tif ((timestamp + ts->period) > ts->timestamp)\n+\t\t\tts->timestamp = timestamp;\n \t}\n }\n EXPORT_SYMBOL_NS_GPL(inv_sensors_timestamp_apply_odr, \"IIO_INV_SENSORS_TIMESTAMP\");"
+    },
+    {
+      "filename": "include/linux/iio/common/inv_sensors_timestamp.h",
+      "patch": "@@ -66,6 +66,7 @@ struct inv_sensors_timestamp {\n \tu32 new_mult;\n \tu32 period;\n \tstruct inv_sensors_timestamp_acc chip_period;\n+\tbool init;\n };\n \n void inv_sensors_timestamp_init(struct inv_sensors_timestamp *ts,\n@@ -94,7 +95,7 @@ static inline void inv_sensors_timestamp_reset(struct inv_sensors_timestamp *ts)\n \tts->it = interval_init;\n \tts->delta = interval_init;\n \tts->delta_counter = 0;\n-\tts->timestamp = 0;\n+\tts->init = false;\n }\n \n #endif"
+    }
+  ],
+  "parents": [
+    "7b5f54280f8e6ef07664f6705dd005feefbe87d1"
+  ],
+  "source": "torvalds/linux via read-only GitHub API"
+}

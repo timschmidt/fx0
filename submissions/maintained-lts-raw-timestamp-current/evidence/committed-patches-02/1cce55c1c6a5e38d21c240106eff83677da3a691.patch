@@ -1,0 +1,126 @@
+From 1cce55c1c6a5e38d21c240106eff83677da3a691 Mon Sep 17 00:00:00 2001
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Date: Tue, 20 Oct 2026 15:26:00 +0000
+Subject: [PATCH] iio: inv_sensors: prevent timestamps going back in time in
+ transitions
+
+Ensure when computing first timestamp and when applying odr change, that
+the next timestamp will not be lower than the previous one.
+
+This way there is no risk to have a timestamp going back in time,
+meaning being lower than the previous one. It already can never happen
+without a transition because we are generating timestamps by adding the
+period to the last timestamp.
+
+Fixes: 0ecc363ccea7 ("iio: make invensense timestamp module generic")
+Cc: stable@vger.kernel.org
+
+Carry the timestamp-module scope into maintained LTS together with the
+complete five-change alignment, measurement, estimate-cap and transition
+sequence. The two comment/type prerequisites are separate from runtime
+repairs and from the original 147-origin feature inventory. Unrelated
+common-driver spelling changes are excluded. Map Fixes references for
+the new sequence to their local backport commits; archived upstream
+metadata retains the original references. Document the new init field
+and omit a redundant blank line before a closing brace.
+
+The complete pure timestamp module and inline API pass 504 synthetic
+cases and 83780 checks with address, undefined-behavior and leak
+sanitizers. The baseline has 344 failed checks; seven behavioral
+regression controls fail as intended. MPU and ICM callers and the
+separate DMP/quaternion ABI are preserved. Full FIFO callbacks and
+physical timing are not replayed.
+
+The upstream algorithm still cannot satisfy both its minimum period and
+a shorter IRQ budget: a 500000 ns budget with a 980000 ns minimum
+produces a 480000 ns overshoot in a separate reproducer. Final timing,
+IRQ latency, sensor accuracy, full linking and normal APK acceptance
+remain open.
+
+Codex prepared this scoped LTS port and qualification. Original upstream
+trailers are retained provenance, not new sign-offs for the adaptation.
+Human DCO and final owner/security review remain pending.
+
+Link: https://github.com/torvalds/linux/commit/3785dffc7c68751a8429ae6dd75804c14a5a7c7a
+
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+---
+ .../common/inv_sensors/inv_sensors_timestamp.c    | 15 +++++++++++----
+ include/linux/iio/common/inv_sensors_timestamp.h  |  4 +++-
+ 2 files changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
+index 8c9e81a77e688..838ddb2162a6d 100644
+--- a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
++++ b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
+@@ -133,10 +133,14 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,
+ 		return;
+ 
+ 	/* no previous data, compute theoretical value from interrupt */
+-	if (ts->timestamp == 0) {
++	if (!ts->init) {
+ 		/* elapsed time: sensor period * sensor samples number */
+ 		interval = (s64)ts->period * (s64)sample_nb;
+-		ts->timestamp = timestamp - interval;
++		delta = timestamp - interval;
++		/* prevent next timestamp to be lower than the last one */
++		if ((delta + ts->period) > ts->timestamp)
++			ts->timestamp = delta;
++		ts->init = true;
+ 	}
+ 
+ 	/* update delta timestamps and estimated period */
+@@ -184,7 +188,7 @@ void inv_sensors_timestamp_apply_odr(struct inv_sensors_timestamp *ts,
+ 				     u32 fifo_period, size_t fifo_nb,
+ 				     unsigned int fifo_no)
+ {
+-	s64 interval;
++	s64 interval, timestamp;
+ 	u32 fifo_mult;
+ 
+ 	if (ts->new_mult == 0)
+@@ -207,7 +211,10 @@ void inv_sensors_timestamp_apply_odr(struct inv_sensors_timestamp *ts,
+ 		fifo_period = fifo_mult * ts->chip_period.val;
+ 		/* computes time interval between interrupt and this sample */
+ 		interval = (s64)(fifo_nb - fifo_no) * (s64)fifo_period;
+-		ts->timestamp = ts->it.up - interval;
++		timestamp = ts->it.up - interval;
++		/* prevent next timestamp to be lower than current one */
++		if ((timestamp + ts->period) > ts->timestamp)
++			ts->timestamp = timestamp;
+ 	}
+ }
+ EXPORT_SYMBOL_NS_GPL(inv_sensors_timestamp_apply_odr, "IIO_INV_SENSORS_TIMESTAMP");
+diff --git a/include/linux/iio/common/inv_sensors_timestamp.h b/include/linux/iio/common/inv_sensors_timestamp.h
+index 4f08204ede3b4..e402e0045720c 100644
+--- a/include/linux/iio/common/inv_sensors_timestamp.h
++++ b/include/linux/iio/common/inv_sensors_timestamp.h
+@@ -53,6 +53,7 @@ struct inv_sensors_timestamp_acc {
+  * @new_mult:		new set internal period multiplier (not yet effective)
+  * @period:		measured current period of the sensor
+  * @chip_period:	accumulator for computing internal chip period
++ * @init:		first interrupt has initialized timestamp alignment
+  */
+ struct inv_sensors_timestamp {
+ 	struct inv_sensors_timestamp_chip chip;
+@@ -66,6 +67,7 @@ struct inv_sensors_timestamp {
+ 	u32 new_mult;
+ 	u32 period;
+ 	struct inv_sensors_timestamp_acc chip_period;
++	bool init;
+ };
+ 
+ void inv_sensors_timestamp_init(struct inv_sensors_timestamp *ts,
+@@ -94,7 +96,7 @@ static inline void inv_sensors_timestamp_reset(struct inv_sensors_timestamp *ts)
+ 	ts->it = interval_init;
+ 	ts->delta = interval_init;
+ 	ts->delta_counter = 0;
+-	ts->timestamp = 0;
++	ts->init = false;
+ }
+ 
+ #endif
+-- 
+2.56.0
+

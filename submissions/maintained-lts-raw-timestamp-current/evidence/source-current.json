@@ -1,0 +1,169 @@
+{
+  "passed": true,
+  "base": "4e09950ec22dec00cc880cfc49eb70be6cd30fb2",
+  "head": "48f2a7bc7627669ca2f7bbac32f10ec2d205e850",
+  "commits": [
+    {
+      "origin_commit": "96f46405219d9bf62d9fab76e055e3b6059b0bd5",
+      "commit": "73a9204694b8005eb7036589cd98c6c9f4832ece",
+      "parent": "4e09950ec22dec00cc880cfc49eb70be6cd30fb2",
+      "subject": "iio: inv_sensors: correct timestamp comments",
+      "author": "Shi Hao",
+      "author_email": "i.shihao.999@gmail.com",
+      "author_date": "2026-03-16T09:00:19Z",
+      "paths": [
+        "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c"
+      ],
+      "original_147_origin": null,
+      "additional_upstream_backport": true,
+      "prerequisite_only": true,
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "1330597c7480611334977ff66878fd40b411fa41",
+      "commit": "70d3f08847e64848a3d7dd6d04f8ffe1b5ab4130",
+      "parent": "73a9204694b8005eb7036589cd98c6c9f4832ece",
+      "subject": "iio: inv_sensors: convert to kernel types",
+      "author": "Jean-Baptiste Maneyrol",
+      "author_email": "jean-baptiste.maneyrol@tdk.com",
+      "author_date": "2026-07-20T10:38:32Z",
+      "paths": [
+        "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+        "include/linux/iio/common/inv_sensors_timestamp.h"
+      ],
+      "original_147_origin": null,
+      "additional_upstream_backport": true,
+      "prerequisite_only": true,
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "8f4b627656fa1767d8337a95849fe7c895b6f68a",
+      "commit": "06a639729d0e65cde294a760510806849cfefc7f",
+      "parent": "70d3f08847e64848a3d7dd6d04f8ffe1b5ab4130",
+      "subject": "iio: inv_sensors: better timestamp alignment when using watermark",
+      "author": "Jean-Baptiste Maneyrol",
+      "author_email": "jean-baptiste.maneyrol@tdk.com",
+      "author_date": "2026-07-20T10:38:33Z",
+      "paths": [
+        "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c"
+      ],
+      "original_147_origin": null,
+      "additional_upstream_backport": true,
+      "prerequisite_only": false,
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "82bd09ce4fd3b15680735eaeafe2e688901e3b00",
+      "commit": "2834ec1fad7ac219a60a7089b6df33286b63a721",
+      "parent": "06a639729d0e65cde294a760510806849cfefc7f",
+      "subject": "iio: inv_sensors: improve period measurement by using a longer delay",
+      "author": "Jean-Baptiste Maneyrol",
+      "author_email": "jean-baptiste.maneyrol@tdk.com",
+      "author_date": "2026-07-20T10:38:34Z",
+      "paths": [
+        "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+        "include/linux/iio/common/inv_sensors_timestamp.h"
+      ],
+      "original_147_origin": null,
+      "additional_upstream_backport": true,
+      "prerequisite_only": false,
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "b1c3c51b0916f7d1b2dceffc0e48abe185958825",
+      "commit": "8089dffed8b5d63af0f7ceffd6d293b7f6001407",
+      "parent": "2834ec1fad7ac219a60a7089b6df33286b63a721",
+      "subject": "iio: inv_sensors: fix estimated value larger than interrupt timestamp",
+      "author": "Jean-Baptiste Maneyrol",
+      "author_email": "jean-baptiste.maneyrol@tdk.com",
+      "author_date": "2026-08-24T15:16:58Z",
+      "paths": [
+        "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c"
+      ],
+      "original_147_origin": null,
+      "additional_upstream_backport": true,
+      "prerequisite_only": false,
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "3785dffc7c68751a8429ae6dd75804c14a5a7c7a",
+      "commit": "1cce55c1c6a5e38d21c240106eff83677da3a691",
+      "parent": "8089dffed8b5d63af0f7ceffd6d293b7f6001407",
+      "subject": "iio: inv_sensors: prevent timestamps going back in time in transitions",
+      "author": "Jean-Baptiste Maneyrol",
+      "author_email": "jean-baptiste.maneyrol@tdk.com",
+      "author_date": "2026-10-20T15:26:00Z",
+      "paths": [
+        "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+        "include/linux/iio/common/inv_sensors_timestamp.h"
+      ],
+      "original_147_origin": null,
+      "additional_upstream_backport": true,
+      "prerequisite_only": false,
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "0d695709ed380f1bc9303a91f57525d33766a07e",
+      "commit": "48f2a7bc7627669ca2f7bbac32f10ec2d205e850",
+      "parent": "1cce55c1c6a5e38d21c240106eff83677da3a691",
+      "subject": "iio: inv_sensors: do not compute period estimation when updating odr",
+      "author": "Jean-Baptiste Maneyrol",
+      "author_email": "jean-baptiste.maneyrol@tdk.com",
+      "author_date": "2026-10-20T16:28:47Z",
+      "paths": [
+        "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c"
+      ],
+      "original_147_origin": null,
+      "additional_upstream_backport": true,
+      "prerequisite_only": false,
+      "exact_added_removed_source_lines": true
+    }
+  ],
+  "source_files": {
+    "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c": "a484ccadbcc8cf8c9346516e7fb3b1821aec81330146743cab6bd04febeb1a34",
+    "include/linux/iio/common/inv_sensors_timestamp.h": "cb2a43416f3b921cfbe6c53599c9bbd360e1a0344915d35cca45d31140171a4e",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h": "ad506b4d40c92487219fb0c8724c969a95cd0fa493c69983d72a0ccfed3b0589",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_core.c": "c325173917089dcbf6390fd23863c62588ea94e45de96b6b6f03c17523d9d070",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c": "57488c497ee5b5e2ec8b49a11d4bfc4cf521897b8f447db717da3ffd4d836436",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c": "315c183376f33ba0a0643c370fc73c9e499009aecf5f916c42e8ecd3f2ffbf8a",
+    "drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c": "408a6f80356bb96e760cb2eb67a65f9c739fe5668d82720fe4e74fbe12924e83",
+    "drivers/iio/imu/inv_icm42600/inv_icm42600.h": "175e7a05de71e85087e23fc990eb68f10de4d8700b1f0f1c495ae750c796ffd4",
+    "drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c": "9c417c76b40f701a06e74c77a69792f4b60334d730d1ab4212c3fc43b4383899",
+    "drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c": "72d622d0228cb18d53daca41d196e9140c389e8bde6d3be89a6c9416d3e299c8",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c": "3bcbbf61dae97804aa26347eccd307f2a468cf64eee6f530eab4c3d70237c71a",
+    "drivers/iio/industrialio-buffer.c": "f3460a850184a4c75c9be61a5c429f0ba178f412ba57b57058a7867b2327d661",
+    "include/linux/iio/buffer.h": "114916cda8f5551545ba742f52badf8ed17964fcf0f75eea9c1db9672195dddf",
+    "drivers/iio/test/iio-test-format.c": "daa1e1827d613d14acd7f562c27aca44ef6723a954ca9a935d39d66a33ab3e5a"
+  },
+  "branch_advanced": true,
+  "recorded_UTC": "2026-11-17T15:17:59.547651+00:00",
+  "working_tree_clean": true,
+  "original_source_ports": 0,
+  "additional_upstream_backports": 7,
+  "additional_upstream_runtime_changes": 5,
+  "additional_upstream_prerequisite_changes": 2,
+  "native_objects": 90,
+  "focused_positive_cases": 504,
+  "focused_checks": 83780,
+  "baseline_failed_checks": 344,
+  "regression_variants": 7,
+  "strict_checkpatch_passed": true,
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "upstream_source_dependency_sequence_integrated": true,
+  "observed_IRQ_budget_limitation": {
+    "period_min_ns": 980000,
+    "IRQ_budget_ns": 500000,
+    "timestamp_overshoot_ns": 480000,
+    "reproduced_in_official_algorithm": true,
+    "physical_trigger_or_latency_observed": false,
+    "final_timing_acceptance_open": true
+  },
+  "raw_IRQ_latency_accuracy_acceptance_open": true,
+  "full_FIFO_callbacks_replayed": false,
+  "current_full_kernel_link_qualified": false,
+  "normal_public_APK_qualified": false,
+  "phone_access": false,
+  "published": false,
+  "human_DCO_pending": true,
+  "full_goal_complete": false
+}

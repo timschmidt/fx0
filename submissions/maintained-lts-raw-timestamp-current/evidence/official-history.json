@@ -1,0 +1,257 @@
+[
+  {
+    "commit": "0d695709ed380f1bc9303a91f57525d33766a07e",
+    "author": {
+      "name": "Jean-Baptiste Maneyrol",
+      "email": "jean-baptiste.maneyrol@tdk.com",
+      "date": "2026-10-20T16:28:47Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "jonathan.cameron@oss.qualcomm.com",
+      "date": "2026-11-02T00:39:30Z"
+    },
+    "message": "iio: inv_sensors: do not compute period estimation when updating odr\n\nWhen odr is updated, the delta between the interrupts will change and it\nwill lead to a bad period estimation.\n\nAvoid this by preventing the period estimation in this case.\n\nFixes: 82bd09ce4fd3 (\"iio: inv_sensors: improve period measurement by using a longer delay\")\nCc: stable@vger.kernel.org\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nSigned-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>",
+    "parents": [
+      "3785dffc7c68751a8429ae6dd75804c14a5a7c7a"
+    ]
+  },
+  {
+    "commit": "3785dffc7c68751a8429ae6dd75804c14a5a7c7a",
+    "author": {
+      "name": "Jean-Baptiste Maneyrol",
+      "email": "jean-baptiste.maneyrol@tdk.com",
+      "date": "2026-10-20T15:26:00Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "jonathan.cameron@oss.qualcomm.com",
+      "date": "2026-11-02T00:39:27Z"
+    },
+    "message": "iio: inv_sensors: prevent timestamps going back in time in transitions\n\nEnsure when computing first timestamp and when applying odr change,\nthat the next timestamp will not be lower than the previous one.\n\nThis way there is no risk to have a timestamp going back in time, meaning\nbeing lower than the previous one. It already can never happen without\na transition because we are generating timestamps by adding the period\nto the last timestamp.\n\nFixes: 0ecc363ccea7 (\"iio: make invensense timestamp module generic\")\nCc: stable@vger.kernel.org\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nSigned-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>",
+    "parents": [
+      "7b5f54280f8e6ef07664f6705dd005feefbe87d1"
+    ]
+  },
+  {
+    "commit": "b1c3c51b0916f7d1b2dceffc0e48abe185958825",
+    "author": {
+      "name": "Jean-Baptiste Maneyrol",
+      "email": "jean-baptiste.maneyrol@tdk.com",
+      "date": "2026-08-24T15:16:58Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "jonathan.cameron@oss.qualcomm.com",
+      "date": "2026-08-31T01:17:56Z"
+    },
+    "message": "iio: inv_sensors: fix estimated value larger than interrupt timestamp\n\nWhen interrupt timestamp interval is not valid, we use an estimated value\nthat can in rare case be bigger than the interrupt timestamp. This is\nobviously wrong, so better use interrupt timestamp in this case.\n\nFixes: 8f4b627656fa (\"iio: inv_sensors: better timestamp alignment when using watermark\")\nCc: stable@vger.kernel.org\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nSigned-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>",
+    "parents": [
+      "95e4eb426b4bd666fa2f37886c0ddf74a0cc6167"
+    ]
+  },
+  {
+    "commit": "82bd09ce4fd3b15680735eaeafe2e688901e3b00",
+    "author": {
+      "name": "Jean-Baptiste Maneyrol",
+      "email": "jean-baptiste.maneyrol@tdk.com",
+      "date": "2026-07-20T10:38:34Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "jonathan.cameron@oss.qualcomm.com",
+      "date": "2026-07-24T00:01:01Z"
+    },
+    "message": "iio: inv_sensors: improve period measurement by using a longer delay\n\nPeriod measurement can be difficult when using high sampling\nfrequency where the jitter criteria is hard to meet because of the\nsystem jitter.\n\nThis new version is using the delta time between 2 distant interrupts\nto measure an interval of at least 20ms. 20ms is a good compromise\nbetween the mitigation of system jitter and the delay to update\nperiod. This way we decorrelate the period measurement from the\ninterrupt timestamps syncing using only the 2 last interrupts.\n\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nSigned-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>",
+    "parents": [
+      "8f4b627656fa1767d8337a95849fe7c895b6f68a"
+    ]
+  },
+  {
+    "commit": "8f4b627656fa1767d8337a95849fe7c895b6f68a",
+    "author": {
+      "name": "Jean-Baptiste Maneyrol",
+      "email": "jean-baptiste.maneyrol@tdk.com",
+      "date": "2026-07-20T10:38:33Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "jonathan.cameron@oss.qualcomm.com",
+      "date": "2026-07-24T00:01:01Z"
+    },
+    "message": "iio: inv_sensors: better timestamp alignment when using watermark\n\nCurrent interrupt timestamp alignment only changes the final timestamp.\nWhen the watermark is in use, we have a batch of samples for each\ninterrupt. The current code doesn't manage to align the timestamp\nbecause the jitter is too high.\n\nInstead modify the estimated inter interrupt period and use that to\nadjust the timestamp alignment over the batch in a linear fashion.\n\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nSigned-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>",
+    "parents": [
+      "1330597c7480611334977ff66878fd40b411fa41"
+    ]
+  },
+  {
+    "commit": "1330597c7480611334977ff66878fd40b411fa41",
+    "author": {
+      "name": "Jean-Baptiste Maneyrol",
+      "email": "jean-baptiste.maneyrol@tdk.com",
+      "date": "2026-07-20T10:38:32Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "jonathan.cameron@oss.qualcomm.com",
+      "date": "2026-07-24T00:00:48Z"
+    },
+    "message": "iio: inv_sensors: convert to kernel types\n\nConvert standard types (u)intXX_t to kernel type u/sXX.\n\nSuggested-by: Andy Shevchenko <andriy.shevchenko@intel.com>\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nReviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>\nSigned-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>",
+    "parents": [
+      "0b5e142ced4bcf20532da051934bd694d1bbd470"
+    ]
+  },
+  {
+    "commit": "96f46405219d9bf62d9fab76e055e3b6059b0bd5",
+    "author": {
+      "name": "Shi Hao",
+      "email": "i.shihao.999@gmail.com",
+      "date": "2026-03-16T09:00:19Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "Jonathan.Cameron@huawei.com",
+      "date": "2026-03-21T19:28:19Z"
+    },
+    "message": "iio: common: fix spelling mistakes in comments\n\nFix spelling mistakes in comments.\n\n- exepects -> expects\n- fuction -> function\n- theoritical -> theoretical\n- appopriate -> appropriate\n- iio -> IIO\n\nSigned-off-by: Shi Hao <i.shihao.999@gmail.com>\nSigned-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>",
+    "parents": [
+      "5088fc744837eaba3f7a1c374cf9457a4ddbd87e"
+    ]
+  },
+  {
+    "commit": "6dfc256151e842fa894a2b579f9a4551c6961e2c",
+    "author": {
+      "name": "Karan Sanghavi",
+      "email": "karansanghvi98@gmail.com",
+      "date": "2024-11-03T08:43:14Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "Jonathan.Cameron@huawei.com",
+      "date": "2024-12-07T17:11:01Z"
+    },
+    "message": "iio: invensense: Prevent possible integer overflow while multiplication\n\nTypecast a variable to int64_t for 64-bit arithmetic multiplication.\n\nSigned-off-by: Karan Sanghavi <karansanghvi98@gmail.com>\nLink: https://scan7.scan.coverity.com/#/project-view/51946/11354?selectedIssue=1586045\nLink: https://patch.msgid.link/20241103-coverity1586045integeroverflow-v1-1-43ea37a3f3cd@gmail.com\nSigned-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>",
+    "parents": [
+      "a79f049b2eec9bac847717b0551469899ac0e715"
+    ]
+  },
+  {
+    "commit": "cdd30ebb1b9f36159d66f088b61aee264e649d7a",
+    "author": {
+      "name": "Peter Zijlstra",
+      "email": "peterz@infradead.org",
+      "date": "2024-12-02T14:59:47Z"
+    },
+    "committer": {
+      "name": "Linus Torvalds",
+      "email": "torvalds@linux-foundation.org",
+      "date": "2024-12-02T19:34:44Z"
+    },
+    "message": "module: Convert symbol namespace to string literal\n\nClean up the existing export namespace code along the same lines of\ncommit 33def8498fdd (\"treewide: Convert macro and uses of __section(foo)\nto __section(\"foo\")\") and for the same reason, it is not desired for the\nnamespace argument to be a macro expansion itself.\n\nScripted using\n\n  git grep -l -e MODULE_IMPORT_NS -e EXPORT_SYMBOL_NS | while read file;\n  do\n    awk -i inplace '\n      /^#define EXPORT_SYMBOL_NS/ {\n        gsub(/__stringify\\(ns\\)/, \"ns\");\n        print;\n        next;\n      }\n      /^#define MODULE_IMPORT_NS/ {\n        gsub(/__stringify\\(ns\\)/, \"ns\");\n        print;\n        next;\n      }\n      /MODULE_IMPORT_NS/ {\n        $0 = gensub(/MODULE_IMPORT_NS\\(([^)]*)\\)/, \"MODULE_IMPORT_NS(\\\"\\\\1\\\")\", \"g\");\n      }\n      /EXPORT_SYMBOL_NS/ {\n        if ($0 ~ /(EXPORT_SYMBOL_NS[^(]*)\\(([^,]+),/) {\n  \tif ($0 !~ /(EXPORT_SYMBOL_NS[^(]*)\\(([^,]+), ([^)]+)\\)/ &&\n  \t    $0 !~ /(EXPORT_SYMBOL_NS[^(]*)\\(\\)/ &&\n  \t    $0 !~ /^my/) {\n  \t  getline line;\n  \t  gsub(/[[:space:]]*\\\\$/, \"\");\n  \t  gsub(/[[:space:]]/, \"\", line);\n  \t  $0 = $0 \" \" line;\n  \t}\n\n  \t$0 = gensub(/(EXPORT_SYMBOL_NS[^(]*)\\(([^,]+), ([^)]+)\\)/,\n  \t\t    \"\\\\1(\\\\2, \\\"\\\\3\\\")\", \"g\");\n        }\n      }\n      { print }' $file;\n  done\n\nRequested-by: Masahiro Yamada <masahiroy@kernel.org>\nSigned-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>\nLink: https://mail.google.com/mail/u/2/#inbox/FMfcgzQXKWgMmjdFwwdsfgxzKpVHWPlc\nAcked-by: Greg KH <gregkh@linuxfoundation.org>\nSigned-off-by: Linus Torvalds <torvalds@linux-foundation.org>",
+    "parents": [
+      "e70140ba0d2b1a30467d4af6bcfe761327b9ec95"
+    ]
+  },
+  {
+    "commit": "ef5f5e7b6f73f79538892a8be3a3bee2342acc9f",
+    "author": {
+      "name": "Jean-Baptiste Maneyrol",
+      "email": "jean-baptiste.maneyrol@tdk.com",
+      "date": "2024-10-21T08:38:42Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "Jonathan.Cameron@huawei.com",
+      "date": "2024-10-29T20:59:49Z"
+    },
+    "message": "iio: invensense: fix multiple odr switch when FIFO is off\n\nWhen multiple ODR switch happens during FIFO off, the change could\nnot be taken into account if you get back to previous FIFO on value.\nFor example, if you run sensor buffer at 50Hz, stop, change to\n200Hz, then back to 50Hz and restart buffer, data will be timestamped\nat 200Hz. This due to testing against mult and not new_mult.\n\nTo prevent this, let's just run apply_odr automatically when FIFO is\noff. It will also simplify driver code.\n\nUpdate inv_mpu6050 and inv_icm42600 to delete now useless apply_odr.\n\nFixes: 95444b9eeb8c (\"iio: invensense: fix odr switching to same value\")\nCc: stable@vger.kernel.org\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nLink: https://patch.msgid.link/20241021-invn-inv-sensors-timestamp-fix-switch-fifo-off-v2-1-39ffd43edcc4@tdk.com\nSigned-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>",
+    "parents": [
+      "d0bc3b92fb9b2c3c981984d52fffe8cca77165dc"
+    ]
+  },
+  {
+    "commit": "95444b9eeb8c5c0330563931d70c61ca3b101548",
+    "author": {
+      "name": "Jean-Baptiste Maneyrol",
+      "email": "jean-baptiste.maneyrol@tdk.com",
+      "date": "2024-05-24T12:48:51Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "Jonathan.Cameron@huawei.com",
+      "date": "2024-05-27T08:49:20Z"
+    },
+    "message": "iio: invensense: fix odr switching to same value\n\nODR switching happens in 2 steps, update to store the new value and then\napply when the ODR change flag is received in the data. When switching to\nthe same ODR value, the ODR change flag is never happening, and frequency\nswitching is blocked waiting for the never coming apply.\n\nFix the issue by preventing update to happen when switching to same ODR\nvalue.\n\nFixes: 0ecc363ccea7 (\"iio: make invensense timestamp module generic\")\nCc: stable@vger.kernel.org\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nLink: https://lore.kernel.org/r/20240524124851.567485-1-inv.git-commit@tdk.com\nSigned-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>",
+    "parents": [
+      "f00dd8953094091a8e9c8cc00661d01c33b93615"
+    ]
+  },
+  {
+    "commit": "bf8367b00c33c64a9391c262bb2e11d274c9f2a4",
+    "author": {
+      "name": "Jean-Baptiste Maneyrol",
+      "email": "jean-baptiste.maneyrol@tdk.com",
+      "date": "2024-04-26T09:48:35Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "jonathan.cameron@huawei.com",
+      "date": "2024-05-03T10:48:56Z"
+    },
+    "message": "iio: invensense: fix timestamp glitches when switching frequency\n\nWhen a sensor is running and there is a FIFO frequency change due to\nanother sensor turned on/off, there are glitches on timestamp. Fix that\nby using only interrupt timestamp when there is the corresponding sensor\ndata in the FIFO.\n\nDelete FIFO period handling and simplify internal functions.\n\nUpdate integration inside inv_mpu6050 and inv_icm42600 drivers.\n\nFixes: 0ecc363ccea7 (\"iio: make invensense timestamp module generic\")\nCc: Stable@vger.kernel.org\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nLink: https://lore.kernel.org/r/20240426094835.138389-1-inv.git-commit@tdk.com\nSigned-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>",
+    "parents": [
+      "0340dc4c82590d8735c58cf904a8aa1173273ab5"
+    ]
+  },
+  {
+    "commit": "0340dc4c82590d8735c58cf904a8aa1173273ab5",
+    "author": {
+      "name": "Jean-Baptiste Maneyrol",
+      "email": "jean-baptiste.maneyrol@tdk.com",
+      "date": "2024-04-26T13:58:14Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "Jonathan.Cameron@huawei.com",
+      "date": "2024-05-01T07:26:36Z"
+    },
+    "message": "iio: invensense: fix interrupt timestamp alignment\n\nRestrict interrupt timestamp alignment for not overflowing max/min\nperiod thresholds.\n\nFixes: 0ecc363ccea7 (\"iio: make invensense timestamp module generic\")\nCc: stable@vger.kernel.org\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nLink: https://lore.kernel.org/r/20240426135814.141837-1-inv.git-commit@tdk.com\nSigned-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>",
+    "parents": [
+      "561e2e3e90b4307f9a47a6382fa5cd15462aacf9"
+    ]
+  },
+  {
+    "commit": "b58b13f156c00c2457035b7071eaaac105fe6836",
+    "author": {
+      "name": "Colin Ian King",
+      "email": "colin.i.king@gmail.com",
+      "date": "2024-01-06T15:32:02Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "Jonathan.Cameron@huawei.com",
+      "date": "2024-01-23T22:06:56Z"
+    },
+    "message": "iio: invensense: remove redundant initialization of variable period\n\nThe variable period is being initialized with a value that is never\nread, it is being re-assigned a new value later on before it is read.\nThe initialization is redundant and can be removed.\n\nCleans up clang scan build warning:\nValue stored to 'period' during its initialization is never\nread [deadcode.DeadStores]\n\nSigned-off-by: Colin Ian King <colin.i.king@gmail.com>\nAcked-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nLink: https://lore.kernel.org/r/20240106153202.54861-1-colin.i.king@gmail.com\nSigned-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>",
+    "parents": [
+      "b2463c49ab68376b20d5165400e47fc675976dd2"
+    ]
+  },
+  {
+    "commit": "0ecc363ccea71eda6a2cceade120489259bcdb33",
+    "author": {
+      "name": "Jean-Baptiste Maneyrol",
+      "email": "jean-baptiste.maneyrol@tdk.com",
+      "date": "2023-06-06T16:21:46Z"
+    },
+    "committer": {
+      "name": "Jonathan Cameron",
+      "email": "Jonathan.Cameron@huawei.com",
+      "date": "2023-07-20T18:21:28Z"
+    },
+    "message": "iio: make invensense timestamp module generic\n\nRename common module to inv_sensors_timestamp, add configuration\nat init (chip internal clock, acceptable jitter, ...) and update\ninv_icm42600 driver integration.\n\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nReviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>\nLink: https://lore.kernel.org/r/20230606162147.79667-4-inv.git-commit@tdk.com\nSigned-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>",
+    "parents": [
+      "d99ff463ecf651437e9e4abe68f331dfb6b5bd9d"
+    ]
+  }
+]

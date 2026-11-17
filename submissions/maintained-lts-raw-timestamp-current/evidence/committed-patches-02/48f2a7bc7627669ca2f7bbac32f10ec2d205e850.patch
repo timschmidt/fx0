@@ -1,0 +1,77 @@
+From 48f2a7bc7627669ca2f7bbac32f10ec2d205e850 Mon Sep 17 00:00:00 2001
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Date: Tue, 20 Oct 2026 16:28:47 +0000
+Subject: [PATCH] iio: inv_sensors: do not compute period estimation when
+ updating odr
+
+When odr is updated, the delta between the interrupts will change and it
+will lead to a bad period estimation.
+
+Avoid this by preventing the period estimation in this case.
+
+Fixes: 2834ec1fad7a ("iio: inv_sensors: improve period measurement by using a longer delay")
+Cc: stable@vger.kernel.org
+
+Carry the timestamp-module scope into maintained LTS together with the
+complete five-change alignment, measurement, estimate-cap and transition
+sequence. The two comment/type prerequisites are separate from runtime
+repairs and from the original 147-origin feature inventory. Unrelated
+common-driver spelling changes are excluded. Map Fixes references for
+the new sequence to their local backport commits; archived upstream
+metadata retains the original references. Document the new init field
+and omit a redundant blank line before a closing brace.
+
+The complete pure timestamp module and inline API pass 504 synthetic
+cases and 83780 checks with address, undefined-behavior and leak
+sanitizers. The baseline has 344 failed checks; seven behavioral
+regression controls fail as intended. MPU and ICM callers and the
+separate DMP/quaternion ABI are preserved. Full FIFO callbacks and
+physical timing are not replayed.
+
+The upstream algorithm still cannot satisfy both its minimum period and
+a shorter IRQ budget: a 500000 ns budget with a 980000 ns minimum
+produces a 480000 ns overshoot in a separate reproducer. Final timing,
+IRQ latency, sensor accuracy, full linking and normal APK acceptance
+remain open.
+
+Codex prepared this scoped LTS port and qualification. Original upstream
+trailers are retained provenance, not new sign-offs for the adaptation.
+Human DCO and final owner/security review remain pending.
+
+Link: https://github.com/torvalds/linux/commit/0d695709ed380f1bc9303a91f57525d33766a07e
+
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+---
+ drivers/iio/common/inv_sensors/inv_sensors_timestamp.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
+index 838ddb2162a6d..be7ef391aeb77 100644
+--- a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
++++ b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
+@@ -146,6 +146,12 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,
+ 	/* update delta timestamps and estimated period */
+ 	it = &ts->delta;
+ 	ts->delta_counter += sample_nb;
++	/* reset in case of odr change */
++	if (ts->new_mult) {
++		it->lo = 0;
++		it->up = 0;
++		ts->delta_counter = 0;
++	}
+ 	delta = timestamp - it->up;
+ 	delta_threshold = INV_SENSORS_TIMESTAMP_MIN(INV_SENSORS_MIN_IT_DELTA, ts->chip.jitter);
+ 	if (delta >= delta_threshold) {
+@@ -165,7 +171,7 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,
+ 	it->lo = it->up;
+ 	it->up = timestamp;
+ 	delta = it->up - it->lo;
+-	if (it->lo != 0) {
++	if (it->lo != 0 && !ts->new_mult) {
+ 		/* compute period and check validity */
+ 		period = div_s64(delta, sample_nb);
+ 		valid = inv_validate_period(ts, period);
+-- 
+2.56.0
+

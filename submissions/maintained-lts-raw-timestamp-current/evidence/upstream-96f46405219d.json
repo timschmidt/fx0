@@ -1,0 +1,34 @@
+{
+  "commit": "96f46405219d9bf62d9fab76e055e3b6059b0bd5",
+  "url": "https://github.com/torvalds/linux/commit/96f46405219d9bf62d9fab76e055e3b6059b0bd5",
+  "author": {
+    "name": "Shi Hao",
+    "email": "i.shihao.999@gmail.com",
+    "date": "2026-03-16T09:00:19Z"
+  },
+  "committer": {
+    "name": "Jonathan Cameron",
+    "email": "Jonathan.Cameron@huawei.com",
+    "date": "2026-03-21T19:28:19Z"
+  },
+  "message": "iio: common: fix spelling mistakes in comments\n\nFix spelling mistakes in comments.\n\n- exepects -> expects\n- fuction -> function\n- theoritical -> theoretical\n- appopriate -> appropriate\n- iio -> IIO\n\nSigned-off-by: Shi Hao <i.shihao.999@gmail.com>\nSigned-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>",
+  "files": [
+    {
+      "filename": "drivers/iio/common/cros_ec_sensors/cros_ec_sensors.c",
+      "patch": "@@ -106,7 +106,7 @@ static int cros_ec_sensors_read(struct iio_dev *indio_dev,\n \t\tswitch (st->core.type) {\n \t\tcase MOTIONSENSE_TYPE_ACCEL:\n \t\t\t/*\n-\t\t\t * EC returns data in g, iio exepects m/s^2.\n+\t\t\t * EC returns data in g, IIO expects m/s^2.\n \t\t\t * Do not use IIO_G_TO_M_S_2 to avoid precision loss.\n \t\t\t */\n \t\t\t*val = div_s64(val64 * 980665, 10);"
+    },
+    {
+      "filename": "drivers/iio/common/hid-sensors/hid-sensor-attributes.c",
+      "patch": "@@ -346,7 +346,7 @@ int hid_sensor_write_raw_hyst_rel_value(struct hid_sensor_common *st,\n EXPORT_SYMBOL_NS(hid_sensor_write_raw_hyst_rel_value, \"IIO_HID\");\n \n /*\n- * This fuction applies the unit exponent to the scale.\n+ * This function applies the unit exponent to the scale.\n  * For example:\n  * 9.806650000 ->exp:2-> val0[980]val1[665000000]\n  * 9.000806000 ->exp:2-> val0[900]val1[80600000]"
+    },
+    {
+      "filename": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+      "patch": "@@ -154,7 +154,7 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,\n \t\tvalid = inv_update_chip_period(ts, period);\n \t}\n \n-\t/* no previous data, compute theoritical value from interrupt */\n+\t/* no previous data, compute theoretical value from interrupt */\n \tif (ts->timestamp == 0) {\n \t\t/* elapsed time: sensor period * sensor samples number */\n \t\tinterval = (int64_t)ts->period * (int64_t)sample_nb;\n@@ -185,7 +185,7 @@ void inv_sensors_timestamp_apply_odr(struct inv_sensors_timestamp *ts,\n \n \t/*\n \t * After ODR change the time interval with the previous sample is\n-\t * undertermined (depends when the change occures). So we compute the\n+\t * undertermined (depends when the change occurs). So we compute the\n \t * timestamp from the current interrupt using the new FIFO period, the\n \t * total number of samples and the current sample numero.\n \t */"
+    },
+    {
+      "filename": "drivers/iio/common/ms_sensors/ms_sensors_i2c.c",
+      "patch": "@@ -96,7 +96,7 @@ EXPORT_SYMBOL_NS(ms_sensors_read_prom_word, \"IIO_MEAS_SPEC_SENSORS\");\n  *\n  * Generic ADC conversion & read function for Measurement Specialties\n  * devices.\n- * The function will issue conversion command, sleep appopriate delay, and\n+ * The function will issue conversion command, sleep appropriate delay, and\n  * issue command to read ADC.\n  *\n  * Return: 0 on success, negative errno otherwise."
+    }
+  ],
+  "source": "torvalds/linux via read-only GitHub API"
+}

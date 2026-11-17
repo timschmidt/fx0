@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "base": "4e09950ec22dec00cc880cfc49eb70be6cd30fb2",
+  "source_files": {
+    "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c": "a484ccadbcc8cf8c9346516e7fb3b1821aec81330146743cab6bd04febeb1a34",
+    "include/linux/iio/common/inv_sensors_timestamp.h": "cb2a43416f3b921cfbe6c53599c9bbd360e1a0344915d35cca45d31140171a4e",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h": "ad506b4d40c92487219fb0c8724c969a95cd0fa493c69983d72a0ccfed3b0589",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_core.c": "c325173917089dcbf6390fd23863c62588ea94e45de96b6b6f03c17523d9d070",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c": "57488c497ee5b5e2ec8b49a11d4bfc4cf521897b8f447db717da3ffd4d836436",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c": "315c183376f33ba0a0643c370fc73c9e499009aecf5f916c42e8ecd3f2ffbf8a",
+    "drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c": "408a6f80356bb96e760cb2eb67a65f9c739fe5668d82720fe4e74fbe12924e83",
+    "drivers/iio/imu/inv_icm42600/inv_icm42600.h": "175e7a05de71e85087e23fc990eb68f10de4d8700b1f0f1c495ae750c796ffd4",
+    "drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c": "9c417c76b40f701a06e74c77a69792f4b60334d730d1ab4212c3fc43b4383899",
+    "drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c": "72d622d0228cb18d53daca41d196e9140c389e8bde6d3be89a6c9416d3e299c8",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c": "3bcbbf61dae97804aa26347eccd307f2a468cf64eee6f530eab4c3d70237c71a",
+    "drivers/iio/industrialio-buffer.c": "f3460a850184a4c75c9be61a5c429f0ba178f412ba57b57058a7867b2327d661",
+    "include/linux/iio/buffer.h": "114916cda8f5551545ba742f52badf8ed17964fcf0f75eea9c1db9672195dddf",
+    "drivers/iio/test/iio-test-format.c": "daa1e1827d613d14acd7f562c27aca44ef6723a954ca9a935d39d66a33ab3e5a"
+  },
+  "changed_paths": [
+    "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+    "include/linux/iio/common/inv_sensors_timestamp.h"
+  ],
+  "endpoint_matches_official_except_init_doc_and_whitespace": true,
+  "original_147_inventory_unchanged": true,
+  "all_timestamp_consumers_enumerated": true,
+  "MPU_and_ICM_caller_source_unchanged": true,
+  "DMP_and_quaternion_ABI_source_unchanged": true,
+  "MPU_1kHz_clock_and_ICM_8kHz_clock_profiles_bound": true,
+  "full_MPU_or_ICM_FIFO_callbacks_replayed": false,
+  "upstream_five_runtime_changes_and_two_prerequisites": true,
+  "observed_infeasible_IRQ_budget": {
+    "period_min_ns": 980000,
+    "IRQ_budget_ns": 500000,
+    "timestamp_overshoot_ns": 480000,
+    "reproduced_in_official_algorithm": true,
+    "physical_trigger_or_latency_observed": false,
+    "final_timing_acceptance_open": true
+  },
+  "DTS_and_schema_unchanged": true,
+  "previous_full19_schema_proof_reusable": true,
+  "phone_access": false
+}

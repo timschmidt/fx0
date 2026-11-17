@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "state": "terminal success",
+  "stages": [
+    {
+      "label": "before",
+      "returncode": 0,
+      "model_returncode": 1,
+      "failed_checks": 344
+    },
+    {
+      "label": "after",
+      "returncode": 0,
+      "model_returncode": 0,
+      "failed_checks": 0
+    },
+    {
+      "label": "official",
+      "returncode": 0,
+      "model_returncode": 0,
+      "failed_checks": 0
+    },
+    {
+      "label": "watermark",
+      "returncode": 0,
+      "model_returncode": 1,
+      "failed_checks": 123
+    },
+    {
+      "label": "long-window",
+      "returncode": 0,
+      "model_returncode": 1,
+      "failed_checks": 20
+    },
+    {
+      "label": "estimate-cap",
+      "returncode": 0,
+      "model_returncode": 1,
+      "failed_checks": 73
+    },
+    {
+      "label": "first-transition",
+      "returncode": 0,
+      "model_returncode": 1,
+      "failed_checks": 6
+    },
+    {
+      "label": "odr-transition",
+      "returncode": 0,
+      "model_returncode": 1,
+      "failed_checks": 195
+    },
+    {
+      "label": "reset-history",
+      "returncode": 0,
+      "model_returncode": 1,
+      "failed_checks": 6
+    },
+    {
+      "label": "pending-odr",
+      "returncode": 0,
+      "model_returncode": 1,
+      "failed_checks": 32
+    }
+  ],
+  "source_head": "48f2a7bc7627669ca2f7bbac32f10ec2d205e850",
+  "manifest_verified_before_execution": true,
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "phone_access": false,
+  "real_hardware_execution": false,
+  "tasks": 10,
+  "qualified_fixtures": 10,
+  "all_generated_fixtures_match": true,
+  "official_and_candidate_IRQ_limit_reproduced": true,
+  "owned_child_terminal_and_reaped": true
+}

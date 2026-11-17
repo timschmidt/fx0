@@ -1,0 +1,22 @@
+{
+  "commit": "8f4b627656fa1767d8337a95849fe7c895b6f68a",
+  "url": "https://github.com/torvalds/linux/commit/8f4b627656fa1767d8337a95849fe7c895b6f68a",
+  "author": {
+    "name": "Jean-Baptiste Maneyrol",
+    "email": "jean-baptiste.maneyrol@tdk.com",
+    "date": "2026-07-20T10:38:33Z"
+  },
+  "committer": {
+    "name": "Jonathan Cameron",
+    "email": "jonathan.cameron@oss.qualcomm.com",
+    "date": "2026-07-24T00:01:01Z"
+  },
+  "message": "iio: inv_sensors: better timestamp alignment when using watermark\n\nCurrent interrupt timestamp alignment only changes the final timestamp.\nWhen the watermark is in use, we have a batch of samples for each\ninterrupt. The current code doesn't manage to align the timestamp\nbecause the jitter is too high.\n\nInstead modify the estimated inter interrupt period and use that to\nadjust the timestamp alignment over the batch in a linear fashion.\n\nSigned-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nSigned-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>",
+  "files": [
+    {
+      "filename": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+      "patch": "@@ -10,9 +10,7 @@\n \n #include <linux/iio/common/inv_sensors_timestamp.h>\n \n-/* compute jitter, min and max following jitter in per mille */\n-#define INV_SENSORS_TIMESTAMP_JITTER(_val, _jitter)\t\t\\\n-\t(div_s64((_val) * (_jitter), 1000))\n+/* compute min and max following jitter in per mille */\n #define INV_SENSORS_TIMESTAMP_MIN(_val, _jitter)\t\t\\\n \t(((_val) * (1000 - (_jitter))) / 1000)\n #define INV_SENSORS_TIMESTAMP_MAX(_val, _jitter)\t\t\\\n@@ -102,34 +100,22 @@ static bool inv_update_chip_period(struct inv_sensors_timestamp *ts,\n \t/* update chip internal period estimation */\n \tnew_chip_period = period / ts->mult;\n \tinv_update_acc(&ts->chip_period, new_chip_period);\n-\tts->period = ts->mult * ts->chip_period.val;\n \n \treturn true;\n }\n \n-static void inv_align_timestamp_it(struct inv_sensors_timestamp *ts)\n+static u32 inv_align_timestamp_it(struct inv_sensors_timestamp *ts,\n+\t\t\t\t  unsigned int sample_nb)\n {\n \tconst s64 period_min = (s64)ts->min_period * ts->mult;\n \tconst s64 period_max = (s64)ts->max_period * ts->mult;\n-\ts64 add_max, sub_max;\n-\ts64 delta, jitter;\n-\ts64 adjust;\n-\n-\t/* delta time between last sample and last interrupt */\n-\tdelta = ts->it.lo - ts->timestamp;\n-\n-\t/* adjust timestamp while respecting jitter */\n-\tadd_max = period_max - (s64)ts->period;\n-\tsub_max = period_min - (s64)ts->period;\n-\tjitter = INV_SENSORS_TIMESTAMP_JITTER((s64)ts->period, ts->chip.jitter);\n-\tif (delta > jitter)\n-\t\tadjust = add_max;\n-\telse if (delta < -jitter)\n-\t\tadjust = sub_max;\n-\telse\n-\t\tadjust = 0;\n+\ts64 new_period;\n+\n+\t/* compute new period aligning last timestamp with interrupt timestamp */\n+\tnew_period = div_s64(ts->it.up - ts->timestamp, sample_nb);\n \n-\tts->timestamp += adjust;\n+\t/* ensure that period never overflows the jitter */\n+\treturn clamp(new_period, period_min, period_max);\n }\n \n void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,\n@@ -143,6 +129,13 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,\n \tif (sample_nb == 0)\n \t\treturn;\n \n+\t/* no previous data, compute theoretical value from interrupt */\n+\tif (ts->timestamp == 0) {\n+\t\t/* elapsed time: sensor period * sensor samples number */\n+\t\tinterval = (s64)ts->period * (s64)sample_nb;\n+\t\tts->timestamp = timestamp - interval;\n+\t}\n+\n \t/* update interrupt timestamp and compute chip and sensor periods */\n \tit = &ts->it;\n \tit->lo = it->up;\n@@ -154,17 +147,11 @@ void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,\n \t\tvalid = inv_update_chip_period(ts, period);\n \t}\n \n-\t/* no previous data, compute theoretical value from interrupt */\n-\tif (ts->timestamp == 0) {\n-\t\t/* elapsed time: sensor period * sensor samples number */\n-\t\tinterval = (s64)ts->period * (s64)sample_nb;\n-\t\tts->timestamp = it->up - interval;\n-\t\treturn;\n-\t}\n-\n \t/* if interrupt interval is valid, sync with interrupt timestamp */\n \tif (valid)\n-\t\tinv_align_timestamp_it(ts);\n+\t\tts->period = inv_align_timestamp_it(ts, sample_nb);\n+\telse\n+\t\tts->period = ts->mult * ts->chip_period.val;\n }\n EXPORT_SYMBOL_NS_GPL(inv_sensors_timestamp_interrupt, \"IIO_INV_SENSORS_TIMESTAMP\");\n "
+    }
+  ],
+  "source": "torvalds/linux via read-only GitHub API"
+}
