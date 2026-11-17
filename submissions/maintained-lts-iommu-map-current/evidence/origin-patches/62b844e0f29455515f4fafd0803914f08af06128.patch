@@ -1,0 +1,68 @@
+commit 62b844e0f29455515f4fafd0803914f08af06128
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Sat Nov 14 22:53:52 2026 -0500
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sat Nov 14 22:53:52 2026 -0500
+
+    ARM: dts: qcom: msm8226: Describe the VFE IOMMU
+    
+    Describe the VFE IOMMU global registers, three non-secure context banks,
+    clocks and power domain. Leave the instance disabled for boards to enable.
+    
+    Refresh the existing implementation from 4245f34dee3c onto the
+    current Qualcomm ARM32 tree. The hardware description is unchanged; node
+    placement follows address order in the current source.
+    
+    Original implementation by Timothy Schmidt, with Claude Opus 5.5
+    assistance credited in the original commit. Refreshed with OpenAI Codex
+    assistance. Human review and DCO certification remain pending.
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+index 14605d7666e6..6b4f96c02b76 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+@@ -1309,6 +1309,44 @@ cci_i2c0: i2c-bus@0 {
+ 			};
+ 		};
+ 
++		vfe_iommu: iommu@fda44000 {
++			compatible = "qcom,msm8226-vfe-iommu";
++			reg = <0xfda44000 0x2600>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			#iommu-cells = <1>;
++			ranges = <0 0xfda4c000 0x3000>;
++
++			clocks = <&mmcc CAMSS_VFE_VFE_AHB_CLK>,
++				 <&mmcc CAMSS_VFE_VFE_AXI_CLK>,
++				 <&mmcc CAMSS_TOP_AHB_CLK>;
++			clock-names = "iface", "bus", "tbu";
++			power-domains = <&mmcc CAMSS_VFE_GDSC>;
++
++			status = "disabled";
++
++			/* VFE0 */
++			iommu-ctx@0 {
++				compatible = "qcom,msm-iommu-v1-ns";
++				reg = <0x0 0x1000>;
++				interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>;
++			};
++
++			/* VFE1 */
++			iommu-ctx@1000 {
++				compatible = "qcom,msm-iommu-v1-ns";
++				reg = <0x1000 0x1000>;
++				interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>;
++			};
++
++			/* CPP */
++			iommu-ctx@2000 {
++				compatible = "qcom,msm-iommu-v1-ns";
++				reg = <0x2000 0x1000>;
++				interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>;
++			};
++		};
++
+ 		gpu: gpu@fdb00000 {
+ 			compatible = "qcom,adreno-305.18", "qcom,adreno";
+ 			reg = <0xfdb00000 0x10000>;

@@ -1,0 +1,51 @@
+commit 264773d2c7b9b91eec1c801a361ef93e99f2da6a
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Sat Oct 31 07:19:32 2026 -0400
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sun Nov 15 18:07:08 2026 -0500
+
+    iommu: qcom_iommu: Map the MSM8226 VFE stream IDs
+    
+    Original integration rationale and historical observations follow. These
+    observations do not qualify hardware on this refreshed base.
+    
+    The VFE SMMU is OS-managed, so the driver programs its stream match
+    registers from the configuration. Without a stream table every VFE
+    transaction is an unidentified stream and faults, and captures stay
+    empty. Map VFE0, VFE1 and CPP (stream IDs 0, 1 and 2) to their context
+    banks, as the vendor context descriptions do.
+    
+    Original integration AI credit: Claude Opus 5.5 <noreply@anthropic.com>.
+    
+    Refreshed from integration source
+    05834c037143a566676c57d765e6cc4145873a3f. Current-base adaptation and
+    host qualification used OpenAI Codex. Human review and new DCO
+    certification remain pending.
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 3abd34a83f41..754f40c86832 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -1270,6 +1270,13 @@ static const struct qcom_iommu_bfb_reg msm8226_vfe_bfb[] = {
+ 	{ 0x020, 0x00000000 },
+ };
+ 
++/* Stream IDs from the vendor vfe_iommu context descriptions. */
++static const struct qcom_iommu_sid msm8226_vfe_sids[] = {
++	{ .cbndx = 0, .sid = 0 },	/* VFE0 */
++	{ .cbndx = 1, .sid = 1 },	/* VFE1 */
++	{ .cbndx = 2, .sid = 2 },	/* CPP */
++};
++
+ static const struct qcom_iommu_cfg msm8226_vfe_cfg = {
+ 	.halt = true,
+ 	.no_stall = true,
+@@ -1278,6 +1285,8 @@ static const struct qcom_iommu_cfg msm8226_vfe_cfg = {
+ 	.ctx_restore = true,
+ 	.bfb = msm8226_vfe_bfb,
+ 	.num_bfb = ARRAY_SIZE(msm8226_vfe_bfb),
++	.sids = msm8226_vfe_sids,
++	.num_sids = ARRAY_SIZE(msm8226_vfe_sids),
+ };
+ 
+ static const struct qcom_iommu_bfb_reg msm8226_mdp_bfb[] = {

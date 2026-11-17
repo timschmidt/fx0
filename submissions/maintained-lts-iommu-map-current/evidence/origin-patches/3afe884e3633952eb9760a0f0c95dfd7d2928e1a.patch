@@ -1,0 +1,83 @@
+commit 3afe884e3633952eb9760a0f0c95dfd7d2928e1a
+Author:     Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+AuthorDate: Sun Aug 9 23:15:49 2026 +0300
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sun Nov 15 18:07:07 2026 -0500
+
+    iommu: qcom_iommu: program BFP (prefetch) settings
+    
+    Original integration rationale and historical observations follow. These
+    observations do not qualify hardware on this refreshed base.
+    
+    MSM8974 QSMMU instances require additional programming of the prefetch
+    settings in the instance-specific space, with the tables being specific
+    to a particular instance (rather than the SoC). Implement support for
+    programming BFB tables.
+    
+    Original integration AI credit: Claude:claude-fable-5.
+    
+    Refreshed from integration source
+    2407435a40542b068a2732acf0005d99a69220bb. Current-base adaptation and
+    host qualification used OpenAI Codex. Human review and new DCO
+    certification remain pending.
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 07f61ab3b192..266b3de8d96b 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -57,6 +57,11 @@ enum qcom_iommu_clk {
+ 
+ struct qcom_iommu_ctx;
+ 
++struct qcom_iommu_bfb_reg {
++	u32			 offset;
++	u32			 value;
++};
++
+ struct qcom_iommu_sid {
+ 	u8			 cbndx;
+ 	u8			 sid;
+@@ -78,6 +83,8 @@ struct qcom_iommu_cfg {
+ 	bool				 halt;
+ 	/* faulting transactions must terminate rather than stall */
+ 	bool				 no_stall;
++	const struct qcom_iommu_bfb_reg	*bfb;
++	unsigned int			 num_bfb;
+ 	const struct qcom_iommu_sid	*sids;	/* one SMR slot per entry */
+ 	unsigned int			 num_sids;
+ };
+@@ -286,6 +293,25 @@ static irqreturn_t qcom_iommu_fault(int irq, void *dev)
+ 	return IRQ_HANDLED;
+ }
+ 
++static void qcom_iommu_bfb_setup(struct qcom_iommu_dev *qcom_iommu)
++{
++	const struct qcom_iommu_cfg *cfg = qcom_iommu->cfg;
++	unsigned int i;
++
++	if (!cfg)
++		return;
++
++	/* The BFB registers sit in the implementation-defined space */
++	for (i = 0; i < cfg->num_bfb; i++) {
++		if (WARN_ON_ONCE(cfg->bfb[i].offset >= SZ_4K))
++			continue;
++
++		writel_relaxed(cfg->bfb[i].value,
++			       qcom_iommu->global_base + QCOM_IOMMU_IMPL_DEF +
++			      cfg->bfb[i].offset);
++	}
++}
++
+ /*
+  * Reset and configure the global register space of an instance the
+  * secure world does not manage: global fault state, TLB, stream
+@@ -1131,6 +1157,8 @@ static int __maybe_unused qcom_iommu_resume(struct device *dev)
+ 			return ret;
+ 	}
+ 
++	qcom_iommu_bfb_setup(qcom_iommu);
++
+ 	if (qcom_iommu->cfg && qcom_iommu->cfg->ctx_restore) {
+ 		/* Restore context banks lost over power collapse */
+ 		for (i = 0; i <= qcom_iommu->max_asid; i++) {

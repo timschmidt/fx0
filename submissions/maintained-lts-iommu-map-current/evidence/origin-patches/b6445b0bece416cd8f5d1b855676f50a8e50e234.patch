@@ -1,0 +1,66 @@
+commit b6445b0bece416cd8f5d1b855676f50a8e50e234
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Sat Oct 31 06:27:10 2026 -0400
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sun Nov 15 18:07:08 2026 -0500
+
+    clk: qcom: mmcc-msm8974: Use the M/N counter for camera MCLKs
+    
+    The MCLK0-3 tables contain fractional rates, but their RCG descriptions
+    leave mnd_width at zero. The shared RCG code consequently skips M/N
+    programming and readback. For example, the 24 MHz entry with a 600 MHz
+    GPLL0 parent produces 120 MHz after its divide-by-five stage instead of
+    applying the additional 1/5 fraction.
+    
+    Declare the eight-bit M/N counters for all four MCLK RCGs. This restores
+    the fractional entries shared by MSM8974 and the MSM8226 override tables
+    without changing their parent maps or requested frequencies.
+    
+    An extracted-production ASan/UBSan host reproducer shows 22 mismatches
+    among 50 table cases before the change and none afterward. All four
+    per-clock omission controls reproduce the 120 MHz result. Native ARM
+    and ARM64 COMPILE_TEST component validation is recorded separately; no
+    new hardware acceptance is claimed by this refresh.
+    
+    Fixes: d8b212014e69 ("clk: qcom: Add support for MSM8974's multimedia clock controller (MMCC)")
+    
+    Original integration work by Timothy Schmidt credits Claude Opus 5.5
+    <noreply@anthropic.com> as co-author. This current-base refresh and host
+    qualification used OpenAI Codex. Human review and DCO remain pending.
+
+diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
+index f2e802cf6afc..eeb7596d3b2c 100644
+--- a/drivers/clk/qcom/mmcc-msm8974.c
++++ b/drivers/clk/qcom/mmcc-msm8974.c
+@@ -678,6 +678,7 @@ static const struct freq_tbl ftbl_camss_mclk0_3_clk[] = {
+ 
+ static struct clk_rcg2 mclk0_clk_src = {
+ 	.cmd_rcgr = 0x3360,
++	.mnd_width = 8,
+ 	.hid_width = 5,
+ 	.parent_map = mmcc_xo_mmpll0_mmpll1_gpll0_map,
+ 	.freq_tbl = ftbl_camss_mclk0_3_clk,
+@@ -691,6 +692,7 @@ static struct clk_rcg2 mclk0_clk_src = {
+ 
+ static struct clk_rcg2 mclk1_clk_src = {
+ 	.cmd_rcgr = 0x3390,
++	.mnd_width = 8,
+ 	.hid_width = 5,
+ 	.parent_map = mmcc_xo_mmpll0_mmpll1_gpll0_map,
+ 	.freq_tbl = ftbl_camss_mclk0_3_clk,
+@@ -704,6 +706,7 @@ static struct clk_rcg2 mclk1_clk_src = {
+ 
+ static struct clk_rcg2 mclk2_clk_src = {
+ 	.cmd_rcgr = 0x33c0,
++	.mnd_width = 8,
+ 	.hid_width = 5,
+ 	.parent_map = mmcc_xo_mmpll0_mmpll1_gpll0_map,
+ 	.freq_tbl = ftbl_camss_mclk0_3_clk,
+@@ -717,6 +720,7 @@ static struct clk_rcg2 mclk2_clk_src = {
+ 
+ static struct clk_rcg2 mclk3_clk_src = {
+ 	.cmd_rcgr = 0x33f0,
++	.mnd_width = 8,
+ 	.hid_width = 5,
+ 	.parent_map = mmcc_xo_mmpll0_mmpll1_gpll0_map,
+ 	.freq_tbl = ftbl_camss_mclk0_3_clk,

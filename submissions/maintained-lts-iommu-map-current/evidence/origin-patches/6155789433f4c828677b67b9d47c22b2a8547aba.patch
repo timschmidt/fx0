@@ -1,0 +1,71 @@
+commit 6155789433f4c828677b67b9d47c22b2a8547aba
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Sat Nov 14 23:05:54 2026 -0500
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sat Nov 14 23:05:54 2026 -0500
+
+    ARM: dts: qcom: msm8226: Describe the GPU IOMMU
+    
+    Describe the GPU SMMU global registers, user and privileged context banks,
+    interface/bus/TBU clocks and OXILICX GDSC. Attach context zero to the GPU,
+    matching the existing integration. Both nodes remain disabled by default.
+    
+    Refresh the existing implementation from dad2d15ff6ba
+    onto the current Qualcomm ARM32 base, retaining the platform data.
+    All eighteen current upstream boards inheriting this common description
+    leave the GPU disabled; the future board enablement must enable its IOMMU.
+    
+    Original implementation by Timothy Schmidt, with Claude Opus 5.5
+    assistance credited in the original commit. Refreshed with OpenAI Codex
+    assistance. Human review and DCO certification remain pending.
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+index 7a5bbbd12b0c..61d19a04b358 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+@@ -1480,6 +1480,7 @@ gpu: gpu@fdb00000 {
+ 			sram = <&gmu_sram>;
+ 			power-domains = <&mmcc OXILICX_GDSC>;
+ 			operating-points-v2 = <&gpu_opp_table>;
++			iommus = <&gpu_iommu 0>;
+ 
+ 			status = "disabled";
+ 
+@@ -1504,6 +1505,37 @@ opp-19000000 {
+ 			};
+ 		};
+ 
++		gpu_iommu: iommu@fdb10000 {
++			compatible = "qcom,msm8226-gpu-iommu";
++			reg = <0xfdb10000 0x2600>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			#iommu-cells = <1>;
++			ranges = <0 0xfdb18000 0x2000>;
++
++			clocks = <&mmcc OXILICX_AHB_CLK>,
++				 <&mmcc OXILICX_AXI_CLK>,
++				 <&mmcc OXILI_GFX3D_CLK>;
++			clock-names = "iface", "bus", "tbu";
++			power-domains = <&mmcc OXILICX_GDSC>;
++
++			status = "disabled";
++
++			/* GFX3D_USER */
++			iommu-ctx@0 {
++				compatible = "qcom,msm-iommu-v1-ns";
++				reg = <0x0 0x1000>;
++				interrupts = <GIC_SPI 241 IRQ_TYPE_LEVEL_HIGH>;
++			};
++
++			/* GFX3D_PRIV */
++			iommu-ctx@1000 {
++				compatible = "qcom,msm-iommu-v1-ns";
++				reg = <0x1000 0x1000>;
++				interrupts = <GIC_SPI 241 IRQ_TYPE_LEVEL_HIGH>;
++			};
++		};
++
+ 		sram@fdd00000 {
+ 			compatible = "qcom,msm8226-ocmem";
+ 			reg = <0xfdd00000 0x2000>,

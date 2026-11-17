@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "positive_schema_cases": 3,
+  "schema_rejection_controls": [
+    "missing reg",
+    "missing ranges",
+    "only one clock",
+    "incorrect clock name",
+    "incorrect iommu cells",
+    "incorrect context compatible",
+    "missing context IRQ",
+    "undocumented property"
+  ],
+  "actual_VFE_context_banks": 3,
+  "VFE_stream_to_context_pairs": [
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      2
+    ]
+  ],
+  "VFE_prefetch_registers_within_declared_global_window": 18,
+  "example_SHA256": "5e7051d7463fff62e90da22c06a48b81a1384bbb3101ac4060505fe6e0fe8fe5",
+  "driver_SHA256": "ad9cabb49e2ecf4f6a1d7d03cdcd0fef8fa13568fec512aab260a19f0ea44330",
+  "legacy_optional_local_region_preserved": true,
+  "scope": "Compiled examples, schema and platform-data contract; no board DTB or hardware acceptance",
+  "phone_access": false
+}

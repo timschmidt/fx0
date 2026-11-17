@@ -1,0 +1,34 @@
+{
+  "source_files_SHA256": {
+    "drivers/clk/qcom/mmcc-msm8974.c": "28a5e8cfe8d2133af0f89447a601a39dc1e0963a0ef3f838ff4006c3c99c3250",
+    "drivers/clk/qcom/clk-rcg2.c": "28d570df7a3af481da5e88af29aca161c597d00f0991d6fca4f445a6c0491a1d",
+    "drivers/clk/qcom/common.c": "ea4541695d6567d8a7e3b3ff450c50353c278a44777fc6565f98616a28f30949",
+    "drivers/clk/clk.c": "a30805dc12b79b20f41dfaf20ce18aa04aa6afb332317b7c1310df3d2b2cd235",
+    "drivers/clk/qcom/clk-rcg.h": "128e149a3f94d356a16e294e0ba406452e2a47af0443396cc2ff078da7731e1d",
+    "drivers/clk/qcom/clk-branch.c": "a0840dff3927c93b5ece621cd799415d3827428fdb8c67e3ac682561d30efc72"
+  },
+  "expected_mnd": "fixed",
+  "expected_axi": "fixed",
+  "fixtures_SHA256": "a87a7978e5d4fc1e78d647da04a033972e93b2efd264b7daafd48d02d85b782b",
+  "stages": [
+    {
+      "name": "compile",
+      "returncode": 0
+    },
+    {
+      "name": "run",
+      "returncode": 0
+    }
+  ],
+  "phone_access": false,
+  "scope": "Production descriptor/RCG/CCF-rounding code; owned regmap and table-backed parent emulation, no hardware or full CCF rate-change acceptance",
+  "observed": {
+    "rate_cases": 50,
+    "correct": 50,
+    "mismatches": 0,
+    "IO_error_cases": 5,
+    "width_controls": 4,
+    "AXI_rate": 266666666
+  },
+  "passed": true
+}

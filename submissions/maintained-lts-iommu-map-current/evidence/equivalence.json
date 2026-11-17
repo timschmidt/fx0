@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "originals_audited": 21,
+  "existing_equivalents": 21,
+  "original_source_ports": 0,
+  "rows": [
+    {
+      "path": "drivers/iommu/arm/arm-smmu/qcom_iommu.c",
+      "all_original_feature_tokens_equivalent": true,
+      "retained_LTS_differences": [
+        "allocator spelling",
+        "explicit OF node release",
+        "IRQ diagnostic",
+        "manual runtime-PM probe teardown"
+      ],
+      "new_upstream_or_local_error_handling_qualified_separately": true,
+      "manual_PM_probe_cleanup_followup_open": true
+    },
+    {
+      "path": "drivers/iommu/arm/arm-smmu/arm-smmu.h",
+      "all_nonwhitespace_header_tokens_identical": true
+    },
+    {
+      "path": "drivers/iommu/arm/Kconfig",
+      "entire_QCOM_IOMMU_Kconfig_block_identical": true
+    },
+    {
+      "path": "drivers/clk/qcom/mmcc-msm8974.c",
+      "complete_clock_source_equivalent_except_retained_LTS_include_and_GDSC_flag": true
+    },
+    {
+      "path": "drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c",
+      "complete_source_identical": true
+    },
+    {
+      "path": "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi",
+      "complete_four_selected_nodes_token_identical": true,
+      "LTS_CCI_assigned_clock_CPU_idle_and_domain_indices_preserved": true
+    }
+  ],
+  "additional_error_path_repairs_not_counted_as_original_backports": true,
+  "phone_access": false
+}

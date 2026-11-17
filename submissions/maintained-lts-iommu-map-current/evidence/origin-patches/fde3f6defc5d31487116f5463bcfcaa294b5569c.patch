@@ -1,0 +1,41 @@
+commit fde3f6defc5d31487116f5463bcfcaa294b5569c
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Sat Oct 31 18:59:01 2026 -0400
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sun Nov 15 18:07:08 2026 -0500
+
+    clk: qcom: mmcc-msm8974: Propagate VFE AXI rate requests
+    
+    The VFE AXI branch is sourced by mmss_axi_clk_src, but it does not pass
+    rate requests to that parent. The current CCF rounding path consequently
+    returns the branch's existing rate. This prevents the new MSM8226 CAMSS
+    resource table from raising multimedia AXI bandwidth while streaming.
+    
+    Set CLK_SET_RATE_PARENT for the VFE AXI branch. Keep its source, gating
+    and halt configuration unchanged. In a host fixture using the actual
+    CCF rounding function and a table-backed parent, an MSM8226 request for
+    266.67 MHz now reaches the parent and selects 266666666 Hz instead of
+    retaining the 100 MHz starting rate. Parent errors propagate, and an
+    omitted-flag control retains the old result.
+    
+    This enables the new CAMSS platform configuration; it does not claim a
+    newly introduced upstream capture regression. The integration's earlier
+    full-frame result is historical. No hardware or full CCF rate-change
+    acceptance is inherited on this base.
+    
+    Original integration work by Timothy Schmidt credits Claude Opus 5.5
+    <noreply@anthropic.com> as co-author. This current-base refresh and host
+    qualification used OpenAI Codex. Human review and DCO remain pending.
+
+diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
+index eeb7596d3b2c..e09fbbefe42c 100644
+--- a/drivers/clk/qcom/mmcc-msm8974.c
++++ b/drivers/clk/qcom/mmcc-msm8974.c
+@@ -1782,6 +1782,7 @@ static struct clk_branch camss_vfe_vfe_axi_clk = {
+ 				&mmss_axi_clk_src.clkr.hw
+ 			},
+ 			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},

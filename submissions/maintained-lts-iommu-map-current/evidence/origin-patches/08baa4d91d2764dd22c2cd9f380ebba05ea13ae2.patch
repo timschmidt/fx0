@@ -1,0 +1,70 @@
+commit 08baa4d91d2764dd22c2cd9f380ebba05ea13ae2
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Fri Oct 30 21:58:54 2026 -0400
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sun Nov 15 18:07:07 2026 -0500
+
+    iommu: qcom_iommu: Add the MSM8226 GPU configuration
+    
+    Original integration rationale and historical observations follow. These
+    observations do not qualify hardware on this refreshed base.
+    
+    The MSM8226 GPU SMMU is OS-managed like the MSM8974 one and uses the
+    same GFX3D user and privileged stream IDs, but its vendor description
+    sets different prefetch (BFB) values and enables halting while context
+    banks are programmed. Add a configuration with those values.
+    
+    Original integration AI credit: Claude Opus 5.5 <noreply@anthropic.com>.
+    
+    Refreshed from integration source
+    60fa2a06552bb98e447d52d31aa8f36723bafe46. Current-base adaptation and
+    host qualification used OpenAI Codex. Human review and new DCO
+    certification remain pending.
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index b4e9cfed9d64..3a03b3cb706a 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -1220,6 +1220,34 @@ static const struct qcom_iommu_cfg msm8974_gpu_cfg = {
+ 	.num_sids = ARRAY_SIZE(msm8974_gpu_sids),
+ };
+ 
++/* Values from the MSM8226 vendor kgsl_iommu description. */
++static const struct qcom_iommu_bfb_reg msm8226_gpu_bfb[] = {
++	{ 0x04c, 0x00000003 },
++	{ 0x050, 0x00000000 },
++	{ 0x514, 0x00000004 },
++	{ 0x540, 0x00000010 },
++	{ 0x56c, 0x00000000 },
++	{ 0x0ac, 0x00000000 },
++	{ 0x15c, 0x00000001 },
++	{ 0x20c, 0x00000011 },
++	{ 0x314, 0x00000000 },
++	{ 0x394, 0x00000001 },
++	{ 0x414, 0x00000041 },
++	{ 0x008, 0x00000000 },
++};
++
++static const struct qcom_iommu_cfg msm8226_gpu_cfg = {
++	.halt = true,
++	.no_stall = true,
++	.fmt = ARM_V7S,
++	.no_afe = true,
++	.ctx_restore = true,
++	.bfb = msm8226_gpu_bfb,
++	.num_bfb = ARRAY_SIZE(msm8226_gpu_bfb),
++	.sids = msm8974_gpu_sids,
++	.num_sids = ARRAY_SIZE(msm8974_gpu_sids),
++};
++
+ static const struct qcom_iommu_bfb_reg msm8226_mdp_bfb[] = {
+ 	{ 0x04c, 0xffffffff },
+ 	{ 0x050, 0x00000000 },
+@@ -1323,6 +1351,7 @@ static const struct of_device_id qcom_iommu_of_match[] = {
+ 	{ .compatible = "qcom,msm-iommu-v1" },
+ 	{ .compatible = "qcom,msm-iommu-v2" },
+ 	{ .compatible = "qcom,msm8974-gpu-iommu", .data = &msm8974_gpu_cfg },
++	{ .compatible = "qcom,msm8226-gpu-iommu", .data = &msm8226_gpu_cfg },
+ 	{ .compatible = "qcom,msm8226-mdp-iommu", .data = &msm8226_mdp_cfg },
+ 	{ .compatible = "qcom,msm8974-mdp-iommu", .data = &msm8974_mdp_cfg },
+ 	{ .compatible = "qcom,msm8974-venus-iommu", .data = &msm8974_venus_cfg },

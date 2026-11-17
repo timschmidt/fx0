@@ -1,0 +1,75 @@
+commit e51b41b23cd414b845b4cd38c1709b0834005258
+Author:     Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+AuthorDate: Sun Aug 9 23:15:46 2026 +0300
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sun Nov 15 18:07:06 2026 -0500
+
+    iommu: qcom_iommu: restore context bank state after power collapse
+    
+    Original integration rationale and historical observations follow. These
+    observations do not qualify hardware on this refreshed base.
+    
+    The MSM8974 QSMMU instances sit in MMSS GDSCs: whenever the power domain
+    collapses, the SMMU loses the global and context bank state the driver
+    programmed, and the next master transaction faults or bypasses
+    translation.
+    
+    Cache the computed context bank register values at attach time and
+    replay the global reset, stream mapping and context bank programming on
+    runtime resume, for instances that opt in through the new ctx_restore
+    configuration flag.
+    
+    Original integration AI credit: Claude:claude-fable-5.
+    
+    Refreshed from integration source
+    7a2c169b805edf37b98226c02a6ad0138f6051ea. Current-base adaptation and
+    host qualification used OpenAI Codex. Human review and new DCO
+    certification remain pending.
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 617e4b21d9bc..8f90b692a9a1 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -64,6 +64,8 @@ struct qcom_iommu_cfg {
+ 	enum io_pgtable_fmt		 fmt;
+ 	/* the walker faults on the AF bit despite it being set */
+ 	bool				 no_afe;
++	/* context banks lose their state over GDSC power collapse */
++	bool				 ctx_restore;
+ 	const struct qcom_iommu_sid	*sids;	/* one SMR slot per entry */
+ 	unsigned int			 num_sids;
+ };
+@@ -94,7 +96,7 @@ struct qcom_iommu_ctx {
+ 	bool			 secured_ctx;
+ 	u8			 asid;      /* asid and ctx bank # are 1:1 */
+ 	struct iommu_domain	*domain;
+-	/* programmed context bank state */
++	/* CB state replayed after power collapse on OS-managed instances */
+ 	u64			 ttbr0;
+ 	u32			 tcr[2];
+ 	u32			 mair[2];
+@@ -1063,6 +1065,7 @@ static void qcom_iommu_device_remove(struct platform_device *pdev)
+ static int __maybe_unused qcom_iommu_resume(struct device *dev)
+ {
+ 	struct qcom_iommu_dev *qcom_iommu = dev_get_drvdata(dev);
++	unsigned int i;
+ 	int ret;
+ 
+ 	ret = clk_bulk_prepare_enable(CLK_NUM, qcom_iommu->clks);
+@@ -1079,6 +1082,16 @@ static int __maybe_unused qcom_iommu_resume(struct device *dev)
+ 			return ret;
+ 	}
+ 
++	if (qcom_iommu->cfg && qcom_iommu->cfg->ctx_restore) {
++		/* Restore context banks lost over power collapse */
++		for (i = 0; i <= qcom_iommu->max_asid; i++) {
++			struct qcom_iommu_ctx *ctx = qcom_iommu->ctxs[i];
++
++			if (ctx && ctx->domain && !ctx->secured_ctx)
++				qcom_iommu_program_ctx(qcom_iommu, ctx);
++		}
++	}
++
+ 	return ret;
+ }
+ 

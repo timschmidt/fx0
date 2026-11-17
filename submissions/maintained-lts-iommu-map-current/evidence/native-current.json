@@ -1,0 +1,128 @@
+{
+  "passed": true,
+  "source_files": {
+    "drivers/iommu/arm/arm-smmu/qcom_iommu.c": "ad9cabb49e2ecf4f6a1d7d03cdcd0fef8fa13568fec512aab260a19f0ea44330",
+    "drivers/iommu/io-pgtable-arm-v7s.c": "71a6b00f3e132dfeb09343298c38c398ae98b373974eac33ce74973e9c7368e1",
+    "drivers/iommu/io-pgtable-arm.c": "4fe68a63e54f9244bfcc1c72b6f0814863dbf0cf3f1c4e9bdf880c3575029c44",
+    "drivers/clk/qcom/mmcc-msm8974.c": "28a5e8cfe8d2133af0f89447a601a39dc1e0963a0ef3f838ff4006c3c99c3250",
+    "drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c": "943c3dd49a335025bfd6cdcde958007186ee5014930ba2af55467d34b74d3d3d"
+  },
+  "profiles": [
+    {
+      "profile": "arm-normal",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "7f2eb86fe0a2cd3b5486b070f9c3c7bc3cf52bf43c7393be6a4ca5b56aa49110",
+      "objects": {
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.o": "6c8b5077e2e820e8b72bca9c3a3ea6dc2a5466ffbb6fc616baf5810f461f4c6d",
+        "drivers/iommu/io-pgtable-arm-v7s.o": "82f34251cd3fcdf5fea394a07c3ea618cc99480b934982cb4423a73f85cabf22",
+        "drivers/iommu/io-pgtable-arm.o": "68b6dcbe6ac93f34e449f24a3d1d61df0d8a6881f9b3c1b98a99308fb4eeea44",
+        "drivers/clk/qcom/mmcc-msm8974.o": "3a57709e489f60d9e6bbd993083dfb2875bcc6c3bc2df4041d28647c1f8ca9ad",
+        "drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.o": "2e85605f56221f59e2b77257efc1463adeb64d4f5a0d086a66f26af1c033cf13"
+      },
+      "output_relative": "native-03/arm-normal-out"
+    },
+    {
+      "profile": "arm64-normal",
+      "ARCH": "arm64",
+      "PREEMPT_RT": false,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "6e209efb7b968b04e1137cd43d2e2617a03ee2711ed792de2500dd49cffd2e19",
+      "objects": {
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.o": "79cc6c7ef32ab54c759f9fb0db56b698bda7609dace3915233f89dfbf20147b9",
+        "drivers/iommu/io-pgtable-arm-v7s.o": "698284daa9c8a253549bfd8e6c7518064e0a061abf3412d572fc3c5411bb3b22",
+        "drivers/iommu/io-pgtable-arm.o": "0285634f14c161cfbc0f63c2fec52de6b7368a2f734d185ccef084e7d602d0c6",
+        "drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.o": "01da294e2e2f13415b17b493864f32a1335919c06195a7c160b39b2e2bb0baf5"
+      },
+      "output_relative": "native-04/arm64-normal-out"
+    },
+    {
+      "profile": "arm64-rt",
+      "ARCH": "arm64",
+      "PREEMPT_RT": true,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "0a12bdb7010301d077c554140c5465cc3387f08d39ae367e217241a39735cb8f",
+      "objects": {
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.o": "05480cdbcff02ce9998c353a1b02ec129ad361c8c1afc1b4c98df2f0f18a78d3",
+        "drivers/iommu/io-pgtable-arm-v7s.o": "ffebf0672c2339103a335b782939fb52a68529dfd08f84024c49b28235c40fc5",
+        "drivers/iommu/io-pgtable-arm.o": "2c4aec402159de75957e3fc7139893974c185ab9d2c007424972361ce97210cd",
+        "drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.o": "11fc46b815c5da3ec34105d8f51815b58b06cf673a3fe4b6a9726bde0f5a7be5"
+      },
+      "output_relative": "native-04/arm64-rt-out"
+    }
+  ],
+  "native_objects": 13,
+  "stages": [
+    {
+      "profile": "arm-normal",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "5946286e039a50387b7910a151648bb854c1f1ad120b8342d7e0f4eb27fca277"
+    },
+    {
+      "profile": "arm-normal",
+      "phase": "headers",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "profile": "arm-normal",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "99c1148797a222d4983f8007beafba9bd00d815b0a0397783ad74ebf2918ef98"
+    },
+    {
+      "profile": "arm64-normal",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "be9101d7efed779c0ca6fac54eaaa29ee88f5d2643eb79bc5308f477273a5268"
+    },
+    {
+      "profile": "arm64-normal",
+      "phase": "headers",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "profile": "arm64-normal",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "5b5c06bc448c234f5f2f2ef2eb299fb29f8b39fec1d94a83d35319dd2fd68c5c"
+    },
+    {
+      "profile": "arm64-rt",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "5ac1f87ef3dd4138c4dfd39059186e89e7ece9391c362faff8ed0211616b0230"
+    },
+    {
+      "profile": "arm64-rt",
+      "phase": "headers",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "profile": "arm64-rt",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "3fea3c1c385c5ce0ba76f62227b1ecafb4c7fe8e4a60cf444863f6a23111fc36"
+    }
+  ],
+  "MMCC_ARM32_only_and_not_forced_on_ARM64": true,
+  "invalid_Kconfig_attempts_preserved": true,
+  "owned_child_terminal_and_reaped": true,
+  "phone_access": false
+}

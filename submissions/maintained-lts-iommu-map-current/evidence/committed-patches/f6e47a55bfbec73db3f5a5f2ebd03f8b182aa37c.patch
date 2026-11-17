@@ -1,0 +1,58 @@
+From f6e47a55bfbec73db3f5a5f2ebd03f8b182aa37c Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Tue, 17 Nov 2026 07:24:11 -0500
+Subject: [PATCH] iommu: qcom_iommu: unwind clocks after failed runtime resume
+
+Runtime resume enables the bulk clock reference before resetting a
+non-secure IOMMU or restoring secure configuration. Both error returns
+leave that reference held. Release the clocks on either failure and
+preserve the original error. Keep the successful resume/suspend contract.
+
+Source-extracted tests cover both formats, VFE-style bank IDs 0/1/2,
+allocation and every secure-restore failure, successful publication and
+resume/suspend. The baseline fails 23 of 52 cases; both repairs leave zero.
+Three deliberate regressions are rejected by their intended contracts.
+Kernel services, secure firmware and context programming are modeled.
+Normal LeakSanitizer and fail-fast ASan/UBSan remain enabled.
+
+Codex prepared this new local repair and host qualification. Thirteen
+selected native objects pass with nonpermissive CFI on supported ARM,
+ARM64 and ARM64 RT profiles; MMCC remains native ARM32 only. Original
+source/board attribution is retained. Human review, security review and
+DCO remain pending; no sign-off certification or hardware claim is made.
+---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 925967662fb1..8dc4e510cbc2 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -1168,11 +1168,11 @@ static int __maybe_unused qcom_iommu_resume(struct device *dev)
+ 	if (qcom_iommu->non_secure) {
+ 		ret = qcom_iommu_reset_ns(qcom_iommu);
+ 		if (ret)
+-			return ret;
++			goto err_disable_clks;
+ 	} else if (dev->pm_domain) {
+ 		ret = qcom_scm_restore_sec_cfg(qcom_iommu->sec_id, 0);
+ 		if (ret)
+-			return ret;
++			goto err_disable_clks;
+ 	}
+ 
+ 	qcom_iommu_bfb_setup(qcom_iommu);
+@@ -1187,6 +1187,10 @@ static int __maybe_unused qcom_iommu_resume(struct device *dev)
+ 		}
+ 	}
+ 
++	return 0;
++
++err_disable_clks:
++	clk_bulk_disable_unprepare(CLK_NUM, qcom_iommu->clks);
+ 	return ret;
+ }
+ 
+-- 
+2.56.0
+
