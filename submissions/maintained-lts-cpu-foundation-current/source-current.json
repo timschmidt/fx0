@@ -1,0 +1,91 @@
+{
+  "passed": true,
+  "recorded_UTC": "2026-11-17T08:08:15.396958+00:00",
+  "base": "136e614f365c855c3897e4a96ac3b2bdede9feda",
+  "head": "432cb11b41e9427d0d095fda2d09da9b7034983e",
+  "commits": [
+    {
+      "label": "calibration-helpers",
+      "origin_commit": "93e671bc3c5dd81eadcabc9643620fb657baa269",
+      "commit": "9c1636eff0d6b3d8b8b6c4eda695b710aa7b6bf6",
+      "parent": "136e614f365c855c3897e4a96ac3b2bdede9feda",
+      "paths": [
+        "drivers/pmdomain/qcom/cpr-msm8926-corner.h",
+        "drivers/pmdomain/qcom/cpr-msm8926-fuses.h",
+        "drivers/pmdomain/qcom/cpr-msm8926-voltage.h",
+        "drivers/pmdomain/qcom/cpr-msm8926.h"
+      ],
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-11T08:29:12-05:00",
+      "exact_delta": true
+    },
+    {
+      "label": "qfprom-window",
+      "origin_commit": "a4e91406a10be6d00011fb2e6a5b8cb3cb639751",
+      "commit": "432cb11b41e9427d0d095fda2d09da9b7034983e",
+      "parent": "9c1636eff0d6b3d8b8b6c4eda695b710aa7b6bf6",
+      "paths": [
+        "drivers/nvmem/qfprom.c"
+      ],
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-11T00:17:59-05:00",
+      "exact_delta": false
+    }
+  ],
+  "source_files": {
+    "drivers/nvmem/qfprom.c": "b42af333f4536ae9a2c3e75479e6adaab9a0723a603b2e84414a694d972d70ef",
+    "drivers/nvmem/core.c": "aaac813bbaee74b4e854b2f55f6d18591fee28aaa98ccaa32725bf4cdd59613e",
+    "drivers/firmware/qcom/qcom_scm.c": "b485f55c5a292473cc55e22a1bb14cfc1ec8bcfafd7bcbaa15b2a2e69243c361",
+    "drivers/firmware/qcom/qcom_scm-legacy.c": "a83b256f364d34d127e99b78377f4a7e0466856a498c04e12d512e7b2d96554b",
+    "drivers/pmdomain/qcom/cpr-msm8926.h": "8eecdff7fb43f484027b80eb2e7acc05ba435b26af978bb05f15bf751fd634b0",
+    "drivers/pmdomain/qcom/cpr-msm8926-voltage.h": "702e0dbaba15acec11cb662698dd41470c91c6ec6cdf7b9c7cfbc8cbad790ead",
+    "drivers/pmdomain/qcom/cpr-msm8926-corner.h": "64bc80d033fd90c46eb40ced3840c64841b41f7f6d5ea5c19b97b81202550af0",
+    "drivers/pmdomain/qcom/cpr-msm8926-fuses.h": "9af6b33fbf392237a9fa5b307a7487d73d4593301324af328169e4aeeb850f0e",
+    "drivers/firmware/qcom/qcom_scm.h": "15193474dde0e5aa271becd519bf2bf55ac5b3c9aff1b8c68cf51049091f70ce",
+    "include/linux/arm-smccc.h": "783abb82a58ad36d7e13c4d34a390d4757385fdfe53720b8d63cf371400413ce",
+    "include/linux/firmware/qcom/qcom_scm.h": "3c0b20a0e3fcf4ae3a04c237ad470ad3ea17849fbc7942cda4327ef881bbf1ef",
+    "Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml": "1edc12e56435e5f1e7f36817aff0a9a0d709bb614bdedb3581e0061ebd4a5d32"
+  },
+  "focused_cases": 4748,
+  "reader_assertion_checks": 18393,
+  "reader_baseline_failed_assertions": 1,
+  "reader_after_failed_assertions": 0,
+  "helper_test_methods": 16,
+  "helper_skips": 0,
+  "ctypes_shared_oracles_unsanitized": true,
+  "native_driver_objects": 12,
+  "native_header_probe_objects": 3,
+  "native_profiles": [
+    "arm-normal",
+    "arm64-normal",
+    "arm64-rt"
+  ],
+  "nonpermissive_CFI_verified": true,
+  "ARM32_RT_unsupported_not_counted": true,
+  "native_diagnostics": 0,
+  "all_source_hashes_match_precommit_native_builds": true,
+  "clean_behavioral_controls": 12,
+  "full_link_package_or_physical_acceptance": false,
+  "CPR_consumer_not_yet_integrated": true,
+  "all_data_synthetic": true,
+  "human_DCO_pending": true,
+  "phone_access": false,
+  "published": false,
+  "full_goal_complete": false,
+  "strict_checkpatch_passed": false,
+  "checkpatch_errors": 0,
+  "checkpatch_warnings": 1,
+  "checkpatch_checks": 1,
+  "pending_style_findings": [
+    "MAINTAINERS coverage for newly added CPR headers; complete with the pending CPU metadata/consumer port",
+    "Preserved original bootstrap_mx_uV field uses kernel voltage-unit spelling but is flagged by LTS CamelCase check"
+  ],
+  "ordinary_binding_examples_not_rerun_this_turn": true,
+  "focused_QFPROM_schema_positive_profiles": 39,
+  "focused_QFPROM_schema_rejected_controls": 10,
+  "all_LTS_QFPROM_constraints_equal_current": true,
+  "existing_SCM_feature_focused_qualified": true,
+  "existing_QFPROM_binding_focused_qualified": true
+}

@@ -1,0 +1,41 @@
+{
+  "base": "136e614f365c855c3897e4a96ac3b2bdede9feda",
+  "source_repo": "worktrees/linux-fx0-lts-integration-current-01",
+  "before_files": {
+    "drivers/nvmem/qfprom.c": "8fd41aa45c1ee3d841ff54a122e3b01a873d6274f5e2638fa004ea7c40734578",
+    "drivers/nvmem/core.c": "aaac813bbaee74b4e854b2f55f6d18591fee28aaa98ccaa32725bf4cdd59613e",
+    "drivers/firmware/qcom/qcom_scm.c": "b485f55c5a292473cc55e22a1bb14cfc1ec8bcfafd7bcbaa15b2a2e69243c361",
+    "drivers/firmware/qcom/qcom_scm.h": "15193474dde0e5aa271becd519bf2bf55ac5b3c9aff1b8c68cf51049091f70ce",
+    "drivers/firmware/qcom/qcom_scm-legacy.c": "a83b256f364d34d127e99b78377f4a7e0466856a498c04e12d512e7b2d96554b",
+    "include/linux/arm-smccc.h": "783abb82a58ad36d7e13c4d34a390d4757385fdfe53720b8d63cf371400413ce",
+    "include/linux/firmware/qcom/qcom_scm.h": "3c0b20a0e3fcf4ae3a04c237ad470ad3ea17849fbc7942cda4327ef881bbf1ef"
+  },
+  "phone_access": false,
+  "published": false,
+  "source_edits_applied": true,
+  "fixture_changes": [
+    "NVMEM direct callbacks and captured actual registration assignments use 6.18 API",
+    "LTS direct missing callbacks return EINVAL for read/write; no SRCU lifetime claim. Initial guessed EOPNOTSUPP expectations caused four model failures and were corrected against the extracted LTS core.",
+    "No production body transformations"
+  ],
+  "patches": [
+    {
+      "label": "calibration-helpers",
+      "origin_commit": "93e671bc3c5dd81eadcabc9643620fb657baa269",
+      "patch_SHA256": "6cfb8443d4b445fd4dbd6cf722bd944fd9dc4f392c6215e159be5fb237917914",
+      "exact_delta": true
+    },
+    {
+      "label": "qfprom-window",
+      "origin_commit": "a4e91406a10be6d00011fb2e6a5b8cb3cb639751",
+      "patch_SHA256": "6494cd674419327596e2d957d3e9dca37b8e0c343a4b347377c67b49ef6bf3e5",
+      "exact_delta": false,
+      "reason": "Existing raw-reader feature retained; port only missing size guard"
+    }
+  ],
+  "remaining_integration_dependencies": [
+    "New helpers still need the complete CPR/domain/OPP/clock/regulator/board port; no consumer enabled by adding headers",
+    "Cached full-board DTB used only as a QFPROM schema fixture, not a new LTS board build or 64-bit raw-cell acceptance",
+    "No installed firmware, fuse data, CPU rate or voltage behavior has been tested"
+  ]
+}

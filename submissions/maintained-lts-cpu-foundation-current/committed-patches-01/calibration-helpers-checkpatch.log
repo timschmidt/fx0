@@ -1,0 +1,17 @@
+WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+#40:
+new file mode 100644
+
+CHECK: Avoid CamelCase: <bootstrap_mx_uV>
+#381: FILE: drivers/pmdomain/qcom/cpr-msm8926-voltage.h:107:
++	result.bootstrap_mx_uV = DIV_ROUND_UP(bootstrap_apc_uV, 12500) * 12500;
+
+total: 0 errors, 1 warnings, 1 checks, 484 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+<workspace>/local/fx0-lts-production-current-01/cpu-foundation-01/committed-patches-01/calibration-helpers.patch has style problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
