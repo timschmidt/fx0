@@ -1,0 +1,40 @@
+{
+  "failed_attempts_retained": true,
+  "corrected_fixture_only": true,
+  "kernel_mutation_after_native_build": false,
+  "corrections": [
+    "LTS core explicit OF release added to synthetic services; source callbacks remain byte exact.",
+    "Response fixture models the later DMA admission gate as open while transaction ownership is tested.",
+    "Ownership fixture models explicit LTS OF references and synthetic later admission/PM fields; the separate startup suite tests those lifetimes.",
+    "Normal LSan cannot run under the sandbox tracing layer; accepted host-only executions use normal LSan outside it.",
+    "The first response baseline predates preparation and cannot compile the latest async suite; the accepted async baseline includes the preceding synchronous fix.",
+    "An obsolete transaction prepared-flag mutation survives because independent pending-record state now controls publication; it is retained and excluded from rejected-control counts. Eight applicable PM/submission controls are independently rejected.",
+    "The first stream expectations omitted four-byte DMA padding; the second mistakenly expected the previous command byte where the second allocated TID is encoded. Corrected packet expectations pass and reject three controls.",
+    "The first child-admission apply check rejected extra whitespace left by the ownership adaptation. No partial patch applied; the staged ownership snapshot was corrected before continuing.",
+    "Final port changelog uses a checkpatch-compatible abbreviated original commit description, retaining full provenance in the original patch, and retains the original AI co-author credit as prose. All 18 port patches pass strict checkpatch."
+  ],
+  "invalid_or_environmental_runs": [
+    "startup-candidate-01",
+    "transaction-candidate-01",
+    "response-candidate-01",
+    "transport-candidate-01",
+    "ownership-candidate-01",
+    "models-02/response-baseline",
+    "models-02/ownership-candidate",
+    "response-extended-controls-01",
+    "stream-caller-01",
+    "stream-caller-02"
+  ],
+  "accepted_models": [
+    "models-02/startup",
+    "models-02/transaction",
+    "models-02/transport",
+    "models-03/response",
+    "models-03/ownership",
+    "models-04/tx",
+    "response-sync-delta-controls-01",
+    "stream-caller-03"
+  ],
+  "sanitizers_not_suppressed": true,
+  "no_source_callback_body_rewriting": true
+}

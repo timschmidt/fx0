@@ -1,0 +1,204 @@
+From 498b010fc0bed2e3fb978916eea452cad978125f Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 09:49:00 -0500
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: gate startup on parent readiness
+
+Carry this reviewed SLIMbus/BAM change into maintained Linux 6.18.
+Preserve the existing LTS channel-removal/reconfigure protocol, socket
+interfaces and DMA provider implementation. This stage is reconciled:
+replace legacy blind startup with gated parent publication.
+
+The completed eighteen-change series passes 3,221 source-bound synthetic
+cases and 117 independent regression controls, with normal LeakSanitizer
+and fail-fast address/undefined-behavior sanitizers. These cover
+startup, child and parent ownership, QMI allocation, TX completion
+lifetime, synchronous/asynchronous response ownership, DMA admission and
+the retained LTS stream caller. Baselines from the appropriate
+intermediate stages fail their targeted assertions. All 108 ARM, ARM64
+and ARM64 RT component objects build with W=1 and nonpermissive CFI
+without diagnostics; their ELF source checksums match the final
+candidate.
+
+Kernel waits, workqueues, IDR, PM, packets, DMA and device services in
+the host models are synthetic. No real firmware, audio, hardware,
+network, phone or installed package executes. Full current-kernel link,
+physical DMA-stop/recovery and final-image acceptance remain
+unqualified. Codex prepared the LTS adaptations and qualification.
+Preserve original authors, dates, notices and assistance credits. Human
+DCO and owner, security and subsystem review remain pending; no new
+sign-off is added.
+
+Original reviewed changelog and provenance:
+
+PDR lookup can report UP after the child binds but before the parent has
+registered its SSR notifier or enabled its IRQ. Child readiness alone
+therefore admits startup against a partially initialized parent. Closing
+only that child gate at parent removal also allows a concurrent child
+bind to reopen startup while the parent is being dismantled.
+
+Track parent readiness independently under ssr_lock. Publish it only
+after the final parent initialization step, then replay a remembered UP
+if the child is ready. Keep the last UP/DOWN state during partial probe.
+Require both lifetimes at every startup producer and before and after
+the worker's QMI wait. Include parent closure in the wait predicate.
+
+Close parent admission, notify its waiters and cancel startup outside
+the mutex before releasing providers or disabling the IRQ. Leave the
+child gate independent so a binding that completes during parent
+cancellation cannot authorize startup. Late DOWN still records the last
+state but leaves cleanup to child removal once the parent closes.
+
+A host model composes 23 exact callbacks with logical QMI, wait, PM,
+workqueue and device services. Its 71 cases and 1,079 checks cover
+partial probe, remembered UP/DOWN, parent errors, producer admission,
+queued and post-wait workers, and child bind during cancellation. The
+previous source fails 51 checks; the candidate passes all. Twenty-nine
+independent regression controls are rejected. Eight native ARM/ARM64
+objects build with LLVM21 and W=1 without diagnostics.
+
+Master work and external transfer quiescence, registered-client endpoint
+recovery, initial DSP bootstrap and LTS error recovery remain separate
+work. No real kernel wait queue, device, firmware, DMA callback, audio
+or phone is executed. Codex generated this change and model; human
+review and DCO remain pending.
+
+Fixes: a899d324863a ("slimbus: qcom-ngd-ctrl: add Sub System Restart support")
+
+Backported from commit a7853c33aaf3 ("slimbus: qcom-ngd-ctrl: gate
+startup on parent readiness")
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 41 +++++++++++++++++++++------------
+ 1 file changed, 26 insertions(+), 15 deletions(-)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index b11df08fd6651..0eee5f0f85947 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -172,7 +172,8 @@ struct qcom_slim_ngd_ctrl {
+ 	struct pdr_handle *pdr;
+ 	enum qcom_slim_ngd_state state;
+ 	bool registered;
+-	/* Child admission and bootstrap PM ownership, protected by ssr_lock. */
++	/* Startup admission and bootstrap PM ownership, protected by ssr_lock. */
++	bool parent_ready;
+ 	bool child_ready;
+ 	bool up_requested;
+ 	bool pm_ref_held;
+@@ -1495,7 +1496,7 @@ static int qcom_slim_ngd_qmi_new_server(struct qmi_handle *hdl,
+ 
+ 	WRITE_ONCE(ctrl->qmi_ready, true);
+ 	wake_up_all(&ctrl->qmi_wait);
+-	if (ctrl->child_ready && ctrl->up_requested)
++	if (ctrl->parent_ready && ctrl->child_ready && ctrl->up_requested)
+ 		schedule_work(&ctrl->ngd_up_work);
+ 	mutex_unlock(&ctrl->ssr_lock);
+ 
+@@ -1584,7 +1585,7 @@ static void qcom_slim_ngd_up_worker(struct work_struct *work)
+ 	ctrl = container_of(work, struct qcom_slim_ngd_ctrl, ngd_up_work);
+ 
+ 	mutex_lock(&ctrl->ssr_lock);
+-	if (!ctrl->child_ready || !ctrl->up_requested) {
++	if (!ctrl->parent_ready || !ctrl->child_ready || !ctrl->up_requested) {
+ 		mutex_unlock(&ctrl->ssr_lock);
+ 		return;
+ 	}
+@@ -1593,6 +1594,7 @@ static void qcom_slim_ngd_up_worker(struct work_struct *work)
+ 	/* Make sure qmi service is up before continuing */
+ 	ret = wait_event_interruptible_timeout(ctrl->qmi_wait,
+ 					       READ_ONCE(ctrl->qmi_ready) ||
++					       !READ_ONCE(ctrl->parent_ready) ||
+ 					       !READ_ONCE(ctrl->child_ready) ||
+ 					       !READ_ONCE(ctrl->up_requested),
+ 					       msecs_to_jiffies(MSEC_PER_SEC));
+@@ -1602,7 +1604,8 @@ static void qcom_slim_ngd_up_worker(struct work_struct *work)
+ 	}
+ 
+ 	mutex_lock(&ctrl->ssr_lock);
+-	if (ctrl->child_ready && ctrl->up_requested && ctrl->qmi_ready)
++	if (ctrl->parent_ready && ctrl->child_ready &&
++	    ctrl->up_requested && ctrl->qmi_ready)
+ 		qcom_slim_ngd_enable(ctrl, true);
+ 	mutex_unlock(&ctrl->ssr_lock);
+ }
+@@ -1616,6 +1619,15 @@ static void qcom_slim_ngd_stop_up(struct qcom_slim_ngd_ctrl *ctrl)
+ 	cancel_work_sync(&ctrl->ngd_up_work);
+ }
+ 
++static void qcom_slim_ngd_stop_parent_up(struct qcom_slim_ngd_ctrl *ctrl)
++{
++	mutex_lock(&ctrl->ssr_lock);
++	WRITE_ONCE(ctrl->parent_ready, false);
++	wake_up_all(&ctrl->qmi_wait);
++	mutex_unlock(&ctrl->ssr_lock);
++	cancel_work_sync(&ctrl->ngd_up_work);
++}
++
+ static int qcom_slim_ngd_ssr_pdr_notify(struct qcom_slim_ngd_ctrl *ctrl,
+ 					unsigned long action)
+ {
+@@ -1625,7 +1637,7 @@ static int qcom_slim_ngd_ssr_pdr_notify(struct qcom_slim_ngd_ctrl *ctrl,
+ 	case SERVREG_SERVICE_STATE_DOWN:
+ 		WRITE_ONCE(ctrl->up_requested, false);
+ 		wake_up_all(&ctrl->qmi_wait);
+-		if (!ctrl->child_ready)
++		if (!ctrl->parent_ready || !ctrl->child_ready)
+ 			break;
+ 		if (ctrl->state != QCOM_SLIM_NGD_CTRL_DOWN || ctrl->registered) {
+ 			if (!ctrl->pm_ref_held) {
+@@ -1640,7 +1652,7 @@ static int qcom_slim_ngd_ssr_pdr_notify(struct qcom_slim_ngd_ctrl *ctrl,
+ 	case QCOM_SSR_AFTER_POWERUP:
+ 	case SERVREG_SERVICE_STATE_UP:
+ 		WRITE_ONCE(ctrl->up_requested, true);
+-		if (ctrl->child_ready)
++		if (ctrl->parent_ready && ctrl->child_ready)
+ 			schedule_work(&ctrl->ngd_up_work);
+ 		break;
+ 	default:
+@@ -1784,7 +1796,7 @@ static int qcom_slim_ngd_probe(struct platform_device *pdev)
+ 
+ 	mutex_lock(&ctrl->ssr_lock);
+ 	WRITE_ONCE(ctrl->child_ready, true);
+-	if (ctrl->up_requested)
++	if (ctrl->parent_ready && ctrl->up_requested)
+ 		schedule_work(&ctrl->ngd_up_work);
+ 	mutex_unlock(&ctrl->ssr_lock);
+ 
+@@ -1873,18 +1885,17 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
+ 
+ 	enable_irq(irq);
+ 
+-	/*
+-	 * The DSP may already be running, as when it boots before this driver
+-	 * loads, and then no power-up notification follows. Bring the NGD up
+-	 * now; the worker waits for the QMI service.
+-	 */
+-	schedule_work(&ctrl->ngd_up_work);
++	mutex_lock(&ctrl->ssr_lock);
++	WRITE_ONCE(ctrl->parent_ready, true);
++	if (ctrl->child_ready && ctrl->up_requested)
++		schedule_work(&ctrl->ngd_up_work);
++	mutex_unlock(&ctrl->ssr_lock);
+ 
+ 	return 0;
+ 
+ err_unregister_ngd:
++	qcom_slim_ngd_stop_parent_up(ctrl);
+ 	pdr_handle_release(ctrl->pdr);
+-	qcom_slim_ngd_stop_up(ctrl);
+ 	qcom_slim_ngd_unregister(ctrl);
+ 	goto err_destroy_mwq;
+ err_pdr_release:
+@@ -1899,9 +1910,9 @@ static void qcom_slim_ngd_ctrl_remove(struct platform_device *pdev)
+ {
+ 	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
+ 
++	qcom_slim_ngd_stop_parent_up(ctrl);
+ 	pdr_handle_release(ctrl->pdr);
+ 	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
+-	qcom_slim_ngd_stop_up(ctrl);
+ 	disable_irq(ctrl->irq);
+ 
+ 	qcom_slim_ngd_unregister(ctrl);
+-- 
+2.56.0
+

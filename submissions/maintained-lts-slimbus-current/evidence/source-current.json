@@ -1,0 +1,329 @@
+{
+  "passed": true,
+  "base": "4707a595569cf36306828781df5c56cc43306d68",
+  "head": "f670355ca51442d59800b6500ba18dda33f250bb",
+  "commits": [
+    {
+      "origin_commit": "c506d19f8204f8e762fa8550227de4a6e3d63f4c",
+      "original_147_origin": "c506d19f8204f8e762fa8550227de4a6e3d63f4c",
+      "commit": "5a3a64044bcd543c7e0434b8d773cf647b64d819",
+      "parent": "4707a595569cf36306828781df5c56cc43306d68",
+      "subject": "slimbus: qcom-ngd-ctrl: require a completed QMI wait before startup",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T05:34:18-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "62301cefdf053bb2b07c2f8ce6636c7ca4b5e85c",
+      "original_147_origin": "62301cefdf053bb2b07c2f8ce6636c7ca4b5e85c",
+      "commit": "3aa336b492bfc7a329307aad8ce8d9a5a94c4ed6",
+      "parent": "5a3a64044bcd543c7e0434b8d773cf647b64d819",
+      "subject": "slimbus: qcom-ngd-ctrl: track completed controller registration",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T05:35:24-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "c2ca6f314b3f2d767f5fe3f01a0fb3b278b6818b",
+      "original_147_origin": "c2ca6f314b3f2d767f5fe3f01a0fb3b278b6818b",
+      "commit": "bc1819d4627a32e518d48c52e6911e966d3a1b46",
+      "parent": "3aa336b492bfc7a329307aad8ce8d9a5a94c4ed6",
+      "subject": "slimbus: qcom-ngd-ctrl: drain startup work before parent detach",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T06:02:39-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "fd5ebcf3b32e931be94019b03840e7735c7e8f49",
+      "original_147_origin": "fd5ebcf3b32e931be94019b03840e7735c7e8f49",
+      "commit": "55669ca9569fe67530eb2242506546fc514eb1b6",
+      "parent": "bc1819d4627a32e518d48c52e6911e966d3a1b46",
+      "subject": "slimbus: qcom-ngd-ctrl: stop PDR startup work before probe unwind",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T06:04:04-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "60255996929a762033c1933b0bbfa121455f553d",
+      "original_147_origin": "60255996929a762033c1933b0bbfa121455f553d",
+      "commit": "2cf2518f9a39be6e906b0538d906ca9ae95bb2ab",
+      "parent": "55669ca9569fe67530eb2242506546fc514eb1b6",
+      "subject": "slimbus: qcom-ngd-ctrl: quiesce the parent IRQ before child teardown",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T06:29:47-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "bb9092ea26e737e3b9079e77a72973eb858cd4a3",
+      "original_147_origin": "bb9092ea26e737e3b9079e77a72973eb858cd4a3",
+      "commit": "e3cc2e00f971cf8490d3ca9f822dbdcb01007581",
+      "parent": "2cf2518f9a39be6e906b0538d906ca9ae95bb2ab",
+      "subject": "slimbus: qcom-ngd-ctrl: retain child resources for their parent lifetime",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T06:31:26-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": false,
+      "LTS_adaptation": "reconciled: LTS allocation helpers and explicit OF node references",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "28b00a801a8ce03ab1d22eead3bccfa63d1eda5a",
+      "original_147_origin": "28b00a801a8ce03ab1d22eead3bccfa63d1eda5a",
+      "commit": "5fafbb7b73a3e870cb2bce84f3e717a3dcc47d49",
+      "parent": "e3cc2e00f971cf8490d3ca9f822dbdcb01007581",
+      "subject": "slimbus: qcom-ngd-ctrl: gate startup on child binding",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T07:17:45-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "0aef6b296ef3729a38b4cf593f6a2ee6f703019b",
+      "original_147_origin": "0aef6b296ef3729a38b4cf593f6a2ee6f703019b",
+      "commit": "1f349ea14bee2314e83d1bc2ef115f9d31a67a7d",
+      "parent": "5fafbb7b73a3e870cb2bce84f3e717a3dcc47d49",
+      "subject": "slimbus: qcom-ngd-ctrl: make DMA setup reusable and fallible",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T07:38:40-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "7cdceb93fcca46e878bf4f3f7ab635fa5ea6fb7a",
+      "original_147_origin": "7cdceb93fcca46e878bf4f3f7ab635fa5ea6fb7a",
+      "commit": "401aa59b2a53a1f552b4c345be1062c784cae2d4",
+      "parent": "1f349ea14bee2314e83d1bc2ef115f9d31a67a7d",
+      "subject": "slimbus: qcom-ngd-ctrl: propagate resume errors before registration",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T08:00:56-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "60f52e3aaac6ab915fc1f285055687d2e72cac83",
+      "original_147_origin": "60f52e3aaac6ab915fc1f285055687d2e72cac83",
+      "commit": "0254012f67726a87fd622e8ef1f324bf7033063d",
+      "parent": "401aa59b2a53a1f552b4c345be1062c784cae2d4",
+      "subject": "slimbus: qcom-ngd-ctrl: keep QMI readiness across startup waits",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T08:49:47-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "a7853c33aaf3802da98086e7a5ba6394647d1d6a",
+      "original_147_origin": "a7853c33aaf3802da98086e7a5ba6394647d1d6a",
+      "commit": "498b010fc0bed2e3fb978916eea452cad978125f",
+      "parent": "0254012f67726a87fd622e8ef1f324bf7033063d",
+      "subject": "slimbus: qcom-ngd-ctrl: gate startup on parent readiness",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T09:49:00-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": false,
+      "LTS_adaptation": "reconciled: replace legacy blind startup with gated parent publication",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "c32836e8ae990d28adccf29700fe999d6035d8b0",
+      "original_147_origin": "c32836e8ae990d28adccf29700fe999d6035d8b0",
+      "commit": "df61dbe38e4246fbdb84261efb2ae8559214344a",
+      "parent": "498b010fc0bed2e3fb978916eea452cad978125f",
+      "subject": "dmaengine: qcom: bam_dma: synchronize channel callbacks",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T10:15:07-05:00",
+      "paths": [
+        "drivers/dma/qcom/bam_dma.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "d9260717ca81632fdfd595d369dd11a4927b451b",
+      "original_147_origin": "d9260717ca81632fdfd595d369dd11a4927b451b",
+      "commit": "5ffa9b205f22bfd8c86cb16d0d4d5446e7fad76e",
+      "parent": "df61dbe38e4246fbdb84261efb2ae8559214344a",
+      "subject": "slimbus: qcom-ngd-ctrl: retire TX completion references on return",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T10:43:34-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "1384dacdd888876aec9cf3b862cbbfdd140ed2c3",
+      "original_147_origin": "1384dacdd888876aec9cf3b862cbbfdd140ed2c3",
+      "commit": "7cdce9b4999fdd46f905e7702e9cce2f1acce0cb",
+      "parent": "5ffa9b205f22bfd8c86cb16d0d4d5446e7fad76e",
+      "subject": "slimbus: serialize synchronous response retirement and PM ownership",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T11:38:25-05:00",
+      "paths": [
+        "drivers/slimbus/messaging.c",
+        "drivers/slimbus/qcom-ngd-ctrl.c",
+        "drivers/slimbus/slimbus.h"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "3d53aa5389010be43eb96e1b989242c0161c4f0d",
+      "original_147_origin": "3d53aa5389010be43eb96e1b989242c0161c4f0d",
+      "commit": "2d89ca707b406b95b246fe8389413ca716e47e65",
+      "parent": "7cdce9b4999fdd46f905e7702e9cce2f1acce0cb",
+      "subject": "slimbus: own asynchronous response records independently of senders",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T12:22:05-05:00",
+      "paths": [
+        "drivers/slimbus/core.c",
+        "drivers/slimbus/messaging.c",
+        "drivers/slimbus/qcom-ngd-ctrl.c",
+        "drivers/slimbus/slimbus.h",
+        "include/linux/slimbus.h"
+      ],
+      "exact_added_removed_source_lines": false,
+      "LTS_adaptation": "reconciled: LTS explicit-sized pending-record allocation",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "f86bacbe316cf448ab1109d117b092ac5dcb749c",
+      "original_147_origin": "f86bacbe316cf448ab1109d117b092ac5dcb749c",
+      "commit": "b52082bbad2d0730279d81655844b4d36d414d42",
+      "parent": "2d89ca707b406b95b246fe8389413ca716e47e65",
+      "subject": "slimbus: ngd: close software producers before DMA release",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T13:26:34-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "ed2c35d1391fe921c068ea680665476963454c10",
+      "original_147_origin": "ed2c35d1391fe921c068ea680665476963454c10",
+      "commit": "e6396f89e9c2704e5a1866f041040c1160bb71f3",
+      "parent": "b52082bbad2d0730279d81655844b4d36d414d42",
+      "subject": "slimbus: ngd: return transaction allocation errors before power requests",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T14:00:34-05:00",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    },
+    {
+      "origin_commit": "d00affc04b7fd8f019e4094f5e34a517ef051be7",
+      "original_147_origin": "d00affc04b7fd8f019e4094f5e34a517ef051be7",
+      "commit": "f670355ca51442d59800b6500ba18dda33f250bb",
+      "parent": "e6396f89e9c2704e5a1866f041040c1160bb71f3",
+      "subject": "slimbus: qcom-ngd-ctrl: Bring the NGD up if the DSP is already running",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-10-31T23:21:46Z",
+      "paths": [
+        "drivers/slimbus/qcom-ngd-ctrl.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "LTS_adaptation": "exact patch",
+      "human_DCO_pending": true
+    }
+  ],
+  "source_files": {
+    "drivers/dma/qcom/bam_dma.c": "22fd00e2087f4dcd80a786eb4947d87455dae2077a05efc1fb02eb4b90208efd",
+    "drivers/slimbus/core.c": "d8de95a4fc21f8628afcdc4e159de9327a1d5c514ad6b8e090d2a52a9b0fae98",
+    "drivers/slimbus/messaging.c": "c77fdde59bdf20f879bcfcfd2de9df7e44381d3bd0e7ef01457203cb168a5657",
+    "drivers/slimbus/qcom-ngd-ctrl.c": "b35b41fe499fc5c0c2784525ce19dc587cadf5f6e472b64d339d331a71efde35",
+    "drivers/slimbus/slimbus.h": "357a71f06604b9472bce17146b62a78f73fd3dc8659d1801b66f7299e76cbb53",
+    "include/linux/slimbus.h": "5c9b24e6e90d98a95ec4674814705c4e058fdbca9375d7743194f33cc494e953"
+  },
+  "branch_advanced": true,
+  "working_tree_clean": true,
+  "original_source_ports": 18,
+  "exact_source_delta_backports": 15,
+  "reconciled_source_backports": 3,
+  "focused_positive_cases": 3221,
+  "regression_controls": 117,
+  "native_objects": 108,
+  "source_bytes_match_precommit_native_builds": true,
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "strict_checkpatch_passed": true,
+  "original_147_origin_audit_complete": true,
+  "current_full_kernel_link_qualified": false,
+  "physical_DMA_audio_firmware_or_recovery_qualified": false,
+  "phone_access": false,
+  "WiFi_scans": false,
+  "network_changes": false,
+  "published": false,
+  "human_DCO_pending": true,
+  "full_goal_complete": false
+}

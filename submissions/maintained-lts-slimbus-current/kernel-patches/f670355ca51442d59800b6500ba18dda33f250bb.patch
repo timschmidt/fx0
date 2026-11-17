@@ -1,0 +1,90 @@
+From f670355ca51442d59800b6500ba18dda33f250bb Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 31 Oct 2026 23:21:46 +0000
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: Bring the NGD up if the DSP is
+ already running
+
+Carry this reviewed SLIMbus/BAM change into maintained Linux 6.18.
+Preserve the existing LTS channel-removal/reconfigure protocol, socket
+interfaces and DMA provider implementation. This stage is exact patch.
+
+The completed eighteen-change series passes 3,221 source-bound synthetic
+cases and 117 independent regression controls, with normal LeakSanitizer
+and fail-fast address/undefined-behavior sanitizers. These cover
+startup, child and parent ownership, QMI allocation, TX completion
+lifetime, synchronous/asynchronous response ownership, DMA admission and
+the retained LTS stream caller. Baselines from the appropriate
+intermediate stages fail their targeted assertions. All 108 ARM, ARM64
+and ARM64 RT component objects build with W=1 and nonpermissive CFI
+without diagnostics; their ELF source checksums match the final
+candidate.
+
+Kernel waits, workqueues, IDR, PM, packets, DMA and device services in
+the host models are synthetic. No real firmware, audio, hardware,
+network, phone or installed package executes. Full current-kernel link,
+physical DMA-stop/recovery and final-image acceptance remain
+unqualified. Codex prepared the LTS adaptations and qualification.
+Preserve original authors, dates, notices and assistance credits. Human
+DCO and owner, security and subsystem review remain pending; no new
+sign-off is added.
+
+Original reviewed changelog and provenance:
+
+The controller starts the NGD only from a DSP power-up notification (SSR
+or PDR). When the DSP boots before the driver loads, as the MSM8226 ADSP
+does, no notification follows and the bus never comes up; the driver
+then needs a DSP restart. Schedule the bring-up once at probe as well.
+The worker waits for the QMI SLIMbus service, so on a stopped DSP it
+times out and the later power-up notification brings the NGD up as
+before.
+
+[Codex port to the current parent/child admission model: initialize the
+startup request before discovery and notifier callbacks can run, rather
+than queueing a worker directly after IRQ enable. Existing readiness
+publication queues the attempt only after all parent and child resources
+are ready. Any explicit DOWN can revoke it before publication. A late
+QMI service or child bind replays the still-pending request.]
+
+Codex expanded the logical lifecycle model to 81 cases and 1,263 checks,
+including the already-running DSP, late QMI/child arrival, explicit
+DOWN, initial failures/retry and cancellation. The pre-port source fails
+35 checks. All 29 earlier and four new regression controls are rejected.
+Eight ARM/ARM64 objects build with LLVM21 W=1 and strict callback
+checking without diagnostics. Providers and scheduling remain synthetic;
+no firmware, audio, DMA, phone or network operations execute. Hardware
+stop, registered endpoint recovery, LTS recovery and physical acceptance
+remain open. Human review and DCO certification remain pending.
+
+Original source: commit fe063af17b09 ("slimbus: qcom-ngd-ctrl: Bring the
+NGD up if the DSP is already running")
+
+Original source co-author assistance credit: Claude Opus 5.5
+<noreply@anthropic.com>. The unchanged original patch retains its
+original metadata trailer.
+
+Backported from commit d00affc04b7f ("slimbus: qcom-ngd-ctrl: Bring the
+NGD up if the DSP is already running")
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index a0af6a80982cc..cbf2a4b752ec7 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1956,6 +1956,12 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
+ 	ctrl->ctrl.xfer_msg = qcom_slim_ngd_xfer_msg;
+ 	ctrl->ctrl.wakeup = NULL;
+ 	ctrl->state = QCOM_SLIM_NGD_CTRL_DOWN;
++	/*
++	 * The DSP may already be running before this driver loads. Request an
++	 * initial startup, published only when the parent and child are ready.
++	 * A subsequent DOWN notification can revoke it before publication.
++	 */
++	WRITE_ONCE(ctrl->up_requested, true);
+ 
+ 	mutex_init(&ctrl->tx_lock);
+ 	mutex_init(&ctrl->dma_lock);
+-- 
+2.56.0
+

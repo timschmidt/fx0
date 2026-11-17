@@ -1,0 +1,94 @@
+From df61dbe38e4246fbdb84261efb2ae8559214344a Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 10:15:07 -0500
+Subject: [PATCH] dmaengine: qcom: bam_dma: synchronize channel callbacks
+
+Carry this reviewed SLIMbus/BAM change into maintained Linux 6.18.
+Preserve the existing LTS channel-removal/reconfigure protocol, socket
+interfaces and DMA provider implementation. This stage is exact patch.
+
+The completed eighteen-change series passes 3,221 source-bound synthetic
+cases and 117 independent regression controls, with normal LeakSanitizer
+and fail-fast address/undefined-behavior sanitizers. These cover
+startup, child and parent ownership, QMI allocation, TX completion
+lifetime, synchronous/asynchronous response ownership, DMA admission and
+the retained LTS stream caller. Baselines from the appropriate
+intermediate stages fail their targeted assertions. All 108 ARM, ARM64
+and ARM64 RT component objects build with W=1 and nonpermissive CFI
+without diagnostics; their ELF source checksums match the final
+candidate.
+
+Kernel waits, workqueues, IDR, PM, packets, DMA and device services in
+the host models are synthetic. No real firmware, audio, hardware,
+network, phone or installed package executes. Full current-kernel link,
+physical DMA-stop/recovery and final-image acceptance remain
+unqualified. Codex prepared the LTS adaptations and qualification.
+Preserve original authors, dates, notices and assistance credits. Human
+DCO and owner, security and subsystem review remain pending; no new
+sign-off is added.
+
+Original reviewed changelog and provenance:
+
+BAM implements termination but has no device_synchronize callback.
+Terminating a channel removes queued descriptors and resets an active
+pipe, but a virt-dma completion tasklet may already have detached its
+completed list and be running a client callback. dmaengine_synchronize()
+and dmaengine_terminate_sync() consequently return without waiting for
+that callback, contrary to their lifetime guarantee.
+
+Implement device_synchronize with vchan_synchronize() on the selected
+channel. Drain that channel's completion tasklet outside its spinlock;
+leave other channels and the device's shared issue tasklet alone. Keep
+the existing cancellation, descriptor ownership and hardware reset
+paths. Clients must still stop the attached engine and prevent new
+submissions as required by the DMA API. This does not fix client
+resubmission or master/transfer teardown ordering.
+
+A host model executes eight exact driver/virt-dma/DMA API callbacks and
+the two relevant probe assignments. It passes 256 cases/3,328 checks,
+compared with 536 pre-change failures, and rejects eight regression
+controls. It covers both channel selections, combined and split APIs,
+active callbacks, queued descriptors and an unrelated active channel.
+Six native ARM/ARM64 objects build with LLVM21, W=1 and strict callback
+diagnostics without warnings or errors.
+
+Tasklets, callbacks, lists, hardware and owner retirement are synthetic;
+no real DMA, stale-memory access, audio or phone operations execute.
+Codex generated this fix, model and changelog. Human review and DCO
+certification remain pending.
+
+Fixes: e7c0fe2a5c84 ("dmaengine: add Qualcomm BAM dma driver")
+
+Backported from commit c32836e8ae99 ("dmaengine: qcom: bam_dma:
+synchronize channel callbacks")
+---
+ drivers/dma/qcom/bam_dma.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 781cea16196f5..78833b664aed8 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -764,6 +764,11 @@ static int bam_dma_terminate_all(struct dma_chan *chan)
+ 	return 0;
+ }
+ 
++static void bam_dma_synchronize(struct dma_chan *chan)
++{
++	vchan_synchronize(to_virt_chan(chan));
++}
++
+ /**
+  * bam_pause - Pause DMA channel
+  * @chan: dma channel
+@@ -1349,6 +1354,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	bdev->common.device_pause = bam_pause;
+ 	bdev->common.device_resume = bam_resume;
+ 	bdev->common.device_terminate_all = bam_dma_terminate_all;
++	bdev->common.device_synchronize = bam_dma_synchronize;
+ 	bdev->common.device_issue_pending = bam_issue_pending;
+ 	bdev->common.device_tx_status = bam_tx_status;
+ 	bdev->common.dev = bdev->dev;
+-- 
+2.56.0
+

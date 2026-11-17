@@ -1,0 +1,74 @@
+{
+  "passed": true,
+  "suites": [
+    {
+      "suite": "startup",
+      "path": "models-02/startup-candidate/qualification.json",
+      "SHA256": "1259762f42fc3f416085a5bf385e7334f3fd0adaca5e908ce5f618940ec73b0b",
+      "cases": 81,
+      "checks": 1263,
+      "baseline_failures": 35,
+      "controls": 33
+    },
+    {
+      "suite": "transaction",
+      "path": "models-02/transaction-candidate/qualification.json",
+      "SHA256": "150dbc0680ba00eb7d2262063ea202aa200b8bfba671846be5804d03f4312b61",
+      "cases": 576,
+      "checks": 7008,
+      "baseline_failures": 896,
+      "controls": 5
+    },
+    {
+      "suite": "transport",
+      "path": "models-02/transport-candidate/qualification.json",
+      "SHA256": "c65888b094d2b1dce302fe05fa9efd80d6474879b10820936c82b9a32f1628c2",
+      "cases": 96,
+      "checks": 1375,
+      "baseline_failures": 241,
+      "controls": 28
+    },
+    {
+      "suite": "response",
+      "path": "models-03/response-candidate/qualification.json",
+      "SHA256": "c6c99dcff55c648144409056cc123da886293deb972a18eeed9994f35576da9e",
+      "cases": 1149,
+      "checks": 44419,
+      "baseline_failures": 102,
+      "controls": 21
+    },
+    {
+      "suite": "ownership",
+      "path": "models-03/ownership-candidate/qualification.json",
+      "SHA256": "441c7289a8d0b8344ec53f38be4269780ed91f73bb0fd9b34983140a1275ad93",
+      "cases": 10,
+      "checks": 124,
+      "baseline_failures": 40,
+      "controls": 7
+    },
+    {
+      "suite": "tx",
+      "path": "models-04/tx-candidate/qualification.json",
+      "SHA256": "43807131dbe9b9ab67866e404d27dadd4a1826c6a46d69aa45a802f72ac16d71",
+      "cases": 1093,
+      "checks": 47497,
+      "baseline_failures": 2757,
+      "controls": 12
+    }
+  ],
+  "cases": 3221,
+  "checks": 111156,
+  "controls": 117,
+  "baseline_failures": 4071,
+  "failures": 0,
+  "stream_caller_cases": 216,
+  "stream_caller_controls": 3,
+  "additional_sync_PM_controls": 8,
+  "wire_trace_bytes": 41147,
+  "wire_trace_SHA256": "2a559250271d63398ebfc2ba805da62d0417a7520bf8725ead3c209ab67015ca",
+  "wire_trace_unchanged_across_TX_ownership": true,
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "all_kernel_services_synthetic": true,
+  "physical_DMA_audio_firmware_or_phone_execution": false,
+  "full_transport_recovery_or_hardware_acceptance": false
+}

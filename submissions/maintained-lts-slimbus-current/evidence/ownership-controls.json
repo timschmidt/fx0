@@ -1,0 +1,57 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "parent-IRQ-left-enabled",
+      "failures": 5,
+      "expected_case": "parent-detach-bound",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "unmanaged-descriptor",
+      "failures": 18,
+      "expected_case": "parent-detach-unbound",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "child-frees-parent-descriptor",
+      "failures": 15,
+      "expected_case": "child-unbind-rebind",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "initial-device-reference-leaked",
+      "failures": 20,
+      "expected_case": "parent-detach-bound",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "extra-device-reference-missing",
+      "failures": 12,
+      "expected_case": "parent-detach-bound",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "initial-reference-leaked-on-action-error",
+      "failures": 3,
+      "expected_case": "managed-action-allocation-error",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "success-iteration-reference-leaked",
+      "failures": 5,
+      "expected_case": "parent-detach-bound",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "all_services_synthetic": true,
+  "hardware_audio_firmware_or_phone_execution": false
+}

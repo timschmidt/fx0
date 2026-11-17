@@ -1,0 +1,21 @@
+response-copy-versus-core-timeout: timeout retirement waits for an admitted response copy and completion
+response-copy-versus-core-timeout: only the operation references are released at return
+response-copy-versus-core-timeout: response copy and completion stay within their logical lifetimes
+response-copy-versus-core-timeout: late callbacks never access retired logical frames
+response-copy-versus-NGD-timeout: the preceding case retired every owned record exactly once
+response-copy-versus-NGD-timeout: timeout retirement waits for an admitted response copy and completion
+response-copy-versus-NGD-timeout: only the operation references are released at return
+response-copy-versus-NGD-timeout: response copy and completion stay within their logical lifetimes
+response-copy-versus-NGD-timeout: late callbacks never access retired logical frames
+async-operation-0-fault-0-external-0: the preceding case retired every owned record exactly once
+late-response-copy-versus-public-cancel: public cancel or stop waits for admitted copy and completion
+late-response-copy-versus-public-cancel: response winner is not retired twice by cancellation
+late-response-copy-versus-public-cancel: raced response and cancellation retire one PM pin
+late-response-copy-versus-public-cancel: cancellation race preserves caller and record lifetime
+late-response-copy-versus-public-cancel: all core-owned records are retired exactly once
+late-response-copy-versus-controller-stop: the preceding case retired every owned record exactly once
+late-response-copy-versus-controller-stop: public cancel or stop waits for admitted copy and completion
+late-response-copy-versus-controller-stop: raced response and cancellation retire one PM pin
+late-response-copy-versus-controller-stop: cancellation race preserves caller and record lifetime
+late-response-copy-versus-controller-stop: all core-owned records are retired exactly once
+registration-preserves-bootstrap-and-unregister-drains-before-clients: the preceding case retired every owned record exactly once

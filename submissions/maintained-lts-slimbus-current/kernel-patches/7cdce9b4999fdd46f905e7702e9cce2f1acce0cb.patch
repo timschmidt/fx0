@@ -1,0 +1,402 @@
+From 7cdce9b4999fdd46f905e7702e9cce2f1acce0cb Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 11:38:25 -0500
+Subject: [PATCH] slimbus: serialize synchronous response retirement and PM
+ ownership
+
+Carry this reviewed SLIMbus/BAM change into maintained Linux 6.18.
+Preserve the existing LTS channel-removal/reconfigure protocol, socket
+interfaces and DMA provider implementation. This stage is exact patch.
+
+The completed eighteen-change series passes 3,221 source-bound synthetic
+cases and 117 independent regression controls, with normal LeakSanitizer
+and fail-fast address/undefined-behavior sanitizers. These cover
+startup, child and parent ownership, QMI allocation, TX completion
+lifetime, synchronous/asynchronous response ownership, DMA admission and
+the retained LTS stream caller. Baselines from the appropriate
+intermediate stages fail their targeted assertions. All 108 ARM, ARM64
+and ARM64 RT component objects build with W=1 and nonpermissive CFI
+without diagnostics; their ELF source checksums match the final
+candidate.
+
+Kernel waits, workqueues, IDR, PM, packets, DMA and device services in
+the host models are synthetic. No real firmware, audio, hardware,
+network, phone or installed package executes. Full current-kernel link,
+physical DMA-stop/recovery and final-image acceptance remain
+unqualified. Codex prepared the LTS adaptations and qualification.
+Preserve original authors, dates, notices and assistance credits. Human
+DCO and owner, security and subsystem review remain pending; no new
+sign-off is added.
+
+Original reviewed changelog and provenance:
+
+Response lookup drops txn_lock before using its transaction, buffer and
+completion. A timeout can remove that TID and return while the response
+still uses the caller's storage. Cancellation also removes a numeric TID
+without checking its current owner, and responses can observe a newly
+allocated transaction before its response pointers are initialized.
+Existing error paths can leave TIDs and PM references behind or drop a
+reference already released by a winning response.
+
+Publish response readiness explicitly after pointer initialization.
+Serialize lookup, bounded copy, TID removal and completion with timeout
+retirement. Cancel only the matching transaction, and release its
+response PM reference only when that cancellation actually owns it.
+
+Keep a caller PM reference through the whole synchronous operation and
+acquire a separate response reference when preparation succeeds. A reply
+can then retire its own reference without allowing an early response to
+release the sender's last reference while TX DMA is still pending.
+Balance negative PM-get results and reject inactive clock state.
+
+Prepare NGD replies after its local response pointers are initialized,
+and retire internal ACK TIDs before returning those local buffers.
+Retire synchronous query TIDs on every error. Propagate DMA submission
+errors before issue_pending, preserving the prior unsubmitted rollback
+and TX completion-reference cleanup.
+
+The host model composes thirteen exact core/NGD callbacks. It passes
+1,022 cases/41,774 checks after 2,061 pre-change failures and rejects
+sixteen controls. The earlier TX model still passes 1,093 cases/47,497
+checks and twelve controls; all 41,147 packet-trace bytes are unchanged.
+Eight native ARM/ARM64 objects build without diagnostics using LLVM21,
+W=1 and strict callback checking.
+
+IDR, PM, responses, completions and DMA are logical services; fixture
+storage stays live through its lifetime audit. No real stale-memory,
+DMA, audio or phone execution occurs. Exported asynchronous stack
+transaction lifetime, late wire-TID generations and full RX/master/
+external transfer teardown remain unqualified. Codex generated this fix
+and evidence; human review and DCO certification remain pending.
+
+Fixes: afbdcc7c384b ("slimbus: Add messaging APIs to slimbus framework")
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+
+Backported from commit 1384dacdd888 ("slimbus: serialize synchronous
+response retirement and PM ownership")
+---
+ drivers/slimbus/messaging.c     | 104 +++++++++++++++++++++++---------
+ drivers/slimbus/qcom-ngd-ctrl.c |  36 ++++++++---
+ drivers/slimbus/slimbus.h       |   5 +-
+ 3 files changed, 106 insertions(+), 39 deletions(-)
+
+diff --git a/drivers/slimbus/messaging.c b/drivers/slimbus/messaging.c
+index ee127ef42046b..302918ae8cb53 100644
+--- a/drivers/slimbus/messaging.c
++++ b/drivers/slimbus/messaging.c
+@@ -29,26 +29,29 @@ void slim_msg_response(struct slim_controller *ctrl, u8 *reply, u8 tid, u8 len)
+ 
+ 	spin_lock_irqsave(&ctrl->txn_lock, flags);
+ 	txn = idr_find(&ctrl->tid_idr, tid);
+-	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
+-
+-	if (txn == NULL)
+-		return;
++	if (!txn || !txn->prepared)
++		goto unlock;
+ 
+ 	msg = txn->msg;
+-	if (msg == NULL || msg->rbuf == NULL) {
++	if (!msg || !msg->rbuf || len > msg->num_bytes) {
+ 		dev_err(ctrl->dev, "Got response to invalid TID:%d, len:%d\n",
+ 				tid, len);
+-		return;
++		goto unlock;
+ 	}
+ 
+-	slim_free_txn_tid(ctrl, txn);
+ 	memcpy(msg->rbuf, reply, len);
++	idr_remove(&ctrl->tid_idr, tid);
+ 	if (txn->comp)
+ 		complete(txn->comp);
++	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
+ 
+-	/* Remove runtime-pm vote now that response was received for TID txn */
++	/* The response owns the PM reference after retiring its TID. */
+ 	pm_runtime_mark_last_busy(ctrl->dev);
+ 	pm_runtime_put_autosuspend(ctrl->dev);
++	return;
++
++unlock:
++	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
+ }
+ EXPORT_SYMBOL_GPL(slim_msg_response);
+ 
+@@ -66,6 +69,8 @@ int slim_alloc_txn_tid(struct slim_controller *ctrl, struct slim_msg_txn *txn)
+ 	int ret = 0;
+ 
+ 	spin_lock_irqsave(&ctrl->txn_lock, flags);
++	txn->prepared = false;
++	txn->tid = 0;
+ 	ret = idr_alloc_cyclic(&ctrl->tid_idr, txn, 1,
+ 				SLIM_MAX_TIDS, GFP_ATOMIC);
+ 	if (ret < 0) {
+@@ -78,19 +83,65 @@ int slim_alloc_txn_tid(struct slim_controller *ctrl, struct slim_msg_txn *txn)
+ }
+ EXPORT_SYMBOL_GPL(slim_alloc_txn_tid);
+ 
++/**
++ * slim_prepare_txn() - Publish initialized response pointers for a transaction
++ * @ctrl: Controller handle
++ * @txn: Transaction with an allocated TID and initialized response pointers
++ *
++ * The sender must hold a runtime-PM reference. A prepared transaction acquires
++ * a separate response reference, released by its response or cancellation.
++ *
++ * Return: zero on success, -EINVAL if the TID is no longer owned, or
++ * -EALREADY if response ownership was already published.
++ */
++int slim_prepare_txn(struct slim_controller *ctrl, struct slim_msg_txn *txn)
++{
++	unsigned long flags;
++	int ret = 0;
++
++	spin_lock_irqsave(&ctrl->txn_lock, flags);
++	if (idr_find(&ctrl->tid_idr, txn->tid) != txn) {
++		ret = -EINVAL;
++	} else if (txn->prepared) {
++		ret = -EALREADY;
++	} else {
++		pm_runtime_get_noresume(ctrl->dev);
++		txn->prepared = true;
++	}
++	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(slim_prepare_txn);
++
+ /**
+  * slim_free_txn_tid() - Free tid of txn
+  *
+  * @ctrl: Controller handle
+  * @txn: transaction whose tid should be freed
++ *
++ * Return: true if this call retired the transaction, false if it no longer
++ * owns its TID. Retirement synchronizes with response copy and completion
++ * and releases the response PM reference of a prepared transaction.
+  */
+-void slim_free_txn_tid(struct slim_controller *ctrl, struct slim_msg_txn *txn)
++bool slim_free_txn_tid(struct slim_controller *ctrl, struct slim_msg_txn *txn)
+ {
+ 	unsigned long flags;
++	bool released = false;
+ 
+ 	spin_lock_irqsave(&ctrl->txn_lock, flags);
+-	idr_remove(&ctrl->tid_idr, txn->tid);
++	if (idr_find(&ctrl->tid_idr, txn->tid) == txn) {
++		idr_remove(&ctrl->tid_idr, txn->tid);
++		released = true;
++	}
+ 	spin_unlock_irqrestore(&ctrl->txn_lock, flags);
++
++	if (released && txn->prepared) {
++		pm_runtime_mark_last_busy(ctrl->dev);
++		pm_runtime_put_autosuspend(ctrl->dev);
++	}
++
++	return released;
+ }
+ EXPORT_SYMBOL_GPL(slim_free_txn_tid);
+ 
+@@ -114,10 +165,8 @@ int slim_do_transfer(struct slim_controller *ctrl, struct slim_msg_txn *txn)
+ 	int ret;
+ 	unsigned long time_left;
+ 
+-	/*
+-	 * do not vote for runtime-PM if the transactions are part of clock
+-	 * pause sequence
+-	 */
++	txn->tid = 0;
++	/* Clock-pause messages do not acquire a runtime-PM reference. */
+ 	if (ctrl->sched.clk_state == SLIM_CLK_ENTERING_PAUSE &&
+ 		(txn->mt == SLIM_MSG_MT_CORE &&
+ 		 txn->mc >= SLIM_MSG_MC_BEGIN_RECONFIGURATION &&
+@@ -126,29 +175,32 @@ int slim_do_transfer(struct slim_controller *ctrl, struct slim_msg_txn *txn)
+ 
+ 	if (!clk_pause_msg) {
+ 		ret = pm_runtime_get_sync(ctrl->dev);
+-		if (ctrl->sched.clk_state != SLIM_CLK_ACTIVE) {
++		if (ret < 0 || ctrl->sched.clk_state != SLIM_CLK_ACTIVE) {
+ 			dev_err(ctrl->dev, "ctrl wrong state:%d, ret:%d\n",
+ 				ctrl->sched.clk_state, ret);
++			if (ret >= 0)
++				ret = -EREMOTEIO;
+ 			goto slim_xfer_err;
+ 		}
+ 	}
+-	/* Initialize tid to invalid value */
+-	txn->tid = 0;
+-	need_tid = slim_tid_txn(txn->mt, txn->mc);
+ 
++	need_tid = slim_tid_txn(txn->mt, txn->mc);
+ 	if (need_tid) {
++		txn->comp = txn->msg->comp ?: &done;
+ 		ret = slim_alloc_txn_tid(ctrl, txn);
+ 		if (ret)
+ 			goto slim_xfer_err;
+-
+-		if (!txn->msg->comp)
+-			txn->comp = &done;
++		ret = slim_prepare_txn(ctrl, txn);
++		if (ret) {
++			slim_free_txn_tid(ctrl, txn);
++			goto slim_xfer_err;
++		}
+ 	}
+ 
+ 	ret = ctrl->xfer_msg(ctrl, txn);
+-	if (ret == -ETIMEDOUT) {
++	if (ret) {
+ 		slim_free_txn_tid(ctrl, txn);
+-	} else if (!ret && need_tid && !txn->msg->comp) {
++	} else if (need_tid && !txn->msg->comp) {
+ 		unsigned long ms = txn->rl + HZ;
+ 
+ 		time_left = wait_for_completion_timeout(txn->comp,
+@@ -164,11 +216,7 @@ int slim_do_transfer(struct slim_controller *ctrl, struct slim_msg_txn *txn)
+ 			txn->mt, txn->mc, txn->la, ret);
+ 
+ slim_xfer_err:
+-	if (!clk_pause_msg && (txn->tid == 0  || ret == -ETIMEDOUT)) {
+-		/*
+-		 * remove runtime-pm vote if this was TX only, or
+-		 * if there was error during this transaction
+-		 */
++	if (!clk_pause_msg) {
+ 		pm_runtime_mark_last_busy(ctrl->dev);
+ 		pm_runtime_put_autosuspend(ctrl->dev);
+ 	}
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index d9d34d70695c4..bd366e1c4665e 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -594,7 +594,7 @@ static int qcom_slim_ngd_tx_msg_post(struct qcom_slim_ngd_ctrl *ctrl,
+ {
+ 	struct qcom_slim_ngd_dma_desc *desc;
+ 	unsigned long flags;
+-	int index, offset;
++	int index, offset, ret;
+ 
+ 	spin_lock_irqsave(&ctrl->tx_buf_lock, flags);
+ 	offset = buf - ctrl->tx_base;
+@@ -619,6 +619,11 @@ static int qcom_slim_ngd_tx_msg_post(struct qcom_slim_ngd_ctrl *ctrl,
+ 	desc->desc->callback = qcom_slim_ngd_tx_msg_dma_cb;
+ 	desc->desc->callback_param = desc;
+ 	desc->cookie = dmaengine_submit(desc->desc);
++	ret = dma_submit_error(desc->cookie);
++	if (ret) {
++		spin_unlock_irqrestore(&ctrl->tx_buf_lock, flags);
++		return ret;
++	}
+ 	dma_async_issue_pending(ctrl->dma_tx_channel);
+ 	spin_unlock_irqrestore(&ctrl->tx_buf_lock, flags);
+ 
+@@ -835,7 +840,7 @@ static int qcom_slim_ngd_xfer_msg(struct slim_controller *sctrl,
+ 	u32 *pbuf;
+ 	u8 *puc;
+ 	u8 la = txn->la;
+-	bool usr_msg = false, submitted = false;
++	bool usr_msg = false, submitted = false, tid_allocated = false;
+ 
+ 	if (txn->mt == SLIM_MSG_MT_CORE &&
+ 		(txn->mc >= SLIM_MSG_MC_BEGIN_RECONFIGURATION &&
+@@ -894,12 +899,16 @@ static int qcom_slim_ngd_xfer_msg(struct slim_controller *sctrl,
+ 			goto put;
+ 		}
+ 
++		tid_allocated = true;
+ 		wbuf[i++] = txn->tid;
+ 
+ 		txn->msg->num_bytes = i;
+ 		txn->msg->wbuf = wbuf;
+ 		txn->msg->rbuf = rbuf;
+ 		txn->rl = txn->msg->num_bytes + 4;
++		ret = slim_prepare_txn(sctrl, txn);
++		if (ret)
++			goto put;
+ 	}
+ 
+ 	/* HW expects length field to be excluded */
+@@ -953,6 +962,8 @@ static int qcom_slim_ngd_xfer_msg(struct slim_controller *sctrl,
+ 	ret = 0;
+ put:
+ 	qcom_slim_ngd_tx_msg_put(ctrl, pbuf, submitted);
++	if (usr_msg && tid_allocated && ret)
++		slim_free_txn_tid(sctrl, txn);
+ unlock:
+ 	mutex_unlock(&ctrl->tx_lock);
+ 	return ret;
+@@ -967,26 +978,31 @@ static int qcom_slim_ngd_xfer_msg_sync(struct slim_controller *ctrl,
+ 
+ 	ret = pm_runtime_get_sync(ctrl->dev);
+ 	if (ret < 0)
+-		goto pm_put;
++		goto cancel_response;
+ 
+ 	txn->comp = &done;
++	ret = slim_prepare_txn(ctrl, txn);
++	if (ret)
++		goto cancel_response;
+ 
+ 	ret = qcom_slim_ngd_xfer_msg(ctrl, txn);
+ 	if (ret)
+-		goto pm_put;
++		goto cancel_response;
+ 
+ 	time_left = wait_for_completion_timeout(&done, HZ);
+ 	if (!time_left) {
+-		dev_err(ctrl->dev, "TX timed out:MC:0x%x,mt:0x%x", txn->mc,
+-				txn->mt);
++		dev_err(ctrl->dev, "TX timed out:MC:0x%x,mt:0x%x",
++			txn->mc, txn->mt);
+ 		ret = -ETIMEDOUT;
+-		goto pm_put;
++		goto cancel_response;
+ 	}
+-	return 0;
++	goto pm_put;
+ 
++cancel_response:
++	slim_free_txn_tid(ctrl, txn);
+ pm_put:
+-	pm_runtime_put(ctrl->dev);
+-
++	pm_runtime_mark_last_busy(ctrl->dev);
++	pm_runtime_put_autosuspend(ctrl->dev);
+ 	return ret;
+ }
+ 
+diff --git a/drivers/slimbus/slimbus.h b/drivers/slimbus/slimbus.h
+index 00a7f112574b5..ee00488b1523e 100644
+--- a/drivers/slimbus/slimbus.h
++++ b/drivers/slimbus/slimbus.h
+@@ -123,6 +123,7 @@ struct slim_framer {
+  * @msg: Elemental access message to be read/written
+  * @comp: completion if read/write is synchronous, used internally
+  *	for tid based transactions.
++ * @prepared: response pointers and PM ownership published under txn_lock.
+  */
+ struct slim_msg_txn {
+ 	u8			rl;
+@@ -134,6 +135,7 @@ struct slim_msg_txn {
+ 	u8			la;
+ 	struct slim_val_inf	*msg;
+ 	struct	completion	*comp;
++	bool			prepared;
+ };
+ 
+ /* Frequently used message transaction structures */
+@@ -431,7 +433,8 @@ void slim_msg_response(struct slim_controller *ctrl, u8 *reply, u8 tid, u8 l);
+ int slim_do_transfer(struct slim_controller *ctrl, struct slim_msg_txn *txn);
+ int slim_ctrl_clk_pause(struct slim_controller *ctrl, bool wakeup, u8 restart);
+ int slim_alloc_txn_tid(struct slim_controller *ctrl, struct slim_msg_txn *txn);
+-void slim_free_txn_tid(struct slim_controller *ctrl, struct slim_msg_txn *txn);
++int slim_prepare_txn(struct slim_controller *ctrl, struct slim_msg_txn *txn);
++bool slim_free_txn_tid(struct slim_controller *ctrl, struct slim_msg_txn *txn);
+ 
+ static inline bool slim_tid_txn(u8 mt, u8 mc)
+ {
+-- 
+2.56.0
+

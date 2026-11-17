@@ -1,0 +1,21 @@
+{
+  "cases": 576,
+  "checks": 8160,
+  "failures": 896,
+  "failed_initialization_cases": 192,
+  "ID_zero_cases": 96,
+  "positive_ID_cases": 288,
+  "actual_function_bindings": {
+    "qmi_txn_init": "eea4b1ac65af7a50ceae57007fe8d37f735c5fe0a7d62983f8eb3d8c042011f4",
+    "qmi_txn_wait": "c7a0796050cdb54d6d611d58fed2dc56499229e38a6076178ceff1650dc0adf0",
+    "qmi_txn_cancel": "cde1b06f79e6ac2f6a8e8471105062664840eca1b86c4ee44c20628668fb1dd0",
+    "qcom_slim_qmi_power_resp_cb": "5ff78940b2188927f92103620f25c00dd99cc1cc017d5aa66bb970cc1082c57c",
+    "qcom_slim_qmi_send_power_request": "03f2fa07cca3490e57d4c2e6196e925a10571c08f6738f2ee9ce3e697a77f73e",
+    "qcom_slim_qmi_power_request": "461a9ac1327eebd7e9061d64cbba3387ba968f77067f082c07615465c502402f"
+  },
+  "actual_callback_bodies_byte_exact": true,
+  "logical_IDR_completion_mutex_and_socket_services": true,
+  "no_real_QMI_DMA_audio_phone_or_network_execution": true,
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "hardware_stop_and_suspend_rollback_qualified": false
+}

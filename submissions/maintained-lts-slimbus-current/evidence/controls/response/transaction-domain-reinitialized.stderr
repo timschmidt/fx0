@@ -1,0 +1,9 @@
+transaction-initialization-is-not-repeated-at-registration: transaction locks and IDR initialize exactly once
+transaction-initialization-is-not-repeated-at-registration: registration preserves an initialized transaction domain
+transaction-initialization-is-not-repeated-at-registration: all core-owned records are retired exactly once
+late-response-copy-versus-public-cancel: the preceding case retired every owned record exactly once
+registration-preserves-bootstrap-and-unregister-drains-before-clients: registration does not erase an existing response record
+registration-preserves-bootstrap-and-unregister-drains-before-clients: registration does not reinitialize a published transaction lock
+registration-preserves-bootstrap-and-unregister-drains-before-clients: controller unregister releases outstanding response ownership and PM pin
+registration-preserves-bootstrap-and-unregister-drains-before-clients: all core-owned records are retired exactly once
+pending-response-snapshots-outlive-reused-sender-storage: the preceding case retired every owned record exactly once

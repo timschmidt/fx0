@@ -1,0 +1,86 @@
+From 2cf2518f9a39be6e906b0538d906ca9ae95bb2ab Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 06:29:47 -0500
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: quiesce the parent IRQ before child
+ teardown
+
+Carry this reviewed SLIMbus/BAM change into maintained Linux 6.18.
+Preserve the existing LTS channel-removal/reconfigure protocol, socket
+interfaces and DMA provider implementation. This stage is exact patch.
+
+The completed eighteen-change series passes 3,221 source-bound synthetic
+cases and 117 independent regression controls, with normal LeakSanitizer
+and fail-fast address/undefined-behavior sanitizers. These cover
+startup, child and parent ownership, QMI allocation, TX completion
+lifetime, synchronous/asynchronous response ownership, DMA admission and
+the retained LTS stream caller. Baselines from the appropriate
+intermediate stages fail their targeted assertions. All 108 ARM, ARM64
+and ARM64 RT component objects build with W=1 and nonpermissive CFI
+without diagnostics; their ELF source checksums match the final
+candidate.
+
+Kernel waits, workqueues, IDR, PM, packets, DMA and device services in
+the host models are synthetic. No real firmware, audio, hardware,
+network, phone or installed package executes. Full current-kernel link,
+physical DMA-stop/recovery and final-image acceptance remain
+unqualified. Codex prepared the LTS adaptations and qualification.
+Preserve original authors, dates, notices and assistance credits. Human
+DCO and owner, security and subsystem review remain pending; no new
+sign-off is added.
+
+Original reviewed changelog and provenance:
+
+The parent-owned IRQ dereferences the NGD descriptor. Parent removal
+unregisters the child, whose remove callback releases that descriptor,
+before the managed IRQ is released. An interrupt can still enter during
+that part of teardown.
+
+Remember the validated IRQ number and disable it synchronously after
+notification producers and startup work have stopped, before removing
+the child. The synthetic resource model checks descriptor release while
+the parent IRQ is enabled; its normal parent-detach cases pass this
+ordering check after the change. Child-only unbind and descriptor/device
+reference ownership remain separate work. No IRQ hardware is executed.
+
+OpenAI Codex implemented the fix, changelog and host qualification.
+Human review and DCO certification are pending.
+
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+
+Backported from commit 60255996929a ("slimbus: qcom-ngd-ctrl: quiesce
+the parent IRQ before child teardown")
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index b922359c0137b..1991de07d72cc 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -152,6 +152,7 @@ struct qcom_slim_ngd_ctrl {
+ 	struct qcom_slim_ngd_qmi qmi;
+ 	struct qcom_slim_ngd *ngd;
+ 	struct device *dev;
++	int irq;
+ 	void __iomem *base;
+ 	struct dma_chan *dma_rx_channel;
+ 	struct dma_chan	*dma_tx_channel;
+@@ -1702,6 +1703,7 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0)
+ 		return irq;
++	ctrl->irq = irq;
+ 
+ 	ret = devm_request_irq(dev, irq, qcom_slim_ngd_interrupt,
+ 			       IRQF_TRIGGER_HIGH | IRQF_NO_AUTOEN,
+@@ -1791,6 +1793,7 @@ static void qcom_slim_ngd_ctrl_remove(struct platform_device *pdev)
+ 	pdr_handle_release(ctrl->pdr);
+ 	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
+ 	cancel_work_sync(&ctrl->ngd_up_work);
++	disable_irq(ctrl->irq);
+ 
+ 	qcom_slim_ngd_unregister(ctrl);
+ 
+-- 
+2.56.0
+

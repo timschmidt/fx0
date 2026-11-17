@@ -1,0 +1,15 @@
+parent-detach-bound: each resource released by its owner once
+parent-detach-bound: descriptor and device survive parent queue drain
+child-unbind-rebind: child unbind retains its parent's descriptor
+child-unbind-rebind: child driver can rebind using retained descriptor
+child-unbind-rebind: rebind preserves address and instance identity
+child-unbind-rebind: parent can unregister after child-only unbind
+child-unbind-rebind: each resource released by its owner once
+child-unbind-rebind: parent IRQ quiesced before descriptor release
+child-unbind-rebind: descriptor and device survive parent queue drain
+child-unbind-rebind: only an external device reference remains
+child-unbind-rebind: all owned device references released
+child-unbind-rebind: iteration and owned device OF references released
+child-unbind-rebind: platform device reaches final release exactly once
+external-device-reference: each resource released by its owner once
+external-device-reference: descriptor and device survive parent queue drain

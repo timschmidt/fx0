@@ -1,0 +1,93 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "completion-not-detached",
+      "failures": 960,
+      "expected_case": "ring-0-type-0-failure-3",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "unsubmitted-reservation-not-returned",
+      "failures": 1024,
+      "expected_case": "ring-0-type-0-failure-2",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "submitted-buffer-returned-early",
+      "failures": 1796,
+      "expected_case": "pipeline-full-at-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "reservation-before-transfer-mutex",
+      "failures": 1091,
+      "expected_case": "concurrent-reservation",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "cleanup-after-transfer-unlock",
+      "failures": 1090,
+      "expected_case": "ring-0-type-0-failure-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "TID-error-skips-reservation-cleanup",
+      "failures": 576,
+      "expected_case": "ring-0-type-1-failure-1",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "prepare-error-skips-reservation-cleanup",
+      "failures": 960,
+      "expected_case": "ring-0-type-0-failure-2",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "TX-timeout-skips-completion-cleanup",
+      "failures": 450,
+      "expected_case": "timeout-races-active-callback",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "submission-ownership-never-recorded",
+      "failures": 1796,
+      "expected_case": "pipeline-full-at-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "cookie-written-through-DMA-descriptor",
+      "failures": 770,
+      "expected_case": "ring-0-type-0-failure-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "callback-does-not-retire-ring-owner",
+      "failures": 801,
+      "expected_case": "pipeline-full-at-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "ring-capacity-not-enforced",
+      "failures": 128,
+      "expected_case": "pipeline-full-at-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "invalid_callback_tokens_logged_without_executing_nonexistent_or_retired_memory": true,
+  "all_completion_DMA_and_TID_services_synthetic": true,
+  "hardware_audio_phone_or_network_execution": false
+}

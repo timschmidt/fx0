@@ -1,0 +1,11 @@
+master-postprocessing-cannot-publish-notification-after-close: close drains a handshake that has finished TX but not postprocessing
+master-postprocessing-cannot-publish-notification-after-close: DMA channels are released after callbacks, master work and active senders drain
+SSR-DOWN-drains-before-QMI-and-client-release: SSR shutdown drains DMA and queued master work
+SSR-DOWN-drains-before-QMI-and-client-release: DMA channels are released after callbacks, master work and active senders drain
+SSR-DOWN-drains-before-QMI-and-client-release: client and QMI release follow producer drain
+child-remove-drains-before-QMI-and-client-release: child removal drains master and DMA resources
+child-remove-drains-before-QMI-and-client-release: DMA channels are released after callbacks, master work and active senders drain
+child-remove-drains-before-QMI-and-client-release: client and QMI release follow producer drain
+overlapping-shutdowns-serialize-resource-release: overlapping stop operations serialize before releasing channels
+already-running-RX-callback-after-close-before-termination: no DMA operation uses a released or missing channel
+master-postprocessing-cannot-enqueue-notification-after-close: DMA channels are released after callbacks, master work and active senders drain

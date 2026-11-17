@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "response-has-no-own-PM-reference",
+      "failures": 750,
+      "expected_assertion": "kind-0-reply-1-fault-0-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "duplicate-preparation-acquires-another-pin",
+      "failures": 3,
+      "expected_assertion": "duplicate-preparation-does-not-add-PM-pin",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "cancellation-does-not-release-its-pin",
+      "failures": 458,
+      "expected_assertion": "kind-0-reply-0-fault-0-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "core-caller-vote-not-released",
+      "failures": 1090,
+      "expected_assertion": "kind-0-reply-1-fault-0-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "NGD-caller-vote-not-released",
+      "failures": 131,
+      "expected_assertion": "kind-5-reply-3-fault-0-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "driver-ACK-TID-survives-local-return",
+      "failures": 414,
+      "expected_assertion": "kind-2-reply-0-fault-1-external-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "submission-errors-ignored",
+      "failures": 426,
+      "expected_assertion": "submit-error--12-kind-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "submission-error-collapsed-to-EIO",
+      "failures": 21,
+      "expected_assertion": "submit-error--12-kind-0",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "heap_record_and_sender_storage_kept_physically_live_until_logical_audit": true,
+  "IDR_PM_completion_DMA_response_and_device_services_synthetic": true,
+  "hardware_audio_phone_or_network_execution": false
+}

@@ -1,0 +1,4 @@
+setup-versus-shutdown: shutdown serializes against setup before touching its channels
+setup-versus-shutdown: an admitted setup completes before serialized shutdown
+setup-versus-shutdown: no DMA operation uses a released or missing channel
+overlapping-shutdowns-serialize-resource-release: overlapping stop operations serialize before releasing channels

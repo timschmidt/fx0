@@ -1,0 +1,155 @@
+From e3cc2e00f971cf8490d3ca9f822dbdcb01007581 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 06:31:26 -0500
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: retain child resources for their
+ parent lifetime
+
+Carry this reviewed SLIMbus/BAM change into maintained Linux 6.18.
+Preserve the existing LTS channel-removal/reconfigure protocol, socket
+interfaces and DMA provider implementation. This stage is reconciled:
+LTS allocation helpers and explicit OF node references.
+
+The completed eighteen-change series passes 3,221 source-bound synthetic
+cases and 117 independent regression controls, with normal LeakSanitizer
+and fail-fast address/undefined-behavior sanitizers. These cover
+startup, child and parent ownership, QMI allocation, TX completion
+lifetime, synchronous/asynchronous response ownership, DMA admission and
+the retained LTS stream caller. Baselines from the appropriate
+intermediate stages fail their targeted assertions. All 108 ARM, ARM64
+and ARM64 RT component objects build with W=1 and nonpermissive CFI
+without diagnostics; their ELF source checksums match the final
+candidate.
+
+Kernel waits, workqueues, IDR, PM, packets, DMA and device services in
+the host models are synthetic. No real firmware, audio, hardware,
+network, phone or installed package executes. Full current-kernel link,
+physical DMA-stop/recovery and final-image acceptance remain
+unqualified. Codex prepared the LTS adaptations and qualification.
+Preserve original authors, dates, notices and assistance credits. Human
+DCO and owner, security and subsystem review remain pending; no new
+sign-off is added.
+
+Original reviewed changelog and provenance:
+
+The parent allocates the NGD descriptor, but child remove frees it and
+clears ctrl->ngd. Child-only unbind then leaves no descriptor for rebind
+or the parent's later unregister. A child that never bound also leaves
+the descriptor allocated. The parent unregister path deletes the
+platform device without dropping its allocation reference.
+
+Manage the descriptor from the parent and retain it across child driver
+unbind. Use normal platform-device unregister to drop the initial device
+reference. Hold one managed extra reference until parent cleanup, so the
+platform device and descriptor remain available while controller workers
+are drained. The error paths keep dropping their initial reference; an
+action-registration failure resets the extra reference before unwinding.
+
+Ten synthetic resource cases cover bound, unbound and failed child
+probe, child unbind/rebind, an external device reference and allocation
+failures. The exact driver, platform unregister/put and devres reset
+wrappers execute against modeled services with fail-fast sanitizers and
+normal leak checks. Notification admission, master/DMA transfer
+quiescence, startup scheduling and physical acceptance remain separate
+work.
+
+OpenAI Codex implemented the fix, changelog and host qualification.
+Human review and DCO certification are pending.
+
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+
+Backported from commit bb9092ea26e7 ("slimbus: qcom-ngd-ctrl: retain
+child resources for their parent lifetime")
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index 1991de07d72cc..5a6ecd5884271 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1593,6 +1593,12 @@ static void slim_pd_status(int state, char *svc_path, void *priv)
+ 
+ 	qcom_slim_ngd_ssr_pdr_notify(ctrl, state);
+ }
++
++static void qcom_slim_ngd_put_device(void *data)
++{
++	put_device(data);
++}
++
+ static int of_qcom_slim_ngd_register(struct device *parent,
+ 				     struct qcom_slim_ngd_ctrl *ctrl)
+ {
+@@ -1609,7 +1615,7 @@ static int of_qcom_slim_ngd_register(struct device *parent,
+ 		if (of_property_read_u32(node, "reg", &id))
+ 			continue;
+ 
+-		ngd = kzalloc(sizeof(*ngd), GFP_KERNEL);
++		ngd = devm_kzalloc(parent, sizeof(*ngd), GFP_KERNEL);
+ 		if (!ngd) {
+ 			of_node_put(node);
+ 			return -ENOMEM;
+@@ -1617,10 +1623,17 @@ static int of_qcom_slim_ngd_register(struct device *parent,
+ 
+ 		ngd->pdev = platform_device_alloc(QCOM_SLIM_NGD_DRV_NAME, id);
+ 		if (!ngd->pdev) {
+-			kfree(ngd);
+ 			of_node_put(node);
+ 			return -ENOMEM;
+ 		}
++		/* Keep the device alive until the controller workers are drained. */
++		ret = devm_add_action_or_reset(parent, qcom_slim_ngd_put_device,
++					       get_device(&ngd->pdev->dev));
++		if (ret) {
++			platform_device_put(ngd->pdev);
++			of_node_put(node);
++			return ret;
++		}
+ 		ngd->id = id;
+ 		ngd->pdev->dev.parent = parent;
+ 
+@@ -1628,7 +1641,6 @@ static int of_qcom_slim_ngd_register(struct device *parent,
+ 						 QCOM_SLIM_NGD_DRV_NAME);
+ 		if (ret) {
+ 			platform_device_put(ngd->pdev);
+-			kfree(ngd);
+ 			of_node_put(node);
+ 			return ret;
+ 		}
+@@ -1638,13 +1650,13 @@ static int of_qcom_slim_ngd_register(struct device *parent,
+ 		ret = platform_device_add(ngd->pdev);
+ 		if (ret) {
+ 			platform_device_put(ngd->pdev);
+-			kfree(ngd);
+ 			of_node_put(node);
+ 			return ret;
+ 		}
+ 		ngd->base = ctrl->base + ngd->id * data->offset +
+ 					(ngd->id - 1) * data->size;
+ 
++		of_node_put(node);
+ 		return 0;
+ 	}
+ 
+@@ -1655,7 +1667,7 @@ static void qcom_slim_ngd_unregister(struct qcom_slim_ngd_ctrl *ctrl)
+ {
+ 	struct qcom_slim_ngd *ngd = ctrl->ngd;
+ 
+-	platform_device_del(ngd->pdev);
++	platform_device_unregister(ngd->pdev);
+ }
+ 
+ static int qcom_slim_ngd_probe(struct platform_device *pdev)
+@@ -1809,9 +1821,6 @@ static void qcom_slim_ngd_remove(struct platform_device *pdev)
+ 	qcom_slim_ngd_enable(ctrl, false);
+ 	qcom_slim_ngd_exit_dma(ctrl);
+ 	qcom_slim_ngd_qmi_svc_event_deinit(&ctrl->qmi);
+-
+-	kfree(ctrl->ngd);
+-	ctrl->ngd = NULL;
+ }
+ 
+ static int __maybe_unused qcom_slim_ngd_runtime_idle(struct device *dev)
+-- 
+2.56.0
+

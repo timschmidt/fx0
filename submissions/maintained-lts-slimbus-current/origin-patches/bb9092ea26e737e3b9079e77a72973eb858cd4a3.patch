@@ -1,0 +1,113 @@
+From bb9092ea26e737e3b9079e77a72973eb858cd4a3 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 06:31:26 -0500
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: retain child resources for their
+ parent lifetime
+
+The parent allocates the NGD descriptor, but child remove frees it and
+clears ctrl->ngd. Child-only unbind then leaves no descriptor for rebind
+or the parent's later unregister. A child that never bound also leaves
+the descriptor allocated. The parent unregister path deletes the platform
+device without dropping its allocation reference.
+
+Manage the descriptor from the parent and retain it across child driver
+unbind. Use normal platform-device unregister to drop the initial device
+reference. Hold one managed extra reference until parent cleanup, so the
+platform device and descriptor remain available while controller workers
+are drained. The error paths keep dropping their initial reference; an
+action-registration failure resets the extra reference before unwinding.
+
+Ten synthetic resource cases cover bound, unbound and failed child probe,
+child unbind/rebind, an external device reference and allocation failures.
+The exact driver, platform unregister/put and devres reset wrappers execute
+against modeled services with fail-fast sanitizers and normal leak checks.
+Notification admission, master/DMA transfer quiescence, startup scheduling
+and physical acceptance remain separate work.
+
+OpenAI Codex implemented the fix, changelog and host qualification.
+Human review and DCO certification are pending.
+
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index 6744fbd001cc..0fa9c2675383 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1597,6 +1597,12 @@ static void slim_pd_status(int state, char *svc_path, void *priv)
+ 
+ 	qcom_slim_ngd_ssr_pdr_notify(ctrl, state);
+ }
++
++static void qcom_slim_ngd_put_device(void *data)
++{
++	put_device(data);
++}
++
+ static int of_qcom_slim_ngd_register(struct device *parent,
+ 				     struct qcom_slim_ngd_ctrl *ctrl)
+ {
+@@ -1612,14 +1618,20 @@ static int of_qcom_slim_ngd_register(struct device *parent,
+ 		if (of_property_read_u32(node, "reg", &id))
+ 			continue;
+ 
+-		ngd = kzalloc_obj(*ngd);
++		ngd = devm_kzalloc_obj(parent, *ngd);
+ 		if (!ngd)
+ 			return -ENOMEM;
+ 
+ 		ngd->pdev = platform_device_alloc(QCOM_SLIM_NGD_DRV_NAME, id);
+-		if (!ngd->pdev) {
+-			kfree(ngd);
++		if (!ngd->pdev)
+ 			return -ENOMEM;
++
++		/* Keep the device alive until the controller workers are drained. */
++		ret = devm_add_action_or_reset(parent, qcom_slim_ngd_put_device,
++					       get_device(&ngd->pdev->dev));
++		if (ret) {
++			platform_device_put(ngd->pdev);
++			return ret;
+ 		}
+ 		ngd->id = id;
+ 		ngd->pdev->dev.parent = parent;
+@@ -1628,7 +1640,6 @@ static int of_qcom_slim_ngd_register(struct device *parent,
+ 						 QCOM_SLIM_NGD_DRV_NAME);
+ 		if (ret) {
+ 			platform_device_put(ngd->pdev);
+-			kfree(ngd);
+ 			return ret;
+ 		}
+ 		platform_device_set_fwnode(ngd->pdev, of_fwnode_handle(node));
+@@ -1637,7 +1648,6 @@ static int of_qcom_slim_ngd_register(struct device *parent,
+ 		ret = platform_device_add(ngd->pdev);
+ 		if (ret) {
+ 			platform_device_put(ngd->pdev);
+-			kfree(ngd);
+ 			return ret;
+ 		}
+ 		ngd->base = ctrl->base + ngd->id * data->offset +
+@@ -1653,7 +1663,7 @@ static void qcom_slim_ngd_unregister(struct qcom_slim_ngd_ctrl *ctrl)
+ {
+ 	struct qcom_slim_ngd *ngd = ctrl->ngd;
+ 
+-	platform_device_del(ngd->pdev);
++	platform_device_unregister(ngd->pdev);
+ }
+ 
+ static int qcom_slim_ngd_probe(struct platform_device *pdev)
+@@ -1800,9 +1810,6 @@ static void qcom_slim_ngd_remove(struct platform_device *pdev)
+ 	qcom_slim_ngd_enable(ctrl, false);
+ 	qcom_slim_ngd_exit_dma(ctrl);
+ 	qcom_slim_ngd_qmi_svc_event_deinit(&ctrl->qmi);
+-
+-	kfree(ctrl->ngd);
+-	ctrl->ngd = NULL;
+ }
+ 
+ static int __maybe_unused qcom_slim_ngd_runtime_idle(struct device *dev)
+-- 
+2.56.0
+

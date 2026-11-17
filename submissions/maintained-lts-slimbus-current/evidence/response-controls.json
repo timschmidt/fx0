@@ -1,0 +1,156 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "control": "record-leak-on-response",
+      "failures": 246,
+      "expected_assertion": "all core-owned records are retired exactly once",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "record-leak-on-internal-cancel",
+      "failures": 491,
+      "expected_assertion": "all core-owned records are retired exactly once",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "record-leak-on-IDR-failure",
+      "failures": 138,
+      "expected_assertion": "all core-owned records are retired exactly once",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "record-leak-on-public-cancel",
+      "failures": 8,
+      "expected_assertion": "all core-owned records are retired exactly once",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "record-leak-on-controller-stop",
+      "failures": 10,
+      "expected_assertion": "all core-owned records are retired exactly once",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "controller-stop-does-not-close-admission",
+      "failures": 7,
+      "expected_assertion": "controller stop closes transaction admission",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "allocation-ignores-closed-controller",
+      "failures": 3,
+      "expected_assertion": "a closed controller rejects new TID allocation",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "controller-stop-forgets-response-PM-pins",
+      "failures": 11,
+      "expected_assertion": "stop releases only prepared response PM references",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "controller-stop-forgets-IDR-destruction",
+      "failures": 1,
+      "expected_assertion": "controller unregister destroys the empty IDR allocation tree",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "response-buffer-snapshot-shifted",
+      "failures": 1,
+      "expected_assertion": "response uses original buffer independent of reused sender metadata",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "response-completion-not-snapshotted",
+      "failures": 171,
+      "expected_assertion": "the late response completes the external caller token",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "software-owner-identity-ignored",
+      "failures": 6,
+      "expected_assertion": "an old owner cannot cancel its replacement",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "duplicate-active-descriptor-accepted",
+      "failures": 4,
+      "expected_assertion": "duplicate active descriptor is rejected before transmission",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "transaction-domain-reinitialized",
+      "failures": 9,
+      "expected_assertion": "registration does not erase an existing response record",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "response-drops-no-PM-pin",
+      "failures": 230,
+      "expected_assertion": "late response or failed send retires its TID and PM reference",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "public-cancel-drops-another-PM-pin",
+      "failures": 4,
+      "expected_assertion": "cancelled response drops only its own PM reference",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "public-cancel-matches-another-descriptor",
+      "failures": 9,
+      "expected_assertion": "wrong descriptor cannot consume response ownership",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "public-cancel-retires-synchronous-message",
+      "failures": 2,
+      "expected_assertion": "public async cancellation ignores synchronous requests",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "controller-start-does-not-reopen",
+      "failures": 6,
+      "expected_assertion": "serialized re-registration reopens transaction admission",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "response-size-bound-removed",
+      "failures": 30,
+      "expected_assertion": "response copy and completion stay within their logical lifetimes",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "control": "response-copy-outside-lock",
+      "failures": 21,
+      "expected_assertion": "public cancel or stop waits for admitted copy and completion",
+      "rejected": true,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "heap_record_and_sender_storage_kept_physically_live_until_logical_audit": true,
+  "IDR_PM_completion_DMA_response_and_device_services_synthetic": true,
+  "hardware_audio_phone_or_network_execution": false
+}
