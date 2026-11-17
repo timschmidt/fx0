@@ -1,0 +1,2330 @@
+{
+  "passed": true,
+  "errors": [],
+  "warnings": [
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/arch/arm/mm/dma-mapping.c:1241 function parameter 'attrs' not described in 'arm_iommu_map_sg'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/arch/arm/mm/dma-mapping.c:1300 function parameter 'attrs' not described in 'arm_iommu_unmap_sg'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/arch/arm/mm/dma-mapping.c:1370 function parameter 'attrs' not described in 'arm_iommu_map_page'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/arch/arm/mm/dma-mapping.c:1406 function parameter 'attrs' not described in 'arm_iommu_unmap_page'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/arch/arm/mm/dma-mapping.c:1435 function parameter 'attrs' not described in 'arm_iommu_map_resource'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/arch/arm/mm/dma-mapping.c:1469 function parameter 'attrs' not described in 'arm_iommu_unmap_resource'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/fs/backing-file.c:35 function parameter 'user_file' not described in 'backing_file_open'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/kernel/time/tick-oneshot.c:23 function parameter 'expires' not described in 'tick_program_event'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/kernel/time/tick-oneshot.c:23 function parameter 'force' not described in 'tick_program_event'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/kernel/time/tick-oneshot.c:63 function parameter 'newdev' not described in 'tick_setup_oneshot'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/kernel/time/tick-oneshot.c:63 function parameter 'handler' not described in 'tick_setup_oneshot'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/kernel/time/tick-oneshot.c:63 function parameter 'next_event' not described in 'tick_setup_oneshot'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/kernel/time/tick-oneshot.c:73 function parameter 'handler' not described in 'tick_switch_to_oneshot'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/kernel/trace/ring_buffer.c:6930 function parameter 'rpage' not described in 'ring_buffer_read_page_size'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/lib/842/842_compress.c:478 function parameter 'in' not described in 'sw842_compress'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/lib/842/842_compress.c:478 function parameter 'ilen' not described in 'sw842_compress'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/lib/842/842_compress.c:478 function parameter 'out' not described in 'sw842_compress'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/lib/842/842_compress.c:478 function parameter 'olen' not described in 'sw842_compress'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/lib/842/842_compress.c:478 function parameter 'wmem' not described in 'sw842_compress'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/lib/842/842_decompress.c:281 function parameter 'in' not described in 'sw842_decompress'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/lib/842/842_decompress.c:281 function parameter 'ilen' not described in 'sw842_decompress'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/lib/842/842_decompress.c:281 function parameter 'out' not described in 'sw842_decompress'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/lib/842/842_decompress.c:281 function parameter 'olen' not described in 'sw842_decompress'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/fs/smb/client/cifsacl.c:856:19: warning: variable 'end_of_dacl' set but not used [-Wunused-but-set-variable]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/fs/fuse/ioctl.c:132:18: warning: result of comparison of constant 4294967291 with expression of type '__u16' (aka 'unsigned short') is always false [-Wtautological-constant-out-of-range-compare]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/net/ipv4/igmp.c:2067:6: warning: variable 'changerec' set but not used [-Wunused-but-set-variable]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/fs/xfs/xfs_reflink.c:1358:12: warning: variable 'qdelta' set but not used [-Wunused-but-set-variable]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "Warning: /src/linux/fs/f2fs/segment.c:1905 function parameter 'need_check' not described in 'f2fs_issue_discard_timeout'"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/fs/erofs/decompressor.c:15:6: warning: variable 'distance' set but not used [-Wunused-but-set-variable]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:158:32: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:159:34: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:160:37: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:161:34: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:162:40: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:163:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:164:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:177:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:178:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:179:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:180:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:182:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:183:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:185:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:186:40: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:187:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:188:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:190:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:191:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:193:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:194:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:196:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:197:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:198:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:199:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:207:32: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:208:34: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:209:37: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:210:34: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:211:40: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:212:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:213:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:214:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:227:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:228:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:229:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:230:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:232:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:234:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:235:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:237:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:238:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:240:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:241:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:242:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:243:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:251:32: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:252:34: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:253:37: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:254:34: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:255:40: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:256:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:264:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:265:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:266:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:267:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:268:47: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:269:45: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:271:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:272:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:277:47: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:278:45: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:280:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:281:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:283:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:284:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:286:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:287:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:288:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:289:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:297:32: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:298:34: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:299:37: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:300:34: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:301:40: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:302:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:303:32: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:311:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:312:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:313:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:314:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:321:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:322:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:324:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:325:40: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:326:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:327:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:329:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:330:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:332:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:333:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:335:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:336:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:337:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:338:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:346:32: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:347:34: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:348:37: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:349:34: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:350:40: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:351:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:352:32: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:365:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:366:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:367:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:368:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:370:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:371:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:373:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:374:40: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:375:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:376:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:378:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:379:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:381:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:382:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:384:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:385:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:386:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:387:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:395:32: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:396:34: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:397:37: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:398:34: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:399:40: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:400:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:401:32: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:409:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:410:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:411:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:412:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:419:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:420:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:422:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:423:40: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:424:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:425:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:427:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:428:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:429:46: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:431:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:432:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:434:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:435:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:436:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:437:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:445:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:446:37: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:447:40: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:448:38: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:449:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:454:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:455:37: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:456:38: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:457:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:470:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:471:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:472:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:473:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:475:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:476:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:478:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:479:45: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:481:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:482:45: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:484:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:485:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:486:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:487:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:495:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:496:37: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:497:40: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:498:38: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:499:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:511:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:512:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:513:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:514:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:515:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:516:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:521:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:522:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:523:45: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:524:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:525:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:526:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:527:43: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:528:41: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:529:44: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "kernel-modules",
+      "diagnostic": "/src/linux/drivers/perf/arm_v7_pmu.c:530:42: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:1606.27-1654.6: Warning (avoid_unnecessary_addr_size): /soc@0/display-subsystem@1a00000/dsi@1a98000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:463.26-466.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/base1@d0: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s0-p1@d0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:478.26-481.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s1-p1@d2: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s1-p2@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:491.26-494.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s2-p2@d4: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s4-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:503.26-506.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s4-p2@d5: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s5-p1@d5)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:1593.11-1603.7: Warning (graph_child_address): /soc@0/display-subsystem@1a00000/display-controller@1a01000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8660.dtsi:43.9-46.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:1130.21-1178.5: Warning (avoid_unnecessary_addr_size): /soc/dsi@4700000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:1196.21-1250.5: Warning (avoid_unnecessary_addr_size): /soc/dsi@5800000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:1130.21-1178.5: Warning (avoid_unnecessary_addr_size): /soc/dsi@4700000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:1196.21-1250.5: Warning (avoid_unnecessary_addr_size): /soc/dsi@5800000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:1130.21-1178.5: Warning (avoid_unnecessary_addr_size): /soc/dsi@4700000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:1196.21-1250.5: Warning (avoid_unnecessary_addr_size): /soc/dsi@5800000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:1196.21-1250.5: Warning (avoid_unnecessary_addr_size): /soc/dsi@5800000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:1130.21-1178.5: Warning (avoid_unnecessary_addr_size): /soc/dsi@4700000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:1196.21-1250.5: Warning (avoid_unnecessary_addr_size): /soc/dsi@5800000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:92.9-95.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:92.9-95.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:264.26-267.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:279.26-282.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:299.26-302.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:264.26-267.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:309.26-312.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:279.26-282.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:299.26-302.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:334.26-337.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:309.26-312.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:334.26-337.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:359.26-362.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:359.26-362.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:379.40-382.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:379.40-382.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:389.40-392.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:389.40-392.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:424.41-427.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:439.41-442.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:424.41-427.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:464.41-467.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:439.41-442.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:489.41-492.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:464.41-467.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi:489.41-492.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi:128.9-131.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi:128.9-131.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi:128.9-131.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi:128.9-131.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi:128.9-131.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi:128.9-131.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq4019-ap.dk07.1-c1.dts:12.16-15.5: Warning (unit_address_vs_reg): /soc/pci@40000000: node has a unit name, but no reg or ranges property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq4019-ap.dk07.1-c1.dts:12.16-15.5: Warning (simple_bus_reg): /soc/pci@40000000: missing or empty reg/ranges property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi:128.9-131.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi:128.9-131.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi:274.9-277.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi:274.9-277.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi:642.24-665.5: Warning (unique_unit_address_if_enabled): /soc/usb@110f8800: duplicate unit-address (also used in node /soc/phy@110f8800)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8660.dtsi:43.9-46.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:1606.27-1654.6: Warning (avoid_unnecessary_addr_size): /soc@0/display-subsystem@1a00000/dsi@1a98000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:463.26-466.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/base1@d0: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s0-p1@d0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:478.26-481.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s1-p1@d2: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s1-p2@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:491.26-494.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s2-p2@d4: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s4-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:503.26-506.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s4-p2@d5: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s5-p1@d5)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:1593.11-1603.7: Warning (graph_child_address): /soc@0/display-subsystem@1a00000/display-controller@1a01000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:463.26-466.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/base1@d0: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s0-p1@d0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:478.26-481.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s1-p1@d2: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s1-p2@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:491.26-494.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s2-p2@d4: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s4-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:503.26-506.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s4-p2@d5: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s5-p1@d5)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:1606.27-1654.6: Warning (avoid_unnecessary_addr_size): /soc@0/display-subsystem@1a00000/dsi@1a98000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:463.26-466.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/base1@d0: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s0-p1@d0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:478.26-481.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s1-p1@d2: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s1-p2@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:491.26-494.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s2-p2@d4: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s4-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:503.26-506.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s4-p2@d5: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s5-p1@d5)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:1593.11-1603.7: Warning (graph_child_address): /soc@0/display-subsystem@1a00000/display-controller@1a01000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:1606.27-1654.6: Warning (avoid_unnecessary_addr_size): /soc@0/display-subsystem@1a00000/dsi@1a98000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:1593.11-1603.7: Warning (graph_child_address): /soc@0/display-subsystem@1a00000/display-controller@1a01000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:463.26-466.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/base1@d0: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s0-p1@d0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:478.26-481.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s1-p1@d2: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s1-p2@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:491.26-494.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s2-p2@d4: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s4-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:503.26-506.6: Warning (unique_unit_address_if_enabled): /soc@0/qfprom@5c000/s4-p2@d5: duplicate unit-address (also used in node /soc@0/qfprom@5c000/s5-p1@d5)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/msm8916.dtsi:1593.11-1603.7: Warning (graph_child_address): /soc@0/display-subsystem@1a00000/display-controller@1a01000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:709.28-720.5: Warning (avoid_unnecessary_addr_size): /soc/i2c@f9927000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:709.28-720.5: Warning (avoid_unnecessary_addr_size): /soc/i2c@f9927000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/pm8941.dtsi:199.19-207.5: Warning (avoid_unnecessary_addr_size): /soc/spmi@fc4cf000/pm8941@1/pwm: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1956.28-2009.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/pm8941.dtsi:199.19-207.5: Warning (avoid_unnecessary_addr_size): /soc/spmi@fc4cf000/pm8941@1/pwm: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1956.28-2009.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/pm8941.dtsi:199.19-207.5: Warning (avoid_unnecessary_addr_size): /soc/spmi@fc4cf000/pm8941@1/pwm: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1956.28-2009.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:553.28-565.5: Warning (avoid_unnecessary_addr_size): /soc/i2c@f9924000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/pm8941.dtsi:199.19-207.5: Warning (avoid_unnecessary_addr_size): /soc/spmi@fc4cf000/pm8941@1/pwm: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1956.28-2009.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/pm8941.dtsi:199.19-207.5: Warning (avoid_unnecessary_addr_size): /soc/spmi@fc4cf000/pm8941@1/pwm: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1956.28-2009.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1956.28-2009.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1956.28-2009.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/pm8941.dtsi:199.19-207.5: Warning (avoid_unnecessary_addr_size): /soc/spmi@fc4cf000/pm8941@1/pwm: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1956.28-2009.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/pm8941.dtsi:199.19-207.5: Warning (avoid_unnecessary_addr_size): /soc/spmi@fc4cf000/pm8941@1/pwm: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1956.28-2009.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/pm8941.dtsi:199.19-207.5: Warning (avoid_unnecessary_addr_size): /soc/spmi@fc4cf000/pm8941@1/pwm: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1956.28-2009.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:2029.28-2082.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922e00: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1253.26-1256.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@d2: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@d2)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1268.26-1271.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1@d4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1@d4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1288.26-1291.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1@d7: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode@d7)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1298.26-1301.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s9-p1@d8: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s10-p1@d8)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1323.26-1326.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s2-p2@dc: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s3-p2@dc)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1348.26-1351.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s7-p2@e0: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s8-p2@e0)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1368.40-1371.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s5-p2-backup@e3: duplicate unit-address (also used in node /soc/efuse@fc4bc000/mode-backup@e3)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1378.40-1381.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s6-p2-backup@e4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s7-p2-backup@e4)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1413.41-1416.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1-backup@442: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1-backup@442)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1428.41-1431.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s4-p1-backup@444: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s5-p1-backup@444)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1453.41-1456.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s8-p1-backup@448: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s9-p1-backup@448)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:1478.41-1481.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p2-backup@44c: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p2-backup@44c)"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi:23.9-26.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi:23.9-26.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/scripts/dtc/include-prefixes/arm64/qcom/pm8150b.dtsi:164.9-179.4: Warning (avoid_unnecessary_addr_size): /soc/spmi@c440000/pmic@3: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi:23.9-26.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi:23.9-26.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name"
+    },
+    {
+      "stage": "DTBs",
+      "diagnostic": "/src/linux/arch/arm/boot/dts/qcom/qcom-sdx65.dtsi:394.24-397.5: Warning (simple_bus_reg): /soc/syscon@1fcb000: simple-bus unit address format error, expected \"1fc0000\""
+    }
+  ],
+  "warnings_count": 580,
+  "W1": true,
+  "all_warnings_classified_and_resolved": false,
+  "zero_diagnostics_not_claimed": true
+}
