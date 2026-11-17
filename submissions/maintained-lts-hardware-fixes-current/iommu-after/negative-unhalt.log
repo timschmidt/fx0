@@ -1,0 +1,8 @@
+<workspace>/local/fx0-lts-production-current-01/hardware-fixes-01/iommu-after/negative.c:52:46: runtime error: applying non-zero offset 8192 to null pointer
+    #0 0x0000004ea5c4 in qcom_iommu_unhalt <workspace>/local/fx0-lts-production-current-01/hardware-fixes-01/iommu-after/negative.c:52:46
+    #1 0x0000004e9f9e in main <workspace>/local/fx0-lts-production-current-01/hardware-fixes-01/iommu-after/negative.c:63:46
+    #2 0x7fc48d8755b4 in __libc_start_call_main (/lib64/libc.so.6+0x35b4) (BuildId: 12e74671e7bfc0b6699fd701dd3881b5137163d4)
+    #3 0x7fc48d875667 in __libc_start_main@GLIBC_2.2.5 (/lib64/libc.so.6+0x3667) (BuildId: 12e74671e7bfc0b6699fd701dd3881b5137163d4)
+    #4 0x0000004006f4 in _start (<workspace>/local/fx0-lts-production-current-01/hardware-fixes-01/iommu-after/negative+0x4006f4) (BuildId: 9c50cea18166f4f261561f9c0f1193c644212e63)
+
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior <workspace>/local/fx0-lts-production-current-01/hardware-fixes-01/iommu-after/negative.c:52:46

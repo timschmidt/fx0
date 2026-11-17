@@ -1,0 +1,33 @@
+{
+  "source_SHA256": "6dd40168946b4e1bad172cd181aa4b8ec5b11e37ff93ba224c9b0e4742193ea8",
+  "helper_SHA256": "316d13e4695975b70f5a79f9aa398447c7b68a8dfc61c9693f96bd5c7babfa8e",
+  "stages": [
+    {
+      "name": "candidate-compile",
+      "returncode": 0
+    },
+    {
+      "name": "negative-compile",
+      "returncode": 0
+    },
+    {
+      "name": "candidate-run",
+      "returncode": 0
+    },
+    {
+      "name": "negative-halt",
+      "returncode": -6
+    },
+    {
+      "name": "negative-unhalt",
+      "returncode": -6
+    }
+  ],
+  "fixture_scope": "Copied production helpers; minimal structs and owned emulated MMIO, no kernel ABI or hardware acceptance",
+  "phone_access": false,
+  "passed": true,
+  "positive_cases": 4,
+  "rejected_original_behavior_controls": 2,
+  "ASan_UBSan": true,
+  "runtime_hardware_test": false
+}

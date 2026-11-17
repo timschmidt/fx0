@@ -1,0 +1,32 @@
+{
+  "base": "2677746cc1d6b6ab4aa60dbb5c8ad926fb327568",
+  "items": [
+    [
+      "mdp5-right",
+      "68bc7d6951bfe79e84e6fbea4f9297f34f2d57ee",
+      "drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c"
+    ],
+    [
+      "vibrator-upper",
+      "baefd400d8b347a10a04cc13d7341cdce1c584a8",
+      "drivers/input/misc/pm8xxx-vibrator.c"
+    ],
+    [
+      "iommu-address",
+      "d8c6a90c3b52480eeadd2dd4ceff95c0b46d4d9a",
+      "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+    ]
+  ],
+  "source_edits_applied": true,
+  "fixture_changes": [
+    "Synthetic DRM/core declarations rename drm_atomic_commit to LTS drm_atomic_state",
+    "Mutation targets existing LTS helper variable global; extracted production bodies unchanged"
+  ],
+  "phone_access": false,
+  "published": false,
+  "after_source_files": {
+    "drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c": "772c74a9b8f09cc0d0babd20eb62abc08df8c13883fa679eb0bf1f5f84d78c9f",
+    "drivers/input/misc/pm8xxx-vibrator.c": "ea185476d931bc578f5c579c1a1d99d8d78953ade5045eef79db6bea46a2b64a",
+    "drivers/iommu/arm/arm-smmu/qcom_iommu.c": "6dd40168946b4e1bad172cd181aa4b8ec5b11e37ff93ba224c9b0e4742193ea8"
+  }
+}

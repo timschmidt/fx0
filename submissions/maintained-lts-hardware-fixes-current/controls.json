@@ -1,0 +1,74 @@
+{
+  "passed": true,
+  "behavioral_controls": [
+    {
+      "kind": "plane",
+      "mutation": "left-only",
+      "cases": 1258,
+      "failed_assertions": 120,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "kind": "plane",
+      "mutation": "ignore-error",
+      "cases": 1258,
+      "failed_assertions": 84,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "kind": "plane",
+      "mutation": "drop-owned",
+      "cases": 1258,
+      "failed_assertions": 234,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "kind": "plane",
+      "mutation": "right-old-only",
+      "cases": 1258,
+      "failed_assertions": 713,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "kind": "plane",
+      "mutation": "right-new-only",
+      "cases": 1258,
+      "failed_assertions": 265,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "kind": "vibrator",
+      "mutation": "wrong-range",
+      "cases": 12303,
+      "failed_assertions": 9616,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "kind": "vibrator",
+      "mutation": "missing-limit",
+      "cases": 12303,
+      "failed_assertions": 144,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "kind": "vibrator",
+      "mutation": "stale-drive",
+      "cases": 12303,
+      "failed_assertions": 15232,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "kind": "vibrator",
+      "mutation": "upper-left",
+      "cases": 12303,
+      "failed_assertions": 8160,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "IOMMU_original_helpers_byte_equal": true,
+  "IOMMU_UB_sanitizer_reproducers": 2,
+  "IOMMU_reproducers_not_clean_behavioral_controls": true,
+  "LSan_enabled": true,
+  "phone_access": false,
+  "published": false
+}

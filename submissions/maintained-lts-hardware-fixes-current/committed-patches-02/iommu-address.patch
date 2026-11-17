@@ -1,0 +1,85 @@
+From 136e614f365c855c3897e4a96ac3b2bdede9feda Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 15 Nov 2026 03:00:34 +0000
+Subject: [PATCH] iommu: qcom_iommu: Guard optional global address calculation
+
+Legacy instances have no per-instance configuration or global base. The
+halt helpers currently add the micro-MMU offset to the NULL global base
+before checking whether the helper is needed. An ASan/UBSan host fixture
+executing the extracted production helper reports a nonzero offset from
+a null pointer on that legacy path.
+
+Derive the register address only after the configuration and halt guards
+in both helpers. Keep the programmed path and all MMIO operations
+intact. This addresses the imported integration feature; it is not a
+claim that the new feature already exists in the current upstream IOMMU
+base.
+
+Fixes: 5ec3d506e602 ("iommu: qcom_iommu: halt the micro-MMU while programming context banks")
+
+Prepared with OpenAI Codex assistance. Human review and DCO
+certification remain pending. Host memory emulation does not qualify
+hardware operation.
+
+Backport this exact delta to the maintained 6.18.63 Fx0 tree. The
+fork already carries the optional-global/halt implementation through
+its checksum-pinned reconstructed r50 source overlay. The Fixes tag
+identifies the original imported feature, not an upstream LTS commit.
+The LTS extracted helpers pass four cases. Both original helpers are
+byte-equal to the saved baseline and trigger the expected UBSan null
+offset reports. These are UB reproducers, not clean behavioral controls.
+No kernel ABI or physical behavior is established by the host model.
+
+The combined LTS series compiles six selected MDP5, IOMMU and input
+objects per profile: ARM normal, ARM64 normal and ARM64 RT. All three
+verify nonpermissive CFI, with W=1 and no diagnostics. ARM32 RT is
+unsupported by this LTS and is not counted. These object checks do
+not qualify a full link, package update or hardware operation.
+
+Codex prepared this local backport and verification. Human review and
+DCO remain pending. No publication or maintainer contact is authorized.
+
+Backported from commit d8c6a90c3b52480eeadd2dd4ceff95c0b46d4d9a
+("iommu: qcom_iommu: Guard optional global address calculation")
+---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 7c42fb259aa2..541e79dd8a8b 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -387,12 +387,14 @@ static int qcom_iommu_reset_ns(struct qcom_iommu_dev *qcom_iommu)
+  */
+ static void qcom_iommu_halt(struct qcom_iommu_dev *qcom_iommu)
+ {
+-	void __iomem *reg = qcom_iommu->global_base + QCOM_IOMMU_MICRO_MMU_CTRL;
++	void __iomem *reg;
+ 	u32 val;
+ 
+ 	if (!qcom_iommu->cfg || !qcom_iommu->cfg->halt)
+ 		return;
+ 
++	reg = qcom_iommu->global_base + QCOM_IOMMU_MICRO_MMU_CTRL;
++
+ 	writel_relaxed(readl_relaxed(reg) | MICRO_MMU_CTRL_HALT_REQ, reg);
+ 
+ 	if (readl_poll_timeout(reg, val, val & MICRO_MMU_CTRL_IDLE, 0, 100000))
+@@ -401,11 +403,13 @@ static void qcom_iommu_halt(struct qcom_iommu_dev *qcom_iommu)
+ 
+ static void qcom_iommu_unhalt(struct qcom_iommu_dev *qcom_iommu)
+ {
+-	void __iomem *reg = qcom_iommu->global_base + QCOM_IOMMU_MICRO_MMU_CTRL;
++	void __iomem *reg;
+ 
+ 	if (!qcom_iommu->cfg || !qcom_iommu->cfg->halt)
+ 		return;
+ 
++	reg = qcom_iommu->global_base + QCOM_IOMMU_MICRO_MMU_CTRL;
++
+ 	writel_relaxed(readl_relaxed(reg) & ~MICRO_MMU_CTRL_HALT_REQ, reg);
+ }
+ 
+-- 
+2.56.0
+

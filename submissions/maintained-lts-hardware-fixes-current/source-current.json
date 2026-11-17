@@ -1,0 +1,95 @@
+{
+  "passed": true,
+  "recorded_UTC": "2026-11-17T07:47:08.068770+00:00",
+  "base": "2677746cc1d6b6ab4aa60dbb5c8ad926fb327568",
+  "head": "136e614f365c855c3897e4a96ac3b2bdede9feda",
+  "commits": [
+    {
+      "label": "mdp5-right",
+      "origin_commit": "68bc7d6951bfe79e84e6fbea4f9297f34f2d57ee",
+      "commit": "b94dabf1b0bae0bdb77d309947a6847244f863f0",
+      "path": "drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-15T20:26:56-05:00",
+      "previous_message_revision": "79f1bc2cda31f06d3628378d6e2e52df795db9d5",
+      "parent": "2677746cc1d6b6ab4aa60dbb5c8ad926fb327568",
+      "source_tree_unchanged": true
+    },
+    {
+      "label": "vibrator-upper",
+      "origin_commit": "baefd400d8b347a10a04cc13d7341cdce1c584a8",
+      "commit": "3ce228635f52f0befd90bd05a46b8ac8b6f1b2ca",
+      "path": "drivers/input/misc/pm8xxx-vibrator.c",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-15T21:07:54-05:00",
+      "previous_message_revision": "6f6d19297b30ab7a86c30b2b77dbc60541793f98",
+      "parent": "b94dabf1b0bae0bdb77d309947a6847244f863f0",
+      "source_tree_unchanged": true
+    },
+    {
+      "label": "iommu-address",
+      "origin_commit": "d8c6a90c3b52480eeadd2dd4ceff95c0b46d4d9a",
+      "commit": "136e614f365c855c3897e4a96ac3b2bdede9feda",
+      "path": "drivers/iommu/arm/arm-smmu/qcom_iommu.c",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-15T03:00:34Z",
+      "previous_message_revision": "5dc26dd42e516a84ad9a0e58963a14f839daad81",
+      "parent": "3ce228635f52f0befd90bd05a46b8ac8b6f1b2ca",
+      "source_tree_unchanged": true
+    }
+  ],
+  "source_files": {
+    "drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c": "772c74a9b8f09cc0d0babd20eb62abc08df8c13883fa679eb0bf1f5f84d78c9f",
+    "drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c": "cd30013bc00ba9677df721a81c473797c6533bc84628ffee2535c6072ce72904",
+    "drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c": "2f6122d8218dda68c410495f91cbebc40d9a5d542fa2b6c56c148871835a484a",
+    "drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c": "eb436a6b6e0df8f04dc2643a3a018ab4438dd547f3a38d86f5c8616d0e7f600f",
+    "drivers/input/misc/pm8xxx-vibrator.c": "ea185476d931bc578f5c579c1a1d99d8d78953ade5045eef79db6bea46a2b64a",
+    "drivers/iommu/arm/arm-smmu/qcom_iommu.c": "6dd40168946b4e1bad172cd181aa4b8ec5b11e37ff93ba224c9b0e4742193ea8"
+  },
+  "focused_cases": 13565,
+  "focused_after_checks": 106227,
+  "focused_baseline_failed_assertions": 9212,
+  "IOMMU_cases": 4,
+  "IOMMU_original_UB_reproducers": 2,
+  "clean_behavioral_controls": 9,
+  "native_objects": 18,
+  "native_profiles": [
+    "arm-normal",
+    "arm64-normal",
+    "arm64-rt"
+  ],
+  "CFI_nonpermissive_in_all_supported_profiles": true,
+  "ARM32_RT_unsupported_not_counted": true,
+  "new_native_diagnostics": 0,
+  "source_bytes_match_precommit_native_builds": true,
+  "working_tree_clean": true,
+  "full_link_and_release_specific_package_qualification": false,
+  "physical_acceptance": false,
+  "human_DCO_pending": true,
+  "phone_access": false,
+  "published": false,
+  "maintainer_contact": false,
+  "full_goal_complete": false,
+  "original_local_head_preserved": "5dc26dd42e516a84ad9a0e58963a14f839daad81",
+  "message_format_revisions": [
+    {
+      "old": "79f1bc2cda31f06d3628378d6e2e52df795db9d5",
+      "new": "b94dabf1b0bae0bdb77d309947a6847244f863f0",
+      "tree": "222186b39ca302fc0863bd17050b13d12b7b0a36"
+    },
+    {
+      "old": "6f6d19297b30ab7a86c30b2b77dbc60541793f98",
+      "new": "3ce228635f52f0befd90bd05a46b8ac8b6f1b2ca",
+      "tree": "e3ceba501688ac1e70321d3ca7d1ee9fe54ff22d"
+    },
+    {
+      "old": "5dc26dd42e516a84ad9a0e58963a14f839daad81",
+      "new": "136e614f365c855c3897e4a96ac3b2bdede9feda",
+      "tree": "58c87afac21bbe49e58e3f62c3e644b3444dc750"
+    }
+  ],
+  "strict_checkpatch_passed": true
+}

@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "origin_commit": "b7acbb99dc86f35c2f7234ceb7b1cc8fe9ff674f",
+      "path": "drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c",
+      "function": "mdp5_plane_drop_stale_hwpipes",
+      "equivalent_after_comments_and_local_identifier_renaming": true,
+      "maintained_function_SHA256": "b3454a89ecc6eefb845c5a17383bb864de9785e1f321246d108fe2f1ded9e186",
+      "current_function_SHA256": "bac9a2d0e5dbdb1f014840e2781c65ec84ae73b5fedf9f50f5de974dd999bd59",
+      "qualification": "local/fx0-lts-production-current-01/hardware-fixes-01/plane-after/qualification.json",
+      "physical_acceptance": false
+    },
+    {
+      "origin_commit": "c632efab26d8a2f5baba1e8ff08694d941828731",
+      "path": "drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c",
+      "function": "mdp5_vid_encoder_enable",
+      "equivalent_after_comments_and_local_identifier_renaming": true,
+      "maintained_function_SHA256": "2c30b1fdc60d3521559adcd201cea23ea48a3fd27c611518afcf4b7c9edb9f90",
+      "current_function_SHA256": "d666abe20c5a6c42a8babfa3f427e11896b6418a9c15fa601b7609bd3aa19b16",
+      "qualification": "local/fx0-lts-production-current-01/hardware-fixes-01/existing-flush-order-qualification.json",
+      "physical_acceptance": false
+    },
+    {
+      "origin_commit": "6b1d61603473a5c158e111f572e7bc9a4b6f0104",
+      "path": "drivers/input/misc/pm8xxx-vibrator.c",
+      "complete_final_file_equal_to_current": true,
+      "complete_final_file_SHA256": "ea185476d931bc578f5c579c1a1d99d8d78953ade5045eef79db6bea46a2b64a",
+      "qualification": "local/fx0-lts-production-current-01/hardware-fixes-01/vibrator-after/qualification.json",
+      "individual_preceding_commits_present_by_reverse_patch_check": true,
+      "physical_acceptance": false
+    },
+    {
+      "origin_commit": "86a86a5aee60654e4a0c38586c295d8b8151e628",
+      "path": "drivers/input/misc/pm8xxx-vibrator.c",
+      "complete_final_file_equal_to_current": true,
+      "complete_final_file_SHA256": "ea185476d931bc578f5c579c1a1d99d8d78953ade5045eef79db6bea46a2b64a",
+      "qualification": "local/fx0-lts-production-current-01/hardware-fixes-01/vibrator-after/qualification.json",
+      "individual_preceding_commits_present_by_reverse_patch_check": true,
+      "physical_acceptance": false
+    },
+    {
+      "origin_commit": "1f4e05b6c4641abb44f5efa87a214b843dcc1e32",
+      "path": "drivers/input/misc/pm8xxx-vibrator.c",
+      "complete_final_file_equal_to_current": true,
+      "complete_final_file_SHA256": "ea185476d931bc578f5c579c1a1d99d8d78953ade5045eef79db6bea46a2b64a",
+      "qualification": "local/fx0-lts-production-current-01/hardware-fixes-01/vibrator-after/qualification.json",
+      "individual_preceding_commits_present_by_reverse_patch_check": true,
+      "physical_acceptance": false
+    }
+  ],
+  "limits": "Source/function equivalence and focused host models; no hardware, concurrency, complete DRM or FF ioctl qualification."
+}
