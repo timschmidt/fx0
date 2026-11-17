@@ -1,6 +1,7 @@
 """Reader restoration against IIO's exclusive scan-mask semantics."""
 import importlib.util
 from pathlib import Path
+import struct
 import unittest
 
 spec = importlib.util.spec_from_file_location('native_reader', Path(__file__).resolve().parents[1] /
@@ -45,6 +46,55 @@ class ReaderRestore(unittest.TestCase):
             reader.restore_configuration(saved, [paths[k] for k in ('raw', 'quat', 'stamp')])
         self.assertEqual(state['quat'], '0')
         self.assertEqual(state['length'], '8')
+
+
+class ReaderDecode(unittest.TestCase):
+    VALUES = [
+        (0, 0, 0, 0, 0),
+        (1 << 30, 0, 0, 0, 123456789),
+        (-(1 << 30), 1, -1, 17, 987654321),
+        (2**31-1, -2**31, 123, -456, 2**63-1),
+        (5, 6, 7, 8, -2**63),
+        (1, 2, 3, 4, -1),
+        (-1, -2, -3, -4, 16),
+        (123, 456, 789, 1000, 24),
+        (111, -222, 333, -444, 31415926535),
+    ]
+
+    def test_maintained_timestamp_precedes_nonzero_tail_padding(self):
+        for values in self.VALUES:
+            with self.subTest(values=values):
+                data = bytearray(struct.pack('=iiiiq8x', *values))
+                data[24:] = b'\xa5' * 8
+                self.assertEqual(reader.SCAN.size, 32)
+                self.assertEqual(reader.decode_scan(data), values)
+
+    def test_explicit_legacy_timestamp_follows_nonzero_padding(self):
+        for values in self.VALUES:
+            with self.subTest(values=values):
+                data = bytearray(struct.pack('=iiii8xq', *values))
+                data[16:24] = b'\x5a' * 8
+                self.assertEqual(reader.LEGACY_R1_SCAN.size, 32)
+                self.assertEqual(reader.decode_scan(data, legacy_r1_timestamp=True), values)
+
+    def test_layouts_select_different_timestamp_slots(self):
+        data = struct.pack('=iiiiqq', 1, 2, 3, 4, 987654321, 123456789)
+        self.assertEqual(reader.decode_scan(data), (1, 2, 3, 4, 987654321))
+        self.assertEqual(reader.decode_scan(data, legacy_r1_timestamp=True),
+                         (1, 2, 3, 4, 123456789))
+
+    def test_incomplete_frame_rejected(self):
+        for size in [0, 15, 16, 23, 24, 31]:
+            with self.subTest(size=size):
+                with self.assertRaises(struct.error):
+                    reader.decode_scan(bytes(size))
+
+    def test_first_scan_in_a_queued_batch(self):
+        first = self.VALUES[1]
+        second = self.VALUES[2]
+        data = struct.pack('=iiiiq8x', *first) + struct.pack('=iiiiq8x', *second)
+        self.assertEqual(reader.decode_scan(data), first)
+        self.assertEqual(reader.decode_scan(memoryview(data)[32:]), second)
 
 
 if __name__ == '__main__':

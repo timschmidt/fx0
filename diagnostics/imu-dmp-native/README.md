@@ -1,12 +1,17 @@
 # Native MPU6515 DMP candidate
 
+The early development and physical results here describe the legacy r1 ABI.
+Maintained LTS source uses the corrected timestamp layout in the reader section
+below. Its normal package deployment and final-image hardware acceptance remain
+open.
+
 This is staged development code in `worktrees/linux-dmp`, branch
 `development/fx0-dmp-smd-wake`, based on integration commit
 `4b800b920c7db82e8012a580a17cc2d8ff9d5e66`. A development kernel is installed, and the corrected driver captured 125
 quaternion samples in five seconds. General ABI, accuracy, stability and wake
 qualification remain incomplete; the exact-scale kernel fix has booted and passed three raw/DMP/raw cycles. Audio work/testing remains excluded.
 
-The proposed ABI adds a buffered `IIO_ROT/IIO_MOD_QUATERNION` channel to the
+The legacy ABI adds a buffered `IIO_ROT/IIO_MOD_QUATERNION` channel to the
 MPU6515 IIO device. Its scan is four native-endian signed 32-bit Q30 values in
 W, X, Y, Z order, followed, when timestamps are enabled, by eight padding bytes and a native-
 endian signed 64-bit timestamp: 32 bytes total. IIO aligns the complete scan
@@ -46,6 +51,14 @@ physical DMP wakes plus a matched-build masked-motion control. Battery and
 broader qualification remain open.
 
 ## Reader (after candidate installation and hardware verification)
+
+The maintained LTS reader defaults to the corrected IIO layout: four Q30
+components, a timestamp at byte 16, then eight unused tail bytes, for a 32-byte
+scan. Pair this reader with the maintained driver. The earlier r1 driver places
+the timestamp at byte 24; use `--legacy-r1-timestamp` only for a direct capture
+from that old driver. Its historical capture results below describe that legacy
+layout. The reader and kernel package update must be qualified together; these
+source changes do not update the installed phone or establish physical accuracy.
 
 Extract the private reference image with `scripts/extract_mpu6515_dmp.py` and
 install it under the firmware loader's path. Do not redistribute its bytes

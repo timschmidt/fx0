@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "reader_SHA256": "54ba421581dcc1d5e27244a0f9b8a9cbb125bbd23442a58a07a320cb7a16e994",
+  "tests": 7,
+  "synthetic_decode_records": 18,
+  "regression_controls": [
+    {
+      "variant": "maintained-slot-reverted",
+      "records": 18,
+      "failures": 9
+    },
+    {
+      "variant": "legacy-slot-overwritten",
+      "records": 18,
+      "failures": 9
+    }
+  ],
+  "maintained_timestamp_offset": 16,
+  "legacy_timestamp_offset": 24,
+  "scan_bytes": 32,
+  "actual_capture_calls_decoder_and_forwards_layout_flag": true,
+  "restore_function_unchanged": true,
+  "capture_main_firmware_and_device_operations_not_executed": true,
+  "normal_package_deployment_qualified": false,
+  "phone_access": false
+}

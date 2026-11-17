@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bounded reader for the staged native MPU6515 quaternion ABI (not stock kernels)."""
+"""Bounded reader for the maintained MPU6515 quaternion ABI (not stock kernels)."""
 import argparse
 from decimal import Decimal
 import os
@@ -9,6 +9,16 @@ import signal
 import struct
 import sys
 import time
+
+
+SCAN = struct.Struct('=iiiiq8x')
+LEGACY_R1_SCAN = struct.Struct('=iiii8xq')
+
+
+def decode_scan(data, *, legacy_r1_timestamp=False):
+    """Decode one scan; maintained IIO places the timestamp at byte 16."""
+    scan = LEGACY_R1_SCAN if legacy_r1_timestamp else SCAN
+    return scan.unpack_from(data)
 
 
 def restore_configuration(saved, scan_files):
@@ -29,7 +39,7 @@ def restore_configuration(saved, scan_files):
         raise RuntimeError('capture configuration restore failed: ' + '; '.join(failures))
 
 
-def capture(device, seconds):
+def capture(device, seconds, *, legacy_r1_timestamp=False):
     scan = device / 'scan_elements'
     quat = scan / 'in_rot_quaternion_en'
     stamp = scan / 'in_timestamp_en'
@@ -79,7 +89,8 @@ def capture(device, seconds):
                 raise RuntimeError('IIO device closed during capture')
             pending.extend(data)
             while len(pending) >= 32:
-                w, x, y, z, timestamp = struct.unpack_from('=iiii8xq', pending)
+                w, x, y, z, timestamp = decode_scan(
+                    pending, legacy_r1_timestamp=legacy_r1_timestamp)
                 del pending[:32]
                 if last is not None and timestamp <= last:
                     raise RuntimeError('nonmonotonic quaternion timestamp')
@@ -101,6 +112,8 @@ def capture(device, seconds):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--seconds', type=float, default=5)
+    parser.add_argument('--legacy-r1-timestamp', action='store_true',
+                        help='read the old r1 timestamp at byte 24; maintained kernels use byte 16')
     args = parser.parse_args()
     if not 0.5 <= args.seconds <= 60:
         parser.error('--seconds must be between 0.5 and 60')
@@ -112,7 +125,9 @@ def main():
     def interrupted(signum, frame):
         raise KeyboardInterrupt
     signal.signal(signal.SIGTERM, interrupted)
-    print(f'# {capture(devices[0], args.seconds)} samples', file=sys.stderr)
+    samples = capture(devices[0], args.seconds,
+                      legacy_r1_timestamp=args.legacy_r1_timestamp)
+    print(f'# {samples} samples', file=sys.stderr)
 
 
 if __name__ == '__main__':
