@@ -1,0 +1,34 @@
+{
+  "runtime_head": "192b0d581ac98b3d245df8ee8183dcdd4d7fb39c",
+  "source_files": {
+    "kernel/smp.c": "4a466335897438f79bfa97480063aeba127b31f742a8405568b9ec721d6f6490",
+    "drivers/base/dd.c": "49f37afdab0ba004b29807316835b1905f6a382ae2f5ef457ec408cdd4e1cb43",
+    "drivers/cpuidle/Kconfig.arm": "38e9335df2773fe6d9c7b40339d3f7f1c6966c6eddbe8c91c2cb6f3b0083106b",
+    "drivers/pmdomain/qcom/cpr.c": "5f1440e94a343362f65f59f18ec61da647b41ce1a4dbabd4183cd80c4df355b6",
+    "drivers/regulator/qcom-spmi-saw-fts2.h": "697f55bcbdefea453c790aa647a86b3028a35dbad241941dce44dfcdb1005d86",
+    "kernel/power/suspend.c": "ab9b70861e1983e2891f0cdc776cc3aa851ff5d659a5dc9874347f9544bd41a7",
+    "include/linux/cpuidle.h": "f664b4a8bc2b43f15338d444d975b9d0298c33eb39452461ff9abeee4b375c11"
+  },
+  "Fixes_provenance": "SPM-introduction-proof.json; original 7ce75bb2c05ef6949ab0b93633e052f46855690d verified by public upstream patch and local Git metadata",
+  "before_reproduction": "Exact parent void retry loop reaches logical watchdog at attempt 101 without returning; all MMIO is synthetic. No real-time device hang or bus-fault reproduction is claimed.",
+  "CPU_mode_error_contract": "50 write/readback attempts per command; at most two disable commands on failure. Preserve all non-INDEX bits including inherited bypass while verifying EN clear. INDEX may reset at END. Persistent unverified disable is fatal before returning to generic WFI. This bounds software attempts, not real MMIO bus response time.",
+  "CPU_idle": "No cpu_suspend after failed SPC. Attempt standby after wake or abort; preserve original suspend error or report restore error after successful wake. Exact CPU_PM macro balances notifications on all nonfatal paths.",
+  "admission": "SPM drvdata publication follows successful standby/regulator setup. Preflight all present CPU providers before warm-vector or first CPU-idle registration. Available unready providers defer; unsupported/disabled CPU nodes skip. Temporary OF and device references balance. Existing per-CPU allocation/DT/registration error policy remains.",
+  "provider_lifetime": "CPU-idle depends on QCOM_SPM=y, the provider is built-in and suppresses bind attrs. The SPM driver has no unregister path. Readiness is published only after all fallible per-controller setup. Core clears drvdata on failed probe; no baseline UAF is claimed.",
+  "PC_alias": "Only MSM8226 v2 gains PC start=5 sharing its identical 20-byte SPC/PC vendor program; raw CPU sequence bytes and all other SoC tables remain unchanged.",
+  "SCM_prerequisite_headers": "Source/runtime full SCM headers differ due to prior runtime prerequisites; the exact L2_ON constant used by this model matches. Models and changed source bytes are identical.",
+  "SCM_L2_ON_definition": "#define QCOM_SCM_CPU_PWR_DOWN_L2_ON\t0x0",
+  "full_entry_remaining": [
+    "New checked CPU and L2 backends still have no full system-collapse caller.",
+    "Global prepare/abort must quiesce CPR/CPUfreq and verify APC, MX/SO and clocks.",
+    "L2 cache clean, SCM L2_OFF and warm-resume/cache state handoff remain to be composed.",
+    "RPM freeze/drain, IRQ-aware SLEEP context ownership and MPM wake topology remain incomplete.",
+    "CPR deep-suspend guard and covering SO ceiling remain; no low CPU sleep floor or global physical SLEEP entry is authorized.",
+    "Firmware, real concurrency, MMIO bus faults, electrical behavior, original r2 display/IOMMU fault and physical acceptance remain unqualified.",
+    "CPU sequence RAM readback is unchanged by this API fix; the full MSM8226 PC entry gate still needs verified CPU program/state alongside the already verified L2 programs."
+  ],
+  "all_seven_original_requirements_preserved": true,
+  "phone_access": false,
+  "published": false,
+  "maintainer_contact": false
+}

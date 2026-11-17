@@ -1,0 +1,10 @@
+UNSENT — human review and DCO pending
+Subject: [RFC PATCH] soc: qcom: spm: bound CPU mode writes and idle errors
+
+Bound CPU control readback, propagate mode failures and verify disable before
+generic WFI. Preserve inherited control bits and allow INDEX reset while
+disabled. Check CPU-idle arm/restore results and preflight all suppliers before
+warm setup or first registration. Include exact-source fault models, original
+upstream Fixes provenance, native/kernel/module evidence and offline replay.
+Full CPU/APC/cache/L2/SCM/RPM/MPM system entry and physical acceptance remain
+incomplete; retain the CPR deep-suspend guard and covering SO ceiling.

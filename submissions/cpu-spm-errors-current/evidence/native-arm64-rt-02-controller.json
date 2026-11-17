@@ -1,0 +1,78 @@
+{
+  "started_UTC": "2026-11-16T23:39:26.091757+00:00",
+  "ARCH": "arm64",
+  "PREEMPT_RT": true,
+  "native": true,
+  "COMPILE_TEST": false,
+  "LLVM": "-21",
+  "W": 1,
+  "strict_function_pointer_diagnostics": true,
+  "source_head": "eea388024394a49b750791a7e1161152f298dd05",
+  "source_status": " M drivers/cpuidle/cpuidle-qcom-spm.c\n M drivers/soc/qcom/spm.c\n M include/soc/qcom/spm.h\n",
+  "source_files": {
+    "drivers/soc/qcom/spm.c": "b407e0dc2c919bf74744cc58a36e7dc6017ccf6f0453a4079e98dbac6737c001",
+    "drivers/soc/qcom/smd-rpm.c": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+    "drivers/base/regmap/regmap.c": "b2871149ba67331effc7c1c9a44c3a7e84922b305954af6b9ecc0bcb640bf593",
+    "drivers/base/regmap/regmap-mmio.c": "101c7487aa11dff40528e6e3b990e260c9f6013c501b8280fd50c09e075f1bd7",
+    "drivers/mfd/syscon.c": "2d93e488b42bd7ed6ee2f6d0ec3fabbe201f8f98caae2d226564b64870164aec",
+    "drivers/rpmsg/rpmsg_core.c": "58b145327037a4c168c1453d09c798ee25288d9b06dff52fb24a4efa4edd92e4",
+    "drivers/rpmsg/qcom_smd.c": "13ffe4334b7a9be3f700eb100133aca7e7748e03a6671564b1f9124416ad0d90",
+    "drivers/firmware/qcom/qcom_scm.c": "8c421fd091e945e63f387bcfb08e6cd95a1b92cf892f4ad943b7d2cb97915e7e",
+    "drivers/cpuidle/cpuidle.c": "040e43a1bb1439384f9871766630cef2296050d8335080725cffdb00afedeaf6",
+    "kernel/cpu_pm.c": "92c427772e50eba83366156fa2fcf5817f0543799eb8624029399ae9c91af62c",
+    "drivers/soc/qcom/spm-msm8226-l2.h": "171e0f31ca6544c406879986787c084be73478ed55f581aae6b2e6254a91a242",
+    "drivers/soc/qcom/Kconfig": "3c9401d5b000b1bab7e2d8e0bfbd2136dffda744a1948610a42f2c79d256a16a",
+    "include/soc/qcom/spm.h": "9f46bfd84f9734946d6019f7ceb8c14cb2372da2f08a221884cef1ce9302c710",
+    "include/linux/cpuidle.h": "f664b4a8bc2b43f15338d444d975b9d0298c33eb39452461ff9abeee4b375c11"
+  },
+  "stages": [
+    {
+      "stage": "options",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "fb6ceb40ad1c094c0ed1238a6024cd9a67e1fb84ee893f7a507ada2156472943"
+    },
+    {
+      "stage": "prepare",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "2b0430b6877003cd6f7225c4f19e1fadd98ae0a6ac063a58ea2701cf316751c3"
+    },
+    {
+      "stage": "components",
+      "returncode": 0,
+      "diagnostics": [
+        "Warning: <workspace>/worktrees/linux-qcom-spm-rpm-current-01/drivers/rpmsg/qcom_smd.c:228 Excess struct member 'cb' description in 'qcom_smd_channel'",
+        "Warning: <workspace>/worktrees/linux-qcom-spm-rpm-current-01/drivers/rpmsg/qcom_smd.c:228 Excess struct member 'cb' description in 'qcom_smd_channel'"
+      ],
+      "log_SHA256": "1c0687ebccd9f8c7eec2fe142b68d3926506a95f8c4a2dcf14588109110447da"
+    }
+  ],
+  "phone_access": false,
+  "state": "terminal success",
+  "config_SHA256": "8dc147c7be2b204d5ff7afb6ddc2f6144f00e43d45decc27c411e6fd788b6583",
+  "passed": true,
+  "objects": {
+    "drivers/soc/qcom/spm.o": "4ff2b13764514c42911606c7c06d0e94dff61d217e9aa3356f33b6cfa59677c0",
+    "drivers/soc/qcom/smd-rpm.o": "34d6b03469131c8305eba1687cffb308e0d377eb1783f1f47030669de01d289f",
+    "drivers/base/regmap/regmap.o": "2847314454724ab4677cdf8da26d84f251beab00d9a608d80e5b91ccb115fe25",
+    "drivers/base/regmap/regmap-mmio.o": "bdc7f3cbda1ebcfc23491ebbb821b191326b37a5db2a31d57e29fd4ef520ccc8",
+    "drivers/mfd/syscon.o": "ff8afc969111644e3848c7e8874758265a3715b50870eea3a5906d6b7c930637",
+    "drivers/rpmsg/rpmsg_core.o": "352741d7cd9e29447dec1fd6a92b7998873b36d0fd14fc9a447892cc36c47b45",
+    "drivers/rpmsg/qcom_smd.o": "117bb66ce1e6d0394533225b2de73c79fa81f728fb6399e96b5012f209e68376",
+    "drivers/firmware/qcom/qcom_scm.o": "18d96688ad60b19ef37a8d7ed2713fb2cbfe70f45acf568c338f37e3cdc201e6",
+    "drivers/cpuidle/cpuidle.o": "0f35d4cf987b196486f3deae6375f7106bc28f8103b336eb5fed9a8a05de9d0a",
+    "kernel/cpu_pm.o": "8dce26b3c0d9857a2c245ca3deaac2c4b706b1c0677d1167cc453cad27a4c748"
+  },
+  "inherited_RPMsg_doc_warnings": 2,
+  "new_diagnostics": 0,
+  "diagnostics_suppressed": false,
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-16T23:39:41.999680+00:00"
+}

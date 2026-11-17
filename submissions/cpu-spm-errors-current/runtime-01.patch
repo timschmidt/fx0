@@ -1,0 +1,361 @@
+From 192b0d581ac98b3d245df8ee8183dcdd4d7fb39c Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 19:05:18 -0500
+Subject: [PATCH] soc: qcom: spm: Bound CPU mode writes and propagate idle
+ errors
+
+If an SPC control write never reads back, the CPU mode setter can spin
+forever and its void interface cannot report failure. Bound readback
+attempts and return an error. Before returning a mode error, disable and
+verify EN while retaining inherited bypass/control bits. The start index
+can reset after END and has no meaning while disabled. Retry one failed
+disable; an unverified second attempt is fatal before generic WFI.
+
+Reject unsupported/out-of-field mode indices. Keep existing successful
+SoC mode tables and add the MSM8226 PC alias to its identical vendor SPC
+program. This prepares a CPU backend without enabling global collapse.
+
+Check SPC before cpu_suspend and attempt standby after both wake and
+abort. Preserve the suspend error, or return the restore error after a
+successful wake. The actual CPU-PM wrapper retains balanced notifications.
+
+Publish SPM data only after standby and regulator setup succeed. Preflight
+all present CPU suppliers before warm-vector setup or CPU-idle registration
+so an unready supplier defers before any consumers are registered. Keep
+OF/device references balanced and existing per-CPU registration policy.
+
+Exact-source host models cover 1198 cases, 23 behavioral controls, all
+supplier readiness combinations and both fatal recovery policies. The
+parent's actual write loop exceeds a synthetic watchdog at 101 attempts.
+Native ARM/ARM64 ordinary/RT builds compile 42 objects with no new
+diagnostics; exactly reproduced parent RPMsg doc warnings are retained.
+Real MMIO bus faults, firmware, concurrency and full platform entry remain
+unqualified. Keep the CPR deep-suspend guard and covering MX sleep floor.
+
+Fixes: 7ce75bb2c05e ("ARM: qcom: Add Subsystem Power Manager (SPM) driver")
+
+Codex generated this change and its host qualification. Human review and
+DCO certification remain pending. Nothing has been submitted.
+---
+ drivers/cpuidle/cpuidle-qcom-spm.c |  58 +++++++++++-----
+ drivers/soc/qcom/spm.c             | 108 +++++++++++++++++++++--------
+ include/soc/qcom/spm.h             |   5 +-
+ 3 files changed, 124 insertions(+), 47 deletions(-)
+
+diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
+index 7ab6f68b9..3dcc1f706 100644
+--- a/drivers/cpuidle/cpuidle-qcom-spm.c
++++ b/drivers/cpuidle/cpuidle-qcom-spm.c
+@@ -42,19 +42,21 @@ static int qcom_pm_collapse(unsigned long int unused)
+ 
+ static int qcom_cpu_spc(struct spm_driver_data *drv)
+ {
+-	int ret;
++	int ret, restore_ret;
+ 
+-	spm_set_low_power_mode(drv, PM_SLEEP_MODE_SPC);
++	ret = spm_set_low_power_mode(drv, PM_SLEEP_MODE_SPC);
++	if (ret)
++		return ret;
+ 	ret = cpu_suspend(0, qcom_pm_collapse);
+ 	/*
+ 	 * ARM common code executes WFI without calling into our driver and
+ 	 * if the SPM mode is not reset, then we may accidentally power down the
+ 	 * cpu when we intended only to gate the cpu clock.
+-	 * Ensure the state is set to standby before returning.
++	 * Restore standby, or verify EN is clear if the restore cannot be written.
+ 	 */
+-	spm_set_low_power_mode(drv, PM_SLEEP_MODE_STBY);
++	restore_ret = spm_set_low_power_mode(drv, PM_SLEEP_MODE_STBY);
+ 
+-	return ret;
++	return ret ?: restore_ret;
+ }
+ 
+ static __cpuidle int spm_enter_idle_state(struct cpuidle_device *dev,
+@@ -84,37 +86,49 @@ static const struct of_device_id qcom_idle_state_match[] = {
+ 	{ },
+ };
+ 
+-static int spm_cpuidle_register(struct device *cpuidle_dev, int cpu)
++static struct spm_driver_data *spm_cpuidle_get_spm(int cpu)
+ {
+ 	struct platform_device *pdev;
+ 	struct device_node *cpu_node, *saw_node;
+-	struct cpuidle_qcom_spm_data *data;
+-	int ret;
++	struct spm_driver_data *spm;
+ 
+ 	cpu_node = of_cpu_device_node_get(cpu);
+ 	if (!cpu_node)
+-		return -ENODEV;
++		return ERR_PTR(-ENODEV);
+ 
+ 	saw_node = of_parse_phandle(cpu_node, "qcom,saw", 0);
+ 	of_node_put(cpu_node);
+ 	if (!saw_node)
+-		return -ENODEV;
++		return ERR_PTR(-ENODEV);
++	if (!of_device_is_available(saw_node)) {
++		of_node_put(saw_node);
++		return ERR_PTR(-ENODEV);
++	}
+ 
+ 	pdev = of_find_device_by_node(saw_node);
+ 	of_node_put(saw_node);
+ 	if (!pdev)
+-		return -ENODEV;
++		return ERR_PTR(-EPROBE_DEFER);
++	spm = dev_get_drvdata(&pdev->dev);
++	put_device(&pdev->dev);
++	return spm ?: ERR_PTR(-EPROBE_DEFER);
++}
++
++static int spm_cpuidle_register(struct device *cpuidle_dev, int cpu)
++{
++	struct cpuidle_qcom_spm_data *data;
++	struct spm_driver_data *spm;
++	int ret;
++
++	spm = spm_cpuidle_get_spm(cpu);
++	if (IS_ERR(spm))
++		return PTR_ERR(spm);
+ 
+ 	data = devm_kzalloc(cpuidle_dev, sizeof(*data), GFP_KERNEL);
+-	if (!data) {
+-		put_device(&pdev->dev);
++	if (!data)
+ 		return -ENOMEM;
+-	}
+ 
+-	data->spm = dev_get_drvdata(&pdev->dev);
+-	put_device(&pdev->dev);
+-	if (!data->spm)
+-		return -EINVAL;
++	data->spm = spm;
+ 
+ 	data->cpuidle_driver = qcom_spm_idle_driver;
+ 	data->cpuidle_driver.cpumask = (struct cpumask *)cpumask_of(cpu);
+@@ -129,11 +143,19 @@ static int spm_cpuidle_register(struct device *cpuidle_dev, int cpu)
+ 
+ static int spm_cpuidle_drv_probe(struct platform_device *pdev)
+ {
++	struct spm_driver_data *spm;
+ 	int cpu, ret;
+ 
+ 	if (!qcom_scm_is_available())
+ 		return -EPROBE_DEFER;
+ 
++	/* Defer before publishing any CPU-idle driver, not partway through. */
++	for_each_present_cpu(cpu) {
++		spm = spm_cpuidle_get_spm(cpu);
++		if (IS_ERR(spm) && PTR_ERR(spm) != -ENODEV)
++			return PTR_ERR(spm);
++	}
++
+ 	ret = qcom_scm_set_warm_boot_addr(cpu_resume_arm);
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret, "set warm boot addr failed");
+diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
+index acf0863b1..a18d8fbaf 100644
+--- a/drivers/soc/qcom/spm.c
++++ b/drivers/soc/qcom/spm.c
+@@ -8,6 +8,7 @@
+ 
+ #include <linux/bitfield.h>
+ #include <linux/cpu.h>
++#include <linux/delay.h>
+ #include <linux/err.h>
+ #include <linux/init.h>
+ #include <linux/io.h>
+@@ -35,6 +36,7 @@
+ #define SPM_CTL_INDEX		0x7f
+ #define SPM_CTL_INDEX_SHIFT	4
+ #define SPM_CTL_EN		BIT(0)
++#define SPM_CTL_WRITE_RETRIES	50
+ 
+ /* These registers might be specific to SPM 1.1 */
+ #define SPM_VCTL_VLVL			GENMASK(7, 0)
+@@ -228,6 +230,8 @@ static const struct spm_reg_data spm_reg_8226_cpu  = {
+ 		0x80, 0x10, 0x26, 0x30, 0x0F },
+ 	.start_index[PM_SLEEP_MODE_STBY] = 0,
+ 	.start_index[PM_SLEEP_MODE_SPC] = 5,
++	/* Vendor SPC and PC programs are identical on MSM8226 v2. */
++	.start_index[PM_SLEEP_MODE_PC] = 5,
+ };
+ 
+ static const u16 spm_reg_offset_v1_1[SPM_REG_NR] = {
+@@ -273,24 +277,26 @@ static inline void spm_register_write(struct spm_driver_data *drv,
+ 				drv->reg_data->reg_offset[reg]);
+ }
+ 
+-/* Ensure a guaranteed write, before return */
+-static inline void spm_register_write_sync(struct spm_driver_data *drv,
+-					enum spm_reg reg, u32 val)
++/* Bound failed readback without sleeping in the CPU-idle/entry path. */
++static inline int spm_register_write_sync(struct spm_driver_data *drv,
++					  enum spm_reg reg, u32 val, u32 mask)
+ {
+-	u32 ret;
++	unsigned int attempt;
++	u32 value;
+ 
+ 	if (!drv->reg_data->reg_offset[reg])
+-		return;
++		return -EOPNOTSUPP;
+ 
+-	do {
++	for (attempt = 0; attempt < SPM_CTL_WRITE_RETRIES; attempt++) {
+ 		writel_relaxed(val, drv->reg_base +
+ 				drv->reg_data->reg_offset[reg]);
+-		ret = readl_relaxed(drv->reg_base +
++		value = readl_relaxed(drv->reg_base +
+ 				drv->reg_data->reg_offset[reg]);
+-		if (ret == val)
+-			break;
+-		cpu_relax();
+-	} while (1);
++		if ((value & mask) == (val & mask))
++			return 0;
++		udelay(1);
++	}
++	return -ETIMEDOUT;
+ }
+ 
+ static inline u32 spm_register_read(struct spm_driver_data *drv,
+@@ -313,24 +319,60 @@ int spm_set_l2_low_power_mode(struct spm_driver_data *drv,
+ 	return spm_8226_l2_set_mode(drv->l2_map, mode);
+ }
+ 
+-void spm_set_low_power_mode(struct spm_driver_data *drv,
+-			    enum pm_sleep_mode mode)
++static void spm_force_disable(struct spm_driver_data *drv, u32 saved_ctl)
++{
++	u32 mask = ~(SPM_CTL_INDEX << SPM_CTL_INDEX_SHIFT);
++	int ret;
++
++	/* Preserve inherited bypass and other control bits for a later retry. */
++	/* The start index can reset after END; it has no meaning with EN clear. */
++	ret = spm_register_write_sync(drv, SPM_REG_SPM_CTL, saved_ctl & ~SPM_CTL_EN, mask);
++	if (ret)
++		ret = spm_register_write_sync(drv, SPM_REG_SPM_CTL, saved_ctl & ~SPM_CTL_EN, mask);
++	if (ret)
++		panic("CPU SPM disable could not be verified: %d", ret);
++}
++
++int spm_set_low_power_mode(struct spm_driver_data *drv,
++			   enum pm_sleep_mode mode)
+ {
+ 	u32 start_index;
+-	u32 ctl_val;
++	u32 ctl_val, saved_ctl;
++	int ret;
+ 
+-	/* This owner supplies voltage arbitration, not L2 low-power sequences. */
+-	if (drv->reg_data->pmic_arbiter_master) {
+-		dev_warn_ratelimited(drv->dev, "L2 master has no low-power sequence\n");
+-		return;
++	if (!drv || !drv->reg_data)
++		return -ENODEV;
++	/* L2 master modes use their separate, context-checked interface. */
++	if (drv->reg_data->pmic_arbiter_master || !drv->reg_data->reg_offset ||
++	    !drv->reg_data->reg_offset[SPM_REG_SPM_CTL])
++		return -EOPNOTSUPP;
++	saved_ctl = spm_register_read(drv, SPM_REG_SPM_CTL);
++	if ((unsigned int)mode >= PM_SLEEP_MODE_NR) {
++		ret = -EINVAL;
++		goto disable;
+ 	}
+ 	start_index = drv->reg_data->start_index[mode];
++	if (mode != PM_SLEEP_MODE_STBY && !start_index) {
++		ret = -EOPNOTSUPP;
++		goto disable;
++	}
++	if (start_index > SPM_CTL_INDEX) {
++		ret = -EINVAL;
++		goto disable;
++	}
+ 
+-	ctl_val = spm_register_read(drv, SPM_REG_SPM_CTL);
++	ctl_val = saved_ctl;
+ 	ctl_val &= ~(SPM_CTL_INDEX << SPM_CTL_INDEX_SHIFT);
+ 	ctl_val |= start_index << SPM_CTL_INDEX_SHIFT;
+ 	ctl_val |= SPM_CTL_EN;
+-	spm_register_write_sync(drv, SPM_REG_SPM_CTL, ctl_val);
++	ret = spm_register_write_sync(drv, SPM_REG_SPM_CTL, ctl_val, ~0U);
++	if (!ret)
++		return 0;
++
++disable:
++	/* An uncertain mode write must not reach generic WFI with EN still set. */
++	spm_force_disable(drv, saved_ctl);
++	return ret;
+ }
+ 
+ static int spm_set_voltage_sel(struct regulator_dev *rdev, unsigned int selector)
+@@ -624,6 +666,7 @@ static int spm_dev_probe(struct platform_device *pdev)
+ 	const struct of_device_id *match_id;
+ 	struct spm_driver_data *drv;
+ 	void __iomem *addr;
++	int ret;
+ 
+ 	drv = devm_kzalloc(&pdev->dev, sizeof(*drv), GFP_KERNEL);
+ 	if (!drv)
+@@ -639,10 +682,14 @@ static int spm_dev_probe(struct platform_device *pdev)
+ 
+ 	drv->reg_data = match_id->data;
+ 	drv->dev = &pdev->dev;
+-	platform_set_drvdata(pdev, drv);
+ 
+-	if (drv->reg_data->pmic_arbiter_master)
+-		return spm_8226_l2_register(pdev, drv);
++	if (drv->reg_data->pmic_arbiter_master) {
++		ret = spm_8226_l2_register(pdev, drv);
++		if (ret)
++			return ret;
++		platform_set_drvdata(pdev, drv);
++		return 0;
++	}
+ 
+ 	/* Write the SPM sequences first.. */
+ 	if (drv->reg_data->reg_offset[SPM_REG_SEQ_ENTRY]) {
+@@ -668,12 +715,19 @@ static int spm_dev_probe(struct platform_device *pdev)
+ 				drv->reg_data->pmic_data[1]);
+ 
+ 	/* Set up Standby as the default low power mode */
+-	if (drv->reg_data->reg_offset[SPM_REG_SPM_CTL])
+-		spm_set_low_power_mode(drv, PM_SLEEP_MODE_STBY);
++	if (drv->reg_data->reg_offset[SPM_REG_SPM_CTL]) {
++		ret = spm_set_low_power_mode(drv, PM_SLEEP_MODE_STBY);
++		if (ret)
++			return dev_err_probe(&pdev->dev, ret, "could not set standby\n");
++	}
+ 
+-	if (IS_ENABLED(CONFIG_REGULATOR))
+-		return spm_register_regulator(&pdev->dev, drv);
++	if (IS_ENABLED(CONFIG_REGULATOR)) {
++		ret = spm_register_regulator(&pdev->dev, drv);
++		if (ret)
++			return ret;
++	}
+ 
++	platform_set_drvdata(pdev, drv);
+ 	return 0;
+ }
+ 
+diff --git a/include/soc/qcom/spm.h b/include/soc/qcom/spm.h
+index d4e994939..6f741971a 100644
+--- a/include/soc/qcom/spm.h
++++ b/include/soc/qcom/spm.h
+@@ -16,8 +16,9 @@ enum pm_sleep_mode {
+ };
+ 
+ struct spm_driver_data;
+-void spm_set_low_power_mode(struct spm_driver_data *drv,
+-			    enum pm_sleep_mode mode);
++/* A mode error on a usable CPU controller leaves its sequencer disabled. */
++int spm_set_low_power_mode(struct spm_driver_data *drv,
++			   enum pm_sleep_mode mode);
+ 
+ enum spm_l2_sleep_mode {
+ 	SPM_L2_MODE_DISABLED,
