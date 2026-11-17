@@ -1,0 +1,125 @@
+{
+  "passed": true,
+  "DTBs": 21,
+  "twenty_prior_DTBs_byte_identical": true,
+  "full21_schema_validation_unfiltered_and_silent": true,
+  "DTB_SHA256": "c8fd5fa76a39a9a75d9f94d41213a74a24d5b48d75ad73b7c52f3f77bb4c52cb",
+  "processed_schema_SHA256": "180b748337187977cf62fc4ac94836d161306c58ddfc0eb42509a1345458e093",
+  "coordinator": "/remoteproc/smd-edge/rpm-requests/system-sleep",
+  "suppliers": {
+    "CPR": "/soc/power-controller@f9018000",
+    "MPM": "/remoteproc/interrupt-controller",
+    "L2": "/soc/power-manager@f9012000",
+    "RPM": "/remoteproc/smd-edge/rpm-requests"
+  },
+  "CPUs": [
+    {
+      "cpu": 0,
+      "SAW": "/soc/power-manager@f9089000",
+      "ACC": "/soc/power-manager@f9088000"
+    },
+    {
+      "cpu": 1,
+      "SAW": "/soc/power-manager@f9099000",
+      "ACC": "/soc/power-manager@f9098000"
+    },
+    {
+      "cpu": 2,
+      "SAW": "/soc/power-manager@f90a9000",
+      "ACC": "/soc/power-manager@f90a8000"
+    },
+    {
+      "cpu": 3,
+      "SAW": "/soc/power-manager@f90b9000",
+      "ACC": "/soc/power-manager@f90b8000"
+    }
+  ],
+  "raw_DTC_occurrences": 62,
+  "prior_raw_DTC_occurrences": 60,
+  "extra_target_occurrences_of_existing_diagnostics": {
+    "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:930.27-933.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)": 1,
+    "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:965.27-968.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)": 1
+  },
+  "new_unique_DTC_diagnostics": [],
+  "negative_binding_controls": [
+    {
+      "name": "missing-qcom-cpr",
+      "rejected_by_schema": true,
+      "expected_diagnostic": "qcom,cpr",
+      "stderr_SHA256": "395a43c18f767e120c90b80757e5b10aeb0b2063dd575c4a6e23372ab775682a"
+    },
+    {
+      "name": "multiple-qcom-cpr",
+      "rejected_by_schema": true,
+      "expected_diagnostic": "qcom,cpr",
+      "stderr_SHA256": "b516a2cb67166f0e09277c63d6e7dee91736e816d4c725f1fce82e7e03da9a1e"
+    },
+    {
+      "name": "missing-qcom-mpm",
+      "rejected_by_schema": true,
+      "expected_diagnostic": "qcom,mpm",
+      "stderr_SHA256": "f663a63dbc65af0076121a65e9f448d2983e33cbb9354b6d80d7ff81a79da9a1"
+    },
+    {
+      "name": "multiple-qcom-mpm",
+      "rejected_by_schema": true,
+      "expected_diagnostic": "qcom,mpm",
+      "stderr_SHA256": "829e36c315ca10688a727929cc788e4142d3b252fa90ae263b46e915bcc65f4c"
+    },
+    {
+      "name": "missing-qcom-l2-spm",
+      "rejected_by_schema": true,
+      "expected_diagnostic": "qcom,l2-spm",
+      "stderr_SHA256": "c76b5875fb34d9477956b07961fc6f19032ef1b3b6d218a833ba517c29823765"
+    },
+    {
+      "name": "multiple-qcom-l2-spm",
+      "rejected_by_schema": true,
+      "expected_diagnostic": "qcom,l2-spm",
+      "stderr_SHA256": "3d6a10a299f3abe17cdb2427022f7837f4e2b19047ee35cb59ea8870539c55b2"
+    },
+    {
+      "name": "unknown-coordinator-property",
+      "rejected_by_schema": true,
+      "expected_diagnostic": "qcom,unsafe-entry",
+      "stderr_SHA256": "818ad3521f0cf98158c3c187c5d513473f8e950108455b5801da8dc31e59f728"
+    },
+    {
+      "name": "wrong-coordinator-name",
+      "rejected_by_schema": true,
+      "expected_diagnostic": "system-sleep",
+      "stderr_SHA256": "aa5618a546f109cd91c803ac56cf31efef5ecd3342c490f6c5d28f009ec74000"
+    },
+    {
+      "name": "other-rpm-soc",
+      "rejected_by_schema": true,
+      "expected_diagnostic": "qcom,msm8226-system-pm",
+      "stderr_SHA256": "268e044e1fe7e59c0bc635c7bd7d09d185444fd2dd8582c216199c06e4d2f59a"
+    },
+    {
+      "name": "mpm-address-cells-one",
+      "rejected_by_schema": true,
+      "expected_diagnostic": "#address-cells",
+      "stderr_SHA256": "d5f4b6e2ae9babf2237c2864919dd2855dd6b8f38879ae3e10dbe98dbcd98163"
+    },
+    {
+      "name": "mpm-missing-mailbox",
+      "rejected_by_schema": true,
+      "expected_diagnostic": "mboxes",
+      "stderr_SHA256": "590505685de9e49d1e606ba1843ef1b4ad961e33636345b8608211fa4f8b8e40"
+    },
+    {
+      "name": "mpm-missing-msg-ram",
+      "rejected_by_schema": true,
+      "expected_diagnostic": "qcom,rpm-msg-ram",
+      "stderr_SHA256": "06df9f075d4f60dcf1aac6e1be75f15d7939a99613bdaf4cfbb0879854ec340e"
+    }
+  ],
+  "vendor_GIC_hwirq_to_current_SPI_offset": 32,
+  "vendor_source_SHA256": "9b90788e727f799876f64c1083dfe1a9a6bfa21b121715a8ba06392d78ea149d",
+  "vendor_mapping_implementation_SHA256": "9170d4f2e2478387b2356d80492ac9f1117cbfd1e0f7f9c7dd229ef55d3d25de",
+  "physical_wake_routing_qualified": false,
+  "wrong_phandle_target_semantics_require_runtime_probe_checks": true,
+  "private_DTB_controls_not_for_publication": true,
+  "phone_access": false
+}

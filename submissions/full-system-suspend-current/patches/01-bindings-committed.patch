@@ -1,0 +1,137 @@
+From 5684a2e2d77410e52f6bdde598d69b02105b7172 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Mon, 16 Nov 2026 23:22:59 -0500
+Subject: [PATCH] dt-bindings: power: Describe MSM8226 system sleep
+ coordination
+
+Describe the RPM child that coordinates CPR, CPU/L2 SAW and MPM during
+MSM8226 system sleep. Restrict that child to the MSM8226 resource service
+and describe the MPM interrupt controller's zero address-cell form. Route
+the new binding through the existing Qualcomm architecture maintainers.
+
+The full processed schema validates all 21 candidate DTBs silently. Twelve
+malformed binding controls are rejected. The 20 prior DTBs are byte-identical.
+This describes a local experimental interface pending cross-subsystem review.
+
+Codex generated this source, host tests and draft message during the Fx0
+bringup. Human review and DCO remain pending. This feature is local and
+has not been submitted; it has no Fixes tag.
+---
+ .../interrupt-controller/qcom,mpm.yaml        |  3 ++
+ .../power/qcom,msm8226-system-pm.yaml         | 45 +++++++++++++++++++
+ .../bindings/soc/qcom/qcom,smd-rpm.yaml       | 16 +++++++
+ MAINTAINERS                                   |  1 +
+ 4 files changed, 65 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/power/qcom,msm8226-system-pm.yaml
+
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
+index ebb40c48950a..1efb3dceb057 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
+@@ -48,6 +48,9 @@ properties:
+ 
+   interrupt-controller: true
+ 
++  '#address-cells':
++    const: 0
++
+   '#interrupt-cells':
+     const: 2
+     description:
+diff --git a/Documentation/devicetree/bindings/power/qcom,msm8226-system-pm.yaml b/Documentation/devicetree/bindings/power/qcom,msm8226-system-pm.yaml
+new file mode 100644
+index 000000000000..5b4b6a0fb276
+--- /dev/null
++++ b/Documentation/devicetree/bindings/power/qcom,msm8226-system-pm.yaml
+@@ -0,0 +1,45 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/power/qcom,msm8226-system-pm.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm MSM8226 CPU cluster system power coordination
++
++maintainers:
++  - Bjorn Andersson <andersson@kernel.org>
++
++description: |
++  MSM8226 and MSM8926 combine CPU and L2 SAW sequencers, CPR-controlled CPU
++  voltage, RPM resource votes and the MPM wake controller for system power
++  collapse. This child of the RPM resource service identifies the providers
++  that participate in the shared cluster transition. CPU SAW and ACC blocks
++  are described by the CPU nodes themselves.
++
++properties:
++  $nodename:
++    const: system-sleep
++
++  compatible:
++    const: qcom,msm8226-system-pm
++
++  qcom,cpr:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: MSM8926 CPR controller for the CPU cluster.
++
++  qcom,mpm:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: Always-on MPM wake controller.
++
++  qcom,l2-spm:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: L2 SAW sequencer and shared PMIC arbiter master.
++
++required:
++  - compatible
++  - qcom,cpr
++  - qcom,mpm
++  - qcom,l2-spm
++
++additionalProperties: false
++...
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
+index bd1d32898461..11d8326c33d5 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
+@@ -63,6 +63,9 @@ properties:
+               - qcom,rpm-sm6375
+           - const: qcom,glink-smd-rpm
+ 
++  system-sleep:
++    $ref: /schemas/power/qcom,msm8226-system-pm.yaml#
++
+   clock-controller:
+     $ref: /schemas/clock/qcom,rpmcc.yaml#
+     unevaluatedProperties: false
+@@ -82,6 +85,19 @@ properties:
+     items:
+       - const: rpm_requests
+ 
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: qcom,rpm-msm8226
++    then:
++      properties:
++        system-sleep: true
++    else:
++      properties:
++        system-sleep: false
++
+ patternProperties:
+   "^regulators(-[01])?$":
+     $ref: /schemas/regulator/qcom,smd-rpm-regulator.yaml#
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4d3e7ebc1b6d..a3f64daaf14b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3521,6 +3521,7 @@ F:	Documentation/devicetree/bindings/arm/qcom.yaml
+ F:	Documentation/devicetree/bindings/bus/qcom*
+ F:	Documentation/devicetree/bindings/cache/qcom,llcc.yaml
+ F:	Documentation/devicetree/bindings/firmware/qcom,scm.yaml
++F:	Documentation/devicetree/bindings/power/qcom,msm8226-system-pm.yaml
+ F:	Documentation/devicetree/bindings/reserved-memory/qcom*
+ F:	Documentation/devicetree/bindings/soc/qcom/
+ F:	arch/arm/boot/dts/qcom/

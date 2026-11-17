@@ -1,0 +1,37 @@
+Subject: [RFC DRAFT 0/10] Coordinate experimental MSM8226 system suspend
+
+UNSENT: human review and DCO are pending. Do not submit this integration
+series as ten independent, already qualified maintainer topic branches.
+
+The new experimental Madai DT target couples CPR voltage and clock
+preparation, owned RPM request/receive-IRQ admission, MPM wake programming,
+secondary core collapse and CPU0/L2 collapse. Device noirq votes complete
+with the dedicated RPM receive IRQ alive; the platform callback freezes
+request admission before masking it. Resume unmasks before thaw and
+before device noirq resume can send new requests.
+
+The ten ordered feature commits depend on the earlier clock, CPR, RPM
+sleep-voter, SPM and SCM bringup work. The three separately recorded
+SMD/MPM fixes are prerequisites, not new feature Fixes tags. The MPM
+probe-unwind issue still needs human security classification before any
+reporting decision. The dependency graph and local routing output are
+included in the review packet.
+
+Validation includes actual-source synthetic host models with fail-fast
+ASAN/UBSAN and leak detection, behavioral controls, native ARM/ARM64
+normal/RT object builds, real Kconfig cases, DT compilation and unfiltered
+schema validation, full kernel/module builds and normal module staging.
+The README records counts, inherited diagnostics, the invalidated and
+corrected RT profile, and build reproducibility limits.
+
+This has not demonstrated physical collapse, firmware wake-voltage
+readiness, reliable motion wake, standby current or final-image recovery.
+No new target has been booted. The covering sleep-only APC vote remains
+1,337,500 uV. This experimental 7.4-rc1 integration is not the maintained-LTS
+or final package acceptance target. All seven bringup requirements remain
+in scope, as do the independent SLIMbus recovery gaps.
+
+Codex generated the new source, synthetic host models and this draft
+during the Fx0 bringup. Existing human and third-party attribution is
+preserved. No AI Signed-off-by is supplied. This draft and all new source
+remain local and unpublished; no message has been sent to maintainers.

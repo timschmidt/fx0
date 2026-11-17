@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "standalone": [
+    {
+      "label": "before",
+      "diagnostics": [
+        "Warning: <same-RPMsg-source>:<line> Excess struct member 'cb' description in 'qcom_smd_channel'",
+        "Warning: <same-RPMsg-source>:<line> Excess struct member 'cb' description in 'qcom_smd_channel'"
+      ]
+    },
+    {
+      "label": "current",
+      "diagnostics": [
+        "Warning: <same-RPMsg-source>:<line> Excess struct member 'cb' description in 'qcom_smd_channel'",
+        "Warning: <same-RPMsg-source>:<line> Excess struct member 'cb' description in 'qcom_smd_channel'"
+      ]
+    }
+  ],
+  "profiles": [
+    {
+      "profile": "native-arm-07",
+      "objects": 13,
+      "inherited_warning_occurrences": 2,
+      "new_diagnostics": 0
+    },
+    {
+      "profile": "native-arm-rt-05",
+      "objects": 13,
+      "inherited_warning_occurrences": 2,
+      "new_diagnostics": 0
+    },
+    {
+      "profile": "native-arm64-02",
+      "objects": 10,
+      "inherited_warning_occurrences": 2,
+      "new_diagnostics": 0
+    },
+    {
+      "profile": "native-arm64-rt-02",
+      "objects": 10,
+      "inherited_warning_occurrences": 2,
+      "new_diagnostics": 0
+    }
+  ],
+  "new_diagnostics": 0,
+  "diagnostics_suppressed": false
+}

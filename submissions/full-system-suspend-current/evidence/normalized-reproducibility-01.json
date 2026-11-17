@@ -1,0 +1,2344 @@
+{
+  "passed": true,
+  "recorded_UTC": "2026-11-17T05:26:13.789372+00:00",
+  "source_head": "fc5120c4e0f2ab4790cb62f1f4c40aea74697a18",
+  "source_tree": "db872556b9b09289d09138209e0bb7674326300a",
+  "source_archive_SHA256": "b7722b0ecf00a1a00f35f474c121fcfb08663679f0d330e45261dfbce300dbac",
+  "config_SHA256": "b0ee40cfd6ef4b621279bcabaaeb926b9804dfd8c807313ebe9c28b8c5acdfeb",
+  "release": "7.4.0-rc1-fx0-power-policy-alpine-gfc5120c4e0f2",
+  "independent_fresh_outputs": true,
+  "distinct_source_and_output_paths": true,
+  "source_exports_without_Git_metadata": true,
+  "Git_denied": true,
+  "debug_paths_normalized": true,
+  "fixed_build_version": "30",
+  "controlled_same_development_certificate": true,
+  "private_key_used_only_by_normal_build_tools": true,
+  "private_key_not_read_hashed_or_copied_by_audit": true,
+  "independent_public_signing_recipe_qualified": false,
+  "core_artifacts": {
+    "vmlinux": {
+      "first_SHA256": "b0b6404c01e31689d0857db77bc95e77e43bf30002eff32d960050393ab0f40a",
+      "second_SHA256": "b0b6404c01e31689d0857db77bc95e77e43bf30002eff32d960050393ab0f40a",
+      "byte_identical": true
+    },
+    "System.map": {
+      "first_SHA256": "ea2f46081163df4c1ac4e0645baa9c60e1af8eb76faa5d3417118d8033df4a26",
+      "second_SHA256": "ea2f46081163df4c1ac4e0645baa9c60e1af8eb76faa5d3417118d8033df4a26",
+      "byte_identical": true
+    },
+    "Module.symvers": {
+      "first_SHA256": "86836afd39c9868e30f4b8f8bfed5cf09d2ab1eb79d7d3e8e9ae807225bd69ee",
+      "second_SHA256": "86836afd39c9868e30f4b8f8bfed5cf09d2ab1eb79d7d3e8e9ae807225bd69ee",
+      "byte_identical": true
+    },
+    "arch/arm/boot/zImage": {
+      "first_SHA256": "25a415f18b3c913eeb661f209b4e8e535fbac031965bc84d969b8340857337ad",
+      "second_SHA256": "25a415f18b3c913eeb661f209b4e8e535fbac031965bc84d969b8340857337ad",
+      "byte_identical": true
+    }
+  },
+  "module_artifacts": {
+    "crypto/af_alg.ko": {
+      "first_SHA256": "771ee0acfd70ab582de0e3861d2d1c801b2d7b8fceb2529621239c9c02d47ab8",
+      "second_SHA256": "771ee0acfd70ab582de0e3861d2d1c801b2d7b8fceb2529621239c9c02d47ab8",
+      "byte_identical": true
+    },
+    "crypto/algif_aead.ko": {
+      "first_SHA256": "b6ea74bf4ef3ede7d544e6644b07a2bc2e8b30138f7299f0c603210d754f274d",
+      "second_SHA256": "b6ea74bf4ef3ede7d544e6644b07a2bc2e8b30138f7299f0c603210d754f274d",
+      "byte_identical": true
+    },
+    "crypto/algif_hash.ko": {
+      "first_SHA256": "5cc14f92ef0af36cd40b558b717605ad3dca62a484a202054a8a668a54f286e9",
+      "second_SHA256": "5cc14f92ef0af36cd40b558b717605ad3dca62a484a202054a8a668a54f286e9",
+      "byte_identical": true
+    },
+    "crypto/algif_rng.ko": {
+      "first_SHA256": "19e88d898ccab96ac62fe9201ad17ada1a867ae3014a0cd30d54115c1dabaab3",
+      "second_SHA256": "19e88d898ccab96ac62fe9201ad17ada1a867ae3014a0cd30d54115c1dabaab3",
+      "byte_identical": true
+    },
+    "crypto/algif_skcipher.ko": {
+      "first_SHA256": "eea4063108b4dd48aaacb0114159ebdf4bd1877f0e0fee27f363f327aa305669",
+      "second_SHA256": "eea4063108b4dd48aaacb0114159ebdf4bd1877f0e0fee27f363f327aa305669",
+      "byte_identical": true
+    },
+    "crypto/asymmetric_keys/pkcs8_key_parser.ko": {
+      "first_SHA256": "7ef1d9ed936bdadf8b867282409dce7405632672aec0af6411c9ada3e40a2196",
+      "second_SHA256": "7ef1d9ed936bdadf8b867282409dce7405632672aec0af6411c9ada3e40a2196",
+      "byte_identical": true
+    },
+    "crypto/async_tx/async_tx.ko": {
+      "first_SHA256": "afe00c144b8f4ad8463116be1018bbe7b50055058f1a9456d1fcb73776477c3c",
+      "second_SHA256": "afe00c144b8f4ad8463116be1018bbe7b50055058f1a9456d1fcb73776477c3c",
+      "byte_identical": true
+    },
+    "crypto/async_tx/async_xor.ko": {
+      "first_SHA256": "62f1b83aa5846121aeb4f9e3b697daf961c6ddfbf8dc05f45f02bcb54a501796",
+      "second_SHA256": "62f1b83aa5846121aeb4f9e3b697daf961c6ddfbf8dc05f45f02bcb54a501796",
+      "byte_identical": true
+    },
+    "crypto/camellia_generic.ko": {
+      "first_SHA256": "5194442fb462357b3e2aacc016b4754b3268f250d2ef99308b3a5115a0e3723c",
+      "second_SHA256": "5194442fb462357b3e2aacc016b4754b3268f250d2ef99308b3a5115a0e3723c",
+      "byte_identical": true
+    },
+    "crypto/cmac.ko": {
+      "first_SHA256": "9dfb3a100e4f3a2435866904c3323141c6d10de7f9f7e29a5e328772d79af9e7",
+      "second_SHA256": "9dfb3a100e4f3a2435866904c3323141c6d10de7f9f7e29a5e328772d79af9e7",
+      "byte_identical": true
+    },
+    "crypto/crc32-cryptoapi.ko": {
+      "first_SHA256": "0739a921010fb392de858c8ffefd43848b44f3280adf1e3ffe90c05512a9fa20",
+      "second_SHA256": "0739a921010fb392de858c8ffefd43848b44f3280adf1e3ffe90c05512a9fa20",
+      "byte_identical": true
+    },
+    "crypto/crypto_user.ko": {
+      "first_SHA256": "f619626bc547745cdc5d3ea584094c4f30434be192f675aec014a6a2a50671e8",
+      "second_SHA256": "f619626bc547745cdc5d3ea584094c4f30434be192f675aec014a6a2a50671e8",
+      "byte_identical": true
+    },
+    "crypto/des_generic.ko": {
+      "first_SHA256": "a0729268a24f63f6aed042ddb58fdafdeed90461109c2a662a471eeaf83a61d0",
+      "second_SHA256": "a0729268a24f63f6aed042ddb58fdafdeed90461109c2a662a471eeaf83a61d0",
+      "byte_identical": true
+    },
+    "crypto/drbg.ko": {
+      "first_SHA256": "47659da454de74cf96baba59aed2b26c42691df7c7d13acdd815667752b1ed6f",
+      "second_SHA256": "47659da454de74cf96baba59aed2b26c42691df7c7d13acdd815667752b1ed6f",
+      "byte_identical": true
+    },
+    "crypto/ecc.ko": {
+      "first_SHA256": "90ad67d8b7b4fcae6b6401a1c6a558348bd4d9db59669e3aa078f657567fa3d3",
+      "second_SHA256": "90ad67d8b7b4fcae6b6401a1c6a558348bd4d9db59669e3aa078f657567fa3d3",
+      "byte_identical": true
+    },
+    "crypto/ecdh_generic.ko": {
+      "first_SHA256": "5fa5644b1dfe4cc1afc371d2dbac63dca68f9c90c57694c482be7ef2d4d3cd05",
+      "second_SHA256": "5fa5644b1dfe4cc1afc371d2dbac63dca68f9c90c57694c482be7ef2d4d3cd05",
+      "byte_identical": true
+    },
+    "crypto/jitterentropy_rng.ko": {
+      "first_SHA256": "1aa006dbaf5330d65c0fe9deb195dd435a38daca6f5417851d403598dba40b4f",
+      "second_SHA256": "1aa006dbaf5330d65c0fe9deb195dd435a38daca6f5417851d403598dba40b4f",
+      "byte_identical": true
+    },
+    "crypto/krb5/krb5.ko": {
+      "first_SHA256": "4f150a1d837dea6ec49365c9d9869fe0762ed21455ee03b9303df2a0fda5c4ce",
+      "second_SHA256": "4f150a1d837dea6ec49365c9d9869fe0762ed21455ee03b9303df2a0fda5c4ce",
+      "byte_identical": true
+    },
+    "crypto/krb5enc.ko": {
+      "first_SHA256": "0123b1c5a6b77de5d57dd7e337042d8db2b954be4eb3979051c422ca8c56b66a",
+      "second_SHA256": "0123b1c5a6b77de5d57dd7e337042d8db2b954be4eb3979051c422ca8c56b66a",
+      "byte_identical": true
+    },
+    "crypto/md4.ko": {
+      "first_SHA256": "8154d4afac9fcbcce0a4eacd6d94bd6d4d5432c27be8212328e81b973d243913",
+      "second_SHA256": "8154d4afac9fcbcce0a4eacd6d94bd6d4d5432c27be8212328e81b973d243913",
+      "byte_identical": true
+    },
+    "crypto/rng.ko": {
+      "first_SHA256": "3f19dd01ec9ccb25ffe1f48a8face1512fc6b515ccb80642b12e38b80af14f46",
+      "second_SHA256": "3f19dd01ec9ccb25ffe1f48a8face1512fc6b515ccb80642b12e38b80af14f46",
+      "byte_identical": true
+    },
+    "crypto/sha3.ko": {
+      "first_SHA256": "c24dbf50fd10ee9582e23d30f3d832316635ea99faf6ffec1bb13e3d2a2bd479",
+      "second_SHA256": "c24dbf50fd10ee9582e23d30f3d832316635ea99faf6ffec1bb13e3d2a2bd479",
+      "byte_identical": true
+    },
+    "crypto/zstd.ko": {
+      "first_SHA256": "3cd2e2a85e6e013d9f907322773d5342f49f16d321ca8d813dff1eb85f9fd4d9",
+      "second_SHA256": "3cd2e2a85e6e013d9f907322773d5342f49f16d321ca8d813dff1eb85f9fd4d9",
+      "byte_identical": true
+    },
+    "drivers/accessibility/speakup/speakup.ko": {
+      "first_SHA256": "8a1631ec240eb5da8158557d9947753d3212581663eaf413a8ccce9c42e3f86a",
+      "second_SHA256": "8a1631ec240eb5da8158557d9947753d3212581663eaf413a8ccce9c42e3f86a",
+      "byte_identical": true
+    },
+    "drivers/accessibility/speakup/speakup_acntsa.ko": {
+      "first_SHA256": "4aacc180914d7339ce653765c084bc2aca705c18858aed54a54f396821ca4b8a",
+      "second_SHA256": "4aacc180914d7339ce653765c084bc2aca705c18858aed54a54f396821ca4b8a",
+      "byte_identical": true
+    },
+    "drivers/accessibility/speakup/speakup_apollo.ko": {
+      "first_SHA256": "f0defa9d32edfb5b83eaf7a41dd13c347d4256af2c4f9c602d4d367f82cb079d",
+      "second_SHA256": "f0defa9d32edfb5b83eaf7a41dd13c347d4256af2c4f9c602d4d367f82cb079d",
+      "byte_identical": true
+    },
+    "drivers/accessibility/speakup/speakup_audptr.ko": {
+      "first_SHA256": "7e6398fa438f068d57f5b570c97be2e062bedf1e501b98fb279717078e6d5c62",
+      "second_SHA256": "7e6398fa438f068d57f5b570c97be2e062bedf1e501b98fb279717078e6d5c62",
+      "byte_identical": true
+    },
+    "drivers/accessibility/speakup/speakup_bns.ko": {
+      "first_SHA256": "baf997da0017049168aea21698998c5f3f00c630413ea340f747c4aeb1a52e41",
+      "second_SHA256": "baf997da0017049168aea21698998c5f3f00c630413ea340f747c4aeb1a52e41",
+      "byte_identical": true
+    },
+    "drivers/accessibility/speakup/speakup_decext.ko": {
+      "first_SHA256": "40d7858b97b7b96257f2c4922fd0e47896b06108a5ec427b87fe437526c7f2d9",
+      "second_SHA256": "40d7858b97b7b96257f2c4922fd0e47896b06108a5ec427b87fe437526c7f2d9",
+      "byte_identical": true
+    },
+    "drivers/accessibility/speakup/speakup_dectlk.ko": {
+      "first_SHA256": "5fe656cc405cc4205d74f6630e819b0713b96a688294c94eed539b71ff9e685a",
+      "second_SHA256": "5fe656cc405cc4205d74f6630e819b0713b96a688294c94eed539b71ff9e685a",
+      "byte_identical": true
+    },
+    "drivers/accessibility/speakup/speakup_ltlk.ko": {
+      "first_SHA256": "02ab2b528f77ce8cb9dea49fbf297d2426517d4953e3a1cb5f252485e8c0e258",
+      "second_SHA256": "02ab2b528f77ce8cb9dea49fbf297d2426517d4953e3a1cb5f252485e8c0e258",
+      "byte_identical": true
+    },
+    "drivers/accessibility/speakup/speakup_soft.ko": {
+      "first_SHA256": "0301a097e3677f977bfa5f725a068ab0ea923035a1a1d02a734f0a354074ba81",
+      "second_SHA256": "0301a097e3677f977bfa5f725a068ab0ea923035a1a1d02a734f0a354074ba81",
+      "byte_identical": true
+    },
+    "drivers/accessibility/speakup/speakup_spkout.ko": {
+      "first_SHA256": "8d7086a67839257c30120d467822bffa0f863bebacf1caaafb14d0a43b25bfc6",
+      "second_SHA256": "8d7086a67839257c30120d467822bffa0f863bebacf1caaafb14d0a43b25bfc6",
+      "byte_identical": true
+    },
+    "drivers/accessibility/speakup/speakup_txprt.ko": {
+      "first_SHA256": "1c9a6c3f539327e4426440b3dcb1dfe1a49368120f9b43252d2e4f18ac2a6071",
+      "second_SHA256": "1c9a6c3f539327e4426440b3dcb1dfe1a49368120f9b43252d2e4f18ac2a6071",
+      "byte_identical": true
+    },
+    "drivers/block/nbd.ko": {
+      "first_SHA256": "b5b23da0b7881644faca023f5e24e6bb4ffe3df4775bb37162e355e615bbd8c7",
+      "second_SHA256": "b5b23da0b7881644faca023f5e24e6bb4ffe3df4775bb37162e355e615bbd8c7",
+      "byte_identical": true
+    },
+    "drivers/block/ublk_drv.ko": {
+      "first_SHA256": "906bcd0d0c6fa25fad4d11b2fd03342a997adc474d21114eb9c0905abf851d52",
+      "second_SHA256": "906bcd0d0c6fa25fad4d11b2fd03342a997adc474d21114eb9c0905abf851d52",
+      "byte_identical": true
+    },
+    "drivers/bluetooth/btbcm.ko": {
+      "first_SHA256": "b36ef2458d0497c86df5ff3e541e425089bfb599dc199160e28e77b75d957a35",
+      "second_SHA256": "b36ef2458d0497c86df5ff3e541e425089bfb599dc199160e28e77b75d957a35",
+      "byte_identical": true
+    },
+    "drivers/bluetooth/btqca.ko": {
+      "first_SHA256": "7de8d7882f4e20fcc363dbb9f5672e849768ec72d84350569424111b47dbce86",
+      "second_SHA256": "7de8d7882f4e20fcc363dbb9f5672e849768ec72d84350569424111b47dbce86",
+      "byte_identical": true
+    },
+    "drivers/bluetooth/btqcomsmd.ko": {
+      "first_SHA256": "7d6b972cc499c90c2449071f1f29edae8b7692be0c4c99beddee152d3eea962a",
+      "second_SHA256": "7d6b972cc499c90c2449071f1f29edae8b7692be0c4c99beddee152d3eea962a",
+      "byte_identical": true
+    },
+    "drivers/bluetooth/hci_uart.ko": {
+      "first_SHA256": "46f06f655100fad7716c40a9746747a89a2571b0291eb14922a4adb0b79d8105",
+      "second_SHA256": "46f06f655100fad7716c40a9746747a89a2571b0291eb14922a4adb0b79d8105",
+      "byte_identical": true
+    },
+    "drivers/cdrom/cdrom.ko": {
+      "first_SHA256": "504c9f1d949e1bdf303ae225585e928a2790172d72b6591e03519e087c0ccbe8",
+      "second_SHA256": "504c9f1d949e1bdf303ae225585e928a2790172d72b6591e03519e087c0ccbe8",
+      "byte_identical": true
+    },
+    "drivers/cpufreq/cpufreq_conservative.ko": {
+      "first_SHA256": "7dc1f06d1a88e1edfe55be9fbaece5020d43ebecb1164503b3a827af09d4b2bd",
+      "second_SHA256": "7dc1f06d1a88e1edfe55be9fbaece5020d43ebecb1164503b3a827af09d4b2bd",
+      "byte_identical": true
+    },
+    "drivers/cpufreq/cpufreq_ondemand.ko": {
+      "first_SHA256": "d8db5bc642932a058903cb62a322e79de417c69794c663594f67f3619400ebd6",
+      "second_SHA256": "d8db5bc642932a058903cb62a322e79de417c69794c663594f67f3619400ebd6",
+      "byte_identical": true
+    },
+    "drivers/cpufreq/cpufreq_powersave.ko": {
+      "first_SHA256": "e7e27d2ebc8519e0bffbf7cc1f1d27c4167f05a36cff9aa6bb51b3a29fd34fe7",
+      "second_SHA256": "e7e27d2ebc8519e0bffbf7cc1f1d27c4167f05a36cff9aa6bb51b3a29fd34fe7",
+      "byte_identical": true
+    },
+    "drivers/cpufreq/cpufreq_userspace.ko": {
+      "first_SHA256": "a3d0d5856eb8ff2976716a3c884cadf7e4098c5f51eb1546786b56d5404c2853",
+      "second_SHA256": "a3d0d5856eb8ff2976716a3c884cadf7e4098c5f51eb1546786b56d5404c2853",
+      "byte_identical": true
+    },
+    "drivers/cpufreq/qcom-cpufreq-nvmem.ko": {
+      "first_SHA256": "01261d20c398903b66bf02792886dafde2834080c3810ff3698079db57bab99a",
+      "second_SHA256": "01261d20c398903b66bf02792886dafde2834080c3810ff3698079db57bab99a",
+      "byte_identical": true
+    },
+    "drivers/extcon/extcon-sm5502.ko": {
+      "first_SHA256": "656e9392de65186bf32cfcc6c9fee2594c0b2fff2675d972af606dee546334bf",
+      "second_SHA256": "656e9392de65186bf32cfcc6c9fee2594c0b2fff2675d972af606dee546334bf",
+      "byte_identical": true
+    },
+    "drivers/gpu/drm/bridge/analogix/analogix-anx78xx.ko": {
+      "first_SHA256": "51e19de434914e5945797f2b19b917359593f88f42f1a9517f2168d5314e58dc",
+      "second_SHA256": "51e19de434914e5945797f2b19b917359593f88f42f1a9517f2168d5314e58dc",
+      "byte_identical": true
+    },
+    "drivers/gpu/drm/bridge/analogix/analogix_dp.ko": {
+      "first_SHA256": "127eccb0971ad4e66e7786495fed72e4b649b1ab8f34f1f590b2eda5daa21120",
+      "second_SHA256": "127eccb0971ad4e66e7786495fed72e4b649b1ab8f34f1f590b2eda5daa21120",
+      "byte_identical": true
+    },
+    "drivers/gpu/drm/display/drm_dp_aux_bus.ko": {
+      "first_SHA256": "de31a6678cd057f4dc0979b42f3918d7f3c8c00b0e92870134dee956d3376a39",
+      "second_SHA256": "de31a6678cd057f4dc0979b42f3918d7f3c8c00b0e92870134dee956d3376a39",
+      "byte_identical": true
+    },
+    "drivers/gpu/drm/drm_exec.ko": {
+      "first_SHA256": "521aa0f1e1075748bf3ae0f1557731b1e50272acb4692265b10bee71f1f3b18f",
+      "second_SHA256": "521aa0f1e1075748bf3ae0f1557731b1e50272acb4692265b10bee71f1f3b18f",
+      "byte_identical": true
+    },
+    "drivers/gpu/drm/drm_gpuvm.ko": {
+      "first_SHA256": "6cd7eee3567289f36a9d4fe4b00a36880a994a1f12225d16b55bf8524ecd61fb",
+      "second_SHA256": "6cd7eee3567289f36a9d4fe4b00a36880a994a1f12225d16b55bf8524ecd61fb",
+      "byte_identical": true
+    },
+    "drivers/gpu/drm/msm/msm.ko": {
+      "first_SHA256": "7a676c45bb3edec82cb73d624cf30dea9d853af420a6cfa3fe969e34abf3eeab",
+      "second_SHA256": "7a676c45bb3edec82cb73d624cf30dea9d853af420a6cfa3fe969e34abf3eeab",
+      "byte_identical": true
+    },
+    "drivers/gpu/drm/scheduler/gpu-sched.ko": {
+      "first_SHA256": "3f2be364e6999500ae8c7c7858368ac9c7aec1ac5abd29a2e7fa8fc743d14845",
+      "second_SHA256": "3f2be364e6999500ae8c7c7858368ac9c7aec1ac5abd29a2e7fa8fc743d14845",
+      "byte_identical": true
+    },
+    "drivers/gpu/drm/udl/udl.ko": {
+      "first_SHA256": "8162f95086dc15df56252e0640a50c043da19baf674f968bb580ec3aaae471f5",
+      "second_SHA256": "8162f95086dc15df56252e0640a50c043da19baf674f968bb580ec3aaae471f5",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-a4tech.ko": {
+      "first_SHA256": "5ea3b713f20b53c296b7c2c750e5904922607f3e5e917ef89ad150acf68eaf53",
+      "second_SHA256": "5ea3b713f20b53c296b7c2c750e5904922607f3e5e917ef89ad150acf68eaf53",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-accutouch.ko": {
+      "first_SHA256": "86ba4a2a47344dcb28bcab99ea1316a9ecb0581f2c855f1a9fe986d668151338",
+      "second_SHA256": "86ba4a2a47344dcb28bcab99ea1316a9ecb0581f2c855f1a9fe986d668151338",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-alps.ko": {
+      "first_SHA256": "7c1ef551b8fb18e2f4424cb99af9b2f01ec9c24b4bc9dde839bad3a361d2893f",
+      "second_SHA256": "7c1ef551b8fb18e2f4424cb99af9b2f01ec9c24b4bc9dde839bad3a361d2893f",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-apple.ko": {
+      "first_SHA256": "b3f2eaf6517ceac416f6b88d666eba37fc861559cda8e07ba752818ba31192f3",
+      "second_SHA256": "b3f2eaf6517ceac416f6b88d666eba37fc861559cda8e07ba752818ba31192f3",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-appleir.ko": {
+      "first_SHA256": "abff4f039cdf91ead1d703a470774180f035b1108a44c6cc38b18ce429c522bf",
+      "second_SHA256": "abff4f039cdf91ead1d703a470774180f035b1108a44c6cc38b18ce429c522bf",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-aureal.ko": {
+      "first_SHA256": "1f9a89b541404ca40ac35f93c595febc6f5d276cede053f0adecff6995c61307",
+      "second_SHA256": "1f9a89b541404ca40ac35f93c595febc6f5d276cede053f0adecff6995c61307",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-axff.ko": {
+      "first_SHA256": "cc998e395c018d6aeda58fedd1f8626bf808013c5ebc236d4986c88aab5221c3",
+      "second_SHA256": "cc998e395c018d6aeda58fedd1f8626bf808013c5ebc236d4986c88aab5221c3",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-belkin.ko": {
+      "first_SHA256": "826a6222d7844db423e74c249f64c67990c09ff345bb235a2f588033534746ec",
+      "second_SHA256": "826a6222d7844db423e74c249f64c67990c09ff345bb235a2f588033534746ec",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-betopff.ko": {
+      "first_SHA256": "eeca67658cc62bc6ab68ec6bca8cf01498ff01ce9960d4662aa7a0159cfa25e8",
+      "second_SHA256": "eeca67658cc62bc6ab68ec6bca8cf01498ff01ce9960d4662aa7a0159cfa25e8",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-bigbenff.ko": {
+      "first_SHA256": "163f62085121a3d1c72542d35fae8c484d5c66f5a02a7d7fa8570294ee312d04",
+      "second_SHA256": "163f62085121a3d1c72542d35fae8c484d5c66f5a02a7d7fa8570294ee312d04",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-cherry.ko": {
+      "first_SHA256": "4a478cd749607a180192927a7f0733a502bf573bbe5ae05658439a38a8ea8a5c",
+      "second_SHA256": "4a478cd749607a180192927a7f0733a502bf573bbe5ae05658439a38a8ea8a5c",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-chicony.ko": {
+      "first_SHA256": "d2a2ec83b0f38b463847aedb4f7c1538943dd356d3206180b3d3837a708d2069",
+      "second_SHA256": "d2a2ec83b0f38b463847aedb4f7c1538943dd356d3206180b3d3837a708d2069",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-cmedia.ko": {
+      "first_SHA256": "d1103887e147a993c11ebac6ebd382a6284936574af220960e3718bbe97d4e44",
+      "second_SHA256": "d1103887e147a993c11ebac6ebd382a6284936574af220960e3718bbe97d4e44",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-corsair-void.ko": {
+      "first_SHA256": "3d7f0eb82250f4463a651dc193b6428e31b4cc011ce2e36be0017657729d8af0",
+      "second_SHA256": "3d7f0eb82250f4463a651dc193b6428e31b4cc011ce2e36be0017657729d8af0",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-corsair.ko": {
+      "first_SHA256": "16cff46f13331fea8220fb6b833d90f1bba4738bf7966b60f2e34c7a3848b23c",
+      "second_SHA256": "16cff46f13331fea8220fb6b833d90f1bba4738bf7966b60f2e34c7a3848b23c",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-cougar.ko": {
+      "first_SHA256": "5f70ce0db4de9cd050efc844286d84143205d0d1bd8078efa95233ed21ac9e0b",
+      "second_SHA256": "5f70ce0db4de9cd050efc844286d84143205d0d1bd8078efa95233ed21ac9e0b",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-cp2112.ko": {
+      "first_SHA256": "cd04c22792cc2c9ee4ba5d97790faea5f905656e4e1d14d03fb66495e4d68294",
+      "second_SHA256": "cd04c22792cc2c9ee4ba5d97790faea5f905656e4e1d14d03fb66495e4d68294",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-creative-sb0540.ko": {
+      "first_SHA256": "0fa289f90d77f83247cb76346877f05320f69b0b9687ae157dab36cc5c00183c",
+      "second_SHA256": "0fa289f90d77f83247cb76346877f05320f69b0b9687ae157dab36cc5c00183c",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-cypress.ko": {
+      "first_SHA256": "0a2384bc69ca046cd6d82b97ecfe801ac9dc90c68c194e575d3bcfba0944a944",
+      "second_SHA256": "0a2384bc69ca046cd6d82b97ecfe801ac9dc90c68c194e575d3bcfba0944a944",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-dr.ko": {
+      "first_SHA256": "8dbaae4fdfc37648ceb1a801986b5ce6cf4867a3784b8dbbd573f8c4006b2be7",
+      "second_SHA256": "8dbaae4fdfc37648ceb1a801986b5ce6cf4867a3784b8dbbd573f8c4006b2be7",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-elan.ko": {
+      "first_SHA256": "a1cab5d64762c90d168d9ad8872cb730cb8a81cdac6d5b5853c95e46125f3b83",
+      "second_SHA256": "a1cab5d64762c90d168d9ad8872cb730cb8a81cdac6d5b5853c95e46125f3b83",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-elecom.ko": {
+      "first_SHA256": "e8bd37143b004e9261197f533513a36b84b59c91db9b6b5e4aabbe67d9e91868",
+      "second_SHA256": "e8bd37143b004e9261197f533513a36b84b59c91db9b6b5e4aabbe67d9e91868",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-elo.ko": {
+      "first_SHA256": "43cfda40d14c0244bd374baeee564df36968737480dfd2fb5b2821597dbe74f2",
+      "second_SHA256": "43cfda40d14c0244bd374baeee564df36968737480dfd2fb5b2821597dbe74f2",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-emsff.ko": {
+      "first_SHA256": "2b7b7db3ce156ecd3a09088c2fb97842a9e2ebad8e645fefada5df009e11eb45",
+      "second_SHA256": "2b7b7db3ce156ecd3a09088c2fb97842a9e2ebad8e645fefada5df009e11eb45",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-evision.ko": {
+      "first_SHA256": "52330bf4d0e48f0a521614e2cae61093c262f288e1802cd5253625779ac44125",
+      "second_SHA256": "52330bf4d0e48f0a521614e2cae61093c262f288e1802cd5253625779ac44125",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-ezkey.ko": {
+      "first_SHA256": "ca98f294248403bb7bacb97db4c7d116b5d3cac5207a1f87cbce167c69e31bc5",
+      "second_SHA256": "ca98f294248403bb7bacb97db4c7d116b5d3cac5207a1f87cbce167c69e31bc5",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-ft260.ko": {
+      "first_SHA256": "cf663bb210b580170184698c5f863ff39b0b293d1fc774f45a3cfbf6eb71602b",
+      "second_SHA256": "cf663bb210b580170184698c5f863ff39b0b293d1fc774f45a3cfbf6eb71602b",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-gaff.ko": {
+      "first_SHA256": "465864fdb52f3735f1fbe0b2200fc239ccdf5956dae94c743a3e030a35fd8e26",
+      "second_SHA256": "465864fdb52f3735f1fbe0b2200fc239ccdf5956dae94c743a3e030a35fd8e26",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-gembird.ko": {
+      "first_SHA256": "712848e322c28410fc526909485486546f2e188f3c9346280838e72b8f75093b",
+      "second_SHA256": "712848e322c28410fc526909485486546f2e188f3c9346280838e72b8f75093b",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-generic.ko": {
+      "first_SHA256": "98ca58f7fd6e0f86499c53153f53f3aaf10ea4b4f98ee7946238b9314acd8a48",
+      "second_SHA256": "98ca58f7fd6e0f86499c53153f53f3aaf10ea4b4f98ee7946238b9314acd8a48",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-gfrm.ko": {
+      "first_SHA256": "801878cf22e66a7dbd55eeca0afc2f7bd87c47c28452e27d37b46a0aa170c3ab",
+      "second_SHA256": "801878cf22e66a7dbd55eeca0afc2f7bd87c47c28452e27d37b46a0aa170c3ab",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-glorious.ko": {
+      "first_SHA256": "ad5c7b962e7717715769d06f107c9e8eda7690b6a1e749b9ec7e495e631bbcf4",
+      "second_SHA256": "ad5c7b962e7717715769d06f107c9e8eda7690b6a1e749b9ec7e495e631bbcf4",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-goodix-spi.ko": {
+      "first_SHA256": "cb2e6bc953fde9c9f60bbec1ee1a89eece95425c8464329ceece02abedc7440c",
+      "second_SHA256": "cb2e6bc953fde9c9f60bbec1ee1a89eece95425c8464329ceece02abedc7440c",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-google-stadiaff.ko": {
+      "first_SHA256": "c406188b1629c42593f8367ce1519760d1150339a321292583969e147a3224f7",
+      "second_SHA256": "c406188b1629c42593f8367ce1519760d1150339a321292583969e147a3224f7",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-gt683r.ko": {
+      "first_SHA256": "d045b2d9780e08e04439d5c95bb64d0cc29f9b2cd2d806e5ffc756845e4fbc8d",
+      "second_SHA256": "d045b2d9780e08e04439d5c95bb64d0cc29f9b2cd2d806e5ffc756845e4fbc8d",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-gyration.ko": {
+      "first_SHA256": "0bfe4a7bcfef1f5e0bbce7f7a94cb9dfbc745bf19c8b2b1f9078803aa9d8a278",
+      "second_SHA256": "0bfe4a7bcfef1f5e0bbce7f7a94cb9dfbc745bf19c8b2b1f9078803aa9d8a278",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-holtek-kbd.ko": {
+      "first_SHA256": "6c241b99aebad0897e42e889cff3dcaf86f93a81d4e81d02dae312d7ea70f3ed",
+      "second_SHA256": "6c241b99aebad0897e42e889cff3dcaf86f93a81d4e81d02dae312d7ea70f3ed",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-holtek-mouse.ko": {
+      "first_SHA256": "fff50b64ad2fe3935d676429b3eb9e82ff4d48d8904de317ffc9a177882af467",
+      "second_SHA256": "fff50b64ad2fe3935d676429b3eb9e82ff4d48d8904de317ffc9a177882af467",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-holtekff.ko": {
+      "first_SHA256": "5e1992a5bfa4a84f7f317327f6f437c30c77478a2d9ef71a7a3a15800fc41075",
+      "second_SHA256": "5e1992a5bfa4a84f7f317327f6f437c30c77478a2d9ef71a7a3a15800fc41075",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-icade.ko": {
+      "first_SHA256": "494bb6a362e6b02491d13028e1c87548a3109e56d50b298ce01476c2fb0a405b",
+      "second_SHA256": "494bb6a362e6b02491d13028e1c87548a3109e56d50b298ce01476c2fb0a405b",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-ite.ko": {
+      "first_SHA256": "ac72b4da4b80be4d2882992da2a6d1ec7cf3c853c9dae7b4cb3a97e8d1d5901c",
+      "second_SHA256": "ac72b4da4b80be4d2882992da2a6d1ec7cf3c853c9dae7b4cb3a97e8d1d5901c",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-jabra.ko": {
+      "first_SHA256": "21b8b1d6b9196f3d21646e6a46f332f9c7fb7c46d94f747ba177787532332470",
+      "second_SHA256": "21b8b1d6b9196f3d21646e6a46f332f9c7fb7c46d94f747ba177787532332470",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-kensington.ko": {
+      "first_SHA256": "fa3a40717028893863e143a5e1318378eabf3eec796c3f9ebdcfecd67e21fe63",
+      "second_SHA256": "fa3a40717028893863e143a5e1318378eabf3eec796c3f9ebdcfecd67e21fe63",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-keytouch.ko": {
+      "first_SHA256": "9461341679a46da09db2246ec1f98f5475289952b7e94c516941984b024beece",
+      "second_SHA256": "9461341679a46da09db2246ec1f98f5475289952b7e94c516941984b024beece",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-kye.ko": {
+      "first_SHA256": "95eea95aa3150e6d09ce40cd8a9a6e8a56a7926effb6e904e2efa569ea6c5f32",
+      "second_SHA256": "95eea95aa3150e6d09ce40cd8a9a6e8a56a7926effb6e904e2efa569ea6c5f32",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-lcpower.ko": {
+      "first_SHA256": "5cf260d505d6ab9c26dfac9ad9b738c3c0e872a826970e448e41a1b17390d14d",
+      "second_SHA256": "5cf260d505d6ab9c26dfac9ad9b738c3c0e872a826970e448e41a1b17390d14d",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-led.ko": {
+      "first_SHA256": "90a1d5afb76ba27251ad920ec36309f88d4c9e93837e091401b7d697a43a0e9b",
+      "second_SHA256": "90a1d5afb76ba27251ad920ec36309f88d4c9e93837e091401b7d697a43a0e9b",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-letsketch.ko": {
+      "first_SHA256": "bb34616a679cb5a135fb1ae62ea8cb6c52bd9b4a1c018f2609262a402e7aef15",
+      "second_SHA256": "bb34616a679cb5a135fb1ae62ea8cb6c52bd9b4a1c018f2609262a402e7aef15",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-lg-g15.ko": {
+      "first_SHA256": "fae90d4a19f72d1d8807f21fbfa0a4e1b0668248ba9ebdae1b29ada61c28dbd1",
+      "second_SHA256": "fae90d4a19f72d1d8807f21fbfa0a4e1b0668248ba9ebdae1b29ada61c28dbd1",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-logitech-dj.ko": {
+      "first_SHA256": "2d6349ac5e2dae64f38d1de93ff2321b6de4e866f85cfefa3f54c7f87c25bdec",
+      "second_SHA256": "2d6349ac5e2dae64f38d1de93ff2321b6de4e866f85cfefa3f54c7f87c25bdec",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-logitech-hidpp.ko": {
+      "first_SHA256": "4e92d44265021a178b951883adefbd8c3ca9b37d9334cc9604fff4ba6ba00f7f",
+      "second_SHA256": "4e92d44265021a178b951883adefbd8c3ca9b37d9334cc9604fff4ba6ba00f7f",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-logitech.ko": {
+      "first_SHA256": "8b6d94ac5d5c1d51a19035e95f578c9c01f87a611c4367ca9f2d03a6541d8459",
+      "second_SHA256": "8b6d94ac5d5c1d51a19035e95f578c9c01f87a611c4367ca9f2d03a6541d8459",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-macally.ko": {
+      "first_SHA256": "c2ecacbee968047c3a67a6ddee4cb9144cc5469db04120399adddaf141327403",
+      "second_SHA256": "c2ecacbee968047c3a67a6ddee4cb9144cc5469db04120399adddaf141327403",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-magicmouse.ko": {
+      "first_SHA256": "173888432ab59d8a3d4b45e8be96f4989ea80af9faac5cff5af6f5dba62d4018",
+      "second_SHA256": "173888432ab59d8a3d4b45e8be96f4989ea80af9faac5cff5af6f5dba62d4018",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-maltron.ko": {
+      "first_SHA256": "dc8c82fe3d5cfee66040a7c2f58c4f81676ea665bc2e5ca76400c3c50eccba8d",
+      "second_SHA256": "dc8c82fe3d5cfee66040a7c2f58c4f81676ea665bc2e5ca76400c3c50eccba8d",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-mcp2221.ko": {
+      "first_SHA256": "a1be6bf2163574f55cc26551203944b9bc8eea0c33ead46fdb1d91a4d2cc65dd",
+      "second_SHA256": "a1be6bf2163574f55cc26551203944b9bc8eea0c33ead46fdb1d91a4d2cc65dd",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-megaworld.ko": {
+      "first_SHA256": "76974337e1c2e0594d93883d3ee493dd9456752ad6d9f3c164551fb999d770d5",
+      "second_SHA256": "76974337e1c2e0594d93883d3ee493dd9456752ad6d9f3c164551fb999d770d5",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-mf.ko": {
+      "first_SHA256": "f4d7f474d3246180a781053351be4f85b35e9a6d7711b2721b337e753e294749",
+      "second_SHA256": "f4d7f474d3246180a781053351be4f85b35e9a6d7711b2721b337e753e294749",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-microsoft.ko": {
+      "first_SHA256": "743d428e0d4bf0d04c571e2ff9efecd223ae32a074c1990400ae57692ddf94e6",
+      "second_SHA256": "743d428e0d4bf0d04c571e2ff9efecd223ae32a074c1990400ae57692ddf94e6",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-monterey.ko": {
+      "first_SHA256": "3c5fab790d0b642191e6b062b0eea7f9662ac1738a5e5668cd1a730abd929714",
+      "second_SHA256": "3c5fab790d0b642191e6b062b0eea7f9662ac1738a5e5668cd1a730abd929714",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-multitouch.ko": {
+      "first_SHA256": "e6126680f88192c1701bdf57a2493a6fc900e24511caadebb3233f19d739b8e8",
+      "second_SHA256": "e6126680f88192c1701bdf57a2493a6fc900e24511caadebb3233f19d739b8e8",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-nintendo.ko": {
+      "first_SHA256": "31fabf3c13fb585559624cd87eb13d403353a2973e262c71f8c795c034fd28b1",
+      "second_SHA256": "31fabf3c13fb585559624cd87eb13d403353a2973e262c71f8c795c034fd28b1",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-nti.ko": {
+      "first_SHA256": "58fe94d9a29eff12aa76cc32683a69c93f7e5eb34c4013bb2f69d2e3bcdd8108",
+      "second_SHA256": "58fe94d9a29eff12aa76cc32683a69c93f7e5eb34c4013bb2f69d2e3bcdd8108",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-ntrig.ko": {
+      "first_SHA256": "05aaf8eb9092943c7704403cef13ec0fbfdb062fef56fa037ab5322e2458123d",
+      "second_SHA256": "05aaf8eb9092943c7704403cef13ec0fbfdb062fef56fa037ab5322e2458123d",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-nvidia-shield.ko": {
+      "first_SHA256": "8a65a1ed3be58de6617b971734cfbf36471c15c133007a350e04cd6513ee21d0",
+      "second_SHA256": "8a65a1ed3be58de6617b971734cfbf36471c15c133007a350e04cd6513ee21d0",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-ortek.ko": {
+      "first_SHA256": "d3e0db6d5689f78e871b705d66522d8d40ba2516471011bbc03086c3c8f41f8b",
+      "second_SHA256": "d3e0db6d5689f78e871b705d66522d8d40ba2516471011bbc03086c3c8f41f8b",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-penmount.ko": {
+      "first_SHA256": "95fc4ea9425db1b1b1a0bf5e58b81a294073a3fcff656257486f270ffece380e",
+      "second_SHA256": "95fc4ea9425db1b1b1a0bf5e58b81a294073a3fcff656257486f270ffece380e",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-petalynx.ko": {
+      "first_SHA256": "803a54c77012e6bb1d89d6782acace0cc28971656d4da1783f2a67cc2c7d578c",
+      "second_SHA256": "803a54c77012e6bb1d89d6782acace0cc28971656d4da1783f2a67cc2c7d578c",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-picolcd.ko": {
+      "first_SHA256": "8f20d8fefaf7b7315b0dd11031cf53e1a8cd6e542075e1b5801248855ae01d31",
+      "second_SHA256": "8f20d8fefaf7b7315b0dd11031cf53e1a8cd6e542075e1b5801248855ae01d31",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-pl.ko": {
+      "first_SHA256": "46a6711bd9f15f0e25f64894cf6324694d058893bbb5c6fe7bc7f7dff4b577d5",
+      "second_SHA256": "46a6711bd9f15f0e25f64894cf6324694d058893bbb5c6fe7bc7f7dff4b577d5",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-plantronics.ko": {
+      "first_SHA256": "015a068ae67fe281bae4aaa41ffbc8d5b3b70201af92d7a73cbf9e5959bf6bc5",
+      "second_SHA256": "015a068ae67fe281bae4aaa41ffbc8d5b3b70201af92d7a73cbf9e5959bf6bc5",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-playstation.ko": {
+      "first_SHA256": "571415bb0315758909688503d77c6fd5ff084b94022b38a23f73eab8f8ed3fd6",
+      "second_SHA256": "571415bb0315758909688503d77c6fd5ff084b94022b38a23f73eab8f8ed3fd6",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-primax.ko": {
+      "first_SHA256": "a487ed014bb1f7005795741e435ba04a04f50a7b84f50caf88be4378a8c845ae",
+      "second_SHA256": "a487ed014bb1f7005795741e435ba04a04f50a7b84f50caf88be4378a8c845ae",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-prodikeys.ko": {
+      "first_SHA256": "fa40e52bea7c43e6b3b8517e05dea6d381da95b0933d9b645c5b9d386577d9c8",
+      "second_SHA256": "fa40e52bea7c43e6b3b8517e05dea6d381da95b0933d9b645c5b9d386577d9c8",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-pxrc.ko": {
+      "first_SHA256": "bd655b7dfd01fe882d3851fd19c7d448ae93acf5c864e38072958637d24cb30a",
+      "second_SHA256": "bd655b7dfd01fe882d3851fd19c7d448ae93acf5c864e38072958637d24cb30a",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-razer.ko": {
+      "first_SHA256": "cb89d5e2cdfc7c0ca019045f9b5150280b341ef6e8ef88abf9d3b44fdb89bf2a",
+      "second_SHA256": "cb89d5e2cdfc7c0ca019045f9b5150280b341ef6e8ef88abf9d3b44fdb89bf2a",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-retrode.ko": {
+      "first_SHA256": "45d16659748fc0597a5e144a1c38bc2c2e66eea2bbd9ca6ab2a143f015ee7c50",
+      "second_SHA256": "45d16659748fc0597a5e144a1c38bc2c2e66eea2bbd9ca6ab2a143f015ee7c50",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-rmi.ko": {
+      "first_SHA256": "b577dc077a61c199ab5931905d935e8b01bb18317ca65c4c4be68637ea478080",
+      "second_SHA256": "b577dc077a61c199ab5931905d935e8b01bb18317ca65c4c4be68637ea478080",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-roccat-arvo.ko": {
+      "first_SHA256": "e52f02925d4cd5b8dab6386cdf7a5cc92cb1511e236c65523ee028ebade91c97",
+      "second_SHA256": "e52f02925d4cd5b8dab6386cdf7a5cc92cb1511e236c65523ee028ebade91c97",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-roccat-common.ko": {
+      "first_SHA256": "651e3c41480961cf2be76e55e82c658893689993141e2b6a6c4ff457e9cde044",
+      "second_SHA256": "651e3c41480961cf2be76e55e82c658893689993141e2b6a6c4ff457e9cde044",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-roccat-isku.ko": {
+      "first_SHA256": "259f88843d2531583c38ffd0a563aa720fd974746f3027222e5de86036f79047",
+      "second_SHA256": "259f88843d2531583c38ffd0a563aa720fd974746f3027222e5de86036f79047",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-roccat-kone.ko": {
+      "first_SHA256": "72d9651f52b9ab2c3f079e842fca5640667838eb76c00c0179daca7d78e1e067",
+      "second_SHA256": "72d9651f52b9ab2c3f079e842fca5640667838eb76c00c0179daca7d78e1e067",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-roccat-koneplus.ko": {
+      "first_SHA256": "e38c4923db14e58bb67476f6a0db8dba47d0c45511692da2aeae0b2ff4bbc96e",
+      "second_SHA256": "e38c4923db14e58bb67476f6a0db8dba47d0c45511692da2aeae0b2ff4bbc96e",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-roccat-konepure.ko": {
+      "first_SHA256": "b57a4d3488108ef23c4647c60fd214690b1115c9e5952f5963c70a71e996f33f",
+      "second_SHA256": "b57a4d3488108ef23c4647c60fd214690b1115c9e5952f5963c70a71e996f33f",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-roccat-kovaplus.ko": {
+      "first_SHA256": "35d28e39a05f1b943108dfc3dc0e6b0e5ba457c84a2d21393b43209e5787f028",
+      "second_SHA256": "35d28e39a05f1b943108dfc3dc0e6b0e5ba457c84a2d21393b43209e5787f028",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-roccat-lua.ko": {
+      "first_SHA256": "a118c130d6e33c31c237e7f059644581d4201b431c88ab2fe73b72e954d4d195",
+      "second_SHA256": "a118c130d6e33c31c237e7f059644581d4201b431c88ab2fe73b72e954d4d195",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-roccat-pyra.ko": {
+      "first_SHA256": "d3a8cc41fead177740ed9a87aa69dc2682a1ef076972a7aa247c1d97f3034f58",
+      "second_SHA256": "d3a8cc41fead177740ed9a87aa69dc2682a1ef076972a7aa247c1d97f3034f58",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-roccat-ryos.ko": {
+      "first_SHA256": "87331aa054510ca175acaf1cde9237306717fb921c5f58bf4f58f2798080617c",
+      "second_SHA256": "87331aa054510ca175acaf1cde9237306717fb921c5f58bf4f58f2798080617c",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-roccat-savu.ko": {
+      "first_SHA256": "177062f52afbc56743ceb6d52d6331846ad705893f36e7daacdfae931dc3288b",
+      "second_SHA256": "177062f52afbc56743ceb6d52d6331846ad705893f36e7daacdfae931dc3288b",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-roccat.ko": {
+      "first_SHA256": "854b6ceae32698d7de58ff95a8c2c42ae0ecbc771773d3a9691099ff51e15a51",
+      "second_SHA256": "854b6ceae32698d7de58ff95a8c2c42ae0ecbc771773d3a9691099ff51e15a51",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-saitek.ko": {
+      "first_SHA256": "0a6d8d338b8732358c524b71dd770c24d794a68c733e165f33bd95cd24b20699",
+      "second_SHA256": "0a6d8d338b8732358c524b71dd770c24d794a68c733e165f33bd95cd24b20699",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-samsung.ko": {
+      "first_SHA256": "d356c23594c15c7683e4ccfecad8e43f4b5394a0c48ebe49d72ab56ef12bcf24",
+      "second_SHA256": "d356c23594c15c7683e4ccfecad8e43f4b5394a0c48ebe49d72ab56ef12bcf24",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-semitek.ko": {
+      "first_SHA256": "e0cf5b7ca74f9264800a0f37f3e24f0fb7e901be911e2aebccd98b128527afd3",
+      "second_SHA256": "e0cf5b7ca74f9264800a0f37f3e24f0fb7e901be911e2aebccd98b128527afd3",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-sensor-hub.ko": {
+      "first_SHA256": "952a0e0ef9478eaa230ad8ddd7be43e507c1ffcadfe5959c3f60660c55bdc562",
+      "second_SHA256": "952a0e0ef9478eaa230ad8ddd7be43e507c1ffcadfe5959c3f60660c55bdc562",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-sigmamicro.ko": {
+      "first_SHA256": "26d068b9868f9300f9d37f8a0eaeb4b824fb166e69fa09d043872a7be4a136a0",
+      "second_SHA256": "26d068b9868f9300f9d37f8a0eaeb4b824fb166e69fa09d043872a7be4a136a0",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-sjoy.ko": {
+      "first_SHA256": "db32b508a434ca3e9491224b1492fbc19d7a725af0bd585a28a7924d4be49323",
+      "second_SHA256": "db32b508a434ca3e9491224b1492fbc19d7a725af0bd585a28a7924d4be49323",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-sony.ko": {
+      "first_SHA256": "06e6f5c3b83c7679bb1ba999d52648cea89ed7b13fa264728cf1490e4290f67c",
+      "second_SHA256": "06e6f5c3b83c7679bb1ba999d52648cea89ed7b13fa264728cf1490e4290f67c",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-speedlink.ko": {
+      "first_SHA256": "ba331be383142fd8f54785d9ebd09f298ffd5539cc965b267fa098481cdab35a",
+      "second_SHA256": "ba331be383142fd8f54785d9ebd09f298ffd5539cc965b267fa098481cdab35a",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-steam.ko": {
+      "first_SHA256": "4feb61eb7fd72f229890446032fc3c8300891f67e15455902d212372ac197bc0",
+      "second_SHA256": "4feb61eb7fd72f229890446032fc3c8300891f67e15455902d212372ac197bc0",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-steelseries-arctis.ko": {
+      "first_SHA256": "dafc0f81151ce9fa49ec799445d33b55e0f67e26d05957369f64a3db22f1ad1a",
+      "second_SHA256": "dafc0f81151ce9fa49ec799445d33b55e0f67e26d05957369f64a3db22f1ad1a",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-steelseries.ko": {
+      "first_SHA256": "24fa9ece89371140ad7743f23c19bee544c078232eb0417fc6cebe82f6480b24",
+      "second_SHA256": "24fa9ece89371140ad7743f23c19bee544c078232eb0417fc6cebe82f6480b24",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-sunplus.ko": {
+      "first_SHA256": "89b10989bc912c07825cea8d3a46f38413d6c14c9c155038ff225f4a63535693",
+      "second_SHA256": "89b10989bc912c07825cea8d3a46f38413d6c14c9c155038ff225f4a63535693",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-thrustmaster.ko": {
+      "first_SHA256": "861e853d3e0f2077aede8c8a2ef50f113c2fdb6e49233cc76ac913cc80ce6914",
+      "second_SHA256": "861e853d3e0f2077aede8c8a2ef50f113c2fdb6e49233cc76ac913cc80ce6914",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-tivo.ko": {
+      "first_SHA256": "e213818c629db984be1b56b9d49e9ada1608b8334dfe11135c4b38fc2cb30592",
+      "second_SHA256": "e213818c629db984be1b56b9d49e9ada1608b8334dfe11135c4b38fc2cb30592",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-tmff.ko": {
+      "first_SHA256": "47e5e40a674207b2ba294658e9a8e28cf23c0ce84dcb3129d04aaa91f99ba1aa",
+      "second_SHA256": "47e5e40a674207b2ba294658e9a8e28cf23c0ce84dcb3129d04aaa91f99ba1aa",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-topre.ko": {
+      "first_SHA256": "8ae3084d04bfa98fd3966dd0fa86d2781853f19499ddbf6fcfeab97763097598",
+      "second_SHA256": "8ae3084d04bfa98fd3966dd0fa86d2781853f19499ddbf6fcfeab97763097598",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-topseed.ko": {
+      "first_SHA256": "e44a14a3c8961edf9ebdc4998e1ae2bf159a931108a54653c0ed1a2764493f44",
+      "second_SHA256": "e44a14a3c8961edf9ebdc4998e1ae2bf159a931108a54653c0ed1a2764493f44",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-twinhan.ko": {
+      "first_SHA256": "0df2b7ce051a7451a424b6e83c5145f345e3d858faf3cbfd677448ae8bb09ba1",
+      "second_SHA256": "0df2b7ce051a7451a424b6e83c5145f345e3d858faf3cbfd677448ae8bb09ba1",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-u2fzero.ko": {
+      "first_SHA256": "6301ae9b2ad0d36815ccf2496e46192aeaf8b04bf127db76dc02a1d73d199917",
+      "second_SHA256": "6301ae9b2ad0d36815ccf2496e46192aeaf8b04bf127db76dc02a1d73d199917",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-uclogic.ko": {
+      "first_SHA256": "9a568b360ae00136a9e5a6d02826db2edb3079b9d1974122c97fc0c8115eaaa7",
+      "second_SHA256": "9a568b360ae00136a9e5a6d02826db2edb3079b9d1974122c97fc0c8115eaaa7",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-udraw-ps3.ko": {
+      "first_SHA256": "73eed30d5c9609a7fcd26c4dbcafe57aa3a8689326de9fbacf403644d650e5bc",
+      "second_SHA256": "73eed30d5c9609a7fcd26c4dbcafe57aa3a8689326de9fbacf403644d650e5bc",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-viewsonic.ko": {
+      "first_SHA256": "816706706e2953d3fd384fdda05f4ff003dd41dc13370f5ba737a05e61f5506f",
+      "second_SHA256": "816706706e2953d3fd384fdda05f4ff003dd41dc13370f5ba737a05e61f5506f",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-vivaldi-common.ko": {
+      "first_SHA256": "8ed3363b1c5b814c1e063c5a0371eaa1c2367a6473888308f7e65ef699e5faf5",
+      "second_SHA256": "8ed3363b1c5b814c1e063c5a0371eaa1c2367a6473888308f7e65ef699e5faf5",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-vivaldi.ko": {
+      "first_SHA256": "1b8871d5c83137dc2e6918d503bac8c22a37a1bb5f5f0a8de288c2e2d5995578",
+      "second_SHA256": "1b8871d5c83137dc2e6918d503bac8c22a37a1bb5f5f0a8de288c2e2d5995578",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-waltop.ko": {
+      "first_SHA256": "65f3535a949f564082a04a7ac275cbc7a7ff5ce061fbe5af41dc327e8d26d8a7",
+      "second_SHA256": "65f3535a949f564082a04a7ac275cbc7a7ff5ce061fbe5af41dc327e8d26d8a7",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-wiimote.ko": {
+      "first_SHA256": "f6d2dc5ef26e9f38db7a19b1c643c95211402591a4779d7cd9812dbf2d7345bb",
+      "second_SHA256": "f6d2dc5ef26e9f38db7a19b1c643c95211402591a4779d7cd9812dbf2d7345bb",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-winwing.ko": {
+      "first_SHA256": "5c7bc2968e9c0feabbe37ac584b614763710f49582d31627cdb8c87f53bae195",
+      "second_SHA256": "5c7bc2968e9c0feabbe37ac584b614763710f49582d31627cdb8c87f53bae195",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-xiaomi.ko": {
+      "first_SHA256": "e0ea26c0432a247f79f7161db7f413fa6a03b589cdf3346573f498ace30c4c88",
+      "second_SHA256": "e0ea26c0432a247f79f7161db7f413fa6a03b589cdf3346573f498ace30c4c88",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-xinmo.ko": {
+      "first_SHA256": "13dae2e7142b23d51a26b04b95752a5f29ddebbd88bbeb8c7d67f2d73e56d7ba",
+      "second_SHA256": "13dae2e7142b23d51a26b04b95752a5f29ddebbd88bbeb8c7d67f2d73e56d7ba",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-zpff.ko": {
+      "first_SHA256": "d56aab75f4f1af4913e3a8b200e638fd391f5872a9b4d213fe47b848ff928de8",
+      "second_SHA256": "d56aab75f4f1af4913e3a8b200e638fd391f5872a9b4d213fe47b848ff928de8",
+      "byte_identical": true
+    },
+    "drivers/hid/hid-zydacron.ko": {
+      "first_SHA256": "ac338729f36a30a680d2c9c48c30cf04b6c9d4acd43c725f93990e35f2b4d3ba",
+      "second_SHA256": "ac338729f36a30a680d2c9c48c30cf04b6c9d4acd43c725f93990e35f2b4d3ba",
+      "byte_identical": true
+    },
+    "drivers/hid/uhid.ko": {
+      "first_SHA256": "1bb6141adaa532143ef3faeabaf88651382b6734d110e1035069b4d1e7035e0c",
+      "second_SHA256": "1bb6141adaa532143ef3faeabaf88651382b6734d110e1035069b4d1e7035e0c",
+      "byte_identical": true
+    },
+    "drivers/hid/wacom.ko": {
+      "first_SHA256": "0c98f334b67d82c04a74645543f8355481caf2bb6d751ceed8bf8e4273e8885d",
+      "second_SHA256": "0c98f334b67d82c04a74645543f8355481caf2bb6d751ceed8bf8e4273e8885d",
+      "byte_identical": true
+    },
+    "drivers/hwmon/tmp108.ko": {
+      "first_SHA256": "ea627d84d04c054d57921569d5fb94ace36c0a43b45059971e121917747aed8e",
+      "second_SHA256": "ea627d84d04c054d57921569d5fb94ace36c0a43b45059971e121917747aed8e",
+      "byte_identical": true
+    },
+    "drivers/i2c/algos/i2c-algo-bit.ko": {
+      "first_SHA256": "adf0d85a4797e4830975afa6f703df5d7af59b738738744164f7de3aac9b0a8e",
+      "second_SHA256": "adf0d85a4797e4830975afa6f703df5d7af59b738738744164f7de3aac9b0a8e",
+      "byte_identical": true
+    },
+    "drivers/i2c/busses/i2c-gpio.ko": {
+      "first_SHA256": "9ef1505e61c0462475b4640a26d304e48704011b9e7cee2461a04322380f752e",
+      "second_SHA256": "9ef1505e61c0462475b4640a26d304e48704011b9e7cee2461a04322380f752e",
+      "byte_identical": true
+    },
+    "drivers/i2c/busses/i2c-qcom-cci.ko": {
+      "first_SHA256": "aac72024e7041280031e5b8ded23f42002e801e69e3c00778adc132c6acdc849",
+      "second_SHA256": "aac72024e7041280031e5b8ded23f42002e801e69e3c00778adc132c6acdc849",
+      "byte_identical": true
+    },
+    "drivers/iio/accel/bmc150-accel-core.ko": {
+      "first_SHA256": "d2a128b4566569d4d242639f7e0f99aa7524014c71b5d678f1956e7bacce99f2",
+      "second_SHA256": "d2a128b4566569d4d242639f7e0f99aa7524014c71b5d678f1956e7bacce99f2",
+      "byte_identical": true
+    },
+    "drivers/iio/accel/bmc150-accel-i2c.ko": {
+      "first_SHA256": "fd69a32bc267ac88de37981934a939967b767e4a71598e8a723fc4bad33d158a",
+      "second_SHA256": "fd69a32bc267ac88de37981934a939967b767e4a71598e8a723fc4bad33d158a",
+      "byte_identical": true
+    },
+    "drivers/iio/accel/bmc150-accel-spi.ko": {
+      "first_SHA256": "1590e2d1d4030f3ecbc69c71d5a10fca7a23aba3a47413bbf4f1a683a9ae621b",
+      "second_SHA256": "1590e2d1d4030f3ecbc69c71d5a10fca7a23aba3a47413bbf4f1a683a9ae621b",
+      "byte_identical": true
+    },
+    "drivers/iio/accel/hid-sensor-accel-3d.ko": {
+      "first_SHA256": "c59ee3bcb9c9ad7435d9195d2d61b9bd97fb208fc6f77712ec9f53fd839f7aaa",
+      "second_SHA256": "c59ee3bcb9c9ad7435d9195d2d61b9bd97fb208fc6f77712ec9f53fd839f7aaa",
+      "byte_identical": true
+    },
+    "drivers/iio/accel/kxsd9-i2c.ko": {
+      "first_SHA256": "26d0ee7d39eb30e65ff00a372561b5a397af31cc5d385e3f4099712d328e165f",
+      "second_SHA256": "26d0ee7d39eb30e65ff00a372561b5a397af31cc5d385e3f4099712d328e165f",
+      "byte_identical": true
+    },
+    "drivers/iio/accel/kxsd9-spi.ko": {
+      "first_SHA256": "845b2bb0c5b86a6944ea1743ce356af2e580ef37f9b4645045ff3617d5b74aae",
+      "second_SHA256": "845b2bb0c5b86a6944ea1743ce356af2e580ef37f9b4645045ff3617d5b74aae",
+      "byte_identical": true
+    },
+    "drivers/iio/accel/kxsd9.ko": {
+      "first_SHA256": "2b10e8a5c3c26a913a5611eca3a1495f5dc2567d4238d68822527bf03a75d955",
+      "second_SHA256": "2b10e8a5c3c26a913a5611eca3a1495f5dc2567d4238d68822527bf03a75d955",
+      "byte_identical": true
+    },
+    "drivers/iio/accel/st_accel.ko": {
+      "first_SHA256": "b33e16e71ce592a8a33398b550876b15714482dc615fefda5f0d839a35f149c9",
+      "second_SHA256": "b33e16e71ce592a8a33398b550876b15714482dc615fefda5f0d839a35f149c9",
+      "byte_identical": true
+    },
+    "drivers/iio/accel/st_accel_i2c.ko": {
+      "first_SHA256": "c9706ed561316e2cb0807aa0c9b347f9e1e49959533a7c87e2e058e65ce179f7",
+      "second_SHA256": "c9706ed561316e2cb0807aa0c9b347f9e1e49959533a7c87e2e058e65ce179f7",
+      "byte_identical": true
+    },
+    "drivers/iio/accel/st_accel_spi.ko": {
+      "first_SHA256": "92f3a4e9293d47e9290bf70c9c56fc76c2211ba98ad46d4b9441e135cf9e852a",
+      "second_SHA256": "92f3a4e9293d47e9290bf70c9c56fc76c2211ba98ad46d4b9441e135cf9e852a",
+      "byte_identical": true
+    },
+    "drivers/iio/adc/qcom-spmi-iadc.ko": {
+      "first_SHA256": "303d506ad104c9a56dee41a0ed3744ea869c94c77b3c38a8b279797cde4eb7d3",
+      "second_SHA256": "303d506ad104c9a56dee41a0ed3744ea869c94c77b3c38a8b279797cde4eb7d3",
+      "byte_identical": true
+    },
+    "drivers/iio/adc/qcom-spmi-vadc.ko": {
+      "first_SHA256": "a4e544c811b053484578c4fccd023cf0a35ef9c4e37e22956744c74a6007a7ad",
+      "second_SHA256": "a4e544c811b053484578c4fccd023cf0a35ef9c4e37e22956744c74a6007a7ad",
+      "byte_identical": true
+    },
+    "drivers/iio/adc/qcom-vadc-common.ko": {
+      "first_SHA256": "f6351ff9255a36faf8ecbe1453e3d04b802a503ad1428b8609a989f032c3f050",
+      "second_SHA256": "f6351ff9255a36faf8ecbe1453e3d04b802a503ad1428b8609a989f032c3f050",
+      "byte_identical": true
+    },
+    "drivers/iio/buffer/industrialio-buffer-cb.ko": {
+      "first_SHA256": "3a090c6e45e106bf7b44f5f8507a3ad990a3a691cc7a5edad227a16a6c176270",
+      "second_SHA256": "3a090c6e45e106bf7b44f5f8507a3ad990a3a691cc7a5edad227a16a6c176270",
+      "byte_identical": true
+    },
+    "drivers/iio/common/hid-sensors/hid-sensor-iio-common.ko": {
+      "first_SHA256": "866a6db9012530a184e8da9c730ff9f347bb48073ab05b6ec6c8fd40d69393d9",
+      "second_SHA256": "866a6db9012530a184e8da9c730ff9f347bb48073ab05b6ec6c8fd40d69393d9",
+      "byte_identical": true
+    },
+    "drivers/iio/common/hid-sensors/hid-sensor-trigger.ko": {
+      "first_SHA256": "0d195c39c5d8cbe084200929879e772c5fe2bf7feb8842a1f1df4814873d4436",
+      "second_SHA256": "0d195c39c5d8cbe084200929879e772c5fe2bf7feb8842a1f1df4814873d4436",
+      "byte_identical": true
+    },
+    "drivers/iio/common/inv_sensors/inv_sensors_timestamp.ko": {
+      "first_SHA256": "462065e5130665529bd346aa9fb7b52d8f42fe8fc2c88e4a8d4bbcb5994cc567",
+      "second_SHA256": "462065e5130665529bd346aa9fb7b52d8f42fe8fc2c88e4a8d4bbcb5994cc567",
+      "byte_identical": true
+    },
+    "drivers/iio/common/st_sensors/st_sensors.ko": {
+      "first_SHA256": "8165050b9ee9ddeb4dc9be47ab7911976b5d6a9ab68dbcb00c555700651a8109",
+      "second_SHA256": "8165050b9ee9ddeb4dc9be47ab7911976b5d6a9ab68dbcb00c555700651a8109",
+      "byte_identical": true
+    },
+    "drivers/iio/common/st_sensors/st_sensors_i2c.ko": {
+      "first_SHA256": "6cec5c4a719fb85bf4e9a372d3dd1eb7b70da86c9830ebd3dcd1e45f327a90a8",
+      "second_SHA256": "6cec5c4a719fb85bf4e9a372d3dd1eb7b70da86c9830ebd3dcd1e45f327a90a8",
+      "byte_identical": true
+    },
+    "drivers/iio/common/st_sensors/st_sensors_spi.ko": {
+      "first_SHA256": "ae884e39a01d2333250f982c826a116e8a61a564bbccff89e2ed73bafdabddf3",
+      "second_SHA256": "ae884e39a01d2333250f982c826a116e8a61a564bbccff89e2ed73bafdabddf3",
+      "byte_identical": true
+    },
+    "drivers/iio/gyro/hid-sensor-gyro-3d.ko": {
+      "first_SHA256": "f6407aa497c22866ca0f5cf3b952225dca987b04f746e84ffae7898efa5662e3",
+      "second_SHA256": "f6407aa497c22866ca0f5cf3b952225dca987b04f746e84ffae7898efa5662e3",
+      "byte_identical": true
+    },
+    "drivers/iio/humidity/hid-sensor-humidity.ko": {
+      "first_SHA256": "4656cffb0445fd1d859487ba28fb0251353891cfdab16efbea32f7788a647da3",
+      "second_SHA256": "4656cffb0445fd1d859487ba28fb0251353891cfdab16efbea32f7788a647da3",
+      "byte_identical": true
+    },
+    "drivers/iio/imu/inv_mpu6050/inv-mpu6050-i2c.ko": {
+      "first_SHA256": "9d1392cc527720a5336a31767daf7ad5ecb535042f469271f130b667c2ec3491",
+      "second_SHA256": "9d1392cc527720a5336a31767daf7ad5ecb535042f469271f130b667c2ec3491",
+      "byte_identical": true
+    },
+    "drivers/iio/imu/inv_mpu6050/inv-mpu6050-spi.ko": {
+      "first_SHA256": "17d17285d248a47bf58920127e70af23243aab9150cb425b960e1a77142b44f1",
+      "second_SHA256": "17d17285d248a47bf58920127e70af23243aab9150cb425b960e1a77142b44f1",
+      "byte_identical": true
+    },
+    "drivers/iio/imu/inv_mpu6050/inv-mpu6050.ko": {
+      "first_SHA256": "7861a0b222d4d4cfb1a0c27c0e978348d0cbb64e686419fd848e4a89fa769d55",
+      "second_SHA256": "7861a0b222d4d4cfb1a0c27c0e978348d0cbb64e686419fd848e4a89fa769d55",
+      "byte_identical": true
+    },
+    "drivers/iio/light/hid-sensor-als.ko": {
+      "first_SHA256": "a2eb8a8b280ead7f49196f5061788eb9c3a354a0eb312abc5db13e76681133ba",
+      "second_SHA256": "a2eb8a8b280ead7f49196f5061788eb9c3a354a0eb312abc5db13e76681133ba",
+      "byte_identical": true
+    },
+    "drivers/iio/light/tsl2772.ko": {
+      "first_SHA256": "b522d56fda1c248c7c14ab6e06181a92a71e96dafd8da0b1156bc5b44688bc7b",
+      "second_SHA256": "b522d56fda1c248c7c14ab6e06181a92a71e96dafd8da0b1156bc5b44688bc7b",
+      "byte_identical": true
+    },
+    "drivers/iio/magnetometer/ak8974.ko": {
+      "first_SHA256": "c1b3c8d31dd16a156d7b93378e9860e7057d1c4965164fa3ec5fe1dc1b881802",
+      "second_SHA256": "c1b3c8d31dd16a156d7b93378e9860e7057d1c4965164fa3ec5fe1dc1b881802",
+      "byte_identical": true
+    },
+    "drivers/iio/magnetometer/ak8975.ko": {
+      "first_SHA256": "85a5c3d68ae6c7cf5ed239063f89fb0bf1d175a821a7d239289ef7e65c550292",
+      "second_SHA256": "85a5c3d68ae6c7cf5ed239063f89fb0bf1d175a821a7d239289ef7e65c550292",
+      "byte_identical": true
+    },
+    "drivers/iio/magnetometer/hid-sensor-magn-3d.ko": {
+      "first_SHA256": "f6c9cb8726b8fc42cf592c63033a47a3dbe935c8996bdcc4e5457af305d40874",
+      "second_SHA256": "f6c9cb8726b8fc42cf592c63033a47a3dbe935c8996bdcc4e5457af305d40874",
+      "byte_identical": true
+    },
+    "drivers/iio/orientation/hid-sensor-incl-3d.ko": {
+      "first_SHA256": "25668e5d652278ff387508bc30cab6afb607b727c6d1aeb5d2c6422393a49863",
+      "second_SHA256": "25668e5d652278ff387508bc30cab6afb607b727c6d1aeb5d2c6422393a49863",
+      "byte_identical": true
+    },
+    "drivers/iio/orientation/hid-sensor-rotation.ko": {
+      "first_SHA256": "708e5c0ef95eb84c96bc1e944cf563c5dcf1968e3925341cc77244100814ee0a",
+      "second_SHA256": "708e5c0ef95eb84c96bc1e944cf563c5dcf1968e3925341cc77244100814ee0a",
+      "byte_identical": true
+    },
+    "drivers/iio/position/hid-sensor-custom-intel-hinge.ko": {
+      "first_SHA256": "48f16cd2e4b58aed8a138a92d4a34cf91fe98e38b6f58ab67570a6835675ccc6",
+      "second_SHA256": "48f16cd2e4b58aed8a138a92d4a34cf91fe98e38b6f58ab67570a6835675ccc6",
+      "byte_identical": true
+    },
+    "drivers/iio/pressure/bmp280-i2c.ko": {
+      "first_SHA256": "d7a843f94984faf4719b8ffde533d9990df886dbf20a1780428d167f63345e52",
+      "second_SHA256": "d7a843f94984faf4719b8ffde533d9990df886dbf20a1780428d167f63345e52",
+      "byte_identical": true
+    },
+    "drivers/iio/pressure/bmp280-spi.ko": {
+      "first_SHA256": "1b2832bb7141c12922ef17b21a669d4fdebc1e413713fd4cb6cbd2191e454dbd",
+      "second_SHA256": "1b2832bb7141c12922ef17b21a669d4fdebc1e413713fd4cb6cbd2191e454dbd",
+      "byte_identical": true
+    },
+    "drivers/iio/pressure/bmp280.ko": {
+      "first_SHA256": "6ebd41fc3e20f5015d3abbe61e0669b80fdf0cb75934b9427edec3cb74f3a3d4",
+      "second_SHA256": "6ebd41fc3e20f5015d3abbe61e0669b80fdf0cb75934b9427edec3cb74f3a3d4",
+      "byte_identical": true
+    },
+    "drivers/iio/temperature/hid-sensor-temperature.ko": {
+      "first_SHA256": "382c5a43b94c766374bf27555d75959f77899e7e6ae8eb4d8cdd0fe446d96776",
+      "second_SHA256": "382c5a43b94c766374bf27555d75959f77899e7e6ae8eb4d8cdd0fe446d96776",
+      "byte_identical": true
+    },
+    "drivers/iio/test/iio-test-format.ko": {
+      "first_SHA256": "a8f7bfccbcc633b2f1d321b8c3b8f08600044b1cc5803b1e2a583acb9daa650d",
+      "second_SHA256": "a8f7bfccbcc633b2f1d321b8c3b8f08600044b1cc5803b1e2a583acb9daa650d",
+      "byte_identical": true
+    },
+    "drivers/input/evdev.ko": {
+      "first_SHA256": "d693763203170059429feaec3d8cfde5c365708db9195a1b91d8697b5a8756b2",
+      "second_SHA256": "d693763203170059429feaec3d8cfde5c365708db9195a1b91d8697b5a8756b2",
+      "byte_identical": true
+    },
+    "drivers/input/joystick/xpad.ko": {
+      "first_SHA256": "a4882a8664889bc9cd544d5f6d00302d09545c1f603a881ef73aee6ffe787eba",
+      "second_SHA256": "a4882a8664889bc9cd544d5f6d00302d09545c1f603a881ef73aee6ffe787eba",
+      "byte_identical": true
+    },
+    "drivers/input/keyboard/tm2-touchkey.ko": {
+      "first_SHA256": "493ecd5f7074933b09e5beba4f11f7153c36b1ed14b4f89fd972b2d5ad8418c9",
+      "second_SHA256": "493ecd5f7074933b09e5beba4f11f7153c36b1ed14b4f89fd972b2d5ad8418c9",
+      "byte_identical": true
+    },
+    "drivers/input/misc/drv260x.ko": {
+      "first_SHA256": "6f951debd1849e92073249167b1e23572a739eb9faa39cec19652bc9bafb0944",
+      "second_SHA256": "6f951debd1849e92073249167b1e23572a739eb9faa39cec19652bc9bafb0944",
+      "byte_identical": true
+    },
+    "drivers/input/misc/pm8xxx-vibrator.ko": {
+      "first_SHA256": "b2285dfc0594f59e233e15e88e11de189f8f55b4638b1c028f0e5ff1d1f81ba2",
+      "second_SHA256": "b2285dfc0594f59e233e15e88e11de189f8f55b4638b1c028f0e5ff1d1f81ba2",
+      "byte_identical": true
+    },
+    "drivers/input/misc/pmic8xxx-pwrkey.ko": {
+      "first_SHA256": "ed6f490cbfdab86987a8e62ac9aa85513ce1d38955d9d97256a556ac4001f0b4",
+      "second_SHA256": "ed6f490cbfdab86987a8e62ac9aa85513ce1d38955d9d97256a556ac4001f0b4",
+      "byte_identical": true
+    },
+    "drivers/input/misc/pwm-vibra.ko": {
+      "first_SHA256": "afca37cff00d6289e1f1918b8e401cc10889b9bb73ab362112a0018d7afed41e",
+      "second_SHA256": "afca37cff00d6289e1f1918b8e401cc10889b9bb73ab362112a0018d7afed41e",
+      "byte_identical": true
+    },
+    "drivers/input/misc/regulator-haptic.ko": {
+      "first_SHA256": "94764f124dd7dd7dd7b02d3982c93241e0831f08c21917410cbc1c7908d7a893",
+      "second_SHA256": "94764f124dd7dd7dd7b02d3982c93241e0831f08c21917410cbc1c7908d7a893",
+      "byte_identical": true
+    },
+    "drivers/input/rmi4/rmi_core.ko": {
+      "first_SHA256": "503f16e654c339356b39454a294f4cdc4a5b0cdb44ed828824b90148e6785983",
+      "second_SHA256": "503f16e654c339356b39454a294f4cdc4a5b0cdb44ed828824b90148e6785983",
+      "byte_identical": true
+    },
+    "drivers/input/rmi4/rmi_i2c.ko": {
+      "first_SHA256": "6c822ad5c2b34f62762a4cb34f810941203187bb65ca8d7674beb734e98a523b",
+      "second_SHA256": "6c822ad5c2b34f62762a4cb34f810941203187bb65ca8d7674beb734e98a523b",
+      "byte_identical": true
+    },
+    "drivers/input/touchscreen/atmel_mxt_ts.ko": {
+      "first_SHA256": "fa6027ca69ed70bf21115856a3aaffdf585a5189f3ae0d3bbc787b865a9b9df9",
+      "second_SHA256": "fa6027ca69ed70bf21115856a3aaffdf585a5189f3ae0d3bbc787b865a9b9df9",
+      "byte_identical": true
+    },
+    "drivers/input/touchscreen/mms114.ko": {
+      "first_SHA256": "16c9be22ef93b5f7f63736601ef6a66649775eb7483e917827346d9458397394",
+      "second_SHA256": "16c9be22ef93b5f7f63736601ef6a66649775eb7483e917827346d9458397394",
+      "byte_identical": true
+    },
+    "drivers/input/touchscreen/zinitix.ko": {
+      "first_SHA256": "2eccc1e872c0923ea5ff65473a8b41522f5e3bb902521fb0ca985a4e2ab55f30",
+      "second_SHA256": "2eccc1e872c0923ea5ff65473a8b41522f5e3bb902521fb0ca985a4e2ab55f30",
+      "byte_identical": true
+    },
+    "drivers/input/vivaldi-fmap.ko": {
+      "first_SHA256": "2213f333178a28b3657ad83b91c7f19d5f661c0155db7cf6c564424922b17470",
+      "second_SHA256": "2213f333178a28b3657ad83b91c7f19d5f661c0155db7cf6c564424922b17470",
+      "byte_identical": true
+    },
+    "drivers/interconnect/qcom/icc-smd-rpm.ko": {
+      "first_SHA256": "1f1a3cfe8aa65ea1b4ee0d82a1e416fa73b3fc6e9975d81b5cfe80f396502770",
+      "second_SHA256": "1f1a3cfe8aa65ea1b4ee0d82a1e416fa73b3fc6e9975d81b5cfe80f396502770",
+      "byte_identical": true
+    },
+    "drivers/interconnect/qcom/qnoc-msm8974.ko": {
+      "first_SHA256": "48e85d60f22a6f43fd530d01bb3e9adbf78060587eef4325289b3784e0c3e3ac",
+      "second_SHA256": "48e85d60f22a6f43fd530d01bb3e9adbf78060587eef4325289b3784e0c3e3ac",
+      "byte_identical": true
+    },
+    "drivers/leds/led-class-multicolor.ko": {
+      "first_SHA256": "b84e5a9b682e1b88a0751031551d52d53d4c46cedb5f1d7932a46d4b25a207da",
+      "second_SHA256": "b84e5a9b682e1b88a0751031551d52d53d4c46cedb5f1d7932a46d4b25a207da",
+      "byte_identical": true
+    },
+    "drivers/leds/leds-pm8058.ko": {
+      "first_SHA256": "400d323da095cdc712dd60e9a4a50e316e1f085d5af1bea5b6077b344320ac9b",
+      "second_SHA256": "400d323da095cdc712dd60e9a4a50e316e1f085d5af1bea5b6077b344320ac9b",
+      "byte_identical": true
+    },
+    "drivers/leds/rgb/leds-qcom-lpg.ko": {
+      "first_SHA256": "5b1691458391a90a8b1db3a105c3def9fa5d1baabbbe3cfcd95162d08eb53471",
+      "second_SHA256": "5b1691458391a90a8b1db3a105c3def9fa5d1baabbbe3cfcd95162d08eb53471",
+      "byte_identical": true
+    },
+    "drivers/leds/trigger/ledtrig-heartbeat.ko": {
+      "first_SHA256": "a914d6434cc9433b3270a12615c6fbfd1e6aa3691e0e8e77a4410dddfe1365ef",
+      "second_SHA256": "a914d6434cc9433b3270a12615c6fbfd1e6aa3691e0e8e77a4410dddfe1365ef",
+      "byte_identical": true
+    },
+    "drivers/leds/trigger/ledtrig-pattern.ko": {
+      "first_SHA256": "f13f49c315bf8b1f34b64c8e8d067773eb49cfb6bedd78435c24d68cb5595fa2",
+      "second_SHA256": "f13f49c315bf8b1f34b64c8e8d067773eb49cfb6bedd78435c24d68cb5595fa2",
+      "byte_identical": true
+    },
+    "drivers/leds/trigger/ledtrig-timer.ko": {
+      "first_SHA256": "706a59a1989ca13918d803e8e6bda9c9a69bec9e3155dfddca9ee3e11f064e10",
+      "second_SHA256": "706a59a1989ca13918d803e8e6bda9c9a69bec9e3155dfddca9ee3e11f064e10",
+      "byte_identical": true
+    },
+    "drivers/md/dm-bio-prison.ko": {
+      "first_SHA256": "60087f6738d70c7e7ff340ed1557446d5566bb7726cf1ccfb9eb8dca84db3338",
+      "second_SHA256": "60087f6738d70c7e7ff340ed1557446d5566bb7726cf1ccfb9eb8dca84db3338",
+      "byte_identical": true
+    },
+    "drivers/md/dm-bufio.ko": {
+      "first_SHA256": "11d9d104efe59fbab5fafff8b109a207bf3adfb9ed952f35501d770aaf12ba43",
+      "second_SHA256": "11d9d104efe59fbab5fafff8b109a207bf3adfb9ed952f35501d770aaf12ba43",
+      "byte_identical": true
+    },
+    "drivers/md/dm-integrity.ko": {
+      "first_SHA256": "a11a77d1d51e7e547efa837d9347bbed3f02597f33f2e3144de3f535fb4963ad",
+      "second_SHA256": "a11a77d1d51e7e547efa837d9347bbed3f02597f33f2e3144de3f535fb4963ad",
+      "byte_identical": true
+    },
+    "drivers/md/dm-thin-pool.ko": {
+      "first_SHA256": "a6fbf19d8550ec5f1c3ebd1dc44f03459c2319046c8eb91cb4db1a6f938b5712",
+      "second_SHA256": "a6fbf19d8550ec5f1c3ebd1dc44f03459c2319046c8eb91cb4db1a6f938b5712",
+      "byte_identical": true
+    },
+    "drivers/md/dm-verity.ko": {
+      "first_SHA256": "57a7a2b5dd39cbbf44357c25efaf180f2b4a752870c9930fa98e7110cea47c3e",
+      "second_SHA256": "57a7a2b5dd39cbbf44357c25efaf180f2b4a752870c9930fa98e7110cea47c3e",
+      "byte_identical": true
+    },
+    "drivers/md/persistent-data/dm-persistent-data.ko": {
+      "first_SHA256": "682fc8cf6bcfce857c4a9177a4cb26867404d37f208fea6616ec77b791a8a6b1",
+      "second_SHA256": "682fc8cf6bcfce857c4a9177a4cb26867404d37f208fea6616ec77b791a8a6b1",
+      "byte_identical": true
+    },
+    "drivers/misc/ntsync.ko": {
+      "first_SHA256": "66942fcaff9f6b75805d788917725770e0ba7b5846d84e30fe31615a90fc8261",
+      "second_SHA256": "66942fcaff9f6b75805d788917725770e0ba7b5846d84e30fe31615a90fc8261",
+      "byte_identical": true
+    },
+    "drivers/net/dummy.ko": {
+      "first_SHA256": "fecae3e69fb9f541f30f07258dc8b9344de485123c6a60e8b763311c837f8663",
+      "second_SHA256": "fecae3e69fb9f541f30f07258dc8b9344de485123c6a60e8b763311c837f8663",
+      "byte_identical": true
+    },
+    "drivers/net/ipvlan/ipvlan.ko": {
+      "first_SHA256": "be757b8f8dba07f2710dcdcf68a5c9ee9d741fa1722b83a171b78fb61e531217",
+      "second_SHA256": "be757b8f8dba07f2710dcdcf68a5c9ee9d741fa1722b83a171b78fb61e531217",
+      "byte_identical": true
+    },
+    "drivers/net/macvlan.ko": {
+      "first_SHA256": "196a7210e7424cce54cb19792aee72ec07fdf1bff3c5328967aa01afb9c67ac1",
+      "second_SHA256": "196a7210e7424cce54cb19792aee72ec07fdf1bff3c5328967aa01afb9c67ac1",
+      "byte_identical": true
+    },
+    "drivers/net/mii.ko": {
+      "first_SHA256": "5545824d5dbf91aad95c366d9c95086b3b2b92cc5f88654140e8400341cef061",
+      "second_SHA256": "5545824d5dbf91aad95c366d9c95086b3b2b92cc5f88654140e8400341cef061",
+      "byte_identical": true
+    },
+    "drivers/net/tun.ko": {
+      "first_SHA256": "ce9f1870318ca9706bf82c9da1c59dc1f29eaf3e64e284af237db3b7d63cfa6c",
+      "second_SHA256": "ce9f1870318ca9706bf82c9da1c59dc1f29eaf3e64e284af237db3b7d63cfa6c",
+      "byte_identical": true
+    },
+    "drivers/net/usb/ax88179_178a.ko": {
+      "first_SHA256": "c6168ef459b6eec38a65975584d72923f23f201b1ccf58097e5b9648ff16174b",
+      "second_SHA256": "c6168ef459b6eec38a65975584d72923f23f201b1ccf58097e5b9648ff16174b",
+      "byte_identical": true
+    },
+    "drivers/net/usb/cdc_ether.ko": {
+      "first_SHA256": "1e365239b95aca19ffcb2384744b7850087ef2bc14bea09b46d32b6dc1980cf7",
+      "second_SHA256": "1e365239b95aca19ffcb2384744b7850087ef2bc14bea09b46d32b6dc1980cf7",
+      "byte_identical": true
+    },
+    "drivers/net/usb/cdc_ncm.ko": {
+      "first_SHA256": "db4ab3a2bcdb58090f2d27d14fac2dadfa53d1b21cf35303344c6b1d3835978a",
+      "second_SHA256": "db4ab3a2bcdb58090f2d27d14fac2dadfa53d1b21cf35303344c6b1d3835978a",
+      "byte_identical": true
+    },
+    "drivers/net/usb/cdc_subset.ko": {
+      "first_SHA256": "58daa3e52bc0f1a77b8a45fe1daade37360868a11352428e942f3cd5189af7b0",
+      "second_SHA256": "58daa3e52bc0f1a77b8a45fe1daade37360868a11352428e942f3cd5189af7b0",
+      "byte_identical": true
+    },
+    "drivers/net/usb/net1080.ko": {
+      "first_SHA256": "4a2536636a0718662a62185978fd8b6e54015bf935774b4cb0430b884c53f620",
+      "second_SHA256": "4a2536636a0718662a62185978fd8b6e54015bf935774b4cb0430b884c53f620",
+      "byte_identical": true
+    },
+    "drivers/net/usb/r8152.ko": {
+      "first_SHA256": "b885330dbde7a708e816e9053e2147a6e4dd9aead074d0ece2d28997b9e92600",
+      "second_SHA256": "b885330dbde7a708e816e9053e2147a6e4dd9aead074d0ece2d28997b9e92600",
+      "byte_identical": true
+    },
+    "drivers/net/usb/r8153_ecm.ko": {
+      "first_SHA256": "c3fd19fb7da1ea8798f07b15a7fb4206113fc1919abb68af7b1c44bdd739e1fa",
+      "second_SHA256": "c3fd19fb7da1ea8798f07b15a7fb4206113fc1919abb68af7b1c44bdd739e1fa",
+      "byte_identical": true
+    },
+    "drivers/net/usb/rndis_host.ko": {
+      "first_SHA256": "d6b26c141382fb73875fb37ad321df70c9b3eb13823fbb712dca07a628e1a991",
+      "second_SHA256": "d6b26c141382fb73875fb37ad321df70c9b3eb13823fbb712dca07a628e1a991",
+      "byte_identical": true
+    },
+    "drivers/net/usb/usbnet.ko": {
+      "first_SHA256": "360ef2a75619452e861d38f470323402dd2af6d3ba68190a7b43e20a60ee7e24",
+      "second_SHA256": "360ef2a75619452e861d38f470323402dd2af6d3ba68190a7b43e20a60ee7e24",
+      "byte_identical": true
+    },
+    "drivers/net/veth.ko": {
+      "first_SHA256": "5d9e73d30338055d8dad7cc9d7499843f286e9c7c208d82e9c05a82134fcff93",
+      "second_SHA256": "5d9e73d30338055d8dad7cc9d7499843f286e9c7c208d82e9c05a82134fcff93",
+      "byte_identical": true
+    },
+    "drivers/net/vxlan/vxlan.ko": {
+      "first_SHA256": "582322fe9ecfb36ada4e48034d855f4e87f85fbd4ee23bcbf0d73ebfc0665dbf",
+      "second_SHA256": "582322fe9ecfb36ada4e48034d855f4e87f85fbd4ee23bcbf0d73ebfc0665dbf",
+      "byte_identical": true
+    },
+    "drivers/net/wireguard/wireguard.ko": {
+      "first_SHA256": "8f62bfb44e78301860dc55d614ebe72012e5d6f9dd1a890244d2628be578a033",
+      "second_SHA256": "8f62bfb44e78301860dc55d614ebe72012e5d6f9dd1a890244d2628be578a033",
+      "byte_identical": true
+    },
+    "drivers/net/wireless/ath/wcn36xx/wcn36xx.ko": {
+      "first_SHA256": "28c734b421e836b030862d1628cf772fcfcf7c1807089a605b6db3f0d26de447",
+      "second_SHA256": "28c734b421e836b030862d1628cf772fcfcf7c1807089a605b6db3f0d26de447",
+      "byte_identical": true
+    },
+    "drivers/net/wireless/broadcom/brcm80211/brcmfmac/bca/brcmfmac-bca.ko": {
+      "first_SHA256": "20e7abf723d82df894b22377e8b535db4fad397182e7c8d62e352a40f728cf14",
+      "second_SHA256": "20e7abf723d82df894b22377e8b535db4fad397182e7c8d62e352a40f728cf14",
+      "byte_identical": true
+    },
+    "drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko": {
+      "first_SHA256": "75609bca3c68700ae96975600f4274ac2c4cf244d4b3987c86decae9f8dd3482",
+      "second_SHA256": "75609bca3c68700ae96975600f4274ac2c4cf244d4b3987c86decae9f8dd3482",
+      "byte_identical": true
+    },
+    "drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/brcmfmac-cyw.ko": {
+      "first_SHA256": "2e679950ab3a6ea38be747d666bf8d7f7beab6a1cd057cfc8e54f0eeedcda016",
+      "second_SHA256": "2e679950ab3a6ea38be747d666bf8d7f7beab6a1cd057cfc8e54f0eeedcda016",
+      "byte_identical": true
+    },
+    "drivers/net/wireless/broadcom/brcm80211/brcmfmac/wcc/brcmfmac-wcc.ko": {
+      "first_SHA256": "8e8574f1919664c53316c77fe8440ba957673d445dac32b2297e77ca1e80f4c2",
+      "second_SHA256": "8e8574f1919664c53316c77fe8440ba957673d445dac32b2297e77ca1e80f4c2",
+      "byte_identical": true
+    },
+    "drivers/net/wireless/broadcom/brcm80211/brcmutil/brcmutil.ko": {
+      "first_SHA256": "5e8a6e1d5aa004611bf6ad640367a0ab9591e2fef3ab2734d7c53398667b586f",
+      "second_SHA256": "5e8a6e1d5aa004611bf6ad640367a0ab9591e2fef3ab2734d7c53398667b586f",
+      "byte_identical": true
+    },
+    "drivers/net/wwan/qcom_bam_dmux.ko": {
+      "first_SHA256": "f301ae67cb5d27f65c1a5828ce1cb426ccba3078c0f0e639903a3a2a7c4cc128",
+      "second_SHA256": "f301ae67cb5d27f65c1a5828ce1cb426ccba3078c0f0e639903a3a2a7c4cc128",
+      "byte_identical": true
+    },
+    "drivers/net/wwan/rpmsg_wwan_ctrl.ko": {
+      "first_SHA256": "51386cbb7e74717ed10d584e9495b4c237a051fe670c03452eca62280788399f",
+      "second_SHA256": "51386cbb7e74717ed10d584e9495b4c237a051fe670c03452eca62280788399f",
+      "byte_identical": true
+    },
+    "drivers/nfc/nxp-nci/nxp-nci.ko": {
+      "first_SHA256": "f1fad31c4763fc45244e69ec045dc8f6bca6fdf2098101c5302926ba49007a8b",
+      "second_SHA256": "f1fad31c4763fc45244e69ec045dc8f6bca6fdf2098101c5302926ba49007a8b",
+      "byte_identical": true
+    },
+    "drivers/nfc/nxp-nci/nxp-nci_i2c.ko": {
+      "first_SHA256": "e13bbadd38ac227d82a6c6696fd134107875d7d90e0d449189505ef45c2e518e",
+      "second_SHA256": "e13bbadd38ac227d82a6c6696fd134107875d7d90e0d449189505ef45c2e518e",
+      "byte_identical": true
+    },
+    "drivers/power/reset/syscon-reboot-mode.ko": {
+      "first_SHA256": "4670a917d45bc046cce939b1acae78fb230fd2d9e5dd9fbb7354f9f8d36d32e8",
+      "second_SHA256": "4670a917d45bc046cce939b1acae78fb230fd2d9e5dd9fbb7354f9f8d36d32e8",
+      "byte_identical": true
+    },
+    "drivers/power/supply/bq24190_charger.ko": {
+      "first_SHA256": "b30ae75c4d6e31825f2bac51504e57f981eb1e0112545f3107d2df03324377e3",
+      "second_SHA256": "b30ae75c4d6e31825f2bac51504e57f981eb1e0112545f3107d2df03324377e3",
+      "byte_identical": true
+    },
+    "drivers/power/supply/bq27xxx_battery.ko": {
+      "first_SHA256": "59b716a09c0ebb7ba8d694df6d11414ca0ff5e83c2287aaa02dcb0c4b3118cba",
+      "second_SHA256": "59b716a09c0ebb7ba8d694df6d11414ca0ff5e83c2287aaa02dcb0c4b3118cba",
+      "byte_identical": true
+    },
+    "drivers/power/supply/bq27xxx_battery_i2c.ko": {
+      "first_SHA256": "588124015690951c9b62b49321b1153aea986d9981cb7315c3ee86ffe3432117",
+      "second_SHA256": "588124015690951c9b62b49321b1153aea986d9981cb7315c3ee86ffe3432117",
+      "byte_identical": true
+    },
+    "drivers/power/supply/smb347-charger.ko": {
+      "first_SHA256": "94f919665d616504f224c71fc8324ccc53f364d7b5b1088002afe14280f184a4",
+      "second_SHA256": "94f919665d616504f224c71fc8324ccc53f364d7b5b1088002afe14280f184a4",
+      "byte_identical": true
+    },
+    "drivers/pwm/pwm-clk.ko": {
+      "first_SHA256": "886bcaa830684cc0b1a352c42ebf3b2ae8f42036c54c82b26c74d0433842b44c",
+      "second_SHA256": "886bcaa830684cc0b1a352c42ebf3b2ae8f42036c54c82b26c74d0433842b44c",
+      "byte_identical": true
+    },
+    "drivers/regulator/tps65132-regulator.ko": {
+      "first_SHA256": "e25d2eb59135687cc127fc8c507565c738413c2cff796a37a8839f567825f64b",
+      "second_SHA256": "e25d2eb59135687cc127fc8c507565c738413c2cff796a37a8839f567825f64b",
+      "byte_identical": true
+    },
+    "drivers/remoteproc/qcom_common.ko": {
+      "first_SHA256": "b4dde33bd545efa010d3cfa218b17f702c4fd47ada9be2152cae3ed45799bd95",
+      "second_SHA256": "b4dde33bd545efa010d3cfa218b17f702c4fd47ada9be2152cae3ed45799bd95",
+      "byte_identical": true
+    },
+    "drivers/remoteproc/qcom_pil_info.ko": {
+      "first_SHA256": "12e211a83ee8ef3c3227da95c4e610daa8fff2abe89c7975931f8ae7a2f6dbe1",
+      "second_SHA256": "12e211a83ee8ef3c3227da95c4e610daa8fff2abe89c7975931f8ae7a2f6dbe1",
+      "byte_identical": true
+    },
+    "drivers/remoteproc/qcom_q6v5.ko": {
+      "first_SHA256": "b9028e02ab710f459d4b6b34a7926bdab6a8a0201f6297985d509a1ef5e19bde",
+      "second_SHA256": "b9028e02ab710f459d4b6b34a7926bdab6a8a0201f6297985d509a1ef5e19bde",
+      "byte_identical": true
+    },
+    "drivers/remoteproc/qcom_q6v5_mss.ko": {
+      "first_SHA256": "83f168b4d86b3af1bda07408ef7c60511b5dacec9e88c06a9f8a4b32b6feb332",
+      "second_SHA256": "83f168b4d86b3af1bda07408ef7c60511b5dacec9e88c06a9f8a4b32b6feb332",
+      "byte_identical": true
+    },
+    "drivers/remoteproc/qcom_q6v5_pas.ko": {
+      "first_SHA256": "d9657f3dd871443006c20bbdc6a54095d461b60ac966df819c5fdf2e302e20c1",
+      "second_SHA256": "d9657f3dd871443006c20bbdc6a54095d461b60ac966df819c5fdf2e302e20c1",
+      "byte_identical": true
+    },
+    "drivers/remoteproc/qcom_wcnss_pil.ko": {
+      "first_SHA256": "e432e55ed409177187dc182edcc28996de2ad4e2b5c9b8186871531039689d08",
+      "second_SHA256": "e432e55ed409177187dc182edcc28996de2ad4e2b5c9b8186871531039689d08",
+      "byte_identical": true
+    },
+    "drivers/scsi/sr_mod.ko": {
+      "first_SHA256": "ac9b7c56da26714674138e28acd1389db8a6755b93a5fa00459b70f713f03f4a",
+      "second_SHA256": "ac9b7c56da26714674138e28acd1389db8a6755b93a5fa00459b70f713f03f4a",
+      "byte_identical": true
+    },
+    "drivers/slimbus/slim-qcom-ngd-ctrl.ko": {
+      "first_SHA256": "94cc4bef991066097497060e3cc5cf395c3e1697baf087852156f2cc01fc6d71",
+      "second_SHA256": "94cc4bef991066097497060e3cc5cf395c3e1697baf087852156f2cc01fc6d71",
+      "byte_identical": true
+    },
+    "drivers/slimbus/slimbus.ko": {
+      "first_SHA256": "f8477dc5313013f9ddf80748824ebfbc1afd87fd22b5a1a6723704b584fbb029",
+      "second_SHA256": "f8477dc5313013f9ddf80748824ebfbc1afd87fd22b5a1a6723704b584fbb029",
+      "byte_identical": true
+    },
+    "drivers/soc/qcom/apr.ko": {
+      "first_SHA256": "e239ed7cf053cd68f0588369bd440250080a68c53f0e6a57e6f6e0c341af5f58",
+      "second_SHA256": "e239ed7cf053cd68f0588369bd440250080a68c53f0e6a57e6f6e0c341af5f58",
+      "byte_identical": true
+    },
+    "drivers/soc/qcom/mdt_loader.ko": {
+      "first_SHA256": "02fc46ed8c37517b46790dab1e94640c4c90202750db45b045c08154cbcea0ec",
+      "second_SHA256": "02fc46ed8c37517b46790dab1e94640c4c90202750db45b045c08154cbcea0ec",
+      "byte_identical": true
+    },
+    "drivers/soc/qcom/pdr_interface.ko": {
+      "first_SHA256": "fc1ca4f1e7e40e38efdc38bad23d783eb8732493034e91f79f6c0b649dbdc913",
+      "second_SHA256": "fc1ca4f1e7e40e38efdc38bad23d783eb8732493034e91f79f6c0b649dbdc913",
+      "byte_identical": true
+    },
+    "drivers/soc/qcom/qcom_pdr_msg.ko": {
+      "first_SHA256": "aba25c25a309e105f8df1aaebf844989f4e7e94f2a37e70d775be1d43bc0c912",
+      "second_SHA256": "aba25c25a309e105f8df1aaebf844989f4e7e94f2a37e70d775be1d43bc0c912",
+      "byte_identical": true
+    },
+    "drivers/soc/qcom/qcom_stats.ko": {
+      "first_SHA256": "ba659ee77c6a2aa5c8f3563bc70a8bf38bda873e004f8ba626c2764bf70722b9",
+      "second_SHA256": "ba659ee77c6a2aa5c8f3563bc70a8bf38bda873e004f8ba626c2764bf70722b9",
+      "byte_identical": true
+    },
+    "drivers/soc/qcom/qmi_helpers.ko": {
+      "first_SHA256": "2fce71571583f4dd922769ffd5686233d3202524e0cadc9d4bb7fe951af859aa",
+      "second_SHA256": "2fce71571583f4dd922769ffd5686233d3202524e0cadc9d4bb7fe951af859aa",
+      "byte_identical": true
+    },
+    "drivers/soc/qcom/qmi_tmd.ko": {
+      "first_SHA256": "9b2c8836065a3aba70a51b3569c3dc1043655a9a0b34eeeea18ae528ea2cc090",
+      "second_SHA256": "9b2c8836065a3aba70a51b3569c3dc1043655a9a0b34eeeea18ae528ea2cc090",
+      "byte_identical": true
+    },
+    "drivers/soc/qcom/rpm_master_stats.ko": {
+      "first_SHA256": "0c951b60f836d5a3350476adf57a8a67b1e9c358a52c186e08379a9f009168b6",
+      "second_SHA256": "0c951b60f836d5a3350476adf57a8a67b1e9c358a52c186e08379a9f009168b6",
+      "byte_identical": true
+    },
+    "drivers/soc/qcom/ubwc_config.ko": {
+      "first_SHA256": "2f8440b9aeb3384fb49e3722319d8d5d9014d96ac7e2bab0a7f6366f4e1d06cf",
+      "second_SHA256": "2f8440b9aeb3384fb49e3722319d8d5d9014d96ac7e2bab0a7f6366f4e1d06cf",
+      "byte_identical": true
+    },
+    "drivers/tty/ttynull.ko": {
+      "first_SHA256": "0b5575ddc09a92eaa306f2ce4a19a822c3503b29ee8c4e998fe06e551b6974bb",
+      "second_SHA256": "0b5575ddc09a92eaa306f2ce4a19a822c3503b29ee8c4e998fe06e551b6974bb",
+      "byte_identical": true
+    },
+    "drivers/usb/chipidea/ci_hdrc.ko": {
+      "first_SHA256": "f653e536c25fea6ca4b175bc1253aab5c6ead39c9bccb831eb477287bfd47e28",
+      "second_SHA256": "f653e536c25fea6ca4b175bc1253aab5c6ead39c9bccb831eb477287bfd47e28",
+      "byte_identical": true
+    },
+    "drivers/usb/chipidea/ci_hdrc_imx.ko": {
+      "first_SHA256": "a319f3fe792b9f145d385905a28a598c5ad09ab43e6eafbb6458992417a040a4",
+      "second_SHA256": "a319f3fe792b9f145d385905a28a598c5ad09ab43e6eafbb6458992417a040a4",
+      "byte_identical": true
+    },
+    "drivers/usb/chipidea/ci_hdrc_msm.ko": {
+      "first_SHA256": "b130e91be05b855176cd0d7ae1dddf0f862f3e51f05ba619af43b7a8e4f17fc0",
+      "second_SHA256": "b130e91be05b855176cd0d7ae1dddf0f862f3e51f05ba619af43b7a8e4f17fc0",
+      "byte_identical": true
+    },
+    "drivers/usb/chipidea/ci_hdrc_npcm.ko": {
+      "first_SHA256": "4d5d8e6f6118eab45999ec138d4debd1704f8135cbdd7cfc1eddaf1a203a24d0",
+      "second_SHA256": "4d5d8e6f6118eab45999ec138d4debd1704f8135cbdd7cfc1eddaf1a203a24d0",
+      "byte_identical": true
+    },
+    "drivers/usb/chipidea/ci_hdrc_tegra.ko": {
+      "first_SHA256": "f60579e289107534d8a03b628d7b877de68f5dc73e38041660a560651a99b905",
+      "second_SHA256": "f60579e289107534d8a03b628d7b877de68f5dc73e38041660a560651a99b905",
+      "byte_identical": true
+    },
+    "drivers/usb/chipidea/ci_hdrc_usb2.ko": {
+      "first_SHA256": "c98a06bf459f5d74d75ed4a391259871cdf3c32384ee32ee0c43019d0fdfa52c",
+      "second_SHA256": "c98a06bf459f5d74d75ed4a391259871cdf3c32384ee32ee0c43019d0fdfa52c",
+      "byte_identical": true
+    },
+    "drivers/usb/chipidea/usbmisc_imx.ko": {
+      "first_SHA256": "dab30666647b2f4aa0bcaac1f760b393e9ab27bf8fd4708566e53c28b2faa631",
+      "second_SHA256": "dab30666647b2f4aa0bcaac1f760b393e9ab27bf8fd4708566e53c28b2faa631",
+      "byte_identical": true
+    },
+    "drivers/usb/class/usblp.ko": {
+      "first_SHA256": "0770216f75a4012023552f65c68d92985ae4537947035958559e0f1106b98a39",
+      "second_SHA256": "0770216f75a4012023552f65c68d92985ae4537947035958559e0f1106b98a39",
+      "byte_identical": true
+    },
+    "drivers/usb/serial/cp210x.ko": {
+      "first_SHA256": "e76470f24da68b3cfa5772bba5b002b159a2d665cccd161d6517c2fa9db7c0c4",
+      "second_SHA256": "e76470f24da68b3cfa5772bba5b002b159a2d665cccd161d6517c2fa9db7c0c4",
+      "byte_identical": true
+    },
+    "drivers/usb/serial/usb-serial-simple.ko": {
+      "first_SHA256": "d54dfe8b1b7b5266d5f27e9fe78ceeba6f4f73c7010028f4604eb7e2cd179cf4",
+      "second_SHA256": "d54dfe8b1b7b5266d5f27e9fe78ceeba6f4f73c7010028f4604eb7e2cd179cf4",
+      "byte_identical": true
+    },
+    "drivers/usb/serial/usbserial.ko": {
+      "first_SHA256": "ef1d527cc432009db6090d41b21ed8644ee9ec1f74220f4f5161b87f51c0fa99",
+      "second_SHA256": "ef1d527cc432009db6090d41b21ed8644ee9ec1f74220f4f5161b87f51c0fa99",
+      "byte_identical": true
+    },
+    "drivers/usb/storage/uas.ko": {
+      "first_SHA256": "02f55e6eb9f6cdf4e3a7b0be4c3471182fa6e2635948a03c2ceb667755dafd9e",
+      "second_SHA256": "02f55e6eb9f6cdf4e3a7b0be4c3471182fa6e2635948a03c2ceb667755dafd9e",
+      "byte_identical": true
+    },
+    "drivers/usb/storage/usb-storage.ko": {
+      "first_SHA256": "5fce443d36b0878c8083d0ac9715598d714fb3728ff2c23c6849993b0e9cfaae",
+      "second_SHA256": "5fce443d36b0878c8083d0ac9715598d714fb3728ff2c23c6849993b0e9cfaae",
+      "byte_identical": true
+    },
+    "drivers/video/backlight/lcd.ko": {
+      "first_SHA256": "02a64c09c3cf8db7368bc26752e16d0544cf20b58f0b4c552239e0848f378469",
+      "second_SHA256": "02a64c09c3cf8db7368bc26752e16d0544cf20b58f0b4c552239e0848f378469",
+      "byte_identical": true
+    },
+    "drivers/video/backlight/qcom-wled.ko": {
+      "first_SHA256": "995da9679b7b886a19842c077c14efb37a25243f6694d973d3d6ae80acf3f98a",
+      "second_SHA256": "995da9679b7b886a19842c077c14efb37a25243f6694d973d3d6ae80acf3f98a",
+      "byte_identical": true
+    },
+    "fs/autofs/autofs4.ko": {
+      "first_SHA256": "cfacf4813827c63c57c988fa484f92289a40e905290ee9a001da31327a972996",
+      "second_SHA256": "cfacf4813827c63c57c988fa484f92289a40e905290ee9a001da31327a972996",
+      "byte_identical": true
+    },
+    "fs/binfmt_misc.ko": {
+      "first_SHA256": "cf1bfc11016dade91b3744732a331e9ffbd161b38e77a393515dcd85caee1490",
+      "second_SHA256": "cf1bfc11016dade91b3744732a331e9ffbd161b38e77a393515dcd85caee1490",
+      "byte_identical": true
+    },
+    "fs/btrfs/btrfs.ko": {
+      "first_SHA256": "58d9db4f6a9431366fd44a676c505f4af1c881ce5c102f816c27738ff9d3dcdb",
+      "second_SHA256": "58d9db4f6a9431366fd44a676c505f4af1c881ce5c102f816c27738ff9d3dcdb",
+      "byte_identical": true
+    },
+    "fs/cachefiles/cachefiles.ko": {
+      "first_SHA256": "2898e19aba151488380798558a9e147c724c24db70b8915b8e5ee4a7166027e6",
+      "second_SHA256": "2898e19aba151488380798558a9e147c724c24db70b8915b8e5ee4a7166027e6",
+      "byte_identical": true
+    },
+    "fs/efivarfs/efivarfs.ko": {
+      "first_SHA256": "2a161c734b21e9d720c7b4271cd08cf8b6ab2cea651cc60ea70caf227b5e445b",
+      "second_SHA256": "2a161c734b21e9d720c7b4271cd08cf8b6ab2cea651cc60ea70caf227b5e445b",
+      "byte_identical": true
+    },
+    "fs/erofs/erofs.ko": {
+      "first_SHA256": "e49d7ae4d5bba427b910128e2ad8d262ba24ebeaae4c5fc7e56178ed23aef9ed",
+      "second_SHA256": "e49d7ae4d5bba427b910128e2ad8d262ba24ebeaae4c5fc7e56178ed23aef9ed",
+      "byte_identical": true
+    },
+    "fs/exfat/exfat.ko": {
+      "first_SHA256": "ad8adc1394ed660492e58f719018b321bc1293128b19db2aad1d03107b641870",
+      "second_SHA256": "ad8adc1394ed660492e58f719018b321bc1293128b19db2aad1d03107b641870",
+      "byte_identical": true
+    },
+    "fs/ext2/ext2.ko": {
+      "first_SHA256": "34419712343228d219c45e793e3db79cb8a1001bbc5382dd38464db7f7abd3aa",
+      "second_SHA256": "34419712343228d219c45e793e3db79cb8a1001bbc5382dd38464db7f7abd3aa",
+      "byte_identical": true
+    },
+    "fs/f2fs/f2fs.ko": {
+      "first_SHA256": "d036f992bf97b317a804a4e9a2ac4a1bb5c419a717c67be75ef3a8210dc470b0",
+      "second_SHA256": "d036f992bf97b317a804a4e9a2ac4a1bb5c419a717c67be75ef3a8210dc470b0",
+      "byte_identical": true
+    },
+    "fs/fuse/fuse.ko": {
+      "first_SHA256": "62e93a50737215166c1e5b68bf40830fa20e4bd29d1264b889a2229cdc687899",
+      "second_SHA256": "62e93a50737215166c1e5b68bf40830fa20e4bd29d1264b889a2229cdc687899",
+      "byte_identical": true
+    },
+    "fs/isofs/isofs.ko": {
+      "first_SHA256": "b9e2cf900808309dde9a355804f5d5a3065d7184cf92d45d67581b28192b463e",
+      "second_SHA256": "b9e2cf900808309dde9a355804f5d5a3065d7184cf92d45d67581b28192b463e",
+      "byte_identical": true
+    },
+    "fs/lockd/lockd.ko": {
+      "first_SHA256": "adda2ee5abe59a44702379c3c359ad27524d0ce65e990a3aba54ccc40af2e661",
+      "second_SHA256": "adda2ee5abe59a44702379c3c359ad27524d0ce65e990a3aba54ccc40af2e661",
+      "byte_identical": true
+    },
+    "fs/netfs/netfs.ko": {
+      "first_SHA256": "6974a43c6553efdfc12a639e1ed35ded74610af9d7fc597ac710c7f695b941bc",
+      "second_SHA256": "6974a43c6553efdfc12a639e1ed35ded74610af9d7fc597ac710c7f695b941bc",
+      "byte_identical": true
+    },
+    "fs/nfs/blocklayout/blocklayoutdriver.ko": {
+      "first_SHA256": "a6e0ae10bcb86cf641b13f4969f6f222c40066c6fe2016445261e03de4a1bc44",
+      "second_SHA256": "a6e0ae10bcb86cf641b13f4969f6f222c40066c6fe2016445261e03de4a1bc44",
+      "byte_identical": true
+    },
+    "fs/nfs/filelayout/nfs_layout_nfsv41_files.ko": {
+      "first_SHA256": "d821d033f1bce9df43a1af39db23980ee27a2f774320fc4f8001de9da19bb583",
+      "second_SHA256": "d821d033f1bce9df43a1af39db23980ee27a2f774320fc4f8001de9da19bb583",
+      "byte_identical": true
+    },
+    "fs/nfs/flexfilelayout/nfs_layout_flexfiles.ko": {
+      "first_SHA256": "350ad59bd3691851256bc2a15f44e614423da1774b716952602fb5c34a82e80b",
+      "second_SHA256": "350ad59bd3691851256bc2a15f44e614423da1774b716952602fb5c34a82e80b",
+      "byte_identical": true
+    },
+    "fs/nfs/nfs.ko": {
+      "first_SHA256": "9b8f845e24f449c423af39cef61a65b0cd6f8685e2f64b43f550f4aff60e27a2",
+      "second_SHA256": "9b8f845e24f449c423af39cef61a65b0cd6f8685e2f64b43f550f4aff60e27a2",
+      "byte_identical": true
+    },
+    "fs/nfs/nfsv2.ko": {
+      "first_SHA256": "806d061a3f0c71238b0ddc5728f0306239fe5e708d88c733b08edc4a5237a218",
+      "second_SHA256": "806d061a3f0c71238b0ddc5728f0306239fe5e708d88c733b08edc4a5237a218",
+      "byte_identical": true
+    },
+    "fs/nfs/nfsv3.ko": {
+      "first_SHA256": "3fc5abac6da735f90bafe04398fce09190b72a7215785f3bdc758899ac29c277",
+      "second_SHA256": "3fc5abac6da735f90bafe04398fce09190b72a7215785f3bdc758899ac29c277",
+      "byte_identical": true
+    },
+    "fs/nfs/nfsv4.ko": {
+      "first_SHA256": "9ebb068be0e3559ea277cb5be85b04d59891234d66e5954688c16ca82d7341ba",
+      "second_SHA256": "9ebb068be0e3559ea277cb5be85b04d59891234d66e5954688c16ca82d7341ba",
+      "byte_identical": true
+    },
+    "fs/nfs_common/grace.ko": {
+      "first_SHA256": "b535afbdd257f2127255c6db64067b94b049b966de16be764d5be456f1e8edf3",
+      "second_SHA256": "b535afbdd257f2127255c6db64067b94b049b966de16be764d5be456f1e8edf3",
+      "byte_identical": true
+    },
+    "fs/nfs_common/nfs_acl.ko": {
+      "first_SHA256": "2b4fee8d669d5b373eaf47ed3aa1c341d6e256921f14c6146d0723d107ab203b",
+      "second_SHA256": "2b4fee8d669d5b373eaf47ed3aa1c341d6e256921f14c6146d0723d107ab203b",
+      "byte_identical": true
+    },
+    "fs/nfsd/nfsd.ko": {
+      "first_SHA256": "8ca3205bfe0870d41983adbc2fd9428dd5bba4d48291ab71466f59a2b0cc26ad",
+      "second_SHA256": "8ca3205bfe0870d41983adbc2fd9428dd5bba4d48291ab71466f59a2b0cc26ad",
+      "byte_identical": true
+    },
+    "fs/nls/nls_ucs2_utils.ko": {
+      "first_SHA256": "59680d2028fd793462f1031082a90c5283ddce88d123c3635f3f1d0026e602fd",
+      "second_SHA256": "59680d2028fd793462f1031082a90c5283ddce88d123c3635f3f1d0026e602fd",
+      "byte_identical": true
+    },
+    "fs/ntfs3/ntfs3.ko": {
+      "first_SHA256": "79b5b611b9bac8636dbda40d5bf17b4b02e275ae022ca2aeac7e2e3bf4919f65",
+      "second_SHA256": "79b5b611b9bac8636dbda40d5bf17b4b02e275ae022ca2aeac7e2e3bf4919f65",
+      "byte_identical": true
+    },
+    "fs/overlayfs/overlay.ko": {
+      "first_SHA256": "889544f750c9b55b1ba98c3734d7706c0d463e5743d24e7b01585abdbbd2aef7",
+      "second_SHA256": "889544f750c9b55b1ba98c3734d7706c0d463e5743d24e7b01585abdbbd2aef7",
+      "byte_identical": true
+    },
+    "fs/quota/quota_tree.ko": {
+      "first_SHA256": "29613b24c149e77e98fa5bb689cfa64bdec9c9fa9a34a350db25975a27244c2f",
+      "second_SHA256": "29613b24c149e77e98fa5bb689cfa64bdec9c9fa9a34a350db25975a27244c2f",
+      "byte_identical": true
+    },
+    "fs/quota/quota_v2.ko": {
+      "first_SHA256": "09dc5bd4a4169a49761deef42a79c0ef18187edc37a104cb653b292a43ab19ed",
+      "second_SHA256": "09dc5bd4a4169a49761deef42a79c0ef18187edc37a104cb653b292a43ab19ed",
+      "byte_identical": true
+    },
+    "fs/smb/client/cifs.ko": {
+      "first_SHA256": "a0ff562a666ae84cef5c8c99a7c7799132b6879827e8cd729ed20d3bdc88a9a1",
+      "second_SHA256": "a0ff562a666ae84cef5c8c99a7c7799132b6879827e8cd729ed20d3bdc88a9a1",
+      "byte_identical": true
+    },
+    "fs/smb/common/cifs_md4.ko": {
+      "first_SHA256": "c39e9c4fd40d189a074ed367e6d3d7b7809d22a2836938d387c0ffbb6d101346",
+      "second_SHA256": "c39e9c4fd40d189a074ed367e6d3d7b7809d22a2836938d387c0ffbb6d101346",
+      "byte_identical": true
+    },
+    "fs/smb/common/smb_compress.ko": {
+      "first_SHA256": "cdb601df30633f6b392f1db5dbe72dfb815ae92b32676e8cd6ba38f837158ec7",
+      "second_SHA256": "cdb601df30633f6b392f1db5dbe72dfb815ae92b32676e8cd6ba38f837158ec7",
+      "byte_identical": true
+    },
+    "fs/squashfs/squashfs.ko": {
+      "first_SHA256": "fdc6203ed91e6f60512b1f102d58163a432718d2df147b67ed44184d95b8875a",
+      "second_SHA256": "fdc6203ed91e6f60512b1f102d58163a432718d2df147b67ed44184d95b8875a",
+      "byte_identical": true
+    },
+    "fs/udf/udf.ko": {
+      "first_SHA256": "63fd6865855b0ef8e97565b963cf9859b4091fa376b57bd5bf92cae4dcfb4395",
+      "second_SHA256": "63fd6865855b0ef8e97565b963cf9859b4091fa376b57bd5bf92cae4dcfb4395",
+      "byte_identical": true
+    },
+    "fs/xfs/xfs.ko": {
+      "first_SHA256": "bf13431766bb556d3e6ebc453a37f0d0e455051547dc71511666bb0816008dc7",
+      "second_SHA256": "bf13431766bb556d3e6ebc453a37f0d0e455051547dc71511666bb0816008dc7",
+      "byte_identical": true
+    },
+    "lib/crc/crc-itu-t.ko": {
+      "first_SHA256": "21abe1ade36ee0abb0309b8cf561469a2526bb18b265de1fd8c88111abecd87a",
+      "second_SHA256": "21abe1ade36ee0abb0309b8cf561469a2526bb18b265de1fd8c88111abecd87a",
+      "byte_identical": true
+    },
+    "lib/crypto/libarc4.ko": {
+      "first_SHA256": "7e5ea575cadbe804b89d8c822d4af26a03e4f10d11dfd6f66add7d01dfb3c7a5",
+      "second_SHA256": "7e5ea575cadbe804b89d8c822d4af26a03e4f10d11dfd6f66add7d01dfb3c7a5",
+      "byte_identical": true
+    },
+    "lib/crypto/libchacha.ko": {
+      "first_SHA256": "5e10744381d0867de5cfffddfcc38b94ef375d253e084e7ec16588ec9b9ee1e7",
+      "second_SHA256": "5e10744381d0867de5cfffddfcc38b94ef375d253e084e7ec16588ec9b9ee1e7",
+      "byte_identical": true
+    },
+    "lib/crypto/libchacha20poly1305.ko": {
+      "first_SHA256": "87f079bca475184ce5494553136bf7072481b7e5e535d27117c2ae84a9e2f9ba",
+      "second_SHA256": "87f079bca475184ce5494553136bf7072481b7e5e535d27117c2ae84a9e2f9ba",
+      "byte_identical": true
+    },
+    "lib/crypto/libcurve25519.ko": {
+      "first_SHA256": "6870d0c623a48d9e7c1e8349547fb1f605606be210fbd39cb91475abda53dc6d",
+      "second_SHA256": "6870d0c623a48d9e7c1e8349547fb1f605606be210fbd39cb91475abda53dc6d",
+      "byte_identical": true
+    },
+    "lib/crypto/libdes.ko": {
+      "first_SHA256": "59dee7ce94470026fb162430ee4c5be6d1ef37f8f341e8cda515415a51fadd37",
+      "second_SHA256": "59dee7ce94470026fb162430ee4c5be6d1ef37f8f341e8cda515415a51fadd37",
+      "byte_identical": true
+    },
+    "lib/crypto/libpoly1305.ko": {
+      "first_SHA256": "2d58a5912bcd6c52b448594ac052a7d1ec3eef68e265cf72371ea34cfc4b8f89",
+      "second_SHA256": "2d58a5912bcd6c52b448594ac052a7d1ec3eef68e265cf72371ea34cfc4b8f89",
+      "byte_identical": true
+    },
+    "lib/crypto/libsha3.ko": {
+      "first_SHA256": "774cdf6d50bace87225eab26856107b12fe795d9cc45f7372632dd300fc7d5ff",
+      "second_SHA256": "774cdf6d50bace87225eab26856107b12fe795d9cc45f7372632dd300fc7d5ff",
+      "byte_identical": true
+    },
+    "lib/raid/raid6/raid6_pq.ko": {
+      "first_SHA256": "1b37f2b6297fb467db5dc4678f56b70f3587e87498f65957687d1114604135bd",
+      "second_SHA256": "1b37f2b6297fb467db5dc4678f56b70f3587e87498f65957687d1114604135bd",
+      "byte_identical": true
+    },
+    "lib/raid/xor/xor.ko": {
+      "first_SHA256": "c794a5fea82287b72ae545c1b1cba4544b79d135bb19ef228d6b4d9c83480bf4",
+      "second_SHA256": "c794a5fea82287b72ae545c1b1cba4544b79d135bb19ef228d6b4d9c83480bf4",
+      "byte_identical": true
+    },
+    "net/802/psnap.ko": {
+      "first_SHA256": "cc0f719e66d48a2bdb1b15a64356ff629423b84698896a78d094178976691a60",
+      "second_SHA256": "cc0f719e66d48a2bdb1b15a64356ff629423b84698896a78d094178976691a60",
+      "byte_identical": true
+    },
+    "net/802/stp.ko": {
+      "first_SHA256": "827c612fc8c05ebb517741798ecc428ed1a03fb2cda4de36eb422163e478efeb",
+      "second_SHA256": "827c612fc8c05ebb517741798ecc428ed1a03fb2cda4de36eb422163e478efeb",
+      "byte_identical": true
+    },
+    "net/8021q/8021q.ko": {
+      "first_SHA256": "38a2724259416c844969f1920cff1ec5832253d8fff5568dc8b683a7a8f738bd",
+      "second_SHA256": "38a2724259416c844969f1920cff1ec5832253d8fff5568dc8b683a7a8f738bd",
+      "byte_identical": true
+    },
+    "net/bluetooth/bluetooth.ko": {
+      "first_SHA256": "f8562b08a86f57d840bb13349874d80bc0e713073f54c4bfdfc776fd4048db93",
+      "second_SHA256": "f8562b08a86f57d840bb13349874d80bc0e713073f54c4bfdfc776fd4048db93",
+      "byte_identical": true
+    },
+    "net/bluetooth/bnep/bnep.ko": {
+      "first_SHA256": "f9c12aa4c53ca60b86b32e28bc867b1b6bc2838fe060233896067681dfb33058",
+      "second_SHA256": "f9c12aa4c53ca60b86b32e28bc867b1b6bc2838fe060233896067681dfb33058",
+      "byte_identical": true
+    },
+    "net/bluetooth/hidp/hidp.ko": {
+      "first_SHA256": "7bea3f6e6c995e5a76c120d64cda09041e18ce8ccb44405209453dd261eed47a",
+      "second_SHA256": "7bea3f6e6c995e5a76c120d64cda09041e18ce8ccb44405209453dd261eed47a",
+      "byte_identical": true
+    },
+    "net/bluetooth/rfcomm/rfcomm.ko": {
+      "first_SHA256": "cc166b560f5e2d8a9b7ed14a274636847a29496432b0e7dc633ad6789dd79501",
+      "second_SHA256": "cc166b560f5e2d8a9b7ed14a274636847a29496432b0e7dc633ad6789dd79501",
+      "byte_identical": true
+    },
+    "net/bridge/br_netfilter.ko": {
+      "first_SHA256": "6684d399504a04d31e2cc347f4e4c81259a5c0f039fcb2d1b3b12dabddf0f4cf",
+      "second_SHA256": "6684d399504a04d31e2cc347f4e4c81259a5c0f039fcb2d1b3b12dabddf0f4cf",
+      "byte_identical": true
+    },
+    "net/bridge/bridge.ko": {
+      "first_SHA256": "1ed4971905fe6e795867fcc6c8965217771644f1f72eb5bcf18a05f1bd47a234",
+      "second_SHA256": "1ed4971905fe6e795867fcc6c8965217771644f1f72eb5bcf18a05f1bd47a234",
+      "byte_identical": true
+    },
+    "net/ipv4/ip_tunnel.ko": {
+      "first_SHA256": "326524c0370475803cc16e6c6a40fe7181372b8c0e180bd57b92506886162e44",
+      "second_SHA256": "326524c0370475803cc16e6c6a40fe7181372b8c0e180bd57b92506886162e44",
+      "byte_identical": true
+    },
+    "net/ipv4/netfilter/ip_tables.ko": {
+      "first_SHA256": "fce17d95a994787e1834ab92cf11102310c3b353445f73950b6c86e6c9284ca8",
+      "second_SHA256": "fce17d95a994787e1834ab92cf11102310c3b353445f73950b6c86e6c9284ca8",
+      "byte_identical": true
+    },
+    "net/ipv4/netfilter/ipt_REJECT.ko": {
+      "first_SHA256": "4de90cc1b810477e6ba48f23dec62773d0ee121a6899b07c4a70e404cd3f56c0",
+      "second_SHA256": "4de90cc1b810477e6ba48f23dec62773d0ee121a6899b07c4a70e404cd3f56c0",
+      "byte_identical": true
+    },
+    "net/ipv4/netfilter/iptable_filter.ko": {
+      "first_SHA256": "b8fb1af5c08946f197efe0f82bf93b30a2e8bc8c019480799ca14d767bc65f9b",
+      "second_SHA256": "b8fb1af5c08946f197efe0f82bf93b30a2e8bc8c019480799ca14d767bc65f9b",
+      "byte_identical": true
+    },
+    "net/ipv4/netfilter/iptable_mangle.ko": {
+      "first_SHA256": "f1e43d5271853f1a12ae1b7b5373ce78b2971741ae5d983fe3691980f1520b2d",
+      "second_SHA256": "f1e43d5271853f1a12ae1b7b5373ce78b2971741ae5d983fe3691980f1520b2d",
+      "byte_identical": true
+    },
+    "net/ipv4/netfilter/iptable_nat.ko": {
+      "first_SHA256": "68a208b575641a384449c8d6c9aad78e5c7769771027bc240130f23b18c8f7bc",
+      "second_SHA256": "68a208b575641a384449c8d6c9aad78e5c7769771027bc240130f23b18c8f7bc",
+      "byte_identical": true
+    },
+    "net/ipv4/netfilter/iptable_raw.ko": {
+      "first_SHA256": "9d105be964e0ba358f51dd1e85870e7188d5eab3562c62ea4ef12c81aa8691ae",
+      "second_SHA256": "9d105be964e0ba358f51dd1e85870e7188d5eab3562c62ea4ef12c81aa8691ae",
+      "byte_identical": true
+    },
+    "net/ipv4/netfilter/nf_defrag_ipv4.ko": {
+      "first_SHA256": "fcebfc161438a1e1ed885b9755388096aabbf2e6d60f09a4aeee1255d4c206b0",
+      "second_SHA256": "fcebfc161438a1e1ed885b9755388096aabbf2e6d60f09a4aeee1255d4c206b0",
+      "byte_identical": true
+    },
+    "net/ipv4/netfilter/nf_reject_ipv4.ko": {
+      "first_SHA256": "9abc9134d79d37e9239e33872da425dad49830a696211899a89e13f4cd93efb9",
+      "second_SHA256": "9abc9134d79d37e9239e33872da425dad49830a696211899a89e13f4cd93efb9",
+      "byte_identical": true
+    },
+    "net/ipv4/netfilter/nft_fib_ipv4.ko": {
+      "first_SHA256": "d9f75dc17c2a109c4a6833c31f70a254260f6398360577dbd154183b9710fb51",
+      "second_SHA256": "d9f75dc17c2a109c4a6833c31f70a254260f6398360577dbd154183b9710fb51",
+      "byte_identical": true
+    },
+    "net/ipv4/netfilter/nft_reject_ipv4.ko": {
+      "first_SHA256": "102adb153e43f04d42427e6db585d34da2aa0ffa2d5df7e84a095d191f593d6b",
+      "second_SHA256": "102adb153e43f04d42427e6db585d34da2aa0ffa2d5df7e84a095d191f593d6b",
+      "byte_identical": true
+    },
+    "net/ipv4/tunnel4.ko": {
+      "first_SHA256": "eae3bc62c73ba4d86daea7cd170ed2930c723d8bab198c242bb98127b035a7b1",
+      "second_SHA256": "eae3bc62c73ba4d86daea7cd170ed2930c723d8bab198c242bb98127b035a7b1",
+      "byte_identical": true
+    },
+    "net/ipv4/udp_tunnel.ko": {
+      "first_SHA256": "c997d481cd57fac65fd5e4c97521f63f0817ac172c35ed5f36de7c02584e5fa0",
+      "second_SHA256": "c997d481cd57fac65fd5e4c97521f63f0817ac172c35ed5f36de7c02584e5fa0",
+      "byte_identical": true
+    },
+    "net/ipv6/ip6_udp_tunnel.ko": {
+      "first_SHA256": "9f497ee056e7c457eab3c590af8d3d4a095f4ea9405b54c16f26aecfaec7f054",
+      "second_SHA256": "9f497ee056e7c457eab3c590af8d3d4a095f4ea9405b54c16f26aecfaec7f054",
+      "byte_identical": true
+    },
+    "net/ipv6/netfilter/ip6_tables.ko": {
+      "first_SHA256": "6cff7ada0825c836187fa2fccb60be877025214d731f1a0f558856289cde51fe",
+      "second_SHA256": "6cff7ada0825c836187fa2fccb60be877025214d731f1a0f558856289cde51fe",
+      "byte_identical": true
+    },
+    "net/ipv6/netfilter/ip6t_REJECT.ko": {
+      "first_SHA256": "dce924e60bdcf655f779b9a0e17c8e2a06d22e3175d6414a18d1792d496c263d",
+      "second_SHA256": "dce924e60bdcf655f779b9a0e17c8e2a06d22e3175d6414a18d1792d496c263d",
+      "byte_identical": true
+    },
+    "net/ipv6/netfilter/ip6table_filter.ko": {
+      "first_SHA256": "b4b6e5a2a0668927b3c1bf7485082393775ef8bf30438789e143ac37eac1f41a",
+      "second_SHA256": "b4b6e5a2a0668927b3c1bf7485082393775ef8bf30438789e143ac37eac1f41a",
+      "byte_identical": true
+    },
+    "net/ipv6/netfilter/ip6table_mangle.ko": {
+      "first_SHA256": "858dcc9ea90e0eb5d74b73383cf6410ecb522dfe7e7b2f7c70f317019b63efba",
+      "second_SHA256": "858dcc9ea90e0eb5d74b73383cf6410ecb522dfe7e7b2f7c70f317019b63efba",
+      "byte_identical": true
+    },
+    "net/ipv6/netfilter/ip6table_nat.ko": {
+      "first_SHA256": "24eb51810e7886a98fa42599e1ca4fecea02523fdda8f63aab4141da0bc7a474",
+      "second_SHA256": "24eb51810e7886a98fa42599e1ca4fecea02523fdda8f63aab4141da0bc7a474",
+      "byte_identical": true
+    },
+    "net/ipv6/netfilter/ip6table_raw.ko": {
+      "first_SHA256": "1b4b1479d6c0de4fe30a2df3f6b0361b8a0b4848fa9ce565a9360f52d8eb084a",
+      "second_SHA256": "1b4b1479d6c0de4fe30a2df3f6b0361b8a0b4848fa9ce565a9360f52d8eb084a",
+      "byte_identical": true
+    },
+    "net/ipv6/netfilter/nf_defrag_ipv6.ko": {
+      "first_SHA256": "ce2b919f3fc0cacd725f4601a5c2594eb940b146ee26ba41ea7fbc3d7d3a27a3",
+      "second_SHA256": "ce2b919f3fc0cacd725f4601a5c2594eb940b146ee26ba41ea7fbc3d7d3a27a3",
+      "byte_identical": true
+    },
+    "net/ipv6/netfilter/nf_reject_ipv6.ko": {
+      "first_SHA256": "db8b8d1a5731cd4b8b16ad7b4dfcf37af890887d9aa21de873f45d9195595cd6",
+      "second_SHA256": "db8b8d1a5731cd4b8b16ad7b4dfcf37af890887d9aa21de873f45d9195595cd6",
+      "byte_identical": true
+    },
+    "net/ipv6/netfilter/nft_fib_ipv6.ko": {
+      "first_SHA256": "a01724a4dafde5e9c75bd614d101b8c34391a7b54e8df8e88f060f0d8d06c91d",
+      "second_SHA256": "a01724a4dafde5e9c75bd614d101b8c34391a7b54e8df8e88f060f0d8d06c91d",
+      "byte_identical": true
+    },
+    "net/ipv6/netfilter/nft_reject_ipv6.ko": {
+      "first_SHA256": "78218d3fec5271feb6647076008e53949aad78aa93702ad2add0f4e20b25c2d9",
+      "second_SHA256": "78218d3fec5271feb6647076008e53949aad78aa93702ad2add0f4e20b25c2d9",
+      "byte_identical": true
+    },
+    "net/ipv6/sit.ko": {
+      "first_SHA256": "8fd05241d2467fa36f9837a36b565caddee3bcd52ab0662658a61780297b9f25",
+      "second_SHA256": "8fd05241d2467fa36f9837a36b565caddee3bcd52ab0662658a61780297b9f25",
+      "byte_identical": true
+    },
+    "net/llc/llc.ko": {
+      "first_SHA256": "e948c9f5ef29e9aabe3ef4cce92053ae3488abbae31b231d08042c491b530820",
+      "second_SHA256": "e948c9f5ef29e9aabe3ef4cce92053ae3488abbae31b231d08042c491b530820",
+      "byte_identical": true
+    },
+    "net/mac80211/mac80211.ko": {
+      "first_SHA256": "3d304d5f8d0d1182abdcfe3df58a287007266a40c3d6980ab7fc765cef918105",
+      "second_SHA256": "3d304d5f8d0d1182abdcfe3df58a287007266a40c3d6980ab7fc765cef918105",
+      "byte_identical": true
+    },
+    "net/netfilter/ipvs/ip_vs.ko": {
+      "first_SHA256": "b162e9c7431531971de310ba4487c14aec01b4de1101efd53290790c108e1477",
+      "second_SHA256": "b162e9c7431531971de310ba4487c14aec01b4de1101efd53290790c108e1477",
+      "byte_identical": true
+    },
+    "net/netfilter/ipvs/ip_vs_rr.ko": {
+      "first_SHA256": "39c04947e55210414ba82fc07f5166248e6e094605db24a467297f764cc4963d",
+      "second_SHA256": "39c04947e55210414ba82fc07f5166248e6e094605db24a467297f764cc4963d",
+      "byte_identical": true
+    },
+    "net/netfilter/nf_conntrack.ko": {
+      "first_SHA256": "4db3460bcebfa332be57ff9d0a1fdf638379838da0ffb4f378793707087d121c",
+      "second_SHA256": "4db3460bcebfa332be57ff9d0a1fdf638379838da0ffb4f378793707087d121c",
+      "byte_identical": true
+    },
+    "net/netfilter/nf_nat.ko": {
+      "first_SHA256": "ccb517ea1a6c8186ce2c7bd378608d0e21d7b559dc99d5b5df601380382c7a75",
+      "second_SHA256": "ccb517ea1a6c8186ce2c7bd378608d0e21d7b559dc99d5b5df601380382c7a75",
+      "byte_identical": true
+    },
+    "net/netfilter/nf_tables.ko": {
+      "first_SHA256": "52d7771a16570432c27376f802144b9c0ecb4afb4595855cbb1e615d40b6700b",
+      "second_SHA256": "52d7771a16570432c27376f802144b9c0ecb4afb4595855cbb1e615d40b6700b",
+      "byte_identical": true
+    },
+    "net/netfilter/nft_chain_nat.ko": {
+      "first_SHA256": "f6da356e97fa6cce163c6eafbb87c463ef3741e2155123373b38a41d61527b86",
+      "second_SHA256": "f6da356e97fa6cce163c6eafbb87c463ef3741e2155123373b38a41d61527b86",
+      "byte_identical": true
+    },
+    "net/netfilter/nft_compat.ko": {
+      "first_SHA256": "a6397d965deb6bd6507b92ef739a86e1bd0df5487b271ec3453e58dea962b2d7",
+      "second_SHA256": "a6397d965deb6bd6507b92ef739a86e1bd0df5487b271ec3453e58dea962b2d7",
+      "byte_identical": true
+    },
+    "net/netfilter/nft_ct.ko": {
+      "first_SHA256": "f829473b8bc33e943be41dcfdbe5e3a2568ac62967c2e54a41716148b4e303b9",
+      "second_SHA256": "f829473b8bc33e943be41dcfdbe5e3a2568ac62967c2e54a41716148b4e303b9",
+      "byte_identical": true
+    },
+    "net/netfilter/nft_fib.ko": {
+      "first_SHA256": "fb842df5888eb98e3841d48d7c6a93e59c767863da25d514b26c52212cc1958a",
+      "second_SHA256": "fb842df5888eb98e3841d48d7c6a93e59c767863da25d514b26c52212cc1958a",
+      "byte_identical": true
+    },
+    "net/netfilter/nft_limit.ko": {
+      "first_SHA256": "faa7241fee6984a00d63d7b49ae8e8c5630715e8ce163e3fe95fdd7b5adf1802",
+      "second_SHA256": "faa7241fee6984a00d63d7b49ae8e8c5630715e8ce163e3fe95fdd7b5adf1802",
+      "byte_identical": true
+    },
+    "net/netfilter/nft_log.ko": {
+      "first_SHA256": "aa6996f66f61c725a7596d237cbbe2591a9d8b1ac1e213ec054d6a8f82464384",
+      "second_SHA256": "aa6996f66f61c725a7596d237cbbe2591a9d8b1ac1e213ec054d6a8f82464384",
+      "byte_identical": true
+    },
+    "net/netfilter/nft_masq.ko": {
+      "first_SHA256": "51c11363d4084b079ffde58551a981a7ccbaf1f73e6a6ac0a947ab095065f4bb",
+      "second_SHA256": "51c11363d4084b079ffde58551a981a7ccbaf1f73e6a6ac0a947ab095065f4bb",
+      "byte_identical": true
+    },
+    "net/netfilter/nft_nat.ko": {
+      "first_SHA256": "d7c2b788a1eea97d73d9729960751a06fbacbf2823f0e82de2cded6bd76e5bd6",
+      "second_SHA256": "d7c2b788a1eea97d73d9729960751a06fbacbf2823f0e82de2cded6bd76e5bd6",
+      "byte_identical": true
+    },
+    "net/netfilter/nft_reject.ko": {
+      "first_SHA256": "c0e79aa37ee8433f9103860ba1508221201ec5dccd994eb7c1c9b53034df08f5",
+      "second_SHA256": "c0e79aa37ee8433f9103860ba1508221201ec5dccd994eb7c1c9b53034df08f5",
+      "byte_identical": true
+    },
+    "net/netfilter/nft_reject_inet.ko": {
+      "first_SHA256": "38eeb0b137ccaccb81b5c2ab829b938bec45c83569a1d9a6627d7eed5630991b",
+      "second_SHA256": "38eeb0b137ccaccb81b5c2ab829b938bec45c83569a1d9a6627d7eed5630991b",
+      "byte_identical": true
+    },
+    "net/netfilter/x_tables.ko": {
+      "first_SHA256": "56a1ae7c154ce1e26c5f52a9d99a702da71b2a5122181746e7d624ab205f8974",
+      "second_SHA256": "56a1ae7c154ce1e26c5f52a9d99a702da71b2a5122181746e7d624ab205f8974",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_CHECKSUM.ko": {
+      "first_SHA256": "eb993ea96075ab8b23a2b95e92231c2bcc74f39b103ab62579314f8f86733bb5",
+      "second_SHA256": "eb993ea96075ab8b23a2b95e92231c2bcc74f39b103ab62579314f8f86733bb5",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_MASQUERADE.ko": {
+      "first_SHA256": "39cca1668971691287873523c3210a9d0e5b0705dc7e1b5896d3190072c07585",
+      "second_SHA256": "39cca1668971691287873523c3210a9d0e5b0705dc7e1b5896d3190072c07585",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_REDIRECT.ko": {
+      "first_SHA256": "c49b970780793a7dec74bea0739e8e8241b5b6bf9b01182605d287e895bb70b4",
+      "second_SHA256": "c49b970780793a7dec74bea0739e8e8241b5b6bf9b01182605d287e895bb70b4",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_TCPMSS.ko": {
+      "first_SHA256": "8a3e4534ed18b87fa22e3a2ab3bee1189d4991e8a01bc576f7d029be4ccf68e3",
+      "second_SHA256": "8a3e4534ed18b87fa22e3a2ab3bee1189d4991e8a01bc576f7d029be4ccf68e3",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_addrtype.ko": {
+      "first_SHA256": "d01b60e97cbf34d178cd6dc8cd4cc4c8b5da3e24a8e1e47c34cff8dfb6721de4",
+      "second_SHA256": "d01b60e97cbf34d178cd6dc8cd4cc4c8b5da3e24a8e1e47c34cff8dfb6721de4",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_comment.ko": {
+      "first_SHA256": "3817eeeabfb98f876eca22a66889c60a80588caacc1347503f6a4091746599f6",
+      "second_SHA256": "3817eeeabfb98f876eca22a66889c60a80588caacc1347503f6a4091746599f6",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_conntrack.ko": {
+      "first_SHA256": "e77ac0292c124d93f405e9b0f77884d37d0ad9db12c5b00d2f9674bd7fe991db",
+      "second_SHA256": "e77ac0292c124d93f405e9b0f77884d37d0ad9db12c5b00d2f9674bd7fe991db",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_ipvs.ko": {
+      "first_SHA256": "beb3860ec5e104576ee85227ce61ecbb18407334e9491fe5239ba7ae051a4be6",
+      "second_SHA256": "beb3860ec5e104576ee85227ce61ecbb18407334e9491fe5239ba7ae051a4be6",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_mark.ko": {
+      "first_SHA256": "f7b4d59adaf07975960dd93ee0d8ba5ede39bf6517e9926b69871a01c0bdf922",
+      "second_SHA256": "f7b4d59adaf07975960dd93ee0d8ba5ede39bf6517e9926b69871a01c0bdf922",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_multiport.ko": {
+      "first_SHA256": "90a7f8be44a2808a5dfc4a532114a9564fec79ba03943f78dd17cc8924b7352a",
+      "second_SHA256": "90a7f8be44a2808a5dfc4a532114a9564fec79ba03943f78dd17cc8924b7352a",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_nat.ko": {
+      "first_SHA256": "c8756d6f05adcce8108ca377e81bed0e535cbe5206b0d9874056692321e83e7c",
+      "second_SHA256": "c8756d6f05adcce8108ca377e81bed0e535cbe5206b0d9874056692321e83e7c",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_statistic.ko": {
+      "first_SHA256": "696b69f7755abb7c7c64a3eaf47a9656cc617b2359351558b7d338efb6dac6ef",
+      "second_SHA256": "696b69f7755abb7c7c64a3eaf47a9656cc617b2359351558b7d338efb6dac6ef",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_tcpmss.ko": {
+      "first_SHA256": "1389b62831e16583a9086a3df4cc3e37cc35d9b073f4a73d5fde4eeb37c26043",
+      "second_SHA256": "1389b62831e16583a9086a3df4cc3e37cc35d9b073f4a73d5fde4eeb37c26043",
+      "byte_identical": true
+    },
+    "net/netfilter/xt_tcpudp.ko": {
+      "first_SHA256": "231e20012c8fa56b022c0dbe14cf11ec40fc2d6ab8ff35af73df91f1e6d82b88",
+      "second_SHA256": "231e20012c8fa56b022c0dbe14cf11ec40fc2d6ab8ff35af73df91f1e6d82b88",
+      "byte_identical": true
+    },
+    "net/nfc/nci/nci.ko": {
+      "first_SHA256": "cebd79f7b072e167e2f482abb5659d5e71cf6193d9dfa45ece1d736f1c9c081b",
+      "second_SHA256": "cebd79f7b072e167e2f482abb5659d5e71cf6193d9dfa45ece1d736f1c9c081b",
+      "byte_identical": true
+    },
+    "net/nfc/nfc.ko": {
+      "first_SHA256": "5f1c5261283b66d122e22e6694dc18d3ab1a8809d99599636429b929a52e65b6",
+      "second_SHA256": "5f1c5261283b66d122e22e6694dc18d3ab1a8809d99599636429b929a52e65b6",
+      "byte_identical": true
+    },
+    "net/qrtr/qrtr-smd.ko": {
+      "first_SHA256": "3ac0552f71f008bcd35e9926169a5b42335bc77a5b4eae07a45919711ab8db23",
+      "second_SHA256": "3ac0552f71f008bcd35e9926169a5b42335bc77a5b4eae07a45919711ab8db23",
+      "byte_identical": true
+    },
+    "net/qrtr/qrtr.ko": {
+      "first_SHA256": "49f74a5ed9f64d604a98dc00b1e9a4aa25b91cf86873a8f3da9283734c4a755a",
+      "second_SHA256": "49f74a5ed9f64d604a98dc00b1e9a4aa25b91cf86873a8f3da9283734c4a755a",
+      "byte_identical": true
+    },
+    "net/rfkill/rfkill.ko": {
+      "first_SHA256": "8e2f3d865770c31c594fe094d52d7b701c398fa4937fb21f8dce73fad310a03e",
+      "second_SHA256": "8e2f3d865770c31c594fe094d52d7b701c398fa4937fb21f8dce73fad310a03e",
+      "byte_identical": true
+    },
+    "net/sched/cls_cgroup.ko": {
+      "first_SHA256": "cdbddef7bbc3a3a1bee6118ddabc9f8c79952549471f4fbff4704a508218c8bc",
+      "second_SHA256": "cdbddef7bbc3a3a1bee6118ddabc9f8c79952549471f4fbff4704a508218c8bc",
+      "byte_identical": true
+    },
+    "net/sunrpc/auth_gss/auth_rpcgss.ko": {
+      "first_SHA256": "35e6a53abfc31ed5f5f9879353d708538eada240323ab8f8f507643873caf25e",
+      "second_SHA256": "35e6a53abfc31ed5f5f9879353d708538eada240323ab8f8f507643873caf25e",
+      "byte_identical": true
+    },
+    "net/sunrpc/auth_gss/rpcsec_gss_krb5.ko": {
+      "first_SHA256": "c5736c1b0ae13fc89693d0d102f72aa0394ba485453079db63c3b7cd7d929448",
+      "second_SHA256": "c5736c1b0ae13fc89693d0d102f72aa0394ba485453079db63c3b7cd7d929448",
+      "byte_identical": true
+    },
+    "net/sunrpc/sunrpc.ko": {
+      "first_SHA256": "4211dd1f7797f05819500dbdd34bfc42e31d9d68b2675eece1b59c28dd6c322f",
+      "second_SHA256": "4211dd1f7797f05819500dbdd34bfc42e31d9d68b2675eece1b59c28dd6c322f",
+      "byte_identical": true
+    },
+    "net/wireless/cfg80211.ko": {
+      "first_SHA256": "b57f0fdecdf1c09fe060f8ecb4a7d422ab467eb55b9fe7ed13318f5959329bd6",
+      "second_SHA256": "b57f0fdecdf1c09fe060f8ecb4a7d422ab467eb55b9fe7ed13318f5959329bd6",
+      "byte_identical": true
+    },
+    "sound/core/snd-hwdep.ko": {
+      "first_SHA256": "784d2b7c953969719a4ff1605d7de427fd62aca8f257ab329d92ba4eedd6db2e",
+      "second_SHA256": "784d2b7c953969719a4ff1605d7de427fd62aca8f257ab329d92ba4eedd6db2e",
+      "byte_identical": true
+    },
+    "sound/core/snd-rawmidi.ko": {
+      "first_SHA256": "30c8a98e031eda9f4fbe5179638accb6ef8684f79ee77b4a2bf9b350063e2ae7",
+      "second_SHA256": "30c8a98e031eda9f4fbe5179638accb6ef8684f79ee77b4a2bf9b350063e2ae7",
+      "byte_identical": true
+    },
+    "sound/core/snd-ump.ko": {
+      "first_SHA256": "1d9df1dcc1403955329d082ad81ccb29b2bb744b0d10998ab6577431aa48d660",
+      "second_SHA256": "1d9df1dcc1403955329d082ad81ccb29b2bb744b0d10998ab6577431aa48d660",
+      "byte_identical": true
+    },
+    "sound/soc/codecs/snd-soc-hdmi-codec.ko": {
+      "first_SHA256": "ab25648edeb1a5cc5405593464d84efe8ff87850f8d14c553bf69cd3ad82c030",
+      "second_SHA256": "ab25648edeb1a5cc5405593464d84efe8ff87850f8d14c553bf69cd3ad82c030",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/q6adm.ko": {
+      "first_SHA256": "38f5a7d2dbff903692b0c99abb3d36a811968b4994eed93febe22624baba0243",
+      "second_SHA256": "38f5a7d2dbff903692b0c99abb3d36a811968b4994eed93febe22624baba0243",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/q6afe-clocks.ko": {
+      "first_SHA256": "6c7b8398d497da009f074e6134181bdef6c431fbfc6621f361f428dc31786a20",
+      "second_SHA256": "6c7b8398d497da009f074e6134181bdef6c431fbfc6621f361f428dc31786a20",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/q6afe-dai.ko": {
+      "first_SHA256": "0260537d0413cbe19aee6e904708cb9394da29b061681b46a0da736a2f2827a3",
+      "second_SHA256": "0260537d0413cbe19aee6e904708cb9394da29b061681b46a0da736a2f2827a3",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/q6afe.ko": {
+      "first_SHA256": "e47082b2cc0a763941b7063a2ad024f398f236482d591e2ae3d7bfa4ec0f9664",
+      "second_SHA256": "e47082b2cc0a763941b7063a2ad024f398f236482d591e2ae3d7bfa4ec0f9664",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/q6apm-dai.ko": {
+      "first_SHA256": "ba3ee35c6d5368c2771181155a6a7d7ae3de7c276f2906a9b4b4c5b79e4ef057",
+      "second_SHA256": "ba3ee35c6d5368c2771181155a6a7d7ae3de7c276f2906a9b4b4c5b79e4ef057",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/q6apm-lpass-dais.ko": {
+      "first_SHA256": "6b5f7762d2e1610e0fb6824cab22467ac51758d4a6cb9fe58fc6474d1d586d74",
+      "second_SHA256": "6b5f7762d2e1610e0fb6824cab22467ac51758d4a6cb9fe58fc6474d1d586d74",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/q6asm-dai.ko": {
+      "first_SHA256": "6627da9e1c5a64723b299fcd407a70f5a0387c18d6e74ef00775c84bc3794855",
+      "second_SHA256": "6627da9e1c5a64723b299fcd407a70f5a0387c18d6e74ef00775c84bc3794855",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/q6asm.ko": {
+      "first_SHA256": "e9c7678e1c58d607998978350cac01d098bdcbbf3b15908b43ebd4c73c24b3bc",
+      "second_SHA256": "e9c7678e1c58d607998978350cac01d098bdcbbf3b15908b43ebd4c73c24b3bc",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/q6core.ko": {
+      "first_SHA256": "162266ba25956e501896bc059a6eda38a0ae03569b22060e1ca2878e3a1898f5",
+      "second_SHA256": "162266ba25956e501896bc059a6eda38a0ae03569b22060e1ca2878e3a1898f5",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/q6prm-clocks.ko": {
+      "first_SHA256": "52e6e8cef73c28a63251255ec6a2c62ab2d3d4df50355276dfb6fbcf45285c29",
+      "second_SHA256": "52e6e8cef73c28a63251255ec6a2c62ab2d3d4df50355276dfb6fbcf45285c29",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/q6prm.ko": {
+      "first_SHA256": "94b30abc0dfa8246877c7f15bede50326f3d615631daa10a6ba21050f0a66d80",
+      "second_SHA256": "94b30abc0dfa8246877c7f15bede50326f3d615631daa10a6ba21050f0a66d80",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/q6routing.ko": {
+      "first_SHA256": "481ebf9696eb415000a488e9baa4e66f9cf764f3d6ef8e52a06cfcd254e4b653",
+      "second_SHA256": "481ebf9696eb415000a488e9baa4e66f9cf764f3d6ef8e52a06cfcd254e4b653",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/snd-q6apm.ko": {
+      "first_SHA256": "2f7faa2adb4c31bd847356e3be14b2c21b945e9e7ae6b2ecf05908be592ca7ab",
+      "second_SHA256": "2f7faa2adb4c31bd847356e3be14b2c21b945e9e7ae6b2ecf05908be592ca7ab",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/qdsp6/snd-q6dsp-common.ko": {
+      "first_SHA256": "0bbad9ccf5c0222925836fef2653467534ce87e0dd880b3a44b2852df9d5f400",
+      "second_SHA256": "0bbad9ccf5c0222925836fef2653467534ce87e0dd880b3a44b2852df9d5f400",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/snd-soc-apq8096.ko": {
+      "first_SHA256": "306070349ed56b536c639cc866baec8b2b250fffe74622c868251bf42e8c6229",
+      "second_SHA256": "306070349ed56b536c639cc866baec8b2b250fffe74622c868251bf42e8c6229",
+      "byte_identical": true
+    },
+    "sound/soc/qcom/snd-soc-qcom-common.ko": {
+      "first_SHA256": "6e430afe8eeba66b2d2eb10bbf7d71f046b68f113f39ce51d9b466f67f072c83",
+      "second_SHA256": "6e430afe8eeba66b2d2eb10bbf7d71f046b68f113f39ce51d9b466f67f072c83",
+      "byte_identical": true
+    },
+    "sound/usb/snd-usb-audio.ko": {
+      "first_SHA256": "cd384d4931819fc3841515a49c53abb565e2de7c3f5143894dac230bec1c4bfc",
+      "second_SHA256": "cd384d4931819fc3841515a49c53abb565e2de7c3f5143894dac230bec1c4bfc",
+      "byte_identical": true
+    },
+    "sound/usb/snd-usbmidi-lib.ko": {
+      "first_SHA256": "be14fb83221ce4c4708baca7e67299d7718569b541f6ad973e61e46729cf0b4d",
+      "second_SHA256": "be14fb83221ce4c4708baca7e67299d7718569b541f6ad973e61e46729cf0b4d",
+      "byte_identical": true
+    }
+  },
+  "modules_compared": 459,
+  "modules_byte_identical": 459,
+  "full_package_install_update_recovery_or_physical_acceptance": false,
+  "maintained_LTS_acceptance": false,
+  "phone_access": false,
+  "published": false
+}

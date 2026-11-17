@@ -1,0 +1,221 @@
+{
+  "passed": true,
+  "recorded_UTC": "2026-11-17T04:23:06.987294+00:00",
+  "state": "local experimental feature source committed",
+  "base": "a80e0ad0e69ac36427d90305dc592298f7132b03",
+  "head": "fc5120c4e0f2ab4790cb62f1f4c40aea74697a18",
+  "branch": "integration/fx0-full-suspend-current-01",
+  "commits": [
+    {
+      "order": 1,
+      "topic": "bindings",
+      "commit": "5684a2e2d77410e52f6bdde598d69b02105b7172",
+      "parent": "a80e0ad0e69ac36427d90305dc592298f7132b03",
+      "paths": [
+        "Documentation/devicetree/bindings/power/qcom,msm8226-system-pm.yaml",
+        "Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml",
+        "Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml",
+        "MAINTAINERS"
+      ],
+      "patch": "local/fx0-full-suspend-current-01/feature-series-01/01-bindings-committed.patch",
+      "patch_SHA256": "0a4bee1fa38e1ead0ccf3621ad22d233955131cadf853ff05e535bfa9166040e",
+      "strict_checkpatch_errors": 0,
+      "advisories": [
+        "WARNING: Prefer a maximum 75 chars per line (possible unwrapped commit description?)"
+      ]
+    },
+    {
+      "order": 2,
+      "topic": "pll",
+      "commit": "ac03d871113a3d2eaea081d00e50d7ad0d779a59",
+      "parent": "5684a2e2d77410e52f6bdde598d69b02105b7172",
+      "paths": [
+        "drivers/clk/qcom/a53-pll.c",
+        "drivers/clk/qcom/clk-pll.c",
+        "drivers/clk/qcom/clk-pll.h",
+        "drivers/clk/qcom/clk-pll-suspend.h"
+      ],
+      "patch": "local/fx0-full-suspend-current-01/feature-series-01/02-pll-committed.patch",
+      "patch_SHA256": "bf60685bdd1f6df5dba835c65f4ac271f8f20bd472aa6fb24e6a6f32b6354c30",
+      "strict_checkpatch_errors": 0,
+      "advisories": [
+        "WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?"
+      ]
+    },
+    {
+      "order": 3,
+      "topic": "cpu-spm",
+      "commit": "a37ea8cff8cf0243e279f4168a299993c3189215",
+      "parent": "ac03d871113a3d2eaea081d00e50d7ad0d779a59",
+      "paths": [
+        "drivers/soc/qcom/spm.c",
+        "include/soc/qcom/spm.h"
+      ],
+      "patch": "local/fx0-full-suspend-current-01/feature-series-01/03-cpu-spm-committed.patch",
+      "patch_SHA256": "23e00b275caf87925f154f41c4b777b1996fe400932d227003549646173f9cc4",
+      "strict_checkpatch_errors": 0,
+      "advisories": [
+        "WARNING: Prefer a maximum 75 chars per line (possible unwrapped commit description?)"
+      ]
+    },
+    {
+      "order": 4,
+      "topic": "cpr",
+      "commit": "d1e250838f9836327ef46141bca28a367e2ba7f1",
+      "parent": "a37ea8cff8cf0243e279f4168a299993c3189215",
+      "paths": [
+        "drivers/pmdomain/qcom/cpr.c",
+        "drivers/pmdomain/qcom/cpr-msm8926-suspend.h",
+        "include/linux/soc/qcom/cpr.h"
+      ],
+      "patch": "local/fx0-full-suspend-current-01/feature-series-01/04-cpr-committed.patch",
+      "patch_SHA256": "302b60f0f0dceb2b75c217562d1c651eff07719e15cd6ca15561a4e6559b2a17",
+      "strict_checkpatch_errors": 0,
+      "advisories": [
+        "WARNING: Prefer a maximum 75 chars per line (possible unwrapped commit description?)",
+        "WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?",
+        "CHECK: Avoid CamelCase: <mx_max_uV>",
+        "CHECK: Avoid CamelCase: <mx_min_uV>"
+      ]
+    },
+    {
+      "order": 5,
+      "topic": "mpm",
+      "commit": "ffb851ee18dc9411b816476f1c46e374643decaa",
+      "parent": "d1e250838f9836327ef46141bca28a367e2ba7f1",
+      "paths": [
+        "drivers/irqchip/irq-qcom-mpm.c",
+        "include/linux/soc/qcom/mpm.h"
+      ],
+      "patch": "local/fx0-full-suspend-current-01/feature-series-01/05-mpm-committed.patch",
+      "patch_SHA256": "3d65bbdc069185f5e0e5c790d9841fa84627957e74c50f11278128b253cdcd49",
+      "strict_checkpatch_errors": 0,
+      "advisories": [
+        "WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?"
+      ]
+    },
+    {
+      "order": 6,
+      "topic": "smd",
+      "commit": "a4e62575745f880bc1689daf155fac5edbe89320",
+      "parent": "ffb851ee18dc9411b816476f1c46e374643decaa",
+      "paths": [
+        "drivers/rpmsg/qcom_smd.c",
+        "include/linux/rpmsg/qcom_smd.h",
+        "drivers/soc/qcom/rpm-proc.c"
+      ],
+      "patch": "local/fx0-full-suspend-current-01/feature-series-01/06-smd-committed.patch",
+      "patch_SHA256": "b7b5b82e490826d26b61d78f001823ec0272ec6c21f89a30b63c6bc82306f0e2",
+      "strict_checkpatch_errors": 0,
+      "advisories": []
+    },
+    {
+      "order": 7,
+      "topic": "rpm-gate",
+      "commit": "52dd599c5dcbbb3d804583a4ffa4d04f8a7f91d1",
+      "parent": "a4e62575745f880bc1689daf155fac5edbe89320",
+      "paths": [
+        "drivers/soc/qcom/smd-rpm.c",
+        "include/linux/soc/qcom/smd-rpm.h"
+      ],
+      "patch": "local/fx0-full-suspend-current-01/feature-series-01/07-rpm-gate-committed.patch",
+      "patch_SHA256": "a188556a1e728bfd6da93a3a775fbf12f7ee3195fd7e93e43b76838f888c61b9",
+      "strict_checkpatch_errors": 0,
+      "advisories": []
+    },
+    {
+      "order": 8,
+      "topic": "arm",
+      "commit": "33b9a12656d4e9758d0ee162ead1b9ae15a54586",
+      "parent": "52dd599c5dcbbb3d804583a4ffa4d04f8a7f91d1",
+      "paths": [
+        "arch/arm/mach-qcom/platsmp.c",
+        "drivers/irqchip/irq-gic.c",
+        "include/linux/irqchip/arm-gic.h",
+        "include/soc/qcom/msm8226-pm.h"
+      ],
+      "patch": "local/fx0-full-suspend-current-01/feature-series-01/08-arm-committed.patch",
+      "patch_SHA256": "be1438f58fb7fde3a2ac931e8666cdce6d0059865ab9abcbec76453f80a8972a",
+      "strict_checkpatch_errors": 0,
+      "advisories": [
+        "WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?"
+      ]
+    },
+    {
+      "order": 9,
+      "topic": "coordinator",
+      "commit": "642186babe2317442a6f6475b69bb7ccca453b51",
+      "parent": "33b9a12656d4e9758d0ee162ead1b9ae15a54586",
+      "paths": [
+        "drivers/soc/qcom/msm8226-pm.c",
+        "drivers/soc/qcom/Kconfig",
+        "drivers/soc/qcom/Makefile"
+      ],
+      "patch": "local/fx0-full-suspend-current-01/feature-series-01/09-coordinator-committed.patch",
+      "patch_SHA256": "f72e48bc9c33489428b30a08f1867245d098bcdf9ce0314a136233a597d807fa",
+      "strict_checkpatch_errors": 0,
+      "advisories": [
+        "WARNING: Prefer a maximum 75 chars per line (possible unwrapped commit description?)",
+        "WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?"
+      ]
+    },
+    {
+      "order": 10,
+      "topic": "dts",
+      "commit": "fc5120c4e0f2ab4790cb62f1f4c40aea74697a18",
+      "parent": "642186babe2317442a6f6475b69bb7ccca453b51",
+      "paths": [
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts",
+        "arch/arm/boot/dts/qcom/Makefile"
+      ],
+      "patch": "local/fx0-full-suspend-current-01/feature-series-01/10-dts-committed.patch",
+      "patch_SHA256": "f3fb05d37ab1d45c4a1c1447e2bd2ed97e9382f9865f6d0e7d9c9d28185cc08f",
+      "strict_checkpatch_errors": 0,
+      "advisories": [
+        "WARNING: Prefer a maximum 75 chars per line (possible unwrapped commit description?)",
+        "WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?"
+      ]
+    }
+  ],
+  "source_files": {
+    "Documentation/devicetree/bindings/power/qcom,msm8226-system-pm.yaml": "f22529aef1c98d88274a14f2db9e29306014ad5c601a942e60df67c45508bf39",
+    "Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml": "4c5ce2ee8a68da96e05c1c119c70d24486beba822ff8189ac3d2b405e621647d",
+    "Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml": "f2bd89304ca9e99178b91bd6f954ff9d4b6cec593890cfd7ed64928a0deef6ef",
+    "MAINTAINERS": "1facfcd47d6b21226fbd77445781c5bf2275ad9ea21f88737bad4763d1252518",
+    "drivers/clk/qcom/a53-pll.c": "3c310785acdf9764eb41bb807dbf6cf075cca90e5ba426ba77db319d3c73dcfd",
+    "drivers/clk/qcom/clk-pll.c": "4deed93d36d0d7c5aac35bda809a435300858a1214f204cd752e938e91c045c3",
+    "drivers/clk/qcom/clk-pll.h": "8dc7fb521fdfc1a7bd70ad0712c3ea2d620973ce7c32311a4fd906310127aa3d",
+    "drivers/clk/qcom/clk-pll-suspend.h": "0b69f8d52cf54ee5f363b692b7f159f3aab44ca3f954492f89c6eb7f94bf4678",
+    "drivers/soc/qcom/spm.c": "f4dd829b8b8975fbd6c56ac1143ff41e07b1631175b53c8f71ef17780ac5f53a",
+    "include/soc/qcom/spm.h": "0df2f3c80d5f7a0231a988dc55df72591809a0d186d14c1c5894666e679498cc",
+    "drivers/pmdomain/qcom/cpr.c": "6fbd626375268ac37eef325f565597d5cf8f95c20eb85f2a63a9dfff680acdf7",
+    "drivers/pmdomain/qcom/cpr-msm8926-suspend.h": "c27e3df23d054d82d311c211e8235c2ab4ab126e11ae5d3f9d0bf6230b597170",
+    "include/linux/soc/qcom/cpr.h": "093bdcd438e04bc8879b3324253357446aa6a69217af4baf12b2ac994861f1c5",
+    "drivers/irqchip/irq-qcom-mpm.c": "ec59324887c396a3a9a1326368f2e03361968d6330bd957aa6fd379131bde1f6",
+    "include/linux/soc/qcom/mpm.h": "b7ba52217d6d9b65a06252d424e4a2b8d4ba5b8a152439d6717eb68955864743",
+    "drivers/rpmsg/qcom_smd.c": "ffda25d230b8351f6e739f49dd870efce7b877b16ee1f27dfda186e9017e2a37",
+    "include/linux/rpmsg/qcom_smd.h": "9a3c03cb788231ead298d0b9244e23f6b1e9c895988b34ac040dee2213a008e2",
+    "drivers/soc/qcom/rpm-proc.c": "b5d008ba52d21402f663531b8ed852f6ab3ed04afe70b8eadb31ff7363d525b7",
+    "drivers/soc/qcom/smd-rpm.c": "fe5bbb32ff4d1d7fa4f31d64125490d329003c64ed857df263e8ca1134c72726",
+    "include/linux/soc/qcom/smd-rpm.h": "3dc73a51ee45ee7bb8cf1891bb81bdfa8781f69d598c903dfd09c056560693f4",
+    "arch/arm/mach-qcom/platsmp.c": "c76cc0fc3035a9aaa9211d418d6a9cf4c2524e22276e9470d9a637c1b80d66dd",
+    "drivers/irqchip/irq-gic.c": "edd7a93e9a9a78fa04803a72c04fb3522feeeb28066a3198a7080dc7deeb5610",
+    "include/linux/irqchip/arm-gic.h": "744e5d0ea2f3f8108bcced950eb9f5aaeca2357f30e3c9c9f12ca8bfc4c6e6a2",
+    "include/soc/qcom/msm8226-pm.h": "35d2d5e5f1f5d7bc8059f85ea902da5d64a4de55ef0bd54a32f5eece1019fd3a",
+    "drivers/soc/qcom/msm8226-pm.c": "055e3c7fe79737a63be9fbbd2fcf211b896c6be76880a7790971f3a6fb3faf9d",
+    "drivers/soc/qcom/Kconfig": "a62a4ccf5d6329a9592aeca45057e7a316afb15cdf2040a58e53459e444933d3",
+    "drivers/soc/qcom/Makefile": "573a5a7ef66693867b679599b426a87a86df2986a926008cb26014dac7d66dc7",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts": "87aef0bb972bc471c600a36a6bbceb84b173339ce260797e6b87ff18b48884f4",
+    "arch/arm/boot/dts/qcom/Makefile": "67240b5dea77a66cb5a42f198f128d20fa36f7cb9c09fb1588fa5c004bd01708"
+  },
+  "source_tree": "db872556b9b09289d09138209e0bb7674326300a",
+  "working_tree_clean": true,
+  "root_index_unchanged": true,
+  "unpublished": true,
+  "maintainer_contact": false,
+  "human_DCO_pending": true,
+  "physical_acceptance": false,
+  "complete_coordinator_qualified": false,
+  "full_goal_complete": false,
+  "full_kernel_module_package_qualification": false
+}

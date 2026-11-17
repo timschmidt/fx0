@@ -1,0 +1,11 @@
+diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
+--- a/drivers/rpmsg/qcom_smd.c
++++ b/drivers/rpmsg/qcom_smd.c
+@@ -1452,6 +1452,7 @@
+ 		kfree(channel);
+ 	}
+ 
++	of_node_put(edge->of_node);
+ 	kfree(edge);
+ }
+ 

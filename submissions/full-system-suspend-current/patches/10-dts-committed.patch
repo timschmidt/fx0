@@ -1,0 +1,97 @@
+From fc5120c4e0f2ab4790cb62f1f4c40aea74697a18 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Mon, 16 Nov 2026 23:23:06 -0500
+Subject: [PATCH] ARM: dts: qcom: Add an experimental Madai suspend target
+
+Add a separate full-system suspend qualification target using the CPR
+board as its base. Describe the MPM SRAM slice, mailbox and interrupt routes,
+link the coordinator's providers and connect GPIO/SPMI/MDSS/TSENS wake paths.
+Translate vendor full GIC hwirqs into the SPI numbers required by this binding.
+
+All 21 DTBs build and validate against the unfiltered full schema. Twenty
+prior DTBs are byte-identical. The added target repeats two existing TSENS
+unit-address diagnostics; it adds no unique DTC diagnostic. The ordinary
+and CPR targets are unchanged. Physical acceptance and later promotion into
+the normal board/package path are separate, still-required bringup work.
+
+Codex generated this source, host tests and draft message during the Fx0
+bringup. Human review and DCO remain pending. This feature is local and
+has not been submitted; it has no Fixes tag.
+---
+ arch/arm/boot/dts/qcom/Makefile               |  1 +
+ .../qcom/qcom-msm8926-lg-madai-suspend.dts    | 57 +++++++++++++++++++
+ 2 files changed, 58 insertions(+)
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts
+
+diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
+index 672d5aa6c816..0b63c898b033 100644
+--- a/arch/arm/boot/dts/qcom/Makefile
++++ b/arch/arm/boot/dts/qcom/Makefile
+@@ -67,3 +67,4 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+ # Validation-only complete Fx0 board, preserved byte-for-byte.
+ dtb-$(CONFIG_ARCH_QCOM) += qcom-msm8926-lg-madai.dtb
+ dtb-$(CONFIG_ARCH_QCOM) += qcom-msm8926-lg-madai-cpr.dtb
++dtb-$(CONFIG_ARCH_QCOM) += qcom-msm8926-lg-madai-suspend.dtb
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts
+new file mode 100644
+index 000000000000..9821624c01a3
+--- /dev/null
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts
+@@ -0,0 +1,57 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/* Experimental full-system suspend target; physical acceptance is separate. */
++#include "qcom-msm8926-lg-madai-cpr.dts"
++
++&rpm {
++	mpm: interrupt-controller {
++		compatible = "qcom,mpm";
++		qcom,rpm-msg-ram = <&apss_mpm>;
++		interrupt-parent = <&intc>;
++		interrupts = <GIC_SPI 171 IRQ_TYPE_EDGE_RISING>;
++		mboxes = <&apcs 1>;
++		interrupt-controller;
++		#address-cells = <0>;
++		#interrupt-cells = <2>;
++		#power-domain-cells = <0>;
++		qcom,mpm-pin-count = <64>;
++		/* Vendor GIC hwirqs include 32; the current binding takes SPIs. */
++		qcom,mpm-pin-map = <2 184>,
++				   <47 140>,
++				   <53 72>,
++				   <62 190>;
++	};
++};
++
++&rpm_msg_ram {
++	apss_mpm: sram@1d0 {
++		reg = <0x1d0 0x30>;
++	};
++};
++
++&rpm_requests {
++	system-sleep {
++		compatible = "qcom,msm8226-system-pm";
++		qcom,cpr = <&cpr>;
++		qcom,mpm = <&mpm>;
++		qcom,l2-spm = <&saw_l2>;
++	};
++};
++
++&tlmm {
++	wakeup-parent = <&mpm>;
++};
++
++&spmi_bus {
++	/delete-property/ interrupts;
++	interrupts-extended = <&mpm 62 IRQ_TYPE_LEVEL_HIGH>;
++};
++
++&mdss {
++	/delete-property/ interrupts;
++	interrupts-extended = <&mpm 53 IRQ_TYPE_LEVEL_HIGH>;
++};
++
++&tsens {
++	/delete-property/ interrupts;
++	interrupts-extended = <&mpm 2 IRQ_TYPE_LEVEL_HIGH>;
++};

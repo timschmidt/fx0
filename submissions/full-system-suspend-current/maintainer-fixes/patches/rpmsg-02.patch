@@ -1,0 +1,68 @@
+From a757c5f0d15605d056dd42b39cd53c92f40f07f2 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Mon, 16 Nov 2026 22:59:43 -0500
+Subject: [PATCH] rpmsg: qcom_smd: Keep failed channel registration retryable
+
+qcom_smd_create_device() can fail allocating or registering the RPMsg device.
+The state worker ignores its result and marks the channel registered anyway.
+A later worker pass then skips the still-closed channel because registered
+is true, although no device exists. Registration cannot recover on that
+channel through subsequent state work.
+
+Set registered only after successful device creation, while holding the
+channels lock. A later state-work invocation can retry a failed creation.
+Successful registration, including a device awaiting its consumer driver,
+retains its existing behavior. Other channels continue to be processed.
+
+A host model executes the actual worker with synthetic channel lists,
+registration failures and endpoint close/reopen services. Its 788 cases
+reproduce 11 failed assertions before this change and pass afterward. Four
+clean behavioral controls reject lost failure handling, registration state,
+close recovery and the local RPM-only edge policy. Native ARM/ARM64 normal
+and RT builds pass with no new diagnostics; inherited RPMsg documentation
+warnings remain. These do not qualify real kernel concurrency or hardware.
+
+Codex found the issue and generated the fix, host model and this draft
+message during the Fx0 recovery audit. Public source history verifies the
+initial ignored result and unconditional registration assignment. Human
+review and DCO remain pending. Nothing has been submitted.
+
+Fixes: 53e2822e56c7 ("rpmsg: Introduce Qualcomm SMD backend")
+
+Maintainer-base validation is recorded separately from the original
+integration lifecycle models. This local replay preserves the source
+change and attribution; human review and DCO are still pending.
+
+(cherry picked from commit daba8b5e5d5c232b6674ca44a759aee692bcaba8)
+---
+ drivers/rpmsg/qcom_smd.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
+index 7cfde3dea..c82dfd49c 100644
+--- a/drivers/rpmsg/qcom_smd.c
++++ b/drivers/rpmsg/qcom_smd.c
+@@ -1280,6 +1280,7 @@ static void qcom_channel_state_worker(struct work_struct *work)
+ 	struct rpmsg_channel_info chinfo;
+ 	unsigned remote_state;
+ 	unsigned long flags;
++	int ret;
+ 
+ 	/*
+ 	 * Register a device for any closed channel where the remote processor
+@@ -1304,9 +1305,10 @@ static void qcom_channel_state_worker(struct work_struct *work)
+ 			continue;
+ 
+ 		spin_unlock_irqrestore(&edge->channels_lock, flags);
+-		qcom_smd_create_device(channel);
++		ret = qcom_smd_create_device(channel);
+ 		spin_lock_irqsave(&edge->channels_lock, flags);
+-		channel->registered = true;
++		if (!ret)
++			channel->registered = true;
+ 	}
+ 
+ 	/*
+-- 
+2.56.0
+
