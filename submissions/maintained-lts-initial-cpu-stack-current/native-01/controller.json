@@ -1,0 +1,50 @@
+{
+  "started_UTC": "2026-11-17T08:25:53.039199+00:00",
+  "passed": false,
+  "state": "terminal failure",
+  "source_head": "432cb11b41e9427d0d095fda2d09da9b7034983e",
+  "source_uncommitted": true,
+  "source_files": {
+    "drivers/pmdomain/qcom/cpr.c": "989ec2d76f8d8418372a5d65c2c40833d641ca956cbabef6f3d49c1ef4eae17c",
+    "drivers/regulator/qcom_spmi-regulator.c": "90a1a48ab4c32ae54b41c9494137168f833399f9dca1f7ed5be5688a25413e80",
+    "drivers/soc/qcom/spm.c": "1e1827b0f5c3b5db1d18a30edfd7e95054397e94248594220fe6f0b873c15731",
+    "drivers/soc/qcom/smd-rpm.c": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+    "drivers/cpufreq/qcom-cpufreq-nvmem.c": "2f61370f6c4f6a8410830a523483b1395ecfb5e98be6c0f293f52364a5e173b8",
+    "drivers/cpufreq/cpufreq-dt-platdev.c": "6ca5e684e7d36ca732944530e4240f9ab2eb6c3e15aa916ba8808c5232bcfeee",
+    "drivers/clk/qcom/a53-pll.c": "84a91c06729b2c5190f1dc47b53ae564f1399adfd699ea518cf800dd3b0dc256",
+    "drivers/clk/qcom/apcs-msm8916.c": "4fd79329d44473d5335c0510bc357f37ce5de6ce97d99e8cd464224a32c2036c",
+    "drivers/clk/qcom/clk-pll.c": "bfbaf9e47a56e0e37a670a26bdeda82a3072b8966fc644cb25b96eacacddafda",
+    "drivers/clk/qcom/clk-regmap-mux-div.c": "3395adb60d400564bd432404003efbe42db92f28b55c31e66fd0b632a24b4a92",
+    "drivers/clk/qcom/gcc-msm8974.c": "4b0de15d4c41226ce92462d1800efd25156b60e2b8335e6cc8bc727e95e678b1",
+    "drivers/mfd/qcom-spmi-pmic.c": "3a79cf6520d138e416e1454fdce42359c5e895b65a5add33da2bdc19f6107235",
+    "drivers/regulator/qcom-spmi-saw-fts2.h": "697f55bcbdefea453c790aa647a86b3028a35dbad241941dce44dfcdb1005d86",
+    "drivers/soc/qcom/spm-msm8226-l2.h": "5cc4d9161aaf621ee236bc475e8265069e91b8ebc6dd0070f21a0e7a4659625d",
+    "drivers/pmdomain/qcom/cpr-voltage.h": "8ae79b9419e5096ec30ade91358739d75a224c3e25078dc8d09689bbe43028a8",
+    "include/linux/soc/qcom/cpr.h": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3"
+  },
+  "profiles": [],
+  "architecture_constraints": [],
+  "phone_access": false,
+  "published": false,
+  "full_kernel_package_or_physical_acceptance": false,
+  "seeds": "Already qualified LTS native-02 configs; no 7.4 seed Kconfig type adaptation required",
+  "ARM32_RT_unsupported_not_counted": true,
+  "stages": [
+    {
+      "label": "arm-normal-CPU-enabled-options",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diagnostics": []
+    },
+    {
+      "label": "arm-normal-CPU-enabled-config",
+      "returncode": 0,
+      "log_SHA256": "2aa0dc4efbf30ac31c0f34ac0abba92cd56bafab43a748376956b37695e84061",
+      "diagnostics": []
+    }
+  ],
+  "error_type": "AssertionError",
+  "error": "MFD_QCOM_SPMI_PMIC",
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-17T08:25:56.275688+00:00"
+}

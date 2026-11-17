@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "profiles": [
+    {
+      "profile": "arm-normal-CPU-enabled",
+      "config_SHA256": "b529ae68b1e0e9f50649662b6e11714e941380c976f6b12921d38086984b9c17",
+      "objects": {
+        "drivers/pmdomain/qcom/cpr.o": "b74571afa8e75f52b978442983a8962d763b7416ac455621c9d8ffa551cebcdb",
+        "drivers/cpufreq/cpufreq-dt-platdev.o": "60201d829c5d29fc8b09d7c4fe51486e8e9613bcbba64faaedc39a72769de041"
+      },
+      "diagnostics": []
+    },
+    {
+      "profile": "arm-normal-CPU-disabled",
+      "config_SHA256": "86c0954e04198311f3b5cb75ec05b38095ac3cab3059796902348781a87d412d",
+      "objects": {
+        "drivers/pmdomain/qcom/cpr.o": "c974dd8ad3a5745a99929095dd774fc09f01bd717c12fd2cedcc25b754bc5197",
+        "drivers/cpufreq/cpufreq-dt-platdev.o": "8031e7a96b35f6c22c1fc972ea2ce16301258623fc26f0055d53d42dd7a42984"
+      },
+      "diagnostics": []
+    },
+    {
+      "profile": "arm64-normal-CPU-enabled",
+      "config_SHA256": "67eb0424312fdab2d04a31855e546b2b2390e94b64f929630d1ec661bf148dcb",
+      "objects": {
+        "drivers/pmdomain/qcom/cpr.o": "aeb45ff38631304c0ccf6dce2f15795c3c957406bbf0a54b4a214b7ec840b75a",
+        "drivers/cpufreq/cpufreq-dt-platdev.o": "a295f768406ab1e122f35ad16a552c637a8a8a8e70ea64632227cc3ecbfca3b6"
+      },
+      "diagnostics": []
+    },
+    {
+      "profile": "arm64-normal-CPU-disabled",
+      "config_SHA256": "c3021946727c48fec72f9a5c7d1fe99dcdb1c2476d7a7529b069650ef0ad6730",
+      "objects": {
+        "drivers/pmdomain/qcom/cpr.o": "8fbcb7dca0695272ea7439561a77efcd952d8c723ab0b0e9843742e138f4bfca",
+        "drivers/cpufreq/cpufreq-dt-platdev.o": "0371047f2248ac8e41cf58a45a275fb84b834b22d55726b1e494422b92ac52dc"
+      },
+      "diagnostics": []
+    },
+    {
+      "profile": "arm64-rt-CPU-enabled",
+      "config_SHA256": "bf4aa666f14f17454a4f5ea7402a9988cbb9211780235cf5f661b390fcc77a65",
+      "objects": {
+        "drivers/pmdomain/qcom/cpr.o": "7ef809a429c319838363bf8353e5806a846833353e9a597f864240023620d873",
+        "drivers/cpufreq/cpufreq-dt-platdev.o": "ee9b3fc170489bd4cf016026a594b232978cc323d4b47eb538168e95535287bb"
+      },
+      "diagnostics": []
+    },
+    {
+      "profile": "arm64-rt-CPU-disabled",
+      "config_SHA256": "c1165060ff6e672406517de8e4a63db38a5b52257d1bfe46c132e17bd9798779",
+      "objects": {
+        "drivers/pmdomain/qcom/cpr.o": "e8071ad30a2588e951a6e386df9dea80ecec6a6ca501d147c9a51cb6b3b9b8b9",
+        "drivers/cpufreq/cpufreq-dt-platdev.o": "d2249e7b2575165accec533ec37e0af49b7f1ba8804b4bdb9de5c856c6257c7c"
+      },
+      "diagnostics": []
+    }
+  ],
+  "whitespace_only_changes": true,
+  "phone_access": false,
+  "state": "terminal success",
+  "recompiled_objects": 12,
+  "final_source_files": {
+    "drivers/pmdomain/qcom/cpr.c": "1eb8894ff1dc13f081db2baed4d03027e4ae56b6161de715442df5221755658a",
+    "drivers/cpufreq/cpufreq-dt-platdev.c": "df07cc0eecbcaf335f52b017f805b1d0183f59b5ba38e7970476fffcbe8d3d7b"
+  },
+  "owned_child_terminal_and_reaped": true
+}

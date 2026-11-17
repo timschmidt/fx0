@@ -1,0 +1,982 @@
+{
+  "passed": true,
+  "stages": [
+    {
+      "label": "baseline-config",
+      "returncode": 0,
+      "log_SHA256": "95750e251888640535fd1a4538249f383376da15f63651478842c6c6e49d7815"
+    },
+    {
+      "label": "baseline-DTBs",
+      "returncode": 0,
+      "log_SHA256": "6d8082bcbf4cc91111042e2bb64fab9260103c4536f23e0d5429365b510d6639"
+    },
+    {
+      "label": "candidate-config",
+      "returncode": 0,
+      "log_SHA256": "267cabf78f89e3f9d67f1d107782e78e1f7046a0070549466ceb531ca37fbe02"
+    },
+    {
+      "label": "candidate-DTBs",
+      "returncode": 0,
+      "log_SHA256": "971f4362252656325c5e0c934aafcb3fd2a0cdab6e218ba717717f219bde6bd5"
+    }
+  ],
+  "names": [
+    "qcom-apq8026-asus-sparrow.dtb",
+    "qcom-apq8026-huawei-sturgeon.dtb",
+    "qcom-apq8026-lg-lenok.dtb",
+    "qcom-apq8026-samsung-matisse-wifi.dtb",
+    "qcom-apq8026-samsung-milletwifi.dtb",
+    "qcom-msm8226-microsoft-dempsey.dtb",
+    "qcom-msm8226-microsoft-makepeace.dtb",
+    "qcom-msm8226-microsoft-moneypenny.dtb",
+    "qcom-msm8226-samsung-ms013g.dtb",
+    "qcom-msm8226-samsung-s3ve3g.dtb",
+    "qcom-msm8926-htc-memul.dtb",
+    "qcom-msm8926-lg-madai-cpr.dtb",
+    "qcom-msm8926-lg-madai.dtb",
+    "qcom-msm8926-microsoft-superman-lte.dtb",
+    "qcom-msm8926-microsoft-tesla.dtb",
+    "qcom-msm8926-motorola-peregrine.dtb",
+    "qcom-msm8926-samsung-matisselte.dtb"
+  ],
+  "baseline_names": [
+    "qcom-apq8026-asus-sparrow.dtb",
+    "qcom-apq8026-huawei-sturgeon.dtb",
+    "qcom-apq8026-lg-lenok.dtb",
+    "qcom-apq8026-samsung-matisse-wifi.dtb",
+    "qcom-apq8026-samsung-milletwifi.dtb",
+    "qcom-msm8226-microsoft-dempsey.dtb",
+    "qcom-msm8226-microsoft-makepeace.dtb",
+    "qcom-msm8226-microsoft-moneypenny.dtb",
+    "qcom-msm8226-samsung-ms013g.dtb",
+    "qcom-msm8226-samsung-s3ve3g.dtb",
+    "qcom-msm8926-htc-memul.dtb",
+    "qcom-msm8926-lg-madai.dtb",
+    "qcom-msm8926-microsoft-superman-lte.dtb",
+    "qcom-msm8926-microsoft-tesla.dtb",
+    "qcom-msm8926-motorola-peregrine.dtb",
+    "qcom-msm8926-samsung-matisselte.dtb"
+  ],
+  "baseline_DTS_and_DTC_inputs_match_pre_CPU_head": true,
+  "phone_access": false,
+  "physical_acceptance": false,
+  "full_unfiltered_board_schema_acceptance": false,
+  "state": "terminal success",
+  "DTBs": {
+    "baseline": {
+      "qcom-apq8026-asus-sparrow.dtb": "329dd2dfbf5037b54cdd589e964b8d4a025de389cac2bd51af607803965ade7c",
+      "qcom-apq8026-huawei-sturgeon.dtb": "f4ff96c5aaf769768ca75f5941f2cee86b2b4f106c2ec7cbfc222d22f08a73c7",
+      "qcom-apq8026-lg-lenok.dtb": "2ef2a396e2bd14d15bbecc334376587eafa4d7fd383c8d16e19e5f459a7e7e6e",
+      "qcom-apq8026-samsung-matisse-wifi.dtb": "5f29d2f6e19fe3a3d7201a2f3b5f93a4ddb9635c980d7020eb32310339338950",
+      "qcom-apq8026-samsung-milletwifi.dtb": "716fef236e3b7de74ba1d5760bbd8521f655eb42af0c1f3b22da525a5f22b2fb",
+      "qcom-msm8226-microsoft-dempsey.dtb": "9a25fb8b3213d40dffe5d1ff0def2a728acf78c2047862a0f2c57fe7cb1aee30",
+      "qcom-msm8226-microsoft-makepeace.dtb": "13aea089f144217616104e0796420b05317066f52a01b9c9f4f2d2cfa2b325a8",
+      "qcom-msm8226-microsoft-moneypenny.dtb": "f2e40a29eb381bd92c2b1d3731e9737abd0eef7e60323936318346f2d5db4411",
+      "qcom-msm8226-samsung-ms013g.dtb": "6738f54034aee6783dc69474fc23d0329ee49787149d4dfd43a3f3961896a893",
+      "qcom-msm8226-samsung-s3ve3g.dtb": "e6d96eab161118738bebf8c74671ef06c1aef6708bab2cc87fa5da5e01c0bd3c",
+      "qcom-msm8926-htc-memul.dtb": "4d93d6d76c65ac9557affaa709736151741c0f8989031cf41aa78f95dd23282c",
+      "qcom-msm8926-lg-madai.dtb": "55f6638948dc7a53c2663cf7516852d08754bcdeba97af1fe35b473c40fbe9ed",
+      "qcom-msm8926-microsoft-superman-lte.dtb": "ab1cba5f729642eb89f2a11d38e7f816fb48d0146a56fdb275a3c52f4bf985ae",
+      "qcom-msm8926-microsoft-tesla.dtb": "460821886ce55a4019d396f2747ef184bd6fa4cd21e9d88282c8ef5e5691223b",
+      "qcom-msm8926-motorola-peregrine.dtb": "4e05ac5ab748b3cd79bc5797694ee0b90fe19110e941fafad706ef38a6cccfcf",
+      "qcom-msm8926-samsung-matisselte.dtb": "881db49e8aa2a261c09fc213110e832f9d9d5ca856c4dee4e1745523bdf0e5d1"
+    },
+    "candidate": {
+      "qcom-apq8026-asus-sparrow.dtb": "329dd2dfbf5037b54cdd589e964b8d4a025de389cac2bd51af607803965ade7c",
+      "qcom-apq8026-huawei-sturgeon.dtb": "f4ff96c5aaf769768ca75f5941f2cee86b2b4f106c2ec7cbfc222d22f08a73c7",
+      "qcom-apq8026-lg-lenok.dtb": "2ef2a396e2bd14d15bbecc334376587eafa4d7fd383c8d16e19e5f459a7e7e6e",
+      "qcom-apq8026-samsung-matisse-wifi.dtb": "5f29d2f6e19fe3a3d7201a2f3b5f93a4ddb9635c980d7020eb32310339338950",
+      "qcom-apq8026-samsung-milletwifi.dtb": "716fef236e3b7de74ba1d5760bbd8521f655eb42af0c1f3b22da525a5f22b2fb",
+      "qcom-msm8226-microsoft-dempsey.dtb": "9a25fb8b3213d40dffe5d1ff0def2a728acf78c2047862a0f2c57fe7cb1aee30",
+      "qcom-msm8226-microsoft-makepeace.dtb": "13aea089f144217616104e0796420b05317066f52a01b9c9f4f2d2cfa2b325a8",
+      "qcom-msm8226-microsoft-moneypenny.dtb": "f2e40a29eb381bd92c2b1d3731e9737abd0eef7e60323936318346f2d5db4411",
+      "qcom-msm8226-samsung-ms013g.dtb": "6738f54034aee6783dc69474fc23d0329ee49787149d4dfd43a3f3961896a893",
+      "qcom-msm8226-samsung-s3ve3g.dtb": "e6d96eab161118738bebf8c74671ef06c1aef6708bab2cc87fa5da5e01c0bd3c",
+      "qcom-msm8926-htc-memul.dtb": "4d93d6d76c65ac9557affaa709736151741c0f8989031cf41aa78f95dd23282c",
+      "qcom-msm8926-lg-madai-cpr.dtb": "c689da4619aac8270256de4657d0ab8d65f30e4c3675a63120fd645883b5cf1e",
+      "qcom-msm8926-lg-madai.dtb": "6ea6ef6223b56b42f5083bd7f833d94671c6829fc9c2f01135403e9df030d9e0",
+      "qcom-msm8926-microsoft-superman-lte.dtb": "ab1cba5f729642eb89f2a11d38e7f816fb48d0146a56fdb275a3c52f4bf985ae",
+      "qcom-msm8926-microsoft-tesla.dtb": "460821886ce55a4019d396f2747ef184bd6fa4cd21e9d88282c8ef5e5691223b",
+      "qcom-msm8926-motorola-peregrine.dtb": "4e05ac5ab748b3cd79bc5797694ee0b90fe19110e941fafad706ef38a6cccfcf",
+      "qcom-msm8926-samsung-matisselte.dtb": "881db49e8aa2a261c09fc213110e832f9d9d5ca856c4dee4e1745523bdf0e5d1"
+    }
+  },
+  "byte_identical_other_boards": [
+    "qcom-apq8026-asus-sparrow.dtb",
+    "qcom-apq8026-huawei-sturgeon.dtb",
+    "qcom-apq8026-lg-lenok.dtb",
+    "qcom-apq8026-samsung-matisse-wifi.dtb",
+    "qcom-apq8026-samsung-milletwifi.dtb",
+    "qcom-msm8226-microsoft-dempsey.dtb",
+    "qcom-msm8226-microsoft-makepeace.dtb",
+    "qcom-msm8226-microsoft-moneypenny.dtb",
+    "qcom-msm8226-samsung-ms013g.dtb",
+    "qcom-msm8226-samsung-s3ve3g.dtb",
+    "qcom-msm8926-htc-memul.dtb",
+    "qcom-msm8926-microsoft-superman-lte.dtb",
+    "qcom-msm8926-microsoft-tesla.dtb",
+    "qcom-msm8926-motorola-peregrine.dtb",
+    "qcom-msm8926-samsung-matisselte.dtb"
+  ],
+  "warnings": {
+    "baseline": [
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:709.28-720.5: Warning (avoid_unnecessary_addr_size): /soc/i2c@f9927000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:709.28-720.5: Warning (avoid_unnecessary_addr_size): /soc/i2c@f9927000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    ],
+    "candidate": [
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:709.28-720.5: Warning (avoid_unnecessary_addr_size): /soc/i2c@f9927000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:709.28-720.5: Warning (avoid_unnecessary_addr_size): /soc/i2c@f9927000: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1320.28-1371.6: Warning (avoid_unnecessary_addr_size): /soc/display-subsystem@fd900000/dsi@fd922800: unnecessary #address-cells/#size-cells without \"ranges\", \"dma-ranges\" or child \"reg\" or \"ranges\" property",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:940.27-943.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:975.27-978.6: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+      "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:1307.11-1317.7: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+    ]
+  },
+  "schema_checks": [
+    {
+      "board": "qcom-apq8026-asus-sparrow.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-asus-sparrow.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-asus-sparrow.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-asus-sparrow.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-asus-sparrow.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-asus-sparrow.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-huawei-sturgeon.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-huawei-sturgeon.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-huawei-sturgeon.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-huawei-sturgeon.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-huawei-sturgeon.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-huawei-sturgeon.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-lg-lenok.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-lg-lenok.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-lg-lenok.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-lg-lenok.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-lg-lenok.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-lg-lenok.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-samsung-matisse-wifi.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-samsung-matisse-wifi.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-samsung-matisse-wifi.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-samsung-matisse-wifi.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-samsung-matisse-wifi.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-samsung-matisse-wifi.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-samsung-milletwifi.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-samsung-milletwifi.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-samsung-milletwifi.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-samsung-milletwifi.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-samsung-milletwifi.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-apq8026-samsung-milletwifi.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-dempsey.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-dempsey.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-dempsey.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-dempsey.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-dempsey.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-dempsey.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-makepeace.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-makepeace.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-makepeace.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-makepeace.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-makepeace.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-makepeace.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-moneypenny.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-moneypenny.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-moneypenny.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-moneypenny.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-moneypenny.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-microsoft-moneypenny.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-samsung-ms013g.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-samsung-ms013g.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-samsung-ms013g.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-samsung-ms013g.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-samsung-ms013g.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-samsung-ms013g.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-samsung-s3ve3g.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-samsung-s3ve3g.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-samsung-s3ve3g.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-samsung-s3ve3g.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-samsung-s3ve3g.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8226-samsung-s3ve3g.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-htc-memul.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-htc-memul.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-htc-memul.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-htc-memul.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-htc-memul.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-htc-memul.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-lg-madai-cpr.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-lg-madai-cpr.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-lg-madai-cpr.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-lg-madai-cpr.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-lg-madai-cpr.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-lg-madai-cpr.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-lg-madai.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-lg-madai.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-lg-madai.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-lg-madai.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-lg-madai.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-lg-madai.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-microsoft-superman-lte.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-microsoft-superman-lte.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-microsoft-superman-lte.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-microsoft-superman-lte.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-microsoft-superman-lte.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-microsoft-superman-lte.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-microsoft-tesla.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-microsoft-tesla.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-microsoft-tesla.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-microsoft-tesla.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-microsoft-tesla.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-microsoft-tesla.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-motorola-peregrine.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-motorola-peregrine.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-motorola-peregrine.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-motorola-peregrine.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-motorola-peregrine.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-motorola-peregrine.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-samsung-matisselte.dtb",
+      "schema": "opp/opp-v2-kryo-cpu.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-samsung-matisselte.dtb",
+      "schema": "opp/opp-v2-qcom-level.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-samsung-matisselte.dtb",
+      "schema": "power/avs/qcom,cpr.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-samsung-matisselte.dtb",
+      "schema": "regulator/qcom,spmi-regulator.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-samsung-matisselte.dtb",
+      "schema": "soc/qcom/qcom,saw2.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    },
+    {
+      "board": "qcom-msm8926-samsung-matisselte.dtb",
+      "schema": "nvmem/qcom,qfprom.yaml",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "silent": true
+    }
+  ],
+  "processed_schema_SHA256": "47e3b365692ec61395f7c8c0fe11b11f00d3d2afeebf1f2107b055526fe7711b",
+  "processed_schema_entries": 5257,
+  "candidate_ordinary_and_CPU_targets_built": true,
+  "owned_child_terminal_and_reaped": true
+}

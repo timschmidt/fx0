@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "origin_commit": "70db7a1d84406980abb9e0050009a25e04fd02e4",
+  "original_author": "Kees Cook",
+  "decision": "Newer typed-allocation-only refactor not applicable to maintained 6.18; retain supported checked traditional zeroed allocations",
+  "public_LTS_headers": {
+    "include/linux/device/devres.h": {
+      "SHA256": "275638bcb5e116b7546b9f60607c462b0c40c8814dc8e1ef372eaaed1f3cbd90",
+      "has_newer_allocation_macros": false
+    },
+    "include/linux/slab.h": {
+      "SHA256": "d3a7999286cbba4e0bb51db023dd5926ce13a355a574e4bbe86d638e6183fed1",
+      "has_newer_allocation_macros": false
+    }
+  },
+  "retained_source": {
+    "drivers/clk/qcom/a53-pll.c": {
+      "SHA256": "84a91c06729b2c5190f1dc47b53ae564f1399adfd699ea518cf800dd3b0dc256",
+      "traditional_zeroed_allocation_calls": 2,
+      "newer_allocation_macros": false
+    },
+    "drivers/clk/qcom/apcs-msm8916.c": {
+      "SHA256": "4fd79329d44473d5335c0510bc357f37ce5de6ce97d99e8cd464224a32c2036c",
+      "traditional_zeroed_allocation_calls": 1,
+      "newer_allocation_macros": false
+    },
+    "drivers/cpufreq/qcom-cpufreq-nvmem.c": {
+      "SHA256": "2f61370f6c4f6a8410830a523483b1395ecfb5e98be6c0f293f52364a5e173b8",
+      "traditional_zeroed_allocation_calls": 1,
+      "newer_allocation_macros": false
+    },
+    "drivers/firmware/qcom/qcom_scm.c": {
+      "SHA256": "b485f55c5a292473cc55e22a1bb14cfc1ec8bcfafd7bcbaa15b2a2e69243c361",
+      "traditional_zeroed_allocation_calls": 3,
+      "newer_allocation_macros": false
+    },
+    "drivers/pmdomain/qcom/cpr.c": {
+      "SHA256": "1eb8894ff1dc13f081db2baed4d03027e4ae56b6161de715442df5221755658a",
+      "traditional_zeroed_allocation_calls": 5,
+      "newer_allocation_macros": false
+    }
+  },
+  "CPU_native_enabled_disabled_profiles": 6,
+  "SCM_native_qualification": "local/fx0-lts-production-current-01/cpu-foundation-01/native-01/controller.json",
+  "allocation_behavior_or_publication_not_claimed_for_unrelated_newer_SoCs": true,
+  "source_changes_for_this_refactor": false,
+  "phone_access": false
+}

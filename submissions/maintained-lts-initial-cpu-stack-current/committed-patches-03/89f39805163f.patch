@@ -1,0 +1,48 @@
+From e6d29e7ce1479a83fc32f6e9efb9f4e0c589a032 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 00:38:02 -0500
+Subject: [PATCH] mfd: qcom-spmi-pmic: use a raw lock for atomic register
+ access
+
+The SPMI PMIC map advertises fast_io and is accessed by the SAW voltage
+callback from a synchronous CPU0 IPI. Its spinlock_t becomes a sleeping
+lock on PREEMPT_RT, so the PMIC access has an invalid wait context even
+when the SAW MMIO map itself uses a raw lock.
+
+Include this PMIC map in the actual LTS regmap selection/callback model
+and all six native profiles. Its raw-lock policy passes the focused
+model. This does not establish physical interrupt or SMP behavior.
+
+Backport as part of the initial maintained-6.18.63 CPU stack. The complete
+series passes 45 selected host test methods. Standalone executables use
+ASan, UBSan and normal LeakSanitizer; ctypes numerical oracles are
+explicitly unsanitized. Twenty selected objects compile with the feature
+enabled and disabled on ARM, ARM64 and ARM64 RT (120 objects), W=1 and
+nonpermissive CFI, with no diagnostics. ARM32 RT is unsupported.
+
+Original author/date and source notices are preserved. Codex prepared
+this local backport and verification. Original scoped source provenance
+remains recorded in the review evidence. Human review and DCO remain
+pending; no phone, publication or maintainer action has occurred.
+
+Backported from commit 89f39805163fb2c05a00e3f5adbd3ac1c8fd731d ("mfd:
+qcom-spmi-pmic: use a raw lock for atomic register access")
+---
+ drivers/mfd/qcom-spmi-pmic.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
+index b4b178caf754..db28a89edc39 100644
+--- a/drivers/mfd/qcom-spmi-pmic.c
++++ b/drivers/mfd/qcom-spmi-pmic.c
+@@ -248,6 +248,7 @@ static const struct regmap_config spmi_regmap_config = {
+ 	.val_bits	= 8,
+ 	.max_register	= 0xffff,
+ 	.fast_io	= true,
++	.use_raw_spinlock = true,
+ };
+ 
+ static int pmic_spmi_probe(struct spmi_device *sdev)
+-- 
+2.56.0
+

@@ -1,0 +1,185 @@
+From ea524169a03ca1a6524d2d004b248f9071cb5e1a Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:33:09 +0000
+Subject: [PATCH] cpufreq: qcom-nvmem: attach MSM8926 CPUs after supplier
+ filtering
+
+Use the explicit MSM8926 OPP type to select calibrated supplier/CPU
+filtering before parsing or attaching the shared domain. Unwind partial
+CPU setup and register the child only after all consumers are ready.
+Preserve the current of_machine matching helpers and ordinary generic
+registration for unmodified board OPP tables.
+
+Keep LTS root-node and allowlist/blocklist matching APIs and all unrelated
+SoC support. Add the calibrated OPP guard before generic registration.
+The actual opt-in/legacy routes and supplier/error lifetime models pass.
+
+Backport as part of the initial maintained-6.18.63 CPU stack. The complete
+series passes 45 selected host test methods. Standalone executables use
+ASan, UBSan and normal LeakSanitizer; ctypes numerical oracles are
+explicitly unsanitized. Twenty selected objects compile with the feature
+enabled and disabled on ARM, ARM64 and ARM64 RT (120 objects), W=1 and
+nonpermissive CFI, with no diagnostics. ARM32 RT is unsupported.
+
+Original author/date and source notices are preserved. Codex prepared
+this local backport and verification. Original scoped source provenance
+remains recorded in the review evidence. Human review and DCO remain
+pending; no phone, publication or maintainer action has occurred.
+
+Backported from commit 965b16234067d414526f98de418a15fd776cebf1 ("cpufreq:
+qcom-nvmem: attach MSM8926 CPUs after supplier filtering")
+---
+ drivers/cpufreq/cpufreq-dt-platdev.c | 13 ++++++++
+ drivers/cpufreq/qcom-cpufreq-nvmem.c | 46 +++++++++++++++++++++++-----
+ 2 files changed, 51 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
+index 47dd76acd31e..61d7e1f08cfb 100644
+--- a/drivers/cpufreq/cpufreq-dt-platdev.c
++++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+@@ -220,6 +220,15 @@ static bool __init cpu0_node_has_opp_v2_prop(void)
+ 	return ret;
+ }
+ 
++static bool __init cpu0_uses_msm8926_cpr(void)
++{
++	struct device_node *cpu __free(device_node) = of_cpu_device_node_get(0);
++	struct device_node *opps __free(device_node) =
++		of_parse_phandle(cpu, "operating-points-v2", 0);
++
++	return of_device_is_compatible(opps, "operating-points-v2-msm8926-cpu");
++}
++
+ static int __init cpufreq_dt_platdev_init(void)
+ {
+ 	struct device_node *np __free(device_node) = of_find_node_by_path("/");
+@@ -229,6 +238,10 @@ static int __init cpufreq_dt_platdev_init(void)
+ 	if (!np)
+ 		return -ENODEV;
+ 
++	/* Calibrated CPU/domain filtering must precede generic registration. */
++	if (cpu0_uses_msm8926_cpr())
++		return -ENODEV;
++
+ 	match = of_match_node(allowlist, np);
+ 	if (match) {
+ 		data = match->data;
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index 765a5bb81829..0fb5ee30f074 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -28,6 +28,7 @@
+ #include <linux/pm_opp.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/slab.h>
++#include <linux/soc/qcom/cpr.h>
+ #include <linux/soc/qcom/smem.h>
+ 
+ #include <dt-bindings/arm/qcom,ids.h>
+@@ -54,6 +55,7 @@ struct qcom_cpufreq_match_data {
+ 			   struct qcom_cpufreq_drv *drv);
+ 	const char **pd_names;
+ 	unsigned int num_pd_names;
++	bool cpr_supported_hw;
+ };
+ 
+ struct qcom_cpufreq_drv_cpu {
+@@ -419,6 +421,12 @@ static const struct qcom_cpufreq_match_data match_data_qcs404 = {
+ 	.num_pd_names = 1,
+ };
+ 
++static const struct qcom_cpufreq_match_data match_data_msm8926 = {
++	.pd_names = (const char *[]) { "cpr" },
++	.num_pd_names = 1,
++	.cpr_supported_hw = true,
++};
++
+ static const struct qcom_cpufreq_match_data match_data_ipq6018 = {
+ 	.get_version = qcom_cpufreq_ipq6018_name_version,
+ };
+@@ -452,8 +460,14 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 	char *pvs_name = pvs_name_buffer;
+ 	unsigned cpu;
+ 	const struct of_device_id *match;
++	const struct qcom_cpufreq_match_data *data;
+ 	int ret;
+ 
++	match = pdev->dev.platform_data;
++	if (!match || !match->data)
++		return -EINVAL;
++	data = match->data;
++
+ 	cpu_dev = get_cpu_device(0);
+ 	if (!cpu_dev)
+ 		return -ENODEV;
+@@ -463,8 +477,11 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 	if (!np)
+ 		return -ENOENT;
+ 
+-	ret = of_device_is_compatible(np, "operating-points-v2-kryo-cpu") ||
+-	      of_device_is_compatible(np, "operating-points-v2-krait-cpu");
++	if (data->cpr_supported_hw)
++		ret = of_device_is_compatible(np, "operating-points-v2-msm8926-cpu");
++	else
++		ret = of_device_is_compatible(np, "operating-points-v2-kryo-cpu") ||
++		      of_device_is_compatible(np, "operating-points-v2-krait-cpu");
+ 	if (!ret)
+ 		return -ENOENT;
+ 
+@@ -473,12 +490,14 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 	if (!drv)
+ 		return -ENOMEM;
+ 
+-	match = pdev->dev.platform_data;
+-	drv->data = match->data;
+-	if (!drv->data)
+-		return -ENODEV;
++	drv->data = data;
+ 
+-	if (drv->data->get_version) {
++	if (data->cpr_supported_hw) {
++		ret = qcom_cpr_msm8926_get_supported_hw(cpu_dev, &drv->versions);
++		if (ret)
++			return dev_err_probe(cpu_dev, ret, "CPR eligibility unavailable\n");
++		pvs_name = NULL;
++	} else if (data->get_version) {
+ 		speedbin_nvmem = of_nvmem_cell_get(np, NULL);
+ 		if (IS_ERR(speedbin_nvmem))
+ 			return dev_err_probe(cpu_dev, PTR_ERR(speedbin_nvmem),
+@@ -504,7 +523,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 			goto free_opp;
+ 		}
+ 
+-		if (drv->data->get_version) {
++		if (drv->data->get_version || drv->data->cpr_supported_hw) {
+ 			config.supported_hw = &drv->versions;
+ 			config.supported_hw_count = 1;
+ 
+@@ -592,6 +611,7 @@ static struct platform_driver qcom_cpufreq_driver = {
+ static const struct of_device_id qcom_cpufreq_match_list[] __initconst __maybe_unused = {
+ 	{ .compatible = "qcom,apq8096", .data = &match_data_kryo },
+ 	{ .compatible = "qcom,msm8909", .data = &match_data_msm8909 },
++	{ .compatible = "qcom,msm8926", .data = &match_data_msm8926 },
+ 	{ .compatible = "qcom,msm8996", .data = &match_data_kryo },
+ 	{ .compatible = "qcom,qcs404", .data = &match_data_qcs404 },
+ 	{ .compatible = "qcom,ipq5332", .data = &match_data_kryo },
+@@ -626,6 +646,16 @@ static int __init qcom_cpufreq_init(void)
+ 	if (!match)
+ 		return -ENODEV;
+ 
++	if (((const struct qcom_cpufreq_match_data *)match->data)->cpr_supported_hw) {
++		struct device_node *cpu __free(device_node) = of_cpu_device_node_get(0);
++		struct device_node *opps __free(device_node) =
++			of_parse_phandle(cpu, "operating-points-v2", 0);
++
++		/* Legacy MSM8926 boards keep their ordinary cpufreq-dt route. */
++		if (!of_device_is_compatible(opps, "operating-points-v2-msm8926-cpu"))
++			return -ENODEV;
++	}
++
+ 	ret = platform_driver_register(&qcom_cpufreq_driver);
+ 	if (unlikely(ret < 0))
+ 		return ret;
+-- 
+2.56.0
+

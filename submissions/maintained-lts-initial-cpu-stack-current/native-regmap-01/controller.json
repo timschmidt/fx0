@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "profiles": [
+    {
+      "profile": "arm-normal-CPU-enabled",
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "PREEMPT_RT": false,
+      "config_SHA256": "b529ae68b1e0e9f50649662b6e11714e941380c976f6b12921d38086984b9c17",
+      "object_SHA256": "19a73f16c8447ca330044c4aff17d2a1e2a2b5c49187c2d3249ed45db5fd82b4",
+      "diagnostics": []
+    },
+    {
+      "profile": "arm64-normal-CPU-enabled",
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "PREEMPT_RT": false,
+      "config_SHA256": "67eb0424312fdab2d04a31855e546b2b2390e94b64f929630d1ec661bf148dcb",
+      "object_SHA256": "4d234bff770b5323559bfd4ad763177fdf63f1b2f06824b3c107e511eb18d74d",
+      "diagnostics": []
+    },
+    {
+      "profile": "arm64-rt-CPU-enabled",
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "PREEMPT_RT": true,
+      "config_SHA256": "bf4aa666f14f17454a4f5ea7402a9988cbb9211780235cf5f661b390fcc77a65",
+      "object_SHA256": "7d421b3b7bcb339de2c54803c8565aa77a77b8c6cebf183341c133f7f4ca4a9b",
+      "diagnostics": []
+    }
+  ],
+  "phone_access": false,
+  "physical_RT_lockdep_acceptance": false,
+  "state": "terminal success",
+  "native_objects": 3,
+  "source_SHA256": "0bc14f8e9c0729af2151ab0a2e53cbfe399181fb18c9684721389137767c3066",
+  "owned_child_terminal_and_reaped": true
+}

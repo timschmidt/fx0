@@ -1,0 +1,209 @@
+{
+  "base": "432cb11b41e9427d0d095fda2d09da9b7034983e",
+  "source_repo": "worktrees/linux-fx0-lts-integration-current-01",
+  "current_source_repo": "worktrees/linux-fx0-cpu-current-01",
+  "before_files": {
+    "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml": "1db1bed0117a21a6d1744d0d07b4f7f6cdb2bd0650475c108c242d6be9164cf3",
+    "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml": "8f56f2a45cb10fa73e64c922a4d1452885160503aaac782db720edf4251765da",
+    "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml": "809a3244703657428574b278705742e3582700203fb8a0984808e214f5d903ac",
+    "Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml": "f1c5e454684fe0768b3325624912860abeac1df25cdcac3d1868e331ad827113",
+    "Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml": "cdfef3127f378c170d0864085fa0f66b42ece32a5bb8177839ff7e061470fc43",
+    "MAINTAINERS": "1480184c78c672114cc80f20b6640dd6533f76c21f60f9656dc704a816614d4a",
+    "arch/arm/boot/dts/qcom/Makefile": "ca4544d556c606ae5af432776a6e5dfb4d4a27192d0f98570a7da99cc10936d7",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts": null,
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "36b2a733ba62b94371e018f20f3b318bd57732a3469c1db0a85428f196ca4c0a",
+    "drivers/clk/qcom/a53-pll.c": "db9684949acb34ae19dc5e854cf19ba5a1e42a1cd8cca8720d8f5ac75c81378a",
+    "drivers/clk/qcom/apcs-msm8916.c": "7fbb307d82b75052294f661948e678a969453ae02fbc21f6b14ac80a9a2213eb",
+    "drivers/clk/qcom/clk-pll.c": "b12e945d1f142101c28d33cf465095a247b560c2255f12fb1b8a224f49db8c30",
+    "drivers/clk/qcom/clk-pll.h": "8eca6afa9577d99872c39dba393ce7a21874f8ff899e9476718dc1e0edb821cc",
+    "drivers/clk/qcom/clk-regmap-mux-div.c": "f4bfcc8a91a2fbd097352cea21b3c6f9e2f81ef25be7bd4878f8cab037412653",
+    "drivers/clk/qcom/clk-regmap-mux-div.h": "a51e4292681a842f02495ba470f4d20e31a890b230019390be090bb7816e6f9a",
+    "drivers/clk/qcom/gcc-msm8974.c": "8ab70c616611c5cced6ea169f2e0066e5d73f4a5faee95da188e33c965176001",
+    "drivers/cpufreq/cpufreq-dt-platdev.c": "4a28d23c713071c0ef5be1c05f7b2473aebc4ede7a24f3ffcacf5e6437a5e7b1",
+    "drivers/cpufreq/qcom-cpufreq-nvmem.c": "8d6ad00ca0f62d8687d34223db47b94fd8e2bb6aa62d627c0330bae7647b6ef5",
+    "drivers/firmware/qcom/qcom_scm.c": "b485f55c5a292473cc55e22a1bb14cfc1ec8bcfafd7bcbaa15b2a2e69243c361",
+    "drivers/mfd/qcom-spmi-pmic.c": "cba250364921bfff3e8cfe10372906631cf2cba70365b2d75eabb8822084b9bd",
+    "drivers/pmdomain/qcom/Kconfig": "63dc3ba59a8426fb625551452390c2c13cbdce9c4fafd9103bad4a557388fa92",
+    "drivers/pmdomain/qcom/cpr-voltage.h": "0a260fe7fb6dca95cfb8d3fba05e47e0ba2989579620406f2f9b71f54bd7ad7b",
+    "drivers/pmdomain/qcom/cpr.c": "ea7990fc9b13454785bb17469c6991ff6c3e01d2b633b65230d5f540cfd75d5c",
+    "drivers/regulator/Kconfig": "ee58e00ec356113beadaf9ce38731a6fc44ddbfcc14edec0911eea26d04be174",
+    "drivers/regulator/qcom-spmi-saw-fts2.h": null,
+    "drivers/regulator/qcom_spmi-regulator.c": "09436b8793dc69bf0805f941512b796b0831507d0c7d9d566ce186b6031c0dbc",
+    "drivers/soc/qcom/Kconfig": "2ca9c970971185f9e721547514c427dc71b2b4021e417f990faa6a7fdf3db63f",
+    "drivers/soc/qcom/smd-rpm.c": "e15c2afc6b081a28d437c5208492d03fd54766e359cca15d18b4c43ce2d829de",
+    "drivers/soc/qcom/spm-msm8226-l2.h": null,
+    "drivers/soc/qcom/spm.c": "511c2195882e3b835788891b2cc0116ba942f4f00cfeb5cad7dfb6c839bf1c25",
+    "include/dt-bindings/opp/qcom,msm8926.h": null,
+    "include/linux/soc/qcom/cpr.h": null
+  },
+  "origin_commits": [
+    {
+      "commit": "1d921d51748bcf8c37a478092d2e6c15c771091e",
+      "subject": "MAINTAINERS: track MSM8926 CPU calibration helpers",
+      "paths": [
+        "MAINTAINERS"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: MAINTAINERS:22942\nerror: MAINTAINERS: patch does not apply\n",
+      "patch_SHA256": "9b8b20572269fe2fa8faa0b439029bdec1082331d3d339d6e783ef50851331b4"
+    },
+    {
+      "commit": "e0a2fcfe2def697ff9b52ffe9348e792ad904ea1",
+      "subject": "dt-bindings: qcom: describe MSM8926 CPU and CPR control",
+      "paths": [
+        "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml",
+        "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml",
+        "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml",
+        "Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml",
+        "Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml",
+        "include/dt-bindings/opp/qcom,msm8926.h"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "5c058480b8d64ad3a86d23e454e7d6c73f4c3a23d21ea0da7b86f558b8b52f39"
+    },
+    {
+      "commit": "b920df1379abff3982be5d1ece143eb7fd16c443",
+      "subject": "soc: qcom: spm: initialize the MSM8226 L2 arbiter master",
+      "paths": [
+        "drivers/soc/qcom/Kconfig",
+        "drivers/soc/qcom/spm-msm8226-l2.h",
+        "drivers/soc/qcom/spm.c"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: drivers/soc/qcom/Kconfig:224\nerror: drivers/soc/qcom/Kconfig: patch does not apply\n",
+      "patch_SHA256": "2f11a6961e1a8f2f63652f4bd8cb55b1deb54c42d70012fdb25cf6f680d4d157"
+    },
+    {
+      "commit": "cd316b91fc1e1049db8aa2f0bb94b640519977a4",
+      "subject": "regulator: qcom-spmi: retain fixed-range PM8226 APC ownership",
+      "paths": [
+        "drivers/regulator/qcom-spmi-saw-fts2.h",
+        "drivers/regulator/qcom_spmi-regulator.c"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "2d0f51b33cd1a9bc9fac4f4744f26266324dd6be67a52f4729266d0b6429a20c"
+    },
+    {
+      "commit": "82e051d499a6a20d8716fa4a5448cd222ece2bb1",
+      "subject": "soc: qcom: smd-rpm: correlate completion with each request",
+      "paths": [
+        "drivers/soc/qcom/smd-rpm.c"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "c928c4613ec9917f1df32261b52ade2a7dea87900b3c693590f3037958aafb22"
+    },
+    {
+      "commit": "68cc2620dd9e8848770df5bb37077fa4d82afde3",
+      "subject": "pmdomain: qcom: retain and reconcile the APC MX dependency",
+      "paths": [
+        "drivers/pmdomain/qcom/cpr-voltage.h"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: drivers/pmdomain/qcom/cpr-voltage.h: already exists in working directory\n",
+      "patch_SHA256": "9b543ea4b3f81249c9608a3ff6de2f6f63d0270b952ff7ebc3f1ae0532d77953"
+    },
+    {
+      "commit": "617ae40348a79b6759cba86b20d5252c744e374c",
+      "subject": "clk: qcom: verify MSM8226 CPU PLL and mux transitions",
+      "paths": [
+        "drivers/clk/qcom/a53-pll.c",
+        "drivers/clk/qcom/apcs-msm8916.c",
+        "drivers/clk/qcom/clk-pll.c",
+        "drivers/clk/qcom/clk-pll.h",
+        "drivers/clk/qcom/clk-regmap-mux-div.c",
+        "drivers/clk/qcom/clk-regmap-mux-div.h",
+        "drivers/clk/qcom/gcc-msm8974.c"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "167b62c51e0436b1336173ec5b07f0ee3212cf1135a2caf86f92cfcfa9b9099e"
+    },
+    {
+      "commit": "4569dae3b15824cb1d1fa0e388ba727bd52d6102",
+      "subject": "pmdomain: qcom: port the calibrated MSM8926 CPU domain",
+      "paths": [
+        "drivers/pmdomain/qcom/Kconfig",
+        "drivers/pmdomain/qcom/cpr.c",
+        "include/linux/soc/qcom/cpr.h"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: drivers/pmdomain/qcom/cpr.c:25\nerror: drivers/pmdomain/qcom/cpr.c: patch does not apply\n",
+      "patch_SHA256": "94b4e4164f137433f0d975033ddf884eaea8cdd6ccc3a3f54406bde8360648e3"
+    },
+    {
+      "commit": "965b16234067d414526f98de418a15fd776cebf1",
+      "subject": "cpufreq: qcom-nvmem: attach MSM8926 CPUs after supplier filtering",
+      "paths": [
+        "drivers/cpufreq/cpufreq-dt-platdev.c",
+        "drivers/cpufreq/qcom-cpufreq-nvmem.c"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: drivers/cpufreq/cpufreq-dt-platdev.c:229\nerror: drivers/cpufreq/cpufreq-dt-platdev.c: patch does not apply\nerror: patch failed: drivers/cpufreq/qcom-cpufreq-nvmem.c:631\nerror: drivers/cpufreq/qcom-cpufreq-nvmem.c: patch does not apply\n",
+      "patch_SHA256": "2bc8c5cc794fcd39a405f1974b9b38b67e171cef269b583f4f6c2b9ae28fb3da"
+    },
+    {
+      "commit": "57b4bd9ec2db78022e93be3c5bef3e9e25833f12",
+      "subject": "ARM: dts: qcom: add separate Madai CPU qualification target",
+      "paths": [
+        "arch/arm/boot/dts/qcom/Makefile",
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts",
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: arch/arm/boot/dts/qcom/Makefile:66\nerror: arch/arm/boot/dts/qcom/Makefile: patch does not apply\n",
+      "patch_SHA256": "be0b5972b63218044fca096a6732bfb5b09d15b7d1107cf17d51e108f5d2231a"
+    },
+    {
+      "commit": "3621db8f609490bccee6296f9b5ff7720c255447",
+      "subject": "soc: qcom: spm: use a raw lock for the MSM8226 L2 map",
+      "paths": [
+        "drivers/soc/qcom/spm.c"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: drivers/soc/qcom/spm.c:554\nerror: drivers/soc/qcom/spm.c: patch does not apply\n",
+      "patch_SHA256": "bf70480fcd96264623aa84ac756bb7e2c1a915eb56c491d9ecaae77fb680fc65"
+    },
+    {
+      "commit": "89f39805163fb2c05a00e3f5adbd3ac1c8fd731d",
+      "subject": "mfd: qcom-spmi-pmic: use a raw lock for atomic register access",
+      "paths": [
+        "drivers/mfd/qcom-spmi-pmic.c"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "84bb40bc30614303197a91cad976d1b80c2aeb2df1cd89bb0d53dbb032eb4cad"
+    },
+    {
+      "commit": "76068f3c6a4ed1b37d4c7499d7b673e1872839d7",
+      "subject": "regulator: qcom-spmi: retain current SAW mapping APIs in the runtime",
+      "paths": [
+        "drivers/regulator/Kconfig",
+        "drivers/regulator/qcom_spmi-regulator.c"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: drivers/regulator/qcom_spmi-regulator.c:1347\nerror: drivers/regulator/qcom_spmi-regulator.c: patch does not apply\n",
+      "patch_SHA256": "aae0ca148c53b500e4e500548f1c58a99a5164cefa123676d1bdae544867dd4d"
+    },
+    {
+      "commit": "70db7a1d84406980abb9e0050009a25e04fd02e4",
+      "subject": "kernel: retain current typed allocation in the Fx0 CPU stack",
+      "paths": [
+        "drivers/clk/qcom/a53-pll.c",
+        "drivers/clk/qcom/apcs-msm8916.c",
+        "drivers/cpufreq/qcom-cpufreq-nvmem.c",
+        "drivers/firmware/qcom/qcom_scm.c",
+        "drivers/pmdomain/qcom/cpr.c"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: drivers/pmdomain/qcom/cpr.c:1924\nerror: drivers/pmdomain/qcom/cpr.c: patch does not apply\n",
+      "patch_SHA256": "277f6cbb49b62ff330cf248e564d4783649a1292dff070baf7083b51d9022f7c"
+    }
+  ],
+  "source_edits_applied": false,
+  "phone_access": false,
+  "published": false,
+  "full_goal_complete": false
+}

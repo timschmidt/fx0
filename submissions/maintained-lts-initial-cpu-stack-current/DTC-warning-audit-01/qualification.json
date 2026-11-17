@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "runs": [
+    {
+      "profile": "baseline",
+      "board": "qcom-msm8926-lg-madai.dtb",
+      "DTB_SHA256": "55f6638948dc7a53c2663cf7516852d08754bcdeba97af1fe35b473c40fbe9ed",
+      "warnings": [
+        "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:<line>: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+        "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:<line>: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+        "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:<line>: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+      ],
+      "identical_to_previously_validated_DTB": true
+    },
+    {
+      "profile": "candidate",
+      "board": "qcom-msm8926-lg-madai.dtb",
+      "DTB_SHA256": "6ea6ef6223b56b42f5083bd7f833d94671c6829fc9c2f01135403e9df030d9e0",
+      "warnings": [
+        "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:<line>: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+        "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:<line>: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+        "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:<line>: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+      ],
+      "identical_to_previously_validated_DTB": true
+    },
+    {
+      "profile": "candidate",
+      "board": "qcom-msm8926-lg-madai-cpr.dtb",
+      "DTB_SHA256": "c689da4619aac8270256de4657d0ab8d65f30e4c3675a63120fd645883b5cf1e",
+      "warnings": [
+        "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:<line>: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s1-p1@1c4: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s2-p1@1c4)",
+        "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:<line>: Warning (unique_unit_address_if_enabled): /soc/efuse@fc4bc000/s0-p2@1cd: duplicate unit-address (also used in node /soc/efuse@fc4bc000/s1-p2@1cd)",
+        "<source>/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi:<line>: Warning (graph_child_address): /soc/display-subsystem@fd900000/display-controller@fd900000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary"
+      ],
+      "identical_to_previously_validated_DTB": true
+    }
+  ],
+  "ordinary_and_new_CPU_target_each_repeat_three_identical_inherited_DTC_warnings": true,
+  "all_15_other_LTS_DTBs_byte_identical": true,
+  "total_before_warnings": 65,
+  "total_after_warnings": 68,
+  "new_distinct_DTC_warnings": 0,
+  "full_unfiltered_schema_or_hardware_acceptance": false,
+  "phone_access": false
+}

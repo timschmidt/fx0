@@ -1,0 +1,48 @@
+From 02635e33270dcf1627c4ccd7d93e83011a4680cb Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 00:38:02 -0500
+Subject: [PATCH] soc: qcom: spm: use a raw lock for the MSM8226 L2 map
+
+The fixed-range APC transaction runs on CPU0 in a synchronous IPI.
+Its SAW reads and writes use the map published by the L2 owner. Setting
+fast_io selects a spinlock_t, which is a sleeping lock on PREEMPT_RT;
+it does not request a raw lock.
+
+The actual LTS regmap decision/callback model includes the L2, legacy
+SAW and PMIC configurations: 20 cases and 149 checks pass. Two faulty
+selection/locking variants fail. Actual regmap core objects also build
+on ARM, ARM64 and ARM64 RT; physical RT lockdep remains unqualified.
+
+Backport as part of the initial maintained-6.18.63 CPU stack. The complete
+series passes 45 selected host test methods. Standalone executables use
+ASan, UBSan and normal LeakSanitizer; ctypes numerical oracles are
+explicitly unsanitized. Twenty selected objects compile with the feature
+enabled and disabled on ARM, ARM64 and ARM64 RT (120 objects), W=1 and
+nonpermissive CFI, with no diagnostics. ARM32 RT is unsupported.
+
+Original author/date and source notices are preserved. Codex prepared
+this local backport and verification. Original scoped source provenance
+remains recorded in the review evidence. Human review and DCO remain
+pending; no phone, publication or maintainer action has occurred.
+
+Backported from commit 3621db8f609490bccee6296f9b5ff7720c255447 ("soc:
+qcom: spm: use a raw lock for the MSM8226 L2 map")
+---
+ drivers/soc/qcom/spm.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
+index c4a70565ad6b..ebd32ad69ce1 100644
+--- a/drivers/soc/qcom/spm.c
++++ b/drivers/soc/qcom/spm.c
+@@ -554,6 +554,7 @@ static const struct regmap_config spm_8226_l2_regmap_config = {
+ 	.reg_stride = 4,
+ 	.max_register = 0xffc,
+ 	.fast_io = true,
++	.use_raw_spinlock = true,
+ 	.rd_table = &spm_8226_l2_read_table,
+ 	.wr_table = &spm_8226_l2_write_table,
+ };
+-- 
+2.56.0
+

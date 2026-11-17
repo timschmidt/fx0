@@ -1,0 +1,108 @@
+{
+  "commits": [
+    {
+      "origin_commit": "1d921d51748bcf8c37a478092d2e6c15c771091e",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-11T08:29:12-05:00",
+      "original_message": "MAINTAINERS: track MSM8926 CPU calibration helpers\n\nExtend the existing CPR and CPUfreq ownership patterns to cover the new\nprivate calibration helpers and shared eligibility headers.\n\nComposite port from Fx0 CPU source\n790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original component author and\ndate retained; the scoped original source history is recorded in the\nqualification evidence. Port, current API merges, changelog and\nqualification used OpenAI Codex assistance.",
+      "original_attribution_tags": []
+    },
+    {
+      "origin_commit": "e0a2fcfe2def697ff9b52ffe9348e792ad904ea1",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-08T16:42:00Z",
+      "original_message": "dt-bindings: qcom: describe MSM8926 CPU and CPR control\n\nDescribe the CPU/domain OPP mask, full calibration rows, four owned\nclocks, fixed APC range and L2 PMIC arbiter master. Keep the ordinary\nand qualification targets distinct. All twenty compiled platform DTBs\npass complete unfiltered schema validation.\n\nComposite port from Fx0 CPU source\n790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original component author and\ndate retained; the scoped original source history is recorded in the\nqualification evidence. Port, current API merges, changelog and\nqualification used OpenAI Codex assistance.",
+      "original_attribution_tags": []
+    },
+    {
+      "origin_commit": "b920df1379abff3982be5d1ece143eb7fd16c443",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-08T16:33:09Z",
+      "original_message": "soc: qcom: spm: initialize the MSM8226 L2 arbiter master\n\nValidate idle ownership, establish the compiled delay/data registers\nbefore publishing CFG, and expose the permanent SPM-owned register map.\nRetain the current QCOM_SCM dependency/default and select MFD_SYSCON.\nModel failures and readback checks do not qualify physical bootstrap.\n\nComposite port from Fx0 CPU source\n790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original component author and\ndate retained; the scoped original source history is recorded in the\nqualification evidence. Port, current API merges, changelog and\nqualification used OpenAI Codex assistance.",
+      "original_attribution_tags": []
+    },
+    {
+      "origin_commit": "cd316b91fc1e1049db8aa2f0bb94b640519977a4",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-11T08:29:12-05:00",
+      "original_message": "regulator: qcom-spmi: retain fixed-range PM8226 APC ownership\n\nKeep the boot FTS2 range, per-instance voltage metadata and CPU0 SAW\ntransaction policy. Restore a confirmed old selector before reporting a\nfailed voltage request to OPP; stop after persistent recovery failure.\nRetain safe PWM when only AUTO mode restoration fails. The always-on SAW\nrail does not use generic enable/disable register writes. Physical\nvoltage, settling and fail-stop behavior still require qualification.\n\nComposite port from Fx0 CPU source\n790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original component author and\ndate retained; the scoped original source history is recorded in the\nqualification evidence. Port, current API merges, changelog and\nqualification used OpenAI Codex assistance.",
+      "original_attribution_tags": []
+    },
+    {
+      "origin_commit": "82e051d499a6a20d8716fa4a5448cd222ece2bb1",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-08T16:33:09Z",
+      "original_message": "soc: qcom: smd-rpm: correlate completion with each request\n\nPublish and retire a per-channel request ID under the same IRQ-safe lock\nused by matching completion. Validate bounded response TLVs and reject\nstale, duplicate, malformed and unbound responses. A late reply cannot\nsatisfy a newer vote in the tested transport model.\n\nComposite port from Fx0 CPU source\n790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original component author and\ndate retained; the scoped original source history is recorded in the\nqualification evidence. Port, current API merges, changelog and\nqualification used OpenAI Codex assistance.",
+      "original_attribution_tags": []
+    },
+    {
+      "origin_commit": "68cc2620dd9e8848770df5bb37077fa4d82afde3",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-08T16:33:09Z",
+      "original_message": "pmdomain: qcom: retain and reconcile the APC MX dependency\n\nActivate the boot MX floor before APC requests, preserve references\nwhile the CPU supply remains live, and order voltage changes safely.\nForce the old consumer vote through regulator_sync_voltage after an\nuncertain failed RPM request, retry once and stop on persistent failure.\nThis requires correlated RPM acknowledgements and does not supply a\ndeep-suspend sleep-state vote handoff.\n\nComposite port from Fx0 CPU source\n790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original component author and\ndate retained; the scoped original source history is recorded in the\nqualification evidence. Port, current API merges, changelog and\nqualification used OpenAI Codex assistance.",
+      "original_attribution_tags": []
+    },
+    {
+      "origin_commit": "617ae40348a79b6759cba86b20d5252c744e374c",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-08T16:42:00Z",
+      "original_message": "clk: qcom: verify MSM8226 CPU PLL and mux transitions\n\nSelect uncached CPU clock queries and strict provider failure handling\nfor MSM8226. Verify PLL programming/activation and settled mux readback\nbefore CCF can continue, and report failed queries as zero. Retain the\nlegacy probe policy on other platforms. Native ARM objects introduce no\nunavailable __aeabi_uldivmod dependency. Actual-clock and analog\nsettling acceptance remain open.\n\nComposite port from Fx0 CPU source\n790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original component author and\ndate retained; the scoped original source history is recorded in the\nqualification evidence. Port, current API merges, changelog and\nqualification used OpenAI Codex assistance.",
+      "original_attribution_tags": []
+    },
+    {
+      "origin_commit": "4569dae3b15824cb1d1fa0e388ba727bd52d6102",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-11T08:29:12-05:00",
+      "original_message": "pmdomain: qcom: port the calibrated MSM8926 CPU domain\n\nJoin calibration, canonical OPP filtering, retry-safe attachment,\nreference-clock selection and verified startup normalization. Refresh\nboth PLL parents before guarding every APC request with the actual\nreported CPU rate. Retain rail ownership and feedback state across\nrecoverable failures; resume waits for a fresh nominal request.\n\nPreserve the newer upstream flexible fuse array and struct_size\nallocation, with MSM state before the flexible member. The builtin\nMSM8926 option defaults off. Deeper PM remains explicitly unsupported\nuntil RPM sleep-state handoff exists; this port is not final physical\nCPU or standby acceptance.\n\nComposite port from Fx0 CPU source\n790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original component author and\ndate retained; the scoped original source history is recorded in the\nqualification evidence. Port, current API merges, changelog and\nqualification used OpenAI Codex assistance.",
+      "original_attribution_tags": []
+    },
+    {
+      "origin_commit": "965b16234067d414526f98de418a15fd776cebf1",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-08T16:33:09Z",
+      "original_message": "cpufreq: qcom-nvmem: attach MSM8926 CPUs after supplier filtering\n\nUse the explicit MSM8926 OPP type to select calibrated supplier/CPU\nfiltering before parsing or attaching the shared domain. Unwind partial\nCPU setup and register the child only after all consumers are ready.\nPreserve the current of_machine matching helpers and ordinary generic\nregistration for unmodified board OPP tables.\n\nComposite port from Fx0 CPU source\n790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original component author and\ndate retained; the scoped original source history is recorded in the\nqualification evidence. Port, current API merges, changelog and\nqualification used OpenAI Codex assistance.",
+      "original_attribution_tags": []
+    },
+    {
+      "origin_commit": "3621db8f609490bccee6296f9b5ff7720c255447",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T00:38:02-05:00",
+      "original_message": "soc: qcom: spm: use a raw lock for the MSM8226 L2 map\n\nThe fixed-range APC transaction runs on CPU0 in a synchronous IPI.\nIts SAW reads and writes use the map published by the L2 owner. Setting\nfast_io selects a spinlock_t, which is a sleeping lock on PREEMPT_RT;\nit does not request a raw lock.\n\nSet use_raw_spinlock so the owner publishes the non-sleeping map needed\nby the voltage transaction. Preserve the register allowlists, setup\nordering, permanent ownership and publication checks. The PMIC parent\nmap used by the same transaction requires the separate companion fix.\n\nThe actual regmap selection and callbacks reproduce18 failed checks\nacross the two old configurations; fixing only the L2 map leaves9.\nBoth corrected configurations pass20 cases/149 checks, with two failing\ncontrols. The original L2 publication and no-voltage-write model passes.\nFour native ARM/ARM64 profiles, with and without PREEMPT_RT, compile\n24 related objects with W=1 and no diagnostics. Lock services and IPI\ncontext are synthetic; physical RT/lockdep acceptance is still pending.\n\nCodex generated this fix and qualification. Human review and DCO remain\npending; no Signed-off-by is added.\n\nFixes: b920df1379ab (\"soc: qcom: spm: initialize the MSM8226 L2 arbiter master\")",
+      "original_attribution_tags": []
+    },
+    {
+      "origin_commit": "89f39805163fb2c05a00e3f5adbd3ac1c8fd731d",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T00:38:02-05:00",
+      "original_message": "mfd: qcom-spmi-pmic: use a raw lock for atomic register access\n\nThe SPMI PMIC map advertises fast_io and is accessed by the SAW voltage\ncallback from a synchronous CPU0 IPI. Its spinlock_t becomes a sleeping\nlock on PREEMPT_RT, so the PMIC access has an invalid wait context even\nwhen the SAW MMIO map itself uses a raw lock.\n\nRequest a raw spinlock for the parent map. Keep the existing fast-I/O\nallocation policy and serialize all children through the same map.\nThe SPMI register transport and PMIC arbiter callbacks remain unchanged.\n\nExecuting the actual regmap selection and lock callbacks detects the\nregular lock and synthetic invalid IPI wait. The corrected L2 and PMIC\nmaps pass20 cases/149 checks, while both deliberately broken controls\nfail. Native ARM and ARM64 PREEMPT_RT profiles on this fresh MFD base\ncompile10 related objects with W=1 and no diagnostics. Four combined\nARM/ARM64 RT and ordinary profiles also compile24 objects cleanly.\nThis is source/model qualification; no physical RT/lockdep trial ran.\n\nCodex generated this fix and qualification. Human review and DCO remain\npending; no Signed-off-by is added.\n\nFixes: c3a973a770a1 (\"mfd: Add support for Qualcomm SPMI PMICs\")",
+      "original_attribution_tags": []
+    },
+    {
+      "origin_commit": "76068f3c6a4ed1b37d4c7499d7b673e1872839d7",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T00:45:35-05:00",
+      "original_message": "regulator: qcom-spmi: retain current SAW mapping APIs in the runtime\n\nIntegrate the qualified standalone regulator port fa4d0bf7b86d onto the\ncombined runtime, preserving its complete fixed-range APC policy.\nOnly the permanent MSM8226 L2 master uses its published shared map;\nlegacy SAWs keep private raw-lock MMIO maps and errors stop probe.\nSelect REGMAP_MMIO for the driver's direct mapping dependency.\n\nThese bytes retain Dmitry Baryshkov's 053c50a70525 upstream raw-map fix\nand Kees Cook's 4dd10fbbeb9c allocator API conversion from the pinned\nregulator for-next base. Timothy Schmidt's fixed-range feature algorithm\nand original attribution remain in the preceding source history. Codex\nperformed the current-base mapping split, integration and qualification.\n\nThe standalone source passes two native RT profiles, three actual\nFTS2/provider/recovery methods, the 47-case/407-check acquisition model\nand four rejected controls. The separate L2 and PMIC raw-lock fixes are\nretained. Full package reproducibility, physical RT/lockdep, voltage and\npower acceptance remain separate. Human review/DCO are pending; no\nSigned-off-by is added.",
+      "original_attribution_tags": []
+    },
+    {
+      "origin_commit": "57b4bd9ec2db78022e93be3c5bef3e9e25833f12",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-11T08:25:19-05:00",
+      "original_message": "ARM: dts: qcom: add separate Madai CPU qualification target\n\nRetain the current ordinary board charging, USB, NFC and other device\ndefinitions. Add only the L2/S2 CPU foundation and complete eight-byte\nCPU calibration row. Its ordinary four CPU rates and absent CPR consumer\nremain unchanged. A separate explicit qualification target describes all\nfourteen canonical rates and their matching domain links.\n\nThe other eighteen platform DTBs are byte-identical to the prior\nqualified frontend; both changed Fx0 targets pass complete schemas. No\nimage is installed or booted by this source change.\n\nComposite port from Fx0 CPU source\n790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826. Original component author and\ndate retained; the scoped original source history is recorded in the\nqualification evidence. Port, current API merges, changelog and\nqualification used OpenAI Codex assistance.",
+      "original_attribution_tags": []
+    }
+  ]
+}

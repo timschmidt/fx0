@@ -1,0 +1,144 @@
+From acdf88accf55fd408772de4df5449424e88d02f5 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 00:45:35 -0500
+Subject: [PATCH] regulator: qcom-spmi: retain current SAW mapping APIs in the
+ runtime
+
+Integrate the qualified standalone regulator port fa4d0bf7b86d onto the
+combined runtime, preserving its complete fixed-range APC policy.
+Only the permanent MSM8226 L2 master uses its published shared map;
+legacy SAWs keep private raw-lock MMIO maps and errors stop probe.
+Select REGMAP_MMIO for the driver's direct mapping dependency.
+
+The actual map helper passes 47 cases and 407 checks. Four deliberate
+map/defer/error/locking regressions fail. Retain the two devm_kzalloc
+calls because typed allocation is unavailable in 6.18; no warning type
+is disabled to accommodate this API difference.
+
+Backport as part of the initial maintained-6.18.63 CPU stack. The complete
+series passes 45 selected host test methods. Standalone executables use
+ASan, UBSan and normal LeakSanitizer; ctypes numerical oracles are
+explicitly unsanitized. Twenty selected objects compile with the feature
+enabled and disabled on ARM, ARM64 and ARM64 RT (120 objects), W=1 and
+nonpermissive CFI, with no diagnostics. ARM32 RT is unsupported.
+
+Original author/date and source notices are preserved. Codex prepared
+this local backport and verification. Original scoped source provenance
+remains recorded in the review evidence. Human review and DCO remain
+pending; no phone, publication or maintainer action has occurred.
+
+Backported from commit 76068f3c6a4ed1b37d4c7499d7b673e1872839d7
+("regulator: qcom-spmi: retain current SAW mapping APIs in the runtime")
+---
+ drivers/regulator/Kconfig               |  1 +
+ drivers/regulator/qcom_spmi-regulator.c | 54 +++++++++++++++++++------
+ 2 files changed, 42 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
+index d84f3d054c59..a504a20f994f 100644
+--- a/drivers/regulator/Kconfig
++++ b/drivers/regulator/Kconfig
+@@ -1149,6 +1149,7 @@ config REGULATOR_QCOM_SMD_RPM
+ config REGULATOR_QCOM_SPMI
+ 	tristate "Qualcomm SPMI regulator driver"
+ 	depends on SPMI || COMPILE_TEST
++	select REGMAP_MMIO
+ 	help
+ 	  If you say yes to this option, support will be included for the
+ 	  regulators found in Qualcomm SPMI PMICs.
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+index 286d764dc03c..a8e38f156a65 100644
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -12,6 +12,7 @@
+ #include <linux/bitops.h>
+ #include <linux/slab.h>
+ #include <linux/of.h>
++#include <linux/of_address.h>
+ #include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/ktime.h>
+@@ -1347,6 +1348,14 @@ struct spmi_saw_request {
+ 	int result;
+ };
+ 
++static const struct regmap_config saw_regmap_config = {
++	.name = "saw",
++	.reg_bits = 32,
++	.val_bits = 32,
++	.reg_stride = 4,
++	.use_raw_spinlock = true,
++};
++
+ static void spmi_saw_set_vdd(void *data)
+ {
+ 	u32 vctl, data3, avs_ctl, pmic_sts;
+@@ -2580,6 +2589,33 @@ static const struct of_device_id qcom_spmi_regulator_match[] = {
+ };
+ MODULE_DEVICE_TABLE(of, qcom_spmi_regulator_match);
+ 
++static struct regmap *spmi_regulator_get_saw_regmap(struct device *dev)
++{
++	struct device_node *saw;
++	struct regmap *map;
++	void __iomem *base;
++
++	saw = of_parse_phandle(dev->of_node, "qcom,saw-reg", 0);
++	if (!saw)
++		return NULL;
++
++	if (of_device_is_compatible(saw, "qcom,msm8226-saw2-v2.1-l2") &&
++	    of_property_read_bool(saw, "qcom,pmic-arbiter-master")) {
++		/* The permanent SPM owner publishes this map after L2 setup. */
++		map = syscon_node_to_regmap(saw);
++		of_node_put(saw);
++		return PTR_ERR_OR_ZERO(map) == -EINVAL ? ERR_PTR(-EPROBE_DEFER) : map;
++	}
++
++	/* Legacy SAWs retain the private raw-spinlock map required by the IPI. */
++	base = devm_of_iomap(dev, saw, 0, NULL);
++	of_node_put(saw);
++	if (IS_ERR(base))
++		return ERR_CAST(base);
++
++	return devm_regmap_init_mmio(dev, base, &saw_regmap_config);
++}
++
+ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ {
+ 	const struct spmi_regulator_data *reg;
+@@ -2591,7 +2627,7 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ 	const char *name;
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *node = pdev->dev.of_node;
+-	struct device_node *syscon, *reg_node;
++	struct device_node *reg_node;
+ 	struct property *reg_prop;
+ 	int ret, lenp;
+ 	struct list_head *vreg_list;
+@@ -2610,18 +2646,10 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ 	if (!reg)
+ 		return -ENODEV;
+ 
+-	syscon = of_parse_phandle(node, "qcom,saw-reg", 0);
+-	if (syscon) {
+-		saw_regmap = syscon_node_to_regmap(syscon);
+-		ret = PTR_ERR_OR_ZERO(saw_regmap);
+-		if (ret == -EINVAL &&
+-		    of_device_is_compatible(syscon, "qcom,msm8226-saw2-v2.1-l2") &&
+-		    of_property_read_bool(syscon, "qcom,pmic-arbiter-master"))
+-			ret = -EPROBE_DEFER;
+-		of_node_put(syscon);
+-		if (ret)
+-			return dev_err_probe(dev, ret, "could not get SAW regmap\n");
+-	}
++	saw_regmap = spmi_regulator_get_saw_regmap(dev);
++	if (IS_ERR(saw_regmap))
++		return dev_err_probe(dev, PTR_ERR(saw_regmap),
++				     "could not get SAW regmap\n");
+ 
+ 	for (; reg->name; reg++) {
+ 
+-- 
+2.56.0
+

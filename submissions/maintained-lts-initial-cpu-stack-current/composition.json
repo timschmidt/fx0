@@ -1,0 +1,377 @@
+{
+  "base": "432cb11b41e9427d0d095fda2d09da9b7034983e",
+  "completed": [
+    {
+      "origin_commit": "1d921d51748bcf8c37a478092d2e6c15c771091e",
+      "subject": "MAINTAINERS: track MSM8926 CPU calibration helpers",
+      "files": [
+        {
+          "path": "MAINTAINERS",
+          "before_SHA256": "1480184c78c672114cc80f20b6640dd6533f76c21f60f9656dc704a816614d4a",
+          "original_parent_SHA256": "786b1c6dbb14d34e1851ecf6b83b7b3e1449341c509b1154c18c9118cc31281e",
+          "original_after_SHA256": "654896e7de93b80ab46f8971cf7e7d482b17dc5dc827791d04c83f875dcd5765",
+          "after_SHA256": "97adb23747c600444ee2a226edf9f4a82a031cf4ea3d2345f7ee2b9ab4d5aff1",
+          "adjustments": [
+            "Clean three-way merge against the exact original parent; preserve LTS context"
+          ]
+        }
+      ]
+    },
+    {
+      "origin_commit": "e0a2fcfe2def697ff9b52ffe9348e792ad904ea1",
+      "subject": "dt-bindings: qcom: describe MSM8926 CPU and CPR control",
+      "files": [
+        {
+          "path": "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml",
+          "before_SHA256": "1db1bed0117a21a6d1744d0d07b4f7f6cdb2bd0650475c108c242d6be9164cf3",
+          "original_parent_SHA256": "1db1bed0117a21a6d1744d0d07b4f7f6cdb2bd0650475c108c242d6be9164cf3",
+          "original_after_SHA256": "060f4f058680afff9429ad25331e15797fdc009e73e6fb61b5e43e366b0d3a63",
+          "after_SHA256": "060f4f058680afff9429ad25331e15797fdc009e73e6fb61b5e43e366b0d3a63",
+          "adjustments": []
+        },
+        {
+          "path": "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml",
+          "before_SHA256": "8f56f2a45cb10fa73e64c922a4d1452885160503aaac782db720edf4251765da",
+          "original_parent_SHA256": "8f56f2a45cb10fa73e64c922a4d1452885160503aaac782db720edf4251765da",
+          "original_after_SHA256": "155a952f9a6c233b589da25852fdaa8019eba713e190409391637ac8fa03dc28",
+          "after_SHA256": "155a952f9a6c233b589da25852fdaa8019eba713e190409391637ac8fa03dc28",
+          "adjustments": []
+        },
+        {
+          "path": "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml",
+          "before_SHA256": "809a3244703657428574b278705742e3582700203fb8a0984808e214f5d903ac",
+          "original_parent_SHA256": "809a3244703657428574b278705742e3582700203fb8a0984808e214f5d903ac",
+          "original_after_SHA256": "97ee6589da29592af33aba6c531e4e87187aa3fa0298c71d33f78c5e7af32f61",
+          "after_SHA256": "97ee6589da29592af33aba6c531e4e87187aa3fa0298c71d33f78c5e7af32f61",
+          "adjustments": []
+        },
+        {
+          "path": "Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml",
+          "before_SHA256": "f1c5e454684fe0768b3325624912860abeac1df25cdcac3d1868e331ad827113",
+          "original_parent_SHA256": "f1c5e454684fe0768b3325624912860abeac1df25cdcac3d1868e331ad827113",
+          "original_after_SHA256": "123cc228fa0a718a38e509c10518f5513c3704fe352129c4633739a23d0fa10c",
+          "after_SHA256": "123cc228fa0a718a38e509c10518f5513c3704fe352129c4633739a23d0fa10c",
+          "adjustments": []
+        },
+        {
+          "path": "Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml",
+          "before_SHA256": "cdfef3127f378c170d0864085fa0f66b42ece32a5bb8177839ff7e061470fc43",
+          "original_parent_SHA256": "cdfef3127f378c170d0864085fa0f66b42ece32a5bb8177839ff7e061470fc43",
+          "original_after_SHA256": "ff596a7d082d24acceade1bad26fb6c2e6e2cc4788e1a5bb4094211dc41aeef5",
+          "after_SHA256": "ff596a7d082d24acceade1bad26fb6c2e6e2cc4788e1a5bb4094211dc41aeef5",
+          "adjustments": []
+        },
+        {
+          "path": "include/dt-bindings/opp/qcom,msm8926.h",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "89c62bbea61fddd0e9eaffa78faa5278c92aafc72bcbc504526260fdd7fdb6f6",
+          "after_SHA256": "89c62bbea61fddd0e9eaffa78faa5278c92aafc72bcbc504526260fdd7fdb6f6",
+          "adjustments": []
+        }
+      ]
+    },
+    {
+      "origin_commit": "b920df1379abff3982be5d1ece143eb7fd16c443",
+      "subject": "soc: qcom: spm: initialize the MSM8226 L2 arbiter master",
+      "files": [
+        {
+          "path": "drivers/soc/qcom/Kconfig",
+          "before_SHA256": "2ca9c970971185f9e721547514c427dc71b2b4021e417f990faa6a7fdf3db63f",
+          "original_parent_SHA256": "56a4510ab86e537c888f65c43458ec939238f58a3d8d940e9f190fb5646d9dd6",
+          "original_after_SHA256": "3c9401d5b000b1bab7e2d8e0bfbd2136dffda744a1948610a42f2c79d256a16a",
+          "after_SHA256": "c80f6ec85e28d8625699334f20151d6202f1e6850fffc46894771a2f2c5f7b1c",
+          "adjustments": [
+            "Add MFD_SYSCON while retaining the LTS ARCH_QCOM/COMPILE_TEST dependency and QCOM_SCM select"
+          ]
+        },
+        {
+          "path": "drivers/soc/qcom/spm-msm8226-l2.h",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "5cc4d9161aaf621ee236bc475e8265069e91b8ebc6dd0070f21a0e7a4659625d",
+          "after_SHA256": "5cc4d9161aaf621ee236bc475e8265069e91b8ebc6dd0070f21a0e7a4659625d",
+          "adjustments": []
+        },
+        {
+          "path": "drivers/soc/qcom/spm.c",
+          "before_SHA256": "511c2195882e3b835788891b2cc0116ba942f4f00cfeb5cad7dfb6c839bf1c25",
+          "original_parent_SHA256": "511c2195882e3b835788891b2cc0116ba942f4f00cfeb5cad7dfb6c839bf1c25",
+          "original_after_SHA256": "6bec54b0b0c9ca8c087798941341d6fed88af04d9a2db0491bce91d0704e413b",
+          "after_SHA256": "6bec54b0b0c9ca8c087798941341d6fed88af04d9a2db0491bce91d0704e413b",
+          "adjustments": []
+        }
+      ]
+    },
+    {
+      "origin_commit": "cd316b91fc1e1049db8aa2f0bb94b640519977a4",
+      "subject": "regulator: qcom-spmi: retain fixed-range PM8226 APC ownership",
+      "files": [
+        {
+          "path": "drivers/regulator/qcom-spmi-saw-fts2.h",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "697f55bcbdefea453c790aa647a86b3028a35dbad241941dce44dfcdb1005d86",
+          "after_SHA256": "697f55bcbdefea453c790aa647a86b3028a35dbad241941dce44dfcdb1005d86",
+          "adjustments": []
+        },
+        {
+          "path": "drivers/regulator/qcom_spmi-regulator.c",
+          "before_SHA256": "09436b8793dc69bf0805f941512b796b0831507d0c7d9d566ce186b6031c0dbc",
+          "original_parent_SHA256": "09436b8793dc69bf0805f941512b796b0831507d0c7d9d566ce186b6031c0dbc",
+          "original_after_SHA256": "ec52bcbbec5c40ac0fd05b93a73a43856363105cc9923b484df31c54d0b90cdc",
+          "after_SHA256": "ec52bcbbec5c40ac0fd05b93a73a43856363105cc9923b484df31c54d0b90cdc",
+          "adjustments": []
+        }
+      ]
+    },
+    {
+      "origin_commit": "82e051d499a6a20d8716fa4a5448cd222ece2bb1",
+      "subject": "soc: qcom: smd-rpm: correlate completion with each request",
+      "files": [
+        {
+          "path": "drivers/soc/qcom/smd-rpm.c",
+          "before_SHA256": "e15c2afc6b081a28d437c5208492d03fd54766e359cca15d18b4c43ce2d829de",
+          "original_parent_SHA256": "e15c2afc6b081a28d437c5208492d03fd54766e359cca15d18b4c43ce2d829de",
+          "original_after_SHA256": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+          "after_SHA256": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+          "adjustments": []
+        }
+      ]
+    },
+    {
+      "origin_commit": "68cc2620dd9e8848770df5bb37077fa4d82afde3",
+      "subject": "pmdomain: qcom: retain and reconcile the APC MX dependency",
+      "files": [
+        {
+          "path": "drivers/pmdomain/qcom/cpr-voltage.h",
+          "before_SHA256": "0a260fe7fb6dca95cfb8d3fba05e47e0ba2989579620406f2f9b71f54bd7ad7b",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "8ae79b9419e5096ec30ade91358739d75a224c3e25078dc8d09689bbe43028a8",
+          "after_SHA256": "8ae79b9419e5096ec30ade91358739d75a224c3e25078dc8d09689bbe43028a8",
+          "adjustments": [
+            "Replace the older fork helper with the incoming retained/reconciled MX helper; complete consumer is included in this batch"
+          ]
+        }
+      ]
+    },
+    {
+      "origin_commit": "617ae40348a79b6759cba86b20d5252c744e374c",
+      "subject": "clk: qcom: verify MSM8226 CPU PLL and mux transitions",
+      "files": [
+        {
+          "path": "drivers/clk/qcom/a53-pll.c",
+          "before_SHA256": "db9684949acb34ae19dc5e854cf19ba5a1e42a1cd8cca8720d8f5ac75c81378a",
+          "original_parent_SHA256": "db9684949acb34ae19dc5e854cf19ba5a1e42a1cd8cca8720d8f5ac75c81378a",
+          "original_after_SHA256": "84a91c06729b2c5190f1dc47b53ae564f1399adfd699ea518cf800dd3b0dc256",
+          "after_SHA256": "84a91c06729b2c5190f1dc47b53ae564f1399adfd699ea518cf800dd3b0dc256",
+          "adjustments": []
+        },
+        {
+          "path": "drivers/clk/qcom/apcs-msm8916.c",
+          "before_SHA256": "7fbb307d82b75052294f661948e678a969453ae02fbc21f6b14ac80a9a2213eb",
+          "original_parent_SHA256": "7fbb307d82b75052294f661948e678a969453ae02fbc21f6b14ac80a9a2213eb",
+          "original_after_SHA256": "4fd79329d44473d5335c0510bc357f37ce5de6ce97d99e8cd464224a32c2036c",
+          "after_SHA256": "4fd79329d44473d5335c0510bc357f37ce5de6ce97d99e8cd464224a32c2036c",
+          "adjustments": []
+        },
+        {
+          "path": "drivers/clk/qcom/clk-pll.c",
+          "before_SHA256": "b12e945d1f142101c28d33cf465095a247b560c2255f12fb1b8a224f49db8c30",
+          "original_parent_SHA256": "b12e945d1f142101c28d33cf465095a247b560c2255f12fb1b8a224f49db8c30",
+          "original_after_SHA256": "bfbaf9e47a56e0e37a670a26bdeda82a3072b8966fc644cb25b96eacacddafda",
+          "after_SHA256": "bfbaf9e47a56e0e37a670a26bdeda82a3072b8966fc644cb25b96eacacddafda",
+          "adjustments": []
+        },
+        {
+          "path": "drivers/clk/qcom/clk-pll.h",
+          "before_SHA256": "8eca6afa9577d99872c39dba393ce7a21874f8ff899e9476718dc1e0edb821cc",
+          "original_parent_SHA256": "8eca6afa9577d99872c39dba393ce7a21874f8ff899e9476718dc1e0edb821cc",
+          "original_after_SHA256": "2a7fdfbe8e1569e402a2064e43990751212e0f6bab127b6bebb0460f026a5240",
+          "after_SHA256": "2a7fdfbe8e1569e402a2064e43990751212e0f6bab127b6bebb0460f026a5240",
+          "adjustments": []
+        },
+        {
+          "path": "drivers/clk/qcom/clk-regmap-mux-div.c",
+          "before_SHA256": "f4bfcc8a91a2fbd097352cea21b3c6f9e2f81ef25be7bd4878f8cab037412653",
+          "original_parent_SHA256": "f4bfcc8a91a2fbd097352cea21b3c6f9e2f81ef25be7bd4878f8cab037412653",
+          "original_after_SHA256": "3395adb60d400564bd432404003efbe42db92f28b55c31e66fd0b632a24b4a92",
+          "after_SHA256": "3395adb60d400564bd432404003efbe42db92f28b55c31e66fd0b632a24b4a92",
+          "adjustments": []
+        },
+        {
+          "path": "drivers/clk/qcom/clk-regmap-mux-div.h",
+          "before_SHA256": "a51e4292681a842f02495ba470f4d20e31a890b230019390be090bb7816e6f9a",
+          "original_parent_SHA256": "a51e4292681a842f02495ba470f4d20e31a890b230019390be090bb7816e6f9a",
+          "original_after_SHA256": "330cab12a04f019c3bba132a6d37d34a4264e2c6cf9a84b75e1b5cc0d3b10bd8",
+          "after_SHA256": "330cab12a04f019c3bba132a6d37d34a4264e2c6cf9a84b75e1b5cc0d3b10bd8",
+          "adjustments": []
+        },
+        {
+          "path": "drivers/clk/qcom/gcc-msm8974.c",
+          "before_SHA256": "8ab70c616611c5cced6ea169f2e0066e5d73f4a5faee95da188e33c965176001",
+          "original_parent_SHA256": "8ab70c616611c5cced6ea169f2e0066e5d73f4a5faee95da188e33c965176001",
+          "original_after_SHA256": "4b0de15d4c41226ce92462d1800efd25156b60e2b8335e6cc8bc727e95e678b1",
+          "after_SHA256": "4b0de15d4c41226ce92462d1800efd25156b60e2b8335e6cc8bc727e95e678b1",
+          "adjustments": []
+        }
+      ]
+    },
+    {
+      "origin_commit": "4569dae3b15824cb1d1fa0e388ba727bd52d6102",
+      "subject": "pmdomain: qcom: port the calibrated MSM8926 CPU domain",
+      "files": [
+        {
+          "path": "drivers/pmdomain/qcom/Kconfig",
+          "before_SHA256": "63dc3ba59a8426fb625551452390c2c13cbdce9c4fafd9103bad4a557388fa92",
+          "original_parent_SHA256": "d8c0ffbd29bc263e9ed4e5b4fe881dd0d3cef390a90935e8f2541330182bd72b",
+          "original_after_SHA256": "653a2a93b898404f0155b1801a05541c0304db973f671ee62a0360b5541bc640",
+          "after_SHA256": "0bd37273aed1805ad6971d6682632c32fdbefb84ce25046bf30e2214b45cac19",
+          "adjustments": [
+            "Clean three-way merge against the exact original parent; preserve LTS context"
+          ]
+        },
+        {
+          "path": "drivers/pmdomain/qcom/cpr.c",
+          "before_SHA256": "ea7990fc9b13454785bb17469c6991ff6c3e01d2b633b65230d5f540cfd75d5c",
+          "original_parent_SHA256": "7ab1da2daccaa2a46ebe32e1c6334782a0008314bc6c4f8e516208e68da3900a",
+          "original_after_SHA256": "989ec2d76f8d8418372a5d65c2c40833d641ca956cbabef6f3d49c1ef4eae17c",
+          "after_SHA256": "1eb8894ff1dc13f081db2baed4d03027e4ae56b6161de715442df5221755658a",
+          "adjustments": [
+            "Incoming complete domain retains the fork rails wrapper and reconciles separate fuse allocation into the checked flexible-array allocation; original-parent comparison retained",
+            "Whitespace-only kernel style correction; non-whitespace token stream unchanged"
+          ]
+        },
+        {
+          "path": "include/linux/soc/qcom/cpr.h",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3",
+          "after_SHA256": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3",
+          "adjustments": []
+        }
+      ]
+    },
+    {
+      "origin_commit": "965b16234067d414526f98de418a15fd776cebf1",
+      "subject": "cpufreq: qcom-nvmem: attach MSM8926 CPUs after supplier filtering",
+      "files": [
+        {
+          "path": "drivers/cpufreq/cpufreq-dt-platdev.c",
+          "before_SHA256": "4a28d23c713071c0ef5be1c05f7b2473aebc4ede7a24f3ffcacf5e6437a5e7b1",
+          "original_parent_SHA256": "85ee538f91c04cc97705e702f6eb45ef444ceeaea38ac70b6a1262cc72217bf2",
+          "original_after_SHA256": "3cd25df0c59034667d9b3d8674fb8cb66c4a048c3a09d5980d5a886c2733de88",
+          "after_SHA256": "df07cc0eecbcaf335f52b017f805b1d0183f59b5ba38e7970476fffcbe8d3d7b",
+          "adjustments": [
+            "Insert the calibrated-OPP route guard while retaining LTS root-node lookup and allowlist/blocklist APIs",
+            "Whitespace-only kernel style correction; non-whitespace token stream unchanged"
+          ]
+        },
+        {
+          "path": "drivers/cpufreq/qcom-cpufreq-nvmem.c",
+          "before_SHA256": "8d6ad00ca0f62d8687d34223db47b94fd8e2bb6aa62d627c0330bae7647b6ef5",
+          "original_parent_SHA256": "6f24880ad11bc24da3086b4d80282f1f0cb616a02948b328972bc1de5ad6a8f8",
+          "original_after_SHA256": "825a8c1a0b8d596bd72df6083fb3abce8e5a6521e23e2f62f692e4adc5a83501",
+          "after_SHA256": "2f61370f6c4f6a8410830a523483b1395ecfb5e98be6c0f293f52364a5e173b8",
+          "adjustments": [
+            "Clean three-way merge against the exact original parent; preserve LTS context"
+          ]
+        }
+      ]
+    },
+    {
+      "origin_commit": "3621db8f609490bccee6296f9b5ff7720c255447",
+      "subject": "soc: qcom: spm: use a raw lock for the MSM8226 L2 map",
+      "files": [
+        {
+          "path": "drivers/soc/qcom/spm.c",
+          "before_SHA256": "6bec54b0b0c9ca8c087798941341d6fed88af04d9a2db0491bce91d0704e413b",
+          "original_parent_SHA256": "6bec54b0b0c9ca8c087798941341d6fed88af04d9a2db0491bce91d0704e413b",
+          "original_after_SHA256": "1e1827b0f5c3b5db1d18a30edfd7e95054397e94248594220fe6f0b873c15731",
+          "after_SHA256": "1e1827b0f5c3b5db1d18a30edfd7e95054397e94248594220fe6f0b873c15731",
+          "adjustments": []
+        }
+      ]
+    },
+    {
+      "origin_commit": "89f39805163fb2c05a00e3f5adbd3ac1c8fd731d",
+      "subject": "mfd: qcom-spmi-pmic: use a raw lock for atomic register access",
+      "files": [
+        {
+          "path": "drivers/mfd/qcom-spmi-pmic.c",
+          "before_SHA256": "cba250364921bfff3e8cfe10372906631cf2cba70365b2d75eabb8822084b9bd",
+          "original_parent_SHA256": "cba250364921bfff3e8cfe10372906631cf2cba70365b2d75eabb8822084b9bd",
+          "original_after_SHA256": "3a79cf6520d138e416e1454fdce42359c5e895b65a5add33da2bdc19f6107235",
+          "after_SHA256": "3a79cf6520d138e416e1454fdce42359c5e895b65a5add33da2bdc19f6107235",
+          "adjustments": []
+        }
+      ]
+    },
+    {
+      "origin_commit": "76068f3c6a4ed1b37d4c7499d7b673e1872839d7",
+      "subject": "regulator: qcom-spmi: retain current SAW mapping APIs in the runtime",
+      "files": [
+        {
+          "path": "drivers/regulator/Kconfig",
+          "before_SHA256": "ee58e00ec356113beadaf9ce38731a6fc44ddbfcc14edec0911eea26d04be174",
+          "original_parent_SHA256": "d88460402c4db3f31a9ae5e269932aa960c8679d1df4a090fbae4fa001348831",
+          "original_after_SHA256": "7fcc9b8ecbeb8a9d2d2830f1b16394e7c962c65befdcee06f4d15d25ba7b7fda",
+          "after_SHA256": "7d577337a01652bf3b43503486c68ea677a3d9a5cabd6842981be74544c8f780",
+          "adjustments": [
+            "Clean three-way merge against the exact original parent; preserve LTS context"
+          ]
+        },
+        {
+          "path": "drivers/regulator/qcom_spmi-regulator.c",
+          "before_SHA256": "ec52bcbbec5c40ac0fd05b93a73a43856363105cc9923b484df31c54d0b90cdc",
+          "original_parent_SHA256": "ec52bcbbec5c40ac0fd05b93a73a43856363105cc9923b484df31c54d0b90cdc",
+          "original_after_SHA256": "3d449114af46b2e7160bae6cf1bcef5266b23d8e252e97132833f1e72882616c",
+          "after_SHA256": "90a1a48ab4c32ae54b41c9494137168f833399f9dca1f7ed5be5688a25413e80",
+          "adjustments": [
+            "Keep the two LTS devm_kzalloc calls; typed allocation refactor is unavailable in 6.18"
+          ]
+        }
+      ]
+    },
+    {
+      "origin_commit": "57b4bd9ec2db78022e93be3c5bef3e9e25833f12",
+      "subject": "ARM: dts: qcom: add separate Madai CPU qualification target",
+      "files": [
+        {
+          "path": "arch/arm/boot/dts/qcom/Makefile",
+          "before_SHA256": "ca4544d556c606ae5af432776a6e5dfb4d4a27192d0f98570a7da99cc10936d7",
+          "original_parent_SHA256": "7acf3c730c541f7040e0f8e286e88f0f714a48b14c119a54a44e49dec5e2e35d",
+          "original_after_SHA256": "64f7e3f24166c6254c846099cfa693919e070f85a1fd91b37de906d192295af8",
+          "after_SHA256": "d23e64aa14250dfa84c0b2437b69382b1b31eed5267525aac6f29ee33306a0c0",
+          "adjustments": [
+            "Register the additional CPU target next to the ordinary board in the existing complete LTS list"
+          ]
+        },
+        {
+          "path": "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "70451f93286448e2ea296a70f6a008d58ea163c338645b204669276ab0ae5961",
+          "after_SHA256": "70451f93286448e2ea296a70f6a008d58ea163c338645b204669276ab0ae5961",
+          "adjustments": []
+        },
+        {
+          "path": "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts",
+          "before_SHA256": "36b2a733ba62b94371e018f20f3b318bd57732a3469c1db0a85428f196ca4c0a",
+          "original_parent_SHA256": "36b2a733ba62b94371e018f20f3b318bd57732a3469c1db0a85428f196ca4c0a",
+          "original_after_SHA256": "bea1ce365166bf4aa3d51a541c6651f52bec43b50d15de4dbe013c88c1fe465d",
+          "after_SHA256": "bea1ce365166bf4aa3d51a541c6651f52bec43b50d15de4dbe013c88c1fe465d",
+          "adjustments": []
+        }
+      ]
+    }
+  ],
+  "state": "all selected source changes composed",
+  "phone_access": false,
+  "published": false,
+  "source_commits_not_yet_created": true,
+  "merge_returncode": 1,
+  "passed": true,
+  "newer_typed_allocation_refactor_not_applied": true,
+  "board_target_included": true
+}

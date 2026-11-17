@@ -1,0 +1,29 @@
+WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+#38:
+new file mode 100644
+
+CHECK: usleep_range is preferred over udelay; see function description of usleep_range() and udelay().
+#179: FILE: drivers/regulator/qcom-spmi-saw-fts2.h:137:
++	udelay(42);
+
+WARNING: struct regulator_ops should normally be const
+#319: FILE: drivers/regulator/qcom_spmi-regulator.c:412:
++	struct regulator_ops			saw_ops;
+
+CHECK: Avoid CamelCase: <set_point_min_uV>
+#433: FILE: drivers/regulator/qcom_spmi-regulator.c:1472:
++	range->set_point_min_uV = state->range ? 700000 : 350000;
+
+CHECK: Avoid CamelCase: <set_point_max_uV>
+#435: FILE: drivers/regulator/qcom_spmi-regulator.c:1474:
++	range->set_point_max_uV = range->max_uV;
+
+total: 0 errors, 2 warnings, 3 checks, 487 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+<workspace>/local/fx0-lts-production-current-01/cpu-stack-01/committed-patches-03/cd316b91fc1e.patch has style problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.

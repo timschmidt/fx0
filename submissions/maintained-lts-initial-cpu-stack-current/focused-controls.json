@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "kind": "mapping",
+      "mutation": "all-shared",
+      "failed_checks": 67
+    },
+    {
+      "kind": "mapping",
+      "mutation": "no-defer",
+      "failed_checks": 2
+    },
+    {
+      "kind": "mapping",
+      "mutation": "drop-map-error",
+      "failed_checks": 12
+    },
+    {
+      "kind": "mapping",
+      "mutation": "legacy-spinlock",
+      "failed_checks": 20
+    },
+    {
+      "kind": "raw-locks",
+      "mutation": "ignore-raw",
+      "failed_checks": 27
+    },
+    {
+      "kind": "raw-locks",
+      "mutation": "disable-owner-locking",
+      "failed_checks": 12
+    },
+    {
+      "kind": "RPM",
+      "mutation": "accept-wrong-id",
+      "failed_checks": 2
+    },
+    {
+      "kind": "RPM",
+      "mutation": "retain-completion",
+      "failed_checks": 1
+    }
+  ],
+  "normal_LSan_enabled": true,
+  "all_sources_and_services_synthetic": true,
+  "physical_or_concurrent_acceptance": false
+}

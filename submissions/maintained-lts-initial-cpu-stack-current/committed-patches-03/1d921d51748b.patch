@@ -1,0 +1,54 @@
+From 7cb100d0caa060d18ad36b24844ab680ffb30491 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Wed, 11 Nov 2026 08:29:12 -0500
+Subject: [PATCH] MAINTAINERS: track MSM8926 CPU calibration helpers
+
+Extend the existing CPR and CPUfreq ownership patterns to cover the new
+private calibration helpers and shared eligibility headers.
+
+The complete series now provides every referenced header and consumer.
+Retain the existing Qualcomm CPR and cpufreq owners and mailing lists.
+
+Backport as part of the initial maintained-6.18.63 CPU stack. The complete
+series passes 45 selected host test methods. Standalone executables use
+ASan, UBSan and normal LeakSanitizer; ctypes numerical oracles are
+explicitly unsanitized. Twenty selected objects compile with the feature
+enabled and disabled on ARM, ARM64 and ARM64 RT (120 objects), W=1 and
+nonpermissive CFI, with no diagnostics. ARM32 RT is unsupported.
+
+Original author/date and source notices are preserved. Codex prepared
+this local backport and verification. Original scoped source provenance
+remains recorded in the review evidence. Human review and DCO remain
+pending; no phone, publication or maintainer action has occurred.
+
+Backported from commit 1d921d51748bcf8c37a478092d2e6c15c771091e
+("MAINTAINERS: track MSM8926 CPU calibration helpers")
+---
+ MAINTAINERS | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 012e86db67d6..e6bf0757aa2b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -21127,7 +21127,9 @@ L:	linux-pm@vger.kernel.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
++F:	drivers/pmdomain/qcom/cpr*.h
+ F:	drivers/pmdomain/qcom/cpr.c
++F:	include/linux/soc/qcom/cpr.h
+ 
+ QUALCOMM CPUCP MAILBOX DRIVER
+ M:	Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+@@ -21143,6 +21145,7 @@ S:	Maintained
+ F:	Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+ F:	Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+ F:	drivers/cpufreq/qcom-cpufreq-nvmem.c
++F:	include/dt-bindings/opp/qcom,msm8926.h
+ 
+ QUALCOMM CRYPTO DRIVERS
+ M:	Thara Gopinath <thara.gopinath@gmail.com>
+-- 
+2.56.0
+

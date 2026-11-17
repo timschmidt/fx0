@@ -1,0 +1,139 @@
+From 21959c686a12161ace096e743f9a2b090da0402e Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:33:09 +0000
+Subject: [PATCH] pmdomain: qcom: retain and reconcile the APC MX dependency
+
+Activate the boot MX floor before APC requests, preserve references
+while the CPU supply remains live, and order voltage changes safely.
+Force the old consumer vote through regulator_sync_voltage after an
+uncertain failed RPM request, retry once and stop on persistent failure.
+This requires correlated RPM acknowledgements and does not supply a
+deep-suspend sleep-state vote handoff.
+
+Reconcile the existing fork helper with retained MX activation and
+forced recovery. The complete calibrated consumer is included in this
+series. Actual consumer/core/RPM models cover voltage ordering, enable
+references, failure after effects and persistent restoration failure.
+
+Backport as part of the initial maintained-6.18.63 CPU stack. The complete
+series passes 45 selected host test methods. Standalone executables use
+ASan, UBSan and normal LeakSanitizer; ctypes numerical oracles are
+explicitly unsanitized. Twenty selected objects compile with the feature
+enabled and disabled on ARM, ARM64 and ARM64 RT (120 objects), W=1 and
+nonpermissive CFI, with no diagnostics. ARM32 RT is unsupported.
+
+Original author/date and source notices are preserved. Codex prepared
+this local backport and verification. Original scoped source provenance
+remains recorded in the review evidence. Human review and DCO remain
+pending; no phone, publication or maintainer action has occurred.
+
+Backported from commit 68cc2620dd9e8848770df5bb37077fa4d82afde3 ("pmdomain:
+qcom: retain and reconcile the APC MX dependency")
+---
+ drivers/pmdomain/qcom/cpr-voltage.h | 47 +++++++++++++++++++++++------
+ 1 file changed, 38 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/pmdomain/qcom/cpr-voltage.h b/drivers/pmdomain/qcom/cpr-voltage.h
+index 6c4354d90e24..0dd360a82b4a 100644
+--- a/drivers/pmdomain/qcom/cpr-voltage.h
++++ b/drivers/pmdomain/qcom/cpr-voltage.h
+@@ -3,50 +3,79 @@
+ #define __QCOM_CPR_VOLTAGE_H__
+ 
+ #include <linux/errno.h>
++#include <linux/panic.h>
+ #include <linux/regulator/consumer.h>
+ 
+-/* The caller owns regulator activation, handoff and locking. */
++/* The caller owns locking and must retain MX while APC can remain live. */
+ struct cpr_voltage {
+ 	struct regulator *apc;
+ 	struct regulator *mx;
+ 	int mx_max_uV;
+ 	int mx_min_uV;
+ 	int mx_lower_error;
++	bool mx_enabled;
+ };
+ 
+ static inline int cpr_voltage_vote_mx(struct cpr_voltage *rails, int min_uV)
+ {
+-	int ret;
++	int ret, recovery;
+ 
+ 	if (!rails->mx || min_uV <= 0 || min_uV > rails->mx_max_uV)
+ 		return -EINVAL;
+ 
+ 	ret = regulator_set_voltage(rails->mx, min_uV, rails->mx_max_uV);
+-	if (!ret)
++	if (!ret) {
+ 		rails->mx_min_uV = min_uV;
++	} else if (rails->mx_enabled && rails->mx_min_uV > 0) {
++		/*
++		 * A timed-out RPM request may already have changed the vote.
++		 * Core restored the old consumer request on failure; force it
++		 * through the provider instead of accepting a cached same vote.
++		 * RPM must correlate replies before this can confirm restoration.
++		 */
++		recovery = regulator_sync_voltage(rails->mx);
++		if (recovery)
++			recovery = regulator_sync_voltage(rails->mx);
++		if (recovery)
++			panic("CPR MX vote recovery failed: %d", recovery);
++	}
+ 
+ 	return ret;
+ }
+ 
+ /*
+- * Establish a floor covering every possible boot corner before any APC
+- * transition. Repeating handoff must not lower an existing MX vote.
++ * Establish and activate a floor covering every possible boot corner before
++ * any APC transition. Repeating handoff never lowers an existing MX vote or
++ * takes another enable reference. A failed enable retains the requested floor
++ * for retry, but cannot authorize APC transitions. There is deliberately no
++ * automatic disable: an always-on APC rail can outlive CPR domain power-off.
+  */
+ static inline int cpr_voltage_bootstrap(struct cpr_voltage *rails, int boot_min_uV)
+ {
++	int ret;
++
+ 	if (!rails->mx)
+ 		return 0;
+ 	if (boot_min_uV <= 0 || boot_min_uV > rails->mx_max_uV ||
+ 	    rails->mx_min_uV < 0 || rails->mx_min_uV > rails->mx_max_uV)
+ 		return -EINVAL;
+-	if (rails->mx_min_uV >= boot_min_uV)
++	if (rails->mx_min_uV < boot_min_uV) {
++		ret = cpr_voltage_vote_mx(rails, boot_min_uV);
++		if (ret)
++			return ret;
++	}
++	if (rails->mx_enabled)
+ 		return 0;
+ 
+-	return cpr_voltage_vote_mx(rails, boot_min_uV);
++	ret = regulator_enable(rails->mx);
++	if (!ret)
++		rails->mx_enabled = true;
++
++	return ret;
+ }
+ 
+ static inline int cpr_voltage_set(struct cpr_voltage *rails, int apc_uV,
+-				 int mx_min_uV)
++				  int mx_min_uV)
+ {
+ 	int ret;
+ 
+@@ -57,7 +86,7 @@ static inline int cpr_voltage_set(struct cpr_voltage *rails, int apc_uV,
+ 		return regulator_set_voltage(rails->apc, apc_uV, apc_uV);
+ 
+ 	/* Never infer an initial vote from a rounded-down boot clock corner. */
+-	if (rails->mx_min_uV <= 0 || rails->mx_min_uV > rails->mx_max_uV ||
++	if (!rails->mx_enabled || rails->mx_min_uV <= 0 || rails->mx_min_uV > rails->mx_max_uV ||
+ 	    mx_min_uV <= 0 || mx_min_uV > rails->mx_max_uV ||
+ 	    apc_uV > mx_min_uV)
+ 		return -EINVAL;
+-- 
+2.56.0
+
