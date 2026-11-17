@@ -1,0 +1,119 @@
+From 4c42f4a6edaae3f0a7adb7b11495192ce939929b Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 07:02:23 -0400
+Subject: [PATCH] drm/panel: lg-fx0: retain supply ownership after failed
+ cleanup
+
+The existing LTS panel loses a rejected regulator-disable reference and
+hides unprepare failures from DRM. Track ownership and pending cleanup,
+attempt all off operations, preserve the first failure and retry rejected
+cleanup before acquiring another reference. Return the unprepare error
+so DRM retains its prepared state for a retry. Preserve the exact existing
+DSI commands, payloads, waits, mode and production power sequence.
+
+Actual-source host tests reproduce 16 touch and eight panel cleanup
+failures before the changes and none afterward. Four targeted power/PM
+regressions and three DSI command regressions are rejected. Native ARM,
+ARM64 and ARM64 RT objects compile with nonpermissive CFI; built-in,
+modular and DRM-disabled profiles are checked. All nineteen maintained
+family/control DTBs validate against the full schema, with 25 focused
+binding cases. Low-level I/O, runtime callback schedules and selected
+core operations are modeled; real hardware and complete kernel driver
+core execution, panel timing and RMI disable-failure recovery remain open.
+
+Codex prepared this local reconciliation and qualification, preserving
+the original author, date and source notices. Human DCO and review are
+pending; no sign-off certification, phone action or publication is claimed.
+
+Backported from commit ae10f0803a05 ("drm/panel: Add LG Fx0 JDI
+in-cell panel support")
+---
+ drivers/gpu/drm/panel/panel-lg-fx0.c | 44 ++++++++++++++++++++++------
+ 1 file changed, 35 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/gpu/drm/panel/panel-lg-fx0.c b/drivers/gpu/drm/panel/panel-lg-fx0.c
+index 093c1cc7efae..c816e062a9b6 100644
+--- a/drivers/gpu/drm/panel/panel-lg-fx0.c
++++ b/drivers/gpu/drm/panel/panel-lg-fx0.c
+@@ -25,6 +25,8 @@ struct lg_fx0 {
+ 	struct gpio_desc *io_enable;
+ 	struct gpio_desc *positive_enable;
+ 	struct gpio_desc *negative_enable;
++	bool vdd_enabled;
++	bool cleanup_pending;
+ };
+ 
+ static inline struct lg_fx0 *to_lg_fx0(struct drm_panel *panel)
+@@ -73,15 +75,34 @@ static int lg_fx0_on(struct lg_fx0 *priv)
+ 	return ctx.accum_err;
+ }
+ 
+-static void lg_fx0_power_off(struct lg_fx0 *priv)
++static int lg_fx0_power_off(struct lg_fx0 *priv)
+ {
+-	gpiod_direction_output(priv->reset, 1);
+-	gpiod_direction_output(priv->negative_enable, 0);
++	int ret, error;
++
++	ret = gpiod_direction_output(priv->reset, 1);
++	error = gpiod_direction_output(priv->negative_enable, 0);
++	if (!ret)
++		ret = error;
+ 	usleep_range(10000, 11000);
+-	gpiod_direction_output(priv->positive_enable, 0);
++	error = gpiod_direction_output(priv->positive_enable, 0);
++	if (!ret)
++		ret = error;
+ 	usleep_range(10000, 11000);
+-	gpiod_direction_output(priv->io_enable, 0);
+-	regulator_disable(priv->vdd);
++	error = gpiod_direction_output(priv->io_enable, 0);
++	if (!ret)
++		ret = error;
++	if (priv->vdd_enabled) {
++		error = regulator_disable(priv->vdd);
++		if (!error)
++			priv->vdd_enabled = false;
++		if (!ret)
++			ret = error;
++	}
++	priv->cleanup_pending = ret != 0;
++	if (ret)
++		dev_err(&priv->dsi->dev, "Failed to power off panel: %d\n", ret);
++
++	return ret;
+ }
+ 
+ static int lg_fx0_prepare(struct drm_panel *panel)
+@@ -89,10 +110,17 @@ static int lg_fx0_prepare(struct drm_panel *panel)
+ 	struct lg_fx0 *priv = to_lg_fx0(panel);
+ 	int ret;
+ 
++	/* Finish a rejected cleanup before acquiring another supply reference. */
++	if (priv->cleanup_pending) {
++		ret = lg_fx0_power_off(priv);
++		if (ret)
++			return ret;
++	}
+ 	ret = regulator_enable(priv->vdd);
+ 	if (ret)
+ 		return ret;
+ 
++	priv->vdd_enabled = true;
+ 	ret = gpiod_direction_output(priv->reset, 1);
+ 	if (ret)
+ 		goto power_off;
+@@ -144,9 +172,7 @@ static int lg_fx0_disable(struct drm_panel *panel)
+ 
+ static int lg_fx0_unprepare(struct drm_panel *panel)
+ {
+-	lg_fx0_power_off(to_lg_fx0(panel));
+-
+-	return 0;
++	return lg_fx0_power_off(to_lg_fx0(panel));
+ }
+ 
+ static const struct drm_display_mode lg_fx0_mode = {
+-- 
+2.56.0
+

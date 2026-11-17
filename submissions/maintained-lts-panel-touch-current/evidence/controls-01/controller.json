@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "label": "missing-cleanup-retry",
+      "cases": 16,
+      "broken": 3,
+      "intended_runtime_contract_rejected": true
+    },
+    {
+      "label": "hidden-unprepare-error",
+      "cases": 16,
+      "broken": 5,
+      "intended_runtime_contract_rejected": true
+    },
+    {
+      "label": "rmi_i2c_runtime_suspend",
+      "cases": 34,
+      "broken": 16,
+      "intended_runtime_contract_rejected": true
+    },
+    {
+      "label": "rmi_i2c_runtime_resume",
+      "cases": 34,
+      "broken": 12,
+      "intended_runtime_contract_rejected": true
+    }
+  ],
+  "phone_access": false,
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "state": "terminal success",
+  "owned_child_terminal_and_reaped": true
+}

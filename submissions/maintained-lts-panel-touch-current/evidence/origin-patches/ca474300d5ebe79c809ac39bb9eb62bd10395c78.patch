@@ -1,0 +1,50 @@
+commit ca474300d5ebe79c809ac39bb9eb62bd10395c78
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Sun Nov 1 14:30:55 2026 -0500
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sun Nov 15 15:38:30 2026 -0500
+
+    Input: rmi4 - do not fail system suspend after powering off
+    
+    rmi_i2c_suspend() disables the supplies even when the RMI function
+    suspend callback fails, then returns that error. The PM core does not
+    mark a device suspended after a failed callback and skips its resume
+    callback during unwind. The controller can consequently remain powered
+    off with its IRQ disabled.
+    
+    Log the function-suspend failure and return success after powering off,
+    matching the existing runtime-suspend behavior. This lets system resume
+    restore power and the IRQ. Correct the suspend warning at the same time.
+    
+    Adapt Timothy Schmidt's original change 6d3c6c42f7bb to the current Input
+    fixes tree, where reset-GPIO and panel-follower support are absent. The
+    original change used Claude assistance; this adaptation and its extracted
+    callback regression fixture used Codex. No new hardware test is claimed.
+    
+    Original AI assistance used Claude:claude-opus-5-5 with checkpatch.
+    Codex:GPT-6 assisted this current-tree adaptation and source-extracted
+    ASan/UBSan qualification. The task was to preserve the original hardware
+    description and sequencing while checking current APIs and error paths.
+    
+    Fixes: 946c8432aab0 ("Input: synaptics-rmi4 - support regulator supplies")
+
+diff --git a/drivers/input/rmi4/rmi_i2c.c b/drivers/input/rmi4/rmi_i2c.c
+index e11d0acb9b96..5561422bf48e 100644
+--- a/drivers/input/rmi4/rmi_i2c.c
++++ b/drivers/input/rmi4/rmi_i2c.c
+@@ -295,12 +295,13 @@ static int rmi_i2c_suspend(struct device *dev)
+ 
+ 	ret = rmi_driver_suspend(rmi_i2c->xport.rmi_dev, true);
+ 	if (ret)
+-		dev_warn(dev, "Failed to resume device: %d\n", ret);
++		dev_warn(dev, "Failed to suspend device: %d\n", ret);
+ 
+ 	regulator_bulk_disable(ARRAY_SIZE(rmi_i2c->supplies),
+ 			       rmi_i2c->supplies);
+ 
+-	return ret;
++	/* Resume must restore power even if putting the device to sleep failed. */
++	return 0;
+ }
+ 
+ static int rmi_i2c_resume(struct device *dev)

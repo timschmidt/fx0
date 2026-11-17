@@ -1,0 +1,163 @@
+{
+  "passed": true,
+  "DTBs": 19,
+  "all_prior_DTBs_byte_identical": true,
+  "full_current_LTS_family_schema_gate_passed": true,
+  "binding_cases": 25,
+  "controls": [
+    {
+      "label": "normal-I2C-panel-follower",
+      "expected_valid": true,
+      "diagnostics": 0,
+      "property": null
+    },
+    {
+      "label": "I2C-no-panel",
+      "expected_valid": true,
+      "diagnostics": 0,
+      "property": null
+    },
+    {
+      "label": "SPI-no-panel",
+      "expected_valid": true,
+      "diagnostics": 0,
+      "property": null
+    },
+    {
+      "label": "RMI-panel-two-phandles",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "panel"
+    },
+    {
+      "label": "RMI-panel-string",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "panel"
+    },
+    {
+      "label": "RMI-panel-empty",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "panel"
+    },
+    {
+      "label": "SPI-with-panel",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "panel"
+    },
+    {
+      "label": "unknown-RMI-property",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "syna,unexpected-control"
+    },
+    {
+      "label": "normal-production-panel",
+      "expected_valid": true,
+      "diagnostics": 0,
+      "property": null
+    },
+    {
+      "label": "panel-missing-reg",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "reg"
+    },
+    {
+      "label": "panel-missing-vdd-supply",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "vdd-supply"
+    },
+    {
+      "label": "panel-missing-reset-gpios",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "reset-gpios"
+    },
+    {
+      "label": "panel-missing-io-enable-gpios",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "io-enable-gpios"
+    },
+    {
+      "label": "panel-missing-positive-enable-gpios",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "positive-enable-gpios"
+    },
+    {
+      "label": "panel-missing-negative-enable-gpios",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "negative-enable-gpios"
+    },
+    {
+      "label": "panel-missing-backlight",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "backlight"
+    },
+    {
+      "label": "panel-missing-port",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "port"
+    },
+    {
+      "label": "panel-duplicate-reg",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "reg"
+    },
+    {
+      "label": "panel-duplicate-reset-gpios",
+      "expected_valid": false,
+      "diagnostics": 2,
+      "property": "reset-gpios"
+    },
+    {
+      "label": "panel-duplicate-backlight",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "backlight"
+    },
+    {
+      "label": "panel-duplicate-io-enable-gpios",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "io-enable-gpios"
+    },
+    {
+      "label": "unknown-panel-property",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "lge,unexpected-control"
+    },
+    {
+      "label": "normal-Madai-compatible",
+      "expected_valid": true,
+      "diagnostics": 0,
+      "property": null
+    },
+    {
+      "label": "Madai-missing-fallback",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "compatible"
+    },
+    {
+      "label": "Madai-wrong-order",
+      "expected_valid": false,
+      "diagnostics": 1,
+      "property": "compatible"
+    }
+  ],
+  "processed_schema_SHA256": "f60f0fd87b401680ac4064e62a46e0a37620e648a17608cf1f7b24ddd1ab6192",
+  "DTS_source_changed": false,
+  "runtime_firmware_or_hardware_execution": false,
+  "phone_access": false
+}

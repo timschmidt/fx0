@@ -1,0 +1,114 @@
+{
+  "passed": true,
+  "recorded_UTC": "2026-11-17T11:59:15.124887+00:00",
+  "base": "2f2077445a5e5bee97d67f29a8e8078ddec32331",
+  "head": "4c42f4a6edaae3f0a7adb7b11495192ce939929b",
+  "source_repo": "worktrees/linux-fx0-lts-integration-current-01",
+  "commits": [
+    {
+      "origin_commit": "79c77fb2cafcc3e02b3c97a3561946385f5c2cd7",
+      "commit": "100bc1686a3eeca96380b1d4116abad1a7429a8d",
+      "parent": "2f2077445a5e5bee97d67f29a8e8078ddec32331",
+      "subject": "dt-bindings: input: syna,rmi4: constrain the panel follower reference",
+      "original_subject": "dt-bindings: input: syna,rmi4: describe an in-cell I2C panel",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-01T14:31:19-05:00",
+      "paths": [
+        "Documentation/devicetree/bindings/input/syna,rmi4.yaml"
+      ],
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "2223cefc134cca099f3c9fb5470ed58b6057ca38",
+      "commit": "e6ec778abbb334906d0cec738ada5e0c4a308e09",
+      "parent": "100bc1686a3eeca96380b1d4116abad1a7429a8d",
+      "subject": "Input: rmi4 - delegate runtime power sequencing to panel followers",
+      "original_subject": "Input: rmi4 - sequence an in-cell I2C touchscreen with its panel",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-01T14:31:38-05:00",
+      "paths": [
+        "drivers/input/rmi4/rmi_i2c.c"
+      ],
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "bffc782a349d63b258586fff1704254c44cea9cc",
+      "commit": "a8114b5da051f5e677940c8ea1561729d32828df",
+      "parent": "e6ec778abbb334906d0cec738ada5e0c4a308e09",
+      "subject": "dt-bindings: display: panel: add the Fx0 production example",
+      "original_subject": "dt-bindings: display: panel: Add LG Fx0 production panel",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-10-29T07:02:23-04:00",
+      "paths": [
+        "Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml"
+      ],
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "ae10f0803a05730d33102925b7c88110a443ce39",
+      "commit": "4c42f4a6edaae3f0a7adb7b11495192ce939929b",
+      "parent": "a8114b5da051f5e677940c8ea1561729d32828df",
+      "subject": "drm/panel: lg-fx0: retain supply ownership after failed cleanup",
+      "original_subject": "drm/panel: Add LG Fx0 JDI in-cell panel support",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-10-29T07:02:23-04:00",
+      "paths": [
+        "drivers/gpu/drm/panel/panel-lg-fx0.c"
+      ],
+      "exact_added_removed_source_lines": false
+    }
+  ],
+  "existing_equivalents": [
+    {
+      "origin_commit": "6415fd2c429cd73738e1670b84439282e6221160",
+      "subject": "dt-bindings: arm: qcom: Document the LG Fx0",
+      "changed_files": [],
+      "notes": [
+        "Exact LG Madai entry already present in the MSM8926 compatible group"
+      ]
+    },
+    {
+      "origin_commit": "ca474300d5ebe79c809ac39bb9eb62bd10395c78",
+      "subject": "Input: rmi4 - do not fail system suspend after powering off",
+      "changed_files": [],
+      "notes": [
+        "System suspend already returns success after power-off, retaining resume eligibility; only comment differs"
+      ]
+    },
+    {
+      "origin_commit": "af586c82e3933ff420a51a5783dc5c42cdf81523",
+      "subject": "Input: synaptics-rmi4 - add support for reset gpios",
+      "changed_files": [],
+      "notes": [
+        "Reset acquisition, release helper and power-off assertion already present; complete final callback source equivalence checked separately"
+      ]
+    }
+  ],
+  "source_files": {
+    "Documentation/devicetree/bindings/arm/qcom.yaml": "9087355a94970fda81fd78d27e90956ca14cf92a733df024ca53d422b0d21622",
+    "Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml": "374818fdc8d203ec455761955302876896d475253de1bd4ab4f02581fdb602f5",
+    "Documentation/devicetree/bindings/input/syna,rmi4.yaml": "3f1024526ff62ccd8143278dca7300dbc5278af46d1c2721a4df74db912bbb27",
+    "MAINTAINERS": "3b8418438978fb43d4febd8507f6a5438c200aa18ac82a92d0b2e2f1156a4cbb",
+    "drivers/gpu/drm/panel/Kconfig": "18c646aee5147df4a6eb7bfba70dfe18663ef4a30d801d7d8d8bbf32026c3cc0",
+    "drivers/gpu/drm/panel/Makefile": "36566dbfbda3da745155486a66d701c331b82e4bec4b0b2b217d744f7abb3448",
+    "drivers/gpu/drm/panel/panel-lg-fx0.c": "75f8fa38bb53fb893f3fe506bd5d7e75c6e9b1520683c1bb975e09a453c0ec27",
+    "drivers/input/rmi4/Kconfig": "4345ccb47499f67756072523ebead287ce57808f4a354d53868e4f7571b4198d",
+    "drivers/input/rmi4/rmi_i2c.c": "cb542c009e9b74bd4f90f54e5a67f0b6fc4473d1ffb60c34d2da729c7718d8af"
+  },
+  "working_tree_clean": true,
+  "source_commits": 4,
+  "reconciled_source_deltas": 4,
+  "exact_source_deltas": 0,
+  "normal_DTS_and_command_bytes_unchanged": true,
+  "native_objects": 11,
+  "full_current_19_board_schema_passed": true,
+  "physical_acceptance": false,
+  "human_DCO_pending": true,
+  "phone_access": false,
+  "published": false,
+  "full_goal_complete": false
+}

@@ -1,0 +1,96 @@
+From e6ec778abbb334906d0cec738ada5e0c4a308e09 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 1 Nov 2026 14:31:38 -0500
+Subject: [PATCH] Input: rmi4 - delegate runtime power sequencing to panel
+ followers
+
+The existing LTS follower and power helpers track regulator ownership,
+but the old runtime callbacks bypass them. Defer follower runtime callbacks
+to the panel and use the tracked helpers for standalone devices, avoiding
+duplicate reference acquisition and IRQ enable on an unpowered device.
+Document the existing follower and power state. Preserve the LTS I2C ID
+form and system-suspend explanation. The existing driver does not enable
+runtime PM; host callback interleavings are synthetic controls.
+
+Actual-source host tests reproduce 16 touch and eight panel cleanup
+failures before the changes and none afterward. Four targeted power/PM
+regressions and three DSI command regressions are rejected. Native ARM,
+ARM64 and ARM64 RT objects compile with nonpermissive CFI; built-in,
+modular and DRM-disabled profiles are checked. All nineteen maintained
+family/control DTBs validate against the full schema, with 25 focused
+binding cases. Low-level I/O, runtime callback schedules and selected
+core operations are modeled; real hardware and complete kernel driver
+core execution, panel timing and RMI disable-failure recovery remain open.
+
+Codex prepared this local reconciliation and qualification, preserving
+the original author, date and source notices. Human DCO and review are
+pending; no sign-off certification, phone action or publication is claimed.
+
+Backported from commit 2223cefc134c ("Input: rmi4 - sequence an
+in-cell I2C touchscreen with its panel")
+---
+ drivers/input/rmi4/rmi_i2c.c | 30 ++++++++++++------------------
+ 1 file changed, 12 insertions(+), 18 deletions(-)
+
+diff --git a/drivers/input/rmi4/rmi_i2c.c b/drivers/input/rmi4/rmi_i2c.c
+index 79f4c114b5d2..0b836d178802 100644
+--- a/drivers/input/rmi4/rmi_i2c.c
++++ b/drivers/input/rmi4/rmi_i2c.c
+@@ -30,6 +30,9 @@
+  * @supplies: Array of voltage regulators
+  * @startup_delay: Milliseconds to pause after powering up the regulators
+  * @reset_gpio: Optional GPIO held asserted while the device is powered off
++ * @panel_follower: Callbacks for sequencing with an in-cell display panel
++ * @is_panel_follower: Whether system sleep defers sequencing to the panel
++ * @powered: Whether this driver holds the regulator enable references
+  */
+ struct rmi_i2c_xport {
+ 	struct rmi_transport_dev xport;
+@@ -434,17 +437,11 @@ static int rmi_i2c_runtime_suspend(struct device *dev)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct rmi_i2c_xport *rmi_i2c = i2c_get_clientdata(client);
+-	int ret;
+-
+-	ret = rmi_driver_suspend(rmi_i2c->xport.rmi_dev, false);
+-	if (ret)
+-		dev_warn(dev, "Failed to resume device: %d\n", ret);
+ 
+-	if (rmi_i2c->reset_gpio)
+-		gpiod_set_value_cansleep(rmi_i2c->reset_gpio, 1);
++	if (rmi_i2c->is_panel_follower)
++		return 0;
+ 
+-	regulator_bulk_disable(ARRAY_SIZE(rmi_i2c->supplies),
+-			       rmi_i2c->supplies);
++	rmi_i2c_power_off(rmi_i2c, false);
+ 
+ 	return 0;
+ }
+@@ -455,17 +452,14 @@ static int rmi_i2c_runtime_resume(struct device *dev)
+ 	struct rmi_i2c_xport *rmi_i2c = i2c_get_clientdata(client);
+ 	int ret;
+ 
+-	ret = regulator_bulk_enable(ARRAY_SIZE(rmi_i2c->supplies),
+-				    rmi_i2c->supplies);
+-	if (ret)
+-		return ret;
+-
+-	rmi_i2c_release_reset(rmi_i2c);
++	if (rmi_i2c->is_panel_follower)
++		return 0;
+ 
+-	ret = rmi_driver_resume(rmi_i2c->xport.rmi_dev, false);
+-	if (ret)
+-		dev_warn(dev, "Failed to resume device: %d\n", ret);
++	ret = rmi_i2c_power_on(rmi_i2c, false);
++	if (!rmi_i2c->powered)
++		return ret;
+ 
++	/* Preserve the existing warning-only handling of function-resume errors. */
+ 	return 0;
+ }
+ 
+-- 
+2.56.0
+

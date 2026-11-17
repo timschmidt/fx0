@@ -1,0 +1,67 @@
+From a8114b5da051f5e677940c8ea1561729d32828df Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Thu, 29 Oct 2026 07:02:23 -0400
+Subject: [PATCH] dt-bindings: display: panel: add the Fx0 production example
+
+The LTS tree already contains the attributed production-panel binding.
+Append its ordinary example, preserving all existing requirements and
+descriptions. Keep the complete board's GPIOs, power and graph unchanged.
+
+Actual-source host tests reproduce 16 touch and eight panel cleanup
+failures before the changes and none afterward. Four targeted power/PM
+regressions and three DSI command regressions are rejected. Native ARM,
+ARM64 and ARM64 RT objects compile with nonpermissive CFI; built-in,
+modular and DRM-disabled profiles are checked. All nineteen maintained
+family/control DTBs validate against the full schema, with 25 focused
+binding cases. Low-level I/O, runtime callback schedules and selected
+core operations are modeled; real hardware and complete kernel driver
+core execution, panel timing and RMI disable-failure recovery remain open.
+
+Codex prepared this local reconciliation and qualification, preserving
+the original author, date and source notices. Human DCO and review are
+pending; no sign-off certification, phone action or publication is claimed.
+
+Backported from commit bffc782a349d ("dt-bindings: display: panel: Add
+LG Fx0 production panel")
+---
+ .../bindings/display/panel/lg,fx0-panel.yaml  | 27 +++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml b/Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml
+index 8395b7be5e68..1e1b9ee64176 100644
+--- a/Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml
++++ b/Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml
+@@ -57,3 +57,30 @@ required:
+   - port
+ 
+ additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++
++    dsi {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        panel@0 {
++            compatible = "lg,fx0-panel";
++            reg = <0>;
++
++            vdd-supply = <&pm8226_l28>;
++            reset-gpios = <&tlmm 25 GPIO_ACTIVE_LOW>;
++            io-enable-gpios = <&tlmm 113 GPIO_ACTIVE_HIGH>;
++            positive-enable-gpios = <&tlmm 111 GPIO_ACTIVE_HIGH>;
++            negative-enable-gpios = <&tlmm 112 GPIO_ACTIVE_HIGH>;
++            backlight = <&pm8226_wled>;
++
++            port {
++                endpoint {
++                    remote-endpoint = <&mdss_dsi0_out>;
++                };
++            };
++        };
++    };
+-- 
+2.56.0
+

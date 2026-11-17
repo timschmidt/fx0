@@ -1,0 +1,111 @@
+{
+  "passed": true,
+  "base": "2f2077445a5e5bee97d67f29a8e8078ddec32331",
+  "origins": [
+    {
+      "origin_commit": "6415fd2c429cd73738e1670b84439282e6221160",
+      "subject": "dt-bindings: arm: qcom: Document the LG Fx0",
+      "changed_files": [],
+      "notes": [
+        "Exact LG Madai entry already present in the MSM8926 compatible group"
+      ]
+    },
+    {
+      "origin_commit": "ca474300d5ebe79c809ac39bb9eb62bd10395c78",
+      "subject": "Input: rmi4 - do not fail system suspend after powering off",
+      "changed_files": [],
+      "notes": [
+        "System suspend already returns success after power-off, retaining resume eligibility; only comment differs"
+      ]
+    },
+    {
+      "origin_commit": "af586c82e3933ff420a51a5783dc5c42cdf81523",
+      "subject": "Input: synaptics-rmi4 - add support for reset gpios",
+      "changed_files": [],
+      "notes": [
+        "Reset acquisition, release helper and power-off assertion already present; complete final callback source equivalence checked separately"
+      ]
+    },
+    {
+      "origin_commit": "79c77fb2cafcc3e02b3c97a3561946385f5c2cd7",
+      "subject": "dt-bindings: input: syna,rmi4: describe an in-cell I2C panel",
+      "changed_files": [
+        {
+          "path": "Documentation/devicetree/bindings/input/syna,rmi4.yaml",
+          "before_SHA256": "8c673a9b0a906d286f087c07331b68f18fff9676d08bc0b9311cb9262b4c50d7",
+          "after_SHA256": "3f1024526ff62ccd8143278dca7300dbc5278af46d1c2721a4df74db912bbb27"
+        }
+      ],
+      "notes": [
+        "Add explicit panel phandle type and reject SPI panel followers; retain the LTS compatible enum"
+      ]
+    },
+    {
+      "origin_commit": "2223cefc134cca099f3c9fb5470ed58b6057ca38",
+      "subject": "Input: rmi4 - sequence an in-cell I2C touchscreen with its panel",
+      "changed_files": [
+        {
+          "path": "drivers/input/rmi4/rmi_i2c.c",
+          "before_SHA256": "a9218cffdd73061ef690296b64cb3280d695efb3f6b12045d37a482f567d53d2",
+          "after_SHA256": "cb542c009e9b74bd4f90f54e5a67f0b6fc4473d1ffb60c34d2da729c7718d8af"
+        }
+      ],
+      "notes": [
+        "Existing follower, helpers, callbacks and Kconfig retained; replace only missing runtime PM delegation and document state; retain LTS I2C ID and system-suspend explanation"
+      ]
+    },
+    {
+      "origin_commit": "bffc782a349d63b258586fff1704254c44cea9cc",
+      "subject": "dt-bindings: display: panel: Add LG Fx0 production panel",
+      "changed_files": [
+        {
+          "path": "Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml",
+          "before_SHA256": "ba6eece16c49375bab0d4668793f890fe6a4e7e81e358c5f40e62d1a5a567524",
+          "after_SHA256": "374818fdc8d203ec455761955302876896d475253de1bd4ab4f02581fdb602f5"
+        }
+      ],
+      "notes": [
+        "Existing complete binding retained; append exact attributed ordinary example only"
+      ]
+    },
+    {
+      "origin_commit": "ae10f0803a05730d33102925b7c88110a443ce39",
+      "subject": "drm/panel: Add LG Fx0 JDI in-cell panel support",
+      "changed_files": [
+        {
+          "path": "drivers/gpu/drm/panel/panel-lg-fx0.c",
+          "before_SHA256": "546e94c9e41ff01d89943a52ffcaef263ea0104159ff336f45bb37e5f428fbde",
+          "after_SHA256": "75f8fa38bb53fb893f3fe506bd5d7e75c6e9b1520683c1bb975e09a453c0ec27"
+        }
+      ],
+      "notes": [
+        "Track regulator ownership and pending cleanup; attempt every off operation and preserve the first error; propagate failed unprepare and retry rejected cleanup before acquiring a new reference; retain all command payloads and LTS registrations"
+      ]
+    }
+  ],
+  "before_files": {
+    "Documentation/devicetree/bindings/arm/qcom.yaml": "9087355a94970fda81fd78d27e90956ca14cf92a733df024ca53d422b0d21622",
+    "Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml": "ba6eece16c49375bab0d4668793f890fe6a4e7e81e358c5f40e62d1a5a567524",
+    "Documentation/devicetree/bindings/input/syna,rmi4.yaml": "8c673a9b0a906d286f087c07331b68f18fff9676d08bc0b9311cb9262b4c50d7",
+    "MAINTAINERS": "3b8418438978fb43d4febd8507f6a5438c200aa18ac82a92d0b2e2f1156a4cbb",
+    "drivers/gpu/drm/panel/Kconfig": "18c646aee5147df4a6eb7bfba70dfe18663ef4a30d801d7d8d8bbf32026c3cc0",
+    "drivers/gpu/drm/panel/Makefile": "36566dbfbda3da745155486a66d701c331b82e4bec4b0b2b217d744f7abb3448",
+    "drivers/gpu/drm/panel/panel-lg-fx0.c": "546e94c9e41ff01d89943a52ffcaef263ea0104159ff336f45bb37e5f428fbde",
+    "drivers/input/rmi4/Kconfig": "4345ccb47499f67756072523ebead287ce57808f4a354d53868e4f7571b4198d",
+    "drivers/input/rmi4/rmi_i2c.c": "a9218cffdd73061ef690296b64cb3280d695efb3f6b12045d37a482f567d53d2"
+  },
+  "after_files": {
+    "Documentation/devicetree/bindings/arm/qcom.yaml": "9087355a94970fda81fd78d27e90956ca14cf92a733df024ca53d422b0d21622",
+    "Documentation/devicetree/bindings/display/panel/lg,fx0-panel.yaml": "374818fdc8d203ec455761955302876896d475253de1bd4ab4f02581fdb602f5",
+    "Documentation/devicetree/bindings/input/syna,rmi4.yaml": "3f1024526ff62ccd8143278dca7300dbc5278af46d1c2721a4df74db912bbb27",
+    "MAINTAINERS": "3b8418438978fb43d4febd8507f6a5438c200aa18ac82a92d0b2e2f1156a4cbb",
+    "drivers/gpu/drm/panel/Kconfig": "18c646aee5147df4a6eb7bfba70dfe18663ef4a30d801d7d8d8bbf32026c3cc0",
+    "drivers/gpu/drm/panel/Makefile": "36566dbfbda3da745155486a66d701c331b82e4bec4b0b2b217d744f7abb3448",
+    "drivers/gpu/drm/panel/panel-lg-fx0.c": "75f8fa38bb53fb893f3fe506bd5d7e75c6e9b1520683c1bb975e09a453c0ec27",
+    "drivers/input/rmi4/Kconfig": "4345ccb47499f67756072523ebead287ce57808f4a354d53868e4f7571b4198d",
+    "drivers/input/rmi4/rmi_i2c.c": "cb542c009e9b74bd4f90f54e5a67f0b6fc4473d1ffb60c34d2da729c7718d8af"
+  },
+  "source_ports": 4,
+  "existing_equivalents": 3,
+  "phone_access": false
+}

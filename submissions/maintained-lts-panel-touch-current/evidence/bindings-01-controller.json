@@ -1,0 +1,27 @@
+{
+  "started_UTC": "2026-11-17T11:55:18.422999+00:00",
+  "base": "2f2077445a5e5bee97d67f29a8e8078ddec32331",
+  "binding_SHA256": {
+    "input/syna,rmi4.yaml": "3f1024526ff62ccd8143278dca7300dbc5278af46d1c2721a4df74db912bbb27",
+    "display/panel/lg,fx0-panel.yaml": "374818fdc8d203ec455761955302876896d475253de1bd4ab4f02581fdb602f5",
+    "arm/qcom.yaml": "9087355a94970fda81fd78d27e90956ca14cf92a733df024ca53d422b0d21622"
+  },
+  "phone_access": false,
+  "state": "terminal success",
+  "command": [
+    "make",
+    "O=/home/tim/Documents/GitHub/fx0/local/fx0-lts-production-current-01/panel-touch-01/bindings-01-out",
+    "ARCH=arm",
+    "LLVM=-21",
+    "W=1",
+    "-j2",
+    "DT_SCHEMA_FILES=input/syna,rmi4.yaml:display/panel/lg,fx0-panel.yaml:arm/qcom.yaml",
+    "dt_binding_check"
+  ],
+  "returncode": 0,
+  "diagnostics": [],
+  "passed": true,
+  "full_processed_schema_SHA256": "f60f0fd87b401680ac4064e62a46e0a37620e648a17608cf1f7b24ddd1ab6192",
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-17T11:56:12.250680+00:00"
+}

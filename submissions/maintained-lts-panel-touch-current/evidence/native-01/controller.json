@@ -1,0 +1,136 @@
+{
+  "passed": true,
+  "state": "terminal success",
+  "source_files": {
+    "drivers/input/rmi4/rmi_i2c.c": "cb542c009e9b74bd4f90f54e5a67f0b6fc4473d1ffb60c34d2da729c7718d8af",
+    "drivers/input/rmi4/rmi_driver.c": "1119f730ed398d6d688cc175430f7fa61049988cbc82c5dadce7f97d8e906fb5",
+    "drivers/gpu/drm/panel/panel-lg-fx0.c": "75f8fa38bb53fb893f3fe506bd5d7e75c6e9b1520683c1bb975e09a453c0ec27"
+  },
+  "profiles": [
+    {
+      "profile": "arm-normal-DRM-y",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "DRM": "y",
+      "RMI4_I2C": "y",
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "57216041fc76c9bea968cc0aec9de519735d9f0243570ae17cb2a7e507986cbe",
+      "objects": {
+        "drivers/input/rmi4/rmi_i2c.o": "2d96957ce1f5a32587f7506ab9e192b1ab4370c73c40c5d0d0f6cabb759bc457",
+        "drivers/input/rmi4/rmi_driver.o": "a8291a52b6d1472bcd5bc35c0decac8c31f0134fae927362140ad3fe1f8f04f8",
+        "drivers/gpu/drm/panel/panel-lg-fx0.o": "7d35e96cc03de21b0ab34bca09d2267c48d24c4c7bb23a62cae7120cb7ad0087"
+      },
+      "panel_callbacks_present": true
+    },
+    {
+      "profile": "arm64-normal-DRM-m",
+      "ARCH": "arm64",
+      "PREEMPT_RT": false,
+      "DRM": "m",
+      "RMI4_I2C": "m",
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "67eb0424312fdab2d04a31855e546b2b2390e94b64f929630d1ec661bf148dcb",
+      "objects": {
+        "drivers/input/rmi4/rmi_i2c.o": "71b7ade82139387072da0763c78aff1eb2d72c8f3f73151b405a8fc82953a64b",
+        "drivers/input/rmi4/rmi_driver.o": "2fc796f33d94d8c982ffeff758f1ffc1618ae4d4375d54bae272661e5676d102",
+        "drivers/gpu/drm/panel/panel-lg-fx0.o": "8721091be5e9ab1c7d4ff6682ce75a73ad7d8ef491d406490073646dee79bb4d"
+      },
+      "panel_callbacks_present": true
+    },
+    {
+      "profile": "arm64-rt-DRM-m",
+      "ARCH": "arm64",
+      "PREEMPT_RT": true,
+      "DRM": "m",
+      "RMI4_I2C": "m",
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "bf4aa666f14f17454a4f5ea7402a9988cbb9211780235cf5f661b390fcc77a65",
+      "objects": {
+        "drivers/input/rmi4/rmi_i2c.o": "e456b62b7179d1344313828baf49af1c23bac2d42733aa1ccb3449831d3d97d1",
+        "drivers/input/rmi4/rmi_driver.o": "3f2c22a350748becaf236b38c1fb049decb1cff7a0fa519c1df380c0006f5499",
+        "drivers/gpu/drm/panel/panel-lg-fx0.o": "35cf4aec30acb64a0d473fb4d6aa0289942d15d67bf277d47da965f64596d884"
+      },
+      "panel_callbacks_present": true
+    },
+    {
+      "profile": "arm-normal-DRM-n",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "DRM": "n",
+      "RMI4_I2C": "m",
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "4d34f1ff48de9d7ab0c17e7bf338bcc1c3b2ce3e7a2190ea59237027fcc9e598",
+      "objects": {
+        "drivers/input/rmi4/rmi_i2c.o": "862f2a7eb0e2b369b55dda9fb5cfec194bed95692cb18e5a87188d6ac27c5d9d",
+        "drivers/input/rmi4/rmi_driver.o": "c73c59ce907c7e814aef24822229307abdc8a6269c639db04fba22ccbd7d295c"
+      },
+      "panel_callbacks_present": false
+    }
+  ],
+  "stages": [
+    {
+      "profile": "arm-normal-DRM-y",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "ef9406046c6e8097ef1c50be9a28626a2240534dcb006b62b6ee0086995eb1c4"
+    },
+    {
+      "profile": "arm-normal-DRM-y",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "03278bee109d9e7731af7df32e6c9473f5bd35b0fc5f32299a4b353b2378463b"
+    },
+    {
+      "profile": "arm64-normal-DRM-m",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "dbe31c9a5690eaefb590368d6814c7b7b0cd3de6b59b93ac1d44c858b546cbbe"
+    },
+    {
+      "profile": "arm64-normal-DRM-m",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "0dace6fb68b97052c5819eae5a16f042b672ae14ba195c49131182da20b99996"
+    },
+    {
+      "profile": "arm64-rt-DRM-m",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "675da186123734e3a33852824292ba381b31cd718199a20d5618d14f46b8de0f"
+    },
+    {
+      "profile": "arm64-rt-DRM-m",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "ddbf6fbfa1430923f89481127a445df36ad578fb08a84a452a0ff25da4d6d07e"
+    },
+    {
+      "profile": "arm-normal-DRM-n",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "1e61683393ffe855753229158a474500682b20d191e11f6b61c16414f9685747"
+    },
+    {
+      "profile": "arm-normal-DRM-n",
+      "phase": "objects",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "54f6ece52d27a22ed9a64a4fe697bd17fa5ffc7c0727a43977f1b4624795403e"
+    }
+  ],
+  "ARM32_RT_unsupported_not_counted": true,
+  "phone_access": false,
+  "native_objects": 11,
+  "owned_child_terminal_and_reaped": true
+}

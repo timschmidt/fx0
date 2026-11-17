@@ -1,0 +1,59 @@
+From 100bc1686a3eeca96380b1d4116abad1a7429a8d Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 1 Nov 2026 14:31:19 -0500
+Subject: [PATCH] dt-bindings: input: syna,rmi4: constrain the panel follower
+ reference
+
+The LTS binding already describes an optional panel. Give that reference
+its phandle type and prohibit it for SPI transports, matching the actual
+I2C-only follower implementation. Preserve the existing LTS compatible
+enum and all other device descriptions; do not import unrelated matches.
+
+Actual-source host tests reproduce 16 touch and eight panel cleanup
+failures before the changes and none afterward. Four targeted power/PM
+regressions and three DSI command regressions are rejected. Native ARM,
+ARM64 and ARM64 RT objects compile with nonpermissive CFI; built-in,
+modular and DRM-disabled profiles are checked. All nineteen maintained
+family/control DTBs validate against the full schema, with 25 focused
+binding cases. Low-level I/O, runtime callback schedules and selected
+core operations are modeled; real hardware and complete kernel driver
+core execution, panel timing and RMI disable-failure recovery remain open.
+
+Codex prepared this local reconciliation and qualification, preserving
+the original author, date and source notices. Human DCO and review are
+pending; no sign-off certification, phone action or publication is claimed.
+
+Backported from commit 79c77fb2cafc ("dt-bindings: input: syna,rmi4:
+describe an in-cell I2C panel")
+---
+ Documentation/devicetree/bindings/input/syna,rmi4.yaml | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/input/syna,rmi4.yaml b/Documentation/devicetree/bindings/input/syna,rmi4.yaml
+index 545867d4b1e1..64f62c6d9908 100644
+--- a/Documentation/devicetree/bindings/input/syna,rmi4.yaml
++++ b/Documentation/devicetree/bindings/input/syna,rmi4.yaml
+@@ -35,9 +35,10 @@ properties:
+     maxItems: 1
+ 
+   panel:
++    $ref: /schemas/types.yaml#/definitions/phandle
+     description:
+-      The panel an in-cell touchscreen belongs to. The touchscreen is then
+-      powered down before the panel and powered up after it.
++      Display panel that must be powered on before the in-cell touchscreen.
++      The I2C controller follows the panel's prepare and unprepare sequence.
+ 
+   reset-gpios:
+     maxItems: 1
+@@ -219,6 +220,7 @@ allOf:
+         spi-tx-delay-us: false
+     else:
+       properties:
++        panel: false
+         syna,reset-delay-ms: false
+         syna,startup-delay-ms: false
+ 
+-- 
+2.56.0
+

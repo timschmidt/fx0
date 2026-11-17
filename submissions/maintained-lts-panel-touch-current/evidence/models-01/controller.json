@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "stages": [
+    {
+      "label": "touch-before",
+      "returncode": 0,
+      "stdout_SHA256": "293f73bd5221c3e62fe2834af6b4f33b5117f49e5a0f2b916207352bef6330f0",
+      "stderr_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "touch-after",
+      "returncode": 0,
+      "stdout_SHA256": "67952b14bcb5bf04423e9380f6e59cc964ecfbaf95fc828b3ebad52d59dede3c",
+      "stderr_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "panel-before",
+      "returncode": 0,
+      "stdout_SHA256": "661393434881ac3f6bbd6ae2c2f860dab93b7051e63de49dd3f8d62dfa4f3a47",
+      "stderr_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "panel-after",
+      "returncode": 0,
+      "stdout_SHA256": "4a59b43df7b5837b64fecb0c7815f907247bdb7c997405e51ac3fc63f569a37f",
+      "stderr_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "command-trace",
+      "returncode": 0,
+      "stdout_SHA256": "4d1dacd33cca9fcd0a5c9ece4a577a0f2833186dd0cd0a6f2ae900ad9e62bb2c",
+      "stderr_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "phone_access": false,
+  "real_hardware_or_kernel_driver_core_execution": false,
+  "state": "terminal success",
+  "touch_cases": 34,
+  "touch_before_broken": 16,
+  "touch_after_broken": 0,
+  "panel_cases": 16,
+  "panel_before_broken": 8,
+  "panel_after_broken": 0,
+  "command_cases_per_variant": 18,
+  "command_mutants_rejected": 3,
+  "owned_child_terminal_and_reaped": true
+}
