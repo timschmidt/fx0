@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "recorded_UTC": "2026-11-17T12:43:57.800013+00:00",
+  "base": "f6e47a55bfbec73db3f5a5f2ebd03f8b182aa37c",
+  "head": "007c1af504855ec4c6dd04a37c46fd96612e243d",
+  "source_repo": "worktrees/linux-fx0-lts-integration-current-01",
+  "additional_runtime_fixes": [
+    {
+      "commit": "0785b26e714dd5517c86fa102df34065e1c48781",
+      "parent": "f6e47a55bfbec73db3f5a5f2ebd03f8b182aa37c",
+      "subject": "iommu: qcom_iommu: retain runtime PM through child probe cleanup",
+      "author": "Codex",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "additional_local_repair": true,
+      "original_147_origin": null
+    },
+    {
+      "commit": "007c1af504855ec4c6dd04a37c46fd96612e243d",
+      "parent": "0785b26e714dd5517c86fa102df34065e1c48781",
+      "subject": "iommu: qcom_iommu: retire clients and contexts before parent removal",
+      "author": "Codex",
+      "paths": [
+        "drivers/iommu/arm/arm-smmu/qcom_iommu.c"
+      ],
+      "additional_local_repair": true,
+      "original_147_origin": null
+    }
+  ],
+  "source_files": {
+    "drivers/iommu/arm/arm-smmu/qcom_iommu.c": "1a589d0d600150bbb0ee0d8cd2b2680eb1a94b550cf11222c0eb15126fd8feda"
+  },
+  "working_tree_clean": true,
+  "additional_local_source_commits": 2,
+  "original_147_source_ports_this_phase": 0,
+  "original_147_inventory_unchanged": true,
+  "normal_DTS_and_bindings_unchanged": true,
+  "probe_and_remove_lifetime_host_contract_fixed": true,
+  "physical_driver_core_or_secure_firmware_acceptance": false,
+  "human_DCO_pending": true,
+  "phone_access": false,
+  "published": false,
+  "full_goal_complete": false
+}

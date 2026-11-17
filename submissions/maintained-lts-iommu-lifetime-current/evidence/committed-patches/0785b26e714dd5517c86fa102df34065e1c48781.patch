@@ -1,0 +1,67 @@
+From 0785b26e714dd5517c86fa102df34065e1c48781 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Tue, 17 Nov 2026 07:43:44 -0500
+Subject: [PATCH] iommu: qcom_iommu: retain runtime PM through child probe
+ cleanup
+
+The parent manually disables runtime PM on errors after managed context
+population. Driver-core devres cleanup runs later, so children are still
+present when PM is disabled. Register runtime-PM cleanup before managed
+child population and let reverse devres order retire the children first.
+Handle cleanup-action allocation failure and preserve original errors.
+
+Use the LTS devm_pm_runtime_enable() contract, also used by the cached
+official IOMMU next baseline 2cf4be57b301. Keep the original LTS APIs,
+resource getters, context handling and all source/license notices.
+
+Three native ARM, ARM64 and ARM64 RT driver objects compile cleanly with
+nonpermissive CFI and match current source checksums. All other driver
+functions, board data and schemas retain their prior bytes. These new
+local repairs are prepared by Codex; human DCO and security/owner review
+remain pending. No sign-off certification or physical acceptance is made.
+---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 8dc4e510cbc2..ff134563dad9 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -1104,20 +1104,22 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, qcom_iommu);
+ 
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		return ret;
+ 
+ 	/* register context bank devices, which are child nodes: */
+ 	ret = devm_of_platform_populate(dev);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to populate iommu contexts\n");
+-		goto err_pm_disable;
++		return ret;
+ 	}
+ 
+ 	ret = iommu_device_sysfs_add(&qcom_iommu->iommu, dev, NULL,
+ 				     dev_name(dev));
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register iommu in sysfs\n");
+-		goto err_pm_disable;
++		return ret;
+ 	}
+ 
+ 	ret = iommu_device_register(&qcom_iommu->iommu, &qcom_iommu_ops, dev);
+@@ -1140,8 +1142,6 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 	iommu_device_unregister(&qcom_iommu->iommu);
+ err_sysfs_remove:
+ 	iommu_device_sysfs_remove(&qcom_iommu->iommu);
+-err_pm_disable:
+-	pm_runtime_disable(dev);
+ 	return ret;
+ }
+ 
+-- 
+2.56.0
+

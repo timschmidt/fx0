@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "cases": 36,
+  "wrong": 0,
+  "source_SHA256": "1a589d0d600150bbb0ee0d8cd2b2680eb1a94b550cf11222c0eb15126fd8feda",
+  "bindings": {
+    "qcom_iommu_device_probe": "7404ccb87827dd15cb47535ac6d9387a673669cbdebfa0ea4a6f4b6825f2ea7e",
+    "probe_tail": "2288b6a2edb663a78a1cdca3600eb517a6dfecff76142a9106860019f7d29983",
+    "pm_runtime_disable_action": "90156d49847408ead6e12e723bf9b81ed96a784c753009e3f5c0615ab83609a3",
+    "devm_pm_runtime_enable": "4efa991d031da67a98a883aeeae11651b8e0c079ea22449235dbd1e7e30f39bf",
+    "devm_of_platform_populate_release": "c8da7227a181469ebdfd2a988538efe7a6dd832250e35f630fa992c187798e12",
+    "devm_of_platform_populate": "a3613a0793ae051f757db5d0544612051c52a4e4665b6c5eb7357a2d64c5b62f",
+    "devm_of_platform_depopulate": "4746376b5aba75755ca24070ba8144b91927802ab95f24dccbb9a998886f893c",
+    "device_unbind_cleanup": "36079b60ee500be8dc759b3842bf5565dd95ee5e2742c3c411bd8c0c8942505d",
+    "qcom_iommu_ctx_remove": "c159a63598c7496fb8a34cede8e27261f345247481d8fa245b539c980661eece",
+    "release_nodes": "fd6ccd2d6e2fad95c7a0f1fe46aa7c7565bc63778adacc7e90d0e911ff3930fd",
+    "devres_release": "ab34a73cdb5d185b6aba9da7c302625f497a14ef81b330e11c0a8d0a7ac3fa7f",
+    "qcom_iommu_device_remove": "a35ac2aa333d9cd032c1adb3dfc06aef2d1d7da1d469a5856887488f8734d680"
+  },
+  "core_files_SHA256": {
+    "drivers/base/power/runtime.c": "a20954a2101667f9c72c0f4b0bcb41de917deb65f1d3d6bf5f14472f52a45a30",
+    "drivers/of/platform.c": "67557f81563a13b6347e449a3c7aa8acfac4cd3da67c55d433f0163df3d92100",
+    "drivers/base/dd.c": "fd27f4315a8c4a9a882b2aa68a66b38e06b285488617b95b4c01b9ba7e6bfec6",
+    "drivers/base/devres.c": "5c2b58422bebe697e6b528d02bf1f9aea2a2d77c0ba47d8a44e190ee0bfb5a6b",
+    "drivers/iommu/iommu.c": "9dc7411282cc22fa43e02f0f16f544f919e2438c45780a6ee18e5fe4be97b5eb"
+  },
+  "model_SHA256": "b214bebd96d2306e882e3638f5dbdc385ea54fd2e187645daa0ad7d52d3a0d14",
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "pre_tail_allocation_and_list_container_PM_client_services_modeled": true,
+  "unavailable_parent_access_intercepted_before_NULL_dereference": true,
+  "full_kernel_driver_core_or_hardware_execution": false,
+  "phone_access": false
+}

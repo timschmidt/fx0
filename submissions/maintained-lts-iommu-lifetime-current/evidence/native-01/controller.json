@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "state": "terminal success",
+  "source_files": {
+    "drivers/iommu/arm/arm-smmu/qcom_iommu.c": "1a589d0d600150bbb0ee0d8cd2b2680eb1a94b550cf11222c0eb15126fd8feda"
+  },
+  "profiles": [
+    {
+      "profile": "arm-normal",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "214767e28d83eb60a1d2842f397b5c1805e234fa4f8a8815165c520a9a1f208c",
+      "object_SHA256": "b21e2c7b296d2468b28a10e0fb88de93c35f2eacd7e08fb89e8bfcd4686b8282"
+    },
+    {
+      "profile": "arm64-normal",
+      "ARCH": "arm64",
+      "PREEMPT_RT": false,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "67eb0424312fdab2d04a31855e546b2b2390e94b64f929630d1ec661bf148dcb",
+      "object_SHA256": "65ad7d5871363e21cae0720efc1fa1666943eff8fe5edc7de7322f7d04f655a9"
+    },
+    {
+      "profile": "arm64-rt",
+      "ARCH": "arm64",
+      "PREEMPT_RT": true,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "bf4aa666f14f17454a4f5ea7402a9988cbb9211780235cf5f661b390fcc77a65",
+      "object_SHA256": "cab6bca539dba2a01e86d7b76af5622a0c8e6d87538c6f9f60911267c722ca2a"
+    }
+  ],
+  "stages": [
+    {
+      "profile": "arm-normal",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "cd802e1c5468196e5c95721be50e4501449a2581e51e5904e1730d521ac89934"
+    },
+    {
+      "profile": "arm-normal",
+      "phase": "object",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "6612985a2d3f51cc184fe24d7af164025e185017dfbf63507c34ddcd8f6bdc02"
+    },
+    {
+      "profile": "arm64-normal",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "3648b01e5dd002a68b41e4cebd9ade249a770f8e45585bb0619eba906ca0067e"
+    },
+    {
+      "profile": "arm64-normal",
+      "phase": "object",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "28e3779339ff825bd4e25a5b3d40fd4ada042b97298fd2e7e0cebbcd76dacb61"
+    },
+    {
+      "profile": "arm64-rt",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "f91fc2c2e2d61bb107574f1b117f5ead59126da75197859f0a92f52a818c7223"
+    },
+    {
+      "profile": "arm64-rt",
+      "phase": "object",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "7799f17c1ce578ae42a34c4adf21ccd6809e247d273f85e4710ab440d877b88c"
+    }
+  ],
+  "ARM32_RT_unsupported_not_counted": true,
+  "phone_access": false,
+  "physical_acceptance": false,
+  "native_objects": 3,
+  "owned_child_terminal_and_reaped": true
+}

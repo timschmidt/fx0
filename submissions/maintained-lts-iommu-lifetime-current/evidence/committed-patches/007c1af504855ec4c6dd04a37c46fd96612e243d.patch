@@ -1,0 +1,54 @@
+From 007c1af504855ec4c6dd04a37c46fd96612e243d Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Tue, 17 Nov 2026 07:43:44 -0500
+Subject: [PATCH] iommu: qcom_iommu: retire clients and contexts before parent
+ removal
+
+Parent removal clears driver data before managed child removal calls
+qcom_iommu_ctx_remove(), which reads that parent pointer. It also forces
+suspend before unregistering clients that can still need their contexts.
+Unregister clients while their context banks and PM are available, remove
+the sysfs representation, explicitly release managed children, then force
+suspend and clear parent data. Automatic devres cleanup must not remove
+the already released children a second time.
+
+The extracted probe-tail/remove and LTS cleanup model reproduces 24 wrong
+cases out of 30 before the changes and none out of 36 afterward, including
+six new PM cleanup-action allocation failures. Three wrong orderings fail
+their intended contracts. Pre-tail allocation/resource getters, devres
+list storage, device creation, client release, PM transitions and hardware
+are modeled. Invalid parent access is intercepted before dereference;
+full driver-core registration, locking and concurrency are not executed.
+
+Three native ARM, ARM64 and ARM64 RT driver objects compile cleanly with
+nonpermissive CFI and match current source checksums. All other driver
+functions, board data and schemas retain their prior bytes. These new
+local repairs are prepared by Codex; human DCO and security/owner review
+remain pending. No sign-off certification or physical acceptance is made.
+---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index ff134563dad9..e94be05ec5db 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -1149,10 +1149,13 @@ static void qcom_iommu_device_remove(struct platform_device *pdev)
+ {
+ 	struct qcom_iommu_dev *qcom_iommu = platform_get_drvdata(pdev);
+ 
++	/* Retire clients while their context banks and parent PM are available. */
++	iommu_device_unregister(&qcom_iommu->iommu);
++	iommu_device_sysfs_remove(&qcom_iommu->iommu);
++	devm_of_platform_depopulate(&pdev->dev);
++
+ 	pm_runtime_force_suspend(&pdev->dev);
+ 	platform_set_drvdata(pdev, NULL);
+-	iommu_device_sysfs_remove(&qcom_iommu->iommu);
+-	iommu_device_unregister(&qcom_iommu->iommu);
+ }
+ 
+ static int __maybe_unused qcom_iommu_resume(struct device *dev)
+-- 
+2.56.0
+
