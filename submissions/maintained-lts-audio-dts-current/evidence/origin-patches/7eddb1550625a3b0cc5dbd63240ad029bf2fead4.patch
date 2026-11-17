@@ -1,0 +1,71 @@
+From 7eddb1550625a3b0cc5dbd63240ad029bf2fead4 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 31 Oct 2026 19:28:52 -0400
+Subject: [PATCH] ARM: dts: qcom: msm8226: describe the QDSP6 services
+
+Describe the AFE, ASM and ADM APR services and their DAI and routing
+children. Preserve the original service IDs and the platform without an
+audio SMMU. These nodes remain below the disabled common APR bus.
+
+Adapted from the original implementation linked below. Original authors:
+Timothy Schmidt and Claude Opus 5.5. Only the common SoC description is
+carried; the complete Fx0 board is preserved separately without the early
+experiment.
+
+Current-tree refresh and validation prepared with OpenAI Codex assistance.
+Audio execution testing is excluded; current hardware validation is
+pending.
+
+Link: https://github.com/timschmidt/fx0-linux/commit/68ac6144c11a31404f836ac5dcee43dae5081eea
+---
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 34 ++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+index 6aac5f308793..a997024a4490 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+@@ -1723,6 +1723,40 @@ q6core: service@3 {
+ 						compatible = "qcom,q6core";
+ 						reg = <APR_SVC_ADSP_CORE>;
+ 					};
++
++					q6afe: service@4 {
++						compatible = "qcom,q6afe";
++						reg = <APR_SVC_AFE>;
++
++						q6afedai: dais {
++							compatible = "qcom,q6afe-dais";
++							#address-cells = <1>;
++							#size-cells = <0>;
++							#sound-dai-cells = <1>;
++						};
++					};
++
++					q6asm: service@7 {
++						compatible = "qcom,q6asm";
++						reg = <APR_SVC_ASM>;
++
++						q6asmdai: dais {
++							compatible = "qcom,q6asm-dais";
++							#address-cells = <1>;
++							#size-cells = <0>;
++							#sound-dai-cells = <1>;
++						};
++					};
++
++					q6adm: service@8 {
++						compatible = "qcom,q6adm";
++						reg = <APR_SVC_ADM>;
++
++						q6routing: routing {
++							compatible = "qcom,q6adm-routing";
++							#sound-dai-cells = <0>;
++						};
++					};
+ 				};
+ 			};
+ 		};
+-- 
+2.56.0
+

@@ -1,0 +1,108 @@
+{
+  "passed": true,
+  "recorded_UTC": "2026-11-17T16:22:39.403276+00:00",
+  "base": "4707a595569cf36306828781df5c56cc43306d68",
+  "head": "4707a595569cf36306828781df5c56cc43306d68",
+  "commits": [],
+  "kernel_source_changes": false,
+  "source_branch_unchanged": true,
+  "source_files": {
+    "Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml": "892d01069f860a5efa3fa8ec41110e3ea957a7bf18bd07d2fde1af682541b8bd",
+    "Documentation/devicetree/bindings/slimbus/qcom,slim-ngd.yaml": "9d4f0349b65db6cdcbf73930882fa79ab19d6f3e747ae223cdaaeeede0bf4564",
+    "Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml": "f9f24b4db2261fb87a9517405a6e6d636c9581f1d0a02d837754a2ee6b2265a7",
+    "Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml": "635ec47935297ad250313e43d8452fefdb869e0310c9edec31de64dc8c9c91a3",
+    "Documentation/devicetree/bindings/sound/qcom,q6adm-routing.yaml": "3ae47dfe9ca421a16c1f3d662266ddd85a144db123425cd1966e175afff6949d",
+    "Documentation/devicetree/bindings/sound/qcom,q6adm.yaml": "a9b2f5ca9853dcfd64f7989dd016b37bb0af13c3f68f93968e203a1719948304",
+    "Documentation/devicetree/bindings/sound/qcom,q6afe.yaml": "899e8486eec5e8c76a7b549a2bfae7d80b4735aaa036df65360ad2b64a67e30f",
+    "Documentation/devicetree/bindings/sound/qcom,q6asm-dais.yaml": "254754240e2e283a74592d80572340aab84f35e2fa139560f63ab94697ea51b9",
+    "Documentation/devicetree/bindings/sound/qcom,q6asm.yaml": "577eda656b5504474de83f613d00b90414c7ad191f54f2475755e49367ae1d7a",
+    "Documentation/devicetree/bindings/sound/qcom,q6core.yaml": "160d7eb7496f7ae010f8d4d2b5492272748824af9f5c779387a3cf369131a60c",
+    "Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml": "ea4e12ac6751f2459921880442031d6452cbac2c9008e9f9daf483cc44b9f90d",
+    "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi": "20f9aa62a67fa37b80344901a7497f0c35aa0144e81b7b6288cdd204d5bd9d1f",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts": "cd78b4cbb48378ab089656f21921ae077b4f1f8ecb64d6431b683a2a9ab98b8a",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts": "87aef0bb972bc471c600a36a6bbceb84b173339ce260797e6b87ff18b48884f4",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "3f8af54ac46d06965779f46a0b83a52b8e3e1bf13edc3aa17d166cc5c3d6baa2",
+    "drivers/dma/qcom/bam_dma.c": "f0a29a997a32dc1314802b45d33a1a42ae687ce98f62d77c5c64a4eb4380ce5e",
+    "drivers/remoteproc/qcom_common.c": "4305ac91b913fec2a07f25657bd21d8298ef948d47b05c1e9b631b253436709f",
+    "drivers/remoteproc/qcom_pil_info.c": "18fb7e5d8c1c0fed21b2a083aa63833f28de6bddb67ed334802b3dc46e82068a",
+    "drivers/remoteproc/qcom_q6v5.c": "75667c767521dbeea81f370224e2c3f279a76339635a9a41c33b8bd99285beaf",
+    "drivers/remoteproc/qcom_q6v5_pas.c": "91df206da7eb6a36bafd3cbe7250298b2675ec46c533606b98f6b6e5e4714502",
+    "drivers/rpmsg/qcom_smd.c": "a15246f9e9e3f72e1f31650370010fea6c16fd659d88760a110f8e6377ddbdac",
+    "drivers/rpmsg/rpmsg_core.c": "757289aa348f2752635f276066fd5af79740486b6615535419e131e15a95f1de",
+    "drivers/slimbus/core.c": "4eef46770cf6edb8f52239e0afd60a1d1e7ce904a21f258bfa124e5ce9fb739b",
+    "drivers/slimbus/messaging.c": "dc5230ee35acb9a34353b5d0c34c0b204a9a051a49b98ea3eaaef7c0c8f739b3",
+    "drivers/slimbus/qcom-ngd-ctrl.c": "2c851434a69b69f37fc722ecd072f11e1a07e7a4505f8f30b200a5b084684eed",
+    "drivers/slimbus/sched.c": "13a2b94cc215de7fcf0bb220a3c511e069bc277466986d6eed1ebfc50e893568",
+    "drivers/slimbus/stream.c": "20576bf7fa11b4932670ac232d1a0ae3c0ce1247b82dd3cfe29a7891468b2141",
+    "drivers/soc/qcom/apr.c": "991ead5114afa0f1b69c0a493cd84187c1483972683633fe0b69581ba0cad45b",
+    "drivers/soc/qcom/mdt_loader.c": "6ad9ec383fa9f78995ca7d236a30ae1d04183e353ce8d83fa49f4cbb6fa346ab",
+    "drivers/soc/qcom/pdr_interface.c": "a82c5f1b128ee6d479fa2c905c87b89f30a8f19f0482a2de5683c0ae4706dc4e",
+    "drivers/soc/qcom/qmi_encdec.c": "72c9fd2ec5c033ec1fd845e6f55f45648b1a6938b64aee9db0d5f99d39d5ef15",
+    "drivers/soc/qcom/qmi_interface.c": "1acae3ba8cb63ccc913aab31a7770ee08f7e7a1260fe4e5af7588e1f15acfbea",
+    "include/dt-bindings/soc/qcom,apr.h": "4dc994d399a17fb2f52067f7487d9d857c83880d67486da4dd8abd01a59c0c1a",
+    "include/dt-bindings/sound/qcom,q6afe.h": "40705e919123149802bae69a5fd39eaa074f27fda1b958529eb92df024774b22",
+    "include/dt-bindings/sound/qcom,q6asm.h": "349e52e66e23b07a17567d6e71aba184b23846e0a9fe835ff614a0310a24cdd8",
+    "sound/soc/qcom/Kconfig": "f5b353ff824894dd5377ecb40c2c9464880fb69b381440ed9099c7a2ff83d065",
+    "sound/soc/qcom/apq8096.c": "67f1e135b8956e9187a371c0de0c7859d472fa38a46a6eea907a59d7a96b2669",
+    "sound/soc/qcom/common.c": "791d8986f9153c902ac1c742f4ffe606a13b72e2fe14704f091a2ad54ef7fbef",
+    "sound/soc/qcom/qdsp6/q6adm.c": "81d4210622117e80e771e0847fbd700995f828f4cd6c8fcc3edd6b2604924d57",
+    "sound/soc/qcom/qdsp6/q6afe-clocks.c": "8247bcc2e2a854e1e3a24a07b8e4d52b80ad4cfeb6a6c9fc43f439eb3d6cf8bf",
+    "sound/soc/qcom/qdsp6/q6afe-dai.c": "883abb5c5bdf1b8baebd9064b22fbb9b0a143d6ee245f4b47e55b856df388a17",
+    "sound/soc/qcom/qdsp6/q6afe.c": "48e634c312b9db4d350db32f089b70e7bf5ea9c36c213e06a592a8781b505ab0",
+    "sound/soc/qcom/qdsp6/q6asm-dai.c": "2a958a838a553b4d520f7c4acc9154a0e42bee74c80484eea73d7ae141e03e8e",
+    "sound/soc/qcom/qdsp6/q6asm.c": "f8488fec80b5abfd091cf90aa2674898e3f8f9c0ecac2cd99c7d97bb5a99fc6e",
+    "sound/soc/qcom/qdsp6/q6asm.h": "df4f5eeb94be3486d41358c62f5df4eef190efa008a611c07d0e3398ac55b1bc",
+    "sound/soc/qcom/qdsp6/q6core.c": "b3717216aeedb78e5440b1790c47baf13920e24cbbe9ec6824ba3190d9be0e93",
+    "sound/soc/qcom/qdsp6/q6dsp-common.c": "6690240cd1d4dab753fcf7fcc6cc5cbcd4fb2920784440ce779d0468ec09e0d0",
+    "sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c": "83c8c0bf269ec24e2cddf3927e35205292b2cb6951c617c30af6cd9faa0477b1",
+    "sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c": "bf60defe09b1831b4d3dda718a0fd755281cdaf3eb7a73e5278d3a41dfc89228",
+    "sound/soc/qcom/qdsp6/q6routing.c": "f9ae9a319da0da29365487505da41ac149f6210d5f40d132df00e39b28a91d63"
+  },
+  "existing_equivalents": [
+    {
+      "origin": "f4375daff7197c2cff28bfc9636ad5da37d138c9",
+      "scope": [
+        "APR transport compatible/domain/channel and core service"
+      ],
+      "evidence": "audit-03/qualification.json"
+    },
+    {
+      "origin": "9c90dae786c6b1a9cb4c18323d6d4b719f699267",
+      "scope": [
+        "BAM windows/IRQ/remote EE and SLIMbus windows/IRQ/RX3/TX4/NGD child"
+      ],
+      "evidence": "audit-03/qualification.json"
+    },
+    {
+      "origin": "7eddb1550625a3b0cc5dbd63240ad029bf2fead4",
+      "scope": [
+        "AFE/ASM/ADM services and DAI/routing cell declarations"
+      ],
+      "evidence": "audit-03/qualification.json"
+    },
+    {
+      "origin": "a7ba24173e4618ace25b68ec36991fb08b7b552e",
+      "scope": [
+        "ASM front-end DAI registers 0, 1 and 2 with matching template/header indices"
+      ],
+      "evidence": "audit-03/qualification.json"
+    }
+  ],
+  "native_objects": 90,
+  "semantic_board_cases": 19,
+  "semantic_controls": 6,
+  "binding_controls": 6,
+  "full19_schema_evidence_reused": true,
+  "fresh_focused_recursive_binding_validation": true,
+  "new_full_schema_run": false,
+  "four_original_patch_style_checks_passed": true,
+  "new_kernel_patches": 0,
+  "normal_public_APK_qualified": false,
+  "current_full_kernel_link_qualified": false,
+  "audio_execution": false,
+  "driver_runtime_or_physical_acceptance": false,
+  "phone_access": false,
+  "published": false,
+  "human_DCO_pending": true,
+  "full_goal_complete": false
+}

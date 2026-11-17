@@ -1,0 +1,58 @@
+From f4375daff7197c2cff28bfc9636ad5da37d138c9 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 31 Oct 2026 04:14:36 -0400
+Subject: [PATCH] ARM: dts: qcom: msm8226: describe the ADSP APR core
+
+Describe the APR v2 transport on the ADSP SMD edge and its core service.
+Keep the common transport disabled until a board enables it.
+
+Adapted from the original implementation linked below. Original authors:
+Timothy Schmidt and Claude Opus 5.5. Only the common SoC description is
+carried; the complete Fx0 board is preserved separately without the early
+experiment.
+
+Current-tree refresh and validation prepared with OpenAI Codex assistance.
+Audio execution testing is excluded; current hardware validation is
+pending.
+
+Link: https://github.com/timschmidt/fx0-linux/commit/6c896e708b2ba1926c204236a3dbc3860a4e619d
+---
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+index ae2f3f3fbced..ffe351f01cb0 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+@@ -5,6 +5,7 @@
+ 
+ /dts-v1/;
+ 
++#include <dt-bindings/soc/qcom,apr.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
+ #include <dt-bindings/clock/qcom,gcc-msm8974.h>
+@@ -1680,6 +1681,20 @@ smd-edge {
+ 				qcom,smd-edge = <1>;
+ 
+ 				label = "lpass";
++
++				apr: apr {
++					compatible = "qcom,apr-v2";
++					qcom,smd-channels = "apr_audio_svc";
++					qcom,domain = <APR_DOMAIN_ADSP>;
++					#address-cells = <1>;
++					#size-cells = <0>;
++					status = "disabled";
++
++					q6core: service@3 {
++						compatible = "qcom,q6core";
++						reg = <APR_SVC_ADSP_CORE>;
++					};
++				};
+ 			};
+ 		};
+ 
+-- 
+2.56.0
+
