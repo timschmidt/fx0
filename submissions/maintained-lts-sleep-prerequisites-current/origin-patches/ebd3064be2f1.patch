@@ -1,0 +1,13 @@
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+index 6bb2775823ab..96fc912b7dfb 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+@@ -224,6 +224,8 @@ cpr: power-controller@f9018000 {
+ 
+ &rpm_requests {
+ 	regulators {
++		qcom,boot-apc-supply = <&pm8226_apc>;
++
+ 		pm8226_l3_ao: l3-ao {
+ 			regulator-min-microvolt = <750000>;
+ 			regulator-max-microvolt = <1337500>;

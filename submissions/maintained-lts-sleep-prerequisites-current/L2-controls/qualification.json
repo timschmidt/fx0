@@ -1,0 +1,93 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "name": "RPM-program-selects-no-RPM",
+      "rejected": true,
+      "failures": 21,
+      "named_assertion": "bank.registers[0x30/4]==(mode ? starts[mode]<<4|1 : 0)"
+    },
+    {
+      "name": "GDHS-program-selects-retention",
+      "rejected": true,
+      "failures": 21,
+      "named_assertion": "bank.registers[0x30/4]==(mode ? starts[mode]<<4|1 : 0)"
+    },
+    {
+      "name": "enabled-readback-ignored",
+      "rejected": true,
+      "failures": 5,
+      "named_assertion": "!bank.registers[0x30/4]&&operations<=4"
+    },
+    {
+      "name": "persistent-disarm-error-not-fatal",
+      "rejected": true,
+      "failures": 4,
+      "named_assertion": "unknown disable state must not return"
+    },
+    {
+      "name": "failed-arm-not-disarmed",
+      "rejected": true,
+      "failures": 38,
+      "named_assertion": "!bank.registers[0x30/4]"
+    },
+    {
+      "name": "persistent-entry-recovery-error-not-fatal",
+      "rejected": true,
+      "failures": 4,
+      "named_assertion": "unknown entry recovery must not return"
+    },
+    {
+      "name": "mode-write-readback-not-checked",
+      "rejected": true,
+      "failures": 16,
+      "named_assertion": "bank.registers[0x30/4]==(starts[mode]<<4|1)"
+    },
+    {
+      "name": "controller-state-not-validated",
+      "rejected": true,
+      "failures": 16,
+      "named_assertion": "==-EOPNOTSUPP"
+    },
+    {
+      "name": "lost-sequence-not-checked-before-arm",
+      "rejected": true,
+      "failures": 42,
+      "named_assertion": "==-EIO"
+    },
+    {
+      "name": "sequence-init-omitted-before-publication",
+      "rejected": true,
+      "failures": 9191,
+      "named_assertion": "bank.registers[(0x80+4*i)/4]==spm_8226_l2_sequence[i]"
+    },
+    {
+      "name": "initial-control-guard-omitted",
+      "rejected": true,
+      "failures": 22,
+      "named_assertion": "!writes&&!sequence_writes&&!publication_calls"
+    },
+    {
+      "name": "initial-AVS-guard-omitted",
+      "rejected": true,
+      "failures": 1,
+      "named_assertion": "!writes&&!sequence_writes&&!publication_calls"
+    },
+    {
+      "name": "CPU0-IRQ-ownership-check-omitted",
+      "rejected": true,
+      "failures": 4,
+      "named_assertion": "!operations"
+    },
+    {
+      "name": "secondary-CPU-check-omitted",
+      "rejected": true,
+      "failures": 2,
+      "named_assertion": "!operations"
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "crashes_or_compiler_or_sanitizer_faults_do_not_count": true,
+  "only_synthetic_services": true,
+  "no_phone_network_radio_audio_or_firmware_execution": true
+}

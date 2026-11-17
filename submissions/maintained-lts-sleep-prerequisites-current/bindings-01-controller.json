@@ -1,0 +1,30 @@
+{
+  "started_UTC": "2026-11-17T09:48:07.883911+00:00",
+  "base": "8d8cb579e4ba340a4bd943daca58dffa47aa2559",
+  "binding_SHA256": {
+    "opp/opp-v2-kryo-cpu.yaml": "060f4f058680afff9429ad25331e15797fdc009e73e6fb61b5e43e366b0d3a63",
+    "opp/opp-v2-qcom-level.yaml": "155a952f9a6c233b589da25852fdaa8019eba713e190409391637ac8fa03dc28",
+    "power/avs/qcom,cpr.yaml": "d4a75da70e0e4ddea7af6f7918e8eb5cff7cd9752c8bf49feb9790194d33f283",
+    "regulator/qcom,spmi-regulator.yaml": "123cc228fa0a718a38e509c10518f5513c3704fe352129c4633739a23d0fa10c",
+    "soc/qcom/qcom,saw2.yaml": "ff596a7d082d24acceade1bad26fb6c2e6e2cc4788e1a5bb4094211dc41aeef5",
+    "regulator/qcom,smd-rpm-regulator.yaml": "bd38d4575968f91c52fde03dd361816e2c72329d0c1b4914ba834b491d2a276e"
+  },
+  "phone_access": false,
+  "state": "terminal success",
+  "command": [
+    "make",
+    "O=<workspace>/local/fx0-lts-production-current-01/sleep-prerequisites-01/bindings-01-out",
+    "ARCH=arm",
+    "LLVM=-21",
+    "W=1",
+    "-j2",
+    "DT_SCHEMA_FILES=opp/opp-v2-kryo-cpu.yaml:opp/opp-v2-qcom-level.yaml:power/avs/qcom,cpr.yaml:regulator/qcom,spmi-regulator.yaml:soc/qcom/qcom,saw2.yaml:regulator/qcom,smd-rpm-regulator.yaml",
+    "dt_binding_check"
+  ],
+  "returncode": 0,
+  "diagnostics": [],
+  "passed": true,
+  "full_processed_schema_SHA256": "1c375f584ad79755c6b9b8e20b4de5a516f5ffaa93767963eb083cbb54922681",
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-17T09:49:08.641344+00:00"
+}

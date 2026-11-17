@@ -1,0 +1,735 @@
+{
+  "passed": true,
+  "recorded_UTC": "2026-11-17T08:51:13.391594+00:00",
+  "base": "250e7412a5a15068b2a2fe32b57b66c300c91b5f",
+  "head": "8e6fa853a34c0142b9f3e39b55e17ec44089c9fc",
+  "branch": "integration/fx0-lts-current-01",
+  "source_repo": "worktrees/linux-fx0-lts-integration-current-01",
+  "commits": [
+    {
+      "label": "SMD-node-release",
+      "origin_commit": "65fcce0588a4e70325c16834954b76ee914f418b",
+      "commit": "085a309869284ad9df25f708ec59eaf30090105b",
+      "parent": "250e7412a5a15068b2a2fe32b57b66c300c91b5f",
+      "paths": [
+        "drivers/rpmsg/qcom_smd.c"
+      ],
+      "old_commit_preserved": "2e330906f1a4f6e686b7cc621f005f46575a5852",
+      "tree_unchanged": true,
+      "previous_message_revision": "5ad66f813641ce091f1f151d6289102606d6ecd2"
+    },
+    {
+      "label": "SMD-registration-retry",
+      "origin_commit": "daba8b5e5d5c232b6674ca44a759aee692bcaba8",
+      "commit": "00a8e5668a5518b430a58e62e8b448fab1ca9354",
+      "parent": "085a309869284ad9df25f708ec59eaf30090105b",
+      "paths": [
+        "drivers/rpmsg/qcom_smd.c"
+      ],
+      "old_commit_preserved": "abda4575ec7844970b3f4777f60db71ad5e6efcc",
+      "tree_unchanged": true,
+      "previous_message_revision": "bc02c3498b3018b01b473ec0c1b27536cc96c40c"
+    },
+    {
+      "label": "MPM-probe-unwind",
+      "origin_commit": "a80e0ad0e69ac36427d90305dc592298f7132b03",
+      "commit": "2677746cc1d6b6ab4aa60dbb5c8ad926fb327568",
+      "parent": "00a8e5668a5518b430a58e62e8b448fab1ca9354",
+      "paths": [
+        "drivers/irqchip/irq-qcom-mpm.c"
+      ],
+      "old_commit_preserved": "1dc1ee36a4a806d9f4eb8e970f63a51a763beed3",
+      "tree_unchanged": true,
+      "previous_message_revision": "a1796e09593946854b62720b42a2b28b9c158496"
+    },
+    {
+      "label": "mdp5-right",
+      "origin_commit": "68bc7d6951bfe79e84e6fbea4f9297f34f2d57ee",
+      "commit": "b94dabf1b0bae0bdb77d309947a6847244f863f0",
+      "path": "drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-15T20:26:56-05:00",
+      "previous_message_revision": "79f1bc2cda31f06d3628378d6e2e52df795db9d5",
+      "parent": "2677746cc1d6b6ab4aa60dbb5c8ad926fb327568",
+      "source_tree_unchanged": true
+    },
+    {
+      "label": "vibrator-upper",
+      "origin_commit": "baefd400d8b347a10a04cc13d7341cdce1c584a8",
+      "commit": "3ce228635f52f0befd90bd05a46b8ac8b6f1b2ca",
+      "path": "drivers/input/misc/pm8xxx-vibrator.c",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-15T21:07:54-05:00",
+      "previous_message_revision": "6f6d19297b30ab7a86c30b2b77dbc60541793f98",
+      "parent": "b94dabf1b0bae0bdb77d309947a6847244f863f0",
+      "source_tree_unchanged": true
+    },
+    {
+      "label": "iommu-address",
+      "origin_commit": "d8c6a90c3b52480eeadd2dd4ceff95c0b46d4d9a",
+      "commit": "136e614f365c855c3897e4a96ac3b2bdede9feda",
+      "path": "drivers/iommu/arm/arm-smmu/qcom_iommu.c",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-15T03:00:34Z",
+      "previous_message_revision": "5dc26dd42e516a84ad9a0e58963a14f839daad81",
+      "parent": "3ce228635f52f0befd90bd05a46b8ac8b6f1b2ca",
+      "source_tree_unchanged": true
+    },
+    {
+      "label": "calibration-helpers",
+      "origin_commit": "93e671bc3c5dd81eadcabc9643620fb657baa269",
+      "commit": "9c1636eff0d6b3d8b8b6c4eda695b710aa7b6bf6",
+      "parent": "136e614f365c855c3897e4a96ac3b2bdede9feda",
+      "paths": [
+        "drivers/pmdomain/qcom/cpr-msm8926-corner.h",
+        "drivers/pmdomain/qcom/cpr-msm8926-fuses.h",
+        "drivers/pmdomain/qcom/cpr-msm8926-voltage.h",
+        "drivers/pmdomain/qcom/cpr-msm8926.h"
+      ],
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-11T08:29:12-05:00",
+      "exact_delta": true
+    },
+    {
+      "label": "qfprom-window",
+      "origin_commit": "a4e91406a10be6d00011fb2e6a5b8cb3cb639751",
+      "commit": "432cb11b41e9427d0d095fda2d09da9b7034983e",
+      "parent": "9c1636eff0d6b3d8b8b6c4eda695b710aa7b6bf6",
+      "paths": [
+        "drivers/nvmem/qfprom.c"
+      ],
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-11T00:17:59-05:00",
+      "exact_delta": false
+    },
+    {
+      "origin_commit": "1d921d51748bcf8c37a478092d2e6c15c771091e",
+      "commit": "7cb100d0caa060d18ad36b24844ab680ffb30491",
+      "parent": "432cb11b41e9427d0d095fda2d09da9b7034983e",
+      "subject": "MAINTAINERS: track MSM8926 CPU calibration helpers",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-11T08:29:12-05:00",
+      "paths": [
+        "MAINTAINERS"
+      ],
+      "previous_message_revision": "9d09a3ea7b1a4d2d48230fa5504fcc975047e014",
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "e0a2fcfe2def697ff9b52ffe9348e792ad904ea1",
+      "commit": "822745541de3101ef1c6afca2e2f7de2ccb9f8ff",
+      "parent": "7cb100d0caa060d18ad36b24844ab680ffb30491",
+      "subject": "dt-bindings: qcom: describe MSM8926 CPU and CPR control",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-08T16:42:00Z",
+      "paths": [
+        "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml",
+        "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml",
+        "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml",
+        "Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml",
+        "Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml",
+        "include/dt-bindings/opp/qcom,msm8926.h"
+      ],
+      "previous_message_revision": "87d78bbec02ba049dad1482e87013e6626a59e82",
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "b920df1379abff3982be5d1ece143eb7fd16c443",
+      "commit": "f7cc7d11935e0a2324c843df9a0847578909d555",
+      "parent": "822745541de3101ef1c6afca2e2f7de2ccb9f8ff",
+      "subject": "soc: qcom: spm: initialize the MSM8226 L2 arbiter master",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-08T16:33:09Z",
+      "paths": [
+        "drivers/soc/qcom/Kconfig",
+        "drivers/soc/qcom/spm-msm8226-l2.h",
+        "drivers/soc/qcom/spm.c"
+      ],
+      "previous_message_revision": "017894d3484523da871ffb325fc2d97ee80dfd31",
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "cd316b91fc1e1049db8aa2f0bb94b640519977a4",
+      "commit": "c8c28d527571513c28d604ad70f47d407c9d9233",
+      "parent": "f7cc7d11935e0a2324c843df9a0847578909d555",
+      "subject": "regulator: qcom-spmi: retain fixed-range PM8226 APC ownership",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-11T08:29:12-05:00",
+      "paths": [
+        "drivers/regulator/qcom-spmi-saw-fts2.h",
+        "drivers/regulator/qcom_spmi-regulator.c"
+      ],
+      "previous_message_revision": "7a9fb5b49e27367b422be7f4d5ad9976e19b6cad",
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "82e051d499a6a20d8716fa4a5448cd222ece2bb1",
+      "commit": "32918b9d15f486798c8068b47888da96a64ba66c",
+      "parent": "c8c28d527571513c28d604ad70f47d407c9d9233",
+      "subject": "soc: qcom: smd-rpm: correlate completion with each request",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-08T16:33:09Z",
+      "paths": [
+        "drivers/soc/qcom/smd-rpm.c"
+      ],
+      "previous_message_revision": "15d361a2b1589d5351879ec9ef5857b55a69ce21",
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "68cc2620dd9e8848770df5bb37077fa4d82afde3",
+      "commit": "21959c686a12161ace096e743f9a2b090da0402e",
+      "parent": "32918b9d15f486798c8068b47888da96a64ba66c",
+      "subject": "pmdomain: qcom: retain and reconcile the APC MX dependency",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-08T16:33:09Z",
+      "paths": [
+        "drivers/pmdomain/qcom/cpr-voltage.h"
+      ],
+      "previous_message_revision": "e8dadbe09f9233f79bf333a5da4b8f4f2c44e7c9",
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "617ae40348a79b6759cba86b20d5252c744e374c",
+      "commit": "f87b2cfb2cf246e970dc9b7f6b7d3a7bccefd528",
+      "parent": "21959c686a12161ace096e743f9a2b090da0402e",
+      "subject": "clk: qcom: verify MSM8226 CPU PLL and mux transitions",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-08T16:42:00Z",
+      "paths": [
+        "drivers/clk/qcom/a53-pll.c",
+        "drivers/clk/qcom/apcs-msm8916.c",
+        "drivers/clk/qcom/clk-pll.c",
+        "drivers/clk/qcom/clk-pll.h",
+        "drivers/clk/qcom/clk-regmap-mux-div.c",
+        "drivers/clk/qcom/clk-regmap-mux-div.h",
+        "drivers/clk/qcom/gcc-msm8974.c"
+      ],
+      "previous_message_revision": "5c00c1b6c1a1c3e5a126ee1c968845ae0e38fdcd",
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "4569dae3b15824cb1d1fa0e388ba727bd52d6102",
+      "commit": "1a59905e6dd9dd0583bbbbac86e9f23ce655d85e",
+      "parent": "f87b2cfb2cf246e970dc9b7f6b7d3a7bccefd528",
+      "subject": "pmdomain: qcom: port the calibrated MSM8926 CPU domain",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-11T08:29:12-05:00",
+      "paths": [
+        "drivers/pmdomain/qcom/Kconfig",
+        "drivers/pmdomain/qcom/cpr.c",
+        "include/linux/soc/qcom/cpr.h"
+      ],
+      "previous_message_revision": "6252587aa3316e76c0bde2f12abb4602f3fb1f5c",
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "965b16234067d414526f98de418a15fd776cebf1",
+      "commit": "ea524169a03ca1a6524d2d004b248f9071cb5e1a",
+      "parent": "1a59905e6dd9dd0583bbbbac86e9f23ce655d85e",
+      "subject": "cpufreq: qcom-nvmem: attach MSM8926 CPUs after supplier filtering",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-08T16:33:09Z",
+      "paths": [
+        "drivers/cpufreq/cpufreq-dt-platdev.c",
+        "drivers/cpufreq/qcom-cpufreq-nvmem.c"
+      ],
+      "previous_message_revision": "c934ba1eb33b6cc9dc9a9c4f86f83672d61fef11",
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "3621db8f609490bccee6296f9b5ff7720c255447",
+      "commit": "02635e33270dcf1627c4ccd7d93e83011a4680cb",
+      "parent": "ea524169a03ca1a6524d2d004b248f9071cb5e1a",
+      "subject": "soc: qcom: spm: use a raw lock for the MSM8226 L2 map",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T00:38:02-05:00",
+      "paths": [
+        "drivers/soc/qcom/spm.c"
+      ],
+      "previous_message_revision": "4bd95594f948618ac6e34017a1612b712be4be91",
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "89f39805163fb2c05a00e3f5adbd3ac1c8fd731d",
+      "commit": "e6d29e7ce1479a83fc32f6e9efb9f4e0c589a032",
+      "parent": "02635e33270dcf1627c4ccd7d93e83011a4680cb",
+      "subject": "mfd: qcom-spmi-pmic: use a raw lock for atomic register access",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T00:38:02-05:00",
+      "paths": [
+        "drivers/mfd/qcom-spmi-pmic.c"
+      ],
+      "previous_message_revision": "fbce3784d3b47e02c0cda60f1da20486b520e49d",
+      "exact_added_removed_source_lines": true
+    },
+    {
+      "origin_commit": "76068f3c6a4ed1b37d4c7499d7b673e1872839d7",
+      "commit": "acdf88accf55fd408772de4df5449424e88d02f5",
+      "parent": "e6d29e7ce1479a83fc32f6e9efb9f4e0c589a032",
+      "subject": "regulator: qcom-spmi: retain current SAW mapping APIs in the runtime",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T00:45:35-05:00",
+      "paths": [
+        "drivers/regulator/Kconfig",
+        "drivers/regulator/qcom_spmi-regulator.c"
+      ],
+      "previous_message_revision": "322e2282b97b08d6c9f3004d6ee14ac3c7f1560b",
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "57b4bd9ec2db78022e93be3c5bef3e9e25833f12",
+      "commit": "8d8cb579e4ba340a4bd943daca58dffa47aa2559",
+      "parent": "acdf88accf55fd408772de4df5449424e88d02f5",
+      "subject": "ARM: dts: qcom: add separate Madai CPU qualification target",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-11T08:25:19-05:00",
+      "paths": [
+        "arch/arm/boot/dts/qcom/Makefile",
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts",
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts"
+      ],
+      "previous_message_revision": "05a680019f9005a185f8e1a68f79be168f097892",
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "8b5c5b0e431aa491817b7d50fdc876e5cad07cea",
+      "commit": "a93db9ad9f3fd1dd870c267e2c6fda942caa1e67",
+      "parent": "8d8cb579e4ba340a4bd943daca58dffa47aa2559",
+      "subject": "soc: qcom: spm: fix the SDM660 silver L2 AVS control value",
+      "author": "Dmitry Baryshkov",
+      "author_email": "dmitry.baryshkov@oss.qualcomm.com",
+      "author_date": "2026-10-19T17:39:19+03:00",
+      "paths": [
+        "drivers/soc/qcom/spm.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "3bf47b1069f24dbe8c7009d1c22d780cb7738a9a",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "efa32ff01e4fb852b4807a18fea366b9fae5b674",
+      "commit": "6ffa195b6483fe4d7ec8e1acfde7679897a03ec7",
+      "parent": "a93db9ad9f3fd1dd870c267e2c6fda942caa1e67",
+      "subject": "soc: qcom: spm: don't clobber the SAW control registers",
+      "author": "Dmitry Baryshkov",
+      "author_email": "dmitry.baryshkov@oss.qualcomm.com",
+      "author_date": "2026-10-19T17:39:20+03:00",
+      "paths": [
+        "drivers/soc/qcom/spm.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "efb8c49fadeb032779715cacbcd96cef1b8b6086",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "27f50b0c8172ac8addc5616be9bc85137eff0ec3",
+      "commit": "9b7e165fdd53bcbcc768b7deb81c7586ff1944a1",
+      "parent": "6ffa195b6483fe4d7ec8e1acfde7679897a03ec7",
+      "subject": "regulator: qcom_smd: support explicit sleep-set suspend votes",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T14:46:26-05:00",
+      "paths": [
+        "drivers/regulator/qcom_smd-regulator.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "82118af09501eedbfe633c13d122b6ec5baf2ed3",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "ec99962a30bb8d517de324ca5273632d70721357",
+      "commit": "fc5ba6381f2bbcb64ea2f9dcabf2174ec546b5e8",
+      "parent": "9b7e165fdd53bcbcc768b7deb81c7586ff1944a1",
+      "subject": "regulator: dt-bindings: qcom: Describe PM8226 L3 active-only voter",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T15:42:53-05:00",
+      "paths": [
+        "Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "7079b6a2431f0edf4dea696245f86c34c0cad426",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "18bc0ef32ef22ae611090a90b4592583ccc48435",
+      "commit": "aedc16933cd08d3f5b8f35cd910cc4bb2e6e1e18",
+      "parent": "fc5ba6381f2bbcb64ea2f9dcabf2174ec546b5e8",
+      "subject": "regulator: qcom_smd: Add paired normal and active-only PM8226 L3 votes",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T15:42:54-05:00",
+      "paths": [
+        "drivers/regulator/qcom_smd-regulator.c"
+      ],
+      "exact_added_removed_source_lines": false,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "fa99cb8370ed3abe4cade9ba0cb57092523abf8f",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "49cb297d9ca6c9134e8298c8ddc23f9e7f8be031",
+      "commit": "494dd4093834319d44645b9899d19e7ef27494e0",
+      "parent": "aedc16933cd08d3f5b8f35cd910cc4bb2e6e1e18",
+      "subject": "ARM: dts: qcom: Give Madai CPR a separate active-only MX voter",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T15:45:09-05:00",
+      "paths": [
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "3fa142d1ef5ef2c44387c1d9f224229aa1afa1a2",
+      "Fixes_references_remapped": [
+        {
+          "original": "57b4bd9ec2db",
+          "maintained": "8d8cb579e4ba"
+        }
+      ]
+    },
+    {
+      "origin_commit": "6c9b8b686ea5080fae3b3fda3e40c99fb02db115",
+      "commit": "0b60bb611c012fc5da1f0d4b439a803dfa193870",
+      "parent": "494dd4093834319d44645b9899d19e7ef27494e0",
+      "subject": "regulator: dt-bindings: qcom: Describe an APC-aware PM8226 boot hold",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T16:27:32-05:00",
+      "paths": [
+        "Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "1fbc7e29c2d101bce3bae5e11a6815534256565d",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "8898d43f3e1f12a27ebbbc4e51a3327ec43da34e",
+      "commit": "8040e87c91563b7fb5aec588f6a62053df0eb0e4",
+      "parent": "0b60bb611c012fc5da1f0d4b439a803dfa193870",
+      "subject": "regulator: qcom_smd: Protect live APC before the first MX consumer vote",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T16:27:32-05:00",
+      "paths": [
+        "drivers/regulator/qcom_smd-regulator.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "a6a963a7af0b06a4945a1102640c0f4c666b07eb",
+      "Fixes_references_remapped": [
+        {
+          "original": "fd2652968249",
+          "maintained": "aedc16933cd0"
+        }
+      ]
+    },
+    {
+      "origin_commit": "ebd3064be2f15da7d5143b9cc46560efb9073f53",
+      "commit": "7f9842cdd153e76febb213d931ee913d493f1251",
+      "parent": "8040e87c91563b7fb5aec588f6a62053df0eb0e4",
+      "subject": "ARM: dts: qcom: Retain Madai boot MX until the CPR handoff",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T16:28:56-05:00",
+      "paths": [
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "9cb38c4d34a8cf4fa94247b52234874c6330554c",
+      "Fixes_references_remapped": [
+        {
+          "original": "49cb297d9ca6",
+          "maintained": "494dd4093834"
+        }
+      ]
+    },
+    {
+      "origin_commit": "d2d0763fd351e568f4c290d55431b0a53bf4cbe4",
+      "commit": "a4611e4b32ea2bbd2e08a85af81603d69c9bde8d",
+      "parent": "7f9842cdd153e76febb213d931ee913d493f1251",
+      "subject": "dt-bindings: regulator: qcom: Describe PM8226 L3 sleep-only votes",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T17:29:48-05:00",
+      "paths": [
+        "Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "1cb1e97d688315ac9772c9e8cfb22b8124e8a4a5",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "16db651beb1fca144168fe21226533fd4736e85f",
+      "commit": "ce0da648c82c8e03686ac08a18d22082def57449",
+      "parent": "a4611e4b32ea2bbd2e08a85af81603d69c9bde8d",
+      "subject": "regulator: qcom_smd: Add independent PM8226 L3 sleep-only votes",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T17:29:48-05:00",
+      "paths": [
+        "drivers/regulator/qcom_smd-regulator.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "3d8f47117331c046502c5740bbc197b0572d8d09",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "b72d674810b4947e0162fe860efc8319a58509d4",
+      "commit": "98a152d6c846dae016839ab8c1f57e214687491b",
+      "parent": "ce0da648c82c8e03686ac08a18d22082def57449",
+      "subject": "dt-bindings: power: avs: cpr: Describe an MSM8926 sleep voter",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T17:29:48-05:00",
+      "paths": [
+        "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "69ac944df8d325eb6eb62db09d7f8335e6f4c7d9",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "ef79bf8e15ec316e5ab096d6f9ce731ed4f3fbb9",
+      "commit": "cc2e0f128f0f34113ae130cb3a4405207b382f77",
+      "parent": "98a152d6c846dae016839ab8c1f57e214687491b",
+      "subject": "pmdomain: qcom: cpr: Retain an optional MSM8926 MX sleep guard",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T17:29:49-05:00",
+      "paths": [
+        "drivers/pmdomain/qcom/cpr-sleep.h",
+        "drivers/pmdomain/qcom/cpr.c"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "16ed78aea6e54ef78c52739dbaf361f954f488ed",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "ca964cab8969a5fefa649bcb00e7286e996bda37",
+      "commit": "2dc3e1992e0080a8de4fc86a236f7c2b6dc3d56e",
+      "parent": "cc2e0f128f0f34113ae130cb3a4405207b382f77",
+      "subject": "ARM: dts: qcom: Give Madai CPR an independent MX sleep guard",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T17:31:54-05:00",
+      "paths": [
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "e5b6848e19f2c394090cccca7055cfe6d0368f8a",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "a2c8886ef786995ce4e6e55836e7198272e9c2ad",
+      "commit": "e6b7c1c936a14ba27febe3da855ac4459e2757b2",
+      "parent": "2dc3e1992e0080a8de4fc86a236f7c2b6dc3d56e",
+      "subject": "soc: qcom: spm: Add verified MSM8226 L2 low-power programs",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T18:08:43-05:00",
+      "paths": [
+        "drivers/soc/qcom/spm-msm8226-l2.h",
+        "drivers/soc/qcom/spm.c",
+        "include/soc/qcom/spm.h"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "97fb240987ace5b8fff00528cbea0d854c8c855e",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "192b0d581ac98b3d245df8ee8183dcdd4d7fb39c",
+      "commit": "5cb8bf85f58e859781ace53055eb31e9774de316",
+      "parent": "e6b7c1c936a14ba27febe3da855ac4459e2757b2",
+      "subject": "soc: qcom: spm: Bound CPU mode writes and propagate idle errors",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T19:05:18-05:00",
+      "paths": [
+        "drivers/cpuidle/cpuidle-qcom-spm.c",
+        "drivers/soc/qcom/spm.c",
+        "include/soc/qcom/spm.h"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "e645a65ee7f4e3fd10214ffdf50c2ec8118d9df0",
+      "Fixes_references_remapped": []
+    },
+    {
+      "origin_commit": "a96c6085b9cb90ff5f48489bf66867135dd360d7",
+      "commit": "8e6fa853a34c0142b9f3e39b55e17ec44089c9fc",
+      "parent": "5cb8bf85f58e859781ace53055eb31e9774de316",
+      "subject": "soc: qcom: smd-rpm: Add owned request admission for system sleep",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-16T19:51:21-05:00",
+      "paths": [
+        "drivers/soc/qcom/smd-rpm.c",
+        "include/linux/soc/qcom/smd-rpm.h"
+      ],
+      "exact_added_removed_source_lines": true,
+      "removed_nonhuman_signoff_tags": [],
+      "previous_message_revision": "1c50667088329a73d5fa24fbe166e587b07d66bf",
+      "Fixes_references_remapped": []
+    }
+  ],
+  "source_files": {
+    "drivers/rpmsg/qcom_smd.c": "103a44ca3969552945e2061a4eaca9ee3b0c5a00a090309acb1e0004fa707ad4",
+    "drivers/irqchip/irq-qcom-mpm.c": "b79456f01bc7451d53fb67e0095470b2f39e0f5baa3292de91c28d4038b44a35",
+    "drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c": "772c74a9b8f09cc0d0babd20eb62abc08df8c13883fa679eb0bf1f5f84d78c9f",
+    "drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c": "cd30013bc00ba9677df721a81c473797c6533bc84628ffee2535c6072ce72904",
+    "drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c": "2f6122d8218dda68c410495f91cbebc40d9a5d542fa2b6c56c148871835a484a",
+    "drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c": "eb436a6b6e0df8f04dc2643a3a018ab4438dd547f3a38d86f5c8616d0e7f600f",
+    "drivers/input/misc/pm8xxx-vibrator.c": "ea185476d931bc578f5c579c1a1d99d8d78953ade5045eef79db6bea46a2b64a",
+    "drivers/iommu/arm/arm-smmu/qcom_iommu.c": "6dd40168946b4e1bad172cd181aa4b8ec5b11e37ff93ba224c9b0e4742193ea8",
+    "drivers/nvmem/qfprom.c": "b42af333f4536ae9a2c3e75479e6adaab9a0723a603b2e84414a694d972d70ef",
+    "drivers/nvmem/core.c": "aaac813bbaee74b4e854b2f55f6d18591fee28aaa98ccaa32725bf4cdd59613e",
+    "drivers/firmware/qcom/qcom_scm.c": "b485f55c5a292473cc55e22a1bb14cfc1ec8bcfafd7bcbaa15b2a2e69243c361",
+    "drivers/firmware/qcom/qcom_scm-legacy.c": "a83b256f364d34d127e99b78377f4a7e0466856a498c04e12d512e7b2d96554b",
+    "drivers/pmdomain/qcom/cpr-msm8926.h": "8eecdff7fb43f484027b80eb2e7acc05ba435b26af978bb05f15bf751fd634b0",
+    "drivers/pmdomain/qcom/cpr-msm8926-voltage.h": "702e0dbaba15acec11cb662698dd41470c91c6ec6cdf7b9c7cfbc8cbad790ead",
+    "drivers/pmdomain/qcom/cpr-msm8926-corner.h": "64bc80d033fd90c46eb40ced3840c64841b41f7f6d5ea5c19b97b81202550af0",
+    "drivers/pmdomain/qcom/cpr-msm8926-fuses.h": "9af6b33fbf392237a9fa5b307a7487d73d4593301324af328169e4aeeb850f0e",
+    "drivers/firmware/qcom/qcom_scm.h": "15193474dde0e5aa271becd519bf2bf55ac5b3c9aff1b8c68cf51049091f70ce",
+    "include/linux/arm-smccc.h": "783abb82a58ad36d7e13c4d34a390d4757385fdfe53720b8d63cf371400413ce",
+    "include/linux/firmware/qcom/qcom_scm.h": "3c0b20a0e3fcf4ae3a04c237ad470ad3ea17849fbc7942cda4327ef881bbf1ef",
+    "Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml": "1edc12e56435e5f1e7f36817aff0a9a0d709bb614bdedb3581e0061ebd4a5d32",
+    "MAINTAINERS": "97adb23747c600444ee2a226edf9f4a82a031cf4ea3d2345f7ee2b9ab4d5aff1",
+    "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml": "060f4f058680afff9429ad25331e15797fdc009e73e6fb61b5e43e366b0d3a63",
+    "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml": "155a952f9a6c233b589da25852fdaa8019eba713e190409391637ac8fa03dc28",
+    "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml": "d4a75da70e0e4ddea7af6f7918e8eb5cff7cd9752c8bf49feb9790194d33f283",
+    "Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml": "123cc228fa0a718a38e509c10518f5513c3704fe352129c4633739a23d0fa10c",
+    "Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml": "ff596a7d082d24acceade1bad26fb6c2e6e2cc4788e1a5bb4094211dc41aeef5",
+    "include/dt-bindings/opp/qcom,msm8926.h": "89c62bbea61fddd0e9eaffa78faa5278c92aafc72bcbc504526260fdd7fdb6f6",
+    "drivers/soc/qcom/Kconfig": "c80f6ec85e28d8625699334f20151d6202f1e6850fffc46894771a2f2c5f7b1c",
+    "drivers/soc/qcom/spm-msm8226-l2.h": "171e0f31ca6544c406879986787c084be73478ed55f581aae6b2e6254a91a242",
+    "drivers/soc/qcom/spm.c": "b407e0dc2c919bf74744cc58a36e7dc6017ccf6f0453a4079e98dbac6737c001",
+    "drivers/regulator/qcom-spmi-saw-fts2.h": "697f55bcbdefea453c790aa647a86b3028a35dbad241941dce44dfcdb1005d86",
+    "drivers/regulator/qcom_spmi-regulator.c": "90a1a48ab4c32ae54b41c9494137168f833399f9dca1f7ed5be5688a25413e80",
+    "drivers/soc/qcom/smd-rpm.c": "05f863bef30c28e859947100f46452d1ee9f85bba985228776d8dc20a0a972cd",
+    "drivers/pmdomain/qcom/cpr-voltage.h": "8ae79b9419e5096ec30ade91358739d75a224c3e25078dc8d09689bbe43028a8",
+    "drivers/clk/qcom/a53-pll.c": "84a91c06729b2c5190f1dc47b53ae564f1399adfd699ea518cf800dd3b0dc256",
+    "drivers/clk/qcom/apcs-msm8916.c": "4fd79329d44473d5335c0510bc357f37ce5de6ce97d99e8cd464224a32c2036c",
+    "drivers/clk/qcom/clk-pll.c": "bfbaf9e47a56e0e37a670a26bdeda82a3072b8966fc644cb25b96eacacddafda",
+    "drivers/clk/qcom/clk-pll.h": "2a7fdfbe8e1569e402a2064e43990751212e0f6bab127b6bebb0460f026a5240",
+    "drivers/clk/qcom/clk-regmap-mux-div.c": "3395adb60d400564bd432404003efbe42db92f28b55c31e66fd0b632a24b4a92",
+    "drivers/clk/qcom/clk-regmap-mux-div.h": "330cab12a04f019c3bba132a6d37d34a4264e2c6cf9a84b75e1b5cc0d3b10bd8",
+    "drivers/clk/qcom/gcc-msm8974.c": "4b0de15d4c41226ce92462d1800efd25156b60e2b8335e6cc8bc727e95e678b1",
+    "drivers/pmdomain/qcom/Kconfig": "0bd37273aed1805ad6971d6682632c32fdbefb84ce25046bf30e2214b45cac19",
+    "drivers/pmdomain/qcom/cpr.c": "27dd1e6095b088e1f30863ba5a1f2571c585f82124b859c3bd83f8be563250a6",
+    "include/linux/soc/qcom/cpr.h": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3",
+    "drivers/cpufreq/cpufreq-dt-platdev.c": "df07cc0eecbcaf335f52b017f805b1d0183f59b5ba38e7970476fffcbe8d3d7b",
+    "drivers/cpufreq/qcom-cpufreq-nvmem.c": "2f61370f6c4f6a8410830a523483b1395ecfb5e98be6c0f293f52364a5e173b8",
+    "drivers/mfd/qcom-spmi-pmic.c": "3a79cf6520d138e416e1454fdce42359c5e895b65a5add33da2bdc19f6107235",
+    "drivers/regulator/Kconfig": "7d577337a01652bf3b43503486c68ea677a3d9a5cabd6842981be74544c8f780",
+    "arch/arm/boot/dts/qcom/Makefile": "d23e64aa14250dfa84c0b2437b69382b1b31eed5267525aac6f29ee33306a0c0",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts": "cd78b4cbb48378ab089656f21921ae077b4f1f8ecb64d6431b683a2a9ab98b8a",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "bea1ce365166bf4aa3d51a541c6651f52bec43b50d15de4dbe013c88c1fe465d",
+    "Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml": "bd38d4575968f91c52fde03dd361816e2c72329d0c1b4914ba834b491d2a276e",
+    "drivers/cpuidle/cpuidle-qcom-spm.c": "d374e10f621a33517a479cf65243ed89243ca21e19a36344e8932daa7669f64b",
+    "drivers/pmdomain/qcom/cpr-sleep.h": "0b9c570a193f1a246a182219a32d76904b2297ff1e070933f192f37c9d90a3f1",
+    "drivers/regulator/qcom_smd-regulator.c": "e799d121eff60a8fbe88ae0f797c7d008133f6f0f07fe5304163e32d090a79d5",
+    "include/linux/soc/qcom/smd-rpm.h": "85f45b7db7eafa2c0ace23893a8e253ffa6a9e8002a8e1a77538383f3beec255",
+    "include/soc/qcom/spm.h": "9f46bfd84f9734946d6019f7ceb8c14cb2372da2f08a221884cef1ce9302c710"
+  },
+  "working_tree_clean": true,
+  "focused_cases": 33951,
+  "baseline_failed_assertions": 9262,
+  "after_failed_assertions": 0,
+  "native_objects": 281,
+  "native_profiles": [
+    "arm-normal",
+    "arm64-normal",
+    "arm64-rt"
+  ],
+  "ARM32_RT_unsupported_not_counted": true,
+  "CFI_nonpermissive_in_all_supported_profiles": true,
+  "new_native_diagnostics": 0,
+  "source_bytes_match_precommit_native_builds": true,
+  "native_objects_built_before_source_commits": true,
+  "full_link_and_release_specific_package_qualification": false,
+  "current_147_commit_integration_port_incomplete": true,
+  "phone_access": false,
+  "published": false,
+  "maintainer_contact": false,
+  "human_DCO_pending": true,
+  "MPM_security_classification_pending_human_review": true,
+  "full_goal_complete": false,
+  "message_wrapping_only": true,
+  "all_source_trees_unchanged": true,
+  "original_local_head_preserved": "1dc1ee36a4a806d9f4eb8e970f63a51a763beed3",
+  "strict_checkpatch_passed": false,
+  "full_original_commit_references_with_titles": true,
+  "hardware_fix_checkpoint": "local/fx0-lts-production-current-01/hardware-fixes-01/source-current.json",
+  "hardware_existing_equivalence_checkpoint": "local/fx0-lts-production-current-01/hardware-fixes-01/existing-equivalence-qualification.json",
+  "existing_equivalent_commits_focused_qualified": 7,
+  "IOMMU_UB_reproducers_not_clean_behavioral_controls": 2,
+  "clean_behavioral_controls": 11,
+  "native_header_probe_objects": 3,
+  "focused_NVMEM_assertion_checks": 18393,
+  "CPU_helper_test_methods": 16,
+  "ctypes_shared_oracles_unsanitized": true,
+  "exact_source_delta_backports": 16,
+  "reconciled_source_backports": 5,
+  "pending_style_findings": [
+    "Per-commit file-add MAINTAINERS reminders retained; CPU helper/shared-API metadata has now been added",
+    "Per-device regulator_ops is deliberately copied and adjusted before publication; const warning retained for review",
+    "FTS2 runs in synchronous CPU0 IPI context and requires a non-sleeping delay; udelay preference check retained",
+    "Existing microvolt field spellings use kernel regulator uV convention; CamelCase checks retained",
+    "Human DCO and final submission review remain pending"
+  ],
+  "CPU_foundation_checkpoint": "local/fx0-lts-production-current-01/cpu-foundation-01/source-current.json",
+  "CPU_stack_host_methods": 45,
+  "CPU_stack_standalone_sanitizer_builds": 26,
+  "CPU_stack_unsanitized_shared_oracle_builds": 7,
+  "CPU_stack_native_objects": 120,
+  "CPU_stack_regmap_objects": 3,
+  "CPU_stack_focused_clean_fault_controls": 8,
+  "CPU_stack_before_RPM_failed_checks": 10,
+  "CPU_stack_candidate_DTBS": 17,
+  "CPU_stack_baseline_DTBS": 16,
+  "CPU_stack_other_DTBS_byte_identical": 15,
+  "CPU_stack_selected_schema_checks_silent": 102,
+  "CPU_stack_binding_examples": 5,
+  "CPU_stack_checkpatch_errors": 0,
+  "CPU_stack_checkpatch_warnings": 6,
+  "CPU_stack_checkpatch_checks": 8,
+  "initial_CPU_stack_checkpoint": "local/fx0-lts-production-current-01/cpu-stack-01/source-current.json",
+  "previous_maintainer_header_metadata_finding_resolved": true,
+  "newer_API_only_refactors_not_applicable": 1,
+  "latest_native_objects": 122,
+  "latest_host_model_cases": 14924,
+  "latest_retained_CPU_methods": 44,
+  "latest_fault_controls": 113,
+  "latest_phase": "sleep prerequisites"
+}

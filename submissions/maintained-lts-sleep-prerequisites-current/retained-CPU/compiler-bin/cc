@@ -1,0 +1,9 @@
+#!/usr/bin/python3
+# SPDX-License-Identifier: GPL-2.0-only
+import json,os,sys
+from pathlib import Path
+args=sys.argv[1:]
+shared='-shared' in args
+flags=[] if shared else ['-O1','-g','-fsanitize=address,undefined','-fno-omit-frame-pointer']
+with Path(os.environ['FX0_MODEL_COMPILER_LOG']).open('a') as f:f.write(json.dumps(dict(shared=shared,sanitizers=not shared,source_files=[a for a in args if a.endswith('.c')]))+'\n')
+os.execv('/usr/bin/clang-21',['clang-21',*flags,*args])

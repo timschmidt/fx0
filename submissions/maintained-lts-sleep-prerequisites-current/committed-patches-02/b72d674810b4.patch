@@ -1,0 +1,59 @@
+From 98a152d6c846dae016839ab8c1f57e214687491b Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 17:29:48 -0500
+Subject: [PATCH] dt-bindings: power: avs: cpr: Describe an MSM8926 sleep voter
+
+Allow an optional independent MX sleep-only supplier on MSM8926. CPR
+retains a covering ceiling while APC can remain live. Only a complete
+system entry coordinator may later authorize a lower sleep floor after
+quiescing CPR and establishing CPU/L2/RPM power-collapse ordering.
+
+Codex generated this change and its host qualification. Human review and
+DCO certification remain pending. Nothing has been submitted.
+
+Backport this prerequisite to maintained Linux 6.18.63. The complete
+seventeen-change batch passes native ARM, ARM64 and ARM64 RT object
+builds with the MSM8926 feature enabled and disabled. CPU-idle is ARM
+only. Host fault models use synthetic services and normal LeakSanitizer;
+firmware, electrical and physical suspend acceptance remain open.
+
+Codex prepared this local backport and verification. Original authors,
+dates, licenses and human attribution tags are retained. Human DCO and
+review remain pending. No phone access or publication occurred.
+
+Backported from commit b72d674810b4 ("dt-bindings: power: avs: cpr:
+Describe an MSM8926 sleep voter")
+---
+ .../devicetree/bindings/power/avs/qcom,cpr.yaml          | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+index b6e7b97f0654d..2352502742090 100644
+--- a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
++++ b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+@@ -46,6 +46,14 @@ properties:
+   vdd-mx-supply:
+     description: Memory rail dependency of the MSM8926 APC supply.
+ 
++  vdd-mx-sleep-supply:
++    description:
++      Optional independent MSM8926 memory-rail sleep-only voter. CPR retains
++      an enabled request at its supported maximum while APC can remain live.
++      A complete system entry coordinator must quiesce CPR and establish the
++      CPU/L2/RPM power-collapse ordering before lowering this sleep request.
++      This voter must not contribute to the active set.
++
+   '#power-domain-cells':
+     const: 0
+ 
+@@ -115,6 +123,7 @@ allOf:
+           items:
+             - const: ref
+         vdd-mx-supply: false
++        vdd-mx-sleep-supply: false
+         qcom,apcs-syscon: false
+         nvmem-cells:
+           items:
+-- 
+2.56.0
+

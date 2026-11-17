@@ -1,0 +1,70 @@
+From 494dd4093834319d44645b9899d19e7ef27494e0 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 15:45:09 -0500
+Subject: [PATCH] ARM: dts: qcom: Give Madai CPR a separate active-only MX
+ voter
+
+The experimental CPU target shares pm8226_l3 with Pronto. Pronto-v2's
+fixed 1287500 uV consumer range remains after disable and prevents a CPR
+floor above that value on the same regulator device.
+
+Give CPR the optional l3-ao voter and retain Pronto on the normal l3
+voter. The paired provider maximizes their active floors while keeping
+the normal sleep vote independent. This depends on the paired PM8226 L3
+binding/provider and the CPU qualification target's existing retained-MX
+bootstrap and acknowledged-vote recovery.
+
+The ordinary Madai device tree is unchanged. This does not establish the
+live APC boot handover or a complete CPU/L2/RPM/MPM suspend path, change
+Pronto's voltage range, remove the CPR deep-suspend guard or qualify any
+physical radio operation. The target remains experimental and unbooted.
+
+Fixes: 8d8cb579e4ba ("ARM: dts: qcom: add separate Madai CPU qualification target")
+
+Codex generated this change and its host qualification. Human review
+and DCO certification remain pending. Nothing has been submitted.
+
+Backport this prerequisite to maintained Linux 6.18.63. The complete
+seventeen-change batch passes native ARM, ARM64 and ARM64 RT object
+builds with the MSM8926 feature enabled and disabled. CPU-idle is ARM
+only. Host fault models use synthetic services and normal LeakSanitizer;
+firmware, electrical and physical suspend acceptance remain open.
+
+Codex prepared this local backport and verification. Original authors,
+dates, licenses and human attribution tags are retained. Human DCO and
+review remain pending. No phone access or publication occurred.
+
+Backported from commit 49cb297d9ca6 ("ARM: dts: qcom: Give Madai CPR a
+separate active-only MX voter")
+---
+ arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+index c62472752251f..6bb2775823ab6 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+@@ -214,10 +214,19 @@ cpr: power-controller@f9018000 {
+ 		clock-names = "ref", "cpu", "aux", "pll";
+ 		qcom,apcs-syscon = <&apcs>;
+ 		vdd-apc-supply = <&pm8226_apc>;
+-		vdd-mx-supply = <&pm8226_l3>;
++		vdd-mx-supply = <&pm8226_l3_ao>;
+ 		#power-domain-cells = <0>;
+ 		operating-points-v2 = <&cpr_opp_table>;
+ 		nvmem-cells = <&cpu_speedbin>, <&cpr_primary>, <&cpr_redundant>;
+ 		nvmem-cell-names = "cpu_calibration", "cpr_primary", "cpr_redundant";
+ 	};
+ };
++
++&rpm_requests {
++	regulators {
++		pm8226_l3_ao: l3-ao {
++			regulator-min-microvolt = <750000>;
++			regulator-max-microvolt = <1337500>;
++		};
++	};
++};
+-- 
+2.56.0
+

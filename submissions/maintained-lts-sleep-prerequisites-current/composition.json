@@ -1,0 +1,299 @@
+{
+  "base": "8d8cb579e4ba340a4bd943daca58dffa47aa2559",
+  "completed": [
+    {
+      "origin_commit": "8b5c5b0e431aa491817b7d50fdc876e5cad07cea",
+      "subject": "soc: qcom: spm: fix the SDM660 silver L2 AVS control value",
+      "files": [
+        {
+          "path": "drivers/soc/qcom/spm.c",
+          "before_SHA256": "1e1827b0f5c3b5db1d18a30edfd7e95054397e94248594220fe6f0b873c15731",
+          "original_parent_SHA256": "1e1827b0f5c3b5db1d18a30edfd7e95054397e94248594220fe6f0b873c15731",
+          "original_after_SHA256": "6d57df64eb3c37cdb03206935acd11bab55708d4df754287bbda819f8f48cf6a",
+          "after_SHA256": "6d57df64eb3c37cdb03206935acd11bab55708d4df754287bbda819f8f48cf6a",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "efa32ff01e4fb852b4807a18fea366b9fae5b674",
+      "subject": "soc: qcom: spm: don't clobber the SAW control registers",
+      "files": [
+        {
+          "path": "drivers/soc/qcom/spm.c",
+          "before_SHA256": "6d57df64eb3c37cdb03206935acd11bab55708d4df754287bbda819f8f48cf6a",
+          "original_parent_SHA256": "6d57df64eb3c37cdb03206935acd11bab55708d4df754287bbda819f8f48cf6a",
+          "original_after_SHA256": "6989881ebcf1e14a51606ecd28a2f65a64ebfa261120fb0558484cb9e0cdcb3e",
+          "after_SHA256": "6989881ebcf1e14a51606ecd28a2f65a64ebfa261120fb0558484cb9e0cdcb3e",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "27f50b0c8172ac8addc5616be9bc85137eff0ec3",
+      "subject": "regulator: qcom_smd: support explicit sleep-set suspend votes",
+      "files": [
+        {
+          "path": "drivers/regulator/qcom_smd-regulator.c",
+          "before_SHA256": "028293ace79d4ab94a452606d171474cc5c80a9c7cb797c26c24bbda062e3c2a",
+          "original_parent_SHA256": "4148ae42b825fecf124e964e585f775597a77e99df83e274f7236d1640c32370",
+          "original_after_SHA256": "9baa8e2898fa0827c45501d0f5c6be875c04a27ad5abcf67fc709005b62c8a6d",
+          "after_SHA256": "722378545e7eb14f894a5856f8bdd55899caa738215d731b961ea1fe5a03cd2c",
+          "existing_LTS_context_preserved": true,
+          "LTS_allocation_API": "Preserve zeroing with supported devm_kzalloc(dev, sizeof(*pair), GFP_KERNEL); original parent/theirs bytes retained"
+        }
+      ]
+    },
+    {
+      "origin_commit": "ec99962a30bb8d517de324ca5273632d70721357",
+      "subject": "regulator: dt-bindings: qcom: Describe PM8226 L3 active-only voter",
+      "files": [
+        {
+          "path": "Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml",
+          "before_SHA256": "dfc9f01c17f85519b5ae16e9b663521d89be2a0b51c0007c5bae261963e5f0ce",
+          "original_parent_SHA256": "12c89095b86faaca73171a830e0239a3418b995a3a45599a6fcb7a8fec19bdf3",
+          "original_after_SHA256": "841630ac485c81200482b8bc3f98b26ca26dbf659f58a34c03916f5c48a1acac",
+          "after_SHA256": "2b5681fac1f3e40d402000ac0e319be5e7a97d2ffb654904199fa2505e88ec0a",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "18bc0ef32ef22ae611090a90b4592583ccc48435",
+      "subject": "regulator: qcom_smd: Add paired normal and active-only PM8226 L3 votes",
+      "files": [
+        {
+          "path": "drivers/regulator/qcom_smd-regulator.c",
+          "before_SHA256": "722378545e7eb14f894a5856f8bdd55899caa738215d731b961ea1fe5a03cd2c",
+          "original_parent_SHA256": "9baa8e2898fa0827c45501d0f5c6be875c04a27ad5abcf67fc709005b62c8a6d",
+          "original_after_SHA256": "9301728677bf3f78ef44e06f4060edb8799e8a26d62cc4b0e3a2c233de0aef0b",
+          "after_SHA256": "fe2b852a81b99bfa8dbc700169aa12173ec5f0e39af8a1ce60fbe4b50b53390c",
+          "existing_LTS_context_preserved": true,
+          "LTS_allocation_API": "Preserve zeroing with supported devm_kzalloc(dev, sizeof(*pair), GFP_KERNEL); original parent/theirs bytes retained"
+        }
+      ]
+    },
+    {
+      "origin_commit": "49cb297d9ca6c9134e8298c8ddc23f9e7f8be031",
+      "subject": "ARM: dts: qcom: Give Madai CPR a separate active-only MX voter",
+      "files": [
+        {
+          "path": "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts",
+          "before_SHA256": "70451f93286448e2ea296a70f6a008d58ea163c338645b204669276ab0ae5961",
+          "original_parent_SHA256": "70451f93286448e2ea296a70f6a008d58ea163c338645b204669276ab0ae5961",
+          "original_after_SHA256": "0186e50d15bbbde5ca09e5894d2e21e6f6386d03007870a8db33057c7701c2c0",
+          "after_SHA256": "0186e50d15bbbde5ca09e5894d2e21e6f6386d03007870a8db33057c7701c2c0",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "6c9b8b686ea5080fae3b3fda3e40c99fb02db115",
+      "subject": "regulator: dt-bindings: qcom: Describe an APC-aware PM8226 boot hold",
+      "files": [
+        {
+          "path": "Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml",
+          "before_SHA256": "2b5681fac1f3e40d402000ac0e319be5e7a97d2ffb654904199fa2505e88ec0a",
+          "original_parent_SHA256": "841630ac485c81200482b8bc3f98b26ca26dbf659f58a34c03916f5c48a1acac",
+          "original_after_SHA256": "bb7c4a01475a1c3562644b09b220bb1e84b53a85ebd32521b74788029734a610",
+          "after_SHA256": "38de1f4aedc1d18686083a037a6433326c88d1850cb0be1393ff0bce72110d06",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "8898d43f3e1f12a27ebbbc4e51a3327ec43da34e",
+      "subject": "regulator: qcom_smd: Protect live APC before the first MX consumer vote",
+      "files": [
+        {
+          "path": "drivers/regulator/qcom_smd-regulator.c",
+          "before_SHA256": "fe2b852a81b99bfa8dbc700169aa12173ec5f0e39af8a1ce60fbe4b50b53390c",
+          "original_parent_SHA256": "9301728677bf3f78ef44e06f4060edb8799e8a26d62cc4b0e3a2c233de0aef0b",
+          "original_after_SHA256": "e1ffc39c0acc90c155f5cdeb25511c36c590e491f0603efaed6ee6a6b0b176c4",
+          "after_SHA256": "d1141403dfb1c38901049ed904955231db5fef333e0744156ab1d6844fe65e1e",
+          "existing_LTS_context_preserved": true,
+          "LTS_allocation_API": "Preserve zeroing with supported devm_kzalloc(dev, sizeof(*pair), GFP_KERNEL); original parent/theirs bytes retained"
+        }
+      ]
+    },
+    {
+      "origin_commit": "ebd3064be2f15da7d5143b9cc46560efb9073f53",
+      "subject": "ARM: dts: qcom: Retain Madai boot MX until the CPR handoff",
+      "files": [
+        {
+          "path": "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts",
+          "before_SHA256": "0186e50d15bbbde5ca09e5894d2e21e6f6386d03007870a8db33057c7701c2c0",
+          "original_parent_SHA256": "0186e50d15bbbde5ca09e5894d2e21e6f6386d03007870a8db33057c7701c2c0",
+          "original_after_SHA256": "9268ac06b65795dd82ed25d1135a8ce76e8754d48532348ae6291758de1e2134",
+          "after_SHA256": "9268ac06b65795dd82ed25d1135a8ce76e8754d48532348ae6291758de1e2134",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "d2d0763fd351e568f4c290d55431b0a53bf4cbe4",
+      "subject": "dt-bindings: regulator: qcom: Describe PM8226 L3 sleep-only votes",
+      "files": [
+        {
+          "path": "Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml",
+          "before_SHA256": "38de1f4aedc1d18686083a037a6433326c88d1850cb0be1393ff0bce72110d06",
+          "original_parent_SHA256": "bb7c4a01475a1c3562644b09b220bb1e84b53a85ebd32521b74788029734a610",
+          "original_after_SHA256": "2c8e7e98e74c3213ddc8451629147afbecfb5e550ccb4691169a4cc715180403",
+          "after_SHA256": "bd38d4575968f91c52fde03dd361816e2c72329d0c1b4914ba834b491d2a276e",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "16db651beb1fca144168fe21226533fd4736e85f",
+      "subject": "regulator: qcom_smd: Add independent PM8226 L3 sleep-only votes",
+      "files": [
+        {
+          "path": "drivers/regulator/qcom_smd-regulator.c",
+          "before_SHA256": "d1141403dfb1c38901049ed904955231db5fef333e0744156ab1d6844fe65e1e",
+          "original_parent_SHA256": "e1ffc39c0acc90c155f5cdeb25511c36c590e491f0603efaed6ee6a6b0b176c4",
+          "original_after_SHA256": "cfec8174bd3e3c0c64aca2fcc147aec16213e36e6b093910218103bafadfa753",
+          "after_SHA256": "e799d121eff60a8fbe88ae0f797c7d008133f6f0f07fe5304163e32d090a79d5",
+          "existing_LTS_context_preserved": true,
+          "LTS_allocation_API": "Preserve zeroing with supported devm_kzalloc(dev, sizeof(*pair), GFP_KERNEL); original parent/theirs bytes retained"
+        }
+      ]
+    },
+    {
+      "origin_commit": "b72d674810b4947e0162fe860efc8319a58509d4",
+      "subject": "dt-bindings: power: avs: cpr: Describe an MSM8926 sleep voter",
+      "files": [
+        {
+          "path": "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml",
+          "before_SHA256": "97ee6589da29592af33aba6c531e4e87187aa3fa0298c71d33f78c5e7af32f61",
+          "original_parent_SHA256": "97ee6589da29592af33aba6c531e4e87187aa3fa0298c71d33f78c5e7af32f61",
+          "original_after_SHA256": "d4a75da70e0e4ddea7af6f7918e8eb5cff7cd9752c8bf49feb9790194d33f283",
+          "after_SHA256": "d4a75da70e0e4ddea7af6f7918e8eb5cff7cd9752c8bf49feb9790194d33f283",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "ef79bf8e15ec316e5ab096d6f9ce731ed4f3fbb9",
+      "subject": "pmdomain: qcom: cpr: Retain an optional MSM8926 MX sleep guard",
+      "files": [
+        {
+          "path": "drivers/pmdomain/qcom/cpr-sleep.h",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "0b9c570a193f1a246a182219a32d76904b2297ff1e070933f192f37c9d90a3f1",
+          "after_SHA256": "0b9c570a193f1a246a182219a32d76904b2297ff1e070933f192f37c9d90a3f1",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "drivers/pmdomain/qcom/cpr.c",
+          "before_SHA256": "1eb8894ff1dc13f081db2baed4d03027e4ae56b6161de715442df5221755658a",
+          "original_parent_SHA256": "76e4287f16444f4e591fa1fcb6d75bb0d918c6f364f27b3ca2f1b8ff37510b08",
+          "original_after_SHA256": "5f1440e94a343362f65f59f18ec61da647b41ce1a4dbabd4183cd80c4df355b6",
+          "after_SHA256": "27dd1e6095b088e1f30863ba5a1f2571c585f82124b859c3bd83f8be563250a6",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "ca964cab8969a5fefa649bcb00e7286e996bda37",
+      "subject": "ARM: dts: qcom: Give Madai CPR an independent MX sleep guard",
+      "files": [
+        {
+          "path": "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts",
+          "before_SHA256": "9268ac06b65795dd82ed25d1135a8ce76e8754d48532348ae6291758de1e2134",
+          "original_parent_SHA256": "9268ac06b65795dd82ed25d1135a8ce76e8754d48532348ae6291758de1e2134",
+          "original_after_SHA256": "cd78b4cbb48378ab089656f21921ae077b4f1f8ecb64d6431b683a2a9ab98b8a",
+          "after_SHA256": "cd78b4cbb48378ab089656f21921ae077b4f1f8ecb64d6431b683a2a9ab98b8a",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "a2c8886ef786995ce4e6e55836e7198272e9c2ad",
+      "subject": "soc: qcom: spm: Add verified MSM8226 L2 low-power programs",
+      "files": [
+        {
+          "path": "drivers/soc/qcom/spm-msm8226-l2.h",
+          "before_SHA256": "5cc4d9161aaf621ee236bc475e8265069e91b8ebc6dd0070f21a0e7a4659625d",
+          "original_parent_SHA256": "5cc4d9161aaf621ee236bc475e8265069e91b8ebc6dd0070f21a0e7a4659625d",
+          "original_after_SHA256": "171e0f31ca6544c406879986787c084be73478ed55f581aae6b2e6254a91a242",
+          "after_SHA256": "171e0f31ca6544c406879986787c084be73478ed55f581aae6b2e6254a91a242",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "drivers/soc/qcom/spm.c",
+          "before_SHA256": "6989881ebcf1e14a51606ecd28a2f65a64ebfa261120fb0558484cb9e0cdcb3e",
+          "original_parent_SHA256": "6989881ebcf1e14a51606ecd28a2f65a64ebfa261120fb0558484cb9e0cdcb3e",
+          "original_after_SHA256": "390e68429543ec84053ddcdcbee5d29464bdaddae7ccb66790224a42ab59459e",
+          "after_SHA256": "390e68429543ec84053ddcdcbee5d29464bdaddae7ccb66790224a42ab59459e",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "include/soc/qcom/spm.h",
+          "before_SHA256": "2ecc1d9a87f215d11a4ed103831bcfc79824abe66c94a5deb418df4660b43da2",
+          "original_parent_SHA256": "2ecc1d9a87f215d11a4ed103831bcfc79824abe66c94a5deb418df4660b43da2",
+          "original_after_SHA256": "deec829af9199df9fc00351621fb015a28c63af2a81cca549162010c090c26a4",
+          "after_SHA256": "deec829af9199df9fc00351621fb015a28c63af2a81cca549162010c090c26a4",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "192b0d581ac98b3d245df8ee8183dcdd4d7fb39c",
+      "subject": "soc: qcom: spm: Bound CPU mode writes and propagate idle errors",
+      "files": [
+        {
+          "path": "drivers/cpuidle/cpuidle-qcom-spm.c",
+          "before_SHA256": "598937a870b165ebb9f6e629d434c24b48acef771c916e9032625038d3976e5b",
+          "original_parent_SHA256": "598937a870b165ebb9f6e629d434c24b48acef771c916e9032625038d3976e5b",
+          "original_after_SHA256": "d374e10f621a33517a479cf65243ed89243ca21e19a36344e8932daa7669f64b",
+          "after_SHA256": "d374e10f621a33517a479cf65243ed89243ca21e19a36344e8932daa7669f64b",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "drivers/soc/qcom/spm.c",
+          "before_SHA256": "390e68429543ec84053ddcdcbee5d29464bdaddae7ccb66790224a42ab59459e",
+          "original_parent_SHA256": "390e68429543ec84053ddcdcbee5d29464bdaddae7ccb66790224a42ab59459e",
+          "original_after_SHA256": "b407e0dc2c919bf74744cc58a36e7dc6017ccf6f0453a4079e98dbac6737c001",
+          "after_SHA256": "b407e0dc2c919bf74744cc58a36e7dc6017ccf6f0453a4079e98dbac6737c001",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "include/soc/qcom/spm.h",
+          "before_SHA256": "deec829af9199df9fc00351621fb015a28c63af2a81cca549162010c090c26a4",
+          "original_parent_SHA256": "deec829af9199df9fc00351621fb015a28c63af2a81cca549162010c090c26a4",
+          "original_after_SHA256": "9f46bfd84f9734946d6019f7ceb8c14cb2372da2f08a221884cef1ce9302c710",
+          "after_SHA256": "9f46bfd84f9734946d6019f7ceb8c14cb2372da2f08a221884cef1ce9302c710",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "a96c6085b9cb90ff5f48489bf66867135dd360d7",
+      "subject": "soc: qcom: smd-rpm: Add owned request admission for system sleep",
+      "files": [
+        {
+          "path": "drivers/soc/qcom/smd-rpm.c",
+          "before_SHA256": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+          "original_parent_SHA256": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+          "original_after_SHA256": "05f863bef30c28e859947100f46452d1ee9f85bba985228776d8dc20a0a972cd",
+          "after_SHA256": "05f863bef30c28e859947100f46452d1ee9f85bba985228776d8dc20a0a972cd",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "include/linux/soc/qcom/smd-rpm.h",
+          "before_SHA256": "33afc99246fea2c1136c07f7e0d61a3c56a065f0ae091c401322f9b3573dc73d",
+          "original_parent_SHA256": "33afc99246fea2c1136c07f7e0d61a3c56a065f0ae091c401322f9b3573dc73d",
+          "original_after_SHA256": "85f45b7db7eafa2c0ace23893a8e253ffa6a9e8002a8e1a77538383f3beec255",
+          "after_SHA256": "85f45b7db7eafa2c0ace23893a8e253ffa6a9e8002a8e1a77538383f3beec255",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    }
+  ],
+  "phone_access": false,
+  "published": false,
+  "state": "all source changes composed",
+  "passed": true
+}

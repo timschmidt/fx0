@@ -1,0 +1,54 @@
+From 7f9842cdd153e76febb213d931ee913d493f1251 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 16:28:56 -0500
+Subject: [PATCH] ARM: dts: qcom: Retain Madai boot MX until the CPR handoff
+
+The experimental target's separate MX voters still allow an early normal
+Pronto request before CPU-domain attachment retains its calibrated floor.
+Name the live APC supply for the RPM provider's boot-only validation and
+temporary ACTIVE hold. The paired provider releases the hold only after
+an acknowledged enabled AO request covers inherited APC. The existing CPU
+attach callback rechecks actual APC before that handoff.
+
+This depends on the boot-APC binding/provider and complete CPR bootstrap
+and reply-correlated RPM prerequisites. The ordinary board is unchanged.
+This adds no sleep policy, leaves the CPR deep-suspend guard in place and
+does not qualify firmware, hardware or full global suspend/abort/reentry.
+
+Fixes: 494dd4093834 ("ARM: dts: qcom: Give Madai CPR a separate active-only MX voter")
+
+Codex generated this change and its host qualification. Human review and
+DCO certification remain pending. Nothing has been submitted.
+
+Backport this prerequisite to maintained Linux 6.18.63. The complete
+seventeen-change batch passes native ARM, ARM64 and ARM64 RT object
+builds with the MSM8926 feature enabled and disabled. CPU-idle is ARM
+only. Host fault models use synthetic services and normal LeakSanitizer;
+firmware, electrical and physical suspend acceptance remain open.
+
+Codex prepared this local backport and verification. Original authors,
+dates, licenses and human attribution tags are retained. Human DCO and
+review remain pending. No phone access or publication occurred.
+
+Backported from commit ebd3064be2f1 ("ARM: dts: qcom: Retain Madai
+boot MX until the CPR handoff")
+---
+ arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+index 6bb2775823ab6..96fc912b7dfb3 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+@@ -224,6 +224,8 @@ cpr: power-controller@f9018000 {
+ 
+ &rpm_requests {
+ 	regulators {
++		qcom,boot-apc-supply = <&pm8226_apc>;
++
+ 		pm8226_l3_ao: l3-ao {
+ 			regulator-min-microvolt = <750000>;
+ 			regulator-max-microvolt = <1337500>;
+-- 
+2.56.0
+

@@ -1,0 +1,111 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "name": "SO-voltage-omitted",
+      "rejected": true,
+      "failures": 3607,
+      "named_assertion": "fw[1].uV == 1337500"
+    },
+    {
+      "name": "SO-enable-omitted",
+      "rejected": true,
+      "failures": 1668,
+      "named_assertion": "proposed.enabled && proposed.uV >= apc_voltage"
+    },
+    {
+      "name": "AO-contaminates-SLEEP",
+      "rejected": true,
+      "failures": 94,
+      "named_assertion": "fw[1].uV == uv"
+    },
+    {
+      "name": "SO-contaminates-ACTIVE",
+      "rejected": true,
+      "failures": 793,
+      "named_assertion": "fw[0].uV == 900000 && fw[1].uV == 1337500"
+    },
+    {
+      "name": "SO-sent-to-ACTIVE",
+      "rejected": true,
+      "failures": 1480,
+      "named_assertion": "states[i] == QCOM_SMD_RPM_SLEEP_STATE"
+    },
+    {
+      "name": "sleep-handoff-never-releases-ceiling",
+      "rejected": true,
+      "failures": 574,
+      "named_assertion": "pair->boot_sleep_uV == 0"
+    },
+    {
+      "name": "sleep-release-fails-to-rearm",
+      "rejected": true,
+      "failures": 4429,
+      "named_assertion": "pair->boot_sleep_uV == 1337500"
+    },
+    {
+      "name": "failed-release-loses-rearmed-hold",
+      "rejected": true,
+      "failures": 36,
+      "named_assertion": "f.pair.boot_sleep_uV == 1337500"
+    },
+    {
+      "name": "boot-sleep-voltage-omitted",
+      "rejected": true,
+      "failures": 2452,
+      "named_assertion": "proposed.enabled && proposed.uV >= apc_voltage"
+    },
+    {
+      "name": "normal-write-infers-SO-handoff",
+      "rejected": true,
+      "failures": 12,
+      "named_assertion": "fw[1].enabled && fw[1].uV == 1337500 && f.pair.boot_sleep_uV == 1337500"
+    },
+    {
+      "name": "SO-load-overflow-wraps",
+      "rejected": true,
+      "failures": 1,
+      "named_assertion": "UINT32_MAX / 1000"
+    },
+    {
+      "name": "SO-slot-not-restored",
+      "rejected": true,
+      "failures": 120,
+      "named_assertion": "same_vote(f.pair.votes[actor], previous)"
+    },
+    {
+      "name": "normal-partial-policy-not-restored",
+      "rejected": true,
+      "failures": 12,
+      "named_assertion": "!f.pair.sleep_voltage_valid"
+    },
+    {
+      "name": "SO-guard-policy-not-validated",
+      "rejected": true,
+      "failures": 90,
+      "named_assertion": "!wire_calls && !live_count && !factory_registers"
+    },
+    {
+      "name": "boot-sleep-hold-not-initialized",
+      "rejected": true,
+      "failures": 759,
+      "named_assertion": "proposed.enabled && proposed.uV >= apc_voltage"
+    },
+    {
+      "name": "CPR-sleep-guard-disabled-in-DT",
+      "rejected": true,
+      "failures": 402,
+      "named_assertion": "out == &f.so && f.so.enable_count == 1 && cleanup_action"
+    },
+    {
+      "name": "cleanup-retry-omitted",
+      "rejected": true,
+      "failures": 2,
+      "named_assertion": "fatal_calls == 0 && !f.so.enable_count"
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "only_synthetic_services": true,
+  "physical_or_kernel_concurrency_qualified": false,
+  "no_phone_radio_audio_network_or_firmware_execution": true
+}

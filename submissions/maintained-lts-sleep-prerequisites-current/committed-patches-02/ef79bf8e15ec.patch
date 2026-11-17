@@ -1,0 +1,134 @@
+From cc2e0f128f0f34113ae130cb3a4405207b382f77 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 17:29:49 -0500
+Subject: [PATCH] pmdomain: qcom: cpr: Retain an optional MSM8926 MX sleep
+ guard
+
+Acquire the independent sleep-only MX supplier only when the new optional
+property is present. Retain an enabled 1337500 uV request after calibration
+and clock validation, before publishing the MSM8926 driver state. Existing
+DTs keep their previous behavior.
+
+Register managed cleanup after the supplier get, so later probe failure
+disables SO before releasing the consumer. The RPM provider rearms its
+covering sleep ceiling before that disable. Retry one uncertain disable;
+two failures are fatal rather than silently losing the owned constraint.
+The new header is already covered by MAINTAINERS' cpr*.h entry.
+
+This holds a protective ceiling; it does not implement or enable deep
+suspend. Preserve the existing feedback quiescence, calibrated ACTIVE
+sequencing and deep-suspend guard. Full global entry/abort/reentry and
+physical acceptance remain outstanding.
+
+Codex generated this change and its host qualification. Human review and
+DCO certification remain pending. Nothing has been submitted.
+
+Backport this prerequisite to maintained Linux 6.18.63. The complete
+seventeen-change batch passes native ARM, ARM64 and ARM64 RT object
+builds with the MSM8926 feature enabled and disabled. CPU-idle is ARM
+only. Host fault models use synthetic services and normal LeakSanitizer;
+firmware, electrical and physical suspend acceptance remain open.
+
+Codex prepared this local backport and verification. Original authors,
+dates, licenses and human attribution tags are retained. Human DCO and
+review remain pending. No phone access or publication occurred.
+
+Backported from commit ef79bf8e15ec ("pmdomain: qcom: cpr: Retain an
+optional MSM8926 MX sleep guard")
+---
+ drivers/pmdomain/qcom/cpr-sleep.h | 51 +++++++++++++++++++++++++++++++
+ drivers/pmdomain/qcom/cpr.c       |  6 ++++
+ 2 files changed, 57 insertions(+)
+ create mode 100644 drivers/pmdomain/qcom/cpr-sleep.h
+
+diff --git a/drivers/pmdomain/qcom/cpr-sleep.h b/drivers/pmdomain/qcom/cpr-sleep.h
+new file mode 100644
+index 0000000000000..f79d211e403f0
+--- /dev/null
++++ b/drivers/pmdomain/qcom/cpr-sleep.h
+@@ -0,0 +1,51 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef __QCOM_CPR_SLEEP_H__
++#define __QCOM_CPR_SLEEP_H__
++
++#include <linux/device.h>
++#include <linux/of.h>
++#include <linux/panic.h>
++#include <linux/regulator/consumer.h>
++
++static inline void cpr_sleep_vote_disable(void *data)
++{
++	struct regulator *mx = data;
++	int ret;
++
++	ret = regulator_disable(mx);
++	if (ret)
++		ret = regulator_disable(mx);
++	if (ret)
++		panic("CPR sleep vote release failed: %d", ret);
++}
++
++/* Only a complete system entry coordinator may later lower this live floor. */
++static inline int cpr_sleep_vote_init(struct device *dev, int max_uV,
++				      struct regulator **sleep_mx)
++{
++	struct regulator *mx;
++	int ret;
++
++	*sleep_mx = NULL;
++	if (!of_property_present(dev->of_node, "vdd-mx-sleep-supply"))
++		return 0;
++	if (max_uV <= 0)
++		return -EINVAL;
++	mx = devm_regulator_get(dev, "vdd-mx-sleep");
++	if (IS_ERR(mx))
++		return PTR_ERR(mx);
++	ret = regulator_set_voltage(mx, max_uV, max_uV);
++	if (ret)
++		return ret;
++	ret = regulator_enable(mx);
++	if (ret)
++		return ret;
++	/* Disable before the managed put; a failed probe must not leak a vote. */
++	ret = devm_add_action_or_reset(dev, cpr_sleep_vote_disable, mx);
++	if (ret)
++		return ret;
++	*sleep_mx = mx;
++	return 0;
++}
++
++#endif
+diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
+index 5807d337f8c44..96ca622ed8476 100644
+--- a/drivers/pmdomain/qcom/cpr.c
++++ b/drivers/pmdomain/qcom/cpr.c
+@@ -31,6 +31,7 @@
+ #include <linux/soc/qcom/cpr.h>
+ 
+ #include "cpr-voltage.h"
++#include "cpr-sleep.h"
+ #include "cpr-msm8926-corner.h"
+ #include "cpr-msm8926-fuses.h"
+ 
+@@ -242,6 +243,7 @@ struct cpr_msm8926_data {
+ 	struct regmap *apcs;
+ 	struct clk *aux_clk;
+ 	struct clk *pll_clk;
++	struct regulator *mx_sleep;
+ };
+ 
+ static struct platform_driver cpr_driver;
+@@ -1300,6 +1302,10 @@ static int __maybe_unused cpr_msm8926_init(struct cpr_drv *drv)
+ 			data->calibration.ring_osc[i] : 0;
+ 		fuse->step_quot = 30;
+ 	}
++	ret = cpr_sleep_vote_init(drv->dev, 1337500, &data->mx_sleep);
++	if (ret)
++		return dev_err_probe(drv->dev, ret, "MX sleep guard unavailable\n");
++
+ 	drv->cpu_clk = cpu_clk;
+ 	drv->rails.mx = mx;
+ 	drv->rails.mx_max_uV = 1337500;
+-- 
+2.56.0
+

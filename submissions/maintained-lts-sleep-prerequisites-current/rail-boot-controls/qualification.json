@@ -1,0 +1,74 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "name": "boot-voltage-hold-omitted",
+      "rejected": true,
+      "failures": 1568,
+      "named_assertion": "fw[0].enabled && fw[0].uV == 1337500"
+    },
+    {
+      "name": "boot-enable-hold-omitted",
+      "rejected": true,
+      "failures": 1918,
+      "named_assertion": "proposed.enabled && proposed.uV >= apc_voltage"
+    },
+    {
+      "name": "enabled-request-below-APC-releases-hold",
+      "rejected": true,
+      "failures": 668,
+      "named_assertion": "fw[0].enabled && fw[0].uV == 1337500"
+    },
+    {
+      "name": "handoff-keeps-permanent-maximum",
+      "rejected": true,
+      "failures": 174,
+      "named_assertion": "fw[0].uV == 1287500 && fw[0].enabled"
+    },
+    {
+      "name": "failed-handoff-loses-hold",
+      "rejected": true,
+      "failures": 24,
+      "named_assertion": "fw[0].enabled && fw[0].uV == 1337500"
+    },
+    {
+      "name": "APC-read-failure-ignored",
+      "rejected": true,
+      "failures": 6,
+      "named_assertion": "!live_count && !factory_registers && !wire_calls"
+    },
+    {
+      "name": "APC-above-MX-ceiling-accepted",
+      "rejected": true,
+      "failures": 6,
+      "named_assertion": "!live_count && !factory_registers && !wire_calls"
+    },
+    {
+      "name": "APC-handoff-threshold-rounded-down",
+      "rejected": true,
+      "failures": 296,
+      "named_assertion": "proposed.enabled && proposed.uV >= apc_voltage"
+    },
+    {
+      "name": "disabled-cache-bypasses-boot-hold",
+      "rejected": true,
+      "failures": 262,
+      "named_assertion": "fw[0].enabled && fw[0].uV == 1337500"
+    },
+    {
+      "name": "core-boot-enable-can-release-hold",
+      "rejected": true,
+      "failures": 4,
+      "named_assertion": "!live_count && !factory_registers && !wire_calls"
+    },
+    {
+      "name": "CPU-attach-skips-live-APC-recheck",
+      "rejected": true,
+      "failures": 10,
+      "named_assertion": "proposed.enabled && proposed.uV >= apc_voltage"
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "no_hardware_phone_firmware_radio_audio_or_network_execution": true,
+  "deterministic_logical_services_only": true
+}

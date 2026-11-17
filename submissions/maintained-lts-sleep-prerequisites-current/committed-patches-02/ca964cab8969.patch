@@ -1,0 +1,61 @@
+From 2dc3e1992e0080a8de4fc86a236f7c2b6dc3d56e Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 17:31:54 -0500
+Subject: [PATCH] ARM: dts: qcom: Give Madai CPR an independent MX sleep guard
+
+Name a separate L3 sleep-only voter for the experimental CPU target. CPR
+retains its supported maximum while APC remains live, independently of
+ACTIVE scaling and Pronto's persistent normal sleep settings. The RPM
+provider retains independent boot holds and rearms the SLEEP hold when
+the CPU sleep consumer is released after a failed probe.
+
+This depends on the independent SO provider and optional CPR sleep guard.
+It does not lower the sleep request to the binding minimum, add full
+CPU/L2/RPM/MPM entry, or remove the existing CPR deep-suspend guard.
+The ordinary board and all other hardware targets are unchanged.
+
+Codex generated this change and its host qualification. Human review and
+DCO certification remain pending. Nothing has been submitted.
+
+Backport this prerequisite to maintained Linux 6.18.63. The complete
+seventeen-change batch passes native ARM, ARM64 and ARM64 RT object
+builds with the MSM8926 feature enabled and disabled. CPU-idle is ARM
+only. Host fault models use synthetic services and normal LeakSanitizer;
+firmware, electrical and physical suspend acceptance remain open.
+
+Codex prepared this local backport and verification. Original authors,
+dates, licenses and human attribution tags are retained. Human DCO and
+review remain pending. No phone access or publication occurred.
+
+Backported from commit ca964cab8969 ("ARM: dts: qcom: Give Madai CPR
+an independent MX sleep guard")
+---
+ arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+index 96fc912b7dfb3..92340f2bf2f84 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+@@ -215,6 +215,7 @@ cpr: power-controller@f9018000 {
+ 		qcom,apcs-syscon = <&apcs>;
+ 		vdd-apc-supply = <&pm8226_apc>;
+ 		vdd-mx-supply = <&pm8226_l3_ao>;
++		vdd-mx-sleep-supply = <&pm8226_l3_so>;
+ 		#power-domain-cells = <0>;
+ 		operating-points-v2 = <&cpr_opp_table>;
+ 		nvmem-cells = <&cpu_speedbin>, <&cpr_primary>, <&cpr_redundant>;
+@@ -230,5 +231,10 @@ pm8226_l3_ao: l3-ao {
+ 			regulator-min-microvolt = <750000>;
+ 			regulator-max-microvolt = <1337500>;
+ 		};
++
++		pm8226_l3_so: l3-so {
++			regulator-min-microvolt = <750000>;
++			regulator-max-microvolt = <1337500>;
++		};
+ 	};
+ };
+-- 
+2.56.0
+

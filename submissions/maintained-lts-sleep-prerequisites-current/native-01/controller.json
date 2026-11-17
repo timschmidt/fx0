@@ -1,0 +1,69 @@
+{
+  "started_UTC": "2026-11-17T09:24:07.268895+00:00",
+  "passed": false,
+  "state": "terminal failure",
+  "source_head": "8d8cb579e4ba340a4bd943daca58dffa47aa2559",
+  "source_uncommitted": true,
+  "source_files": {
+    "drivers/pmdomain/qcom/cpr.c": "27dd1e6095b088e1f30863ba5a1f2571c585f82124b859c3bd83f8be563250a6",
+    "drivers/regulator/qcom_spmi-regulator.c": "90a1a48ab4c32ae54b41c9494137168f833399f9dca1f7ed5be5688a25413e80",
+    "drivers/soc/qcom/spm.c": "b407e0dc2c919bf74744cc58a36e7dc6017ccf6f0453a4079e98dbac6737c001",
+    "drivers/soc/qcom/smd-rpm.c": "05f863bef30c28e859947100f46452d1ee9f85bba985228776d8dc20a0a972cd",
+    "drivers/cpufreq/qcom-cpufreq-nvmem.c": "2f61370f6c4f6a8410830a523483b1395ecfb5e98be6c0f293f52364a5e173b8",
+    "drivers/cpufreq/cpufreq-dt-platdev.c": "df07cc0eecbcaf335f52b017f805b1d0183f59b5ba38e7970476fffcbe8d3d7b",
+    "drivers/clk/qcom/a53-pll.c": "84a91c06729b2c5190f1dc47b53ae564f1399adfd699ea518cf800dd3b0dc256",
+    "drivers/clk/qcom/apcs-msm8916.c": "4fd79329d44473d5335c0510bc357f37ce5de6ce97d99e8cd464224a32c2036c",
+    "drivers/clk/qcom/clk-pll.c": "bfbaf9e47a56e0e37a670a26bdeda82a3072b8966fc644cb25b96eacacddafda",
+    "drivers/clk/qcom/clk-regmap-mux-div.c": "3395adb60d400564bd432404003efbe42db92f28b55c31e66fd0b632a24b4a92",
+    "drivers/clk/qcom/gcc-msm8974.c": "4b0de15d4c41226ce92462d1800efd25156b60e2b8335e6cc8bc727e95e678b1",
+    "drivers/mfd/qcom-spmi-pmic.c": "3a79cf6520d138e416e1454fdce42359c5e895b65a5add33da2bdc19f6107235",
+    "drivers/regulator/qcom_smd-regulator.c": "bff51dfef5f8452650dfc6217e883af0113d053b29b8a7dded805e13824c4d9b",
+    "drivers/regulator/qcom-spmi-saw-fts2.h": "697f55bcbdefea453c790aa647a86b3028a35dbad241941dce44dfcdb1005d86",
+    "drivers/soc/qcom/spm-msm8226-l2.h": "171e0f31ca6544c406879986787c084be73478ed55f581aae6b2e6254a91a242",
+    "drivers/pmdomain/qcom/cpr-voltage.h": "8ae79b9419e5096ec30ade91358739d75a224c3e25078dc8d09689bbe43028a8",
+    "include/linux/soc/qcom/cpr.h": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3",
+    "drivers/pmdomain/qcom/cpr-sleep.h": "0b9c570a193f1a246a182219a32d76904b2297ff1e070933f192f37c9d90a3f1",
+    "include/soc/qcom/spm.h": "9f46bfd84f9734946d6019f7ceb8c14cb2372da2f08a221884cef1ce9302c710",
+    "include/linux/soc/qcom/smd-rpm.h": "85f45b7db7eafa2c0ace23893a8e253ffa6a9e8002a8e1a77538383f3beec255"
+  },
+  "profiles": [],
+  "architecture_constraints": [
+    {
+      "driver": "ARM_QCOM_SPM_CPUIDLE",
+      "supported_ARCH": "arm",
+      "ARM64_not_counted": true
+    }
+  ],
+  "phone_access": false,
+  "published": false,
+  "full_kernel_package_or_physical_acceptance": false,
+  "seeds": "Already qualified LTS native-02 configs; no 7.4 seed Kconfig type adaptation required",
+  "ARM32_RT_unsupported_not_counted": true,
+  "stages": [
+    {
+      "label": "arm-normal-CPU-enabled-options",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diagnostics": []
+    },
+    {
+      "label": "arm-normal-CPU-enabled-config",
+      "returncode": 0,
+      "log_SHA256": "3d350613b0cf4c488f6380c36af7ea819e65a35cf99e5eb7e8ba54e9d520546d",
+      "diagnostics": []
+    },
+    {
+      "label": "arm-normal-CPU-enabled-objects",
+      "returncode": 2,
+      "log_SHA256": "d103c49cf51723b48592c8b12d8c3001fa585e7e06ed0dcacf6adea4e3de08e6",
+      "diagnostics": [
+        "<workspace>/worktrees/linux-fx0-lts-integration-current-01/drivers/regulator/qcom_smd-regulator.c:1893:10: error: call to undeclared function 'devm_kzalloc_obj'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]",
+        "<workspace>/worktrees/linux-fx0-lts-integration-current-01/drivers/regulator/qcom_smd-regulator.c:1893:8: error: incompatible integer to pointer conversion assigning to 'struct rpm_reg_pair *' from 'int' [-Wint-conversion]"
+      ]
+    }
+  ],
+  "error_type": "AssertionError",
+  "error": "('arm-normal-CPU-enabled-objects', 2, ['      |                      ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~', '  CC      drivers/soc/qcom/spm.o', '2 errors generated.', 'make[5]: *** [<workspace>/worktrees/linux-fx0-lts-integration-current-01/scripts/Makefile.build:287: drivers/regulator/qcom_smd-regulator.o] Error 1', 'make[4]: *** [<workspace>/worktrees/linux-fx0-lts-integration-current-01/scripts/Makefile.build:544: drivers/regulator] Error 2', 'make[4]: *** Waiting for unfinished jobs....', '  CC      drivers/soc/qcom/smd-rpm.o', 'make[3]: *** [<workspace>/worktrees/linux-fx0-lts-integration-current-01/scripts/Makefile.build:544: drivers] Error 2', 'make[2]: *** [<workspace>/worktrees/linux-fx0-lts-integration-current-01/Makefile:2051: .] Error 2', 'make[1]: *** [<workspace>/worktrees/linux-fx0-lts-integration-current-01/Makefile:248: __sub-make] Error 2', \"make[1]: Leaving directory '<workspace>/local/fx0-lts-production-current-01/sleep-prerequisites-01/native-01/arm-normal-CPU-enabled-out'\", 'make: *** [Makefile:248: __sub-make] Error 2'])",
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-17T09:24:19.442321+00:00"
+}

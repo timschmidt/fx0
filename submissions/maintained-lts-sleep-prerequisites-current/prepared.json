@@ -1,0 +1,201 @@
+{
+  "base": "8d8cb579e4ba340a4bd943daca58dffa47aa2559",
+  "source_repo": "worktrees/linux-fx0-lts-integration-current-01",
+  "current_source_repo": "worktrees/linux-fx0-cpu-current-01",
+  "origin_commits": [
+    {
+      "commit": "8b5c5b0e431aa491817b7d50fdc876e5cad07cea",
+      "subject": "soc: qcom: spm: fix the SDM660 silver L2 AVS control value",
+      "paths": [
+        "drivers/soc/qcom/spm.c"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "53e5080cb0dd11869e015e78df028eabf11014a815172cf6a93a5a568465f34e"
+    },
+    {
+      "commit": "efa32ff01e4fb852b4807a18fea366b9fae5b674",
+      "subject": "soc: qcom: spm: don't clobber the SAW control registers",
+      "paths": [
+        "drivers/soc/qcom/spm.c"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "944860937bdb42f3f2da4cc16788284071d85389736516e7a6eb48fcada8520e"
+    },
+    {
+      "commit": "27f50b0c8172ac8addc5616be9bc85137eff0ec3",
+      "subject": "regulator: qcom_smd: support explicit sleep-set suspend votes",
+      "paths": [
+        "drivers/regulator/qcom_smd-regulator.c"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "db624cf084cc4b1e8fd811499d6bfe107220d08967e5f6663662efc2d2666f3e"
+    },
+    {
+      "commit": "ec99962a30bb8d517de324ca5273632d70721357",
+      "subject": "regulator: dt-bindings: qcom: Describe PM8226 L3 active-only voter",
+      "paths": [
+        "Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "e2ae18c2aa428c2b7e1b8d59d60fa8f68cd7a22a0699f1c2cca59e3cb7452138"
+    },
+    {
+      "commit": "18bc0ef32ef22ae611090a90b4592583ccc48435",
+      "subject": "regulator: qcom_smd: Add paired normal and active-only PM8226 L3 votes",
+      "paths": [
+        "drivers/regulator/qcom_smd-regulator.c"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: drivers/regulator/qcom_smd-regulator.c:168\nerror: drivers/regulator/qcom_smd-regulator.c: patch does not apply\n",
+      "patch_SHA256": "d323689548ec08c183275dd4b582ad677059916aa404ad55c8175d905acdc0fd"
+    },
+    {
+      "commit": "49cb297d9ca6c9134e8298c8ddc23f9e7f8be031",
+      "subject": "ARM: dts: qcom: Give Madai CPR a separate active-only MX voter",
+      "paths": [
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "0eb4cb4246fb1cc0c3a4d29b889edfeb4633fc949185208d3df27ab63713bebe"
+    },
+    {
+      "commit": "6c9b8b686ea5080fae3b3fda3e40c99fb02db115",
+      "subject": "regulator: dt-bindings: qcom: Describe an APC-aware PM8226 boot hold",
+      "paths": [
+        "Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml:131\nerror: Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml: patch does not apply\n",
+      "patch_SHA256": "a8eb38dec8f0d882649cdfd2ff5fe3d21ee4963566bbe41a5a8006ff07155c5e"
+    },
+    {
+      "commit": "8898d43f3e1f12a27ebbbc4e51a3327ec43da34e",
+      "subject": "regulator: qcom_smd: Protect live APC before the first MX consumer vote",
+      "paths": [
+        "drivers/regulator/qcom_smd-regulator.c"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: drivers/regulator/qcom_smd-regulator.c:8\nerror: drivers/regulator/qcom_smd-regulator.c: patch does not apply\n",
+      "patch_SHA256": "a75611e28c168357188b758ebe427b30774bf0e660f3f68bf69abf471f7914d1"
+    },
+    {
+      "commit": "ebd3064be2f15da7d5143b9cc46560efb9073f53",
+      "subject": "ARM: dts: qcom: Retain Madai boot MX until the CPR handoff",
+      "paths": [
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts:224\nerror: arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts: patch does not apply\n",
+      "patch_SHA256": "39343e41ef51b49632c31a6be6a3fecb897d35a1e53131978b82d6646e42599b"
+    },
+    {
+      "commit": "d2d0763fd351e568f4c290d55431b0a53bf4cbe4",
+      "subject": "dt-bindings: regulator: qcom: Describe PM8226 L3 sleep-only votes",
+      "paths": [
+        "Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml:52\nerror: Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml: patch does not apply\n",
+      "patch_SHA256": "b1810d9e7d050b5af44e977e8192dfb706e02f03c218b659b638bf8db9adf931"
+    },
+    {
+      "commit": "16db651beb1fca144168fe21226533fd4736e85f",
+      "subject": "regulator: qcom_smd: Add independent PM8226 L3 sleep-only votes",
+      "paths": [
+        "drivers/regulator/qcom_smd-regulator.c"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: drivers/regulator/qcom_smd-regulator.c:26\nerror: drivers/regulator/qcom_smd-regulator.c: patch does not apply\n",
+      "patch_SHA256": "50ba5a1951225bc5feb9ce226adca864d3379a242b7a5618b15a77b5f011cbf5"
+    },
+    {
+      "commit": "b72d674810b4947e0162fe860efc8319a58509d4",
+      "subject": "dt-bindings: power: avs: cpr: Describe an MSM8926 sleep voter",
+      "paths": [
+        "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "18e9d48d3d6641ba232e01ef48c1a11b0487273a578463a5dc1df67d300228ec"
+    },
+    {
+      "commit": "ef79bf8e15ec316e5ab096d6f9ce731ed4f3fbb9",
+      "subject": "pmdomain: qcom: cpr: Retain an optional MSM8926 MX sleep guard",
+      "paths": [
+        "drivers/pmdomain/qcom/cpr-sleep.h",
+        "drivers/pmdomain/qcom/cpr.c"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "a7f1d3c9c57e9d38b407c463a19ba530f9eb4c52fa7a816859f434cafeb20b65"
+    },
+    {
+      "commit": "ca964cab8969a5fefa649bcb00e7286e996bda37",
+      "subject": "ARM: dts: qcom: Give Madai CPR an independent MX sleep guard",
+      "paths": [
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts:215\nerror: arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts: patch does not apply\n",
+      "patch_SHA256": "ea5771f3035dbbb19e66666d4149fbce849c243ee4c24607b97311d5b5b68569"
+    },
+    {
+      "commit": "a2c8886ef786995ce4e6e55836e7198272e9c2ad",
+      "subject": "soc: qcom: spm: Add verified MSM8226 L2 low-power programs",
+      "paths": [
+        "drivers/soc/qcom/spm-msm8226-l2.h",
+        "drivers/soc/qcom/spm.c",
+        "include/soc/qcom/spm.h"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "0caab5d97e03d0b35e9558401691b1e98e1f624c325e9a6cb7b71972f249cb7c"
+    },
+    {
+      "commit": "192b0d581ac98b3d245df8ee8183dcdd4d7fb39c",
+      "subject": "soc: qcom: spm: Bound CPU mode writes and propagate idle errors",
+      "paths": [
+        "drivers/cpuidle/cpuidle-qcom-spm.c",
+        "drivers/soc/qcom/spm.c",
+        "include/soc/qcom/spm.h"
+      ],
+      "initial_patch_check_returncode": 1,
+      "initial_patch_check_stderr": "error: patch failed: drivers/soc/qcom/spm.c:8\nerror: drivers/soc/qcom/spm.c: patch does not apply\nerror: patch failed: include/soc/qcom/spm.h:16\nerror: include/soc/qcom/spm.h: patch does not apply\n",
+      "patch_SHA256": "6cc66d66906a78d946067b9b73f4a1b1f3bf82813c3cf2b49a011551f3377aac"
+    },
+    {
+      "commit": "a96c6085b9cb90ff5f48489bf66867135dd360d7",
+      "subject": "soc: qcom: smd-rpm: Add owned request admission for system sleep",
+      "paths": [
+        "drivers/soc/qcom/smd-rpm.c",
+        "include/linux/soc/qcom/smd-rpm.h"
+      ],
+      "initial_patch_check_returncode": 0,
+      "initial_patch_check_stderr": "",
+      "patch_SHA256": "dffe912e470bd2ad575657c760adc2ee26dcb3130c6a4d3ff0138e09cbee204b"
+    }
+  ],
+  "before_files": {
+    "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml": "97ee6589da29592af33aba6c531e4e87187aa3fa0298c71d33f78c5e7af32f61",
+    "Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml": "dfc9f01c17f85519b5ae16e9b663521d89be2a0b51c0007c5bae261963e5f0ce",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts": "70451f93286448e2ea296a70f6a008d58ea163c338645b204669276ab0ae5961",
+    "drivers/cpuidle/cpuidle-qcom-spm.c": "598937a870b165ebb9f6e629d434c24b48acef771c916e9032625038d3976e5b",
+    "drivers/pmdomain/qcom/cpr-sleep.h": null,
+    "drivers/pmdomain/qcom/cpr.c": "1eb8894ff1dc13f081db2baed4d03027e4ae56b6161de715442df5221755658a",
+    "drivers/regulator/qcom_smd-regulator.c": "028293ace79d4ab94a452606d171474cc5c80a9c7cb797c26c24bbda062e3c2a",
+    "drivers/soc/qcom/smd-rpm.c": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+    "drivers/soc/qcom/spm-msm8226-l2.h": "5cc4d9161aaf621ee236bc475e8265069e91b8ebc6dd0070f21a0e7a4659625d",
+    "drivers/soc/qcom/spm.c": "1e1827b0f5c3b5db1d18a30edfd7e95054397e94248594220fe6f0b873c15731",
+    "include/linux/soc/qcom/smd-rpm.h": "33afc99246fea2c1136c07f7e0d61a3c56a065f0ae091c401322f9b3573dc73d",
+    "include/soc/qcom/spm.h": "2ecc1d9a87f215d11a4ed103831bcfc79824abe66c94a5deb418df4660b43da2"
+  },
+  "source_edits_applied": false,
+  "phone_access": false,
+  "published": false,
+  "full_goal_complete": false
+}

@@ -1,0 +1,147 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "name": "retry-bound-expanded-past-contract",
+      "rejected": true,
+      "failures": 527,
+      "named_assertion": "ret==(count<50 ? 0 : -ETIMEDOUT)"
+    },
+    {
+      "name": "mode-readback-discarded",
+      "rejected": true,
+      "failures": 1746,
+      "named_assertion": "ret==(count<50 ? 0 : -ETIMEDOUT)"
+    },
+    {
+      "name": "mode-error-skips-disable",
+      "rejected": true,
+      "failures": 360,
+      "named_assertion": "!(bank[control_offset()/4]&SPM_CTL_EN)"
+    },
+    {
+      "name": "disable-clears-inherited-bypass",
+      "rejected": true,
+      "failures": 522,
+      "named_assertion": "initial&~(SPM_CTL_INDEX"
+    },
+    {
+      "name": "disable-keeps-enable-set",
+      "rejected": true,
+      "failures": 515,
+      "named_assertion": "!(bank[control_offset()/4]&SPM_CTL_EN)"
+    },
+    {
+      "name": "disable-requires-stale-index",
+      "rejected": true,
+      "failures": 1,
+      "named_assertion": "!fatal_calls&&reset_result==-ETIMEDOUT"
+    },
+    {
+      "name": "unsupported-zero-index-accepted",
+      "rejected": true,
+      "failures": 34,
+      "named_assertion": "ret==(supported ? 0 : -EOPNOTSUPP)"
+    },
+    {
+      "name": "out-of-field-index-accepted",
+      "rejected": true,
+      "failures": 3,
+      "named_assertion": "spm_set_low_power_mode(&direct,PM_SLEEP_MODE_SPC)==-EINVAL"
+    },
+    {
+      "name": "MSM8226-PC-alias-omitted",
+      "rejected": true,
+      "failures": 2,
+      "named_assertion": "ret==0"
+    },
+    {
+      "name": "CPU-suspend-after-failed-SPC",
+      "rejected": true,
+      "failures": 66,
+      "named_assertion": "suspend_calls==(arm_failed ? 0U : 1U)"
+    },
+    {
+      "name": "standby-restore-omitted",
+      "rejected": true,
+      "failures": 68,
+      "named_assertion": "(ctl>>SPM_CTL_INDEX_SHIFT)&SPM_CTL_INDEX"
+    },
+    {
+      "name": "standby-error-discarded",
+      "rejected": true,
+      "failures": 7,
+      "named_assertion": "ret==expected"
+    },
+    {
+      "name": "CPU-abort-error-discarded",
+      "rejected": true,
+      "failures": 30,
+      "named_assertion": "ret==expected"
+    },
+    {
+      "name": "probe-standby-error-discarded",
+      "rejected": true,
+      "failures": 9,
+      "named_assertion": "ret==errors[scenario]&&!publication_calls&&!pdev.data"
+    },
+    {
+      "name": "probe-publishes-before-readiness",
+      "rejected": true,
+      "failures": 160,
+      "named_assertion": "!publication_calls"
+    },
+    {
+      "name": "probe-regulator-error-discarded",
+      "rejected": true,
+      "failures": 52,
+      "named_assertion": "ret==(failed ? -EIO : 0)"
+    },
+    {
+      "name": "CPU-PM-exit-unbalanced",
+      "rejected": true,
+      "failures": 72,
+      "named_assertion": "ct_enters==pm_exits&&ct_exits==pm_exits&&!in_pm"
+    },
+    {
+      "name": "supplier-preflight-omitted",
+      "rejected": true,
+      "failures": 92,
+      "named_assertion": "!warm_calls&&!registration_calls&&!idle_allocation_count"
+    },
+    {
+      "name": "unready-provider-treated-as-unsupported",
+      "rejected": true,
+      "failures": 68,
+      "named_assertion": "!warm_calls&&!registration_calls&&!idle_allocation_count"
+    },
+    {
+      "name": "missing-provider-device-treated-as-unsupported",
+      "rejected": true,
+      "failures": 24,
+      "named_assertion": "!warm_calls&&!registration_calls&&!idle_allocation_count"
+    },
+    {
+      "name": "provider-device-reference-leaked",
+      "rejected": true,
+      "failures": 226,
+      "named_assertion": "!cpu_nodes[i].refs&&!saw_nodes[i].refs&&!providers[i].dev.refs"
+    },
+    {
+      "name": "CPU-node-reference-leaked",
+      "rejected": true,
+      "failures": 238,
+      "named_assertion": "!cpu_nodes[i].refs&&!saw_nodes[i].refs&&!providers[i].dev.refs"
+    },
+    {
+      "name": "disable-second-attempt-omitted",
+      "rejected": true,
+      "failures": 1,
+      "named_assertion": "!fatal_calls&&result==-ETIMEDOUT&&ctl_writes==101"
+    }
+  ],
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "crashes_compiler_errors_and_sanitizer_faults_do_not_count": true,
+  "only_synthetic_services": true,
+  "no_phone_network_radio_audio_or_firmware_execution": true
+}

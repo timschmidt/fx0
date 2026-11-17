@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "bindings": {
+    "qcom_rpm_smd_freeze": "7ca0324fbf48b2de494a4e9e2b55a7fdcb27970bc3fa0fd01334531ff9ee7f4a",
+    "qcom_rpm_smd_thaw": "37bbb9becd26b331444e014f0a3422a1e7d111e675e47d529cac151165cd6256",
+    "qcom_rpm_smd_write": "c3fdc39932a084de817ec2aa4aa74e9d3c6b69cb0ad438e4b43ad6f91e27e029",
+    "qcom_smd_rpm_callback": "9114740d3753009ff52dcde1fa49c78096f984cbd0b944be3a98f1cd711608bc"
+  },
+  "actual_functions": 4,
+  "model_SHA256": "b2448e6f65339698e19c8daae69fbeecf25f52dcc4d479cbe395c7165e2cb4b3",
+  "ASAN_OPTIONS": "detect_leaks=1:halt_on_error=1:abort_on_error=1",
+  "UBSAN_OPTIONS": "halt_on_error=1:print_stacktrace=1",
+  "synthetic": [
+    "RPMsg and IRQ delivery",
+    "IRQ enable state",
+    "allocation failure",
+    "PM callback scheduling"
+  ],
+  "real_host_services": [
+    "POSIX mutexes",
+    "POSIX condition variables",
+    "host pthread concurrency"
+  ],
+  "kernel_concurrency_qualified": false,
+  "phone_access": false,
+  "cases": 147,
+  "checks": 13235,
+  "failures": 0,
+  "threaded_drain_cases": 40
+}
