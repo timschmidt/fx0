@@ -1,0 +1,75 @@
+{
+  "started_UTC": "2026-11-17T05:42:24.389945+00:00",
+  "passed": false,
+  "state": "terminal failure",
+  "source_head": "fc5120c4e0f2ab4790cb62f1f4c40aea74697a18",
+  "source_tree": "db872556b9b09289d09138209e0bb7674326300a",
+  "input_manifest_SHA256": "46b00d67573d2e69d8ae36c9dd2e024b15a7e7a479fa8380756b0bb918d0113f",
+  "controller_script_SHA256": "c64b5caf436896ad3a0c2b81bfdaec22299cb5e2e7d24f381b14118f8b25d93a",
+  "clean_output_directory": true,
+  "source_export_without_Git": true,
+  "development_private_key_not_mounted": true,
+  "private_key_not_read_hashed_or_copied": true,
+  "network_namespace_isolated": true,
+  "hardware_device_access_excluded": true,
+  "environment_cleared": true,
+  "source_and_inputs_read_only": true,
+  "Git_denied": true,
+  "phone_access": false,
+  "published": false,
+  "input_publication_pending": true,
+  "maintained_LTS_acceptance": false,
+  "full_APK_install_update_recovery_or_physical_acceptance": false,
+  "installation_profile": "unstripped modules; matches the controlled experimental build",
+  "stages": [
+    {
+      "label": "isolation-probe",
+      "returncode": 0,
+      "log_SHA256": "6abf96ae14fd3df58021e29d20045f66237b9674a2c8f755fe3a3dc84263494e",
+      "diagnostics": []
+    },
+    {
+      "label": "config",
+      "returncode": 0,
+      "log_SHA256": "cf87324e067ab957bdccd16529fe1b16a510eb5cacfda29894c6801cc1e41d18",
+      "diagnostics": []
+    }
+  ],
+  "sandbox_environment": {
+    "PATH": "/inputs/bin:/usr/bin:/usr/sbin:/bin:/sbin",
+    "HOME": "/homeless",
+    "USER": "fx0-review",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "TMPDIR": "/build/out/tmp",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "GIT_NO_LAZY_FETCH": "1",
+    "KBUILD_BUILD_VERSION": "30",
+    "KBUILD_BUILD_USER": "fx0-review",
+    "KBUILD_BUILD_HOST": "source-check",
+    "KBUILD_BUILD_TIMESTAMP": "2026-11-16 00:00:00 UTC",
+    "SOURCE_DATE_EPOCH": "1794787200"
+  },
+  "sandbox_mounts": {
+    "read_only": [
+      "/usr",
+      "/etc",
+      "/src/linux",
+      "/inputs"
+    ],
+    "writable": [
+      "/build/out",
+      "/tmp"
+    ],
+    "synthetic": [
+      "/dev",
+      "/proc"
+    ],
+    "home_root_run_sys_and_host_boot_not_mounted": true
+  },
+  "error_type": "AssertionError",
+  "error": "",
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-17T05:42:28.091625+00:00"
+}

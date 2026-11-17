@@ -1,0 +1,65 @@
+From 085a309869284ad9df25f708ec59eaf30090105b Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Mon, 16 Nov 2026 22:49:02 -0500
+Subject: [PATCH] rpmsg: qcom_smd: Drop the retained edge node on release
+
+qcom_smd_parse_edge() retains the edge device-tree node with of_node_get().
+Error paths drop that reference and clear edge->of_node, but successful
+registration never releases it when the edge is removed. Repeated
+successful
+registration/removal therefore leaves another node reference behind. The
+reference is also retained when a later registration step fails.
+
+Release the saved reference in qcom_smd_edge_release(), after the channels
+are freed. A NULL edge->of_node from an earlier parse failure is harmless.
+The device core does not release this separately retained driver reference.
+
+A host model executes the actual parse, register, child removal, unregister
+and release bodies with synthetic OF/device/mailbox/IRQ/work services. It
+reproduces 16 reference imbalances before this change; all 81 cases pass
+with it, including mailbox and syscon paths, failure boundaries, and the
+local noirq-capable RPM draft. Six clean assertion controls reject broken
+reference, IRQ, notifier and work cleanup. These are synthetic host checks,
+not physical device or kernel concurrency qualification.
+
+Native ARM and ARM64 ordinary/RT builds pass with no new diagnostics. The
+two pre-existing RPMsg kernel-doc warnings per profile are retained.
+Public source history verifies the original unmatched node acquisition.
+
+Codex found the issue and generated the fix, host tests and this draft
+message during the Fx0 bringup audit. Human review and DCO remain pending.
+Nothing has been submitted.
+
+Fixes: 53e2822e56c7 ("rpmsg: Introduce Qualcomm SMD backend")
+
+Backport to the maintained 6.18.63 Fx0 integration. Original integration
+model evidence remains separate. In the combined three-fix series, the
+relevant focused model passes 34 cases. The complete series also compiles
+on ARM, ARM64 and ARM64 RT with nonpermissive CFI. ARM32 RT is unsupported
+in this maintained kernel and is not counted as an RT build.
+
+Codex prepared this local backport and its verification. Human review
+and DCO remain pending; the MPM issue also awaits human security
+classification. Nothing has been published or sent to maintainers.
+
+Backported from commit 65fcce0588a4e70325c16834954b76ee914f418b ("rpmsg:
+qcom_smd: Drop the retained edge node on release").
+---
+ drivers/rpmsg/qcom_smd.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
+index 42594f5ee438..75b3071bd093 100644
+--- a/drivers/rpmsg/qcom_smd.c
++++ b/drivers/rpmsg/qcom_smd.c
+@@ -1450,6 +1450,7 @@ static void qcom_smd_edge_release(struct device *dev)
+ 		kfree(channel);
+ 	}
+ 
++	of_node_put(edge->of_node);
+ 	kfree(edge);
+ }
+ 
+-- 
+2.56.0
+

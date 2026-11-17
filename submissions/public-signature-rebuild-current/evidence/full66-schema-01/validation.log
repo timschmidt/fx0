@@ -1,0 +1,457 @@
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8060-dragonboard.dtb: / (qcom,apq8060-dragonboard): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8060-dragonboard.dtb: timer@2000000 (qcom,scss-timer): 'clocks' is a required property
+	from schema $id: http://devicetree.org/schemas/watchdog/qcom-wdt.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8060-dragonboard.dtb: ssbi@500000 (qcom,ssbi): pmic:led@48:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+	'cm3605' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'gpio', 'kbd-capslock', 'mtd', 'nand-disk', 'netdev', 'none', 'rc-feedback', 'torch', 'usb-gadget', 'usb-host', 'usbport']
+	'cm3605' does not match '^cpu[0-9]*$'
+	'cm3605' does not match '^hci[0-9]+-power$'
+	'cm3605' does not match '^mmc[0-9]+$'
+	'cm3605' does not match '^phy[0-9]+(rx|tx)$'
+	from schema $id: http://devicetree.org/schemas/bus/qcom,ssbi.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8060-dragonboard.dtb: ssbi@500000 (qcom,ssbi): pmic:led@48: Unevaluated properties are not allowed ('default-state', 'label', 'linux,default-trigger' were unexpected)
+	from schema $id: http://devicetree.org/schemas/bus/qcom,ssbi.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8060-dragonboard.dtb: pmic (qcom,pm8058): led@48:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+	'cm3605' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'gpio', 'kbd-capslock', 'mtd', 'nand-disk', 'netdev', 'none', 'rc-feedback', 'torch', 'usb-gadget', 'usb-host', 'usbport']
+	'cm3605' does not match '^cpu[0-9]*$'
+	'cm3605' does not match '^hci[0-9]+-power$'
+	'cm3605' does not match '^mmc[0-9]+$'
+	'cm3605' does not match '^phy[0-9]+(rx|tx)$'
+	from schema $id: http://devicetree.org/schemas/mfd/qcom-pm8xxx.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8060-dragonboard.dtb: pmic (qcom,pm8058): led@48: Unevaluated properties are not allowed ('default-state', 'label', 'linux,default-trigger' were unexpected)
+	from schema $id: http://devicetree.org/schemas/mfd/qcom-pm8xxx.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8060-dragonboard.dtb: led@48 (qcom,pm8058-keypad-led): linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+	'cm3605' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'gpio', 'kbd-capslock', 'mtd', 'nand-disk', 'netdev', 'none', 'rc-feedback', 'torch', 'usb-gadget', 'usb-host', 'usbport']
+	'cm3605' does not match '^cpu[0-9]*$'
+	'cm3605' does not match '^hci[0-9]+-power$'
+	'cm3605' does not match '^mmc[0-9]+$'
+	'cm3605' does not match '^phy[0-9]+(rx|tx)$'
+	from schema $id: http://devicetree.org/schemas/leds/qcom,pm8058-led.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8060-dragonboard.dtb: led@48 (qcom,pm8058-keypad-led): Unevaluated properties are not allowed ('default-state', 'label', 'linux,default-trigger' were unexpected)
+	from schema $id: http://devicetree.org/schemas/leds/qcom,pm8058-led.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8060-dragonboard.dtb: amba (simple-bus): $nodename:0: 'amba' does not match '^([a-z][a-z0-9\\-]+-bus|bus|localbus|soc|axi|ahb|apb)(@.+)?$'
+	from schema $id: http://devicetree.org/schemas/simple-bus.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-asus-nexus7-flo.dtb: usb@12500000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-asus-nexus7-flo.dtb: usb@12500000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-asus-nexus7-flo.dtb: usb@12520000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-asus-nexus7-flo.dtb: usb@12520000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-asus-nexus7-flo.dtb: usb@12530000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-asus-nexus7-flo.dtb: usb@12530000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-cm-qs600.dtb: usb@12500000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-cm-qs600.dtb: usb@12500000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-cm-qs600.dtb: usb@12520000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-cm-qs600.dtb: usb@12520000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-cm-qs600.dtb: usb@12530000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-cm-qs600.dtb: usb@12530000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-ifc6410.dtb: usb@12500000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-ifc6410.dtb: usb@12500000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-ifc6410.dtb: usb@12520000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-ifc6410.dtb: usb@12520000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-ifc6410.dtb: usb@12530000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-ifc6410.dtb: usb@12530000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-lg-nexus4-mako.dtb: usb@12500000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-lg-nexus4-mako.dtb: usb@12500000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-lg-nexus4-mako.dtb: usb@12520000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-lg-nexus4-mako.dtb: usb@12520000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-lg-nexus4-mako.dtb: usb@12530000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-lg-nexus4-mako.dtb: usb@12530000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-sony-xperia-lagan-yuga.dtb: usb@12500000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-sony-xperia-lagan-yuga.dtb: usb@12500000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-sony-xperia-lagan-yuga.dtb: usb@12520000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-sony-xperia-lagan-yuga.dtb: usb@12520000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-sony-xperia-lagan-yuga.dtb: usb@12530000 (qcom,ci-hdrc): clock-names:0: 'iface' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8064-sony-xperia-lagan-yuga.dtb: usb@12530000 (qcom,ci-hdrc): clock-names:1: 'core' was expected
+	from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-apq8074-dragonboard.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac-bit.dtb: / (alfa-network,ap120c-ac): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac-bit.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac-bit.dtb: ethernet-phy-package@0 (qcom,qca8075-package): qcom,tx-drive-strength-milliwatt: 300 is not of type 'array'
+	from schema $id: http://devicetree.org/schemas/property-units.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac-bit.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac-bit.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): reset-names: ['por_rst'] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac-bit.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): resets: [[5, 12]] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac-bit.dtb: usb-phy@a6000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac-bit.dtb: usb@8af8800 (qcom,ipq4019-dwc3): 'oneOf' conditional failed, one must be fixed:
+	'interrupts' is a required property
+	'interrupts-extended' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac-bit.dtb: usb@8af8800 (qcom,ipq4019-dwc3): 'interrupt-names' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac-bit.dtb: usb-phy@a8000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac-bit.dtb: usb@60f8800 (qcom,ipq4019-dwc3): 'oneOf' conditional failed, one must be fixed:
+	'interrupts' is a required property
+	'interrupts-extended' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac-bit.dtb: usb@60f8800 (qcom,ipq4019-dwc3): 'interrupt-names' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: / (alfa-network,ap120c-ac): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: ethernet-phy-package@0 (qcom,qca8075-package): qcom,tx-drive-strength-milliwatt: 300 is not of type 'array'
+	from schema $id: http://devicetree.org/schemas/property-units.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): reset-names: ['por_rst'] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): resets: [[5, 12]] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: usb-phy@a6000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: usb@8af8800 (qcom,ipq4019-dwc3): 'oneOf' conditional failed, one must be fixed:
+	'interrupts' is a required property
+	'interrupts-extended' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: usb@8af8800 (qcom,ipq4019-dwc3): 'interrupt-names' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: usb-phy@a8000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: usb@60f8800 (qcom,ipq4019-dwc3): 'oneOf' conditional failed, one must be fixed:
+	'interrupts' is a required property
+	'interrupts-extended' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: usb@60f8800 (qcom,ipq4019-dwc3): 'interrupt-names' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: leds (gpio-leds): led-wlan2g:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+	'phy0tpt' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'gpio', 'kbd-capslock', 'mtd', 'nand-disk', 'netdev', 'none', 'rc-feedback', 'torch', 'usb-gadget', 'usb-host', 'usbport']
+	'phy0tpt' does not match '^cpu[0-9]*$'
+	'phy0tpt' does not match '^hci[0-9]+-power$'
+	'phy0tpt' does not match '^mmc[0-9]+$'
+	'phy0tpt' does not match '^phy[0-9]+(rx|tx)$'
+	from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-ap120c-ac.dtb: leds (gpio-leds): led-wlan5g:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+	'phy1tpt' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'gpio', 'kbd-capslock', 'mtd', 'nand-disk', 'netdev', 'none', 'rc-feedback', 'torch', 'usb-gadget', 'usb-host', 'usbport']
+	'phy1tpt' does not match '^cpu[0-9]*$'
+	'phy1tpt' does not match '^hci[0-9]+-power$'
+	'phy1tpt' does not match '^mmc[0-9]+$'
+	'phy1tpt' does not match '^phy[0-9]+(rx|tx)$'
+	from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: / (8dev,jalapeno): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: spi-nand@1 (spi-nand): $nodename:0: 'spi-nand@1' does not match '^(flash|.*sram|nand)(@.*)?$'
+	from schema $id: http://devicetree.org/schemas/mtd/spi-nand.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: spi-nand@1 (spi-nand): Unevaluated properties are not allowed ('partitions' was unexpected)
+	from schema $id: http://devicetree.org/schemas/mtd/spi-nand.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: ethernet-phy-package@0 (qcom,qca8075-package): qcom,tx-drive-strength-milliwatt: 300 is not of type 'array'
+	from schema $id: http://devicetree.org/schemas/property-units.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): reset-names: ['por_rst'] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): resets: [[5, 12]] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: usb-phy@a6000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: usb@8af8800 (qcom,ipq4019-dwc3): 'oneOf' conditional failed, one must be fixed:
+	'interrupts' is a required property
+	'interrupts-extended' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: usb@8af8800 (qcom,ipq4019-dwc3): 'interrupt-names' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: usb-phy@a8000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: usb@60f8800 (qcom,ipq4019-dwc3): 'oneOf' conditional failed, one must be fixed:
+	'interrupts' is a required property
+	'interrupts-extended' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4018-jalapeno.dtb: usb@60f8800 (qcom,ipq4019-dwc3): 'interrupt-names' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk01.1-c1.dtb: / (qcom,ipq4019-ap-dk01.1-c1): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk01.1-c1.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk01.1-c1.dtb: ethernet-phy-package@0 (qcom,qca8075-package): qcom,tx-drive-strength-milliwatt: 300 is not of type 'array'
+	from schema $id: http://devicetree.org/schemas/property-units.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk01.1-c1.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk01.1-c1.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): reset-names: ['por_rst'] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk01.1-c1.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): resets: [[5, 12]] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk01.1-c1.dtb: usb-phy@a6000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk01.1-c1.dtb: usb-phy@a8000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c1.dtb: / (qcom,ipq4019-dk04.1-c1): False schema does not allow {'device_type': ['memory'], 'reg': [[2147483648, 268435456]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c1.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c1.dtb: ethernet-phy-package@0 (qcom,qca8075-package): qcom,tx-drive-strength-milliwatt: 300 is not of type 'array'
+	from schema $id: http://devicetree.org/schemas/property-units.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c1.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c1.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): reset-names: ['por_rst'] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c1.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): resets: [[5, 12]] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c1.dtb: usb-phy@a6000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c1.dtb: usb-phy@a8000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c3.dtb: / (qcom,ipq4019-ap-dk04.1-c3): False schema does not allow {'device_type': ['memory'], 'reg': [[2147483648, 268435456]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c3.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c3.dtb: ethernet-phy-package@0 (qcom,qca8075-package): qcom,tx-drive-strength-milliwatt: 300 is not of type 'array'
+	from schema $id: http://devicetree.org/schemas/property-units.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c3.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c3.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): reset-names: ['por_rst'] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c3.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): resets: [[5, 12]] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c3.dtb: usb-phy@a6000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk04.1-c3.dtb: usb-phy@a8000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: / (qcom,ipq4019-ap-dk07.1-c1): False schema does not allow {'device_type': ['memory'], 'reg': [[2147483648, 536870912]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: soc (simple-bus): pci@40000000: 'anyOf' conditional failed, one must be fixed:
+	'reg' is a required property
+	'ranges' is a required property
+	from schema $id: http://devicetree.org/schemas/simple-bus.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: ethernet-phy-package@0 (qcom,qca8075-package): qcom,tx-drive-strength-milliwatt: 300 is not of type 'array'
+	from schema $id: http://devicetree.org/schemas/property-units.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): reset-names: ['por_rst'] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): resets: [[5, 12]] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: usb-phy@a6000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: usb-phy@a8000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: pci@40000000: 'device_type' is a required property
+	from schema $id: http://devicetree.org/schemas/pci/pci-bus-common.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: pci@40000000: 'ranges' is a required property
+	from schema $id: http://devicetree.org/schemas/pci/pci-bus-common.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: pci@40000000: '#address-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/pci/pci-bus-common.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c1.dtb: pci@40000000: '#size-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/pci/pci-bus-common.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c2.dtb: / (qcom,ipq4019-ap-dk07.1-c2): False schema does not allow {'device_type': ['memory'], 'reg': [[2147483648, 536870912]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c2.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c2.dtb: ethernet-phy-package@0 (qcom,qca8075-package): qcom,tx-drive-strength-milliwatt: 300 is not of type 'array'
+	from schema $id: http://devicetree.org/schemas/property-units.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c2.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c2.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): reset-names: ['por_rst'] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c2.dtb: usb-phy@9a000 (qcom,usb-ss-ipq4019-phy): resets: [[5, 12]] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c2.dtb: usb-phy@a6000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq4019-ap.dk07.1-c2.dtb: usb-phy@a8000 (qcom,usb-hs-ipq4019-phy): 'reg-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom-usb-ipq4019-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: / (qcom,ipq8064-ap148): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: syscon@3000000 (syscon): compatible: ['syscon'] is too short
+	from schema $id: http://devicetree.org/schemas/mfd/syscon-common.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: amba (simple-bus): $nodename:0: 'amba' does not match '^([a-z][a-z0-9\\-]+-bus|bus|localbus|soc|axi|ahb|apb)(@.+)?$'
+	from schema $id: http://devicetree.org/schemas/simple-bus.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: syscon@1bb00000 (syscon): compatible: ['syscon'] is too short
+	from schema $id: http://devicetree.org/schemas/mfd/syscon-common.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: ethernet@37000000 (qcom,ipq806x-gmac): qcom,nss-common: b'\x00\x00\x00#' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: ethernet@37000000 (qcom,ipq806x-gmac): qcom,qsgmii-csr: b'\x00\x00\x00$' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: ethernet@37200000 (qcom,ipq806x-gmac): qcom,nss-common: b'\x00\x00\x00#' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: ethernet@37200000 (qcom,ipq806x-gmac): qcom,qsgmii-csr: b'\x00\x00\x00$' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: ethernet@37400000 (qcom,ipq806x-gmac): qcom,nss-common: b'\x00\x00\x00#' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: ethernet@37400000 (qcom,ipq806x-gmac): qcom,qsgmii-csr: b'\x00\x00\x00$' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: ethernet@37600000 (qcom,ipq806x-gmac): qcom,nss-common: b'\x00\x00\x00#' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: ethernet@37600000 (qcom,ipq806x-gmac): qcom,qsgmii-csr: b'\x00\x00\x00$' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: leds (gpio-leds): led-0:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+	'usbdev' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'gpio', 'kbd-capslock', 'mtd', 'nand-disk', 'netdev', 'none', 'rc-feedback', 'torch', 'usb-gadget', 'usb-host', 'usbport']
+	'usbdev' does not match '^cpu[0-9]*$'
+	'usbdev' does not match '^hci[0-9]+-power$'
+	'usbdev' does not match '^mmc[0-9]+$'
+	'usbdev' does not match '^phy[0-9]+(rx|tx)$'
+	from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-ap148.dtb: leds (gpio-leds): led-1:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+	'usbdev' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'gpio', 'kbd-capslock', 'mtd', 'nand-disk', 'netdev', 'none', 'rc-feedback', 'torch', 'usb-gadget', 'usb-host', 'usbport']
+	'usbdev' does not match '^cpu[0-9]*$'
+	'usbdev' does not match '^hci[0-9]+-power$'
+	'usbdev' does not match '^mmc[0-9]+$'
+	'usbdev' does not match '^phy[0-9]+(rx|tx)$'
+	from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: / (mikrotik,rb3011): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: pinmux@800000 (qcom,ipq8064-pinctrl): leds-state: 'oneOf' conditional failed, one must be fixed:
+	{'pins': ['gpio33'], 'function': ['gpio'], 'drive-strength': 16, 'bias-pull-down': True, 'output-low': True, 'bias-disable': True, 'phandle': 40} is valid under each of {'required': ['bias-pull-down']}, {'required': ['bias-disable']}
+	'bias-disable', 'bias-pull-down', 'drive-strength', 'function', 'output-low', 'pins' do not match any of the regexes: '-pins$', '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,ipq8064-pinctrl.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: pinmux@800000 (qcom,ipq8064-pinctrl): buttons-state: 'oneOf' conditional failed, one must be fixed:
+	{'pins': ['gpio66'], 'drive-strength': 16, 'bias-pull-up': True, 'function': ['gpio'], 'bias-disable': True, 'phandle': 39} is valid under each of {'required': ['bias-pull-up']}, {'required': ['bias-disable']}
+	'bias-disable', 'bias-pull-up', 'drive-strength', 'function', 'pins' do not match any of the regexes: '-pins$', '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,ipq8064-pinctrl.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: syscon@3000000 (syscon): compatible: ['syscon'] is too short
+	from schema $id: http://devicetree.org/schemas/mfd/syscon-common.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: usb@110f8800 (qcom,ipq8064-dwc3): 'oneOf' conditional failed, one must be fixed:
+	'interrupts' is a required property
+	'interrupts-extended' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: usb@110f8800 (qcom,ipq8064-dwc3): 'interrupt-names' is a required property
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: amba (simple-bus): $nodename:0: 'amba' does not match '^([a-z][a-z0-9\\-]+-bus|bus|localbus|soc|axi|ahb|apb)(@.+)?$'
+	from schema $id: http://devicetree.org/schemas/simple-bus.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: syscon@1bb00000 (syscon): compatible: ['syscon'] is too short
+	from schema $id: http://devicetree.org/schemas/mfd/syscon-common.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: ethernet@37000000 (qcom,ipq806x-gmac): qcom,nss-common: b'\x00\x00\x00#' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: ethernet@37000000 (qcom,ipq806x-gmac): qcom,qsgmii-csr: b'\x00\x00\x00$' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: ethernet@37000000 (qcom,ipq806x-gmac): qcom,id: b'\x00\x00\x00\x00' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: ethernet@37200000 (qcom,ipq806x-gmac): qcom,nss-common: b'\x00\x00\x00#' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: ethernet@37200000 (qcom,ipq806x-gmac): qcom,qsgmii-csr: b'\x00\x00\x00$' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: ethernet@37400000 (qcom,ipq806x-gmac): qcom,nss-common: b'\x00\x00\x00#' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: ethernet@37400000 (qcom,ipq806x-gmac): qcom,qsgmii-csr: b'\x00\x00\x00$' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: ethernet@37600000 (qcom,ipq806x-gmac): qcom,nss-common: b'\x00\x00\x00#' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: ethernet@37600000 (qcom,ipq806x-gmac): qcom,qsgmii-csr: b'\x00\x00\x00$' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-ipq8064-rb3011.dtb: ethernet@37600000 (qcom,ipq806x-gmac): qcom,id: b'\x00\x00\x00\x03' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-kuno-idp.dtb: / (qcom,kuno-idp): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-kuno-idp.dtb: geniqup@9c0000 (qcom,geni-se-qup): #address-cells: 2 was expected
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-kuno-idp.dtb: geniqup@9c0000 (qcom,geni-se-qup): #size-cells: 2 was expected
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-mdm9615-wp8548-mangoh-green.dtb: timer@200a000 (qcom,kpss-wdt-mdm9615): 'clocks' is a required property
+	from schema $id: http://devicetree.org/schemas/watchdog/qcom-wdt.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8660-surf.dtb: / (qcom,msm8660-surf): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8660-surf.dtb: timer@2000000 (qcom,scss-timer): 'clocks' is a required property
+	from schema $id: http://devicetree.org/schemas/watchdog/qcom-wdt.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8660-surf.dtb: amba (simple-bus): $nodename:0: 'amba' does not match '^([a-z][a-z0-9\\-]+-bus|bus|localbus|soc|axi|ahb|apb)(@.+)?$'
+	from schema $id: http://devicetree.org/schemas/simple-bus.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8960-samsung-expressatt.dtb: i2c-gpio-touchkey (i2c-gpio): $nodename:0: 'i2c-gpio-touchkey' does not match '^i2c(@.+|-[a-z0-9]+)?$'
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8960-samsung-expressatt.dtb: i2c-gpio-touchkey (i2c-gpio): Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'touchkey@20' were unexpected)
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974-lge-nexus5-hammerhead.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974-lge-nexus5-hammerhead.dtb: panel@0 (lg,acx467akm-7): 'power-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/display/panel/panel-simple-dsi.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974-samsung-hlte.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974-sony-xperia-rhine-amami.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974-sony-xperia-rhine-honami.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974-sony-xperia-rhine-togari.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-fairphone-fp2.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-htc-m8.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-oneplus-bacon.dtb: / (oneplus,bacon): False schema does not allow [[8, 0]]
+	from schema $id: http://devicetree.org/schemas/arm/qcom.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-oneplus-bacon.dtb: / (oneplus,bacon): False schema does not allow [[194, 65536]]
+	from schema $id: http://devicetree.org/schemas/arm/qcom.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-oneplus-bacon.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-samsung-klte.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-samsung-klte.dtb: i2c-gpio-touchkey (i2c-gpio): $nodename:0: 'i2c-gpio-touchkey' does not match '^i2c(@.+|-[a-z0-9]+)?$'
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-samsung-klte.dtb: i2c-gpio-touchkey (i2c-gpio): Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'touchkey@20' were unexpected)
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-samsung-klte.dtb: i2c-gpio-led (i2c-gpio): $nodename:0: 'i2c-gpio-led' does not match '^i2c(@.+|-[a-z0-9]+)?$'
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-samsung-klte.dtb: i2c-gpio-led (i2c-gpio): Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'gpio@20', 'led-controller@30' were unexpected)
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-samsung-kltechn.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-samsung-kltechn.dtb: i2c-gpio-touchkey (i2c-gpio): $nodename:0: 'i2c-gpio-touchkey' does not match '^i2c(@.+|-[a-z0-9]+)?$'
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-samsung-kltechn.dtb: i2c-gpio-touchkey (i2c-gpio): Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'touchkey@20' were unexpected)
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-samsung-kltechn.dtb: i2c-gpio-led (i2c-gpio): $nodename:0: 'i2c-gpio-led' does not match '^i2c(@.+|-[a-z0-9]+)?$'
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-samsung-kltechn.dtb: i2c-gpio-led (i2c-gpio): Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'gpio@20', 'led-controller@30' were unexpected)
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-gpio.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-sony-xperia-shinano-aries.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-sony-xperia-shinano-castor.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-msm8974pro-sony-xperia-shinano-leo.dtb: l2-cache (cache): Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-sdx55-mtp.dtb: / (qcom,sdx55-mtp): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-sdx55-mtp.dtb: phy@1c06000 (qcom,sdx55-qmp-pcie-phy): '#address-cells', '#size-cells', 'ranges' do not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-sdx55-mtp.dtb: rsc@17830000 (qcom,rpmh-rsc): 'power-domains' is a required property
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpmh-rsc.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-sdx55-t55.dtb: / (qcom,sdx55-t55): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-sdx55-t55.dtb: phy@1c06000 (qcom,sdx55-qmp-pcie-phy): '#address-cells', '#size-cells', 'ranges' do not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-sdx55-t55.dtb: rsc@17830000 (qcom,rpmh-rsc): 'power-domains' is a required property
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpmh-rsc.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-sdx55-telit-fn980-tlb.dtb: / (qcom,sdx55-telit-fn980-tlb): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-sdx55-telit-fn980-tlb.dtb: phy@1c06000 (qcom,sdx55-qmp-pcie-phy): '#address-cells', '#size-cells', 'ranges' do not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-sdx55-telit-fn980-tlb.dtb: rsc@17830000 (qcom,rpmh-rsc): 'power-domains' is a required property
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpmh-rsc.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-sdx65-mtp.dtb: / (qcom,sdx65-mtp): False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml
+local/fx0-public-signing-replay-current-01/public-build-04/out/stage/boot/dtbs/qcom-sdx65-mtp.dtb: rsc@17830000 (qcom,rpmh-rsc): 'power-domains' is a required property
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpmh-rsc.yaml

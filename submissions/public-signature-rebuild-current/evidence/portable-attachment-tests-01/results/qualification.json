@@ -1,0 +1,73 @@
+{
+  "passed": true,
+  "cases": 10,
+  "records": [
+    {
+      "name": "actual-kernel-attachment",
+      "passed": true,
+      "actual_kernel_sign_file_s": true,
+      "signed_module_SHA256": "86ad4f69b5a906c20050b5917cd98094f9bc283496f70c6d385041bd7799d7a8"
+    },
+    {
+      "name": "double-attachment",
+      "passed": true,
+      "rejected_without_module_write": true
+    },
+    {
+      "name": "changed-payload-catalog",
+      "passed": true,
+      "rejected_without_module_write": true,
+      "CMS_DER_format_validated": false
+    },
+    {
+      "name": "changed-payload-CMS",
+      "passed": true,
+      "rejected_without_module_write": true,
+      "CMS_DER_format_validated": false
+    },
+    {
+      "name": "changed-signature-checksum",
+      "passed": true,
+      "rejected_without_module_write": true,
+      "CMS_DER_format_validated": false
+    },
+    {
+      "name": "valid-format-changed-CMS",
+      "passed": true,
+      "rejected_without_module_write": true,
+      "CMS_DER_format_validated": true
+    },
+    {
+      "name": "unissued-payload",
+      "passed": true,
+      "rejected_without_module_write": true,
+      "CMS_DER_format_validated": false
+    },
+    {
+      "name": "wrong-final-digest",
+      "passed": true,
+      "rejected_without_module_write": true,
+      "CMS_DER_format_validated": false
+    },
+    {
+      "name": "invalid-signature-path",
+      "passed": true,
+      "rejected_without_module_write": true,
+      "CMS_DER_format_validated": false
+    },
+    {
+      "name": "changed-certificate",
+      "passed": true,
+      "rejected_without_module_write": true,
+      "CMS_DER_format_validated": false
+    }
+  ],
+  "actual_kernel_sign_file_source_head": "fc5120c4e0f2ab4790cb62f1f4c40aea74697a18",
+  "input_manifest_SHA256": "46b00d67573d2e69d8ae36c9dd2e024b15a7e7a479fa8380756b0bb918d0113f",
+  "private_key_not_mounted_or_used": true,
+  "no_new_signing_operation": true,
+  "network_interfaces": [
+    "lo"
+  ],
+  "phone_access": false
+}

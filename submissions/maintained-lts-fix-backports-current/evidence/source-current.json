@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "recorded_UTC": "2026-11-17T06:44:36.726656+00:00",
+  "base": "250e7412a5a15068b2a2fe32b57b66c300c91b5f",
+  "head": "2677746cc1d6b6ab4aa60dbb5c8ad926fb327568",
+  "branch": "integration/fx0-lts-current-01",
+  "source_repo": "worktrees/linux-fx0-lts-integration-current-01",
+  "commits": [
+    {
+      "label": "SMD-node-release",
+      "origin_commit": "65fcce0588a4e70325c16834954b76ee914f418b",
+      "commit": "085a309869284ad9df25f708ec59eaf30090105b",
+      "parent": "250e7412a5a15068b2a2fe32b57b66c300c91b5f",
+      "paths": [
+        "drivers/rpmsg/qcom_smd.c"
+      ],
+      "old_commit_preserved": "2e330906f1a4f6e686b7cc621f005f46575a5852",
+      "tree_unchanged": true,
+      "previous_message_revision": "5ad66f813641ce091f1f151d6289102606d6ecd2"
+    },
+    {
+      "label": "SMD-registration-retry",
+      "origin_commit": "daba8b5e5d5c232b6674ca44a759aee692bcaba8",
+      "commit": "00a8e5668a5518b430a58e62e8b448fab1ca9354",
+      "parent": "085a309869284ad9df25f708ec59eaf30090105b",
+      "paths": [
+        "drivers/rpmsg/qcom_smd.c"
+      ],
+      "old_commit_preserved": "abda4575ec7844970b3f4777f60db71ad5e6efcc",
+      "tree_unchanged": true,
+      "previous_message_revision": "bc02c3498b3018b01b473ec0c1b27536cc96c40c"
+    },
+    {
+      "label": "MPM-probe-unwind",
+      "origin_commit": "a80e0ad0e69ac36427d90305dc592298f7132b03",
+      "commit": "2677746cc1d6b6ab4aa60dbb5c8ad926fb327568",
+      "parent": "00a8e5668a5518b430a58e62e8b448fab1ca9354",
+      "paths": [
+        "drivers/irqchip/irq-qcom-mpm.c"
+      ],
+      "old_commit_preserved": "1dc1ee36a4a806d9f4eb8e970f63a51a763beed3",
+      "tree_unchanged": true,
+      "previous_message_revision": "a1796e09593946854b62720b42a2b28b9c158496"
+    }
+  ],
+  "source_files": {
+    "drivers/rpmsg/qcom_smd.c": "103a44ca3969552945e2061a4eaca9ee3b0c5a00a090309acb1e0004fa707ad4",
+    "drivers/irqchip/irq-qcom-mpm.c": "b79456f01bc7451d53fb67e0095470b2f39e0f5baa3292de91c28d4038b44a35"
+  },
+  "working_tree_clean": true,
+  "focused_cases": 473,
+  "baseline_failed_assertions": 49,
+  "after_failed_assertions": 0,
+  "native_objects": 6,
+  "native_profiles": [
+    "arm-normal",
+    "arm64-normal",
+    "arm64-rt"
+  ],
+  "ARM32_RT_unsupported_not_counted": true,
+  "CFI_nonpermissive_in_all_supported_profiles": true,
+  "new_native_diagnostics": 0,
+  "source_bytes_match_precommit_native_builds": true,
+  "native_objects_built_before_source_commits": true,
+  "full_link_and_release_specific_package_qualification": false,
+  "current_147_commit_integration_port_incomplete": true,
+  "phone_access": false,
+  "published": false,
+  "maintainer_contact": false,
+  "human_DCO_pending": true,
+  "MPM_security_classification_pending_human_review": true,
+  "full_goal_complete": false,
+  "message_wrapping_only": true,
+  "all_source_trees_unchanged": true,
+  "original_local_head_preserved": "1dc1ee36a4a806d9f4eb8e970f63a51a763beed3",
+  "strict_checkpatch_passed": true,
+  "full_original_commit_references_with_titles": true
+}

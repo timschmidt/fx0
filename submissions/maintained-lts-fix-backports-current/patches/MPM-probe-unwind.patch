@@ -1,0 +1,74 @@
+From 2677746cc1d6b6ab4aa60dbb5c8ad926fb327568 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Mon, 16 Nov 2026 23:05:56 -0500
+Subject: [PATCH] irqchip/qcom-mpm: Unregister the provider on probe failure
+
+The MPM driver publishes its genpd provider before requesting the mailbox,
+finding the parent IRQ domain, creating its IRQ domain and requesting the
+interrupt. A mailbox error returns without removing either the provider or
+the initialized domain. Later failures remove the domain but leave its OF
+provider registered. Probe can fail with EPROBE_DEFER here, leaving a stale
+provider referring to device-managed memory released after the failure.
+
+Unregister the OF provider before removing the initialized genpd on every
+failure after provider registration. Route mailbox acquisition failures
+through that cleanup without attempting to free an unacquired mailbox.
+The existing domain and mailbox cleanup remains in place for later errors.
+
+A host model executes the actual probe and mapping helper with synthetic
+DT, devres, genpd, mailbox and IRQ services. Its 64 cases reproduce 28
+cleanup assertion failures before this change and pass afterward, covering
+ordinary and local sleep-coordinator configurations, deferred/hard errors
+at all checked initialization boundaries, and invalid pin counts. Four
+clean controls reject missing or reordered cleanup. Native ARM/ARM64 normal
+and RT object builds pass with no new diagnostics. Real kernel concurrency
+and hardware probing remain unqualified.
+
+Codex found the issue and generated this fix, host model and draft message
+during the Fx0 power-controller audit. Public source history verifies that
+the original MPM driver registered the provider without these error-path
+releases. Human review and DCO remain pending. Nothing has been submitted.
+
+Fixes: a6199bb514d8 ("irqchip: Add Qualcomm MPM controller driver")
+
+Backport to the maintained 6.18.63 Fx0 integration. Original integration
+model evidence remains separate. In the combined three-fix series, the
+relevant focused model passes 43 cases. The complete series also compiles
+on ARM, ARM64 and ARM64 RT with nonpermissive CFI. ARM32 RT is unsupported
+in this maintained kernel and is not counted as an RT build.
+
+Codex prepared this local backport and its verification. Human review
+and DCO remain pending; the MPM issue also awaits human security
+classification. Nothing has been published or sent to maintainers.
+
+Backported from commit a80e0ad0e69ac36427d90305dc592298f7132b03
+("irqchip/qcom-mpm: Unregister the provider on probe failure").
+---
+ drivers/irqchip/irq-qcom-mpm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/irqchip/irq-qcom-mpm.c b/drivers/irqchip/irq-qcom-mpm.c
+index 181320528a47..c6aaba6c5c1c 100644
+--- a/drivers/irqchip/irq-qcom-mpm.c
++++ b/drivers/irqchip/irq-qcom-mpm.c
+@@ -441,7 +441,7 @@ static int qcom_mpm_probe(struct platform_device *pdev, struct device_node *pare
+ 	if (IS_ERR(priv->mbox_chan)) {
+ 		ret = PTR_ERR(priv->mbox_chan);
+ 		dev_err(dev, "failed to acquire IPC channel: %d\n", ret);
+-		return ret;
++		goto remove_provider;
+ 	}
+ 
+ 	parent_domain = irq_find_host(parent);
+@@ -475,6 +475,8 @@ static int qcom_mpm_probe(struct platform_device *pdev, struct device_node *pare
+ 	irq_domain_remove(priv->domain);
+ free_mbox:
+ 	mbox_free_channel(priv->mbox_chan);
++remove_provider:
++	of_genpd_del_provider(np);
+ remove_genpd:
+ 	pm_genpd_remove(genpd);
+ 	return ret;
+-- 
+2.56.0
+

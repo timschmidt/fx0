@@ -1,0 +1,152 @@
+{
+  "started_UTC": "2026-11-17T06:24:51.186960+00:00",
+  "passed": true,
+  "state": "terminal success",
+  "source_head": "250e7412a5a15068b2a2fe32b57b66c300c91b5f",
+  "source_uncommitted": true,
+  "source_files": {
+    "drivers/rpmsg/qcom_smd.c": "103a44ca3969552945e2061a4eaca9ee3b0c5a00a090309acb1e0004fa707ad4",
+    "drivers/irqchip/irq-qcom-mpm.c": "b79456f01bc7451d53fb67e0095470b2f39e0f5baa3292de91c28d4038b44a35"
+  },
+  "profiles": [
+    {
+      "profile": "arm-normal",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "EXPERT": true,
+      "config_SHA256": "c2e743e35a8e70ee191e3178117dc328ba828d30735e89ccae026b3004f4dd73",
+      "source_files": {
+        "drivers/rpmsg/qcom_smd.c": "103a44ca3969552945e2061a4eaca9ee3b0c5a00a090309acb1e0004fa707ad4",
+        "drivers/irqchip/irq-qcom-mpm.c": "b79456f01bc7451d53fb67e0095470b2f39e0f5baa3292de91c28d4038b44a35"
+      },
+      "objects": {
+        "drivers/rpmsg/qcom_smd.o": "841afa07ca95be49c38364b706d8718cd09cd7bf1c8695a268e4a002c1b99dd9",
+        "drivers/irqchip/irq-qcom-mpm.o": "7d00ffa8e72bb0a2d5c01bcb09b49c58d07943adbf16e2ebad84a70cea401055"
+      }
+    },
+    {
+      "profile": "arm64-normal",
+      "ARCH": "arm64",
+      "PREEMPT_RT": false,
+      "EXPERT": true,
+      "config_SHA256": "e1fa1b4068a7a66712e2fdde6cc1cefc1d930a7f089c076ac6a7bafef0329590",
+      "source_files": {
+        "drivers/rpmsg/qcom_smd.c": "103a44ca3969552945e2061a4eaca9ee3b0c5a00a090309acb1e0004fa707ad4",
+        "drivers/irqchip/irq-qcom-mpm.c": "b79456f01bc7451d53fb67e0095470b2f39e0f5baa3292de91c28d4038b44a35"
+      },
+      "objects": {
+        "drivers/rpmsg/qcom_smd.o": "e827669e6dff3904831127d5ec963d6904da4ea80195eb150fa3c1df3c17aad1",
+        "drivers/irqchip/irq-qcom-mpm.o": "37d115a13e655a5f9298c5b15afde826e2e1b46c4e9c23fc97ea27e67e68739b"
+      }
+    },
+    {
+      "profile": "arm64-rt",
+      "ARCH": "arm64",
+      "PREEMPT_RT": true,
+      "EXPERT": true,
+      "config_SHA256": "26ae629070b05a78da7965be84807d5cda4281bd9b83a7df68d73282b60a4b51",
+      "source_files": {
+        "drivers/rpmsg/qcom_smd.c": "103a44ca3969552945e2061a4eaca9ee3b0c5a00a090309acb1e0004fa707ad4",
+        "drivers/irqchip/irq-qcom-mpm.c": "b79456f01bc7451d53fb67e0095470b2f39e0f5baa3292de91c28d4038b44a35"
+      },
+      "objects": {
+        "drivers/rpmsg/qcom_smd.o": "21fd070db5c443a8b0bee84f88ae321106efd72048404e10176dab276133eaf5",
+        "drivers/irqchip/irq-qcom-mpm.o": "ab26de53aa1927b490675be885366bc7ee58b3e3afd4466f1d3c574d4a3ca91b"
+      }
+    }
+  ],
+  "architecture_constraints": [
+    {
+      "profile": "arm-rt",
+      "requested_PREEMPT_RT": true,
+      "actual_PREEMPT_RT": false,
+      "ARCH_SUPPORTS_RT": false,
+      "config_SHA256": "f0ad384f1fb46c52aa54fa54e268d8d348c15fc51684daa4248aa39fc7b57b0a",
+      "not_counted_as_RT_native_build": true
+    }
+  ],
+  "phone_access": false,
+  "published": false,
+  "full_kernel_package_or_physical_acceptance": false,
+  "stages": [
+    {
+      "label": "arm-normal-options",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diagnostics": []
+    },
+    {
+      "label": "arm-normal-config",
+      "returncode": 0,
+      "log_SHA256": "a570b9b0002540fba81491f68d2488e46f6027430196e9662ff1b7959076359d",
+      "diagnostics": []
+    },
+    {
+      "label": "arm-normal-objects",
+      "returncode": 0,
+      "log_SHA256": "2a0449a310a579ca381b1e523166f5253d8f549f493e8cbf1925e82f0427231c",
+      "diagnostics": []
+    },
+    {
+      "label": "arm-rt-options",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diagnostics": []
+    },
+    {
+      "label": "arm-rt-config",
+      "returncode": 0,
+      "log_SHA256": "2bf9224747100caef4e2d49f587b4590a7dac2c6539484259780e15c955588d4",
+      "diagnostics": []
+    },
+    {
+      "label": "arm64-normal-options",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diagnostics": []
+    },
+    {
+      "label": "arm64-normal-config",
+      "returncode": 0,
+      "log_SHA256": "682a5ffaf9982296e9adc2c96887f016c312dc10969df5a699f58caace9c4a38",
+      "diagnostics": [
+        ".config:6388:warning: symbol value 'm' invalid for DRM_PANEL",
+        ".config:8685:warning: symbol value 'm' invalid for DMABUF_HEAPS_SYSTEM",
+        ".config:8686:warning: symbol value 'm' invalid for DMABUF_HEAPS_CMA"
+      ]
+    },
+    {
+      "label": "arm64-normal-objects",
+      "returncode": 0,
+      "log_SHA256": "a7be0e6048e0ee28efb6cfda7a1c183fbcc70d26e1cd595392a9ec5ab52ff80b",
+      "diagnostics": []
+    },
+    {
+      "label": "arm64-rt-options",
+      "returncode": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diagnostics": []
+    },
+    {
+      "label": "arm64-rt-config",
+      "returncode": 0,
+      "log_SHA256": "1978b2adb6a7dab23138a3dc95513b5c81cad1f43ec5878c89cf6f50aafa597a",
+      "diagnostics": [
+        ".config:6623:warning: symbol value 'm' invalid for DRM_PANEL",
+        ".config:8921:warning: symbol value 'm' invalid for DMABUF_HEAPS_SYSTEM",
+        ".config:8922:warning: symbol value 'm' invalid for DMABUF_HEAPS_CMA"
+      ]
+    },
+    {
+      "label": "arm64-rt-objects",
+      "returncode": 0,
+      "log_SHA256": "a66c7c76d48672b7ced8ddc86607cea90c6888b563a5987925188df2f23a9b0d",
+      "diagnostics": []
+    }
+  ],
+  "native_objects": 6,
+  "supported_profiles": 3,
+  "unsupported_RT_requests": 1,
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-17T06:25:17.488914+00:00"
+}

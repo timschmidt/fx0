@@ -1,0 +1,17 @@
+{
+  "native_object_compilation_passed": true,
+  "seed_diagnostic_review_passed": false,
+  "original_executed_script_SHA256": "2010c8defa14246872326973fdf927d8f2c85abcd283d52d2eadbaa91b7abcea",
+  "diagnostics": [
+    ".config:6388:warning: symbol value 'm' invalid for DRM_PANEL",
+    ".config:8685:warning: symbol value 'm' invalid for DMABUF_HEAPS_SYSTEM",
+    ".config:8686:warning: symbol value 'm' invalid for DMABUF_HEAPS_CMA",
+    ".config:6623:warning: symbol value 'm' invalid for DRM_PANEL",
+    ".config:8921:warning: symbol value 'm' invalid for DMABUF_HEAPS_SYSTEM",
+    ".config:8922:warning: symbol value 'm' invalid for DMABUF_HEAPS_CMA"
+  ],
+  "reason": "Newer ARM64 seed configs set three symbols to m that are bools in maintained 6.18",
+  "source_changes_needed": false,
+  "corrected_fresh_profiles": "native-02",
+  "phone_access": false
+}
