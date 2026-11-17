@@ -1,0 +1,41 @@
+From 3a5124e9c9aee503982da8c49081de7c4f0b6fae Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 15 Nov 2026 00:57:03 -0500
+Subject: [PATCH] dt-bindings: leds: Describe first-generation Qualcomm torch
+ LEDs
+
+Route the first-generation PM8226/PM8941 torch binding through the
+existing attributed LED owner. Preserve the LTS maintainer roster; the
+newer PAS service from the original parent is not needed for this entry.
+
+Codex prepared this local reconciliation and verification. Original
+authors, dates, source notices and scoped attribution are retained.
+Human review and DCO remain pending; no sign-off certification, phone
+action, publication or maintainer contact is claimed.
+
+Backported from commit 8700b1c2b168 ("dt-bindings: leds: Describe
+first-generation Qualcomm torch LEDs")
+---
+ MAINTAINERS | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9fdc86dd82c85..bc05a80940b95 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -21291,6 +21291,12 @@ F:	Documentation/devicetree/bindings/media/*qcom*
+ F:	drivers/media/platform/qcom
+ F:	include/dt-bindings/media/*qcom*
+ 
++QUALCOMM PM8941 TORCH LED DRIVER
++M:	Timothy Schmidt <timschmidt@gmail.com>
++L:	linux-leds@vger.kernel.org
++S:	Maintained
++F:	Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml
++
+ QUALCOMM SMB CHARGER DRIVER
+ M:	Casey Connolly <casey.connolly@linaro.org>
+ L:	linux-arm-msm@vger.kernel.org
+-- 
+2.56.0
+

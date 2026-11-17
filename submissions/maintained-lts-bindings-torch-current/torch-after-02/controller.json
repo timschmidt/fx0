@@ -1,0 +1,27 @@
+{
+  "source_SHA256": "84bd9da282faf95b7381d06614c7c56bc0c2c13b56a74aebc3fd1a704c213430",
+  "fixture_SHA256": "2ea8f540420e19ca81312a9195c657d4870e8ba0ed91a41ee18e19113cc8d4c2",
+  "extracted_function_SHA256": {
+    "torch_mode": "eb5ace55130db61b13c3e7654b54c4088d3e5c560208e95b60f958ee072eabef",
+    "off": "236e61b0c280595ccf4999c34ee49b7adda8f144f7f24d8ad106a34f3405031d",
+    "on": "f8b738f27bd3211e7d3b4412e2c7eb53660cf6dd4b0b5b8a3c003914c6736e20",
+    "brightness_set": "bb6c2baf3689e4f56f99c63f6031a1040a134721dafbc94c1406ebd2f13e971b"
+  },
+  "expect": "fixed",
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "compiler_temporary_owned_private": true,
+  "host_interfaces_emulated": true,
+  "hardware_qualified": false,
+  "compile_returncode": 0,
+  "execute_returncode": 0,
+  "passed": true,
+  "result": {
+    "off_error_cases": 5,
+    "off_correct": 5,
+    "off_wrong": 0,
+    "on_error_controls": 8,
+    "combined_on_cleanup_fault_correct": true,
+    "healthy_level_cases": 32,
+    "concurrent_callback_transactions": 400
+  }
+}

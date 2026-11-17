@@ -1,0 +1,1275 @@
+From 38b038c9742e288153e1dea553c0317233a80206 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 15 Nov 2026 04:20:06 -0500
+Subject: [PATCH] dt-bindings: Import exact qualified schemas and complete Fx0
+ validation board
+
+Use the five existing qualified IOMMU, CAMSS, WCNSS, LED and PMIC parent
+schema dependencies without runtime driver changes. Add the complete
+unchanged Fx0 board solely for ordinary Kbuild and binding validation.
+
+Prepared with OpenAI Codex assistance; human review and DCO pending.
+---
+ .../devicetree/bindings/iommu/qcom,iommu.yaml |  88 ++-
+ .../bindings/leds/qcom,pm8941-flash-led.yaml  |  71 ++
+ .../bindings/media/qcom,msm8226-camss.yaml    | 250 ++++++
+ .../bindings/mfd/qcom,spmi-pmic.yaml          |   4 +-
+ .../bindings/remoteproc/qcom,wcnss-pil.yaml   |   1 +
+ arch/arm/boot/dts/qcom/Makefile               |   3 +
+ .../boot/dts/qcom/qcom-msm8926-lg-madai.dts   | 741 ++++++++++++++++++
+ 7 files changed, 1152 insertions(+), 6 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+
+diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
+index 93a489025317..6381107f86a4 100644
+--- a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
++++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
+@@ -10,10 +10,15 @@ maintainers:
+   - Konrad Dybcio <konradybcio@kernel.org>
+ 
+ description: |
+-  Qualcomm "B" family devices which are not compatible with arm-smmu have
+-  a similar looking IOMMU, but without access to the global register space
+-  and optionally requiring additional configuration to route context IRQs
+-  to non-secure vs secure interrupt line.
++  Qualcomm legacy IOMMUs are not compatible with the generic arm-smmu
++  programming interface. Instances using the msm-iommu-v1/v2 fallbacks
++  expose an optional local register region for interrupt routing, with
++  global configuration managed by the secure world.
++
++  Instances identified by per-instance compatibles expose the global
++  register space for implementation-specific prefetch settings. When
++  qcom,iommu-secure-id is absent on these instances, the OS also manages
++  the global stream mappings and configuration.
+ 
+ properties:
+   compatible:
+@@ -30,6 +35,13 @@ properties:
+               - qcom,msm8953-iommu
+               - qcom,msm8976-iommu
+           - const: qcom,msm-iommu-v2
++      - enum:
++          - qcom,msm8226-gpu-iommu
++          - qcom,msm8226-vfe-iommu
++          - qcom,msm8226-mdp-iommu
++          - qcom,msm8974-gpu-iommu
++          - qcom,msm8974-mdp-iommu
++          - qcom,msm8974-venus-iommu
+ 
+   clocks:
+     minItems: 2
+@@ -50,13 +62,23 @@ properties:
+ 
+   reg:
+     maxItems: 1
++    description:
++      For instances using the qcom,msm-iommu-v1/-v2 fallbacks, the
++      optional "SMMU local" register region used for interrupt routing
++      configuration. For instances with per-instance compatibles, the
++      SMMU global register space, used for stream mapping configuration
++      on non-secured instances and for the implementation-defined
++      prefetch registers on all instances.
+ 
+   ranges: true
+ 
+   qcom,iommu-secure-id:
+     $ref: /schemas/types.yaml#/definitions/uint32
+     description:
+-      The SCM secure ID of the IOMMU instance.
++      The SCM secure ID of the IOMMU instance. When absent on instances
++      with per-instance compatibles, the instance is not managed by the
++      secure world and the OS programs the whole global register space
++      (stream mapping included) directly.
+ 
+   '#address-cells':
+     const: 1
+@@ -104,6 +126,22 @@ required:
+   - '#size-cells'
+   - '#iommu-cells'
+ 
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,msm8226-gpu-iommu
++              - qcom,msm8226-mdp-iommu
++              - qcom,msm8226-vfe-iommu
++              - qcom,msm8974-gpu-iommu
++              - qcom,msm8974-mdp-iommu
++              - qcom,msm8974-venus-iommu
++    then:
++      required:
++        - reg
++
+ additionalProperties: false
+ 
+ examples:
+@@ -130,3 +168,43 @@ examples:
+         interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
+       };
+     };
++
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++
++    vfe_iommu: iommu@fda44000 {
++      compatible = "qcom,msm8226-vfe-iommu";
++      reg = <0xfda44000 0x2600>;
++      #address-cells = <1>;
++      #size-cells = <1>;
++      #iommu-cells = <1>;
++      ranges = <0 0xfda4c000 0x3000>;
++
++      /* MMCC indices from dt-bindings/clock/qcom,mmcc-msm8974.h. */
++      clocks = <&mmcc 90>, /* CAMSS_VFE_VFE_AHB_CLK */
++               <&mmcc 91>, /* CAMSS_VFE_VFE_AXI_CLK */
++               <&mmcc 85>; /* CAMSS_TOP_AHB_CLK */
++      clock-names = "iface", "bus", "tbu";
++      power-domains = <&mmcc 3>; /* CAMSS_VFE_GDSC */
++
++      /* VFE0 */
++      iommu-ctx@0 {
++        compatible = "qcom,msm-iommu-v1-ns";
++        reg = <0x0 0x1000>;
++        interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>;
++      };
++
++      /* VFE1 */
++      iommu-ctx@1000 {
++        compatible = "qcom,msm-iommu-v1-ns";
++        reg = <0x1000 0x1000>;
++        interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>;
++      };
++
++      /* CPP */
++      iommu-ctx@2000 {
++        compatible = "qcom,msm-iommu-v1-ns";
++        reg = <0x2000 0x1000>;
++        interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>;
++      };
++    };
+diff --git a/Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml b/Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml
+new file mode 100644
+index 000000000000..f07069203d91
+--- /dev/null
++++ b/Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml
+@@ -0,0 +1,71 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/leds/qcom,pm8941-flash-led.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm PM8226 and PM8941 first-generation torch LED controller
++
++maintainers:
++  - Timothy Schmidt <timschmidt@gmail.com>
++
++description: |
++  These PMICs contain the first-generation flash LED peripheral, with type
++  0x18 and subtype 1 or 2. Its register layout differs from later SPMI flash
++  controllers. Torch mode programs the two output current registers together,
++  in 12.5 mA steps up to 200 mA. A single logical torch is described here.
++
++properties:
++  compatible:
++    oneOf:
++      - const: qcom,pm8941-flash-led
++      - items:
++          - const: qcom,pm8226-flash-led
++          - const: qcom,pm8941-flash-led
++
++  reg:
++    maxItems: 1
++
++  vin-supply:
++    description: Optional supply for the torch outputs.
++
++  led:
++    type: object
++    $ref: common.yaml#
++    unevaluatedProperties: false
++
++    properties:
++      led-max-microamp:
++        minimum: 12500
++        maximum: 200000
++        description: Maximum programmed torch current for each output.
++
++    required:
++      - led-max-microamp
++
++required:
++  - compatible
++  - reg
++  - led
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/leds/common.h>
++
++    pmic {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        led-controller@d300 {
++            compatible = "qcom,pm8226-flash-led", "qcom,pm8941-flash-led";
++            reg = <0xd300>;
++
++            led {
++                function = LED_FUNCTION_TORCH;
++                color = <LED_COLOR_ID_WHITE>;
++                led-max-microamp = <200000>;
++            };
++        };
++    };
+diff --git a/Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml
+new file mode 100644
+index 000000000000..2dc0dbee59f1
+--- /dev/null
++++ b/Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml
+@@ -0,0 +1,250 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/media/qcom,msm8226-camss.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm MSM8226 CAMSS ISP
++
++maintainers:
++  - Robert Foss <robert.foss@linaro.org>
++  - Todor Tomov <todor.too@gmail.com>
++
++description: |
++  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms.
++  MSM8226 has the MSM8916 blocks without the separate CAMSS AHB clock.
++
++properties:
++  compatible:
++    const: qcom,msm8226-camss
++
++  clocks:
++    minItems: 18
++    maxItems: 18
++
++  clock-names:
++    items:
++      - const: top_ahb
++      - const: ispif_ahb
++      - const: csiphy0_timer
++      - const: csiphy1_timer
++      - const: csi0_ahb
++      - const: csi0
++      - const: csi0_phy
++      - const: csi0_pix
++      - const: csi0_rdi
++      - const: csi1_ahb
++      - const: csi1
++      - const: csi1_phy
++      - const: csi1_pix
++      - const: csi1_rdi
++      - const: vfe0
++      - const: csi_vfe0
++      - const: vfe_ahb
++      - const: vfe_axi
++
++  interrupts:
++    minItems: 6
++    maxItems: 6
++
++  interrupt-names:
++    items:
++      - const: csiphy0
++      - const: csiphy1
++      - const: csid0
++      - const: csid1
++      - const: ispif
++      - const: vfe0
++
++  iommus:
++    maxItems: 1
++
++  power-domains:
++    items:
++      - description: VFE GDSC - Video Front End, Global Distributed Switch Controller.
++
++  ports:
++    $ref: /schemas/graph.yaml#/properties/ports
++
++    description:
++      CSI input ports.
++
++    properties:
++      port@0:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description:
++          Input port for receiving CSI data.
++
++        properties:
++          endpoint:
++            $ref: video-interfaces.yaml#
++            unevaluatedProperties: false
++
++            properties:
++              data-lanes:
++                description:
++                  An array of physical data lanes indexes.
++                  Position of an entry determines the logical
++                  lane number, while the value of an entry
++                  indicates physical lane index. Lane swapping
++                  is supported. Physical lane indexes;
++                  0, 2, 3, 4.
++                minItems: 1
++                maxItems: 4
++
++              bus-type:
++                enum:
++                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
++
++            required:
++              - data-lanes
++
++      port@1:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description:
++          Input port for receiving CSI data.
++
++        properties:
++          endpoint:
++            $ref: video-interfaces.yaml#
++            unevaluatedProperties: false
++
++            properties:
++              data-lanes:
++                minItems: 1
++                maxItems: 4
++
++              bus-type:
++                enum:
++                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
++
++            required:
++              - data-lanes
++
++  reg:
++    minItems: 9
++    maxItems: 9
++
++  reg-names:
++    items:
++      - const: csiphy0
++      - const: csiphy0_clk_mux
++      - const: csiphy1
++      - const: csiphy1_clk_mux
++      - const: csid0
++      - const: csid1
++      - const: ispif
++      - const: csi_clk_mux
++      - const: vfe0
++
++  vdda-supply:
++    description:
++      Definition of the regulator used as analog power supply.
++
++required:
++  - clock-names
++  - clocks
++  - compatible
++  - interrupt-names
++  - interrupts
++  - iommus
++  - power-domains
++  - reg
++  - reg-names
++  - vdda-supply
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/qcom,mmcc-msm8974.h>
++
++    camss: camss@fda0ac00 {
++      compatible = "qcom,msm8226-camss";
++
++      clocks = <&mmcc CAMSS_TOP_AHB_CLK>,
++        <&mmcc CAMSS_ISPIF_AHB_CLK>,
++        <&mmcc CAMSS_PHY0_CSI0PHYTIMER_CLK>,
++        <&mmcc CAMSS_PHY1_CSI1PHYTIMER_CLK>,
++        <&mmcc CAMSS_CSI0_AHB_CLK>,
++        <&mmcc CAMSS_CSI0_CLK>,
++        <&mmcc CAMSS_CSI0PHY_CLK>,
++        <&mmcc CAMSS_CSI0PIX_CLK>,
++        <&mmcc CAMSS_CSI0RDI_CLK>,
++        <&mmcc CAMSS_CSI1_AHB_CLK>,
++        <&mmcc CAMSS_CSI1_CLK>,
++        <&mmcc CAMSS_CSI1PHY_CLK>,
++        <&mmcc CAMSS_CSI1PIX_CLK>,
++        <&mmcc CAMSS_CSI1RDI_CLK>,
++        <&mmcc CAMSS_VFE_VFE0_CLK>,
++        <&mmcc CAMSS_CSI_VFE0_CLK>,
++        <&mmcc CAMSS_VFE_VFE_AHB_CLK>,
++        <&mmcc CAMSS_VFE_VFE_AXI_CLK>;
++
++      clock-names = "top_ahb",
++        "ispif_ahb",
++        "csiphy0_timer",
++        "csiphy1_timer",
++        "csi0_ahb",
++        "csi0",
++        "csi0_phy",
++        "csi0_pix",
++        "csi0_rdi",
++        "csi1_ahb",
++        "csi1",
++        "csi1_phy",
++        "csi1_pix",
++        "csi1_rdi",
++        "vfe0",
++        "csi_vfe0",
++        "vfe_ahb",
++        "vfe_axi";
++
++      interrupts = <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 51 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 52 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 55 IRQ_TYPE_EDGE_RISING>,
++        <GIC_SPI 57 IRQ_TYPE_EDGE_RISING>;
++
++      interrupt-names = "csiphy0",
++        "csiphy1",
++        "csid0",
++        "csid1",
++        "ispif",
++        "vfe0";
++
++      iommus = <&vfe_iommu 0>;
++
++      power-domains = <&mmcc CAMSS_VFE_GDSC>;
++
++      reg = <0xfda0ac00 0x200>,
++        <0xfda00030 0x4>,
++        <0xfda0b000 0x200>,
++        <0xfda00038 0x4>,
++        <0xfda08000 0x100>,
++        <0xfda08400 0x100>,
++        <0xfda0a000 0x500>,
++        <0xfda00020 0x10>,
++        <0xfda10000 0x1000>;
++
++      reg-names = "csiphy0",
++        "csiphy0_clk_mux",
++        "csiphy1",
++        "csiphy1_clk_mux",
++        "csid0",
++        "csid1",
++        "ispif",
++        "csi_clk_mux",
++        "vfe0";
++
++      vdda-supply = <&reg_1v2>;
++
++      ports {
++        #address-cells = <1>;
++        #size-cells = <0>;
++      };
++    };
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+index 7a889d888383..c7e903039dd2 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+@@ -175,7 +175,9 @@ patternProperties:
+ 
+   "^led-controller@[0-9a-f]+$":
+     type: object
+-    $ref: /schemas/leds/qcom,spmi-flash-led.yaml#
++    oneOf:
++      - $ref: /schemas/leds/qcom,pm8941-flash-led.yaml#
++      - $ref: /schemas/leds/qcom,spmi-flash-led.yaml#
+ 
+   "^nvram@[0-9a-f]+$":
+     type: object
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+index a55e55f5f014..3ef24133e2c4 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+@@ -117,6 +117,7 @@ properties:
+         enum:
+           - qcom,wcn3620
+           - qcom,wcn3660
++          - qcom,wcn3660a
+           - qcom,wcn3660b
+           - qcom,wcn3680
+ 
+diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
+index 7327a7b8180e..f16fda5090eb 100644
+--- a/arch/arm/boot/dts/qcom/Makefile
++++ b/arch/arm/boot/dts/qcom/Makefile
+@@ -63,3 +63,6 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+ 	qcom-sdx55-t55.dtb \
+ 	qcom-sdx55-telit-fn980-tlb.dtb \
+ 	qcom-sdx65-mtp.dtb
++
++# Validation-only complete Fx0 board, preserved byte-for-byte.
++dtb-$(CONFIG_ARCH_QCOM) += qcom-msm8926-lg-madai.dtb
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+new file mode 100644
+index 000000000000..6e721c869752
+--- /dev/null
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -0,0 +1,741 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2024, Masanori Ogino <mogino@acm.org>
++ */
++
++/dts-v1/;
++
++#include "qcom-msm8226.dtsi"
++#include "pm8226.dtsi"
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/input/input.h>
++#include <dt-bindings/leds/common.h>
++#include <dt-bindings/media/video-interfaces.h>
++#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
++#include <dt-bindings/sound/qcom,q6afe.h>
++#include <dt-bindings/sound/qcom,q6asm.h>
++
++/delete-node/ &smem_region;
++
++/ {
++	model = "LG Fx0";
++	compatible = "lg,madai", "qcom,msm8926", "qcom,msm8226";
++	chassis-type = "handset";
++
++	aliases {
++		mmc0 = &sdhc_1; /* SDC1 eMMC slot */
++		mmc1 = &sdhc_2; /* SDC2 SD card slot */
++		serial0 = &blsp1_uart3;
++	};
++
++	chosen {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		ranges;
++
++		stdout-path = "serial0";
++
++		/* Filled in and enabled by lk2nd */
++		framebuffer {
++			compatible = "simple-framebuffer";
++			power-domains = <&mmcc MDSS_GDSC>;
++			status = "disabled";
++		};
++	};
++
++	gpio-keys {
++		compatible = "gpio-keys";
++		pinctrl-0 = <&gpio_keys_default>;
++		pinctrl-1 = <&gpio_keys_sleep>;
++		pinctrl-names = "default", "sleep";
++
++		button-volume-down {
++			label = "Volume Down";
++			gpios = <&tlmm 106 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_VOLUMEDOWN>;
++			debounce-interval = <15>;
++			wakeup-source;
++		};
++
++		button-home {
++			label = "Home";
++			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_HOME>;
++			debounce-interval = <15>;
++			wakeup-source;
++		};
++
++		button-volume-up {
++			label = "Volume Up";
++			gpios = <&tlmm 108 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_VOLUMEUP>;
++			debounce-interval = <15>;
++			wakeup-source;
++		};
++	};
++
++	spk_boost: regulator-speaker-boost {
++		compatible = "regulator-fixed";
++		regulator-name = "spk_boost";
++		gpio = <&tlmm 60 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		startup-delay-us = <1000>;
++	};
++
++	sound {
++		compatible = "qcom,apq8096-sndcard";
++		model = "LG Fx0";
++
++		mm1-dai-link {
++			link-name = "MultiMedia1";
++
++			cpu {
++				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
++			};
++		};
++
++		mm2-dai-link {
++			link-name = "MultiMedia2";
++
++			cpu {
++				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
++			};
++		};
++
++		slim-dai-link {
++			link-name = "SLIM Playback";
++
++			cpu {
++				sound-dai = <&q6afedai SLIMBUS_0_RX>;
++			};
++
++			platform {
++				sound-dai = <&q6routing>;
++			};
++
++			codec {
++				sound-dai = <&tapan_codec 0>;
++			};
++		};
++
++		slim-tx-dai-link {
++			link-name = "SLIM Capture";
++
++			cpu {
++				sound-dai = <&q6afedai SLIMBUS_0_TX>;
++			};
++
++			platform {
++				sound-dai = <&q6routing>;
++			};
++
++			codec {
++				sound-dai = <&tapan_codec 1>;
++			};
++		};
++	};
++
++	cam_avdd: regulator-camera-avdd {
++		compatible = "regulator-fixed";
++		regulator-name = "cam_avdd_2v8";
++		regulator-min-microvolt = <2800000>;
++		regulator-max-microvolt = <2800000>;
++		gpio = <&tlmm 110 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		startup-delay-us = <1000>;
++	};
++
++	cam_vio: regulator-camera-io {
++		compatible = "regulator-fixed";
++		regulator-name = "cam_io_1v8";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++		gpio = <&tlmm 64 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		startup-delay-us = <1000>;
++		off-on-delay-us = <10000>;
++	};
++
++	reserved-memory {
++		/* Stock firmware excludes 5 MiB here; the first MiB is SMEM. */
++		reserved@fb00000 {
++			reg = <0x0fb00000 0x400000>;
++			no-map;
++		};
++
++		smem_region: smem@fa00000 {
++			reg = <0x0fa00000 0x100000>;
++			no-map;
++		};
++	};
++};
++
++&tlmm {
++	cam_mclk0_default: cam-mclk0-default-state {
++		pins = "gpio26";
++		function = "cam_mclk0";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	cam_mclk1_default: cam-mclk1-default-state {
++		pins = "gpio27";
++		function = "cam_mclk1";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	gpio_keys_default: gpio-keys-default-state {
++		pins = "gpio106", "gpio107", "gpio108";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-up;
++	};
++
++	gpio_keys_sleep: gpio-keys-sleep-state {
++		pins = "gpio106", "gpio107", "gpio108";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	sdhc2_cd_default: sdhc2-cd-default-state {
++		pins = "gpio37";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-up;
++	};
++
++	wcnss_pin_a: wcnss-pin-active-state {
++		pins = "gpio40", "gpio41", "gpio42", "gpio43", "gpio44";
++		function = "wlan";
++		drive-strength = <6>;
++		bias-pull-down;
++	};
++};
++
++&cci {
++	status = "okay";
++};
++
++&adsp {
++	status = "okay";
++};
++
++&blsp1_uart3 {
++	status = "okay";
++};
++
++&mba_region {
++	status = "okay";
++};
++
++&mpss_region {
++	status = "okay";
++};
++
++&pm8226_vadc {
++	channel@6 {
++		reg = <VADC_VBAT_SNS>;
++		label = "vbat_sns";
++	};
++
++	channel@30 {
++		reg = <VADC_LR_MUX1_BAT_THERM>;
++		label = "batt_therm";
++		qcom,ratiometric;
++		qcom,hw-settle-time = <200>;
++	};
++};
++
++&pronto {
++	vddmx-supply = <&pm8226_l3>;
++	vddpx-supply = <&pm8226_l6>;
++
++	pinctrl-0 = <&wcnss_pin_a>;
++	pinctrl-names = "default";
++
++	status = "okay";
++
++	iris {
++		compatible = "qcom,wcn3660";
++
++		vddxo-supply = <&pm8226_l10>;
++		vddrfa-supply = <&pm8226_l24>;
++		vddpa-supply = <&pm8226_l16>;
++		vdddig-supply = <&pm8226_l24>;
++	};
++
++	smd-edge {
++		wcnss {
++			status = "okay";
++		};
++	};
++};
++
++&rpm_requests {
++	regulators {
++		compatible = "qcom,rpm-pm8226-regulators";
++
++		pm8226_s4: s4 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++		};
++
++		pm8226_l25: l25 {
++			regulator-min-microvolt = <1775000>;
++			regulator-max-microvolt = <2125000>;
++		};
++
++		pm8226_l3: l3 {
++			regulator-min-microvolt = <750000>;
++			regulator-max-microvolt = <1337500>;
++		};
++
++		pm8226_l18: l18 {
++			regulator-min-microvolt = <2950000>;
++			regulator-max-microvolt = <2950000>;
++			regulator-allow-set-load;
++		};
++
++		pm8226_l21: l21 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <2950000>;
++			regulator-allow-set-load;
++		};
++
++		pm8226_l4: l4 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-allow-set-load;
++		};
++
++		pm8226_l6: l6 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-always-on;
++			regulator-allow-set-load;
++		};
++
++		pm8226_l8: l8 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			/* Also supplies the CPU PLL. */
++			regulator-always-on;
++			regulator-allow-set-load;
++		};
++
++		pm8226_l10: l10 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++		};
++
++		pm8226_l16: l16 {
++			regulator-min-microvolt = <3000000>;
++			regulator-max-microvolt = <3350000>;
++		};
++
++		pm8226_l17: l17 {
++			regulator-min-microvolt = <2950000>;
++			regulator-max-microvolt = <2950000>;
++			regulator-always-on;
++			regulator-allow-set-load;
++		};
++
++		pm8226_l19: l19 {
++			regulator-min-microvolt = <2850000>;
++			regulator-max-microvolt = <2850000>;
++		};
++
++		pm8226_l20: l20 {
++			regulator-min-microvolt = <3075000>;
++			regulator-max-microvolt = <3075000>;
++		};
++
++		/* Shared by the Iris RFA and digital supplies. */
++		pm8226_l24: l24 {
++			regulator-min-microvolt = <1300000>;
++			regulator-max-microvolt = <1350000>;
++		};
++
++		pm8226_l5: l5 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++		};
++
++		pm8226_l15: l15 {
++			regulator-min-microvolt = <2800000>;
++			regulator-max-microvolt = <2800000>;
++		};
++
++		pm8226_l26: l26 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++		};
++
++		pm8226_l28: l28 {
++			regulator-min-microvolt = <3100000>;
++			regulator-max-microvolt = <3100000>;
++			regulator-allow-set-load;
++		};
++
++		pm8226_lvs1: lvs1 {
++			/* The sensor bus answers about 5 ms after the switch closes. */
++			regulator-enable-ramp-delay = <10000>;
++		};
++	};
++};
++
++&sdhc_1 {
++	vmmc-supply = <&pm8226_l17>;
++	vqmmc-supply = <&pm8226_l6>;
++
++	bus-width = <8>;
++	non-removable;
++	max-frequency = <200000000>;
++	mmc-hs200-1_8v;
++	mmc-ddr-1_8v;
++
++	status = "okay";
++};
++
++&smbb {
++	qcom,software-charge-control;
++	qcom,usb-gadget-current-limit;
++	qcom,fast-charge-safe-current = <1500000>;
++	qcom,fast-charge-current-limit = <1200000>;
++	qcom,fast-charge-safe-voltage = <4380000>;
++	qcom,fast-charge-high-threshold-voltage = <4350000>;
++	qcom,auto-recharge-threshold-voltage = <4280000>;
++	qcom,minimum-input-voltage = <4350000>;
++
++	status = "okay";
++
++	charge-policy {
++		compatible = "lg,madai-charge-policy";
++		io-channels = <&pm8226_vadc VADC_LR_MUX1_BAT_THERM>,
++			      <&pm8226_vadc VADC_VBAT_SNS>;
++		io-channel-names = "thermistor", "voltage";
++	};
++};
++
++&usb {
++	extcon = <&smbb>;
++	power-supplies = <&smbb>;
++	dr_mode = "peripheral";
++	status = "okay";
++};
++
++&usb_hs_phy {
++	extcon = <&smbb>;
++	v1p8-supply = <&pm8226_l10>;
++	v3p3-supply = <&pm8226_l20>;
++};
++
++&blsp1_i2c5 {
++	status = "okay";
++
++	touchscreen@20 {
++		compatible = "syna,rmi4-i2c";
++		reg = <0x20>;
++		interrupt-parent = <&tlmm>;
++		interrupts = <17 IRQ_TYPE_EDGE_FALLING>;
++		reset-gpios = <&tlmm 16 GPIO_ACTIVE_LOW>;
++		panel = <&panel>;
++		vdd-supply = <&pm8226_l28>;
++		vio-supply = <&pm8226_l6>;
++		syna,startup-delay-ms = <60>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		rmi4-f01@1 {
++			reg = <0x01>;
++			syna,nosleep-mode = <2>;
++		};
++
++		rmi4-f12@12 {
++			reg = <0x12>;
++			syna,sensor-type = <1>;
++			touchscreen-inverted-x;
++			touchscreen-inverted-y;
++		};
++	};
++};
++
++&mdss {
++	status = "okay";
++};
++
++&mdss_dsi0 {
++	vdd-supply = <&pm8226_l28>;
++	vdda-supply = <&pm8226_l4>;
++	vddio-supply = <&pm8226_l8>;
++
++	panel: panel@0 {
++		compatible = "lg,fx0-panel";
++		reg = <0>;
++		vdd-supply = <&pm8226_l28>;
++		reset-gpios = <&tlmm 25 GPIO_ACTIVE_LOW>;
++		io-enable-gpios = <&tlmm 113 GPIO_ACTIVE_HIGH>;
++		positive-enable-gpios = <&tlmm 111 GPIO_ACTIVE_HIGH>;
++		negative-enable-gpios = <&tlmm 112 GPIO_ACTIVE_HIGH>;
++		backlight = <&pm8226_wled>;
++
++		port {
++			panel_in: endpoint {
++				remote-endpoint = <&mdss_dsi0_out>;
++			};
++		};
++	};
++};
++
++&mdss_dsi0_out {
++	remote-endpoint = <&panel_in>;
++};
++
++&mdss_dsi0_phy {
++	vddio-supply = <&pm8226_l8>;
++};
++
++&pm8226_1 {
++	pm8226_wled: wled@d800 {
++		compatible = "qcom,pm8941-wled";
++		reg = <0xd800>;
++		label = "backlight";
++		qcom,cs-out;
++		qcom,current-limit = <20>;
++		qcom,current-boost-limit = <805>;
++		qcom,switching-freq = <800>;
++		qcom,ovp = <35>;
++		qcom,enabled-strings = <0>;
++		default-brightness = <512>;
++	};
++};
++
++&gpu {
++	status = "okay";
++};
++
++&gpu_iommu {
++	status = "okay";
++};
++
++&mdp_iommu {
++	status = "okay";
++};
++
++&mdss_mdp {
++	iommus = <&mdp_iommu 0>;
++};
++
++/*
++ * The stock bootloader consumes the IMEM restart reason before lk2nd runs.
++ * Also store the reason in the PON spare register, which it leaves intact.
++ */
++&pm8226_pon {
++	mode-recovery = <0x1>;
++	mode-bootloader = <0x2>;
++};
++
++&sdhc_2 {
++	vmmc-supply = <&pm8226_l18>;
++	vqmmc-supply = <&pm8226_l21>;
++	bus-width = <4>;
++	cd-gpios = <&tlmm 37 GPIO_ACTIVE_LOW>;
++	pinctrl-0 = <&sdhc2_default_state>, <&sdhc2_cd_default>;
++
++	status = "okay";
++};
++
++&blsp1_i2c2 {
++	status = "okay";
++
++	magnetometer@c {
++		compatible = "alps,hscdtd008a";
++		reg = <0x0c>;
++		avdd-supply = <&pm8226_l19>;
++		dvdd-supply = <&pm8226_lvs1>;
++		mount-matrix = "0", "-1", "0",
++			       "1", "0", "0",
++			       "0", "0", "1";
++	};
++
++	imu@68 {
++		compatible = "invensense,mpu6515";
++		reg = <0x68>;
++		interrupts-extended = <&tlmm 69 IRQ_TYPE_EDGE_RISING>;
++		vdd-supply = <&pm8226_lvs1>;
++		vddio-supply = <&pm8226_lvs1>;
++
++		mount-matrix = "0", "1", "0",
++			       "1", "0", "0",
++			       "0", "0", "-1";
++	};
++};
++
++&pm8226_vib {
++	status = "okay";
++};
++
++&pm8226_flash {
++	status = "okay";
++
++	led {
++		function = LED_FUNCTION_TORCH;
++		color = <LED_COLOR_ID_WHITE>;
++		led-max-microamp = <200000>;
++	};
++};
++
++&camss {
++	vdda-supply = <&pm8226_l4>;
++	status = "okay";
++
++	ports {
++		port@0 {
++			reg = <0>;
++
++			camss_csiphy0_ep: endpoint {
++				remote-endpoint = <&rear_camera_ep>;
++				data-lanes = <0 2 3 4>;
++				bus-type = <MEDIA_BUS_TYPE_CSI2_DPHY>;
++			};
++		};
++
++		port@1 {
++			reg = <1>;
++
++			camss_csiphy1_ep: endpoint {
++				remote-endpoint = <&front_camera_ep>;
++				data-lanes = <0>;
++				bus-type = <MEDIA_BUS_TYPE_CSI2_DPHY>;
++			};
++		};
++	};
++};
++
++&cci_i2c0 {
++	rear_camera: camera@10 {
++		compatible = "sony,imx179";
++		reg = <0x10>;
++		clocks = <&mmcc CAMSS_MCLK0_CLK>;
++		assigned-clocks = <&mmcc CAMSS_MCLK0_CLK>;
++		assigned-clock-rates = <24000000>;
++		pinctrl-0 = <&cam_mclk0_default>;
++		pinctrl-names = "default";
++		dovdd-supply = <&cam_vio>;
++		avdd-supply = <&cam_avdd>;
++		dvdd-supply = <&pm8226_l26>;
++		reset-gpios = <&tlmm 114 GPIO_ACTIVE_LOW>;
++		orientation = <1>; /* back */
++		rotation = <270>;
++
++		port {
++			rear_camera_ep: endpoint {
++				remote-endpoint = <&camss_csiphy0_ep>;
++				data-lanes = <1 2 3 4>;
++				link-frequencies = /bits/ 64 <324000000>;
++			};
++		};
++	};
++
++	front_camera: camera@36 {
++		compatible = "sony,imx132";
++		reg = <0x36>;
++		clocks = <&mmcc CAMSS_MCLK1_CLK>;
++		assigned-clocks = <&mmcc CAMSS_MCLK1_CLK>;
++		assigned-clock-rates = <24000000>;
++		pinctrl-0 = <&cam_mclk1_default>;
++		pinctrl-names = "default";
++		dovdd-supply = <&cam_vio>;
++		avdd-supply = <&pm8226_l15>;
++		dvdd-supply = <&pm8226_l5>;
++		reset-gpios = <&tlmm 28 GPIO_ACTIVE_LOW>;
++		orientation = <0>; /* front */
++		rotation = <270>;
++
++		port {
++			front_camera_ep: endpoint {
++				remote-endpoint = <&camss_csiphy1_ep>;
++				data-lanes = <1>;
++				link-frequencies = /bits/ 64 <198000000>;
++			};
++		};
++	};
++};
++
++&vfe_iommu {
++	status = "okay";
++};
++
++&apr {
++	status = "okay";
++};
++
++&slimbam {
++	status = "okay";
++};
++
++&slim_msm {
++	status = "okay";
++
++	slim@1 {
++		tapan_ifd: ifd@0,0 {
++			compatible = "slim217,e0";
++			reg = <0 0>;
++		};
++
++		tapan_codec: codec@1,0 {
++			compatible = "slim217,e0";
++			reg = <1 0>;
++			slim-ifc-dev = <&tapan_ifd>;
++			#sound-dai-cells = <1>;
++			clocks = <&rpmcc RPM_SMD_DIV_CLK1>;
++			clock-names = "mclk";
++			pinctrl-0 = <&cdc_mclk_default>;
++			pinctrl-names = "default";
++			vdd-spkdrv-supply = <&spk_boost>;
++			vdd-buck-supply = <&pm8226_s4>;
++			vdd-buckhelper-supply = <&pm8226_l25>;
++			reset-gpios = <&tlmm 72 GPIO_ACTIVE_LOW>;
++			vdd-h-supply = <&pm8226_l6>;
++			vdd-px-supply = <&pm8226_l6>;
++			vdd-cx-supply = <&pm8226_l4>;
++		};
++	};
++};
++
++&pm8226_gpios {
++	cdc_mclk_default: cdc-mclk-default-state {
++		pins = "gpio1";
++		function = "func1";
++		output-enable;
++		drive-push-pull;
++		bias-disable;
++		power-source = <3>;
++		qcom,drive-strength = <PMIC_GPIO_STRENGTH_HIGH>;
++	};
++};
++
++/* CPU/CPR fuses use the raw view; TSENS retains the corrected provider. */
++&soc {
++	qfprom_raw: efuse@fc4b8000 {
++		compatible = "qcom,msm8926-qfprom-raw";
++		reg = <0xfc4b8000 0x1000>;
++		read-only;
++		#address-cells = <1>;
++		#size-cells = <1>;
++
++		cpu_speedbin: cpu-bin@b0 {
++			reg = <0xb0 0x4>;
++		};
++
++		cpr_primary: cpr-primary@450 {
++			reg = <0x450 0x8>;
++		};
++
++		cpr_redundant: cpr-redundant@458 {
++			reg = <0x458 0x8>;
++		};
++	};
++};
+-- 
+2.56.0
+

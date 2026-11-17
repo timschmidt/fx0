@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "name": "early-off-return",
+      "rejected_by_intended_assertion": true,
+      "source_SHA256": "aec55b6bc75f86765cd0367a17e33b21c5af56f2f094274cd5933a15700bf9e4",
+      "assertion": "torch-errors: local/fx0-lts-production-current-01/bindings-torch-01/torch-controls-01/early-off-return/result/torch-errors.c:211: int main(void): Assertion `okay' failed."
+    },
+    {
+      "name": "release-failed-regulator-ownership",
+      "rejected_by_intended_assertion": true,
+      "source_SHA256": "7664973fb5239ea520698d660ba543f3e40813df37f1c0cd3880188050df9029",
+      "assertion": "torch-errors: local/fx0-lts-production-current-01/bindings-torch-01/torch-controls-01/release-failed-regulator-ownership/result/torch-errors.c:208: int main(void): Assertion `okay' failed."
+    }
+  ],
+  "compiler_or_sanitizer_failure_counted": false,
+  "phone_access": false,
+  "all_services_synthetic": true
+}

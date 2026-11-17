@@ -1,0 +1,99 @@
+From 52795f8a14e49fdb1da3d58efd120d0c6488d81d Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 15 Nov 2026 00:57:03 -0500
+Subject: [PATCH] leds: flash: finish first-generation Qualcomm torch shutdown
+
+The existing LTS driver returns after an early shutdown register
+failure, leaving later off operations unattempted, and clears vin_on
+even if its regulator disable fails. Attempt all shutdown paths,
+preserve the first error, and retain supply ownership after a failed
+disable.
+
+The complete existing driver differs from the attributed current
+source only in this shutdown function. The carried implementation was
+originally by Timothy Schmidt with Claude Opus 5.5 assistance;
+preserve that credit. The exact LTS baseline fails all five shutdown
+scenarios; all pass after this change. Eight startup faults, a
+combined cleanup fault, 32 healthy brightness/supply cases and 400
+synthetic threaded callback transactions pass with ASan, UBSan and
+normal LeakSanitizer. Two faulty variants are rejected by the intended
+assertions. Native ARM, ARM64 and ARM64 RT driver objects compile
+cleanly with nonpermissive CFI. Firmware/bus uncertainty, physical
+current, strobe/boost and current-base hardware remain unqualified.
+
+Codex prepared this local reconciliation and verification. Original
+authors, dates, source notices and scoped attribution are retained.
+Human review and DCO remain pending; no sign-off certification, phone
+action, publication or maintainer contact is claimed.
+
+Backported from commit e6026418366c ("leds: flash: Support
+first-generation Qualcomm PMIC torch mode")
+---
+ MAINTAINERS                             |  1 +
+ drivers/leds/flash/leds-qcom-flash-v1.c | 27 +++++++++++++------------
+ 2 files changed, 15 insertions(+), 13 deletions(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index bc05a80940b95..d255b34793872 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -21296,6 +21296,7 @@ M:	Timothy Schmidt <timschmidt@gmail.com>
+ L:	linux-leds@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml
++F:	drivers/leds/flash/leds-qcom-flash-v1.c
+ 
+ QUALCOMM SMB CHARGER DRIVER
+ M:	Casey Connolly <casey.connolly@linaro.org>
+diff --git a/drivers/leds/flash/leds-qcom-flash-v1.c b/drivers/leds/flash/leds-qcom-flash-v1.c
+index f4f3ff08d4d44..485252c1c1d5a 100644
+--- a/drivers/leds/flash/leds-qcom-flash-v1.c
++++ b/drivers/leds/flash/leds-qcom-flash-v1.c
+@@ -68,30 +68,31 @@ static int qcom_flash_v1_torch_mode(struct qcom_flash_v1 *flash, bool on)
+ 
+ static int qcom_flash_v1_off(struct qcom_flash_v1 *flash)
+ {
+-	int ret;
++	int ret, err;
+ 
+ 	ret = regmap_update_bits(flash->regmap, flash->base + FLASH_STROBE_CTRL,
+ 				 FLASH_STROBE_TORCH, 0);
+-	if (ret)
+-		return ret;
+-
+-	ret = qcom_flash_v1_torch_mode(flash, false);
+-	if (ret)
+-		return ret;
++	/* Try every off path even if an earlier register access failed. */
++	err = qcom_flash_v1_torch_mode(flash, false);
++	if (!ret)
++		ret = err;
+ 
+ 	/* Let the current ramp down before disabling the module. */
+ 	usleep_range(2200, 2500);
+-	ret = regmap_update_bits(flash->regmap, flash->base + FLASH_ENABLE_CTRL,
++	err = regmap_update_bits(flash->regmap, flash->base + FLASH_ENABLE_CTRL,
+ 				 FLASH_ENABLE_MASK, 0);
+-	if (ret)
+-		return ret;
++	if (!ret)
++		ret = err;
+ 
+ 	if (flash->vin_on) {
+-		regulator_disable(flash->vin);
+-		flash->vin_on = false;
++		err = regulator_disable(flash->vin);
++		if (!err)
++			flash->vin_on = false;
++		if (!ret)
++			ret = err;
+ 	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int qcom_flash_v1_on(struct qcom_flash_v1 *flash, unsigned int level)
+-- 
+2.56.0
+

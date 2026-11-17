@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "state": "terminal success",
+  "source_files": {
+    "drivers/leds/flash/leds-qcom-flash-v1.c": "84bd9da282faf95b7381d06614c7c56bc0c2c13b56a74aebc3fd1a704c213430"
+  },
+  "profiles": [
+    {
+      "profile": "arm-normal",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "131b7b6be40392d2c7c378a56461971e145adf19d4914bc85ad2cfcc20622320",
+      "object_SHA256": "39aa4f1b6c123c7e3c6f50b2bb9b5eb1a3f30d50fc8e4317b246ff1435424a28"
+    },
+    {
+      "profile": "arm64-normal",
+      "ARCH": "arm64",
+      "PREEMPT_RT": false,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "67eb0424312fdab2d04a31855e546b2b2390e94b64f929630d1ec661bf148dcb",
+      "object_SHA256": "3d77630f4e73eafbb5655e46a45969b0f70d36686b0782c0c579a863eb57bb83"
+    },
+    {
+      "profile": "arm64-rt",
+      "ARCH": "arm64",
+      "PREEMPT_RT": true,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "bf4aa666f14f17454a4f5ea7402a9988cbb9211780235cf5f661b390fcc77a65",
+      "object_SHA256": "ad964be11244cd637556859ba04d8b1d72d590dce8bd877c0ac043692dd6ba9a"
+    }
+  ],
+  "stages": [
+    {
+      "profile": "arm-normal",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "448610e713bc2b66bca65e6b9ca44cb8e94e200b02a32b4b742dc4f510050e81"
+    },
+    {
+      "profile": "arm-normal",
+      "phase": "object",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "520c5d8562b09c40e4ea440bb369981aa0df36658d11421de2dd2f3dff7f9474"
+    },
+    {
+      "profile": "arm64-normal",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "8d420a485dd70cecfcc87969e061e19213af5d8623938231cc117f7d74db171d"
+    },
+    {
+      "profile": "arm64-normal",
+      "phase": "object",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "25817a9a7846836187bea765dc9588313171942f4597e5f4c8d177cbbf1d4ba0"
+    },
+    {
+      "profile": "arm64-rt",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "c7f5a553a398c0a3534f8604c7994fee2705ca352041618786e55e84355f59fa"
+    },
+    {
+      "profile": "arm64-rt",
+      "phase": "object",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "2be0f4671559258960a2bd41431cd6059b59f6f2e9c0ea03f81f1fa71039ac7e"
+    }
+  ],
+  "ARM32_RT_unsupported_not_counted": true,
+  "phone_access": false,
+  "physical_acceptance": false,
+  "native_objects": 3,
+  "owned_child_terminal_and_reaped": true
+}

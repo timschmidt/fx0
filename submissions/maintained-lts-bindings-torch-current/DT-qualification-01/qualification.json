@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "full_current_LTS_family_schema_gate_passed": true,
+  "DTBs": 19,
+  "eighteen_prior_DTBS_byte_identical": true,
+  "all_DTS_DTC_and_DT_binding_header_inputs_unchanged": true,
+  "ordinary_example_negative_controls": [
+    {
+      "name": "wrong-fallback",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "current-too-low",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "current-too-high",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "missing-current",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "missing-led",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "extra-led",
+      "expected_property_diagnostic_verified": true
+    },
+    {
+      "name": "extra-reg",
+      "expected_property_diagnostic_verified": true
+    }
+  ],
+  "positive_controls": [
+    "PM8941-only",
+    "minimum-current",
+    "non-multiple-current"
+  ],
+  "processed_schema_SHA256": "c92b2daa3e9c5324b62d4eb54c87ea0eaf3da6f47f00c4d5dff117ab89beb161",
+  "all_current_LTS_affected_boards_present": true,
+  "newer_titan_and_eagle_boards_absent_not_imported_or_counted": true,
+  "normal_board_APC_and_eight_byte_CPU_cell_preserved": true,
+  "phone_access": false,
+  "hardware_acceptance": false
+}

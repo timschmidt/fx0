@@ -1,0 +1,67 @@
+{
+  "base": "7f87a7a42edae0cb40086d26788f3a88c56c1c9f",
+  "source_repo": "worktrees/linux-fx0-lts-integration-current-01",
+  "original_source_repo": "worktrees/linux-fx0-cpu-current-01",
+  "origin_commits": [
+    {
+      "commit": "99339fb06b6495a18d5454519354c414fa856244",
+      "subject": "ARM: dts: qcom: pm8226: Label the PON node",
+      "paths": [
+        "arch/arm/boot/dts/qcom/pm8226.dtsi"
+      ]
+    },
+    {
+      "commit": "3c4dccb16e558b2100fdfb79cea0933cc8d223c7",
+      "subject": "ARM: dts: qcom: pm8226: Describe the torch LED controller",
+      "paths": [
+        "arch/arm/boot/dts/qcom/pm8226.dtsi"
+      ]
+    },
+    {
+      "commit": "38b038c9742e288153e1dea553c0317233a80206",
+      "subject": "dt-bindings: Import exact qualified schemas and complete Fx0 validation board",
+      "paths": [
+        "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml",
+        "Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml",
+        "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml",
+        "Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml",
+        "Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml",
+        "arch/arm/boot/dts/qcom/Makefile",
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts"
+      ]
+    },
+    {
+      "commit": "8700b1c2b168ebd88b8660551d228fa88734992c",
+      "subject": "dt-bindings: leds: Describe first-generation Qualcomm torch LEDs",
+      "paths": [
+        "MAINTAINERS"
+      ]
+    },
+    {
+      "commit": "e6026418366c2f6232bdd39d2d15f4aeb46184c3",
+      "subject": "leds: flash: Support first-generation Qualcomm PMIC torch mode",
+      "paths": [
+        "MAINTAINERS",
+        "drivers/leds/flash/Kconfig",
+        "drivers/leds/flash/Makefile",
+        "drivers/leds/flash/leds-qcom-flash-v1.c"
+      ]
+    }
+  ],
+  "before_files": {
+    "Documentation/devicetree/bindings/iommu/qcom,iommu.yaml": "70d1bcccdd5e68fe3a59e8132f2226e5c8049469fb73773b79c63ffec6f863f3",
+    "Documentation/devicetree/bindings/media/qcom,msm8226-camss.yaml": "0888da8dda271d056495c3e5c41bbbfd097b2170c8272fe6b9b5a24696a192bf",
+    "Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml": "7c7f72a25a66312c96b66fe3b942e9dc6ebed729d48c26c07185d5ab97007587",
+    "Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml": "483a9ef62b9b125eea567a3501ac6ff39f5f5e91b6b67daaa93abce6fa3db577",
+    "MAINTAINERS": "be1bd1870cf6f35464036675d4040d3981aa03a78507bbeecf98a44926f21205",
+    "arch/arm/boot/dts/qcom/Makefile": "0c77bb1b83b6603c2f3379fdc0be5322646679573591abe7641a954daec562d8",
+    "arch/arm/boot/dts/qcom/pm8226.dtsi": "3d7df3ae77e51b94c88adf0afaec812323e7aae5bb968c15bd142bca222b3df7",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "bea1ce365166bf4aa3d51a541c6651f52bec43b50d15de4dbe013c88c1fe465d",
+    "drivers/leds/flash/Kconfig": "70b0fa9e7e347e29699c1478963d4db4647ee4b8ea4f836d7cd14ddbcec0a0e6",
+    "drivers/leds/flash/Makefile": "7475a93ea910f6dc25d91603037bb9a78c4ef06a2e9abc654159c0cf5a1abc23",
+    "drivers/leds/flash/leds-qcom-flash-v1.c": "5026fcf63c818a15833e2e82eaa5f3a682181c5de6522409f91bfe3dc013d5c8"
+  },
+  "phone_access": false,
+  "published": false,
+  "full_goal_complete": false
+}

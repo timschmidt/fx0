@@ -1,0 +1,38 @@
+{
+  "started_UTC": "2026-11-17T11:03:56.146610+00:00",
+  "base": "7f87a7a42edae0cb40086d26788f3a88c56c1c9f",
+  "binding_SHA256": {
+    "opp/opp-v2-kryo-cpu.yaml": "060f4f058680afff9429ad25331e15797fdc009e73e6fb61b5e43e366b0d3a63",
+    "opp/opp-v2-qcom-level.yaml": "155a952f9a6c233b589da25852fdaa8019eba713e190409391637ac8fa03dc28",
+    "power/avs/qcom,cpr.yaml": "d4a75da70e0e4ddea7af6f7918e8eb5cff7cd9752c8bf49feb9790194d33f283",
+    "regulator/qcom,spmi-regulator.yaml": "123cc228fa0a718a38e509c10518f5513c3704fe352129c4633739a23d0fa10c",
+    "soc/qcom/qcom,saw2.yaml": "ff596a7d082d24acceade1bad26fb6c2e6e2cc4788e1a5bb4094211dc41aeef5",
+    "regulator/qcom,smd-rpm-regulator.yaml": "bd38d4575968f91c52fde03dd361816e2c72329d0c1b4914ba834b491d2a276e",
+    "interrupt-controller/qcom,mpm.yaml": "f2bd89304ca9e99178b91bd6f954ff9d4b6cec593890cfd7ed64928a0deef6ef",
+    "power/qcom,msm8226-system-pm.yaml": "f22529aef1c98d88274a14f2db9e29306014ad5c601a942e60df67c45508bf39",
+    "soc/qcom/qcom,smd-rpm.yaml": "fc5bbc26e8ccf93aaa1fc3a092777a003d3cfeeb44a2c565f6f3224c3fe092c0",
+    "iommu/qcom,iommu.yaml": "c6326a22775ecb2011aeb0cc59f23d5e1cbb5f2c23934a0e4664417900701a76",
+    "leds/qcom,pm8941-flash-led.yaml": "84267e35e4777e5c246f425ba79cda5d0acb8af7bc5c0fb5870977319c50cb78",
+    "media/qcom,msm8226-camss.yaml": "0888da8dda271d056495c3e5c41bbbfd097b2170c8272fe6b9b5a24696a192bf",
+    "mfd/qcom,spmi-pmic.yaml": "26256d8aad28d4cb08329a271b28b29cfe40fe35a6f045089eb26b06323c5e2e",
+    "remoteproc/qcom,wcnss-pil.yaml": "483a9ef62b9b125eea567a3501ac6ff39f5f5e91b6b67daaa93abce6fa3db577"
+  },
+  "phone_access": false,
+  "state": "terminal success",
+  "command": [
+    "make",
+    "O=<workspace>/local/fx0-lts-production-current-01/bindings-torch-01/bindings-01-out",
+    "ARCH=arm",
+    "LLVM=-21",
+    "W=1",
+    "-j2",
+    "DT_SCHEMA_FILES=opp/opp-v2-kryo-cpu.yaml:opp/opp-v2-qcom-level.yaml:power/avs/qcom,cpr.yaml:regulator/qcom,spmi-regulator.yaml:soc/qcom/qcom,saw2.yaml:regulator/qcom,smd-rpm-regulator.yaml:interrupt-controller/qcom,mpm.yaml:power/qcom,msm8226-system-pm.yaml:soc/qcom/qcom,smd-rpm.yaml:iommu/qcom,iommu.yaml:leds/qcom,pm8941-flash-led.yaml:media/qcom,msm8226-camss.yaml:mfd/qcom,spmi-pmic.yaml:remoteproc/qcom,wcnss-pil.yaml",
+    "dt_binding_check"
+  ],
+  "returncode": 0,
+  "diagnostics": [],
+  "passed": true,
+  "full_processed_schema_SHA256": "c92b2daa3e9c5324b62d4eb54c87ea0eaf3da6f47f00c4d5dff117ab89beb161",
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-17T11:04:54.479293+00:00"
+}

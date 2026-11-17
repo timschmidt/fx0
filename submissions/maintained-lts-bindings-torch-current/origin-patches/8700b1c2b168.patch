@@ -1,0 +1,37 @@
+From 8700b1c2b168ebd88b8660551d228fa88734992c Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 15 Nov 2026 00:57:03 -0500
+Subject: [PATCH] dt-bindings: leds: Describe first-generation Qualcomm torch
+ LEDs
+
+Describe the PM8226 and PM8941 peripheral with its distinct register
+layout, shared torch current control and optional supply. Preserve the
+compatible and child layout used by the existing Fx0 integration.
+
+Ordinary binding/example validation passes on the current LED maintainer
+base. Prepared with OpenAI Codex assistance; human review and DCO
+pending.
+---
+ MAINTAINERS | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b9e3b0c17127..50a4d9c77d2b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -23122,6 +23122,12 @@ F:	drivers/firmware/qcom/qcom_pas.h
+ F:	drivers/firmware/qcom/qcom_pas_tee.c
+ F:	include/linux/firmware/qcom/qcom_pas.h
+ 
++QUALCOMM PM8941 TORCH LED DRIVER
++M:	Timothy Schmidt <timschmidt@gmail.com>
++L:	linux-leds@vger.kernel.org
++S:	Maintained
++F:	Documentation/devicetree/bindings/leds/qcom,pm8941-flash-led.yaml
++
+ QUALCOMM SMB CHARGER DRIVER
+ M:	Casey Connolly <casey.connolly@linaro.org>
+ L:	linux-arm-msm@vger.kernel.org
+-- 
+2.56.0
+
