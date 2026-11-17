@@ -1,0 +1,43 @@
+commit 2c14753169281fe43fda0efbbf19cbaca869bb8f
+Author:     Emma Anholt <anholt@igalia.com>
+AuthorDate: Fri Nov 13 20:43:05 2026 -0500
+Commit:     Codex <codex@openai.com>
+CommitDate: Sun Nov 15 20:31:25 2026 -0500
+
+    drm/msm: make register usage header generation deterministic
+    
+    The register generator iterates a Python set when collecting per-variant
+    usage arrays. Hash seeds therefore change the generated declaration
+    order and, through header checksums in debug data, reproducible object
+    and module outputs.
+    
+    Backport Emma Anholt's Mesa c09c414563fc change by sorting variants
+    before collecting usage arrays. Preserve each array key/register pair
+    and every non-usage declaration.
+    
+    On this pinned msm-fixes source, five seeds produce three baseline
+    headers and one fixed header. All 18 usage arrays and other declarations
+    are preserved. Both native complete MSM components build with the
+    fixed generator, W=1 and no compiler diagnostics.
+    
+    The original Mesa change was marked Generated-by: LLM. Codex (GPT-6)
+    assisted the earlier Linux draft and this source-base qualification.
+    Full package reproducibility and physical acceptance remain separate.
+    
+    Fixes: 5acf49119630 ("drm/msm: import gen_header.py script from Mesa")
+    Link: https://gitlab.freedesktop.org/mesa/mesa/-/commit/c09c414563fc0fe6788f28ee7a35522ab21d0ed5
+    Assisted-by: LLM
+
+diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
+index d3b56a9d84fb..5a738a2ad173 100644
+--- a/drivers/gpu/drm/msm/registers/gen_header.py
++++ b/drivers/gpu/drm/msm/registers/gen_header.py
+@@ -816,7 +816,7 @@ class Parser(object):
+                         if reg == vreg:
+                             d[(usage, sanitize_variant(variant))].append(reg)
+                 else:
+-                    for variant in self.variants:
++                    for variant in sorted(self.variants):
+                         d[(usage, sanitize_variant(variant))].append(reg)
+ 
+         print("#ifdef __cplusplus")

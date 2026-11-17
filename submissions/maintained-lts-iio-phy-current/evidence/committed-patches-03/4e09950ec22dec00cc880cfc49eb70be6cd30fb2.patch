@@ -1,0 +1,250 @@
+From 4e09950ec22dec00cc880cfc49eb70be6cd30fb2 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Sun, 15 Nov 2026 22:29:51 -0500
+Subject: [PATCH] iio: document DMP ABI and retain precise scan storage tests
+
+Carry the missing DMP ABI documentation, maintainer coverage and six
+tiny fractional-log2 formatting vectors into maintained LTS. Use opaque
+32-byte quaternion storage with core-owned timestamp placement. Preserve
+the existing IADC, MPU offset/PM, raw-channel and guarded DMP behavior;
+do not import unrelated newer-base parsing or formatter APIs.
+
+The ABI file retains its original proposal's KernelVersion metadata. The
+eight-commit source series retains its individual feature authors,
+notices and assistance disclosures in the accompanying review packet.
+Codex prepared the integration and this LTS reconciliation.
+
+Seven real UML formatter KUnit tests pass. Five fresh actual-source DMP
+models pass 876382 assertions; the unchanged loader source is bound to
+its prior accepted proof without rereading private firmware. Numeric,
+offset/PM, scan and PHY models pass 19520 cases. The paired reader's
+decoder passes nine synthetic records without executing device access.
+Sixty-nine ARM, ARM64 and ARM64 RT objects compile with W=1 and
+nonpermissive CFI. No sensor, firmware, USB or phone action is
+performed.
+
+Raw FIFO timestamp estimation needs a separate dependency audit. The
+normal package must update its reader together with the new kernel. Full
+current-kernel linking, packaging, physical accuracy and wake/soak
+acceptance remain open. Human DCO and final integration review remain
+pending.
+
+Backported from commit 602d9d8588bc ("iio: integrate qualified IADC,
+MPU6515 DMP and precision ports")
+---
+ .../ABI/testing/sysfs-bus-iio-mpu6515-dmp     | 52 +++++++++++++++++++
+ MAINTAINERS                                   |  1 +
+ drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c     | 16 +++---
+ drivers/iio/test/iio-test-format.c            | 47 +++++++++++------
+ 4 files changed, 91 insertions(+), 25 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-bus-iio-mpu6515-dmp
+
+diff --git a/Documentation/ABI/testing/sysfs-bus-iio-mpu6515-dmp b/Documentation/ABI/testing/sysfs-bus-iio-mpu6515-dmp
+new file mode 100644
+index 0000000000000..3efc02dd10d1c
+--- /dev/null
++++ b/Documentation/ABI/testing/sysfs-bus-iio-mpu6515-dmp
+@@ -0,0 +1,52 @@
++What:		/sys/bus/iio/devices/iio:deviceX/in_rot_quaternion_scale
++What:		/sys/bus/iio/devices/iio:deviceX/in_rot_quaternion_sampling_frequency
++Date:		November 2026
++KernelVersion:	7.4
++Contact:	linux-iio@vger.kernel.org
++Description:
++		MPU6515 DMP six-axis quaternion output. The scale is exactly
++		2^-30 and the read-only sampling frequency is 25 Hz. Buffered
++		values are four signed, native-endian 32-bit integers in W, X,
++		Y, Z order, in the firmware's sensor coordinate frame. W is
++		reconstructed as the nonnegative square root of 1-X^2-Y^2-Z^2.
++		This representation does not provide a continuous quaternion
++		sign choice or an absolute magnetic heading.
++
++		Enable in_rot_quaternion in scan_elements to select DMP output.
++		The quaternion scan mask excludes the ordinary raw channels.
++		The optional software timestamp uses the selected IIO clock;
++		batch timestamps are reconstructed at 40 ms intervals ending
++		at the IRQ timestamp. They are not hardware packet timestamps.
++		Use the scan type and index attributes and IIO core alignment
++		rules to interpret the buffer. On the introducing core, the
++		quaternion occupies bytes 0-15, the timestamp bytes 16-23, and
++		the complete timestamped scan is 32 bytes including tail padding.
++
++		DMP operation requires invensense/mpu6515-dmp.bin through the
++		firmware loader. Only the 2943-byte reference image matching
++		CRC32 0xa7e2110d (initial CRC zero) is accepted. Firmware is
++		reloaded and verified on each start; it is not stored in the
++		kernel source. Ordinary raw sampling does not require this file.
++
++What:		/sys/bus/iio/devices/iio:deviceX/events/in_activity_still_change_falling_en
++Date:		November 2026
++KernelVersion:	7.4
++Contact:	linux-iio@vger.kernel.org
++Description:
++		MPU6515 DMP significant-motion one-shot event. Write 1 to arm
++		using the reference firmware's fixed configuration, or 0 to
++		disable and restore the saved raw-sensor configuration. Reads
++		indicate whether it is armed. A firmware SMD status indication
++		emits an IIO_ACTIVITY / IIO_MOD_STILL change-falling event and
++		disarms it; userspace must explicitly rearm for another event.
++		Pedometer status alone does not emit this event.
++
++		Arming requires the reference firmware described above and
++		is exclusive with raw/quaternion buffered sampling and ordinary
++		accelerometer wake-on-motion. It holds a runtime-PM reference
++		while armed. System suspend may retain the running DMP only
++		when device wakeup is enabled and IRQ wake can be armed. The
++		event timestamp is the host observation time, not a firmware
++		measurement of the physical start of motion. A resume without
++		an SMD indication leaves the one-shot event armed. Configuration
++		changes are rejected while the DMP suspend state is retained.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 616d12d2d4b6f..551f495d4653b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -13075,6 +13075,7 @@ M:	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+ L:	linux-iio@vger.kernel.org
+ S:	Maintained
+ W:	https://invensense.tdk.com/
++F:	Documentation/ABI/testing/sysfs-bus-iio-mpu6515-dmp
+ F:	Documentation/devicetree/bindings/iio/imu/invensense,mpu6050.yaml
+ F:	drivers/iio/imu/inv_mpu6050/
+ 
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
+index 5fab34cfee79c..3097de43f4825 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c
+@@ -28,7 +28,7 @@
+  * cursor. The memory port itself must not increment the register address.
+  */
+ static int inv_mpu6515_dmp_mem_transfer(struct inv_mpu6050_state *st,
+-				      unsigned int address, u8 *data,
++					unsigned int address, u8 *data,
+ 				      size_t len, bool write)
+ {
+ 	unsigned int ctrl;
+@@ -72,14 +72,14 @@ static int inv_mpu6515_dmp_mem_transfer(struct inv_mpu6050_state *st,
+ }
+ 
+ int inv_mpu6515_dmp_mem_read(struct inv_mpu6050_state *st,
+-			   unsigned int address, u8 *data, size_t len)
++			     unsigned int address, u8 *data, size_t len)
+ {
+ 	return inv_mpu6515_dmp_mem_transfer(st, address, data, len, false);
+ }
+ 
+ /* A failed write/verify leaves execution disabled; caller must invalidate FW. */
+ int inv_mpu6515_dmp_mem_write(struct inv_mpu6050_state *st,
+-			    unsigned int address, const u8 *data, size_t len)
++			      unsigned int address, const u8 *data, size_t len)
+ {
+ 	u8 verify[INV_DMP_CHUNK];
+ 	size_t chunk, offset = 0;
+@@ -92,7 +92,7 @@ int inv_mpu6515_dmp_mem_write(struct inv_mpu6050_state *st,
+ 	while (offset < len) {
+ 		chunk = min_t(size_t, len - offset, sizeof(verify));
+ 		ret = inv_mpu6515_dmp_mem_transfer(st, address + offset,
+-						(u8 *)data + offset, chunk, true);
++						   (u8 *)data + offset, chunk, true);
+ 		if (ret)
+ 			return ret;
+ 		ret = inv_mpu6515_dmp_mem_read(st, address + offset, verify, chunk);
+@@ -209,7 +209,7 @@ int inv_mpu6515_dmp_configure(struct inv_mpu6050_state *st)
+ 	lockdep_assert_held(&st->lock);
+ 	for (i = 0; i < ARRAY_SIZE(patches); i++) {
+ 		ret = inv_mpu6515_dmp_mem_write(st, patches[i].address,
+-					      patches[i].data, patches[i].length);
++						patches[i].data, patches[i].length);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -283,7 +283,7 @@ static int inv_mpu6515_dmp_configure_smd(struct inv_mpu6050_state *st)
+ 
+ 	for (i = 0; i < ARRAY_SIZE(patches); i++) {
+ 		ret = inv_mpu6515_dmp_mem_write(st, patches[i].address,
+-					      patches[i].data, patches[i].length);
++						patches[i].data, patches[i].length);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -457,8 +457,8 @@ int inv_mpu6515_dmp_read_fifo(struct iio_dev *indio_dev, s64 timestamp)
+ {
+ 	struct inv_mpu6050_state *st = iio_priv(indio_dev);
+ 	struct inv_mpu6515_dmp_packet packet;
+-	/* Repeated quaternion storage aligns the complete timestamped scan to 16. */
+-	struct { s32 q[4]; s64 padding; s64 timestamp; } sample __aligned(16) = { };
++	/* The core computes the timestamp offset and the final scan padding. */
++	struct { s32 q[4]; u8 padding[16]; } sample __aligned(16) = { };
+ 	unsigned int hi, lo, check, tries, count, quats = 0;
+ 	size_t len, offset;
+ 	u64 norm;
+diff --git a/drivers/iio/test/iio-test-format.c b/drivers/iio/test/iio-test-format.c
+index 3abf39e74f9cf..5012f33be5da2 100644
+--- a/drivers/iio/test/iio-test-format.c
++++ b/drivers/iio/test/iio-test-format.c
+@@ -181,26 +181,38 @@ static void iio_test_iio_format_value_fractional_log2(struct kunit *test)
+ 	values[1] = 10;
+ 	ret = iio_format_value(buf, IIO_VAL_FRACTIONAL_LOG2, ARRAY_SIZE(values), values);
+ 	IIO_TEST_FORMAT_EXPECT_EQ(test, buf, ret, "0.000000000\n");
++}
+ 
+-	/* Q30 quaternion scale must not be rounded to zero. */
+-	values[0] = 1;
+-	values[1] = 30;
+-	ret = iio_format_value(buf, IIO_VAL_FRACTIONAL_LOG2, ARRAY_SIZE(values), values);
+-	IIO_TEST_FORMAT_EXPECT_EQ(test, buf, ret, "0.000000000931322574615478515625\n");
+-	values[0] = -1;
+-	ret = iio_format_value(buf, IIO_VAL_FRACTIONAL_LOG2, ARRAY_SIZE(values), values);
+-	IIO_TEST_FORMAT_EXPECT_EQ(test, buf, ret, "-0.000000000931322574615478515625\n");
++static void iio_test_iio_format_value_tiny_fractional_log2(struct kunit *test)
++{
++	static const struct {
++		int numerator;
++		int shift;
++		const char *expected;
++	} cases[] = {
++		{ 1, 30, "0.000000000931322574615478515625\n" },
++		{ -1, 30, "-0.000000000931322574615478515625\n" },
++		{ 1, 63,
++		  "0.000000000000000000108420217248550443400745280086994171142578125\n" },
++		{ INT_MIN, 63, "-0.00000000023283064365386962890625\n" },
++		{ INT_MAX, 63,
++		  "0.000000000232830643545449411657699556599254719913005828857421875\n" },
++		{ 0, 63, "0.000000000\n" },
++	};
++	char *buf;
++	unsigned int i;
++	int ret;
+ 
+-	/* Maximum supported shift and signed numerator boundary. */
+-	values[0] = 1;
+-	values[1] = 63;
+-	ret = iio_format_value(buf, IIO_VAL_FRACTIONAL_LOG2, ARRAY_SIZE(values), values);
+-	IIO_TEST_FORMAT_EXPECT_EQ(test, buf, ret,
+-		"0.000000000000000000108420217248550443400745280086994171142578125\n");
+-	values[0] = INT_MIN;
+-	ret = iio_format_value(buf, IIO_VAL_FRACTIONAL_LOG2, ARRAY_SIZE(values), values);
+-	IIO_TEST_FORMAT_EXPECT_EQ(test, buf, ret, "-0.00000000023283064365386962890625\n");
++	buf = kunit_kmalloc(test, PAGE_SIZE, GFP_KERNEL);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, buf);
++
++	for (i = 0; i < ARRAY_SIZE(cases); i++) {
++		int values[] = { cases[i].numerator, cases[i].shift };
+ 
++		ret = iio_format_value(buf, IIO_VAL_FRACTIONAL_LOG2,
++				       ARRAY_SIZE(values), values);
++		IIO_TEST_FORMAT_EXPECT_EQ(test, buf, ret, cases[i].expected);
++	}
+ }
+ 
+ static void iio_test_iio_format_value_multiple(struct kunit *test)
+@@ -275,6 +287,7 @@ static struct kunit_case iio_format_test_cases[] = {
+ 		KUNIT_CASE(iio_test_iio_format_value_fixedpoint),
+ 		KUNIT_CASE(iio_test_iio_format_value_fractional),
+ 		KUNIT_CASE(iio_test_iio_format_value_fractional_log2),
++		KUNIT_CASE(iio_test_iio_format_value_tiny_fractional_log2),
+ 		KUNIT_CASE(iio_test_iio_format_value_multiple),
+ 		KUNIT_CASE(iio_test_iio_format_value_integer_64),
+ 		{ }
+-- 
+2.56.0
+

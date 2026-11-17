@@ -1,0 +1,123 @@
+{
+  "passed": true,
+  "base": "2eae6938469b792720462ed5c37b97f4f12dd9c9",
+  "head": "4e09950ec22dec00cc880cfc49eb70be6cd30fb2",
+  "commits": [
+    {
+      "origin_commit": "cb27d8c18fa311ad87fca4c2e7f1d73ec0cb440d",
+      "commit": "fcb47e61e154d08e04e29c96b5d547588d00645e",
+      "parent": "2eae6938469b792720462ed5c37b97f4f12dd9c9",
+      "subject": "iio: buffer: cache timestamp offset in scan buffer",
+      "author": "David Lechner",
+      "author_email": "dlechner@baylibre.com",
+      "author_date": "2026-03-08T01:44:11Z",
+      "paths": [
+        "drivers/iio/industrialio-buffer.c",
+        "include/linux/iio/iio.h"
+      ],
+      "original_147_origin": null,
+      "additional_upstream_backport": true,
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "d05e3c1460e47aa61e58cc6947cf7c9fc1371d7e",
+      "commit": "b8d0fcb4eb7477de96d4122775d6494194dd8fa2",
+      "parent": "fcb47e61e154d08e04e29c96b5d547588d00645e",
+      "subject": "iio: buffer: fix timestamp alignment when quaternion in scan",
+      "author": "David Lechner",
+      "author_email": "dlechner@baylibre.com",
+      "author_date": "2026-03-08T01:44:13Z",
+      "paths": [
+        "include/linux/iio/buffer.h"
+      ],
+      "original_147_origin": null,
+      "additional_upstream_backport": true,
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "76a08c219e84cc78324ba66c16dfd076e06a2c7b",
+      "commit": "33ea1245630b02f6110fadc5bf9567ebcee4ddf5",
+      "parent": "b8d0fcb4eb7477de96d4122775d6494194dd8fa2",
+      "subject": "phy: qcom-usb-hs: consolidate counted initialization storage",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-10-31T03:56:19-04:00",
+      "paths": [
+        "drivers/phy/qualcomm/phy-qcom-usb-hs.c"
+      ],
+      "original_147_origin": "76a08c219e84cc78324ba66c16dfd076e06a2c7b",
+      "additional_upstream_backport": false,
+      "exact_added_removed_source_lines": false
+    },
+    {
+      "origin_commit": "602d9d8588bced38898afd22d52399af6afff5bd",
+      "commit": "4e09950ec22dec00cc880cfc49eb70be6cd30fb2",
+      "parent": "33ea1245630b02f6110fadc5bf9567ebcee4ddf5",
+      "subject": "iio: document DMP ABI and retain precise scan storage tests",
+      "author": "Codex",
+      "author_email": "codex@openai.com",
+      "author_date": "2026-11-15T22:29:51-05:00",
+      "paths": [
+        "Documentation/ABI/testing/sysfs-bus-iio-mpu6515-dmp",
+        "MAINTAINERS",
+        "drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c",
+        "drivers/iio/test/iio-test-format.c"
+      ],
+      "original_147_origin": "602d9d8588bced38898afd22d52399af6afff5bd",
+      "additional_upstream_backport": false,
+      "exact_added_removed_source_lines": false
+    }
+  ],
+  "source_files": {
+    "Documentation/ABI/testing/sysfs-bus-iio-mpu6515-dmp": "3d5c2cb708c4e43410bd4d892ad07daa934afb46542c6cf2c224da32002262e2",
+    "MAINTAINERS": "25cd85d474a161491197d6a0dd139c02af39c09ed0db98e46d634980594ab459",
+    "drivers/gpu/drm/msm/registers/gen_header.py": "c034a397444556e6b8c579b18d77dd0e2dd6dd2c4acd735a1ca6023769cb9fae",
+    "drivers/iio/adc/qcom-spmi-iadc.c": "5b7bb24aa119770f64d8d08f48cef7ad3981067e42cdc518f529465b014b6cf1",
+    "drivers/iio/imu/inv_mpu6050/Kconfig": "f8df4dbd5d3e3cf02d5886c24d2e07e2333847156473479679d83efc4c81c27a",
+    "drivers/iio/imu/inv_mpu6050/Makefile": "3f89dfed1f10d488a793f045992275093a701496e26f12192d62d21e980165f4",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_core.c": "c325173917089dcbf6390fd23863c62588ea94e45de96b6b6f03c17523d9d070",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c": "3bcbbf61dae97804aa26347eccd307f2a468cf64eee6f530eab4c3d70237c71a",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h": "ad506b4d40c92487219fb0c8724c969a95cd0fa493c69983d72a0ccfed3b0589",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c": "57488c497ee5b5e2ec8b49a11d4bfc4cf521897b8f447db717da3ffd4d836436",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c": "315c183376f33ba0a0643c370fc73c9e499009aecf5f916c42e8ecd3f2ffbf8a",
+    "drivers/iio/industrialio-buffer.c": "f3460a850184a4c75c9be61a5c429f0ba178f412ba57b57058a7867b2327d661",
+    "drivers/iio/industrialio-core.c": "d066c5ba9d75ce08c9b0f27021c83ee4e2e1931e91dbc140ed3d772b72c30859",
+    "drivers/iio/orientation/hid-sensor-rotation.c": "7ba3ab18add733071fc1b122f02a7fdca39cc63f64818c9e8fa9870ec70075f0",
+    "drivers/iio/test/iio-test-format.c": "daa1e1827d613d14acd7f562c27aca44ef6723a954ca9a935d39d66a33ab3e5a",
+    "drivers/phy/qualcomm/phy-qcom-usb-hs.c": "9c52cf38ab85e4a1879f54c0401d0da1cf6142998b8f8de38fd34698186c500f",
+    "include/linux/iio/buffer.h": "114916cda8f5551545ba742f52badf8ed17964fcf0f75eea9c1db9672195dddf",
+    "include/linux/iio/iio.h": "df67812362a262ed1ac2d0fe0522eed923b8edc2db3bea18698966e3812e12d2"
+  },
+  "branch_advanced": true,
+  "recorded_UTC": "2026-11-17T14:59:06.363607+00:00",
+  "working_tree_clean": true,
+  "original_source_ports": 2,
+  "additional_upstream_backports": 2,
+  "existing_equivalents": 1,
+  "native_objects": 69,
+  "focused_positive_cases": 19529,
+  "DMP_fresh_model_assertions": 876382,
+  "DMP_fresh_models": 5,
+  "unchanged_loader_evidence_reused": true,
+  "UML_KUnit_tests": 7,
+  "header_seed_runs": 5,
+  "LTS_header_usage_arrays": 4,
+  "regression_variants": 17,
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "strict_checkpatch_passed": true,
+  "current_full_kernel_link_qualified": false,
+  "physical_acceptance": false,
+  "normal_package_current_reader_update_required": true,
+  "raw_timestamp_dependency_audit": {
+    "path": "drivers/iio/common/inv_sensors/inv_sensors_timestamp.c",
+    "maintained_SHA256": "d08b86ba3a786d7fdd1163305fdf0beb99ac591132edca0624042e0598273ea7",
+    "newer_SHA256": "aea2fa3ff75b96ef1a481afee191e4d8e6df12ae87b3aa95b67f1d286a2c2e45",
+    "not_changed_this_phase": true,
+    "not_covered_by_DMP_timestamp_placement_fix": true,
+    "required_followup": "Audit relevant raw FIFO timestamp transition/estimation fixes before final combined-kernel acceptance"
+  },
+  "phone_access": false,
+  "published": false,
+  "human_DCO_pending": true,
+  "full_goal_complete": false
+}

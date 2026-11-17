@@ -1,0 +1,72 @@
+From b8d0fcb4eb7477de96d4122775d6494194dd8fa2 Mon Sep 17 00:00:00 2001
+From: David Lechner <dlechner@baylibre.com>
+Date: Sun, 8 Mar 2026 01:44:13 +0000
+Subject: [PATCH] iio: buffer: fix timestamp alignment when quaternion in scan
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fix timestamp alignment when a scan buffer contains an element larger
+than sizeof(int64_t). Currently s32 quaternions are the only such
+element, and the one driver that has this (hid-sensor-rotation) has a
+workaround in place already so this change does not affect it.
+
+Previously, we assumed that the timestamp would always be 8-byte aligned
+relative to the end of the scan buffer, but in the case of a scan buffer
+a 16-byte quaternion vector, scan_bytes == 32, but the timestamp needs
+to be placed at offset 16, not 24.
+
+ts_offset is now a value in bytes so we have to change how the array
+access is done.
+
+Adapt the upstream change to the maintained LTS byte-count return
+interface. Initialize the cached offset even when timestamps are
+disabled. The HID rotation driver's existing dual-slot compatibility
+remains intact.
+
+Actual scan descriptors, storage calculation, cache producer/consumer
+fragments and push helpers reproduce the documented quaternion mismatch:
+the old helper writes byte 24, while the corrected helper writes byte 16
+in the 32-byte scan. Fourteen candidate model cases pass; three
+independent timestamp/cache regressions fail. Full buffer registration
+is not modeled.
+
+Codex prepared this LTS adaptation and qualification. The original
+upstream trailers below are retained provenance, not new sign-offs for
+this port. Human DCO and final integration review remain pending.
+
+Link: https://github.com/torvalds/linux/commit/d05e3c1460e47aa61e58cc6947cf7c9fc1371d7e
+
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+---
+ include/linux/iio/buffer.h | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/include/linux/iio/buffer.h b/include/linux/iio/buffer.h
+index 5c84ec4a98100..4f1759afba46c 100644
+--- a/include/linux/iio/buffer.h
++++ b/include/linux/iio/buffer.h
+@@ -38,8 +38,16 @@ static inline int iio_push_to_buffers_with_timestamp(struct iio_dev *indio_dev,
+ 	void *data, int64_t timestamp)
+ {
+ 	if (ACCESS_PRIVATE(indio_dev, scan_timestamp)) {
+-		size_t ts_offset = indio_dev->scan_bytes / sizeof(int64_t) - 1;
+-		((int64_t *)data)[ts_offset] = timestamp;
++		size_t ts_offset = ACCESS_PRIVATE(indio_dev, scan_timestamp_offset);
++
++		/*
++		 * The size of indio_dev->scan_bytes is always aligned to the
++		 * largest scan element's alignment (see iio_compute_scan_bytes()).
++		 * So there may be padding after the timestamp. ts_offset contains
++		 * the offset in bytes that was already computed for correctly
++		 * aligning the timestamp.
++		 */
++		*(int64_t *)(data + ts_offset) = timestamp;
+ 	}
+ 
+ 	return iio_push_to_buffers(indio_dev, data);
+-- 
+2.56.0
+

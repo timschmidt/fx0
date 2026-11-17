@@ -1,0 +1,65 @@
+commit 6eaeb30c76e52fb2e3b663374cf572c875b6aec3
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Sun Nov 1 04:46:06 2026 -0500
+Commit:     Codex <codex@openai.com>
+CommitDate: Sun Nov 15 22:25:23 2026 -0500
+
+    iio: imu: inv_mpu6050: Resume before reading calibbias
+    
+    The chip supplies can be off during autosuspend. Resume the device before
+    reading bias registers, then release the runtime-PM reference after
+    unlocking. Propagate resume and bus failures without changing ownership.
+    
+    Fixes: 4599cac84614 ("iio: imu: inv_mpu6050: use runtime pm with autosuspend")
+    
+    Ported from Fx0 commit 21508b9dbbcb74198cd3b4929789d1a357e3fe0e.
+    Port and qualification used OpenAI Codex assistance.
+
+diff --git a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+index 9850532e8a..60bb8c5510 100644
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+@@ -805,24 +805,31 @@ inv_mpu6050_read_raw(struct iio_dev *indio_dev,
+ 		default:
+ 			return -EINVAL;
+ 		}
+-	case IIO_CHAN_INFO_CALIBBIAS:
++	case IIO_CHAN_INFO_CALIBBIAS: {
++		struct device *pdev = regmap_get_device(st->map);
++		int reg;
++
+ 		switch (chan->type) {
+ 		case IIO_ANGL_VEL:
+-			mutex_lock(&st->lock);
+-			ret = inv_mpu6050_sensor_show(st, st->reg->gyro_offset,
+-						chan->channel2, val);
+-			mutex_unlock(&st->lock);
+-			return ret;
++			reg = st->reg->gyro_offset;
++			break;
+ 		case IIO_ACCEL:
+-			mutex_lock(&st->lock);
+-			ret = inv_mpu6050_sensor_show(st, st->reg->accl_offset,
+-						chan->channel2, val);
+-			mutex_unlock(&st->lock);
+-			return ret;
+-
++			reg = st->reg->accl_offset;
++			break;
+ 		default:
+ 			return -EINVAL;
+ 		}
++
++		/* The supplies may be off while the chip is runtime suspended */
++		ret = pm_runtime_resume_and_get(pdev);
++		if (ret)
++			return ret;
++		mutex_lock(&st->lock);
++		ret = inv_mpu6050_sensor_show(st, reg, chan->channel2, val);
++		mutex_unlock(&st->lock);
++		pm_runtime_put_autosuspend(pdev);
++		return ret;
++	}
+ 	default:
+ 		return -EINVAL;
+ 	}

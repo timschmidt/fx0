@@ -1,0 +1,89 @@
+[
+  {
+    "label": "offset-stride",
+    "head": "292d2789b6297b7c9082be2dc658982dfebe9965",
+    "tree": "eac843a39f143f09e91dbf7a8846b8033b232769",
+    "parent": "1390ca4953a7400ca932cb49635f02c727f885a6",
+    "original": "2ebba2c0ab2651c0d4e38e80151cb3812b4b15d7",
+    "subject": "iio: imu: inv_mpu6050: Fix accel calibbias register stride",
+    "author": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-01T04:45:50-05:00"
+  },
+  {
+    "label": "calibbias-PM",
+    "head": "6eaeb30c76e52fb2e3b663374cf572c875b6aec3",
+    "tree": "76a7b07f3bb43ffd2cbcb3cc426ca8a737065bd2",
+    "parent": "292d2789b6297b7c9082be2dc658982dfebe9965",
+    "original": "21508b9dbbcb74198cd3b4929789d1a357e3fe0e",
+    "subject": "iio: imu: inv_mpu6050: Resume before reading calibbias",
+    "author": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-01T04:46:06-05:00"
+  },
+  {
+    "label": "IADC",
+    "head": "e17f0bc867cf6f163ac38609ef4fddb777f4ea6d",
+    "tree": "559ee9ac46e411adb1f7cd820c33c6e0a561b12f",
+    "parent": "6eaeb30c76e52fb2e3b663374cf572c875b6aec3",
+    "original": "5c3efd4c7fa8a8d2bec768d826b5daac57a45e76",
+    "subject": "iio: adc: qcom-spmi-iadc: Preserve signed microamp values",
+    "author": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-10-29T23:51:28-04:00"
+  },
+  {
+    "label": "precision",
+    "head": "5697bdda5f9756860665930d9583f235c74f5174",
+    "tree": "fc269114914a4a050d10f5ee15b0847b0ea0cc67",
+    "parent": "e17f0bc867cf6f163ac38609ef4fddb777f4ea6d",
+    "original": "383c3b717e5d4d16a7fad5ef5da471b71b23b645",
+    "subject": "iio: core: Preserve tiny nonzero fractional log2 scales",
+    "author": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z"
+  },
+  {
+    "label": "DMP-stream",
+    "head": "e439f4adc75444d2b451f2d7190295387d60847b",
+    "tree": "530d4a6a0973bbc6c0c4c93ec61feaf3573b638c",
+    "parent": "5697bdda5f9756860665930d9583f235c74f5174",
+    "original": "250f944e5e5074e767252fc69a59709c5f189c07",
+    "subject": "iio: inv_mpu6050: Add guarded MPU6515 DMP execution",
+    "author": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z"
+  },
+  {
+    "label": "DMP-SMD-awake",
+    "head": "b15ba3b9c7713acf58b801327af91d5477135d90",
+    "tree": "b166dc63023c24d65f245f5b88714f94bd6b52b3",
+    "parent": "e439f4adc75444d2b451f2d7190295387d60847b",
+    "original": "9c6cb08d33bf3153eb443f8cffe22ad76b8487f5",
+    "subject": "iio: inv_mpu6050: Expose verified significant-motion events",
+    "author": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z"
+  },
+  {
+    "label": "DMP-SMD-suspend",
+    "head": "115dd39fbca968f76ae13f455db2660b520e492e",
+    "tree": "b9458f67470a5754c7b818ea1c42e9dac6424ad5",
+    "parent": "b15ba3b9c7713acf58b801327af91d5477135d90",
+    "original": "ca17e5cf5eca2dedcba928f9995261f955fac96c",
+    "subject": "iio: inv_mpu6050: Retain significant-motion state across suspend",
+    "author": "Timothy Schmidt",
+    "author_email": "timschmidt@gmail.com",
+    "author_date": "2026-11-08T16:33:09Z"
+  },
+  {
+    "label": "current-layout-ABI",
+    "head": "0cf9669f4e6aefaaba2c0b5798a2306f7cc72dfc",
+    "tree": "c3a764a9af3b9c0abe280267edab7007ff4ede79",
+    "parent": "115dd39fbca968f76ae13f455db2660b520e492e",
+    "subject": "iio: inv_mpu6050: Document DMP ABI and core-owned scan layout",
+    "author": "Codex",
+    "author_email": "codex@openai.com",
+    "author_date": "2026-11-15T22:25:23-05:00"
+  }
+]

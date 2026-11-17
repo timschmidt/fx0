@@ -1,0 +1,93 @@
+{
+  "base": "2eae6938469b792720462ed5c37b97f4f12dd9c9",
+  "stages": [
+    {
+      "origin": "cb27d8c18fa311ad87fca4c2e7f1d73ec0cb440d",
+      "kind": "additional upstream prerequisite",
+      "files": [
+        {
+          "path": "drivers/iio/industrialio-buffer.c",
+          "before_SHA256": "aae7ac91bdf696400110f1d9ee3cad3042bcc02a693e8e210d40bce8f7b9c3f3",
+          "after_SHA256": "f3460a850184a4c75c9be61a5c429f0ba178f412ba57b57058a7867b2327d661"
+        },
+        {
+          "path": "include/linux/iio/iio.h",
+          "before_SHA256": "0f28dbb1a0bf9d3f8618b9f9e5120da1f87093a998e6f72f049de887df00c239",
+          "after_SHA256": "df67812362a262ed1ac2d0fe0522eed923b8edc2db3bea18698966e3812e12d2"
+        }
+      ]
+    },
+    {
+      "origin": "d05e3c1460e47aa61e58cc6947cf7c9fc1371d7e",
+      "kind": "additional upstream alignment fix",
+      "files": [
+        {
+          "path": "include/linux/iio/buffer.h",
+          "before_SHA256": "c8a68cd245b94c9d73c75c9ee1404b98c2776ef887d62534bc8084fad6444db7",
+          "after_SHA256": "114916cda8f5551545ba742f52badf8ed17964fcf0f75eea9c1db9672195dddf"
+        }
+      ]
+    },
+    {
+      "origin": "76a08c219e84cc78324ba66c16dfd076e06a2c7b",
+      "kind": "original reconciled port",
+      "files": [
+        {
+          "path": "drivers/phy/qualcomm/phy-qcom-usb-hs.c",
+          "before_SHA256": "a9eedf509cefee148c46466d0c06cbe3f0784d8781e5b1b980440c566f05b0e1",
+          "after_SHA256": "9c52cf38ab85e4a1879f54c0401d0da1cf6142998b8f8de38fd34698186c500f"
+        }
+      ]
+    },
+    {
+      "origin": "602d9d8588bced38898afd22d52399af6afff5bd",
+      "kind": "original reconciled port",
+      "files": [
+        {
+          "path": "Documentation/ABI/testing/sysfs-bus-iio-mpu6515-dmp",
+          "before_SHA256": null,
+          "after_SHA256": "3d5c2cb708c4e43410bd4d892ad07daa934afb46542c6cf2c224da32002262e2"
+        },
+        {
+          "path": "MAINTAINERS",
+          "before_SHA256": "d78275bb66ac05a0b34c7af0391558b6cc41ea635c43b18c5b371acff79bee0c",
+          "after_SHA256": "25cd85d474a161491197d6a0dd139c02af39c09ed0db98e46d634980594ab459"
+        },
+        {
+          "path": "drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c",
+          "before_SHA256": "db058a8d300bd8caa7068b0980f923dba70795c90209a7a7f6033482f078a852",
+          "after_SHA256": "3bcbbf61dae97804aa26347eccd307f2a468cf64eee6f530eab4c3d70237c71a"
+        },
+        {
+          "path": "drivers/iio/test/iio-test-format.c",
+          "before_SHA256": "487f3c14538983dee027df1ab29ae8336738f06c29a5cd76f89f0c526a183a0f",
+          "after_SHA256": "daa1e1827d613d14acd7f562c27aca44ef6723a954ca9a935d39d66a33ab3e5a"
+        }
+      ]
+    }
+  ],
+  "complete": true,
+  "original_ports": 2,
+  "additional_upstream_backports": 2,
+  "header_generator_already_present": true,
+  "source_files": {
+    "Documentation/ABI/testing/sysfs-bus-iio-mpu6515-dmp": "3d5c2cb708c4e43410bd4d892ad07daa934afb46542c6cf2c224da32002262e2",
+    "MAINTAINERS": "25cd85d474a161491197d6a0dd139c02af39c09ed0db98e46d634980594ab459",
+    "drivers/gpu/drm/msm/registers/gen_header.py": "c034a397444556e6b8c579b18d77dd0e2dd6dd2c4acd735a1ca6023769cb9fae",
+    "drivers/iio/adc/qcom-spmi-iadc.c": "5b7bb24aa119770f64d8d08f48cef7ad3981067e42cdc518f529465b014b6cf1",
+    "drivers/iio/imu/inv_mpu6050/Kconfig": "f8df4dbd5d3e3cf02d5886c24d2e07e2333847156473479679d83efc4c81c27a",
+    "drivers/iio/imu/inv_mpu6050/Makefile": "3f89dfed1f10d488a793f045992275093a701496e26f12192d62d21e980165f4",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_core.c": "c325173917089dcbf6390fd23863c62588ea94e45de96b6b6f03c17523d9d070",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c": "3bcbbf61dae97804aa26347eccd307f2a468cf64eee6f530eab4c3d70237c71a",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h": "ad506b4d40c92487219fb0c8724c969a95cd0fa493c69983d72a0ccfed3b0589",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c": "57488c497ee5b5e2ec8b49a11d4bfc4cf521897b8f447db717da3ffd4d836436",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c": "315c183376f33ba0a0643c370fc73c9e499009aecf5f916c42e8ecd3f2ffbf8a",
+    "drivers/iio/industrialio-buffer.c": "f3460a850184a4c75c9be61a5c429f0ba178f412ba57b57058a7867b2327d661",
+    "drivers/iio/industrialio-core.c": "d066c5ba9d75ce08c9b0f27021c83ee4e2e1931e91dbc140ed3d772b72c30859",
+    "drivers/iio/orientation/hid-sensor-rotation.c": "7ba3ab18add733071fc1b122f02a7fdca39cc63f64818c9e8fa9870ec70075f0",
+    "drivers/iio/test/iio-test-format.c": "daa1e1827d613d14acd7f562c27aca44ef6723a954ca9a935d39d66a33ab3e5a",
+    "drivers/phy/qualcomm/phy-qcom-usb-hs.c": "9c52cf38ab85e4a1879f54c0401d0da1cf6142998b8f8de38fd34698186c500f",
+    "include/linux/iio/buffer.h": "114916cda8f5551545ba742f52badf8ed17964fcf0f75eea9c1db9672195dddf",
+    "include/linux/iio/iio.h": "df67812362a262ed1ac2d0fe0522eed923b8edc2db3bea18698966e3812e12d2"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "commit": "d05e3c1460e47aa61e58cc6947cf7c9fc1371d7e",
+  "url": "https://github.com/torvalds/linux/commit/d05e3c1460e47aa61e58cc6947cf7c9fc1371d7e",
+  "author": {
+    "name": "David Lechner",
+    "email": "dlechner@baylibre.com",
+    "date": "2026-03-08T01:44:13Z"
+  },
+  "committer": {
+    "name": "Jonathan Cameron",
+    "email": "jic23@kernel.org",
+    "date": "2026-04-27T08:58:15Z"
+  },
+  "message": "iio: buffer: fix timestamp alignment when quaternion in scan\n\nFix timestamp alignment when a scan buffer contains an element larger\nthan sizeof(int64_t). Currently s32 quaternions are the only such\nelement, and the one driver that has this (hid-sensor-rotation) has a\nworkaround in place already so this change does not affect it.\n\nPreviously, we assumed that the timestamp would always be 8-byte aligned\nrelative to the end of the scan buffer, but in the case of a scan buffer\na 16-byte quaternion vector, scan_bytes == 32, but the timestamp needs\nto be placed at offset 16, not 24.\n\nts_offset is now a value in bytes so we have to change how the array\naccess is done.\n\nSigned-off-by: David Lechner <dlechner@baylibre.com>\nReviewed-by: Nuno Sá <nuno.sa@analog.com>\nSigned-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>",
+  "files": [
+    {
+      "filename": "include/linux/iio/buffer.h",
+      "patch": "@@ -34,8 +34,16 @@ static inline int iio_push_to_buffers_with_timestamp(struct iio_dev *indio_dev,\n \tvoid *data, int64_t timestamp)\n {\n \tif (ACCESS_PRIVATE(indio_dev, scan_timestamp)) {\n-\t\tsize_t ts_offset = indio_dev->scan_bytes / sizeof(int64_t) - 1;\n-\t\t((int64_t *)data)[ts_offset] = timestamp;\n+\t\tsize_t ts_offset = ACCESS_PRIVATE(indio_dev, scan_timestamp_offset);\n+\n+\t\t/*\n+\t\t * The size of indio_dev->scan_bytes is always aligned to the\n+\t\t * largest scan element's alignment (see iio_compute_scan_bytes()).\n+\t\t * So there may be padding after the timestamp. ts_offset contains\n+\t\t * the offset in bytes that was already computed for correctly\n+\t\t * aligning the timestamp.\n+\t\t */\n+\t\t*(int64_t *)(data + ts_offset) = timestamp;\n \t}\n \n \treturn iio_push_to_buffers(indio_dev, data);"
+    }
+  ],
+  "parents": [
+    "99577250145316cb5840867f0278ddd8e0de8689"
+  ],
+  "source": "torvalds/linux via read-only GitHub API"
+}

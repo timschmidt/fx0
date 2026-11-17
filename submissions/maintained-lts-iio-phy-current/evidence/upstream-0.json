@@ -1,0 +1,29 @@
+{
+  "commit": "cb27d8c18fa311ad87fca4c2e7f1d73ec0cb440d",
+  "url": "https://github.com/torvalds/linux/commit/cb27d8c18fa311ad87fca4c2e7f1d73ec0cb440d",
+  "author": {
+    "name": "David Lechner",
+    "email": "dlechner@baylibre.com",
+    "date": "2026-03-08T01:44:11Z"
+  },
+  "committer": {
+    "name": "Jonathan Cameron",
+    "email": "jic23@kernel.org",
+    "date": "2026-04-27T08:58:15Z"
+  },
+  "message": "iio: buffer: cache timestamp offset in scan buffer\n\nCache the offset (in bytes) for the timestamp element in a scan buffer.\nThis will be used later to ensure proper alignment of the timestamp\nelement in the scan buffer.\n\nThe new field could not be placed in struct iio_dev_opaque because we\nwill need to access it in a static inline function later, so we make it\n__private instead. It is only intended to be used by core IIO code.\n\nSigned-off-by: David Lechner <dlechner@baylibre.com>\nReviewed-by: Nuno Sá <nuno.sa@analog.com>\nSigned-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>",
+  "files": [
+    {
+      "filename": "drivers/iio/industrialio-buffer.c",
+      "patch": "@@ -765,7 +765,8 @@ static int iio_storage_bytes_for_timestamp(struct iio_dev *indio_dev)\n \n static int iio_compute_scan_bytes(struct iio_dev *indio_dev,\n \t\t\t\t  const unsigned long *mask, bool timestamp,\n-\t\t\t\t  unsigned int *scan_bytes)\n+\t\t\t\t  unsigned int *scan_bytes,\n+\t\t\t\t  unsigned int *timestamp_offset)\n {\n \tunsigned int bytes = 0;\n \tint length, i, largest = 0;\n@@ -787,6 +788,10 @@ static int iio_compute_scan_bytes(struct iio_dev *indio_dev,\n \t\t\treturn length;\n \n \t\tbytes = ALIGN(bytes, length);\n+\n+\t\tif (timestamp_offset)\n+\t\t\t*timestamp_offset = bytes;\n+\n \t\tbytes += length;\n \t\tlargest = max(largest, length);\n \t}\n@@ -848,7 +853,7 @@ static int iio_buffer_update_bytes_per_datum(struct iio_dev *indio_dev,\n \t\treturn 0;\n \n \tret = iio_compute_scan_bytes(indio_dev, buffer->scan_mask,\n-\t\t\t\t     buffer->scan_timestamp, &bytes);\n+\t\t\t\t     buffer->scan_timestamp, &bytes, NULL);\n \tif (ret)\n \t\treturn ret;\n \n@@ -892,6 +897,7 @@ struct iio_device_config {\n \tunsigned int watermark;\n \tconst unsigned long *scan_mask;\n \tunsigned int scan_bytes;\n+\tunsigned int scan_timestamp_offset;\n \tbool scan_timestamp;\n };\n \n@@ -997,7 +1003,8 @@ static int iio_verify_update(struct iio_dev *indio_dev,\n \t}\n \n \tret = iio_compute_scan_bytes(indio_dev, scan_mask, scan_timestamp,\n-\t\t\t\t     &config->scan_bytes);\n+\t\t\t\t     &config->scan_bytes,\n+\t\t\t\t     &config->scan_timestamp_offset);\n \tif (ret)\n \t\treturn ret;\n \n@@ -1155,6 +1162,7 @@ static int iio_enable_buffers(struct iio_dev *indio_dev,\n \tindio_dev->active_scan_mask = config->scan_mask;\n \tACCESS_PRIVATE(indio_dev, scan_timestamp) = config->scan_timestamp;\n \tindio_dev->scan_bytes = config->scan_bytes;\n+\tACCESS_PRIVATE(indio_dev, scan_timestamp_offset) = config->scan_timestamp_offset;\n \tiio_dev_opaque->currentmode = config->mode;\n \n \tiio_update_demux(indio_dev);"
+    },
+    {
+      "filename": "include/linux/iio/iio.h",
+      "patch": "@@ -584,6 +584,8 @@ struct iio_buffer_setup_ops {\n  *\t\t\tand owner\n  * @buffer:\t\t[DRIVER] any buffer present\n  * @scan_bytes:\t\t[INTERN] num bytes captured to be fed to buffer demux\n+ * @scan_timestamp_offset: [INTERN] cache of the offset (in bytes) for the\n+ *\t\t\t   timestamp in the scan buffer\n  * @available_scan_masks: [DRIVER] optional array of allowed bitmasks. Sort the\n  *\t\t\t   array in order of preference, the most preferred\n  *\t\t\t   masks first.\n@@ -610,6 +612,7 @@ struct iio_dev {\n \n \tstruct iio_buffer\t\t*buffer;\n \tint\t\t\t\tscan_bytes;\n+\tunsigned int\t\t\t__private scan_timestamp_offset;\n \n \tconst unsigned long\t\t*available_scan_masks;\n \tunsigned int\t\t\t__private masklength;"
+    }
+  ],
+  "parents": [
+    "78abd04ea19608dc8a025ba5b95cd21c5a86d3e6"
+  ],
+  "source": "torvalds/linux via read-only GitHub API"
+}
