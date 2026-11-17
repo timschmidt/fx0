@@ -1,0 +1,103 @@
+{
+  "full_system_coordinator_implemented": false,
+  "CPR_deep_suspend_guard_removed": false,
+  "SO_floor_lowered": false,
+  "source": {
+    "repository": "worktrees/linux-qcom-spm-rpm-current-01",
+    "parent": "c710ac48db5179aaa8d9c95401c56019a4ac4191",
+    "head": "d7235bd60442433ae5ad3492d630986cf1290588",
+    "tree": "93959ee77e1a53a425d0d27cadfea7aeaab2f5a2",
+    "branch": "development/qcom-rpm-suspend-admission-current-01",
+    "source_files": {
+      "drivers/soc/qcom/smd-rpm.c": "05f863bef30c28e859947100f46452d1ee9f85bba985228776d8dc20a0a972cd",
+      "include/linux/soc/qcom/smd-rpm.h": "85f45b7db7eafa2c0ace23893a8e253ffa6a9e8002a8e1a77538383f3beec255"
+    },
+    "native_profiles": [
+      {
+        "label": "native-arm-02",
+        "objects": 4,
+        "new_diagnostics": 0,
+        "inherited_RPMsg_doc_warnings": 2
+      },
+      {
+        "label": "native-arm-rt-01",
+        "objects": 4,
+        "new_diagnostics": 0,
+        "inherited_RPMsg_doc_warnings": 2
+      },
+      {
+        "label": "native-arm64-01",
+        "objects": 4,
+        "new_diagnostics": 0,
+        "inherited_RPMsg_doc_warnings": 2
+      },
+      {
+        "label": "native-arm64-rt-01",
+        "objects": 4,
+        "new_diagnostics": 0,
+        "inherited_RPMsg_doc_warnings": 2
+      }
+    ],
+    "native_objects": 16,
+    "production_caller_present": false,
+    "upstream_ready": false,
+    "feature_not_existing_bug_fix": true,
+    "human_DCO_pending": true,
+    "published": false,
+    "phone_access": false
+  },
+  "runtime_head_unchanged": "192b0d581ac98b3d245df8ee8183dcdd4d7fb39c",
+  "original_seven_requirements_unchanged": true,
+  "clean_maintained_LTS_packaging_and_all_physical_acceptance_pending": true,
+  "prior_phase_assumption_superseded": "Prior checkpoint prose inferred MEM platform prepare_late/resume_early from wrapper names; actual dispatch disproves it.",
+  "actual_MEM_order": [
+    "platform prepare (IRQs on)",
+    "device suspend_late (IRQs on)",
+    "platform pre-late wrapper does nothing",
+    "device suspend_noirq disables device IRQs",
+    "platform prepare_late (device IRQs disabled)",
+    "secondary CPU offline",
+    "local IRQs off/syscore suspend",
+    "platform enter",
+    "syscore resume/local IRQs on/secondary CPU online",
+    "platform wake (device IRQs disabled)",
+    "device resume_noirq restores device IRQs",
+    "platform early wrapper does nothing",
+    "device resume_early",
+    "platform finish"
+  ],
+  "required_design": "Ordered device suspend_late/resume_early callbacks must stage synchronous CPR/voltage/clock/RPM work and rollback before CPR feedback can resume. A failing device late callback must restore its own effects inline because its early callback is skipped.",
+  "remaining_gates": [
+    "complete actual coordinator and supplier lifetime/ordering",
+    "CPR/cpufreq/clock/APC/SO prepare and restore",
+    "secondary physical collapse and warm-resume protocol",
+    "CPU program/state readback",
+    "L2 cache clean/CPU_PM/cluster_PM/SCM L2_OFF",
+    "MPM topology, timer, wake admission/status/replay and masking"
+  ],
+  "secondary_CPU_source": {
+    "path": "arch/arm/mach-qcom/platsmp.c",
+    "SHA256": "214b9e92d0dfe82b1472c6b5346ad06c09cf3debc963b3babd57789efc6fc1cf",
+    "actual": "qcom_cpu_die calls wfi; no cpu_kill in MSM8226 smp operations",
+    "consequence": "num_online_cpus()==1 is not proof that secondary power domains collapsed"
+  },
+  "vendor_sleep_status": {
+    "source": "src/vendor-linux/arch/arm/boot/dts/msm8226-v2-pm.dtsi",
+    "register_base": "0xf9088008",
+    "CPU_stride": "0x10000",
+    "collapsed_mask": "0x80000",
+    "note": "Source reference only. No MMIO was read; bounded physical-state validation and actual secondary entry are still needed."
+  },
+  "model_limitations": [
+    "POSIX locking is not kernel/RT locking qualification",
+    "all IRQ/firmware/MMIO/device services synthetic",
+    "PM-order model executes exact core/wrappers with synthetic device callbacks, not a new production coordinator",
+    "retained ACK model uses its original native compiler without sanitizers; new models use ASan/UBSan/LSan",
+    "first retained ACK compile needed a synthetic EBUSY definition; cases and production source were not changed"
+  ],
+  "publication": "local only; API has no caller and is not an upstream-ready standalone proposal",
+  "phone_access": false,
+  "network_changes": false,
+  "WiFi_scans": false,
+  "Replimat3_interaction": false
+}

@@ -1,0 +1,63 @@
+{
+  "started_UTC": "2026-11-17T00:47:27.865179+00:00",
+  "ARCH": "arm64",
+  "PREEMPT_RT": true,
+  "native": true,
+  "COMPILE_TEST": false,
+  "LLVM": "-21",
+  "W": 1,
+  "strict_function_pointer_diagnostics": true,
+  "source_head": "c710ac48db5179aaa8d9c95401c56019a4ac4191",
+  "source_status": " M drivers/soc/qcom/smd-rpm.c\n M include/linux/soc/qcom/smd-rpm.h\n",
+  "source_files": {
+    "drivers/soc/qcom/smd-rpm.c": "05f863bef30c28e859947100f46452d1ee9f85bba985228776d8dc20a0a972cd",
+    "drivers/soc/qcom/rpm-proc.c": "71c323c080e9f0af1a04fd10c8c352aa2235ea837b45ce69f35fd91af7b49349",
+    "drivers/rpmsg/rpmsg_core.c": "58b145327037a4c168c1453d09c798ee25288d9b06dff52fb24a4efa4edd92e4",
+    "drivers/rpmsg/qcom_smd.c": "13ffe4334b7a9be3f700eb100133aca7e7748e03a6671564b1f9124416ad0d90",
+    "include/linux/soc/qcom/smd-rpm.h": "85f45b7db7eafa2c0ace23893a8e253ffa6a9e8002a8e1a77538383f3beec255"
+  },
+  "stages": [
+    {
+      "stage": "options",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "0dcff3a736cfed26092ce0d079602eee76e0a6aba2a1d8f2fce9a555ba96349f"
+    },
+    {
+      "stage": "prepare",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "e612cf6cbd2b216bc08d7cb43f9e8262189281106b5c64797c34b4f4d084db78"
+    },
+    {
+      "stage": "components",
+      "returncode": 0,
+      "diagnostics": [
+        "Warning: <workspace>/worktrees/linux-qcom-spm-rpm-current-01/drivers/rpmsg/qcom_smd.c:228 Excess struct member 'cb' description in 'qcom_smd_channel'",
+        "Warning: <workspace>/worktrees/linux-qcom-spm-rpm-current-01/drivers/rpmsg/qcom_smd.c:228 Excess struct member 'cb' description in 'qcom_smd_channel'"
+      ],
+      "log_SHA256": "06c7ec20cae39876c00df209da3bc7e07c6a856ae01962d96a1a9422c948d447"
+    }
+  ],
+  "phone_access": false,
+  "state": "terminal success",
+  "config_SHA256": "8dc147c7be2b204d5ff7afb6ddc2f6144f00e43d45decc27c411e6fd788b6583",
+  "passed": true,
+  "objects": {
+    "drivers/soc/qcom/smd-rpm.o": "5f9334794c5150e70a75d177253ddd1da9742df2eceeefe0d746fb2460764a05",
+    "drivers/soc/qcom/rpm-proc.o": "0fde95c594935ba642f8f970e77bc961f93cea7676c479c01ba7868e96762dcf",
+    "drivers/rpmsg/rpmsg_core.o": "667f7e6a64cf5bd57e211512808d62aa12fb0b7211a7c4e1fc0e19dd483d3c9b",
+    "drivers/rpmsg/qcom_smd.o": "7477df9d2f8bee10f017d8d90a296e6e1fa58ee6f5b60a99a9e2304924a2fea5"
+  },
+  "inherited_RPMsg_doc_warnings": 2,
+  "new_diagnostics": 0,
+  "diagnostics_suppressed": false,
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-17T00:47:39.765313+00:00"
+}

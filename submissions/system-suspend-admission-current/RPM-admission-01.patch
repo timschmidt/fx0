@@ -1,0 +1,215 @@
+From d7235bd60442433ae5ad3492d630986cf1290588 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 16 Nov 2026 19:51:21 -0500
+Subject: [PATCH] soc: qcom: smd-rpm: Add owned request admission for system
+ sleep
+
+Add explicit freeze/thaw operations for the future MSM8226 system suspend
+coordinator. Freeze drains the serialized send/ACK pair with receive IRQs
+still available, then rejects writers with EBUSY. No request mutex remains
+held across sleep. An address-bound, non-reused token prevents unrelated,
+copied or stale transactions from reopening admission. Reject IRQ-disabled
+freeze/thaw calls before taking the mutex.
+
+Retain uncertainty after a submission error, negative response or timeout.
+A later successful request cannot prove all earlier resource state known,
+so freeze stays unavailable on that channel. Pre-submission allocation or
+size errors and frozen-writer rejection do not poison it. Reprobe clears
+local admission state; it does not prove firmware reset or voltage state.
+
+Exact-source host models exercise 147 cases, including 40 threaded drain
+runs, and reject 12 clean behavioral mutations. The retained ACK model
+still passes its 111537 bounded packet cases. Four native ARM/ARM64
+ordinary/RT profiles compile 16 objects with no new diagnostics; existing
+RPMsg documentation warnings are retained. Services remain synthetic and
+this is not kernel concurrency or firmware qualification.
+
+A separate executable source audit checks suspend_enter and six actual
+platform wrappers in 176 cases, with four controls. For suspend-to-RAM,
+platform prepare_late runs after dpm_suspend_noirq, and platform early
+restore does nothing. Synchronous RPM preparation/restore must use ordered
+device suspend_late/resume_early callbacks. Do not infer IRQ availability
+from wrapper names. The current secondary CPU hotplug path also only uses
+WFI; an offline CPU count is not proof of physical power collapse.
+
+This is a local coordinator prerequisite, with no production caller yet,
+not an operational full-system entry implementation or an upstream-ready
+standalone API proposal. Keep CPR's deep-suspend guard and covering sleep
+voltage floor. No phone, network configuration or radio operation occurred.
+
+Codex generated this source, tests and draft. Human review and DCO remain
+pending. Nothing has been submitted. This feature has no Fixes tag.
+---
+ drivers/soc/qcom/smd-rpm.c       | 97 ++++++++++++++++++++++++++++++++
+ include/linux/soc/qcom/smd-rpm.h | 10 ++++
+ 2 files changed, 107 insertions(+)
+
+diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
+index e3c5dad28fe..59ac7e0a712 100644
+--- a/drivers/soc/qcom/smd-rpm.c
++++ b/drivers/soc/qcom/smd-rpm.c
+@@ -9,6 +9,7 @@
+ #include <linux/of_platform.h>
+ #include <linux/io.h>
+ #include <linux/interrupt.h>
++#include <linux/irqflags.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
+ #include <linux/unaligned.h>
+@@ -29,6 +30,11 @@
+  * @msg_id:		last request identifier allocated on this channel
+  * @pending_id:		identifier expected by the current waiter
+  * @waiting:		whether the current request can still accept a response
++ * @sleep_owner:	address of the token holding request admission closed
++ * @sleep_sequence:	last sleep token identifier, never reused on this channel
++ * @uncertain:		a request failed after submission was attempted
++ *
++ * The request mutex also protects sleep admission and uncertainty state.
+  */
+ struct qcom_smd_rpm {
+ 	struct rpmsg_endpoint *rpm_channel;
+@@ -41,6 +47,9 @@ struct qcom_smd_rpm {
+ 	u32 msg_id;
+ 	u32 pending_id;
+ 	bool waiting;
++	const struct qcom_rpm_smd_sleep_token *sleep_owner;
++	u64 sleep_sequence;
++	bool uncertain;
+ };
+ 
+ /**
+@@ -92,6 +101,87 @@ struct qcom_rpm_message {
+ #define RPM_MSG_TYPE_ERR		0x00727265 /* "err\0" */
+ #define RPM_MSG_TYPE_MSG_ID		0x2367736d /* "msg#" */
+ 
++/**
++ * qcom_rpm_smd_freeze - drain requests and close admission for system sleep
++ * @rpm: RPM channel, kept bound by the caller throughout the transaction
++ * @token: zero-initialized, exclusively owned token retained until thaw
++ *
++ * Call with IRQs enabled, after all synchronous sleep votes, before the SMD
++ * receive IRQ is suspended. Taking the request mutex drains the current
++ * send/ACK pair. Later writers fail with -EBUSY instead of waiting across
++ * suspend. No mutex remains held on return.
++ *
++ * A failed request may already have changed firmware state. Such a channel
++ * cannot authorize deep sleep again until reprobed, even if later requests
++ * succeed. This gate establishes transport quiescence, not voltage readiness,
++ * MPM wake routing, receive-IRQ masking or permission to collapse the system.
++ *
++ * Return: 0 on success, or a negative error code.
++ */
++int qcom_rpm_smd_freeze(struct qcom_smd_rpm *rpm,
++			struct qcom_rpm_smd_sleep_token *token)
++{
++	int ret = 0;
++
++	if (!rpm || !token || token->cookie)
++		return -EINVAL;
++	if (irqs_disabled())
++		return -EPERM;
++
++	mutex_lock(&rpm->lock);
++	if (rpm->sleep_owner) {
++		ret = -EBUSY;
++	} else if (rpm->uncertain) {
++		ret = -EIO;
++	} else if (rpm->sleep_sequence == U64_MAX) {
++		ret = -EOVERFLOW;
++	} else {
++		token->cookie = ++rpm->sleep_sequence;
++		rpm->sleep_owner = token;
++	}
++	mutex_unlock(&rpm->lock);
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(qcom_rpm_smd_freeze);
++
++/**
++ * qcom_rpm_smd_thaw - reopen request admission after system sleep or abort
++ * @rpm: RPM channel used by freeze
++ * @token: original token at its original address
++ *
++ * Call with IRQs enabled and the receive IRQ restored, before any synchronous
++ * voltage/clock recovery requests. Also call inline on failure after a
++ * successful freeze if the failing preparation callback will not be resumed.
++ * The caller must serialize use of its token and keep the supplier bound.
++ * A copied, stale or other-channel token cannot release admission.
++ *
++ * Return: 0 on success, or a negative error code with admission unchanged.
++ */
++int qcom_rpm_smd_thaw(struct qcom_smd_rpm *rpm,
++		      struct qcom_rpm_smd_sleep_token *token)
++{
++	int ret = 0;
++
++	if (!rpm || !token)
++		return -EINVAL;
++	if (irqs_disabled())
++		return -EPERM;
++
++	mutex_lock(&rpm->lock);
++	if (rpm->sleep_owner != token || !token->cookie ||
++	    token->cookie != rpm->sleep_sequence) {
++		ret = -ESTALE;
++	} else {
++		rpm->sleep_owner = NULL;
++		token->cookie = 0;
++	}
++	mutex_unlock(&rpm->lock);
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(qcom_rpm_smd_thaw);
++
+ /**
+  * qcom_rpm_smd_write - write @buf to @type:@id
+  * @rpm:	rpm handle
+@@ -127,6 +217,10 @@ int qcom_rpm_smd_write(struct qcom_smd_rpm *rpm,
+ 		return -ENOMEM;
+ 
+ 	mutex_lock(&rpm->lock);
++	if (rpm->sleep_owner) {
++		ret = -EBUSY;
++		goto unlock;
++	}
+ 
+ 	pkt->hdr.service_type = cpu_to_le32(RPM_SERVICE_TYPE_REQUEST);
+ 	pkt->hdr.length = cpu_to_le32(sizeof(struct qcom_rpm_request) + count);
+@@ -165,6 +259,9 @@ int qcom_rpm_smd_write(struct qcom_smd_rpm *rpm,
+ 	spin_lock_irqsave(&rpm->ack_lock, flags);
+ 	rpm->waiting = false;
+ 	spin_unlock_irqrestore(&rpm->ack_lock, flags);
++	if (ret)
++		rpm->uncertain = true;
++unlock:
+ 	kfree(pkt);
+ 	mutex_unlock(&rpm->lock);
+ 	return ret;
+diff --git a/include/linux/soc/qcom/smd-rpm.h b/include/linux/soc/qcom/smd-rpm.h
+index 8190878645f..4c0ab8be789 100644
+--- a/include/linux/soc/qcom/smd-rpm.h
++++ b/include/linux/soc/qcom/smd-rpm.h
+@@ -6,6 +6,11 @@
+ 
+ struct qcom_smd_rpm;
+ 
++/* Initialize to zero and keep alive, at the same address, until thaw. */
++struct qcom_rpm_smd_sleep_token {
++	u64 cookie;
++};
++
+ #define QCOM_SMD_RPM_ACTIVE_STATE	0
+ #define QCOM_SMD_RPM_SLEEP_STATE	1
+ #define QCOM_SMD_RPM_STATE_NUM		2
+@@ -65,4 +70,9 @@ int qcom_rpm_smd_write(struct qcom_smd_rpm *rpm,
+ 		       u32 resource_type, u32 resource_id,
+ 		       void *buf, size_t count);
+ 
++int qcom_rpm_smd_freeze(struct qcom_smd_rpm *rpm,
++			struct qcom_rpm_smd_sleep_token *token);
++int qcom_rpm_smd_thaw(struct qcom_smd_rpm *rpm,
++		      struct qcom_rpm_smd_sleep_token *token);
++
+ #endif

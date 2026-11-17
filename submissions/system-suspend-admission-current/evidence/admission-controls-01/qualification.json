@@ -1,0 +1,79 @@
+{
+  "passed": true,
+  "controls": 12,
+  "records": [
+    {
+      "name": "ignore-freeze",
+      "rejected_by_intended_assertion": true,
+      "returncode": 1,
+      "assertion": "287: !ep->rpm->sleep_owner"
+    },
+    {
+      "name": "forget-uncertainty",
+      "rejected_by_intended_assertion": true,
+      "returncode": 1,
+      "assertion": "343: r.uncertain==(mode!=ACK)"
+    },
+    {
+      "name": "clear-on-success",
+      "rejected_by_intended_assertion": true,
+      "returncode": 1,
+      "assertion": "346: qcom_rpm_smd_freeze(&r,&t)==-EIO"
+    },
+    {
+      "name": "admit-uncertain",
+      "rejected_by_intended_assertion": true,
+      "returncode": 1,
+      "assertion": "347: qcom_rpm_smd_freeze(&r,&t)==-EIO"
+    },
+    {
+      "name": "copy-token-releases",
+      "rejected_by_intended_assertion": true,
+      "returncode": 1,
+      "assertion": "326: qcom_rpm_smd_thaw(&r,&copy)==-ESTALE"
+    },
+    {
+      "name": "ignore-cookie",
+      "rejected_by_intended_assertion": true,
+      "returncode": 1,
+      "assertion": "330: qcom_rpm_smd_thaw(&r,&t)==-ESTALE"
+    },
+    {
+      "name": "reuse-cookie",
+      "rejected_by_intended_assertion": true,
+      "returncode": 1,
+      "assertion": "324: t.cookie==(u64)cycle+1"
+    },
+    {
+      "name": "retain-token",
+      "rejected_by_intended_assertion": true,
+      "returncode": 1,
+      "assertion": "331: !t.cookie&&!r.sleep_owner"
+    },
+    {
+      "name": "retain-owner",
+      "rejected_by_intended_assertion": true,
+      "returncode": 1,
+      "assertion": "331: !t.cookie&&!r.sleep_owner"
+    },
+    {
+      "name": "ignore-irq-freeze",
+      "rejected_by_intended_assertion": true,
+      "returncode": 1,
+      "assertion": "321: qcom_rpm_smd_freeze(&r,&t)==-EPERM"
+    },
+    {
+      "name": "allow-wrap",
+      "rejected_by_intended_assertion": true,
+      "returncode": 1,
+      "assertion": "335: qcom_rpm_smd_freeze(&r,&t)==-EOVERFLOW"
+    },
+    {
+      "name": "steal-existing-owner",
+      "rejected_by_intended_assertion": true,
+      "returncode": 1,
+      "assertion": "325: qcom_rpm_smd_freeze(&r,&second)==-EBUSY"
+    }
+  ],
+  "compile_crash_or_sanitizer_failure_counted": false
+}

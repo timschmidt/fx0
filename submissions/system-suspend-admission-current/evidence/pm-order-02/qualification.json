@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "bindings": {
+    "platform_suspend_prepare": "8d85e20a57ca931420d5fa81c1db11f0a7ce62c5b3c05f13770dfa178f23a9b8",
+    "platform_suspend_prepare_late": "3a3f34f81554c7af08550beaab321dbe9a62336a624196dc3961238692117fc6",
+    "platform_suspend_prepare_noirq": "cc348a28fcd480226e4f30fb068bc64faff3d76a9a9e0043caf409e9c7160bf0",
+    "platform_resume_noirq": "69c7e2311c975b84925c6291d5c144170eaf47cf28f5596d82839d6f286679ba",
+    "platform_resume_early": "5579dee23ab0c1f4679e3f7b171c0f3ffe648882753930bb19e0aaff5af96257",
+    "platform_resume_finish": "07bc458e7fac3f0a6e3fcc6bc6cc452debda4cd3df26e804c45625c8af4d7b58",
+    "suspend_enter": "4e2004c55ff3437a0c51a09569a1ee252431de6dc93eec6deb7f65235f7f2380"
+  },
+  "actual_functions": 7,
+  "model_SHA256": "fee365952e0541a08bbbfd46074b6c7637df4a83fb2708cd397f6910627b72f5",
+  "scope": "Actual suspend_enter and six dispatch wrappers; all device PM, IRQ, syscore, CPU and callback services synthetic",
+  "production_coordinator_implemented": false,
+  "phone_access": false,
+  "cases": 176,
+  "checks": 3634,
+  "failures": 0
+}

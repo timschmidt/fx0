@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "controls": 4,
+  "records": [
+    {
+      "name": "mem-prepare-before-noirq",
+      "rejected_by_intended_assertion": true,
+      "assertion": "170: !device_irqs&&!irq_disabled&&admission_closed"
+    },
+    {
+      "name": "drop-mem-prepare",
+      "rejected_by_intended_assertion": true,
+      "assertion": "203: num_events==(int)count"
+    },
+    {
+      "name": "mem-early-restore",
+      "rejected_by_intended_assertion": true,
+      "assertion": "189: index_of(IDLE_PREPARE)<0&&index_of(IDLE_LATE)<0&&index_of(IDLE_WAKE)<0&&index_of(IDLE_RESTORE)<0"
+    },
+    {
+      "name": "finish-before-devices",
+      "rejected_by_intended_assertion": true,
+      "assertion": "174: device_irqs&&!irq_disabled&&!admission_closed&&!late_done"
+    }
+  ],
+  "compile_crash_or_sanitizer_failure_counted": false
+}
