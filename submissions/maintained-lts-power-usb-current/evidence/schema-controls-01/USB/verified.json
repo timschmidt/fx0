@@ -1,0 +1,92 @@
+{
+  "cases": 14,
+  "results": [
+    {
+      "label": "current-controller",
+      "expected_valid": true,
+      "validation_errors": 0,
+      "expected_result_verified": true
+    },
+    {
+      "label": "one-phandle-two-arguments",
+      "expected_valid": true,
+      "validation_errors": 0,
+      "expected_result_verified": true
+    },
+    {
+      "label": "missing-argument",
+      "expected_valid": false,
+      "validation_errors": 1,
+      "expected_result_verified": true
+    },
+    {
+      "label": "extra-argument",
+      "expected_valid": false,
+      "validation_errors": 1,
+      "expected_result_verified": true
+    },
+    {
+      "label": "multiple-tuples",
+      "expected_valid": false,
+      "validation_errors": 1,
+      "expected_result_verified": true
+    },
+    {
+      "label": "flat-cells",
+      "expected_valid": false,
+      "validation_errors": 5,
+      "expected_result_verified": true
+    },
+    {
+      "label": "empty-tuple-list",
+      "expected_valid": false,
+      "validation_errors": 2,
+      "expected_result_verified": true
+    },
+    {
+      "label": "role-switch-flag",
+      "expected_valid": true,
+      "validation_errors": 0,
+      "expected_result_verified": true
+    },
+    {
+      "label": "role-switch-string",
+      "expected_valid": false,
+      "validation_errors": 3,
+      "expected_result_verified": true
+    },
+    {
+      "label": "role-switch-cells",
+      "expected_valid": false,
+      "validation_errors": 3,
+      "expected_result_verified": true
+    },
+    {
+      "label": "managed-host-role",
+      "expected_valid": false,
+      "validation_errors": 1,
+      "expected_result_verified": true
+    },
+    {
+      "label": "managed-role-switch",
+      "expected_valid": false,
+      "validation_errors": 1,
+      "expected_result_verified": true
+    },
+    {
+      "label": "current-managed-charger",
+      "expected_valid": true,
+      "validation_errors": 0,
+      "expected_result_verified": true
+    },
+    {
+      "label": "managed-manual-limit",
+      "expected_valid": false,
+      "validation_errors": 1,
+      "expected_result_verified": true
+    }
+  ],
+  "schema_SHA256": "462a13b2d72057122de99b98046665def00b5b90714fd798c0c6273c273e64dc",
+  "DTB_SHA256": "6ea6ef6223b56b42f5083bd7f833d94671c6829fc9c2f01135403e9df030d9e0",
+  "scope": "Actual processed ChipIdea/USB-DRD schemas with decoded current controller node; no hardware or kernel execution."
+}

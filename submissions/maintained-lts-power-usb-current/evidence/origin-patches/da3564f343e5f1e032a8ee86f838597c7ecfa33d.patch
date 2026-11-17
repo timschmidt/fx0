@@ -1,0 +1,356 @@
+commit da3564f343e5f1e032a8ee86f838597c7ecfa33d
+Author:     Timothy Schmidt <timschmidt@gmail.com>
+AuthorDate: Fri Oct 30 13:30:08 2026 -0400
+Commit:     Timothy Schmidt <timschmidt@gmail.com>
+CommitDate: Sun Nov 15 14:36:34 2026 -0500
+
+    power: supply: qcom_smbb: add verified charging inhibition
+    
+    Expose automatic and inhibited charge behaviour without changing the
+    forced-battery mode or the other charger-control bits. Serialize user,
+    initialization and fault votes with battery-limit changes. Hold charging
+    inhibited through setup and attempt inhibition on cleanup and uncertain
+    transactions. An automatic request releases only the user's vote.
+    
+    Verify enable and limit writes through readback. Update limit caches
+    only after verification and reject their values after a latched fault.
+    This is a control foundation; it does not supply a thermal policy.
+    
+    Combine Timothy Schmidt's aef67594985d, 2da84994c7db and a562539a0edc so
+    the new interface includes its original hardening from introduction.
+    Codex:GPT-6 assisted this current-tree port. The actual-source fixture
+    passes 6242 cases, including concurrent requests and five deliberately
+    broken controls. No current-base hardware test is claimed.
+
+diff --git a/drivers/power/supply/qcom_smbb.c b/drivers/power/supply/qcom_smbb.c
+index f33aab9619c4..fee51602831f 100644
+--- a/drivers/power/supply/qcom_smbb.c
++++ b/drivers/power/supply/qcom_smbb.c
+@@ -90,6 +90,10 @@
+ #define STATUS_CHG_FAST		BIT(7) /* Fast charging */
+ #define STATUS_CHG_GONE		BIT(8) /* No charger is connected */
+ 
++#define SMBB_INHIBIT_INIT	BIT(0)
++#define SMBB_INHIBIT_USER	BIT(1)
++#define SMBB_INHIBIT_FAULT	BIT(2)
++
+ enum smbb_attr {
+ 	ATTR_BAT_ISAFE,
+ 	ATTR_BAT_IMAX,
+@@ -113,6 +117,9 @@ struct smbb_charger {
+ 	bool jeita_ext_temp;
+ 	unsigned long status;
+ 	struct mutex statlock;
++	/* Serializes charger-enable votes and battery limit changes. */
++	struct mutex charge_lock;
++	unsigned int charge_inhibit;
+ 
+ 	unsigned int attr[_ATTR_CNT];
+ 
+@@ -296,6 +303,11 @@ static int smbb_charger_attr_write(struct smbb_charger *chg,
+ 		dev_err(chg->dev, "unable to update %s", prop->name);
+ 		return rc;
+ 	}
++	rc = regmap_read(chg->regmap, chg->addr + prop->reg, &out);
++	if (rc)
++		return rc;
++	if (out != wval)
++		return -EIO;
+ 	out = prop->hw_fn(wval);
+ 	if (out != val) {
+ 		dev_warn(chg->dev,
+@@ -587,13 +599,114 @@ static int smbb_charger_writable_property(struct power_supply *psy,
+ 	return psp == POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT;
+ }
+ 
++/* Caller holds charge_lock. Never change forced-battery mode (bit 0). */
++static int smbb_charge_verify(struct smbb_charger *chg, bool enable)
++{
++	unsigned int value = enable ? CTRL_EN : 0;
++	unsigned int control;
++	int ret;
++
++	/* Force the bus write even after a previously uncertain transaction. */
++	ret = regmap_write_bits(chg->regmap, chg->addr + SMBB_CHG_CTRL,
++				CTRL_EN, value);
++	if (ret)
++		return ret;
++	ret = regmap_read(chg->regmap, chg->addr + SMBB_CHG_CTRL, &control);
++	if (ret)
++		return ret;
++	return (control & CTRL_EN) == value ? 0 : -EIO;
++}
++
++/* A bus failure can be reported after a write has reached the PMIC. */
++static void smbb_charge_fault(struct smbb_charger *chg)
++{
++	int ret;
++
++	chg->charge_inhibit |= SMBB_INHIBIT_FAULT;
++	ret = smbb_charge_verify(chg, false);
++	if (ret)
++		dev_err(chg->dev, "unable to verify charge inhibition: %d\n", ret);
++}
++
++static int smbb_charge_vote(struct smbb_charger *chg, unsigned int vote,
++			    bool inhibit)
++{
++	int ret;
++
++	mutex_lock(&chg->charge_lock);
++	if (inhibit)
++		chg->charge_inhibit |= vote;
++	else
++		chg->charge_inhibit &= ~vote;
++
++	ret = smbb_charge_verify(chg, !chg->charge_inhibit);
++	if (ret)
++		smbb_charge_fault(chg);
++	mutex_unlock(&chg->charge_lock);
++	return ret;
++}
++
++static int smbb_get_charge_behaviour(struct smbb_charger *chg, int *behaviour)
++{
++	unsigned int control;
++	int ret;
++
++	mutex_lock(&chg->charge_lock);
++	ret = regmap_read(chg->regmap, chg->addr + SMBB_CHG_CTRL, &control);
++	if (!ret && (control & CTRL_EN) && chg->charge_inhibit)
++		ret = -EIO;
++	if (ret)
++		smbb_charge_fault(chg);
++	else
++		*behaviour = control & CTRL_EN ? POWER_SUPPLY_CHARGE_BEHAVIOUR_AUTO :
++			POWER_SUPPLY_CHARGE_BEHAVIOUR_INHIBIT_CHARGE;
++	mutex_unlock(&chg->charge_lock);
++	return ret;
++}
++
++static int smbb_set_charge_behaviour(struct smbb_charger *chg, int behaviour)
++{
++	bool inhibit;
++
++	switch (behaviour) {
++	case POWER_SUPPLY_CHARGE_BEHAVIOUR_AUTO:
++		inhibit = false;
++		break;
++	case POWER_SUPPLY_CHARGE_BEHAVIOUR_INHIBIT_CHARGE:
++		inhibit = true;
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	/* Auto releases only the user's vote; fault and probe votes remain. */
++	return smbb_charge_vote(chg, SMBB_INHIBIT_USER, inhibit);
++}
++
++static int smbb_set_battery_limit(struct smbb_charger *chg,
++				  enum smbb_attr which, int value)
++{
++	const struct smbb_charger_attr *prop = &smbb_charger_attrs[which];
++	int ret;
++
++	if (value < 0 || value < prop->min || value > prop->max)
++		return -EINVAL;
++
++	mutex_lock(&chg->charge_lock);
++	ret = smbb_charger_attr_write(chg, which, value);
++	if (ret)
++		smbb_charge_fault(chg);
++	mutex_unlock(&chg->charge_lock);
++	return ret;
++}
++
+ static int smbb_battery_get_property(struct power_supply *psy,
+ 		enum power_supply_property psp,
+ 		union power_supply_propval *val)
+ {
+ 	struct smbb_charger *chg = power_supply_get_drvdata(psy);
+ 	unsigned long status;
+-	int rc = 0;
++	int behaviour, rc = 0;
+ 
+ 	mutex_lock(&chg->statlock);
+ 	status = chg->status;
+@@ -601,18 +714,28 @@ static int smbb_battery_get_property(struct power_supply *psy,
+ 
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_STATUS:
+-		if (status & STATUS_CHG_GONE)
++		if (status & STATUS_CHG_GONE) {
+ 			val->intval = POWER_SUPPLY_STATUS_DISCHARGING;
+-		else if (!(status & (STATUS_DCIN_VALID | STATUS_USBIN_VALID)))
++		} else if (!(status & (STATUS_DCIN_VALID | STATUS_USBIN_VALID))) {
+ 			val->intval = POWER_SUPPLY_STATUS_DISCHARGING;
+-		else if (status & STATUS_CHG_DONE)
++		} else if (status & STATUS_CHG_DONE) {
+ 			val->intval = POWER_SUPPLY_STATUS_FULL;
+-		else if (!(status & STATUS_BAT_OK))
+-			val->intval = POWER_SUPPLY_STATUS_DISCHARGING;
+-		else if (status & (STATUS_CHG_FAST | STATUS_CHG_TRKL))
+-			val->intval = POWER_SUPPLY_STATUS_CHARGING;
+-		else /* everything is ok for charging, but we are not... */
++		} else if (!(status & STATUS_BAT_OK)) {
+ 			val->intval = POWER_SUPPLY_STATUS_DISCHARGING;
++		} else {
++			rc = smbb_get_charge_behaviour(chg, &behaviour);
++			if (rc)
++				break;
++			if (behaviour == POWER_SUPPLY_CHARGE_BEHAVIOUR_INHIBIT_CHARGE)
++				val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
++			else if (status & (STATUS_CHG_FAST | STATUS_CHG_TRKL))
++				val->intval = POWER_SUPPLY_STATUS_CHARGING;
++			else
++				val->intval = POWER_SUPPLY_STATUS_DISCHARGING;
++		}
++		break;
++	case POWER_SUPPLY_PROP_CHARGE_BEHAVIOUR:
++		rc = smbb_get_charge_behaviour(chg, &val->intval);
+ 		break;
+ 	case POWER_SUPPLY_PROP_HEALTH:
+ 		if (status & STATUS_BAT_OK)
+@@ -634,10 +757,20 @@ static int smbb_battery_get_property(struct power_supply *psy,
+ 		val->intval = !!(status & STATUS_BAT_PRESENT);
+ 		break;
+ 	case POWER_SUPPLY_PROP_CURRENT_MAX:
+-		val->intval = chg->attr[ATTR_BAT_IMAX];
++		mutex_lock(&chg->charge_lock);
++		if (chg->charge_inhibit & SMBB_INHIBIT_FAULT)
++			rc = -EIO;
++		else
++			val->intval = chg->attr[ATTR_BAT_IMAX];
++		mutex_unlock(&chg->charge_lock);
+ 		break;
+ 	case POWER_SUPPLY_PROP_VOLTAGE_MAX:
+-		val->intval = chg->attr[ATTR_BAT_VMAX];
++		mutex_lock(&chg->charge_lock);
++		if (chg->charge_inhibit & SMBB_INHIBIT_FAULT)
++			rc = -EIO;
++		else
++			val->intval = chg->attr[ATTR_BAT_VMAX];
++		mutex_unlock(&chg->charge_lock);
+ 		break;
+ 	case POWER_SUPPLY_PROP_TECHNOLOGY:
+ 		/* this charger is a single-cell lithium-ion battery charger
+@@ -665,11 +798,16 @@ static int smbb_battery_set_property(struct power_supply *psy,
+ 	int rc;
+ 
+ 	switch (psp) {
++	case POWER_SUPPLY_PROP_CHARGE_BEHAVIOUR:
++		rc = smbb_set_charge_behaviour(chg, val->intval);
++		if (!rc)
++			power_supply_changed(psy);
++		break;
+ 	case POWER_SUPPLY_PROP_CURRENT_MAX:
+-		rc = smbb_charger_attr_write(chg, ATTR_BAT_IMAX, val->intval);
++		rc = smbb_set_battery_limit(chg, ATTR_BAT_IMAX, val->intval);
+ 		break;
+ 	case POWER_SUPPLY_PROP_VOLTAGE_MAX:
+-		rc = smbb_charger_attr_write(chg, ATTR_BAT_VMAX, val->intval);
++		rc = smbb_set_battery_limit(chg, ATTR_BAT_VMAX, val->intval);
+ 		break;
+ 	default:
+ 		rc = -EINVAL;
+@@ -683,6 +821,7 @@ static int smbb_battery_writable_property(struct power_supply *psy,
+ 		enum power_supply_property psp)
+ {
+ 	switch (psp) {
++	case POWER_SUPPLY_PROP_CHARGE_BEHAVIOUR:
+ 	case POWER_SUPPLY_PROP_CURRENT_MAX:
+ 	case POWER_SUPPLY_PROP_VOLTAGE_MAX:
+ 		return 1;
+@@ -699,6 +838,7 @@ static enum power_supply_property smbb_charger_properties[] = {
+ 
+ static enum power_supply_property smbb_battery_properties[] = {
+ 	POWER_SUPPLY_PROP_STATUS,
++	POWER_SUPPLY_PROP_CHARGE_BEHAVIOUR,
+ 	POWER_SUPPLY_PROP_HEALTH,
+ 	POWER_SUPPLY_PROP_PRESENT,
+ 	POWER_SUPPLY_PROP_CHARGE_TYPE,
+@@ -749,8 +889,6 @@ static const struct reg_off_mask_default {
+ 	/* Stop USB enumeration timer, again */
+ 	{ SMBB_USB_ENUM_TIMER_STOP, ENUM_TIMER_STOP, ENUM_TIMER_STOP },
+ 
+-	/* Enable charging */
+-	{ SMBB_CHG_CTRL, CTRL_EN, CTRL_EN },
+ };
+ 
+ static char *smbb_bif[] = { "smbb-bif" };
+@@ -758,6 +896,8 @@ static char *smbb_bif[] = { "smbb-bif" };
+ static const struct power_supply_desc bat_psy_desc = {
+ 	.name = "smbb-bif",
+ 	.type = POWER_SUPPLY_TYPE_BATTERY,
++	.charge_behaviours = BIT(POWER_SUPPLY_CHARGE_BEHAVIOUR_AUTO) |
++			     BIT(POWER_SUPPLY_CHARGE_BEHAVIOUR_INHIBIT_CHARGE),
+ 	.properties = smbb_battery_properties,
+ 	.num_properties = ARRAY_SIZE(smbb_battery_properties),
+ 	.get_property = smbb_battery_get_property,
+@@ -828,6 +968,16 @@ static const struct regulator_ops smbb_chg_otg_ops = {
+ 	.is_enabled = smbb_chg_otg_is_enabled,
+ };
+ 
++static void smbb_charge_cleanup(void *data)
++{
++	struct smbb_charger *chg = data;
++	int ret;
++
++	ret = smbb_charge_vote(chg, SMBB_INHIBIT_INIT, true);
++	if (ret)
++		dev_err(chg->dev, "failed to inhibit charging at cleanup: %d\n", ret);
++}
++
+ static int smbb_charger_probe(struct platform_device *pdev)
+ {
+ 	struct power_supply_config bat_cfg = {};
+@@ -843,6 +993,7 @@ static int smbb_charger_probe(struct platform_device *pdev)
+ 
+ 	chg->dev = &pdev->dev;
+ 	mutex_init(&chg->statlock);
++	mutex_init(&chg->charge_lock);
+ 
+ 	chg->regmap = dev_get_regmap(pdev->dev.parent, NULL);
+ 	if (!chg->regmap) {
+@@ -856,6 +1007,14 @@ static int smbb_charger_probe(struct platform_device *pdev)
+ 		return rc;
+ 	}
+ 
++	/* Keep charging off through setup, including every deferred/error exit. */
++	rc = smbb_charge_vote(chg, SMBB_INHIBIT_INIT, true);
++	if (rc)
++		return dev_err_probe(&pdev->dev, rc, "unable to inhibit charging\n");
++	rc = devm_add_action_or_reset(&pdev->dev, smbb_charge_cleanup, chg);
++	if (rc)
++		return rc;
++
+ 	rc = regmap_read(chg->regmap, chg->addr + SMBB_MISC_REV2, &chg->revision);
+ 	if (rc) {
+ 		dev_err(&pdev->dev, "unable to read revision\n");
+@@ -994,16 +1153,7 @@ static int smbb_charger_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, chg);
+ 
+-	return 0;
+-}
+-
+-static void smbb_charger_remove(struct platform_device *pdev)
+-{
+-	struct smbb_charger *chg;
+-
+-	chg = platform_get_drvdata(pdev);
+-
+-	regmap_update_bits(chg->regmap, chg->addr + SMBB_CHG_CTRL, CTRL_EN, 0);
++	return smbb_charge_vote(chg, SMBB_INHIBIT_INIT, false);
+ }
+ 
+ static const struct of_device_id smbb_charger_id_table[] = {
+@@ -1015,7 +1165,6 @@ MODULE_DEVICE_TABLE(of, smbb_charger_id_table);
+ 
+ static struct platform_driver smbb_charger_driver = {
+ 	.probe = smbb_charger_probe,
+-	.remove = smbb_charger_remove,
+ 	.driver = {
+ 		.name = "qcom-smbb",
+ 		.of_match_table = smbb_charger_id_table,

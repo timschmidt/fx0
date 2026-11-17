@@ -1,0 +1,126 @@
+{
+  "passed": true,
+  "recorded_UTC": "2026-11-17T11:43:41.969560+00:00",
+  "base": "52795f8a14e49fdb1da3d58efd120d0c6488d81d",
+  "head": "2f2077445a5e5bee97d67f29a8e8078ddec32331",
+  "commits": [
+    {
+      "origin_commit": "79617f20e1541f711438cc5c70602cddbc57439a",
+      "commit": "5d7e6793ea9374fefa02606748c9751be0943c9d",
+      "parent": "52795f8a14e49fdb1da3d58efd120d0c6488d81d",
+      "subject": "MAINTAINERS: restore Fx0 charging policy binding coverage",
+      "original_subject": "dt-bindings: power: supply: describe the Fx0 charging policy proposal",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-10-30T14:47:33-04:00",
+      "paths": [
+        "MAINTAINERS"
+      ],
+      "exact_added_removed_source_lines": false,
+      "runtime_already_present": true
+    },
+    {
+      "origin_commit": "84eb746a0a75948a386d1d10e0fa898638e999df",
+      "commit": "2f2077445a5e5bee97d67f29a8e8078ddec32331",
+      "parent": "5d7e6793ea9374fefa02606748c9751be0943c9d",
+      "subject": "MAINTAINERS: restore Fx0 charging policy header coverage",
+      "original_subject": "power: supply: qcom_smbb: add the guarded Fx0 policy child",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-10-30T14:47:32-04:00",
+      "paths": [
+        "MAINTAINERS"
+      ],
+      "exact_added_removed_source_lines": false,
+      "runtime_already_present": true
+    }
+  ],
+  "existing_equivalents": [
+    {
+      "original_commit": "da3564f343e5f1e032a8ee86f838597c7ecfa33d",
+      "subject": "power: supply: qcom_smbb: add verified charging inhibition",
+      "paths": [
+        "drivers/power/supply/qcom_smbb.c"
+      ],
+      "reverse_check_returncode": 1
+    },
+    {
+      "original_commit": "3202f7d4f6ee967254bdc1b8b54677570b83fe17",
+      "subject": "dt-bindings: power: supply: qcom,smbb: allow monitored-battery",
+      "paths": [
+        "Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml"
+      ],
+      "reverse_check_returncode": 1
+    },
+    {
+      "original_commit": "f0aa795373e11246aa93d5d9644120e4128a7f09",
+      "subject": "power: supply: qcom_smbb: verify USB input limits and suspension",
+      "paths": [
+        "drivers/power/supply/qcom_smbb.c"
+      ],
+      "reverse_check_returncode": 1
+    },
+    {
+      "original_commit": "39815af034e046b453d1a6894a4f5c01773011c8",
+      "subject": "dt-bindings: power: supply: qcom,smbb: describe gadget-managed input",
+      "paths": [
+        "Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml"
+      ],
+      "reverse_check_returncode": 0
+    },
+    {
+      "original_commit": "2856363c8d9c2d302aba6ef7e3893c90189da42f",
+      "subject": "power: supply: qcom_smbb: accept gadget-managed USB budgets",
+      "paths": [
+        "drivers/power/supply/qcom_smbb.c"
+      ],
+      "reverse_check_returncode": 0
+    },
+    {
+      "original_commit": "96759024357b4f8c81880ed1b93b328bb215f667",
+      "subject": "dt-bindings: usb: chipidea: describe a gadget current-budget supply",
+      "paths": [
+        "Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml"
+      ],
+      "reverse_check_returncode": 1
+    },
+    {
+      "original_commit": "dc62e4e47d5927ea0f9b2ea30f97d8cba88349e8",
+      "subject": "usb: chipidea: forward gadget budgets to a USB input supply",
+      "paths": [
+        "drivers/usb/chipidea/ci.h",
+        "drivers/usb/chipidea/udc.c"
+      ],
+      "reverse_check_returncode": 1
+    },
+    {
+      "original_commit": "e4a1fc9172de8b0bcbf1659b5f1df87d92af9122",
+      "subject": "iio: adc: qcom-spmi-vadc: expose processed battery voltages",
+      "paths": [
+        "drivers/iio/adc/qcom-spmi-vadc.c"
+      ],
+      "reverse_check_returncode": 0
+    }
+  ],
+  "source_files": {
+    "Documentation/devicetree/bindings/power/supply/lg,madai-charge-policy.yaml": "96dabded28a381c85de417c9a86b7ccf06f00e962447e543007f18cd83b9a674",
+    "Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml": "7856203f3986507d9ec889e7be8d6ed3c9d4b363a6bb1591ca2c69d431b3ff48",
+    "Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml": "9811c85e0b0da8ed4ce9e8c9497a2992ade1ab5585d33ac1364f451aeea21227",
+    "MAINTAINERS": "3b8418438978fb43d4febd8507f6a5438c200aa18ac82a92d0b2e2f1156a4cbb",
+    "drivers/iio/adc/qcom-spmi-vadc.c": "74056ba7da45951434eedb746434c22da487b1e46ba87bb535b2a1f3ca3d52d6",
+    "drivers/power/supply/Kconfig": "2f3c5fc22c4112f8b61cd9ff547991930361e8ae745eb67a73306a13624035e3",
+    "drivers/power/supply/qcom_smbb.c": "ca37e278548767a267319622b8ff63e9e10fb0956cfe65299828781dc64a73a7",
+    "drivers/power/supply/qcom_smbb_policy.h": "528af44a2c469278115b105eb39a0eae188fe31960d7c2c7cc2250de1a8523fe",
+    "drivers/usb/chipidea/ci.h": "9642f91d60730e7c71eb4366276f17de2878e35fd7681ec4e6fa4e7c671cae16",
+    "drivers/usb/chipidea/udc.c": "7ef9579c7a0a88d9182584d205f9e1d9bf0bc4ef5412b915f8dcf709a1f34e8d"
+  },
+  "working_tree_clean": true,
+  "source_commits": 2,
+  "reconciled_source_deltas": 2,
+  "exact_source_deltas": 0,
+  "runtime_and_DTS_unchanged": true,
+  "phone_access": false,
+  "published": false,
+  "human_DCO_pending": true,
+  "full_goal_complete": false
+}

@@ -1,0 +1,140 @@
+{
+  "passed": true,
+  "state": "terminal success",
+  "source_files": {
+    "drivers/power/supply/qcom_smbb.c": "ca37e278548767a267319622b8ff63e9e10fb0956cfe65299828781dc64a73a7",
+    "drivers/usb/chipidea/udc.c": "7ef9579c7a0a88d9182584d205f9e1d9bf0bc4ef5412b915f8dcf709a1f34e8d",
+    "drivers/iio/adc/qcom-spmi-vadc.c": "74056ba7da45951434eedb746434c22da487b1e46ba87bb535b2a1f3ca3d52d6",
+    "drivers/iio/adc/qcom-vadc-common.c": "45925ae172504d62783374fbb37a13e0eb1fb9fc099dacfe9590c35b91de1910",
+    "drivers/iio/inkern.c": "efe82f50976cc73251d86669bb02cc9c71e4978b05af84f8f9eb5cfa567f3115"
+  },
+  "profiles": [
+    {
+      "profile": "arm-normal-managed",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "214767e28d83eb60a1d2842f397b5c1805e234fa4f8a8815165c520a9a1f208c",
+      "objects": {
+        "drivers/power/supply/qcom_smbb.o": "64bc12f9aad3a9fde6ae39178e86aea5270ab200dc7f517e8708fdd3f472bc37",
+        "drivers/usb/chipidea/udc.o": "17771448989cd81c74eead964007d82447a86bd8c3f299f6b9944d6020ca54cf",
+        "drivers/iio/adc/qcom-spmi-vadc.o": "4872f048bab4ff220b7b01fa9fb64da01c9921b91dd63b488d42fdcee5026da1",
+        "drivers/iio/adc/qcom-vadc-common.o": "be5a792dfb44d18d81881dc067bb6163a857387ade781841c211102e5acf8618",
+        "drivers/iio/inkern.o": "6ddec8aed47a476f16c6df88d8bfe2af13de45a156a29abf7bbf7113d650ef6c"
+      },
+      "managed_policy": true
+    },
+    {
+      "profile": "arm64-normal-managed",
+      "ARCH": "arm64",
+      "PREEMPT_RT": false,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "67eb0424312fdab2d04a31855e546b2b2390e94b64f929630d1ec661bf148dcb",
+      "objects": {
+        "drivers/power/supply/qcom_smbb.o": "61eb12611c4b92d37d1e9e09a1c8c985892dbf747cb2fdba40a352fb7320e9c7",
+        "drivers/usb/chipidea/udc.o": "e115596df2f09e279d8aa82b2fbd952ed9836664a159d023e3fb78406a7c865d",
+        "drivers/iio/adc/qcom-spmi-vadc.o": "7f693e6f98c3c0fdca069efb7472ba8f4392152c9be2b755b707f573b9eb6fab",
+        "drivers/iio/adc/qcom-vadc-common.o": "a1511bad1792a6b5be0b9f41c86b5e36cd189f2ad3cbb116cd0ba7f5fd39fc63",
+        "drivers/iio/inkern.o": "6ff03c6bf871ef73b30cfdc0dcdf0fabfa6398f688fed3aafb1b9730499fe10a"
+      },
+      "managed_policy": true
+    },
+    {
+      "profile": "arm64-rt-managed",
+      "ARCH": "arm64",
+      "PREEMPT_RT": true,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "bf4aa666f14f17454a4f5ea7402a9988cbb9211780235cf5f661b390fcc77a65",
+      "objects": {
+        "drivers/power/supply/qcom_smbb.o": "f8bc68e72499263cdb6ded805bace2d4b08fb88960fd1646397b4ebbe058d837",
+        "drivers/usb/chipidea/udc.o": "b27bc24d758c3c8992fd71e508ee2adda334eb1714ba6414349871f4d9aa530b",
+        "drivers/iio/adc/qcom-spmi-vadc.o": "4bb569cb413533cfab459eb2ea39a84ca912e89b81ef0e397866e726d3ee091e",
+        "drivers/iio/adc/qcom-vadc-common.o": "dc1e10a286278f5b2ce7c49ee43b08a6a36c7fdae8a1a2d464649154983e102f",
+        "drivers/iio/inkern.o": "e730fd26f1b17d358f19108f8b9c0c01e6ba60da3ca53aa2a3bd8de880e388a2"
+      },
+      "managed_policy": true
+    },
+    {
+      "profile": "arm-normal-legacy",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "CFI": true,
+      "CFI_PERMISSIVE": false,
+      "config_SHA256": "cc5a5caad3b0e638adfb25c38795e318b815bf9d8d95cdd33561dc3eb5e78700",
+      "objects": {
+        "drivers/power/supply/qcom_smbb.o": "7947840a508be07f1b0d58b0fe676e35237d1b4fb2e64212062f62d8f14232b1",
+        "drivers/usb/chipidea/udc.o": "b297abf463256cb282c3edc617f0b07bf5e65731c29138c646894b96d9e8f022",
+        "drivers/iio/adc/qcom-spmi-vadc.o": "54488582f77bb3699e27a9b0452855792745cb5123ef9134eafc2504f6c04f0a",
+        "drivers/iio/adc/qcom-vadc-common.o": "0455ae797725e22059ee9ed2a780c802f6820f8f9e6de5b381fee07865844b77",
+        "drivers/iio/inkern.o": "1f22920325bb9b7ba0bca2870ed3716e4b192f9fb6b7a2b78b3a37802e5442cb"
+      },
+      "managed_policy": false
+    }
+  ],
+  "stages": [
+    {
+      "profile": "arm-normal-managed",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "3c54c0b39ca928ac548bcb4da4de72bd11eee110203d69dd48b5869aab1f5648"
+    },
+    {
+      "profile": "arm-normal-managed",
+      "phase": "object",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "fc39402a7f10c8d94209c22a0b89dc10d5f3c9115f90807230f5b76110a0d28c"
+    },
+    {
+      "profile": "arm64-normal-managed",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "35d588f663d19299bdc336dca9f278dc4824a076523d12ee3211b0bb6c332423"
+    },
+    {
+      "profile": "arm64-normal-managed",
+      "phase": "object",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "ba9be07969d60a9ae3c4806b9485d50876a42cbc7b09f6704e5ad066fbfc3c50"
+    },
+    {
+      "profile": "arm64-rt-managed",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "4feff2741e6c9a260a724cb3db818e05c81a22f37ee86af6c2b94d69ca36f3e0"
+    },
+    {
+      "profile": "arm64-rt-managed",
+      "phase": "object",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "7f0904462ec630e4662f54baca1d86365bff0b272939a25a4735f84091303170"
+    },
+    {
+      "profile": "arm-normal-legacy",
+      "phase": "config",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "4256ca9a067db016f7e3ccb55c36db269a742cb82e573a76df6a33f8e1d87c85"
+    },
+    {
+      "profile": "arm-normal-legacy",
+      "phase": "object",
+      "returncode": 0,
+      "diagnostics": [],
+      "log_SHA256": "bcaa1b2da18810a8dba87527a049f8f71fa204f60d5bd21f16df5352d4f89fc6"
+    }
+  ],
+  "ARM32_RT_unsupported_not_counted": true,
+  "phone_access": false,
+  "physical_acceptance": false,
+  "native_objects": 20,
+  "owned_child_terminal_and_reaped": true
+}

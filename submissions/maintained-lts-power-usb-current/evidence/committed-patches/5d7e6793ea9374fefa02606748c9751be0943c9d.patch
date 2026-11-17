@@ -1,0 +1,46 @@
+From 5d7e6793ea9374fefa02606748c9751be0943c9d Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 30 Oct 2026 14:47:33 -0400
+Subject: [PATCH] MAINTAINERS: restore Fx0 charging policy binding coverage
+
+The maintained tree already contains the attributed policy implementation
+and bindings. Restore only the missing narrow maintainer coverage; retain
+all LTS runtime APIs, source notices and existing board descriptions.
+
+Scoped host control, policy, lifetime, USB budget and VADC suites pass,
+including normal LeakSanitizer, fail-fast ASan/UBSan and three deliberately
+faulty lifetime controls. Twenty native objects pass in ARM, ARM64, ARM64
+RT and legacy profiles. Three ordinary binding gates pass. Physical charge
+current, sensor accuracy, USB timing, combined provider integration and
+normal signed release qualification remain open.
+
+Codex prepared this local reconciliation with original author and date.
+This proposed owner entry still requires human review and DCO; no sign-off
+certification or maintainer contact is claimed.
+
+Backported from commit 79617f20e1541f711438cc5c70602cddbc57439a
+("dt-bindings: power: supply: describe the Fx0 charging policy proposal")
+---
+ MAINTAINERS | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d255b3479387..5d939eaf6c81 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -14163,6 +14163,12 @@ S:	Maintained
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/hid/hid.git
+ F:	drivers/hid/hid-letsketch.c
+ 
++LG FX0 CHARGING POLICY
++M:	Timothy Schmidt <timschmidt@gmail.com>
++L:	linux-pm@vger.kernel.org
++S:	Maintained
++F:	Documentation/devicetree/bindings/power/supply/lg,madai-charge-policy.yaml
++
+ LG FX0 DISPLAY PANEL
+ M:	Timothy Schmidt <timschmidt@gmail.com>
+ L:	dri-devel@lists.freedesktop.org
+-- 
+2.56.0
+

@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "source_head": "52795f8a14e49fdb1da3d58efd120d0c6488d81d",
+  "records": [
+    {
+      "path": "drivers/power/supply/qcom_smbb_policy.h",
+      "exact_complete_file": true,
+      "SHA256": "528af44a2c469278115b105eb39a0eae188fe31960d7c2c7cc2250de1a8523fe"
+    },
+    {
+      "path": "Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml",
+      "exact_complete_file": true,
+      "SHA256": "7856203f3986507d9ec889e7be8d6ed3c9d4b363a6bb1591ca2c69d431b3ff48"
+    },
+    {
+      "path": "Documentation/devicetree/bindings/power/supply/lg,madai-charge-policy.yaml",
+      "exact_complete_file": true,
+      "SHA256": "96dabded28a381c85de417c9a86b7ccf06f00e962447e543007f18cd83b9a674"
+    },
+    {
+      "path": "drivers/usb/chipidea/ci.h",
+      "exact_complete_file": true,
+      "SHA256": "9642f91d60730e7c71eb4366276f17de2878e35fd7681ec4e6fa4e7c671cae16"
+    },
+    {
+      "path": "drivers/power/supply/qcom_smbb.c",
+      "complete_file_equivalent_except": "Retained LTS IRQ-request failure diagnostic and whitespace; no control-flow change",
+      "SHA256": "ca37e278548767a267319622b8ff63e9e10fb0956cfe65299828781dc64a73a7"
+    },
+    {
+      "path": "drivers/iio/adc/qcom-spmi-vadc.c",
+      "complete_file_equivalent_except": "Retained LTS mod_devicetable include",
+      "SHA256": "74056ba7da45951434eedb746434c22da487b1e46ba87bb535b2a1f3ca3d52d6"
+    },
+    {
+      "path": "drivers/usb/chipidea/udc.c",
+      "all_original_added_runs_present": 19,
+      "SHA256": "7ef9579c7a0a88d9182584d205f9e1d9bf0bc4ef5412b915f8dcf709a1f34e8d",
+      "unrelated_newer_role_lifecycle_and_allocator_changes_not_imported": true
+    },
+    {
+      "path": "Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml",
+      "complete_binding_equivalent_except": "Retained LTS clock bounds and no newer Qualcomm three-clock conditional; current-budget description differs only in YAML wrapping",
+      "SHA256": "9811c85e0b0da8ed4ce9e8c9497a2992ade1ab5585d33ac1364f451aeea21227"
+    },
+    {
+      "path": "drivers/power/supply/Kconfig",
+      "exact_charger_Kconfig_blocks": 2,
+      "managed_requires_builtin_provider_and_IIO": true
+    }
+  ],
+  "original_commits_audited": 10,
+  "already_present_equivalents": 8,
+  "metadata_only_reconciliations_needed": 2,
+  "reverse_patch_checks_are_not_the_equivalence_gate": true,
+  "phone_access": false,
+  "physical_acceptance": false
+}

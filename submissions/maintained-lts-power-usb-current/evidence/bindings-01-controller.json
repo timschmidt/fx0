@@ -1,0 +1,27 @@
+{
+  "started_UTC": "2026-11-17T11:40:10.336223+00:00",
+  "base": "52795f8a14e49fdb1da3d58efd120d0c6488d81d",
+  "binding_SHA256": {
+    "power/supply/qcom,pm8941-charger.yaml": "7856203f3986507d9ec889e7be8d6ed3c9d4b363a6bb1591ca2c69d431b3ff48",
+    "power/supply/lg,madai-charge-policy.yaml": "96dabded28a381c85de417c9a86b7ccf06f00e962447e543007f18cd83b9a674",
+    "usb/ci-hdrc-usb2.yaml": "9811c85e0b0da8ed4ce9e8c9497a2992ade1ab5585d33ac1364f451aeea21227"
+  },
+  "phone_access": false,
+  "state": "terminal success",
+  "command": [
+    "make",
+    "O=/home/tim/Documents/GitHub/fx0/local/fx0-lts-production-current-01/power-usb-01/bindings-01-out",
+    "ARCH=arm",
+    "LLVM=-21",
+    "W=1",
+    "-j2",
+    "DT_SCHEMA_FILES=power/supply/qcom,pm8941-charger.yaml:power/supply/lg,madai-charge-policy.yaml:usb/ci-hdrc-usb2.yaml",
+    "dt_binding_check"
+  ],
+  "returncode": 0,
+  "diagnostics": [],
+  "passed": true,
+  "full_processed_schema_SHA256": "462a13b2d72057122de99b98046665def00b5b90714fd798c0c6273c273e64dc",
+  "owned_child_terminal_and_reaped": true,
+  "finished_UTC": "2026-11-17T11:41:04.673333+00:00"
+}

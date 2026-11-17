@@ -1,0 +1,41 @@
+From 2f2077445a5e5bee97d67f29a8e8078ddec32331 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 30 Oct 2026 14:47:32 -0400
+Subject: [PATCH] MAINTAINERS: restore Fx0 charging policy header coverage
+
+The maintained tree already contains the attributed policy implementation
+and bindings. Restore only the missing narrow maintainer coverage; retain
+all LTS runtime APIs, source notices and existing board descriptions.
+
+Scoped host control, policy, lifetime, USB budget and VADC suites pass,
+including normal LeakSanitizer, fail-fast ASan/UBSan and three deliberately
+faulty lifetime controls. Twenty native objects pass in ARM, ARM64, ARM64
+RT and legacy profiles. Three ordinary binding gates pass. Physical charge
+current, sensor accuracy, USB timing, combined provider integration and
+normal signed release qualification remain open.
+
+Codex prepared this local reconciliation with original author and date.
+This proposed owner entry still requires human review and DCO; no sign-off
+certification or maintainer contact is claimed.
+
+Backported from commit 84eb746a0a75948a386d1d10e0fa898638e999df
+("power: supply: qcom_smbb: add the guarded Fx0 policy child")
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 5d939eaf6c81..9ef2967be268 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -14168,6 +14168,7 @@ M:	Timothy Schmidt <timschmidt@gmail.com>
+ L:	linux-pm@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/power/supply/lg,madai-charge-policy.yaml
++F:	drivers/power/supply/qcom_smbb_policy.h
+ 
+ LG FX0 DISPLAY PANEL
+ M:	Timothy Schmidt <timschmidt@gmail.com>
+-- 
+2.56.0
+

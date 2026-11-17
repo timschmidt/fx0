@@ -1,0 +1,90 @@
+{
+  "passed": true,
+  "charger_policy_cases": 13,
+  "charger_policy_results": [
+    {
+      "label": "normal-current-charger",
+      "expected_valid": true,
+      "errors": 0,
+      "property_diagnostic_verified": true
+    },
+    {
+      "label": "simulated-runtime-profile",
+      "expected_valid": true,
+      "errors": 0,
+      "property_diagnostic_verified": true
+    },
+    {
+      "label": "managed-manual-limit",
+      "expected_valid": false,
+      "errors": 1,
+      "property_diagnostic_verified": true
+    },
+    {
+      "label": "wrong-variant",
+      "expected_valid": false,
+      "errors": 1,
+      "property_diagnostic_verified": true
+    },
+    {
+      "label": "unknown-profile",
+      "expected_valid": false,
+      "errors": 1,
+      "property_diagnostic_verified": true
+    },
+    {
+      "label": "nonboolean-opt-in",
+      "expected_valid": false,
+      "errors": 1,
+      "property_diagnostic_verified": true
+    },
+    {
+      "label": "nonboolean-runtime-marker",
+      "expected_valid": false,
+      "errors": 1,
+      "property_diagnostic_verified": true
+    },
+    {
+      "label": "two-batteries",
+      "expected_valid": false,
+      "errors": 1,
+      "property_diagnostic_verified": true
+    },
+    {
+      "label": "runtime-without-opt-in",
+      "expected_valid": false,
+      "errors": 3,
+      "property_diagnostic_verified": true
+    },
+    {
+      "label": "normal-policy",
+      "expected_valid": true,
+      "errors": 0,
+      "property_diagnostic_verified": true
+    },
+    {
+      "label": "reversed-channel-names",
+      "expected_valid": false,
+      "errors": 2,
+      "property_diagnostic_verified": true
+    },
+    {
+      "label": "extra-channel",
+      "expected_valid": false,
+      "errors": 1,
+      "property_diagnostic_verified": true
+    },
+    {
+      "label": "unknown-child-property",
+      "expected_valid": false,
+      "errors": 1,
+      "property_diagnostic_verified": true
+    }
+  ],
+  "USB_cases": 14,
+  "DTB_SHA256": "6ea6ef6223b56b42f5083bd7f833d94671c6829fc9c2f01135403e9df030d9e0",
+  "schema_SHA256": "462a13b2d72057122de99b98046665def00b5b90714fd798c0c6273c273e64dc",
+  "runtime_firmware_handoff_simulated": true,
+  "phone_access": false,
+  "physical_acceptance": false
+}
