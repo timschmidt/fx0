@@ -1,0 +1,233 @@
+{
+  "passed": true,
+  "base": "8e6fa853a34c0142b9f3e39b55e17ec44089c9fc",
+  "head": "7f87a7a42edae0cb40086d26788f3a88c56c1c9f",
+  "source_repo": "worktrees/linux-fx0-lts-integration-current-01",
+  "branch": "integration/fx0-lts-current-01",
+  "commits": [
+    {
+      "origin_commit": "5684a2e2d77410e52f6bdde598d69b02105b7172",
+      "commit": "a92cd32547b35c45db6acdf03bf92efeaa2b76d3",
+      "parent": "8e6fa853a34c0142b9f3e39b55e17ec44089c9fc",
+      "subject": "dt-bindings: power: Describe MSM8226 system sleep coordination",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-16T23:22:59-05:00",
+      "paths": [
+        "Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml",
+        "Documentation/devicetree/bindings/power/qcom,msm8226-system-pm.yaml",
+        "Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml",
+        "MAINTAINERS"
+      ],
+      "exact_added_removed_source_lines": true,
+      "original_message_preserved_in_origin_patch": true
+    },
+    {
+      "origin_commit": "ac03d871113a3d2eaea081d00e50d7ad0d779a59",
+      "commit": "8667a2b86855370ddb7de64ee478d7caa75c75d3",
+      "parent": "a92cd32547b35c45db6acdf03bf92efeaa2b76d3",
+      "subject": "clk: qcom: Restore MSM8226 A7PLL context before activation",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-16T23:22:59-05:00",
+      "paths": [
+        "drivers/clk/qcom/a53-pll.c",
+        "drivers/clk/qcom/clk-pll-suspend.h",
+        "drivers/clk/qcom/clk-pll.c",
+        "drivers/clk/qcom/clk-pll.h"
+      ],
+      "exact_added_removed_source_lines": true,
+      "original_message_preserved_in_origin_patch": true
+    },
+    {
+      "origin_commit": "a37ea8cff8cf0243e279f4168a299993c3189215",
+      "commit": "103c2e694dc5be9a97e12b3aa07db629f1dace2f",
+      "parent": "8667a2b86855370ddb7de64ee478d7caa75c75d3",
+      "subject": "soc: qcom: spm: Verify MSM8226 CPU collapse readiness",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-16T23:23:00-05:00",
+      "paths": [
+        "drivers/soc/qcom/spm.c",
+        "include/soc/qcom/spm.h"
+      ],
+      "exact_added_removed_source_lines": true,
+      "original_message_preserved_in_origin_patch": true
+    },
+    {
+      "origin_commit": "d1e250838f9836327ef46141bca28a367e2ba7f1",
+      "commit": "b816ffe6dfacaa43077c38ad17f9a6d034d42c5a",
+      "parent": "103c2e694dc5be9a97e12b3aa07db629f1dace2f",
+      "subject": "pmdomain: qcom: Coordinate MSM8926 sleep voltage and clock state",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-16T23:23:00-05:00",
+      "paths": [
+        "drivers/pmdomain/qcom/cpr-msm8926-suspend.h",
+        "drivers/pmdomain/qcom/cpr.c",
+        "include/linux/soc/qcom/cpr.h"
+      ],
+      "exact_added_removed_source_lines": true,
+      "original_message_preserved_in_origin_patch": true
+    },
+    {
+      "origin_commit": "ffb851ee18dc9411b816476f1c46e374643decaa",
+      "commit": "dd10016727f2737a57484649632e7bcbcdf72533",
+      "parent": "b816ffe6dfacaa43077c38ad17f9a6d034d42c5a",
+      "subject": "irqchip/qcom-mpm: Add owned system-sleep handoff",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-16T23:23:04-05:00",
+      "paths": [
+        "drivers/irqchip/irq-qcom-mpm.c",
+        "include/linux/soc/qcom/mpm.h"
+      ],
+      "exact_added_removed_source_lines": true,
+      "original_message_preserved_in_origin_patch": true
+    },
+    {
+      "origin_commit": "a4e62575745f880bc1689daf155fac5edbe89320",
+      "commit": "6319bf9c47a0f7598c08741ed3281cf2ebd71985",
+      "parent": "dd10016727f2737a57484649632e7bcbcdf72533",
+      "subject": "rpmsg: qcom_smd: Retain RPM transport through device noirq",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-16T23:23:04-05:00",
+      "paths": [
+        "drivers/rpmsg/qcom_smd.c",
+        "drivers/soc/qcom/rpm-proc.c",
+        "include/linux/rpmsg/qcom_smd.h"
+      ],
+      "exact_added_removed_source_lines": true,
+      "original_message_preserved_in_origin_patch": true
+    },
+    {
+      "origin_commit": "52dd599c5dcbbb3d804583a4ffa4d04f8a7f91d1",
+      "commit": "ad5389d8fb8f489d2a8012c59908a81de31bc1ac",
+      "parent": "6319bf9c47a0f7598c08741ed3281cf2ebd71985",
+      "subject": "soc: qcom: smd-rpm: Hand off receive IRQs after device noirq",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-16T23:23:05-05:00",
+      "paths": [
+        "drivers/soc/qcom/smd-rpm.c",
+        "include/linux/soc/qcom/smd-rpm.h"
+      ],
+      "exact_added_removed_source_lines": true,
+      "original_message_preserved_in_origin_patch": true
+    },
+    {
+      "origin_commit": "33b9a12656d4e9758d0ee162ead1b9ae15a54586",
+      "commit": "25900048da45fbbd16df5a0fba317169f3d99067",
+      "parent": "ad5389d8fb8f489d2a8012c59908a81de31bc1ac",
+      "subject": "ARM: qcom: Collapse MSM8226 secondary cores for system sleep",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-16T23:23:05-05:00",
+      "paths": [
+        "arch/arm/mach-qcom/platsmp.c",
+        "drivers/irqchip/irq-gic.c",
+        "include/linux/irqchip/arm-gic.h",
+        "include/soc/qcom/msm8226-pm.h"
+      ],
+      "exact_added_removed_source_lines": true,
+      "original_message_preserved_in_origin_patch": true
+    },
+    {
+      "origin_commit": "642186babe2317442a6f6475b69bb7ccca453b51",
+      "commit": "f7e47653c287644a6d1523ae393a9f4cce33e414",
+      "parent": "25900048da45fbbd16df5a0fba317169f3d99067",
+      "subject": "soc: qcom: Add MSM8226 system suspend coordinator",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-16T23:23:06-05:00",
+      "paths": [
+        "drivers/soc/qcom/Kconfig",
+        "drivers/soc/qcom/Makefile",
+        "drivers/soc/qcom/msm8226-pm.c"
+      ],
+      "exact_added_removed_source_lines": false,
+      "original_message_preserved_in_origin_patch": true
+    },
+    {
+      "origin_commit": "fc5120c4e0f2ab4790cb62f1f4c40aea74697a18",
+      "commit": "7f87a7a42edae0cb40086d26788f3a88c56c1c9f",
+      "parent": "f7e47653c287644a6d1523ae393a9f4cce33e414",
+      "subject": "ARM: dts: qcom: Add an experimental Madai suspend target",
+      "author": "Timothy Schmidt",
+      "author_email": "timschmidt@gmail.com",
+      "author_date": "2026-11-16T23:23:06-05:00",
+      "paths": [
+        "arch/arm/boot/dts/qcom/Makefile",
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts"
+      ],
+      "exact_added_removed_source_lines": false,
+      "original_message_preserved_in_origin_patch": true
+    }
+  ],
+  "source_files": {
+    "Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml": "f2bd89304ca9e99178b91bd6f954ff9d4b6cec593890cfd7ed64928a0deef6ef",
+    "Documentation/devicetree/bindings/power/qcom,msm8226-system-pm.yaml": "f22529aef1c98d88274a14f2db9e29306014ad5c601a942e60df67c45508bf39",
+    "Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml": "fc5bbc26e8ccf93aaa1fc3a092777a003d3cfeeb44a2c565f6f3224c3fe092c0",
+    "MAINTAINERS": "be1bd1870cf6f35464036675d4040d3981aa03a78507bbeecf98a44926f21205",
+    "arch/arm/boot/dts/qcom/Makefile": "0c77bb1b83b6603c2f3379fdc0be5322646679573591abe7641a954daec562d8",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts": "87aef0bb972bc471c600a36a6bbceb84b173339ce260797e6b87ff18b48884f4",
+    "arch/arm/mach-qcom/platsmp.c": "c76cc0fc3035a9aaa9211d418d6a9cf4c2524e22276e9470d9a637c1b80d66dd",
+    "drivers/clk/qcom/a53-pll.c": "a41dbee2688422bd4ac109fc6f8a91ebf81cd297d5f7e0f489cdd6269800e6c8",
+    "drivers/clk/qcom/clk-pll-suspend.h": "0b69f8d52cf54ee5f363b692b7f159f3aab44ca3f954492f89c6eb7f94bf4678",
+    "drivers/clk/qcom/clk-pll.c": "4deed93d36d0d7c5aac35bda809a435300858a1214f204cd752e938e91c045c3",
+    "drivers/clk/qcom/clk-pll.h": "8dc7fb521fdfc1a7bd70ad0712c3ea2d620973ce7c32311a4fd906310127aa3d",
+    "drivers/irqchip/irq-gic.c": "0585e98bdd6e107b846c5b9062c350155f18fdc1e8c49887237790afb9fe5a73",
+    "drivers/irqchip/irq-qcom-mpm.c": "b9c3aacbdb079dbc7004805014af661238a14c7ddd9e2d99ffafe963fedeae1d",
+    "drivers/pmdomain/qcom/cpr-msm8926-suspend.h": "c27e3df23d054d82d311c211e8235c2ab4ab126e11ae5d3f9d0bf6230b597170",
+    "drivers/pmdomain/qcom/cpr.c": "aa7af2a619c2387e6e260ebbafd911426612c2698c28af9cc32a05a3dcac9932",
+    "drivers/rpmsg/qcom_smd.c": "a15246f9e9e3f72e1f31650370010fea6c16fd659d88760a110f8e6377ddbdac",
+    "drivers/soc/qcom/Kconfig": "c886fdf4da3aa1a303fead0e2c918ff8a3b25fbf3ce5ba5ed272aaa2ceda22e2",
+    "drivers/soc/qcom/Makefile": "3a8a9d69e7150a0fee77e7927148cdb10cbb4f8272fa7f162939f5fc6fd32f85",
+    "drivers/soc/qcom/msm8226-pm.c": "d1b732a3af569a23a6e5c12cc469842b15888d2700f2384169f7f070ac42f8d9",
+    "drivers/soc/qcom/rpm-proc.c": "b5d008ba52d21402f663531b8ed852f6ab3ed04afe70b8eadb31ff7363d525b7",
+    "drivers/soc/qcom/smd-rpm.c": "fe5bbb32ff4d1d7fa4f31d64125490d329003c64ed857df263e8ca1134c72726",
+    "drivers/soc/qcom/spm.c": "f4dd829b8b8975fbd6c56ac1143ff41e07b1631175b53c8f71ef17780ac5f53a",
+    "include/linux/irqchip/arm-gic.h": "37ecaf81f547a14708034014cbb02459573f31eafc352e9cbdca3f67d25e810f",
+    "include/linux/rpmsg/qcom_smd.h": "9a3c03cb788231ead298d0b9244e23f6b1e9c895988b34ac040dee2213a008e2",
+    "include/linux/soc/qcom/cpr.h": "093bdcd438e04bc8879b3324253357446aa6a69217af4baf12b2ac994861f1c5",
+    "include/linux/soc/qcom/mpm.h": "b7ba52217d6d9b65a06252d424e4a2b8d4ba5b8a152439d6717eb68955864743",
+    "include/linux/soc/qcom/smd-rpm.h": "3dc73a51ee45ee7bb8cf1891bb81bdfa8781f69d598c903dfd09c056560693f4",
+    "include/soc/qcom/msm8226-pm.h": "35d2d5e5f1f5d7bc8059f85ea902da5d64a4de55ef0bd54a32f5eece1019fd3a",
+    "include/soc/qcom/spm.h": "0df2f3c80d5f7a0231a988dc55df72591809a0d186d14c1c5894666e679498cc"
+  },
+  "source_commits": 10,
+  "exact_source_deltas": 8,
+  "reconciled_source_deltas": 2,
+  "source_branch_not_advanced": false,
+  "normal_target_promoted": false,
+  "published": false,
+  "phone_access": false,
+  "human_DCO_pending": true,
+  "full_goal_complete": false,
+  "recorded_UTC": "2026-11-17T10:38:53.698610+00:00",
+  "working_tree_clean": true,
+  "source_bytes_match_precommit_native_and_integration_link": true,
+  "native_objects": 175,
+  "supported_native_profiles": 7,
+  "host_model_cases": 5009,
+  "fault_controls": 85,
+  "DTBS": 18,
+  "previous_DTBS_byte_identical": 17,
+  "selected_schema_checks": 180,
+  "Kconfig_cases": 21,
+  "negative_binding_controls": 12,
+  "full_host_integration_link_passed": true,
+  "raw_unsigned_modules": 447,
+  "automatic_module_signing_disabled": true,
+  "public_verification_certificate_only": true,
+  "private_key_access_or_generation": false,
+  "release_specific_APK_qualified": false,
+  "strict_checkpatch_passed": false,
+  "checkpatch_errors": 0,
+  "checkpatch_warnings": 6,
+  "checkpatch_checks": 2,
+  "full_schema_gate_passed": false,
+  "physical_acceptance": false,
+  "maintainer_contact": false
+}

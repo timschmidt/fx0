@@ -1,0 +1,184 @@
+From ad5389d8fb8f489d2a8012c59908a81de31bc1ac Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Mon, 16 Nov 2026 23:23:05 -0500
+Subject: [PATCH] soc: qcom: smd-rpm: Hand off receive IRQs after device noirq
+
+Register the coordinator child as the RPM sleep client. After device
+noirq votes have completed, drain/freeze admission before masking the
+explicitly NO_SUSPEND receive IRQ. Re-enable receive delivery before
+thaw, so device noirq resume can issue genpd power-on requests again.
+Final admission also requires a still-open endpoint and the original
+owned token.
+
+Backport onto maintained Linux 6.18.63 while preserving its platform
+context and APIs. The ten-change batch passes 5009 synthetic model cases,
+85 fault controls and 175 selected native objects across seven supported
+feature/config profiles. ARM32 RT is unsupported and is not counted.
+
+Services and faults are synthetic. Firmware, kernel concurrency, normal
+package integration and physical acceptance remain open. Codex prepared
+this local backport and verification. Original authors, dates and source
+notices are retained; no human DCO or publication is claimed.
+
+Backported from commit 52dd599c5dcb ("soc: qcom: smd-rpm: Hand off
+receive IRQs after device noirq")
+---
+ drivers/soc/qcom/smd-rpm.c       | 89 ++++++++++++++++++++++++++++++++
+ include/linux/soc/qcom/smd-rpm.h |  8 +++
+ 2 files changed, 97 insertions(+)
+
+diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
+index 59ac7e0a7129c..01dc7db973a41 100644
+--- a/drivers/soc/qcom/smd-rpm.c
++++ b/drivers/soc/qcom/smd-rpm.c
+@@ -10,6 +10,7 @@
+ #include <linux/io.h>
+ #include <linux/interrupt.h>
+ #include <linux/irqflags.h>
++#include <linux/rpmsg/qcom_smd.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
+ #include <linux/unaligned.h>
+@@ -33,6 +34,10 @@
+  * @sleep_owner:	address of the token holding request admission closed
+  * @sleep_sequence:	last sleep token identifier, never reused on this channel
+  * @uncertain:		a request failed after submission was attempted
++ * @sleep_client:	coordinator child whose PM transaction enables the gate
++ * @system_token:	owned by the coordinator platform callbacks
++ * @receive_irq:	NO_SUSPEND receive IRQ on the dedicated RPM edge
++ * @receive_masked:	coordinator masked the receive IRQ after draining
+  *
+  * The request mutex also protects sleep admission and uncertainty state.
+  */
+@@ -50,6 +55,10 @@ struct qcom_smd_rpm {
+ 	const struct qcom_rpm_smd_sleep_token *sleep_owner;
+ 	u64 sleep_sequence;
+ 	bool uncertain;
++	struct device *sleep_client;
++	struct qcom_rpm_smd_sleep_token system_token;
++	int receive_irq;
++	bool receive_masked;
+ };
+ 
+ /**
+@@ -182,6 +191,85 @@ int qcom_rpm_smd_thaw(struct qcom_smd_rpm *rpm,
+ }
+ EXPORT_SYMBOL_GPL(qcom_rpm_smd_thaw);
+ 
++int qcom_rpm_smd_register_sleep(struct qcom_smd_rpm *rpm, struct device *client)
++{
++	int irq, ret = 0;
++
++	if (!rpm || !client || client->parent != rpm->dev)
++		return -EINVAL;
++	irq = qcom_smd_rpm_get_irq(rpm->rpm_channel);
++	if (irq < 0)
++		return irq;
++	mutex_lock(&rpm->lock);
++	if (rpm->sleep_client || rpm->sleep_owner) {
++		ret = -EBUSY;
++	} else {
++		rpm->sleep_client = client;
++		rpm->receive_irq = irq;
++	}
++	mutex_unlock(&rpm->lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(qcom_rpm_smd_register_sleep);
++
++int qcom_rpm_smd_unregister_sleep(struct qcom_smd_rpm *rpm, struct device *client)
++{
++	int ret = 0;
++
++	mutex_lock(&rpm->lock);
++	if (rpm->sleep_client != client)
++		ret = -EINVAL;
++	else if (rpm->sleep_owner || rpm->receive_masked)
++		ret = -EBUSY;
++	else
++		rpm->sleep_client = NULL;
++	mutex_unlock(&rpm->lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(qcom_rpm_smd_unregister_sleep);
++
++/* All device noirq requests have completed; this receive IRQ is NO_SUSPEND. */
++int qcom_rpm_smd_prepare_sleep(struct qcom_smd_rpm *rpm, struct device *client)
++{
++	int ret;
++
++	if (rpm->sleep_client != client || rpm->receive_masked)
++		return -EINVAL;
++	ret = qcom_rpm_smd_freeze(rpm, &rpm->system_token);
++	if (ret)
++		return ret;
++	disable_irq(rpm->receive_irq);
++	rpm->receive_masked = true;
++	return 0;
++}
++EXPORT_SYMBOL_GPL(qcom_rpm_smd_prepare_sleep);
++
++/* Called with local IRQs enabled, before the first device noirq resume. */
++int qcom_rpm_smd_finish_sleep(struct qcom_smd_rpm *rpm, struct device *client)
++{
++	if (rpm->sleep_client != client || irqs_disabled())
++		return -EPERM;
++	if (!rpm->system_token.cookie)
++		return 0;
++	if (rpm->receive_masked) {
++		enable_irq(rpm->receive_irq);
++		rpm->receive_masked = false;
++	}
++	return qcom_rpm_smd_thaw(rpm, &rpm->system_token);
++}
++EXPORT_SYMBOL_GPL(qcom_rpm_smd_finish_sleep);
++
++/* Only during the registered child's PM transition, with its parent bound. */
++bool qcom_rpm_smd_sleep_ready(struct qcom_smd_rpm *rpm, struct device *client)
++{
++	return qcom_smd_rpm_get_irq(rpm->rpm_channel) == rpm->receive_irq &&
++	       READ_ONCE(rpm->sleep_client) == client && READ_ONCE(rpm->receive_masked) &&
++	       READ_ONCE(rpm->sleep_owner) == &rpm->system_token &&
++	       READ_ONCE(rpm->system_token.cookie) &&
++	       READ_ONCE(rpm->system_token.cookie) == READ_ONCE(rpm->sleep_sequence);
++}
++EXPORT_SYMBOL_GPL(qcom_rpm_smd_sleep_ready);
++
+ /**
+  * qcom_rpm_smd_write - write @buf to @type:@id
+  * @rpm:	rpm handle
+@@ -395,6 +483,7 @@ static struct rpmsg_driver qcom_smd_rpm_driver = {
+ 	.drv  = {
+ 		.name  = "qcom_smd_rpm",
+ 		.of_match_table = qcom_smd_rpm_of_match,
++		.suppress_bind_attrs = IS_ENABLED(CONFIG_QCOM_MSM8226_PM),
+ 	},
+ };
+ 
+diff --git a/include/linux/soc/qcom/smd-rpm.h b/include/linux/soc/qcom/smd-rpm.h
+index 4c0ab8be789c0..be9bfc5cb4bb4 100644
+--- a/include/linux/soc/qcom/smd-rpm.h
++++ b/include/linux/soc/qcom/smd-rpm.h
+@@ -5,6 +5,7 @@
+ #include <linux/types.h>
+ 
+ struct qcom_smd_rpm;
++struct device;
+ 
+ /* Initialize to zero and keep alive, at the same address, until thaw. */
+ struct qcom_rpm_smd_sleep_token {
+@@ -75,4 +76,11 @@ int qcom_rpm_smd_freeze(struct qcom_smd_rpm *rpm,
+ int qcom_rpm_smd_thaw(struct qcom_smd_rpm *rpm,
+ 		      struct qcom_rpm_smd_sleep_token *token);
+ 
++/* Child lifetime and PM ordering must be synchronized with system sleep. */
++int qcom_rpm_smd_register_sleep(struct qcom_smd_rpm *rpm, struct device *client);
++int qcom_rpm_smd_unregister_sleep(struct qcom_smd_rpm *rpm, struct device *client);
++int qcom_rpm_smd_prepare_sleep(struct qcom_smd_rpm *rpm, struct device *client);
++int qcom_rpm_smd_finish_sleep(struct qcom_smd_rpm *rpm, struct device *client);
++bool qcom_rpm_smd_sleep_ready(struct qcom_smd_rpm *rpm, struct device *client);
++
+ #endif
+-- 
+2.56.0
+

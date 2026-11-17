@@ -1,0 +1,95 @@
+From 103c2e694dc5be9a97e12b3aa07db629f1dace2f Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Mon, 16 Nov 2026 23:23:00 -0500
+Subject: [PATCH] soc: qcom: spm: Verify MSM8226 CPU collapse readiness
+
+Record the CPU owning each MSM8226 CPU SAW before publishing it.
+Expose a read-only admission check for that CPU with IRQs disabled:
+match the controller version, disabled AVS, configuration, delay, safe
+control state and every word of the 64-byte CPU sequence program
+before collapse.
+
+Backport onto maintained Linux 6.18.63 while preserving its platform
+context and APIs. The ten-change batch passes 5009 synthetic model cases,
+85 fault controls and 175 selected native objects across seven supported
+feature/config profiles. ARM32 RT is unsupported and is not counted.
+
+Services and faults are synthetic. Firmware, kernel concurrency, normal
+package integration and physical acceptance remain open. Codex prepared
+this local backport and verification. Original authors, dates and source
+notices are retained; no human DCO or publication is claimed.
+
+Backported from commit a37ea8cff8cf ("soc: qcom: spm: Verify MSM8226
+CPU collapse readiness")
+---
+ drivers/soc/qcom/spm.c | 32 ++++++++++++++++++++++++++++++++
+ include/soc/qcom/spm.h |  3 +++
+ 2 files changed, 35 insertions(+)
+
+diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
+index a18d8fbaf54d5..85b1d19e12c00 100644
+--- a/drivers/soc/qcom/spm.c
++++ b/drivers/soc/qcom/spm.c
+@@ -319,6 +319,32 @@ int spm_set_l2_low_power_mode(struct spm_driver_data *drv,
+ 	return spm_8226_l2_set_mode(drv->l2_map, mode);
+ }
+ 
++int spm_msm8226_cpu_ready(struct spm_driver_data *drv)
++{
++	const struct spm_reg_data *data;
++	u32 word;
++	int i;
++
++	if (!drv || drv->reg_data != &spm_reg_8226_cpu)
++		return -ENODEV;
++	if (!irqs_disabled() || raw_smp_processor_id() != drv->reg_cpu)
++		return -EPERM;
++	data = drv->reg_data;
++	if (readl_relaxed(drv->reg_base + 0xfd0) != 0x20010000 ||
++	    readl_relaxed(drv->reg_base + 0x20) & BIT(0) ||
++	    spm_register_read(drv, SPM_REG_CFG) != data->spm_cfg ||
++	    spm_register_read(drv, SPM_REG_DLY) != data->spm_dly ||
++	    spm_register_read(drv, SPM_REG_SPM_CTL) & ~SPM_CTL_EN)
++		return -EIO;
++	for (i = 0; i < MAX_SEQ_DATA; i += sizeof(word)) {
++		word = data->seq[i] | (u32)data->seq[i + 1] << 8 |
++		       (u32)data->seq[i + 2] << 16 | (u32)data->seq[i + 3] << 24;
++		if (readl_relaxed(drv->reg_base + 0x80 + i) != word)
++			return -EIO;
++	}
++	return 0;
++}
++
+ static void spm_force_disable(struct spm_driver_data *drv, u32 saved_ctl)
+ {
+ 	u32 mask = ~(SPM_CTL_INDEX << SPM_CTL_INDEX_SHIFT);
+@@ -682,6 +708,12 @@ static int spm_dev_probe(struct platform_device *pdev)
+ 
+ 	drv->reg_data = match_id->data;
+ 	drv->dev = &pdev->dev;
++	if (drv->reg_data == &spm_reg_8226_cpu) {
++		ret = spm_get_cpu(&pdev->dev);
++		if (ret < 0)
++			return ret;
++		drv->reg_cpu = ret;
++	}
+ 
+ 	if (drv->reg_data->pmic_arbiter_master) {
+ 		ret = spm_8226_l2_register(pdev, drv);
+diff --git a/include/soc/qcom/spm.h b/include/soc/qcom/spm.h
+index 6f741971a3070..bc69d4bb3db54 100644
+--- a/include/soc/qcom/spm.h
++++ b/include/soc/qcom/spm.h
+@@ -20,6 +20,9 @@ struct spm_driver_data;
+ int spm_set_low_power_mode(struct spm_driver_data *drv,
+ 			   enum pm_sleep_mode mode);
+ 
++/* Exact MSM8226 CPU program/state check on its own CPU, with IRQs off. */
++int spm_msm8226_cpu_ready(struct spm_driver_data *drv);
++
+ enum spm_l2_sleep_mode {
+ 	SPM_L2_MODE_DISABLED,
+ 	SPM_L2_MODE_RETENTION,
+-- 
+2.56.0
+

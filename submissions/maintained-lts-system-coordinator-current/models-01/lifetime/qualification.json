@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "returncode": 0,
+  "actual_functions": 5,
+  "bindings": {
+    "msm8226_pm_supplier": "450ed6cb5b6093e09a8edc5818b4da1886c91c2124f58e3bd3f8c27b30fdd8b0",
+    "msm8226_pm_get_cpus": "46125790a5adb120e05da8e52a87744aa2290b8e94e92ec134728d13c0d01ebe",
+    "msm8226_pm_install": "c154f36b7e424d83fa5536329218f0eb6d04dd433ec07d843ba22798253a53e5",
+    "msm8226_pm_probe": "fbc27913c5f18383a85aca68a990b242a90e6bec9b2cd36f927e893f88ff813b",
+    "msm8226_pm_remove": "37a430495b961eaa5a7443f0ca43d55e7f9627b83f680a8d93ff1ea3fc5d8e20"
+  },
+  "source_SHA256": "055e3c7fe79737a63be9fbbd2fcf211b896c6be76880a7790971f3a6fb3faf9d",
+  "model_SHA256": "d97847830fae79f1b37efe87564d51e4fa8ff68d316f263c966913ef078a84bd",
+  "services_synthetic": [
+    "device graph, devres and driver-core cleanup",
+    "supplier ownership and hardware resource mappings",
+    "CPU-hotplug writer and online masks",
+    "async work scheduling and system sleep ops mutex"
+  ],
+  "actual_driver_core_concurrency_qualified": false,
+  "phone_access": false,
+  "cases": 54,
+  "checks": 3893,
+  "failures": 0,
+  "fault_positions": 42
+}

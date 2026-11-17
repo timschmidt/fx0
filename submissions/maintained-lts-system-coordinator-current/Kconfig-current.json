@@ -1,0 +1,309 @@
+{
+  "passed": true,
+  "cases": 21,
+  "records": [
+    {
+      "label": "ARM-all-enabled",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {},
+      "actual": {},
+      "coordinator_enabled": true,
+      "config_SHA256": "214767e28d83eb60a1d2842f397b5c1805e234fa4f8a8815165c520a9a1f208c",
+      "diagnostics": []
+    },
+    {
+      "label": "ARM-default-off",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "QCOM_MSM8226_PM": "unset"
+      },
+      "actual": {
+        "QCOM_MSM8226_PM": "n"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "9bb302da5dbb27434bfb79df689dc54673720c8bce0c159138df7d7cd102319e",
+      "diagnostics": []
+    },
+    {
+      "label": "ARM64-rejected",
+      "ARCH": "arm64",
+      "PREEMPT_RT": false,
+      "requested": {},
+      "actual": {},
+      "coordinator_enabled": false,
+      "config_SHA256": "67eb0424312fdab2d04a31855e546b2b2390e94b64f929630d1ec661bf148dcb",
+      "diagnostics": []
+    },
+    {
+      "label": "ARM64-RT-rejected",
+      "ARCH": "arm64",
+      "PREEMPT_RT": true,
+      "requested": {},
+      "actual": {},
+      "coordinator_enabled": false,
+      "config_SHA256": "bf4aa666f14f17454a4f5ea7402a9988cbb9211780235cf5f661b390fcc77a65",
+      "diagnostics": []
+    },
+    {
+      "label": "without-SMP",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "SMP": "n"
+      },
+      "actual": {
+        "SMP": "n"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "f9813ee7cc99bd595ab70ff807126c93155f566638bf2ef39d1c99743a878b8b",
+      "diagnostics": []
+    },
+    {
+      "label": "without-HOTPLUG_CPU",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "HOTPLUG_CPU": "n"
+      },
+      "actual": {
+        "HOTPLUG_CPU": "y"
+      },
+      "coordinator_enabled": true,
+      "config_SHA256": "214767e28d83eb60a1d2842f397b5c1805e234fa4f8a8815165c520a9a1f208c",
+      "diagnostics": []
+    },
+    {
+      "label": "without-SUSPEND",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "SUSPEND": "n"
+      },
+      "actual": {
+        "SUSPEND": "n"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "4b3695ca3db04f18023c223ae4ecb063bea28587514b0b2868bbddddd5e868f0",
+      "diagnostics": []
+    },
+    {
+      "label": "without-CPU_PM",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "CPU_PM": "n"
+      },
+      "actual": {
+        "CPU_PM": "y"
+      },
+      "coordinator_enabled": true,
+      "config_SHA256": "214767e28d83eb60a1d2842f397b5c1805e234fa4f8a8815165c520a9a1f208c",
+      "diagnostics": []
+    },
+    {
+      "label": "without-QCOM_CPR_MSM8926",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "QCOM_CPR_MSM8926": "n"
+      },
+      "actual": {
+        "QCOM_CPR_MSM8926": "n"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "290ae35fbbbc8d7c9bce463be8355b4601fba02b7aab3abb61a8d88c749a094d",
+      "diagnostics": []
+    },
+    {
+      "label": "without-QCOM_CPR",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "QCOM_CPR": "n"
+      },
+      "actual": {
+        "QCOM_CPR": "n"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "a4d7828867bd8a7f3fa0498c2b447b023f1454d69444412d09b98b5190925fd7",
+      "diagnostics": []
+    },
+    {
+      "label": "without-QCOM_SPM",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "QCOM_SPM": "n",
+        "ARM_QCOM_SPM_CPUIDLE": "n"
+      },
+      "actual": {
+        "QCOM_SPM": "n",
+        "ARM_QCOM_SPM_CPUIDLE": "n"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "8bac96b1629f5bb61ccbd3c28cd17461cd5dc8abf6b2dba5f2cc81a06162a19f",
+      "diagnostics": []
+    },
+    {
+      "label": "without-QCOM_SMD_RPM",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "QCOM_SMD_RPM": "n"
+      },
+      "actual": {
+        "QCOM_SMD_RPM": "n"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "02eb535974849d51ff32eb919527f29227b50a159facc380ea2c074428301f2d",
+      "diagnostics": []
+    },
+    {
+      "label": "without-RPMSG_QCOM_SMD",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "RPMSG_QCOM_SMD": "n"
+      },
+      "actual": {
+        "RPMSG_QCOM_SMD": "n"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "be8d1b3101fe42474e5533b3a2893b9f3010b5d238b2d90cf13172278a582eef",
+      "diagnostics": []
+    },
+    {
+      "label": "without-QCOM_MPM",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "QCOM_MPM": "n"
+      },
+      "actual": {
+        "QCOM_MPM": "n"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "393d2012a97be06572e809830c66c5a4c40ccd0f7e770ad9865e6d90b9094c6b",
+      "diagnostics": []
+    },
+    {
+      "label": "module-QCOM_CPR",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "QCOM_CPR": "m"
+      },
+      "actual": {
+        "QCOM_CPR": "m"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "86c0954e04198311f3b5cb75ec05b38095ac3cab3059796902348781a87d412d",
+      "diagnostics": []
+    },
+    {
+      "label": "module-QCOM_SPM",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "QCOM_SPM": "m",
+        "ARM_QCOM_SPM_CPUIDLE": "n"
+      },
+      "actual": {
+        "QCOM_SPM": "m",
+        "ARM_QCOM_SPM_CPUIDLE": "n"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "272349fa3a0def00978ae617d9ccba51321a5b9944244ff283e74cd706af2991",
+      "diagnostics": []
+    },
+    {
+      "label": "module-QCOM_SMD_RPM",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "QCOM_SMD_RPM": "m"
+      },
+      "actual": {
+        "QCOM_SMD_RPM": "m"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "5fbd72d7f288306df52a8d5ca4a6e6edac14ce940846959631880851ac23e6d3",
+      "diagnostics": []
+    },
+    {
+      "label": "module-RPMSG_QCOM_SMD",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "RPMSG_QCOM_SMD": "m"
+      },
+      "actual": {
+        "RPMSG_QCOM_SMD": "m"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "b4453946cb86de6c48272fae0f099f2e940bc53cc30354aa3c5d71b0a805808e",
+      "diagnostics": []
+    },
+    {
+      "label": "module-QCOM_MPM",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "QCOM_MPM": "m"
+      },
+      "actual": {
+        "QCOM_MPM": "m"
+      },
+      "coordinator_enabled": false,
+      "config_SHA256": "2fe6e2c82da128f8a7ac379b4b3b8bad339c6123a13b592dabe2d60553c6f5a6",
+      "diagnostics": []
+    },
+    {
+      "label": "SCM-arch-forces-y-from-n",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "QCOM_SCM": "n"
+      },
+      "actual": {
+        "QCOM_SCM": "y"
+      },
+      "coordinator_enabled": true,
+      "config_SHA256": "214767e28d83eb60a1d2842f397b5c1805e234fa4f8a8815165c520a9a1f208c",
+      "diagnostics": []
+    },
+    {
+      "label": "SCM-arch-forces-y-from-m",
+      "ARCH": "arm",
+      "PREEMPT_RT": false,
+      "requested": {
+        "QCOM_SCM": "m"
+      },
+      "actual": {
+        "QCOM_SCM": "y"
+      },
+      "coordinator_enabled": true,
+      "config_SHA256": "214767e28d83eb60a1d2842f397b5c1805e234fa4f8a8815165c520a9a1f208c",
+      "diagnostics": []
+    }
+  ],
+  "actual_LTS_Kconfig": true,
+  "ARM32_RT_not_requested_or_counted": true,
+  "forced_builtin_requests": {
+    "HOTPLUG_CPU": "PM_SLEEP_SMP selects HOTPLUG_CPU while SMP and system sleep remain enabled",
+    "CPU_PM": "ARM selects CPU_PM when SUSPEND or CPU_IDLE is enabled",
+    "QCOM_SCM": "ARCH_QCOM/SMP and QCOM_SPM select QCOM_SCM"
+  },
+  "QCOM_SPM_negative_cases_disable_ARM_QCOM_SPM_CPUIDLE_selector": true,
+  "earlier_failed_expectation_receipts_preserved": true,
+  "source_files": {
+    "kernel/power/Kconfig": "01b906bb84cdf3def02a6d7c120b6d27348a5f67da9dbc565761e7529a4fa0a6",
+    "arch/arm/Kconfig": "92a8e1de09f5b6b00a679103529ea8eabe9e21efea9782f8870b72418f03bbde",
+    "drivers/soc/qcom/Kconfig": "c886fdf4da3aa1a303fead0e2c918ff8a3b25fbf3ce5ba5ed272aaa2ceda22e2",
+    "drivers/cpuidle/Kconfig.arm": "14561f6d373fc6b88cb8e8d4504d947eaa16d31f9a97022c09d7ec4b02968858",
+    "drivers/pmdomain/qcom/Kconfig": "0bd37273aed1805ad6971d6682632c32fdbefb84ce25046bf30e2214b45cac19"
+  },
+  "phone_access": false
+}

@@ -1,0 +1,28 @@
+make[1]: Entering directory '<workspace>/local/fx0-lts-production-current-01/system-coordinator-01/unsigned-link-02'
+  GEN     Makefile
+  CALL    <workspace>/worktrees/linux-fx0-lts-integration-current-01/scripts/checksyscalls.sh
+  CC      drivers/soc/qcom/msm8226-pm.o
+  AR      drivers/soc/qcom/built-in.a
+  AR      drivers/soc/built-in.a
+  AR      drivers/built-in.a
+  AR      built-in.a
+  AR      vmlinux.a
+  LD      vmlinux.o
+  MODPOST Module.symvers
+  KSYMS   .tmp_vmlinux0.kallsyms.S
+  AS      .tmp_vmlinux0.kallsyms.o
+  LD      .tmp_vmlinux1
+  NM      .tmp_vmlinux1.syms
+  KSYMS   .tmp_vmlinux1.kallsyms.S
+  AS      .tmp_vmlinux1.kallsyms.o
+  LD      .tmp_vmlinux2
+  NM      .tmp_vmlinux2.syms
+  KSYMS   .tmp_vmlinux2.kallsyms.S
+  AS      .tmp_vmlinux2.kallsyms.o
+  LD      vmlinux.unstripped
+  NM      System.map
+  SORTTAB vmlinux.unstripped
+  OBJCOPY vmlinux
+  GEN     modules.builtin.modinfo
+  GEN     modules.builtin
+make[1]: Leaving directory '<workspace>/local/fx0-lts-production-current-01/system-coordinator-01/unsigned-link-02'

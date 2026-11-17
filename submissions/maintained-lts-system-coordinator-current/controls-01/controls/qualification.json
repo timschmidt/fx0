@@ -1,0 +1,455 @@
+{
+  "passed": true,
+  "controls": 56,
+  "records": [
+    {
+      "group": "mpm-probe",
+      "name": "mailbox-error-bypasses-domain-cleanup",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "305: !pdev.dev.data&&!genpd_live&&!provider_live&&!mailbox_live&&!domain_live&&!irq_live\n305: !pdev.dev.data&&!genpd_live&&!provider_live&&!mailbox_live&&!domain_live&&!irq_live\n305: !pdev.dev.data&&!genpd_live&&!provider_live&&!mailbox_live&&!domain_live&&!irq_live\n305: !pdev.dev.data&&!genpd_live&&!provider_live&&!mailbox_live&&!domain_live&&!irq_live",
+      "mutated_source_SHA256": "3cb0b2a8936176c16c97796ca8ad37f76780ec461e932106cc08c6a16188d9f4"
+    },
+    {
+      "group": "mpm-probe",
+      "name": "retain-failed-genpd-provider",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "69: !provider_live\n305: !pdev.dev.data&&!genpd_live&&!provider_live&&!mailbox_live&&!domain_live&&!irq_live\n69: !provider_live\n305: !pdev.dev.data&&!genpd_live&&!provider_live&&!mailbox_live&&!domain_live&&!irq_live\n69: !provider_live\n305: !pdev.dev.data&&!genpd_live&&!provider_live&&!mailbox_live&&!domain_live&&!irq_live\n69: !provider_live\n305: !pdev.dev.data&&!genpd_live&&!provider_live&&!mailbox_live&&!domain_live&&!irq_live\n69: !provider_live\n305: !pdev.dev.data&&!genpd_live&&!provider_live&&!mailbox_live&&!domain_live&&!irq_live\n69: !provider_live\n305: !pdev.dev.data&&!genpd_live&&!provider_live&&!mailbox_live&&!domain_live&&!irq_live\n69: !provider_live\n305: !pdev.dev.data&&!genpd_live&&!provider_live&&!mailbox_live&&!domain_live&&!irq_live\n69: !provider_live\n305: !pdev.dev.data&&!genpd_live&&!provider_live&&!mailbox_live&&!domain_live&&!irq_live",
+      "mutated_source_SHA256": "b2bda6018c8740a7bb77fec025adc62a0f9923bab2a9529bb73ab9552b1aa624"
+    },
+    {
+      "group": "mpm-probe",
+      "name": "remove-domain-before-provider",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live\n69: !provider_live",
+      "mutated_source_SHA256": "a2a6325253c09a5675865d45403d5052b7298cf4b155ba10f833689f3a6e1d59"
+    },
+    {
+      "group": "mpm-probe",
+      "name": "free-unacquired-mailbox",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "73: c==&mailbox&&mailbox_live",
+      "mutated_source_SHA256": "c8181b268ca8b5314a5c6fe033006aef05dde2581c69f8d911d18ae124139687"
+    },
+    {
+      "group": "smd-state",
+      "name": "create-non-rpm-device-on-reserved-edge",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "109: creates==(int)create&&removes==(int)remove\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: creates==(int)create&&removes==(int)remove\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: creates==(int)create&&removes==(int)remove\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: creates==(int)create&&removes==(int)remove\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: creates==(int)create&&removes==(int)remove\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: creates==(int)create&&removes==(int)remove\n109: channels[0].registered==(remove?false:create?true:(bool)registered)",
+      "mutated_source_SHA256": "0f376109b99e9754fcb92b36c34261c19261a4e2dd01e71a8a988a09a80db00c"
+    },
+    {
+      "group": "smd-state",
+      "name": "mark-failed-registration-successful",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "114: !channels[0].registered&&creates==1&&!removes\n114: channels[0].registered&&creates==2&&!removes\n116: channels[0].registered&&creates==3&&removes==1\n114: !channels[0].registered&&creates==1&&!removes\n114: channels[0].registered&&creates==2&&!removes\n116: channels[0].registered&&creates==3&&removes==1\n114: !channels[0].registered&&creates==1&&!removes\n114: channels[0].registered&&creates==2&&!removes\n116: channels[0].registered&&creates==3&&removes==1\n119: !channels[0].registered&&channels[1].registered&&creates==2\n119: channels[0].registered&&channels[1].registered&&creates==3",
+      "mutated_source_SHA256": "a565519876255c4dc3aa01b7211400b16cc02c01161264bc75c0c1f4d2f6865d"
+    },
+    {
+      "group": "smd-state",
+      "name": "forget-successful-registration",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)",
+      "mutated_source_SHA256": "caf1556d0167b148683a3f42785fdbb83c9164bc9a1aa2bda800d378450e1e29"
+    },
+    {
+      "group": "smd-state",
+      "name": "retain-closed-channel-registration",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)\n109: channels[0].registered==(remove?false:create?true:(bool)registered)",
+      "mutated_source_SHA256": "4eebe889b0d775c126192169e3d0a9e93f952466f32a7c562899776bddbb73d8"
+    },
+    {
+      "group": "clock-probe",
+      "name": "capture-context-on-other-socs",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "line 263: pll->suspend_valid==(bool)(cfg&&msm)",
+      "mutated_source_SHA256": "29cce2248688c417d10c36987c0fc147911a2b1e704b6c140e1193fbf98ccd5f"
+    },
+    {
+      "group": "clock-probe",
+      "name": "capture-without-coordinator",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "line 263: pll->suspend_valid==(bool)(cfg&&msm)",
+      "mutated_source_SHA256": "6d0dba724dc083eb0ec0c24913bdbb26bc72db0906094d70d1c96694c60f1c38"
+    },
+    {
+      "group": "clock-probe",
+      "name": "ignore-context-read-failure",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "line 271: qcom_a53pll_probe(&pdev)==-EIO",
+      "mutated_source_SHA256": "8e7a1e729a767f66916783509b967d15870a73ff6fcbd547e2df683d9ba651b9"
+    },
+    {
+      "group": "clock-probe",
+      "name": "cache-wrong-l-value",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "line 264: pll->suspend_config==0xdeadbeef&&pll->suspend_l==40&&!pll->suspend_m&&pll->suspend_n==1",
+      "mutated_source_SHA256": "9f2415c3ba9bf1483a04fdac07661ebf2faab467a18b2de032c186081e551764"
+    },
+    {
+      "group": "smd-edge",
+      "name": "leak-edge-node-reference",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1\n351: edge_node.refs==1&&syscon_node.refs==1&&parent_node.refs==1",
+      "mutated_source_SHA256": "0d9d86ea41caf7906b0ea5fbe9e7f1d368787af3e1c57b480bbbda75fd0b9ee8"
+    },
+    {
+      "group": "smd-edge",
+      "name": "allow-no-suspend-on-every-edge",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "355: e->no_suspend==(bool)(pm&&msm)",
+      "mutated_source_SHA256": "e76932725f37aeaae3efff16c7b56697d09086a351fe841b37ae1bba603bb984"
+    },
+    {
+      "group": "smd-edge",
+      "name": "omit-no-suspend-irq-flag",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "355: !!(irq_flags&IRQF_NO_SUSPEND)==(bool)(pm&&msm)",
+      "mutated_source_SHA256": "0aea1d67da585874d6c67bbc17893cff13dc753f5e2d5acc6d4f4b39d76e4ecc"
+    },
+    {
+      "group": "smd-edge",
+      "name": "forget-pm-notifier-unregister",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "135: !mailboxes&&!notifiers&&!child.registered",
+      "mutated_source_SHA256": "e77be35017d7616fc23999ab5a6c474e01ce67d642af82df7308f7eb37fdb591"
+    },
+    {
+      "group": "smd-edge",
+      "name": "failed-notifier-skips-irq-work-cleanup",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "134: irq_disables==1&&cancel_calls==2&&!e->scan_work.scheduled&&!e->state_work.scheduled",
+      "mutated_source_SHA256": "ea6cbdca087d93e5374ef8e2353af46aad13a14d38e3d6298c4912eca0639393"
+    },
+    {
+      "group": "smd-edge",
+      "name": "leave-state-worker-queued-on-release",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "93: irq_disables==1&&cancel_calls==2",
+      "mutated_source_SHA256": "fa2b5005d127ba81798b162fd4a77df1e7ebfe1399c8cca1da2cbab167d9499d"
+    },
+    {
+      "group": "lifetime",
+      "name": "retain-cpr-supplier-reference",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "330: providers[i].dev.refs==1",
+      "mutated_source_SHA256": "8d66abce12a19489ce20eb5f946528565842cde094e02769c63670d956c98b7a"
+    },
+    {
+      "group": "lifetime",
+      "name": "delete-driver-managed-link-manually",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "80: link&&link->live&&link->flags==DL_FLAG_STATELESS",
+      "mutated_source_SHA256": "d966eb241a66430446a62086630a7bbc715287016d2c1d28ebb13d2e744f2b5d"
+    },
+    {
+      "group": "lifetime",
+      "name": "install-suspend-ops-during-probe",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "97: !in_probe&&!system_sleep_mutex",
+      "mutated_source_SHA256": "5f80df3bc399fb1dc5280667c0e129fbdbc60b4036d9544da1ebfb08adce3b0f"
+    },
+    {
+      "group": "lifetime",
+      "name": "retain-pending-install-work",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "331: cancel_calls==1&&!pm->install_work.scheduled",
+      "mutated_source_SHA256": "e6316dd23909335fdac9d3d51a8de4aaaa568f5c4ed5ef6ebb78dbd2920eca69"
+    },
+    {
+      "group": "lifetime",
+      "name": "accept-unbound-rpm-parent",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "336: probe()<0",
+      "mutated_source_SHA256": "0b4667cc60d9d53f5afd85b3cdfe2a46349824761a2892ac014ec4c32eff06cc"
+    },
+    {
+      "group": "lifetime",
+      "name": "retain-cpr-owner-on-probe-failure",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "330: !hotplug_writer&&!mpm_owner&&!rpm_owner&&!cpr_owner&&!msm8226_pm",
+      "mutated_source_SHA256": "f5c7bbbb2221d2abec9ffe62563f3957acb23eaa585c6d60bfe07fb5d61ba77e"
+    },
+    {
+      "group": "lifetime",
+      "name": "publish-with-offline-cpu",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "336: probe()<0",
+      "mutated_source_SHA256": "427525ea2b400ce4128e20b437728ed55c34b35d615bca5542d52e0a5cb3debb"
+    },
+    {
+      "group": "mpm",
+      "name": "unknown-wake-route",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct\n466: ready()==direct",
+      "mutated_source_SHA256": "6485a5b7c715e45dd3575dec5d1a33dc824e7fd8b2fcf4fc556084c7a4cc26e0"
+    },
+    {
+      "group": "mpm",
+      "name": "ignore-second-shared-action",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "480: ready()==(kind==0||kind==1||kind==5||kind==7)",
+      "mutated_source_SHA256": "f3e2133672b7ab9a075016894d1f98d5d9165fd2e1745041ab4d1649b06a2b05"
+    },
+    {
+      "group": "mpm",
+      "name": "ignore-snapshot-pin-enable",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "486: ready()==(bool)enabled\n486: ready()==(bool)enabled",
+      "mutated_source_SHA256": "6a67927c945160ebf7eab1ce7627ed9e4376b1f66e8ea6efe6ccde970922ca59"
+    },
+    {
+      "group": "mpm",
+      "name": "ignore-mailbox-failure",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "461: qcom_mpm_prepare_sleep(&dev,&owner)==-EIO\n461: !p.sleep_prepared&&mbox_calls==1&&!txdone\n450: !qcom_mpm_prepare_sleep(&dev,&owner)\n450: p.sleep_prepared&&mbox_calls==old_calls+1&&txdone==old_done+1",
+      "mutated_source_SHA256": "392007642ba589b9aeff4430a9ffbbea41fe3ba6edb4b057c75353b8d43a7ef2"
+    },
+    {
+      "group": "mpm",
+      "name": "retain-replayed-status",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "494: !regs[10]&&!regs[11]\n495: qcom_mpm_handler(0,&p)==IRQ_NONE\n495: replay_count[10]==1\n494: !regs[10]&&!regs[11]\n495: qcom_mpm_handler(0,&p)==IRQ_NONE\n495: replay_count[10]==1\n494: !regs[10]&&!regs[11]\n495: qcom_mpm_handler(0,&p)==IRQ_NONE\n495: replay_count[10]==1\n494: !regs[10]&&!regs[11]\n495: qcom_mpm_handler(0,&p)==IRQ_NONE\n495: replay_count[10]==1",
+      "mutated_source_SHA256": "7ad38ef7314f588bc0f49c8144a38de5e2e0f7ffc466ff7e87b4a5358129ef5b"
+    },
+    {
+      "group": "mpm",
+      "name": "replay-level-as-edge",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "494: replay_count[11]==(unsigned)(mapped&&!level)",
+      "mutated_source_SHA256": "55ccda33ec61dbcb54b4f2804270ef740d942bf83c9a44d8538b8888c17796a3"
+    },
+    {
+      "group": "mpm",
+      "name": "skip-domain-node-release-action",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "426: nodes[i].refs==1\n426: nodes[i].refs==1\n426: nodes[i].refs==1\n426: nodes[i].refs==1\n426: nodes[i].refs==1\n426: nodes[i].refs==1\n426: nodes[i].refs==1\n426: nodes[i].refs==1\n426: nodes[i].refs==1\n426: nodes[i].refs==1\n519: ret==(fault==1||fault==2||fault==3?-ENOMEM:fault==4?-EAGAIN:0)\n426: nodes[i].refs==1\n426: nodes[i].refs==1\n519: ret==(fault==1||fault==2||fault==3?-ENOMEM:fault==4?-EAGAIN:0)\n426: nodes[i].refs==1\n426: nodes[i].refs==1\n426: nodes[i].refs==1\n426: nodes[i].refs==1\n426: nodes[i].refs==1",
+      "mutated_source_SHA256": "5195a890d0c86fd2c4c6bfffc2bb9a092c2ebc08bf23745d23d625ea24c305cc"
+    },
+    {
+      "group": "mpm",
+      "name": "allow-multiple-online-cpus",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "488: !ready()",
+      "mutated_source_SHA256": "0244de0d801732fb89123b2f163e72555791ffe3663c51fc5e3999b134681122"
+    },
+    {
+      "group": "transport",
+      "name": "ignore-remote-channel-close",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "300: !qcom_rpm_smd_sleep_ready(&rpm,&client)",
+      "mutated_source_SHA256": "7cfaf872bc943d0e37a2615ef81fec9703ca5767c684584be00ac61ade6f4bcf"
+    },
+    {
+      "group": "transport",
+      "name": "run-lifecycle-work-during-sleep",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "325: !scan_runs&&!state_runs&&!removed",
+      "mutated_source_SHA256": "e599ce57258cc3ca6730fb4956f5cbdc204a278690312609a6d3aa79df5e6086"
+    },
+    {
+      "group": "transport",
+      "name": "allow-duplicate-prepare",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "324: qcom_smd_sleep_notify(&edge.sleep_nb,prep,NULL)==NOTIFY_BAD",
+      "mutated_source_SHA256": "b510d72fe4ce4037e5945864d32c18851df738b2dd716636eef4b8f69c6df638"
+    },
+    {
+      "group": "transport",
+      "name": "lose-deferred-state-work",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "327: !edge.system_sleep&&edge.scan_work.scheduled&&edge.state_work.scheduled",
+      "mutated_source_SHA256": "bbd819c6856acd619c4cf0280cc89519b83332946d47902d84e2401d2618e6fe"
+    },
+    {
+      "group": "transport",
+      "name": "mask-before-freeze",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "46: !irq_off&&irq==91&&irq_depth==0",
+      "mutated_source_SHA256": "0755a4bc62bdd1810f18b6ff01a7c56bae16b8d88a483ed3b7815cd5e2efeec1"
+    },
+    {
+      "group": "transport",
+      "name": "thaw-before-unmask",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "86: watched&&watched->sleep_owner==&watched->system_token&&watched->system_token.cookie",
+      "mutated_source_SHA256": "2e6e8ca099398cbff477ab2853e635bf0634209884eb6899332188930a3b4f1d"
+    },
+    {
+      "group": "cpr-api",
+      "name": "resume-before-voltage-restore",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "429: !d->msm8926->sleep.active&&!d->msm8926->suspend_irq_disabled\n642: cpr_pm_resume(&dev)==-EBUSY\n642: drv.suspended&&data.sleep.active&&data.suspend_irq_disabled&&config_calls==0",
+      "mutated_source_SHA256": "955ec369dc663587b9993b53489949130fa20af132b0e0db53cd7a80c10de60e"
+    },
+    {
+      "group": "cpr-api",
+      "name": "skip-loop-quiescence-check",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "627: (ret==0)==(fault==11)\n629: enable_calls==1&&!data.sleep.active&&irq_depth==(fault==4?1:0)\n627: (ret==0)==(fault==11)\n629: enable_calls==1&&!data.sleep.active&&irq_depth==(fault==4?1:0)",
+      "mutated_source_SHA256": "9cf1418d3491792c2527f0030a3ac7aae337c4d42ad1d35b25515ff1f255b93c"
+    },
+    {
+      "group": "cpr-api",
+      "name": "ignore-prepared-pll-reference",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "637: !qcom_cpr_msm8926_suspend_ready(&dev,&owner)",
+      "mutated_source_SHA256": "25511300782b69a520e69e61ef83ac8289caeb8f124baf1a7149ae95082a4efd"
+    },
+    {
+      "group": "coordinator",
+      "name": "skip-last-collapse-status-check",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "127 cpu0: readl_relaxed(&acc[c][2])&MSM8226_CPU_COLLAPSED",
+      "mutated_source_SHA256": "6e98969b1df554333c39ef7006dbdc38440f6f30ecfc3dbcbceebfcd35d3a9dc"
+    },
+    {
+      "group": "coordinator",
+      "name": "skip-outer-cache-clean",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "127 cpu0: cache_clean==outer_clean&&cache_clean>0",
+      "mutated_source_SHA256": "322093a6a02b8c8b3076ee06508bae4aeb691d461c5ca4d7a1cb7996518bca76"
+    },
+    {
+      "group": "coordinator",
+      "name": "skip-l2-disarm",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "104 cpu0: !current_cpu&&cluster_depth==1&&l2_mode==SPM_L2_MODE_DISABLED",
+      "mutated_source_SHA256": "e24245698cd2170676cf15e112499e78828e703e5475c997d7345fae283aca4f"
+    },
+    {
+      "group": "coordinator",
+      "name": "close-admission-in-early-callback",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "572 cpu0: !ret&&scm_calls==1&&cache_clean==1&&outer_clean==1&&genpd_requests==2",
+      "mutated_source_SHA256": "4d9e3236f475b3558fdac7ad1bea698f896b55b1c1d270bc5d504b9640b57350"
+    },
+    {
+      "group": "coordinator",
+      "name": "lose-secondary-cpu-pm-exit",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "394 cpu1: !pm_depth&&!cluster_depth&&cpu_modes[current_cpu]==PM_SLEEP_MODE_STBY",
+      "mutated_source_SHA256": "860b666ea14e6557f83121c2f0c8f2e9716681ad25f97088966bede6ab3646f8"
+    },
+    {
+      "group": "coordinator",
+      "name": "ignore-ppi-disable-readback",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "602 cpu0: gic_cpu_quiesce_ppis(0)==-EIO",
+      "mutated_source_SHA256": "c3930fc1d16373894b7931eae2f54dc9fec92f50ea78218a69a026fe4d798909"
+    },
+    {
+      "group": "cpr-transaction",
+      "name": "skip-forced-apc-sync",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks",
+      "mutated_source_SHA256": "add1edff9c400e805d193ff124c91f5e39f45df33cf6a2c060fa0ecbb282840a"
+    },
+    {
+      "group": "cpr-transaction",
+      "name": "allow-live-pll-reference",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "439: prepare()==-EBUSY\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: cpuclk->rate==saved_rate&&apc->voltage==saved_apc",
+      "mutated_source_SHA256": "31ef29d77f3c47a57375ca4e4765463736c84f1e2368a155eba2349f1b819b99"
+    },
+    {
+      "group": "cpr-transaction",
+      "name": "retain-clock-exclusivity",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive\n418: !sleep_ctx.active&&!sleep_ctx.exclusive&&!cpuclk->exclusive",
+      "mutated_source_SHA256": "76be4dacd302fd9e62732776ff9fb86a3200067632c08307ca3da8204ff72a19"
+    },
+    {
+      "group": "cpr-transaction",
+      "name": "allow-low-sleep-mx-vote",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "61: mx->voltage==MAX_UV&&apc->voltage==MAX_UV&&so->request==MAX_UV&&apc->acks&&mx->acks\n442: prepare()==-ERANGE\n442: !cpuclk->exclusive&&!sleep_ctx.active",
+      "mutated_source_SHA256": "67fee53f9f1badb38db1dc377b126f2809252aef389ff28b010546572b9f1b01"
+    },
+    {
+      "group": "pll",
+      "name": "skip-disable-readback",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "423: set_rate(1536000000)==-EOWNERDEAD\n423: !map.unsafe_program",
+      "mutated_source_SHA256": "9943a768c17212d7fb19de3e94c9a1c57f6ec011b96ed36156aaea22ad89f7f9"
+    },
+    {
+      "group": "pll",
+      "name": "accept-fsm-on-initial-prepare",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "402: prepare()==-EOWNERDEAD",
+      "mutated_source_SHA256": "02c92cc69afc26790bb1005166a5caf14e447d33cf1548c10491892f113b06b3"
+    },
+    {
+      "group": "pll",
+      "name": "cache-wrong-programmed-rate",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "412: pll.suspend_l==table[i].l&&pll.suspend_n==table[i].n&&pll.suspend_m==table[i].m\n398: (map.regs[1]&0x3ff)==pll.suspend_l\n412: pll.suspend_l==table[i].l&&pll.suspend_n==table[i].n&&pll.suspend_m==table[i].m\n398: (map.regs[1]&0x3ff)==pll.suspend_l\n412: pll.suspend_l==table[i].l&&pll.suspend_n==table[i].n&&pll.suspend_m==table[i].m\n398: (map.regs[1]&0x3ff)==pll.suspend_l\n412: pll.suspend_l==table[i].l&&pll.suspend_n==table[i].n&&pll.suspend_m==table[i].m\n398: (map.regs[1]&0x3ff)==pll.suspend_l\n410: !prepare()\n412: pll.suspend_l==table[i].l&&pll.suspend_n==table[i].n&&pll.suspend_m==table[i].m\n398: map.regs[5]==pll.suspend_config\n398: (map.regs[1]&0x3ff)==pll.suspend_l",
+      "mutated_source_SHA256": "03997af8b9f7b2039c180c7272b03a86629e3ea9f7fcaa1e725283202361b593"
+    },
+    {
+      "group": "pll",
+      "name": "skip-config-restoration",
+      "returncode": 1,
+      "rejected_by_model_assertion": true,
+      "diagnostic": "400: !prepare()&&!map.writes\n405: !prepare()\n405: !pll.suspend_armed\n405: !prepare()\n405: !pll.suspend_armed\n405: !prepare()\n405: !pll.suspend_armed\n405: !prepare()\n405: !pll.suspend_armed\n405: !prepare()\n405: !pll.suspend_armed\n405: !prepare()",
+      "mutated_source_SHA256": "5cddcea69b2c37cb25d17654878ebdd10e2ddc8b59024ab4090b789039dcec49"
+    }
+  ],
+  "compiler_crash_timeout_or_sanitizer_failure_counted": false
+}

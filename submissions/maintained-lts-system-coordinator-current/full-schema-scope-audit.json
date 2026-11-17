@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "full_schema_gate_passed": false,
+  "ordinary_CPU_and_suspend_same_six_diagnostic_nonempty_lines": true,
+  "records": [
+    {
+      "file": "ordinary-baseline-full-schema.log",
+      "raw_SHA256": "87905547894c6fc096f438d28bc11bd83243e5dc6aebd70653db4dc29d0dc6ea",
+      "normalized_diagnostics": "<DTB>: pm8226@1 (qcom,pm8226): led-controller@d300: 'led' does not match any of the regexes: '^led-[0-3]$', '^pinctrl-[0-9]+$'\n\tfrom schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml\n<DTB>: pm8226@1 (qcom,pm8226): led-controller@d300:compatible:0: 'qcom,pm8226-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm660l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']\n\tfrom schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml\n<DTB>: pm8226@1 (qcom,pm8226): led-controller@d300:compatible:1: 'qcom,spmi-flash-led' was expected\n\tfrom schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml\n",
+      "nonempty_lines": 6
+    },
+    {
+      "file": "CPU-baseline-full-schema.log",
+      "raw_SHA256": "a484e870dfc504105f2a66f87d3c27e6d5836088985d6ee2318536f3966bb5d8",
+      "normalized_diagnostics": "<DTB>: pm8226@1 (qcom,pm8226): led-controller@d300: 'led' does not match any of the regexes: '^led-[0-3]$', '^pinctrl-[0-9]+$'\n\tfrom schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml\n<DTB>: pm8226@1 (qcom,pm8226): led-controller@d300:compatible:0: 'qcom,pm8226-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm660l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']\n\tfrom schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml\n<DTB>: pm8226@1 (qcom,pm8226): led-controller@d300:compatible:1: 'qcom,spmi-flash-led' was expected\n\tfrom schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml\n",
+      "nonempty_lines": 6
+    },
+    {
+      "file": "suspend-DTB-full-schema.stderr",
+      "raw_SHA256": "97a528fea0a60f156f538bab2fbb9a227b87e31048fbbbd05a35815c28ec035b",
+      "normalized_diagnostics": "<DTB>: pm8226@1 (qcom,pm8226): led-controller@d300: 'led' does not match any of the regexes: '^led-[0-3]$', '^pinctrl-[0-9]+$'\n\tfrom schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml\n<DTB>: pm8226@1 (qcom,pm8226): led-controller@d300:compatible:0: 'qcom,pm8226-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm660l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']\n\tfrom schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml\n<DTB>: pm8226@1 (qcom,pm8226): led-controller@d300:compatible:1: 'qcom,spmi-flash-led' was expected\n\tfrom schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml\n",
+      "nonempty_lines": 6
+    }
+  ],
+  "scope": "Existing PM8226 torch node is rejected by the maintained MFD child schema. A separate binding/driver port remains pending; not asserted inherited from upstream.",
+  "selected_180_schema_checks_silent": true,
+  "phone_access": false
+}

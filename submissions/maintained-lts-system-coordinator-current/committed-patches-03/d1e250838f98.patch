@@ -1,0 +1,481 @@
+From b816ffe6dfacaa43077c38ad17f9a6d034d42c5a Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Mon, 16 Nov 2026 23:23:00 -0500
+Subject: [PATCH] pmdomain: qcom: Coordinate MSM8926 sleep voltage and clock
+ state
+
+Let a registered system-sleep supplier own the interval between CPR's
+late suspend and early resume. Disable the threaded IRQ outside its
+mutex, verify feedback is quiescent, retain a covering MX/SO/APC
+ceiling and move the CPU to a verified 300 MHz GPLL0-derived point
+with no A7PLL references. Restore verified voltage and clock state
+before releasing the IRQ and let CPR resume only after the transaction
+has been restored.
+
+The independent sleep-only vote stays at 1337500 uV; lowering that
+floor has not been authorized or physically qualified.
+
+Backport onto maintained Linux 6.18.63 while preserving its platform
+context and APIs. The ten-change batch passes 5009 synthetic model cases,
+85 fault controls and 175 selected native objects across seven supported
+feature/config profiles. ARM32 RT is unsupported and is not counted.
+
+Services and faults are synthetic. Firmware, kernel concurrency, normal
+package integration and physical acceptance remain open. Codex prepared
+this local backport and verification. Original authors, dates and source
+notices are retained; no human DCO or publication is claimed.
+
+Backported from commit d1e250838f98 ("pmdomain: qcom: Coordinate
+MSM8926 sleep voltage and clock state")
+---
+ drivers/pmdomain/qcom/cpr-msm8926-suspend.h | 217 ++++++++++++++++++++
+ drivers/pmdomain/qcom/cpr.c                 | 137 +++++++++++-
+ include/linux/soc/qcom/cpr.h                |   7 +
+ 3 files changed, 359 insertions(+), 2 deletions(-)
+ create mode 100644 drivers/pmdomain/qcom/cpr-msm8926-suspend.h
+
+diff --git a/drivers/pmdomain/qcom/cpr-msm8926-suspend.h b/drivers/pmdomain/qcom/cpr-msm8926-suspend.h
+new file mode 100644
+index 0000000000000..35cee34f3d53b
+--- /dev/null
++++ b/drivers/pmdomain/qcom/cpr-msm8926-suspend.h
+@@ -0,0 +1,217 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef __QCOM_CPR_MSM8926_SUSPEND_H__
++#define __QCOM_CPR_MSM8926_SUSPEND_H__
++
++#include <linux/bits.h>
++#include <linux/clk.h>
++#include <linux/clk-provider.h>
++#include <linux/regmap.h>
++
++#include "cpr-voltage.h"
++
++#define CPR_SUSPEND_SAFE_RATE	300000000UL
++#define CPR_SUSPEND_CFG_MASK	(GENMASK(10, 8) | GENMASK(4, 0))
++#define CPR_SUSPEND_CMD_BUSY	(BIT(0) | BIT(4) | BIT(31))
++
++/* Protected by CPR's mutex; feedback and its IRQ are quiescent throughout. */
++struct cpr_msm8926_suspend {
++	struct cpr_voltage *rails;
++	struct regulator *sleep_mx;
++	struct clk *clock;
++	struct clk *aux;
++	struct clk *pll;
++	struct regmap *apcs;
++	unsigned long saved_rate;
++	u32 saved_cfg;
++	int saved_apc_uv;
++	int saved_mx_uv;
++	bool active;
++	bool exclusive;
++};
++
++static inline int cpr_suspend_check_parents(struct cpr_msm8926_suspend *sleep)
++{
++	struct clk *gpll0 = clk_get_parent(sleep->aux);
++
++	if (!gpll0 || clk_get_rate(gpll0) != 600000000 ||
++	    clk_get_rate(sleep->aux) != 600000000)
++		return -EIO;
++	/* Refresh the PLL's noncached rate before CCF decides how to restore it. */
++	clk_get_rate(sleep->pll);
++	return 0;
++}
++
++static inline int cpr_suspend_check_clock(struct cpr_msm8926_suspend *sleep,
++					  unsigned long rate, u32 cfg)
++{
++	u32 cmd, cmd_after, value, value_after;
++	int ret;
++
++	ret = cpr_suspend_check_parents(sleep);
++	if (ret)
++		return ret;
++	if ((cfg & GENMASK(10, 8)) == (5 << 8) && !clk_get_rate(sleep->pll))
++		return -EIO;
++	ret = regmap_read(sleep->apcs, 0x50, &cmd);
++	if (ret)
++		return ret;
++	ret = regmap_read(sleep->apcs, 0x54, &value);
++	if (ret)
++		return ret;
++	ret = regmap_read(sleep->apcs, 0x50, &cmd_after);
++	if (ret)
++		return ret;
++	ret = regmap_read(sleep->apcs, 0x54, &value_after);
++	if (ret)
++		return ret;
++	if ((cmd | cmd_after) & CPR_SUSPEND_CMD_BUSY || value != value_after ||
++	    (value & CPR_SUSPEND_CFG_MASK) != (cfg & CPR_SUSPEND_CFG_MASK) ||
++	    clk_get_rate(sleep->clock) != rate)
++		return -EIO;
++
++	return 0;
++}
++
++/* Force the current consumer request through a possibly cached provider. */
++static inline int cpr_suspend_sync(struct regulator *rail)
++{
++	int ret;
++
++	ret = regulator_sync_voltage(rail);
++	if (ret)
++		ret = regulator_sync_voltage(rail);
++	return ret;
++}
++
++static inline int cpr_suspend_cover(struct cpr_msm8926_suspend *sleep)
++{
++	struct cpr_voltage *rails = sleep->rails;
++	int ret;
++
++	ret = cpr_voltage_vote_mx(rails, rails->mx_max_uV);
++	if (ret)
++		return ret;
++	ret = cpr_suspend_sync(rails->mx);
++	if (ret)
++		return ret;
++	/* Retain the covering sleep ceiling; lowering it needs a separate proof. */
++	ret = cpr_suspend_sync(sleep->sleep_mx);
++	if (ret)
++		return ret;
++	ret = regulator_set_voltage(rails->apc, rails->mx_max_uV, rails->mx_max_uV);
++	if (ret)
++		return ret;
++	return cpr_suspend_sync(rails->apc);
++}
++
++static inline void cpr_suspend_restore(struct cpr_msm8926_suspend *sleep)
++{
++	struct cpr_voltage *rails = sleep->rails;
++	int ret, attempt;
++
++	if (!sleep->active)
++		return;
++
++	/* Establish a physical ceiling before any possible clock increase. */
++	ret = cpr_suspend_cover(sleep);
++	if (ret)
++		ret = cpr_suspend_cover(sleep);
++	if (ret)
++		panic("CPR suspend ceiling restore failed: %d", ret);
++
++	for (attempt = 0; attempt < 2; attempt++) {
++		ret = cpr_suspend_check_parents(sleep);
++		if (ret)
++			continue;
++		clk_set_rate(sleep->clock, sleep->saved_rate);
++		ret = cpr_suspend_check_clock(sleep, sleep->saved_rate, sleep->saved_cfg);
++		if (!ret)
++			break;
++	}
++	if (ret)
++		panic("CPR suspend clock restore could not be verified: %d", ret);
++
++	/* The restored clock is now covered by its original observed APC point. */
++	ret = cpr_voltage_set(rails, sleep->saved_apc_uv, sleep->saved_mx_uv);
++	if (ret)
++		ret = cpr_voltage_set(rails, sleep->saved_apc_uv, sleep->saved_mx_uv);
++	if (ret)
++		panic("CPR suspend APC restore failed: %d", ret);
++
++	/* A failed MX reduction remains high and is safe after APC restoration. */
++	sleep->active = false;
++	clk_rate_exclusive_put(sleep->clock);
++	sleep->exclusive = false;
++}
++
++static inline int cpr_suspend_prepare(struct cpr_msm8926_suspend *sleep,
++				      unsigned long rate, int min_apc_uV,
++				      int max_apc_uV)
++{
++	struct cpr_voltage *rails = sleep->rails;
++	int ret;
++
++	if (sleep->active || sleep->exclusive || !rails || !rails->apc || !rails->mx ||
++	    !rails->mx_enabled || !sleep->sleep_mx || !sleep->clock ||
++	    !sleep->aux || !sleep->pll || !sleep->apcs ||
++	    rails->mx_min_uV <= 0 || rails->mx_min_uV > rails->mx_max_uV ||
++	    min_apc_uV <= 0 || max_apc_uV < min_apc_uV || max_apc_uV > rails->mx_max_uV ||
++	    rate < CPR_SUSPEND_SAFE_RATE)
++		return -EINVAL;
++	ret = clk_rate_exclusive_get(sleep->clock);
++	if (ret)
++		return ret;
++	sleep->exclusive = true;
++	sleep->saved_rate = rate;
++	sleep->saved_mx_uv = rails->mx_min_uV;
++	ret = regmap_read(sleep->apcs, 0x54, &sleep->saved_cfg);
++	if (ret)
++		goto release;
++	ret = cpr_suspend_check_clock(sleep, rate, sleep->saved_cfg);
++	if (ret)
++		goto release;
++	ret = regulator_get_voltage(rails->apc);
++	if (ret < 0)
++		goto release;
++	if (ret < min_apc_uV || ret > max_apc_uV || ret > sleep->saved_mx_uv) {
++		ret = -ERANGE;
++		goto release;
++	}
++	sleep->saved_apc_uv = ret;
++	if (regulator_get_voltage(sleep->sleep_mx) != rails->mx_max_uV) {
++		ret = -ERANGE;
++		goto release;
++	}
++
++	/* Mark ownership before the first fallible state change. */
++	sleep->active = true;
++	ret = cpr_suspend_cover(sleep);
++	if (ret)
++		goto restore;
++	ret = cpr_suspend_check_parents(sleep);
++	if (ret)
++		goto restore;
++	ret = clk_set_rate(sleep->clock, CPR_SUSPEND_SAFE_RATE);
++	if (ret)
++		goto restore;
++	ret = cpr_suspend_check_clock(sleep, CPR_SUSPEND_SAFE_RATE, 4 << 8 | 3);
++	if (ret)
++		goto restore;
++	/* CCF must re-enable the PLL on reparent, even if its context was lost. */
++	if (__clk_get_enable_count(sleep->pll) ||
++	    clk_hw_is_prepared(__clk_get_hw(sleep->pll))) {
++		ret = -EBUSY;
++		goto restore;
++	}
++	return 0;
++
++restore:
++	cpr_suspend_restore(sleep);
++	return ret;
++release:
++	clk_rate_exclusive_put(sleep->clock);
++	sleep->exclusive = false;
++	return ret;
++}
++
++#endif
+diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
+index 96ca622ed8476..7b2492139e18a 100644
+--- a/drivers/pmdomain/qcom/cpr.c
++++ b/drivers/pmdomain/qcom/cpr.c
+@@ -14,6 +14,7 @@
+ #include <linux/list.h>
+ #include <linux/init.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/bitops.h>
+ #include <linux/slab.h>
+ #include <linux/of.h>
+@@ -32,6 +33,7 @@
+ 
+ #include "cpr-voltage.h"
+ #include "cpr-sleep.h"
++#include "cpr-msm8926-suspend.h"
+ #include "cpr-msm8926-corner.h"
+ #include "cpr-msm8926-fuses.h"
+ 
+@@ -234,6 +236,10 @@ struct corner {
+ };
+ 
+ struct cpr_msm8926_data {
++	struct cpr_msm8926_suspend sleep;
++	struct device *suspend_owner;
++	bool suspend_irq_disabled;
++	bool suspend_was_applied;
+ 	struct cpr_msm8926_calibration calibration;
+ 	struct cpr_msm8926_voltage_plan plan;
+ 	bool apc_enabled;
+@@ -274,6 +280,7 @@ struct cpr_drv {
+ 	struct dentry *debugfs;
+ 	struct cpr_msm8926_data *msm8926;
+ 	bool suspended;
++	int irq;
+ 
+ 	struct fuse_corner	fuse_corners[];
+ };
+@@ -2176,6 +2183,7 @@ static int cpr_probe(struct platform_device *pdev)
+ 	if (drv->msm8926)
+ 		cpr_ctl_disable(drv);
+ 
++	drv->irq = irq;
+ 	ret = devm_request_threaded_irq(dev, irq, NULL,
+ 					cpr_irq_handler,
+ 					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
+@@ -2223,12 +2231,133 @@ static void cpr_remove(struct platform_device *pdev)
+ 	debugfs_remove_recursive(drv->debugfs);
+ }
+ 
++#if IS_ENABLED(CONFIG_QCOM_CPR_MSM8926)
++/* A registered supplier coordinates the interval between CPR late/early PM. */
++int qcom_cpr_msm8926_suspend_attach(struct device *dev, struct device *owner)
++{
++	struct cpr_drv *drv = dev_get_drvdata(dev);
++	struct cpr_msm8926_data *data;
++
++	if (dev->driver != &cpr_driver.driver || !drv || !owner)
++		return -ENODEV;
++	guard(mutex)(&drv->lock);
++	data = drv->msm8926;
++	if (!data || !drv->initialized || !drv->corner || !data->mx_sleep)
++		return -EPROBE_DEFER;
++	if (data->suspend_owner || drv->suspended)
++		return -EBUSY;
++	data->sleep = (struct cpr_msm8926_suspend) {
++		.rails = &drv->rails,
++		.sleep_mx = data->mx_sleep,
++		.clock = drv->cpu_clk,
++		.aux = data->aux_clk,
++		.pll = data->pll_clk,
++		.apcs = data->apcs,
++	};
++	data->suspend_owner = owner;
++	return 0;
++}
++EXPORT_SYMBOL_GPL(qcom_cpr_msm8926_suspend_attach);
++
++int qcom_cpr_msm8926_suspend_detach(struct device *dev, struct device *owner)
++{
++	struct cpr_drv *drv = dev_get_drvdata(dev);
++	struct cpr_msm8926_data *data = drv->msm8926;
++
++	guard(mutex)(&drv->lock);
++	if (data->suspend_owner != owner)
++		return -ESTALE;
++	if (data->sleep.active || data->suspend_irq_disabled || drv->suspended)
++		return -EBUSY;
++	data->suspend_owner = NULL;
++	return 0;
++}
++EXPORT_SYMBOL_GPL(qcom_cpr_msm8926_suspend_detach);
++
++int qcom_cpr_msm8926_suspend_prepare(struct device *dev, struct device *owner)
++{
++	struct cpr_drv *drv = dev_get_drvdata(dev);
++	struct cpr_msm8926_data *data = drv->msm8926;
++	u32 value;
++	int ret;
++
++	/* Never wait for the threaded handler while holding its mutex. */
++	disable_irq(drv->irq);
++	mutex_lock(&drv->lock);
++	if (data->suspend_owner != owner || !drv->suspended ||
++	    !data->suspend_was_applied || !drv->corner || data->suspend_irq_disabled) {
++		ret = -EBUSY;
++		goto out;
++	}
++	if (cpr_read(drv, REG_RBCPR_CTL) & RBCPR_CTL_LOOP_EN ||
++	    cpr_read(drv, REG_RBIF_IRQ_EN(0))) {
++		ret = -EIO;
++		goto out;
++	}
++	ret = readl_poll_timeout(drv->base + REG_RBCPR_RESULT_0, value,
++				 !(value & RBCPR_RESULT0_BUSY_MASK), 1, 1000);
++	if (ret)
++		goto out;
++	ret = cpr_msm8926_check_cpu_rate(drv, drv->corner->freq);
++	if (ret)
++		goto out;
++	ret = cpr_suspend_prepare(&data->sleep, drv->corner->freq,
++				  drv->corner->min_uV, drv->corner->max_uV);
++	if (!ret)
++		data->suspend_irq_disabled = true;
++out:
++	mutex_unlock(&drv->lock);
++	if (ret)
++		enable_irq(drv->irq);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(qcom_cpr_msm8926_suspend_prepare);
++
++int qcom_cpr_msm8926_suspend_restore(struct device *dev, struct device *owner)
++{
++	struct cpr_drv *drv = dev_get_drvdata(dev);
++	struct cpr_msm8926_data *data = drv->msm8926;
++	bool enable;
++
++	mutex_lock(&drv->lock);
++	if (data->suspend_owner != owner) {
++		mutex_unlock(&drv->lock);
++		return -ESTALE;
++	}
++	cpr_suspend_restore(&data->sleep);
++	enable = data->suspend_irq_disabled;
++	data->suspend_irq_disabled = false;
++	mutex_unlock(&drv->lock);
++	if (enable)
++		enable_irq(drv->irq);
++	return 0;
++}
++EXPORT_SYMBOL_GPL(qcom_cpr_msm8926_suspend_restore);
++
++/* PM callbacks and the supplier link retain both bound devices here. */
++bool qcom_cpr_msm8926_suspend_ready(struct device *dev, struct device *owner)
++{
++	struct cpr_drv *drv = dev_get_drvdata(dev);
++	struct cpr_msm8926_data *data = drv->msm8926;
++
++	return READ_ONCE(data->suspend_owner) == owner &&
++	       READ_ONCE(data->suspend_irq_disabled) && READ_ONCE(data->sleep.active) &&
++	       !__clk_get_enable_count(data->sleep.pll) &&
++	       !clk_hw_is_prepared(__clk_get_hw(data->sleep.pll)) && READ_ONCE(drv->suspended) &&
++	       !(cpr_read(drv, REG_RBCPR_CTL) & RBCPR_CTL_LOOP_EN) &&
++	       !cpr_read(drv, REG_RBIF_IRQ_EN(0));
++}
++EXPORT_SYMBOL_GPL(qcom_cpr_msm8926_suspend_ready);
++
++#endif
++
+ static int cpr_pm_prepare(struct device *dev)
+ {
+ 	struct cpr_drv *drv = dev_get_drvdata(dev);
+ 
+-	/* Active-only MX requests do not establish an RPM sleep-state vote. */
+-	if (drv->msm8926 && pm_suspend_target_state != PM_SUSPEND_TO_IDLE)
++	/* Only the registered full-system supplier can authorize deep entry. */
++	if (drv->msm8926 && pm_suspend_target_state != PM_SUSPEND_TO_IDLE &&
++	    (pm_suspend_target_state != PM_SUSPEND_MEM || !drv->msm8926->suspend_owner))
+ 		return -EOPNOTSUPP;
+ 	return 0;
+ }
+@@ -2243,6 +2372,7 @@ static int cpr_pm_suspend(struct device *dev)
+ 	if (drv->corner && cpr_is_allowed(drv))
+ 		cpr_corner_save(drv, drv->corner);
+ 	cpr_ctl_disable(drv);
++	drv->msm8926->suspend_was_applied = drv->msm8926->applied;
+ 	drv->suspended = true;
+ 	/* Do not run feedback on assumed boot/resume voltage. */
+ 	drv->msm8926->applied = false;
+@@ -2257,6 +2387,9 @@ static int cpr_pm_resume(struct device *dev)
+ 	if (!drv->msm8926)
+ 		return 0;
+ 	guard(mutex)(&drv->lock);
++	/* Keep feedback quiescent until the coordinating supplier restores rails. */
++	if (drv->msm8926->sleep.active || drv->msm8926->suspend_irq_disabled)
++		return -EBUSY;
+ 	ret = cpr_config(drv);
+ 	if (ret)
+ 		return ret;
+diff --git a/include/linux/soc/qcom/cpr.h b/include/linux/soc/qcom/cpr.h
+index da153c7fb693f..9b4051c977b35 100644
+--- a/include/linux/soc/qcom/cpr.h
++++ b/include/linux/soc/qcom/cpr.h
+@@ -10,6 +10,13 @@ struct device;
+ 
+ #if IS_ENABLED(CONFIG_QCOM_CPR_MSM8926)
+ int qcom_cpr_msm8926_get_supported_hw(struct device *cpu, u32 *mask);
++
++/* The owner is a PM supplier of CPR and retains both bound devices. */
++int qcom_cpr_msm8926_suspend_attach(struct device *dev, struct device *owner);
++int qcom_cpr_msm8926_suspend_detach(struct device *dev, struct device *owner);
++int qcom_cpr_msm8926_suspend_prepare(struct device *dev, struct device *owner);
++int qcom_cpr_msm8926_suspend_restore(struct device *dev, struct device *owner);
++bool qcom_cpr_msm8926_suspend_ready(struct device *dev, struct device *owner);
+ #else
+ static inline int qcom_cpr_msm8926_get_supported_hw(struct device *cpu, u32 *mask)
+ {
+-- 
+2.56.0
+

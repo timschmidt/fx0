@@ -1,0 +1,22 @@
+{
+  "passed": false,
+  "returncode": 1,
+  "actual_functions": 5,
+  "bindings": {
+    "qcom_smd_parse_edge": "65d241518d98e3ef566184ab00255da3d17b3c192d2cae7f69aa8b0e44c7bc79",
+    "qcom_smd_edge_release": "bc0e152094fb23d12d3011144af2ee3eb271b53338f489091d39f239f4d49516",
+    "qcom_smd_register_edge": "710cba082e6889e40dfe0e230f85cdb4a6f3870631ae4b230441ed2f83a0b5ec",
+    "qcom_smd_remove_device": "5b1cb9250f94ecbb5cac091c3fa36bceb0def82acb1475a5bbbbe81441c4cbad",
+    "qcom_smd_unregister_edge": "c14832f2c3a2b6d1c9c5acd8b6b6c74de00a580af503172db589ca9b00c46a8a"
+  },
+  "source_SHA256": "fa2b5005d127ba81798b162fd4a77df1e7ebfe1399c8cca1da2cbab167d9499d",
+  "model_SHA256": "a58b08e3ae04fc8a37f2a533ae51005393120871e732c86f805137e7464336d6",
+  "services_synthetic": [
+    "device registration and final ref release",
+    "mailbox/syscon/DT properties and references",
+    "devres IRQ allocation and work scheduling/cancellation",
+    "PM notifier registration and children"
+  ],
+  "actual_channel_discovery_or_removal_concurrency_qualified": false,
+  "phone_access": false
+}

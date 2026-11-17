@@ -1,0 +1,104 @@
+{
+  "records": [
+    {
+      "path": "test_cpr_reference_disabled.py",
+      "before_SHA256": "142a1c94035db691454dac4ac070dd6d2a44402f8ae1832b0a73d37474564d52",
+      "after_SHA256": "8386da9a314e601776f35db4032b01b95d87ff2ba25a95021c0b19908a94a0e2",
+      "old": "#define EIO 5",
+      "new": "#define EIO 5\n#define EBUSY 16"
+    },
+    {
+      "path": "test_cpr_reference_disabled.py",
+      "before_SHA256": "8386da9a314e601776f35db4032b01b95d87ff2ba25a95021c0b19908a94a0e2",
+      "after_SHA256": "3f715b281f2923f811be6613b60eb01ca595cd9090de63be0bc823a16face48f",
+      "old": "struct cpr_msm8926_data {struct regmap *apcs;bool applied;};",
+      "new": "struct cpr_msm8926_data {struct regmap *apcs;bool applied;struct {bool active;} sleep;bool suspend_irq_disabled;};"
+    },
+    {
+      "path": "test_cpr_runtime_clock.py",
+      "before_SHA256": "db815112f71d3e05ca2b1fc5cca7ef4aff31c1d774df17e8a760b6774da999e7",
+      "after_SHA256": "7aa74459cd376628a6b44237ac1b8e81c7cedb49a745ea5a35064a3ae47c6d0a",
+      "old": "bool critical_rate;\n const struct pll_freq_tbl *freq_tbl;",
+      "new": "bool critical_rate,suspend_valid,suspend_armed;\n u32 suspend_config,suspend_l,suspend_m,suspend_n;\n const struct pll_freq_tbl *freq_tbl;"
+    },
+    {
+      "path": "test_cpr_runtime_clock.py",
+      "before_SHA256": "7aa74459cd376628a6b44237ac1b8e81c7cedb49a745ea5a35064a3ae47c6d0a",
+      "after_SHA256": "e99a62a0ef7c89a03e9058700da67a932e7c7669a8fb82d41d894b362345d8b1",
+      "old": "static int pre_calls,",
+      "new": "static bool drop_first_l_write;\nstatic int pre_calls,"
+    },
+    {
+      "path": "test_cpr_runtime_clock.py",
+      "before_SHA256": "e99a62a0ef7c89a03e9058700da67a932e7c7669a8fb82d41d894b362345d8b1",
+      "after_SHA256": "660c2c008341bda8df133763ea7be65ca5a12009186df69c6206790431134d34",
+      "old": "if(io_calls==drop_write_at)return 0;",
+      "new": "if(io_calls==drop_write_at || (drop_first_l_write && map==&pll_map && offset==cpu_pll.l_reg)){drop_first_l_write=false;return 0;}"
+    },
+    {
+      "path": "test_cpr_runtime_clock.py",
+      "before_SHA256": "660c2c008341bda8df133763ea7be65ca5a12009186df69c6206790431134d34",
+      "after_SHA256": "a45347836107a3d5c8cbdd28157ed64402ed018d92941ac2dc3811fdf5e63950",
+      "old": "panics=io_calls=fail_at=",
+      "new": "drop_first_l_write=false;panics=io_calls=fail_at="
+    },
+    {
+      "path": "test_cpr_runtime_clock.py",
+      "before_SHA256": "a45347836107a3d5c8cbdd28157ed64402ed018d92941ac2dc3811fdf5e63950",
+      "after_SHA256": "d6139fd9be105de6f831152990ba8ae1ebf0e989722bd126e5d9491c773e2325",
+      "old": "drop_write_at=4; /* Lost L write",
+      "new": "drop_first_l_write=true; /* Lost L write"
+    },
+    {
+      "path": "test_msm8226_clock_policy.py",
+      "before_SHA256": "56a46e2fcf5709445b7ffe6ac15cab3d5a1edc9e82ce1c17de24c02bf1ae7fc7",
+      "after_SHA256": "ebf92877f75fbdb0daf31d211bb7afe47f56fde8e40e2c007758d5efed3a87cf",
+      "old": "bool critical_rate;const struct pll_freq_tbl",
+      "new": "bool critical_rate,suspend_valid,suspend_armed;u32 suspend_config,suspend_l,suspend_m,suspend_n;const struct pll_freq_tbl"
+    },
+    {
+      "path": "test_msm8226_clock_policy.py",
+      "before_SHA256": "ebf92877f75fbdb0daf31d211bb7afe47f56fde8e40e2c007758d5efed3a87cf",
+      "after_SHA256": "672f33f0b1a07a31baebc8793671e3c884086a3496d8662fee3eb05ea1aed230",
+      "old": "#define ENOMEM 12",
+      "new": "#define ENOMEM 12\n#define IS_ENABLED(x) 0 /* Legacy feature-off fixture; full context model tests the new branch. */"
+    },
+    {
+      "path": "test_msm8226_clock_policy.py",
+      "before_SHA256": "672f33f0b1a07a31baebc8793671e3c884086a3496d8662fee3eb05ea1aed230",
+      "after_SHA256": "390384a32dc0942ebb302a4ff36bc861294dc80c76cc3e96d289815f2ef9761b",
+      "old": "struct regmap {int unused;};",
+      "new": "struct regmap {int unused;};\nstatic int regmap_read(struct regmap *r,unsigned int o,u32 *v){(void)r;(void)o;(void)v;CHECK(0);return -1;}"
+    },
+    {
+      "path": "test_smd_rpm_ack.py",
+      "before_SHA256": "c50c21e72defe242471becb4ebb0ff36f572804c2ef484de81e2448868214d2b",
+      "after_SHA256": "49ca7b17e4a225a5ac5fa35ca1396961366931ff9628114722b20c207faae702",
+      "old": "struct qcom_smd_rpm;",
+      "new": "struct qcom_smd_rpm;\nstruct qcom_rpm_smd_sleep_token {\n\tu64 cookie;\n};"
+    },
+    {
+      "path": "test_cpr_runtime_clock.py",
+      "before_SHA256": "d6139fd9be105de6f831152990ba8ae1ebf0e989722bd126e5d9491c773e2325",
+      "after_SHA256": "00ec51a2521e4ed028587fb68cd034b96fb3509ed88b38c6843655544733e8f8",
+      "old": "#define EINVAL 22",
+      "new": "#define EINVAL 22\n#define EOPNOTSUPP 95"
+    },
+    {
+      "path": "test_cpr_domain_state.py",
+      "before_SHA256": "8f9881ae49d7c66f106f2ab0043d05ccfd018c56321f221e0faafd82ee2c6bd5",
+      "after_SHA256": "680f0be1a4f2eaf48f29e71168a7a1c10fbb83422646193d8025c66265f219bb",
+      "old": "#define PM_SUSPEND_TO_IDLE 1",
+      "new": "#define PM_SUSPEND_TO_IDLE 1\n#define PM_SUSPEND_MEM 3"
+    },
+    {
+      "path": "test_cpr_domain_state.py",
+      "before_SHA256": "680f0be1a4f2eaf48f29e71168a7a1c10fbb83422646193d8025c66265f219bb",
+      "after_SHA256": "977020442ee893f03872ab9efc1ec7b2f768d18b691265b5a13bef4f3e94488e",
+      "old": "struct cpr_msm8926_data { bool applied,apc_enabled; };",
+      "new": "struct cpr_msm8926_data { bool applied,apc_enabled; void *suspend_owner; bool suspend_was_applied,suspend_irq_disabled; struct {bool active;} sleep; };"
+    }
+  ],
+  "production_function_bodies_not_transformed": true,
+  "new_branches_independently_qualified": true
+}

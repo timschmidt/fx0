@@ -1,0 +1,50 @@
+{
+  "passed": false,
+  "returncode": 1,
+  "actual_functions": 22,
+  "bindings": {
+    "qcom_msm8226_pm_active": "f180233593e4df27e9d9f1d375dc3ffebfd47d9e5083b9a0acc37454d0d08ab8",
+    "msm8226_core_finisher": "03c7d49f08bb72f2a8db4b6dc04934b9e0e2e0721177c29a06b355d6e62957d1",
+    "qcom_msm8226_cpu_collapse": "22217fd7581faa96c921b1c7f83da4dd5501b23220164ba73fa02aa73af31a5d",
+    "qcom_msm8226_cpu_kill": "36475852c3cce07f25d0c543b67db3ef4729e851a8dce94ba0488dd1886eb889",
+    "msm8226_secondaries_collapsed": "d6b43563e682086ef1194492b46bd4fe1da5d5c83150cc0f874ed9959d15a1dd",
+    "msm8226_system_finisher": "e500231bbe9f12d81b6aa58edec93a243bbf66ab39208bd636cea515829a997f",
+    "msm8226_suspend_enter": "15168b9c197f9184224809c0602569c9f947cd139c7fe68cd050513cb0df6afa",
+    "msm8226_platform_prepare_late": "513989a9f33cc473ea379e4d5bdd811bdfb28513cf1d11bfe276d58135502ff7",
+    "msm8226_platform_wake": "886a513bdc600b32f432b03d744aea84f6f3af4dfd24343f946f074793b1324d",
+    "msm8226_pm_suspend_late": "4c327d0424681a648f4f5fc2aa3fd4982567321248248aa85c6abb3835983791",
+    "msm8226_pm_resume_early": "1ba4bea1e64dc3be16dd7bbc4843f2b62437d156815e34f31231efd5e320de26",
+    "msm8226_cpu_disable": "e9c838d08185a8a92f7b0b011e92082a32fb70f0f3f68e06210e5699856ba644",
+    "msm8226_cpu_die": "03511cced2633ddf4146f2e8139187a98c99a7342a363a0d5dd78dc3b9c6f054",
+    "msm8226_boot_secondary": "80482811d393c319289d0c6f58ec0851349b80c0e2643ed1b637a06c7af60224",
+    "gic_cpu_quiesce_ppis": "39b8de6dc4218261d220a0e2f348205397d7081216a541cc9e495e4baa514c7f",
+    "platform_suspend_prepare": "8d85e20a57ca931420d5fa81c1db11f0a7ce62c5b3c05f13770dfa178f23a9b8",
+    "platform_suspend_prepare_late": "3a3f34f81554c7af08550beaab321dbe9a62336a624196dc3961238692117fc6",
+    "platform_suspend_prepare_noirq": "cc348a28fcd480226e4f30fb068bc64faff3d76a9a9e0043caf409e9c7160bf0",
+    "platform_resume_noirq": "69c7e2311c975b84925c6291d5c144170eaf47cf28f5596d82839d6f286679ba",
+    "platform_resume_early": "5579dee23ab0c1f4679e3f7b171c0f3ffe648882753930bb19e0aaff5af96257",
+    "platform_resume_finish": "07bc458e7fac3f0a6e3fcc6bc6cc452debda4cd3df26e804c45625c8af4d7b58",
+    "suspend_enter": "4e2004c55ff3437a0c51a09569a1ee252431de6dc93eec6deb7f65235f7f2380"
+  },
+  "actual_suspend_ops_SHA256": "1ec64240ede0a653e2130edac565177baa9ee9c3df77177adc2c8b12f8c32889",
+  "source_SHA256": {
+    "drivers/soc/qcom/msm8226-pm.c": "055e3c7fe79737a63be9fbbd2fcf211b896c6be76880a7790971f3a6fb3faf9d",
+    "arch/arm/mach-qcom/platsmp.c": "c76cc0fc3035a9aaa9211d418d6a9cf4c2524e22276e9470d9a637c1b80d66dd",
+    "drivers/irqchip/irq-gic.c": "c3930fc1d16373894b7931eae2f54dc9fec92f50ea78218a69a026fe4d798909",
+    "kernel/power/suspend.c": "0f5cd354b1523364549e8cfc6dc4bbd781edc207b58a664617c4b971c119ae24"
+  },
+  "model_SHA256": "603b9cd246f86c8cf34a2deeb0708d1f9f638fbb5817a2e8fedbeafc412e1387",
+  "services_synthetic": [
+    "SPM and CPR/RPM/MPM provider responses",
+    "SCM collapse, warm reset and banked GIC/ACC registers",
+    "driver PM traversal, IRQ/syscore callbacks, wakeup and test levels"
+  ],
+  "real_host_services": [
+    "three concurrent secondary CPU threads",
+    "POSIX condition variables, atomic flags and mutexes"
+  ],
+  "actual_probe_remove_included": false,
+  "physical_collapse_qualification": false,
+  "kernel_concurrency_qualified": false,
+  "phone_access": false
+}

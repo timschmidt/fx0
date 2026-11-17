@@ -1,0 +1,123 @@
+{
+  "base": "8e6fa853a34c0142b9f3e39b55e17ec44089c9fc",
+  "source_repo": "worktrees/linux-fx0-lts-integration-current-01",
+  "current_source_repo": "worktrees/linux-fx0-cpu-current-01",
+  "origin_commits": [
+    {
+      "commit": "5684a2e2d77410e52f6bdde598d69b02105b7172",
+      "subject": "dt-bindings: power: Describe MSM8226 system sleep coordination",
+      "paths": [
+        "Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml",
+        "Documentation/devicetree/bindings/power/qcom,msm8226-system-pm.yaml",
+        "Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml",
+        "MAINTAINERS"
+      ]
+    },
+    {
+      "commit": "ac03d871113a3d2eaea081d00e50d7ad0d779a59",
+      "subject": "clk: qcom: Restore MSM8226 A7PLL context before activation",
+      "paths": [
+        "drivers/clk/qcom/a53-pll.c",
+        "drivers/clk/qcom/clk-pll-suspend.h",
+        "drivers/clk/qcom/clk-pll.c",
+        "drivers/clk/qcom/clk-pll.h"
+      ]
+    },
+    {
+      "commit": "a37ea8cff8cf0243e279f4168a299993c3189215",
+      "subject": "soc: qcom: spm: Verify MSM8226 CPU collapse readiness",
+      "paths": [
+        "drivers/soc/qcom/spm.c",
+        "include/soc/qcom/spm.h"
+      ]
+    },
+    {
+      "commit": "d1e250838f9836327ef46141bca28a367e2ba7f1",
+      "subject": "pmdomain: qcom: Coordinate MSM8926 sleep voltage and clock state",
+      "paths": [
+        "drivers/pmdomain/qcom/cpr-msm8926-suspend.h",
+        "drivers/pmdomain/qcom/cpr.c",
+        "include/linux/soc/qcom/cpr.h"
+      ]
+    },
+    {
+      "commit": "ffb851ee18dc9411b816476f1c46e374643decaa",
+      "subject": "irqchip/qcom-mpm: Add owned system-sleep handoff",
+      "paths": [
+        "drivers/irqchip/irq-qcom-mpm.c",
+        "include/linux/soc/qcom/mpm.h"
+      ]
+    },
+    {
+      "commit": "a4e62575745f880bc1689daf155fac5edbe89320",
+      "subject": "rpmsg: qcom_smd: Retain RPM transport through device noirq",
+      "paths": [
+        "drivers/rpmsg/qcom_smd.c",
+        "drivers/soc/qcom/rpm-proc.c",
+        "include/linux/rpmsg/qcom_smd.h"
+      ]
+    },
+    {
+      "commit": "52dd599c5dcbbb3d804583a4ffa4d04f8a7f91d1",
+      "subject": "soc: qcom: smd-rpm: Hand off receive IRQs after device noirq",
+      "paths": [
+        "drivers/soc/qcom/smd-rpm.c",
+        "include/linux/soc/qcom/smd-rpm.h"
+      ]
+    },
+    {
+      "commit": "33b9a12656d4e9758d0ee162ead1b9ae15a54586",
+      "subject": "ARM: qcom: Collapse MSM8226 secondary cores for system sleep",
+      "paths": [
+        "arch/arm/mach-qcom/platsmp.c",
+        "drivers/irqchip/irq-gic.c",
+        "include/linux/irqchip/arm-gic.h",
+        "include/soc/qcom/msm8226-pm.h"
+      ]
+    },
+    {
+      "commit": "642186babe2317442a6f6475b69bb7ccca453b51",
+      "subject": "soc: qcom: Add MSM8226 system suspend coordinator",
+      "paths": [
+        "drivers/soc/qcom/Kconfig",
+        "drivers/soc/qcom/Makefile",
+        "drivers/soc/qcom/msm8226-pm.c"
+      ]
+    },
+    {
+      "commit": "fc5120c4e0f2ab4790cb62f1f4c40aea74697a18",
+      "subject": "ARM: dts: qcom: Add an experimental Madai suspend target",
+      "paths": [
+        "arch/arm/boot/dts/qcom/Makefile",
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts"
+      ]
+    }
+  ],
+  "before_files": {
+    "MAINTAINERS": "97adb23747c600444ee2a226edf9f4a82a031cf4ea3d2345f7ee2b9ab4d5aff1",
+    "drivers/rpmsg/qcom_smd.c": "103a44ca3969552945e2061a4eaca9ee3b0c5a00a090309acb1e0004fa707ad4",
+    "drivers/irqchip/irq-qcom-mpm.c": "b79456f01bc7451d53fb67e0095470b2f39e0f5baa3292de91c28d4038b44a35",
+    "drivers/irqchip/irq-gic.c": "3095481db1f1a10f2ffd63e420ae35c6e5a3352eb78c37591a6d8a327b353a65",
+    "drivers/clk/qcom/clk-pll.h": "2a7fdfbe8e1569e402a2064e43990751212e0f6bab127b6bebb0460f026a5240",
+    "drivers/clk/qcom/clk-pll.c": "bfbaf9e47a56e0e37a670a26bdeda82a3072b8966fc644cb25b96eacacddafda",
+    "drivers/clk/qcom/a53-pll.c": "84a91c06729b2c5190f1dc47b53ae564f1399adfd699ea518cf800dd3b0dc256",
+    "drivers/pmdomain/qcom/cpr.c": "27dd1e6095b088e1f30863ba5a1f2571c585f82124b859c3bd83f8be563250a6",
+    "drivers/soc/qcom/spm.c": "b407e0dc2c919bf74744cc58a36e7dc6017ccf6f0453a4079e98dbac6737c001",
+    "drivers/soc/qcom/smd-rpm.c": "05f863bef30c28e859947100f46452d1ee9f85bba985228776d8dc20a0a972cd",
+    "drivers/soc/qcom/Kconfig": "c80f6ec85e28d8625699334f20151d6202f1e6850fffc46894771a2f2c5f7b1c",
+    "drivers/soc/qcom/Makefile": "08efeee3a711e33be2dbf68caf66492267d48346af8f87f416115a2996e0ef35",
+    "drivers/soc/qcom/rpm-proc.c": "71c323c080e9f0af1a04fd10c8c352aa2235ea837b45ce69f35fd91af7b49349",
+    "include/linux/rpmsg/qcom_smd.h": "eb6f24b116213315315f43325090480954ddb9a6812354f10b82aa73316036a0",
+    "include/linux/irqchip/arm-gic.h": "6f9bf34e36ea014314a7be43cf10537548beba95242dab36b26161b150a8b5f3",
+    "include/linux/soc/qcom/cpr.h": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3",
+    "include/linux/soc/qcom/smd-rpm.h": "85f45b7db7eafa2c0ace23893a8e253ffa6a9e8002a8e1a77538383f3beec255",
+    "include/soc/qcom/spm.h": "9f46bfd84f9734946d6019f7ceb8c14cb2372da2f08a221884cef1ce9302c710",
+    "Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml": "91ca7a61403e12dab7f02e2185051af14144cc677c6c9267776e5c273e8554d8",
+    "Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml": "e14fd80c8e10595364a385cf6ceb366aa88df9783e741c68948310ed3c69622b",
+    "arch/arm/mach-qcom/platsmp.c": "214b9e92d0dfe82b1472c6b5346ad06c09cf3debc963b3babd57789efc6fc1cf",
+    "arch/arm/boot/dts/qcom/Makefile": "d23e64aa14250dfa84c0b2437b69382b1b31eed5267525aac6f29ee33306a0c0"
+  },
+  "phone_access": false,
+  "published": false,
+  "full_goal_complete": false
+}

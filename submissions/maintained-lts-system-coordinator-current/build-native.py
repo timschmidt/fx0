@@ -1,0 +1,84 @@
+# SPDX-License-Identifier: GPL-2.0-only
+"""Compile affected maintained-LTS system-sleep and retained CPU objects under supported native configs."""
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib, json, os, signal, subprocess
+B=Path(__file__).resolve().parent;R=B.parents[2]
+C=R/'worktrees/linux-fx0-lts-integration-current-01'
+previous=B.parent/'native-02'
+O=B/'native-01';O.mkdir(exist_ok=False)
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+paths=['drivers/pmdomain/qcom/cpr.c', 'drivers/regulator/qcom_spmi-regulator.c', 'drivers/soc/qcom/spm.c', 'drivers/soc/qcom/smd-rpm.c', 'drivers/cpufreq/qcom-cpufreq-nvmem.c', 'drivers/cpufreq/cpufreq-dt-platdev.c', 'drivers/clk/qcom/a53-pll.c', 'drivers/clk/qcom/apcs-msm8916.c', 'drivers/clk/qcom/clk-pll.c', 'drivers/clk/qcom/clk-regmap-mux-div.c', 'drivers/clk/qcom/gcc-msm8974.c', 'drivers/mfd/qcom-spmi-pmic.c','drivers/regulator/qcom_smd-regulator.c','drivers/rpmsg/qcom_smd.c','drivers/irqchip/irq-qcom-mpm.c','drivers/irqchip/irq-gic.c','drivers/soc/qcom/rpm-proc.c']
+headers=['drivers/regulator/qcom-spmi-saw-fts2.h', 'drivers/soc/qcom/spm-msm8226-l2.h', 'drivers/pmdomain/qcom/cpr-voltage.h', 'include/linux/soc/qcom/cpr.h','drivers/pmdomain/qcom/cpr-sleep.h','include/soc/qcom/spm.h','include/linux/soc/qcom/smd-rpm.h','drivers/pmdomain/qcom/cpr-msm8926-suspend.h','drivers/clk/qcom/clk-pll-suspend.h','drivers/clk/qcom/clk-pll.h','include/linux/soc/qcom/mpm.h','include/soc/qcom/msm8226-pm.h','include/linux/irqchip/arm-gic.h','include/linux/rpmsg/qcom_smd.h']
+pinned = paths+headers+['drivers/soc/qcom/msm8226-pm.c','arch/arm/mach-qcom/platsmp.c','drivers/cpuidle/cpuidle-qcom-spm.c']
+manifest={p:sha(C/p) for p in pinned}
+record=dict(started_UTC=datetime.now(timezone.utc).isoformat(),passed=False,state='prepared',
+    source_head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=C,text=True).strip(),
+    source_uncommitted=True,source_files=manifest,profiles=[],architecture_constraints=[dict(driver='ARM_QCOM_SPM_CPUIDLE',supported_ARCH='arm',ARM64_not_counted=True)],
+    phone_access=False,published=False,full_kernel_package_or_physical_acceptance=False,seeds='Already qualified LTS native-02 configs; no 7.4 seed Kconfig type adaptation required',ARM32_RT_unsupported_not_counted=True,stages=[])
+controller=O/'controller.json';child=None
+def save():controller.write_text(json.dumps(record,indent=2)+'\n')
+def interrupted(sig,frame):raise InterruptedError(str(sig))
+signal.signal(signal.SIGTERM,interrupted)
+def run(label,cmd,env,timeout=300):
+ global child
+ log=O/(label+'.log')
+ with log.open('xb') as stream:
+  child=subprocess.Popen(cmd,cwd=C,env=env,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)
+  record.update(state='running '+label,active_PID=child.pid);save();code=child.wait(timeout=timeout)
+ record.pop('active_PID',None);lines=log.read_text(errors='replace').splitlines()
+ record['stages'].append(dict(label=label,returncode=code,log_SHA256=sha(log),diagnostics=[l for l in lines if 'warning:' in l.lower() or 'error:' in l.lower()]));save();assert code==0,(label,code,lines[-12:])
+try:
+ profiles=[(arch,rt,seed,feature,arch=='arm' and feature) for arch,rt,seed in [('arm',False,'arm-normal'),('arm64',False,'arm64-normal'),('arm64',True,'arm64-rt')] for feature in [True,False]]
+ profiles.insert(1,('arm',False,'arm-normal',True,False))
+ for arch,rt,seed,feature,coordinator in profiles:
+  label=arch+('-rt' if rt else '-normal')+('-CPU-enabled' if feature else '-CPU-disabled')+('-system-on' if coordinator else '-system-off');out=O/(label+'-out');out.mkdir();(out/'tmp').mkdir()
+  (out/'.config').write_bytes((previous/(seed+'-out/.config')).read_bytes())
+  env=os.environ|{'TMPDIR':str(out/'tmp'),'GIT_NO_LAZY_FETCH':'1','KBUILD_BUILD_USER':'fx0-review','KBUILD_BUILD_HOST':'source-check','KBUILD_BUILD_TIMESTAMP':'2026-11-16 00:00:00 UTC','KBUILD_BUILD_VERSION':'1'}
+  options=['scripts/config','--file',str(out/'.config'),'--enable','EXPERT','--disable','COMPILE_TEST','--enable' if rt else '--disable','PREEMPT_RT']
+  for name in ['ARCH_QCOM','PM','PM_GENERIC_DOMAINS','PM_GENERIC_DOMAINS_OF','PM_OPP','SUSPEND','NVMEM','QCOM_SCM','REGULATOR','REGULATOR_QCOM_SPMI','REGULATOR_QCOM_SMD_RPM','QCOM_SMD_RPM','QCOM_SPM','QCOM_A53PLL','QCOM_CLK_APCS_MSM8916','MSM_GCC_8974','SMP','HOTPLUG_CPU','CPU_PM','QCOM_MPM','RPMSG_QCOM_SMD','CPU_FREQ','CPUFREQ_DT','CPUFREQ_DT_PLATDEV','MFD_SPMI_PMIC']:options+=['--enable',name]
+  options+=['--module','ARM_QCOM_CPUFREQ_NVMEM','--enable' if feature else '--module','QCOM_CPR','--enable' if feature else '--disable','QCOM_CPR_MSM8926']
+  options+=['--enable' if coordinator else '--disable','QCOM_MSM8226_PM']
+  if arch=='arm':options+=['--enable','CPU_IDLE','--enable','CPU_PM','--enable','ARM_QCOM_SPM_CPUIDLE']
+  if rt:options+=['--disable','PREEMPT','--disable','PREEMPT_LAZY','--disable','PREEMPT_DYNAMIC']
+  make=['make','O='+str(out),'ARCH='+arch,'LLVM=-21','W=1','KCFLAGS=-Werror=incompatible-function-pointer-types','--jobserver-style=pipe','-j2']
+  run(label+'-options',options,env)
+  run(label+'-config',make+['olddefconfig'],env)
+  cfg=(out/'.config').read_text();actual_rt='CONFIG_PREEMPT_RT=y\n' in cfg
+  assert 'CONFIG_EXPERT=y\n' in cfg and '# CONFIG_COMPILE_TEST is not set\n' in cfg
+  assert 'CONFIG_CFI=y\n' in cfg and '# CONFIG_CFI_PERMISSIVE is not set\n' in cfg
+  for name in ['QCOM_SPM','QCOM_SMD_RPM','REGULATOR_QCOM_SPMI','MFD_SPMI_PMIC']:
+   assert any('CONFIG_'+name+'='+value+'\n' in cfg for value in ['y','m']),name
+  if rt and not actual_rt:
+   assert arch=='arm' and 'CONFIG_ARCH_SUPPORTS_RT=y\n' not in cfg, 'Supported RT request was unexpectedly lost'
+   record['architecture_constraints'].append(dict(profile=label,requested_PREEMPT_RT=True,actual_PREEMPT_RT=False,ARCH_SUPPORTS_RT=False,config_SHA256=sha(out/'.config'),not_counted_as_RT_native_build=True))
+   save();continue
+  assert actual_rt==rt
+  assert ('CONFIG_QCOM_CPR_MSM8926=y\n' in cfg)==feature
+  assert 'CONFIG_QCOM_CPR='+('y' if feature else 'm')+'\n' in cfg
+  assert 'CONFIG_ARM_QCOM_CPUFREQ_NVMEM=m\n' in cfg
+  assert ('CONFIG_QCOM_MSM8226_PM=y\n' in cfg)==coordinator
+  objects=[p[:-2]+'.o' for p in paths]
+  objects+=['drivers/pmdomain/core.o','drivers/regulator/core.o','drivers/regulator/helpers.o','drivers/cpufreq/cpufreq-dt.o','drivers/cpufreq/cpufreq.o','drivers/opp/core.o','drivers/nvmem/core.o']
+  if arch=='arm':
+   assert 'CONFIG_ARM_QCOM_SPM_CPUIDLE=y\n' in cfg
+   objects+=['drivers/cpuidle/cpuidle-qcom-spm.o']
+   run(label+'-architecture',make[:-1]+['-j1','arch/arm/mach-qcom/platsmp.o'],env)
+   if coordinator:objects+=['drivers/soc/qcom/msm8226-pm.o']
+  run(label+'-objects',make+objects,env,900)
+  if arch=='arm':objects+=['arch/arm/mach-qcom/platsmp.o']
+  assert manifest=={p:sha(C/p) for p in pinned}
+  record['profiles'].append(dict(profile=label,ARCH=arch,PREEMPT_RT=actual_rt,MSM8926_feature_enabled=feature,EXPERT=True,CFI=True,CFI_PERMISSIVE=False,config_SHA256=sha(out/'.config'),source_files=manifest,objects={p:sha(out/p) for p in objects},ARM_QCOM_SPM_CPUIDLE=(arch=='arm'),system_coordinator_enabled=coordinator))
+  save()
+ assert not [d for stage in record['stages'] for d in stage['diagnostics']], 'Unexpected native/config diagnostics'
+ record.update(passed=True,state='terminal success',native_objects=sum(len(p['objects']) for p in record['profiles']),supported_profiles=len(record['profiles']),unsupported_RT_requests=0,ARM64_architecture_only_sources_not_compiled=['drivers/soc/qcom/msm8226-pm.c','arch/arm/mach-qcom/platsmp.c','drivers/cpuidle/cpuidle-qcom-spm.c'])
+except BaseException as error:
+ record.update(state='terminal failure',error_type=type(error).__name__,error=str(error));raise
+finally:
+ if child is not None and child.poll() is None:
+  os.killpg(child.pid,signal.SIGTERM)
+  try:child.wait(timeout=5)
+  except subprocess.TimeoutExpired:os.killpg(child.pid,signal.SIGKILL);child.wait(timeout=5)
+ record.pop('active_PID',None);record['owned_child_terminal_and_reaped']=child is None or child.returncode is not None
+ record['finished_UTC']=datetime.now(timezone.utc).isoformat();save()
+print(json.dumps(dict(passed=record['passed'],native_objects=record.get('native_objects'),unsupported_RT_requests=record.get('unsupported_RT_requests'))))

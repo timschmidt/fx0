@@ -1,0 +1,103 @@
+{
+  "passed": true,
+  "models": [
+    {
+      "label": "spm",
+      "cases": 1749,
+      "checks": 1185158,
+      "qualification": "models-01/spm/qualification.json",
+      "qualification_SHA256": "bdfbf906e5cfaf3f5dfb416c15972e7fb3dbb9fe237fcc3d5e926db43f4b027e"
+    },
+    {
+      "label": "pll",
+      "cases": 393,
+      "checks": 11784,
+      "qualification": "models-01/pll/qualification.json",
+      "qualification_SHA256": "b0f2ea8d52a81f0f550f112fb25efc6b3f6a6d8be5c5a036069accf68edafa06"
+    },
+    {
+      "label": "cpr-transaction",
+      "cases": 1400,
+      "checks": 142579,
+      "qualification": "models-01/cpr-transaction/qualification.json",
+      "qualification_SHA256": "d4c6bbd25bd75dad21eb1cbc5116315f142273faf54d23dd7930dc333865250a"
+    },
+    {
+      "label": "cpr-api",
+      "cases": 124,
+      "checks": 11947,
+      "qualification": "models-01/cpr-api/qualification.json",
+      "qualification_SHA256": "998e9d9a68198fc087b6b55ea514408ef50876ae54c69b371907b9722d5bf98a"
+    },
+    {
+      "label": "coordinator",
+      "cases": 157,
+      "checks": 9376,
+      "qualification": "models-01/coordinator/qualification.json",
+      "qualification_SHA256": "092c8c29ea034dfc91fe9dc49afa5d62768fe58a4dcaa9e4eef88912da25155b"
+    },
+    {
+      "label": "mpm",
+      "cases": 112,
+      "checks": 3050,
+      "qualification": "models-01/mpm/qualification.json",
+      "qualification_SHA256": "668c552aa573aa10ef36d38f4ef503d09a4fb1a053e2efe8f2c69e1fd27b010a"
+    },
+    {
+      "label": "transport",
+      "cases": 79,
+      "checks": 2244,
+      "qualification": "models-01/transport/qualification.json",
+      "qualification_SHA256": "c20b3aa6f20c25bedfd0ecc718e11d979d2809d1218edcb6d7d2a92ef683ee67"
+    },
+    {
+      "label": "lifetime",
+      "cases": 54,
+      "checks": 3893,
+      "qualification": "models-01/lifetime/qualification.json",
+      "qualification_SHA256": "32901aa7f9ddada12de6f9ba0f14361830a1580bbcc05547629116408968cd80"
+    },
+    {
+      "label": "smd-edge",
+      "cases": 81,
+      "checks": 1472,
+      "qualification": "models-02/smd-edge/qualification.json",
+      "qualification_SHA256": "5a5c4f9e6c8da4e2d2092cd7b1bd6425f7d17c4a4af8aad971888e5f6189af97"
+    },
+    {
+      "label": "clock-probe",
+      "cases": 8,
+      "checks": 109,
+      "qualification": "models-02/clock-probe/qualification.json",
+      "qualification_SHA256": "cf8590a01be85b49463ae119e26d6f007898296beda2d7700cfc33ebffce4025"
+    },
+    {
+      "label": "smd-state",
+      "cases": 788,
+      "checks": 4873,
+      "qualification": "models-02/smd-state/qualification.json",
+      "qualification_SHA256": "5a0a3fcd0a1f72816352da9497a3db57f5debe4565aebf3e5266fa89f0ccedc9"
+    },
+    {
+      "label": "mpm-probe",
+      "cases": 64,
+      "checks": 1818,
+      "qualification": "models-02/mpm-probe/qualification.json",
+      "qualification_SHA256": "751472761ba1f791fdf56f1dba6f257c518e063de5092afa4ac7206e5628b0a5"
+    },
+    {
+      "label": "retained-clock",
+      "cases": null,
+      "checks": null,
+      "qualification": "models-02/retained-clock/qualification.json",
+      "qualification_SHA256": "1014554333250749d0f55170a7e7eec12888058bf21478c19c75e0f0dc7ec6ba"
+    }
+  ],
+  "positive_cases": 5009,
+  "retained_clock_subruns": 4,
+  "controls": 85,
+  "full_kernel_concurrency_firmware_or_physical_acceptance": false,
+  "all_services_synthetic": true,
+  "normal_LSan_and_failfast_ASan_UBSan": true,
+  "phone_access": false
+}

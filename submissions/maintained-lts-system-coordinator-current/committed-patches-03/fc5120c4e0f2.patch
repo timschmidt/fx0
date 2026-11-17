@@ -1,0 +1,112 @@
+From 7f87a7a42edae0cb40086d26788f3a88c56c1c9f Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Mon, 16 Nov 2026 23:23:06 -0500
+Subject: [PATCH] ARM: dts: qcom: Add an experimental Madai suspend target
+
+Add a separate full-system suspend qualification target using the CPR
+board as its base. Describe the MPM SRAM slice, mailbox and interrupt
+routes, link the coordinator's providers and connect
+GPIO/SPMI/MDSS/TSENS wake paths. Translate vendor full GIC hwirqs into
+the SPI numbers required by this binding.
+
+Backport onto maintained Linux 6.18.63 while preserving its platform
+context and APIs. The ten-change batch passes 5009 synthetic model cases,
+85 fault controls and 175 selected native objects across seven supported
+feature/config profiles. ARM32 RT is unsupported and is not counted.
+
+All 18 family DTBs build and 180 selected schema checks are silent;
+the 17 prior DTBs are byte-identical. The new target repeats three
+existing DTC warnings. Unfiltered schema validation still rejects the
+existing PM8226 torch child; that independent port remains pending.
+
+Services and faults are synthetic. Firmware, kernel concurrency, normal
+package integration and physical acceptance remain open. Codex prepared
+this local backport and verification. Original authors, dates and source
+notices are retained; no human DCO or publication is claimed.
+
+Backported from commit fc5120c4e0f2 ("ARM: dts: qcom: Add an
+experimental Madai suspend target")
+---
+ arch/arm/boot/dts/qcom/Makefile               |  1 +
+ .../qcom/qcom-msm8926-lg-madai-suspend.dts    | 57 +++++++++++++++++++
+ 2 files changed, 58 insertions(+)
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts
+
+diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
+index 6da91620b32a6..16cdd122dc315 100644
+--- a/arch/arm/boot/dts/qcom/Makefile
++++ b/arch/arm/boot/dts/qcom/Makefile
+@@ -39,6 +39,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+ 	qcom-msm8926-htc-memul.dtb \
+ 	qcom-msm8926-lg-madai.dtb \
+ 	qcom-msm8926-lg-madai-cpr.dtb \
++	qcom-msm8926-lg-madai-suspend.dtb \
+ 	qcom-msm8926-microsoft-superman-lte.dtb \
+ 	qcom-msm8926-microsoft-tesla.dtb \
+ 	qcom-msm8926-motorola-peregrine.dtb \
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts
+new file mode 100644
+index 0000000000000..9821624c01a34
+--- /dev/null
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts
+@@ -0,0 +1,57 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/* Experimental full-system suspend target; physical acceptance is separate. */
++#include "qcom-msm8926-lg-madai-cpr.dts"
++
++&rpm {
++	mpm: interrupt-controller {
++		compatible = "qcom,mpm";
++		qcom,rpm-msg-ram = <&apss_mpm>;
++		interrupt-parent = <&intc>;
++		interrupts = <GIC_SPI 171 IRQ_TYPE_EDGE_RISING>;
++		mboxes = <&apcs 1>;
++		interrupt-controller;
++		#address-cells = <0>;
++		#interrupt-cells = <2>;
++		#power-domain-cells = <0>;
++		qcom,mpm-pin-count = <64>;
++		/* Vendor GIC hwirqs include 32; the current binding takes SPIs. */
++		qcom,mpm-pin-map = <2 184>,
++				   <47 140>,
++				   <53 72>,
++				   <62 190>;
++	};
++};
++
++&rpm_msg_ram {
++	apss_mpm: sram@1d0 {
++		reg = <0x1d0 0x30>;
++	};
++};
++
++&rpm_requests {
++	system-sleep {
++		compatible = "qcom,msm8226-system-pm";
++		qcom,cpr = <&cpr>;
++		qcom,mpm = <&mpm>;
++		qcom,l2-spm = <&saw_l2>;
++	};
++};
++
++&tlmm {
++	wakeup-parent = <&mpm>;
++};
++
++&spmi_bus {
++	/delete-property/ interrupts;
++	interrupts-extended = <&mpm 62 IRQ_TYPE_LEVEL_HIGH>;
++};
++
++&mdss {
++	/delete-property/ interrupts;
++	interrupts-extended = <&mpm 53 IRQ_TYPE_LEVEL_HIGH>;
++};
++
++&tsens {
++	/delete-property/ interrupts;
++	interrupts-extended = <&mpm 2 IRQ_TYPE_LEVEL_HIGH>;
++};
+-- 
+2.56.0
+

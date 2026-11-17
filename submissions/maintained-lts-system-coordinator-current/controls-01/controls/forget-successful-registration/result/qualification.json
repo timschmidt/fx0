@@ -1,0 +1,20 @@
+{
+  "passed": false,
+  "returncode": 1,
+  "actual_functions": 1,
+  "bindings": {
+    "qcom_channel_state_worker_run": "989db9d98a1ad919dfa5d4beb74d80c637fa109f0e77c9cb70cb9c45cb0e1446"
+  },
+  "source_SHA256": "caf1556d0167b148683a3f42785fdbb83c9164bc9a1aa2bda800d378450e1e29",
+  "model_SHA256": "7ef130364cc2654944d85d199f71c45bac491c6f35b2175f43c19de0d75aa7db",
+  "services_synthetic": [
+    "fixed channel list and IRQ spinlock",
+    "RPMsg registration failure and successful/no-consumer creation",
+    "RPMsg removal and endpoint-close state"
+  ],
+  "kernel_worker_concurrency_qualified": false,
+  "phone_access": false,
+  "cases": 788,
+  "checks": 4876,
+  "failures": 28
+}

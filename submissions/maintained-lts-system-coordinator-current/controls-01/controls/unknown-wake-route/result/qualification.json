@@ -1,0 +1,36 @@
+{
+  "passed": false,
+  "returncode": 1,
+  "actual_functions": 15,
+  "bindings": {
+    "qcom_mpm_read": "3716db9a221ce45133642b82541e0a3a61822ab0a2a92a8516351a1f6bfdd33a",
+    "qcom_mpm_write": "6a7aa56fe2bccb81089862bd80b2bda31f0b2c26827bab59bac97af3f5a7ad5a",
+    "get_mpm_gic_map": "cb7e4e0224f12f7bc965215ff627b75a94129204da98706f42209cab00d84ac0",
+    "qcom_mpm_handler": "f671cda6f768ae39916e6ba778c2afbffaad6ea887f479c54a7a8f8f540b4168",
+    "qcom_mpm_register_sleep": "5508b78f6c8b289079ee0a8da16194a9b49b8739b0f9666091bb8a0cf7484cd2",
+    "qcom_mpm_unregister_sleep": "86f282bf76e7b9121355e3e6f1fa411604b5c98dadf69ec62d4347d6cf9ad86f",
+    "qcom_mpm_prepare_sleep": "abdbe8097fe83f2da60101aee47a72bdf4cb30d4553ad89743df6d8faa71b88b",
+    "qcom_mpm_put_node": "f26ea2c98ffd122f6b359b92ebd365422659560b07d7064c0b533e9ff47a150d",
+    "qcom_mpm_init_wake_domains": "0e64fa8b6cac53c396c68e008f4b8e461f7211758326f26350fb31896c9d992e",
+    "qcom_mpm_pin_enabled": "12ff712422eaf6dc780840fb8d76e20d936082d4d7992f033c3c2503e9f2ef83",
+    "qcom_mpm_irq_covered": "e17e9e91d125d3b60523953510c63e63f5a4d489527cd60e053233f540dea6c8",
+    "qcom_mpm_wake_covered": "4cb465434e8ed6e7d51d03b65b7ca63ebb0eb2d438ac2a067f4b845096751188",
+    "qcom_mpm_sleep_ready": "82f62bd583c98ce0686da4f209800567f8c1a70b5427bda0feebbecbc3986089",
+    "qcom_mpm_finish_sleep": "e528912e06b5f9cf2cb8ac01e44f6cca63518281cf44b5e5fb558544f99220a0",
+    "mpm_pd_power_off": "40a6acacbc067fd82d95c5906215659a2ac151b9a4a33db5a03ad3c0568c584e"
+  },
+  "source_SHA256": "6485a5b7c715e45dd3575dec5d1a33dc824e7fd8b2fcf4fc556084c7a4cc26e0",
+  "model_SHA256": "17ffb525d416a18ab92077aabe44422168c027f5b7e45863191061d476cf0fb2",
+  "services_synthetic": [
+    "IRQ descriptors, actions and domains",
+    "DT node enumeration and references",
+    "devres and fault injection",
+    "register IO and mailbox delivery"
+  ],
+  "actual_provider_probe_included": false,
+  "physical_wake_qualification": false,
+  "phone_access": false,
+  "cases": 112,
+  "checks": 3087,
+  "failures": 70
+}

@@ -1,0 +1,36 @@
+{
+  "passed": false,
+  "returncode": 1,
+  "actual_functions": 11,
+  "bindings": {
+    "qcom_smd_rpm_get_irq": "1237026dee9f7f104416565b053401cc76cd1a2dd06825a7d461c7cb2c7e5ee7",
+    "qcom_channel_scan_worker": "145b83afb5c39c8ad7d0713386af0fbd3513888c50e0672e61ee9a8def790b39",
+    "qcom_channel_state_worker": "ffcb4b9849c8f85893e1ac217dc77f46ba5dc3c5f5d41288490917b5de38f9cf",
+    "qcom_smd_sleep_notify": "3c9a4e44ae0b79ea8bde9ce911315e21e3b09d441c5d8fb4b6560e08b073e70c",
+    "qcom_rpm_smd_freeze": "7ca0324fbf48b2de494a4e9e2b55a7fdcb27970bc3fa0fd01334531ff9ee7f4a",
+    "qcom_rpm_smd_thaw": "37bbb9becd26b331444e014f0a3422a1e7d111e675e47d529cac151165cd6256",
+    "qcom_rpm_smd_register_sleep": "087a3d5e5f1c42bb8007c670bd74e5ccbcc9ca5354935d0ae80069be16a80ca6",
+    "qcom_rpm_smd_unregister_sleep": "888d3a074cf4ffaa54f0ac6c4257a4cc2b96a23fbbdc33d40fb0b30c4f6297bd",
+    "qcom_rpm_smd_prepare_sleep": "168b6507322237a4f81d4f60283eba8af313635d58dd19fd1f00fca5b51e969a",
+    "qcom_rpm_smd_finish_sleep": "7dc25c47cc5f064b2ac1f5f848f682552bf36726cd0b0e61117c6c573c116ada",
+    "qcom_rpm_smd_sleep_ready": "17eba2312b68641ba8d00f2edd02fe8bc942bdb93d63d9022a125331330e1e2d"
+  },
+  "source_SHA256": {
+    "drivers/soc/qcom/smd-rpm.c": "fe5bbb32ff4d1d7fa4f31d64125490d329003c64ed857df263e8ca1134c72726",
+    "drivers/rpmsg/qcom_smd.c": "b510d72fe4ce4037e5945864d32c18851df738b2dd716636eef4b8f69c6df638",
+    "include/linux/soc/qcom/smd-rpm.h": "3dc73a51ee45ee7bb8cf1891bb81bdfa8781f69d598c903dfd09c056560693f4"
+  },
+  "model_SHA256": "bfdfc2b3d470be30914d9d687a0912cc724fcdab48703a352a1f111cedc51c8c",
+  "services_synthetic": [
+    "channel state, endpoint fields and receive IRQ",
+    "work scheduling and child removal",
+    "system PM callback scheduling"
+  ],
+  "real_host_services": [
+    "POSIX mutexes, condition variables and concurrent worker"
+  ],
+  "actual_SMD_parse_probe_remove_included": false,
+  "kernel_concurrency_qualified": false,
+  "physical_transport_qualification": false,
+  "phone_access": false
+}

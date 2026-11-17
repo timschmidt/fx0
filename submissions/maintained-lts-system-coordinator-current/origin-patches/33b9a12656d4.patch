@@ -1,0 +1,180 @@
+From 33b9a12656d4e9758d0ee162ead1b9ae15a54586 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Mon, 16 Nov 2026 23:23:05 -0500
+Subject: [PATCH] ARM: qcom: Collapse MSM8226 secondary cores for system sleep
+
+Give MSM8226 a distinct SMP path. When the coordinator is active, keep
+secondary CPU PM notifications entered while the core is collapsed; use an
+ordered boot request to leave the park loop and avoid losing a boot SGI
+while quiescing local PPIs. Keep SGIs and the GIC CPU interface available.
+Other Cortex-A7 boards and inactive-coordinator boots retain their path.
+
+The GIC helper masks PPIs and clears stale SGIs with readback. The actual
+ARM hooks, coordinator and suspend dispatcher execute in a 157-case model,
+including three simulated CPU threads, failed entry, a boot-request race
+and lost collapse status. Both ARM64 GIC builds are also checked. This is
+not proof of physical CPU collapse, GIC retention or secure warm reset.
+
+Codex generated this source, host tests and draft message during the Fx0
+bringup. Human review and DCO remain pending. This feature is local and
+has not been submitted; it has no Fixes tag.
+---
+ arch/arm/mach-qcom/platsmp.c    | 55 ++++++++++++++++++++++++++++++++-
+ drivers/irqchip/irq-gic.c       | 21 +++++++++++++
+ include/linux/irqchip/arm-gic.h |  1 +
+ include/soc/qcom/msm8226-pm.h   | 19 ++++++++++++
+ 4 files changed, 95 insertions(+), 1 deletion(-)
+ create mode 100644 include/soc/qcom/msm8226-pm.h
+
+diff --git a/arch/arm/mach-qcom/platsmp.c b/arch/arm/mach-qcom/platsmp.c
+index eca2fe0f4314..04729e1ded2c 100644
+--- a/arch/arm/mach-qcom/platsmp.c
++++ b/arch/arm/mach-qcom/platsmp.c
+@@ -15,6 +15,8 @@
+ #include <linux/smp.h>
+ #include <linux/io.h>
+ #include <linux/firmware/qcom/qcom_scm.h>
++#include <linux/irqchip/arm-gic.h>
++#include <soc/qcom/msm8226-pm.h>
+ 
+ #include <asm/smp_plat.h>
+ 
+@@ -376,6 +378,56 @@ static const struct smp_operations smp_msm8660_ops __initconst = {
+ };
+ CPU_METHOD_OF_DECLARE(qcom_smp, "qcom,gcc-msm8660", &smp_msm8660_ops);
+ 
++#ifdef CONFIG_HOTPLUG_CPU
++static DEFINE_PER_CPU(bool, msm8226_boot_requested);
++
++static int msm8226_cpu_disable(unsigned int cpu)
++{
++	if (qcom_msm8226_pm_active() && !cpu)
++		return -EPERM;
++	/* Publish a fresh offline interval before waiting for a new boot request. */
++	smp_store_release(&per_cpu(msm8226_boot_requested, cpu), false);
++	return 0;
++}
++
++static void msm8226_cpu_die(unsigned int cpu)
++{
++	bool quiesced;
++	int ret;
++
++	if (!qcom_msm8226_pm_active()) {
++		wfi();
++		return;
++	}
++	quiesced = !gic_cpu_quiesce_ppis(0);
++	/* Recheck after SGI cleanup so a concurrent boot request cannot be lost. */
++	while (!smp_load_acquire(&per_cpu(msm8226_boot_requested, cpu))) {
++		ret = quiesced ? qcom_msm8226_cpu_collapse(cpu) : -EIO;
++		if (ret)
++			wfi();
++	}
++}
++#endif
++
++static int msm8226_boot_secondary(unsigned int cpu, struct task_struct *idle)
++{
++#ifdef CONFIG_HOTPLUG_CPU
++	/* Publish the request before the bring-up path sends its boot SGI. */
++	smp_store_release(&per_cpu(msm8226_boot_requested, cpu), true);
++#endif
++	return cortex_a7_boot_secondary(cpu, idle);
++}
++
++static const struct smp_operations qcom_smp_msm8226_ops __initconst = {
++	.smp_prepare_cpus = qcom_smp_prepare_cpus,
++	.smp_boot_secondary = msm8226_boot_secondary,
++#ifdef CONFIG_HOTPLUG_CPU
++	.cpu_disable = msm8226_cpu_disable,
++	.cpu_die = msm8226_cpu_die,
++	.cpu_kill = qcom_msm8226_cpu_kill,
++#endif
++};
++
+ static const struct smp_operations qcom_smp_cortex_a7_ops __initconst = {
+ 	.smp_prepare_cpus	= qcom_smp_prepare_cpus,
+ 	.smp_boot_secondary	= cortex_a7_boot_secondary,
+@@ -383,7 +435,8 @@ static const struct smp_operations qcom_smp_cortex_a7_ops __initconst = {
+ 	.cpu_die		= qcom_cpu_die,
+ #endif
+ };
+-CPU_METHOD_OF_DECLARE(qcom_smp_msm8226, "qcom,msm8226-smp", &qcom_smp_cortex_a7_ops);
++
++CPU_METHOD_OF_DECLARE(qcom_smp_msm8226, "qcom,msm8226-smp", &qcom_smp_msm8226_ops);
+ CPU_METHOD_OF_DECLARE(qcom_smp_msm8909, "qcom,msm8909-smp", &qcom_smp_cortex_a7_ops);
+ CPU_METHOD_OF_DECLARE(qcom_smp_msm8916, "qcom,msm8916-smp", &qcom_smp_cortex_a7_ops);
+ 
+diff --git a/drivers/irqchip/irq-gic.c b/drivers/irqchip/irq-gic.c
+index a5ca04e9be64..15cb94a887d6 100644
+--- a/drivers/irqchip/irq-gic.c
++++ b/drivers/irqchip/irq-gic.c
+@@ -524,6 +524,27 @@ static int gic_cpu_init(struct gic_chip_data *gic)
+ 	return 0;
+ }
+ 
++/* Keep SGIs deliverable for an IRQ-woken secondary power-collapse path. */
++int gic_cpu_quiesce_ppis(unsigned int gic_nr)
++{
++	void __iomem *base;
++	int i;
++
++	if (gic_nr >= CONFIG_ARM_GIC_MAX_NR || !irqs_disabled())
++		return -EINVAL;
++	base = gic_data_dist_base(&gic_data[gic_nr]);
++	if (!base)
++		return -ENODEV;
++	writel_relaxed(GENMASK(31, 16), base + GIC_DIST_ENABLE_CLEAR);
++	/* No new boot SGI can be lost: the caller rechecks its boot request. */
++	for (i = 0; i < 16; i += 4)
++		writel_relaxed(U32_MAX, base + GIC_DIST_SGI_PENDING_CLEAR + i);
++	dsb(ishst);
++	if (readl_relaxed(base + GIC_DIST_ENABLE_SET) & GENMASK(31, 16))
++		return -EIO;
++	return 0;
++}
++
+ int gic_cpu_if_down(unsigned int gic_nr)
+ {
+ 	void __iomem *cpu_base;
+diff --git a/include/linux/irqchip/arm-gic.h b/include/linux/irqchip/arm-gic.h
+index 849386dc5ec8..051141acd25f 100644
+--- a/include/linux/irqchip/arm-gic.h
++++ b/include/linux/irqchip/arm-gic.h
+@@ -140,6 +140,7 @@ struct gic_chip_data;
+ 
+ void gic_cascade_irq(unsigned int gic_nr, unsigned int irq);
+ int gic_cpu_if_down(unsigned int gic_nr);
++int gic_cpu_quiesce_ppis(unsigned int gic_nr);
+ void gic_cpu_save(struct gic_chip_data *gic);
+ void gic_cpu_restore(struct gic_chip_data *gic);
+ void gic_dist_save(struct gic_chip_data *gic);
+diff --git a/include/soc/qcom/msm8226-pm.h b/include/soc/qcom/msm8226-pm.h
+new file mode 100644
+index 000000000000..264d5f250ea2
+--- /dev/null
++++ b/include/soc/qcom/msm8226-pm.h
+@@ -0,0 +1,19 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef __SOC_QCOM_MSM8226_PM_H__
++#define __SOC_QCOM_MSM8226_PM_H__
++
++#include <linux/kconfig.h>
++#include <linux/types.h>
++#include <linux/errno.h>
++
++#if IS_ENABLED(CONFIG_QCOM_MSM8226_PM)
++bool qcom_msm8226_pm_active(void);
++int qcom_msm8226_cpu_collapse(unsigned int cpu);
++int qcom_msm8226_cpu_kill(unsigned int cpu);
++#else
++static inline bool qcom_msm8226_pm_active(void) { return false; }
++static inline int qcom_msm8226_cpu_collapse(unsigned int cpu) { return -ENODEV; }
++static inline int qcom_msm8226_cpu_kill(unsigned int cpu) { return 1; }
++#endif
++
++#endif
+-- 
+2.56.0
+

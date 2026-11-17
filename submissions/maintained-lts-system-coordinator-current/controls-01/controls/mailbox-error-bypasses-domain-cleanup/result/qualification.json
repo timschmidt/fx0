@@ -1,0 +1,21 @@
+{
+  "passed": false,
+  "returncode": 1,
+  "actual_functions": 2,
+  "bindings": {
+    "gic_hwirq_is_mapped": "2a06fe17fd253c30fbfd7a3a176f484b5ff5401124657cb167c6e4a8405e10cd",
+    "qcom_mpm_probe": "95457ea96230bd6ec490c2d73cce343397e5bd2a89b23b679bcb58e3cc9f45e1"
+  },
+  "source_SHA256": "3cb0b2a8936176c16c97796ca8ad37f76780ec461e932106cc08c6a16188d9f4",
+  "model_SHA256": "7141f781523a7a7a6d6b32a1a41fafa9a27a55a20cf7777cf0f8011e82ded030",
+  "services_synthetic": [
+    "fixed DT public routing data, resource maps and devres",
+    "genpd/provider/mailbox/domain/IRQ registration and failure",
+    "wake-domain cache initialization"
+  ],
+  "actual_kernel_resource_concurrency_qualified": false,
+  "phone_access": false,
+  "cases": 64,
+  "checks": 1806,
+  "failures": 4
+}

@@ -1,0 +1,304 @@
+{
+  "base": "8e6fa853a34c0142b9f3e39b55e17ec44089c9fc",
+  "completed": [
+    {
+      "origin_commit": "5684a2e2d77410e52f6bdde598d69b02105b7172",
+      "subject": "dt-bindings: power: Describe MSM8226 system sleep coordination",
+      "files": [
+        {
+          "path": "Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml",
+          "before_SHA256": "91ca7a61403e12dab7f02e2185051af14144cc677c6c9267776e5c273e8554d8",
+          "original_parent_SHA256": "91ca7a61403e12dab7f02e2185051af14144cc677c6c9267776e5c273e8554d8",
+          "original_after_SHA256": "f2bd89304ca9e99178b91bd6f954ff9d4b6cec593890cfd7ed64928a0deef6ef",
+          "after_SHA256": "f2bd89304ca9e99178b91bd6f954ff9d4b6cec593890cfd7ed64928a0deef6ef",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "Documentation/devicetree/bindings/power/qcom,msm8226-system-pm.yaml",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "f22529aef1c98d88274a14f2db9e29306014ad5c601a942e60df67c45508bf39",
+          "after_SHA256": "f22529aef1c98d88274a14f2db9e29306014ad5c601a942e60df67c45508bf39",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml",
+          "before_SHA256": "e14fd80c8e10595364a385cf6ceb366aa88df9783e741c68948310ed3c69622b",
+          "original_parent_SHA256": "94e0dd802ef2d6df5d3051a06cef71dca70daa3ca894018ab7b4566e9ac5174b",
+          "original_after_SHA256": "4c5ce2ee8a68da96e05c1c119c70d24486beba822ff8189ac3d2b405e621647d",
+          "after_SHA256": "fc5bbc26e8ccf93aaa1fc3a092777a003d3cfeeb44a2c565f6f3224c3fe092c0",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "MAINTAINERS",
+          "before_SHA256": "97adb23747c600444ee2a226edf9f4a82a031cf4ea3d2345f7ee2b9ab4d5aff1",
+          "original_parent_SHA256": "654896e7de93b80ab46f8971cf7e7d482b17dc5dc827791d04c83f875dcd5765",
+          "original_after_SHA256": "1facfcd47d6b21226fbd77445781c5bf2275ad9ea21f88737bad4763d1252518",
+          "after_SHA256": "be1bd1870cf6f35464036675d4040d3981aa03a78507bbeecf98a44926f21205",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "ac03d871113a3d2eaea081d00e50d7ad0d779a59",
+      "subject": "clk: qcom: Restore MSM8226 A7PLL context before activation",
+      "files": [
+        {
+          "path": "drivers/clk/qcom/a53-pll.c",
+          "before_SHA256": "84a91c06729b2c5190f1dc47b53ae564f1399adfd699ea518cf800dd3b0dc256",
+          "original_parent_SHA256": "e956793be137bff4858bb9e1d73ea11bcdf0fd96459eaaa00042ae2f8988c474",
+          "original_after_SHA256": "3c310785acdf9764eb41bb807dbf6cf075cca90e5ba426ba77db319d3c73dcfd",
+          "after_SHA256": "a41dbee2688422bd4ac109fc6f8a91ebf81cd297d5f7e0f489cdd6269800e6c8",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "drivers/clk/qcom/clk-pll-suspend.h",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "0b69f8d52cf54ee5f363b692b7f159f3aab44ca3f954492f89c6eb7f94bf4678",
+          "after_SHA256": "0b69f8d52cf54ee5f363b692b7f159f3aab44ca3f954492f89c6eb7f94bf4678",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "drivers/clk/qcom/clk-pll.c",
+          "before_SHA256": "bfbaf9e47a56e0e37a670a26bdeda82a3072b8966fc644cb25b96eacacddafda",
+          "original_parent_SHA256": "bfbaf9e47a56e0e37a670a26bdeda82a3072b8966fc644cb25b96eacacddafda",
+          "original_after_SHA256": "4deed93d36d0d7c5aac35bda809a435300858a1214f204cd752e938e91c045c3",
+          "after_SHA256": "4deed93d36d0d7c5aac35bda809a435300858a1214f204cd752e938e91c045c3",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "drivers/clk/qcom/clk-pll.h",
+          "before_SHA256": "2a7fdfbe8e1569e402a2064e43990751212e0f6bab127b6bebb0460f026a5240",
+          "original_parent_SHA256": "2a7fdfbe8e1569e402a2064e43990751212e0f6bab127b6bebb0460f026a5240",
+          "original_after_SHA256": "8dc7fb521fdfc1a7bd70ad0712c3ea2d620973ce7c32311a4fd906310127aa3d",
+          "after_SHA256": "8dc7fb521fdfc1a7bd70ad0712c3ea2d620973ce7c32311a4fd906310127aa3d",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "a37ea8cff8cf0243e279f4168a299993c3189215",
+      "subject": "soc: qcom: spm: Verify MSM8226 CPU collapse readiness",
+      "files": [
+        {
+          "path": "drivers/soc/qcom/spm.c",
+          "before_SHA256": "b407e0dc2c919bf74744cc58a36e7dc6017ccf6f0453a4079e98dbac6737c001",
+          "original_parent_SHA256": "b407e0dc2c919bf74744cc58a36e7dc6017ccf6f0453a4079e98dbac6737c001",
+          "original_after_SHA256": "f4dd829b8b8975fbd6c56ac1143ff41e07b1631175b53c8f71ef17780ac5f53a",
+          "after_SHA256": "f4dd829b8b8975fbd6c56ac1143ff41e07b1631175b53c8f71ef17780ac5f53a",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "include/soc/qcom/spm.h",
+          "before_SHA256": "9f46bfd84f9734946d6019f7ceb8c14cb2372da2f08a221884cef1ce9302c710",
+          "original_parent_SHA256": "9f46bfd84f9734946d6019f7ceb8c14cb2372da2f08a221884cef1ce9302c710",
+          "original_after_SHA256": "0df2f3c80d5f7a0231a988dc55df72591809a0d186d14c1c5894666e679498cc",
+          "after_SHA256": "0df2f3c80d5f7a0231a988dc55df72591809a0d186d14c1c5894666e679498cc",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "d1e250838f9836327ef46141bca28a367e2ba7f1",
+      "subject": "pmdomain: qcom: Coordinate MSM8926 sleep voltage and clock state",
+      "files": [
+        {
+          "path": "drivers/pmdomain/qcom/cpr-msm8926-suspend.h",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "c27e3df23d054d82d311c211e8235c2ab4ab126e11ae5d3f9d0bf6230b597170",
+          "after_SHA256": "c27e3df23d054d82d311c211e8235c2ab4ab126e11ae5d3f9d0bf6230b597170",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "drivers/pmdomain/qcom/cpr.c",
+          "before_SHA256": "27dd1e6095b088e1f30863ba5a1f2571c585f82124b859c3bd83f8be563250a6",
+          "original_parent_SHA256": "5f1440e94a343362f65f59f18ec61da647b41ce1a4dbabd4183cd80c4df355b6",
+          "original_after_SHA256": "6fbd626375268ac37eef325f565597d5cf8f95c20eb85f2a63a9dfff680acdf7",
+          "after_SHA256": "aa7af2a619c2387e6e260ebbafd911426612c2698c28af9cc32a05a3dcac9932",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "include/linux/soc/qcom/cpr.h",
+          "before_SHA256": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3",
+          "original_parent_SHA256": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3",
+          "original_after_SHA256": "093bdcd438e04bc8879b3324253357446aa6a69217af4baf12b2ac994861f1c5",
+          "after_SHA256": "093bdcd438e04bc8879b3324253357446aa6a69217af4baf12b2ac994861f1c5",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "ffb851ee18dc9411b816476f1c46e374643decaa",
+      "subject": "irqchip/qcom-mpm: Add owned system-sleep handoff",
+      "files": [
+        {
+          "path": "drivers/irqchip/irq-qcom-mpm.c",
+          "before_SHA256": "b79456f01bc7451d53fb67e0095470b2f39e0f5baa3292de91c28d4038b44a35",
+          "original_parent_SHA256": "b24a47cc0e52c585f1ec3cd4e153edd32a6d188ea08c4a7d51fc83e784417bec",
+          "original_after_SHA256": "ec59324887c396a3a9a1326368f2e03361968d6330bd957aa6fd379131bde1f6",
+          "after_SHA256": "b9c3aacbdb079dbc7004805014af661238a14c7ddd9e2d99ffafe963fedeae1d",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "include/linux/soc/qcom/mpm.h",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "b7ba52217d6d9b65a06252d424e4a2b8d4ba5b8a152439d6717eb68955864743",
+          "after_SHA256": "b7ba52217d6d9b65a06252d424e4a2b8d4ba5b8a152439d6717eb68955864743",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "a4e62575745f880bc1689daf155fac5edbe89320",
+      "subject": "rpmsg: qcom_smd: Retain RPM transport through device noirq",
+      "files": [
+        {
+          "path": "drivers/rpmsg/qcom_smd.c",
+          "before_SHA256": "103a44ca3969552945e2061a4eaca9ee3b0c5a00a090309acb1e0004fa707ad4",
+          "original_parent_SHA256": "34aa1d78119914a38f9cf5038d89d62e621d4e951b6ada0811e1d45f80913b5b",
+          "original_after_SHA256": "ffda25d230b8351f6e739f49dd870efce7b877b16ee1f27dfda186e9017e2a37",
+          "after_SHA256": "a15246f9e9e3f72e1f31650370010fea6c16fd659d88760a110f8e6377ddbdac",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "drivers/soc/qcom/rpm-proc.c",
+          "before_SHA256": "71c323c080e9f0af1a04fd10c8c352aa2235ea837b45ce69f35fd91af7b49349",
+          "original_parent_SHA256": "71c323c080e9f0af1a04fd10c8c352aa2235ea837b45ce69f35fd91af7b49349",
+          "original_after_SHA256": "b5d008ba52d21402f663531b8ed852f6ab3ed04afe70b8eadb31ff7363d525b7",
+          "after_SHA256": "b5d008ba52d21402f663531b8ed852f6ab3ed04afe70b8eadb31ff7363d525b7",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "include/linux/rpmsg/qcom_smd.h",
+          "before_SHA256": "eb6f24b116213315315f43325090480954ddb9a6812354f10b82aa73316036a0",
+          "original_parent_SHA256": "eb6f24b116213315315f43325090480954ddb9a6812354f10b82aa73316036a0",
+          "original_after_SHA256": "9a3c03cb788231ead298d0b9244e23f6b1e9c895988b34ac040dee2213a008e2",
+          "after_SHA256": "9a3c03cb788231ead298d0b9244e23f6b1e9c895988b34ac040dee2213a008e2",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "52dd599c5dcbbb3d804583a4ffa4d04f8a7f91d1",
+      "subject": "soc: qcom: smd-rpm: Hand off receive IRQs after device noirq",
+      "files": [
+        {
+          "path": "drivers/soc/qcom/smd-rpm.c",
+          "before_SHA256": "05f863bef30c28e859947100f46452d1ee9f85bba985228776d8dc20a0a972cd",
+          "original_parent_SHA256": "05f863bef30c28e859947100f46452d1ee9f85bba985228776d8dc20a0a972cd",
+          "original_after_SHA256": "fe5bbb32ff4d1d7fa4f31d64125490d329003c64ed857df263e8ca1134c72726",
+          "after_SHA256": "fe5bbb32ff4d1d7fa4f31d64125490d329003c64ed857df263e8ca1134c72726",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "include/linux/soc/qcom/smd-rpm.h",
+          "before_SHA256": "85f45b7db7eafa2c0ace23893a8e253ffa6a9e8002a8e1a77538383f3beec255",
+          "original_parent_SHA256": "85f45b7db7eafa2c0ace23893a8e253ffa6a9e8002a8e1a77538383f3beec255",
+          "original_after_SHA256": "3dc73a51ee45ee7bb8cf1891bb81bdfa8781f69d598c903dfd09c056560693f4",
+          "after_SHA256": "3dc73a51ee45ee7bb8cf1891bb81bdfa8781f69d598c903dfd09c056560693f4",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "33b9a12656d4e9758d0ee162ead1b9ae15a54586",
+      "subject": "ARM: qcom: Collapse MSM8226 secondary cores for system sleep",
+      "files": [
+        {
+          "path": "arch/arm/mach-qcom/platsmp.c",
+          "before_SHA256": "214b9e92d0dfe82b1472c6b5346ad06c09cf3debc963b3babd57789efc6fc1cf",
+          "original_parent_SHA256": "214b9e92d0dfe82b1472c6b5346ad06c09cf3debc963b3babd57789efc6fc1cf",
+          "original_after_SHA256": "c76cc0fc3035a9aaa9211d418d6a9cf4c2524e22276e9470d9a637c1b80d66dd",
+          "after_SHA256": "c76cc0fc3035a9aaa9211d418d6a9cf4c2524e22276e9470d9a637c1b80d66dd",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "drivers/irqchip/irq-gic.c",
+          "before_SHA256": "3095481db1f1a10f2ffd63e420ae35c6e5a3352eb78c37591a6d8a327b353a65",
+          "original_parent_SHA256": "521d9457e6ab6f224568913527742c01566a1ac59a1d007fb50cb6bdb97a7e42",
+          "original_after_SHA256": "edd7a93e9a9a78fa04803a72c04fb3522feeeb28066a3198a7080dc7deeb5610",
+          "after_SHA256": "0585e98bdd6e107b846c5b9062c350155f18fdc1e8c49887237790afb9fe5a73",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "include/linux/irqchip/arm-gic.h",
+          "before_SHA256": "6f9bf34e36ea014314a7be43cf10537548beba95242dab36b26161b150a8b5f3",
+          "original_parent_SHA256": "a503699f866c088518d91df3a2d14020152ec3a972af5a246c86487131f60c65",
+          "original_after_SHA256": "744e5d0ea2f3f8108bcced950eb9f5aaeca2357f30e3c9c9f12ca8bfc4c6e6a2",
+          "after_SHA256": "37ecaf81f547a14708034014cbb02459573f31eafc352e9cbdca3f67d25e810f",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "include/soc/qcom/msm8226-pm.h",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "35d2d5e5f1f5d7bc8059f85ea902da5d64a4de55ef0bd54a32f5eece1019fd3a",
+          "after_SHA256": "35d2d5e5f1f5d7bc8059f85ea902da5d64a4de55ef0bd54a32f5eece1019fd3a",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "642186babe2317442a6f6475b69bb7ccca453b51",
+      "subject": "soc: qcom: Add MSM8226 system suspend coordinator",
+      "files": [
+        {
+          "path": "drivers/soc/qcom/Kconfig",
+          "before_SHA256": "c80f6ec85e28d8625699334f20151d6202f1e6850fffc46894771a2f2c5f7b1c",
+          "original_parent_SHA256": "3c9401d5b000b1bab7e2d8e0bfbd2136dffda744a1948610a42f2c79d256a16a",
+          "original_after_SHA256": "a62a4ccf5d6329a9592aeca45057e7a316afb15cdf2040a58e53459e444933d3",
+          "after_SHA256": "c886fdf4da3aa1a303fead0e2c918ff8a3b25fbf3ce5ba5ed272aaa2ceda22e2",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "drivers/soc/qcom/Makefile",
+          "before_SHA256": "08efeee3a711e33be2dbf68caf66492267d48346af8f87f416115a2996e0ef35",
+          "original_parent_SHA256": "96ccdbe96cbe068fcc82dc61c0ef40966905f2c0f8d3d2bbfa43f98c31ace06d",
+          "original_after_SHA256": "573a5a7ef66693867b679599b426a87a86df2986a926008cb26014dac7d66dc7",
+          "after_SHA256": "3a8a9d69e7150a0fee77e7927148cdb10cbb4f8272fa7f162939f5fc6fd32f85",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "drivers/soc/qcom/msm8226-pm.c",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "055e3c7fe79737a63be9fbbd2fcf211b896c6be76880a7790971f3a6fb3faf9d",
+          "after_SHA256": "d1b732a3af569a23a6e5c12cc469842b15888d2700f2384169f7f070ac42f8d9",
+          "existing_LTS_context_preserved": true,
+          "LTS_generic_cacheflush_wrapper": true
+        }
+      ]
+    },
+    {
+      "origin_commit": "fc5120c4e0f2ab4790cb62f1f4c40aea74697a18",
+      "subject": "ARM: dts: qcom: Add an experimental Madai suspend target",
+      "files": [
+        {
+          "path": "arch/arm/boot/dts/qcom/Makefile",
+          "before_SHA256": "d23e64aa14250dfa84c0b2437b69382b1b31eed5267525aac6f29ee33306a0c0",
+          "original_parent_SHA256": "64f7e3f24166c6254c846099cfa693919e070f85a1fd91b37de906d192295af8",
+          "original_after_SHA256": "67240b5dea77a66cb5a42f198f128d20fa36f7cb9c09fb1588fa5c004bd01708",
+          "after_SHA256": "0c77bb1b83b6603c2f3379fdc0be5322646679573591abe7641a954daec562d8",
+          "existing_LTS_context_preserved": true
+        },
+        {
+          "path": "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-suspend.dts",
+          "before_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_parent_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "original_after_SHA256": "87aef0bb972bc471c600a36a6bbceb84b173339ce260797e6b87ff18b48884f4",
+          "after_SHA256": "87aef0bb972bc471c600a36a6bbceb84b173339ce260797e6b87ff18b48884f4",
+          "existing_LTS_context_preserved": true
+        }
+      ]
+    }
+  ],
+  "phone_access": false,
+  "published": false,
+  "state": "all source changes composed",
+  "origin": "fc5120c4e0f2ab4790cb62f1f4c40aea74697a18",
+  "path": "arch/arm/boot/dts/qcom/Makefile",
+  "passed": true
+}
