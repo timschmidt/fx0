@@ -1,0 +1,74 @@
+{
+  "scope": "MSM8226 APSS watchdog retention in bounded system-core PM and RTC-woken s2idle",
+  "source_commit": "2fd22a05dd05ded4ed35806bd2f1a7051effcc90",
+  "RAM_boot": "ffbf1e84",
+  "RAM_transfer_readback_exact": true,
+  "core": {
+    "passed": true,
+    "rate": 32768,
+    "timeout": 25,
+    "running_at_resume": true,
+    "retained_ticks": 165857,
+    "syscore_phases": {
+      "syscore_suspend": [
+        1,
+        1
+      ],
+      "syscore_resume": [
+        1,
+        1
+      ]
+    },
+    "all_cpus_restored": true,
+    "machine_suspend_entered": false
+  },
+  "s2idle": {
+    "passed": false,
+    "rate": 32768,
+    "timeout": 25,
+    "running_at_resume": true,
+    "retained_ticks": 584,
+    "inactive_clock_seconds": 13.99,
+    "first_wakeup_source": "rtc",
+    "rtc_interrupt_increment": 1,
+    "host_USB_polling_quiet_seconds": 32.0
+  },
+  "conclusion": "The APSS watchdog counter did not account for the s2idle interval, even though its enable bit remained set at resume.",
+  "awake_expiration": {
+    "dispatched": false,
+    "reason": "Automatic approval review rejected the separate expiration control after the retention failure."
+  },
+  "installed_return": {
+    "boot": "54b0e36f",
+    "kernel": "6.18.64-fx0-lts-alpine",
+    "installed_modules_exact": 482,
+    "protected_hashes_match": true
+  },
+  "physical_deep_suspend_qualified": false,
+  "manual_WiFi_scans": 0,
+  "PM8226_read_only_inventory": {
+    "source_commit": "0d081b757956382cf328fadbf346e356dbfdfdb6",
+    "RAM_boot": "a9352ca3",
+    "RAM_transfer_readback_exact": true,
+    "PON_registers": {
+      "PON_revision": 1,
+      "PON_type": 1,
+      "PON_subtype": 1,
+      "S1_raw": 17,
+      "S2_raw": 1,
+      "watchdog_reset_type_raw": 14,
+      "watchdog_control_raw": 128,
+      "watchdog_enable_bit": true
+    },
+    "matched_two_reads": true,
+    "PMIC_register_writes": 0,
+    "suspend_requests": 0,
+    "watchdog_owner_and_expiration_behavior_qualified": false,
+    "installed_return": {
+      "boot": "5826a6cf",
+      "kernel": "6.18.64-fx0-lts-alpine",
+      "installed_modules_exact": 482,
+      "protected_hashes_match": true
+    }
+  }
+}

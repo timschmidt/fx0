@@ -474,11 +474,28 @@ three saved-context restores and matched all 482 installed modules and
 the protected boot and package hashes after return. [System-core evidence](../evidence/2026-11-18-msm8226-secondary-restart.json)
 
 The installed Fx0 has a registered APSS watchdog. The existing driver
-stops the active watchdog in its late suspend callback. The next
-diagnostic can keep it armed and record its hardware tick counter on
-resume. The complete ARM build and host cases passed. On-device reset
-qualification and watchdog retention through physical deep suspend are
-pending. [Watchdog diagnostic source](https://github.com/timschmidt/fx0-linux/commit/2fd22a05dd05ded4ed35806bd2f1a7051effcc90)
+stops the active watchdog in its late suspend callback. The diagnostic
+kept it armed and captured its tick counter on resume. It counted
+165,857 ticks at 32,768 Hz during the bounded system-core test. The
+next test woke from 13.99 seconds of `s2idle` via the RTC and recorded
+only 584 watchdog ticks. The driver read the enable bit as set on both
+resumes. The two samples leave continuous watchdog coverage during
+sleep unverified. The phone returned normally, and the installed
+module and protected hashes matched. [APSS watchdog evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
+[Diagnostic source](https://github.com/timschmidt/fx0-linux/commit/2fd22a05dd05ded4ed35806bd2f1a7051effcc90)
+
+The PM8226 power-on controller offers another watchdog path. Qualcomm's
+downstream driver uses the same watchdog enable register offset as the
+Linux PM8916 driver. The Fx0's RAM inventory read only the selected
+registers through the bound PON driver. Two reads agreed on revision
+`0x01`, type and subtype `0x01`, timer bytes `0x11` and `0x01`, reset
+type byte `0x0e`, and control byte `0x80`. Bit 7 was already set. The
+inventory issued zero PMIC register writes. Configuration ownership,
+expiration behavior, and independent recovery during deep suspend
+remain to be established. [PMIC watchdog inventory](../evidence/2026-11-18-fx0-watchdog-recovery.json)
+[Inventory source](https://github.com/timschmidt/fx0-linux/commit/0d081b757956382cf328fadbf346e356dbfdfdb6)
+[Qualcomm PON source](https://android.googlesource.com/kernel/msm/%2B/75b24301009d38deab0f93cd10095b9b33dba545/drivers/input/misc/qpnp-power-on.c)
+[Related Linux watchdog driver](https://android.googlesource.com/kernel/common/%2B/refs/tags/android15-6.6-2025-03_r8/drivers/watchdog/pm8916_wdt.c)
 This difference defines the next hardware comparison. Its effect on
 the delayed wake remains unverified.
 [ARM bringup timeout](https://github.com/timschmidt/fx0-linux/blob/3651953cbe1e033d67d510f2b55194c520e2fbc5/arch/arm/kernel/smp.c#L143)
