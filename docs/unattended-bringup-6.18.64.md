@@ -333,6 +333,25 @@ SSH and H.264 acceptance remain unverified. The next diagnostic needs to
 separate initramfs boot from the first Venus probe.
 [Corrected handset trial evidence](../evidence/2026-11-18-venus-ram-second-trial.json)
 
+### Coldplug and ordinary-DTB control
+
+The boot arguments for the third trial deferred automatic Venus module
+loading through kmod. The candidate returned before USB userspace, so the
+controller never asked for an explicit module load. The retained console
+ended at 16.8 seconds. The same Adreno firmware warning also appeared during
+the successful capped power-management boot.
+
+The next trial used the ordinary signed DTB with the exact same Venus kernel,
+ramdisk and boot arguments. It reached USB userspace with signature enforcement,
+both automatic return paths and all four staged Venus firmware files present.
+The active firmware path was `/run/msm-firmware-loader/target`, which is
+managed by the installed MSM firmware loader. The general codec-readiness
+check therefore stayed false. The control localizes the early failure to the
+diagnostic DTB or its interaction with the kernel. The next driver test needs
+to isolate the new device nodes and resolve the firmware-path handoff.
+Both tests returned with matching installed boot and package hashes.
+[Coldplug and ordinary-DTB evidence](../evidence/2026-11-18-venus-dtb-control.json)
+
 ### Venus H.264 workload
 
 A static ARM32 FFmpeg build includes the V4L2 mem-to-mem H.264 encoder and
