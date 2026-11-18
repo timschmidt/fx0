@@ -11,7 +11,9 @@ The front and rear cameras completed five capture sessions at 1976×1200,
 The worker verified at least 16 consecutive sensor color-bar frames per session.
 Both sensor controls returned to their original values and both sensors
 runtime-suspended after close. USB remained configured at high speed. The
-scoped journal check found no camera pipeline or IOMMU fault. Frame files
+independent journal check covered the 21.7-second service window and found
+zero VFE missing-ready-buffer warnings, display underruns or camera/IOMMU
+faults. The worker’s original matcher omitted the VFE buffer warning. Frame files
 stayed in phone RAM and the test removed them. Scene quality, sustained
 capture and system resume still require qualification.
 
