@@ -161,6 +161,15 @@ cgroup, clears its alarm and leaves the saved software offset unchanged. It has
 no suspend or hardware-clock-setting capability. This qualifies the awake alarm
 path only; it does not establish alarm wake from system sleep or cold retention.
 
+A separate RTC probe is prepared for one WLAN-disabled RAM boot. It checks
+the boot identity, both return paths and RTC ownership before it requests
+`freeze`. It requires a completed s2idle cycle, an RTC IRQ increment and a
+matching wake IRQ to attribute the wake to the alarm. The workstation replay
+covers early wake, ambiguous IRQs, a changed boot, alarm ownership and
+wakeup-count races. The probe has yet to request suspend on the handset.
+[RTC s2idle probe](../diagnostics/rtc-s2idle/probe.py)
+[Workstation checks](../evidence/2026-11-18-rtc-s2idle-workstation.json)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate
