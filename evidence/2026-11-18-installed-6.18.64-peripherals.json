@@ -264,5 +264,146 @@
     "checked": true
   },
   "full_bringup_acceptance": false,
-  "last_updated_UTC": "2026-11-18T02:52:16.124576+00:00"
+  "last_updated_UTC": "2026-11-18T03:01:27.729734+00:00",
+  "IIO_sensors": {
+    "accelerometer": {
+      "sensor": "mpu6515",
+      "driver": "inv-mpu6050-i2c",
+      "axis_scales": [
+        0.000598,
+        0.000598,
+        0.000598
+      ],
+      "samples": 16,
+      "errors": {}
+    },
+    "gyroscope": {
+      "sensor": "mpu6515",
+      "driver": "inv-mpu6050-i2c",
+      "axis_scales": [
+        0.001064724,
+        0.001064724,
+        0.001064724
+      ],
+      "samples": 16,
+      "errors": {}
+    },
+    "magnetometer": {
+      "sensor": "hscdtd008a",
+      "driver": "ak8974",
+      "axis_scales": [
+        0.001464843,
+        0.001464843,
+        0.001464843
+      ],
+      "samples": 16,
+      "errors": {}
+    },
+    "device_tree_and_userspace_matrices": {
+      "mpu6515": {
+        "in_accel_mount_matrix": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          -1
+        ],
+        "in_anglvel_mount_matrix": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          -1
+        ],
+        "device_tree": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          -1
+        ]
+      },
+      "hscdtd008a": {
+        "in_mount_matrix": [
+          0,
+          -1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "device_tree": [
+          0,
+          -1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    "first_probe_failed_on_shared_scale_assumption": true,
+    "pose_calibration_and_suspend_qualified": false
+  },
+  "GPU": {
+    "contexts": 5,
+    "frames": 40,
+    "pixels_per_frame": 4096,
+    "render_node": "renderD128",
+    "renderer": "FD305",
+    "gles": "OpenGL ES 3.0 Mesa 26.1.6",
+    "egl": "1.5",
+    "pattern_hashes": [
+      "d9649d2d88d0c0243c15c69750a7c67876e4ac0cf038d794b9fda4382c31d341",
+      "e5968d96986ef91670559ad7222aa8d9b06bb432c67aa672e007654cf5ae8735"
+    ],
+    "display_surface_created": false,
+    "fd_closed": true,
+    "kernel_message_counts": {
+      "GPU_or_IOMMU_error": 0,
+      "display_underrun": 0,
+      "kernel_fault": 0
+    },
+    "pixel_checks": 163840,
+    "diagnostic_sha256": "aa184bda959b691da7e8c4ea308ef768e6c23ebf08b0fe43b9acbd2058a28904",
+    "sustained_load_and_compositor_acceptance": false
+  },
+  "Venus_video_codec": {
+    "installed_nodes": [
+      "msm_vfe0_video0",
+      "msm_vfe0_video1",
+      "msm_vfe0_video2"
+    ],
+    "installed_venus_DT_nodes": 0,
+    "installed_venus_platform_devices": 0,
+    "standard_firmware_basenames_in_checked_directories": 0,
+    "stock_VIDC_engine_node_offset": "0xfdc00000",
+    "stock_Venus_PIL_wrapper_node_offset": "0xfdce0000",
+    "msm8226_MMCC_exports_venus_clocks_reset_and_power_domain": true,
+    "kernel_ARM64_Kconfig_gate": true,
+    "installed_kernel_source": "c3e72d14babc2e875b89cadde5ed57bb54b11a0b",
+    "ARM32_object_builds": 18,
+    "ARM32_relocatable_partial_links": 3,
+    "compile_or_partial_link_diagnostics": 0,
+    "validated_live_hardware_codec": false,
+    "ARM32_DMA_and_firmware_handoff_open": true
+  }
 }

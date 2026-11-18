@@ -50,4 +50,39 @@ persistent Wi-Fi policy allows startup scanning, so the reboot remains
 pending. Larger storage loads, cold boot, unplugged standby and the complete
 reliability matrix remain open.
 
+## Sensors and offscreen graphics
+
+The MPU-6515 accelerometer and gyroscope and the HSCDTD008A magnetometer
+each returned 16 vectors without read errors. The first probe assumed a
+shared scale and failed on the magnetometer’s per-axis attributes. The
+corrected reads used the live ABI. All three exported mounting matrices
+matched the board device tree, including the magnetometer’s
+`in_mount_matrix`. Physical pose calibration and resume remain open.
+
+The EGL test opened the MSM DRM render node and created five offscreen GLES
+contexts. Mesa 26.1.6 reported Freedreno FD305. Two alternating shader
+patterns matched every pixel across 40 RGBA frames, totaling 163,840
+pixel comparisons. The test closed the render node and the scoped kernel
+journal showed zero matching GPU, IOMMU or display faults. The installed
+boot and package hashes matched after the test. This covers basic rendering
+correctness and context recreation. Sustained load and compositor behavior
+remain separate.
+
+## Venus video codec
+
+The installed device exposed only the three CAMSS VFE video outputs. The
+stock MSM8226 source describes a VIDC engine at `0xfdc00000` and a Venus
+firmware-loader wrapper at `0xfdce0000`. No matching DT or platform device
+appeared on the installed kernel. The firmware query checked known Venus
+filenames under the installed firmware paths. It found none in those paths.
+
+The maintained MSM8226 MMCC driver already provides the Venus core, AHB
+and AXI clocks, a reset and a power domain. The installed kernel’s Venus
+Kconfig gate is ARM64 in regular Qualcomm configurations. An isolated
+Clang 21 Kbuild test directly compiled all 18 existing Venus sources for
+ARM32 and linked three relocatable core, decoder and encoder objects with no
+diagnostics. The ordinary Kconfig gate remained in effect. ARM32 DMA and
+IOMMU behavior, the stock firmware and HFI contract, platform binding, and
+actual hardware encode/decode remain open. [Linux Venus source](https://raw.githubusercontent.com/torvalds/linux/master/drivers/media/platform/qcom/venus/core.c)
+
 [Sanitized device evidence](../evidence/2026-11-18-installed-6.18.64-peripherals.json)
