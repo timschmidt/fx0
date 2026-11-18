@@ -326,6 +326,22 @@ The general return-probe capture hit its output limit. The retained
 kernel journal confirms the callback error.
 [Clock-owner trace](../evidence/2026-11-18-msm8226-clock-owner-first.json)
 
+The counted trace identified the lingering A7 PLL reference. APCS clock
+registration brought the prepare count to one. The generic syscon lookup
+in `cpr_msm8926_init` brought it to two. When startup switched the CPU
+mux to GPLL0, CCF released the mux's reference and the PLL count fell
+back to one. The retained journal showed zero suspend entries on that boot
+after the test dispatch failed. The phone returned to installed 6.18.64
+and matched all protected hashes and 482 module files.
+[Prepare-count trace](../evidence/2026-11-18-msm8226-clock-prepare-balance.json)
+
+The correction obtains the APCS mailbox driver's register map and creates
+a managed device link for the supplier lifetime. The generic path
+attaches the first DT clock to the map, which prepares the A7 PLL on
+MSM8226. Seven workstation cases exercise the provider lookup, deferral,
+map and device-link failures, and balanced device references.
+[APCS register-map correction](https://github.com/timschmidt/fx0-linux/commit/3651953cbe1e033d67d510f2b55194c520e2fbc5)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate
