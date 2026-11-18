@@ -135,6 +135,37 @@ The binding, bandwidth votes, firmware authentication, and physical video
 encode/decode still require qualification.
 [Stock IOMMU descriptions](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/boot/dts/msm8226-iommu.dtsi)
 
+### MSM8226 device-tree preview
+
+The separate Madai Venus DTB describes seven disjoint codec and IOMMU MMIO
+windows. The IOMMU owns the wrapper clock selector. The codec has separate
+resources for the wrapper version and the registers above the selector. Linux
+binds only the nonsecure IOMMU context. The codec's DMA bus describes the stock
+1 GiB aperture, and its firmware phandle points at the 5 MiB `no-map` reservation.
+Both hardware nodes have `status = "disabled"`. The normal packaged Madai DTB
+matched the rebuild byte for byte.
+
+The driver uses the stock clock rates, codec write presets, IOMMU tuning and
+DDR bandwidth vectors. The bandwidth code adds average votes by direction and
+takes the larger peak. A host model checks the actual split and legacy MMIO
+functions, clock-selector readback, runtime-resume error propagation at attach,
+and bandwidth boundaries. It detects five injected faults. Eight invalid DTB
+copies exercise the new schema gates, including a missing clock resource, an
+extra secure context and codec enablement without interconnect paths.
+
+The preview links on ARM32 and the changed driver code compiles on ARM64.
+Enabling the codec requires the MSM8226 memory and CPU configuration
+interconnect providers, plus a device trial of PAS firmware startup and HFI
+operation. Runtime PM errors on IOMMU teardown and TLB paths still need
+qualification before an enabled trial.
+[Platform source](https://github.com/timschmidt/fx0-linux/commit/b190c7dfd9eeac3588807c39107f2e64d0050ecb)
+
+```sh
+python3 -B diagnostics/venus-arm32/check-platform.py /path/to/linux /path/to/results
+```
+
+[Platform preview evidence](../evidence/2026-11-18-venus-platform-preview.json)
+
 [Venus and USB follow-up evidence](../evidence/2026-11-18-venus-arm32-and-usb.json)
 
 [Sanitized device evidence](../evidence/2026-11-18-installed-6.18.64-peripherals.json)

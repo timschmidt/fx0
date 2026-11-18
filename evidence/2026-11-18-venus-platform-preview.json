@@ -1,0 +1,132 @@
+{
+  "recorded_UTC": "2026-11-18T04:21:41.023679+00:00",
+  "source_commit": "b190c7dfd9eeac3588807c39107f2e64d0050ecb",
+  "vendor_source_commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+  "ARM32": {
+    "terminal_process_exit": 0,
+    "vmlinux_sha256": "59bc4b14a60e995815a795eeec29fc44f0abfd8f551f9fb6e62e8938f3643848",
+    "total_modules": 473,
+    "selected_by_Kconfig_without_compile_test": true,
+    "unsigned_modules": {
+      "venus-core.ko": {
+        "sha256": "f55cc77500f6084f12cbbefab1bba51d02136bd79cb75e6ccde3b9082646e552",
+        "imported_CRCs_match": 153
+      },
+      "venus-dec.ko": {
+        "sha256": "7a2561210515de88d05e27847efed1731b8f35329aa7ec23952407c4d098d33c",
+        "imported_CRCs_match": 127
+      },
+      "venus-enc.ko": {
+        "sha256": "3233346d5a50105465685c8137eb92aa8521ac64cc31aa5f41a6d4517e35e4f2",
+        "imported_CRCs_match": 100
+      }
+    },
+    "build_warnings": 0,
+    "public_verification_certificate_only": true
+  },
+  "ARM64": {
+    "terminal_process_exit": 0,
+    "changed_objects": {
+      "core.o": "93c460bf3abd891949081693776faa8592d9813be608694b074d785c3128f273",
+      "hfi_venus.o": "1a8184795f0e5a41cce88c3ab51fafdae7fdbca56f0139c1c51f17ef0ce8b502",
+      "pm_helpers.o": "1775a0d56924f074edfcd225f6a13779468dd58f48e522c3de8089dbcaee0541",
+      "firmware.o": "13f1ca90821d48f22e15cce83aa3a2dba48e314de5149ac71233b74403a43435",
+      "qcom_iommu.o": "742118038a40cb2e4f0ae3bc571eb0be757668a8fd0741c404f9cd7d502a9f11"
+    },
+    "generic_DMA_reservation_retained": true,
+    "warnings": 0
+  },
+  "compiled_topology": {
+    "passed": true,
+    "preview_sha256": "70eb1321b657fbe0487ebe1646aae2656d030cd4ae52e9b5e50202115cdb4000",
+    "normal_DTB_matches_packaged_bytes": true,
+    "schema_positive": true,
+    "binding_controls": [
+      "clock-select resource missing",
+      "wrong PAS IOMMU ID",
+      "missing TBU clock name",
+      "wrong context type",
+      "extra secure context",
+      "enabled without bandwidth paths",
+      "implicit enable without bandwidth paths",
+      "wrong codec resource order"
+    ],
+    "nonoverlapping_MMIO_windows": [
+      [
+        4257742848,
+        1024
+      ],
+      [
+        4257759232,
+        9728
+      ],
+      [
+        4257792000,
+        4096
+      ],
+      [
+        4258004992,
+        131072
+      ],
+      [
+        4258136064,
+        4
+      ],
+      [
+        4258136068,
+        4
+      ],
+      [
+        4258136072,
+        16376
+      ]
+    ],
+    "one_nonsecure_context": true,
+    "disabled_codec_and_IOMMU": true,
+    "stock_table_comparisons": {
+      "IOMMU_tuning_pairs": 24,
+      "codec_register_presets": 10,
+      "codec_clock_load_pairs": 3,
+      "nonzero_stock_DDR_votes": 6
+    },
+    "runtime_test": false
+  },
+  "compiled_helper_model": {
+    "passed": true,
+    "preset_writes": 10,
+    "failed_map_slots": 4,
+    "bandwidth_boundary_and_aggregation_cases": 6,
+    "clock_resume_cases": 5,
+    "attach_PM_cases": 2,
+    "kernel_fragments_sha256": {
+      "venus_wrapper_addr": "aa264312d4d5f77b2279d8d1e064fe7e35f0646a9b8cc059a22dcf4e0d19a863",
+      "venus_assign_register_offsets": "02a322eb57bc3e7d2a76b6a5f62c1262c3c4d69b38bb7c24137361f8426bb1be",
+      "venus_map_registers": "81422385b3fd7e0413d726ddb521d834485cadbb66461af26c1cfefe4a3205a6",
+      "venus_set_registers": "e469be4dbf0f9193467f50591e24f077e97f4895c9b8f13bbddaff9fddc263c6",
+      "mbs_to_bw": "11e155394e3aa689174a441732bb2bf26d2585de285e3ef6b25a07375ef7e34b",
+      "load_scale_bw": "d77b8bf258f8b6689eb5ad3ca86ebf68f754253b8beeea55a35931db551c03b6",
+      "qcom_iommu_select_wrapper_clk": "876b23fa65086ee40e7b8d44c765598342777e7c6533cdd773f48d42baf0d88e",
+      "qcom_iommu_resume": "89a3eb8fd708b41aefee37b17e02f1d58818717c718d2c61adb9c5eb99a61ab9",
+      "qcom_iommu_attach_dev": "348486f00dc580a809ff3ad6e0c6d0612972085d9b57d8b2975b538659462061",
+      "msm8226_reg_preset": "0984a3ecca15a35e931bc67f3caa134ecad6b5283361f26d67b07219aaf70875",
+      "msm8226_bw_enc": "653c3c26193707d5747719ef07e5dcdc731a396942a12aad2d78c81e0408ea0d",
+      "msm8226_bw_dec": "a60b856a9149b1a2ba1de50f6cb004b17855d689b1ba6646cf2c4492952bdf50"
+    },
+    "UBSan": true,
+    "hardware_exercised": false
+  },
+  "detected_fault_injections": [
+    "wrapper offset points at the wrong register",
+    "clock selection clobbers unrelated bits",
+    "clock selection ignores a stuck select bit",
+    "attach continues after a failed resume",
+    "aggregate adds peak votes instead of taking their maximum"
+  ],
+  "source_gaps": [
+    "MSM8226 memory and CPU configuration interconnect providers",
+    "IOMMU teardown and TLB paths under runtime PM failure",
+    "physical secure firmware authentication and HFI/codec trial"
+  ],
+  "phone_boot_or_activation_executed": false,
+  "main_bringup_completed": false
+}
