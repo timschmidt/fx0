@@ -375,6 +375,64 @@ secondary boot data at the end of each timed attempt. Qualcomm's
 downstream hotplug path publishes a per-CPU startup vector and uses the
 firmware's dedicated hotplug-collapse argument. The tested kernel uses
 the idle context-resume vector and the ordinary L2-on collapse argument.
+
+### CPU3 warm-vector probe
+
+The diagnostic uses the firmware's hotplug-collapse argument `0x10` on
+CPU3. It records entry to the ARM warm vector in an aligned memory word
+and parks the core until reboot. The other cores can still run userspace
+and the automatic return. Ordinary idle resumes use `cpu_resume_arm`.
+Keeping CPU3 at the vector avoids relying on the timed-out ARM startup
+request or its cleared boot data. The diagnostic runs only when its boot
+parameter is supplied. [Kernel source](https://github.com/timschmidt/fx0-linux/commit/a37af0becb9c29e4b6da131fa7ded3fd5ca72ac7)
+
+The worker issues one offline request and checks that CPU3 is armed and
+the other cores are online before issuing one online request. Linux can report an online timeout
+while the core is parked. The worker measures warm-vector arrival
+separately and verifies that the system suspend counters stay fixed.
+The RAM boot uses the capped DTB, enforces module signatures and disables
+WLAN. The host verifies exact USB readback before boot. [Probe worker](../diagnostics/msm8226-pm/cpu3-warm-probe.py)
+
+The ARM controls run the compiled dispatcher at two link addresses. They
+substitute a synthetic MPIDR value, skip privileged interrupt masking and inspect the state at
+the WFI boundary. Twenty-four cases cover normal idle, CPU identity and
+probe state. The ARM SMP and cpuidle objects also compile with the MSM8226
+coordinator disabled. [ARM controls](../diagnostics/msm8226-pm/warm-entry-controls.py)
+
+The first RAM boot skipped the probe because the host checker lacked a
+Python import. The repaired checker passed on the same boot before the
+automatic return. The repeat used the same image and took CPU3 offline
+with CPUs 0–2 still online. Linux returned `EIO` after the wake request on
+SGI 0. The probe word still read `armed` at 353.4 seconds after boot. The
+journal recorded two distinct online timeouts. A host reproduction showed
+that Python's buffered file close retries the failed write. The worker now
+uses unbuffered sysfs writes, and a regression test exercises the rejected
+write. The return audit matched all 482 installed module files and protected
+boot and package hashes. [CPU3 evidence](../evidence/2026-11-18-msm8226-cpu3-warm-probe.json)
+
+Qualcomm's downstream wake uses hardware SGI 1. The same capped DTB and
+boot arguments with SGI 1 and a single unbuffered online write produced
+one kernel timeout. CPU3 stayed armed through the last sample at 353.6
+seconds. The installed kernel passed the independent return audit.
+[SGI 1 source](https://github.com/timschmidt/fx0-linux/commit/85ae3cf7bc5016ccea2ef33cc78b3fe464dca081)
+
+ARM disables the per-CPU IPIs during CPU teardown. GICv2 leaves the
+effect of SGI enable changes up to the implementation. The control
+read CPU3's banked enable bit immediately before collapse and restored
+it. It kept the SGI 1 trigger, device tree, boot arguments, and unbuffered
+worker. [Arm architecture specification](https://documentation-service.arm.com/static/5f8ff196f86e16515cdbf969)
+[Wake-enable source](https://github.com/timschmidt/fx0-linux/commit/4b44caace62baa968b0c43ea84e4225bfabe499f)
+
+The banked SGI enable bit was clear after teardown and set after the
+write. CPU3 reached the firmware vector 1.009 seconds after the worker
+started the wake request. The diagnostic parks CPU3 at the vector, so
+the online request still timed out as expected. The suspend counters
+stayed fixed. This qualifies wake delivery to the firmware vector.
+The phone returned to installed 6.18.64 with all four CPUs online.
+The independent audit matched all 482 module files and the protected
+boot and package hashes.
+Returning CPU3 to the scheduler and entering physical deep suspend
+remain open. [CPU3 evidence](../evidence/2026-11-18-msm8226-cpu3-warm-probe.json)
 This difference defines the next hardware comparison. Its effect on
 the delayed wake remains unverified.
 [ARM bringup timeout](https://github.com/timschmidt/fx0-linux/blob/3651953cbe1e033d67d510f2b55194c520e2fbc5/arch/arm/kernel/smp.c#L143)
