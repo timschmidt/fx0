@@ -582,8 +582,10 @@ frame-count difference remains open.
 A fresh boot of the exact same image ran the independent decoder workload
 before any encode. FFmpeg used the Venus decoder, reported packet I/O
 errors and aborted. The kernel journal recorded the same firmware system
-error and decoder session error as the earlier decoder attempt. Both
-trials returned to installed 6.18.64. The installed audits verified 482
+error and decoder session error as the earlier decoder attempt. Before
+the system error, the firmware rejected the current session state for
+continue-data-transfer, raw-format selection and buffer-allocation mode.
+Both trials returned to installed 6.18.64. The installed audits verified 482
 module files and the protected hashes, and found zero IOMMU timeouts and
 zero runtime PM underflow warnings in either candidate journal.
 
