@@ -501,6 +501,17 @@ deep suspend remain unresolved. The first setup attempt used a 60-second
 timeout that the watchdog ioctl rejected before suspend.
 [WFI watchdog evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
 
+A further RTC-woken s2idle control traced 11 sites in Linux's APSS
+watchdog driver and core. The trace saw the late-suspend callback return,
+then early resume begin 13.998 seconds later. No probed watchdog operation
+occurred within that window. The trace includes starts and a stop outside
+it and reports zero lost entries. An independent installed-kernel audit
+confirmed one s2idle entry and exit and the resume count of 577 ticks at
+32,768 Hz. Linux driver activity at the probed sites does not explain the
+shortfall. The hardware counter and firmware activity during the interval
+remain unobserved.
+[Driver trace evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
+
 The PM8226 power-on controller offers another watchdog path. Qualcomm's
 downstream driver uses the same watchdog enable register offset as the
 Linux PM8916 driver. The Fx0's RAM inventory read only the selected

@@ -132,5 +132,37 @@
       "modules_verified": 482,
       "protected_hashes_match": true
     }
+  },
+  "s2idle_APSS_driver_trace_control": {
+    "RAM_boot": "063b8c1a",
+    "same_signed_RAM_image_as_WFI_and_original_tests": true,
+    "rtc_first_wake": true,
+    "inactive_clock_seconds": 13.981,
+    "timeout_seconds": 25,
+    "rate": 32768,
+    "running_at_resume": true,
+    "retained_ticks": 577,
+    "registered_driver_probes": 11,
+    "trace_entries_lost": 0,
+    "trace_seconds_from_late_callback_return_to_early_callback_entry": 13.998017,
+    "ordered_events": [
+      "watchdog_start",
+      "watchdog_set_timeout",
+      "watchdog_start",
+      "watchdog_ping",
+      "late_suspend_enter",
+      "late_suspend_return",
+      "early_resume_enter",
+      "watchdog_start",
+      "early_resume_return",
+      "watchdog_stop"
+    ],
+    "probed_events_between_late_return_and_early_entry": [],
+    "coverage": "The Linux watchdog hardware-driver entry and exit probes do not observe firmware, secure-world operations, or the hardware counter directly while asleep.",
+    "installed_return": {
+      "boot": "dbce6cf3",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
   }
 }
