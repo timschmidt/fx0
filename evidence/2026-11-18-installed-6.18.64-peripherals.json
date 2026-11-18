@@ -1,0 +1,167 @@
+{
+  "recorded_UTC": "2026-11-18T02:43:06.871362+00:00",
+  "installed_release": "6.18.64-fx0-lts-alpine",
+  "signed_module_enforcement": true,
+  "kernel_taint": 0,
+  "USB_high_speed_configured_during_camera_capture": true,
+  "installed_boot_package_and_repository_hashes_preserved": true,
+  "cameras": {
+    "acquisition_and_reopen_passed": true,
+    "sessions": [
+      {
+        "camera": "front",
+        "width": 1976,
+        "height": 1200,
+        "stride": 2472,
+        "frames": 24,
+        "bytes_per_frame": 2966400,
+        "consecutive_pattern_frames": 18,
+        "PM_after_close": {
+          "front": "suspended",
+          "back": "suspended"
+        },
+        "test_pattern_restored": true
+      },
+      {
+        "camera": "back",
+        "width": 1640,
+        "height": 1232,
+        "stride": 2056,
+        "frames": 24,
+        "bytes_per_frame": 2532992,
+        "consecutive_pattern_frames": 17,
+        "PM_after_close": {
+          "front": "suspended",
+          "back": "suspended"
+        },
+        "test_pattern_restored": true
+      },
+      {
+        "camera": "front",
+        "width": 1976,
+        "height": 1200,
+        "stride": 2472,
+        "frames": 24,
+        "bytes_per_frame": 2966400,
+        "consecutive_pattern_frames": 18,
+        "PM_after_close": {
+          "front": "suspended",
+          "back": "suspended"
+        },
+        "test_pattern_restored": true
+      },
+      {
+        "camera": "back",
+        "width": 1640,
+        "height": 1232,
+        "stride": 2056,
+        "frames": 24,
+        "bytes_per_frame": 2532992,
+        "consecutive_pattern_frames": 18,
+        "PM_after_close": {
+          "front": "suspended",
+          "back": "suspended"
+        },
+        "test_pattern_restored": true
+      },
+      {
+        "camera": "back",
+        "width": 3280,
+        "height": 2464,
+        "stride": 4104,
+        "frames": 24,
+        "bytes_per_frame": 10112256,
+        "consecutive_pattern_frames": 16,
+        "PM_after_close": {
+          "front": "suspended",
+          "back": "suspended"
+        },
+        "test_pattern_restored": true
+      }
+    ],
+    "frame_count": 120,
+    "new_matching_kernel_faults": 0,
+    "frame_exports": 0,
+    "final_patterns": {
+      "front": 0,
+      "back": 0
+    },
+    "worker_sha256": "fb3b47491c94595b6e66b98e33ce5f019128814eec302feb4886e7286da5006d",
+    "worker_source_commit": "203070a84d25c507a6fda1dbb88dbf5962b734ba",
+    "all_frame_workspaces_removed": true,
+    "transient_unit_cgroup_empty": true,
+    "scene_and_system_resume_acceptance": false
+  },
+  "NFC": {
+    "registered": true,
+    "driver": "nxp-nci_i2c",
+    "public_command": "GET_DEVICE",
+    "protocol_bitmask": 126,
+    "powered_before": 0,
+    "powered_after": 0,
+    "RF_mode": 2,
+    "NCI_RF_tag_acceptance": false
+  },
+  "microSD": {
+    "host_driver": "sdhci_msm",
+    "card_enumerated": false,
+    "card_detect_gpio": "GPIO37 high, active low",
+    "direct_read_attempted": false,
+    "absence_of_hardware_not_inferred": true
+  },
+  "emmc": {
+    "initial_available_bytes": 433594368,
+    "larger_test_rejected_by_free_space_before_payload": true,
+    "initial_failed_unit_made_systemd_degraded": true,
+    "only_owned_failed_unit_reset": true,
+    "smaller_test_passed": true,
+    "file_bytes": 33554432,
+    "rounds": [
+      {
+        "round": 0,
+        "bytes_written": 33554432,
+        "bytes_directly_read": 33554432,
+        "sha256": "ad5a905103bf64eebb52e4e7ae49e3721ec8a069eb68aebc1612b0ba386ad44f",
+        "write_and_fsync_seconds": 3.301446023000153,
+        "read_and_verify_seconds": 3.155584704000148
+      },
+      {
+        "round": 1,
+        "bytes_written": 33554432,
+        "bytes_directly_read": 33554432,
+        "sha256": "79c6026af7a01814ee6f295b305e5549c26251184b53eafd89fac8a0ded089ee",
+        "write_and_fsync_seconds": 3.2272116130000086,
+        "read_and_verify_seconds": 3.1667723719999685
+      },
+      {
+        "round": 2,
+        "bytes_written": 33554432,
+        "bytes_directly_read": 33554432,
+        "sha256": "57d6f73a6133875cf1dbabba3f154227037d1cb3990d7050d6d8ee41e23ad7dd",
+        "write_and_fsync_seconds": 3.2201542729999346,
+        "read_and_verify_seconds": 3.1617444420000993
+      },
+      {
+        "round": 3,
+        "bytes_written": 33554432,
+        "bytes_directly_read": 33554432,
+        "sha256": "6f022f1ee91bc96d740dcb872ffcf22349512573b4e02c3fd691332b2638eec4",
+        "write_and_fsync_seconds": 3.256229071000007,
+        "read_and_verify_seconds": 3.164379528000154
+      }
+    ],
+    "write_and_read_total_bytes_each": 134217728,
+    "retained_synthetic_payload_for_cross_boot": true,
+    "cross_boot_current_test_passed": false,
+    "kernel_storage_error_matches": 0,
+    "ext4_errors_after": 0,
+    "root_available_bytes_after": 400007168,
+    "native_unit_released": true
+  },
+  "maintained_series_release": {
+    "version": "6.18.64",
+    "source": "https://www.kernel.org/",
+    "checked": true
+  },
+  "full_bringup_acceptance": false
+}
