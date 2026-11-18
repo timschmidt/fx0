@@ -108,7 +108,91 @@
     "powered_before": 0,
     "powered_after": 0,
     "RF_mode": 2,
-    "NCI_RF_tag_acceptance": false
+    "NCI_RF_tag_acceptance": false,
+    "initial_non_polling_startup_shutdown_passed": true,
+    "continuous_startup_shutdown_cycles": 10,
+    "cycle_results": [
+      {
+        "startup_ms": 70,
+        "shutdown_ms": 49,
+        "startup_IRQs": 3,
+        "shutdown_IRQs": 1,
+        "cold_clock_GPIO_restored": true
+      },
+      {
+        "startup_ms": 71,
+        "shutdown_ms": 46,
+        "startup_IRQs": 3,
+        "shutdown_IRQs": 1,
+        "cold_clock_GPIO_restored": true
+      },
+      {
+        "startup_ms": 71,
+        "shutdown_ms": 49,
+        "startup_IRQs": 3,
+        "shutdown_IRQs": 1,
+        "cold_clock_GPIO_restored": true
+      },
+      {
+        "startup_ms": 71,
+        "shutdown_ms": 48,
+        "startup_IRQs": 3,
+        "shutdown_IRQs": 1,
+        "cold_clock_GPIO_restored": true
+      },
+      {
+        "startup_ms": 70,
+        "shutdown_ms": 47,
+        "startup_IRQs": 3,
+        "shutdown_IRQs": 1,
+        "cold_clock_GPIO_restored": true
+      },
+      {
+        "startup_ms": 67,
+        "shutdown_ms": 50,
+        "startup_IRQs": 3,
+        "shutdown_IRQs": 1,
+        "cold_clock_GPIO_restored": true
+      },
+      {
+        "startup_ms": 71,
+        "shutdown_ms": 49,
+        "startup_IRQs": 3,
+        "shutdown_IRQs": 1,
+        "cold_clock_GPIO_restored": true
+      },
+      {
+        "startup_ms": 70,
+        "shutdown_ms": 50,
+        "startup_IRQs": 3,
+        "shutdown_IRQs": 1,
+        "cold_clock_GPIO_restored": true
+      },
+      {
+        "startup_ms": 70,
+        "shutdown_ms": 48,
+        "startup_IRQs": 3,
+        "shutdown_IRQs": 1,
+        "cold_clock_GPIO_restored": true
+      },
+      {
+        "startup_ms": 70,
+        "shutdown_ms": 49,
+        "startup_IRQs": 3,
+        "shutdown_IRQs": 1,
+        "cold_clock_GPIO_restored": true
+      }
+    ],
+    "all_cycle_units_released": true,
+    "all_cycles_cold_clock_and_GPIO_restored": true,
+    "final_cold_IRQ_count_stable_after_three_seconds": true,
+    "matching_kernel_error_counts": {
+      "NFC_or_NCI_error": 0,
+      "kernel_fault": 0
+    },
+    "close_reset_status_decoded": false,
+    "controller_startup_shutdown_qualified": true,
+    "physical_tag_acceptance": false
   },
   "microSD": {
     "host_driver": "sdhci_msm",
@@ -164,12 +248,21 @@
     "kernel_storage_error_matches": 0,
     "ext4_errors_after": 0,
     "root_available_bytes_after": 400007168,
-    "native_unit_released": true
+    "native_unit_released": true,
+    "nondestructive_same_boot_guard_verified": true,
+    "warm_reboot_pending_because_wifi_enabled_at_boot": true,
+    "removed_redundant_test_stage_copies": 4,
+    "dormant_signed_modules_byte_verified_each": 479,
+    "retained_stage_manifests_and_identical_restore_sources": true,
+    "root_available_bytes_before_duplicate_stage_cleanup": 400007168,
+    "root_available_bytes_after_duplicate_stage_cleanup": 457269248,
+    "root_bytes_reclaimed": 57262080
   },
   "maintained_series_release": {
     "version": "6.18.64",
     "source": "https://www.kernel.org/",
     "checked": true
   },
-  "full_bringup_acceptance": false
+  "full_bringup_acceptance": false,
+  "last_updated_UTC": "2026-11-18T02:52:16.124576+00:00"
 }
