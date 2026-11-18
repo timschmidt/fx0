@@ -1,0 +1,55 @@
+{
+  "recorded_UTC": "2026-11-18T08:56:40.022553+00:00",
+  "build": {
+    "source": "108d6d1068476ba9c70c3bc08fbb72022d28446d",
+    "same_byte_exact_RAM_image_as_300_MHz": true,
+    "capped_DTB_identical": true
+  },
+  "feedback_active_control": {
+    "candidate_boot": "b63d6729",
+    "CPU_kHz_at_request": 600000,
+    "CPR_corner_applied": true,
+    "busy_at_suspend_request": false,
+    "CPR_drain": {
+      "loop_enabled": 1,
+      "busy_before_disable": 0,
+      "busy_after_disable": 1,
+      "busy_on_entry": 1,
+      "busy_on_exit": 1,
+      "elapsed_us": 10008,
+      "limit_us": 10000,
+      "ret": -110
+    },
+    "retained_journal_matches_live_CPR_record": true,
+    "platform_only_requests_observed": 1,
+    "late_callback_errno": -110,
+    "CPU_rate_check_calls": 0,
+    "machine_suspend_entered": false,
+    "PM_controls_and_all_CPUs_restored": true,
+    "CPU_frequency_kHz_after_unwind": 300000,
+    "MX_requests_acknowledged": 12,
+    "maximum_logged_MX_request_microvolts": 1287500
+  },
+  "fixed_300_MHz_control": {
+    "candidate_boot": "ae2d11f8",
+    "CPR_drain": {
+      "loop_enabled": 0,
+      "busy_before_disable": 1,
+      "busy_after_disable": 1,
+      "busy_on_entry": 1,
+      "busy_on_exit": 1,
+      "elapsed_us": 10030,
+      "limit_us": 10000,
+      "ret": -110
+    }
+  },
+  "installed_return": {
+    "boot": "74472e74",
+    "kernel": "6.18.64-fx0-lts-alpine",
+    "automatic": true,
+    "matched_installed_module_files": 482,
+    "matched_protected_boot_and_package_hashes": true
+  },
+  "explicit_wifi_scans_requested": false,
+  "deep_sleep_or_wake_qualified": false
+}

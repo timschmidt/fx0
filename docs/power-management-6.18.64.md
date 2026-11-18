@@ -261,6 +261,15 @@ status bit set. The test leaves open whether the result bit reflects active
 measurement or latched status while the loop is disabled.
 [CPR timing evidence](../evidence/2026-11-18-msm8226-platform-cpr-timing.json)
 
+The same signed RAM image ran a comparison at 600 MHz, where the feedback
+loop was active. The result busy bit was clear immediately before the
+driver's disable sequence and set immediately afterward. It stayed set
+through the poll, which timed out after 10,008 µs. The callback aborted
+before the CPU rate check. The probe restored 300 MHz, and all four CPUs
+were online after early resume. The comparison places the busy transition
+within the disable sequence in this run.
+[Feedback-active comparison](../evidence/2026-11-18-msm8226-platform-cpr-active-control.json)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate
