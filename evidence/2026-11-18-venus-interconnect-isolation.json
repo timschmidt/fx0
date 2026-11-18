@@ -110,5 +110,28 @@
       }
     },
     "snapshot_during_MMSS_probe": false
+  },
+  "MMSS_S0_AXI_reference_control": {
+    "source_commit": "d91b7a61e3b4afe4c823d0493741c9ef50a2e595",
+    "parent_MMSS_only_image": "ba3b2fc4f533eaf8da87610039a4198f55fc07c2ee5c4371314f8c41b2a890e5",
+    "RAM_image_sha256": "39d98632502d483831f973aab35b8652c4cef5a50e5538112a5b7e3d07b917ea",
+    "kernel_and_DTB_byte_identical_to_parent": true,
+    "only_module_replaced": "qnoc-msm8226.ko",
+    "other_initramfs_entries_byte_identical": 858,
+    "module_signature_verified_against_linked_certificate": true,
+    "module_symbol_version_checks": 18,
+    "only_appended_kernel_option": "qnoc_msm8226.fx0_hold_mmss_iface=1",
+    "RAM_readback_exact": true,
+    "retained_probe_markers": [
+      "[   12.869750] qnoc-msm8226 fc478000.interconnect: Fx0 S0 AXI hold acquired before provider probe",
+      "[   12.973447] qnoc-msm8226 fc478000.interconnect: Fx0 S0 AXI hold retained after provider probe"
+    ],
+    "candidate_USB_userspace_seen": false,
+    "reset_cause_established": false,
+    "installed_return": {
+      "boot": "553da1c2",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
   }
 }

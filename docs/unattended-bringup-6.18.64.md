@@ -368,7 +368,12 @@ MMSS NoC AXI branch. The diagnostic provider prepares the shared AXI root
 and takes the S0 branch for QoS setup. The maintained clock driver exposes
 both branches as children of the root. On the installed kernel, both branches
 were enabled in hardware at 100 MHz while Linux held zero references to
-either. Their state around the MMSS provider probe needs measurement. [Stock MSM8226 clock source](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/mach-msm/clock-8226.c)
+either. An opt-in diagnostic held an S0 reference through provider probe.
+The retained console shows the reference acquired before probe and retained
+after successful probe. USB userspace remained unreachable. This rules out
+the probe releasing its own S0 reference as a sufficient explanation. The
+installed kernel returned with all 482 module files and protected hashes
+verified. [Stock MSM8226 clock source](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/mach-msm/clock-8226.c)
 
 [Interconnect isolation evidence](../evidence/2026-11-18-venus-interconnect-isolation.json)
 
