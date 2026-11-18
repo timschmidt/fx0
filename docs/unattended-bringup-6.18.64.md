@@ -127,6 +127,24 @@ between ADSP and SMEM. The reservation checker rejects a short range, an
 unaligned range and overlaps with either neighbor. Firmware authentication
 still requires the device's secure firmware service.
 
+For a temporary or native Venus image, the inspector can also create a
+private firmware bundle from the verified stock system backup. Supply the
+exact image hash from the backup manifest and an existing private parent
+directory.
+
+```sh
+python3 diagnostics/venus-arm32/inspect-stock-firmware.py \
+    "$stock_system_image" --sha256 "$stock_system_sha256" \
+    --export-private "$private_bundle_parent"
+```
+
+The output contains only the four requested firmware files under
+`qcom/msm8226` and a manifest. It compares the three loadable segments
+against the stock MBN before writing and returns the new directory path.
+The original inspection mode remains available. The output serves as
+a local input to the firmware search tree for a Venus-enabled boot.
+
+
 The stock and maintained C definitions agree on 38 initialization constants,
 fixed offsets and queue fields. The stock nonsecure IOMMU aperture runs
 from `0x40000000` to `0x80000000`
@@ -628,9 +646,14 @@ property rejection messages. The decoder still faulted at that transition
 and produced zero verified frames. The independent return audit matched
 the installed kernel, protected hashes and 482 module files. The next
 candidate initializes MSM8226 with the negotiated coded dimensions, as
-the vendor driver does. Its ARM module and signed RAM image passed the
-host checks. That change and a separate stream with two midstream size
-changes await handset tests.
+the vendor driver does. On the handset this changed the firmware event
+to sufficient resources, but the same firmware fault still produced
+zero frames. A matching control omitted the unused secondary capture
+buffer count. It logged input, primary and secondary counts of 16, 32
+and 0 and reproduced the same fault. Both installed returns passed the
+482-module and protected-hash audit. A separate stream with two
+midstream size changes remains available for decoder qualification.
+[Buffer-count source](https://github.com/timschmidt/fx0-linux/commit/24409004534caf2a37202a454d1c85915419d573)
 [Start-size candidate](https://github.com/timschmidt/fx0-linux/commit/852b186174bfabb1037e5ba01ff603eda7a15cbf)
 [Vendor decoder](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/vidc/msm_vdec.c#L982-L1002)
 

@@ -1115,7 +1115,20 @@
       "sanitizer_cases_passed": 5,
       "matching_import_CRCs": 128,
       "decoder_signature_checked": true,
-      "handset_tested": false
+      "handset_tested": true,
+      "candidate_boot": "156ebdcd",
+      "initial_resolution": [
+        320,
+        240
+      ],
+      "firmware_reported_sufficient_resources": true,
+      "firmware_system_error_persisted": true,
+      "verified_hardware_decoded_frames": 0,
+      "installed_return": {
+        "boot": "f666107b",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      }
     },
     "three_resolution_segment_fixture": {
       "sha256": "a48a5dd0db15be55fc937e76d2e6b6abbf31934603b0c97701a5045192413e72",
@@ -1136,6 +1149,40 @@
       "frames_per_segment": 12,
       "software_inspected_frames": 36,
       "handset_tested": false
+    },
+    "single_capture_queue_count_candidate": {
+      "source_commit": "24409004534caf2a37202a454d1c85915419d573",
+      "image_sha256": "1d74c7019500ae8679e40ba4561dd2e574d14f37dde34265aae25c7957c2b7ed",
+      "candidate_boot": "1d42b7f9",
+      "handset_tested": true,
+      "initial_resolution": [
+        320,
+        240
+      ],
+      "firmware_reported_sufficient_resources": true,
+      "firmware_system_error_persisted": true,
+      "verified_hardware_decoded_frames": 0,
+      "installed_return": {
+        "boot": "d2f3749f",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      },
+      "configured_buffer_counts": [
+        16,
+        32,
+        0
+      ],
+      "matching_import_CRCs": 128
     }
+  },
+  "Venus_stock_firmware_private_export": {
+    "passed": true,
+    "expected_firmware_files_match": 4,
+    "individual_MBN_segments_matched": 3,
+    "private_directory_mode": "0700",
+    "file_mode": "0600",
+    "wrong_partition_hash_refused_before_output": true,
+    "inspect_only_invocation_preserved": true,
+    "device_modified": false
   }
 }

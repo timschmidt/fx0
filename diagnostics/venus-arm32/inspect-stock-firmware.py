@@ -7,8 +7,10 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import struct
 import subprocess
+import tempfile
 
 
 ELF = struct.Struct('<16sHHIIIIIHHHHHH')
@@ -92,10 +94,64 @@ def describe_mdt(preamble, sizes):
                 loadable_segments_individually_opened=False, signature_verified=False)
 
 
+def verified_payloads(image, mdt, sizes, summary):
+    segments = summary['load_segments']
+    if (summary['link_address'], summary['resident_span_bytes']) != (0x0F500000, 0x500000):
+        raise ValueError('stock Venus firmware does not match the Madai reservation')
+    if [segment['index'] for segment in segments] != [2, 3, 4]:
+        raise ValueError('unexpected Madai loadable segment indices')
+    if not len(mdt) <= sizes.get('venus.mbn', 0) <= VENUS_MAX_FIRMWARE_SIZE:
+        raise ValueError('missing or invalid stock Venus MBN')
+
+    mbn = debugfs(image, 'cat /etc/firmware/venus.mbn')
+    header_size = sizes['venus.b00']
+    if len(mbn) != sizes['venus.mbn'] or mbn[:header_size] != mdt[:header_size]:
+        raise ValueError('stock split and MBN ELF headers differ')
+
+    payloads = {'venus.mdt': mdt}
+    for segment in segments:
+        name = f"venus.b{segment['index']:02d}"
+        body = debugfs(image, f'cat /etc/firmware/{name}')
+        offset = segment['file_offset']
+        if len(body) != sizes[name] or body != mbn[offset:offset + segment['filesz']]:
+            raise ValueError(f'stock MBN differs from {name}')
+        payloads[name] = body
+    return payloads
+
+
+def export_private_bundle(parent, payloads, source_hash):
+    parent = parent.resolve(strict=True)
+    output = Path(tempfile.mkdtemp(prefix='fx0-venus-', dir=parent))
+    manifest = {'source_partition_sha256': source_hash, 'files': {}}
+    try:
+        firmware = output / 'qcom/msm8226'
+        firmware.parent.mkdir(mode=0o700)
+        firmware.mkdir(mode=0o700)
+        for name, body in payloads.items():
+            path = firmware / name
+            with os.fdopen(os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), 'wb') as stream:
+                stream.write(body)
+            if path.read_bytes() != body:
+                raise OSError(f'private firmware readback failed for {name}')
+            manifest['files'][str(path.relative_to(output))] = {
+                'bytes': len(body), 'sha256': hashlib.sha256(body).hexdigest(),
+            }
+        path = output / 'firmware-manifest.json'
+        with os.fdopen(os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), 'w') as stream:
+            json.dump(manifest, stream, indent=2)
+            stream.write('\n')
+    except BaseException:
+        shutil.rmtree(output)
+        raise
+    return output
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('stock_system', type=Path, help='unchanged private ext4 system image')
     parser.add_argument('--sha256', required=True, help='expected image hash from the verified manifest')
+    parser.add_argument('--export-private', type=Path, metavar='PARENT',
+                        help='place the verified blobs in a new private directory under PARENT')
     args = parser.parse_args()
     with args.stock_system.open('rb') as image:
         initial = os.fstat(image.fileno())
@@ -104,10 +160,18 @@ def main():
         sizes = file_sizes(image)
         if not ELF.size <= sizes.get('venus.mdt', 0) <= 65536:
             raise ValueError('missing or unexpected Venus MDT size')
-        summary = describe_mdt(debugfs(image, 'cat /etc/firmware/venus.mdt'), sizes)
+        mdt = debugfs(image, 'cat /etc/firmware/venus.mdt')
+        summary = describe_mdt(mdt, sizes)
+        if args.export_private is not None:
+            payloads = verified_payloads(image, mdt, sizes, summary)
         final = os.fstat(image.fileno())
         if (initial.st_size, initial.st_mtime_ns) != (final.st_size, final.st_mtime_ns):
             raise ValueError('stock image changed during inspection')
+    if args.export_private is not None:
+        output = export_private_bundle(args.export_private, payloads, args.sha256.lower())
+        summary.update(loadable_segments_individually_opened=True,
+                       split_files_match_stock_mbn=len(summary['load_segments']),
+                       private_bundle=str(output))
     print(json.dumps(summary | {'verified_stock_image_bytes': initial.st_size,
                                 'stock_image_sha256_matched': True}, indent=2))
 
