@@ -659,6 +659,27 @@ deep suspend and unattended recovery remain open.
 [Diagnostic source](https://github.com/timschmidt/fx0-linux/commit/e239ca303c5dcbc5a70452851cd3ad6edfc5ef7b)
 [Device evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
 
+### PM8226 reset-reason inventory
+
+The opt-in Madai PON inventory now exposes `reset_reason_inventory`. It
+returns five hexadecimal bytes in register order. The first is the
+power-on reason at `0x808`. The remaining bytes are the two warm-reset
+reasons and two power-off reasons at `0x80a` through `0x80d`.
+Capture the raw bytes with the boot ID after a known reset. Qualcomm's
+Gen1 PON driver describes the power-off reason bits for PMIC watchdog,
+PS_HOLD and stage-3 reset. Attribution to a specific event also requires
+the preceding boot and a comparison with the earlier register values.
+[Qualcomm Gen1 reason definitions](https://android.googlesource.com/kernel/msm/%2B/20f6203c302caa77d7de6e662c0062da58850c65/drivers/input/misc/qpnp-power-on.c#262)
+
+The ARM object builds with the existing diagnostic kernel configuration.
+A host test exercises each possible byte value in each position and checks
+both read failures. The handler issues only the two selected read
+transactions and propagates errors without returning a partial record.
+Handset verification of those registers and autonomous recovery remain
+open.
+[Diagnostic source](https://github.com/timschmidt/fx0-linux/commit/eb2e1d27f6eaa10591d809c5dc1212b0c28aa5b2)
+[Host evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
+
 ## Remaining physical scope
 
 The installed firmware lacks the verified early charge-inhibition marker.

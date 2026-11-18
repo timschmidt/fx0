@@ -251,6 +251,25 @@
       }
     }
   },
+  "PM8226_reset_reason_inventory_host": {
+    "source_commit": "eb2e1d27f6eaa10591d809c5dc1212b0c28aa5b2",
+    "exact_remote_verified": true,
+    "ARM_EABI5_object_built": true,
+    "checkpatch_errors": 0,
+    "checkpatch_warnings": 0,
+    "host_register_byte_order_cases": 1280,
+    "host_propagated_error_cases": 2,
+    "host_undefined_behavior_sanitizer_passed": true,
+    "allowed_register_reads": [
+      "0x808",
+      "0x80a-0x80d"
+    ],
+    "PMIC_register_writes_in_handler": 0,
+    "board_compatible_gate_retained": true,
+    "diagnostic_opt_in_required": true,
+    "handset_tested": false,
+    "physical_deep_suspend_qualified": false
+  },
   "PM8226_S3_read_only_inventory": {
     "source_commit": "e239ca303c5dcbc5a70452851cd3ad6edfc5ef7b",
     "vendor_source_commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
