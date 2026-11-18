@@ -1,0 +1,43 @@
+{
+  "recorded_UTC": "2026-11-18T10:33:30.994299+00:00",
+  "kernel_source": "3651953cbe1e033d67d510f2b55194c520e2fbc5",
+  "same_signed_kernel_DTB_and_arguments_as_platform_pass": true,
+  "only_changed_initramfs_entry": "usr/bin/fx0-platform-pm-probe.py",
+  "exact_RAM_image_readback": true,
+  "test": {
+    "level": "processors",
+    "candidate_boot": "fc0771a1",
+    "accepted_dispatch": true,
+    "machine_suspend_requested": false,
+    "worker_receipt_received": false,
+    "retained_suspend_request_count": 1,
+    "CPR_busy_poll_return": 0,
+    "clock_switch_to_300_MHz_return": 0,
+    "reached_test_wait_after_offlining": true,
+    "test_wait_seconds": 5,
+    "secondary_CPU_online_errors": {
+      "1": -5,
+      "2": -5,
+      "3": -5
+    },
+    "suspend_exit_in_pstore": true,
+    "late_cpu_die_returns": [
+      1,
+      2,
+      3
+    ],
+    "initial_fault_function": "tick_nohz_get_sleep_length",
+    "panic": "Attempted to kill the idle task",
+    "panic_record_matches_candidate_journal_hotplug_sequence": true,
+    "secondary_CPU_restart_qualified": false
+  },
+  "installed_return": {
+    "automatic": true,
+    "boot": "889395e9",
+    "kernel": "6.18.64-fx0-lts-alpine",
+    "matched_module_files": 482,
+    "protected_hashes_match": true
+  },
+  "explicit_wifi_scans_requested": false,
+  "deep_sleep_or_wake_qualified": false
+}

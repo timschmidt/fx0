@@ -351,6 +351,24 @@ zero failures. The live audit verified the APCS supplier link, all
 selected afterward. The platform test stops before secondary CPUs
 are offlined. [Platform result with the shared APCS map](../evidence/2026-11-18-msm8226-apcs-platform-pass.json)
 
+### Secondary CPU suspend test
+
+The processor test used the same signed kernel, device tree, and boot
+arguments. Only the PM probe changed in the initramfs. Linux's
+`processors` mode takes secondary CPUs offline and returns before
+`syscore_suspend()` and the machine suspend callback.
+[Kernel ordering](https://github.com/timschmidt/fx0-linux/blob/3651953cbe1e033d67d510f2b55194c520e2fbc5/kernel/power/suspend.c#L438)
+
+The kernel passed the CPR checks and reached the five-second test wait
+after offlining the secondaries. CPUs 1–3 then timed out coming online
+with `-EIO`. Ramoops records all three later returning from
+`smp_ops.cpu_die()`, entering the idle path and faulting in
+`tick_nohz_get_sleep_length`. The kernel panicked and the phone returned
+to installed 6.18.64. The probe receipt was unavailable over USB.
+The independent audit matched all 482 installed module files and protected
+hashes. Secondary CPU restart and physical deep suspend remain open.
+[Processor test and reset evidence](../evidence/2026-11-18-msm8226-processor-test.json)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate

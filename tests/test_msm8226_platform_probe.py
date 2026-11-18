@@ -90,6 +90,22 @@ class PlatformTest(unittest.TestCase):
         self.assertEqual(result["CPR_stages_reached"]["cpr_late_prepare"], 1)
         self.assertEqual(stores.count((probe.POWER / "state", "mem")), 1)
 
+    def test_processor_cycles_require_each_secondary_and_no_cpu_zero(self):
+        events = [
+            f"test: suspend_resume: {action}[{cpu}] {edge}"
+            for action in ("CPU_OFF", "CPU_ON")
+            for cpu in (1, 2, 3)
+            for edge in ("begin", "end")
+        ]
+        self.assertTrue(probe.trace_summary("\n".join(events))["all_secondary_CPU_cycles_completed_once"])
+        self.assertFalse(probe.trace_summary("\n".join(events[:-1]))["all_secondary_CPU_cycles_completed_once"])
+        events.append("test: suspend_resume: CPU_OFF[0] begin")
+        self.assertFalse(probe.trace_summary("\n".join(events))["all_secondary_CPU_cycles_completed_once"])
+
+    def test_machine_suspend_levels_are_refused(self):
+        with self.assertRaisesRegex(ValueError, "bounded PM test level"):
+            probe.exercise(lambda: self.fail("unexpected revalidation"), test_level="none")
+
     def test_unavailable_cpr_probe_preserves_the_power_trace(self):
         events = []
         errors = {}
