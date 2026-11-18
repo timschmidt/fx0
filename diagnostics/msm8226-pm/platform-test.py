@@ -18,6 +18,7 @@ CPR_STAGES = {
 }
 CALLBACKS = ("dpm_suspend_late", "dpm_suspend_noirq", "dpm_resume_noirq", "dpm_resume_early")
 HOTPLUG_ACTIONS = ("CPU_OFF", "CPU_ON")
+SYSCORE_ACTIONS = ("syscore_suspend", "syscore_resume")
 
 
 def read(path):
@@ -50,6 +51,7 @@ def statistics():
 
 def trace_summary(text):
     counts = {name: [0, 0] for name in CALLBACKS}
+    syscore = {name: [0, 0] for name in SYSCORE_ACTIONS}
     hotplug = {action: {} for action in HOTPLUG_ACTIONS}
     stages = dict.fromkeys(CPR_STAGES, 0)
     in_late_suspend = False
@@ -60,6 +62,8 @@ def trace_summary(text):
             name, number, edge = callback.groups()
             if name in counts:
                 counts[name][int(edge == "end")] += 1
+            if name in syscore:
+                syscore[name][int(edge == "end")] += 1
             if name in hotplug:
                 hotplug[name].setdefault(number, [0, 0])[int(edge == "end")] += 1
             if name == "dpm_suspend_late":
@@ -73,6 +77,8 @@ def trace_summary(text):
     return {
         "callback_phases": counts,
         "all_callback_phases_completed_once": all(pair == [1, 1] for pair in counts.values()),
+        "syscore_phases": syscore,
+        "all_syscore_phases_completed_once": all(pair == [1, 1] for pair in syscore.values()),
         "secondary_CPU_hotplug": hotplug,
         "all_secondary_CPU_cycles_completed_once": all(
             actions == {"1": [1, 1], "2": [1, 1], "3": [1, 1]} for actions in hotplug.values()
@@ -115,7 +121,7 @@ def capture(registration_errors):
 
 def exercise(revalidate, *, test_level="platform"):
     """The caller must pin revalidation to the prepared RAM boot."""
-    if test_level not in ("platform", "processors"):
+    if test_level not in ("platform", "processors", "core"):
         raise ValueError("expected a bounded PM test level")
     revalidate()
     pm_test, mode = POWER / "pm_test", POWER / "mem_sleep"
@@ -142,7 +148,7 @@ def exercise(revalidate, *, test_level="platform"):
             count = POWER / "wakeup_count"
             write(count, read(count))
             revalidate()
-            # Both test levels return before the kernel enters machine suspend.
+            # The bounded test levels stop before the machine suspend callback.
             if (selected(pm_test), selected(mode)) != (test_level, "deep"):
                 raise ValueError("PM test controls changed before the request")
             began = time.monotonic()
@@ -167,6 +173,7 @@ def exercise(revalidate, *, test_level="platform"):
                 "error" not in result and result["controls_restored"]
                 and result["all_callback_phases_completed_once"]
                 and (test_level == "platform" or result["all_secondary_CPU_cycles_completed_once"])
+                and (test_level != "core" or result["all_syscore_phases_completed_once"])
                 and not result["machine_suspend_entered"] and result["all_cpus_restored"]
                 and result["after"] == {"success": initial["success"] + 1, "fail": initial["fail"]}
             )

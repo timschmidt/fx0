@@ -106,6 +106,45 @@ class PlatformTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "bounded PM test level"):
             probe.exercise(lambda: self.fail("unexpected revalidation"), test_level="none")
 
+    def test_core_level_requires_syscore_suspend_and_resume(self):
+        pm_test, mode = probe.POWER / "pm_test", probe.POWER / "mem_sleep"
+        trace = Path("/fixture/trace")
+        actions = dict.fromkeys(probe.CALLBACKS, (2,))
+        actions.update(dict.fromkeys(probe.HOTPLUG_ACTIONS, (1, 2, 3)))
+        actions.update(dict.fromkeys(probe.SYSCORE_ACTIONS, (0,)))
+        events = [
+            f"test: suspend_resume: {action}[{value}] {edge}"
+            for action, identifiers in actions.items()
+            for value in identifiers
+            for edge in ("begin", "end")
+        ]
+        for label, observed, accepted in (
+            ("complete", events, True),
+            ("missing resume", events[:-1], False),
+            ("machine entry", events + ["test: suspend_resume: machine_suspend[3] begin"], False),
+        ):
+            with self.subTest(label=label):
+                values = {pm_test: "[none] core", mode: "[s2idle] deep",
+                          probe.POWER / "wakeup_count": "3", probe.CPUS: "0-3",
+                          trace / "trace": "\n".join(observed)}
+
+                def write(path, value):
+                    if path == pm_test:
+                        other = "none" if value == "core" else "core"
+                        values[path] = f"[{value}] {other}"
+                    if path == mode:
+                        other = "s2idle" if value == "deep" else "deep"
+                        values[path] = f"[{value}] {other}"
+
+                with patch.object(probe, "capture", return_value=nullcontext(trace)), \
+                     patch.object(probe, "read", side_effect=values.__getitem__), \
+                     patch.object(probe, "statistics", side_effect=(
+                         {"success": 0, "fail": 0}, {"success": 1, "fail": 0},
+                     )), patch.object(probe, "write", side_effect=write):
+                    result = probe.exercise(lambda: None, test_level="core")
+                self.assertEqual(result["passed"], accepted)
+                self.assertTrue(result["controls_restored"])
+
     def test_unavailable_cpr_probe_preserves_the_power_trace(self):
         events = []
         errors = {}

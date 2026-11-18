@@ -1,0 +1,337 @@
+{
+  "source_commit": "3743831132900a49258df9378563a634ae62a87a",
+  "scope": "MSM8226 sequential hotplug and bounded processors and system-core PM tests",
+  "host": {
+    "compiled_cancellation_harness_passed": true,
+    "changed_ARM_objects_build_with_coordinator_disabled": true,
+    "full_ARM_kernel_and_modules_built": true,
+    "module_signatures_verified": 465,
+    "capped_DTB_matches": true
+  },
+  "RAM_boot": "04002fd2",
+  "RAM_transfer_readback_exact": true,
+  "sequential_hotplug": {
+    "cycles": [
+      {
+        "cpu": 3,
+        "online_before": "0-3",
+        "online_requests": 1,
+        "offline_mask": "0-2",
+        "online_seconds": 0.072,
+        "online_after": "0-3",
+        "pinned_task_passed": true
+      },
+      {
+        "cpu": 3,
+        "online_before": "0-3",
+        "online_requests": 1,
+        "offline_mask": "0-2",
+        "online_seconds": 0.0615,
+        "online_after": "0-3",
+        "pinned_task_passed": true
+      },
+      {
+        "cpu": 1,
+        "online_before": "0-3",
+        "online_requests": 1,
+        "offline_mask": "0,2-3",
+        "online_seconds": 0.026,
+        "online_after": "0-3",
+        "pinned_task_passed": true
+      },
+      {
+        "cpu": 2,
+        "online_before": "0-3",
+        "online_requests": 1,
+        "offline_mask": "0-1,3",
+        "online_seconds": 0.0501,
+        "online_after": "0-3",
+        "pinned_task_passed": true
+      }
+    ],
+    "all_cpus_restored": true,
+    "suspend_counters_unchanged": true
+  },
+  "processors": {
+    "elapsed_seconds": 6.191,
+    "test_level": "processors",
+    "before": {
+      "success": 0,
+      "fail": 0
+    },
+    "after": {
+      "success": 1,
+      "fail": 0
+    },
+    "controls_restored": true,
+    "callback_phases": {
+      "dpm_suspend_late": [
+        1,
+        1
+      ],
+      "dpm_suspend_noirq": [
+        1,
+        1
+      ],
+      "dpm_resume_noirq": [
+        1,
+        1
+      ],
+      "dpm_resume_early": [
+        1,
+        1
+      ]
+    },
+    "secondary_CPU_hotplug": {
+      "CPU_OFF": {
+        "3": [
+          1,
+          1
+        ],
+        "2": [
+          1,
+          1
+        ],
+        "1": [
+          1,
+          1
+        ]
+      },
+      "CPU_ON": {
+        "1": [
+          1,
+          1
+        ],
+        "2": [
+          1,
+          1
+        ],
+        "3": [
+          1,
+          1
+        ]
+      }
+    },
+    "all_cpus_restored": true,
+    "machine_suspend_entered": false,
+    "restored_300_kHz": true,
+    "CPR_preparation": {
+      "corner_applied": true,
+      "request_kHz": 600000,
+      "loop_enabled": true,
+      "result_busy_before_request": false
+    },
+    "CPR_stages_reached": {
+      "cpr_late_prepare": 1,
+      "cpr_check_rate": 1,
+      "cpr_prepare_rails": null,
+      "cpr_cover_rails": null
+    },
+    "CPR_trace_registration_errors": {
+      "cpr_prepare_rails": {
+        "operation": "register",
+        "errno": 22
+      },
+      "cpr_cover_rails": {
+        "operation": "register",
+        "errno": 22
+      }
+    }
+  },
+  "independent_journal": {
+    "candidate_contexts_restored": [
+      3,
+      3,
+      1,
+      2,
+      1,
+      2,
+      3
+    ],
+    "candidate_GIC_wake_records": [
+      {
+        "cpu": 3,
+        "enabled_before": false,
+        "enabled_after": true,
+        "control": 1,
+        "priority_mask": 240
+      },
+      {
+        "cpu": 3,
+        "enabled_before": false,
+        "enabled_after": true,
+        "control": 1,
+        "priority_mask": 240
+      },
+      {
+        "cpu": 1,
+        "enabled_before": false,
+        "enabled_after": true,
+        "control": 1,
+        "priority_mask": 240
+      },
+      {
+        "cpu": 2,
+        "enabled_before": false,
+        "enabled_after": true,
+        "control": 1,
+        "priority_mask": 240
+      },
+      {
+        "cpu": 3,
+        "enabled_before": false,
+        "enabled_after": true,
+        "control": 1,
+        "priority_mask": 240
+      },
+      {
+        "cpu": 2,
+        "enabled_before": false,
+        "enabled_after": true,
+        "control": 1,
+        "priority_mask": 240
+      },
+      {
+        "cpu": 1,
+        "enabled_before": false,
+        "enabled_after": true,
+        "control": 1,
+        "priority_mask": 240
+      }
+    ],
+    "candidate_online_errors": [],
+    "candidate_collapse_warnings": [],
+    "candidate_unexpected_kernel_markers": []
+  },
+  "installed_return": {
+    "boot": "5c2b2b1e",
+    "kernel": "6.18.64-fx0-lts-alpine",
+    "memory_sleep": "[s2idle]",
+    "installed_modules_exact": 482,
+    "protected_hashes_match": true
+  },
+  "controller_exit_status_correction": "The host status previously checked the removed warm-vector key. Both worker receipts passed and the installed return was independently verified.",
+  "WLAN_disabled_in_RAM": true,
+  "test_transport": "Pinned USB Ethernet",
+  "manual_WiFi_scans": 0,
+  "physical_deep_suspend_qualified": false,
+  "system_core": {
+    "test_level": "core",
+    "before": {
+      "success": 0,
+      "fail": 0
+    },
+    "after": {
+      "success": 1,
+      "fail": 0
+    },
+    "controls_restored": true,
+    "callback_phases": {
+      "dpm_suspend_late": [
+        1,
+        1
+      ],
+      "dpm_suspend_noirq": [
+        1,
+        1
+      ],
+      "dpm_resume_noirq": [
+        1,
+        1
+      ],
+      "dpm_resume_early": [
+        1,
+        1
+      ]
+    },
+    "syscore_phases": {
+      "syscore_suspend": [
+        1,
+        1
+      ],
+      "syscore_resume": [
+        1,
+        1
+      ]
+    },
+    "secondary_CPU_hotplug": {
+      "CPU_OFF": {
+        "3": [
+          1,
+          1
+        ],
+        "2": [
+          1,
+          1
+        ],
+        "1": [
+          1,
+          1
+        ]
+      },
+      "CPU_ON": {
+        "1": [
+          1,
+          1
+        ],
+        "2": [
+          1,
+          1
+        ],
+        "3": [
+          1,
+          1
+        ]
+      }
+    },
+    "all_cpus_restored": true,
+    "machine_suspend_entered": false,
+    "restored_300_kHz": true,
+    "CPR_preparation": {
+      "corner_applied": true,
+      "request_kHz": 600000,
+      "loop_enabled": true,
+      "result_busy_before_request": false
+    },
+    "CPR_stages_reached": {
+      "cpr_late_prepare": 1,
+      "cpr_check_rate": 1,
+      "cpr_prepare_rails": null,
+      "cpr_cover_rails": null
+    },
+    "CPR_trace_registration_errors": {
+      "cpr_prepare_rails": {
+        "operation": "register",
+        "errno": 22
+      },
+      "cpr_cover_rails": {
+        "operation": "register",
+        "errno": 22
+      }
+    },
+    "RAM_boot": "5887cc24",
+    "exact_same_RAM_image_readback": true,
+    "independent_context_restore_order": [
+      1,
+      2,
+      3
+    ],
+    "collapse_warnings": [],
+    "online_errors": [],
+    "unexpected_kernel_markers": [],
+    "installed_return": {
+      "boot": "8d5e3b85",
+      "kernel": "6.18.64-fx0-lts-alpine",
+      "memory_sleep": "[s2idle]",
+      "installed_modules_exact": 482,
+      "protected_hashes_match": true
+    }
+  },
+  "suspend_watchdog_preparation": {
+    "APSS_watchdog_registered_on_installed_kernel": true,
+    "installed_driver_stops_active_watchdog_on_suspend": true,
+    "diagnostic_source": "2fd22a05dd05ded4ed35806bd2f1a7051effcc90",
+    "default_stop_resume_and_keep_armed_host_cases_passed": true,
+    "hardware_qualification_pending": true
+  }
+}

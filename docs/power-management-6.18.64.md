@@ -431,8 +431,54 @@ stayed fixed. This qualifies wake delivery to the firmware vector.
 The phone returned to installed 6.18.64 with all four CPUs online.
 The independent audit matched all 482 module files and the protected
 boot and package hashes.
-Returning CPU3 to the scheduler and entering physical deep suspend
-remain open. [CPU3 evidence](../evidence/2026-11-18-msm8226-cpu3-warm-probe.json)
+The restart test below checks the additional steps needed to return
+CPU3 to the scheduler. [CPU3 evidence](../evidence/2026-11-18-msm8226-cpu3-warm-probe.json)
+
+### Restarting secondary CPUs after power collapse
+
+The restart candidate re-enables the banked SGI before collapsing a
+secondary, then restores its saved ARM suspend context on wake. The
+firmware receives the hotplug collapse argument `0x10`. In coherent
+kernel code the secondary must atomically claim a current online request
+before it can enter ARM secondary initialization. On timeout the
+controller can withdraw an unclaimed request. If the core has already
+claimed it, ARM retains the startup state for up to five more seconds.
+The diagnostic stops the kernel if that committed startup stalls, since
+ordinary timeout cleanup would allow hotplug to unwind while the core
+is still entering Linux.
+
+The host harness compiles the actual platform transition functions and
+ARM startup wait. It exercises a stale wake after cancellation, a failed
+SGI send, a request accepted as the timer expires, and a committed startup
+that never finishes. The RAM worker tests CPU3 twice, then CPUs 1 and 2
+in isolation. It requires a checksum task to run on the restarted CPU
+before issuing the next offline request.
+
+All four isolated restarts completed in 26–72 ms, and the checksum
+tasks ran on the intended CPUs. The following `processors` PM test
+completed in 6.191 seconds. Its trace recorded all four late and noirq
+device callback pairs and one offline and online pair for each secondary.
+The independent kernel journal recorded seven restores of the saved
+context across both tests. The PM success counter rose from zero to
+one, the failure counter stayed at zero, and all four CPUs returned.
+Two optional CPR probes could not register. The required power trace
+and independent journal were available. [Restart evidence](../evidence/2026-11-18-msm8226-secondary-restart.json)
+[Kernel source](https://github.com/timschmidt/fx0-linux/commit/3743831132900a49258df9378563a634ae62a87a)
+
+A separate RAM boot repeated the exact image for `pm_test=core`. Its
+trace recorded one complete `syscore_suspend` and `syscore_resume` pair
+and another complete offline and online cycle for CPUs 1–3. All CPUs
+returned and the PM test controls were restored. The kernel stopped
+before the machine-suspend callback. The independent postflight found
+three saved-context restores and matched all 482 installed modules and
+the protected boot and package hashes after return. [System-core evidence](../evidence/2026-11-18-msm8226-secondary-restart.json)
+
+The installed Fx0 has a registered APSS watchdog. The existing driver
+stops the active watchdog in its late suspend callback. The next
+diagnostic can keep it armed and record its hardware tick counter on
+resume. The complete ARM build and host cases passed. On-device reset
+qualification and watchdog retention through physical deep suspend are
+pending. [Watchdog diagnostic source](https://github.com/timschmidt/fx0-linux/commit/2fd22a05dd05ded4ed35806bd2f1a7051effcc90)
 This difference defines the next hardware comparison. Its effect on
 the delayed wake remains unverified.
 [ARM bringup timeout](https://github.com/timschmidt/fx0-linux/blob/3651953cbe1e033d67d510f2b55194c520e2fbc5/arch/arm/kernel/smp.c#L143)
