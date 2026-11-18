@@ -247,6 +247,20 @@ audit matched all 482 installed module files and the protected boot and
 package hashes. Physical deep entry and wake remain open.
 [Corrected platform test evidence](../evidence/2026-11-18-msm8226-platform-cpr-followup.json)
 
+The timing build logged the CPR feedback loop as already disabled before the
+suspend callback wrote to its control register. The result busy bit was set
+before and after that write and throughout the longer poll. The 10 ms poll
+timed out after 10,030 µs. Five read-only samples after early resume again
+found the loop disabled and the busy bit set. These observations show that
+the longer wait did not clear the outward busy indication on this boot.
+[Timing diagnostic source](https://github.com/timschmidt/fx0-linux/commit/108d6d1068476ba9c70c3bc08fbb72022d28446d)
+
+The platform test again unwound before the clock and rail checks. The
+separate reads after resume also found the CPR timer enabled and an interrupt
+status bit set. The test leaves open whether the result bit reflects active
+measurement or latched status while the loop is disabled.
+[CPR timing evidence](../evidence/2026-11-18-msm8226-platform-cpr-timing.json)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate
