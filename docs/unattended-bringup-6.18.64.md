@@ -570,8 +570,22 @@ FFmpeg 7.1.5 requests separate headers. The MSM8226 driver path accepts
 that mode but has no caller to fetch the separate sequence header. A
 follow-up restricts the MSM8226 control to joined headers. The ARM
 encoder module built, and host checks verified the menu on MSM8226 and
-the unchanged menu on other Venus hardware. Handset qualification is
-pending. [Joined-header source](https://github.com/timschmidt/fx0-linux/commit/10ed483a6c663d920ad50a113efd86ab03a8df38)
+the unchanged menu on other Venus hardware. [Joined-header source](https://github.com/timschmidt/fx0-linux/commit/10ed483a6c663d920ad50a113efd86ab03a8df38)
+
+On the handset, the joined-header encoder produced a stream that the
+software decoder could read. It decoded 11 frames at 384×256, while the
+fixture requires 12 at 320×240. Venus rounds negotiated encoder formats
+up to 128-pixel width and 32-line height multiples. It exposes a separate
+crop setting that the tested FFmpeg encoder path does not request. The
+frame-count difference remains open.
+
+A fresh boot of the exact same image ran the independent decoder workload
+before any encode. FFmpeg used the Venus decoder, reported packet I/O
+errors and aborted. The kernel journal recorded the same firmware system
+error and decoder session error as the earlier decoder attempt. Both
+trials returned to installed 6.18.64. The installed audits verified 482
+module files and the protected hashes, and found zero IOMMU timeouts and
+zero runtime PM underflow warnings in either candidate journal.
 
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)

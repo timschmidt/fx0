@@ -187,10 +187,7 @@ def decode_reference(binary, decoder, directory):
     return directory / "decoded.yuv"
 
 
-def run_trial(binary, binary_hash, fixture, reference_hash, *, token=TOKEN,
-              firmware_target="/run/fx0-venus-firmware"):
-    binary, boot, nodes, directory = prepare_trial(binary, binary_hash, fixture, reference_hash,
-                                                    token, firmware_target)
+def encode_reference(binary, encoder, directory):
     (directory / "reference.nv12").write_bytes(raw_video())
     encode = run_command(binary, [
         "-f", "rawvideo", "-pixel_format", "nv12", "-video_size", f"{WIDTH}x{HEIGHT}",
@@ -198,16 +195,36 @@ def run_trial(binary, binary_hash, fixture, reference_hash, *, token=TOKEN,
         "-c:v", "h264_v4l2m2m", "-b:v", "800k", "-g", str(FRAMES), "-bf", "0",
         "-frames:v", str(FRAMES), "-f", "h264", "hardware.h264",
     ], directory, "hardware-encode")
-    only_expected_node(encode, nodes["encoder"])
+    only_expected_node(encode, encoder)
     run_command(binary, ["-f", "h264", "-c:v", "h264", "-i", "hardware.h264",
                          *RAW_OUTPUT, "encoded-check.yuv"], directory, "software-verify-encoding")
+    return directory / "encoded-check.yuv"
+
+
+def run_trial(binary, binary_hash, fixture, reference_hash, *, token=TOKEN,
+              firmware_target="/run/fx0-venus-firmware"):
+    binary, boot, nodes, directory = prepare_trial(binary, binary_hash, fixture, reference_hash,
+                                                    token, firmware_target)
+    encoded = encode_reference(binary, nodes["encoder"], directory)
     decoded = decode_reference(binary, nodes["decoder"], directory)
     report = {"boot": boot, "nodes": nodes,
-              "encode_checked_in_software": check_frames(directory / "encoded-check.yuv"),
+              "encode_checked_in_software": check_frames(encoded),
               "hardware_decode_of_reference": check_frames(decoded)}
     if Path("/proc/sys/kernel/random/boot_id").read_text().strip() != boot:
         raise ValueError("boot changed during codec acceptance")
     (directory / "acceptance.json").write_text(json.dumps(report, indent=2) + "\n")
+    print(json.dumps(report, indent=2))
+
+
+def run_encoder_trial(binary, binary_hash, fixture, reference_hash, *, token=TOKEN,
+                      firmware_target="/run/fx0-venus-firmware"):
+    binary, boot, nodes, directory = prepare_trial(binary, binary_hash, fixture, reference_hash,
+                                                    token, firmware_target)
+    encoded = check_frames(encode_reference(binary, nodes["encoder"], directory))
+    if Path("/proc/sys/kernel/random/boot_id").read_text().strip() != boot:
+        raise ValueError("boot changed during encoder acceptance")
+    report = {"boot": boot, "encoder_node": nodes["encoder"], "encode_checked_in_software": encoded}
+    (directory / "encoder-acceptance.json").write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report, indent=2))
 
 

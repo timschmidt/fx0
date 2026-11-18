@@ -911,6 +911,48 @@
     "matching_import_CRCs": 102,
     "encoder_signature_checked": true,
     "manifest_records_verified": 488,
-    "same_kernel_DTB_and_arguments": true
+    "same_kernel_DTB_and_arguments": true,
+    "encoder_only_trial": {
+      "candidate_boot": "8446e58a",
+      "output_bitstream_decoded_in_software": true,
+      "software_decoded_frames_reported": 11,
+      "expected_frames": 12,
+      "software_decoded_dimensions": [
+        384,
+        256
+      ],
+      "expected_dimensions": [
+        320,
+        240
+      ],
+      "fixture_content_verified": false,
+      "failed_check": "unexpected decoded size or frame count",
+      "IOMMU_timeout_messages": 0,
+      "runtime_PM_underflow_messages": 0,
+      "installed_return": {
+        "boot": "aaf4f322",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      }
+    },
+    "decoder_only_trial": {
+      "candidate_boot": "04f8cc62",
+      "separate_fresh_boot": true,
+      "workload_started_before_any_encoder": true,
+      "verified_frames": 0,
+      "packet_IO_failure": true,
+      "ffmpeg_exit_status": -6,
+      "kernel_firmware_events": [
+        "sys error (session id:ff, data1:1, data2:0)",
+        "event session error 0"
+      ],
+      "IOMMU_timeout_messages": 0,
+      "runtime_PM_underflow_messages": 0,
+      "installed_return": {
+        "boot": "e4cc4460",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      }
+    }
   }
 }
