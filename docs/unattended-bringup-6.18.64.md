@@ -246,6 +246,19 @@ drivers use PAS ID 9. [Stock PAS ID](https://github.com/peremen/android-kernel-l
 
 [Shared clock qualification evidence](../evidence/2026-11-18-venus-shared-clocks.json)
 
+### Stock Venus firmware metadata
+
+The maintained MDT loader recognized the stock image as split firmware and
+computed a 5 MiB load span. Its copy of the 412-byte metadata matched the
+original bytes. The replay uses SCM stubs to check PAS ID 9, the relocation
+base and size, and error propagation from both calls. The handset's secure
+firmware service still needs to authenticate the real image.
+[Metadata replay evidence](../evidence/2026-11-18-venus-stock-mdt-model.json)
+
+```sh
+python3 -B diagnostics/venus-arm32/replay-stock-mdt.py /path/to/linux /path/to/stock/manifest.json /path/to/results
+```
+
 [Venus and USB follow-up evidence](../evidence/2026-11-18-venus-arm32-and-usb.json)
 
 [Sanitized device evidence](../evidence/2026-11-18-installed-6.18.64-peripherals.json)
