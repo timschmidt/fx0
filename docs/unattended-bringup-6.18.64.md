@@ -298,9 +298,40 @@ The return fixture and six startup hook cases passed with hardware calls
 simulated. [RAM image qualification evidence](../evidence/2026-11-18-venus-ram-image.json)
 
 The candidate prevents the WLAN module from loading. The operator permits one
-normal startup scan on the installed return boot. The handset trial still
-requires a controller for this exact RAM image and checks of the installed
-return. Firmware authentication and codec operation remain open.
+normal startup scan on the installed return boot.
+
+### Initial handset trial
+
+The bootloader accepted one RAM BOOT after exact image readback. The retained
+console records the candidate entering the initramfs, arming early return,
+and adding the codec to an IOMMU group. The Venus driver then returned
+`-ENODATA` during probe. The console ends at 16.4 seconds without identifying
+the reset cause. The controller did not reach candidate SSH or run the codec
+workload. It independently verified the return to installed 6.18.64 with all
+seven protected hashes matching.
+
+The candidate device tree supplies only the required `video-mem` interconnect.
+Ten host cases exercise the actual Venus and OF interconnect lookup code.
+The fix allows the optional `cpu-cfg` name to be absent on MSM8226 and preserves
+lookup errors for supplied paths. A separate replay runs the original
+postmarketOS initramfs firmware setup before the staging hook. This reproduces
+the original hook's rejection of the active firmware path. The corrected hook
+verifies the early path, checks the copied firmware, then switches to `/run`
+before the installed root starts. The rebuilt private image passed independent
+archive checks and verification of all 474 module signatures.
+[Initial trial and corrected image evidence](../evidence/2026-11-18-venus-ram-first-trial.json)
+
+### Corrected handset trial
+
+The second trial transferred the corrected image with exact readback and
+issued one RAM BOOT. The candidate reached postmarketOS initramfs stage two
+and armed the early return helper. Its matched console ends at 15.2 seconds.
+It contains neither the original `-ENODATA` probe error nor enough evidence to
+identify the reset cause. The installed kernel returned with matching boot and
+package hashes, and the compositor and gesture service were running. Candidate
+SSH and H.264 acceptance remain unverified. The next diagnostic needs to
+separate initramfs boot from the first Venus probe.
+[Corrected handset trial evidence](../evidence/2026-11-18-venus-ram-second-trial.json)
 
 ### Venus H.264 workload
 

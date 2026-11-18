@@ -1,0 +1,78 @@
+{
+  "recorded_UTC": "2026-11-18T06:18:57.558062+00:00",
+  "initial_RAM_trial": {
+    "bootloader_accepted_single_BOOT_after_exact_readback": true,
+    "retained_console_matched_release_and_trial_token": true,
+    "kernel_reached_initramfs": true,
+    "early_return_helper_armed": true,
+    "Venus_IOMMU_group_assigned": true,
+    "Venus_probe_errno": -61,
+    "latest_retained_timestamp_seconds": 16.401622,
+    "panic_or_oops_in_matched_console": false,
+    "reset_cause_established": false,
+    "candidate_SSH_userspace_observed": false,
+    "H264_workload_attempted": false,
+    "installed_boot_before": "75940ebe",
+    "installed_boot_after": "c664bd3f",
+    "installed_release": "6.18.64-fx0-lts-alpine",
+    "independent_USB_return_verified": true,
+    "seven_protected_boot_and_package_hashes_match": true,
+    "additional_wifi_scans_requested": false
+  },
+  "corrected_image_host_qualification": {
+    "kernel_source": "ca22073bcd187e902c3050bb329234278471caac",
+    "stock_init_firmware_order_and_hook_cases": [
+      {
+        "case": "ready",
+        "expected_exit": 0
+      },
+      {
+        "case": "bad_token",
+        "expected_exit": 93
+      },
+      {
+        "case": "unenforced",
+        "expected_exit": 93
+      },
+      {
+        "case": "missing_return",
+        "expected_exit": 93
+      },
+      {
+        "case": "failed_move",
+        "expected_exit": 93
+      },
+      {
+        "case": "corrupt_firmware",
+        "expected_exit": 93
+      },
+      {
+        "case": "wrong_initial_firmware_path",
+        "expected_exit": 93
+      },
+      {
+        "case": "prior_hook",
+        "expected_exit": 93
+      }
+    ],
+    "private_image_sha256": "c4036756e71f4169e043e487b1b0a3fede8aa9411e1b10ba164c52bc4e1cb491",
+    "module_signatures_verified": 474,
+    "import_symbol_crcs_verified": 26111,
+    "independent_image_audit": {
+      "private_image_sha256": "c4036756e71f4169e043e487b1b0a3fede8aa9411e1b10ba164c52bc4e1cb491",
+      "independent_android_header_digest_and_load_bounds": true,
+      "gnu_cpio_members_verified": 2,
+      "all_archived_module_files_match": 488,
+      "all_archived_firmware_files_match": 4,
+      "arm_busybox_scripts_checked": 3,
+      "arm_return_control_cases_and_invalid_argument_passed": true,
+      "systemd_unit_token_release_and_timer_checked": true,
+      "device_contacted": false
+    },
+    "venus_optional_cpu_cfg_controls": {
+      "controls_passed": 10,
+      "executed_actual_venus_OF_and_ICC_lookup_source": true,
+      "undefined_behavior_sanitizer": true
+    }
+  }
+}

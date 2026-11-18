@@ -18,7 +18,7 @@ WIDTH, HEIGHT, FRAMES, FPS = 320, 240, 12, 15
 LUMA = WIDTH * HEIGHT
 FRAME_SIZE = LUMA * 3 // 2
 RELEASE = "6.18.64-fx0-venus-ram-alpine"
-TOKEN = "fx0.native_trial=venus-6.18.64-01"
+TOKEN = "fx0.native_trial=venus-6.18.64-02"
 VIDIOC_QUERYCAP = 0x80685600
 CAPABILITY = struct.Struct("=16s32s32s6I")
 M2M_MPLANE = 0x4000
@@ -132,6 +132,8 @@ def target_gate():
         raise ValueError("current boot does not match the Venus RAM candidate")
     if Path("/sys/module/module/parameters/sig_enforce").read_text().strip() != "Y":
         raise ValueError("kernel module signatures are unenforced")
+    if Path("/sys/module/firmware_class/parameters/path").read_text().strip() != "/run/fx0-venus-firmware":
+        raise ValueError("firmware search path does not match the Venus RAM candidate")
     if Path("/proc/sys/kernel/tainted").read_text().strip() != "0":
         raise ValueError("kernel taint prevents acceptance")
     if Path("/sys/class/ieee80211").exists() and any(Path("/sys/class/ieee80211").iterdir()):
@@ -142,6 +144,12 @@ def target_gate():
     armed = Path("/run/fx0-native-trial/return-armed").read_text().splitlines()
     if "DEADLINE=420" not in armed or f"TOKEN={TOKEN}" not in armed:
         raise ValueError("early return helper is not recorded")
+    pids = [line.removeprefix("PID=") for line in armed if line.startswith("PID=")]
+    if len(pids) != 1 or not pids[0].isdecimal():
+        raise ValueError("early return helper PID is absent")
+    process = Path("/proc") / pids[0]
+    if (process / "exe").readlink().name.removesuffix(" (deleted)") != "fx0-native-return":
+        raise ValueError("early return helper process differs from the recorded process")
     subprocess.run(["systemctl", "is-active", "--quiet", "fx0-native-return.timer"],
                    check=True, timeout=8)
     if time.clock_gettime(time.CLOCK_BOOTTIME) > 205:

@@ -2,8 +2,14 @@
 # SPDX-License-Identifier: MIT
 set -eu
 
+log_stage() {
+    if [ -c /dev/kmsg ]; then
+        printf '<2>%s\n' "$*" > /dev/kmsg && return
+    fi
+    printf '%s\n' "$*" >&2
+}
 abort_trial() {
-    printf '<2>FX0_VENUS_STAGE_FAIL %s\n' "$*" >&2
+    log_stage "FX0_VENUS_STAGE_FAIL $*"
     sync
     reboot -f
     while :; do sleep 60; done
@@ -12,12 +18,14 @@ abort_trial() {
 release=6.18.64-fx0-venus-ram-alpine
 [ "$(uname -r)" = "$release" ] || abort_trial release
 case " $(cat /proc/cmdline) " in
-    *' fx0.native_trial=venus-6.18.64-01 '*) : ;;
+    *' fx0.native_trial=venus-6.18.64-02 '*) : ;;
     *) abort_trial token ;;
 esac
 [ "$(cat /proc/sys/kernel/tainted)" = 0 ] || abort_trial taint
 [ "$(cat /sys/module/module/parameters/sig_enforce)" = Y ] || abort_trial signatures
-[ "$(cat /sys/module/firmware_class/parameters/path)" = /run/fx0-venus-firmware ] || abort_trial 'firmware path'
+firmware_parameter=/sys/module/firmware_class/parameters/path
+# The postmarketOS first stage selects this path before loading drivers.
+[ "$(cat "$firmware_parameter")" = /lib/firmware/postmarketos ] || abort_trial 'initial firmware path'
 [ -f /tmp/fx0-native-return-armed ] || abort_trial 'return helper'
 
 early_modules=/usr/lib/modules
@@ -43,4 +51,7 @@ mkdir -p /run/systemd/system/sysinit.target.wants || abort_trial 'return timer d
 cp /etc/fx0-native-return.service /run/systemd/system/fx0-native-return.service || abort_trial 'return service'
 cp /etc/fx0-native-return.timer /run/systemd/system/fx0-native-return.timer || abort_trial 'return timer'
 ln -s ../fx0-native-return.timer /run/systemd/system/sysinit.target.wants/fx0-native-return.timer || abort_trial 'return timer enable'
-printf '<2>FX0_VENUS_STAGE_READY release=%s\n' "$release"
+# The verified copy is available on the /run mount carried into userspace.
+printf '%s' "$ram_firmware" > "$firmware_parameter" || abort_trial 'firmware path switch'
+[ "$(cat "$firmware_parameter")" = "$ram_firmware" ] || abort_trial 'verify firmware path'
+log_stage "FX0_VENUS_STAGE_READY release=$release"
