@@ -465,6 +465,22 @@ kernel, module files and protected hashes were verified after reboot.
 The operation within runtime resume that returns the first error
 remains to be identified.
 
+An ABI-matched Venus module added dynamic debug messages for the
+interconnect votes, core clock enables and HFI resume. The RAM image
+changed only this module and its manifest hash. All six sites were
+enabled, and the recorded codec steps returned zero. The trace still
+showed `EINVAL` on the first resume after suspend. The later requests
+produced no additional messages from the instrumented callback.
+[Diagnostic source](https://github.com/timschmidt/fx0-linux/commit/6705e8d7640b792abb6fce785899862a9de2681b)
+
+The matched supplier trace showed the linked Venus IOMMU enter an
+asynchronous runtime suspend. Its suspend returned `ETIMEDOUT`. The
+waiting IOMMU resume then returned `EINVAL`, followed by the matching
+error on the parent codec's resume. Sysfs reported the IOMMU runtime state
+as `error`. This accounts for the codec failure before its own resume
+callback and the child’s `EBUSY` from the workload. The IOMMU operation
+that timed out still needs isolation.
+
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)

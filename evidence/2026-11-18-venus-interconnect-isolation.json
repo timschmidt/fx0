@@ -18,7 +18,7 @@
     "retained_dmesg_records_all_preexisting": true
   },
   "installed_return": {
-    "boot": "4c96e837",
+    "boot": "88bbc34f",
     "kernel": "6.18.64-fx0-lts-alpine",
     "installed_modules_match": true,
     "seven_protected_hashes_match": true,
@@ -365,7 +365,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-18T15:55:06.738522+00:00",
+  "last_updated_UTC": "2026-11-18T16:13:51.705769+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -467,6 +467,138 @@
     "H264_workload_dispatched": false,
     "installed_return": {
       "boot": "4c96e837",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
+  },
+  "codec_driver_resume_diagnostic": {
+    "source_commit": "6705e8d7640b792abb6fce785899862a9de2681b",
+    "RAM_image_sha256": "9068b4899af345935cb0335248ec27e6e579ef9119100b2a9630d98e567b897f",
+    "RAM_readback_exact": true,
+    "candidate_boot": "f1e683ad",
+    "kernel_DTB_and_arguments_unchanged": true,
+    "only_Venus_core_module_and_its_manifest_entry_changed": true,
+    "six_targeted_dynamic_debug_sites_enabled": true,
+    "codec_step_returns": [
+      {
+        "step": "runtime resume video interconnect vote",
+        "return": 0
+      },
+      {
+        "step": "runtime resume CPU interconnect vote",
+        "return": 0
+      },
+      {
+        "step": "runtime resume core power",
+        "return": 0
+      },
+      {
+        "step": "runtime resume HFI",
+        "return": 0
+      },
+      {
+        "step": "HFI resume hardware state",
+        "return": 0
+      },
+      {
+        "step": "HFI resume firmware run",
+        "return": 0
+      }
+    ],
+    "parent_runtime_PM_returns": {
+      "resume": [
+        0,
+        1,
+        1,
+        -22,
+        -22
+      ],
+      "suspend": [
+        0
+      ]
+    },
+    "driver_resume_failure_site_identified": false,
+    "installed_return": {
+      "boot": "2e7ea71a",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
+  },
+  "Venus_IOMMU_runtime_PM_trace": {
+    "candidate_boot": "0226e666",
+    "same_diagnostic_RAM_image": true,
+    "RAM_readback_exact": true,
+    "capture_started_before_driver_load": true,
+    "capture_cleaned_up": true,
+    "codec_suppliers_runtime_status": {
+      "fdc84000.iommu": "error",
+      "fd8c0000.clock-controller": "unsupported"
+    },
+    "ordered_return_values": [
+      {
+        "device": "fdc84000.iommu",
+        "operation": "resume",
+        "return": 0
+      },
+      {
+        "device": "fdc84000.iommu",
+        "operation": "resume",
+        "return": 1
+      },
+      {
+        "device": "fdc84000.iommu",
+        "operation": "resume",
+        "return": 1
+      },
+      {
+        "device": "fdc80000.video-codec",
+        "operation": "resume",
+        "return": 0
+      },
+      {
+        "device": "fdc80000.video-codec",
+        "operation": "resume",
+        "return": 1
+      },
+      {
+        "device": "fdc80000.video-codec",
+        "operation": "resume",
+        "return": 1
+      },
+      {
+        "device": "fdc80000.video-codec",
+        "operation": "suspend",
+        "return": 0
+      },
+      {
+        "device": "fdc84000.iommu",
+        "operation": "suspend",
+        "return": 0
+      },
+      {
+        "device": "fdc84000.iommu",
+        "operation": "suspend",
+        "return": -110
+      },
+      {
+        "device": "fdc84000.iommu",
+        "operation": "resume",
+        "return": -22
+      },
+      {
+        "device": "fdc80000.video-codec",
+        "operation": "resume",
+        "return": -22
+      },
+      {
+        "device": "fdc80000.video-codec",
+        "operation": "resume",
+        "return": -22
+      }
+    ],
+    "early_reboot_transport_acknowledgment_received": false,
+    "installed_return": {
+      "boot": "88bbc34f",
       "modules_verified": 482,
       "protected_hashes_match": true
     }
