@@ -657,6 +657,59 @@ midstream size changes remains available for decoder qualification.
 [Start-size candidate](https://github.com/timschmidt/fx0-linux/commit/852b186174bfabb1037e5ba01ff603eda7a15cbf)
 [Vendor decoder](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/vidc/msm_vdec.c#L982-L1002)
 
+The [direct startup probe](../diagnostics/venus-arm32/decoder-startup.c)
+compares startup on separate sessions with one coded input buffer. Use
+`output-first` as the control and `headers-only` with the exact bytes
+preceding its first picture slice. The `preallocate-capture` mode retains
+the same input and allocates the destination queue before startup. Its
+firmware-registration comparison applies in static buffer mode. Each mode
+reports source change, the input buffer return and driver errors over the
+same 2.5-second window. The probe leaves CAPTURE idle, so frame
+qualification uses the full workload. Pair the observation with the
+candidate's HFI journal.
+[Linux stateful decoder initialization](https://docs.kernel.org/6.18/userspace-api/media/v4l/dev-decoder.html#initialization)
+
+Create the two inputs from the known 320×240 software reference.
+The generator checks the first packet's extent and requires SPS and PPS
+before an IDR picture. A software decode of the extracted access unit
+returned the same first frame as the complete reference.
+
+```sh
+python3 -B diagnostics/venus-arm32/prepare-decoder-startup.py reference.h264 startup-inputs
+```
+
+The direct control submitted a single 940-byte access unit. HFI reported
+sufficient resources at 320×240 before the same firmware exception.
+V4L2 returned `EIO` when the probe tried to dequeue the input. The first
+probe stopped checking source events when an empty nonblocking queue
+returned `ENOENT`. The corrected poll treats that as an empty queue,
+and four mocked workloads check the corrected behavior. The installed
+return matched all 482 module files and the protected hashes.
+
+A fresh boot with the same signed image submitted only the 630 bytes
+before the first slice. It produced the same firmware exception and
+input dequeue `EIO`, with no source-change event in the HFI journal or
+at V4L2. The comparison places the failure before the first picture
+slice is needed. The firmware's exact failing operation remains open.
+
+### Standard kernel package
+
+Two clean offline package builds produced byte-identical signed APKs,
+signed repository indexes, kernel images, symbol tables and kernel
+configurations. Each audit checked 91,296 tracked source files, all
+474 module signatures and 26,119 import CRCs. The 65 retained DTBs are
+byte-identical to the installed package build. The encoder uses a
+separate Venus DTB and privately staged stock firmware.
+[Kernel source](https://github.com/timschmidt/fx0-linux/commit/9a5798a4b8239df1fec6732bb0942ba5e0611add)
+[Package recipe](https://github.com/timschmidt/fx0-pmaports/commit/faa816bb14d5207f3b5b9935639ebb04c881737c)
+
+The RAM image audit matched the packaged kernel, Venus DTB and module
+payloads, and verified all 488 module records in the image. The native
+trial shares the installed kernel's release string. Its independent
+kernel notes and unique boot token identify it before the temporary
+module mount is installed. The 360-second systemd timer and 420-second
+early return helper both require the trial token.
+
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)

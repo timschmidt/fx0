@@ -1184,5 +1184,61 @@
     "wrong_partition_hash_refused_before_output": true,
     "inspect_only_invocation_preserved": true,
     "device_modified": false
+  },
+  "Venus_standard_encoder_package": {
+    "source_commit": "9a5798a4b8239df1fec6732bb0942ba5e0611add",
+    "recipe_commit": "faa816bb14d5207f3b5b9935639ebb04c881737c",
+    "source_files_verified": 91296,
+    "package_sha256": "2cd60be8f4c4be968fbed4c1776de213a40184dbab45f29717a2322ffee975f8",
+    "release": "6.18.64-fx0-lts-alpine",
+    "all_module_signatures_verified": 474,
+    "import_CRCs_verified": 26119,
+    "signed_index_SHA256": "32defb446aa308c43300685d17a3d951b7bbfc4f0943135f0f95e3b3858d34ce",
+    "retained_DTBS_byte_identical": 65,
+    "Venus_DTB_sha256": "f9faa1106af2e28fc464f06074e5be2053f0953f381f23285aaf1f5177c232a7",
+    "independent_clean_builds": 2,
+    "both_independent_package_audits_passed": true,
+    "all_compared_artifacts_byte_identical": true,
+    "ordinary_and_65_retained_DTBs_unchanged": true,
+    "private_firmware_records_in_RAM_image": 4,
+    "native_RAM_image_SHA256": "0da1b656d271d017da0f6b7e09b8b1b0f168b0e5cb39e1e298bdbf40b674ca4e",
+    "native_RAM_module_records_verified": 488,
+    "exact_source_and_recipe_refs_verified": true,
+    "platform_coldplug_claimed": false,
+    "installed_on_handset": false
+  },
+  "Venus_direct_decoder_startup_comparison": {
+    "same_signed_RAM_image": "1d74c7019500ae8679e40ba4561dd2e574d14f37dde34265aae25c7957c2b7ed",
+    "software_decoded_first_access_unit_matches_reference_first_frame": true,
+    "output_first": {
+      "boot": "ad2a32a3-16ea-4533-a361-d0c91a142d00",
+      "input_bytes": 940,
+      "HFI_sufficient_resources": [
+        320,
+        240
+      ],
+      "V4L2_output_errno": 5,
+      "source_event_observer_empty_queue_error": 2,
+      "installed_modules_verified": 482,
+      "installed_protected_hashes_match": true
+    },
+    "headers_only": {
+      "boot": "ea842dfa-f6b7-4610-807c-1ab3fbc64186",
+      "input_bytes": 630,
+      "prefix_ends_before_first_picture_slice": true,
+      "source_change_seen_by_HFI_or_userspace": false,
+      "V4L2_output_errno": 5,
+      "V4L2_event_errno": 0,
+      "same_firmware_exception": true,
+      "installed_return_boot": "228ac316-232e-414e-9f2f-80a34c4d2efe",
+      "installed_modules_verified": 482,
+      "installed_protected_hashes_match": true,
+      "runtime_PM_underflows": 0,
+      "Venus_IOMMU_timeout_messages": 0
+    },
+    "no_CAPTURE_stream_in_either_trial": true,
+    "V4L2_empty_event_queue_handling_fixed": true,
+    "host_mocked_empty_event_queue_cases": 4,
+    "decoded_frames_qualified": false
   }
 }
