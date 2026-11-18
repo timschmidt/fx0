@@ -30,17 +30,85 @@
     "only_one_provider_status_changed_relative_to_both_provider_control": true,
     "kernel_ramdisk_and_command_line_equal_to_ordinary_DTB_control": true,
     "codec_and_IOMMU_disabled": true,
-    "board_trials_run": 0,
+    "board_trials_run": 2,
     "BIMC": {
       "image_sha256": "a5822f3ae568ac87e086fd3af264f4a626334536d16c1c87ddb05963c32d44c9",
       "DTB_sha256": "c7e6ebadff8e033e2605bd1c4739565c39cc74a70ef7910409e91f68260146dc",
-      "sole_DT_property_change": "/soc/interconnect@fc478000:status"
+      "sole_DT_property_change": "/soc/interconnect@fc478000:status",
+      "RAM_readback_exact": true,
+      "candidate_USB_userspace_ready": true,
+      "candidate_boot": "bed5c174",
+      "BIMC_driver_bound": true,
+      "MMSS_driver_bound": false,
+      "both_return_guards_observed": true,
+      "WLAN_devices": 0,
+      "installed_return": {
+        "boot": "527d1b6f",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      }
     },
     "MMSS": {
       "image_sha256": "ba3b2fc4f533eaf8da87610039a4198f55fc07c2ee5c4371314f8c41b2a890e5",
       "DTB_sha256": "97f9d9920129e456e10c4c0291ecd2146c05531ec22e90c87dc799f7e1409c7a",
-      "sole_DT_property_change": "/soc/interconnect@fc380000:status"
+      "sole_DT_property_change": "/soc/interconnect@fc380000:status",
+      "RAM_readback_exact": true,
+      "candidate_USB_userspace_seen": false,
+      "retained_native_init_prefix_present": true,
+      "reset_cause_established": false,
+      "retained_dmesg_records_all_preexisting": true,
+      "installed_return": {
+        "boot": "09e2fa62",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      }
     }
   },
-  "manual_WiFi_scans": 0
+  "manual_WiFi_scans": 0,
+  "no_interconnect_providers": {
+    "only_changed_properties_vs_both_providers": [
+      "/soc/interconnect@fc380000:status",
+      "/soc/interconnect@fc478000:status"
+    ],
+    "RAM_image_sha256": "6633c723eb11b4fe6d67aac488f0dd7a0deabf843ccf7ef9a4b142d0f60d09aa",
+    "RAM_readback_exact": true,
+    "kernel_ramdisk_and_command_line_byte_identical": true,
+    "codec_and_IOMMU_disabled": true,
+    "candidate_USB_userspace_ready": true,
+    "candidate_boot": "074a5807",
+    "both_return_guards_observed": true,
+    "active_interconnect_provider_drivers": 0,
+    "WLAN_devices": 0,
+    "installed_return": {
+      "boot": "497a9ade",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
+  },
+  "paired_DTB_conclusion": "The MMSS provider alone reproduced the failure to reach USB userspace. The same diagnostic device tree booted with both providers disabled and with only BIMC enabled. The retained evidence does not establish which operation caused the reset.",
+  "installed_MMSS_clock_snapshot": {
+    "recorded_UTC": "2026-11-18T13:10:33.261862+00:00",
+    "boot": "527d1b6f",
+    "clock_summary": {
+      "mmss_axi_clk_src": {
+        "enable_count": 1,
+        "prepare_count": 1,
+        "rate_Hz": 100000000,
+        "hardware_enabled": "Y"
+      },
+      "mmss_s0_axi_clk": {
+        "enable_count": 0,
+        "prepare_count": 0,
+        "rate_Hz": 100000000,
+        "hardware_enabled": "Y"
+      },
+      "mmss_mmssnoc_axi_clk": {
+        "enable_count": 0,
+        "prepare_count": 0,
+        "rate_Hz": 100000000,
+        "hardware_enabled": "Y"
+      }
+    },
+    "snapshot_during_MMSS_probe": false
+  }
 }

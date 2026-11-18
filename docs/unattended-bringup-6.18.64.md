@@ -352,6 +352,26 @@ to isolate the new device nodes and resolve the firmware-path handoff.
 Both tests returned with matching installed boot and package hashes.
 [Coldplug and ordinary-DTB evidence](../evidence/2026-11-18-venus-dtb-control.json)
 
+### Interconnect provider controls
+
+With the codec and its IOMMU held disabled, enabling both providers kept the
+diagnostic kernel from reaching USB userspace. Disabling both reached USB
+userspace. BIMC alone also reached USB userspace and its driver bound. MMSS
+NoC alone reproduced the early failure. Each image used the same kernel,
+ramdisk and boot arguments. MMSS NoC coldplug is sufficient to reproduce the
+observed failure. The retained console reaches early userspace, and the
+matched panic records predate the test. The precise reset mechanism remains
+unknown.
+
+The stock MSM8226 clock driver makes the MMSS S0 AXI branch depend on the
+MMSS NoC AXI branch. The diagnostic provider prepares the shared AXI root
+and takes the S0 branch for QoS setup. The maintained clock driver exposes
+both branches as children of the root. On the installed kernel, both branches
+were enabled in hardware at 100 MHz while Linux held zero references to
+either. Their state around the MMSS provider probe needs measurement. [Stock MSM8226 clock source](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/mach-msm/clock-8226.c)
+
+[Interconnect isolation evidence](../evidence/2026-11-18-venus-interconnect-isolation.json)
+
 ### Venus H.264 workload
 
 A static ARM32 FFmpeg build includes the V4L2 mem-to-mem H.264 encoder and
