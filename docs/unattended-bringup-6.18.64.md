@@ -503,6 +503,16 @@ were checked. The DTB and boot arguments match the previous control.
 The candidate awaits handset qualification after the local restart.
 [Runtime PM source](https://github.com/timschmidt/fx0-linux/commit/5fed68fdad831e9f115ac0d0f3f8d6780d6d7658)
 
+Two clean builds on the workstation reproduced the ARM kernel, all three
+Venus modules, the certificate and the built-in symbol manifest byte for
+byte. Their signed RAM images also matched exactly. Each build verified
+474 module signatures and all 488 startup manifest records. The build
+helper accepts a kernel source tree, base configuration, reference
+module-symbol manifest, private test signer and new output directory.
+It sets the build timestamp from the source commit and copies the signer
+to a separate file in each output tree.
+[Clean rebuild script](../diagnostics/venus-arm32/rebuild-ram-kernel.sh)
+
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)

@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-18T16:43:16.624076+00:00",
+  "last_updated_UTC": "2026-11-18T17:08:00.878209+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -668,5 +668,49 @@
     "negative_cross_certificate_checks_passed": 6,
     "phone_booted_with_recovery_candidate": false,
     "last_IOMMU_hold_trial_still_awaiting_local_restart": true
+  },
+  "Venus_runtime_PM_clean_rebuild": {
+    "source_commit": "5fed68fdad831e9f115ac0d0f3f8d6780d6d7658",
+    "clean_builds": 2,
+    "image_sha256": "6a083df7221573aae39bd503438bd5565fd40a5e6b180a441fd29f40efcd9ddf",
+    "image_bytes": 20809728,
+    "zimage_sha256": "3305d4f1f957a80a6eddb1d6965ff73be67235069da4583fb13e47a0c6c55f32",
+    "built_in_export_CRCs_match": 11741,
+    "codec_modules": {
+      "venus-core": {
+        "matching_import_CRCs": 154,
+        "payload_SHA256": "3b9fbdef85fa0565a31895f9f2147db8d58b08ae95cafff7bc518be993c0e405"
+      },
+      "venus-enc": {
+        "matching_import_CRCs": 100,
+        "payload_SHA256": "5a6fd74a4c2a37d7966bdd1001758e6854200bef26f1fa50b537e5183b6ee89a"
+      },
+      "venus-dec": {
+        "matching_import_CRCs": 127,
+        "payload_SHA256": "952f2257df4d84688588d0372b3ccfd995c862a65457b2736a293512501a4303"
+      }
+    },
+    "verified_module_signatures": 474,
+    "unchanged_module_payloads": 472,
+    "startup_manifest_records_verified": 488,
+    "DTB_and_arguments_unchanged": true,
+    "WLAN_blacklisted": true,
+    "signed_images_byte_identical": true,
+    "isolated_signer_copies": true,
+    "rebuild_recipe_sha256": "691ee8df14ddfbf3c7cf9e532955df7b92dbdf50f2c050bd7235dcedd5c47ea8",
+    "independently_matching_unsigned_artifacts": [
+      "ARM zImage",
+      "Venus core module",
+      "Venus encoder module",
+      "Venus decoder module",
+      "embedded certificate",
+      "built-in ABI manifest"
+    ],
+    "compiler": "Clang 21.1.8 (Fedora 21.1.8-6.fc43)",
+    "openssl": "3.5.9",
+    "storage": "workspace filesystem after temporary filesystem quota failure",
+    "refused_existing_output_directory": true,
+    "controller_verified_host_image": true,
+    "handset_booted_with_image": false
   }
 }
