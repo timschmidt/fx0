@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-18T16:25:37.872402+00:00",
+  "last_updated_UTC": "2026-11-18T16:43:16.624076+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -630,5 +630,43 @@
     },
     "installed_return_verified": false,
     "local_restart_requested": true
+  },
+  "Venus_runtime_PM_recovery_candidate": {
+    "source_commit": "5fed68fdad831e9f115ac0d0f3f8d6780d6d7658",
+    "PM_reference_balance_host_tests": {
+      "actual_teardown_paths": 4,
+      "original_failure_cases_reproduced": 8,
+      "corrected_cases_passed": 12
+    },
+    "IOMMU_host_regression": {
+      "actual_driver_functions": 3,
+      "corrected_scenarios_passed": 4,
+      "invariants": [
+        "suspend disables and drains context before clocks gate without halt or TLB sync",
+        "failed halt or sync keeps supplier offline",
+        "successful retry invalidates then restores the current live context",
+        "no context restoration after offline domain release",
+        "already offline or unavailable context needs no MMIO",
+        "non-Venus clock gating behavior preserved"
+      ]
+    },
+    "signed_ARM_RAM_image": {
+      "image_sha256": "79c49b21df9d7049ef4dfebdf37b8d0f69510dbb93f09c519e0a48b735e8682f",
+      "image_bytes": 20809728,
+      "built_in_export_CRCs_match": 11741,
+      "verified_module_signatures": 474,
+      "unchanged_module_payloads": 472,
+      "startup_manifest_records_verified": 488,
+      "DTB_and_arguments_unchanged": true,
+      "WLAN_blacklisted": true
+    },
+    "child_module_import_CRCs": {
+      "venus-enc": 100,
+      "venus-dec": 127
+    },
+    "embedded_trial_certificate_matches_module_signatures": true,
+    "negative_cross_certificate_checks_passed": 6,
+    "phone_booted_with_recovery_candidate": false,
+    "last_IOMMU_hold_trial_still_awaiting_local_restart": true
   }
 }

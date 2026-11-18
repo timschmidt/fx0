@@ -489,6 +489,20 @@ verified return to the installed system. The last installed audit before
 this trial verified all 482 module files and the protected hashes. A
 local restart is pending.
 
+The next candidate balances runtime PM references on encoder and decoder
+teardown after a failed resume. Its IOMMU suspend disables the Linux-owned
+context before dropping clocks. Resume performs the full ASID invalidation
+before restoring the context and releasing the consumer. Host tests reproduced
+the previous reference-count failure and exercised suspend, resume failure,
+retry and offline domain release using the actual driver functions.
+
+The ARM build matched 11,741 built-in symbol versions. All 474 archived
+modules verify against the candidate kernel's isolated trial certificate.
+The 472 unchanged module payloads and all 488 startup manifest entries
+were checked. The DTB and boot arguments match the previous control.
+The candidate awaits handset qualification after the local restart.
+[Runtime PM source](https://github.com/timschmidt/fx0-linux/commit/5fed68fdad831e9f115ac0d0f3f8d6780d6d7658)
+
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)
