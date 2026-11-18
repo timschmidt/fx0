@@ -1,0 +1,62 @@
+{
+  "date_utc": "2026-11-18",
+  "classification": "disabled diagnostic preview qualified on workstation",
+  "arm32": {
+    "source": "6213d215f298c949e293cfb699c4b8c22716ce31",
+    "architecture": "ARM EABI5",
+    "release": "6.18.64-fx0-venus-host+",
+    "vmlinux_sha256": "6797254e2ef73b9207d969a0bdb6ce6bc11ba7edd3d60fd390f1dd35cc37c4f5",
+    "modules": 474,
+    "selected_import_crcs": {
+      "venus-core.ko": 153,
+      "venus-dec.ko": 127,
+      "venus-enc.ko": 100,
+      "qnoc-msm8226.ko": 8,
+      "icc-smd-rpm.ko": 43
+    },
+    "preview_depends_on_smd_rpm": true,
+    "unsigned_host_artifacts": true,
+    "generated_signing_key": false
+  },
+  "device_tree": {
+    "normal_dtb_sha256": "aeeda1292d347cf15caf475ed953a952162720c6be4606941d5461237ea12a47",
+    "preview_dtb_sha256": "ba461a234575c423c675c0ecba418d05394462e49e0dc2aa5650a2b206269b83",
+    "compiled_four_disabled_nodes": true,
+    "compiled_route_and_clock_cells_exact": true,
+    "target_schemas": "passed",
+    "controls": {
+      "codec_with_only_video_memory_path": "accepted",
+      "enabled_without_video_memory_path": "rejected",
+      "mmss_without_clocks": "rejected",
+      "mmss_without_endpoint_cells": "rejected",
+      "unknown_vote_name": "rejected",
+      "bimc_with_clocks": "rejected"
+    }
+  },
+  "host_ubsan": {
+    "baseline": "nine checks passed",
+    "incorrect_mmss_stride": "incorrect MSM8226 mode write\nincorrect MSM8226 priority sequence\npriority failure not propagated",
+    "incorrect_bimc_offset": "incorrect BIMC bypass write",
+    "incorrect_rpm_slave": "incorrect EBI RPM vote",
+    "missing_gateway": "incorrect route",
+    "legacy_default_changed": "legacy mode stride changed"
+  },
+  "video_p0_to_ddr_channel_0": {
+    "stock_endpoint_cells": [
+      63,
+      512
+    ],
+    "multimedia_qos_mode_offset": "0x320c",
+    "multimedia_qos_port_stride": "0x80",
+    "legacy_default_stride": "0x1000",
+    "memory_qos_bypass_offset": "0x10300",
+    "rpm_bandwidth_slave": 0,
+    "cpu_configuration_vote_required": false
+  },
+  "device_booted_or_updated": false,
+  "pending": [
+    "Exercise shared AXI and DDR vote behavior alongside existing display, GPU and memory users.",
+    "Qualify IOMMU runtime PM teardown and TLB updates.",
+    "Verify PAS startup, HFI and video encode/decode during a recoverable device trial."
+  ]
+}

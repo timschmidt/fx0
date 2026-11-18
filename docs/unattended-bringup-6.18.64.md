@@ -154,10 +154,8 @@ copies exercise the new schema gates, including a missing clock resource, an
 extra secure context and codec enablement without interconnect paths.
 
 The preview links on ARM32 and the changed driver code compiles on ARM64.
-Enabling the codec requires the MSM8226 memory and CPU configuration
-interconnect providers, plus a device trial of PAS firmware startup and HFI
-operation. Runtime PM errors on IOMMU teardown and TLB paths still need
-qualification before an enabled trial.
+Runtime PM errors on IOMMU teardown and TLB paths still need qualification
+before a device trial of PAS firmware startup and HFI operation.
 [Platform source](https://github.com/timschmidt/fx0-linux/commit/b190c7dfd9eeac3588807c39107f2e64d0050ecb)
 
 ```sh
@@ -165,6 +163,33 @@ python3 -B diagnostics/venus-arm32/check-platform.py /path/to/linux /path/to/res
 ```
 
 [Platform preview evidence](../evidence/2026-11-18-venus-platform-preview.json)
+
+### MSM8226 Venus memory interconnect
+
+The expanded preview follows the stock Video P0 route through the multimedia
+NoC and the memory controller to DDR channel 0. The application processor
+owns both QoS ports. The DDR endpoint uses RPM slave 0. MSM8226's multimedia
+QoS ports are spaced 0x80 bytes apart. Other users of the shared legacy NoC
+driver retain their 0x1000-byte spacing. The stock video driver requests
+bandwidth through its DDR path and uses the Venus interface clocks for CPU
+register access. The MSM8226 binding requires `video-mem` for an enabled
+codec. [Stock fabric tables](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/boot/dts/msm8226-bus.dtsi)
+[Stock video vote parser](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/vidc/msm_vidc_res_parse.c)
+
+The ARM32 build produced `vmlinux` and 474 modules. All 431 inspected symbol
+imports match the linked kernel. Nine checks on the actual backend and
+topology pass under UBSan, and five injected faults are detected. The binding
+accepts the single stock route and rejects five malformed device-tree copies.
+The regular Madai DTB matches the signed package byte for byte. The preview's
+two providers, codec and IOMMU are disabled. Before enabling the fabrics,
+their shared AXI and DDR clock votes need qualification with the existing
+display, GPU and memory users. [Kernel source](https://github.com/timschmidt/fx0-linux/commit/6213d215f298c949e293cfb699c4b8c22716ce31)
+
+```sh
+python3 -B diagnostics/venus-arm32/check-interconnect.py /path/to/linux /path/to/results
+```
+
+[Interconnect qualification evidence](../evidence/2026-11-18-venus-interconnect-preview.json)
 
 [Venus and USB follow-up evidence](../evidence/2026-11-18-venus-arm32-and-usb.json)
 
