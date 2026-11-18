@@ -375,6 +375,12 @@ the probe releasing its own S0 reference as a sufficient explanation. The
 installed kernel returned with all 482 module files and protected hashes
 verified. [Stock MSM8226 clock source](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/mach-msm/clock-8226.c)
 
+The next control retained the S0 reference and skipped the Video P0 QoS
+register setup at probe. The boot log confirms both conditions and successful
+provider probe. USB userspace remained unreachable. The original MMSS
+provider's QoS setup and release of its S0 reference are each unnecessary
+for reproducing the failure under these controls.
+
 [Interconnect isolation evidence](../evidence/2026-11-18-venus-interconnect-isolation.json)
 
 ### Venus H.264 workload

@@ -133,5 +133,30 @@
       "modules_verified": 482,
       "protected_hashes_match": true
     }
+  },
+  "MMSS_probe_QoS_control": {
+    "source_commit": "558b88cf0407fdaef00c6f769636707e1515822b",
+    "parent_S0_reference_control_image": "39d98632502d483831f973aab35b8652c4cef5a50e5538112a5b7e3d07b917ea",
+    "RAM_image_sha256": "20eff5623ace8812dccf371260ad239ea9e5c2a2c7b04487fe81806f04528bd9",
+    "kernel_and_DTB_byte_identical_to_parent": true,
+    "only_replaced_module": "qnoc-msm8226.ko",
+    "other_initramfs_entries_byte_identical": 858,
+    "module_signature_verified_against_linked_certificate": true,
+    "module_symbol_version_checks": 18,
+    "only_appended_kernel_option": "qnoc_msm8226.fx0_skip_mmss_qos=1",
+    "retained_S0_reference_control": true,
+    "RAM_readback_exact": true,
+    "retained_probe_markers": [
+      "[   12.902276] qnoc-msm8226 fc478000.interconnect: Fx0 MMSS Video P0 probe QoS setup skipped",
+      "[   12.904939] qnoc-msm8226 fc478000.interconnect: Fx0 S0 AXI hold acquired before provider probe",
+      "[   13.032039] qnoc-msm8226 fc478000.interconnect: Fx0 S0 AXI hold retained after provider probe"
+    ],
+    "candidate_USB_userspace_seen": false,
+    "reset_cause_established": false,
+    "installed_return": {
+      "boot": "37039249",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
   }
 }
