@@ -1,0 +1,44 @@
+{
+  "date_utc": "2026-11-18",
+  "classification": "shared-clock host qualification for disabled diagnostic preview",
+  "source": "9dc6ed47e56d16a4dbf855974484d7994890dd33",
+  "arm32_module_count": 474,
+  "vmlinux_sha256": "9cb899309f8e7c1f041639e9c08d6898ea63ec4a4d238162ab8325c50463b75a",
+  "module_export_crcs_match_previous_preview": true,
+  "module_import_crcs_matched": {
+    "qnoc-msm8226": 10,
+    "icc-smd-rpm": 44,
+    "qnoc-msm8974": 33
+  },
+  "preview_clock_calls": [
+    "clk_round_rate",
+    "clk_set_min_rate"
+  ],
+  "matching_device_trees": {
+    "qcom-msm8926-lg-madai": "aeeda1292d347cf15caf475ed953a952162720c6be4606941d5461237ea12a47",
+    "qcom-msm8926-lg-madai-venus": "ba461a234575c423c675c0ecba418d05394462e49e0dc2aa5650a2b206269b83"
+  },
+  "enabled_provider_schema_copy_validated": true,
+  "host_ubsan": {
+    "actual_interconnect_core_and_backend": true,
+    "clock_and_rpm_operations_simulated": true,
+    "checks": 19,
+    "expected_failures": {
+      "incorrect_mmss_stride": "incorrect MSM8226 mode write\nincorrect MSM8226 priority sequence\npriority failure not propagated",
+      "incorrect_bimc_offset": "incorrect BIMC bypass write",
+      "incorrect_rpm_slave": "incorrect EBI RPM vote",
+      "missing_gateway": "incorrect route",
+      "legacy_default_changed": "legacy mode stride changed",
+      "ddr_clock_handoff_replaced": "video vote replaced the DDR clock handoff\nidle handling moved the DDR clock vote",
+      "probe_applies_synthetic_maximum": "probe changed existing clock or bandwidth votes\nvideo vote overwrote the peer's higher rate\nvideo vote replaced the DDR clock handoff\nvideo minimum did not select the required AXI rate\nidle handling did not release only the video minimum\nidle handling moved the DDR clock vote",
+      "mmss_overwrites_peer_rate": "video vote overwrote the peer's higher rate\nidle handling did not release only the video minimum",
+      "unsatisfiable_mmss_rate_accepted": "excess MMSS minimum was admitted\nclock rounding error was lost\nclock reservation error was lost"
+    }
+  },
+  "firmware_from_stock": {
+    "pas_id": 9,
+    "installed_inventory_has_default_venus_image": false,
+    "default_request_path": "qcom/msm8226/venus.mdt"
+  },
+  "device_booted_or_updated": false
+}

@@ -224,6 +224,28 @@ python3 -B diagnostics/venus-arm32/check-platform.py /path/to/linux /path/to/res
 
 [Teardown and resume qualification evidence](../evidence/2026-11-18-venus-iommu-offline.json)
 
+### Shared AXI and DDR clocks
+
+The video-only provider leaves the RPM clock controller's boot votes in
+place for the DDR clock while the other memory clients still use that
+baseline. It sends the video bandwidth request to EBI slave 0 and starts its
+managed endpoints at zero, avoiding the interconnect core's initial
+maximum-bandwidth request. The multimedia AXI clock uses a per-consumer
+minimum. Display and camera can request higher rates, and an idle video
+request releases the minimum. The physical clock rate after release depends
+on the clock framework's outstanding requests. [Kernel source](https://github.com/timschmidt/fx0-linux/commit/9dc6ed47e56d16a4dbf855974484d7994890dd33)
+[Linux common clock framework](https://docs.kernel.org/driver-api/clk.html)
+
+The workstation replay runs the maintained provider and interconnect core
+with simulated clock and RPM services. Nineteen checks pass and nine fault
+controls are detected. The ARM32 kernel and 474 modules build with both
+Madai DTBs unchanged. Concurrent display, camera and video operation still
+needs a device trial. The installed firmware inventory has no Venus file at
+the driver's requested `qcom/msm8226/venus.mdt` path. The stock and maintained
+drivers use PAS ID 9. [Stock PAS ID](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/mach-msm/scm-pas.h)
+
+[Shared clock qualification evidence](../evidence/2026-11-18-venus-shared-clocks.json)
+
 [Venus and USB follow-up evidence](../evidence/2026-11-18-venus-arm32-and-usb.json)
 
 [Sanitized device evidence](../evidence/2026-11-18-installed-6.18.64-peripherals.json)
