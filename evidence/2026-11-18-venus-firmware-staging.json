@@ -1,0 +1,66 @@
+{
+  "date_utc": "2026-11-18",
+  "source": "7b3824ec1705cc528ae5567b87d25f3158268aaa",
+  "arm32_module_count": 474,
+  "arm32_venus_import_crcs_verified": {
+    "venus-core.ko": 153,
+    "venus-dec.ko": 127,
+    "venus-enc.ko": 100
+  },
+  "firmware_declared_by_module": [
+    "qcom/msm8226/venus.b02",
+    "qcom/msm8226/venus.b03",
+    "qcom/msm8226/venus.b04",
+    "qcom/msm8226/venus.mdt"
+  ],
+  "matching_regular_and_disabled_dtbs": {
+    "qcom-msm8926-lg-madai": "aeeda1292d347cf15caf475ed953a952162720c6be4606941d5461237ea12a47",
+    "qcom-msm8926-lg-madai-venus": "ba461a234575c423c675c0ecba418d05394462e49e0dc2aa5650a2b206269b83"
+  },
+  "enabled_trial_dtb_sha256": "0fd9a52fbe18f7b0281ec4461be508d371549610d7d16a66d8a92c5a4d2598a6",
+  "only_four_device_tree_statuses_enabled": true,
+  "enabled_trial_dtb_passed_device_schemas": true,
+  "private_stage": {
+    "private_stage_verified": true,
+    "file_sizes": {
+      "venus.mdt": 412,
+      "venus.b02": 873184,
+      "venus.b03": 4976,
+      "venus.b04": 32
+    },
+    "split_files_match_stock_mbn": 3
+  },
+  "loader_replay": {
+    "matched_verified_stock_system_hash": true,
+    "loader_functions": {
+      "mdt_header_valid": "2952ef5aa0a99ebc37829ada135a0bb71a6c9b4a06d8f49ae7ba81a9cff552b9",
+      "mdt_phdr_loadable": "50e432fa19db4813d49b526f3dbaf9d20cbe49e361074ed7d0a9db732edbf7d2",
+      "mdt_load_split_segment": "c93f5851788378324f298ffd48e70f9c7d1b0e37ee73931769d0164eacf414b1",
+      "qcom_mdt_get_size": "8475035d387013ed4e9f1d96774475c5a3af5461a6affd62e5dc291d1dfc70f1",
+      "qcom_mdt_read_metadata": "df86394ab1d92e68f530e62427583992e2fe6f9d096beac19201ade248e2d142",
+      "qcom_mdt_pas_init": "98985b921f054573927ecc5bd70b488d299b7ba61826dc781e3e2fdf46b88dbb",
+      "qcom_mdt_bins_are_split": "02a5b2062f32d909949f33545c99b1a25c52f377a3a8835c72341662f91d4a40",
+      "__qcom_mdt_load": "2c2a248b0a2637c5e9cba0cb1ec5f6ed12d2dc368c127da7cf8f424f09a24a45",
+      "qcom_mdt_load": "2d41193e17be64ec52cf1cb40a73ecb12f27f5fd7de417d957a506d3a2418233",
+      "venus_boot": "147a9f201d2a04c9a6ed9c40a8fe0fdd0b8edd335122b57f3e8b068b79947a1c"
+    },
+    "stock_header_bytes": 412,
+    "loader_reports_split": true,
+    "loader_span_bytes": 5242880,
+    "metadata_copy_matches": true,
+    "pas_id_verified_in_stub": 9,
+    "scm_init_error_propagated_in_stub": true,
+    "scm_relocation_error_propagated_in_stub": true,
+    "device_exercised": false,
+    "signature_verified": false,
+    "venus_boot_error_cases": 7,
+    "result": "split files, loaded bytes, zero-fill, guard bytes and six file errors passed",
+    "staged_files_loaded": 3,
+    "checked_memory_bytes": 5242880,
+    "file_error_cases": 6
+  },
+  "past_driver_control": {
+    "previous_driver_lost_missing_firmware_errno": true
+  },
+  "device_booted_or_updated": false
+}

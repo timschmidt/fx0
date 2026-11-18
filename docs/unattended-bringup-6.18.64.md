@@ -259,6 +259,25 @@ firmware service still needs to authenticate the real image.
 python3 -B diagnostics/venus-arm32/replay-stock-mdt.py /path/to/linux /path/to/stock/manifest.json /path/to/results
 ```
 
+### Stock Venus firmware staging
+
+The private stage contains the four files requested at `qcom/msm8226/`.
+The three split files match their ranges in the original stock MBN. The
+maintained loader read them into the expected 5 MiB span, and the replay
+checked payload placement, zero-filled bytes, untouched gaps and guard
+bytes. All six missing and short split-file tests returned the expected
+errors. [Linux firmware search paths](https://docs.kernel.org/driver-api/firmware/fw_search_path.html)
+
+The ARM32 Venus module declares the four exact firmware filenames. The
+driver preserves negative loader and authentication errors and reports
+positive secure-service status while returning `-EIO` to the kernel.
+Seven simulated boot errors exercise those paths. A separate trial DTB
+enables the two interconnect providers, Venus IOMMU and codec. Its only
+device-tree changes are those four status properties, and it passes the
+three targeted schemas. A signed RAM image and a handset trial are still
+required. [Kernel source](https://github.com/timschmidt/fx0-linux/commit/7b3824ec1705cc528ae5567b87d25f3158268aaa)
+[Firmware staging evidence](../evidence/2026-11-18-venus-firmware-staging.json)
+
 [Venus and USB follow-up evidence](../evidence/2026-11-18-venus-arm32-and-usb.json)
 
 [Sanitized device evidence](../evidence/2026-11-18-installed-6.18.64-peripherals.json)
