@@ -158,5 +158,25 @@
       "modules_verified": 482,
       "protected_hashes_match": true
     }
+  },
+  "MMSS_deferred_coldplug_control": {
+    "RAM_image_sha256": "daf2ff0f44a1fc45091ac37b68628ca8761b4853803255b900c9ab0bba1b31f3",
+    "original_MMSS_only_image_sha256": "ba3b2fc4f533eaf8da87610039a4198f55fc07c2ee5c4371314f8c41b2a890e5",
+    "kernel_DTB_and_ramdisk_byte_identical": true,
+    "only_command_line_change": "Append qnoc_msm8226 to the existing kmod coldplug blacklist",
+    "RAM_readback_exact": true,
+    "candidate_USB_ready_before_probe": true,
+    "candidate_boot": "af150bb1",
+    "MMSS_module_loaded_and_driver_bound_before_explicit_probe": false,
+    "both_return_guards_observed": true,
+    "explicit_original_signed_module_probe_after_compositor": true,
+    "retained_module_load_start_marker": "[   67.617231] fx0 MMSS late probe starting signed module load",
+    "module_load_completion_observed": false,
+    "installed_return": {
+      "boot": "dfa2a281",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    },
+    "reset_cause_established": false
   }
 }

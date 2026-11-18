@@ -381,6 +381,15 @@ provider probe. USB userspace remained unreachable. The original MMSS
 provider's QoS setup and release of its S0 reference are each unnecessary
 for reproducing the failure under these controls.
 
+Deferring only the MMSS module's coldplug allowed the same kernel, ramdisk
+and device tree to reach USB userspace with the provider unbound. After the
+compositor started, the controller requested the original signed module.
+The retained console records the explicit module load starting at 67.6
+seconds. The installed kernel returned before the controller received a
+completion receipt. The return audit matched all 482 module files and
+protected hashes. This reproduces the problem after the desktop starts.
+The failing operation within module load or probe remains open.
+
 [Interconnect isolation evidence](../evidence/2026-11-18-venus-interconnect-isolation.json)
 
 ### Venus H.264 workload
