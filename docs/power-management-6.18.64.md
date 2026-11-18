@@ -369,6 +369,17 @@ The independent audit matched all 482 installed module files and protected
 hashes. Secondary CPU restart and physical deep suspend remain open.
 [Processor test and reset evidence](../evidence/2026-11-18-msm8226-processor-test.json)
 
+The first late `cpu_die()` return occurred 6.27 seconds after the last
+secondary CPU online timeout. The ARM bringup code clears its shared
+secondary boot data at the end of each timed attempt. Qualcomm's
+downstream hotplug path publishes a per-CPU startup vector and uses the
+firmware's dedicated hotplug-collapse argument. The tested kernel uses
+the idle context-resume vector and the ordinary L2-on collapse argument.
+This difference defines the next hardware comparison. Its effect on
+the delayed wake remains unverified.
+[ARM bringup timeout](https://github.com/timschmidt/fx0-linux/blob/3651953cbe1e033d67d510f2b55194c520e2fbc5/arch/arm/kernel/smp.c#L143)
+[Qualcomm downstream power collapse](https://android.googlesource.com/kernel/msm/%2B/android-msm-seed-3.10-marshmallow/drivers/power/qcom/msm-pm.c)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate
