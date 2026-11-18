@@ -1,0 +1,57 @@
+{
+  "recorded_UTC": "2026-11-18T09:25:22.970223+00:00",
+  "build": {
+    "source": "622fa1449de547879fe6975bb1c2d1e15f64687d",
+    "capped_DTB_identical": true,
+    "module_signatures_verified": 465,
+    "imported_symbol_CRCs_verified": 25511,
+    "exact_RAM_image_readback": true
+  },
+  "test": {
+    "candidate_boot": "913af01b",
+    "CPU_kHz_at_request": 600000,
+    "reported_ACK_sent": false,
+    "reported_NACK_sent": false,
+    "CPR_busy_steps": {
+      "entry": 0,
+      "mask_irq": 0,
+      "auto_ack_off": 0,
+      "timer_adjust": 0,
+      "clear_irq": 0,
+      "ack": 0,
+      "nack": 0,
+      "loop_off": 0
+    },
+    "late_drain_return": 0,
+    "late_drain_elapsed_microseconds": 1,
+    "late_drain_timeout_microseconds": 10000,
+    "platform_only_requests_observed": 1,
+    "worker_receipt_received_before_USB_disconnect": false,
+    "candidate_pstore_type": "Panic",
+    "pstore_attributed_by_unique_ACK_marker": true,
+    "panic": "CPR suspend ceiling restore failed: -22",
+    "panic_stack": [
+      "cpr_suspend_restore",
+      "cpr_suspend_prepare",
+      "qcom_cpr_msm8926_suspend_prepare",
+      "msm8226_pm_suspend_late"
+    ],
+    "machine_suspend_entered": false,
+    "MX_requests_visible_and_acknowledged_in_pstore_excerpt": 8,
+    "maximum_logged_MX_request_microvolts": 1287500
+  },
+  "source_finding": {
+    "cover_requests_MX_ceiling_as_exact_APC_voltage_microvolts": 1287500,
+    "fixed_APC_range_0_supports_exact_request": false,
+    "fixed_APC_range_1_supports_exact_request": false
+  },
+  "installed_return": {
+    "boot": "0034ee1e",
+    "kernel": "6.18.64-fx0-lts-alpine",
+    "automatic": true,
+    "matched_installed_module_files": 482,
+    "matched_protected_boot_and_package_hashes": true
+  },
+  "explicit_wifi_scans_requested": false,
+  "deep_sleep_or_wake_qualified": false
+}

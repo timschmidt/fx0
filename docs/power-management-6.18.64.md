@@ -286,6 +286,20 @@ The brief interval after ACK leaves open whether its effect arrived after
 the first read or a previously scheduled measurement started then.
 [NACK omission control](../evidence/2026-11-18-msm8226-platform-cpr-idle-nack.json)
 
+The idle-ACK comparison omitted both commands. The retained panic record
+shows Busy clear at all eight samples and the 10 ms poll passing on its
+first read. The kernel continued into the CPR clock and voltage preparation,
+then panicked in the ceiling-restoration path with `-EINVAL`. The record
+shows successful RPM acknowledgements at the 1,287,500 µV MX ceiling
+immediately before the panic. CPU collapse did not run.
+[Idle-ACK diagnostic source](https://github.com/timschmidt/fx0-linux/commit/622fa1449de547879fe6975bb1c2d1e15f64687d)
+
+The tested code uses the MX ceiling as an exact APC target. The PM8226
+fixed-range SAW provider has no 1,287,500 µV APC selector in either range.
+The phone returned to installed 6.18.64 after the diagnostic panic. The
+installed audit matched all 482 module files and the protected boot and
+package hashes. [Idle-ACK result and retained panic](../evidence/2026-11-18-msm8226-platform-cpr-idle-ack.json)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate
