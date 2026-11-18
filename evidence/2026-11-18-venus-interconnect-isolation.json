@@ -270,5 +270,32 @@
       "modules_verified": 482,
       "protected_hashes_match": true
     }
+  },
+  "combined_BIMC_and_MMSS_control": {
+    "parent_RAM_image_sha256": "0c6ab5f129592b68a03abde7d0527256e5d6e101237f4fff1bd93ee1429a7a8c",
+    "RAM_image_sha256": "47dfde9c9eede939fcb19883194de378e98144a4772ebc11b4f4d29ba255fa16",
+    "sole_DTB_change": "/soc/interconnect@fc380000:status",
+    "kernel_ramdisk_arguments_unchanged": true,
+    "codec_and_IOMMU_disabled": true,
+    "RAM_readback_exact": true,
+    "candidate_boot": "3c81efd7",
+    "both_provider_drivers_bound": true,
+    "compositor_running": true,
+    "provider_lifetime_clock_reference_enabled": true,
+    "stable_for_at_least_seconds_before_suspend": 22,
+    "s2idle": {
+      "first_wakeup_source": "rtc",
+      "inactive_seconds": 13.967,
+      "alarm_cleared": true,
+      "both_providers_still_bound": true,
+      "clock_reference_enabled": true,
+      "compositor_running": true,
+      "independent_entry_and_exit_verified": true
+    },
+    "installed_return": {
+      "boot": "5479e2a7",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
   }
 }

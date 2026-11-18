@@ -408,8 +408,13 @@ and returned zero from module registration. A follow-up more than 22 seconds
 later confirmed USB access, the bound MMSS driver and the running compositor.
 The normal reboot restored signed 6.18.64. An independent audit matched the
 candidate's probe stages, the 482 installed module files and protected hashes.
-Qualification of the combined providers, clock behavior during suspend and
-the codec remains open.
+A combined control enabled BIMC by changing one device-tree status property.
+Both drivers bound with the same held MMSS clock reference. The phone
+completed a 13.967-second RTC-woken s2idle interval. Both drivers stayed
+bound, the reference was still held and the compositor was running after
+wake. The independent audit matched the suspend entry and exit and
+verified the installed return. The Venus IOMMU and codec were disabled
+for this test.
 
 [Interconnect isolation evidence](../evidence/2026-11-18-venus-interconnect-isolation.json)
 
