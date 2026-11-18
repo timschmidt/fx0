@@ -512,6 +512,25 @@ shortfall. The hardware counter and firmware activity during the interval
 remain unobserved.
 [Driver trace evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
 
+The first counter-sampling kernel read 17,223 ticks during late suspend
+and 592 before the early-resume restart. The RTC woke the phone after
+14.145 seconds. The late callback completed in under one millisecond,
+leaving the effect of its ping unobserved before the first read. This
+comparison cannot separate a pending ping from a loss of the counter
+during sleep. The host observer was interrupted after the phone accepted
+the normal return request. A separate audit verified the installed return
+and both raw status records.
+
+The next image required the counter to drop after the ping before it
+collected a starting count. The journal shows 22,197 before the ping and
+3 when the drop was observed. The counter reached 2,525 in about 250 ms,
+short of the 4,096-tick target. The driver aborted late suspend. The
+independent audit confirmed zero successful suspends for the control,
+a cleared RTC alarm, all three journal samples and the signed installed
+return. A cross-sleep comparison still requires a verified post-ping
+starting sample.
+[Counter sampling evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
+
 The PM8226 power-on controller offers another watchdog path. Qualcomm's
 downstream driver uses the same watchdog enable register offset as the
 Linux PM8916 driver. The Fx0's RAM inventory read only the selected

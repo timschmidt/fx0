@@ -164,5 +164,53 @@
       "modules_verified": 482,
       "protected_hashes_match": true
     }
+  },
+  "APSS_counter_sampling": {
+    "method": "Read the watchdog status before system sleep and again at early resume before the ordinary driver restart.",
+    "first_control": {
+      "source_commit": "0804ec13b5ce41c7da63ca54242c4aa143e87006",
+      "RAM_boot": "1aa921c0",
+      "before": {
+        "raw": "0x0000868e",
+        "ticks": 17223
+      },
+      "after": {
+        "raw": "0x000004a0",
+        "ticks": 592
+      },
+      "late_callback_elapsed_seconds": 0.000145,
+      "RTC_woken_s2idle_seconds": 14.145,
+      "probed_driver_activity_between_late_suspend_and_early_resume": [],
+      "both_samples_independently_verified": true,
+      "ping_completion_prior_to_sample_verified": false,
+      "normal_return_acknowledged_before_host_observer_interruption": true,
+      "installed_return": {
+        "boot": "c15c6508",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      }
+    },
+    "ping_acknowledgment_control": {
+      "source_commit": "59c6873d8d3735d0e0e939ed4f45b787c13a5d5b",
+      "RAM_boot": "4f0fc893",
+      "count_before_ping": 22197,
+      "count_when_ping_effect_observed": 3,
+      "elapsed_between_logs_seconds": 0.000262,
+      "seed_target_ticks": 4096,
+      "count_at_seeding_timeout": 2525,
+      "elapsed_after_ping_observation_seconds": 0.250318,
+      "Linux_errno": 110,
+      "suspend_success_increment": 0,
+      "suspend_failure_increment": 1,
+      "alarm_cleared": true,
+      "three_samples_independently_verified": true,
+      "installed_return": {
+        "boot": "fd4e0293",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      }
+    },
+    "counter_discontinuity_across_sleep_proven_after_ping_completion": false,
+    "physical_deep_suspend_or_intentional_watchdog_expiration_requested": false
   }
 }
