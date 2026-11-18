@@ -317,6 +317,15 @@ readiness gate in the source. It does not identify the exact return site.
 The installed return matched all 482 module files and protected hashes.
 [APC selector handset result](../evidence/2026-11-18-msm8226-platform-apc-selector.json)
 
+An exact kernel, DTB and initramfs comparison enabled clock event tracing
+through boot arguments. The A7 PLL's first recorded prepare ran under
+`qcom_apcs_msm8916_clk_probe` while CCF registered the critical CPU mux.
+The early trace retained every buffered event through the preflight.
+The platform request reproduced `-EBUSY` and restored all four CPUs.
+The general return-probe capture hit its output limit. The retained
+kernel journal confirms the callback error.
+[Clock-owner trace](../evidence/2026-11-18-msm8226-clock-owner-first.json)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate

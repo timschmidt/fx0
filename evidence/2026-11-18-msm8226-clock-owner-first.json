@@ -1,0 +1,58 @@
+{
+  "recorded_UTC": "2026-11-18T10:03:09.873226+00:00",
+  "kernel_source": "96f8b4dda84fbd3d72808cfeaff011efeb14b0eb",
+  "build": {
+    "only_RAM_boot_arguments_changed": true,
+    "signed_kernel_DTB_and_initramfs_byte_exact": true,
+    "byte_exact_RAM_image_bootloader_readback": true
+  },
+  "startup_trace": {
+    "candidate_boot": "955deae8",
+    "clock": "A7 PLL",
+    "first_prepare_since_boot": {
+      "time": 9.574119,
+      "event": "clk_prepare",
+      "involves_CPU_mux": false,
+      "frames": [
+        "clk_core_prepare",
+        "clk_core_prepare",
+        "__clk_register",
+        "clk_hw_register",
+        "devm_clk_hw_register",
+        "qcom_apcs_msm8916_clk_probe",
+        "platform_probe",
+        "really_probe",
+        "__driver_probe_device",
+        "driver_probe_device",
+        "__device_attach_driver",
+        "bus_for_each_drv",
+        "__device_attach",
+        "device_initial_probe",
+        "__bus_probe_device",
+        "device_add",
+        "platform_device_add",
+        "platform_device_register_full",
+        "qcom_apcs_ipc_probe",
+        "platform_probe"
+      ]
+    },
+    "all_early_events_in_buffer": 2948,
+    "all_written_events_at_preflight": 2948
+  },
+  "platform_trial": {
+    "late_callback_errno": -16,
+    "cpr_busy_poll_return": 0,
+    "machine_suspend_entered": false,
+    "all_CPUs_and_PM_controls_restored": true,
+    "temporary_clock_probe_entries_removed": true,
+    "return_capture_output_truncated": true,
+    "exact_EBUSY_return_site_identified": false
+  },
+  "automatic_installed_return": {
+    "boot": "81e5b839",
+    "kernel": "6.18.64-fx0-lts-alpine",
+    "exact_installed_module_files": 482,
+    "protected_hashes_match": true
+  },
+  "explicit_wifi_scans_requested": false
+}
