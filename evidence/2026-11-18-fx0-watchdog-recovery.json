@@ -211,6 +211,44 @@
       }
     },
     "counter_discontinuity_across_sleep_proven_after_ping_completion": false,
-    "physical_deep_suspend_or_intentional_watchdog_expiration_requested": false
+    "physical_deep_suspend_or_intentional_watchdog_expiration_requested": false,
+    "completed_seeded_comparison": {
+      "source_commit": "f8d0ff48065788f92577551faac4e001bc869444",
+      "RAM_boot": "3c053a16",
+      "signed_archive_DTB_and_return_guards_preserved": true,
+      "all_kernel_and_module_symbol_CRC_records_equal": 14898,
+      "before_ping": {
+        "raw": "0x00009b3a",
+        "ticks": 19869
+      },
+      "confirmed_ping": {
+        "raw": "0x00000006",
+        "ticks": 3
+      },
+      "late_sample": {
+        "raw": "0x00001008",
+        "ticks": 2052
+      },
+      "early_sample": {
+        "raw": "0x00001494",
+        "ticks": 2634
+      },
+      "net_tick_increase": 582,
+      "watchdog_rate_Hz": 32768,
+      "counted_seconds": 0.017761,
+      "RTC_first_wake": true,
+      "inactive_clock_seconds": 13.599,
+      "trace_interval_seconds": 13.615881,
+      "watchdog_running_at_resume": true,
+      "probed_watchdog_activity_in_interval": [],
+      "trace_entries_lost": 0,
+      "interpretation": "The post-ping seeded count is consistent with retention and accounted for only a small fraction of the elapsed s2idle interval.",
+      "all_four_samples_independently_verified": true,
+      "installed_return": {
+        "boot": "100e290b",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      }
+    }
   }
 }

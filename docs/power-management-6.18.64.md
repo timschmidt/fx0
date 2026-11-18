@@ -527,8 +527,19 @@ collected a starting count. The journal shows 22,197 before the ping and
 short of the 4,096-tick target. The driver aborted late suspend. The
 independent audit confirmed zero successful suspends for the control,
 a cleared RTC alarm, all three journal samples and the signed installed
-return. A cross-sleep comparison still requires a verified post-ping
-starting sample.
+return.
+
+The completed comparison used a 2,048-tick starting target within the same
+bounded poll interval. The counter fell from 19,869 ticks to 3 after the
+ping, then reached 2,052 before s2idle. It read 2,634 at early resume. The
+582-tick increase accounts for about 18 ms at 32,768 Hz across a 13.616-second
+callback interval. The RTC woke the phone. The driver reported the watchdog
+still enabled, and the probes recorded zero watchdog calls inside the
+interval and zero lost trace entries. These observations support counter
+retention with little advance during s2idle. The hardware mechanism and
+coverage during physical deep suspend remain open. After the normal
+return, the installed audit matched all four counter samples in the journal,
+all 482 module files and the protected hashes.
 [Counter sampling evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
 
 The PM8226 power-on controller offers another watchdog path. Qualcomm's
