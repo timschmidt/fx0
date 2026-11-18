@@ -493,6 +493,14 @@ type byte `0x0e`, and control byte `0x80`. Bit 7 was already set. The
 inventory issued zero PMIC register writes. Configuration ownership,
 expiration behavior, and independent recovery during deep suspend
 remain to be established. [PMIC watchdog inventory](../evidence/2026-11-18-fx0-watchdog-recovery.json)
+
+A 45-second trace on the installed kernel captured four RTC read requests
+and zero Linux SPMI write requests overlapping the PM8226 watchdog registers
+0x854 through 0x858. The trace reported zero lost entries. The observation
+covers Linux traffic during this window. Watchdog ownership across boot
+firmware, secure-world code and remote processors remains unresolved.
+
+[Passive trace evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
 [Inventory source](https://github.com/timschmidt/fx0-linux/commit/0d081b757956382cf328fadbf346e356dbfdfdb6)
 [Qualcomm PON source](https://android.googlesource.com/kernel/msm/%2B/75b24301009d38deab0f93cd10095b9b33dba545/drivers/input/misc/qpnp-power-on.c)
 [Related Linux watchdog driver](https://android.googlesource.com/kernel/common/%2B/refs/tags/android15-6.6-2025-03_r8/drivers/watchdog/pm8916_wdt.c)

@@ -70,5 +70,25 @@
       "installed_modules_exact": 482,
       "protected_hashes_match": true
     }
+  },
+  "PM8226_passive_Linux_SPMI_observation": {
+    "installed_boot": "0f38d39b",
+    "verified_USB_transport": true,
+    "awake_seconds": 45.001,
+    "slave_id": 0,
+    "watched_watchdog_registers": [
+      "0x854",
+      "0x858"
+    ],
+    "filtered_SPMI_write_start_address_range": [
+      "0x845",
+      "0x858"
+    ],
+    "positive_RTC_read_controls": 4,
+    "trace_lost_entries": 0,
+    "Linux_write_requests_overlapping_watchdog": 0,
+    "PMIC_writes_from_probe": 0,
+    "scope_limit": "The trace covers Linux SPMI writes on this installed boot during the observation window. It cannot identify boot firmware, remote processor or secure-world activity.",
+    "watchdog_ownership_confirmed": false
   }
 }
