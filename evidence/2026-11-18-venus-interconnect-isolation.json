@@ -1042,5 +1042,100 @@
       "modules_verified": 482,
       "protected_hashes_match": true
     }
+  },
+  "Venus_MSM8226_decoder_reconfiguration": {
+    "trace_source_commit": "c77c378b7aaedaceb1e130f7e79c146ca41a8ec9",
+    "trace_image_sha256": "6ac688a54fcc06b7d0e025f4ca73db7286db46fe59c6d188029b049014894f7d",
+    "trace_boot": "c223ffbc",
+    "exact_readback": true,
+    "decoder_debug_sites_active": 10,
+    "initial_coded_buffer_dispatch_return": 0,
+    "initial_resolution": [
+      64,
+      64
+    ],
+    "reference_resolution": [
+      320,
+      240
+    ],
+    "firmware_requested_more_resources_for_resolution_change": true,
+    "firmware_rejected_properties_on_reconfiguration": [
+      "0x1203001",
+      "0x1003",
+      "0x201008",
+      "0x201008"
+    ],
+    "firmware_reported_system_error": true,
+    "verified_hardware_decoded_frames": 0,
+    "initial_settings_and_reconfiguration_trace": [
+      "decoder session init: 0",
+      "decoder initial resolution 64x64 from format 320x240: 0",
+      "decoder startup properties: 0",
+      "decoder continue-data-transfer: 0",
+      "decoder raw format 0x2 type 2: 0",
+      "decoder dynamic buffer mode: 0",
+      "decoder output configuration: 0",
+      "decoder buffer counts: 0",
+      "decoder HFI start: 0",
+      "decoder initial coded buffers: 0",
+      "decoder session init: -114",
+      "decoder continue-data-transfer: 0",
+      "decoder raw format 0x2 type 2: 0",
+      "decoder dynamic buffer mode: 0"
+    ],
+    "traced_installed_return": {
+      "boot": "2f71ead0",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    },
+    "candidate_source_commit": "1cec2356af187066610e1fcc81a7b7f174968f1b",
+    "candidate_image_sha256": "76aa84d169a54a5e084eb319c5518e2466a41f00d45bd49c0bf7fd708f2a70ee",
+    "sanitizer_cases_passed": 5,
+    "matching_import_CRCs": 128,
+    "decoder_signature_checked": true,
+    "manifest_records_verified": 488,
+    "same_kernel_DTB_and_arguments": true,
+    "handset_qualification_passed": false,
+    "resolution_change_patch_test": {
+      "candidate_boot": "9a98a3dd",
+      "same_reference_fixture": true,
+      "firmware_requested_more_resources_for_resolution_change": true,
+      "firmware_property_rejections": [],
+      "firmware_system_error_persisted": true,
+      "verified_hardware_decoded_frames": 0,
+      "installed_return": {
+        "boot": "b758aeea",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      }
+    },
+    "next_startup_size_candidate": {
+      "source_commit": "852b186174bfabb1037e5ba01ff603eda7a15cbf",
+      "image_sha256": "342479c225a58593073d1abb002b021b4ccc90486395278204e93cb5326801f2",
+      "sanitizer_cases_passed": 5,
+      "matching_import_CRCs": 128,
+      "decoder_signature_checked": true,
+      "handset_tested": false
+    },
+    "three_resolution_segment_fixture": {
+      "sha256": "a48a5dd0db15be55fc937e76d2e6b6abbf31934603b0c97701a5045192413e72",
+      "segment_dimensions": [
+        [
+          320,
+          240
+        ],
+        [
+          640,
+          360
+        ],
+        [
+          320,
+          240
+        ]
+      ],
+      "frames_per_segment": 12,
+      "software_inspected_frames": 36,
+      "handset_tested": false
+    }
   }
 }

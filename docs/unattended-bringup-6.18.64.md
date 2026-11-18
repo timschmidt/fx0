@@ -612,6 +612,28 @@ dequeues with zero lost events. Software verified all 144 luma cells and
 hashes passed the independent audit. The experiment used a staged binary
 on the RAM boot. [FFmpeg 7.1.5 patch](../diagnostics/venus-arm32/ffmpeg-7.1.5-v4l2-encode.patch)
 
+A signed decoder trace qualified the order of the failure. The firmware
+accepted the initial HFI start and then reported insufficient resources
+as it detected the fixture's 320×240 dimensions. The initial session had
+been configured at 64×64. The capture reconfiguration resent
+continue-data-transfer, the raw format and allocation mode. The firmware
+rejected those requests before the system error. The candidate retains
+those settings where they match and recomputes the buffer sizes. Five
+host cases passed with AddressSanitizer and UndefinedBehaviorSanitizer.
+[Decoder trace source](https://github.com/timschmidt/fx0-linux/commit/c77c378b7aaedaceb1e130f7e79c146ca41a8ec9)
+[Resolution-change source](https://github.com/timschmidt/fx0-linux/commit/1cec2356af187066610e1fcc81a7b7f174968f1b)
+
+On a fresh handset boot, the resolution-change patch eliminated all four
+property rejection messages. The decoder still faulted at that transition
+and produced zero verified frames. The independent return audit matched
+the installed kernel, protected hashes and 482 module files. The next
+candidate initializes MSM8226 with the negotiated coded dimensions, as
+the vendor driver does. Its ARM module and signed RAM image passed the
+host checks. That change and a separate stream with two midstream size
+changes await handset tests.
+[Start-size candidate](https://github.com/timschmidt/fx0-linux/commit/852b186174bfabb1037e5ba01ff603eda7a15cbf)
+[Vendor decoder](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/vidc/msm_vdec.c#L982-L1002)
+
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)
