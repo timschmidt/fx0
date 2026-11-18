@@ -227,5 +227,48 @@
       "modules_verified": 482,
       "protected_hashes_match": true
     }
+  },
+  "MMSS_interface_reference_matched_control": {
+    "source_commit": "a2250a177c060eab5d5e377f4f6e5422e0387ce2",
+    "matched_parent_image": "ecc21289dcf542ca8bc809ddb7700ebcbf65c7f0d8850230144d9622d08733f3",
+    "RAM_image_sha256": "0c6ab5f129592b68a03abde7d0527256e5d6e101237f4fff1bd93ee1429a7a8c",
+    "RAM_readback_exact": true,
+    "unchanged_startup_hook": true,
+    "validated_boot_manifest_entries": 488,
+    "new_load_parameter": "fx0_hold_iface=1",
+    "in_tree_signed_provider": true,
+    "candidate_boot": "92084d03",
+    "signed_module_load_return_code": 0,
+    "driver_bound_and_compositor_responsive_after_seconds_at_least": 22,
+    "matching_independent_kernel_journal_markers": [
+      "fx0 MMSS traced late probe starting signed module load",
+      "fx0-mmss-trace: platform driver registration begin",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: provider-lifetime interface clock reference acquired",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: probe entered",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: bus clock enable begin",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: bus clock enable end ret=0",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: interface clocks enable begin",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: interface clocks enable end ret=0",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: node 0 creation begin",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: node 0 links added",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: node 0 QoS begin",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: node 0 QoS end ret=0",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: node 1 creation begin",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: node 1 links added",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: interface clocks release begin",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: interface clocks release end",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: provider publication begin",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: provider publication end ret=0",
+      "qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: probe returning success",
+      "fx0-mmss-trace: platform driver registration end ret=0",
+      "fx0 MMSS traced late probe module load returned 0"
+    ],
+    "interpretation": "Holding a provider-lifetime reference avoids the observed failure during interface-clock release in the MMSS-only late probe.",
+    "combined_BIMC_MMSS_and_codec_hardware_qualified": false,
+    "installed_return": {
+      "boot": "50ab1132",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
   }
 }

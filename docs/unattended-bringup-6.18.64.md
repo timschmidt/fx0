@@ -400,6 +400,17 @@ narrows the failure to the release interval. The exact clock operation and
 reset mechanism remain open. The signed installed kernel returned with all
 482 installed modules and protected hashes matching.
 
+A matched late-load test held one extra interface-clock reference for the
+MMSS provider's lifetime. The in-tree ARM module matched the linked kernel's
+trust and symbol versions. All 488 startup manifest records passed. This
+time the kernel logged the clock release completing, published the provider
+and returned zero from module registration. A follow-up more than 22 seconds
+later confirmed USB access, the bound MMSS driver and the running compositor.
+The normal reboot restored signed 6.18.64. An independent audit matched the
+candidate's probe stages, the 482 installed module files and protected hashes.
+Qualification of the combined providers, clock behavior during suspend and
+the codec remains open.
+
 [Interconnect isolation evidence](../evidence/2026-11-18-venus-interconnect-isolation.json)
 
 ### Venus H.264 workload
