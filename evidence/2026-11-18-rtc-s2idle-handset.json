@@ -1,0 +1,44 @@
+{
+  "recorded_UTC": "2026-11-18T06:56:16.341421+00:00",
+  "kernel": "6.18.64-fx0-lts-alpine",
+  "kernel_and_DTB_match_installed_signed_inputs": true,
+  "first_trial": {
+    "candidate_boot": "0bf3c69f",
+    "tracefs_registration_errno": 22,
+    "alarm_clear_and_suspend_counters_zero": true,
+    "installed_return_verified": true,
+    "installed_return_boot": "493d9b7e"
+  },
+  "corrected_trial": {
+    "candidate_boot": "8bb37e0f",
+    "exact_image_readback_then_single_RAM_BOOT": true,
+    "private_image_sha256": "a67204b5e56dad665da219f599dbe9e85043d54014b23ad5f298e5c90784fc7d",
+    "both_return_paths_armed": true,
+    "wlan_devices": 0,
+    "sleep_state": "s2idle",
+    "successful_cycles": 1,
+    "suspend_failures": 0,
+    "inactive_clock_seconds": 13.967,
+    "wake_irq": 33,
+    "rtc_interrupt_increment": 1,
+    "sole_s2idle_wake_irq_matches_PM8xxx_RTC": true,
+    "owned_alarm_cleared": true,
+    "transient_service_exited_zero": true,
+    "prior_boot_kernel_and_service_journal_retained": true,
+    "extra_wifi_scans_requested": false
+  },
+  "independent_installed_return": {
+    "boot_id": "da9cd912",
+    "systemd_running": true,
+    "boot_and_package_hashes_matching": 7,
+    "RTC_alarm_clear": true,
+    "display_compositor_and_gesture_service_running": true,
+    "physical_display_and_touch_observed": false
+  },
+  "workstation_trace_controls": {
+    "trace_parse_cases": 6,
+    "sysfs_compatibility_cases": 3,
+    "workspace_files_only": true
+  },
+  "deep_suspend_or_unplugged_standby_qualified": false
+}

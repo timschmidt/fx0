@@ -2,10 +2,13 @@
 # SPDX-License-Identifier: MIT
 """Measure one RTC-backed s2idle cycle on a WLAN-disabled Fx0 RAM boot."""
 import argparse
+from contextlib import contextmanager
+import errno
 import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import signal
 import subprocess
 import time
@@ -16,6 +19,9 @@ ALARM = RTC / "wakealarm"
 BOOT_ID = Path("/proc/sys/kernel/random/boot_id")
 TIMER = "fx0-native-return.timer"
 RTC_DELAY = 14
+TRACEFS = Path("/sys/kernel/tracing")
+TRACE_NAME = "fx0_rtc_s2idle"
+WAKE_EVENT = f"{TRACE_NAME}/wake_irq"
 
 
 def read(path):
@@ -38,6 +44,15 @@ def rtc_irq():
     return int(number), sum(map(int, contents.split()[:cpu_count]))
 
 
+def wakeup_irq():
+    try:
+        return int(read(POWER / "pm_wakeup_irq"))
+    except OSError as error:
+        if error.errno in {errno.ENOENT, errno.ENODATA}:
+            return 0
+        raise
+
+
 def snapshot():
     stats = POWER / "suspend_stats"
     irq, irq_count = rtc_irq()
@@ -46,7 +61,7 @@ def snapshot():
         "rtc_irq": irq,
         "rtc_irq_count": irq_count,
         "rtc_seconds": int(read(RTC / "since_epoch")),
-        "pm_wakeup_irq": int(read(POWER / "pm_wakeup_irq") or 0),
+        "pm_wakeup_irq": wakeup_irq(),
         "suspend_success": int(read(stats / "success")),
         "suspend_fail": int(read(stats / "fail")),
         "boot_seconds": time.clock_gettime(time.CLOCK_BOOTTIME),
@@ -70,6 +85,61 @@ def classify(before, after, deadline):
         source = "another_irq"
     return {"s2idle_transition_observed": transition, "first_wakeup_source": source,
             "RTC_interrupt_increment": irq_change, "inactive_clock_seconds": round(slept, 3)}
+
+
+def trace_wakes(text):
+    """Return IRQs recorded while the kernel was inside machine_suspend."""
+    times = 0
+    irqs = []
+    interval = None
+    for line in text.splitlines():
+        if ": suspend_resume: machine_suspend[1] begin" in line:
+            interval = []
+        elif ": suspend_resume: machine_suspend[1] end" in line and interval is not None:
+            times += 1
+            irqs.extend(interval)
+            interval = None
+        elif interval is not None:
+            wake = re.search(r": wake_irq: .*\birq=(\d+)\b", line)
+            if wake:
+                interval.append(int(wake[1]))
+    return {"complete_s2idle_intervals": times, "wake_irqs_in_s2idle": irqs}
+
+
+@contextmanager
+def capture_wake_irqs():
+    if (POWER / "pm_wakeup_irq").exists():
+        yield None
+        return
+    dynamic = TRACEFS / "kprobe_events"
+    instance = TRACEFS / "instances" / TRACE_NAME
+    instance.mkdir()
+    registered = False
+
+    def change_probe(command):
+        # Python append mode seeks to EOF, which tracefs does not support.
+        request = (command + "\n").encode()
+        fd = os.open(dynamic, os.O_WRONLY | os.O_APPEND | os.O_CLOEXEC)
+        try:
+            if os.write(fd, request) != len(request):
+                raise OSError("short tracefs probe command")
+        finally:
+            os.close(fd)
+    try:
+        write(instance / "tracing_on", "0")
+        change_probe(f"p:{WAKE_EVENT} pm_system_irq_wakeup irq=%r0:u32")
+        registered = True
+        write(instance / "trace_clock", "boot")
+        write(instance / "events/power/suspend_resume/enable", "1")
+        write(instance / "events" / WAKE_EVENT / "enable", "1")
+        write(instance / "tracing_on", "1")
+        yield instance
+    finally:
+        try:
+            instance.rmdir()
+        finally:
+            if registered:
+                change_probe(f"-:{WAKE_EVENT}")
 
 
 def guard(expected_boot, release, token, notes_hash):
@@ -104,6 +174,11 @@ def guard(expected_boot, release, token, notes_hash):
 
 def probe(expected_boot, release, token, notes_hash):
     guard(expected_boot, release, token, notes_hash)
+    with capture_wake_irqs() as trace:
+        return measure(expected_boot, trace)
+
+
+def measure(expected_boot, trace):
     before = snapshot()
     if read(ALARM):
         raise ValueError("another owner has an armed RTC alarm")
@@ -123,6 +198,13 @@ def probe(expected_boot, release, token, notes_hash):
         report["suspend_requested"] = True
         write(POWER / "state", "freeze")
         after = snapshot()
+        if trace is not None:
+            write(trace / "tracing_on", "0")
+            observed = trace_wakes(read(trace / "trace"))
+            report["trace"] = observed
+            wakes = observed["wake_irqs_in_s2idle"]
+            if observed["complete_s2idle_intervals"] and wakes:
+                after["pm_wakeup_irq"] = wakes[0]
         report.update(classify(before, after, target), after=after)
         report["passed"] = report["first_wakeup_source"] == "rtc"
     except Exception as error:

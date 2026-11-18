@@ -161,13 +161,30 @@ cgroup, clears its alarm and leaves the saved software offset unchanged. It has
 no suspend or hardware-clock-setting capability. This qualifies the awake alarm
 path only; it does not establish alarm wake from system sleep or cold retention.
 
-A separate RTC probe is prepared for one WLAN-disabled RAM boot. It checks
-the boot identity, both return paths and RTC ownership before it requests
-`freeze`. It requires a completed s2idle cycle, an RTC IRQ increment and a
-matching wake IRQ to attribute the wake to the alarm. The workstation replay
-covers early wake, ambiguous IRQs, a changed boot, alarm ownership and
-wakeup-count races. The probe has yet to request suspend on the handset.
-[RTC s2idle probe](../diagnostics/rtc-s2idle/probe.py)
+### RTC wake from s2idle
+
+Both RAM trials reused the installed signed kernel and ordinary Madai DTB.
+The images disabled WLAN and checked the installed module hashes before
+userspace. The suspend gate allowed the two pending time-sync jobs after
+verifying that both return paths were active and no other startup jobs or
+failed units remained.
+
+The installed kernel omits `pm_wakeup_irq` from sysfs. The probe therefore
+uses a tracefs instance to record the kernel wake IRQ inside `machine_suspend`.
+The first trial stopped before arming an alarm because Python's append mode
+tried to seek in `kprobe_events`. The direct-write correction passed the
+workstation checks and the next handset trial. [RTC s2idle probe](../diagnostics/rtc-s2idle/probe.py)
+[Linux kernel event tracing](https://docs.kernel.org/6.18/trace/kprobetrace.html)
+
+The corrected trial completed one s2idle cycle without a suspend failure.
+The inactive-clock difference was 13.967 seconds. The kernel recorded IRQ 33
+as the only wake IRQ in the interval, and the PM8xxx RTC alarm counter
+increased by one. The probe cleared its alarm and exited successfully.
+After automatic return, an independent USB audit verified all seven protected
+hashes and recovered the candidate's suspend-entry, suspend-exit and service
+completion records from the journal. Hardware qualification still covers one
+USB-powered s2idle cycle. Deep suspend, repeated cycles and battery standby
+remain open. [Handset evidence](../evidence/2026-11-18-rtc-s2idle-handset.json)
 [Workstation checks](../evidence/2026-11-18-rtc-s2idle-workstation.json)
 
 ## Combined early charging firmware: host qualification
