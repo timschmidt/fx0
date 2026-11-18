@@ -1,0 +1,68 @@
+{
+  "date_utc": "2026-11-18",
+  "kernel_source": "7b3824ec1705cc528ae5567b87d25f3158268aaa",
+  "kernel_release": "6.18.64-fx0-venus-ram-alpine",
+  "private_image_sha256": "b082f0b595f4c90e511da87d3efd652baab476dad9ab46ef5f177c258891f10a",
+  "container_bytes": 20809728,
+  "ramdisk_bytes": 15178164,
+  "framebuffer_headroom_bytes": 3696204,
+  "trial_device_tree_sha256": "0fd9a52fbe18f7b0281ec4461be508d371549610d7d16a66d8a92c5a4d2598a6",
+  "module_verification": {
+    "kernel_release": "6.18.64-fx0-venus-ram-alpine",
+    "certificate_der_sha256": "96533b33cb08b59857a90f131d289bfeef25586daaa058f2d5d80acf3fb8282b",
+    "certificate_in_kernel": true,
+    "enforcement_built_in": true,
+    "module_signatures_verified": 474,
+    "import_symbol_crcs_verified": 26110,
+    "modified_and_unsigned_controls_rejected": true,
+    "device_contacted": false
+  },
+  "extracted_image_verification": {
+    "private_image_sha256": "b082f0b595f4c90e511da87d3efd652baab476dad9ab46ef5f177c258891f10a",
+    "independent_android_header_digest_and_load_bounds": true,
+    "gnu_cpio_members_verified": 2,
+    "all_archived_module_files_match": 488,
+    "all_archived_firmware_files_match": 4,
+    "arm_busybox_scripts_checked": 3,
+    "arm_return_control_cases_and_invalid_argument_passed": true,
+    "systemd_unit_token_release_and_timer_checked": true,
+    "device_contacted": false
+  },
+  "startup_hook_sha256": "08e000ced6ce9e6de14f24b19dd08acba03bcb6842650f2854d482e147f80113",
+  "startup_hook_simulated_cases": [
+    {
+      "case": "ready",
+      "expected_exit": 0
+    },
+    {
+      "case": "bad_token",
+      "expected_exit": 93
+    },
+    {
+      "case": "unenforced",
+      "expected_exit": 93
+    },
+    {
+      "case": "missing_return",
+      "expected_exit": 93
+    },
+    {
+      "case": "failed_move",
+      "expected_exit": 93
+    },
+    {
+      "case": "corrupt_firmware",
+      "expected_exit": 93
+    }
+  ],
+  "module_dependency_dry_run": {
+    "loads": 39,
+    "builtins": 1
+  },
+  "return_times_seconds": [
+    360,
+    420
+  ],
+  "candidate_kernel_blacklists_wcn36xx": true,
+  "device_booted_or_updated": false
+}

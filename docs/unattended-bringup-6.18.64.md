@@ -274,9 +274,31 @@ positive secure-service status while returning `-EIO` to the kernel.
 Seven simulated boot errors exercise those paths. A separate trial DTB
 enables the two interconnect providers, Venus IOMMU and codec. Its only
 device-tree changes are those four status properties, and it passes the
-three targeted schemas. A signed RAM image and a handset trial are still
-required. [Kernel source](https://github.com/timschmidt/fx0-linux/commit/7b3824ec1705cc528ae5567b87d25f3158268aaa)
+three targeted schemas. [Kernel source](https://github.com/timschmidt/fx0-linux/commit/7b3824ec1705cc528ae5567b87d25f3158268aaa)
 [Firmware staging evidence](../evidence/2026-11-18-venus-firmware-staging.json)
+
+### Private Venus RAM image
+
+The ARM32 RAM image uses the trial DTB and a dedicated module certificate
+embedded in the candidate kernel. Signature enforcement is built in. All
+474 module signatures and 26,110 imported symbol CRCs were verified.
+Modified and unsigned module controls were rejected. The compressed
+ramdisk leaves about 3.5 MiB before the inherited framebuffer.
+[Linux module signing](https://docs.kernel.org/admin-guide/module-signing.html)
+
+The independent unpack check verifies the Android image header, both
+initramfs archives, all 488 module and index files and the four firmware
+files. The firmware is available in the initramfs. The cleanup hook carries
+it into the final userspace under `/run` and verifies its contents. The
+image includes the early return helper at 420 seconds and the normal
+return timer at 360 seconds. The actual ARM scripts passed syntax checks.
+The return fixture and six startup hook cases passed with hardware calls
+simulated. [RAM image qualification evidence](../evidence/2026-11-18-venus-ram-image.json)
+
+The candidate prevents the WLAN module from loading. The installed return
+boot still starts WLAN, so the current Wi-Fi constraint prevents an
+unattended handset trial. Firmware authentication and codec operation
+remain open.
 
 [Venus and USB follow-up evidence](../evidence/2026-11-18-venus-arm32-and-usb.json)
 
