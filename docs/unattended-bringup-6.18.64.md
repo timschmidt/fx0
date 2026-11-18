@@ -44,11 +44,13 @@ Removing four redundant diagnostic module staging trees reclaimed about
 copy, and the corresponding workstation archives were verified. Recovery files,
 stage manifests and installed boot and package hashes were preserved.
 
-The synthetic file remains available for a cross-boot comparison. The checker
-verified that the original boot cannot count as persistence. The current
-persistent Wi-Fi policy allows startup scanning, so the reboot remains
-pending. Larger storage loads, cold boot, unplugged standby and the complete
-reliability matrix remain open.
+The retained 32 MiB file survived one normal reboot into the installed kernel.
+A direct read matched every byte and the expected SHA-256. The eMMC read
+counter advanced, ext4 reported zero errors, and the protected boot and
+package hashes matched. The checker also rejected the original boot as a
+persistence result. Larger storage loads, cold boot, unplugged standby and
+the complete reliability matrix remain open.
+[Warm-reboot storage evidence](../evidence/2026-11-18-emmc-warm-reboot.json)
 
 ## USB bulk transfer
 
@@ -295,10 +297,23 @@ return timer at 360 seconds. The actual ARM scripts passed syntax checks.
 The return fixture and six startup hook cases passed with hardware calls
 simulated. [RAM image qualification evidence](../evidence/2026-11-18-venus-ram-image.json)
 
-The candidate prevents the WLAN module from loading. The installed return
-boot still starts WLAN, so the current Wi-Fi constraint prevents an
-unattended handset trial. Firmware authentication and codec operation
-remain open.
+The candidate prevents the WLAN module from loading. The operator permits one
+normal startup scan on the installed return boot. The handset trial still
+requires a controller for this exact RAM image and checks of the installed
+return. Firmware authentication and codec operation remain open.
+
+### Venus H.264 workload
+
+A static ARM32 FFmpeg build includes the V4L2 mem-to-mem H.264 encoder and
+decoder and a software decoder. Under ARM emulation, the software decoder
+matched a workstation decode byte for byte across 12 reference frames.
+The checker also rejected truncated frames, duplicate frames, swapped chroma,
+ambiguous Venus device roles and unexpected device selection. The handset
+workload checks that FFmpeg uses the two Venus devices and verifies the
+decoded frames from each hardware operation. It still needs a handset run.
+[Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
+[Host verification](../evidence/2026-11-18-venus-codec-workload.json)
+[FFmpeg release verification](https://ffmpeg.org/download.html#releases)
 
 [Venus and USB follow-up evidence](../evidence/2026-11-18-venus-arm32-and-usb.json)
 

@@ -1,0 +1,36 @@
+{
+  "recorded_UTC": "2026-11-18T05:57:38.676158+00:00",
+  "classification": "workstation verification",
+  "FFmpeg_release": "7.1.5",
+  "release_archive_sha256": "de668509caf9e35e3cd162473441fdb29538c6d96ed080292b3cf9e6fc5d558f",
+  "verified_release_signer_fingerprint": "FCF986EA15E6E293A5644F10B4322F04D67658D8",
+  "static_ARM_EABI5_ffmpeg_sha256": "a44a651f620096b7837dc256aaa2a908efc0268be122872129e488a7832593e4",
+  "reference_h264_sha256": "fdaf0a527a0a00d74e039c79ac30ce6a1b31dc8eb5dbe095ac03160b465fc5c5",
+  "enabled_protocols": [
+    "file",
+    "pipe"
+  ],
+  "V4L2_M2M_H264_encoder_and_decoder_built": true,
+  "reference": {
+    "width": 320,
+    "height": 240,
+    "frames_per_second": 15,
+    "frames": 12,
+    "luma_cells": 144,
+    "max_luma_mean_error": 0,
+    "chroma_planes": 24
+  },
+  "host_controls": {
+    "arm_software_reference_matches_host_byte_for_byte": true,
+    "mock_kernel_identification_checked": true,
+    "controls_detected": [
+      "truncated_output",
+      "duplicated_frame",
+      "swapped_chroma",
+      "ambiguous_venus_roles",
+      "wrong_device_selected",
+      "workstation_boot"
+    ]
+  },
+  "handset_Venus_hardware_exercised": false
+}
