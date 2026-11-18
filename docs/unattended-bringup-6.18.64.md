@@ -479,15 +479,21 @@ waiting IOMMU resume then returned `EINVAL`, followed by the matching
 error on the parent codec's resume. Sysfs reported the IOMMU runtime state
 as `error`. This accounts for the codec failure before its own resume
 callback and the child’s `EBUSY` from the workload. The IOMMU operation
-that timed out still needs isolation.
+was confirmed as context-bank TLB synchronization when the installed
+kernel journal became available again.
 
 One RAM-only control held the IOMMU active through its runtime power
 setting. Sysfs confirmed the transition from suspended to active. The
 codec probe request was accepted, then USB stopped returning management
 replies. The observation window ended without a codec result or a
 verified return to the installed system. The last installed audit before
-this trial verified all 482 module files and the protected hashes. A
-local restart is pending.
+this trial verified all 482 module files and the protected hashes. The
+owner saw the Sxmo desktop remain visible with the handset unresponsive
+and restarted it locally. The recovered candidate journal ends the
+observed codec sequence at the encoder module load, after the core load
+returned zero. The installed kernel returned with signature enforcement,
+zero taint, all 482 module files and the protected hashes verified.
+The desktop processes were running during the post-restart audit.
 
 The next candidate balances runtime PM references on encoder and decoder
 teardown after a failed resume. Its IOMMU suspend disables the Linux-owned
@@ -500,7 +506,7 @@ The ARM build matched 11,741 built-in symbol versions. All 474 archived
 modules verify against the candidate kernel's isolated trial certificate.
 The 472 unchanged module payloads and all 488 startup manifest entries
 were checked. The DTB and boot arguments match the previous control.
-The candidate awaits handset qualification after the local restart.
+Handset qualification uses the ordinary automatic IOMMU power policy.
 [Runtime PM source](https://github.com/timschmidt/fx0-linux/commit/5fed68fdad831e9f115ac0d0f3f8d6780d6d7658)
 
 Two clean builds on the workstation reproduced the ARM kernel, all three
@@ -512,6 +518,14 @@ module-symbol manifest, private test signer and new output directory.
 It sets the build timestamp from the source commit and copies the signer
 to a separate file in each output tree.
 [Clean rebuild script](../diagnostics/venus-arm32/rebuild-ram-kernel.sh)
+
+The first RAM boot of the reproducible image reached the guarded desktop.
+Its probe still used the interconnect hashes from before the certificate
+change, so the integrity check stopped before the driver loaded. The
+installed return matched all 482 module files and protected hashes. The
+two interconnect payloads match the earlier build byte for byte, and their
+new signatures verify against the candidate certificate. The repeat uses
+the hashes read from the exact staged image.
 
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)

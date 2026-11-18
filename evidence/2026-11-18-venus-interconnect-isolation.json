@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-18T17:08:00.878209+00:00",
+  "last_updated_UTC": "2026-11-18T17:20:16.158812+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -602,7 +602,8 @@
       "boot": "88bbc34f",
       "modules_verified": 482,
       "protected_hashes_match": true
-    }
+    },
+    "later_verified_kernel_timeout_operation": "context-bank TLB synchronization"
   },
   "Venus_IOMMU_held_active_control": {
     "candidate_boot": "0ad4a9a8",
@@ -629,7 +630,24 @@
       "protected_hashes_match": true
     },
     "installed_return_verified": false,
-    "local_restart_requested": true
+    "local_restart_requested": true,
+    "owner_reported_desktop_visible_but_locked_up": true,
+    "local_restart_completed": true,
+    "last_candidate_probe_markers": [
+      "FX0_VENUS_HARDWARE_STEP loading venus_core",
+      "FX0_VENUS_HARDWARE_STEP venus_core returned 0",
+      "FX0_VENUS_HARDWARE_STEP loading venus_enc"
+    ],
+    "post_restart": {
+      "boot": "fa0eb09b",
+      "kernel": "6.18.64-fx0-lts-alpine",
+      "installed_module_files_verified": 482,
+      "protected_hashes_match": true,
+      "signature_enforcement_enabled": true,
+      "taint": 0,
+      "desktop_processes_running": true,
+      "pstore_records": 0
+    }
   },
   "Venus_runtime_PM_recovery_candidate": {
     "source_commit": "5fed68fdad831e9f115ac0d0f3f8d6780d6d7658",
@@ -667,7 +685,8 @@
     "embedded_trial_certificate_matches_module_signatures": true,
     "negative_cross_certificate_checks_passed": 6,
     "phone_booted_with_recovery_candidate": false,
-    "last_IOMMU_hold_trial_still_awaiting_local_restart": true
+    "last_IOMMU_hold_trial_recovered_by_local_restart": true,
+    "same_source_reproducible_variant_booted": true
   },
   "Venus_runtime_PM_clean_rebuild": {
     "source_commit": "5fed68fdad831e9f115ac0d0f3f8d6780d6d7658",
@@ -711,6 +730,22 @@
     "storage": "workspace filesystem after temporary filesystem quota failure",
     "refused_existing_output_directory": true,
     "controller_verified_host_image": true,
-    "handset_booted_with_image": false
+    "handset_booted_with_image": true,
+    "first_RAM_trial": {
+      "candidate_boot": "dbc8420a",
+      "image_sha256": "6a083df7221573aae39bd503438bd5565fd40a5e6b180a441fd29f40efcd9ddf",
+      "RAM_readback_exact": true,
+      "reached_guarded_userspace": true,
+      "two_automatic_return_paths_armed": true,
+      "pre_probe_module_digest_check_rejected": true,
+      "cause": "Probe expected the two interconnect module hashes from before the test certificate change.",
+      "payloads_unchanged_and_new_signatures_verified": 2,
+      "Venus_probe_started": false,
+      "installed_return": {
+        "boot": "882901ea",
+        "installed_module_files_verified": 482,
+        "protected_hashes_match": true
+      }
+    }
   }
 }
