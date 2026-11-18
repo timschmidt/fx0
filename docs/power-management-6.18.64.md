@@ -177,6 +177,49 @@ RWX load-segment linker warning remains in each build. No new firmware is booted
 or flashed, and no physical charge-handoff, temperature, protection or calibration
 acceptance is inferred from the host checks.
 
+## Installed CPU load and capped suspend follow-up
+
+The installed 6.18.64 kernel passed three 18-second load intervals with one
+checksum worker pinned to each core. A repeat verified all 5,282 one-MiB blocks
+against a known SHA-256 result. The existing `schedutil` policy reported its
+787.2 MHz maximum under load and all four advertised rates across the run. All
+cores entered standalone power-collapse idle again. CPU sensors peaked at
+49 °C in both runs. The installed boot, package and configuration hashes
+passed the independent postflight audit.
+
+USB stayed online with its input limit at 500 mA. The battery driver reported
+`Not charging`, `Good` health and `inhibit-charge`. The driver exposed no
+current, voltage, state of charge or battery temperature in this measurement.
+USB draw and battery charge behavior still require electrical measurements.
+
+The [replay](../diagnostics/cpr-suspend-cap/replay.py) extracts the actual
+CPR helpers from the pinned 6.18.64 cap diagnostic and checks the packaged
+suspend DTB. Its two MX maxima are 1,287,500 µV. The prior synthetic regulator
+fixture runs at that ceiling with 1,344 transactions and 136,547 invariant
+checks. All four controls detect the intended failure, covering APC voltage
+synchronization, live PLL references, clock exclusivity and the matching sleep
+vote. AddressSanitizer, UndefinedBehaviorSanitizer and LeakSanitizer pass.
+The initial sandbox run could not start LeakSanitizer process inspection and
+its output is retained locally.
+
+The packaged IRQ description maps motion GPIO 69 to MPM pin 33. Home and
+volume use MPM pins 36–38. The RTC alarm and power key share the PMIC arbiter
+route to MPM pin 62. The installed awake IRQ inventory agrees on the device
+interrupt identifiers. The installed boot exposes only `s2idle` and its
+suspend success and failure counters were both zero at inspection. Physical
+testing remains necessary for wake arming, wake delivery and display recovery.
+
+Replay requires Python 3, Git, `fdtget`, clang-21 and an environment that
+allows LeakSanitizer to inspect its process. Pass the kernel checkout containing
+the diagnostic commit, the exact packaged suspend DTB and a new output directory.
+
+```sh
+python3 -B diagnostics/cpr-suspend-cap/replay.py /path/to/linux \
+    /path/to/qcom-msm8926-lg-madai-suspend.dtb /path/to/results
+```
+
+[Follow-up evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## Remaining physical scope
 
 The installed firmware lacks the verified early charge-inhibition marker.

@@ -1,0 +1,281 @@
+{
+  "recorded_UTC": "2026-11-18T03:20:57.919518+00:00",
+  "installed_configuration": {
+    "boot_id": "e576e7d1-c8bd-4b77-a6b1-71940f37cfba",
+    "kernel": "6.18.64-fx0-lts-alpine",
+    "notes_sha256": "68596b5e7190f9dcd66eaa0cfeff249f02d920ce4c296611fc441212d42c7a0a",
+    "signature_enforcement": "Y",
+    "taint": 0,
+    "online": "0-3",
+    "policy": {
+      "affected_cpus": "0 1 2 3",
+      "scaling_driver": "cpufreq-dt",
+      "scaling_governor": "schedutil",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200",
+      "scaling_available_frequencies": "300000 384000 600000 787200"
+    },
+    "mem_sleep": "[s2idle]",
+    "power_state": "freeze mem"
+  },
+  "installed_load": {
+    "first": {
+      "timestamp_UTC": "2026-11-18T03:13:15.894968+00:00",
+      "duration_seconds_per_load": 18,
+      "verified_every_digest": false,
+      "one_MiB_blocks": 5268,
+      "governor_rates_during_load_kHz": [
+        600000,
+        787200
+      ],
+      "governor_rates_during_settle_kHz": [
+        300000,
+        384000,
+        600000,
+        787200
+      ],
+      "reported_CPU_peak_mC": 49000,
+      "per_core_idle_deltas": {
+        "0": {
+          "WFI": {
+            "count": 27,
+            "time_us": 29866
+          },
+          "cpu-spc": {
+            "count": 806,
+            "time_us": 31171172
+          }
+        },
+        "1": {
+          "WFI": {
+            "count": 14,
+            "time_us": 12554
+          },
+          "cpu-spc": {
+            "count": 527,
+            "time_us": 32070911
+          }
+        },
+        "2": {
+          "WFI": {
+            "count": 55,
+            "time_us": 30774
+          },
+          "cpu-spc": {
+            "count": 578,
+            "time_us": 31966143
+          }
+        },
+        "3": {
+          "WFI": {
+            "count": 12,
+            "time_us": 7832
+          },
+          "cpu-spc": {
+            "count": 587,
+            "time_us": 31787505
+          }
+        }
+      },
+      "matched_kernel_faults": 0,
+      "cycles": 3,
+      "one_worker_pinned_to_each_core": true,
+      "before_and_after_supply_state": {
+        "smbb-bif": {
+          "present": "1",
+          "status": "Not charging",
+          "health": "Good",
+          "charge_behaviour": "auto [inhibit-charge]"
+        },
+        "smbb-usbin": {
+          "online": "1",
+          "input_current_limit": "500000"
+        },
+        "smbb-dcin": {
+          "online": "0"
+        }
+      }
+    },
+    "known_answer_repeat": {
+      "timestamp_UTC": "2026-11-18T03:20:12.976598+00:00",
+      "duration_seconds_per_load": 18,
+      "verified_every_digest": true,
+      "one_MiB_blocks": 5282,
+      "governor_rates_during_load_kHz": [
+        600000,
+        787200
+      ],
+      "governor_rates_during_settle_kHz": [
+        300000,
+        384000,
+        600000,
+        787200
+      ],
+      "reported_CPU_peak_mC": 49000,
+      "per_core_idle_deltas": {
+        "0": {
+          "WFI": {
+            "count": 87,
+            "time_us": 90566
+          },
+          "cpu-spc": {
+            "count": 886,
+            "time_us": 30831985
+          }
+        },
+        "1": {
+          "WFI": {
+            "count": 11,
+            "time_us": 13238
+          },
+          "cpu-spc": {
+            "count": 579,
+            "time_us": 31314276
+          }
+        },
+        "2": {
+          "WFI": {
+            "count": 43,
+            "time_us": 54595
+          },
+          "cpu-spc": {
+            "count": 631,
+            "time_us": 31570508
+          }
+        },
+        "3": {
+          "WFI": {
+            "count": 44,
+            "time_us": 44260
+          },
+          "cpu-spc": {
+            "count": 684,
+            "time_us": 31119378
+          }
+        }
+      },
+      "matched_kernel_faults": 0,
+      "cycles": 3,
+      "one_worker_pinned_to_each_core": true,
+      "before_and_after_supply_state": {
+        "smbb-bif": {
+          "present": "1",
+          "status": "Not charging",
+          "health": "Good",
+          "charge_behaviour": "auto [inhibit-charge]"
+        },
+        "smbb-usbin": {
+          "online": "1",
+          "input_current_limit": "500000"
+        },
+        "smbb-dcin": {
+          "online": "0"
+        }
+      }
+    },
+    "repeat_probe_SHA256": "ca04c6454c37e18db64f7062c1e7d63f3686c1290435df03384af5ca21d42537",
+    "independent_postflight": {
+      "protected_hash_count": 7,
+      "hashes_match_same_boot_baseline": true,
+      "desktop": {
+        "sway": true,
+        "lisgd": true
+      },
+      "USB": {
+        "ci_hdrc.0": {
+          "state": "configured",
+          "speed": "high-speed"
+        }
+      },
+      "module_signatures_enforced": true,
+      "taint": 0
+    }
+  },
+  "wake_inventory": {
+    "sleep_modes": "[s2idle]",
+    "suspend_counters": {
+      "success": "0",
+      "fail": "0",
+      "failed_prepare": "0",
+      "failed_suspend": "0",
+      "failed_suspend_noirq": "0",
+      "failed_resume": "0",
+      "failed_resume_noirq": "0",
+      "last_failed_errno": "0"
+    },
+    "awake_irq_identifiers_match_DT": true,
+    "hardware_collapse_and_wake_qualified": false
+  },
+  "capped_suspend_replay": {
+    "passed": true,
+    "source_commit": "4cb942677a07683bc8c7341829a96ad004704630",
+    "suspend_DTB_sha256": "577d54838cd0d739297ce1c9c9143c1c7623da33e18d38df9d0806cd4b4fbc63",
+    "DTB_MX_ceilings_microvolt": {
+      "l3-ao": 1287500,
+      "l3-so": 1287500
+    },
+    "packaged_wake_routes": {
+      "gpio_to_MPM": {
+        "motion": [
+          69,
+          33
+        ],
+        "volume-down": [
+          106,
+          36
+        ],
+        "home": [
+          107,
+          37
+        ],
+        "volume-up": [
+          108,
+          38
+        ]
+      },
+      "PMIC_MPM_pin": 62,
+      "PMIC_parent_GIC_SPI": 190,
+      "RTC_alarm_specifier": [
+        0,
+        97,
+        1,
+        1
+      ],
+      "power_key_specifier": [
+        0,
+        8,
+        0,
+        3
+      ]
+    },
+    "simulated_transactions": 1344,
+    "invariant_checks": 136547,
+    "synthetic_fault_controls": [
+      "skip-forced-apc-sync",
+      "allow-live-pll-reference",
+      "retain-clock-exclusivity",
+      "allow-low-sleep-mx-vote"
+    ],
+    "actual_helper_functions_sha256": {
+      "cpr_voltage_vote_mx": "549bce16620a1f1b3df0426f52d88855efae2fcf1c9bff2bcaa0cc7205da462b",
+      "cpr_voltage_bootstrap": "553935ca79c197307c93474b1dde7b5bd0b2eaa6c0700959a9732dcb869f2a92",
+      "cpr_voltage_set": "0693329efa77934f946b2e8928e97892f86b34b7d36dbbd5a17d3769c86d6f8d",
+      "cpr_suspend_check_parents": "8fb2bef9d6c1ce404bb6066294f6be1b2686cb7baeca25abb05960d912b132fc",
+      "cpr_suspend_check_clock": "433d0a4eb14edc3501dac5983b5754fcceef70021eef89838a806b906d99ce10",
+      "cpr_suspend_sync": "6a60ed9ece8150edd9d1c3ea83a5df5ed1927169ac98b99a61ccc7d9557ed3de",
+      "cpr_suspend_cover": "dbc5a759343e6f887da6f229618a465822793d2322cac8465707a6641ad0dc61",
+      "cpr_suspend_restore": "814eea482fa605592a0deafdd471a3d84997dfb249f13112918c34d5e8aedb4d",
+      "cpr_suspend_prepare": "b0eea743d716e67e8434386901166060fec87e2a1dd34e318db44b7e59e4df35"
+    },
+    "capped_fixture_services_sha256": "a59d893a50961aaeffcde544e784bf6278b50d9279a2f9351d449da8313c9f66",
+    "only_model_services_ceiling_changed": true,
+    "physical_suspend_attempted": false,
+    "different_packaged_DTB_rejected_before_output": true
+  },
+  "first_sandbox_run_could_not_start_LeakSanitizer": true,
+  "no_suspend_or_reboot": true,
+  "no_network_operations_on_phone": true,
+  "measured_USB_input_current": false,
+  "calibrated_battery_or_charge_acceptance": false,
+  "full_power_management_complete": false
+}
