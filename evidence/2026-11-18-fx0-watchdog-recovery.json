@@ -90,5 +90,47 @@
     "PMIC_writes_from_probe": 0,
     "scope_limit": "The trace covers Linux SPMI writes on this installed boot during the observation window. It cannot identify boot firmware, remote processor or secure-world activity.",
     "watchdog_ownership_confirmed": false
+  },
+  "s2idle_WFI_control": {
+    "RAM_boot": "9ce90bf6",
+    "same_signed_RAM_image_as_original": true,
+    "boottime_elapsed_seconds": 14.810923,
+    "monotonic_elapsed_seconds": 14.810923,
+    "kernel_s2idle_entry_and_exit_verified": true,
+    "successful_suspend_count_increment": 1,
+    "RTC_first_wakeup_IRQ": 66,
+    "RTC_interrupt_increment": 1,
+    "RTC_alarm_cleared": true,
+    "same_boot": true,
+    "standalone_CPU_collapse_disabled_on_all_four_CPUs": true,
+    "standalone_CPU_collapse_usage_delta": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "dedicated_s2idle_collapse_counters_unchanged": true,
+    "idle_controls_restored": true,
+    "watchdog_rate": 32768,
+    "timeout_seconds": 25,
+    "watchdog_running_at_resume": true,
+    "watchdog_ticks_confirmed_by_independent_kernel_journal": 1215,
+    "watchdog_counted_seconds": 0.037079,
+    "generic_s2idle_classifier_passed": false,
+    "classifier_limit": "It requires a positive boottime-minus-monotonic interval. The WFI fallback kept both clocks advancing.",
+    "exact_cause_of_watchdog_tick_shortfall_established": false,
+    "real_deep_suspend_requested": false,
+    "intentional_watchdog_expiration_requested": false,
+    "first_attempt": {
+      "timeout_requested_seconds": 60,
+      "watchdog_ioctl_errno": 22,
+      "suspend_attempts": 0,
+      "RTC_empty_and_all_four_idle_flags_restored": true
+    },
+    "installed_return": {
+      "boot": "7c53b3b8",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
   }
 }

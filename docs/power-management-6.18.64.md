@@ -484,6 +484,23 @@ sleep unverified. The phone returned normally, and the installed
 module and protected hashes matched. [APSS watchdog evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
 [Diagnostic source](https://github.com/timschmidt/fx0-linux/commit/2fd22a05dd05ded4ed35806bd2f1a7051effcc90)
 
+A matched-profile control kept the same signed image and 25-second watchdog
+timeout, then disabled standalone collapse on all four CPUs. The kernel
+recorded one s2idle entry and exit, one successful suspend increment and
+one matching RTC wake interrupt over 14.811 seconds. The regular and
+dedicated s2idle counters for standalone collapse stayed unchanged. All idle
+settings were restored and the alarm cleared. Monotonic time kept advancing
+with the WFI fallback, so the earlier stopped-clock classifier did not
+recognize this successful freeze.
+
+The independent installed-kernel audit matched the candidate's watchdog
+resume record. The counter advanced 1,215 ticks at 32,768 Hz, about 37 ms,
+while the watchdog remained enabled. Standalone CPU collapse is unnecessary
+for reproducing the shortfall. The mechanism and recovery from physical
+deep suspend remain unresolved. The first setup attempt used a 60-second
+timeout that the watchdog ioctl rejected before suspend.
+[WFI watchdog evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
+
 The PM8226 power-on controller offers another watchdog path. Qualcomm's
 downstream driver uses the same watchdog enable register offset as the
 Linux PM8916 driver. The Fx0's RAM inventory read only the selected
