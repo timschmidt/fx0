@@ -1,11 +1,14 @@
 """Filesystem safety checks; actual APK/controller qualification runs on ARM."""
+from contextlib import nullcontext
 import hashlib
 import importlib.util
 import os
 from pathlib import Path
+import signal
 import stat
 import tempfile
 import time
+from types import SimpleNamespace
 import unittest
 
 SOURCE=Path(__file__).resolve().parents[1]/'diagnostics/stable-update/stable_transaction.py'
@@ -217,6 +220,67 @@ class RecoveryGuards(unittest.TestCase):
         with snapshot.locked():
             with self.assertRaisesRegex(AssertionError,'Candidate payload differs'):
                 snapshot.verify_candidate()
+
+
+class StopSignals(unittest.TestCase):
+    def test_stop_before_candidate_acceptance_requests_verified_rollback(self):
+        protocol_path = SOURCE.parent.parent / 'kernel-maintenance/update_transaction.py'
+        protocol = controller.transaction_module({
+            'transaction_helper_sha256': controller.sha(protocol_path),
+        })
+        for signum in (signal.SIGTERM, signal.SIGINT):
+            for moment in ('payload-verification', 'candidate-verified'):
+                with self.subTest(signal=signum.name, moment=moment):
+                    self.check_stopped_verification(protocol, signum, moment)
+
+    def check_stopped_verification(self, protocol, signum, moment):
+        with tempfile.TemporaryDirectory(prefix='stable-stop-') as temp:
+            database = Path(temp) / 'installed'
+            database.write_bytes(b'candidate package inventory')
+            ops = controller.StableUpdate.__new__(controller.StableUpdate)
+            ops.stopping = False
+            ops.recovering = False
+            ledger = []
+
+            def verify():
+                if moment == 'payload-verification':
+                    signal.raise_signal(signum)
+                return 1
+
+            def record(stage, **fields):
+                ledger.append(stage)
+                if stage == moment:
+                    signal.raise_signal(signum)
+
+            def rollback():
+                self.assertTrue(ops.stopping)
+                self.assertTrue(ops.hooks_terminal())
+                ops.recovering = True
+                ledger.append('restore')
+
+            ops.snapshot = SimpleNamespace(
+                locked=nullcontext, verify_candidate=verify, target=lambda name: database,
+            )
+            ops.preflight = lambda: None
+            ops.install = lambda: None
+            ops.hooks_terminal = lambda: True
+            ops.identity = lambda: None
+            ops.input_guard = lambda: None
+            ops.policy_guard = lambda: None
+            ops.package_state = lambda **fields: None
+            ops.world_guard = lambda: None
+            ops.inventory = lambda: 545
+            ops.record = record
+            ops.rollback = rollback
+            ops.verify_rollback = lambda: ledger.append('verify-restore')
+            handler = signal.signal(signum, lambda number, frame: setattr(ops, 'stopping', True))
+            try:
+                with self.assertRaises(protocol.RolledBack):
+                    protocol.execute(ops)
+            finally:
+                signal.signal(signum, handler)
+            self.assertEqual(ledger[-4:], ['update-failed', 'restore', 'verify-restore', 'rolled-back'])
+            self.assertNotIn('updated-and-verified', ledger)
 
 
 if __name__=='__main__':unittest.main()

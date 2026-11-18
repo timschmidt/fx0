@@ -425,10 +425,14 @@ class StableUpdate:
         pids={int(pid) for path in parent.rglob('cgroup.procs') for pid in path.read_text().split()}
         return pids=={os.getpid()}
 
+    def require_forward_progress(self, context):
+        if self.stopping and not self.recovering:
+            raise RuntimeError('Stop requested ' + context)
+
     def command(self,phase,args):
         assert '--no-scripts' not in args and '--allow-untrusted' not in args
         assert self.snapshot.lock_fd is None or phase=='refresh-inventory'
-        if self.stopping and not self.recovering:raise RuntimeError('Stop requested before next forward command')
+        self.require_forward_progress('before next forward command')
         self.number+=1
         log=self.work/(self.status.stem+'-%02d-%s.log'%(self.number,phase))
         with log.open('xb') as stream:
@@ -444,7 +448,7 @@ class StableUpdate:
             self.state['upgrade_window_ns']=[started_ns,finished_ns]
         self.record(phase+'-terminal',package_parent_returncode=code,all_owned_process_groups_terminal=True)
         assert code==0,('Command failed',phase,code)
-        if self.stopping and not self.recovering:raise RuntimeError('Stop requested after owned command reaped')
+        self.require_forward_progress('after owned command reaped')
         return log.read_text()
 
     def identity(self):
@@ -598,6 +602,7 @@ class StableUpdate:
         if self.fixture_failure=='after-commit':raise RuntimeError('Private controlled failure after actual commit and refresh')
 
     def verify_candidate(self):
+        self.require_forward_progress('before candidate verification')
         assert self.hooks_terminal();self.identity();self.input_guard();self.policy_guard()
         with self.snapshot.locked():
             self.package_state(candidate=True);self.world_guard()
@@ -606,6 +611,7 @@ class StableUpdate:
             other_package_identities_unchanged=745,selected_candidate_identities_verified=30,world_exact=True,
             unit_entries_and_timestamps_verified=count,changed_captured_paths=changes,
             database_sha256=sha(self.snapshot.target(DB)),boot_written=False)
+        self.require_forward_progress('before candidate acceptance')
 
     def rollback(self):
         assert self.hooks_terminal(),'Never restore while owned package hooks remain'

@@ -1,5 +1,15 @@
 # Stable userspace controller on the current r1 boot
 
+## Host regression for stop during candidate verification
+
+The forward transaction now checks for a pending stop before candidate
+verification and again after recording the verification result. The host
+regression delivers SIGTERM and SIGINT during payload verification and while
+the result is recorded. All four cases reproduced false success before the
+change. Afterward, the controller invoked the rollback and verification
+steps before reporting a rolled-back result. Native service-stop qualification
+remains open.
+
 ## Verified live checkpoint, November 13 UTC
 
 Revision 3 completed native success, normal recovery and both injected failure
