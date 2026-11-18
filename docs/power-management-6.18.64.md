@@ -270,6 +270,14 @@ were online after early resume. The comparison places the busy transition
 within the disable sequence in this run.
 [Feedback-active comparison](../evidence/2026-11-18-msm8226-platform-cpr-active-control.json)
 
+The per-write diagnostic sampled CPR at the same 600 MHz point. Busy was
+clear through interrupt masking, disabling automatic acknowledgement,
+timer adjustment, interrupt clear and the explicit ACK. The first busy
+sample followed the explicit NACK. The bit stayed set after loop disable
+and through a 10,027 µs poll. The ordinary disable sequence and all rail
+and clock guards were retained in this test. [Per-write diagnostic source](https://github.com/timschmidt/fx0-linux/commit/cb31884d1f7e0c8ca2cca130c8e20ae33f28b91b)
+[CPR disable sequence evidence](../evidence/2026-11-18-msm8226-platform-cpr-quiesce.json)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate
