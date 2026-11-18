@@ -626,6 +626,26 @@ python3 -B diagnostics/cpr-suspend-cap/replay.py /path/to/linux \
 
 [Follow-up evidence](../evidence/2026-11-18-power-qualification-followup.json)
 
+## PM8226 hardware key reset
+
+An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce
+registers twice. Both reads returned `0x03` and `0x04`. The Madai vendor
+driver's field definitions decode those values as combined KPDPWR and
+RESIN with a 16-second timer. The vendor device tree maps RESIN to
+Volume Down. Its stock configuration requests a longer debounce interval.
+The source of the currently observed setting is unresolved.
+[Vendor PON driver](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/platform/msm/qpnp-power-on.c#L1187-L1231)
+[Vendor board configuration](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/boot/dts/msm-pm8226.dtsi#L30-L53)
+
+The RAM image kept the prior verified DTB, initramfs and command line.
+The probe issued zero PMIC writes and the journal recorded zero suspend
+entries. The installed return passed the complete 482-module and
+protected-hash audit. Testing the reset itself would require a physical
+key press or an independent actuator. Reset behavior, recovery from
+deep suspend and unattended recovery remain open.
+[Diagnostic source](https://github.com/timschmidt/fx0-linux/commit/e239ca303c5dcbc5a70452851cd3ad6edfc5ef7b)
+[Device evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
+
 ## Remaining physical scope
 
 The installed firmware lacks the verified early charge-inhibition marker.
