@@ -278,6 +278,14 @@ and through a 10,027 µs poll. The ordinary disable sequence and all rail
 and clock guards were retained in this test. [Per-write diagnostic source](https://github.com/timschmidt/fx0-linux/commit/cb31884d1f7e0c8ca2cca130c8e20ae33f28b91b)
 [CPR disable sequence evidence](../evidence/2026-11-18-msm8226-platform-cpr-quiesce.json)
 
+In the matched control, the driver skipped NACK after observing a clear busy
+bit at the ACK sample. The bit became set by the next sample even though
+that interval contained no NACK write. The same poll timed out after
+10,049 µs, and the callback again aborted before the CPU rate check.
+The brief interval after ACK leaves open whether its effect arrived after
+the first read or a previously scheduled measurement started then.
+[NACK omission control](../evidence/2026-11-18-msm8226-platform-cpr-idle-nack.json)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate
