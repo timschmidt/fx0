@@ -481,6 +481,14 @@ as `error`. This accounts for the codec failure before its own resume
 callback and the child’s `EBUSY` from the workload. The IOMMU operation
 that timed out still needs isolation.
 
+One RAM-only control held the IOMMU active through its runtime power
+setting. Sysfs confirmed the transition from suspended to active. The
+codec probe request was accepted, then USB stopped returning management
+replies. The observation window ended without a codec result or a
+verified return to the installed system. The last installed audit before
+this trial verified all 482 module files and the protected hashes. A
+local restart is pending.
+
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)

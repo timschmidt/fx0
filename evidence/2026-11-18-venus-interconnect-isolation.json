@@ -23,7 +23,8 @@
     "installed_modules_match": true,
     "seven_protected_hashes_match": true,
     "pinned_USB_route": true,
-    "physical_display_touch_observed": false
+    "physical_display_touch_observed": false,
+    "verified_before_held_active_control": true
   },
   "single_provider_controls": {
     "both_images_verified_on_host": true,
@@ -365,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-18T16:13:51.705769+00:00",
+  "last_updated_UTC": "2026-11-18T16:25:37.872402+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -602,5 +603,32 @@
       "modules_verified": 482,
       "protected_hashes_match": true
     }
+  },
+  "Venus_IOMMU_held_active_control": {
+    "candidate_boot": "0ad4a9a8",
+    "same_diagnostic_RAM_image": true,
+    "RAM_readback_exact": true,
+    "IOMMU_before": {
+      "control": "auto",
+      "runtime_status": "suspended"
+    },
+    "IOMMU_before_codec_load": {
+      "control": "on",
+      "runtime_status": "active"
+    },
+    "both_automatic_return_paths_armed_before_load": true,
+    "codec_probe_transaction_accepted": true,
+    "USB_management_reply_after_probe": false,
+    "codec_initialization_receipt": false,
+    "H264_workload_dispatched": false,
+    "observation_result": "TimeoutError",
+    "finished_UTC": "2026-11-18T16:25:37.872402+00:00",
+    "installed_files_last_verified_before_trial": {
+      "boot": "88bbc34f",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    },
+    "installed_return_verified": false,
+    "local_restart_requested": true
   }
 }
