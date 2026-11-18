@@ -19,6 +19,7 @@ ALARM = RTC / "wakealarm"
 BOOT_ID = Path("/proc/sys/kernel/random/boot_id")
 TIMER = "fx0-native-return.timer"
 RTC_DELAY = 14
+MAX_CYCLES = 8
 TRACEFS = Path("/sys/kernel/tracing")
 TRACE_NAME = "fx0_rtc_s2idle"
 WAKE_EVENT = f"{TRACE_NAME}/wake_irq"
@@ -222,6 +223,40 @@ def measure(expected_boot, trace):
 
 def interrupted(signum, frame):
     raise InterruptedError("probe interrupted")
+
+
+def series(boot_id, release, token, notes_hash, count, progress=None):
+    if not 1 <= count <= MAX_CYCLES:
+        raise ValueError("cycle count outside the RTC trial budget")
+    results = []
+    failure = None
+    for index in range(1, count + 1):
+        try:
+            result = probe(boot_id, release, token, notes_hash)
+        except Exception as error:
+            failure = {"cycle": index, "error_type": type(error).__name__,
+                       "errno": getattr(error, "errno", None)}
+            break
+        if results and result["passed"]:
+            before, previous = result["before"], results[-1]["after"]
+            counters = ("boot_id", "suspend_success", "suspend_fail", "rtc_irq", "rtc_irq_count")
+            if any(before[field] != previous[field] for field in counters):
+                result["passed"] = False
+                result["failure"] = "counters changed between cycles"
+        result["cycle"] = index
+        results.append(result)
+        if progress is not None:
+            progress(result)
+        if not result["passed"]:
+            break
+    return {
+        "passed": len(results) == count and all(result["passed"] for result in results),
+        "suspend_requested": any(result["suspend_requested"] for result in results),
+        "requested_cycles": count,
+        "passed_cycles": sum(result["passed"] for result in results),
+        "cycles": results,
+        "failure": failure,
+    }
 
 
 def main():

@@ -182,10 +182,17 @@ as the only wake IRQ in the interval, and the PM8xxx RTC alarm counter
 increased by one. The probe cleared its alarm and exited successfully.
 After automatic return, an independent USB audit verified all seven protected
 hashes and recovered the candidate's suspend-entry, suspend-exit and service
-completion records from the journal. Hardware qualification still covers one
-USB-powered s2idle cycle. Deep suspend, repeated cycles and battery standby
-remain open. [Handset evidence](../evidence/2026-11-18-rtc-s2idle-handset.json)
+completion records from the journal. [Handset evidence](../evidence/2026-11-18-rtc-s2idle-handset.json)
 [Workstation checks](../evidence/2026-11-18-rtc-s2idle-workstation.json)
+
+A repeat on the signed kernel with WLAN disabled completed eight consecutive
+RTC-triggered cycles. Inactive-clock differences ranged from 13.691 to 14.631
+seconds. Each trace identified RTC IRQ 33 as the only wake IRQ, the alarm
+counter increased by one, and the alarm cleared. The kernel logged eight
+suspend entries and eight exits. After the last cycle, an independent check
+verified trace cleanup, an empty test cgroup, all four CPUs online, and the
+desktop and gesture processes running. Deep suspend and battery standby
+remain open. [Eight-cycle handset evidence](../evidence/2026-11-18-rtc-s2idle-series.json)
 
 ## Combined early charging firmware: host qualification
 
