@@ -626,6 +626,19 @@ python3 -B diagnostics/cpr-suspend-cap/replay.py /path/to/linux \
 
 [Follow-up evidence](../evidence/2026-11-18-power-qualification-followup.json)
 
+## Installed battery ADC observations
+
+The installed signed 6.18.64 kernel exposes the battery sense voltage and
+ratiometric thermistor voltage through IIO. Four raw and processed samples
+reported 4,228.884–4,229.178 mV on VBAT and 653 mV on the thermistor input.
+The USB supply reported online with its 500 mA input limit. The battery
+power-supply device reported `Good` health and `Not charging`.
+
+The installed battery power-supply interface still lacks temperature,
+current and state-of-charge data. Electrical accuracy, conversion from
+thermistor voltage to temperature and actual USB current remain unmeasured.
+[Installed ADC evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce
