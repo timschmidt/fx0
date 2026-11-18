@@ -961,5 +961,48 @@
       ],
       "firmware_fault_report_exception_logged": true
     }
+  },
+  "Venus_MSM8226_direct_encoder_trial": {
+    "RAM_image_sha256": "767faf05500508ad1b73a122d7e409d84e2fc9f14cd8bced40417c9ba480482e",
+    "candidate_boot": "fbd0bf3d",
+    "direct_test_binary_sha256": "a105f4b96c925109e9707e88675ffcfb7150db113a79088fc780a5726fafe9c1",
+    "direct_test_source_sha256": "3b3a05b85d1a528f097c86fe4302a564e8188304cad4ffb3c9239bea753503a4",
+    "exact_RAM_readback": true,
+    "input_stride": 384,
+    "input_padded_height": 256,
+    "explicit_crop_size": [
+      320,
+      240
+    ],
+    "input_frames_submitted": 12,
+    "input_buffers_returned": 12,
+    "capture_payloads_returned": 12,
+    "encoded_stream_bytes": 1522,
+    "empty_capture_before_final_frame": true,
+    "separate_empty_LAST_capture": true,
+    "software_decoded_dimensions": [
+      320,
+      240
+    ],
+    "software_fixture_checks": {
+      "frames": 12,
+      "luma_cells": 144,
+      "max_luma_mean_error": 0,
+      "chroma_planes": 24
+    },
+    "V4L2_trace_counts": {
+      "v4l2_qbuf/VIDEO_CAPTURE_MPLANE": 17,
+      "v4l2_qbuf/VIDEO_OUTPUT_MPLANE": 12,
+      "v4l2_dqbuf/VIDEO_OUTPUT_MPLANE": 12,
+      "v4l2_dqbuf/VIDEO_CAPTURE_MPLANE": 14
+    },
+    "V4L2_trace_loss": 0,
+    "IOMMU_timeout_messages": 0,
+    "runtime_PM_underflow_messages": 0,
+    "installed_return": {
+      "boot": "3a6313fc",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
   }
 }

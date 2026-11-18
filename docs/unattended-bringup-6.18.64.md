@@ -589,6 +589,15 @@ Both trials returned to installed 6.18.64. The installed audits verified 482
 module files and the protected hashes, and found zero IOMMU timeouts and
 zero runtime PM underflow warnings in either candidate journal.
 
+A direct V4L2 encoder test on the same image supplied NV12 with a 384-byte
+stride and 256-line padded height, then requested a 320×240 crop before
+allocating buffers. The driver accepted and returned all 12 input buffers.
+After it accepted the drain command, it returned an empty capture buffer,
+then the last encoded frame, then a separate empty buffer marked `LAST`.
+Software decoded all 12 frames at 320×240 and verified all 144 luma cells
+and 24 chroma planes. The installed return passed the full 482-module and
+protected-hash audit. [Direct encoder test](../diagnostics/venus-arm32/encoder-queue.c)
+
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)
