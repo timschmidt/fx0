@@ -132,6 +132,13 @@
       "boot": "553da1c2",
       "modules_verified": 482,
       "protected_hashes_match": true
+    },
+    "later_readiness_reassessment": {
+      "in_tree_marker_present": false,
+      "module_manifest_matches_replacement": false,
+      "candidate_RAM_image": "39d98632502d483831f973aab35b8652c4cef5a50e5538112a5b7e3d07b917ea",
+      "use_as_control_of_USB_readiness": false,
+      "reason": "The replacement module was built out of tree and the startup manifest still described the original module. The retained probe markers remain valid."
     }
   },
   "MMSS_probe_QoS_control": {
@@ -157,6 +164,13 @@
       "boot": "37039249",
       "modules_verified": 482,
       "protected_hashes_match": true
+    },
+    "later_readiness_reassessment": {
+      "in_tree_marker_present": false,
+      "module_manifest_matches_replacement": false,
+      "candidate_RAM_image": "20eff5623ace8812dccf371260ad239ea9e5c2a2c7b04487fe81806f04528bd9",
+      "use_as_control_of_USB_readiness": false,
+      "reason": "The replacement module was built out of tree and the startup manifest still described the original module. The retained probe markers remain valid."
     }
   },
   "MMSS_deferred_coldplug_control": {
@@ -178,5 +192,40 @@
       "protected_hashes_match": true
     },
     "reset_cause_established": false
+  },
+  "MMSS_instrumented_deferred_probe": {
+    "source_commit": "daeab497955f469f96e5ed7a13bf92a1677ce4ac",
+    "first_preflight_return": "[   19.176718] FX0_VENUS_STAGE_FAIL taint",
+    "second_preflight_return": "[   20.720784] FX0_VENUS_STAGE_FAIL source modules",
+    "verified_corrected_RAM_image": "ecc21289dcf542ca8bc809ddb7700ebcbf65c7f0d8850230144d9622d08733f3",
+    "unchanged_startup_hook": true,
+    "module_manifest_records_verified": 488,
+    "candidate_ready_before_explicit_load": true,
+    "candidate_boot": "72d08819",
+    "retained_probe_markers": [
+      "[   66.260850] fx0 MMSS traced late probe starting signed module load",
+      "[   66.288224] fx0-mmss-trace: platform driver registration begin",
+      "[   66.288792] qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: probe entered",
+      "[   66.299951] qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: bus clock enable begin",
+      "[   66.300293] qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: bus clock enable end ret=0",
+      "[   66.308076] qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: interface clocks enable begin",
+      "[   66.327566] qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: interface clocks enable end ret=0",
+      "[   66.327644] qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: node 0 creation begin",
+      "[   66.342329] qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: node 0 links added",
+      "[   66.343275] qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: node 0 QoS begin",
+      "[   66.357332] qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: node 0 QoS end ret=0",
+      "[   66.358301] qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: node 1 creation begin",
+      "[   66.370326] qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: node 1 links added",
+      "[   66.373744] qnoc-msm8226 fc478000.interconnect: fx0-mmss-trace: interface clocks release begin"
+    ],
+    "last_marker": "interface clocks release begin",
+    "interface_clocks_release_end_observed": false,
+    "provider_publication_attempt_observed": false,
+    "exact_clock_gate_or_reset_cause_established": false,
+    "installed_return": {
+      "boot": "5c3cdb98",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
   }
 }

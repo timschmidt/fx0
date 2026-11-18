@@ -370,16 +370,15 @@ both branches as children of the root. On the installed kernel, both branches
 were enabled in hardware at 100 MHz while Linux held zero references to
 either. An opt-in diagnostic held an S0 reference through provider probe.
 The retained console shows the reference acquired before probe and retained
-after successful probe. USB userspace remained unreachable. This rules out
-the probe releasing its own S0 reference as a sufficient explanation. The
-installed kernel returned with all 482 module files and protected hashes
-verified. [Stock MSM8226 clock source](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/mach-msm/clock-8226.c)
+after successful probe. The installed kernel returned with all 482 module
+files and protected hashes verified. [Stock MSM8226 clock source](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/mach-msm/clock-8226.c)
 
 The next control retained the S0 reference and skipped the Video P0 QoS
 register setup at probe. The boot log confirms both conditions and successful
-provider probe. USB userspace remained unreachable. The original MMSS
-provider's QoS setup and release of its S0 reference are each unnecessary
-for reproducing the failure under these controls.
+provider probe. A later audit of both RAM images found out-of-tree module
+metadata and stale module checksums. Their probe markers establish the
+limited execution shown in the console. These packaging differences leave
+later USB readiness untested under either intervention.
 
 Deferring only the MMSS module's coldplug allowed the same kernel, ramdisk
 and device tree to reach USB userspace with the provider unbound. After the
@@ -389,6 +388,17 @@ seconds. The installed kernel returned before the controller received a
 completion receipt. The return audit matched all 482 module files and
 protected hashes. This reproduces the problem after the desktop starts.
 The failing operation within module load or probe remains open.
+
+The instrumented retry first reached USB userspace with both providers
+unbound. It required in-tree module builds and a manifest updated for both
+signed replacements. The original startup checks stayed in place, and all
+488 manifest entries matched. The late load completed bus and interface
+clock enable, created both nodes and completed Video P0 QoS setup. The
+last retained marker is the start of the interface clock release inside
+`qnoc_probe()`. Provider publication did not appear in the trace. This
+narrows the failure to the release interval. The exact clock operation and
+reset mechanism remain open. The signed installed kernel returned with all
+482 installed modules and protected hashes matching.
 
 [Interconnect isolation evidence](../evidence/2026-11-18-venus-interconnect-isolation.json)
 
