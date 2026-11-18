@@ -198,16 +198,31 @@ It detects both faults when the previous implementations are substituted one
 at a time. [Linux runtime PM API](https://docs.kernel.org/6.18/power/runtime_pm.html)
 [Kernel source](https://github.com/timschmidt/fx0-linux/commit/b7803c465ce017fd98b1f8ce4ac49d775b8cae44)
 
-Unmap, whole-TLB flush and domain free still need a recovery contract for
-failed resumes. The ARM DMA path can release the IOVA after calling unmap,
-so a failed resume must leave page-table state suitable for that release
-and for the next power-up.
+[Identity attach and range invalidation evidence](../evidence/2026-11-18-venus-iommu-runtime-pm.json)
+
+### Venus teardown and resume
+
+The Venus IOMMU now removes software mappings while suspended because ARM DMA
+can release the IOVA immediately after unmap. The runtime suspend path
+quiesces the Linux-owned bank before gating its clocks. Resume disables and
+invalidates that bank, waits for the TLB to finish, and restores registers
+only for a live domain. The runtime PM supplier returns an error if halt or
+TLB synchronization times out. Domain release clears the saved owner and
+drains its interrupt handler before freeing the tables. [Kernel source](https://github.com/timschmidt/fx0-linux/commit/ce2139f533703bbd60ff1d121d283736e2f541f4)
+
+The ARM32 build produced `vmlinux` and 474 modules. The two Madai DTBs and the
+exported symbol CRCs match the previous preview. The host replay covers
+online and offline unmap, full and gathered TLB operations, interrupts,
+four resume failures, retry and domain release. It detects six deliberate
+regressions under UBSan. The preview is disabled on the phone pending shared
+clock vote and real PAS, HFI and codec tests. The common driver's active TLB
+timeout still logs the error without propagating it to the DMA caller.
 
 ```sh
 python3 -B diagnostics/venus-arm32/check-platform.py /path/to/linux /path/to/results
 ```
 
-[IOMMU qualification evidence](../evidence/2026-11-18-venus-iommu-runtime-pm.json)
+[Teardown and resume qualification evidence](../evidence/2026-11-18-venus-iommu-offline.json)
 
 [Venus and USB follow-up evidence](../evidence/2026-11-18-venus-arm32-and-usb.json)
 
