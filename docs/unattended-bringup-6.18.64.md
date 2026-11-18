@@ -598,6 +598,20 @@ Software decoded all 12 frames at 320×240 and verified all 144 luma cells
 and 24 chroma planes. The installed return passed the full 482-module and
 protected-hash audit. [Direct encoder test](../diagnostics/venus-arm32/encoder-queue.c)
 
+FFmpeg 7.1.5 ended capture drain on any empty buffer and copied
+single-plane NV12 using the source frame stride. The tested userspace
+patch requests the crop before buffer allocation, writes NV12 using the
+negotiated buffer stride and height, and requeues an empty non-final
+encoder capture buffer. Two fresh static ARM builds were byte-identical,
+and CPU decode of the reference matched the unmodified build.
+
+The patched FFmpeg passed the same 320×240 12-frame pattern on an unchanged
+RAM image. The V4L2 trace captured all 12 input submissions and 14 capture
+dequeues with zero lost events. Software verified all 144 luma cells and
+24 chroma planes. The installed boot, 482 module files and protected
+hashes passed the independent audit. The experiment used a staged binary
+on the RAM boot. [FFmpeg 7.1.5 patch](../diagnostics/venus-arm32/ffmpeg-7.1.5-v4l2-encode.patch)
+
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)

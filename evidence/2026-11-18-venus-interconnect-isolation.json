@@ -1004,5 +1004,43 @@
       "modules_verified": 482,
       "protected_hashes_match": true
     }
+  },
+  "Venus_MSM8226_FFmpeg_encoder_trial": {
+    "RAM_image_sha256": "767faf05500508ad1b73a122d7e409d84e2fc9f14cd8bced40417c9ba480482e",
+    "candidate_boot": "ee29852a",
+    "FFmpeg_release": "7.1.5",
+    "tool_sha256": "0133cb0e15740db6f0db029261d830d8ed58d00245e3cf795ffc788170727f8b",
+    "source_patch_sha256": "a5bbb50d30eaac5119362488d630387478fd7f3c3b944378e344c85e119ddf88",
+    "two_fresh_ARM_builds_byte_identical": true,
+    "stock_CPU_decode_fixture_byte_identical": true,
+    "same_signed_image_as_direct_encoder_test": true,
+    "software_decoded_dimensions": [
+      320,
+      240
+    ],
+    "software_fixture_checks": {
+      "frames": 12,
+      "luma_cells": 144,
+      "max_luma_mean_error": 0,
+      "chroma_planes": 24
+    },
+    "V4L2_trace_counts": {
+      "v4l2_qbuf/VIDEO_CAPTURE_MPLANE": 17,
+      "v4l2_qbuf/VIDEO_OUTPUT_MPLANE": 12,
+      "v4l2_dqbuf/VIDEO_OUTPUT_MPLANE": 10,
+      "v4l2_dqbuf/VIDEO_CAPTURE_MPLANE": 14
+    },
+    "V4L2_trace_loss": 0,
+    "capture_trace_sequences_before_LAST": [
+      11,
+      12
+    ],
+    "IOMMU_timeout_messages": 0,
+    "runtime_PM_underflow_messages": 0,
+    "installed_return": {
+      "boot": "ab9b2628",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
   }
 }

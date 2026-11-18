@@ -1,0 +1,141 @@
+--- a/libavcodec/v4l2_m2m.c
++++ b/libavcodec/v4l2_m2m.c
+@@ -172,6 +172,18 @@
+         goto error;
+     }
+ 
++    if (s->avctx && av_codec_is_encoder(s->avctx->codec)) {
++        struct v4l2_selection crop = {
++            .type = V4L2_BUF_TYPE_VIDEO_OUTPUT,
++            .target = V4L2_SEL_TGT_CROP,
++            .r = { .width = s->output.width, .height = s->output.height },
++        };
++
++        if (ioctl(s->fd, VIDIOC_S_SELECTION, &crop) == 0)
++            av_log(log_ctx, AV_LOG_VERBOSE, "encoder input crop %ux%u\n",
++                   crop.r.width, crop.r.height);
++    }
++
+     ret = ff_v4l2_context_init(&s->output);
+     if (ret) {
+         av_log(log_ctx, AV_LOG_ERROR, "no v4l2 output context's buffers\n");
+--- a/libavcodec/v4l2_buffers.c
++++ b/libavcodec/v4l2_buffers.c
+@@ -28,6 +28,7 @@
+ #include <fcntl.h>
+ #include <poll.h>
+ #include "libavcodec/avcodec.h"
++#include "libavutil/imgutils.h"
+ #include "libavutil/pixdesc.h"
+ #include "refstruct.h"
+ #include "v4l2_context.h"
+@@ -336,6 +337,42 @@
+     return 0;
+ }
+ 
++static int v4l2_copy_nv12(const AVFrame *frame, V4L2Buffer *out, int height)
++{
++    unsigned int length = out->plane_info[0].length;
++    unsigned int stride = out->plane_info[0].bytesperline;
++    unsigned int chroma_height, luma, chroma;
++    uint8_t *dst = out->plane_info[0].mm_addr;
++
++    if (frame->width <= 0 || frame->height <= 0 || height < frame->height ||
++        frame->width >= INT_MAX || stride > INT_MAX ||
++        stride < FFALIGN(frame->width, 2) ||
++        !frame->data[0] || !frame->data[1])
++        return AVERROR(EINVAL);
++
++    chroma_height = FF_CEIL_RSHIFT(height, 1);
++    if (stride > length / (height + chroma_height))
++        return AVERROR(ENOSPC);
++    luma = stride * height;
++    chroma = stride * chroma_height;
++
++    memset(dst, 0, luma);
++    memset(dst + luma, 128, chroma);
++    av_image_copy_plane(dst, stride, frame->data[0], frame->linesize[0],
++                        frame->width, frame->height);
++    av_image_copy_plane(dst + luma, stride, frame->data[1], frame->linesize[1],
++                        FFALIGN(frame->width, 2), FF_CEIL_RSHIFT(frame->height, 1));
++
++    if (V4L2_TYPE_IS_MULTIPLANAR(out->buf.type)) {
++        out->planes[0].bytesused = luma + chroma;
++        out->planes[0].length = length;
++    } else {
++        out->buf.bytesused = luma + chroma;
++        out->buf.length = length;
++    }
++    return 0;
++}
++
+ static int v4l2_buffer_swframe_to_buf(const AVFrame *frame, V4L2Buffer *out)
+ {
+     int i, ret;
+@@ -345,6 +382,10 @@
+     int height       = V4L2_TYPE_IS_MULTIPLANAR(fmt.type) ?
+                        fmt.fmt.pix_mp.height : fmt.fmt.pix.height;
+     int is_planar_format = 0;
++
++    if (pixel_format == V4L2_PIX_FMT_NV12 && frame->format == AV_PIX_FMT_NV12 &&
++        out->num_planes == 1 && out->plane_info[0].bytesperline)
++        return v4l2_copy_nv12(frame, out, height);
+ 
+     switch (pixel_format) {
+     case V4L2_PIX_FMT_YUV420M:
+--- a/libavcodec/v4l2_context.c
++++ b/libavcodec/v4l2_context.c
+@@ -396,25 +396,40 @@
+             return NULL;
+         }
+ 
+-        if (ctx_to_m2mctx(ctx)->draining && !V4L2_TYPE_IS_OUTPUT(ctx->type)) {
+-            int bytesused = V4L2_TYPE_IS_MULTIPLANAR(buf.type) ?
+-                            buf.m.planes[0].bytesused : buf.bytesused;
+-            if (bytesused == 0) {
+-                ctx->done = 1;
+-                return NULL;
+-            }
+-#ifdef V4L2_BUF_FLAG_LAST
+-            if (buf.flags & V4L2_BUF_FLAG_LAST)
+-                ctx->done = 1;
+-#endif
+-        }
+-
+         avbuf = &ctx->buffers[buf.index];
+         avbuf->status = V4L2BUF_AVAILABLE;
+         avbuf->buf = buf;
+         if (V4L2_TYPE_IS_MULTIPLANAR(ctx->type)) {
+             memcpy(avbuf->planes, planes, sizeof(planes));
+             avbuf->buf.m.planes = avbuf->planes;
++        }
++
++        if (ctx_to_m2mctx(ctx)->draining && !V4L2_TYPE_IS_OUTPUT(ctx->type)) {
++            int bytesused = V4L2_TYPE_IS_MULTIPLANAR(buf.type) ?
++                            buf.m.planes[0].bytesused : buf.bytesused;
++
++#ifdef V4L2_BUF_FLAG_LAST
++            V4L2m2mContext *s = ctx_to_m2mctx(ctx);
++
++            if (buf.flags & V4L2_BUF_FLAG_LAST)
++                ctx->done = 1;
++            else if (!bytesused && !ctx->done && s->avctx &&
++                     av_codec_is_encoder(s->avctx->codec)) {
++                /* An empty capture buffer can precede the last encoded frame. */
++                ret = ff_v4l2_buffer_enqueue(avbuf);
++                if (ret < 0) {
++                    av_log(logger(ctx), AV_LOG_ERROR, "cannot requeue empty capture buffer\n");
++                    ctx->done = 1;
++                    return NULL;
++                }
++                av_log(logger(ctx), AV_LOG_VERBOSE, "requeued empty capture buffer during drain\n");
++                goto start;
++            }
++#endif
++            if (!bytesused) {
++                ctx->done = 1;
++                return NULL;
++            }
+         }
+         return avbuf;
+     }
