@@ -1,0 +1,51 @@
+{
+  "date_utc": "2026-11-18",
+  "classification": "ARM32 host qualification in disabled diagnostic branch",
+  "source": "b7803c465ce017fd98b1f8ce4ac49d775b8cae44",
+  "arm32_module_count": 474,
+  "module_symbol_versions_match_interconnect_preview": true,
+  "iommu_object_sha256": "6a2cfc6defe2dbac88ef11144d03cc72615ea2af6876b4b315cf0c7f9353e636",
+  "vmlinux_sha256": "77518885271f5679666fb5322a01c15a5b78e6c42927cd877fc3f58d9009e45a",
+  "matching_device_trees": {
+    "qcom-msm8926-lg-madai": "aeeda1292d347cf15caf475ed953a952162720c6be4606941d5461237ea12a47",
+    "qcom-msm8926-lg-madai-venus": "ba461a234575c423c675c0ecba418d05394462e49e0dc2aa5650a2b206269b83"
+  },
+  "host_ubsan": {
+    "passed": true,
+    "preset_writes": 10,
+    "failed_map_slots": 4,
+    "bandwidth_boundary_and_aggregation_cases": 6,
+    "clock_resume_cases": 5,
+    "attach_PM_cases": 2,
+    "identity_PM_cases": 4,
+    "range_invalidation_writes": 12,
+    "kernel_fragments_sha256": {
+      "venus_wrapper_addr": "aa264312d4d5f77b2279d8d1e064fe7e35f0646a9b8cc059a22dcf4e0d19a863",
+      "venus_assign_register_offsets": "02a322eb57bc3e7d2a76b6a5f62c1262c3c4d69b38bb7c24137361f8426bb1be",
+      "venus_map_registers": "81422385b3fd7e0413d726ddb521d834485cadbb66461af26c1cfefe4a3205a6",
+      "venus_set_registers": "e469be4dbf0f9193467f50591e24f077e97f4895c9b8f13bbddaff9fddc263c6",
+      "mbs_to_bw": "11e155394e3aa689174a441732bb2bf26d2585de285e3ef6b25a07375ef7e34b",
+      "load_scale_bw": "d77b8bf258f8b6689eb5ad3ca86ebf68f754253b8beeea55a35931db551c03b6",
+      "qcom_iommu_select_wrapper_clk": "876b23fa65086ee40e7b8d44c765598342777e7c6533cdd773f48d42baf0d88e",
+      "qcom_iommu_resume": "89a3eb8fd708b41aefee37b17e02f1d58818717c718d2c61adb9c5eb99a61ab9",
+      "qcom_iommu_attach_dev": "348486f00dc580a809ff3ad6e0c6d0612972085d9b57d8b2975b538659462061",
+      "qcom_iommu_identity_attach": "8a7d09975058a4018c7a431772d0d337fac8f01618a34278c91df34a9b60b39e",
+      "qcom_iommu_tlb_inv_range_nosync": "6ed322f2a5132ebcd6b11ad45a55a649262634e3fc49b377092ff3bf2fa9baa7",
+      "msm8226_reg_preset": "0984a3ecca15a35e931bc67f3caa134ecad6b5283361f26d67b07219aaf70875",
+      "msm8226_bw_enc": "653c3c26193707d5747719ef07e5dcdc731a396942a12aad2d78c81e0408ea0d",
+      "msm8226_bw_dec": "a60b856a9149b1a2ba1de50f6cb004b17855d689b1ba6646cf2c4492952bdf50"
+    },
+    "UBSan": true,
+    "hardware_exercised": false
+  },
+  "previous_source_controls": {
+    "qcom_iommu_tlb_inv_range_nosync": "previous implementation rejected by matching assertion",
+    "qcom_iommu_identity_attach": "previous implementation rejected by matching assertion"
+  },
+  "device_booted_or_updated": false,
+  "pending_runtime_pm_paths": [
+    "unmap",
+    "whole-TLB flush",
+    "domain free"
+  ]
+}

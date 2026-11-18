@@ -25,6 +25,7 @@ typedef uint32_t u32;
 #define max(a, b) ((a) > (b) ? (a) : (b))
 #define dev_dbg(...) do { } while (0)
 #define dev_err(...) do { } while (0)
+#define WARN_ON(condition) (condition)
 #define list_for_each_entry(inst, entries, unused) \
 	for (unsigned int i = 0; ((inst) = (*(entries))[i]); i++)
 
@@ -48,9 +49,10 @@ struct venus_core {
 };
 struct venus_hfi_device { struct venus_core *core; };
 struct platform_device { unsigned int fail_at, calls; };
-struct device { struct qcom_iommu_dev *data; void *pm_domain; };
+struct iommu_fwspec { unsigned int num_ids, ids[2]; };
+struct device { struct qcom_iommu_dev *data; void *pm_domain; struct iommu_fwspec *fwspec; };
 struct qcom_iommu_cfg { bool ctx_restore; };
-struct qcom_iommu_ctx { void *domain; bool secured_ctx; };
+struct qcom_iommu_ctx { void *domain; bool secured_ctx; unsigned int asid; };
 struct qcom_iommu_dev {
 	struct device *dev;
 	u32 *wrapper_clk_sel;
@@ -60,7 +62,7 @@ struct qcom_iommu_dev {
 	const struct qcom_iommu_cfg *cfg;
 	struct qcom_iommu_ctx *ctxs[2];
 };
-struct qcom_iommu_domain { struct qcom_iommu_dev *iommu; };
+struct qcom_iommu_domain { struct qcom_iommu_dev *iommu; struct iommu_fwspec *fwspec; };
 struct iommu_domain { struct qcom_iommu_domain *private; };
 
 static u32 vbif[0x400 / 4], cpu[0x20000 / 4], wrapper[0x4000 / 4];
@@ -69,6 +71,12 @@ static u32 observed_avg, observed_peak;
 static unsigned int reads, writes, enables, disables, restores, resets, presets, contexts;
 static int clock_error, secure_error, clock_stuck;
 static int pm_error, pm_gets, pm_puts, domain_initializations;
+static unsigned int ctx_writes;
+static struct {
+	struct qcom_iommu_ctx *ctx;
+	unsigned int reg;
+	u32 value;
+} ctx_trace[8];
 
 static void *devm_platform_ioremap_resource(struct platform_device *pdev, int index)
 {
@@ -174,9 +182,23 @@ static void qcom_iommu_program_ctx(struct qcom_iommu_dev *iommu, struct qcom_iom
 }
 
 static struct qcom_iommu_dev *dev_iommu_priv_get(struct device *dev) { return dev->data; }
+static struct iommu_fwspec *dev_iommu_fwspec_get(struct device *dev) { return dev->fwspec; }
+
 static struct qcom_iommu_domain *to_qcom_iommu_domain(struct iommu_domain *domain)
 {
 	return domain->private;
+}
+
+static struct qcom_iommu_ctx *to_ctx(struct qcom_iommu_domain *domain, unsigned int asid)
+{
+	assert(asid < ARRAY_SIZE(domain->iommu->ctxs));
+	return domain->iommu->ctxs[asid];
+}
+
+static void iommu_writel(struct qcom_iommu_ctx *ctx, unsigned int reg, u32 value)
+{
+	assert(ctx_writes < ARRAY_SIZE(ctx_trace));
+	ctx_trace[ctx_writes++] = (typeof(ctx_trace[0])) { ctx, reg, value };
 }
 
 static int pm_runtime_resume_and_get(struct device *dev)
@@ -218,12 +240,14 @@ int main(void)
 	struct venus_inst enc_b = { VIDC_SESSION_TYPE_ENC, 0, 16001 };
 	struct venus_inst dec = { VIDC_SESSION_TYPE_DEC, 0, 110400 };
 	struct qcom_iommu_cfg cfg = { .ctx_restore = true };
-	struct qcom_iommu_ctx ns = { &cfg, false }, sec = { &cfg, true };
+	struct qcom_iommu_ctx ns = { &cfg, false, 0 }, sec = { &cfg, true, 1 };
+	struct iommu_fwspec fwspec = { 2, { 1, 0 } };
 	struct qcom_iommu_dev iommu = { .wrapper_clk_sel = &clock_select, .cfg = &cfg,
 				       .max_asid = 1, .ctxs = { &ns, &sec } };
-	struct device dev = { &iommu, &iommu };
-	struct qcom_iommu_domain qcom_domain = { 0 };
+	struct device dev = { &iommu, &iommu, &fwspec };
+	struct qcom_iommu_domain qcom_domain = { .fwspec = &fwspec };
 	struct iommu_domain domain = { &qcom_domain };
+	struct iommu_domain identity = { 0 };
 	u32 avg, peak;
 
 	assert(!venus_map_registers(&pdev, &venus) && pdev.calls == 4);
@@ -301,8 +325,36 @@ int main(void)
 	assert(!qcom_iommu_attach_dev(&domain, &dev, NULL));
 	assert(pm_gets == 2 && pm_puts == 1 && domain_initializations == 1);
 
+	for (unsigned int leaf = 0; leaf < 2; leaf++) {
+		unsigned int reg = leaf ? ARM_SMMU_CB_S1_TLBIVAL : ARM_SMMU_CB_S1_TLBIVA;
+
+		ctx_writes = 0;
+		qcom_iommu_tlb_inv_range_nosync(0x40123789, 0x3000, 0x1000, leaf, &qcom_domain);
+		assert(ctx_writes == 6);
+		for (unsigned int idx = 0; idx < ctx_writes; idx++) {
+			struct qcom_iommu_ctx *bank = idx < 3 ? &sec : &ns;
+
+			assert(ctx_trace[idx].ctx == bank && ctx_trace[idx].reg == reg);
+			assert(ctx_trace[idx].value == (0x40123000 + idx % 3 * 0x1000 + bank->asid));
+		}
+	}
+
+	ctx_writes = 0;
+	assert(!qcom_iommu_identity_attach(&identity, &dev, NULL));
+	assert(!qcom_iommu_identity_attach(&identity, &dev, &identity));
+	assert(pm_gets == 2 && pm_puts == 1 && !ctx_writes);
+	pm_error = -EIO;
+	assert(qcom_iommu_identity_attach(&identity, &dev, &domain) == -EIO);
+	assert(pm_gets == 3 && pm_puts == 1 && !ctx_writes && ns.domain && sec.domain);
+	pm_error = 0;
+	assert(!qcom_iommu_identity_attach(&identity, &dev, &domain));
+	assert(pm_gets == 4 && pm_puts == 2 && ctx_writes == 2 && !ns.domain && !sec.domain);
+	assert(ctx_trace[0].ctx == &sec && ctx_trace[1].ctx == &ns);
+	assert(ctx_trace[0].reg == ARM_SMMU_CB_SCTLR && !ctx_trace[0].value);
+	assert(ctx_trace[1].reg == ARM_SMMU_CB_SCTLR && !ctx_trace[1].value);
+
 	puts("{\"passed\":true,\"preset_writes\":10,\"failed_map_slots\":4,"
 	     "\"bandwidth_boundary_and_aggregation_cases\":6,\"clock_resume_cases\":5,"
-	     "\"attach_PM_cases\":2}");
+	     "\"attach_PM_cases\":2,\"identity_PM_cases\":4,\"range_invalidation_writes\":12}");
 	return 0;
 }

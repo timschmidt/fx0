@@ -27,7 +27,9 @@ def main():
         media / 'core.c': ('venus_assign_register_offsets', 'venus_map_registers'),
         media / 'hfi_venus.c': ('venus_set_registers',),
         media / 'pm_helpers.c': ('mbs_to_bw', 'load_scale_bw'),
-        iommu: ('qcom_iommu_select_wrapper_clk', 'qcom_iommu_resume', 'qcom_iommu_attach_dev'),
+        iommu: ('qcom_iommu_select_wrapper_clk', 'qcom_iommu_resume',
+                'qcom_iommu_attach_dev', 'qcom_iommu_identity_attach',
+                'qcom_iommu_tlb_inv_range_nosync'),
     }
     functions = {name: extract.function(path.read_text(), name)
                  for path, names in targets.items() for name in names}
@@ -37,6 +39,9 @@ def main():
                  'CPU_CS_BASE_V6', 'CPU_IC_BASE_V6', 'WRAPPER_BASE', 'WRAPPER_BASE_V6',
                  'WRAPPER_TZ_BASE_V6', 'AON_BASE_V6'):
         offsets.append(re.search(r'^#define\s+' + name + r'\s+[^\n]+', registers, re.M)[0])
+    smmu_registers = iommu.with_name('arm-smmu.h').read_text()
+    for name in ('ARM_SMMU_CB_SCTLR', 'ARM_SMMU_CB_S1_TLBIVA', 'ARM_SMMU_CB_S1_TLBIVAL'):
+        offsets.append(re.search(r'^#define\s+' + name + r'\s+[^\n]+', smmu_registers, re.M)[0])
 
     core = (media / 'core.c').read_text()
     tables = {}

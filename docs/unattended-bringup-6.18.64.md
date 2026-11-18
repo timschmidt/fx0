@@ -158,10 +158,6 @@ Runtime PM errors on IOMMU teardown and TLB paths still need qualification
 before a device trial of PAS firmware startup and HFI operation.
 [Platform source](https://github.com/timschmidt/fx0-linux/commit/b190c7dfd9eeac3588807c39107f2e64d0050ecb)
 
-```sh
-python3 -B diagnostics/venus-arm32/check-platform.py /path/to/linux /path/to/results
-```
-
 [Platform preview evidence](../evidence/2026-11-18-venus-platform-preview.json)
 
 ### MSM8226 Venus memory interconnect
@@ -190,6 +186,28 @@ python3 -B diagnostics/venus-arm32/check-interconnect.py /path/to/linux /path/to
 ```
 
 [Interconnect qualification evidence](../evidence/2026-11-18-venus-interconnect-preview.json)
+
+### IOMMU resume and range invalidation
+
+A failed runtime resume now returns its error before an identity attach can
+touch the context bank or release a runtime PM reference. Range invalidation
+starts each context bank at the original aligned IOVA and combines that
+address with the bank's ASID. The host replay exercises four identity-attach
+cases and checks all twelve register writes across leaf and walk invalidation.
+It detects both faults when the previous implementations are substituted one
+at a time. [Linux runtime PM API](https://docs.kernel.org/6.18/power/runtime_pm.html)
+[Kernel source](https://github.com/timschmidt/fx0-linux/commit/b7803c465ce017fd98b1f8ce4ac49d775b8cae44)
+
+Unmap, whole-TLB flush and domain free still need a recovery contract for
+failed resumes. The ARM DMA path can release the IOVA after calling unmap,
+so a failed resume must leave page-table state suitable for that release
+and for the next power-up.
+
+```sh
+python3 -B diagnostics/venus-arm32/check-platform.py /path/to/linux /path/to/results
+```
+
+[IOMMU qualification evidence](../evidence/2026-11-18-venus-iommu-runtime-pm.json)
 
 [Venus and USB follow-up evidence](../evidence/2026-11-18-venus-arm32-and-usb.json)
 
