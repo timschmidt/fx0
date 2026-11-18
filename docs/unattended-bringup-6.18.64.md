@@ -50,6 +50,17 @@ persistent Wi-Fi policy allows startup scanning, so the reboot remains
 pending. Larger storage loads, cold boot, unplugged standby and the complete
 reliability matrix remain open.
 
+## USB bulk transfer
+
+On physical USB port `1-7`, four 16 MiB uploads and four 16 MiB downloads
+matched independent SHA-256 checks over the installed high-speed gadget.
+Both sockets stayed bound to their USB interfaces. The controller reaped the
+receiver, the original route still matched, and neither endpoint recorded
+RX or TX errors or drops over the sampled interval. The first two attempts
+stopped during harness setup before any test payload transfer. The corrected
+receiver used the phone's supported route output format. Physical reconnect
+and Fastboot still require separate tests.
+
 ## Sensors and offscreen graphics
 
 The MPU-6515 accelerometer and gyroscope and the HSCDTD008A magnetometer
@@ -76,13 +87,54 @@ firmware-loader wrapper at `0xfdce0000`. No matching DT or platform device
 appeared on the installed kernel. The firmware query checked known Venus
 filenames under the installed firmware paths. It found none in those paths.
 
-The maintained MSM8226 MMCC driver already provides the Venus core, AHB
-and AXI clocks, a reset and a power domain. The installed kernel’s Venus
-Kconfig gate is ARM64 in regular Qualcomm configurations. An isolated
-Clang 21 Kbuild test directly compiled all 18 existing Venus sources for
-ARM32 and linked three relocatable core, decoder and encoder objects with no
-diagnostics. The ordinary Kconfig gate remained in effect. ARM32 DMA and
-IOMMU behavior, the stock firmware and HFI contract, platform binding, and
-actual hardware encode/decode remain open. [Linux Venus source](https://raw.githubusercontent.com/torvalds/linux/master/drivers/media/platform/qcom/venus/core.c)
+The maintained MSM8226 MMCC driver already provides the core, AHB and AXI
+clocks, a reset and a power domain. The installed Venus Kconfig gate requires
+ARM64 for a regular Qualcomm configuration. An initial Clang 21 run compiled
+all 18 Venus sources as ARM32 objects. The stock ARM32 configuration compiles
+the generic IOVA reservation API to a failure stub, so the codec would still
+stop at probe after removing only the Kconfig gate.
+
+The ARM32 diagnostic admits probe only when the active legacy DMA operations
+and attached domain provide an allocator that excludes the bottom 600 MiB.
+It checks the full bitmap extent, including future extensions, against the
+advertised hardware and bus DMA limits. The firmware-described IOMMU alone
+is insufficient. The ARM64 control still calls the generic IOVA allocator.
+The [host checker](../diagnostics/venus-arm32/check-aperture.py) executes the
+actual helpers with synthetic device state. Its 23 checks pass under UBSan.
+The fixture also detects five deliberately weakened guard conditions.
+[Venus low-IOVA reservation rationale](https://lists.openwall.net/linux-kernel/2026/08/07/603)
+
+A regular Qualcomm ARM32 Kbuild run produced `vmlinux` and 473 modules with
+compile-test mode off. Venus entered through its normal Kconfig selection.
+The three Venus modules match the linked kernel release and all 379 imported
+symbol CRCs. The modules are unsigned host artifacts. A separate `W=1` run
+reproduced the same six ARM DMA kernel-doc warnings on the original source.
+The first full-build attempt created an ephemeral signing key because lockdown
+reselected signature support. That build was stopped and the temporary key
+removed. The completed run used the public verification certificate and kept
+automatic signing disabled.
+[ARM32 DMA and Venus source](https://github.com/timschmidt/fx0-linux/commit/518c05d54ff73e03e86ce8f3b6822511d592b7aa)
+
+The original stock ext4 system image contains the Venus MDT and split firmware.
+The [inspector](../diagnostics/venus-arm32/inspect-stock-firmware.py) checks the
+image hash, ELF header and split sizes. The three loadable segments fit in
+a 5 MiB span from `0x0f500000` to `0x0fa00000` (exclusive). Eight malformed
+metadata controls are rejected. The installed device reports that span as
+ordinary System RAM. A host-only DTB experiment reserves exactly that range
+between ADSP and SMEM. The reservation checker rejects a short range, an
+unaligned range and overlaps with either neighbor. Firmware authentication
+still requires the device's secure firmware service.
+
+The stock and maintained C definitions agree on 38 initialization constants,
+fixed offsets and queue fields. The stock nonsecure IOMMU aperture runs
+from `0x40000000` to `0x80000000`
+(exclusive). Vendor IOMMU context banks 0–2 and the clock selector have distinct
+roles. The codec's stock MMIO resource includes the IOMMU window, so the Linux
+binding needs nonoverlapping ownership and a documented clock-selector path.
+The binding, bandwidth votes, firmware authentication, and physical video
+encode/decode still require qualification.
+[Stock IOMMU descriptions](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/boot/dts/msm8226-iommu.dtsi)
+
+[Venus and USB follow-up evidence](../evidence/2026-11-18-venus-arm32-and-usb.json)
 
 [Sanitized device evidence](../evidence/2026-11-18-installed-6.18.64-peripherals.json)

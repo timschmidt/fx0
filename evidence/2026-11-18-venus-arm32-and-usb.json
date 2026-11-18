@@ -1,0 +1,302 @@
+{
+  "recorded_UTC": "2026-11-18T03:45:42.769149+00:00",
+  "installed_boot": "e576e7d1-c8bd-4b77-a6b1-71940f37cfba",
+  "USB": {
+    "upload_bytes_verified": 67108864,
+    "download_bytes_verified": 67108864,
+    "successful_same_boot_rounds": 4,
+    "endpoint_stats": {
+      "host": {
+        "rx_packets": 57352,
+        "tx_packets": 49740,
+        "rx_errors": 0,
+        "tx_errors": 0,
+        "rx_dropped": 0,
+        "tx_dropped": 0
+      },
+      "gadget": {
+        "rx_packets": 49702,
+        "tx_packets": 9342,
+        "rx_errors": 0,
+        "tx_errors": 0,
+        "rx_dropped": 0,
+        "tx_dropped": 0
+      }
+    },
+    "rounds": [
+      {
+        "upload_SHA256": "6a1e85099a4048527f45b966a186eb876004648b42ae3187c73c5b9e4a9856cf",
+        "download_SHA256": "c74eeb0e095be3dc8456a89187644b9c01862b222f0656e60c802f523d96a0ca",
+        "elapsed_seconds": 6.803
+      },
+      {
+        "upload_SHA256": "e7382693c597385b5e7f99df8e78992c273ca9c0141dd59e7de3561ce1526be9",
+        "download_SHA256": "e9c612616b47428cd58b7f9c7ac17c9736a091289160c9509bdd0ac05f735f64",
+        "elapsed_seconds": 6.559
+      },
+      {
+        "upload_SHA256": "47141b75e9172ff343ebd768bd77cb0de623088157238ee56273f8dec21101d4",
+        "download_SHA256": "f1e2e6389fd2628841707f9fb518e271e178859c7ad2065a5a1bff2f379f2f18",
+        "elapsed_seconds": 6.734
+      },
+      {
+        "upload_SHA256": "b9edfbba5d2d5d71f77b75c45e012fc9feafd9a90bc1f459cbda253e74c4d700",
+        "download_SHA256": "dafeb981917e7da2b8566d19bb655bf8603a79eeb70e398fce1db63fad6846bc",
+        "elapsed_seconds": 7.111
+      }
+    ],
+    "receiver_terminal": true,
+    "socket_bindings_USB_only": true,
+    "failed_harness_setups_retained": 2,
+    "physical_reconnect_or_fastboot_tested": false
+  },
+  "postflight": {
+    "same_boot_protected_hash_count": 7,
+    "protected_hashes_match": true,
+    "signatures_enforced": true,
+    "taint": 0
+  },
+  "stock_firmware_metadata": {
+    "ELF_class": "ELF32 little-endian ARM",
+    "header_and_hash_bytes": 412,
+    "entry": 256901120,
+    "load_segments": [
+      {
+        "index": 2,
+        "paddr": 256901120,
+        "filesz": 873184,
+        "memsz": 873184,
+        "file_offset": 8192,
+        "alignment": 1048576
+      },
+      {
+        "index": 3,
+        "paddr": 257777664,
+        "filesz": 4976,
+        "memsz": 4268032,
+        "file_offset": 881376,
+        "alignment": 16384
+      },
+      {
+        "index": 4,
+        "paddr": 262139904,
+        "filesz": 32,
+        "memsz": 32,
+        "file_offset": 886352,
+        "alignment": 4
+      }
+    ],
+    "link_address": 256901120,
+    "aligned_end": 262144000,
+    "resident_span_bytes": 5242880,
+    "relocatable": true,
+    "split_file_sizes": {
+      "venus.b00": 212,
+      "venus.b01": 200,
+      "venus.b02": 873184,
+      "venus.b03": 4976,
+      "venus.b04": 32,
+      "venus.mbn": 886384,
+      "venus.mdt": 412
+    },
+    "loadable_segments_individually_opened": false,
+    "signature_verified": false,
+    "verified_stock_image_bytes": 1073741824,
+    "stock_image_sha256_matched": true
+  },
+  "stock_firmware_controls": {
+    "passed": true,
+    "positive": 1,
+    "rejected": [
+      "bad-elf",
+      "truncated-mdt",
+      "bad-split-byte-count",
+      "unsigned-metadata-shape",
+      "missing-relocatable-flag",
+      "overlapping-load-ranges",
+      "32-bit-address-overflow",
+      "carveout-over-driver-limit"
+    ]
+  },
+  "installed_carveout_state": {
+    "passed": true,
+    "boot_id": "e576e7d1-c8bd-4b77-a6b1-71940f37cfba",
+    "stock_link_address": 256901120,
+    "stock_aligned_end": 262144000,
+    "current_System_RAM_contains_span": true,
+    "other_proc_iomem_resource_overlaps": 0,
+    "queried_MMIO": false,
+    "allocated_or_reserved_memory": false,
+    "recorded_UTC": "2026-11-18T03:39:18.604478+00:00",
+    "USB_route_verified": true
+  },
+  "host_carveout_sample": {
+    "passed": true,
+    "input_packaged_DTB_sha256": "aeeda1292d347cf15caf475ed953a952162720c6be4606941d5461237ea12a47",
+    "reserved_nodes_before": 6,
+    "sample_node": "/reserved-memory/memory@f500000",
+    "start": 256901120,
+    "size": 5242880,
+    "neighbors": {
+      "ADSP": [
+        230686720,
+        26214400
+      ],
+      "SMEM": [
+        262144000,
+        1048576
+      ]
+    },
+    "tests_rejected": [
+      "ADSP overlap",
+      "SMEM overlap",
+      "short carveout",
+      "unaligned carveout"
+    ],
+    "sample_only": true,
+    "phone_booted": false
+  },
+  "stock_hfi_static_comparison": {
+    "passed": true,
+    "matching_constants_and_offsets": {
+      "HFI_CMD_SYS_INIT": 65537,
+      "HFI_CMD_SYS_PC_PREP": 65538,
+      "HFI_CMD_SYS_SESSION_INIT": 65543,
+      "HFI_CMD_SYS_GET_PROPERTY": 65542,
+      "HFI_VIDEO_ARCH_OX": 1,
+      "HFI_MSG_SYS_INIT": 131073,
+      "HFI_MSG_SYS_PC_PREP": 131074,
+      "IFACEQ_NUM": 3,
+      "IFACEQ_DFLT_QHDR": 16842752,
+      "IFACEQ_QUEUE_SIZE": 819200,
+      "CPU_CS_BASE + VIDC_CTRL_INIT": 860232,
+      "CPU_CS_BASE + CPU_CS_SCIACMDARG2": 860244,
+      "CPU_IC_BASE + CPU_IC_SOFTINT": 913432,
+      "WRAPPER_BASE + WRAPPER_INTR_STATUS": 917516,
+      "sizeof(struct hfi_sys_init_pkt)": 12,
+      "offsetof(struct hfi_msg_sys_init_done_pkt, data)": 16,
+      "sizeof(struct hfi_queue_header)": 56,
+      "offsetof(struct hfi_queue_header, status)": 0,
+      "offsetof(struct hfi_queue_header, start_addr)": 4,
+      "offsetof(struct hfi_queue_header, type)": 8,
+      "offsetof(struct hfi_queue_header, q_size)": 12,
+      "offsetof(struct hfi_queue_header, pkt_size)": 16,
+      "offsetof(struct hfi_queue_header, pkt_drop_cnt)": 20,
+      "offsetof(struct hfi_queue_header, rx_wm)": 24,
+      "offsetof(struct hfi_queue_header, tx_wm)": 28,
+      "offsetof(struct hfi_queue_header, rx_req)": 32,
+      "offsetof(struct hfi_queue_header, tx_req)": 36,
+      "offsetof(struct hfi_queue_header, rx_irq_status)": 40,
+      "offsetof(struct hfi_queue_header, tx_irq_status)": 44,
+      "offsetof(struct hfi_queue_header, read_idx)": 48,
+      "offsetof(struct hfi_queue_header, write_idx)": 52,
+      "sizeof(struct hfi_queue_table_header)": 24,
+      "offsetof(struct hfi_queue_table_header, version)": 0,
+      "offsetof(struct hfi_queue_table_header, size)": 4,
+      "offsetof(struct hfi_queue_table_header, qhdr0_offset)": 8,
+      "offsetof(struct hfi_queue_table_header, qhdr_size)": 12,
+      "offsetof(struct hfi_queue_table_header, num_q)": 16,
+      "offsetof(struct hfi_queue_table_header, num_active_q)": 20
+    },
+    "comparisons": 38,
+    "vendor_source_sha256": {
+      "venus_hfi.h": "03eea74811567630047a47f3555d13b7ab5ce419a520bae51b19fb352e21c67d",
+      "vidc_hfi.h": "a175b7b877ec8fca4194205e22486c9e107fb187db52fc41562a1518e6d50152",
+      "vidc_hfi_helper.h": "cd2fd56e785ac1d9b42b1f54c4c8d0aade7f33ecd935c75444bd33460ebdcf46",
+      "vidc_hfi_io.h": "0e534f312c8d9126b8cb468a4a2d7fb5a6fe694571558d9a8fd08d890f627397"
+    },
+    "maintained_source_sha256": {
+      "hfi_venus.c": "fbecb3abfa04ee8c08e8830c6ef01e7f7708873ce1cc14a01cd68b68c541fc57",
+      "hfi_helper.h": "61baed4108425e6524670478686bb1ab52f0669b7fda48bce2891b437d4775da",
+      "hfi_cmds.h": "d9b6139557864319cb8fc8976fb2fa33d0f45a43339966f0e82ce9fad4de5d95",
+      "hfi_msgs.h": "3844261450368c819719267c5a8453ed0f669548e331cf400a7caa5578a07f50",
+      "hfi_venus_io.h": "eddecf2411a8fad132ecec02323ba8037a09360b1bc43b10746e4d3bfde68b38"
+    },
+    "runtime_HFI_version_qualified": false
+  },
+  "ARM32_aperture_model": {
+    "passed": true,
+    "checks": 23,
+    "actual_functions_sha256": {
+      "arm_iommu_dma_aperture_within": "bbb6b97304b15d98018c58b1de7e57c64da0bdbd4e0fd1daa87b1f4235c1dd60",
+      "venus_reserve_iova_region": "f926b08e84a02f2ad1caea5e4eb4bdfa3e9438993aeb2cbac09fc201d0ce652f",
+      "venus_unreserve_iova_region": "895d2e10f1fb499c78433a5b7643d116c2ae57ecd6b3f5e29d777b86b2d295c0"
+    },
+    "services": "synthetic device, allocator and loaded-domain data",
+    "UBSan": true,
+    "hardware_exercised": false
+  },
+  "ARM32_aperture_model_controls": {
+    "passed": true,
+    "rejected": [
+      "allow-direct-DMA",
+      "allow-stale-domain",
+      "ignore-reserved-low-region",
+      "ignore-mapping-extensions",
+      "ignore-bus-DMA-limit"
+    ]
+  },
+  "native_kernel_and_module_build": {
+    "source_commit": "518c05d54ff73e03e86ce8f3b6822511d592b7aa",
+    "source_base": "c3e72d14babc2e875b89cadde5ed57bb54b11a0b",
+    "config_sha256": "dfac2a507078bf85104c99a8f763fb7430d4ecd42816b4a5970d71e64fc1ca2a",
+    "ELF32_ARM_kernel_sha256": "5c243f79b8dd9a713a29324a8fca6526b96f93c44fc66d405859a0b46256ffd3",
+    "unsigned_modules": {
+      "venus-core.ko": {
+        "sha256": "323ce73cef2251620bb3e2a3aeeb618ebf9fb45f11e4801e90f56b06b3c3d0fd",
+        "vermagic": "6.18.64-fx0-venus-host+ SMP preempt mod_unload modversions ARMv7 p2v8",
+        "imported_CRCs": 152,
+        "depends": [
+          "v4l2-mem2mem",
+          "videodev",
+          "videobuf2-common",
+          "mdt_loader"
+        ]
+      },
+      "venus-dec.ko": {
+        "sha256": "6176327043e04b6ff3fcdcb24dd94ea9f4784455592c731f96a55c9c84441e9b",
+        "vermagic": "6.18.64-fx0-venus-host+ SMP preempt mod_unload modversions ARMv7 p2v8",
+        "imported_CRCs": 127,
+        "depends": [
+          "videodev",
+          "venus-core",
+          "v4l2-mem2mem",
+          "videobuf2-dma-contig",
+          "videobuf2-v4l2",
+          "videobuf2-common"
+        ]
+      },
+      "venus-enc.ko": {
+        "sha256": "42b18706976e0b12f4bfec99c678e97a6c5c3949fc35789952df5e2ab2e7ae75",
+        "vermagic": "6.18.64-fx0-venus-host+ SMP preempt mod_unload modversions ARMv7 p2v8",
+        "imported_CRCs": 100,
+        "depends": [
+          "videodev",
+          "venus-core",
+          "v4l2-mem2mem",
+          "videobuf2-dma-contig",
+          "videobuf2-v4l2",
+          "videobuf2-common"
+        ]
+      }
+    },
+    "total_linked_modules": 473,
+    "full_build_warning_lines": 0,
+    "ARM32_QCOM_module_selected": true,
+    "baseline_and_no_legacy_backend_controls_reject": true,
+    "ARM64_control_uses_generic_IOVA_reservation": true,
+    "inherited_W1_documentation_warnings": [
+      "function parameter 'attrs' not described in 'arm_iommu_map_page'",
+      "function parameter 'attrs' not described in 'arm_iommu_map_resource'",
+      "function parameter 'attrs' not described in 'arm_iommu_map_sg'",
+      "function parameter 'attrs' not described in 'arm_iommu_unmap_page'",
+      "function parameter 'attrs' not described in 'arm_iommu_unmap_resource'",
+      "function parameter 'attrs' not described in 'arm_iommu_unmap_sg'"
+    ],
+    "first_attempt_terminated_and_generated_ephemeral_key_removed": true,
+    "successful_build_public_verification_certificate_only": true,
+    "installed": false
+  },
+  "firmware_or_codec_activated": false,
+  "main_bringup_completed": false
+}
