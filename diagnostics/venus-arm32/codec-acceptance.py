@@ -164,8 +164,7 @@ def target_gate(*, token=TOKEN, firmware_target="/run/fx0-venus-firmware"):
     return Path("/proc/sys/kernel/random/boot_id").read_text().strip()
 
 
-def run_trial(binary, binary_hash, fixture, reference_hash, *, token=TOKEN,
-              firmware_target="/run/fx0-venus-firmware"):
+def prepare_trial(binary, binary_hash, fixture, reference_hash, token, firmware_target):
     os.umask(0o077)
     binary, fixture = binary.resolve(strict=True), fixture.resolve(strict=True)
     boot = target_gate(token=token, firmware_target=firmware_target)
@@ -173,8 +172,26 @@ def run_trial(binary, binary_hash, fixture, reference_hash, *, token=TOKEN,
         raise ValueError("test input hash differs from the pinned fixture")
     nodes = identify_nodes()
     directory = Path(tempfile.mkdtemp(prefix="fx0-venus-", dir="/run"))
-    (directory / "reference.nv12").write_bytes(raw_video())
     (directory / "reference.h264").write_bytes(fixture.read_bytes())
+    return binary, boot, nodes, directory
+
+
+RAW_OUTPUT = ("-an", "-fps_mode", "passthrough", "-pix_fmt", "yuv420p", "-c:v", "rawvideo",
+              "-f", "rawvideo")
+
+
+def decode_reference(binary, decoder, directory):
+    log = run_command(binary, ["-f", "h264", "-c:v", "h264_v4l2m2m", "-i", "reference.h264",
+                               *RAW_OUTPUT, "decoded.yuv"], directory, "hardware-decode")
+    only_expected_node(log, decoder)
+    return directory / "decoded.yuv"
+
+
+def run_trial(binary, binary_hash, fixture, reference_hash, *, token=TOKEN,
+              firmware_target="/run/fx0-venus-firmware"):
+    binary, boot, nodes, directory = prepare_trial(binary, binary_hash, fixture, reference_hash,
+                                                    token, firmware_target)
+    (directory / "reference.nv12").write_bytes(raw_video())
     encode = run_command(binary, [
         "-f", "rawvideo", "-pixel_format", "nv12", "-video_size", f"{WIDTH}x{HEIGHT}",
         "-framerate", str(FPS), "-i", "reference.nv12", "-an", "-pix_fmt", "nv12",
@@ -182,19 +199,27 @@ def run_trial(binary, binary_hash, fixture, reference_hash, *, token=TOKEN,
         "-frames:v", str(FRAMES), "-f", "h264", "hardware.h264",
     ], directory, "hardware-encode")
     only_expected_node(encode, nodes["encoder"])
-    output = ["-an", "-fps_mode", "passthrough", "-pix_fmt", "yuv420p", "-c:v", "rawvideo",
-              "-f", "rawvideo"]
     run_command(binary, ["-f", "h264", "-c:v", "h264", "-i", "hardware.h264",
-                         *output, "encoded-check.yuv"], directory, "software-verify-encoding")
-    decode = run_command(binary, ["-f", "h264", "-c:v", "h264_v4l2m2m", "-i", "reference.h264",
-                                  *output, "decoded.yuv"], directory, "hardware-decode")
-    only_expected_node(decode, nodes["decoder"])
+                         *RAW_OUTPUT, "encoded-check.yuv"], directory, "software-verify-encoding")
+    decoded = decode_reference(binary, nodes["decoder"], directory)
     report = {"boot": boot, "nodes": nodes,
               "encode_checked_in_software": check_frames(directory / "encoded-check.yuv"),
-              "hardware_decode_of_reference": check_frames(directory / "decoded.yuv")}
+              "hardware_decode_of_reference": check_frames(decoded)}
     if Path("/proc/sys/kernel/random/boot_id").read_text().strip() != boot:
         raise ValueError("boot changed during codec acceptance")
     (directory / "acceptance.json").write_text(json.dumps(report, indent=2) + "\n")
+    print(json.dumps(report, indent=2))
+
+
+def run_decoder_trial(binary, binary_hash, fixture, reference_hash, *, token=TOKEN,
+                      firmware_target="/run/fx0-venus-firmware"):
+    binary, boot, nodes, directory = prepare_trial(binary, binary_hash, fixture, reference_hash,
+                                                    token, firmware_target)
+    decoded = check_frames(decode_reference(binary, nodes["decoder"], directory))
+    if Path("/proc/sys/kernel/random/boot_id").read_text().strip() != boot:
+        raise ValueError("boot changed during decoder acceptance")
+    report = {"boot": boot, "decoder_node": nodes["decoder"], "hardware_decode_of_reference": decoded}
+    (directory / "decoder-acceptance.json").write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report, indent=2))
 
 

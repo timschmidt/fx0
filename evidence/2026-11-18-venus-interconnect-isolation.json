@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-18T17:20:16.158812+00:00",
+  "last_updated_UTC": "2026-11-18T17:37:54.831325+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -746,6 +746,171 @@
         "installed_module_files_verified": 482,
         "protected_hashes_match": true
       }
+    },
+    "corrected_RAM_trial": {
+      "candidate_boot": "2976c3ff",
+      "exact_image_readback": true,
+      "live_firmware_files_verified": 4,
+      "both_bound_codec_children": true,
+      "IOMMU_automatic_power_policy": {
+        "before": {
+          "control": "auto",
+          "runtime_status": "suspended"
+        },
+        "after": {
+          "control": "auto",
+          "runtime_status": "active"
+        }
+      },
+      "IOMMU_runtime_returns_during_startup": [
+        {
+          "operation": "resume",
+          "return": 0,
+          "count": 3
+        },
+        {
+          "operation": "resume",
+          "return": 1,
+          "count": 2
+        },
+        {
+          "operation": "suspend",
+          "return": 0,
+          "count": 4
+        }
+      ],
+      "IOMMU_runtime_returns_during_workload": [
+        {
+          "operation": "resume",
+          "return": 0,
+          "count": 1
+        }
+      ],
+      "IOMMU_TLB_timeout_messages": 0,
+      "runtime_PM_underflow_messages": 0,
+      "encoder_buffer_ioctl": "VIDIOC_REQBUFS",
+      "encoder_errno": 22,
+      "hardware_encoder_frames": 0,
+      "decoder_workload_dispatched": false,
+      "installed_return": {
+        "boot": "9b0c6128",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      }
+    },
+    "codec_bound_RTC_s2idle_trial": {
+      "candidate_boot": "68f8c4ae",
+      "same_exact_RAM_image": true,
+      "first_wakeup_source": "rtc",
+      "inactive_clock_seconds": 13.695,
+      "RTC_interrupt_increment": 1,
+      "suspend_entry_and_exit_independently_verified": true,
+      "both_interconnect_providers_still_bound": true,
+      "codec_and_IOMMU_after_wake": {
+        "bindings": {
+          "core": true,
+          "encoder": true,
+          "decoder": true,
+          "IOMMU": true
+        },
+        "IOMMU_control": "auto",
+        "IOMMU_runtime_status": "suspended"
+      },
+      "compositor_running_after_wake": true,
+      "alarm_cleared": true,
+      "installed_return": {
+        "boot": "d690194b",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      }
     }
+  },
+  "Venus_encoder_buffer_request_diagnostic": {
+    "source_commit": "82606d944ea45b5c4abad80c3ca3dac21a5abc12",
+    "RAM_image_sha256": "3d532d5d913bd7c4c0b24ce25399f05466a5886e9374bbad9d2c89393945be83",
+    "matching_import_CRCs": 101,
+    "encoder_signature_checked": true,
+    "manifest_records_verified": 488,
+    "same_kernel_DTB_and_arguments": true,
+    "candidate_boot": "1fc1b4cf",
+    "exact_readback": true,
+    "encoder_debug_sites_active": 9,
+    "encoder_setup_stage_returns": [
+      "encoder queue setup PM get: 0",
+      "encoder session init: 0",
+      "encoder input stride: 0",
+      "encoder input resolution: 0",
+      "encoder output resolution: 0",
+      "encoder input color format: 0",
+      "encoder session properties: -22"
+    ],
+    "decoder_attempt_after_encoder_failure": {
+      "packet_io_error_observed": true,
+      "firmware_system_error_logged": true,
+      "verified_frames": 0
+    },
+    "IOMMU_runtime_control": {
+      "before": {
+        "control": "auto",
+        "runtime_status": "suspended"
+      },
+      "after": {
+        "control": "auto",
+        "runtime_status": "active"
+      }
+    },
+    "runtime_PM_underflow_messages": 0,
+    "installed_return": {
+      "boot": "8a8d0a37",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
+  },
+  "Venus_legacy_HFI_8x8_control_candidate": {
+    "source_commit": "b8f493f9bfe67684f108a9ca5d7764a97834c521",
+    "RAM_image_sha256": "ffcac9f57656d88ca2e0923bd7fd7080e76e4ae1284c03eb4b921f5ba569eaff",
+    "only_encoder_module_and_manifest_hash_changed": true,
+    "HFI_versions_with_transform_packet": [
+      "4xx",
+      "6xx"
+    ],
+    "legacy_packetizer_rejection_cases_reproduced": 3,
+    "host_cases_passed": 8,
+    "matching_import_CRCs": 101,
+    "encoder_signature_checked": true,
+    "manifest_records_verified": 488,
+    "handset_trial": {
+      "candidate_boot": "a8bb6418",
+      "exact_readback": true,
+      "session_properties_return": 0,
+      "input_buffer_requirements_return": 0,
+      "hardware_encoder_frames_reported": 11,
+      "ffmpeg_output_reported_KiB": 58,
+      "software_decode_error": "non-existing PPS 0 referenced",
+      "software_decoded_frames_verified": 0,
+      "hardware_decoder_stage_started": false,
+      "IOMMU_timeout_messages": 0,
+      "runtime_PM_underflow_messages": 0,
+      "installed_return": {
+        "boot": "ca60e6f5",
+        "modules_verified": 482,
+        "protected_hashes_match": true
+      }
+    }
+  },
+  "Venus_MSM8226_joined_headers_candidate": {
+    "source_commit": "10ed483a6c663d920ad50a113efd86ab03a8df38",
+    "FFmpeg_requests_separate_header_mode": true,
+    "MSM8226_fetches_separate_sequence_header": false,
+    "MSM8226_advertises_joined_mode_only_in_candidate": true,
+    "other_compatibles_retain_both_modes": true,
+    "host_control_menu_cases_passed": 2,
+    "ARM_encoder_module_built": true,
+    "handset_qualified": false,
+    "RAM_image_sha256": "767faf05500508ad1b73a122d7e409d84e2fc9f14cd8bced40417c9ba480482e",
+    "matching_import_CRCs": 102,
+    "encoder_signature_checked": true,
+    "manifest_records_verified": 488,
+    "same_kernel_DTB_and_arguments": true
   }
 }

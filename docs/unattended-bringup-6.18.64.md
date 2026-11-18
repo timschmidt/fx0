@@ -527,6 +527,52 @@ two interconnect payloads match the earlier build byte for byte, and their
 new signatures verify against the candidate certificate. The repeat uses
 the hashes read from the exact staged image.
 
+The corrected repeat bound both codec children. The IOMMU resumed and
+suspended successfully under its automatic policy. The workload trace
+recorded successful supplier resumes, and the independent journal audit
+found zero IOMMU timeout or runtime PM usage-count underflow messages.
+The encoder's output `VIDIOC_REQBUFS` returned `EINVAL` before producing
+any frames.
+
+A subsequent boot of the same image completed a 13.695-second RTC-woken
+suspend-to-idle interval with the codec drivers bound. Both interconnect
+providers, the codec and its IOMMU remained bound. The IOMMU was runtime
+suspended under automatic power control before and after the interval,
+the alarm cleared, and the compositor was running after wake. The
+installed return verified the suspend entry and exit, all 482 module
+files and the protected hashes.
+
+The encoder diagnostic changed only the signed encoder module and its
+manifest hash. The trace reports successful runtime resume, HFI session
+initialization, stride, resolution and input color format. Setting the
+encoder session properties returns `EINVAL`. A separate decoder workload
+ran after the encoder failure and reached the hardware. It reported
+packet I/O errors and a firmware system error before FFmpeg aborted.
+The installed return again verified the kernel, modules and protected
+hashes. [Encoder diagnostic source](https://github.com/timschmidt/fx0-linux/commit/82606d944ea45b5c4abad80c3ca3dac21a5abc12)
+
+The driver was sending the H.264 8×8 transform property in every H.264
+session. The 1xx and 3xx packetizers reject it, while 4xx and 6xx support
+it. The next encoder module sends and advertises the property only on
+those two supported versions. Host checks reproduced three legacy failure
+cases and verified the corrected behavior across eight cases, including
+the supported versions. [8×8 transform source](https://github.com/timschmidt/fx0-linux/commit/b8f493f9bfe67684f108a9ca5d7764a97834c521)
+
+The handset run with that module completed encoder session setup and
+buffer allocation. FFmpeg reported 11 hardware-encoded frames and 58 KiB
+of output. The software decoder reported a missing picture parameter set
+(PPS) and verified zero frames. The combined workload stopped before the
+hardware decoder stage. The return audit found zero IOMMU timeout or
+runtime PM underflow messages and verified all 482 installed module files
+and protected hashes.
+
+FFmpeg 7.1.5 requests separate headers. The MSM8226 driver path accepts
+that mode but has no caller to fetch the separate sequence header. A
+follow-up restricts the MSM8226 control to joined headers. The ARM
+encoder module built, and host checks verified the menu on MSM8226 and
+the unchanged menu on other Venus hardware. Handset qualification is
+pending. [Joined-header source](https://github.com/timschmidt/fx0-linux/commit/10ed483a6c663d920ad50a113efd86ab03a8df38)
+
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)
