@@ -208,6 +208,31 @@ return, an independent audit matched all 482 installed module files and the
 protected boot and package hashes. Entry into deep suspend and wake through
 MPM still require testing. [Capped boot evidence](../evidence/2026-11-18-rtc-deep-cap-boot.json)
 
+### Platform-only suspend tests
+
+The PM debug build uses the same capped DTB. It enables the 30-second device
+PM watchdog and leaves suspend-on-boot disabled. The image audit verified all
+465 module signatures and 25,511 imported-symbol CRCs. The test selects the
+kernel's `platform` mode, which stops before secondary CPU shutdown.
+[Linux PM test modes](https://docs.kernel.org/6.18/power/basic-pm-debugging.html#testing-suspend-to-ram-str)
+
+The first test applied the CPR corner with a bounded CPU frequency transition
+and restored 300 MHz before the suspend request. The kernel reported
+`-ETIMEDOUT` in CPR late suspend. Python's buffered writer flushed again
+while closing and the second request returned `-EBUSY`. A workstation
+fixture reproduced that sequence. The kernel resumed its device handling and
+the probe restored the suspend controls.
+
+The single-write repeat stopped while registering the CPR tracepoint.
+The retained journal identifies `cpr_suspend_prepare` as unavailable to
+kprobes and records zero suspend entries for that boot. Both trials returned
+to installed 6.18.64. Independent audits matched the protected hashes and all
+482 installed module files. The current probe uses one unbuffered write,
+keeps the regular power trace if an optional CPR probe is unavailable, and
+records the failed registration. It passed four workstation regression tests.
+The original CPR timeout remains open. [Platform test evidence](../evidence/2026-11-18-msm8226-platform-test.json)
+[Platform probe](../diagnostics/msm8226-pm/platform-test.py)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate

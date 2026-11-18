@@ -1,0 +1,45 @@
+{
+  "recorded_UTC": "2026-11-18T08:18:47.927771+00:00",
+  "diagnostic_build": {
+    "kernel": "6.18.64-fx0-deep-pmtest-alpine",
+    "capped_DTB_identical": true,
+    "device_PM_watchdog_seconds": 30,
+    "signed_modules_verified": 465,
+    "imported_symbol_CRCs_verified": 25511
+  },
+  "first_platform_only_trial": {
+    "candidate_boot": "4641f331",
+    "low_rate_CPR_corner_applied": true,
+    "CPU_final_kHz": 300000,
+    "intended_control_writes": 1,
+    "observed_kernel_entries": 2,
+    "late_CPR_callback_errors_in_order": [
+      -110,
+      -16
+    ],
+    "buffered_writer_repeats_failed_store_on_workstation_fixture": true,
+    "real_deep_sleep_requested": false,
+    "PM_controls_restored": true,
+    "installed_return": "21013a65"
+  },
+  "single_write_repeat": {
+    "candidate_boot": "1122c94e",
+    "trace_setup_errno": 22,
+    "unavailable_kprobe_function": "cpr_suspend_prepare",
+    "observed_kernel_entries": 0,
+    "installed_return": "0763ba76"
+  },
+  "latest_probe_and_image": {
+    "private_image_sha256": "c338d629a547f8c919c6a4176aa8768cd10b20ededeb6d4c85d48294ce9b3a22",
+    "independent_archive_check_passed": true,
+    "workstation_regression_tests": 4,
+    "standard_trace_retained_when_optional_probe_is_unavailable": true,
+    "one_store_preserves_the_first_errno": true,
+    "handset_trial_pending": true
+  },
+  "installed_module_files_matching_after_each_trial": 482,
+  "installed_boot_and_package_hashes_match_after_each_trial": true,
+  "additional_wifi_scans_requested": false,
+  "platform_callback_test_passed": false,
+  "deep_sleep_or_wake_qualified": false
+}

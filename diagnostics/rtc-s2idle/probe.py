@@ -29,9 +29,16 @@ def read(path):
     return path.read_text().strip()
 
 
-def write(path, value):
-    with path.open("w") as file:
-        file.write(value + "\n")
+def write(path, value, append=False):
+    # A buffered text file may repeat the store when it closes after an error.
+    data = (value + "\n").encode()
+    flags = os.O_WRONLY | os.O_CLOEXEC | (os.O_APPEND if append else os.O_TRUNC)
+    fd = os.open(path, flags)
+    try:
+        if os.write(fd, data) != len(data):
+            raise OSError("short control write")
+    finally:
+        os.close(fd)
 
 
 def rtc_irq():
@@ -117,18 +124,9 @@ def capture_wake_irqs():
     instance.mkdir()
     registered = False
 
-    def change_probe(command):
-        # Python append mode seeks to EOF, which tracefs does not support.
-        request = (command + "\n").encode()
-        fd = os.open(dynamic, os.O_WRONLY | os.O_APPEND | os.O_CLOEXEC)
-        try:
-            if os.write(fd, request) != len(request):
-                raise OSError("short tracefs probe command")
-        finally:
-            os.close(fd)
     try:
         write(instance / "tracing_on", "0")
-        change_probe(f"p:{WAKE_EVENT} pm_system_irq_wakeup irq=%r0:u32")
+        write(dynamic, f"p:{WAKE_EVENT} pm_system_irq_wakeup irq=%r0:u32", append=True)
         registered = True
         write(instance / "trace_clock", "boot")
         write(instance / "events/power/suspend_resume/enable", "1")
@@ -140,7 +138,7 @@ def capture_wake_irqs():
             instance.rmdir()
         finally:
             if registered:
-                change_probe(f"-:{WAKE_EVENT}")
+                write(dynamic, f"-:{WAKE_EVENT}", append=True)
 
 
 def guard(expected_boot, release, token, notes_hash):
