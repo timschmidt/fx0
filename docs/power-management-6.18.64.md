@@ -194,6 +194,20 @@ verified trace cleanup, an empty test cgroup, all four CPUs online, and the
 desktop and gesture processes running. Deep suspend and battery standby
 remain open. [Eight-cycle handset evidence](../evidence/2026-11-18-rtc-s2idle-series.json)
 
+### Capped deep-suspend boot
+
+The signed capped kernel booted the Madai suspend DTB with WLAN disabled.
+The MSM8226 suspend coordinator and MPM driver both bound. The live tree
+routed the PMIC interrupt through MPM pin 62. Linux exposed `[s2idle] deep`
+with s2idle selected, and both suspend counters stayed at zero during the
+boot-only trial. [Linux system sleep states](https://docs.kernel.org/6.18/admin-guide/pm/sleep-states.html)
+
+All ten logged startup MX requests received successful acknowledgments, with
+a maximum request of 1,287,500 µV. All four CPUs were online. After automatic
+return, an independent audit matched all 482 installed module files and the
+protected boot and package hashes. Entry into deep suspend and wake through
+MPM still require testing. [Capped boot evidence](../evidence/2026-11-18-rtc-deep-cap-boot.json)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate

@@ -1,0 +1,39 @@
+{
+  "recorded_UTC": "2026-11-18T07:23:49.375161+00:00",
+  "profile": "boot-only readiness",
+  "candidate_boot": "d63f1c88",
+  "candidate_kernel": "6.18.64-fx0-power-cap-alpine",
+  "source_commit": "4cb942677a07683bc8c7341829a96ad004704630",
+  "private_image_sha256": "85672f6ecb2b9f29e942789a8f958797b5235cb84cbfd6a5ad65236b896de912",
+  "signed_deep_DTB_sha256": "577d54838cd0d739297ce1c9c9143c1c7623da33e18d38df9d0806cd4b4fbc63",
+  "candidate_RAM_module_paths_verified": 479,
+  "kernel_signature_enforced": true,
+  "new_package_transaction": false,
+  "bootloader_RAM_readback_exact": true,
+  "both_automatic_return_paths_observed": true,
+  "MSM8226_suspend_coordinator_bound": true,
+  "MPM_driver_bound": true,
+  "PMIC_routed_via_MPM_pin": 62,
+  "CPU_governor": "userspace",
+  "CPUs_online": 4,
+  "sleep_modes": [
+    "[s2idle]",
+    "deep"
+  ],
+  "suspend_requests": 0,
+  "suspend_success_and_failure_counters_zero": true,
+  "wlan_devices": 0,
+  "extra_wifi_scans_requested": false,
+  "startup_voltage_votes": {
+    "MX_requests": 10,
+    "successful_acknowledgments": 10,
+    "maximum_request_microvolts": 1287500
+  },
+  "independent_installed_return": {
+    "boot": "2630bf82",
+    "kernel": "6.18.64-fx0-lts-alpine",
+    "installed_module_files_match": 482,
+    "boot_and_package_hashes_match": true
+  },
+  "deep_suspend_or_wake_verified": false
+}
