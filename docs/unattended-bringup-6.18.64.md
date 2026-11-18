@@ -449,6 +449,22 @@ encoder and negotiated formats, then received `EBUSY` from output
 `VIDIOC_REQBUFS`. It produced zero frames, so the decoder workload did
 not run. The candidate journal recorded 13 runtime PM usage-count
 underflow warnings. An independent audit verified the installed return.
+
+A repeat with the runtime PM tracepoints enabled reproduced the encoder
+failure. Each of six child resume attempts found its parent unable to
+resume. Linux returned `EINVAL` from the parent and then `EBUSY` from
+the child. The parent also returned `EINVAL` during each attempted idle.
+The trace isolated the failing power path before hardware buffer
+allocation. It began after driver binding.
+
+A second trace started before the first Venus module load. The parent
+resumed successfully and was already active for the next two requests.
+Its first runtime suspend returned zero. The next two runtime resumes
+returned `EINVAL`. The trace instance was removed and the installed
+kernel, module files and protected hashes were verified after reboot.
+The operation within runtime resume that returns the first error
+remains to be identified.
+
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)

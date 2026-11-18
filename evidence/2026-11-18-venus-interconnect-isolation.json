@@ -18,7 +18,7 @@
     "retained_dmesg_records_all_preexisting": true
   },
   "installed_return": {
-    "boot": "c5443fac",
+    "boot": "4c96e837",
     "kernel": "6.18.64-fx0-lts-alpine",
     "installed_modules_match": true,
     "seven_protected_hashes_match": true,
@@ -365,7 +365,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-18T15:43:06.540443+00:00",
+  "last_updated_UTC": "2026-11-18T15:55:06.738522+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -388,6 +388,85 @@
     "runtime_PM_usage_underflow_messages": 13,
     "installed_return": {
       "boot": "c5443fac",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
+  },
+  "codec_runtime_PM_workload_trace": {
+    "same_exact_RAM_image_as_firmware_control": true,
+    "RAM_readback_exact": true,
+    "candidate_boot": "e7d4b186",
+    "encoder_errno": 16,
+    "runtime_PM_usage_underflow_messages": 13,
+    "tracepoint_results": [
+      {
+        "operation": "rpm_idle",
+        "device": "parent",
+        "return": -22,
+        "count": 6
+      },
+      {
+        "operation": "rpm_resume",
+        "device": "decoder",
+        "return": -16,
+        "count": 2
+      },
+      {
+        "operation": "rpm_resume",
+        "device": "encoder",
+        "return": -16,
+        "count": 4
+      },
+      {
+        "operation": "rpm_resume",
+        "device": "parent",
+        "return": -22,
+        "count": 6
+      }
+    ],
+    "registered_function_return_probes": 0,
+    "installed_return": {
+      "boot": "fc8e8c7f",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
+  },
+  "codec_runtime_PM_startup_trace": {
+    "same_exact_RAM_image_as_firmware_control": true,
+    "RAM_readback_exact": true,
+    "candidate_boot": "737c80c1",
+    "capture_started_before_driver_load": true,
+    "parent_suspend_resume_return_sequence": [
+      {
+        "operation": "resume",
+        "return": 0
+      },
+      {
+        "operation": "resume",
+        "return": 1
+      },
+      {
+        "operation": "resume",
+        "return": 1
+      },
+      {
+        "operation": "suspend",
+        "return": 0
+      },
+      {
+        "operation": "resume",
+        "return": -22
+      },
+      {
+        "operation": "resume",
+        "return": -22
+      }
+    ],
+    "runtime_PM_usage_underflow_messages": 8,
+    "trace_instance_removed": true,
+    "H264_workload_dispatched": false,
+    "installed_return": {
+      "boot": "4c96e837",
       "modules_verified": 482,
       "protected_hashes_match": true
     }
