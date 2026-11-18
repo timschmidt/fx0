@@ -342,6 +342,15 @@ MSM8226. Seven workstation cases exercise the provider lookup, deferral,
 map and device-link failures, and balanced device references.
 [APCS register-map correction](https://github.com/timschmidt/fx0-linux/commit/3651953cbe1e033d67d510f2b55194c520e2fbc5)
 
+With the shared APCS map, the complete startup trace shows the A7 PLL
+prepare count rise to one and fall to zero when the CPU mux moves to
+GPLL0. The platform test completed late and noirq suspend and the
+matching resume callbacks exactly once. It recorded one success and
+zero failures. The live audit verified the APCS supplier link, all
+18 MX acknowledgements, 300 MHz, all four CPUs online and `s2idle`
+selected afterward. The platform test stops before secondary CPUs
+are offlined. [Platform result with the shared APCS map](../evidence/2026-11-18-msm8226-apcs-platform-pass.json)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate
