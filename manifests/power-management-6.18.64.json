@@ -15,5 +15,22 @@
   "charging_firmware_handoff_missing_on_installed_firmware": true,
   "physical_acceptance": false,
   "ordinary_profile_automated_RAM_and_return_checks_passed": true,
-  "ordinary_profile_manual_UI_acceptance": false
+  "ordinary_profile_manual_UI_acceptance": false,
+  "diagnostic_CPU_cap": {
+    "source_branch": "diagnostic/fx0-power-cap-6.18.64-01",
+    "source_commit": "4cb942677a07683bc8c7341829a96ad004704630",
+    "kernel_release": "6.18.64-fx0-power-cap-alpine",
+    "signed_APK_SHA256": "eb992b632f760fc388f30c5852cf60a6939ba5c97ba8a8112efa9dd5f15f1ed9",
+    "single_clean_diagnostic_build": true,
+    "clean_pair_reproducibility_claimed": false,
+    "CPR_CPU_registration_and_20_low_rate_cycles_passed": true,
+    "tested_rates_kHz": [
+      300000,
+      384000,
+      600000
+    ],
+    "installed_kernel_changed": false,
+    "full_physical_acceptance": false,
+    "local_recipe_not_a_deployable_paired_update": true
+  }
 }

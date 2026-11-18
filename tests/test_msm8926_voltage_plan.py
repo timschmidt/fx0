@@ -117,6 +117,21 @@ class VoltagePlanTests(unittest.TestCase):
         self.assertEqual(out,[1080000,1080000,1130000,1080000,1180000,1280000,1080000,1080000,1140000,1087500,1187500,1287500,1287500])
         ret,out,_=self.run_plan(boot=1310000);self.assertEqual(ret,0);self.assertEqual(out[-1],1312500)
 
+    def test_observed_mx_cap_rejects_all_uncovered_plans(self):
+        for step in [5000,10000]:
+            for bin in range(32):
+                for matches in range(2):
+                    for speed in range(2):
+                        for uplift_bit in range(2):
+                            args=(step,bin,matches,speed,uplift_bit)
+                            expected,values=oracle(*args,mx_max=1287500)
+                            actual,out,_=self.run_plan(*args,mx_max=1287500)
+                            self.assertEqual(actual,expected,args)
+                            if not actual:
+                                self.assertEqual(out,values)
+                                self.assertLessEqual(max(out[9:]),1287500)
+        self.assertEqual(self.run_plan(boot=1300000,mx_max=1287500)[0],-34)
+
     def test_provider_metadata_failures_leave_output_unchanged(self):
         ret,_,calls=self.run_plan();self.assertEqual(ret,0)
         for fault in range(1,calls+1):
