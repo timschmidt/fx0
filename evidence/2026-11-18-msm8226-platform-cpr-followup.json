@@ -1,0 +1,65 @@
+{
+  "recorded_UTC": "2026-11-18T08:30:15.423812+00:00",
+  "candidate": {
+    "kernel": "6.18.64-fx0-deep-pmtest-alpine",
+    "source": "4cb942677a07683bc8c7341829a96ad004704630",
+    "boot": "a61c3ec6",
+    "CPR_corner_applied": true,
+    "CPU_kHz_at_request": 300000,
+    "platform_only_requests_observed": 1,
+    "late_callback_errno": -110,
+    "failed_phase": "suspend_late",
+    "callback_phase_trace_counts": {
+      "dpm_suspend_late": [
+        1,
+        1
+      ],
+      "dpm_suspend_noirq": [
+        0,
+        0
+      ],
+      "dpm_resume_noirq": [
+        0,
+        0
+      ],
+      "dpm_resume_early": [
+        1,
+        1
+      ]
+    },
+    "CPR_trace_entry_counts": {
+      "cpr_late_prepare": 1,
+      "cpr_check_rate": 0,
+      "cpr_prepare_rails": null,
+      "cpr_cover_rails": null
+    },
+    "optional_probe_registration_errors": {
+      "cpr_prepare_rails": {
+        "operation": "register",
+        "errno": 22
+      },
+      "cpr_cover_rails": {
+        "operation": "register",
+        "errno": 22
+      }
+    },
+    "only_timeout_before_rate_check_in_candidate_source": "RBCPR_RESULT_0.BUSY remained set during the 1000 us bounded poll",
+    "machine_suspend_entered": false,
+    "all_cpus_online_afterward": true,
+    "pm_test_restored_to_none": true,
+    "mem_sleep_restored_to_s2idle": true,
+    "trace_instance_removed": true,
+    "MX_requests_acknowledged": 11,
+    "maximum_logged_MX_request_microvolts": 1287500,
+    "no_critical_kernel_faults_in_retained_journal": true
+  },
+  "installed_return": {
+    "kernel": "6.18.64-fx0-lts-alpine",
+    "boot": "7d9495ea",
+    "matched_module_files": 482,
+    "matched_protected_boot_and_package_hashes": true,
+    "automatic": true
+  },
+  "explicit_wifi_scans_requested": false,
+  "deep_sleep_or_wake_qualified": false
+}

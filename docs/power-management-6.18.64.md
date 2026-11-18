@@ -230,8 +230,22 @@ to installed 6.18.64. Independent audits matched the protected hashes and all
 482 installed module files. The current probe uses one unbuffered write,
 keeps the regular power trace if an optional CPR probe is unavailable, and
 records the failed registration. It passed four workstation regression tests.
-The original CPR timeout remains open. [Platform test evidence](../evidence/2026-11-18-msm8226-platform-test.json)
+[Platform test evidence](../evidence/2026-11-18-msm8226-platform-test.json)
 [Platform probe](../diagnostics/msm8226-pm/platform-test.py)
+
+The corrected test issued one platform request. The retained journal records
+one late-suspend timeout. The trace reached the CPR late-prepare function
+before timing out and recorded zero calls to the CPU rate check. In the tested
+source the CPR result register's busy poll is the only path to this error
+before the rate check. It waited up to 1 ms for the bit to clear. No CPU entered
+the platform's suspend routine. [Tested CPR driver](https://github.com/timschmidt/fx0-linux/blob/4cb942677a07683bc8c7341829a96ad004704630/drivers/pmdomain/qcom/cpr.c#L2278)
+
+The kernel completed the early resume callbacks. The live audit confirmed
+all four CPUs online, `pm_test` restored to `none`, `s2idle` selected and the
+temporary trace instance removed. After the automatic return, an independent
+audit matched all 482 installed module files and the protected boot and
+package hashes. Physical deep entry and wake remain open.
+[Corrected platform test evidence](../evidence/2026-11-18-msm8226-platform-cpr-followup.json)
 
 ## Combined early charging firmware: host qualification
 
