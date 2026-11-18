@@ -300,6 +300,23 @@ The phone returned to installed 6.18.64 after the diagnostic panic. The
 installed audit matched all 482 module files and the protected boot and
 package hashes. [Idle-ACK result and retained panic](../evidence/2026-11-18-msm8226-platform-cpr-idle-ack.json)
 
+The selector correction retains the highest validated APC point separately
+from the rounded MX ceiling. It checks provider support for the exact APC
+point before acquiring the suspend clock lease. Eight voltage planner
+tests passed. The synthetic suspend fixtures used the two fixed APC
+selector ranges with the same 1,287,500 µV MX ceiling and passed 3,702 cases.
+[APC selector correction](https://github.com/timschmidt/fx0-linux/commit/96f8b4dda84fbd3d72808cfeaff011efeb14b0eb)
+
+On the handset the corrected image passed the CPR busy poll and called
+the CPU rate check. The later CPR callback returned `-EBUSY` and unwound
+without a panic. The live audit confirmed 18 successful MX acknowledgements,
+all four CPUs online, 300 MHz restored and `s2idle` selected. After the
+unwind, the CPU mux ran from GPLL0 and the A7 PLL had zero enable references
+and one prepare reference. That snapshot is consistent with the PLL
+readiness gate in the source. It does not identify the exact return site.
+The installed return matched all 482 module files and protected hashes.
+[APC selector handset result](../evidence/2026-11-18-msm8226-platform-apc-selector.json)
+
 ## Combined early charging firmware: host qualification
 
 A separate firmware branch combines the existing battery/profile and charge-gate

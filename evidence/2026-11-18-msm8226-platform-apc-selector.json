@@ -1,0 +1,58 @@
+{
+  "recorded_UTC": "2026-11-18T09:43:09.488795+00:00",
+  "build": {
+    "source": "96f8b4dda84fbd3d72808cfeaff011efeb14b0eb",
+    "capped_DTB_identical": true,
+    "module_signatures_verified": 465,
+    "imported_symbol_CRCs_verified": 25511,
+    "exact_RAM_image_readback": true
+  },
+  "workstation": {
+    "voltage_plan_tests": 8,
+    "prior_header_compatible": true,
+    "fixed_APC_range_model_cases": [
+      2215,
+      1487
+    ],
+    "synthetic_invariant_checks": 410842,
+    "all_model_failures": 0,
+    "unsupported_exact_MX_ceiling_refused_before_clock_lease": true
+  },
+  "test": {
+    "candidate_boot": "5f01216a",
+    "CPU_kHz_at_request": 600000,
+    "CPR_busy_samples_clear": 8,
+    "CPR_drain": {
+      "loop_enabled": 1,
+      "busy_before_disable": 0,
+      "busy_after_disable": 0,
+      "busy_on_entry": 0,
+      "busy_on_exit": 0,
+      "elapsed_us": 1,
+      "limit_us": 10000,
+      "ret": 0
+    },
+    "live_matches_retained_journal": true,
+    "platform_only_requests_observed": 1,
+    "late_callback_errno": -16,
+    "CPU_rate_check_calls": 1,
+    "machine_suspend_entered": false,
+    "PM_controls_all_CPUs_and_300_MHz_restored": true,
+    "MX_requests_acknowledged": 18,
+    "maximum_logged_MX_request_microvolts": 1287500,
+    "no_critical_kernel_faults_in_candidate_journal": true,
+    "post_unwind_A7_PLL_enable_count": 0,
+    "post_unwind_A7_PLL_prepare_count": 1,
+    "post_unwind_CPU_parent": "gpll0_vote",
+    "exact_EBUSY_return_site_established": false
+  },
+  "installed_return": {
+    "boot": "216f664a",
+    "kernel": "6.18.64-fx0-lts-alpine",
+    "automatic": true,
+    "matched_installed_module_files": 482,
+    "matched_protected_boot_and_package_hashes": true
+  },
+  "explicit_wifi_scans_requested": false,
+  "deep_sleep_or_wake_qualified": false
+}
