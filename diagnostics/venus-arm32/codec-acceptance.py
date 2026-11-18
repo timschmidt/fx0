@@ -124,15 +124,22 @@ def only_expected_node(log, node):
         raise ValueError("FFmpeg did not use the verified Venus node")
 
 
-def target_gate():
+def target_gate(*, token=TOKEN, firmware_target="/run/fx0-venus-firmware"):
     words = Path("/proc/cmdline").read_text().split()
-    mandatory = (TOKEN, "module.sig_enforce=1", "module_blacklist=wcn36xx",
+    mandatory = (token, "module.sig_enforce=1", "module_blacklist=wcn36xx",
                  "firmware_class.path=/run/fx0-venus-firmware")
-    if os.uname().release != RELEASE or any(words.count(word) != 1 for word in mandatory):
+    if (not token.startswith("fx0.native_trial=venus-") or os.uname().release != RELEASE
+            or any(words.count(word) != 1 for word in mandatory)):
         raise ValueError("current boot does not match the Venus RAM candidate")
     if Path("/sys/module/module/parameters/sig_enforce").read_text().strip() != "Y":
         raise ValueError("kernel module signatures are unenforced")
-    if Path("/sys/module/firmware_class/parameters/path").read_text().strip() != "/run/fx0-venus-firmware":
+    allowed_targets = {
+        "/run/fx0-venus-firmware",
+        "/run/msm-firmware-loader/target",
+        "/run/fx0-venus-combined-firmware",
+    }
+    if (firmware_target not in allowed_targets
+            or Path("/sys/module/firmware_class/parameters/path").read_text().strip() != firmware_target):
         raise ValueError("firmware search path does not match the Venus RAM candidate")
     if Path("/proc/sys/kernel/tainted").read_text().strip() != "0":
         raise ValueError("kernel taint prevents acceptance")
@@ -142,7 +149,7 @@ def target_gate():
                for row in Path("/proc/self/mountinfo").read_text().splitlines()):
         raise ValueError("candidate workspace must be on /run tmpfs")
     armed = Path("/run/fx0-native-trial/return-armed").read_text().splitlines()
-    if "DEADLINE=420" not in armed or f"TOKEN={TOKEN}" not in armed:
+    if "DEADLINE=420" not in armed or f"TOKEN={token}" not in armed:
         raise ValueError("early return helper is not recorded")
     pids = [line.removeprefix("PID=") for line in armed if line.startswith("PID=")]
     if len(pids) != 1 or not pids[0].isdecimal():
@@ -157,10 +164,11 @@ def target_gate():
     return Path("/proc/sys/kernel/random/boot_id").read_text().strip()
 
 
-def run_trial(binary, binary_hash, fixture, reference_hash):
+def run_trial(binary, binary_hash, fixture, reference_hash, *, token=TOKEN,
+              firmware_target="/run/fx0-venus-firmware"):
     os.umask(0o077)
     binary, fixture = binary.resolve(strict=True), fixture.resolve(strict=True)
-    boot = target_gate()
+    boot = target_gate(token=token, firmware_target=firmware_target)
     if sha(binary) != binary_hash or sha(fixture) != reference_hash:
         raise ValueError("test input hash differs from the pinned fixture")
     nodes = identify_nodes()

@@ -18,7 +18,7 @@
     "retained_dmesg_records_all_preexisting": true
   },
   "installed_return": {
-    "boot": "0f38d39b",
+    "boot": "c5443fac",
     "kernel": "6.18.64-fx0-lts-alpine",
     "installed_modules_match": true,
     "seven_protected_hashes_match": true,
@@ -294,6 +294,100 @@
     },
     "installed_return": {
       "boot": "5479e2a7",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    }
+  },
+  "combined_providers_and_Venus_IOMMU": {
+    "RAM_image_sha256": "4450dccc33101d428e7b9852fae05438dd84f396bb360d2c0dda2c7fc26bd05f",
+    "sole_DTB_change": "/soc/iommu@fdc84000:status",
+    "RAM_readback_exact": true,
+    "candidate_boot": "9484df0a",
+    "both_providers_and_IOMMU_bound": true,
+    "compositor_running": true,
+    "stable_for_at_least_seconds_before_observation": 22,
+    "installed_return": {
+      "boot": "795a4faf",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    },
+    "codec_disabled": true,
+    "loader_retry": {
+      "first_attempt_blocked_by_USB_access_before_RAM_boot": true,
+      "first_installed_return_independently_verified": true,
+      "bounded_retry_confirmed_same_loader": true
+    }
+  },
+  "combined_codec_firmware_copy_control": {
+    "RAM_image_sha256": "1559a1f9f15c5dd6df8578c20c32d17a22084feaa3b982a168605307d3ef4a4f",
+    "sole_DTB_change": "/soc/venus-bus/video-codec@fdc80000:status",
+    "RAM_readback_exact": true,
+    "candidate_boot": "818f5753",
+    "both_providers_and_IOMMU_bound": true,
+    "compositor_running": true,
+    "stable_for_at_least_seconds_before_observation": 22,
+    "installed_return": {
+      "boot": "bb4f794f",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    },
+    "firmware": {
+      "verified_files_at_RAM_source": 4,
+      "direct_copy_guard_rejected_nested_loader_path": true,
+      "codec_load_dispatched": false
+    }
+  },
+  "combined_codec_RAM_firmware_control": {
+    "RAM_image_sha256": "1559a1f9f15c5dd6df8578c20c32d17a22084feaa3b982a168605307d3ef4a4f",
+    "sole_DTB_change": "/soc/venus-bus/video-codec@fdc80000:status",
+    "RAM_readback_exact": true,
+    "candidate_boot": "7e660ac7",
+    "both_providers_and_IOMMU_bound": true,
+    "compositor_running": true,
+    "stable_for_at_least_seconds_before_observation": 22,
+    "installed_return": {
+      "boot": "b306b32f",
+      "modules_verified": 482,
+      "protected_hashes_match": true
+    },
+    "firmware": {
+      "verified_files": 4,
+      "separate_tmpfs_loader_tree": true,
+      "original_loader_entries_preserved": true
+    },
+    "venus_core_bound": true,
+    "module_return_codes": {
+      "venus_core": 0,
+      "venus_enc": 0,
+      "venus_dec": 0
+    },
+    "runtime_PM_usage_underflow_messages": 8,
+    "H264_workload_dispatched": false,
+    "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
+  },
+  "last_updated_UTC": "2026-11-18T15:43:06.540443+00:00",
+  "combined_codec_H264_workload": {
+    "same_exact_RAM_image_as_firmware_control": true,
+    "RAM_readback_exact": true,
+    "candidate_boot": "2a476cf8",
+    "firmware_files_verified": 4,
+    "both_child_drivers_bound": true,
+    "sysfs_nodes": {
+      "qcom-venus-encoder": "video3",
+      "qcom-venus-decoder": "video4"
+    },
+    "initial_runtime_status": {
+      "qcom-venus-decoder": "suspended",
+      "qcom-venus-encoder": "suspended"
+    },
+    "encoder_ioctl_identity_and_FFmpeg_selection_matched": true,
+    "encoder_failed_ioctl": "VIDIOC_REQBUFS",
+    "errno": 16,
+    "encoder_output_frames": 0,
+    "hardware_decoder_workload_dispatched": false,
+    "runtime_PM_usage_underflow_messages": 13,
+    "installed_return": {
+      "boot": "c5443fac",
       "modules_verified": 482,
       "protected_hashes_match": true
     }

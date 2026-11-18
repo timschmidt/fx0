@@ -416,6 +416,23 @@ wake. The independent audit matched the suspend entry and exit and
 verified the installed return. The Venus IOMMU and codec were disabled
 for this test.
 
+The next RAM boot enabled the Venus IOMMU through a single device-tree
+status change. The IOMMU and both interconnect providers stayed bound
+for more than 22 seconds with USB access and the compositor running.
+The codec remained disabled. The first transfer attempt stopped at
+loader USB permissions, and a bounded retry on the same USB port passed
+after an independently verified installed boot.
+
+Enabling the codec while deferring its module load exposed a firmware
+handoff problem. The direct-copy guard rejected a nested path in the active
+firmware loader tree. A separate RAM lookup tree preserved the loader's
+entries and added the four SHA-256-verified Venus files. The core bound
+and all three module loads returned zero. The first observer used V4L2 card
+descriptions to match sysfs node names and missed the encoder and decoder.
+The kernel journal also recorded runtime PM usage-count underflows on
+both child devices. The signed installed kernel returned with all 482 module
+files and the protected hashes verified after each test.
+
 [Interconnect isolation evidence](../evidence/2026-11-18-venus-interconnect-isolation.json)
 
 ### Venus H.264 workload
@@ -426,7 +443,12 @@ matched a workstation decode byte for byte across 12 reference frames.
 The checker also rejected truncated frames, duplicate frames, swapped chroma,
 ambiguous Venus device roles and unexpected device selection. The handset
 workload checks that FFmpeg uses the two Venus devices and verifies the
-decoded frames from each hardware operation. It still needs a handset run.
+decoded frames from each hardware operation. On the handset, the corrected
+observer found both bound devices. FFmpeg selected the verified Venus
+encoder and negotiated formats, then received `EBUSY` from output
+`VIDIOC_REQBUFS`. It produced zero frames, so the decoder workload did
+not run. The candidate journal recorded 13 runtime PM usage-count
+underflow warnings. An independent audit verified the installed return.
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)
