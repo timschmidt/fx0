@@ -751,10 +751,22 @@ system error after the first 630-byte input submission. A separate
 static-capture control allocated and registered 32 capture buffers
 before HFI startup. Startup returned `EIO` before the driver submitted
 any compressed input, with no firmware system-error event in that run.
-The next trace needs to distinguish resource-load and session-start
-replies and report which buffer types the firmware returned. Both
-installed returns passed the 482-module and protected-hash audit.
+Both installed returns passed the 482-module and protected-hash audit.
 [Static capture control](https://github.com/timschmidt/fx0-linux/commit/477a3b91d924f7effc5bc8951cb0707b876cf37a)
+
+A repeat with the reply trace captured eleven successful property
+responses. Each contained only the coded input, primary capture and
+scratch entries. The four `EINVAL` lookups were for types absent from
+these replies. After the 32 static capture registrations, firmware
+responded to load-resources with `0x1001` (`HFI_ERR_SESSION_FATAL`).
+The driver returned `EIO` before it sent session-start or input.
+At 320×240, the firmware's primary capture entry requested 147,584
+bytes. The driver's NV12 size calculation gives 147,456 bytes for
+those dimensions. A matched comparison still needs to verify the
+registered plane length and exercise allocation at the firmware size.
+The installed return again passed the independent 482-module and
+protected-hash audit.
+[HFI reply trace](https://github.com/timschmidt/fx0-linux/commit/cde92e377925361b9cd32a1b4e52aa949d7c7bbb)
 
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
@@ -763,8 +775,13 @@ after 11 nonempty capture buffers and one empty buffer. It returned to
 the installed kernel and passed the 482-module and protected-hash audit.
 A second signed control retains the separate tag and uses a coherent DMA
 page for the empty marker on MSM8226. The previous placeholder address
-falls outside the codec's IOVA range. This control has passed host build
-and signature checks and awaits handset testing.
+falls outside the codec's IOVA range. The mapped-address handset test
+returned the same 11 nonempty buffers and one empty buffer, then failed
+polling before the final input and LAST. The candidate journal recorded
+no firmware system fault or IOMMU timeout. The installed return matched
+all 482 module files and the protected hashes. The next comparison should
+record firmware input and capture completions around STOP and the exact
+userspace poll flags.
 [Reserved tag](https://github.com/timschmidt/fx0-linux/commit/cfac2aa935f6e6b235db9da58a7bbae33c254ca4)
 [Mapped EOS buffer](https://github.com/timschmidt/fx0-linux/commit/df0da6c7c770dc705bf5992ef2a18a02b37a2d96)
 

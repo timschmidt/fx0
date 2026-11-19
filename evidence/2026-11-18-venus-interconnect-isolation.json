@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-19T00:42:15.313474+00:00",
+  "last_updated_UTC": "2026-11-19T01:05:11.406444+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -1287,6 +1287,29 @@
         "encoder_queue_poll_failed": true,
         "firmware_system_errors": 0,
         "IOMMU_timeouts": 0
+      },
+      "direct_V4L2_mapped_EOS": {
+        "candidate_boot": "3c1db8fc-242c-4b4b-b3ac-57787d453515",
+        "exact_readback": true,
+        "image_sha256": "cbb5a571135df6e5816b11a1380004347647f5bbc757380e25bfc650e85be8af",
+        "source_commit": "df0da6c7c770dc705bf5992ef2a18a02b37a2d96",
+        "natural_driver_coldplug": true,
+        "module_records_verified": 488,
+        "live_firmware_files_verified": 4,
+        "same_input_fixture_and_queue_probe_as_reserved_tag_trial": true,
+        "capture_nonempty_buffers_returned": 11,
+        "empty_capture_buffers_returned": 1,
+        "inputs_returned": 11,
+        "final_input_returned": false,
+        "end_of_stream_flag_observed": false,
+        "encoder_queue_poll_failed": true,
+        "exact_poll_flags_recorded": false,
+        "firmware_system_errors": 0,
+        "firmware_fault_records": 0,
+        "IOMMU_timeouts": 0,
+        "installed_return_boot": "3be795f7-0f80-4985-9fc2-b16eaa468ca3",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true
       }
     },
     "direct_native_encode_delayed_STOP_qualified": true,
@@ -1297,7 +1320,7 @@
       "parent_image_sha256": "68db78f23760e4ce234bace9593036bb6acd8bc3812cdd7ed445c61451ae70e2",
       "verified_import_CRCs": 103,
       "module_records_verified": 488,
-      "handset_tested": false,
+      "handset_tested": true,
       "former_empty_buffer_address": "0xdeadb000",
       "codec_IOVA_range": [
         "0x40000000",
@@ -1406,6 +1429,80 @@
       "compressed_input_submitted": false,
       "firmware_system_error_observed": false,
       "verified_decoded_frames": 0
+    },
+    "static_capture_HFI_reply_trace": {
+      "source_commit": "cde92e377925361b9cd32a1b4e52aa949d7c7bbb",
+      "image_sha256": "c2cc7fd86737e5a42c6a654e0bb54bde50d28322806683b42645db8a70f78ad5",
+      "parent_image_sha256": "fe20d55cc5945cac87cbe6d1096ecefbefa8971e22f23f274452ad2e75645562",
+      "matching_import_CRCs": 155,
+      "matching_export_CRCs": 59,
+      "manifest_records_verified": 488,
+      "unchanged_kernel_dtb_and_arguments": true,
+      "candidate_boot": "2d26e75b-9909-407f-8dee-042555d68069",
+      "exact_readback": true,
+      "sanitizer_parser_controls": {
+        "passed": true,
+        "valid_tables": 10,
+        "trace_disabled_controls": 10,
+        "empty_reply_control": true,
+        "session_trace_gate_checks": 3
+      },
+      "static_capture_buffers_registered": 32,
+      "property_reply_count": 11,
+      "property_message_bytes": 116,
+      "property_parser_error": 0,
+      "initial_requirements": [
+        {
+          "type": "0x1",
+          "bytes": 147584,
+          "count": 4,
+          "minimum": 1
+        },
+        {
+          "type": "0x2",
+          "bytes": 147584,
+          "count": 18,
+          "minimum": 18
+        },
+        {
+          "type": "0x1000001",
+          "bytes": 613696,
+          "count": 1,
+          "minimum": 1
+        }
+      ],
+      "requirements_after_configured_1_and_32_buffers": [
+        {
+          "type": "0x1",
+          "bytes": 147584,
+          "count": 1,
+          "minimum": 1
+        },
+        {
+          "type": "0x2",
+          "bytes": 147584,
+          "count": 32,
+          "minimum": 18
+        },
+        {
+          "type": "0x1000001",
+          "bytes": 613696,
+          "count": 1,
+          "minimum": 1
+        }
+      ],
+      "resource_load_firmware_status": "0x1001",
+      "resource_load_firmware_name": "HFI_ERR_SESSION_FATAL",
+      "resource_load_host_errno": 5,
+      "session_start_sent": false,
+      "compressed_input_submitted": false,
+      "NV12_320_by_240_driver_formula_bytes": 147456,
+      "capture_requirement_difference_bytes": 128,
+      "capture_plane_length_registered_on_handset_measured": false,
+      "verified_decoded_frames": 0,
+      "installed_return_boot": "1ccd736d-c639-42d2-9838-61ba459a1d4b",
+      "installed_modules_verified": 482,
+      "installed_protected_hashes_match": true
     }
   }
 }
