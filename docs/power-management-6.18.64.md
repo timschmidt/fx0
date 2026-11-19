@@ -661,6 +661,24 @@ new property.
 [SMBB callback replay](../diagnostics/vadc-battery-units/check-smbb-voltage.py)
 [Host build and DTB evidence](../evidence/2026-11-18-power-qualification-followup.json)
 
+The linked RAM candidate uses the installed configuration and Alpine
+Clang 22.1.3. The kernel embeds the installed public module certificate.
+All 11,718 built-in export records match the installed kernel. The host
+verified all 468 module signatures, 25,592 imported symbol CRCs, and 482
+module file hashes. The link required only the public certificate.
+
+The candidate includes `qcom-spmi-vadc` and its `qcom-vadc-common`
+dependency from the same signed module set. The initramfs requests these
+modules before USB configuration. The overlay checks installed module
+hashes before and after copying them into RAM. The image preserves the existing
+360-second normal and 420-second early return paths, requires module
+signatures and blacklists `wcn36xx`. An independent parser verified its
+boot header, load bounds, exact DTB properties and initramfs contents.
+The image is ready for a guarded temporary boot. On-device probe order,
+voltage reporting and return to the installed kernel remain unverified
+for this image.
+[Linked RAM candidate evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce

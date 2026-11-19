@@ -349,6 +349,55 @@
     "checkpatch_individual_patches_warnings": 0,
     "phone_boot_or_package_changed": false,
     "handset_voltage_now_qualified": false,
-    "independent_electrical_measurement": false
+    "independent_electrical_measurement": false,
+    "linked_RAM_candidate": {
+      "passed": true,
+      "recorded_UTC": "2026-11-19T04:13:31.221255+00:00",
+      "kernel_source": "0f2c00771fd1fa728c5775a4b8a69d440d31d527",
+      "linked_compiler": "Alpine Clang 22.1.3",
+      "exact_installed_config_except_certificate_path": true,
+      "installed_certificate_embedded": true,
+      "certificate_sha256": "de086e266ec1d82ea17ebbd51f10242e591df3cf74e958e269bdd91b9176d370",
+      "private_signing_key_used": false,
+      "kernel_release": "6.18.64-fx0-lts-alpine",
+      "matching_vmlinux_exports": 11718,
+      "signed_modules": 468,
+      "module_files": 482,
+      "verified_module_import_CRCs": 25592,
+      "module_manifest_sha256": "db3451c2c70e584f11b31232919082538a885f01b714946abf8081c7f73885df",
+      "image_sha256": "22776b1ffb3f8f5f2e1106874f6f3fd707b20fd8d27ffcd32e5b0e60d215586f",
+      "image_bytes": 17309696,
+      "kernel_sha256": "cd9272489ae1c94fcc0aa5a2c1fe15768ce95c014d210b952a4d85165a7f2fad",
+      "kernel_bytes": 5526016,
+      "kernel_notes_sha256": "a89d21b9ccb330a99b72d6f7dd8ee338320fedb652669b5bd54fb1d59907123e",
+      "dtb_sha256": "aa5662b13b302f0338eec2d6b378085445ac9ac6e65d3da8e47774d374a72700",
+      "DTB_only_voltage_wiring_added": true,
+      "ramdisk_sha256": "d1518092d200886c4ea863dd29ab8dc0e0e82ae07a24a44df72648d9cf15d9fc",
+      "unchanged_CPIO_entries": 247,
+      "early_signed_vadc_modules": [
+        "qcom-vadc-common.ko.zst",
+        "qcom-spmi-vadc.ko.zst"
+      ],
+      "VADC_provider_preloaded_by_initramfs": true,
+      "ramdisk_hook_checks": 4,
+      "conventional_return_seconds": 360,
+      "early_return_seconds": 420,
+      "WLAN_blacklisted": true,
+      "signature_enforcement": true,
+      "independently_unpacked_image": true,
+      "handset_contacted": false,
+      "independent_early_VADC_controls": {
+        "passed": true,
+        "early_archive_alias_dependency_resolution_verified": true,
+        "linked_relative_module_tree_layout_verified": true,
+        "VADC_load_requested_before_USB": true,
+        "both_resolved_module_files_in_candidate_archive": true
+      },
+      "first_link_failed_at_workstation_temporary_quota": true,
+      "linked_in_offline_Alpine_sandbox_with_same_installed_compiler": true,
+      "private_image_remains_local": true,
+      "handset_booted": false,
+      "runtime_voltage_qualified": false
+    }
   }
 }
