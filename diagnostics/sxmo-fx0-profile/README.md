@@ -34,3 +34,16 @@ Use the actual login user and runtime directory. For recognizer diagnostics add
 `-v` to the hook temporarily and capture raw events independently; keep full
 logs private. The installed test completed with verbose tracing removed and the
 same60/120/25 settings verified. See the installed r3 and gesture-profile evidence.
+
+On the signed 6.18.64-r2 installation, use the display power test over USB
+with the desktop awake and the expected boot ID and kernel notes hash from
+the installation audit. It briefly blanks the built-in display six times.
+Each blank has a separate systemd restore timer. The test checks Sway,
+the DRM CRTC and vblank sequence, and collects RMI4 callback returns.
+
+```sh
+python3 -B check-display-power.py EXPECTED_BOOT_ID EXPECTED_NOTES_SHA256
+```
+
+Run it as root on the Fx0. Keep the USB connection available until the
+probe reports cleanup. [Installed result](../../evidence/2026-11-19-fx0-display-power.json)

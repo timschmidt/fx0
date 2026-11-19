@@ -1,0 +1,99 @@
+{
+  "display_cycle_series": {
+    "baseline_vblank_increment": 7,
+    "cleanup_verified": true,
+    "drm": {
+      "crtcs": [
+        {
+          "active": 1,
+          "enabled": 1,
+          "name": "crtc-0",
+          "object": 53
+        }
+      ],
+      "dpms": "On",
+      "enabled": "enabled",
+      "status": "connected"
+    },
+    "elapsed_seconds": 18.27,
+    "output": {
+      "active": true,
+      "current_mode": {
+        "height": 1280,
+        "picture_aspect_ratio": "none",
+        "refresh": 60000,
+        "width": 720
+      },
+      "dpms": true,
+      "power": true
+    },
+    "passed": true,
+    "rtc_clear": true,
+    "same_processes": true,
+    "suspend_counts": {
+      "fail": "0",
+      "success": "0"
+    },
+    "timer_restored_first_cycle": true,
+    "trace_return_values": {
+      "rmi_driver_resume": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rmi_driver_suspend": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rmi_i2c_panel_prepared": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "trace_unavailable": [],
+    "vblank_increments": [
+      6,
+      6,
+      6,
+      6,
+      7,
+      6
+    ]
+  },
+  "independent_postflight": {
+    "owned_trace_objects": 0,
+    "recent_kernel_error_counts": {
+      "display_fault": 0,
+      "i2c_timeout": 0,
+      "rmi_suspend_resume_error": 0
+    },
+    "rtc_clear": true,
+    "suspend": {
+      "fail": "0",
+      "success": "0"
+    },
+    "transient_units": 0
+  },
+  "initial_attempt": {
+    "failed_command": "systemctl",
+    "returncode": 5,
+    "vblank_increments": [
+      6
+    ]
+  },
+  "installed_kernel": "6.18.64-r2",
+  "kernel_notes_SHA256": "98e75b8c5fbc306f2c20b26341608b63410cf260de7ac3efc6e06963b399eaf8",
+  "physical_touch_tested": false,
+  "system_suspend_tested": false
+}

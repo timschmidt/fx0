@@ -1454,6 +1454,28 @@ the current policy. The reported freeze remains unresolved.
 [Packaged hook replay](../diagnostics/sxmo-fx0-profile/check-idle-hooks.py)
 [Power management evidence](../evidence/2026-11-17-power-management-6.18.64.json)
 
+### Installed display power cycling
+
+The signed r2 kernel completed six Sway `DSI-1` power-off and power-on
+cycles over wired USB. Each transition reached the requested state in
+Sway and the DRM CRTC. The first restore was driven by an independent
+five-second systemd timer. The DRM vblank sequence advanced by six or
+seven frames over the 110 ms check after each restore at 720 × 1280 and
+60 Hz.
+
+The kernel trace recorded six successful Synaptics RMI4 suspend calls,
+six successful resume calls, and six successful panel-follower prepare
+calls. The same Sway and gesture processes survived the series. A separate
+USB audit checked the active output, zero remaining transient units or
+trace objects, and no matching DRM, RMI4 or I²C timeout errors in the
+recent kernel journal. The corrected probe accepts inactive units that
+systemd has already collected. The first attempt treated this as a cleanup
+error after a successful restore. The test exercised display power with the system
+awake. Physical touch events and display recovery from system sleep
+require separate verification.
+[Handset evidence](../evidence/2026-11-19-fx0-display-power.json)
+[Display test](../diagnostics/sxmo-fx0-profile/check-display-power.py)
+
 ## Remaining physical scope
 
 The installed firmware lacks the verified early charge-inhibition marker.
