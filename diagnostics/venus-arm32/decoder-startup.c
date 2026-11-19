@@ -586,6 +586,8 @@ static int decode_downshift(int fd, int count, FILE *input, const struct access_
     struct v4l2_format format = { .type = capture }, next_format = { .type = capture };
     struct v4l2_decoder_cmd stop = { .cmd = V4L2_DEC_CMD_STOP };
     unsigned int queued = 1, returned = 0, first_frames = 0, new_frames = 0;
+    bool seen_tags[2 * SEQUENCE_FRAMES] = {false};
+    unsigned int last_tag = 0, reordered = 0, b_frames = 0;
     bool source_changed = false, restarted = false, first_last = false;
     bool stop_sent = false, new_last = false;
     int64_t start = monotonic_ms(), deadline, drain_deadline = 0;
@@ -649,6 +651,8 @@ static int decode_downshift(int fd, int count, FILE *input, const struct access_
                 goto done;
             source_changed = true;
             drain_deadline = now + DOWNSHIFT_DRAIN_MS;
+            if (keep_capture)
+                fprintf(stderr, "Source change after %u old pictures dequeued\n", first_frames);
         }
         if (ready.revents & POLLIN) {
             struct v4l2_plane plane = {0};
@@ -670,15 +674,24 @@ static int decode_downshift(int fd, int count, FILE *input, const struct access_
                 goto invalid;
             }
             if (keep_capture && plane.bytesused) {
-                unsigned int expected = first_frames + new_frames + 1;
+                long tag = buffer.timestamp.tv_usec;
 
-                if (buffer.timestamp.tv_sec != 1 || buffer.timestamp.tv_usec != expected ||
-                    (expected > SEQUENCE_FRAMES && !source_changed)) {
-                    fprintf(stderr, "CAPTURE unexpected timestamp: %ld.%06ld expected 1.%06u\n",
-                            (long)buffer.timestamp.tv_sec, (long)buffer.timestamp.tv_usec, expected);
+                if (buffer.timestamp.tv_sec != 1 || tag < 1 || tag > (long)queued ||
+                    seen_tags[tag - 1]) {
+                    fprintf(stderr, "CAPTURE invalid or repeated timestamp: %ld.%06ld\n",
+                            (long)buffer.timestamp.tv_sec, tag);
                     goto invalid;
                 }
-                new_picture = expected > SEQUENCE_FRAMES;
+                new_picture = tag > SEQUENCE_FRAMES;
+                if (new_picture && (!source_changed || first_frames != SEQUENCE_FRAMES)) {
+                    fprintf(stderr, "CAPTURE new picture before the old sequence drained: tag %ld\n", tag);
+                    goto invalid;
+                }
+                /* Decode-order tags can go backwards in the display-order queue. */
+                reordered += (unsigned int)tag < last_tag;
+                b_frames += !!(buffer.flags & V4L2_BUF_FLAG_BFRAME);
+                last_tag = (unsigned int)tag;
+                seen_tags[tag - 1] = true;
             } else if (keep_capture) {
                 new_picture = source_changed;
             }
@@ -741,7 +754,8 @@ done:
     fprintf(stderr, "Downshift: queued %u returned %u old %u new %u event %d restart %d old-LAST %d new-LAST %d STOP %d\n",
             queued, returned, first_frames, new_frames, source_changed, restarted, first_last, new_last, stop_sent);
     if (keep_capture)
-        fputs("Downshift retained the initial CAPTURE queue\n", stderr);
+        fprintf(stderr, "Downshift retained the initial CAPTURE queue, B pictures %u, reordered tags %u\n",
+                b_frames, reordered);
     errno = saved_errno;
     return status;
 }

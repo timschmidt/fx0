@@ -1085,10 +1085,20 @@ completed with a final `LAST` marker after the smaller sequence.
 The initial source-change event was followed by the downshift event,
 and the client made only one CAPTURE `STREAMON` call.
 
-This qualifies the retained-queue path for the tested fixture. The
-diagnostic continues across the downshift without emitting a `LAST`
-for the outgoing sequence. The standard V4L2 source-change and
-capture-restart path still needs qualification.
+A repeat on the same signed image used H.264 Main-profile B-pictures
+at both sizes. All 24 pictures matched independent host and ARM
+software decodes, including 14 B-pictures and eight backward timestamp
+steps in display order. The client dequeued ten old pictures before
+receiving the source-change event and two afterward. It validated unique
+input tags across the boundary and finished with one CAPTURE
+`STREAMON` and `LAST` after STOP. The trace recorded no flush or restart
+between the source-change handler and teardown.
+
+A client must keep reading the outgoing sequence after the event.
+The retained-queue diagnostic emits `LAST` on final drain only. The
+standard V4L2 source-change and capture-restart path still needs
+qualification.
+[V4L2 dynamic resolution change](https://docs.kernel.org/userspace-api/media/v4l/dev-decoder.html#dynamic-resolution-change)
 
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
