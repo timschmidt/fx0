@@ -2117,5 +2117,103 @@
     "reboot_or_firmware_and_package_change_performed": false,
     "managed_policy_enabled_on_installed_boot": false,
     "physical_pack_and_charging_qualified": false
+  },
+  "SMBB_r2_linked_managed_policy_RAM": {
+    "recorded_UTC": "2026-11-19T08:07:26+00:00",
+    "linked_kernel": {
+      "passed": true,
+      "recorded_UTC": "2026-11-19T08:06:25+00:00",
+      "linux_source": "6d7f378fc071fc88dbfdc9ee37c66cad27a13843",
+      "installed_source_base": "0f2c00771fd1fa728c5775a4b8a69d440d31d527",
+      "compiler": "Alpine Clang 22.1.3",
+      "kernel_release": "6.18.64-fx0-lts-alpine",
+      "managed_policy_linked": true,
+      "nonpermissive_normalized_CFI_config_preserved": true,
+      "installed_config_differences": [
+        "CONFIG_CHARGER_QCOM_SMBB_POLICY=y",
+        "CONFIG_MODULE_SIG_KEY=\"certs/fx0-installed-public.pem\""
+      ],
+      "embedded_public_certificate_SHA256": "de086e266ec1d82ea17ebbd51f10242e591df3cf74e958e269bdd91b9176d370",
+      "linked_with_public_certificate_only": true,
+      "identical_built_in_symbol_exports": 11718,
+      "identical_packaged_r2_DTB": true,
+      "inputs": {
+        "zImage": {
+          "bytes": 5521920,
+          "SHA256": "e64b4123e0a13b10a4cbdc846b7a19fbc6271f14e0dd761aa23ad0cd6a3df3a7"
+        },
+        "qcom-msm8926-lg-madai.dtb": {
+          "bytes": 42009,
+          "SHA256": "aa5662b13b302f0338eec2d6b378085445ac9ac6e65d3da8e47774d374a72700"
+        },
+        "kernel-notes": {
+          "bytes": 84,
+          "SHA256": "2cf90249ff0792ff912f367bbacd62cb1a987514403520e54926a44e577610bc"
+        },
+        "vmlinux.symvers": {
+          "bytes": 669013,
+          "SHA256": "5cb316126de8d3969d7b05ae08df41f3bb66624091882f718464faffe4807fe1"
+        },
+        "config": {
+          "bytes": 203023,
+          "SHA256": "0bc0faff1defacb8f76ce623a8d1b01ce7f2d936d3221428431e340ae4265407"
+        }
+      },
+      "physical_policy_or_firmware_boot_test_performed": false
+    },
+    "verified_pair": {
+      "passed": true,
+      "recorded_UTC": "2026-11-19T08:07:26+00:00",
+      "kernel_source": "6d7f378fc071fc88dbfdc9ee37c66cad27a13843",
+      "boot_image_SHA256": "9ca12f7e1865262c6dcd9e7fab7faa340d0b0ca9cc29667c3343786c66e2bc39",
+      "boot_image_bytes": 17307648,
+      "linked_kernel_SHA256": "e64b4123e0a13b10a4cbdc846b7a19fbc6271f14e0dd761aa23ad0cd6a3df3a7",
+      "static_DTB_SHA256": "aa5662b13b302f0338eec2d6b378085445ac9ac6e65d3da8e47774d374a72700",
+      "unchanged_ramdisk_SHA256": "1e975dec10d71b866c979c89b145d9b682514d920c98cade3d3e7d80fb34d6ea",
+      "packaged_parent_image_SHA256": "0480189638d7dbce25a43b405c21bc39a413c0c369372daffd2b5c53441ec8bb",
+      "policy_enabled_at_build": true,
+      "profile_and_handoff_not_preseeded_in_DTB": true,
+      "unchanged_WLAN_blacklist_and_signature_enforcement": true,
+      "early_return_seconds": 420,
+      "standard_return_seconds": 360,
+      "exact_installed_modules": {
+        "signed_modules": 468,
+        "all_file_hashes": 482,
+        "total_import_CRCs": 25592,
+        "built_in_import_CRCs": 22722,
+        "module_packet_SHA256": "38709847fd9bdb6d300782748ed297eb00d1aa7480d2599cb0e741d0f1a33766"
+      },
+      "paired_firmware": {
+        "source": "b3332cf75d7c5b58a6890c2be431f95f84f0fd55",
+        "version": "fx0-pm-host-01",
+        "image_SHA256": "690a4a25fcecde534163ff81ab94a86790dab8a30b99076be71e4b7341275cea",
+        "image_bytes": 264208,
+        "actual_Madai_QCDT_verified": true,
+        "repeated_builds_match": true,
+        "PON_raw_boot_base_preserved": true,
+        "earlier_handoff_hook_revision": "2ce757408f364ec6f1197b1d5d0be4128a309b1e",
+        "physical_boot_previously_qualified": false
+      },
+      "paired_runtime_hardware_test_performed": false,
+      "phone_contacted": false
+    },
+    "firmware_branch_remote_exact_head_verified": true,
+    "assembled_image_reverified_after_removing_duplicate_kernel_and_DTB": true,
+    "actual_host_callbacks": {
+      "temperature_irq_cases": 1026,
+      "temperature_irq_read_failures": 4,
+      "SMBB_battery_voltage_setup_and_read_cases_pass": true,
+      "legacy_control_cases": 6242,
+      "managed_policy_cases": 2604,
+      "child_probe_and_lifetime_cases": 27,
+      "negative_lifetime_controls": 3,
+      "firmware_profile_identity_and_rollback_cases": 41
+    },
+    "combined_firmware_hooks_match_exact_r2_simulated_DTB": true,
+    "gated_DTB_preserved_byte_for_byte_for_simulated_unknown_pack": true,
+    "r2_parent_probe_can_defer_for_VADC_before_registering_power_supplies": true,
+    "temporary_link_build_tree_MiB_at_completion_rounded": 918,
+    "temporary_build_and_verification_trees_removed": true,
+    "managed_policy_runtime_charging_or_transition_qualified": false
   }
 }

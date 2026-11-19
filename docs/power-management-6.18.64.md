@@ -965,6 +965,33 @@ the managed policy disabled. The firmware and policy pairing remains to
 qualify on the handset.
 [Installed observations and exact-r2 host checks](../evidence/2026-11-18-power-qualification-followup.json)
 
+### Linked managed-policy RAM candidate
+
+The managed-policy kernel links on 6.18.64 with the reviewed SMBB
+temperature-cache correction. The build uses the installed public module
+certificate and preserves the 11,718 built-in symbol exports. All 482
+files in the exact r2 module set match their hashes. The 468 signed ARM
+modules pass independent signature verification and all 25,592 imported
+symbol CRC checks against the linked kernel and retained module set.
+
+The private RAM image uses the exact r2 DTB and initramfs, including the
+existing return timers, WLAN blacklist and signature enforcement. The
+static tree carries the opt-in control declaration. The paired firmware
+supplies the profile and early-inhibition marker at runtime. Two retained
+firmware builds have identical images and a verified Madai QCDT. They
+preserve the PON raw-boot support and carry the earlier handoff code. The
+combined firmware reproduces the expected generated r2 tree in simulation
+and leaves the gated tree byte-identical when the pack ID is unknown.
+
+On r2 the SMBB parent's battery-voltage lookup can defer the whole probe
+when VADC is missing. The older diagnostic's assumption that the parent
+supply already exists before loading the ADC needs a different sequence
+on this kernel. The prepared kernel and firmware have passed host checks.
+Their live handoff, charging decisions and automatic return are still open.
+[Kernel source](https://github.com/timschmidt/fx0-linux/commit/6d7f378fc071fc88dbfdc9ee37c66cad27a13843)
+[Firmware source](https://github.com/timschmidt/fx0-lk2nd/commit/b3332cf75d7c5b58a6890c2be431f95f84f0fd55)
+[Linked candidate evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce
