@@ -66,6 +66,7 @@ updates for PIX and other resources. The prior source fails the early-rearm
 control on all three dispatchers. With all suites enabled, 114 dispatcher
 executions and 33 controls passed under ASan, UBSan and LeakSanitizer.
 [Timing evidence and candidate](../camera-reopen/vfe-queue-credit.md#timing-comparison-with-front-sensor-vertical-blanking)
+[Signed handset qualification](../../evidence/2026-11-19-fx0-camss-rdi-sof-rearm-handset.json)
 
 The original native buffers and callbacks remain in
 [the callback witness](../camera-reopen/vfe-callback-order.md). Host regression

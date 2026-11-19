@@ -114,5 +114,27 @@ The MSM8226 candidate queues a continuous RDI rearm when the write master
 completes and writes it at the next start-of-frame interrupt. It clears the
 pending rearm when the queue drains or the output is disabled. The ARM CAMSS
 component compiled with `W=1`, and 114 host executions and 33 negative
-controls passed. The default sensor frame timing is the target for the next
-handset qualification. [Candidate source](https://github.com/timschmidt/fx0-linux/commit/ecf268bf5d66c17e545a1a06792ec679cdaf3eaa)
+controls passed. [Candidate source](https://github.com/timschmidt/fx0-linux/commit/ecf268bf5d66c17e545a1a06792ec679cdaf3eaa)
+
+## Frame-start rearm handset qualification
+
+The signed source candidate kept the front sensor's default blanking of 26.
+Four eight-second front windows recorded 460 RDI frame starts and 460
+write-master completions. The nominal frame period was 69.597 ms and the
+largest delivered interval was 69.847 ms. Both rear RAW10 windows, at
+1640×1232 and 3280×2464, held their 33.272 ms cadence. Frame-start and
+write-master counts across the six windows agreed to within one completion
+at the endpoints. Each delivered buffer matched a VFE interrupt with no
+trace loss. The test collected metadata without saving sensor frames.
+
+All 727 observed steady-state pattern-3 writes occurred in an RDI frame-start
+interrupt, including 171 interrupts with coalesced write-master status. Both
+finite captures returned all 24 requested buffers and released the sensors.
+The active-stream CAMSS guard returned `-EBUSY` on each sensor and each stream
+delivered at least six more verified buffers after refusal. With both cameras
+closed, the RTC woke the phone after 14.114 seconds. No camera warning was
+reported during the run. Active-stream suspend and resume remain open.
+
+The scheduled return restored the installed kernel. The independent audit
+verified 482 installed module files, the protected files, and the charger
+timer and control registers. [Signed RAM qualification](../../evidence/2026-11-19-fx0-camss-rdi-sof-rearm-handset.json)

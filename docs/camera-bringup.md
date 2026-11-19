@@ -577,6 +577,14 @@ sequence and the resulting frame-start and completion behavior. The active
 frame-drop phase remains unknown.
 [Register and IRQ evidence](../evidence/2026-11-19-fx0-camss-vfe-pattern-trace.json)
 
+The MSM8226 frame-start rearm candidate ran at the front sensor's default
+69.597 ms period. Its four front capture windows delivered one completion per
+frame across 460 starts, with a longest interval of 69.847 ms. Both rear
+RAW10 modes held 33.272 ms cadence. Register traces placed the continuous
+rearms in the frame-start IRQ. Both finite captures drained normally, the
+open-stream sleep guard refused suspend, and the closed-camera RTC wake
+passed. [Timing procedure and trials](../diagnostics/camera-reopen/vfe-queue-credit.md#frame-start-rearm-handset-qualification)
+
 Resuming the same stream requires CAMSS to stop DMA at suspend, preserve
 ownership of queued buffers, bring the pipeline back after its suppliers
 resume and surface a queue error if restart fails. The closed-sensor RTC

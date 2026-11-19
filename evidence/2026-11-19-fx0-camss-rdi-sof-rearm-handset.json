@@ -1,0 +1,296 @@
+{
+  "date_UTC": "2026-11-19",
+  "RAM_image": {
+    "kernel_source": "ecf268bf5d66c17e545a1a06792ec679cdaf3eaa",
+    "boot_image_SHA256": "f2b9983038fed3fc26e85d172ef05182bdd374bf8c1aba88f307ec80971296ea",
+    "boot_image_bytes": 17405952,
+    "Madai_DTB_SHA256": "d390bd11f0025787b6bbe27b5fb16840c45e755fd586e057d70ec08287d53a12",
+    "unchanged_built_in_exports": 11718,
+    "unchanged_total_exports": 14885,
+    "verified_CAMSS_symbol_imports": 133,
+    "unchanged_installed_module_files_in_RAM": 481,
+    "original_module_certificate_SHA256": "de086e266ec1d82ea17ebbd51f10242e591df3cf74e958e269bdd91b9176d370",
+    "trial_certificate_SHA256": "a20281c6b7fb219702899cfbbc1d7573e75e7a575ea76c0d717aef328d85fa50",
+    "trial_signer_private_key_removed": true,
+    "tampered_payload_and_wrong_certificate_rejected": true,
+    "retained_signature_enforcement_and_WLAN_blacklist": true,
+    "early_return_seconds": 420,
+    "standard_return_seconds": 360
+  },
+  "paired_RAM_kernel_and_firmware_readbacks_verified": true,
+  "probe_targets_verified_from_exact_ELF_instruction_bodies": true,
+  "steady_camera_windows": [
+    {
+      "RDI0_frame_starts": 115,
+      "WM0_completion_status_count": 115,
+      "SOF_median_ns": 69597000.0,
+      "pattern3_updates_in_RDI0_SOF": 108,
+      "pattern3_updates_in_coalesced_SOF_WM": 42,
+      "pattern3_updates_in_WM_only": 0,
+      "pattern3_updates_outside_completion_irqs": 0,
+      "camera": "front",
+      "mode": "native",
+      "geometry": [
+        1976,
+        1200,
+        2472
+      ],
+      "observed_window_ns": 8001328000,
+      "matched_delivered_frames": 125,
+      "delivered_completions_in_VFE_IRQ": 125,
+      "analyzed_intervals": 114,
+      "gaps_over_1_5_frame_periods": 0,
+      "gaps_over_10_frame_periods": 0,
+      "largest_interval_ns": 69846875,
+      "largest_gap_register_observation": null,
+      "default_front_vblank_checked": true,
+      "lossless_trace_and_probe_cleanup": true,
+      "cadence_passed": true,
+      "rearm_at_sof_observed": true,
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "RDI0_frame_starts": 150,
+      "WM0_completion_status_count": 151,
+      "SOF_median_ns": 33272000,
+      "pattern3_updates_in_RDI0_SOF": 150,
+      "pattern3_updates_in_coalesced_SOF_WM": 0,
+      "pattern3_updates_in_WM_only": 0,
+      "pattern3_updates_outside_completion_irqs": 0,
+      "camera": "back",
+      "mode": "binned",
+      "geometry": [
+        1640,
+        1232,
+        2056
+      ],
+      "observed_window_ns": 5002822000,
+      "matched_delivered_frames": 159,
+      "delivered_completions_in_VFE_IRQ": 159,
+      "analyzed_intervals": 150,
+      "gaps_over_1_5_frame_periods": 0,
+      "gaps_over_10_frame_periods": 0,
+      "largest_interval_ns": 33483333,
+      "largest_gap_register_observation": null,
+      "default_front_vblank_checked": false,
+      "lossless_trace_and_probe_cleanup": true,
+      "cadence_passed": true,
+      "rearm_at_sof_observed": true,
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "RDI0_frame_starts": 115,
+      "WM0_completion_status_count": 115,
+      "SOF_median_ns": 69597000.0,
+      "pattern3_updates_in_RDI0_SOF": 105,
+      "pattern3_updates_in_coalesced_SOF_WM": 45,
+      "pattern3_updates_in_WM_only": 0,
+      "pattern3_updates_outside_completion_irqs": 0,
+      "camera": "front",
+      "mode": "native",
+      "geometry": [
+        1976,
+        1200,
+        2472
+      ],
+      "observed_window_ns": 8001401000,
+      "matched_delivered_frames": 125,
+      "delivered_completions_in_VFE_IRQ": 125,
+      "analyzed_intervals": 114,
+      "gaps_over_1_5_frame_periods": 0,
+      "gaps_over_10_frame_periods": 0,
+      "largest_interval_ns": 69812395,
+      "largest_gap_register_observation": null,
+      "default_front_vblank_checked": true,
+      "lossless_trace_and_probe_cleanup": true,
+      "cadence_passed": true,
+      "rearm_at_sof_observed": true,
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "RDI0_frame_starts": 151,
+      "WM0_completion_status_count": 151,
+      "SOF_median_ns": 33272000.0,
+      "pattern3_updates_in_RDI0_SOF": 151,
+      "pattern3_updates_in_coalesced_SOF_WM": 0,
+      "pattern3_updates_in_WM_only": 0,
+      "pattern3_updates_outside_completion_irqs": 0,
+      "camera": "back",
+      "mode": "full",
+      "geometry": [
+        3280,
+        2464,
+        4104
+      ],
+      "observed_window_ns": 5002613000,
+      "matched_delivered_frames": 159,
+      "delivered_completions_in_VFE_IRQ": 159,
+      "analyzed_intervals": 150,
+      "gaps_over_1_5_frame_periods": 0,
+      "gaps_over_10_frame_periods": 0,
+      "largest_interval_ns": 33492083,
+      "largest_gap_register_observation": null,
+      "default_front_vblank_checked": false,
+      "lossless_trace_and_probe_cleanup": true,
+      "cadence_passed": true,
+      "rearm_at_sof_observed": true,
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "RDI0_frame_starts": 115,
+      "WM0_completion_status_count": 115,
+      "SOF_median_ns": 69597000.0,
+      "pattern3_updates_in_RDI0_SOF": 104,
+      "pattern3_updates_in_coalesced_SOF_WM": 52,
+      "pattern3_updates_in_WM_only": 0,
+      "pattern3_updates_outside_completion_irqs": 0,
+      "camera": "front",
+      "mode": "native",
+      "geometry": [
+        1976,
+        1200,
+        2472
+      ],
+      "observed_window_ns": 8009274000,
+      "matched_delivered_frames": 125,
+      "delivered_completions_in_VFE_IRQ": 125,
+      "analyzed_intervals": 114,
+      "gaps_over_1_5_frame_periods": 0,
+      "gaps_over_10_frame_periods": 0,
+      "largest_interval_ns": 69841979,
+      "largest_gap_register_observation": null,
+      "default_front_vblank_checked": true,
+      "lossless_trace_and_probe_cleanup": true,
+      "cadence_passed": true,
+      "rearm_at_sof_observed": true,
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "RDI0_frame_starts": 115,
+      "WM0_completion_status_count": 115,
+      "SOF_median_ns": 69597000.0,
+      "pattern3_updates_in_RDI0_SOF": 109,
+      "pattern3_updates_in_coalesced_SOF_WM": 32,
+      "pattern3_updates_in_WM_only": 0,
+      "pattern3_updates_outside_completion_irqs": 0,
+      "camera": "front",
+      "mode": "native",
+      "geometry": [
+        1976,
+        1200,
+        2472
+      ],
+      "observed_window_ns": 8001642000,
+      "matched_delivered_frames": 125,
+      "delivered_completions_in_VFE_IRQ": 125,
+      "analyzed_intervals": 114,
+      "gaps_over_1_5_frame_periods": 0,
+      "gaps_over_10_frame_periods": 0,
+      "largest_interval_ns": 69774375,
+      "largest_gap_register_observation": null,
+      "default_front_vblank_checked": true,
+      "lossless_trace_and_probe_cleanup": true,
+      "cadence_passed": true,
+      "rearm_at_sof_observed": true,
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    }
+  ],
+  "finite_drains": [
+    {
+      "camera": "front",
+      "run": 1,
+      "timing": {
+        "buffers": 24,
+        "median_seconds": 0.069597,
+        "longest_seconds": 0.069702,
+        "longest_adjacent_sequence": [
+          12,
+          13
+        ]
+      },
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "camera": "back",
+      "run": 1,
+      "timing": {
+        "buffers": 24,
+        "median_seconds": 0.033272,
+        "longest_seconds": 0.033352,
+        "longest_adjacent_sequence": [
+          10,
+          11
+        ]
+      },
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    }
+  ],
+  "active_streams": [
+    {
+      "camera": "front",
+      "CAMSS_prepare_returns": [
+        -16
+      ],
+      "machine_suspend_entries": 0,
+      "frames_verified_after_refusal": 6,
+      "sensors_runtime_suspended_after_close": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "camera": "back",
+      "CAMSS_prepare_returns": [
+        -16
+      ],
+      "machine_suspend_entries": 0,
+      "frames_verified_after_refusal": 6,
+      "sensors_runtime_suspended_after_close": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    }
+  ],
+  "closed_camera_window": {
+    "inactive_clock_seconds": 14.114,
+    "first_wakeup_source": "rtc",
+    "RTC_interrupt_increment": 1,
+    "cleared_alarm": true
+  },
+  "camera_warnings": 0,
+  "all_steady_windows_and_suspend_checks_passed": true,
+  "raw_sensor_frames_saved": false,
+  "installed_return": {
+    "module_files_verified": 482,
+    "protected_hashes_match": true,
+    "charger_registers_restored": true,
+    "journal_receipt_matched": true,
+    "both_sensors_runtime_suspended": true,
+    "front_vblank": 26,
+    "duplicate_RAM_readbacks_removed": true
+  }
+}
