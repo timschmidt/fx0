@@ -1345,14 +1345,45 @@ register verification. These workers now notify the battery supply when
 the inhibit votes or effective current limit change. The regression
 rejected the old steady-sample notifications and verified notifications
 on expiry, recovery, fault and a reduced-current transition. The full
-charger object compiled for ARM with `W=1`. The change still needs a
-guarded handset repeat to qualify charge disable through sleep and the
-fresh-sample requirement on wake. [Kernel change](https://github.com/timschmidt/fx0-linux/commit/1562a10bf78522776079c2aa7880d4b539324583)
+charger object compiled for ARM with `W=1`. [Kernel change](https://github.com/timschmidt/fx0-linux/commit/1562a10bf78522776079c2aa7880d4b539324583)
 
 The candidate returned through the scheduled reboot. The independent
 audit matched all seven protected hashes and all 482 installed module
 files, and the journal matched the failed suspend receipt.
 [Handset and regression evidence](../evidence/2026-11-19-fx0-managed-charger-freezer.json)
+
+#### Handset repeat with notification gating
+
+The rebuilt RAM image retained the prior configuration, device tree,
+initramfs and return timers. It matched all 11,718 built-in symbol exports
+and checked 468 module signatures, 482 files and 25,592 imported-symbol
+CRCs. The paired temporary loader and kernel both matched their USB
+readbacks. WLAN stayed disabled in the RAM boot.
+
+With the user inhibit held, the patched sample worker ran seven times in
+7.25 seconds and caused zero `smbb-bif` activations. The earlier build
+caused seven activations under the same observation. The first suspend
+request under user inhibit returned `EBUSY` around a battery-temperature
+interrupt. The repeat reached 14.358 seconds of `s2idle` and woke on the
+RTC alarm. The trace verified charge disable and its readback, zero
+charge-control writes during sleep, and zero enables after resume. The
+conservative `0x81` comparator window and user inhibit persisted.
+
+Both automatic-charge attempts stopped before machine suspend. Each
+trace recorded a fast-charge interrupt activating the battery wake
+source during device suspend. The first arrived before the managed
+charger callback. The second arrived 41 µs after the callback completed
+the charge-disable write. These traces show a separate source of suspend
+interference after the fix for
+periodic polling. Sleep from automatic charge and fresh-sample-gated
+re-enable after a completed wake remain unqualified.
+
+The scheduled reboot returned to installed r2. The independent USB
+audit matched all seven protected hashes, all 482 module files, and the
+worker's receipt in the retained journal. The journal recorded four
+`s2idle` requests and exits, including the three early returns.
+[Trace checker](../diagnostics/smbb-charging-policy/check-suspend-trace.py)
+[Handset and return evidence](../evidence/2026-11-19-fx0-managed-charger-suspend.json)
 
 ## PM8226 hardware key reset
 

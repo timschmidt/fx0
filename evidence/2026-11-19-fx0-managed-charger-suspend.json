@@ -1,0 +1,164 @@
+{
+  "recorded_UTC": "2026-11-19T16:44:37+00:00",
+  "kernel_source": "1562a10bf78522776079c2aa7880d4b539324583",
+  "build_toolchain": "Alpine Clang 22.1.3",
+  "RAM_image_SHA256": "cb8e0821241e01ce4ea83a1045dd0bab7ec1eea66fee2f19c6846ce69c5c2e42",
+  "firmware": "fx0-pm-host-01",
+  "linked_module_ABI_and_signatures": {
+    "built_in_exports": 11718,
+    "signed_modules": 468,
+    "all_file_hashes": 482,
+    "total_import_CRCs": 25592,
+    "built_in_import_CRCs": 22722,
+    "module_packet_SHA256": "38709847fd9bdb6d300782748ed297eb00d1aa7480d2599cb0e741d0f1a33766"
+  },
+  "normal_and_early_return_seconds": [
+    360,
+    420
+  ],
+  "exact_DT_and_initramfs": true,
+  "WLAN_disabled": true,
+  "patched_steady_inhibit_trace": {
+    "worker_entries": 7,
+    "worker_returns": 7,
+    "battery_activations": 0,
+    "activations_inside_worker": 0,
+    "trace_lost": 0,
+    "trace_cleanup_verified": true,
+    "seconds": 7.25
+  },
+  "unpatched_steady_activations": 7,
+  "attempts": [
+    {
+      "user_inhibit": false,
+      "rtc_completed": false,
+      "policy_pm_callback_entered": false,
+      "machine_suspend_entered": false,
+      "charger_irq_reporters": [
+        [
+          "chg-fast",
+          "smbb-bif"
+        ],
+        [
+          "chg-gone",
+          "smbb-bif"
+        ],
+        [
+          "chg-gone",
+          "smbb-dcin"
+        ],
+        [
+          "chg-gone",
+          "smbb-usbin"
+        ]
+      ],
+      "fast_charge_before": true,
+      "rtc_alarm_cleared": true,
+      "failure": "[Errno 16] Resource busy"
+    },
+    {
+      "user_inhibit": false,
+      "rtc_completed": false,
+      "policy_pm_callback_entered": true,
+      "machine_suspend_entered": false,
+      "charger_irq_reporters": [
+        [
+          "bat-temp",
+          "smbb-bif"
+        ],
+        [
+          "chg-fast",
+          "smbb-bif"
+        ],
+        [
+          "chg-gone",
+          "smbb-bif"
+        ],
+        [
+          "chg-gone",
+          "smbb-dcin"
+        ],
+        [
+          "chg-gone",
+          "smbb-usbin"
+        ]
+      ],
+      "fast_irq_activation_us_after_charge_disable_write": 41,
+      "fast_charge_before": true,
+      "rtc_alarm_cleared": true,
+      "failure": "[Errno 16] Resource busy"
+    },
+    {
+      "user_inhibit": true,
+      "rtc_completed": false,
+      "policy_pm_callback_entered": false,
+      "machine_suspend_entered": false,
+      "charger_irq_reporters": [
+        [
+          "bat-temp",
+          "smbb-bif"
+        ]
+      ],
+      "fast_charge_before": false,
+      "rtc_alarm_cleared": true,
+      "failure": "[Errno 16] Resource busy"
+    },
+    {
+      "user_inhibit": true,
+      "rtc_completed": true,
+      "policy_pm_callback_entered": true,
+      "machine_suspend_entered": true,
+      "charger_irq_reporters": [],
+      "fast_charge_before": false,
+      "rtc_alarm_cleared": true,
+      "inactive_clock_seconds": 14.358,
+      "rtc_irq": 33,
+      "RTC_interrupt_increment": 1,
+      "controls": {
+        "suspend_inhibit_and_readback": true,
+        "control_writes_during_sleep": 0,
+        "enable_writes_after_wake": 0,
+        "post_wake_ADC_before_enable": [],
+        "control_and_VADC_transfers": 44,
+        "lost_trace_entries": 0
+      },
+      "charge_control_after": [
+        0,
+        0
+      ],
+      "comparator_after": [
+        129,
+        129
+      ],
+      "votes_after": 2
+    }
+  ],
+  "qualified_modes": [
+    "inhibit-charge"
+  ],
+  "replayed_successful_trace": true,
+  "host_negative_trace_cases": 7,
+  "normal_charge_sleep_completed": false,
+  "scheduled_installed_return": {
+    "installed_module_files_verified": 482,
+    "protected_hashes_match": true,
+    "installed_Sway_IPC_active_outputs": 1,
+    "touch_devices_enumerated": 1,
+    "journal_counts": {
+      "journal_rows": 2327,
+      "kernel_rows": 519,
+      "early_return_guard_armed": 1,
+      "full_module_overlay_ready": 1,
+      "early_guard_or_overlay_failure": 0,
+      "suspend_entry": 4,
+      "kernel_fatal": 0,
+      "SMBB_or_VADC_error": 0,
+      "lockup": 0,
+      "normal_return_service_rows": 3,
+      "normal_return_service_success": 2,
+      "orderly_shutdown": 3,
+      "suspend_exit": 4
+    },
+    "matches_captured_RAM_receipt": true
+  }
+}
