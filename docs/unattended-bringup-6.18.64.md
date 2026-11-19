@@ -781,6 +781,23 @@ source-change event nor an input return. Capture streaming and decoded
 frame verification remain open.
 [Capture size control](https://github.com/timschmidt/fx0-linux/commit/701b3cfb1cade941660b977347e865c00189f3fe)
 
+A repeat with the first complete 940-byte access unit reached the
+firmware's sufficient-resources event at 320×240. V4L2 reported a
+320×256 capture format including padding. The 2.5-second observation
+reported no I/O error. This probe keeps capture streaming off, and the
+input buffer did not return during the observation. The twelve access
+units for the next frame test also replayed byte-for-byte through the
+software decoder and matched the established frame checks.
+
+The signed first-frame control checks the existing capture pool after
+the source-change event. It verifies both firmware buffer counts and
+every plane length before starting capture with the preallocated buffers.
+Seven host cases cover reuse and rejection. The ARM probe strips stride
+and height padding, converts NV12 to planar YUV420 and uses the existing
+content checks for the first picture. Host conversion and malformed
+length checks passed. Handset capture still awaits this test.
+[Capture pool validation](https://github.com/timschmidt/fx0-linux/commit/57be812a9b1015f6094516f8c4a513783f9ae130)
+
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
 its synthetic completion. The matched ordinary STOP test still failed
@@ -796,10 +813,34 @@ all 482 module files and the protected hashes. A signed trace derived
 from that exact image records firmware input and capture submissions,
 completion tags, status codes and flags. The host audit matched all 154
 import CRCs, 59 export CRCs and 488 module records. The trace and the
-probe that reports the exact userspace poll flags await handset testing.
+probe that reports the exact userspace poll flags then ran on the Fx0.
+The firmware completed all 12 real inputs and returned 12 nonempty
+capture payloads. Userspace dequeued every one, plus an empty buffer,
+and timed out waiting for `LAST`. The trace independently recorded an
+empty firmware capture completion with EOS set and firmware status zero.
+No error poll flags were observed in this run. The installed return
+passed the complete module and protected-hash audit.
+
+A second trace compared the capture addresses on the handset. It found
+that the empty completion for the synthetic input tag had no buffer
+address, even though it reported capture tag zero. The later EOS
+completion had the address issued for capture tag zero. This run
+returned `LAST` and all 12 payloads. Software decoding verified all 12
+frames. The previous timeout and the successful repeat establish that
+ordinary STOP can still be timing-sensitive. The stock driver also
+documents an empty-EOS case with no valid output buffer.
+
+The next signed encoder control discards only the observed successful
+addressless acknowledgement for the synthetic MSM8226 input tag. The
+valid EOS and capture payloads still follow the existing completion
+path. Eleven host cases check the exact signature and variants. The
+corrected image awaits handset repetition.
 [Reserved tag](https://github.com/timschmidt/fx0-linux/commit/cfac2aa935f6e6b235db9da58a7bbae33c254ca4)
 [Mapped EOS buffer](https://github.com/timschmidt/fx0-linux/commit/df0da6c7c770dc705bf5992ef2a18a02b37a2d96)
 [Encoder HFI trace](https://github.com/timschmidt/fx0-linux/commit/14edfd206702060296240d83d4fa6d92b0345d4b)
+[Capture address comparison](https://github.com/timschmidt/fx0-linux/commit/0281369ec0fa43672d72001c7a650849c0308e75)
+[Stock completion handler](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/vidc/msm_vidc_common.c#L1285-L1310)
+[Encoder acknowledgement filter](https://github.com/timschmidt/fx0-linux/commit/b28c5e79ab7d9e332a5ba1ed0de1650d6ac52b52)
 
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)

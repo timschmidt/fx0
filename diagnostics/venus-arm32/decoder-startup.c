@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <linux/videodev2.h>
+#include <poll.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -233,6 +234,111 @@ static int observe(int fd, const char *mode, size_t bytes, int capture_buffers)
     return fflush(stdout);
 }
 
+static int wait_for_video(int fd, short events)
+{
+    struct pollfd ready = { .fd = fd, .events = events };
+    int result = poll(&ready, 1, OBSERVATION_MS);
+
+    if (result <= 0) {
+        if (result == 0)
+            errno = ETIMEDOUT;
+        return -1;
+    }
+    if ((ready.revents & (POLLERR | POLLHUP | POLLNVAL)) || !(ready.revents & events)) {
+        errno = EIO;
+        return -1;
+    }
+    return 0;
+}
+
+static int save_picture(int fd, const struct v4l2_plane *plane,
+                        unsigned int stride, unsigned int padded_height,
+                        const char *destination)
+{
+    size_t chroma_offset = (size_t)stride * padded_height;
+    size_t last_row_end = chroma_offset + (size_t)stride * (HEIGHT / 2 - 1) + WIDTH;
+    unsigned char samples[WIDTH / 2];
+    const unsigned char *mapping, *pixels;
+    FILE *file;
+    int status = -1;
+
+    if (plane->bytesused > plane->length || plane->bytesused < plane->data_offset ||
+        last_row_end > plane->bytesused - plane->data_offset) {
+        errno = EPROTO;
+        return -1;
+    }
+    mapping = mmap(NULL, plane->length, PROT_READ, MAP_SHARED, fd, plane->m.mem_offset);
+    if (mapping == MAP_FAILED)
+        return -1;
+    pixels = mapping + plane->data_offset;
+    file = fopen(destination, "wbx");
+    if (file) {
+        for (unsigned int row = 0; row < HEIGHT; row++)
+            if (fwrite(pixels + row * stride, 1, WIDTH, file) != WIDTH)
+                goto close_output;
+        for (unsigned int component = 0; component < 2; component++) {
+            for (unsigned int row = 0; row < HEIGHT / 2; row++) {
+                const unsigned char *line = pixels + chroma_offset + row * stride;
+
+                for (unsigned int column = 0; column < WIDTH / 2; column++)
+                    samples[column] = line[column * 2 + component];
+                if (fwrite(samples, 1, sizeof(samples), file) != sizeof(samples))
+                    goto close_output;
+            }
+        }
+        status = 0;
+close_output:
+        if (fclose(file) != 0)
+            status = -1;
+    }
+    int saved_errno = errno;
+    munmap((void *)mapping, plane->length);
+    errno = saved_errno;
+    return status;
+}
+
+static int capture_first_frame(int fd, unsigned int count, const char *destination)
+{
+    struct v4l2_event event = {0};
+    struct v4l2_format format = { .type = capture };
+    struct v4l2_pix_format_mplane *pixels = &format.fmt.pix_mp;
+    struct v4l2_plane plane = {0};
+    struct v4l2_buffer buffer = {
+        .type = capture, .memory = V4L2_MEMORY_MMAP, .length = 1, .m.planes = &plane,
+    };
+    enum v4l2_buf_type stream = capture;
+
+    if (wait_for_video(fd, POLLPRI) < 0 || video_ioctl(fd, VIDIOC_DQEVENT, &event) < 0 ||
+        video_ioctl(fd, VIDIOC_G_FMT, &format) < 0)
+        return -1;
+    if (event.type != V4L2_EVENT_SOURCE_CHANGE ||
+        !(event.u.src_change.changes & V4L2_EVENT_SRC_CH_RESOLUTION) ||
+        pixels->pixelformat != V4L2_PIX_FMT_NV12 || pixels->num_planes != 1 ||
+        pixels->width != WIDTH || pixels->height != 256 ||
+        pixels->plane_fmt[0].bytesperline != 384) {
+        errno = EPROTO;
+        return -1;
+    }
+    for (unsigned int index = 0; index < count; index++) {
+        buffer.index = index;
+        if (video_ioctl(fd, VIDIOC_QBUF, &buffer) < 0)
+            return -1;
+    }
+    if (video_ioctl(fd, VIDIOC_STREAMON, &stream) < 0)
+        return -1;
+    fputs("CAPTURE STREAMON accepted\n", stderr);
+    if (wait_for_video(fd, POLLIN) < 0 || video_ioctl(fd, VIDIOC_DQBUF, &buffer) < 0)
+        return -1;
+    if (buffer.length != 1 || buffer.index >= count || buffer.flags & V4L2_BUF_FLAG_ERROR) {
+        errno = EPROTO;
+        return -1;
+    }
+    fprintf(stderr, "CAPTURE picture: bytes %u offset %u flags %#x\n",
+            plane.bytesused, plane.data_offset, buffer.flags);
+    return save_picture(fd, &plane, pixels->plane_fmt[0].bytesperline,
+                        pixels->height, destination);
+}
+
 int main(int argc, char **argv)
 {
     struct v4l2_event_subscription subscription = { .type = V4L2_EVENT_SOURCE_CHANGE };
@@ -240,16 +346,18 @@ int main(int argc, char **argv)
     struct stat metadata;
     int fd = -1, capture_buffers = 0, status = 1;
     const char *step = "input";
-    bool preallocate;
+    bool preallocate, first_frame;
     FILE *input;
 
-    if (argc != 4 ||
+    first_frame = argc == 5 && !strcmp(argv[1], "capture-first-frame");
+    if (!first_frame && (argc != 4 ||
         (strcmp(argv[1], "output-first") && strcmp(argv[1], "preallocate-capture") &&
-         strcmp(argv[1], "headers-only"))) {
+         strcmp(argv[1], "headers-only")))) {
         fprintf(stderr, "Usage: %s {output-first|preallocate-capture|headers-only} VIDEO CHUNK\n", argv[0]);
+        fprintf(stderr, "       %s capture-first-frame VIDEO ACCESS_UNIT RESULT\n", argv[0]);
         return 2;
     }
-    preallocate = !strcmp(argv[1], "preallocate-capture");
+    preallocate = first_frame || !strcmp(argv[1], "preallocate-capture");
     input = fopen(argv[3], "rb");
     if (!input)
         goto done;
@@ -284,8 +392,9 @@ int main(int argc, char **argv)
     step = "OUTPUT STREAMON";
     if (video_ioctl(fd, VIDIOC_STREAMON, &stream) < 0)
         goto done;
-    step = "observation";
-    if (!observe(fd, argv[1], (size_t)metadata.st_size, capture_buffers))
+    step = first_frame ? "CAPTURE first frame" : "observation";
+    if (first_frame ? !capture_first_frame(fd, (unsigned int)capture_buffers, argv[4]) :
+                      !observe(fd, argv[1], (size_t)metadata.st_size, capture_buffers))
         status = 0;
 
 done:

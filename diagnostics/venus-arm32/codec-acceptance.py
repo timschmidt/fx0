@@ -46,12 +46,12 @@ def raw_video():
     return video
 
 
-def check_frames(path):
+def check_frames(path, *, count=FRAMES):
     decoded = path.read_bytes()
-    if len(decoded) != FRAME_SIZE * FRAMES:
+    if not 1 <= count <= FRAMES or len(decoded) != FRAME_SIZE * count:
         raise ValueError("unexpected decoded size or frame count")
     maximum = 0
-    for frame in range(FRAMES):
+    for frame in range(count):
         start = frame * FRAME_SIZE
         for cell, expected in enumerate(levels(frame)):
             left, top = cell % 4 * 80 + 24, cell // 4 * 80 + 24
@@ -66,8 +66,8 @@ def check_frames(path):
             mean = sum(decoded[offset:offset + LUMA // 4]) / (LUMA // 4)
             if abs(mean - expected) > 18:
                 raise ValueError(f"incorrect chroma in frame {frame}, plane {plane}")
-    return {"frames": FRAMES, "luma_cells": FRAMES * FRAMES,
-            "max_luma_mean_error": maximum, "chroma_planes": FRAMES * 2}
+    return {"frames": count, "luma_cells": count * FRAMES,
+            "max_luma_mean_error": maximum, "chroma_planes": count * 2}
 
 
 def run_command(executable, args, directory, label):
