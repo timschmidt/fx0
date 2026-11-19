@@ -303,11 +303,10 @@ static int queue_capture(int fd, unsigned int index)
     return video_ioctl(fd, VIDIOC_QBUF, &buffer);
 }
 
-static int start_capture(int fd, int count, struct v4l2_format *format)
+static int read_capture_format(int fd, struct v4l2_format *format)
 {
     struct v4l2_event event = {0};
     struct v4l2_pix_format_mplane *pixels = &format->fmt.pix_mp;
-    enum v4l2_buf_type stream = capture;
 
     if (wait_for_video(fd, POLLPRI) < 0 || video_ioctl(fd, VIDIOC_DQEVENT, &event) < 0 ||
         video_ioctl(fd, VIDIOC_G_FMT, format) < 0)
@@ -320,12 +319,13 @@ static int start_capture(int fd, int count, struct v4l2_format *format)
         errno = EPROTO;
         return -1;
     }
-    if (!count) {
-        fputs("Allocating CAPTURE after the source-change event\n", stderr);
-        count = allocate(fd, capture, MAX_BUFFERS);
-        if (count < 0 || report_capture_lengths(fd, (unsigned int)count) < 0)
-            return -1;
-    }
+    return 0;
+}
+
+static int activate_capture(int fd, int count)
+{
+    enum v4l2_buf_type stream = capture;
+
     for (int index = 0; index < count; index++)
         if (queue_capture(fd, (unsigned int)index) < 0)
             return -1;
@@ -333,6 +333,19 @@ static int start_capture(int fd, int count, struct v4l2_format *format)
         return -1;
     fputs("CAPTURE STREAMON accepted\n", stderr);
     return count;
+}
+
+static int start_capture(int fd, int count, struct v4l2_format *format)
+{
+    if (read_capture_format(fd, format) < 0)
+        return -1;
+    if (!count) {
+        fputs("Allocating CAPTURE after the source-change event\n", stderr);
+        count = allocate(fd, capture, MAX_BUFFERS);
+        if (count < 0 || report_capture_lengths(fd, (unsigned int)count) < 0)
+            return -1;
+    }
+    return activate_capture(fd, count);
 }
 
 static int capture_first_frame(int fd, unsigned int count, const char *destination)
@@ -401,7 +414,7 @@ invalid:
 }
 
 static int capture_sequence(int fd, int count, const char *destination,
-                            FILE *input, const struct access_unit *units)
+                            FILE *input, const struct access_unit *units, bool early_capture)
 {
     struct v4l2_format format = { .type = capture };
     struct v4l2_decoder_cmd stop = { .cmd = V4L2_DEC_CMD_STOP };
@@ -411,9 +424,14 @@ static int capture_sequence(int fd, int count, const char *destination,
     int status = -1, saved_errno;
     FILE *file;
 
-    count = start_capture(fd, count, &format);
-    if (count < 0)
-        return -1;
+    if (early_capture) {
+        if (read_capture_format(fd, &format) < 0)
+            return -1;
+    } else {
+        count = start_capture(fd, count, &format);
+        if (count < 0)
+            return -1;
+    }
     file = fopen(destination, "wbx");
     if (!file)
         return -1;
@@ -525,20 +543,22 @@ int main(int argc, char **argv)
     struct stat metadata;
     int fd = -1, capture_buffers = 0, status = 1;
     const char *step = "input";
-    bool preallocate, first_frame, sequence, late_capture;
+    bool preallocate, first_frame, sequence, late_capture, early_capture;
     struct access_unit units[SEQUENCE_FRAMES];
     size_t initial_bytes;
     FILE *input;
 
     first_frame = argc == 5 && !strcmp(argv[1], "capture-first-frame");
     late_capture = argc == 5 && !strcmp(argv[1], "capture-sequence-late");
-    sequence = late_capture || (argc == 5 && !strcmp(argv[1], "capture-sequence"));
+    early_capture = argc == 5 && !strcmp(argv[1], "capture-sequence-early");
+    sequence = early_capture || late_capture || (argc == 5 && !strcmp(argv[1], "capture-sequence"));
     if (!first_frame && !sequence && (argc != 4 ||
         (strcmp(argv[1], "output-first") && strcmp(argv[1], "preallocate-capture") &&
          strcmp(argv[1], "headers-only")))) {
         fprintf(stderr, "Usage: %s {output-first|preallocate-capture|headers-only} VIDEO CHUNK\n", argv[0]);
         fprintf(stderr, "       %s capture-first-frame VIDEO ACCESS_UNIT RESULT\n", argv[0]);
         fprintf(stderr, "       %s {capture-sequence|capture-sequence-late} VIDEO FRAMED_ACCESS_UNITS RESULT\n", argv[0]);
+        fprintf(stderr, "       %s capture-sequence-early VIDEO FRAMED_ACCESS_UNITS RESULT\n", argv[0]);
         return 2;
     }
     preallocate = first_frame || (sequence && !late_capture) || !strcmp(argv[1], "preallocate-capture");
@@ -580,12 +600,18 @@ int main(int argc, char **argv)
     step = "first coded buffer";
     if (queue_input(fd, input, initial_bytes) < 0)
         goto done;
+    if (early_capture) {
+        step = "CAPTURE before OUTPUT start";
+        if (activate_capture(fd, capture_buffers) < 0)
+            goto done;
+        fputs("CAPTURE started before OUTPUT\n", stderr);
+    }
     step = "OUTPUT STREAMON";
     if (video_ioctl(fd, VIDIOC_STREAMON, &stream) < 0)
         goto done;
     if (sequence) {
         step = "CAPTURE sequence";
-        if (!capture_sequence(fd, capture_buffers, argv[4], input, units))
+        if (!capture_sequence(fd, capture_buffers, argv[4], input, units, early_capture))
             status = 0;
     } else if (first_frame) {
         step = "CAPTURE first frame";

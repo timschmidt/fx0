@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-19T02:52:21.178684+00:00",
+  "last_updated_UTC": "2026-11-19T03:08:27.655244+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -1947,6 +1947,86 @@
         "installed_return": "2780d66b-2951-488d-a52d-50cc0e3981b4",
         "installed_modules_verified": 482,
         "installed_protected_hashes_match": true
+      },
+      "dynamic_capture_transfer_reenable_comparison": {
+        "source_commit": "a277d0e672b4ae9a5743f79cc9cda4beda7ef87c",
+        "parent_image_sha256": "27dc2d64bb3f54bde266c5e9cf1d1c7c628cb47867581dcfc535523f3b410622",
+        "image_sha256": "3fe3e22025478d7cd3d152fd5bf9d4da94290b6f08cebbed2bad23e9a810be5d",
+        "decoder_signature_checked": true,
+        "matching_import_CRCs": 130,
+        "manifest_records_verified": 488,
+        "sanitizer_cases_passed": 32,
+        "exact_public_source_ref_verified": true,
+        "exact_RAM_readback": true,
+        "candidate_boot": "3755bcb5-0004-4b0b-8c1c-68b41d85d7df",
+        "capture_buffer_count": 32,
+        "CAPTURE_STREAMON_accepted": true,
+        "transfer_reenable_queued_after_capture": true,
+        "transfer_property_enqueue_status": 0,
+        "firmware_system_error_count": 0,
+        "firmware_rejected_properties": [
+          "0x1203001"
+        ],
+        "firmware_rejection_reason": "invalid decoder state",
+        "IOMMU_timeout_count": 0,
+        "decoded_sequence": {
+          "queued": 1,
+          "returned": 0,
+          "frames": 0,
+          "STOP": false,
+          "LAST": false
+        },
+        "startup_exit": "ETIMEDOUT",
+        "dynamic_capture_decoding_qualified": false,
+        "installed_return": "eb47e934-d577-4cd5-97f0-76fae1d152ee",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true
+      },
+      "capture_first_handset_comparison": {
+        "source_commit": "9bb2e3c38d164e9f34107e4b155ee59b43506918",
+        "parent_image_sha256": "deb8a3c7fec5ffac17343d430d36d3808463b407a1cc769564b39fefd733b8b8",
+        "image_sha256": "58eba6f2830393b0f1e1f3b0302b3b0b8f0d95760c234a66bcff251a109f3d7b",
+        "decoder_signature_checked": true,
+        "matching_import_CRCs": 131,
+        "additional_imports": [
+          "v4l2_m2m_buf_queue"
+        ],
+        "manifest_records_verified": 488,
+        "sanitizer_cases_passed": 136,
+        "exact_public_source_ref_verified": true,
+        "exact_RAM_readback": true,
+        "candidate_boot": "98a792b0-9f79-49d8-8689-c1af8a421953",
+        "arm_probe_sha256": "c67aa4f6db8aec2df0ce1af2ec3cb756012d14657e2714410ef42e3f6d82ec04",
+        "handset_fixture_sha256": "d1239efbe3c4e86cbe716cbcac0a97d75f040c2c8267aca6afe36bf2fb72f9c5",
+        "host_probe_cases": 12,
+        "device_static_capture_override": false,
+        "transfer_property_retains_original_value": true,
+        "userspace_CAPTURE_STREAMON_before_OUTPUT": true,
+        "firmware_capture_submissions_before_first_coded_input": true,
+        "capture_buffer_count": 32,
+        "sequence": {
+          "queued": 12,
+          "returned": 12,
+          "frames": 12,
+          "STOP": true,
+          "LAST": true
+        },
+        "verified_picture": {
+          "frames": 12,
+          "luma_cells": 144,
+          "max_luma_mean_error": 0,
+          "chroma_planes": 24
+        },
+        "output_sha256": "d44f9522cb30d7b8a64fb82270010758564d7dba45a11b97a4236c0e6bc176d0",
+        "byte_identical_to_software_reference": true,
+        "firmware_system_error_count": 0,
+        "firmware_rejection_count": 0,
+        "IOMMU_timeout_count": 0,
+        "installed_return": "a29816ba-bae0-4055-b37d-29882a9e3e94",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true,
+        "standard_FFmpeg_late_capture_startup_qualified": false,
+        "dynamic_resolution_change_qualified": false
       }
     }
   }

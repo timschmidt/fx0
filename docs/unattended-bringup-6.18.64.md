@@ -866,6 +866,29 @@ protected hashes. Dynamic capture decoding remains unqualified.
 [LG downstream property default](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/vidc/msm_vdec.c#L179-L187)
 [Initial transfer comparison](https://github.com/timschmidt/fx0-linux/commit/a81cacc5ca1a04f4ef64060d065257363fe883ce)
 
+Another signed comparison queued the enable property after submitting
+all 32 capture buffers. The driver reported success queueing that request.
+The retained firmware log rejected property `0x1203001` in the current
+decoder state. The probe again timed out with the first coded input
+pending and no picture returned. The log showed no firmware session
+error or IOMMU timeout. All 482 installed module files and the protected
+hashes matched on return.
+[Transfer re-enable comparison](https://github.com/timschmidt/fx0-linux/commit/a277d0e672b4ae9a5743f79cc9cda4beda7ef87c)
+
+The capture-first comparison kept dynamic allocation and the original
+transfer property. The probe started CAPTURE before OUTPUT. The driver
+submitted the prequeued capture pool to firmware before the first coded
+access unit, as confirmed by the candidate journal. The probe dequeued all 12
+coded inputs and returned 12 decoded pictures, with `LAST` after STOP.
+The decoded output matched the software reference byte for byte. The
+code passed 136 host cases for submission order, errors and decoder state.
+The probe passed 12 host cases covering early, preallocated and late
+capture order. The installed return matched all 482 module files and
+the protected hashes. The demonstrated path runs with the static
+override disabled, known dimensions and an early capture pool. Ordinary
+FFmpeg startup and resolution changes still need handset qualification.
+[Capture-first comparison](https://github.com/timschmidt/fx0-linux/commit/9bb2e3c38d164e9f34107e4b155ee59b43506918)
+
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
 its synthetic completion. The matched ordinary STOP test still failed
