@@ -1,0 +1,87 @@
+{
+  "date_UTC": "2026-11-19",
+  "linked_kernel_source": "272ba42f0202498b83c2cabfe922464c46c0cf0c",
+  "four_minute_device_tree_source": "507b8a17314cb5cc5aaa157572e87c9f7ad3a6b4",
+  "four_minute_RAM_image_SHA256": "b1ba8bac3771f2b875f2597ebddb89d5831c8016f4a81469bcdf576911df73ee",
+  "480_minute_reference_image_SHA256": "19a53dd0059e296f8068394131fc46d1574e936299f203386e2564bb2997d5e1",
+  "linked_kernel_SHA256": "f9259ba284200ec362c928076fdd5276ecd6fb1bce0b5aed8de61d5d058266e3",
+  "unchanged_ramdisk_SHA256": "1e975dec10d71b866c979c89b145d9b682514d920c98cade3d3e7d80fb34d6ea",
+  "signed_modules_verified": 468,
+  "module_files_verified_on_RAM_and_installed_boots": 482,
+  "wired_USB_verified": true,
+  "WLAN_unavailable_in_RAM": true,
+  "observation": {
+    "passed": true,
+    "configured_minutes": 4,
+    "transitions": [
+      {
+        "uptime_seconds": 69.0,
+        "failure_IRQ_delta": 0,
+        "fast_charge": true,
+        "cutoff": false,
+        "timer_armed": true,
+        "failure_latch": [
+          0,
+          0
+        ],
+        "charger_status": [
+          33,
+          33
+        ]
+      },
+      {
+        "uptime_seconds": 290.11,
+        "failure_IRQ_delta": 1,
+        "fast_charge": false,
+        "cutoff": true,
+        "timer_armed": true,
+        "failure_latch": [
+          0,
+          0
+        ],
+        "charger_status": [
+          1,
+          1
+        ]
+      }
+    ],
+    "SPMI_reads": 2260,
+    "workload_PMIC_writes": 0,
+    "started_uptime_seconds": 69.0,
+    "fast_charge_first_seen_uptime": 69.0,
+    "failure_IRQ_first_seen_uptime": 290.11,
+    "timer_armed_before_failure": true,
+    "cutoff_verified_for_eight_seconds": true,
+    "last_failure_IRQ_delta": 1
+  },
+  "shutdown_and_return": {
+    "automatic_return": true,
+    "installed_protected_hashes_match": true,
+    "kernel_charger_timer_events": {
+      "failure_IRQ": 1,
+      "failure_IRQ_cutoff_verified": 1,
+      "failure_register": 0,
+      "configuration_error": 0,
+      "restore_error": 0,
+      "cutoff_error": 0
+    },
+    "kernel_fatal_events": 0,
+    "kernel_lockup_events": 0,
+    "timer_registers_match": true,
+    "failure_line_and_latch_clear": true,
+    "charge_disabled_at_return": true,
+    "returned_timer_and_comparator_rows": [
+      "00 1d 00 81 03",
+      "00 1d 00 81 03"
+    ],
+    "returned_charger_control_and_latch_rows": [
+      "02 31 00 00 00",
+      "02 31 00 00 00"
+    ],
+    "postflight_SPMI_reads": 20,
+    "postflight_SPMI_writes": 0
+  },
+  "independent_electrical_cutoff_measured": false,
+  "stalled_CPU_tested": false,
+  "four_minute_setting_deployed": false
+}

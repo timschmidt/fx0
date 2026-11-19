@@ -1347,8 +1347,7 @@ charge failure holds the driver's fault vote. Steady policy samples
 leave an already enabled timed charge session alone. The ARM driver
 object and Madai DTB compiled. The binding passed validation, and the
 host model covered duration bounds, readback errors, the charge-failure
-latch and an injected failure during enable. Timer expiry and recovery
-on the handset remain open.
+latch and an injected failure during enable.
 [Candidate source](https://github.com/timschmidt/fx0-linux/commit/1e75e586a6e8f03fd013430135e5abf86a8643e0)
 [Host checks](../diagnostics/smbb-charging-policy/check-duration.py)
 
@@ -1376,9 +1375,25 @@ The scheduled reboot returned to installed r2. All seven protected
 hashes and 482 installed module files matched. Both postflight snapshots
 matched the installed reference, including timer enable `0x00`, period
 `0x1d` and failure latch `0x00`. The RAM boot's journal contained no
-charger timer or cutoff errors. Timer expiry and charge cutoff with a
-stalled CPU still require handset tests.
+charger timer or cutoff errors.
 [Handset rollback evidence](../evidence/2026-11-19-fx0-charge-duration-rollback.json)
+
+The four-minute RAM boot used the same linked kernel, signed modules and
+initramfs, with only the timer duration changed in the device tree. The
+first snapshot at 69 seconds after boot showed fast charge active. The
+first sample with a charger-failure IRQ was at 290.11 seconds after boot.
+Fast charge had cleared, the charger control showed cutoff, and the
+comparator stayed at `0x81` for at least eight seconds. The journal
+recorded one failure IRQ with successful cutoff. The observer performed
+2,260 SPMI reads and zero PMIC writes.
+
+The second scheduled reboot also matched the seven installed hashes,
+482 module files and both timer and cutoff register snapshots. The
+failure line and latch were clear. These tests qualify the short timer
+and driver's cutoff on a running kernel. Electrical cutoff and cutoff
+with a stalled CPU still require measurement.
+[Four-minute device tree](https://github.com/timschmidt/fx0-linux/commit/507b8a17314cb5cc5aaa157572e87c9f7ad3a6b4)
+[Handset expiry evidence](../evidence/2026-11-19-fx0-charge-duration-expiry.json)
 
 #### Managed charger suspend refusal and wake notifications
 
