@@ -18,6 +18,7 @@ CASES = ['empty0','empty1','pending1_0','pending1_1','pending2_0','pending2_1',
          'no_last_pending','pix_no_last','reassigned_wm','pix_unrelated_active']
 STOPPING_CASES = ['stopping_handoff','rdi_stopping_phase0','rdi_stopping_phase1',
                   'pix_stopping_phase0','pix_stopping_phase1']
+SOF_CASES = ['rdi_sof_rearm','rdi_sof_coalesced','rdi_sof_drain','rdi_sof_unsupported','pix_sof_unchanged']
 VERSIONS = ['4-1','4-7','4-8']
 GEN1 = ['vfe_output_init_addrs','vfe_output_frame_drop','vfe_output_update_ping_addr',
         'vfe_output_update_pong_addr','vfe_buf_update_wm_on_next','vfe_buf_update_wm_on_last',
@@ -122,6 +123,8 @@ def main():
     parser.add_argument('--baseline-tree',type=Path,required=True)
     parser.add_argument('--stopping-baseline-tree',type=Path,
                         help='enable the pre-ack STOPPING cases and use this pre-fix tree as their control')
+    parser.add_argument('--sof-baseline-tree',type=Path,
+                        help='enable start-of-frame rearm cases and use this pre-change tree as their control')
     parser.add_argument('--output-dir',type=Path,required=True)
     parser.add_argument('--cc',default='clang-21')
     parser.add_argument('--sanitize',action='store_true')
@@ -159,6 +162,8 @@ def main():
             report['negative'].append({'version':binary.parent.name,'case':case,'expected_failure_observed':done.stderr.strip()})
         save()
     cases = CASES + STOPPING_CASES if args.stopping_baseline_tree else CASES
+    if args.sof_baseline_tree:
+        cases = cases + SOF_CASES
     for version in VERSIONS:
         candidate=build(args.kernel_tree,version,None,'candidate')
         for case in cases:run(candidate,case)
@@ -175,6 +180,9 @@ def main():
             before=build(args.stopping_baseline_tree,version,None,'stopping-baseline')
             run(before,STOPPING_CASES[0],['STOPPING_OWNER_AT_UNLOCK'])
             for case in STOPPING_CASES[1:]:run(before,case,['STOPPING_STRAY_DIAGNOSTIC'])
+        if args.sof_baseline_tree:
+            before=build(args.sof_baseline_tree,version,None,'sof-baseline')
+            run(before,'rdi_sof_rearm',['REARMED_BEFORE_RDI_SOF'])
     report.update(passed=True,positive_scenarios=len(cases),positive_dispatcher_cases=len(report['positive']),
                   negative_controls=len(report['negative']),phone_access=False)
     save();print(json.dumps({key:report[key] for key in ['passed','positive_scenarios','positive_dispatcher_cases','negative_controls','sanitize','phone_access']}))

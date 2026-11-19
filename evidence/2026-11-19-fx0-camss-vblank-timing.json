@@ -1,0 +1,385 @@
+{
+  "date_UTC": "2026-11-19",
+  "RAM_kernel_source": "2150f900adaf27c32a5bd620bd12ab04345aa99b",
+  "RAM_image_SHA256": "251e90924d2cc4c21307872f2918ec101306f942545cb17220909dd450e094c9",
+  "crop_width_height_RAW10": [
+    1976,
+    1200
+  ],
+  "pixel_rate": 39600000,
+  "horizontal_blanking": 272,
+  "initial_dispatch_failed": true,
+  "compressed_dispatch_on_same_RAM_boot": true,
+  "same_sensor_and_mode_for_all_cases": true,
+  "all_captures_without_sensor_data_files": true,
+  "observation_windows": [
+    {
+      "RDI0_frame_starts": 116,
+      "WM0_completion_status_count": 44,
+      "SOF_median_ns": 69597000,
+      "vblank": 26,
+      "vblank_restored": 26,
+      "case": 0,
+      "per_sample_achieved_cadence_confirmed": true,
+      "expected_SOF_ns": 69597172,
+      "observed_window_ns": 8027059000,
+      "analyzed_intervals": 43,
+      "matched_delivered_frames": 56,
+      "delivered_completions_in_VFE_IRQ": 56,
+      "largest_interval_ns": 2157761093,
+      "long_intervals": [
+        {
+          "gap_ns": 2157761093,
+          "sequences": [
+            29,
+            30
+          ],
+          "ownership_events_ordered": true,
+          "VB2_zero_owned_ns": 0,
+          "owned_after_first_done": 3,
+          "registers": {
+            "nearby_write_sequence_complete": true,
+            "last_frame_drop_writes": {
+              "period_write": {
+                "wm": 0,
+                "period": 31,
+                "addr_cfg": 124,
+                "before_first_done_ns": 22000
+              },
+              "pattern_write": {
+                "wm": 0,
+                "pattern": 3,
+                "before_first_done_ns": 16000
+              },
+              "update_write": {
+                "line": 0,
+                "mask": 2,
+                "before_first_done_ns": 10000
+              }
+            },
+            "inner_hardware_status_counts": {
+              "0x20/0x20000000": 1,
+              "0x0/0x20000000": 30
+            },
+            "RDI_start_of_frame_count": 31,
+            "RDI_register_update_ack_offsets_ns": [
+              131000
+            ],
+            "write_master_done_offsets_ns": [],
+            "final_completion_status": [
+              256,
+              536870912
+            ],
+            "inner_frame_drop_programming_events": 3
+          }
+        },
+        {
+          "gap_ns": 2157668853,
+          "sequences": [
+            31,
+            32
+          ],
+          "ownership_events_ordered": true,
+          "VB2_zero_owned_ns": 0,
+          "owned_after_first_done": 3,
+          "registers": {
+            "nearby_write_sequence_complete": true,
+            "last_frame_drop_writes": {
+              "period_write": {
+                "wm": 0,
+                "period": 31,
+                "addr_cfg": 124,
+                "before_first_done_ns": 24000
+              },
+              "pattern_write": {
+                "wm": 0,
+                "pattern": 3,
+                "before_first_done_ns": 18000
+              },
+              "update_write": {
+                "line": 0,
+                "mask": 2,
+                "before_first_done_ns": 11000
+              }
+            },
+            "inner_hardware_status_counts": {
+              "0x20/0x20000000": 1,
+              "0x0/0x20000000": 30
+            },
+            "RDI_start_of_frame_count": 31,
+            "RDI_register_update_ack_offsets_ns": [
+              42000
+            ],
+            "write_master_done_offsets_ns": [],
+            "final_completion_status": [
+              256,
+              536870912
+            ],
+            "inner_frame_drop_programming_events": 3
+          }
+        }
+      ],
+      "update_ack_ns_min_median_max": [
+        39000,
+        121500.0,
+        138000
+      ],
+      "paired_acks": 16,
+      "completed_lossless": true,
+      "probe_inventory_restored": true,
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "RDI0_frame_starts": 105,
+      "WM0_completion_status_count": 105,
+      "SOF_median_ns": 76862000.0,
+      "vblank": 154,
+      "vblank_restored": 26,
+      "case": 1,
+      "per_sample_achieved_cadence_confirmed": true,
+      "expected_SOF_ns": 76863434,
+      "observed_window_ns": 8026979000,
+      "analyzed_intervals": 104,
+      "matched_delivered_frames": 118,
+      "delivered_completions_in_VFE_IRQ": 118,
+      "largest_interval_ns": 77087916,
+      "long_intervals": [],
+      "update_ack_ns_min_median_max": [
+        7200000,
+        7401000.0,
+        7545000
+      ],
+      "paired_acks": 104,
+      "completed_lossless": true,
+      "probe_inventory_restored": true,
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "RDI0_frame_starts": 88,
+      "WM0_completion_status_count": 88,
+      "SOF_median_ns": 91396000,
+      "vblank": 410,
+      "vblank_restored": 26,
+      "case": 2,
+      "per_sample_achieved_cadence_confirmed": true,
+      "expected_SOF_ns": 91395960,
+      "observed_window_ns": 8022910000,
+      "analyzed_intervals": 87,
+      "matched_delivered_frames": 100,
+      "delivered_completions_in_VFE_IRQ": 100,
+      "largest_interval_ns": 91609635,
+      "long_intervals": [],
+      "update_ack_ns_min_median_max": [
+        21800000,
+        21935000,
+        22091000
+      ],
+      "paired_acks": 87,
+      "completed_lossless": true,
+      "probe_inventory_restored": true,
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "RDI0_frame_starts": 88,
+      "WM0_completion_status_count": 88,
+      "SOF_median_ns": 91395000,
+      "vblank": 410,
+      "vblank_restored": 26,
+      "case": 3,
+      "per_sample_achieved_cadence_confirmed": true,
+      "expected_SOF_ns": 91395960,
+      "observed_window_ns": 8025823000,
+      "analyzed_intervals": 87,
+      "matched_delivered_frames": 100,
+      "delivered_completions_in_VFE_IRQ": 100,
+      "largest_interval_ns": 91616823,
+      "long_intervals": [],
+      "update_ack_ns_min_median_max": [
+        21705000,
+        21933000,
+        22141000
+      ],
+      "paired_acks": 87,
+      "completed_lossless": true,
+      "probe_inventory_restored": true,
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "RDI0_frame_starts": 104,
+      "WM0_completion_status_count": 105,
+      "SOF_median_ns": 76863000,
+      "vblank": 154,
+      "vblank_restored": 26,
+      "case": 4,
+      "per_sample_achieved_cadence_confirmed": true,
+      "expected_SOF_ns": 76863434,
+      "observed_window_ns": 8022195000,
+      "analyzed_intervals": 104,
+      "matched_delivered_frames": 118,
+      "delivered_completions_in_VFE_IRQ": 118,
+      "largest_interval_ns": 77052968,
+      "long_intervals": [],
+      "update_ack_ns_min_median_max": [
+        7222000,
+        7398000.0,
+        7580000
+      ],
+      "paired_acks": 104,
+      "completed_lossless": true,
+      "probe_inventory_restored": true,
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "RDI0_frame_starts": 115,
+      "WM0_completion_status_count": 55,
+      "SOF_median_ns": 69597000.0,
+      "vblank": 26,
+      "vblank_restored": 26,
+      "case": 5,
+      "per_sample_achieved_cadence_confirmed": true,
+      "expected_SOF_ns": 69597172,
+      "observed_window_ns": 8021692000,
+      "analyzed_intervals": 54,
+      "matched_delivered_frames": 69,
+      "delivered_completions_in_VFE_IRQ": 69,
+      "largest_interval_ns": 2157546145,
+      "long_intervals": [
+        {
+          "gap_ns": 2157546145,
+          "sequences": [
+            25,
+            26
+          ],
+          "ownership_events_ordered": true,
+          "VB2_zero_owned_ns": 0,
+          "owned_after_first_done": 3,
+          "registers": {
+            "nearby_write_sequence_complete": true,
+            "last_frame_drop_writes": {
+              "period_write": {
+                "wm": 0,
+                "period": 31,
+                "addr_cfg": 124,
+                "before_first_done_ns": 35000
+              },
+              "pattern_write": {
+                "wm": 0,
+                "pattern": 3,
+                "before_first_done_ns": 25000
+              },
+              "update_write": {
+                "line": 0,
+                "mask": 2,
+                "before_first_done_ns": 16000
+              }
+            },
+            "inner_hardware_status_counts": {
+              "0x20/0x20000000": 1,
+              "0x0/0x20000000": 30
+            },
+            "RDI_start_of_frame_count": 31,
+            "RDI_register_update_ack_offsets_ns": [
+              105000
+            ],
+            "write_master_done_offsets_ns": [],
+            "final_completion_status": [
+              256,
+              0
+            ],
+            "inner_frame_drop_programming_events": 3
+          }
+        },
+        {
+          "gap_ns": 2157463957,
+          "sequences": [
+            45,
+            46
+          ],
+          "ownership_events_ordered": true,
+          "VB2_zero_owned_ns": 0,
+          "owned_after_first_done": 3,
+          "registers": {
+            "nearby_write_sequence_complete": true,
+            "last_frame_drop_writes": {
+              "period_write": {
+                "wm": 0,
+                "period": 31,
+                "addr_cfg": 124,
+                "before_first_done_ns": 21000
+              },
+              "pattern_write": {
+                "wm": 0,
+                "pattern": 3,
+                "before_first_done_ns": 15000
+              },
+              "update_write": {
+                "line": 0,
+                "mask": 2,
+                "before_first_done_ns": 10000
+              }
+            },
+            "inner_hardware_status_counts": {
+              "0x20/0x20000000": 1,
+              "0x0/0x20000000": 30
+            },
+            "RDI_start_of_frame_count": 31,
+            "RDI_register_update_ack_offsets_ns": [
+              128000
+            ],
+            "write_master_done_offsets_ns": [],
+            "final_completion_status": [
+              256,
+              0
+            ],
+            "inner_frame_drop_programming_events": 3
+          }
+        }
+      ],
+      "update_ack_ns_min_median_max": [
+        23000,
+        132000.0,
+        157000
+      ],
+      "paired_acks": 46,
+      "completed_lossless": true,
+      "probe_inventory_restored": true,
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    }
+  ],
+  "restored_installed_vblank": 26,
+  "installed_sensor_runtime": "suspended",
+  "installed_module_files_verified": 482,
+  "protected_files_and_charger_registers_verified": true,
+  "new_kernel_source_candidate": {
+    "commit": "ecf268bf5d66c17e545a1a06792ec679cdaf3eaa",
+    "ARM_CAMSS_component_SHA256": "f8445f81a5ea676f9d878bc440c2eef646362bdb3108e676e2f2661ba9faa65c",
+    "ARM_W1_component_compiled": true,
+    "host_regression_executions": 114,
+    "host_negative_controls": 33,
+    "ASan_UBSan_LeakSanitizer": true,
+    "handset_trial": false,
+    "harness_SHA256": {
+      "check_gen1.py": "2069eb42c7e95fb9ae33d06d70f8e76260d15a266af187cc755fc9f63d0256c7",
+      "shim.h": "2794975f8f934747e61b27d27998af4703e4a5174593902cda54a3089b8b5246",
+      "cases.c": "076e8599abc92842992b32c537d110cd9aeb580e15dd23cee5a064012bff7844"
+    }
+  }
+}

@@ -85,3 +85,34 @@ are therefore tied to an entire programmed frame-drop period despite an early
 acknowledgement and continuing frame starts. The hardware's phase-reset rules
 remain to be established.
 [Register and IRQ evidence](../../evidence/2026-11-19-fx0-camss-vfe-pattern-trace.json)
+
+## Timing comparison with front-sensor vertical blanking
+
+Six eight-second observation windows on the same RAM image used VBLANK
+values 26, 154, 410, 410, 154 and 26. Each window followed a short settling
+period and used the same RAW10 resolution. The live control readback and the
+median RDI start-of-frame interval verified the sensor cadence. Each capture
+restored VBLANK to 26 before closing the sensor. [IMX132 control implementation](https://github.com/timschmidt/fx0-linux/blob/2150f900adaf27c32a5bd620bd12ab04345aa99b/drivers/media/i2c/imx132.c)
+
+| VBLANK | Measured frame period | Median time from WM completion to RDI update acknowledgement | Frame starts across both windows | Gaps over ten frame periods |
+| ---: | ---: | ---: | ---: | ---: |
+| 26 | 69.597 ms | 0.122–0.132 ms | 231 | 4 |
+| 154 | 76.862–76.863 ms | 7.398–7.401 ms | 209 | 0 |
+| 410 | 91.395–91.396 ms | 21.933–21.935 ms | 176 | 0 |
+
+Both default windows reproduced two 31-period gaps with queued buffers.
+All four longer-blanking windows delivered completions at the measured frame
+cadence. The start and completion counts for each longer window agree to
+within one at the endpoints. The timing change moved the update away from
+the next frame boundary and the stalls disappeared in this comparison. The
+internal latch timing still needs qualification. The same-boot repetition
+used a compressed dispatch after the longer SSH command failed to start the
+worker. The installed return and sensor default were verified independently.
+[Vertical-blanking trial](../../evidence/2026-11-19-fx0-camss-vblank-timing.json)
+
+The MSM8226 candidate queues a continuous RDI rearm when the write master
+completes and writes it at the next start-of-frame interrupt. It clears the
+pending rearm when the queue drains or the output is disabled. The ARM CAMSS
+component compiled with `W=1`, and 114 host executions and 33 negative
+controls passed. The default sensor frame timing is the target for the next
+handset qualification. [Candidate source](https://github.com/timschmidt/fx0-linux/commit/ecf268bf5d66c17e545a1a06792ec679cdaf3eaa)

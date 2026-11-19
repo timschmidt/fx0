@@ -48,7 +48,7 @@ struct vfe_hw_ops {
  void (*isr_read)(struct vfe_device *, u32 *, u32 *);
  void (*violation_read)(struct vfe_device *);
 };
-struct vfe_subdev_resources { const struct vfe_hw_ops *hw_ops; unsigned int line_num; };
+struct vfe_subdev_resources { const struct vfe_hw_ops *hw_ops; unsigned int line_num; bool rdi_rearm_at_sof; };
 struct vfe_hw_ops_gen1 {
  void (*wm_set_ping_addr)(struct vfe_device *, u8, u32);
  void (*wm_set_pong_addr)(struct vfe_device *, u8, u32);
@@ -111,7 +111,8 @@ static void pattern_write(struct vfe_device *v, u8 wm, u32 pattern) { v->pattern
 static int active_read(struct vfe_device *v, u8 wm) { return v->active[wm]; }
 static void halt_clear(struct vfe_device *v) { (void)v; }
 static const struct vfe_hw_ops hw = { reg_clear, reg_write, isr_read, violation_read };
-static const struct vfe_subdev_resources resources = { &hw, VFE_LINE_NUM_MAX };
+static const struct vfe_subdev_resources resources = { &hw, VFE_LINE_NUM_MAX, false };
+static const struct vfe_subdev_resources sof_resources = { &hw, VFE_LINE_NUM_MAX, true };
 static const struct vfe_hw_ops_gen1 gen1_hw = {
  ping_write, pong_write, reload_write, period_write, pattern_write, active_read, halt_clear
 };

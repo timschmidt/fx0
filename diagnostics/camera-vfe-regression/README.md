@@ -58,6 +58,15 @@ component also compiled with `W=1`. The handset replay checked finite
 captures, the active-stream sleep refusal, RTC wake and the installed return.
 [Handset qualification](../../evidence/2026-11-19-fx0-camss-stopping-completion-handset.json)
 
+Pass `--sof-baseline-tree /path/to/pre-rearm-linux` with source at
+`2150f900adaf` to exercise the MSM8226 start-of-frame candidate. The five
+additional cases cover rearming on the selected RDI line, coalesced SOF and
+write-master status, cancellation on drain, and the existing immediate
+updates for PIX and other resources. The prior source fails the early-rearm
+control on all three dispatchers. With all suites enabled, 114 dispatcher
+executions and 33 controls passed under ASan, UBSan and LeakSanitizer.
+[Timing evidence and candidate](../camera-reopen/vfe-queue-credit.md#timing-comparison-with-front-sensor-vertical-blanking)
+
 The original native buffers and callbacks remain in
 [the callback witness](../camera-reopen/vfe-callback-order.md). Host regression
 and a CFI-enabled ARM CAMSS component build do not qualify a full kernel,

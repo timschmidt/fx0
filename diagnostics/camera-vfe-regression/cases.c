@@ -47,11 +47,15 @@ static u32 wm_bits(struct vfe_output *o)
  for (unsigned int i = 0; i < o->wm_num; i++) result |= VFE_0_IRQ_STATUS_0_IMAGE_MASTER_n_PING_PONG(o->wm_idx[i]);
  return result;
 }
-static void dispatch(struct vfe_device *v, u32 status)
+static void dispatch_status(struct vfe_device *v, u32 status0, u32 status1)
 {
- v->status0 = status; v->status1 = 0;
+ v->status0 = status0; v->status1 = status1;
  CHECK(vfe_isr(95, v) == IRQ_HANDLED, "IRQ_RETURN");
  CHECK(lock_depth == 0, "IRQ_LOCK_LEAK");
+}
+static void dispatch(struct vfe_device *v, u32 status)
+{
+ dispatch_status(v, status, 0);
 }
 static void new_untouched(unsigned int id)
 {
@@ -277,6 +281,44 @@ static void pix_and_unrelated(void)
  CHECK(buffers[0].done == 1 && buffers[3].done == 1 && v.returns == 2 && v.reads == 1 && v.errors == 0,
        "PIX_MASK_DROPPED_UNRELATED_RDI");
 }
+static void rearm_at_sof(bool enabled, bool pix, bool coalesced, bool drain)
+{
+ struct vfe_device v;
+ enum vfe_line_id id = pix ? VFE_LINE_PIX : VFE_LINE_RDI0;
+ init_vfe(&v, 1);
+ if (enabled) v.res = &sof_resources;
+ bind_line(&v, id, pix ? 4 : 0, pix ? 3 : 1);
+ struct vfe_output *o = &v.line[id].output;
+ o->state = VFE_OUTPUT_CONTINUOUS;
+ o->buf[0] = &buffers[0]; o->buf[1] = &buffers[1];
+ queue(&v, id, 2);
+ u32 completion = pix ? VFE_0_IRQ_STATUS_0_IMAGE_COMPOSITE_DONE_n(0) : wm_bits(o);
+ u32 sof = VFE_0_IRQ_STATUS_1_RDIn_SOF(0);
+ dispatch_status(&v, completion, coalesced ? sof : 0);
+ CHECK(buffers[0].done == 1 && o->buf[0] == &buffers[2], "SOF_REARM_REPLACEMENT");
+ CHECK(v.ping[o->wm_idx[0]] == buffers[2].addr[0], "SOF_REARM_ADDRESS");
+ if (pix || !enabled) {
+  CHECK(v.writes[id] == 1 && v.pattern[o->wm_idx[0]] == 3, "OTHER_OUTPUT_REARM_CHANGED");
+  return;
+ }
+ CHECK(v.writes[id] == 0, "REARMED_BEFORE_RDI_SOF");
+ dispatch_status(&v, 0, VFE_0_IRQ_STATUS_1_RDIn_SOF(1));
+ CHECK(v.writes[id] == 0, "OTHER_LINE_CONSUMED_REARM");
+ if (drain) {
+  v.active[0] = 0;
+  dispatch(&v, completion);
+  CHECK(o->state == VFE_OUTPUT_SINGLE && v.pattern[0] == 1 && buffers[1].done == 1,
+        "SOF_REARM_DRAIN_CHANGED");
+  dispatch_status(&v, 0, sof);
+  CHECK(v.writes[id] == 1 && v.pattern[0] == 1, "DEFERRED_REARM_SURVIVED_DRAIN");
+ } else {
+  dispatch_status(&v, 0, sof);
+  CHECK(v.writes[id] == 1 && v.pattern[0] == 3, "RDI_SOF_DID_NOT_REARM");
+  dispatch_status(&v, 0, sof);
+  CHECK(v.writes[id] == 1 && v.returns == 1, "RDI_SOF_REARM_REPEATED");
+ }
+ CHECK(v.errors == 0, "RDI_SOF_DIAGNOSTIC");
+}
 int main(int argc, char **argv)
 {
  CHECK(argc == 2, "CASE_ARGUMENT"); const char *name = argv[1];
@@ -313,6 +355,11 @@ int main(int argc, char **argv)
  else if (!strcmp(name, "pix_no_last")) missing_last(true);
  else if (!strcmp(name, "reassigned_wm")) reassigned_wm();
  else if (!strcmp(name, "pix_unrelated_active")) pix_and_unrelated();
+ else if (!strcmp(name, "rdi_sof_rearm")) rearm_at_sof(true, false, false, false);
+ else if (!strcmp(name, "rdi_sof_coalesced")) rearm_at_sof(true, false, true, false);
+ else if (!strcmp(name, "rdi_sof_drain")) rearm_at_sof(true, false, false, true);
+ else if (!strcmp(name, "rdi_sof_unsupported")) rearm_at_sof(false, false, false, false);
+ else if (!strcmp(name, "pix_sof_unchanged")) rearm_at_sof(true, true, false, false);
  else die("UNKNOWN_CASE");
  printf("PASS:%s\n", name); return 0;
 }
