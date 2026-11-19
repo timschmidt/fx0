@@ -1,0 +1,107 @@
+{
+  "date_UTC": "2026-11-19",
+  "driver_and_board_source": "272ba42f0202498b83c2cabfe922464c46c0cf0c",
+  "verified_RAM_image_SHA256": "19a53dd0059e296f8068394131fc46d1574e936299f203386e2564bb2997d5e1",
+  "verified_temporary_loader_SHA256": "690a4a25fcecde534163ff81ab94a86790dab8a30b99076be71e4b7341275cea",
+  "candidate": {
+    "configured_minutes": 480,
+    "observer_SPMI_reads": 60,
+    "observer_PMIC_writes": 0,
+    "failure_IRQ_before": 0,
+    "failure_IRQ_increment": 0,
+    "fast_charge_observed": true,
+    "register_values": {
+      "0x1010": [
+        "0x20",
+        "0x21"
+      ],
+      "0x1049": [
+        "0x80"
+      ],
+      "0x104a": [
+        "0x00"
+      ],
+      "0x1060": [
+        "0x80"
+      ],
+      "0x1061": [
+        "0x77"
+      ],
+      "0x1065": [
+        "0x00"
+      ],
+      "0x1249": [
+        "0x82"
+      ],
+      "0x1310": [
+        "0x03"
+      ]
+    },
+    "WLAN_unavailable": true,
+    "built_in_symbol_exports_matched": 11718,
+    "signed_modules_verified": 468,
+    "all_module_files_verified": 482,
+    "imported_symbol_CRCs_verified": 25592,
+    "normal_and_early_return_seconds": [
+      360,
+      420
+    ]
+  },
+  "return": {
+    "automatic_return_confirmed_in_journal": true,
+    "installed_protected_hashes_matched": true,
+    "installed_module_files_verified": 482,
+    "timer_and_comparator_addresses": [
+      "0x1060",
+      "0x1061",
+      "0x1065",
+      "0x1249",
+      "0x1310"
+    ],
+    "charger_control_and_latch_addresses": [
+      "0x1004",
+      "0x1005",
+      "0x1010",
+      "0x1049",
+      "0x104a"
+    ],
+    "installed_reference_timer_and_comparator_rows": [
+      "00 1d 00 81 03",
+      "00 1d 00 81 03"
+    ],
+    "returned_timer_and_comparator_rows": [
+      "00 1d 00 81 03",
+      "00 1d 00 81 03"
+    ],
+    "installed_reference_charger_control_and_latch_rows": [
+      "02 31 00 00 00",
+      "02 31 00 00 00"
+    ],
+    "returned_charger_control_and_latch_rows": [
+      "02 31 00 00 00",
+      "02 31 00 00 00"
+    ],
+    "installed_reference_and_return_SPMI_reads": [
+      20,
+      20
+    ],
+    "installed_reference_and_return_SPMI_writes": [
+      0,
+      0
+    ],
+    "timer_error_and_failure_events": {
+      "failure_IRQ": 0,
+      "failure_register": 0,
+      "configuration_error": 0,
+      "restore_error": 0,
+      "cutoff_error": 0
+    },
+    "kernel_fatal_events": 0,
+    "lockup_events": 0,
+    "sway_outputs": 1,
+    "touch_inputs": 1,
+    "physical_display_or_touch_tested": false
+  },
+  "timer_expiry_tested": false,
+  "hardware_cutoff_with_stalled_CPU_tested": false
+}

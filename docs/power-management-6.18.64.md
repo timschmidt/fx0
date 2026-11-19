@@ -1364,9 +1364,21 @@ uncertain writes and rejected rollback when cutoff could not be verified.
 The installed reference read charger subtype `0x31`, period `0x1d`,
 and zero at the timer enable, charger watchdog enable and failure latch
 registers. Both read-only snapshots agreed. This is the reference for
-the 480-minute RAM rollback rehearsal. A separate short timer test is
-needed to measure expiry and establish its post-reboot behavior.
+the 480-minute RAM rollback rehearsal.
 [Installed reference and host controls](../evidence/2026-11-19-fx0-charge-duration-return-controls.json)
+
+On the 480-minute RAM boot, six snapshots showed fast charge active,
+timer enable `0x80` and period `0x77`. The charger watchdog and failure
+latch stayed clear, and the charger-failure IRQ count stayed at zero.
+The snapshots accounted for 60 SPMI reads and zero observer writes.
+
+The scheduled reboot returned to installed r2. All seven protected
+hashes and 482 installed module files matched. Both postflight snapshots
+matched the installed reference, including timer enable `0x00`, period
+`0x1d` and failure latch `0x00`. The RAM boot's journal contained no
+charger timer or cutoff errors. Timer expiry and charge cutoff with a
+stalled CPU still require handset tests.
+[Handset rollback evidence](../evidence/2026-11-19-fx0-charge-duration-rollback.json)
 
 #### Managed charger suspend refusal and wake notifications
 
