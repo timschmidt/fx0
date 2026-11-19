@@ -45,6 +45,18 @@ baseline, reject an IDLE-only guard, catch premature return under blanket IRQ
 reordering, and catch valid completion loss under blanket WM suppression.
 Thus a quiet log alone cannot satisfy the regression.
 
+For the separate `STOPPING` completion fix at `2150f900adaf`, add
+`--stopping-baseline-tree /path/to/pre-stopping-fix-linux` with the source at
+`c595fe52cc30`. Keep the original coalesced-IRQ baseline at `f71b29239d14`.
+The extra cases check the final buffer at lock release, then exercise both
+ping/pong phases on RDI and PIX when a separate completion arrives before the
+register update. They check that the stray completion leaves the final buffer,
+pending queue and sequence available for the matching acknowledgement and the
+first fresh frame. All 99 dispatcher executions and 30 negative controls
+passed with Clang 21.1.8, ASan, UBSan and LeakSanitizer. The complete ARM CAMSS
+component also compiled with `W=1`. Hardware capture with this change is
+pending.
+
 The original native buffers and callbacks remain in
 [the callback witness](../camera-reopen/vfe-callback-order.md). Host regression
 and a CFI-enabled ARM CAMSS component build do not qualify a full kernel,

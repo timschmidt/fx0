@@ -545,6 +545,13 @@ The scheduled reboot restored the charger registers and passed the
 installed seven-hash and 482-module checks.
 [Signed RAM and handset evidence](../evidence/2026-11-19-fx0-camss-suspend-guard-handset.json)
 
+The follow-up CAMSS source keeps the final buffer under the gen1 output lock
+until the register update acknowledges the frame-drop change. An intervening
+completion leaves the pending queue and ping/pong index untouched. The ARM
+component build and sanitizer tests passed. A handset replay is still needed
+to check the warning and frame timing. [Driver change](https://github.com/timschmidt/fx0-linux/commit/2150f900adaf27c32a5bd620bd12ab04345aa99b)
+[Regression procedure](../diagnostics/camera-vfe-regression/README.md)
+
 Resuming the same stream requires CAMSS to stop DMA at suspend, preserve
 ownership of queued buffers, bring the pipeline back after its suppliers
 resume and surface a queue error if restart fails. The closed-sensor RTC

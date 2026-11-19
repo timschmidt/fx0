@@ -130,6 +130,55 @@ static void old_ack(void)
  dispatch(&v, saved);
  CHECK(buffers[0].done == 1 && v.errors == 0, "NEXT_ACK_RETURN");
 }
+static void check_stopping_handoff(void)
+{
+ struct vfe_output *o = &current_vfe->line[VFE_LINE_RDI0].output;
+ CHECK(o->state == VFE_OUTPUT_STOPPING && o->last_buffer == &buffers[0], "STOPPING_OWNER_AT_UNLOCK");
+}
+static void stopping_handoff(void)
+{
+ struct vfe_device v; init_vfe(&v, 1); bind_line(&v, VFE_LINE_RDI0, 0, 1);
+ queue(&v, VFE_LINE_RDI0, 0);
+ v.earliest_ack[0] = 1;
+ unlock_hook = check_stopping_handoff;
+ dispatch(&v, VFE_0_IRQ_STATUS_0_IMAGE_MASTER_n_PING_PONG(0));
+ CHECK(v.returns == 0, "STOPPING_EARLY_RETURN");
+ dispatch(&v, VFE_0_IRQ_STATUS_0_line_n_REG_UPDATE(0));
+ CHECK(buffers[0].done == 1, "STOPPING_HANDOFF_RETURN");
+}
+static void stopping_before_ack(bool pix, unsigned int active)
+{
+ struct vfe_device v; enum vfe_line_id id = pix ? VFE_LINE_PIX : VFE_LINE_RDI0;
+ init_vfe(&v, active); bind_line(&v, id, pix ? 4 : 0, pix ? 3 : 1);
+ struct vfe_output *o = &v.line[id].output;
+ o->state = VFE_OUTPUT_SINGLE;
+ o->buf[!active] = &buffers[0];
+ v.earliest_ack[0] = 1; v.ack_line[0] = id;
+ u32 done = pix ? VFE_0_IRQ_STATUS_0_IMAGE_COMPOSITE_DONE_n(0) : wm_bits(o);
+ dispatch(&v, done);
+ CHECK(o->state == VFE_OUTPUT_STOPPING && o->last_buffer == &buffers[0] && o->sequence == 8,
+       "STOPPING_FIRST_COMPLETION");
+
+ queue(&v, id, 1); queue(&v, id, 2);
+ for (unsigned int i = 0; i < o->wm_num; i++) v.active[o->wm_idx[i]] = !active;
+ dispatch(&v, done);
+ CHECK(v.errors == 0, "STOPPING_STRAY_DIAGNOSTIC");
+ CHECK(o->state == VFE_OUTPUT_STOPPING && o->last_buffer == &buffers[0] && v.returns == 0,
+       "STOPPING_STRAY_RETURN");
+ CHECK(o->gen1.active_buf == active && o->sequence == 8, "STOPPING_STRAY_PINGPONG");
+ CHECK(v.writes[id] == 1, "STOPPING_STRAY_REGISTER_UPDATE");
+
+ dispatch(&v, VFE_0_IRQ_STATUS_0_line_n_REG_UPDATE(id));
+ CHECK(buffers[0].done == 1 && o->last_buffer == NULL && v.returns == 1, "STOPPING_LATER_ACK");
+ new_untouched(1); new_untouched(2);
+ restart_addresses(&v, id, 2, 1);
+
+ for (unsigned int i = 0; i < o->wm_num; i++) v.active[o->wm_idx[i]] = 1;
+ dispatch(&v, done);
+ CHECK(buffers[1].done == 1 && buffers[1].vb.sequence == 8 && v.errors == 0 && v.returns == 2,
+       "STOPPING_FRESH_COMPLETION");
+ new_untouched(2);
+}
 static void continuous(bool pix)
 {
  struct vfe_device v; enum vfe_line_id id = pix ? VFE_LINE_PIX : VFE_LINE_RDI0;
@@ -245,6 +294,11 @@ int main(int argc, char **argv)
  else if (!strcmp(name, "reg_only")) drain_case(1, 0, false, false, false);
  else if (!strcmp(name, "queue_after_ack")) queue_after_ack();
  else if (!strcmp(name, "old_ack")) old_ack();
+ else if (!strcmp(name, "stopping_handoff")) stopping_handoff();
+ else if (!strcmp(name, "rdi_stopping_phase0")) stopping_before_ack(false, 0);
+ else if (!strcmp(name, "rdi_stopping_phase1")) stopping_before_ack(false, 1);
+ else if (!strcmp(name, "pix_stopping_phase0")) stopping_before_ack(true, 0);
+ else if (!strcmp(name, "pix_stopping_phase1")) stopping_before_ack(true, 1);
  else if (!strcmp(name, "continuous")) continuous(false);
  else if (!strcmp(name, "pix_continuous")) continuous(true);
  else if (!strcmp(name, "missing_active")) unexpected(false, false);

@@ -16,6 +16,8 @@ CASES = ['empty0','empty1','pending1_0','pending1_1','pending2_0','pending2_1',
          'missing_active','unexpected_idle','unmapped','late_unexpected',
          'wait_ack','gen2_wait_ack','two_drains','unrelated_active',
          'no_last_pending','pix_no_last','reassigned_wm','pix_unrelated_active']
+STOPPING_CASES = ['stopping_handoff','rdi_stopping_phase0','rdi_stopping_phase1',
+                  'pix_stopping_phase0','pix_stopping_phase1']
 VERSIONS = ['4-1','4-7','4-8']
 GEN1 = ['vfe_output_init_addrs','vfe_output_frame_drop','vfe_output_update_ping_addr',
         'vfe_output_update_pong_addr','vfe_buf_update_wm_on_next','vfe_buf_update_wm_on_last',
@@ -118,6 +120,8 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--kernel-tree',type=Path,required=True)
     parser.add_argument('--baseline-tree',type=Path,required=True)
+    parser.add_argument('--stopping-baseline-tree',type=Path,
+                        help='enable the pre-ack STOPPING cases and use this pre-fix tree as their control')
     parser.add_argument('--output-dir',type=Path,required=True)
     parser.add_argument('--cc',default='clang-21')
     parser.add_argument('--sanitize',action='store_true')
@@ -154,9 +158,10 @@ def main():
             assert done.returncode==2 and done.stderr.strip() in ['FAIL:'+value for value in expect],(binary,case,done.returncode,done.stdout,done.stderr)
             report['negative'].append({'version':binary.parent.name,'case':case,'expected_failure_observed':done.stderr.strip()})
         save()
+    cases = CASES + STOPPING_CASES if args.stopping_baseline_tree else CASES
     for version in VERSIONS:
         candidate=build(args.kernel_tree,version,None,'candidate')
-        for case in CASES:run(candidate,case)
+        for case in cases:run(candidate,case)
         baseline=build(args.baseline_tree,version,None,'baseline')
         run(baseline,'empty0',['STALE_DIAGNOSTIC'])
         run(baseline,'pending2_1',['NEW_BUFFER_TOUCHED'])
@@ -166,7 +171,11 @@ def main():
         run(reordered,'old_ack',['ACK_BEFORE_RETURN'])
         dropped=build(args.kernel_tree,version,'drop-all-coalesced','drop-all-coalesced')
         run(dropped,'continuous',['NORMAL_COMPLETION_LOST'])
-    report.update(passed=True,positive_scenarios=len(CASES),positive_dispatcher_cases=len(report['positive']),
+        if args.stopping_baseline_tree:
+            before=build(args.stopping_baseline_tree,version,None,'stopping-baseline')
+            run(before,STOPPING_CASES[0],['STOPPING_OWNER_AT_UNLOCK'])
+            for case in STOPPING_CASES[1:]:run(before,case,['STOPPING_STRAY_DIAGNOSTIC'])
+    report.update(passed=True,positive_scenarios=len(cases),positive_dispatcher_cases=len(report['positive']),
                   negative_controls=len(report['negative']),phone_access=False)
     save();print(json.dumps({key:report[key] for key in ['passed','positive_scenarios','positive_dispatcher_cases','negative_controls','sanitize','phone_access']}))
 
