@@ -1287,6 +1287,43 @@ in the journal. The installed r2 boot matched the protected boot and
 package hashes and all 482 module files.
 [Nominal charge evidence](../evidence/2026-11-18-power-qualification-followup.json)
 
+#### Charge termination configuration
+
+On installed r2, two read-only snapshots of PM8226 SID 0 agreed.
+The SPMI trace recorded all 18 expected reads, zero writes and zero
+lost events. The reads used the uncached regmap and the same trace
+validation as the PON diagnostic. The kernel notes hash matched the
+signed r2 baseline. [Trace validation](../diagnostics/pm8226-reset-reasons/read-installed.py)
+
+| Register | Value in both snapshots | Field |
+| --- | --- | --- |
+| `0x1010` | `0x00` | Charger live interrupt status |
+| `0x1040` | `0x6f` | Charge ceiling, 4.35 V |
+| `0x105b` | `0x08` | Termination current register |
+| `0x105d` | `0x34` | Recharge threshold, 4.28 V |
+| `0x1105` | `0x32` | SMBBP buck subtype |
+| `0x1110` | `0x40` | Buck live interrupt status, `VDD_LOOP` asserted |
+| `0x11eb` | `0x00` | Buck comparator override |
+| `0x1210` | `0x03` | Battery interface live interrupt status |
+| `0x1310` | `0x03` | USB charge path live interrupt status |
+
+LG's Madai kernel programs `0x08` for analog termination and sets the
+SMBBP buck comparator override mask `0xc0` to `0x80` to disable the
+charger's charge-done logic. Its software end-of-charge worker checks
+the battery FET, active charge state, voltage loop, taper current and
+repeated samples. The `CONFIG_LGE_PM` path also requires a reported
+state of charge of 100%. The board specifies a 150 mA termination current.
+[LG charger source](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/power/qpnp-charger.c)
+[LG board settings](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/boot/dts/msm8226-madai/msm8226-madai-pm.dtsi)
+
+The installed comparator value differs from LG's programmed value.
+The `VDD_LOOP` bit was already high while the charger reported no
+active charge or charge-done bits. The earlier managed RAM samples
+establish automatic recharge and charge-to-idle with zero charge-done
+interrupts. The installed snapshots leave the cause of the missing
+interrupt unresolved. A validated taper-current measurement and
+samples during the transition are still needed to qualify `Full`.
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce
