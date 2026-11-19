@@ -1075,6 +1075,21 @@ After 32 fill-buffer commands, the firmware again failed at
 while retaining scratch. CAPTURE buffer ownership and frame delivery
 across the source-change boundary remain unqualified.
 
+A [default-off kernel diagnostic](https://github.com/timschmidt/fx0-linux/commit/15146cc4ce1fadf402ad884d0ae91500ad26e190)
+kept the original CAPTURE queue active for the sufficient-resource
+downshift. The direct V4L2 client used the coded-input timestamps to
+associate each picture with its geometry. It decoded all 24 frames
+byte for byte, using 640 × 360 and 320 × 240 visible frames and the
+original 32 capture buffers of 368,768 bytes. `DECODER_CMD STOP`
+completed with a final `LAST` marker after the smaller sequence.
+The initial source-change event was followed by the downshift event,
+and the client made only one CAPTURE `STREAMON` call.
+
+This qualifies the retained-queue path for the tested fixture. The
+diagnostic continues across the downshift without emitting a `LAST`
+for the outgoing sequence. The standard V4L2 source-change and
+capture-restart path still needs qualification.
+
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
 its synthetic completion. The matched ordinary STOP test still failed

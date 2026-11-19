@@ -141,7 +141,7 @@ static int output_format(int fd, size_t input_bytes, unsigned int width, unsigne
     return 0;
 }
 
-static int queue_input(int fd, FILE *input, size_t input_bytes)
+static int queue_tagged_input(int fd, FILE *input, size_t input_bytes, unsigned int tag)
 {
     struct v4l2_plane plane = {0};
     struct v4l2_buffer buffer = {
@@ -164,6 +164,10 @@ static int queue_input(int fd, FILE *input, size_t input_bytes)
     if (fread(mapping, 1, input_bytes, input) == input_bytes) {
         plane.bytesused = (uint32_t)input_bytes;
         buffer.field = V4L2_FIELD_NONE;
+        if (tag) {
+            buffer.timestamp.tv_sec = 1;
+            buffer.timestamp.tv_usec = tag;
+        }
         status = video_ioctl(fd, VIDIOC_QBUF, &buffer);
     } else {
         errno = EIO;
@@ -172,6 +176,11 @@ static int queue_input(int fd, FILE *input, size_t input_bytes)
     munmap(mapping, plane.length);
     errno = saved_errno;
     return status;
+}
+
+static int queue_input(int fd, FILE *input, size_t input_bytes)
+{
+    return queue_tagged_input(fd, input, input_bytes, 0);
 }
 
 static int observe(int fd, const char *mode, size_t bytes, int capture_buffers)
@@ -571,7 +580,8 @@ static int replace_capture_queue(int fd, struct v4l2_format *format)
     return activate_capture(fd, count);
 }
 
-static int decode_downshift(int fd, int count, FILE *input, const struct access_unit *units)
+static int decode_downshift(int fd, int count, FILE *input, const struct access_unit *units,
+                            bool keep_capture)
 {
     struct v4l2_format format = { .type = capture }, next_format = { .type = capture };
     struct v4l2_decoder_cmd stop = { .cmd = V4L2_DEC_CMD_STOP };
@@ -587,6 +597,7 @@ static int decode_downshift(int fd, int count, FILE *input, const struct access_
     while (!new_last || returned < queued) {
         struct pollfd ready = { .fd = fd, .events = POLLPRI };
         int64_t now = monotonic_ms(), wake;
+        unsigned int input_limit = SEQUENCE_FRAMES + 1;
         int polled;
 
         if (now < 0)
@@ -595,7 +606,7 @@ static int decode_downshift(int fd, int count, FILE *input, const struct access_
             errno = ETIMEDOUT;
             goto done;
         }
-        if (source_changed && !restarted && (first_last || now >= drain_deadline)) {
+        if (!keep_capture && source_changed && !restarted && (first_last || now >= drain_deadline)) {
             /* The bounded fallback exposes restart even if LAST is missing. */
             count = replace_capture_queue(fd, &next_format);
             if (count < 0)
@@ -603,22 +614,25 @@ static int decode_downshift(int fd, int count, FILE *input, const struct access_
             format = next_format;
             restarted = true;
         }
-        if (returned == queued && queued < (restarted ? 2 * SEQUENCE_FRAMES : SEQUENCE_FRAMES + 1)) {
+        if (keep_capture ? source_changed : restarted)
+            input_limit = 2 * SEQUENCE_FRAMES;
+        if (returned == queued && queued < input_limit) {
             if (fseek(input, units[queued].offset, SEEK_SET) != 0 ||
-                queue_input(fd, input, units[queued].size) < 0)
+                queue_tagged_input(fd, input, units[queued].size, keep_capture ? queued + 1 : 0) < 0)
                 goto done;
             queued++;
         }
-        if (restarted && returned == 2 * SEQUENCE_FRAMES && !stop_sent) {
+        if ((keep_capture ? queued == 2 * SEQUENCE_FRAMES : restarted && returned == 2 * SEQUENCE_FRAMES)
+            && !stop_sent) {
             if (video_ioctl(fd, VIDIOC_DECODER_CMD, &stop) < 0)
                 goto done;
             stop_sent = true;
         }
-        if (!(restarted ? new_last : first_last))
+        if (!((keep_capture || restarted) ? new_last : first_last))
             ready.events |= POLLIN;
         if (returned < queued)
             ready.events |= POLLOUT;
-        wake = source_changed && !restarted && drain_deadline < deadline ? drain_deadline : deadline;
+        wake = !keep_capture && source_changed && !restarted && drain_deadline < deadline ? drain_deadline : deadline;
         polled = poll(&ready, 1, (int)(wake - now));
         if (polled < 0 && errno != EINTR)
             goto done;
@@ -641,20 +655,40 @@ static int decode_downshift(int fd, int count, FILE *input, const struct access_
             struct v4l2_buffer buffer = {
                 .type = capture, .memory = V4L2_MEMORY_MMAP, .length = 1, .m.planes = &plane,
             };
-            unsigned int *frames = restarted ? &new_frames : &first_frames;
-            bool *last = restarted ? &new_last : &first_last;
+            bool new_picture = restarted;
+            unsigned int *frames;
+            bool *last;
+            const struct v4l2_format *picture_format;
 
             if (video_ioctl(fd, VIDIOC_DQBUF, &buffer) < 0) {
                 if (errno == EAGAIN)
                     continue;
                 goto done;
             }
-            *last = buffer.flags & V4L2_BUF_FLAG_LAST;
             if (buffer.index >= (unsigned int)count || buffer.length != 1) {
                 fprintf(stderr, "CAPTURE invalid buffer: index %u planes %u\n", buffer.index, buffer.length);
                 goto invalid;
             }
-            if (!restarted && source_changed && !*last &&
+            if (keep_capture && plane.bytesused) {
+                unsigned int expected = first_frames + new_frames + 1;
+
+                if (buffer.timestamp.tv_sec != 1 || buffer.timestamp.tv_usec != expected ||
+                    (expected > SEQUENCE_FRAMES && !source_changed)) {
+                    fprintf(stderr, "CAPTURE unexpected timestamp: %ld.%06ld expected 1.%06u\n",
+                            (long)buffer.timestamp.tv_sec, (long)buffer.timestamp.tv_usec, expected);
+                    goto invalid;
+                }
+                new_picture = expected > SEQUENCE_FRAMES;
+            } else if (keep_capture) {
+                new_picture = source_changed;
+            }
+            frames = new_picture ? &new_frames : &first_frames;
+            last = new_picture ? &new_last : &first_last;
+            picture_format = keep_capture && new_picture ? &next_format : &format;
+            *last = buffer.flags & V4L2_BUF_FLAG_LAST;
+            if (keep_capture && *last && !stop_sent)
+                goto invalid;
+            if (!keep_capture && !restarted && source_changed && !*last &&
                 (buffer.flags & V4L2_BUF_FLAG_ERROR || !plane.bytesused || *frames == SEQUENCE_FRAMES)) {
                 fprintf(stderr, "CAPTURE boundary buffer: flags %#x payload %u\n",
                         buffer.flags, plane.bytesused);
@@ -666,10 +700,10 @@ static int decode_downshift(int fd, int count, FILE *input, const struct access_
             if (plane.bytesused) {
                 if (*frames >= SEQUENCE_FRAMES)
                     goto invalid;
-                if (write_picture(fd, &plane, format.fmt.pix_mp.plane_fmt[0].bytesperline,
-                                  format.fmt.pix_mp.height,
-                                  restarted ? WIDTH : DOWNSHIFT_WIDTH,
-                                  restarted ? HEIGHT : DOWNSHIFT_VISIBLE_HEIGHT, stdout) < 0)
+                if (write_picture(fd, &plane, picture_format->fmt.pix_mp.plane_fmt[0].bytesperline,
+                                  picture_format->fmt.pix_mp.height,
+                                  new_picture ? WIDTH : DOWNSHIFT_WIDTH,
+                                  new_picture ? HEIGHT : DOWNSHIFT_VISIBLE_HEIGHT, stdout) < 0)
                     goto done;
                 (*frames)++;
             }
@@ -691,7 +725,8 @@ static int decode_downshift(int fd, int count, FILE *input, const struct access_
             }
         }
     }
-    if (!first_last || !stop_sent || first_frames != SEQUENCE_FRAMES || new_frames != SEQUENCE_FRAMES)
+    if ((!keep_capture && !first_last) || !stop_sent || first_frames != SEQUENCE_FRAMES ||
+        new_frames != SEQUENCE_FRAMES)
         goto invalid;
     status = 0;
     goto done;
@@ -705,6 +740,8 @@ done:
     }
     fprintf(stderr, "Downshift: queued %u returned %u old %u new %u event %d restart %d old-LAST %d new-LAST %d STOP %d\n",
             queued, returned, first_frames, new_frames, source_changed, restarted, first_last, new_last, stop_sent);
+    if (keep_capture)
+        fputs("Downshift retained the initial CAPTURE queue\n", stderr);
     errno = saved_errno;
     return status;
 }
@@ -716,7 +753,7 @@ int main(int argc, char **argv)
     struct stat metadata;
     int fd = -1, capture_buffers = 0, status = 1;
     const char *step = "input";
-    bool preallocate, first_frame, sequence, late_capture, early_capture, downshift;
+    bool preallocate, first_frame, sequence, late_capture, early_capture, downshift, keep_capture;
     struct access_unit units[2 * SEQUENCE_FRAMES];
     size_t initial_bytes;
     FILE *input;
@@ -724,7 +761,8 @@ int main(int argc, char **argv)
     first_frame = argc == 5 && !strcmp(argv[1], "capture-first-frame");
     late_capture = argc == 5 && !strcmp(argv[1], "capture-sequence-late");
     early_capture = argc == 5 && !strcmp(argv[1], "capture-sequence-early");
-    downshift = argc == 4 && !strcmp(argv[1], "capture-downshift");
+    keep_capture = argc == 4 && !strcmp(argv[1], "capture-downshift-in-place");
+    downshift = keep_capture || (argc == 4 && !strcmp(argv[1], "capture-downshift"));
     sequence = early_capture || late_capture || (argc == 5 && !strcmp(argv[1], "capture-sequence"));
     if (!first_frame && !sequence && !downshift && (argc != 4 ||
         (strcmp(argv[1], "output-first") && strcmp(argv[1], "preallocate-capture") &&
@@ -733,7 +771,7 @@ int main(int argc, char **argv)
         fprintf(stderr, "       %s capture-first-frame VIDEO ACCESS_UNIT RESULT\n", argv[0]);
         fprintf(stderr, "       %s {capture-sequence|capture-sequence-late} VIDEO FRAMED_ACCESS_UNITS RESULT\n", argv[0]);
         fprintf(stderr, "       %s capture-sequence-early VIDEO FRAMED_ACCESS_UNITS RESULT\n", argv[0]);
-        fprintf(stderr, "       %s capture-downshift VIDEO FRAMED_ACCESS_UNITS\n", argv[0]);
+        fprintf(stderr, "       %s {capture-downshift|capture-downshift-in-place} VIDEO FRAMED_ACCESS_UNITS\n", argv[0]);
         return 2;
     }
     preallocate = downshift || first_frame || (sequence && !late_capture) || !strcmp(argv[1], "preallocate-capture");
@@ -774,7 +812,7 @@ int main(int argc, char **argv)
             goto done;
     }
     step = "first coded buffer";
-    if (queue_input(fd, input, initial_bytes) < 0)
+    if (queue_tagged_input(fd, input, initial_bytes, keep_capture ? 1 : 0) < 0)
         goto done;
     if (early_capture || downshift) {
         step = "CAPTURE before OUTPUT start";
@@ -787,7 +825,7 @@ int main(int argc, char **argv)
         goto done;
     if (downshift) {
         step = "CAPTURE downshift";
-        if (!decode_downshift(fd, capture_buffers, input, units))
+        if (!decode_downshift(fd, capture_buffers, input, units, keep_capture))
             status = 0;
     } else if (sequence) {
         step = "CAPTURE sequence";
