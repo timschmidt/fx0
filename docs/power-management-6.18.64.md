@@ -1395,6 +1395,25 @@ with a stalled CPU still require measurement.
 [Four-minute device tree](https://github.com/timschmidt/fx0-linux/commit/507b8a17314cb5cc5aaa157572e87c9f7ad3a6b4)
 [Handset expiry evidence](../evidence/2026-11-19-fx0-charge-duration-expiry.json)
 
+#### Charger timer across RTC suspend and wake
+
+The 480-minute RAM kernel completed two RTC-woken `s2idle` cycles.
+The automatic-mode cycle started in fast charge and spent 13.747 seconds
+asleep. The charger verified inhibition before sleep, then took fresh
+thermistor and voltage readings before writing the charge-enable bit
+after wake. The immediate post-wake snapshot still showed fast charge
+inactive. The user-inhibit cycle slept 14.223 seconds and logged zero
+charge-enable writes after wake.
+
+Both cycles cleared the RTC alarm. Before and after each cycle, the timer
+enable and period read back as `0x80` and `0x77`. The SPMI trace recorded
+zero timer writes during either suspend/resume window and no charge-control
+writes during sleep. The scheduled reboot restored the installed
+charger control, timer and failure-latch settings, and the independent
+audit matched all seven protected hashes and 482 module files. Elapsed
+timer behavior during sleep and deep suspend still require measurement.
+[Timer suspend evidence](../evidence/2026-11-19-fx0-charge-timer-s2idle.json)
+
 #### Camera capture during fast charge
 
 The verified 480-minute RAM image ran five camera sessions over the

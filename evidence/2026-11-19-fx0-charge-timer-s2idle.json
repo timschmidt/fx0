@@ -1,0 +1,172 @@
+{
+  "date_UTC": "2026-11-19",
+  "source": "272ba42f0202498b83c2cabfe922464c46c0cf0c",
+  "boot_image_SHA256": "19a53dd0059e296f8068394131fc46d1574e936299f203386e2564bb2997d5e1",
+  "standard_return_seconds": 360,
+  "early_return_seconds": 420,
+  "WLAN_unavailable_in_RAM": true,
+  "configured_duration_minutes": 480,
+  "modes": [
+    "auto",
+    "inhibit-charge"
+  ],
+  "cycles": [
+    {
+      "index": 0,
+      "user_inhibit": false,
+      "controls": {
+        "suspend_inhibit_and_readback": true,
+        "control_writes_during_sleep": 0,
+        "enable_writes_after_wake": 1,
+        "post_wake_ADC_before_enable": [
+          {
+            "channel": 48,
+            "conversion": [
+              150,
+              122
+            ]
+          },
+          {
+            "channel": 6,
+            "conversion": [
+              136,
+              153
+            ]
+          }
+        ],
+        "control_and_VADC_transfers": 146,
+        "lost_trace_entries": 0,
+        "timer_register_writes": 0
+      },
+      "s2idle_seconds": 13.747,
+      "RTC_interrupt_increment": 1,
+      "mode": "auto",
+      "fast_charge_before": true,
+      "RTC_alarm_cleared": true,
+      "fast_charge_in_immediate_post_wake_snapshot": false,
+      "post_wake_charge_control": [
+        128,
+        128
+      ],
+      "post_wake_comparator": [
+        130,
+        130
+      ],
+      "timer_enable_period_watchdog_before_and_after": [
+        [
+          [
+            128,
+            119,
+            0
+          ],
+          [
+            128,
+            119,
+            0
+          ]
+        ],
+        [
+          [
+            128,
+            119,
+            0
+          ],
+          [
+            128,
+            119,
+            0
+          ]
+        ]
+      ],
+      "timer_snapshot_SPMI_reads": 20
+    },
+    {
+      "index": 1,
+      "user_inhibit": true,
+      "controls": {
+        "suspend_inhibit_and_readback": true,
+        "control_writes_during_sleep": 0,
+        "enable_writes_after_wake": 0,
+        "post_wake_ADC_before_enable": [],
+        "control_and_VADC_transfers": 44,
+        "lost_trace_entries": 0,
+        "timer_register_writes": 0
+      },
+      "s2idle_seconds": 14.223,
+      "RTC_interrupt_increment": 1,
+      "mode": "inhibit-charge",
+      "fast_charge_before": false,
+      "RTC_alarm_cleared": true,
+      "fast_charge_in_immediate_post_wake_snapshot": false,
+      "post_wake_charge_control": [
+        0,
+        0
+      ],
+      "post_wake_comparator": [
+        129,
+        129
+      ],
+      "timer_enable_period_watchdog_before_and_after": [
+        [
+          [
+            128,
+            119,
+            0
+          ],
+          [
+            128,
+            119,
+            0
+          ]
+        ],
+        [
+          [
+            128,
+            119,
+            0
+          ],
+          [
+            128,
+            119,
+            0
+          ]
+        ]
+      ],
+      "timer_snapshot_SPMI_reads": 20
+    }
+  ],
+  "inhibited_steady_worker": {
+    "worker_entries": 7,
+    "worker_returns": 7,
+    "battery_activations": 0,
+    "activations_inside_worker": 0,
+    "trace_lost": 0,
+    "trace_cleanup_verified": true,
+    "seconds": 7.25
+  },
+  "independent_return": {
+    "automatic_return": true,
+    "journal_s2idle_entries": 2,
+    "journal_s2idle_exits": 2,
+    "protected_hashes_match": true,
+    "installed_module_files_verified": 482,
+    "timer_registers_recovered": true,
+    "installed_charge_control_and_latch_match": true,
+    "live_IRQ_status_delta": [
+      0,
+      0
+    ],
+    "PMIC_reads": 20,
+    "PMIC_writes": 0,
+    "timer_kernel_events": {
+      "failure_IRQ": 0,
+      "failure_IRQ_cutoff_verified": 0,
+      "failure_register": 0,
+      "configuration_error": 0,
+      "restore_error": 0,
+      "cutoff_error": 0
+    }
+  },
+  "timer_elapsed_during_suspend_measured": false,
+  "deep_suspend_tested": false
+}
