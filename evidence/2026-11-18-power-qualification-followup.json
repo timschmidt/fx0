@@ -1639,6 +1639,289 @@
       "empty_temporary_USB_captures_removed": 18,
       "physical_current_accuracy_or_SOC_qualified": false,
       "persistent_update_performed": false
+    },
+    "HOT_condition_trial": {
+      "recorded_UTC": "2026-11-19T07:47:47+00:00",
+      "exact_RAM_image_SHA256": "a655f6ccf7fbea6d57aab914b56ede483f4751d705691d07503cc2e982fb8a26",
+      "initial_attempt": {
+        "baseline_boot": "bfd6258e-d278-48de-a343-bb10790d3f28",
+        "verified_installed_return": "b64d3cae-7dc1-43f6-9832-6201fcd6d5c2",
+        "gauge_test_reached": false,
+        "intermediate_boot_in_persistent_journal": false,
+        "archived_console_bytes": 21415,
+        "last_console_uptime_seconds": 5.751377,
+        "archived_console_event_counts": {
+          "native_return_armed": 1,
+          "native_module_overlay_ready": 0,
+          "native_prefix_or_module_failure": 0,
+          "native_return_service": 0,
+          "kernel_fault": 0,
+          "software_lockup": 0,
+          "watchdog_reset": 0,
+          "reboot": 0,
+          "MMC_timeout_or_error": 0,
+          "filesystem_error": 0
+        },
+        "PM8226_readback": {
+          "passed": true,
+          "boot_id": "b64d3cae-7dc1-43f6-9832-6201fcd6d5c2",
+          "reset_reasons": [
+            "91 02 00 a0 00",
+            "91 02 00 a0 00"
+          ],
+          "watchdog_config": [
+            "11 01 0e 80",
+            "11 01 0e 80"
+          ],
+          "read_addresses": [
+            "0x808",
+            "0x80a",
+            "0x80b",
+            "0x80c",
+            "0x80d",
+            "0x854",
+            "0x855",
+            "0x856",
+            "0x857"
+          ],
+          "SPMI_reads": 18,
+          "SPMI_writes": 0,
+          "lost_trace_entries": 0,
+          "USB_route_verified": true,
+          "recorded_UTC": "2026-11-19T07:38:20+00:00"
+        },
+        "PON_matches_earlier_unrelated_boots": true,
+        "return_source_attributed": false
+      },
+      "exact_image_repeat": {
+        "passed": true,
+        "thermal_controls_before_probe": {
+          "boot_id": "8641027b-759c-47b9-806f-d58c45bbd763",
+          "USB_input_limit_uA": 500000,
+          "before_conversion": {
+            "raw_status": [
+              128,
+              128
+            ],
+            "BTC": [
+              129,
+              129
+            ],
+            "raw_battery_presence_register": [
+              131,
+              131
+            ],
+            "temperature_OK_interrupt": [
+              true,
+              true
+            ],
+            "health_before": "Good",
+            "health_after": "Good",
+            "charging_status": "Not charging",
+            "confirmed_HOT": false,
+            "SPMI_reads": 8,
+            "SPMI_writes": 0
+          },
+          "voltage_control_uV": [
+            4190829,
+            4190535,
+            4190829
+          ],
+          "after_voltage_control": {
+            "raw_status": [
+              128,
+              128
+            ],
+            "BTC": [
+              129,
+              129
+            ],
+            "raw_battery_presence_register": [
+              131,
+              131
+            ],
+            "temperature_OK_interrupt": [
+              true,
+              true
+            ],
+            "health_before": "Good",
+            "health_after": "Good",
+            "charging_status": "Not charging",
+            "confirmed_HOT": false,
+            "SPMI_reads": 8,
+            "SPMI_writes": 0
+          },
+          "thermistor_mV": [
+            663,
+            663,
+            663
+          ],
+          "after_thermistor": {
+            "raw_status": [
+              64,
+              64
+            ],
+            "BTC": [
+              129,
+              129
+            ],
+            "raw_battery_presence_register": [
+              131,
+              131
+            ],
+            "temperature_OK_interrupt": [
+              false,
+              false
+            ],
+            "health_before": "Overheat",
+            "health_after": "Overheat",
+            "charging_status": "Discharging",
+            "confirmed_HOT": true,
+            "SPMI_reads": 8,
+            "SPMI_writes": 0
+          },
+          "confirmed_HOT": true,
+          "passed": true
+        },
+        "thermal_control_after_unbind": {
+          "boot_id": "8641027b-759c-47b9-806f-d58c45bbd763",
+          "USB_input_limit_uA": 500000,
+          "before_conversion": {
+            "raw_status": [
+              64,
+              64
+            ],
+            "BTC": [
+              129,
+              129
+            ],
+            "raw_battery_presence_register": [
+              131,
+              131
+            ],
+            "temperature_OK_interrupt": [
+              false,
+              false
+            ],
+            "health_before": "Overheat",
+            "health_after": "Overheat",
+            "charging_status": "Discharging",
+            "confirmed_HOT": true,
+            "SPMI_reads": 8,
+            "SPMI_writes": 0
+          },
+          "confirmed_HOT": true,
+          "passed": true
+        },
+        "initial_epoch_summary": {
+          "samples": 12,
+          "elapsed_seconds": 13.018,
+          "max_live_to_average_difference_uA": 3615,
+          "relative_counter_delta_uAh": 11,
+          "relative_counter_mean_uA": 3041.98,
+          "thermistor_voltage_transition_verified": true
+        },
+        "activated_once": true,
+        "all_samples_live_current_zero_and_health_overheat": true,
+        "background_current_uA_range": [
+          0,
+          3615
+        ],
+        "all_samples_charging_status": "Discharging",
+        "probe_trace": {
+          "writes": 109,
+          "bytes_by_peripheral": {
+            "VADC": 9,
+            "IADC": 94,
+            "companion_and_counter": 6
+          },
+          "controls": [
+            [
+              14409,
+              2
+            ],
+            [
+              14408,
+              1
+            ],
+            [
+              16451,
+              192
+            ],
+            [
+              16451,
+              0
+            ],
+            [
+              16450,
+              1
+            ],
+            [
+              16450,
+              0
+            ]
+          ]
+        },
+        "unbind_trace": {
+          "writes": 2,
+          "bytes_by_peripheral": {
+            "companion_and_counter": 2
+          },
+          "controls": [
+            [
+              14408,
+              0
+            ],
+            [
+              14409,
+              0
+            ]
+          ]
+        },
+        "restored_companion_controls": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "original_IADC_provider_restored": true,
+        "independent_return_check": {
+          "passed": true,
+          "installed_boot": "ca3956a4-fcd6-4ce8-a6ba-47681e357f1f",
+          "trial_boot": "8641027b-759c-47b9-806f-d58c45bbd763",
+          "installed_module_files_verified": 482,
+          "protected_hashes_match": true,
+          "installed_Sway_IPC_active_outputs": 1,
+          "touch_devices_enumerated": 1,
+          "USB_power_online": true,
+          "signature_enforced": true,
+          "no_physical_display_touch_assertion": true,
+          "journal_returncode": 0,
+          "journal_counts": {
+            "journal_rows": 2231,
+            "kernel_rows": 486,
+            "early_return_guard_armed": 1,
+            "full_module_overlay_ready": 1,
+            "early_guard_or_overlay_failure": 0,
+            "suspend_entry": 0,
+            "kernel_fatal": 0,
+            "SMBB_or_VADC_error": 0,
+            "lockup": 0,
+            "normal_return_service_rows": 3,
+            "normal_return_service_success": 2,
+            "orderly_shutdown": 3
+          },
+          "automatic_return_journal_verified": true,
+          "USB_route_verified": true,
+          "recorded_UTC": "2026-11-19T07:47:47+00:00"
+        }
+      },
+      "historic_USB_idle_overheat_maximum_difference_uA": 212350,
+      "historic_large_discrepancy_reproduced_in_repeat": false,
+      "power_policy_settings_changed": false,
+      "current_calibration_or_charge_stop_qualified": false,
+      "RAM_duplicate_readbacks_removed": 2,
+      "empty_temporary_USB_captures_removed": 25
     }
   },
   "SMBB_r2_pack_and_policy_handoff": {

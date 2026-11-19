@@ -909,6 +909,35 @@ the single activation. An independent journal check verified automatic
 return to the installed kernel and matching boot, package and module
 hashes. The active trace covers the gauge bind and unbind processes.
 
+### HOT-condition control and gauge comparison
+
+The first attempt returned to installed r2 before the gauge test. Its
+saved console recorded the early helper arming, then stopped at 5.75
+seconds without an overlay-ready marker or a panic message. An independent
+18-read, zero-write PM8226 capture matched earlier reset and watchdog
+register values. The early return source remains unresolved.
+
+On one exact-image repeat, three voltage-only conversions left the raw
+comparator at Good. Three thermistor conversions at 663 mV were followed
+by hardware HOT. The snapshots before and after each set recorded no
+SPMI writes. The BTC setting remained `0x81` and the USB input limit stayed
+at 500 mA. This ordered control reproduces the thermistor-associated status
+transition under the existing settings. The fixed order leaves time and
+ordering effects unisolated.
+
+The signed gauge activated once while the comparator reported HOT. All
+12 samples reported Discharging and Overheat. Live current read 0 mA,
+the background reading ranged from 0 to +3.615 mA, and the relative
+counter increased by 11 µAh over 13.018 seconds. Unbind restored both
+companion settings and the original IADC provider. Hardware HOT persisted
+after unbind. The historical idle discrepancy of about 212 mA did not
+reproduce in this window. Actual charging-stop behavior and independent
+current calibration remain open.
+
+The repeat returned through the normal timer. Independent journal and
+file checks verified installed r2, the same boot and package hashes and
+all 482 installed module files. [HOT-condition evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## Installed pack identity and charging-policy handoff
 
 The installed r2 boot exposes neither the stock battery-ID argument nor a
