@@ -1496,12 +1496,40 @@ All 482 installed module files and the protected hashes matched.
 The isolation candidate uses the policy child’s named voltage input
 for on-demand battery readings. The Madai charger parent no longer
 declares its own VADC reference. The legacy parent input path is still
-supported. The ARM charger object and DTB compiled, and host tests
-covered missing, restored and concurrently removed IIO providers.
-The managed path still needs a handset test of USB continuity and the
-independent user-inhibit vote across supplier removal and rebind.
+supported. Host tests covered absent and restored IIO providers and
+reading errors. The full linked kernel matched 11,718 built-in symbol
+exports, 468 signed modules, 482 module files and 25,592 import CRCs.
 [Repeat and candidate evidence](../evidence/2026-11-19-fx0-vadc-cutoff-and-reprobe.json)
 [Isolation candidate](https://github.com/timschmidt/fx0-linux/commit/5796fb92a078920740ee70857837cc070101c1ba)
+
+#### Supplier isolation on the handset
+
+The charger stayed bound and the USB gadget stayed configured through
+two VADC removals. The host retained the same USB enumeration and network
+interface across five checks. Battery voltage reported `ENODATA` while
+the ADC was unbound and returned a measurement after rebind. The charge
+policy reprobed automatically in both cycles.
+
+The first cycle started in fast charge. Both traces showed charge
+disable and the conservative `0x81` comparator window before the ADC
+unregistered. Each cycle held the disabled state across two snapshots.
+The first cycle then took fresh thermistor and voltage readings before
+enabling charge. The second started with the user's inhibit vote and
+recorded zero enable writes through rebind. The final PMIC readback
+confirmed charge was still inhibited.
+
+On the same RAM boot, two automatic-charge `s2idle` cycles woke by RTC
+after 13.587 and 13.911 seconds. The second started in fast charge. Both
+traces confirmed zero charge-control writes during sleep and fresh
+thermistor and voltage samples before re-enabling charge. The test's
+return-time guard stopped the later user-inhibit suspend cycle before
+it requested sleep. Final charge inhibition and the RTC alarm cleanup
+were verified.
+
+The phone returned to installed r2 on schedule. An independent audit
+matched the two workload receipts, both supplier traces, both suspend
+entry and exit pairs, the protected file hashes and all 482 installed
+module files. [Handset and return evidence](../evidence/2026-11-19-fx0-vadc-supplier-isolation.json)
 
 ## PM8226 hardware key reset
 
