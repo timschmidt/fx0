@@ -340,5 +340,54 @@
     "installed_return_boot": "dd1f4611-f1ca-4e33-93bf-8e9d7efda336",
     "installed_modules_verified": 482,
     "installed_protected_hashes_match": true
+  },
+  "PM8226_reset_reason_inventory_installed": {
+    "recorded_UTC": "2026-11-19T02:19:46.094193+00:00",
+    "kernel": "6.18.64-fx0-lts-alpine",
+    "boot_id": "e3829816-b3f6-4fb1-9b62-343efc6da5b2",
+    "two_matching_snapshots": true,
+    "register_order": [
+      "0x808",
+      "0x80a",
+      "0x80b",
+      "0x80c",
+      "0x80d",
+      "0x854",
+      "0x855",
+      "0x856",
+      "0x857"
+    ],
+    "raw_reason_bytes": [
+      "0x91",
+      "0x02",
+      "0x00",
+      "0xa0",
+      "0x00"
+    ],
+    "watchdog_configuration_bytes": [
+      "0x11",
+      "0x01",
+      "0x0e",
+      "0x80"
+    ],
+    "matches_prior_RAM_baseline": true,
+    "PMIC_arbiter": {
+      "version": "v1",
+      "version_register_hex": "0x20000002",
+      "execution_environment": 0,
+      "channel": 0
+    },
+    "SPMI_reads_in_probe_process": 18,
+    "SPMI_writes_in_probe_process": 0,
+    "trace_lost_events": 0,
+    "watchdog_pet_address_accessed": false,
+    "installed_module_files_verified_on_same_boot": 482,
+    "installed_protected_hashes_match_on_same_boot": true,
+    "host_targeted_offsets_verified": 9,
+    "host_negative_controls_passed": 6,
+    "phone_rebooted_for_probe": false,
+    "explicit_WiFi_scans": 0,
+    "runtime_watchdog_owner_or_expiration_qualified": false,
+    "causal_attribution_to_previous_freeze_established": false
   }
 }

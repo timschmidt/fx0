@@ -694,6 +694,20 @@ journal recorded no suspend, watchdog expiry or critical kernel fault.
 [Diagnostic source](https://github.com/timschmidt/fx0-linux/commit/eb2e1d27f6eaa10591d809c5dc1212b0c28aa5b2)
 [Qualification evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
 
+The installed 6.18.64 build can now supply the same five reason bytes
+without a reboot. The reader verifies the running kernel and PM8226
+regmap layout, then reads only the five reasons and four watchdog
+configuration registers. The process-scoped SPMI trace confirmed all
+18 one-byte reads across two snapshots, with zero writes and zero lost
+events. Both snapshots returned reasons `91 02 00 a0 00` and watchdog
+configuration `11 01 0e 80`, matching the earlier RAM capture. The
+operating system identified the PMIC arbiter as v1 (`0x20000002`),
+with execution environment and channel zero. These observations give a
+baseline for a future independently identified reset. The observed reason
+bits supply no additional attribution for the reported desktop freeze.
+[Installed reader](../diagnostics/pm8226-reset-reasons/read-installed.py)
+[Qualification evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
+
 ## Remaining physical scope
 
 The installed firmware lacks the verified early charge-inhibition marker.
