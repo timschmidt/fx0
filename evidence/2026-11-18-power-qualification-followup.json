@@ -1009,5 +1009,89 @@
     "cause_identified": false,
     "read_only_USB": true,
     "phone_changes": false
+  },
+  "installed_battery_telemetry_and_comparator_r2": {
+    "passed": true,
+    "boot_id": "90a41554-e833-4a2b-b448-482777e92132",
+    "recorded_UTC": "2026-11-19T05:59:17.094771+00:00",
+    "USB_verified_read_only": true,
+    "observation_count": 12,
+    "UPower_package_version": "99991.91.0-r5",
+    "UPower_source": "24a6bdb6bf27822b25288db0c6ecaabe99afa1fb",
+    "UPower_running_and_packaged_hashes_match": true,
+    "battery_charge_fields_available": false,
+    "charger_health_seen": [
+      "Good",
+      "Overheat"
+    ],
+    "charger_status_seen": [
+      "Discharging",
+      "Not charging"
+    ],
+    "thermistor_input_millivolts": 665,
+    "thermistor_pack_profile_verified": false,
+    "IADC_bound": true,
+    "IADC_measurement_ranges_mA": {
+      "0": [
+        "21.369000",
+        "21.369000"
+      ],
+      "1": [
+        "22.200000",
+        "22.200000"
+      ]
+    },
+    "IADC_external_resistor_property_present": false,
+    "current_direction_or_absolute_measurement_verified": false,
+    "SMBB_policy_bound": false,
+    "firmware_charge_inhibit_marker_present": false,
+    "live_comparator": {
+      "passed": true,
+      "boot_id": "90a41554-e833-4a2b-b448-482777e92132",
+      "health_before": "Overheat",
+      "health_after": "Overheat",
+      "live_status_matches_cached_health": true,
+      "comparator": [
+        {
+          "present": true,
+          "temp_status": 64,
+          "temperature_OK_interrupt_realtime": false,
+          "BTC_control": 129,
+          "decoded_temperature_status": "Overheat"
+        },
+        {
+          "present": true,
+          "temp_status": 64,
+          "temperature_OK_interrupt_realtime": false,
+          "BTC_control": 129,
+          "decoded_temperature_status": "Overheat"
+        }
+      ],
+      "SPMI_reads": 8,
+      "SPMI_writes": 0,
+      "selected_four_registers_only": true,
+      "thermistor_conversion_requested_during_capture": false,
+      "USB_online": true,
+      "USB_route_verified": true,
+      "recorded_UTC": "2026-11-19T05:59:17.094771+00:00"
+    },
+    "separate_hot_cache_correction": {
+      "base": "0f2c00771fd1fa728c5775a4b8a69d440d31d527",
+      "commit": "6d7f378fc071fc88dbfdc9ee37c66cad27a13843",
+      "remote_exact_head_verified": true,
+      "installed": false,
+      "original_hot_to_cold_fixture_failed_for_stale_cache": true,
+      "handler_checks": 1026,
+      "register_read_failure_checks": 4,
+      "legacy_control_cases": 6242,
+      "policy_control_cases": 2604,
+      "SMBB_voltage_callback_cases_passed": true,
+      "checkpatch_errors": 0,
+      "checkpatch_warnings": 0,
+      "ARM_charger_W1_object_built": true,
+      "ARM_compiler": "Fedora Clang 21.1.8",
+      "temporary_ARM_output_removed": true,
+      "comparator_or_charging_control_changes": false
+    }
   }
 }

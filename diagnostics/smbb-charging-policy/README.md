@@ -62,6 +62,7 @@ Run the actual-source regressions:
 ```sh
 python3 diagnostics/smbb-charging-policy/check-model.py /path/to/linux /path/to/vendor-linux
 python3 diagnostics/smbb-charging-policy/check-control.py /path/to/linux
+python3 diagnostics/smbb-charging-policy/check-temperature-status.py /path/to/linux/drivers/power/supply/qcom_smbb.c
 python3 diagnostics/smbb-charging-policy/check-firmware-profile.py /path/to/lk2nd
 python3 diagnostics/vadc-battery-units/check.py /path/to/linux
 ```

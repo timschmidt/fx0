@@ -782,8 +782,34 @@ IIO interface within 588 µV. Both interfaces read the same ADC. UPower
 is active and enumerated zero battery objects, so the result currently
 exposes kernel voltage without a desktop battery reading. Calibrated
 charging and hardware wake qualification remain open.
+
+The installed UPower daemon and library match the signed r5 manifest.
+Its charge-data check requires usable capacity, a recognized capacity
+level, or a valid remaining-charge or energy measurement with a full or
+design value. The installed SMBB supply exposes voltage and none of
+those charge values. Both current IIO channels returned samples, with
+the external channel using the driver's default sense resistance.
+Those samples lack independent current or polarity qualification.
+
+During twelve samples, the thermistor channel stayed at 665 mV while the
+charger health changed from Good to Overheat. A later scoped SPMI trace
+verified eight reads and zero writes. Both live temperature-status reads
+reported HOT while the comparator retained its conservative configuration.
+The installed firmware supplied neither the charge-inhibited handoff
+marker nor the stock-pack profile. The software charging policy was
+unbound.
+
+Source review found a separate cache error. After a hot interrupt, a
+later cold reading could retain the previous HOT flag. The correction
+updates both temperature flags after a successful read and preserves
+them on an I/O error. The original handler fails the hot-to-cold
+fixture. The correction passes 1,026 status cases and four read-error
+cases, and the ARM charger object builds with warnings enabled.
+The patch is published for review. The installed hardware HOT reading
+remains a separate qualification issue.
 [Handset and package recipe evidence](../evidence/2026-11-18-power-qualification-followup.json)
 [Package recipes](https://github.com/timschmidt/fx0-pmaports/commit/a8174d382680372082827ae97b7b6f93a86f7d7a)
+[Temperature-cache correction](https://github.com/timschmidt/fx0-linux/commit/6d7f378fc071fc88dbfdc9ee37c66cad27a13843)
 
 ## PM8226 hardware key reset
 

@@ -29,6 +29,7 @@ static bool audit_warm;
 static bool smbb_pack_identity_lost;
 #define READ_ONCE(x) (x)
 #define WRITE_ONCE(x,v) ((x)=(v))
+#define IS_REACHABLE(option) 1
 typedef int irqreturn_t;
 #define IRQ_HANDLED 1
 #define IRQCHIP_STATE_LINE_LEVEL 0
@@ -69,16 +70,21 @@ static const void *of_get_property(struct device_node *node,const char *name,int
  *length=node->request_length;return node->request?&present:NULL;
 }
 struct regmap {''')
+stubs = stubs.replace('POWER_SUPPLY_PROP_CHARGE_BEHAVIOUR };',
+                      'POWER_SUPPLY_PROP_CHARGE_BEHAVIOUR, POWER_SUPPLY_PROP_VOLTAGE_NOW };')
 stubs = stubs.replace('unsigned long status;', '''unsigned long status;
  bool software_control,battery_present_sampled;
  unsigned int board_current,board_voltage,user_current,user_voltage,thermal_current;
  u64 policy_valid_until_ns;
+ struct iio_channel *vbat;
  struct power_supply *bat_psy;''')
 stubs = stubs.replace('void *dev;', 'struct device *dev;')
 stubs = stubs.replace('m->operations++;', 'm->operations++;clock_ns+=bus_delay_ns;')
 stubs = stubs.replace('assert(value < 256);', 'assert(value < 256);if(audit_warm && reg==0x1044)assert(value<=9);')
 defines = '\n'.join(re.findall(r'^#define (?:SMBB_\w+|STATUS_\w+|CTRL_EN|PRES_STATUS_BAT_PRES)\s+.*$', source, re.M))
 attrs = source[source.index('enum smbb_attr {'):source.index('struct smbb_charger {')]
+attrs = re.sub(r'^static const enum power_supply_property smbb_battery_properties\[\] = \{\n.*?^\};\n',
+               '', attrs, flags=re.M | re.S)
 limits = source[source.index('static int smbb_vbat_weak_fn('):source.index('static int smbb_charger_attr_read(')]
 controls = source[source.index('static int smbb_charge_verify('):source.index('static enum power_supply_property smbb_charger_properties')]
 
