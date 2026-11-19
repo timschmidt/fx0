@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-19T13:08:52+00:00",
+  "last_updated_UTC": "2026-11-19T13:19:20+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -3116,6 +3116,84 @@
         "installed_return_boot": "9e72a95d-61cc-4017-a9f2-c89e6d6d5039",
         "installed_module_files_verified": 482,
         "protected_hashes_match": true
+      },
+      "source_change_flush_suppression_control": {
+        "recorded_UTC": "2026-11-19T13:19:20+00:00",
+        "public_source_commit": "16db0ca13351fac720aa4e047f84255695bd95cf",
+        "published_source_head_verified": true,
+        "source_control": {
+          "passed": true,
+          "parent_source_commit": "9bb2e3c38d164e9f34107e4b155ee59b43506918",
+          "parent_object_reproduced_byte_for_byte": true,
+          "parent_object_SHA256": "759ea66f137a4bb2884334dfdece9ccbed00c1268b3c1dd120058d2b1039cbb2",
+          "patch_SHA256": "d5dde3e4d011e694857411508c0e9097e721e7a8e335ec3b7e89fc71a608464c",
+          "ARM_module_SHA256": "dfd92394d54492787259d68e8c1220661753d9a72688611f785be586bec8a635",
+          "module_bytes": 54912,
+          "module_undefined_symbols_unchanged": true,
+          "gate_checked_cases": 10240,
+          "source_event_flush_nonblocking_only": true
+        },
+        "image_control": {
+          "passed": true,
+          "source_commit": "9bb2e3c38d164e9f34107e4b155ee59b43506918",
+          "parent_image_sha256": "58eba6f2830393b0f1e1f3b0302b3b0b8f0d95760c234a66bcff251a109f3d7b",
+          "image_sha256": "76000d94ee9e4b6f24258c642880db92f834e0a47df5434b4632c8a76dca1697",
+          "image_bytes": 20811776,
+          "new_decoder_module_sha256": "528b7c991bbfdda52e8d5bf3667523843c31ba705220d51d2d3fad6fe7d2bce8",
+          "matching_import_CRCs": 131,
+          "decoder_signature_checked": true,
+          "manifest_records_verified": 488,
+          "unchanged_kernel_dtb_and_arguments": true,
+          "modified_entries": [
+            "etc/fx0-native-modules.sha256",
+            "usr/lib/modules/6.18.64-fx0-venus-ram-alpine/kernel/drivers/media/platform/qcom/venus/venus-dec.ko"
+          ],
+          "handset_qualified": false,
+          "sanitizer_cases_passed": 10240,
+          "additional_imports": [],
+          "patch_SHA256": "d5dde3e4d011e694857411508c0e9097e721e7a8e335ec3b7e89fc71a608464c",
+          "default_skip_source_flush": false,
+          "candidate_module_only": true
+        },
+        "fixture_prefix_comparison": {
+          "fixture_SHA256": "4cc5e2ffe25a7cf1a5ef7655cd3e25efa1358c5212aea4bc90b9dc9db26b776d",
+          "frames": 11,
+          "bytes": 1267200,
+          "hardware_prefix_SHA256": "725ec67c9644c883f68b708042a02749e8006f3c99ac4eb7a99d39086bbd49fb",
+          "software_prefix_SHA256": "725ec67c9644c883f68b708042a02749e8006f3c99ac4eb7a99d39086bbd49fb",
+          "matches_software_prefix": true,
+          "software_reference_full_SHA256": "04f9b0fca3b1fcefbb53608e2c39f75bb2616b4ebe551f545c335f13cbeb8ade",
+          "retained_decoded_video": false
+        },
+        "same_FFmpeg_binary_and_fixture_as_function_trace": true,
+        "firmware_source_change_flush_suppressed": true,
+        "capture_stop_flush_completed": true,
+        "capture_STREAMON_calls_accepted": 2,
+        "replacement_firmware_fill_commands_before_fault": 32,
+        "coded_inputs_firmware_records": 14,
+        "filtered_function_trace": {
+          "vdec_stop_streaming": 18716,
+          "venus_session_flush": 18727,
+          "hfi_session_flush_done": 21351,
+          "vdec_start_streaming": 330811,
+          "venus_event_notify": 539248
+        },
+        "last_replacement_fill_to_firmware_system_error_us": 12611,
+        "trace_function_events_recorded_without_overrun": 192,
+        "trace_cleaned_up": true,
+        "firmware_fatal_file": "vbuffer.c",
+        "firmware_fatal_line": 623,
+        "firmware_fatal_data2_hex": "a6fc0",
+        "FFmpeg_signal": 6,
+        "FFmpeg_output_error": "Assertion pkt failed",
+        "V4L2_LAST_and_resolution_change_qualified": false,
+        "prior_fault_recurred": false,
+        "persistent_installation_performed": false,
+        "RAM_readback_removed": true,
+        "retained_decoder_core_files": 0,
+        "installed_return_boot": "7988fba7-de94-4bb4-a4b3-cc52414afd6a",
+        "protected_hashes_match": true,
+        "installed_module_files_verified": 482
       }
     },
     "default_startup_qualified": false,

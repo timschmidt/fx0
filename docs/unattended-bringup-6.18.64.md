@@ -1034,6 +1034,18 @@ source-change output flush was the last observed firmware command
 before the fault. Its causal role and the V4L2 LAST and restart
 contract still need verification.
 
+An opt-in [RAM diagnostic](https://github.com/timschmidt/fx0-linux/commit/16db0ca13351fac720aa4e047f84255695bd95cf)
+skipped only the immediate flush for an active H.264 downshift with
+sufficient resources. The driver still signaled the source change and
+ran the blocking CAPTURE `STREAMOFF` flush. The firmware acknowledged
+that flush, and CAPTURE restarted with 32 smaller buffers. The trace
+then recorded 32 firmware fill-buffer commands and a different fatal
+error at `vbuffer.c:623`. FFmpeg returned 11 byte-exact frames from the
+first segment and aborted on an assertion after the driver reported
+I/O errors. The original `vfw_h264_main.c:2124` fault did not recur in
+this control. Buffer retirement and replacement, the final frame of the
+old segment, and restarting the new segment remain unqualified.
+
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
 its synthetic completion. The matched ordinary STOP test still failed
