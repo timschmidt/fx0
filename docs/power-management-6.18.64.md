@@ -718,6 +718,45 @@ reader again verified 18 reads and zero writes. The unchanged reason
 bytes do not distinguish the two observed boot transitions.
 [Qualification evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
 
+After the later reported desktop freeze and reboot, the same installed
+reader again returned `91 02 00 a0 00` and `11 01 0e 80` in two snapshots.
+It verified 18 SPMI reads and zero writes. The captured journal shows an
+orderly shutdown from the preceding RAM boot. The return request was
+also acknowledged, so the journal and the PMIC bytes cannot uniquely
+identify the owner's reboot or attribute the freeze to a reset source.
+The retained boots show no suspend entry or matching display, touchscreen
+or IOMMU failure. Pstore contains no new crash dump.
+
+The LG kernel release's only direct caller of `qpnp_pon_wd_config()`
+disables the PMIC watchdog when preparing emergency download mode. The
+published MSM8226 lk2nd source likewise clears `0x857` when preparing a
+download mode. Its ordinary Fastboot reboot branch leaves that register
+alone. The source inspection identifies these boot paths without
+establishing who owns the watchdog during normal operation.
+[LG restart source](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/mach-msm/restart.c#L110)
+[MSM8226 lk2nd restart source](https://github.com/timschmidt/fx0-lk2nd/blob/8fbf21a4fd2dd6bd682edc24e83c22a04cb3b927/target/msm8226/init.c#L391)
+[Qualification evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
+
+### Installed Sxmo idle policy
+
+The current Sway session loaded the Madai profile and was in the unlocked
+state. Both `sxmo.noidle` and `sxmo.nosuspend` exist under
+`$XDG_CACHE_HOME/sxmo/`, as retained in earlier bring-up. An earlier probe
+looked in the parent directory and missed both flags. The corrected USB
+audit verified the paths from the active session. Neither idle job was
+registered, and no `swayidle` process was running. Five installed hooks
+matched the workstation package byte for byte.
+
+The workstation replay exercised all four flag combinations in both
+locations, using 32 invocations of the packaged hooks and mock display and
+suspend commands. With only `sxmo.nosuspend` set in the effective
+subdirectory, the lock and unlock hooks queue the idle timer while the
+suspend blocker still waits. Existing settings were kept on the handset.
+This accounts for the lack of automatic screen blanking and suspend under
+the current policy. The reported freeze remains unresolved.
+[Packaged hook replay](../diagnostics/sxmo-fx0-profile/check-idle-hooks.py)
+[Power management evidence](../evidence/2026-11-17-power-management-6.18.64.json)
+
 ## Remaining physical scope
 
 The installed firmware lacks the verified early charge-inhibition marker.

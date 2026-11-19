@@ -411,6 +411,48 @@
       "lost_trace_entries": 0,
       "first_journal_query_timed_out": true,
       "physical_watchdog_recovery_qualified": false
+    },
+    "after_reported_desktop_freeze": {
+      "recorded_UTC": "2026-11-19T03:41:26.001712+00:00",
+      "installed_boot": "6bc8171e-ead6-47c9-8ace-c618124d01ad",
+      "preceding_retained_boot": "dcc16dd3-6f10-4594-b7f9-e0ed793bbcf7",
+      "return_request_acknowledged": true,
+      "preceding_boot_orderly_shutdown_recorded": true,
+      "freeze_or_reboot_source_identified": false,
+      "reason_bytes_hex": [
+        "91 02 00 a0 00",
+        "91 02 00 a0 00"
+      ],
+      "watchdog_configuration_bytes_hex": [
+        "11 01 0e 80",
+        "11 01 0e 80"
+      ],
+      "SPMI_reads_in_probe_process": 18,
+      "SPMI_writes_in_probe_process": 0,
+      "lost_trace_entries": 0,
+      "matches_prior_RAM_baseline": true,
+      "additional_boot_after_confirmed_return_observed": false,
+      "new_persistent_crash_dump_count": 0,
+      "suspend_entry_seen_in_either_retained_boot": false,
+      "matching_display_touch_or_IOMMU_failure_seen": false,
+      "installed_module_files_verified_on_same_boot": 482,
+      "installed_protected_hashes_match_on_same_boot": true,
+      "Sway_responsive_samples": 7,
+      "USB_route_verified": true,
+      "physical_touch_qualified": false,
+      "phone_rebooted_for_audit": false
     }
+  },
+  "PM8226_watchdog_source_cross_check": {
+    "LG_vendor_kernel_commit": "03aba4427a7666d57b5ae06d375e259ea337f351",
+    "vendor_direct_callers_of_qpnp_pon_wd_config": [
+      "arch/arm/mach-msm/restart.c:124"
+    ],
+    "vendor_call_path": "Emergency download preparation disables the PMIC watchdog.",
+    "published_lk2nd_commit": "8fbf21a4fd2dd6bd682edc24e83c22a04cb3b927",
+    "lk2nd_register_written_for_download_mode": "0x857",
+    "lk2nd_fastboot_mode_calls_watchdog_clear": false,
+    "normal_runtime_owner_identified": false,
+    "watchdog_expiration_qualified": false
   }
 }

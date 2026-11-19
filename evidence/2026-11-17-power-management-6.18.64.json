@@ -301,5 +301,106 @@
     "RWX_LOAD_linker_warnings_per_build": 1,
     "phone_boot_or_flash": false,
     "hardware_acceptance": false
+  },
+  "installed_Sxmo_idle_policy": {
+    "recorded_UTC": "2026-11-19T03:45:31.622399+00:00",
+    "boot_id": "6bc8171e-ead6-47c9-8ace-c618124d01ad",
+    "Madai_device_profile": true,
+    "Sxmo_state": "unlock",
+    "flags_in_effective_Sxmo_cache_subdirectory": {
+      "sxmo.noidle": true,
+      "sxmo.nosuspend": true
+    },
+    "same_flags_in_cache_parent": false,
+    "packaged_hooks_sha256": {
+      "sxmo_hook_unlock.sh": "c258cadbbad908046e70380423fcef7cc9579bce05c361ea10583269cc2ac099",
+      "sxmo_hook_lock.sh": "537bce8064b18bfc6223c05e84bb3582ab0f16b2e09156bff48781c490a37552",
+      "sxmo_hook_screenoff.sh": "cb3da0ea74c1636637bb8b30155063daf84bc6a10a003169d4265f0f1249edb6",
+      "sxmo_hook_start.sh": "7fdfc695fd3daa8b8b294223d40535e2b2638aa84f0267bedd73ba6785ad7c60",
+      "sxmo_hook_block_suspend.sh": "b5c7044fcad2f74d0767956fc2a0dde4a6054d865f389080d58bb50f4ad01387"
+    },
+    "idle_jobs_registered": false,
+    "swayidle_installed": true,
+    "swayidle_running": false,
+    "host_mock_flag_cases": 8,
+    "host_packaged_hook_invocations": 32,
+    "host_results": [
+      {
+        "noidle": false,
+        "nosuspend": false,
+        "effective_location": false,
+        "unlock_queues_idle_locker": true,
+        "lock_queues_idle_locker": true,
+        "screenoff_queues_periodic_blink": true,
+        "suspend_blocked_by_flag": false
+      },
+      {
+        "noidle": false,
+        "nosuspend": false,
+        "effective_location": true,
+        "unlock_queues_idle_locker": true,
+        "lock_queues_idle_locker": true,
+        "screenoff_queues_periodic_blink": true,
+        "suspend_blocked_by_flag": false
+      },
+      {
+        "noidle": false,
+        "nosuspend": true,
+        "effective_location": false,
+        "unlock_queues_idle_locker": true,
+        "lock_queues_idle_locker": true,
+        "screenoff_queues_periodic_blink": true,
+        "suspend_blocked_by_flag": false
+      },
+      {
+        "noidle": false,
+        "nosuspend": true,
+        "effective_location": true,
+        "unlock_queues_idle_locker": true,
+        "lock_queues_idle_locker": true,
+        "screenoff_queues_periodic_blink": false,
+        "suspend_blocked_by_flag": true
+      },
+      {
+        "noidle": true,
+        "nosuspend": false,
+        "effective_location": false,
+        "unlock_queues_idle_locker": true,
+        "lock_queues_idle_locker": true,
+        "screenoff_queues_periodic_blink": true,
+        "suspend_blocked_by_flag": false
+      },
+      {
+        "noidle": true,
+        "nosuspend": false,
+        "effective_location": true,
+        "unlock_queues_idle_locker": false,
+        "lock_queues_idle_locker": false,
+        "screenoff_queues_periodic_blink": true,
+        "suspend_blocked_by_flag": false
+      },
+      {
+        "noidle": true,
+        "nosuspend": true,
+        "effective_location": false,
+        "unlock_queues_idle_locker": true,
+        "lock_queues_idle_locker": true,
+        "screenoff_queues_periodic_blink": true,
+        "suspend_blocked_by_flag": false
+      },
+      {
+        "noidle": true,
+        "nosuspend": true,
+        "effective_location": true,
+        "unlock_queues_idle_locker": false,
+        "lock_queues_idle_locker": false,
+        "screenoff_queues_periodic_blink": false,
+        "suspend_blocked_by_flag": true
+      }
+    ],
+    "installed_policy_changed": false,
+    "physical_idle_wake_qualified": false,
+    "phone_rebooted_for_audit": false,
+    "USB_route_verified": true
   }
 }
