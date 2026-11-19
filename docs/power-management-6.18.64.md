@@ -219,6 +219,22 @@ The RAM worker restored the USB wake setting, cleared the alarm and
 removed its trace instance and probe. The return audit verified the
 installed boot and all 482 modules.
 
+The kernel candidate assigns USB SPI 134 to the core and routes the
+separate PHY interrupt through MPM pin 47 in the experimental suspend
+DTB. With USB wake enabled, the driver programs the line-state detector
+for a connected gadget after the host has suspended its bus. It enables
+the asynchronous interrupt output once the PHY enters low-power mode
+and restores the saved register bits on resume. [Kernel candidate](https://github.com/timschmidt/fx0-linux/tree/1cd3353191f28d1bf4cbea6d7f1b96b619751feb)
+
+Two ARM compilations produced identical objects. The build reproduced
+the earlier suspend DTB byte for byte before changing the four USB
+properties. The binding accepted both DTBs and rejected missing or
+reversed interrupt names on the new variant. A host fixture exercised
+1,024 combinations of USB role, bus and wake state, including a PHY
+transition timeout and register restoration. The candidate still needs
+a linked kernel and a handset test with host-driven USB bus suspend
+and resume. [Build and replay evidence](../evidence/2026-11-19-msm8226-usb-async-wake.json)
+
 ### Capped deep-suspend boot
 
 The signed capped kernel booted the Madai suspend DTB with WLAN disabled.

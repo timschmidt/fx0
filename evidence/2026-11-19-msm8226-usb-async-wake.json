@@ -1,0 +1,72 @@
+{
+  "recorded_UTC": "2026-11-19T15:09:07+00:00",
+  "public_branch": "timschmidt/fx0-linux:diagnostic/fx0-msm8226-usb-async-wake-01",
+  "published_exact_head": "1cd3353191f28d1bf4cbea6d7f1b96b619751feb",
+  "binding_commit": "f659f78eff0c5fac56a5589006981c65d81a9ef7",
+  "driver_commit": "11f0632bef9a44c8fe01c51faf927fb45a4c0ab9",
+  "experimental_DTB_commit": "1cd3353191f28d1bf4cbea6d7f1b96b619751feb",
+  "vendor_source": "03aba4427a7666d57b5ae06d375e259ea337f351",
+  "original_r2_ChipIdea_driver_and_private_headers_match_build_parent": true,
+  "build": {
+    "passed": true,
+    "parent_source_commit": "3743831132900a49258df9378563a634ae62a87a",
+    "target": "ARM ELF32",
+    "ARM_candidate_object_SHA256": "9d3a9d63c71e63241926e368c03c8a6fdf802e26271e5b153e8e1a99caac8128",
+    "repeat_ARM_object_byte_identical": true,
+    "same_original_object_imports_as_recorded_build": true,
+    "additional_object_imports": [
+      "_dev_warn",
+      "dev_err_probe",
+      "dev_pm_clear_wake_irq",
+      "dev_pm_set_dedicated_wake_irq",
+      "ktime_get",
+      "platform_get_irq",
+      "platform_get_irq_byname"
+    ],
+    "original_DTB_reproduced_byte_for_byte": true,
+    "original_DTB_SHA256": "577d54838cd0d739297ce1c9c9143c1c7623da33e18d38df9d0806cd4b4fbc63",
+    "candidate_DTB_SHA256": "0e058f858c2a1be721d2e87264701f41684afa9534d4117bf3f363579f5bfc35",
+    "only_four_USB_node_properties_changed": true,
+    "MPM_route": {
+      "pin": 47,
+      "SPI": 140
+    },
+    "core_SPI": 134,
+    "USB_and_wakeup_IRQ_names": [
+      "core",
+      "wakeup"
+    ]
+  },
+  "introduced_imports_found_in_prior_kernel_symbol_map": 7,
+  "modified_DTB_properties": [
+    "compatible",
+    "interrupts",
+    "interrupts-extended",
+    "interrupt-names"
+  ],
+  "ordinary_Madai_DTS_unchanged": true,
+  "binding_document_passed": true,
+  "original_and_candidate_DTB_pass_targeted_USB_schema": true,
+  "schema_fault_controls_rejected": [
+    "missing interrupt-names",
+    "reversed core and wakeup names"
+  ],
+  "host_actual_driver_register_cases": 1024,
+  "ASan_and_UBSan_passed": true,
+  "register_case_coverage": [
+    "wake policy",
+    "gadget role",
+    "connection and host suspend",
+    "both PHCD registers",
+    "PHY timeout",
+    "preservation of other register bits",
+    "repeat entry and cleanup",
+    "wake policy changed before resume"
+  ],
+  "checkpatch_errors": 0,
+  "checkpatch_warnings": 0,
+  "linked_candidate_kernel_built": false,
+  "handset_USB_wake_verified": false,
+  "deep_suspend_recovery_verified": false,
+  "installed_phone_changed": false
+}
