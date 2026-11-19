@@ -811,6 +811,37 @@ remains a separate qualification issue.
 [Package recipes](https://github.com/timschmidt/fx0-pmaports/commit/a8174d382680372082827ae97b7b6f93a86f7d7a)
 [Temperature-cache correction](https://github.com/timschmidt/fx0-linux/commit/6d7f378fc071fc88dbfdc9ee37c66cad27a13843)
 
+## PM8226 fuel-gauge diagnostic
+
+A read-only capture on the installed r2 boot confirmed the BMS and its
+companion IADC identities. The SPMI trace recorded 78 reads and zero
+writes. The counter output was read without a hardware hold, so these
+bytes cannot establish a coherent counter value or charge estimate.
+
+The experimental PM8226 non-VM driver and the IADC reference and
+calibration changes are ported to the installed kernel's 6.18.64 source
+base. The driver source matches the earlier experimental version. The
+port adds `qcom-msm8926-lg-madai-bms.dtb` for diagnostic use. Its four
+IIO channels select external current, gain, offset and battery voltage.
+The normal Fx0 device tree and default kernel configuration retain their
+existing gauge behavior.
+
+Host fixtures passed for gauge arithmetic, snapshot and restart handling,
+property getters, and IADC calibration and reference reads. Both unsigned
+ARM modules linked using the installed build's symbol table and matched
+all 86 imported symbol CRCs. The binding and targeted device tree passed
+schema validation. Comparing the two compiled trees verified that all
+143 existing phandle targets survived compiler renumbering.
+
+No module was loaded on the phone. The diagnostic still needs a guarded
+first probe and measurements against a known current reference. Current
+direction and scale, usable remaining charge, pack identity and charging
+policy remain open. The earlier diagnostic reported a discrepancy between
+live and background current, so the relative counter cannot yet serve as
+desktop charge telemetry.
+[Diagnostic kernel source](https://github.com/timschmidt/fx0-linux/commit/9833a659ee487887893e47bca12db38886f1ef88)
+[Read-only capture and build checks](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce

@@ -1093,5 +1093,88 @@
       "temporary_ARM_output_removed": true,
       "comparator_or_charging_control_changes": false
     }
+  },
+  "PM8226_BMS_diagnostic_6_18_64": {
+    "recorded_UTC": "2026-11-19T06:20:28+00:00",
+    "installed_linux_base": "0f2c00771fd1fa728c5775a4b8a69d440d31d527",
+    "linux_branch": "development/fx0-pm8226-bms-diagnostic-6.18.64-01",
+    "linux_commit": "9833a659ee487887893e47bca12db38886f1ef88",
+    "remote_exact_head_verified": true,
+    "prior_driver_commit": "31061619c6a1ec6579b07ecbd3303614899d116b",
+    "driver_git_blob_matches_prior": "dd604d3691350c5e0df04be95929cbd5c9fb4e1f",
+    "prior_board_wiring_commit": "35743f1984fc7b9863224856dca0aa148e832be5",
+    "installed_read_only_trace": {
+      "boot_id": "90a41554-e833-4a2b-b448-482777e92132",
+      "SPMI_reads": 78,
+      "SPMI_writes": 0,
+      "BMS1_type": 13,
+      "BMS1_subtype": 1,
+      "BMS1_digital_major_revision": 2,
+      "companion_type": 8,
+      "companion_subtype": 5,
+      "companion_digital_major_revision": 4,
+      "BMS_mode_control": [
+        64,
+        64
+      ],
+      "BMS_counter_data_control": [
+        0,
+        0
+      ],
+      "BMS_counter_output_hold_observed": [
+        false,
+        false
+      ],
+      "BMS_power_supply_enumerated": false,
+      "output_reads_are_coherent": false,
+      "physical_current_or_SOC_validated": false,
+      "USB_online": true,
+      "USB_route_verified": true,
+      "recorded_UTC": "2026-11-19T06:08:55.713296+00:00"
+    },
+    "host_fixture_checks_passed": {
+      "BMS_arithmetic": 20033,
+      "BMS_snapshot_restart_and_sense_faults": 70,
+      "BMS_getter_properties_and_cache": 37,
+      "IADC_provider_calibration_cache_and_reset": 34,
+      "IADC_raw_references_translation_and_cache": 27
+    },
+    "ARM_compiler": "Fedora Clang 21.1.8",
+    "ARM_modules": {
+      "passed": true,
+      "module_metadata": {
+        "qcom-spmi-iadc.ko": {
+          "matching_import_CRCs": 40,
+          "kernel_release": "6.18.64-fx0-lts-alpine"
+        },
+        "qcom_pm8226_bms.ko": {
+          "matching_import_CRCs": 46,
+          "kernel_release": "6.18.64-fx0-lts-alpine"
+        }
+      },
+      "binding_and_targeted_DTB_schema_passed": true,
+      "external_Kbuild_link": true,
+      "signed_or_loaded": false,
+      "temp_build_removed_by_wrapper": true
+    },
+    "DTB_checks": {
+      "passed": true,
+      "normal_tree_has_no_BMS_node": true,
+      "prototype_tree_only_expected_changes": true,
+      "IADC_channel_cells_verified": true,
+      "supply_and_phandle_order_verified": true,
+      "unchanged_existing_phandle_targets_after_renumbering": 143,
+      "baseline_dtb_sha256": "aa5662b13b302f0338eec2d6b378085445ac9ac6e65d3da8e47774d374a72700",
+      "prototype_dtb_sha256": "128811bb4f22e60ae7124be22eb4da752d87a23a34b025a12eb5cdcd70d8fe96",
+      "measured_shunt_qualification_in_this_turn": false,
+      "temporary_DTBs_removed_by_build_wrapper": true
+    },
+    "DTB_existing_eFuse_and_display_graph_warnings_each": 3,
+    "temporary_ARM_build_size_MiB_rounded": 6.1,
+    "normal_device_tree_source_changed": false,
+    "installed": false,
+    "handset_rebooted": false,
+    "charging_limits_or_pack_profile_changed": false,
+    "charge_current_or_SOC_qualified": false
   }
 }
