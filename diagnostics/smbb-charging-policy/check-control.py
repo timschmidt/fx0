@@ -77,7 +77,7 @@ struct regmap {''')
 stubs = stubs.replace('POWER_SUPPLY_PROP_CHARGE_BEHAVIOUR };',
                       'POWER_SUPPLY_PROP_CHARGE_BEHAVIOUR, POWER_SUPPLY_PROP_VOLTAGE_NOW };')
 stubs = stubs.replace('unsigned long status;', '''unsigned long status;
- bool software_control,battery_present_sampled;
+ bool software_control,battery_present_sampled,charge_timer_enabled;
  unsigned int board_current,board_voltage,board_recharge_voltage,user_current,user_voltage,thermal_current;
  u64 policy_valid_until_ns;
  struct iio_channel *vbat;
@@ -106,7 +106,7 @@ stubs = stubs.replace('assert(reg == 0x1049 && mask == 0x80 && !(value & ~mask))
  }
 ''')
 defines = '\n'.join(re.findall(
-    r'^#define (?:SMBB_\w+|STATUS_\w+|BTC_CTRL_\w+|CTRL_EN|PRES_STATUS_BAT_PRES)\s+.*$', source, re.M))
+    r'^#define (?:SMBB_\w+|STATUS_\w+|BTC_CTRL_\w+|CTRL_EN|CHG_FAILED_LATCHED|PRES_STATUS_BAT_PRES)\s+.*$', source, re.M))
 if 'static int smbb_set_managed_voltage(' in source:
     defines += '\n#define TEST_MANAGED_RECHARGE'
 attrs = source[source.index('enum smbb_attr {'):source.index('struct smbb_charger {')]
@@ -115,7 +115,31 @@ attrs = re.sub(r'^static const enum power_supply_property smbb_battery_propertie
 limits = source[source.index('static int smbb_vbat_weak_fn('):source.index('static int smbb_charger_attr_read(')]
 control_start = ('static int smbb_charge_enable(' if 'static int smbb_charge_set_btc(' in source
                  else 'static int smbb_charge_verify(')
+if 'static int smbb_read_charge_failure(' in source:
+    control_start = 'static int smbb_read_charge_failure('
+    stubs += r'''
+static int regmap_update_bits(struct regmap *map, unsigned int reg,
+                              unsigned int mask, unsigned int value)
+{
+ unsigned int before;
+ int ret = regmap_read(map, reg, &before);
+ if (ret || (before & mask) == value)
+  return ret;
+ return regmap_write_bits(map, reg, mask, value);
+}
+'''
 controls = source[source.index(control_start):source.index('static enum power_supply_property smbb_charger_properties')]
+policy_voltage = 'static struct device_node *smbb_battery_voltage_node('
+if policy_voltage in controls:
+    start = controls.index(policy_voltage)
+    end = controls.index('static int smbb_battery_get_voltage(', start)
+    # The voltage fixture exercises the policy-node IIO consumer and its lifetime.
+    controls = controls[:start] + r'''
+static int smbb_battery_read_policy_voltage(struct smbb_charger *chg, int *value)
+{
+ return -ENODATA;
+}
+''' + controls[end:]
 
 def definition(name):
     start = source.index(name)

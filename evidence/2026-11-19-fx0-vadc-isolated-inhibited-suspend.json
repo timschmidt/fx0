@@ -1,0 +1,106 @@
+{
+  "recorded_UTC": "2026-11-19T18:47:35.793668+00:00",
+  "kernel_source": "5796fb92a078920740ee70857837cc070101c1ba",
+  "RAM_image_SHA256": "33f519927d3308be930477d7ebe031f15f45f91a23853dffa04ff358f94a312c",
+  "return_guards_seconds": [
+    360,
+    420
+  ],
+  "WLAN_disabled_in_RAM": true,
+  "checked_inhibit_on_fresh_RAM_boot": true,
+  "trace_replay": {
+    "attempts": [
+      {
+        "cycle": 0,
+        "user_inhibit": true,
+        "starting_charge_enabled": [
+          0,
+          0
+        ],
+        "fast_charge_before": false,
+        "rtc_completed": true,
+        "cleared_alarm": true,
+        "phase_irq_events": {
+          "phase_IRQs_between_prepare_and_complete": 0,
+          "phase_IRQs_after_prepare_before_machine_sleep": 0,
+          "phase_IRQ_battery_activations_in_window": 0,
+          "wake_IRQ_reporters": []
+        },
+        "phase_prepare_observed": true,
+        "phase_complete_observed": true,
+        "observed_temp_status_bytes": [
+          64
+        ],
+        "observed_USB_status_bytes": [
+          3
+        ],
+        "suspended_seconds": 14.275,
+        "rtc_wake_irq": 33,
+        "RTC_interrupt_increment": 1,
+        "after_charge_control": [
+          0,
+          0
+        ],
+        "after_comparator": [
+          129,
+          129
+        ],
+        "control_trace": {
+          "suspend_inhibit_and_readback": true,
+          "control_writes_during_sleep": 0,
+          "enable_writes_after_wake": 0,
+          "post_wake_ADC_before_enable": [],
+          "control_and_VADC_transfers": 44,
+          "lost_trace_entries": 0
+        }
+      }
+    ],
+    "steady_wake": {
+      "worker_entries": 7,
+      "worker_returns": 7,
+      "battery_activations": 0,
+      "activations_inside_worker": 0,
+      "trace_lost": 0,
+      "trace_cleanup_verified": true,
+      "seconds": 7.25
+    },
+    "handset_passed": true,
+    "modes_with_RTC_and_charger_trace": [
+      "inhibit-charge"
+    ]
+  },
+  "final_inhibit": {
+    "user_vote": 2,
+    "charge_control": [
+      0,
+      0
+    ],
+    "comparator": [
+      129,
+      129
+    ]
+  },
+  "installed_return": {
+    "verified": true,
+    "normal_return_service_succeeded": true,
+    "host_observer_interrupted_and_resumed": true,
+    "journal_receipt_matched": true,
+    "module_files_verified": 482,
+    "protected_hashes_match": true,
+    "journal_counts": {
+      "journal_rows": 2195,
+      "kernel_rows": 502,
+      "early_return_guard_armed": 1,
+      "full_module_overlay_ready": 1,
+      "early_guard_or_overlay_failure": 0,
+      "suspend_entry": 1,
+      "kernel_fatal": 0,
+      "SMBB_or_VADC_error": 0,
+      "lockup": 0,
+      "normal_return_service_rows": 3,
+      "normal_return_service_success": 2,
+      "orderly_shutdown": 3,
+      "suspend_exit": 1
+    }
+  }
+}

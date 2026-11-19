@@ -1333,6 +1333,25 @@ register `0x1065`. The raw values at `0x1061`, `0x1062` and `0x1063` were
 writes. Hardware charge cutoff with a stalled CPU remains unqualified.
 [Trace validation](../diagnostics/pm8226-reset-reasons/read-installed.py)
 
+#### Charge-duration candidate
+
+LG's Madai device tree selects a 480-minute charge duration. Its driver
+programs the PM8226 duration register in four-minute steps and then
+enables the timer. Its charge-failure handler disables charging on the
+LG configuration. [LG board settings](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/boot/dts/msm8226-madai/msm8226-madai-pm.dtsi#L291)
+[LG driver](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/power/qpnp-charger.c#L3613)
+
+The candidate programs and verifies the same limit while the charger
+is inhibited at startup. A configuration error or a latched PMIC
+charge failure holds the driver's fault vote. Steady policy samples
+leave an already enabled timed charge session alone. The ARM driver
+object and Madai DTB compiled. The binding passed validation, and the
+host model covered duration bounds, readback errors, the charge-failure
+latch and an injected failure during enable. Timer expiry and recovery
+on the handset remain open.
+[Candidate source](https://github.com/timschmidt/fx0-linux/commit/1e75e586a6e8f03fd013430135e5abf86a8643e0)
+[Host checks](../diagnostics/smbb-charging-policy/check-duration.py)
+
 #### Managed charger suspend refusal and wake notifications
 
 The paired managed RAM image started with fast charge active at the
@@ -1530,6 +1549,16 @@ The phone returned to installed r2 on schedule. An independent audit
 matched the two workload receipts, both supplier traces, both suspend
 entry and exit pairs, the protected file hashes and all 482 installed
 module files. [Handset and return evidence](../evidence/2026-11-19-fx0-vadc-supplier-isolation.json)
+
+An early test on a fresh boot of the same image covered the deferred
+user-inhibit case. The RTC woke the phone after 14.275 seconds. The
+PMIC trace confirmed the conservative comparator, zero charge-control
+writes during sleep and zero charge-enable writes after wake. The
+explicit inhibit still held at the final readback. Both automatic
+return safeguards stayed armed. The phone returned to
+installed r2, and the journal, protected hashes and 482 installed
+module files passed the independent audit.
+[Inhibited suspend evidence](../evidence/2026-11-19-fx0-vadc-isolated-inhibited-suspend.json)
 
 ## PM8226 hardware key reset
 
