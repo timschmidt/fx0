@@ -674,10 +674,32 @@ hashes before and after copying them into RAM. The image preserves the existing
 360-second normal and 420-second early return paths, requires module
 signatures and blacklists `wcn36xx`. An independent parser verified its
 boot header, load bounds, exact DTB properties and initramfs contents.
-The image is ready for a guarded temporary boot. On-device probe order,
-voltage reporting and return to the installed kernel remain unverified
-for this image.
 [Linked RAM candidate evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
+The handset booted the exact readback image and reported `voltage_now`
+as read-only. Twelve paired conversions returned 4,193,040–4,193,922 µV
+through the battery supply, within 882 µV of the IIO readings. USB power
+stayed online and the input limit reported 500 mA. The two interfaces read
+the same ADC. Electrical calibration and actual USB draw remain open.
+
+The main observer waited for systemd to finish starting. A separate
+same-boot check verified that only time synchronization was pending and
+both automatic returns were armed. Its first read rejected the IIO
+decimal precision. The corrected check accepted all 12 pairs. The main
+observer stopped on an assertion while returning. The independent audit
+verified the installed boot, all 482 module files and the protected boot
+and package hashes. The retained trial journal recorded a successful
+normal return service, an orderly shutdown, and zero suspend entries or
+charger and ADC failures. On the installed boot, Sway replied and the
+touchscreen was enumerated. Physical touch was outside this test.
+
+The separate package recipes use the cached 6.18.64 release archive and
+the exact patch that reconstructs the three tested kernel files. The Fx0
+device recipe requests `qcom-spmi-vadc` in its early module list. The
+archive and recipe checksums pass. Building and deploying the signed
+package pair remains open.
+[Handset and package recipe evidence](../evidence/2026-11-18-power-qualification-followup.json)
+[Package recipes](https://github.com/timschmidt/fx0-pmaports/commit/59c9d580dea650f24879ca7dca0cfff44fcf82bf)
 
 ## PM8226 hardware key reset
 
