@@ -639,6 +639,28 @@ current and state-of-charge data. Electrical accuracy, conversion from
 thermistor voltage to temperature and actual USB current remain unmeasured.
 [Installed ADC evidence](../evidence/2026-11-18-power-qualification-followup.json)
 
+The 6.18.64 development branch adds read-only `voltage_now` to `smbb-bif`
+when the board supplies the optional `battery-voltage` IIO input. The
+Madai DTB points that input at the existing VBAT sense channel 6. The
+driver requests a fresh processed sample in microvolts. It propagates ADC
+read failures and returns no data if the pack is absent or disappears
+during the read. The new input does not depend on identifying the pack or
+starting the charging policy. A device tree that supplies this input
+requires the VADC provider for the charger to finish probing.
+
+Host sanitizer tests exercised the SMBB setup and voltage callbacks,
+including missing or wrong-type channels, deferred probe, read failures and
+pack removal. The existing provider test passed all 84 unit and scaling
+cases. The ARM SMBB object built with and without IIO. The baseline and
+candidate DTBs passed the targeted binding check, and the candidate
+matched the baseline after removing the two new properties. Three existing
+DTC warnings persisted in both builds. Handset validation and independent
+electrical measurement remain open. The installed supply still lacks the
+new property.
+[Kernel source](https://github.com/timschmidt/fx0-linux/commit/0f2c00771fd1fa728c5775a4b8a69d440d31d527)
+[SMBB callback replay](../diagnostics/vadc-battery-units/check-smbb-voltage.py)
+[Host build and DTB evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce

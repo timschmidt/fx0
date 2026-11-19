@@ -298,5 +298,57 @@
     "electrical_accuracy_qualified": false,
     "thermistor_temperature_conversion_qualified": false,
     "actual_USB_input_current_measured": false
+  },
+  "SMBB_battery_voltage_preparation": {
+    "recorded_UTC": "2026-11-19T03:59:24.385212+00:00",
+    "kernel_base": "c3e72d14babc2e875b89cadde5ed57bb54b11a0b",
+    "kernel_head": "0f2c00771fd1fa728c5775a4b8a69d440d31d527",
+    "exact_public_ref_verified": true,
+    "binding_commit": "7b50183861342a49014375a799df0a746eea34af",
+    "driver_commit": "8b48ac2753e9306cf0cf4f9a453718dc61012bbf",
+    "supply": "smbb-bif",
+    "property": "voltage_now",
+    "unit": "microvolt",
+    "property_read_only": true,
+    "firmware_input": "battery-voltage",
+    "requires_VADC_supplier_to_probe_if_configured": true,
+    "requires_pack_selection_or_charging_policy_for_telemetry": false,
+    "host_ASan_UBSan_setup_and_read_controls_passed": true,
+    "host_adc_timeout_supplier_removal_and_pack_removal_controls_passed": true,
+    "host_VADC_provider_scaling_controls_passed": 84,
+    "clang_version": "21.1.8",
+    "ARM_EABI5_W1_objects": {
+      "IIO_enabled": {
+        "object_sha256": "3140fb83170ceda3ee99bc8f29e689a09fdf1656a6936dd8148692a8e42abc5a",
+        "IIO_imports": [
+          "devm_iio_channel_get",
+          "iio_get_channel_type",
+          "iio_read_channel_processed",
+          "iio_read_channel_processed_scale"
+        ]
+      },
+      "IIO_disabled": {
+        "object_sha256": "a48e290936f1dbbd25e149eb30b5ddcc5a5dd400825b97a67e7d6dbca0e9074a",
+        "IIO_imports": []
+      }
+    },
+    "targeted_DTB_validation": {
+      "passed": true,
+      "candidate_DTB_sha256": "aa5662b13b302f0338eec2d6b378085445ac9ac6e65d3da8e47774d374a72700",
+      "exact_baseline_tree_after_removing_two_properties": true,
+      "voltage_channel": 6,
+      "current_DTB_and_baseline_pass_targeted_schema": true,
+      "DT_schema_negative_cases": [
+        "missing-name",
+        "missing-channel",
+        "wrong-name"
+      ],
+      "unchanged_DTC_warning_count": 3
+    },
+    "checkpatch_individual_patches_errors": 0,
+    "checkpatch_individual_patches_warnings": 0,
+    "phone_boot_or_package_changed": false,
+    "handset_voltage_now_qualified": false,
+    "independent_electrical_measurement": false
   }
 }
