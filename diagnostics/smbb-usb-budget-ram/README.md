@@ -56,5 +56,30 @@ With the exact ARM BusyBox in an isolated network namespace, the former
 second `ip address add` failed with an existing address and both
 `ifconfig` calls succeeded. The rebuilt control and managed images
 replace only the init script and retain the 180-second return timer.
-Handset reconfiguration and measured input current remain unverified.
 [Rebind evidence](../../evidence/2026-11-18-power-qualification-followup.json)
+
+### Handset budget comparison
+
+The workstation recorded the 500 mA and 300 mA descriptors on distinct
+enumerations of the managed gadget. The PM8226 selector and input-limit
+properties agreed at 100 mA before bind, 500 mA after configuration,
+100 mA after detach and 300 mA after rebind. The sample in the default
+USB state still showed 100 mA. The PMIC reported valid USB input during
+the software detach. The battery stayed present and charging stayed
+inhibited throughout the trace.
+
+The control gadget presented the same two descriptors on the same USB
+port. Its PMIC selector stayed at 500 mA through all four phases.
+The retained console verified the 180-second return in each run. Each
+installed r2 return matched the protected hashes and all 482 module
+files.
+
+On the restored 6.18.64-r2 boot, the installed high-speed gadget's
+500 mA descriptor, the read-only input-limit properties and PMIC
+selector `0x05` agreed. The installed device tree linked the controller
+to the managed charger.
+
+The register and descriptor readings establish programmed limits.
+Independent input-current measurement, USB bus suspend and physical
+source loss remain open.
+[Handset comparison evidence](../../evidence/2026-11-18-power-qualification-followup.json)

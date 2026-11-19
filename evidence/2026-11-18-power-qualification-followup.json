@@ -3640,6 +3640,172 @@
       "pinned_ARM_BusyBox_repeated_address_assignment_qualified": true,
       "duplicate_address_regression_reproduced_in_isolated_network": true,
       "USB_gadget_reconfiguration_or_current_physically_tested": false
+    },
+    "handset_trials": {
+      "recorded_UTC": "2026-11-19T11:41:12+00:00",
+      "matched_moduleless_profiles": {
+        "managed": {
+          "mode": "managed",
+          "image_RAM_readback_verified": true,
+          "host_descriptor_mA_distinct_enumerations": [
+            500,
+            300
+          ],
+          "stages": {
+            "pre_bind": {
+              "uptime_s": "1.47",
+              "state": "not_attached",
+              "bound": false,
+              "PMIC_USB_online": true,
+              "USB_REALTIME_status": 3,
+              "programmed_input_limit_uA": 100000,
+              "PMIC_selector": 0
+            },
+            "configured_500": {
+              "uptime_s": "12.95",
+              "state": "configured",
+              "bound": true,
+              "PMIC_USB_online": true,
+              "USB_REALTIME_status": 3,
+              "programmed_input_limit_uA": 500000,
+              "PMIC_selector": 5
+            },
+            "detached": {
+              "uptime_s": "67.20",
+              "state": "configured",
+              "bound": false,
+              "PMIC_USB_online": true,
+              "USB_REALTIME_status": 3,
+              "programmed_input_limit_uA": 100000,
+              "PMIC_selector": 0
+            },
+            "configured_300": {
+              "uptime_s": "75.55",
+              "state": "configured",
+              "bound": true,
+              "PMIC_USB_online": true,
+              "USB_REALTIME_status": 3,
+              "programmed_input_limit_uA": 300000,
+              "PMIC_selector": 3
+            }
+          },
+          "trace_tests": {
+            "mode": "managed",
+            "trace_rows": 6,
+            "samples_valid": true,
+            "battery_present_in_all_samples": true,
+            "charge_inhibited_in_all_samples": true,
+            "OTG_clear_in_all_samples": true,
+            "automatic_stages_passed": true,
+            "stable_control_limit": null,
+            "stage_uptime_s": {
+              "pre_bind": "1.47",
+              "configured_500": "12.95",
+              "detached": "67.20",
+              "configured_300": "75.55"
+            },
+            "managed_suspend_with_VBUS_valid": false,
+            "managed_suspend_resume_passed": false,
+            "actual_current_measured": false
+          },
+          "candidate_timer_return_verified": true,
+          "physical_input_current_measured": false,
+          "installed_initial_boot": "b5c856d6-7d4f-4225-845a-7123484cb3e4",
+          "installed_return_boot": "d45e42da-7770-48c7-8e58-98388aa9fc80",
+          "installed_protected_hashes_matched": true,
+          "installed_module_files_verified": 482,
+          "ephemeral_image_readback_removed": true
+        },
+        "control": {
+          "mode": "control",
+          "image_RAM_readback_verified": true,
+          "host_descriptor_mA_distinct_enumerations": [
+            500,
+            300
+          ],
+          "stages": {
+            "pre_bind": {
+              "uptime_s": "1.45",
+              "state": "not_attached",
+              "bound": false,
+              "PMIC_USB_online": true,
+              "USB_REALTIME_status": 3,
+              "programmed_input_limit_uA": 500000,
+              "PMIC_selector": 5
+            },
+            "configured_500": {
+              "uptime_s": "12.93",
+              "state": "configured",
+              "bound": true,
+              "PMIC_USB_online": true,
+              "USB_REALTIME_status": 3,
+              "programmed_input_limit_uA": 500000,
+              "PMIC_selector": 5
+            },
+            "detached": {
+              "uptime_s": "67.18",
+              "state": "configured",
+              "bound": false,
+              "PMIC_USB_online": true,
+              "USB_REALTIME_status": 3,
+              "programmed_input_limit_uA": 500000,
+              "PMIC_selector": 5
+            },
+            "configured_300": {
+              "uptime_s": "75.53",
+              "state": "configured",
+              "bound": true,
+              "PMIC_USB_online": true,
+              "USB_REALTIME_status": 3,
+              "programmed_input_limit_uA": 500000,
+              "PMIC_selector": 5
+            }
+          },
+          "trace_tests": {
+            "mode": "control",
+            "trace_rows": 6,
+            "samples_valid": true,
+            "battery_present_in_all_samples": true,
+            "charge_inhibited_in_all_samples": true,
+            "OTG_clear_in_all_samples": true,
+            "automatic_stages_passed": true,
+            "stable_control_limit": true,
+            "stage_uptime_s": {
+              "pre_bind": "1.45",
+              "configured_500": "12.93",
+              "detached": "67.18",
+              "configured_300": "75.53"
+            },
+            "managed_suspend_with_VBUS_valid": false,
+            "managed_suspend_resume_passed": false,
+            "actual_current_measured": false
+          },
+          "candidate_timer_return_verified": true,
+          "physical_input_current_measured": false,
+          "installed_initial_boot": "d45e42da-7770-48c7-8e58-98388aa9fc80",
+          "installed_return_boot": "a69d94c1-a84f-4c7e-99f4-66d99ba7e29d",
+          "installed_protected_hashes_matched": true,
+          "installed_module_files_verified": 482,
+          "ephemeral_image_readback_removed": true
+        }
+      },
+      "installed_6_18_64_read_only_budget_check": {
+        "boot_id": "a69d94c1-a84f-4c7e-99f4-66d99ba7e29d",
+        "bound_gadget_configured_high_speed": true,
+        "descriptor_mA": 500,
+        "USB_valid": true,
+        "limit_uA": 500000,
+        "legacy_uA": 500000,
+        "both_limit_properties_read_only": true,
+        "pmic_USB_selector": 5,
+        "USB_suspend_and_OTG_clear": true,
+        "managed_device_tree_consumer_and_supplier_verified": true,
+        "reads_only": true,
+        "independent_current_measurement": false
+      },
+      "gadget_configuration_and_detach_budget_hardware_verified": true,
+      "physical_source_loss_bus_suspend_or_independent_current_verified": false,
+      "persistent_package_or_firmware_installation_performed": false
     }
   }
 }
