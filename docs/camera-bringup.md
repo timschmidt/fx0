@@ -569,6 +569,14 @@ next buffer completion. The durations align with the programmed frame-drop
 period values. Shorter gaps around suspend refusal included an empty queue.
 [Queue and interrupt trace](../diagnostics/camera-reopen/vfe-queue-credit.md)
 
+Probes on the same image captured the write operands and both VFE interrupt
+status words. Three stalls followed a pattern-3 update with a 30 or 31 period
+field. The hardware acknowledged the update and reported exactly that many
+RDI0 frame starts before the next WM0 completion. This records the programming
+sequence and the resulting frame-start and completion behavior. The active
+frame-drop phase remains unknown.
+[Register and IRQ evidence](../evidence/2026-11-19-fx0-camss-vfe-pattern-trace.json)
+
 Resuming the same stream requires CAMSS to stop DMA at suspend, preserve
 ownership of queued buffers, bring the pipeline back after its suppliers
 resume and surface a queue error if restart fails. The closed-sensor RTC

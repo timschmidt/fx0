@@ -45,3 +45,43 @@ Each temporary boot returned to the installed kernel. The independent return
 audits verified all 482 installed module files, the protected files, and the
 charger timer and control registers. The run collected frame metadata only.
 [Sanitized trace results](../../evidence/2026-11-19-fx0-camss-vfe-queue-credit.json)
+
+## Register writes and saved IRQ status
+
+Another boot of the same signed image captured the operands of the period,
+pattern and update stores. It also captured both status words after the VFE
+4.1 IRQ routine read them and before it cleared them. The four probes used
+instruction offsets checked against the signed ARM module and resolved the
+matching symbols on the running kernel. They read CPU registers and the
+driver's saved IRQ status words. An initial buffered append failed with
+`EINVAL` before probe registration. The tracefs writer used by the RTC test
+registered and removed the probes successfully in a new transient service.
+[Kernel probe interface](https://docs.kernel.org/6.18/trace/kprobetrace.html)
+
+Five bounded captures matched all 288 delivered frames in VFE interrupts.
+One uninstrumented front run and the rear probe run had no two-second gaps.
+Each of the three instrumented front runs produced one long interval.
+
+| Frame gap | Period field | RDI0 frame starts inside gap | First RDI0 update acknowledgement after preceding completion |
+| ---: | ---: | ---: | ---: |
+| 2.157393 s | 31 | 31 | 23 µs |
+| 2.087908 s | 30 | 30 | 56 µs |
+| 2.157684 s | 31 | 31 | 59 µs |
+
+For each gap, the preceding completion's handler programmed WM0 pattern `3`
+and wrote RDI0 update bit `0x2`. At least three VB2 buffers remained owned.
+The saved IRQ words report continued RDI0 frame starts and no WM0 completion
+between the endpoint handlers. The next WM0 completion arrived in the final
+handler, where the next period, pattern and update writes also took place.
+An independent replay verified that none of those writes occurred between the
+endpoint handlers. The earlier acknowledgement confirms an update interrupt.
+The probes did not expose the active hardware frame-drop phase.
+
+Ordinary front-camera intervals can also have an early acknowledgement. Among
+95 ordinary front intervals with the same pattern, 59 had an acknowledgement
+between the endpoints, with observed delays of 22–148 µs. All 128 ordinary rear
+intervals with that pattern had one at 16.726–16.990 ms. The three front stalls
+are therefore tied to an entire programmed frame-drop period despite an early
+acknowledgement and continuing frame starts. The hardware's phase-reset rules
+remain to be established.
+[Register and IRQ evidence](../../evidence/2026-11-19-fx0-camss-vfe-pattern-trace.json)
