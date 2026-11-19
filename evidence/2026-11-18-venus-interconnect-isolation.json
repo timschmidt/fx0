@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-19T03:26:53.504115+00:00",
+  "last_updated_UTC": "2026-11-19T03:38:09.083813+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -2090,6 +2090,46 @@
           "installed_protected_hashes_match": true
         },
         "metadata_before_capture_qualified": false
+      },
+      "ffmpeg_capture_first_handset_comparison": {
+        "source_commit": "9bb2e3c38d164e9f34107e4b155ee59b43506918",
+        "image_sha256": "58eba6f2830393b0f1e1f3b0302b3b0b8f0d95760c234a66bcff251a109f3d7b",
+        "exact_RAM_readback": true,
+        "FFmpeg_version": "7.1.5",
+        "patch_sha256": "740f3e583c9a43e5091852a0195953eac6fea5266efbc69f5daf02bc8a78da1b",
+        "ARM_binary_sha256": "841c1855bac19afca07922398e7244d3c06d9727f6c1ad33d6acd8fa979b7f0c",
+        "reproducible_ARM_builds": {
+          "passed": true,
+          "byte_identical": true,
+          "binary_SHA256": "841c1855bac19afca07922398e7244d3c06d9727f6c1ad33d6acd8fa979b7f0c"
+        },
+        "reference_h264_sha256": "fdaf0a527a0a00d74e039c79ac30ce6a1b31dc8eb5dbe095ac03160b465fc5c5",
+        "emulated_software_decode_output_sha256": "d44f9522cb30d7b8a64fb82270010758564d7dba45a11b97a4236c0e6bc176d0",
+        "option_defaults_to_off": true,
+        "option_requires_known_coded_dimensions": true,
+        "test_dimensions": [
+          320,
+          240
+        ],
+        "candidate_boot": "dcc16dd3-6f10-4594-b7f9-e0ed793bbcf7",
+        "selected_V4L2_node": "/dev/video4",
+        "V4L2_CAPTURE_started_before_OUTPUT": true,
+        "firmware_capture_submissions_before_first_coded_input": true,
+        "direct_probe_and_ffmpeg_coded_input_payload_sizes_match": true,
+        "coded_inputs_submitted": 12,
+        "decoder_resource_events": [
+          "event  sufficient resources (320x240)"
+        ],
+        "FFmpeg_exit": 0,
+        "FFmpeg_reported_frames": 12,
+        "pixel_verification_passed": false,
+        "first_pixel_verification_failure": "incorrect chroma in frame 0, plane 0",
+        "firmware_session_error_count": 0,
+        "firmware_rejection_count": 0,
+        "IOMMU_timeout_count": 0,
+        "installed_return": "6bc8171e-ead6-47c9-8ace-c618124d01ad",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true
       }
     }
   }

@@ -1,0 +1,58 @@
+diff --git a/libavcodec/v4l2_m2m.h b/libavcodec/v4l2_m2m.h
+--- a/libavcodec/v4l2_m2m.h
++++ b/libavcodec/v4l2_m2m.h
+@@ -75,6 +75,7 @@
+ 
+     int num_output_buffers;
+     int num_capture_buffers;
++    int prequeue_capture;
+ } V4L2m2mPriv;
+ 
+ /**
+diff --git a/libavcodec/v4l2_m2m_dec.c b/libavcodec/v4l2_m2m_dec.c
+--- a/libavcodec/v4l2_m2m_dec.c
++++ b/libavcodec/v4l2_m2m_dec.c
+@@ -185,6 +185,11 @@
+     V4L2m2mPriv *priv = avctx->priv_data;
+     int ret;
+ 
++    if (priv->prequeue_capture && (avctx->coded_width <= 0 || avctx->coded_height <= 0)) {
++        av_log(avctx, AV_LOG_ERROR, "prequeue_capture requires known coded dimensions\n");
++        return AVERROR(EINVAL);
++    }
++
+     ret = ff_v4l2_m2m_create_context(priv, &s);
+     if (ret < 0)
+         return ret;
+@@ -212,7 +217,21 @@
+         return ret;
+     }
+ 
+-    return v4l2_prepare_decoder(s);
++    ret = v4l2_prepare_decoder(s);
++    if (ret < 0 || !priv->prequeue_capture)
++        return ret;
++
++    ret = ff_v4l2_context_init(capture);
++    if (ret < 0)
++        return ret;
++
++    avctx->pix_fmt = capture->av_pix_fmt;
++    ret = ff_v4l2_context_set_status(capture, VIDIOC_STREAMON);
++    if (ret < 0)
++        return ret;
++
++    av_log(avctx, AV_LOG_INFO, "Started CAPTURE before OUTPUT\n");
++    return 0;
+ }
+ 
+ static av_cold int v4l2_decode_close(AVCodecContext *avctx)
+@@ -227,6 +246,8 @@
+     V4L_M2M_DEFAULT_OPTS,
+     { "num_capture_buffers", "Number of buffers in the capture context",
+         OFFSET(num_capture_buffers), AV_OPT_TYPE_INT, {.i64 = 20}, 2, INT_MAX, FLAGS },
++    { "prequeue_capture", "Start capture before coded output when stream dimensions are known",
++        OFFSET(prequeue_capture), AV_OPT_TYPE_BOOL, {.i64 = 0}, 0, 1, FLAGS },
+     { NULL},
+ };
+ 

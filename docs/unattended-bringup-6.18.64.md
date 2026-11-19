@@ -911,6 +911,21 @@ over 2.5 seconds. The repeat recorded no IOMMU timeout, and the installed
 return matched all 482 module files and the protected hashes. The
 capture-first decode remains the verified path.
 
+A separate FFmpeg 7.1.5 patch adds the decoder option
+`-prequeue_capture 1`. When coded dimensions are known at decoder
+initialization, it allocates and starts the capture pool before OUTPUT.
+The option defaults to off. Two ARM builds were byte-identical, and
+emulated software decoding reproduced the 12-frame reference byte for
+byte. The handset used the same signed capture-first image as the direct
+probe and submitted the same 12 coded access-unit sizes. The journal
+confirmed that the driver handed CAPTURE buffers to firmware before the
+first coded input. FFmpeg exited successfully and reported 12 frames.
+The picture check failed on the first frame's chroma, so FFmpeg hardware
+decode remains unqualified. The retained codec journal showed no
+firmware session error or Venus IOMMU timeout. All 482 installed module
+files and the protected hashes matched on return.
+[FFmpeg capture prequeue patch](../diagnostics/venus-arm32/ffmpeg-7.1.5-v4l2-prequeue-capture.patch)
+
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
 its synthetic completion. The matched ordinary STOP test still failed
