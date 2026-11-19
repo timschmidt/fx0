@@ -560,9 +560,9 @@
           }
         ]
       },
-      "native_install_scripts_and_boot_deployment_qualified": false,
+      "native_install_scripts_and_boot_deployment_qualified": true,
       "packaged_zImage_booted": true,
-      "deployed": false,
+      "deployed": true,
       "guarded_exact_packaged_kernel_RAM_trial": {
         "passed": true,
         "recorded_UTC": "2026-11-19T05:13:16.381719+00:00",
@@ -769,6 +769,205 @@
           "guarded_fixture_chroot_checked": true,
           "APK_or_hook_execution": false,
           "overlay_registered_after": true
+        }
+      },
+      "native_APK_hook_rehearsal": {
+        "passed": true,
+        "boot_id": "491467dc-5490-4045-b457-fa8abfb97f66",
+        "job_terminal": true,
+        "transaction_forward_and_rollback_ran_native_hooks": true,
+        "hooks_forward": [
+          "Executing busybox-1.37.0-r31.trigger",
+          "Executing kmod-34.2-r1.trigger",
+          "Executing postmarketos-base-62-r0.trigger",
+          "Executing postmarketos-mkinitfs-2.11.0-r0.trigger"
+        ],
+        "hooks_rollback": [
+          "Executing busybox-1.37.0-r31.trigger",
+          "Executing kmod-34.2-r1.trigger",
+          "Executing postmarketos-base-62-r0.trigger",
+          "Executing postmarketos-mkinitfs-2.11.0-r0.trigger"
+        ],
+        "original_records_restored": 776,
+        "unchanged_during_upgrade": 773,
+        "exact_original_APK_database": true,
+        "original_world_constraints_and_restored_bytes": true,
+        "APK_alone_reproduced_original_world_order": false,
+        "update_payload_paths_verified": 563,
+        "rollback_payload_paths_verified": 563,
+        "upgrade_native_initramfs": [
+          {
+            "inventory_sha256": "dc7801fa5fda72fa3cab48c824ddfc63e14d9873f96bcdefd0743c22ba21125a",
+            "entries": 247,
+            "archive_sha256": "b8ec6fb42ffa8f022a8543800d53b2e88ad167de55b760ee1360f6b2269a9316",
+            "compressed_bytes": 11960259
+          }
+        ],
+        "rollback_native_initramfs": [
+          {
+            "inventory_sha256": "20addf62304ab7150e4e1c59b527ba69c6ea2132fa8227b9ce583a6280928513",
+            "entries": 243,
+            "archive_sha256": "7a2428599d6f53d43ad06f0815f1bbf848b6e498b3b83320bd95d1e69cff78dc",
+            "compressed_bytes": 11944295
+          }
+        ],
+        "exact_unit_inventory_identities": true,
+        "boot_deploy_intercepted": true,
+        "native_initramfs_bytes_match_staged_images": true,
+        "forward_write_scope": {
+          "upper_paths": 781,
+          "effective_path_changes": 478,
+          "classified": {
+            "package_files": 474,
+            "fixture_files": 1,
+            "commit_files": 0,
+            "package_world": 1,
+            "package_database_state": 1,
+            "boot_files": 0
+          },
+          "additional_paths": [
+            "var/log/apk.log"
+          ],
+          "systemd_commit_inventory_written_in_shadow": true
+        },
+        "rollback_write_scope": {
+          "upper_paths": 781,
+          "effective_path_changes": 2,
+          "classified": {
+            "package_files": 0,
+            "fixture_files": 1,
+            "commit_files": 0,
+            "package_world": 0,
+            "package_database_state": 0,
+            "boot_files": 0
+          },
+          "additional_paths": [
+            "var/log/apk.log"
+          ],
+          "systemd_commit_inventory_written_in_shadow": true
+        },
+        "live_protected_hashes_reverified": true,
+        "isolated_pid_mount_network_namespaces": true,
+        "actual_boot_partition_masked": true,
+        "recorded_UTC": "2026-11-19T05:37:55.251101+00:00",
+        "USB_route_verified": true,
+        "independent_successful_native_upgrade_and_rollback_runs": 2
+      },
+      "persistent_installation": {
+        "passed": true,
+        "owner_approved_install_and_reboot": true,
+        "preflight": {
+          "passed": true,
+          "boot_id": "491467dc-5490-4045-b457-fa8abfb97f66",
+          "native_APK_write_scope_reviewed": true,
+          "live_boot_and_package_hashes_verified": true,
+          "source_recovery_archive_entries": 783,
+          "six_signed_APK_sha256_verified": 6,
+          "staged_boot_image_verified": true,
+          "bootloader_prefix_verified": true,
+          "workspace_free_bytes": 327053312,
+          "measured_update_and_recovery_workspace_bytes": 83092389,
+          "known_good_RAM_fallback_module_files_verified": 482,
+          "active_Sway_outputs": 1,
+          "USB_power_online": true,
+          "physical_input_used": false,
+          "package_install_or_raw_boot_write": false,
+          "recorded_UTC": "2026-11-19T05:40:58.498222+00:00",
+          "USB_route_verified": true,
+          "known_good_RAM_fallback_image_bytes_verified": true,
+          "known_good_RAM_fallback_image_sha256": "7fd3005bcf635265abfae2d9b3f93c532a1327d6761f3a7ecb1c2f6b850e3375",
+          "native_hook_shadow_receipt_sha256": "62a2a0b7c94422dc017ed70dbaeebb78af26653472f8cd240a2da28f1c83b286"
+        },
+        "installer_sha256": "4047f080fd114bb83ea3c939207e32b4f57604111ccee5b578c3b0d9655f95b3",
+        "native_transaction": {
+          "passed": true,
+          "stage": "updated-and-verified",
+          "started_UTC": "2026-11-19T05:45:27.373983+00:00",
+          "installed_boot": "491467dc-5490-4045-b457-fa8abfb97f66",
+          "parent_returncode": 0,
+          "all_owned_hooks_terminal": true,
+          "exact_candidate_files": 563,
+          "unrelated_package_records": 773,
+          "candidate_boot_image_sha256": "caa9a0243f45db1b932f6e315bd1dfa7f939707d2a6edb1c0edfaba39ee60c66",
+          "candidate_raw_boot_sha256": "3fd2c91f80d8017e5e0c37b9dfb20da58ac54eedf17bebf763418dd43d0be736",
+          "candidate_APK_database_sha256": "a7fff81fcfb8b714df30d4a939754055f90bdf563dc8d049bb94d245630aaed8",
+          "candidate_world_sha256": "de1840f4017749154f89b0d06d0b24af583772706fd650c2afbe351302374324",
+          "root_recovery_staged": true,
+          "terminal": true,
+          "finished_UTC": "2026-11-19T05:46:25.391004+00:00",
+          "USB_route_verified": true,
+          "observed_UTC": "2026-11-19T05:46:26.112002+00:00"
+        },
+        "one_normal_reboot_acknowledged": true,
+        "postboot": {
+          "passed": true,
+          "boot_id": "90a41554-e833-4a2b-b448-482777e92132",
+          "release": "6.18.64-fx0-lts-alpine",
+          "matching_candidate_notes": true,
+          "systemd": "running",
+          "reached_new_boot": true,
+          "active_Sway_outputs": 1,
+          "touch_input_devices": 1,
+          "exact_signed_APK_payload_files": 563,
+          "exact_persistent_module_files": 482,
+          "native_signature_enforcement": true,
+          "protected_candidate_hashes_verified": true,
+          "recovery_hashes_verified": true,
+          "voltage": {
+            "pairs": 12,
+            "max_difference_microvolts": "588.000000000",
+            "supply_microvolts_range": [
+              4191348,
+              4192230
+            ],
+            "USB_input_limit_microamps": 500000,
+            "read_only": true,
+            "no_independent_electrical_calibration": true
+          },
+          "physical_touch_confirmed": true,
+          "USB_route_verified": true,
+          "recorded_UTC": "2026-11-19T05:48:39.814186+00:00",
+          "physical_display_confirmed": true
+        },
+        "owner_UI_confirmation": {
+          "boot_id": "90a41554-e833-4a2b-b448-482777e92132",
+          "display_confirmed": true,
+          "touch_confirmed": true,
+          "recorded_UTC": "2026-11-19T05:50:23.323183+00:00"
+        },
+        "installed_upower": {
+          "passed": true,
+          "boot_id": "90a41554-e833-4a2b-b448-482777e92132",
+          "upower_service": "active",
+          "power_supply_property_values": {
+            "charge_behaviour": "auto [inhibit-charge]",
+            "present": "1",
+            "voltage_now": "4193406",
+            "status": "Not charging"
+          },
+          "battery_object_present": false,
+          "upower_Voltage_volts": null,
+          "kernel_voltage_volts": 4.193406,
+          "UPower_reports_voltage_within_20mV": false,
+          "USB_power_online": true,
+          "physical_or_electrical_calibration_performed": false,
+          "recorded_UTC": "2026-11-19T05:48:55.362761+00:00",
+          "USB_route_verified": true
+        },
+        "installed_upower_device_types": {
+          "passed": true,
+          "boot_id": "90a41554-e833-4a2b-b448-482777e92132",
+          "upower_device_types": [
+            1,
+            1,
+            0
+          ],
+          "upower_battery_count": 0,
+          "upower_display_device_present": false,
+          "display_device_type_asserted_on_kernel_battery": false,
+          "expected_native_battery_supply_exists": true,
+          "USB_route_verified": true,
+          "recorded_UTC": "2026-11-19T05:49:44.651435+00:00"
         }
       }
     }

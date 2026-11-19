@@ -754,7 +754,34 @@ byte for byte. It also generated the candidate image using the
 qualified native initramfs. An independent encoder produced identical
 bytes and the candidate retained the installed command line. The live
 boot partition matched its original hash after this preparation.
-Persistent deployment and hardware wake qualification remain open.
+
+Two isolated runs on the Fx0 then performed the actual native APK
+upgrade and rollback. Both ran the BusyBox, kmod, postmarketOS base and
+`mkinitfs` triggers. The systemd APK commit hook regenerated the unit
+inventory. The captured upgrade initramfs matched the staged candidate
+byte for byte, and rollback regenerated the installed archive byte for
+byte. The audited run restored all 776 package records and 563
+package-owned paths. APK reordered the world file, so the rehearsal
+checked its constraints before restoring the original byte order. The
+only additional effective file change beyond the package, boot and
+commit state and the rehearsal shim was the APK log. The live system hashes matched after both
+runs. A private mount, process and network namespace kept the boot
+device and live service sockets outside the rehearsal.
+
+The owner approved the persistent install and reboot. Native APK
+installed kernel `6.18.64-r2`, device `1-r3` and DMP reader
+`6.18.64-r2`. The installer verified all 563 package-owned paths and
+the complete boot partition against the staged image before rebooting.
+The running kernel then matched the candidate build notes and verified
+all 482 module files on ext4 with signature enforcement enabled. The
+owner confirmed the Sxmo desktop displays normally and responds to
+touch on the newly installed boot.
+
+On the installed kernel, twelve battery-voltage readings agreed with the
+IIO interface within 588 µV. Both interfaces read the same ADC. UPower
+is active and enumerated zero battery objects, so the result currently
+exposes kernel voltage without a desktop battery reading. Calibrated
+charging and hardware wake qualification remain open.
 [Handset and package recipe evidence](../evidence/2026-11-18-power-qualification-followup.json)
 [Package recipes](https://github.com/timschmidt/fx0-pmaports/commit/a8174d382680372082827ae97b7b6f93a86f7d7a)
 
