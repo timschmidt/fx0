@@ -1046,6 +1046,20 @@ I/O errors. The original `vfw_h264_main.c:2124` fault did not recur in
 this control. Buffer retirement and replacement, the final frame of the
 old segment, and restarting the new segment remain unqualified.
 
+The firmware reported a 368,768-byte minimum for each capture buffer
+both before and after the downshift. The driver used that size for both
+allocations, including when the new image geometry called for 147,456
+bytes. The firmware also requested the same single 1,482,304-byte
+scratch allocation with 128-byte alignment, which the driver released
+and re-registered before submitting the replacement capture buffers.
+
+The [scratch-retention diagnostic](https://github.com/timschmidt/fx0-linux/commit/f551417db446f4769c507ffb6e61d80ade3d4486)
+passed 18,432 host checks. In two guarded boots with the exact same
+signed image, FFmpeg decoded the opening 12 frames byte for byte and
+set the padded 320 × 256 CAPTURE format for 320 × 240 video. It exited
+before requesting the new buffer pool in both runs. A direct V4L2 test
+can explicitly request and start the replacement queue.
+
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
 its synthetic completion. The matched ordinary STOP test still failed

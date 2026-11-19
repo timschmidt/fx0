@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-19T13:19:20+00:00",
+  "last_updated_UTC": "2026-11-19T13:40:36+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -3194,6 +3194,129 @@
         "installed_return_boot": "7988fba7-de94-4bb4-a4b3-cc52414afd6a",
         "protected_hashes_match": true,
         "installed_module_files_verified": 482
+      },
+      "scratch_retention_control": {
+        "recorded_UTC": "2026-11-19T13:40:36+00:00",
+        "public_kernel_commit": "f551417db446f4769c507ffb6e61d80ade3d4486",
+        "parent_capture_minimum_and_selection_bytes": {
+          "initial": {
+            "calculated": 368640,
+            "firmware": 368768,
+            "selected": 368768
+          },
+          "post_downshift": {
+            "calculated": 147456,
+            "firmware": 368768,
+            "selected": 368768
+          }
+        },
+        "parent_scratch_size_before_and_after_downshift_bytes": [
+          1482304,
+          1482304
+        ],
+        "parent_scratch_buffer_count_before_and_after_downshift": [
+          1,
+          1
+        ],
+        "parent_scratch_alignment_bytes": 128,
+        "parent_scratch_reregistration_confirmed": true,
+        "source_control": {
+          "passed": true,
+          "parent_source_commit": "16db0ca13351fac720aa4e047f84255695bd95cf",
+          "matching_core_source_commit": "cde92e377925361b9cd32a1b4e52aa949d7c7bbb",
+          "parent_core_object_and_module_reproduced_byte_for_byte": true,
+          "parent_core_module_SHA256": "669e22918aa94a7b1fb742c09ad64717f51247a59c0d10fc87807562b3850455",
+          "patch_SHA256": "064f6bb06325c63dd4056620d6a388127aa89a89db42820aaf0a3b55c2fd2ed3",
+          "ARM_module_SHA256": "ea65f590e0b450b2f59536e7ec9504699586831212f748321ce622e5eb92eaa1",
+          "module_bytes": 201620,
+          "module_undefined_and_global_symbols_unchanged": true,
+          "host_gate_and_buffer_cases": 18432
+        },
+        "image_control": {
+          "passed": true,
+          "source_commit": "16db0ca13351fac720aa4e047f84255695bd95cf",
+          "parent_image_sha256": "76000d94ee9e4b6f24258c642880db92f834e0a47df5434b4632c8a76dca1697",
+          "image_sha256": "1733dda1f34e2e464a8306e4a245505019a4c0da2f0d40cbf883255a6f0d42c9",
+          "image_bytes": 20815872,
+          "new_core_module_sha256": "1f8d0370bb712f2353f0a5adaa02631df469cf5b746c51d65449a181591a91e0",
+          "matching_import_CRCs": 155,
+          "core_signature_checked": true,
+          "manifest_records_verified": 488,
+          "unchanged_kernel_dtb_and_arguments": true,
+          "modified_entries": [
+            "etc/fx0-native-modules.sha256",
+            "usr/lib/modules/6.18.64-fx0-venus-ram-alpine/kernel/drivers/media/platform/qcom/venus/venus-core.ko"
+          ],
+          "handset_qualified": false,
+          "matching_export_CRCs": 59,
+          "additional_imports": [],
+          "opt_in_module_parameter": "fx0_decoder_retain_scratch",
+          "patch_SHA256": "064f6bb06325c63dd4056620d6a388127aa89a89db42820aaf0a3b55c2fd2ed3",
+          "host_gate_and_buffer_cases": 18432,
+          "decoder_module_unchanged": true,
+          "default_retain_scratch": false
+        },
+        "first_trial": {
+          "workload_exit_status": 0,
+          "coded_input_records": 14,
+          "byte_exact_prefix": {
+            "fixture_SHA256": "4cc5e2ffe25a7cf1a5ef7655cd3e25efa1358c5212aea4bc90b9dc9db26b776d",
+            "frames": 12,
+            "bytes": 1382400,
+            "hardware_prefix_SHA256": "872f2be2f01635945c6fc2bc3d393e389536a7068047f97615a6fb47e9b16779",
+            "software_prefix_SHA256": "872f2be2f01635945c6fc2bc3d393e389536a7068047f97615a6fb47e9b16779",
+            "matches_software_prefix": true,
+            "software_reference_full_SHA256": "04f9b0fca3b1fcefbb53608e2c39f75bb2616b4ebe551f545c335f13cbeb8ade",
+            "all_24_frames_match": false,
+            "retained_decoded_video": false
+          },
+          "capture_STREAMON_calls_accepted": 1,
+          "replacement_fill_buffer_calls_before_failure": 0,
+          "buffer_set_and_unset_calls_between_restart_and_failure": 0,
+          "blocking_flush_completions": 2,
+          "scratch_retained_marker_observed": false,
+          "firmware_system_error_data": [],
+          "firmware_fatal_source": [],
+          "trace_event_count": 142,
+          "trace_cleaned_up": true,
+          "execution_completed": false,
+          "duplicate_readback_removed": true,
+          "retained_decoder_core_files": 0,
+          "protected_hashes_match": true,
+          "installed_return_boot": "122cabf9-85eb-40d0-9ea2-d4a58332d89d",
+          "installed_module_files_verified": 482
+        },
+        "repeat_trial": {
+          "workload_exit_status": 0,
+          "coded_input_records": 13,
+          "byte_exact_prefix": {
+            "fixture_SHA256": "4cc5e2ffe25a7cf1a5ef7655cd3e25efa1358c5212aea4bc90b9dc9db26b776d",
+            "frames": 12,
+            "bytes": 1382400,
+            "hardware_prefix_SHA256": "872f2be2f01635945c6fc2bc3d393e389536a7068047f97615a6fb47e9b16779",
+            "software_prefix_SHA256": "872f2be2f01635945c6fc2bc3d393e389536a7068047f97615a6fb47e9b16779",
+            "matches_software_prefix": true,
+            "software_reference_full_SHA256": "04f9b0fca3b1fcefbb53608e2c39f75bb2616b4ebe551f545c335f13cbeb8ade",
+            "all_24_frames_match": false,
+            "retained_decoded_video": false
+          },
+          "capture_STREAMON_calls_accepted": 1,
+          "replacement_fill_buffer_calls_before_failure": 0,
+          "buffer_set_and_unset_calls_between_restart_and_failure": 0,
+          "blocking_flush_completions": 2,
+          "scratch_retained_marker_observed": false,
+          "firmware_system_error_data": [],
+          "firmware_fatal_source": [],
+          "trace_event_count": 142,
+          "trace_cleaned_up": true,
+          "execution_completed": false,
+          "duplicate_readback_removed": true,
+          "retained_decoder_core_files": 0,
+          "protected_hashes_match": true,
+          "installed_return_boot": "01f50ad7-5c63-40aa-9857-409fdfa98c68",
+          "installed_module_files_verified": 482
+        },
+        "persistent_installation_performed": false
       }
     },
     "default_startup_qualified": false,
