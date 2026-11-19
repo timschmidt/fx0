@@ -20,6 +20,8 @@ enum {
     MAX_BUFFERS = 32,
     MAX_INPUT_BYTES = 64 * 1024,
     OBSERVATION_MS = 2500,
+    SEQUENCE_FRAMES = 12,
+    SEQUENCE_TIMEOUT_MS = 10000,
 };
 
 static const enum v4l2_buf_type output = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
@@ -251,16 +253,14 @@ static int wait_for_video(int fd, short events)
     return 0;
 }
 
-static int save_picture(int fd, const struct v4l2_plane *plane,
-                        unsigned int stride, unsigned int padded_height,
-                        const char *destination)
+static int write_picture(int fd, const struct v4l2_plane *plane,
+                         unsigned int stride, unsigned int padded_height, FILE *file)
 {
     size_t chroma_offset = (size_t)stride * padded_height;
     size_t last_row_end = chroma_offset + (size_t)stride * (HEIGHT / 2 - 1) + WIDTH;
     unsigned char samples[WIDTH / 2];
     const unsigned char *mapping, *pixels;
-    FILE *file;
-    int status = -1;
+    int status = -1, saved_errno;
 
     if (plane->bytesused > plane->length || plane->bytesused < plane->data_offset ||
         last_row_end > plane->bytesused - plane->data_offset) {
@@ -271,45 +271,46 @@ static int save_picture(int fd, const struct v4l2_plane *plane,
     if (mapping == MAP_FAILED)
         return -1;
     pixels = mapping + plane->data_offset;
-    file = fopen(destination, "wbx");
-    if (file) {
-        for (unsigned int row = 0; row < HEIGHT; row++)
-            if (fwrite(pixels + row * stride, 1, WIDTH, file) != WIDTH)
-                goto close_output;
-        for (unsigned int component = 0; component < 2; component++) {
-            for (unsigned int row = 0; row < HEIGHT / 2; row++) {
-                const unsigned char *line = pixels + chroma_offset + row * stride;
+    for (unsigned int row = 0; row < HEIGHT; row++)
+        if (fwrite(pixels + row * stride, 1, WIDTH, file) != WIDTH)
+            goto unmap;
+    for (unsigned int component = 0; component < 2; component++) {
+        for (unsigned int row = 0; row < HEIGHT / 2; row++) {
+            const unsigned char *line = pixels + chroma_offset + row * stride;
 
-                for (unsigned int column = 0; column < WIDTH / 2; column++)
-                    samples[column] = line[column * 2 + component];
-                if (fwrite(samples, 1, sizeof(samples), file) != sizeof(samples))
-                    goto close_output;
-            }
+            for (unsigned int column = 0; column < WIDTH / 2; column++)
+                samples[column] = line[column * 2 + component];
+            if (fwrite(samples, 1, sizeof(samples), file) != sizeof(samples))
+                goto unmap;
         }
-        status = 0;
-close_output:
-        if (fclose(file) != 0)
-            status = -1;
     }
-    int saved_errno = errno;
+    status = 0;
+unmap:
+    saved_errno = errno;
     munmap((void *)mapping, plane->length);
     errno = saved_errno;
     return status;
 }
 
-static int capture_first_frame(int fd, unsigned int count, const char *destination)
+static int queue_capture(int fd, unsigned int index)
 {
-    struct v4l2_event event = {0};
-    struct v4l2_format format = { .type = capture };
-    struct v4l2_pix_format_mplane *pixels = &format.fmt.pix_mp;
     struct v4l2_plane plane = {0};
     struct v4l2_buffer buffer = {
-        .type = capture, .memory = V4L2_MEMORY_MMAP, .length = 1, .m.planes = &plane,
+        .type = capture, .memory = V4L2_MEMORY_MMAP, .index = index,
+        .length = 1, .m.planes = &plane,
     };
+
+    return video_ioctl(fd, VIDIOC_QBUF, &buffer);
+}
+
+static int start_capture(int fd, unsigned int count, struct v4l2_format *format)
+{
+    struct v4l2_event event = {0};
+    struct v4l2_pix_format_mplane *pixels = &format->fmt.pix_mp;
     enum v4l2_buf_type stream = capture;
 
     if (wait_for_video(fd, POLLPRI) < 0 || video_ioctl(fd, VIDIOC_DQEVENT, &event) < 0 ||
-        video_ioctl(fd, VIDIOC_G_FMT, &format) < 0)
+        video_ioctl(fd, VIDIOC_G_FMT, format) < 0)
         return -1;
     if (event.type != V4L2_EVENT_SOURCE_CHANGE ||
         !(event.u.src_change.changes & V4L2_EVENT_SRC_CH_RESOLUTION) ||
@@ -319,14 +320,27 @@ static int capture_first_frame(int fd, unsigned int count, const char *destinati
         errno = EPROTO;
         return -1;
     }
-    for (unsigned int index = 0; index < count; index++) {
-        buffer.index = index;
-        if (video_ioctl(fd, VIDIOC_QBUF, &buffer) < 0)
+    for (unsigned int index = 0; index < count; index++)
+        if (queue_capture(fd, index) < 0)
             return -1;
-    }
     if (video_ioctl(fd, VIDIOC_STREAMON, &stream) < 0)
         return -1;
     fputs("CAPTURE STREAMON accepted\n", stderr);
+    return 0;
+}
+
+static int capture_first_frame(int fd, unsigned int count, const char *destination)
+{
+    struct v4l2_format format = { .type = capture };
+    struct v4l2_plane plane = {0};
+    struct v4l2_buffer buffer = {
+        .type = capture, .memory = V4L2_MEMORY_MMAP, .length = 1, .m.planes = &plane,
+    };
+    FILE *file;
+    int status, saved_errno;
+
+    if (start_capture(fd, count, &format) < 0)
+        return -1;
     if (wait_for_video(fd, POLLIN) < 0 || video_ioctl(fd, VIDIOC_DQBUF, &buffer) < 0)
         return -1;
     if (buffer.length != 1 || buffer.index >= count || buffer.flags & V4L2_BUF_FLAG_ERROR) {
@@ -335,8 +349,166 @@ static int capture_first_frame(int fd, unsigned int count, const char *destinati
     }
     fprintf(stderr, "CAPTURE picture: bytes %u offset %u flags %#x\n",
             plane.bytesused, plane.data_offset, buffer.flags);
-    return save_picture(fd, &plane, pixels->plane_fmt[0].bytesperline,
-                        pixels->height, destination);
+    file = fopen(destination, "wbx");
+    if (!file)
+        return -1;
+    status = write_picture(fd, &plane, format.fmt.pix_mp.plane_fmt[0].bytesperline,
+                           format.fmt.pix_mp.height, file);
+    saved_errno = errno;
+    if (fclose(file) < 0 && status == 0)
+        return -1;
+    errno = saved_errno;
+    return status;
+}
+
+struct access_unit {
+    long offset;
+    uint32_t size;
+};
+
+static int read_sequence(FILE *input, long size, struct access_unit *units)
+{
+    long position = 0;
+
+    for (unsigned int index = 0; index < SEQUENCE_FRAMES; index++) {
+        unsigned char header[4];
+        uint32_t length;
+
+        if (size - position < (long)sizeof(header) ||
+            fread(header, 1, sizeof(header), input) != sizeof(header))
+            goto invalid;
+        position += sizeof(header);
+        length = header[0] | (uint32_t)header[1] << 8 |
+                 (uint32_t)header[2] << 16 | (uint32_t)header[3] << 24;
+        if (!length || length > MAX_INPUT_BYTES || length > (uint32_t)(size - position))
+            goto invalid;
+        units[index] = (struct access_unit){ .offset = position, .size = length };
+        position += length;
+        if (fseek(input, position, SEEK_SET) != 0)
+            return -1;
+    }
+    if (position == size)
+        return fseek(input, units[0].offset, SEEK_SET) == 0 ? 0 : -1;
+invalid:
+    errno = EPROTO;
+    return -1;
+}
+
+static int capture_sequence(int fd, unsigned int count, const char *destination,
+                            FILE *input, const struct access_unit *units)
+{
+    struct v4l2_format format = { .type = capture };
+    struct v4l2_decoder_cmd stop = { .cmd = V4L2_DEC_CMD_STOP };
+    unsigned int queued = 1, returned = 0, frames = 0;
+    bool draining = false, last = false;
+    int64_t deadline;
+    int status = -1, saved_errno;
+    FILE *file;
+
+    if (start_capture(fd, count, &format) < 0)
+        return -1;
+    file = fopen(destination, "wbx");
+    if (!file)
+        return -1;
+    deadline = monotonic_ms();
+    if (deadline < 0)
+        goto finish;
+    deadline += SEQUENCE_TIMEOUT_MS;
+
+    while (!last || returned < queued) {
+        struct pollfd ready = { .fd = fd, .events = POLLPRI };
+        int64_t now = monotonic_ms();
+        int results;
+
+        if (now < 0)
+            goto finish;
+        if (now >= deadline) {
+            errno = ETIMEDOUT;
+            goto finish;
+        }
+        if (!last)
+            ready.events |= POLLIN;
+        if (returned < queued)
+            ready.events |= POLLOUT;
+        results = poll(&ready, 1, (int)(deadline - now));
+        if (results < 0 && errno == EINTR)
+            continue;
+        if (results <= 0) {
+            if (!results)
+                errno = ETIMEDOUT;
+            goto finish;
+        }
+        if (ready.revents & (POLLERR | POLLHUP | POLLNVAL | POLLPRI)) {
+            fprintf(stderr, "Sequence poll flags %#x\n", (unsigned int)ready.revents);
+            errno = EIO;
+            goto finish;
+        }
+        if (ready.revents & POLLOUT) {
+            struct v4l2_plane plane = {0};
+            struct v4l2_buffer buffer = {
+                .type = output, .memory = V4L2_MEMORY_MMAP, .length = 1, .m.planes = &plane,
+            };
+
+            if (video_ioctl(fd, VIDIOC_DQBUF, &buffer) == 0) {
+                if (returned >= queued || buffer.index != 0 || buffer.flags & V4L2_BUF_FLAG_ERROR)
+                    goto invalid_sequence;
+                returned++;
+                if (queued < SEQUENCE_FRAMES) {
+                    if (fseek(input, units[queued].offset, SEEK_SET) != 0 ||
+                        queue_input(fd, input, units[queued].size) < 0)
+                        goto finish;
+                    queued++;
+                }
+                if (queued == SEQUENCE_FRAMES && !draining) {
+                    if (video_ioctl(fd, VIDIOC_DECODER_CMD, &stop) < 0)
+                        goto finish;
+                    draining = true;
+                }
+            } else if (errno != EAGAIN) {
+                goto finish;
+            }
+        }
+        if (ready.revents & POLLIN) {
+            struct v4l2_plane plane = {0};
+            struct v4l2_buffer buffer = {
+                .type = capture, .memory = V4L2_MEMORY_MMAP, .length = 1, .m.planes = &plane,
+            };
+
+            if (video_ioctl(fd, VIDIOC_DQBUF, &buffer) < 0) {
+                if (errno == EAGAIN)
+                    continue;
+                goto finish;
+            }
+            last = buffer.flags & V4L2_BUF_FLAG_LAST;
+            if (buffer.index >= count || buffer.length != 1 || buffer.flags & V4L2_BUF_FLAG_ERROR ||
+                (last && !draining) || (!plane.bytesused && !last))
+                goto invalid_sequence;
+            if (plane.bytesused) {
+                if (frames >= SEQUENCE_FRAMES)
+                    goto invalid_sequence;
+                if (write_picture(fd, &plane, format.fmt.pix_mp.plane_fmt[0].bytesperline,
+                                  format.fmt.pix_mp.height, file) < 0)
+                    goto finish;
+                frames++;
+            }
+            if (!last && queue_capture(fd, buffer.index) < 0)
+                goto finish;
+        }
+    }
+    if (frames != SEQUENCE_FRAMES)
+        goto invalid_sequence;
+    status = 0;
+    goto finish;
+invalid_sequence:
+    errno = EPROTO;
+finish:
+    saved_errno = errno;
+    fprintf(stderr, "Decoder sequence: queued %u returned %u frames %u STOP %u LAST %u\n",
+            queued, returned, frames, (unsigned int)draining, (unsigned int)last);
+    if (fclose(file) < 0 && status == 0)
+        return -1;
+    errno = saved_errno;
+    return status;
 }
 
 int main(int argc, char **argv)
@@ -346,18 +518,22 @@ int main(int argc, char **argv)
     struct stat metadata;
     int fd = -1, capture_buffers = 0, status = 1;
     const char *step = "input";
-    bool preallocate, first_frame;
+    bool preallocate, first_frame, sequence;
+    struct access_unit units[SEQUENCE_FRAMES];
+    size_t initial_bytes;
     FILE *input;
 
     first_frame = argc == 5 && !strcmp(argv[1], "capture-first-frame");
-    if (!first_frame && (argc != 4 ||
+    sequence = argc == 5 && !strcmp(argv[1], "capture-sequence");
+    if (!first_frame && !sequence && (argc != 4 ||
         (strcmp(argv[1], "output-first") && strcmp(argv[1], "preallocate-capture") &&
          strcmp(argv[1], "headers-only")))) {
         fprintf(stderr, "Usage: %s {output-first|preallocate-capture|headers-only} VIDEO CHUNK\n", argv[0]);
         fprintf(stderr, "       %s capture-first-frame VIDEO ACCESS_UNIT RESULT\n", argv[0]);
+        fprintf(stderr, "       %s capture-sequence VIDEO FRAMED_ACCESS_UNITS RESULT\n", argv[0]);
         return 2;
     }
-    preallocate = first_frame || !strcmp(argv[1], "preallocate-capture");
+    preallocate = first_frame || sequence || !strcmp(argv[1], "preallocate-capture");
     input = fopen(argv[3], "rb");
     if (!input)
         goto done;
@@ -367,6 +543,13 @@ int main(int argc, char **argv)
         errno = EINVAL;
         goto done;
     }
+    initial_bytes = (size_t)metadata.st_size;
+    if (sequence) {
+        step = "framed access units";
+        if (read_sequence(input, (long)metadata.st_size, units) < 0)
+            goto done;
+        initial_bytes = units[0].size;
+    }
     step = "decoder identity";
     fd = open(argv[2], O_RDWR | O_NONBLOCK | O_CLOEXEC);
     if (fd < 0 || verify_decoder(fd) < 0)
@@ -375,7 +558,7 @@ int main(int argc, char **argv)
     if (video_ioctl(fd, VIDIOC_SUBSCRIBE_EVENT, &subscription) < 0)
         goto done;
     step = "OUTPUT format and allocation";
-    if (output_format(fd, (size_t)metadata.st_size) < 0 || allocate(fd, output, 1) < 0)
+    if (output_format(fd, initial_bytes) < 0 || allocate(fd, output, 1) < 0)
         goto done;
     if (preallocate) {
         step = "CAPTURE preallocation";
@@ -387,15 +570,24 @@ int main(int argc, char **argv)
             goto done;
     }
     step = "first coded buffer";
-    if (queue_input(fd, input, (size_t)metadata.st_size) < 0)
+    if (queue_input(fd, input, initial_bytes) < 0)
         goto done;
     step = "OUTPUT STREAMON";
     if (video_ioctl(fd, VIDIOC_STREAMON, &stream) < 0)
         goto done;
-    step = first_frame ? "CAPTURE first frame" : "observation";
-    if (first_frame ? !capture_first_frame(fd, (unsigned int)capture_buffers, argv[4]) :
-                      !observe(fd, argv[1], (size_t)metadata.st_size, capture_buffers))
-        status = 0;
+    if (sequence) {
+        step = "CAPTURE sequence";
+        if (!capture_sequence(fd, (unsigned int)capture_buffers, argv[4], input, units))
+            status = 0;
+    } else if (first_frame) {
+        step = "CAPTURE first frame";
+        if (!capture_first_frame(fd, (unsigned int)capture_buffers, argv[4]))
+            status = 0;
+    } else {
+        step = "observation";
+        if (!observe(fd, argv[1], initial_bytes, capture_buffers))
+            status = 0;
+    }
 
 done:
     if (status)

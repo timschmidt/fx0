@@ -803,13 +803,42 @@ same size. The installed return matched all 482 module files and the
 protected hashes.
 [Capture pool validation](https://github.com/timschmidt/fx0-linux/commit/57be812a9b1015f6094516f8c4a513783f9ae130)
 
-A signed comparison is ready with the same image contents outside the
-decoder module and its manifest entry. It keeps the session's scratch
+The signed comparison keeps the same image contents outside the
+decoder module and its manifest entry. It retains the session's scratch
 buffers and skips a second firmware continue command when the initial
 event says resources are sufficient for the same dimensions and bit
 depth. Seven host cases cover when to retain resources, and four cover
-capture startup. The comparison is awaiting its first handset run.
+capture startup. The handset logged one 613,696-byte scratch allocation
+and queued all 32 preallocated capture buffers with resources retained.
+It returned one decoded picture. After removing stride and height
+padding and converting NV12 to planar YUV420, the 320×240 picture
+matched the software reference byte for byte. The journal showed no
+firmware session error or IOMMU timeout. The installed return matched
+all 482 module files and the protected hashes.
 [Retained-resource comparison](https://github.com/timschmidt/fx0-linux/commit/ee828e634cb3cffdd83e4fa366f3076921b2ae7e)
+
+The full-sequence probe uses 12 length-prefixed Annex-B access units
+from the existing 320×240 fixture. It keeps one coded buffer outstanding
+and starts a V4L2 drain after queueing the last unit. Four host cases
+exercise normal drain, a missing `LAST`, a poll error and an unmarked
+empty capture. The ARM executable rejects truncated, oversized and
+trailing data before opening the device. Earlier startup and first-frame
+host cases still pass.
+[Direct decoder probe](../diagnostics/venus-arm32/decoder-startup.c)
+[Stateful decoder drain](https://docs.kernel.org/6.18/userspace-api/media/v4l/dev-decoder.html#drain)
+
+Run `prepare-decoder-startup.py --sequence` with the reference fixture
+and a new output directory to generate `reference-au.bin` for the
+probe's `capture-sequence` mode.
+
+On a second boot of the same signed image, the direct probe queued and
+dequeued all 12 coded inputs and received 12 decoded pictures. It received
+`LAST` after STOP. The complete planar output matched the software
+reference byte for byte. The journal showed no firmware session error,
+IOMMU timeout or runtime PM underflow. The installed return matched all
+482 module files and the protected hashes. This run used the preallocated
+capture path at one resolution. Standalone FFmpeg decoder compatibility,
+resolution changes and sustained playback remain open.
 
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
@@ -860,8 +889,8 @@ encoding, and software decoding verified 12 frames, 144 luma cells and
 and one addressed EOS completion. It recorded no firmware system errors,
 IOMMU timeouts or unexpected buffer states. The installed return matched
 all 482 module files and the protected hashes. This qualifies the two
-tested encoder workloads on the signed image. Decoder and sustained
-encoder operation remain open.
+tested encoder workloads on the signed image. Sustained encoder
+operation remains open.
 [Reserved tag](https://github.com/timschmidt/fx0-linux/commit/cfac2aa935f6e6b235db9da58a7bbae33c254ca4)
 [Mapped EOS buffer](https://github.com/timschmidt/fx0-linux/commit/df0da6c7c770dc705bf5992ef2a18a02b37a2d96)
 [Encoder HFI trace](https://github.com/timschmidt/fx0-linux/commit/14edfd206702060296240d83d4fa6d92b0345d4b)

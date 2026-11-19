@@ -6,10 +6,12 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import struct
 import subprocess
 
 
 MAX_CHUNK_BYTES = 64 * 1024
+SEQUENCE_FRAMES = 12
 START_CODE = re.compile(rb"\x00\x00(?:\x00)?\x01")
 
 
@@ -34,7 +36,7 @@ def split_first_picture(packet):
     return packet[:offsets[first_picture]], kinds
 
 
-def first_packet(path, body):
+def inspect_packets(path):
     report = json.loads(subprocess.check_output([
         "ffprobe", "-v", "error", "-f", "h264", "-select_streams", "v:0",
         "-show_entries", "packet=pos,size,flags:stream=width,height",
@@ -45,13 +47,32 @@ def first_packet(path, body):
         raise ValueError("startup probe requires a known 320x240 fixture")
     if not report["packets"]:
         raise ValueError("fixture has no H.264 packet")
-    packet = report["packets"][0]
+    return report["packets"]
+
+
+def first_packet(packet, body):
     size = int(packet["size"])
     if int(packet["pos"]) != 0 or not 0 < size <= MAX_CHUNK_BYTES or size > len(body):
         raise ValueError("first packet lies outside the startup probe bounds")
     if "K" not in packet["flags"]:
         raise ValueError("fixture does not start on a keyframe")
     return body[:size]
+
+
+def frame_sequence(packets, body):
+    if len(packets) != SEQUENCE_FRAMES:
+        raise ValueError("sequence probe requires exactly twelve access units")
+    pieces = []
+    offset = 0
+    for packet in packets:
+        size = int(packet["size"])
+        if int(packet["pos"]) != offset or not 0 < size <= len(body) - offset:
+            raise ValueError("access units do not cover contiguous fixture bytes")
+        pieces.append(struct.pack("<I", size) + body[offset:offset + size])
+        offset += size
+    if offset != len(body) or offset + 4 * len(packets) > MAX_CHUNK_BYTES:
+        raise ValueError("framed sequence does not match the fixture or exceeds the probe limit")
+    return b"".join(pieces)
 
 
 def describe(data):
@@ -62,12 +83,16 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("fixture", type=Path)
     parser.add_argument("directory", type=Path, help="new output directory")
+    parser.add_argument("--sequence", action="store_true", help="also prepare all twelve access units")
     args = parser.parse_args()
 
     body = args.fixture.read_bytes()
-    packet = first_packet(args.fixture, body)
+    packets = inspect_packets(args.fixture)
+    packet = first_packet(packets[0], body)
     headers, kinds = split_first_picture(packet)
     outputs = {"first-access-unit.h264": packet, "before-first-slice.h264": headers}
+    if args.sequence:
+        outputs["reference-au.bin"] = frame_sequence(packets, body)
     report = {
         "reference": describe(body),
         "first_packet_nal_types": kinds,

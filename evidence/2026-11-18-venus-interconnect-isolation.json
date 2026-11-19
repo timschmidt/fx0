@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-19T02:11:30.976744+00:00",
+  "last_updated_UTC": "2026-11-19T02:36:41.404560+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -1827,7 +1827,66 @@
       "host_resource_selection_cases": 7,
       "host_capture_start_cases": 4,
       "exact_public_source_ref_verified": true,
-      "handset_tested": false
+      "handset_tested": true,
+      "first_picture_handset": {
+        "exact_readback": true,
+        "candidate_boot": "c04aa423-fb47-456c-8572-a126420e9bdc",
+        "verified_picture": {
+          "frames": 1,
+          "luma_cells": 12,
+          "max_luma_mean_error": 0,
+          "chroma_planes": 2
+        },
+        "first_frame_sha256": "a242661393576730029240c7f0cd5cbab1a56ae465dcd3355d9401ebb2fdecf1",
+        "byte_identical_to_software_reference": true,
+        "CAPTURE_STREAMON_accepted": true,
+        "capture_pool_count": 32,
+        "firmware_required_bytes_per_plane": 147584,
+        "returned_picture_bytes": 147456,
+        "scratch_allocations": 1,
+        "scratch_bytes": 613696,
+        "preallocated_capture_with_resources_retained": true,
+        "firmware_session_error_count": 0,
+        "IOMMU_timeout_count": 0,
+        "installed_return": "ec38b5f9-fe49-4b38-9fdb-a1da2f5eb77a",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true
+      },
+      "direct_sequence_handset": {
+        "exact_readback": true,
+        "candidate_boot": "d51e7edb-9585-4526-b76e-178aeb98efbc",
+        "same_signed_image": true,
+        "input_fixture_SHA256": "d1239efbe3c4e86cbe716cbcac0a97d75f040c2c8267aca6afe36bf2fb72f9c5",
+        "ARM_probe_SHA256": "9ad298b13b5e6333562cdc86c3d5292476fb0e8ac0f35cdf65770117eed759b2",
+        "ARM_probe_rebuild_byte_identical": true,
+        "host_drain_cases_passed": 4,
+        "host_previous_startup_and_first_frame_cases_passed": 4,
+        "ARM_emulated_malformed_sequences_rejected": 3,
+        "host_sequence_generator_negative_cases_passed": 3,
+        "sequence": {
+          "queued": 12,
+          "returned": 12,
+          "frames": 12,
+          "STOP": true,
+          "LAST": true
+        },
+        "verified_picture": {
+          "frames": 12,
+          "luma_cells": 144,
+          "max_luma_mean_error": 0,
+          "chroma_planes": 24
+        },
+        "output_sha256": "d44f9522cb30d7b8a64fb82270010758564d7dba45a11b97a4236c0e6bc176d0",
+        "byte_identical_to_software_reference": true,
+        "firmware_session_error_count": 0,
+        "IOMMU_timeout_count": 0,
+        "runtime_PM_underflow_count": 0,
+        "installed_return": "c59198d8-ef38-4546-9ca6-68cc0b2eb729",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true,
+        "FFmpeg_decoder_compatibility_qualified": false,
+        "resolution_change_qualified": false
+      }
     }
   }
 }
