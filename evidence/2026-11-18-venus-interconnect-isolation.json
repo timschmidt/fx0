@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-19T03:38:09.083813+00:00",
+  "last_updated_UTC": "2026-11-19T12:39:41+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -2452,7 +2452,332 @@
           "late_DECODER_CMD_returned_EIO": true
         }
       },
-      "full_resolution_changes_qualified": false
+      "full_resolution_changes_qualified": false,
+      "active_capture_geometry": {
+        "recorded_UTC": "2026-11-19T12:39:41+00:00",
+        "stream_rectangles": [
+          {
+            "segment": 0,
+            "coded_width_height": [
+              320,
+              240
+            ],
+            "active_width_height": [
+              320,
+              240
+            ],
+            "crop_left_right_top_bottom_pixels": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "segment": 1,
+            "coded_width_height": [
+              640,
+              368
+            ],
+            "active_width_height": [
+              640,
+              360
+            ],
+            "crop_left_right_top_bottom_pixels": [
+              0,
+              0,
+              0,
+              8
+            ]
+          },
+          {
+            "segment": 2,
+            "coded_width_height": [
+              320,
+              240
+            ],
+            "active_width_height": [
+              320,
+              240
+            ],
+            "crop_left_right_top_bottom_pixels": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "host_parser": {
+          "passed": true,
+          "packets": 36,
+          "packet_payloads_preserved": true,
+          "parser_geometry_per_segment": [
+            [
+              320,
+              240,
+              320,
+              240
+            ],
+            [
+              640,
+              368,
+              640,
+              360
+            ],
+            [
+              320,
+              240,
+              320,
+              240
+            ]
+          ],
+          "host_libavcodec_version": "61.19.101",
+          "tested_complete_access_units": true
+        },
+        "retained_decoded_video": false,
+        "persistent_installation_performed": false,
+        "compose_probe": {
+          "ffmpeg_binary_SHA256": "a0c9775f29a6d0baa438d00298afe25341d31a22c2407b4df152e2209a79411a",
+          "probe_patch_SHA256": "be40d98cc299c7b619c5203e7b2452e0173127b243c40e4116d1a90005e41175",
+          "software_reference_SHA256": "9dfb5883f402ea8f6e346d1d514e5522df2798c519b14e8e15df3ad5eb80b731",
+          "software_reference_matches": true,
+          "filter": "scale=320:240",
+          "frame_count": 24,
+          "exit_status": 0,
+          "probe_completed": false,
+          "filter_input_geometry": [
+            [
+              320,
+              240,
+              "nv12"
+            ],
+            [
+              640,
+              368,
+              "nv12"
+            ]
+          ],
+          "capture_rectangles_fields": [
+            "phase",
+            "compose_width",
+            "compose_height",
+            "left",
+            "top",
+            "allocation_width",
+            "allocation_height"
+          ],
+          "capture_rectangles": [
+            [
+              "before reinit",
+              320,
+              240,
+              0,
+              0,
+              320,
+              256
+            ],
+            [
+              "before reinit",
+              640,
+              368,
+              0,
+              0,
+              640,
+              384
+            ],
+            [
+              "after reinit",
+              640,
+              384,
+              0,
+              0,
+              640,
+              384
+            ],
+            [
+              "before reinit",
+              320,
+              240,
+              0,
+              0,
+              320,
+              256
+            ],
+            [
+              "after reinit",
+              320,
+              256,
+              0,
+              0,
+              320,
+              256
+            ]
+          ],
+          "decoded_segment_SHA256": [
+            "d44f9522cb30d7b8a64fb82270010758564d7dba45a11b97a4236c0e6bc176d0",
+            "4443689f6c13588d75aef73f967f3ce8f3a67db317cb7c2c50ab119438ce087f"
+          ],
+          "segment_matches_software": [
+            true,
+            false,
+            null
+          ],
+          "firmware_resources": [
+            {
+              "sufficient": true,
+              "width": 320,
+              "height": 240
+            },
+            {
+              "sufficient": false,
+              "width": 640,
+              "height": 368
+            },
+            {
+              "sufficient": true,
+              "width": 320,
+              "height": 240
+            }
+          ],
+          "firmware_input_buffer_records": 25,
+          "fault_counts": {
+            "firmware_errors": 2,
+            "firmware_rejected_properties": 0,
+            "iommu_timeouts": 0,
+            "panics": 0,
+            "PM_usage_underflows": 0
+          },
+          "return_audit": {
+            "passed": true,
+            "boot_id": "a82ce1c8-ca46-4f4d-89f4-39c752733fe2",
+            "protected_hashes_match": true,
+            "installed_module_files_verified": 482
+          },
+          "exact_signed_RAM_readback_verified": true
+        },
+        "fixture_crop_probe": {
+          "ffmpeg_binary_SHA256": "c850ceef2382e03a09c8140d898aca38a4c4dc6e08f13748ef423b9403c2f0e2",
+          "probe_patch_SHA256": "be40d98cc299c7b619c5203e7b2452e0173127b243c40e4116d1a90005e41175",
+          "software_reference_SHA256": "9dfb5883f402ea8f6e346d1d514e5522df2798c519b14e8e15df3ad5eb80b731",
+          "software_reference_matches": true,
+          "filter": "crop=w=iw:h='min(ih,if(eq(iw,640),360,240))':x=0:y=0,scale=320:240",
+          "frame_count": 24,
+          "exit_status": 0,
+          "probe_completed": false,
+          "filter_input_geometry": [
+            [
+              320,
+              240,
+              "nv12"
+            ],
+            [
+              640,
+              368,
+              "nv12"
+            ]
+          ],
+          "capture_rectangles_fields": [
+            "phase",
+            "compose_width",
+            "compose_height",
+            "left",
+            "top",
+            "allocation_width",
+            "allocation_height"
+          ],
+          "capture_rectangles": [
+            [
+              "before reinit",
+              320,
+              240,
+              0,
+              0,
+              320,
+              256
+            ],
+            [
+              "before reinit",
+              640,
+              368,
+              0,
+              0,
+              640,
+              384
+            ],
+            [
+              "after reinit",
+              640,
+              384,
+              0,
+              0,
+              640,
+              384
+            ],
+            [
+              "before reinit",
+              320,
+              240,
+              0,
+              0,
+              320,
+              256
+            ],
+            [
+              "after reinit",
+              320,
+              256,
+              0,
+              0,
+              320,
+              256
+            ]
+          ],
+          "decoded_segment_SHA256": [
+            "d44f9522cb30d7b8a64fb82270010758564d7dba45a11b97a4236c0e6bc176d0",
+            "872f2be2f01635945c6fc2bc3d393e389536a7068047f97615a6fb47e9b16779"
+          ],
+          "segment_matches_software": [
+            true,
+            true,
+            null
+          ],
+          "firmware_resources": [
+            {
+              "sufficient": true,
+              "width": 320,
+              "height": 240
+            },
+            {
+              "sufficient": false,
+              "width": 640,
+              "height": 368
+            },
+            {
+              "sufficient": true,
+              "width": 320,
+              "height": 240
+            }
+          ],
+          "firmware_input_buffer_records": 25,
+          "fault_counts": {
+            "firmware_errors": 2,
+            "firmware_rejected_properties": 0,
+            "iommu_timeouts": 0,
+            "panics": 0,
+            "PM_usage_underflows": 0
+          },
+          "return_audit": {
+            "passed": true,
+            "boot_id": "73a37856-caf8-425a-bc4b-3ef36bcb8713",
+            "protected_hashes_match": true,
+            "installed_module_files_verified": 482
+          },
+          "exact_signed_RAM_readback_verified": true
+        },
+        "automatic_stream_crop_qualified": false,
+        "downshift_qualified": false
+      }
     },
     "default_startup_qualified": false,
     "persistent_installation_performed": false

@@ -976,6 +976,24 @@ FFmpeg again exited with status zero. Both runs returned to installed
 r2 and passed the protected-hash and 482-module audit. Resolution
 changes remain unqualified.
 
+The middle segment's H.264 headers specify a 640 × 368 coded picture
+with an eight-row bottom crop. The host H.264 parser recovered the
+640 × 360 visible size from all 12 packets in that segment and returned
+the packet payloads unchanged. On the handset, a read-only
+`G_SELECTION(COMPOSE)` query reported 640 × 368 at the source-change
+event and 640 × 384 after CAPTURE reinitialization. Applying the
+pre-reinitialization rectangle removed 16 padding rows from FFmpeg's
+input. The remaining eight rows still changed the normalized picture
+digest.
+
+With a fixture-specific crop before scaling, all 24 frames from the
+first two segments matched the software reference byte for byte. The
+final 12 frames were still missing. The driver reported sufficient
+capture resources for the switch back to 320 × 240, then logged a
+firmware session error. Both probes returned to installed r2 and
+passed the protected-hash and 482-module audit. Automatic stream crop
+and switching back to the smaller resolution remain unqualified.
+
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
 its synthetic completion. The matched ordinary STOP test still failed
