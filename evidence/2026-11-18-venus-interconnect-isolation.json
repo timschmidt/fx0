@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-19T12:39:41+00:00",
+  "last_updated_UTC": "2026-11-19T12:54:47+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -2777,6 +2777,235 @@
         },
         "automatic_stream_crop_qualified": false,
         "downshift_qualified": false
+      },
+      "downshift_only_control": {
+        "recorded_UTC": "2026-11-19T12:54:47+00:00",
+        "prior_traced_runs": {
+          "ioctl": {
+            "event_to_fatal_error_us": 15038,
+            "intervening_flush_done_events": 0,
+            "firmware_fatal_data1_hex": "1",
+            "firmware_fatal_data2_hex": "58138",
+            "fatal_file_and_line": [
+              [
+                "vfw_h264_main.c",
+                2124
+              ]
+            ]
+          },
+          "compose": {
+            "event_to_fatal_error_us": 18330,
+            "intervening_flush_done_events": 0,
+            "firmware_fatal_data1_hex": "1",
+            "firmware_fatal_data2_hex": "58138",
+            "fatal_file_and_line": [
+              [
+                "vfw_h264_main.c",
+                2124
+              ]
+            ]
+          },
+          "fixture-crop": {
+            "event_to_fatal_error_us": 17157,
+            "intervening_flush_done_events": 0,
+            "firmware_fatal_data1_hex": "1",
+            "firmware_fatal_data2_hex": "58138",
+            "fatal_file_and_line": [
+              [
+                "vfw_h264_main.c",
+                2124
+              ]
+            ]
+          }
+        },
+        "original_visible_height": {
+          "fixture": {
+            "passed": true,
+            "frames": 24,
+            "width": 320,
+            "height": 240,
+            "source_segment_dimensions": [
+              [
+                640,
+                360
+              ],
+              [
+                320,
+                240
+              ]
+            ],
+            "frames_per_segment": 12,
+            "output_filter": "crop=w=iw:h='min(ih,if(eq(iw,640),360,240))':x=0:y=0,scale=320:240",
+            "compressed_bytes": 7882,
+            "fixture_h264_SHA256": "dfec91942f502284a4a32d63fe22cff4786aa7781ce414f47297306c34793bc9",
+            "software_YUV420P_SHA256": "04f9b0fca3b1fcefbb53608e2c39f75bb2616b4ebe551f545c335f13cbeb8ade",
+            "raw_segment_hashes": [
+              "872f2be2f01635945c6fc2bc3d393e389536a7068047f97615a6fb47e9b16779",
+              "1eb729624e34b0742f37b9cba3c22da5d88f264d3ac61e34570d0bb0e05bfb08"
+            ],
+            "software_output_bytes": 2764800,
+            "FFmpeg_ARM_binary_SHA256": "c850ceef2382e03a09c8140d898aca38a4c4dc6e08f13748ef423b9403c2f0e2",
+            "retained_decoded_video": false,
+            "ARM_software_reference_matches_original_segments": true,
+            "removed_fixture_segment": 0
+          },
+          "coded_queue_geometry": [
+            640,
+            360
+          ],
+          "capture_started_before_coded_input": true,
+          "capture_STREAMON_calls_accepted": 1,
+          "filter_input_geometry": [
+            [
+              640,
+              360,
+              "nv12"
+            ]
+          ],
+          "exit_status": -9,
+          "integrity_check_error": "decoded_bytes_exceed_expected_frame_count",
+          "output_bytes": 2797568,
+          "incomplete_frame_bytes": 32768,
+          "normalized_segments_match_ARM_software": [
+            false,
+            false
+          ],
+          "probe_completed": false,
+          "firmware_coded_input_records": 1,
+          "received_smaller_source_change": false,
+          "firmware_event_timeline": [
+            {
+              "marker": "resources",
+              "monotonic_us": 118942870,
+              "sufficient": true,
+              "width": 640,
+              "height": 368
+            },
+            {
+              "marker": "flush_done",
+              "monotonic_us": 118960183
+            },
+            {
+              "marker": "flush_done",
+              "monotonic_us": 119900175
+            },
+            {
+              "marker": "flush_done",
+              "monotonic_us": 119912400
+            }
+          ],
+          "returned_to_installed_r2": true,
+          "installed_return_boot": "3c742cec-01d0-4de2-9276-1148d2164879",
+          "protected_hashes_match": true,
+          "installed_module_files_verified": 482,
+          "temporary_readback_removed": true
+        },
+        "coded_height_SPS_control": {
+          "fixture": {
+            "passed": true,
+            "frames": 24,
+            "width": 320,
+            "height": 240,
+            "source_segment_dimensions": [
+              [
+                640,
+                368
+              ],
+              [
+                320,
+                240
+              ]
+            ],
+            "frames_per_segment": 12,
+            "output_filter": "crop=w=iw:h='min(ih,if(eq(iw,640),360,240))':x=0:y=0,scale=320:240",
+            "compressed_bytes": 7881,
+            "fixture_h264_SHA256": "4cc5e2ffe25a7cf1a5ef7655cd3e25efa1358c5212aea4bc90b9dc9db26b776d",
+            "software_YUV420P_SHA256": "04f9b0fca3b1fcefbb53608e2c39f75bb2616b4ebe551f545c335f13cbeb8ade",
+            "raw_segment_hashes": [
+              "872f2be2f01635945c6fc2bc3d393e389536a7068047f97615a6fb47e9b16779",
+              "1eb729624e34b0742f37b9cba3c22da5d88f264d3ac61e34570d0bb0e05bfb08"
+            ],
+            "software_output_bytes": 2764800,
+            "FFmpeg_ARM_binary_SHA256": "c850ceef2382e03a09c8140d898aca38a4c4dc6e08f13748ef423b9403c2f0e2",
+            "retained_decoded_video": false,
+            "ARM_software_reference_matches_original_segments": true,
+            "removed_fixture_segment": 0,
+            "arm_reference_unchanged_after_SPS_rewrite": true,
+            "only_SPS_NAL_changed": true,
+            "slice_payloads_unchanged": true,
+            "first_segment_bottom_crop_before_pixels": 8,
+            "first_segment_bottom_crop_after_pixels": 0
+          },
+          "coded_queue_geometry": [
+            640,
+            368
+          ],
+          "capture_started_before_coded_input": true,
+          "capture_STREAMON_calls_accepted": 1,
+          "filter_input_geometry": [
+            [
+              640,
+              368,
+              "nv12"
+            ]
+          ],
+          "exit_status": 0,
+          "integrity_check_error": null,
+          "output_bytes": 1382400,
+          "incomplete_frame_bytes": 0,
+          "normalized_segments_match_ARM_software": [
+            true,
+            null
+          ],
+          "probe_completed": false,
+          "firmware_coded_input_records": 13,
+          "received_smaller_source_change": true,
+          "firmware_event_timeline": [
+            {
+              "marker": "resources",
+              "monotonic_us": 119014676,
+              "sufficient": true,
+              "width": 640,
+              "height": 368
+            },
+            {
+              "marker": "resources",
+              "monotonic_us": 119492027,
+              "sufficient": true,
+              "width": 320,
+              "height": 240
+            },
+            {
+              "marker": "firmware_system_error",
+              "monotonic_us": 119497895,
+              "data1_hex": "1",
+              "data2_hex": "58138"
+            },
+            {
+              "marker": "decoder_session_error",
+              "monotonic_us": 119510269
+            },
+            {
+              "marker": "firmware_fatal_source",
+              "monotonic_us": 119513266,
+              "file": "vfw_h264_main.c",
+              "line": 2124
+            },
+            {
+              "marker": "recovered",
+              "monotonic_us": 122601893
+            }
+          ],
+          "returned_to_installed_r2": true,
+          "installed_return_boot": "6696b372-9011-46be-99a3-4b211e4a72a4",
+          "protected_hashes_match": true,
+          "installed_module_files_verified": 482,
+          "temporary_readback_removed": true
+        },
+        "same_signed_RAM_image_SHA256": "58eba6f2830393b0f1e1f3b0302b3b0b8f0d95760c234a66bcff251a109f3d7b",
+        "persistent_installation_performed": false,
+        "earlier_expansion_required_for_failure": false,
+        "production_resolution_change_qualified": false
       }
     },
     "default_startup_qualified": false,

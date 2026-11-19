@@ -994,6 +994,34 @@ firmware session error. Both probes returned to installed r2 and
 passed the protected-hash and 482-module audit. Automatic stream crop
 and switching back to the smaller resolution remain unqualified.
 
+Across the three traced runs, the firmware logged the same fatal error
+15–19 ms after the sufficient-resource event at 320 × 240, with no
+intervening flush completion. The signed driver sends an asynchronous
+output flush while handling an in-stream source-change event. A later
+CAPTURE `STREAMOFF` can issue a blocking flush. The journal establishes
+the order of firmware events, while the command that caused the error
+remains unknown. The [legacy LG MSM8226 driver](https://github.com/LineageOS/android_kernel_lge_msm8226/blob/bf756279493c2cc4656b784afa29822b30838e98/drivers/media/platform/msm/vidc/msm_vidc_common.c#L531)
+handles the sufficient-resource event with continued data transfer
+enabled by keeping its existing buffers and notifying userspace.
+
+Starting with the 640 × 360 segment exposed a separate startup issue.
+FFmpeg configured the coded queue at 640 × 360, while the firmware
+reported 640 × 368. Both sizes use the same 640 × 384 CAPTURE
+allocation, so FFmpeg tried `DECODER_CMD START` without recreating the
+queue. Only one coded access unit reached the firmware. The integrity
+check rejected the corrupt output before the downshift was reached.
+
+Removing the initial segment's eight-row crop from its SPS made FFmpeg
+configure the coded queue at 640 × 368. The slice payloads were
+unchanged, and the same explicit crop produced the same 24-frame ARM
+software reference. On the handset, the first 12 frames matched that
+reference. The direct switch to 320 × 240 then reproduced the fatal
+error 5.9 ms after the sufficient-resource event, before CAPTURE could
+restart. All four traced failures reported
+`vfw_h264_main.c:2124`. The failure can occur without an earlier
+expansion. Both controls used the same signed RAM image and returned to
+installed r2 with all 482 modules and protected hashes verified.
+
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
 its synthetic completion. The matched ordinary STOP test still failed
