@@ -231,9 +231,23 @@ the earlier suspend DTB byte for byte before changing the four USB
 properties. The binding accepted both DTBs and rejected missing or
 reversed interrupt names on the new variant. A host fixture exercised
 1,024 combinations of USB role, bus and wake state, including a PHY
-transition timeout and register restoration. The candidate still needs
-a linked kernel and a handset test with host-driven USB bus suspend
-and resume. [Build and replay evidence](../evidence/2026-11-19-msm8226-usb-async-wake.json)
+transition timeout and register restoration.
+[Build and replay evidence](../evidence/2026-11-19-msm8226-usb-async-wake.json)
+
+The RAM image uses a complete kernel relink with one changed built-in
+ChipIdea object. Its 11,740 exported symbol CRCs match the parent kernel.
+The image keeps the parent ramdisk, including its 465 signed modules
+and both return timers. It starts with s2idle selected and WLAN disabled.
+The handset bound the additional USB IRQ to MPM pin 47 and retained its
+main controller IRQ.
+
+The matched RAM comparison recorded no calls to set the dedicated IRQ's
+wake flag with USB wake disabled. With USB wake enabled, Linux called
+the arm and disarm paths once each. The RTC woke the handset in both
+cycles. The worker restored the wake setting and cleared its alarm and
+trace state. The installed return audit matched the 482 module files and
+protected hashes. Host-driven USB bus resume and wake from deep suspend
+remain unverified. [Handset and relink evidence](../evidence/2026-11-19-msm8226-usb-wake-runtime.json)
 
 ### Capped deep-suspend boot
 

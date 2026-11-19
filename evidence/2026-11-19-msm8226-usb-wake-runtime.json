@@ -1,0 +1,124 @@
+{
+  "recorded_UTC": "2026-11-19T15:37:31+00:00",
+  "source_commit": "1cd3353191f28d1bf4cbea6d7f1b96b619751feb",
+  "full_kernel_relink": {
+    "passed": true,
+    "parent_commit": "3743831132900a49258df9378563a634ae62a87a",
+    "source_commit": "1cd3353191f28d1bf4cbea6d7f1b96b619751feb",
+    "unchanged_archive_members": 1969,
+    "parent_System_map_byte_identical": true,
+    "parent_Image_differs_only_in_generated_build_ID": true,
+    "parent_zImage_byte_identical_with_archived_build_ID": true,
+    "parent_zImage_SHA256": "b96ef0a01601e6fd0693a6278399ef81f177e04082440ff979a8f7222df5d392",
+    "parent_vmlinux_SHA256": "b0e5ef7227d8e1ec2f9366dc5ee46a0d37dc75038a622606f96d067f5d1ea795",
+    "candidate_zImage_SHA256": "8e2ec352d8025bb2fb73e5773c4a63f956e3601f4dcaa9b04662a5c47e5f5fc2",
+    "candidate_vmlinux_SHA256": "5c953125cb4687a5e366a897a89b71c47350f680bc6b43912b88a0687b7ce7fa",
+    "candidate_cfg_sha256": "2ab21bf21354a213419c8e8d3c9569bc7bc495cc3b4ce53d98f151ad35fb5a38",
+    "candidate_ChipIdea_with_mcount_SHA256": "bb485e3bdc38a497ad30c4d99246dcb61e1c9a08616057989af75b48e30ecc82",
+    "kernel_symbol_version_records_checked": 11740,
+    "unchanged_export_object_SHA256": "db6a2336ea50ab50e7570a048b415c1058ff8ab986ca68eddcfac2dd2308343f",
+    "signed_module_set_reused": true,
+    "kernel_bss_size": 295460
+  },
+  "image": {
+    "recorded_UTC": "2026-11-19T15:16:50+00:00",
+    "passed": true,
+    "source_commit": "1cd3353191f28d1bf4cbea6d7f1b96b619751feb",
+    "kernel_notes_sha256": "32997d0800c8451e5c77db6ec81461fd2d285e7bbcdd78486dbb09a75e81d111",
+    "image_sha256": "c85b7d11f95ff3543cc73d318ab1a30fc61bd75336b1774efddfa386a5003e03",
+    "image_bytes": 20402176,
+    "kernel_SHA256": "8e2ec352d8025bb2fb73e5773c4a63f956e3601f4dcaa9b04662a5c47e5f5fc2",
+    "candidate_DTB_SHA256": "0e058f858c2a1be721d2e87264701f41684afa9534d4117bf3f363579f5bfc35",
+    "parent_image_sha256": "a54af2cec10ede9e103d252ba275a941e3a073647a4dfbe58513e80fa3eae493",
+    "parent_image_recomposed_exact": true,
+    "original_compressed_ramdisk_SHA256": "2ceede67748eacdd6726388a761835325d92b7d028afab36bb70057aa2acd255",
+    "same_compressed_ramdisk": true,
+    "same_boot_arguments": true,
+    "same_RAM_return_guards": {
+      "early": 420,
+      "systemd": 360
+    },
+    "normal_sleep_on_boot": "s2idle",
+    "archive_module_paths_verified": 479,
+    "previously_verified_signed_modules": 465,
+    "platform_workload_sha256": "704bb8c1f386147bbdec8f2a8d46b7970f7b5a87ff4c893b7df00dd13d42aade",
+    "Android_image_header_id_load_bounds_verified": true
+  },
+  "first_hardware_attempt": {
+    "IRQ_route_bound": true,
+    "s2idle_cycles_completed": 1,
+    "worker_aborted_on_optional_trace_field": true,
+    "returned_to_installed_r2": true,
+    "installed_module_files_verified": 482
+  },
+  "second_hardware_attempt": {
+    "IRQ_route_bound": true,
+    "s2idle_cycles_completed": 1,
+    "comparison_ended_with_assertion": true,
+    "returned_to_installed_r2": true,
+    "installed_module_files_verified": 482
+  },
+  "repeated_same_image": {
+    "candidate_boot": "219be352-4e58-46e5-9657-335170d92e6a",
+    "runtime_IRQ_routes": {
+      "core": {
+        "irq": 68,
+        "chip_name": "",
+        "hwirq": "166",
+        "wakeup": "disabled"
+      },
+      "async": {
+        "irq": 67,
+        "chip_name": "mpm",
+        "hwirq": "47",
+        "wakeup": "disabled"
+      }
+    },
+    "cycles": [
+      {
+        "USB_device_wake": "disabled",
+        "dedicated_IRQ_wake_calls": [],
+        "RTC_wake_IRQ": 66,
+        "RTC_IRQ_reported_via_sysfs": true,
+        "RTC_IRQ_increment": 1,
+        "seconds_inactive_clock": 13.999,
+        "async_wake_trace_events_lost": 0
+      },
+      {
+        "USB_device_wake": "enabled",
+        "dedicated_IRQ_wake_calls": [
+          1,
+          0
+        ],
+        "RTC_wake_IRQ": 66,
+        "RTC_IRQ_reported_via_sysfs": true,
+        "RTC_IRQ_increment": 1,
+        "seconds_inactive_clock": 14.338,
+        "async_wake_trace_events_lost": 0
+      }
+    ],
+    "USB_gadget_ready_verified_before_each_cycle": true,
+    "wrapper_and_trace_cleanup_verified": true,
+    "rtc_alarm_cleared": true,
+    "experimental_wake_policy_restored": true,
+    "restore_request_acknowledged": true,
+    "handset_USB_host_bus_suspend_tested": false,
+    "handset_USB_forced_bus_resume_tested": false,
+    "physical_USB_wake_qualified": false,
+    "deep_suspend_tested": false
+  },
+  "installed_return": {
+    "boot_id": "45345d35-3d38-459d-8618-d3e6374c6c3e",
+    "installed_module_files_verified": 482,
+    "protected_hashes_match": true,
+    "desktop_and_touch_gesture_services_running": true,
+    "journal_entry_and_exit_count": [
+      2,
+      2
+    ],
+    "worker_receipt_matches_journal": true
+  },
+  "no_new_persistent_installation": true,
+  "RAM_image_publication": false,
+  "RAM_candidate_and_installed_return_duplicate_readbacks_removed": true
+}
