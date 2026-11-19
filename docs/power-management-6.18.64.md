@@ -987,7 +987,7 @@ On r2 the SMBB parent's battery-voltage lookup can defer the whole probe
 when VADC is missing. The older diagnostic's assumption that the parent
 supply already exists before loading the ADC needs a different sequence
 on this kernel. The prepared kernel and firmware have passed host checks.
-Their live handoff, charging decisions and automatic return are still open.
+The hardware checks below cover the installed and paired loaders.
 [Kernel source](https://github.com/timschmidt/fx0-linux/commit/6d7f378fc071fc88dbfdc9ee37c66cad27a13843)
 [Firmware source](https://github.com/timschmidt/fx0-lk2nd/commit/b3332cf75d7c5b58a6890c2be431f95f84f0fd55)
 [Linked candidate evidence](../evidence/2026-11-18-power-qualification-followup.json)
@@ -1010,8 +1010,36 @@ independent audit matched the protected boot and package hashes and all
 482 module files. Its only SMBB/VADC diagnostic was the policy-child
 probe returning `-EPROTO`, the expected consequence of the missing
 handoff. The test qualifies that rejection using the installed loader.
-The paired firmware's live profile handoff and charging behavior remain
-open. [Missing-handoff evidence](../evidence/2026-11-18-power-qualification-followup.json)
+[Missing-handoff evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
+### Paired firmware and managed kernel in RAM
+
+The installed loader chainloaded `fx0-pm-host-01` in RAM over the pinned
+USB port. The workstation verified exact byte-for-byte RAM readbacks
+before booting the loader and kernel. Linux's live device tree reported
+the expected loader version, charge-inhibited handoff marker and
+`tocad-madai` battery profile. The profile's phandle resolved to the
+expected battery data, and the signed VADC provider and managed policy
+child bound successfully. Both return timers were active.
+
+Across six fresh snapshots, the software policy reported 31.3 °C and
+4.189–4.190 V, requested charging and kept the programmed USB input
+limit at 500 mA. Direct PMIC reads showed charge enable set, the
+`0x81` comparator configuration and HOT status. A separate trace of
+six snapshots confirmed USB valid, with the temperature-OK, fast-charge,
+trickle-charge and charge-done lines all deasserted. The observations
+confirm the software charge request under the conservative comparator
+setting. A previous stock-kernel test reproduced HOT with that setting
+near the same reported temperature. [Stock comparator comparison](../evidence/2026-10-30-stock-BTC-window.json)
+
+The scheduled service returned the phone to installed r2 without a
+Fastboot recovery command. The independent audit found the protected
+boot and package hashes and all 482 module files intact. The retained
+journal showed an orderly shutdown with no charger or VADC errors.
+
+Battery current, charge completion and protection across
+temperature and power-source changes still require qualification.
+[Paired-handoff evidence](../evidence/2026-11-18-power-qualification-followup.json)
 
 ## PM8226 hardware key reset
 
