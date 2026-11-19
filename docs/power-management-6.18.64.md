@@ -710,15 +710,33 @@ The packaged kernel has the installed configuration, public module
 certificate and complete `Module.symvers`. All 468 module signatures
 and 25,592 import CRCs passed verification. All three Madai DTBs changed,
 and the normal Madai DTB matches the one from the earlier RAM trial.
-The packaged zImage differs from the earlier trial image and still
-requires boot qualification.
+
+A second guarded RAM trial loaded the exact zImage, normal Madai DTB
+and 21 early signed modules from the APK. The diagnostic CPIO used the
+device package's early VADC entry. The live tmpfs module tree matched
+all 482 package files. The twelve paired readings agreed within
+588 µV. Sway reported one active output and Linux enumerated the
+touchscreen. Physical interaction was outside this unattended test.
+The scheduled return service completed. An independent USB audit
+matched all 482 installed module files and the protected boot and
+package files, and found zero suspend entries, kernel faults or SMBB
+and ADC errors in the retained trial journal.
 
 An isolated APK transaction used the phone's captured package database
 and verified the original and replacement signatures. Both simulations
 and both transactions passed. The three packages were the only database
 records changed during upgrade. Rollback restored the original database
 and world files byte for byte, and both directions verified 562 payload
-files. Native boot hooks and deployment remain open.
+files.
+
+The installed handset's `mkinitfs` generated an inventory matching its
+current 243-entry initramfs. Two candidate runs produced identical
+247-entry inventories, including 21 exact signed modules and 14 module
+metadata files. The VADC driver and its dependency account for the new
+module files. All non-module entries matched the baseline. The runs used
+a private mount and network namespace with deployment intercepted. The
+live boot and package files matched the preflight hashes afterwards.
+Persistent deployment and hardware wake qualification remain open.
 [Handset and package recipe evidence](../evidence/2026-11-18-power-qualification-followup.json)
 [Package recipes](https://github.com/timschmidt/fx0-pmaports/commit/a8174d382680372082827ae97b7b6f93a86f7d7a)
 

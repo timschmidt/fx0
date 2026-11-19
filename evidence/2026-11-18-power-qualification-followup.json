@@ -561,8 +561,98 @@
         ]
       },
       "native_install_scripts_and_boot_deployment_qualified": false,
-      "packaged_zImage_booted": false,
-      "deployed": false
+      "packaged_zImage_booted": true,
+      "deployed": false,
+      "guarded_exact_packaged_kernel_RAM_trial": {
+        "passed": true,
+        "recorded_UTC": "2026-11-19T05:13:16.381719+00:00",
+        "raw_fastboot_readback_verified": true,
+        "image_sha256": "0480189638d7dbce25a43b405c21bc39a413c0c369372daffd2b5c53441ec8bb",
+        "image_bytes": 17307648,
+        "APK_zImage_SHA256": "b3780b1bd593412c56f082901ae007a47d41b058b41e71cab490f37913a31577",
+        "APK_DTB_SHA256": "aa5662b13b302f0338eec2d6b378085445ac9ac6e65d3da8e47774d374a72700",
+        "candidate_kernel_notes_sha256": "98e75b8c5fbc306f2c20b26341608b63410cf260de7ac3efc6e06963b399eaf8",
+        "early_signed_APK_modules": 21,
+        "early_module_metadata_files": 14,
+        "independent_CPIO_and_Android_header_checks": true,
+        "staged_exact_module_files": 482,
+        "exact_live_tmpfs_module_files_verified": 482,
+        "exact_live_signed_module_files_verified": 468,
+        "candidate_boot": "61d50b9a-0c51-469b-8224-de3c2ecade18",
+        "installed_return_boot": "491467dc-5490-4045-b457-fa8abfb97f66",
+        "candidate_Sway_IPC_active_outputs": 1,
+        "candidate_touchscreen_inputs_enumerated": 1,
+        "installed_Sway_IPC_active_outputs": 1,
+        "installed_touchscreen_inputs_enumerated": 1,
+        "last_candidate_uptime_seconds": 357.39,
+        "read_only_voltage": {
+          "battery_present": true,
+          "USB_online": true,
+          "supply_voltage_read_only": true,
+          "voltage_pair_count": 12,
+          "IIO_voltage_microvolts_range": [
+            "4191210.000000000",
+            "4192092.000000000"
+          ],
+          "supply_microvolts_range": [
+            4191210,
+            4192092
+          ],
+          "maximum_pair_difference_uv": "588.000000000",
+          "pair_tolerance_uv": 5000,
+          "charge_behaviour": "auto [inhibit-charge]",
+          "USB_input_current_limit_ua": 500000,
+          "independent_electrical_calibration_measured": false
+        },
+        "both_automatic_return_guards_observed": true,
+        "automatic_return_journal": {
+          "journal_rows": 2193,
+          "kernel_rows": 477,
+          "early_return_guard_armed": 1,
+          "full_module_overlay_ready": 1,
+          "early_guard_or_overlay_failure": 0,
+          "suspend_entry": 0,
+          "kernel_fatal": 0,
+          "SMBB_or_VADC_error": 0,
+          "lockup": 0,
+          "normal_return_service_rows": 3,
+          "normal_return_service_success": 2,
+          "orderly_shutdown": 3
+        },
+        "explicit_WiFi_scans": 0,
+        "candidate_WLAN_blacklist_verified": true,
+        "physical_display_and_touch_confirmed": false,
+        "persistent_boot_or_packages_changed": false,
+        "installed_module_files_after_return": 482,
+        "installed_protected_hashes_match": true
+      },
+      "native_initramfs_preview": {
+        "passed": true,
+        "unchanged_live_protected_files": true,
+        "reviewed_signed_early_module_files": 21,
+        "reviewed_module_records": 35,
+        "native_candidate_runs": 2,
+        "candidate_inventories_identical": true,
+        "native_baseline_inventory_equals_installed": true,
+        "base_entries": 243,
+        "candidate_entries": 247,
+        "candidate_inventory_SHA256": "dc7801fa5fda72fa3cab48c824ddfc63e14d9873f96bcdefd0743c22ba21125a",
+        "network_namespace_isolated": true,
+        "deployment_intercepted": true,
+        "nonmodule_difference_counts": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "installed_boot": "491467dc-5490-4045-b457-fa8abfb97f66",
+        "added_entries": 4,
+        "removed_entries": 0,
+        "changed_entries": 20,
+        "signed_VADC_module_pair_present": true,
+        "recorded_UTC": "2026-11-19T05:14:17.505335+00:00",
+        "USB_route_verified": true,
+        "APK_kernel_SHA256": "07c6d7339f961105059dcdd572487d6c7ab54cbd33024917ab62680fa35090d0"
+      }
     }
   },
   "desktop_freeze_followup": {
