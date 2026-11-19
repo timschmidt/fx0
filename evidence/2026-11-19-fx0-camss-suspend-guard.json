@@ -1,0 +1,43 @@
+{
+  "date_UTC": "2026-11-19",
+  "candidate_kernel_source": "c595fe52cc30df4430cf752a831e8f4616bd6993",
+  "base_kernel_source": "272ba42f0202498b83c2cabfe922464c46c0cf0c",
+  "changed_files": [
+    "drivers/media/platform/qcom/camss/camss.c"
+  ],
+  "baseline_sleep_source": {
+    "camss": "runtime force-sleep callbacks manage interconnect votes",
+    "MSM8226_interconnect_paths": 0,
+    "IMX132_and_IMX179": "force-sleep callbacks power sensors off and on",
+    "VFE_IOMMU": "runtime force-sleep callbacks can gate its clocks"
+  },
+  "prepare_guard": {
+    "compatible": "qcom,msm8226-camss",
+    "callback": "camss_prepare",
+    "busy_errno": "EBUSY",
+    "reads_VFE_stream_count_under_stream_lock": true,
+    "runs_in_device_prepare_phase": true
+  },
+  "ARM_build": {
+    "compiler": "clang version 21.1.8 (Fedora 21.1.8-6.fc43)",
+    "W": 1,
+    "EABI": 5,
+    "normal_CAMSS_object_SHA256": "4c1fcfd5bf8c01825f4397b8dbe54d72eb020e78ddab211f5e15205a9fd641c4",
+    "normal_CAMSS_aggregate_object_SHA256": "578fdbd30eeeb265c6b032fb8cb09027ac02d2ff97fc12cba1956afd3f1ca07b",
+    "PM_SLEEP_disabled_CAMSS_object_SHA256": "ea87afa343301ae1b575ed352be07bb7c54e5cccb41d643f01cfc498f6e35c9b",
+    "build_diagnostics": 0,
+    "shipping_module_signed": false
+  },
+  "host_controls": {
+    "actual_callback_source_extracted": true,
+    "executions": 768,
+    "distinct_states": 336,
+    "configurations": "MSM8226, MSM8916, SM8550 and absent OF node, with one to three VFEs",
+    "AddressSanitizer": "passed",
+    "UndefinedBehaviorSanitizer": "passed",
+    "balanced_stream_locks": true,
+    "fixture_SHA256": "0c18faff79869d5cfbc53384c47c0687eb19bffd467b12f820e368630553b339"
+  },
+  "handset_trial_performed": false,
+  "open_stream_suspend_resume_implemented": false
+}

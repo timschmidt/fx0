@@ -510,6 +510,31 @@ The front and full-resolution rear cameras also delivered complete captures
 before and after an RTC-woken `s2idle` cycle. The sensors were closed for
 suspend and both runtime-suspended again after capture. [Suspend and reopen evidence](power-management-6.18.64.md#camera-reopen-after-rtc-woken-suspend)
 
+## System sleep with an open capture stream
+
+On the qualified Linux 6.18.64 CAMSS base, the MSM8226 system-sleep
+callback delegates to runtime PM. The CAMSS callback handles interconnect
+votes, and the MSM8226 description has no paths for it to vote on. The
+IMX132 and IMX179 system-sleep callbacks can power off their sensors, and
+the VFE IOMMU can disable its clocks. The bridge currently has no
+system-sleep operation that stops the running VFE before those changes.
+Linux assigns the stop and restart of the whole camera pipeline to the
+bridge driver. [Linux camera PM guidance](https://docs.kernel.org/6.18/driver-api/media/camera-sensor.html#power-management)
+
+The MSM8226 guard checks the VFE stream counts in device `prepare`, before
+the PM core starts any suspend callbacks. It returns `-EBUSY` if a stream
+is active. The ARM CAMSS object and aggregate driver compiled with `W=1`.
+The source also compiled with system sleep disabled, and a host fixture
+verified idle, busy and multiple-VFE states with balanced stream locks.
+The candidate requires a signed handset build for physical qualification.
+[Guard source](https://github.com/timschmidt/fx0-linux/commit/c595fe52cc30df4430cf752a831e8f4616bd6993)
+[Build and host evidence](../evidence/2026-11-19-fx0-camss-suspend-guard.json)
+
+Resuming the same stream requires CAMSS to stop DMA at suspend, preserve
+ownership of queued buffers, bring the pipeline back after its suppliers
+resume and surface a queue error if restart fails. The closed-sensor RTC
+trial establishes the reopen baseline for that work.
+
 Six subsequent full-resolution rear cases alternate frame-file writing and
 discard and retain all completion timestamps and capture stdout. All 144 buffers
 arrive; writing cases have 23/69 intervals above 1.5 times their session median,
