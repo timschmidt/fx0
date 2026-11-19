@@ -873,8 +873,21 @@ modules with the installed kernel's CFI settings. The sole configuration
 addition selects the diagnostic BMS as a module. Both module signatures
 verify against the certificate embedded in the installed kernel, and all
 87 imported symbol CRCs match. The locally prepared image and modules passed
-offline verification. Handset staging, the first probe and the automatic
-return still require a hardware run with this image.
+offline verification.
+
+The diagnostic DTB booted on the handset with both return guards active
+and WLAN unavailable. The kernel exposed the expected DT properties while
+the experimental module remained unloaded. A process-scoped SPMI trace
+recorded 22 reads and zero writes. Both snapshots showed idle counter
+controls and zero selections in the companion IADC. All 482 module files
+matched the signed r2 package manifest in the RAM overlay.
+
+The normal return service rebooted to installed r2. An independent audit
+matched the boot files, package state and all 482 installed module files.
+It found one active Sway output and one touchscreen input. The trial
+journal had zero suspend entries, kernel faults or lockups. This qualifies
+the passive boot and return. The signed experimental modules still need a
+controlled first activation and current calibration.
 
 ## PM8226 hardware key reset
 

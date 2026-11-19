@@ -1292,6 +1292,80 @@
       "normal_DTB_byte_for_byte_rebuilt": true,
       "native_build_scratch_MiB_rounded": 5.7,
       "signing_and_build_temporary_directories_removed": true
+    },
+    "passive_hardware_trial": {
+      "recorded_UTC": "2026-11-19T06:58:27+00:00",
+      "initial_installed_boot": "90a41554-e833-4a2b-b448-482777e92132",
+      "trial_boot": "7b0ca6ea-3731-4d1c-bb8e-cf06276b08d7",
+      "returned_installed_boot": "b4685172-dec7-4fbf-b36e-28e6c616fc6a",
+      "RAM_transfer_readback_SHA256": "a655f6ccf7fbea6d57aab914b56ede483f4751d705691d07503cc2e982fb8a26",
+      "RAM_duplicate_readback_removed_after_return": true,
+      "both_return_guards_active_before_register_read": true,
+      "RAM_WLAN_unavailable": true,
+      "passive_register_check": {
+        "passed": true,
+        "boot_id": "7b0ca6ea-3731-4d1c-bb8e-cf06276b08d7",
+        "diagnostic_node_verified": true,
+        "SPMI_reads": 22,
+        "SPMI_writes": 0,
+        "gauge_bound": false,
+        "signature_enforced": true,
+        "register_controls": [
+          {
+            "mode": 64,
+            "output_hold": false,
+            "counter_clear": false,
+            "companion_channel": 0,
+            "companion_sense": 0
+          },
+          {
+            "mode": 64,
+            "output_hold": false,
+            "counter_clear": false,
+            "companion_channel": 0,
+            "companion_sense": 0
+          }
+        ],
+        "early_return_helper": true,
+        "normal_return_timer": true,
+        "wireless_unavailable": true
+      },
+      "candidate_exact_signed_package_module_files": 482,
+      "candidate_active_Sway_outputs": 1,
+      "candidate_touch_devices_enumerated": 1,
+      "independent_return_check": {
+        "passed": true,
+        "installed_boot": "b4685172-dec7-4fbf-b36e-28e6c616fc6a",
+        "trial_boot": "7b0ca6ea-3731-4d1c-bb8e-cf06276b08d7",
+        "installed_module_files_verified": 482,
+        "protected_hashes_match": true,
+        "installed_Sway_IPC_active_outputs": 1,
+        "touch_devices_enumerated": 1,
+        "USB_power_online": true,
+        "signature_enforced": true,
+        "no_physical_display_touch_assertion": true,
+        "journal_returncode": 0,
+        "journal_counts": {
+          "journal_rows": 2210,
+          "kernel_rows": 470,
+          "early_return_guard_armed": 1,
+          "full_module_overlay_ready": 1,
+          "early_guard_or_overlay_failure": 0,
+          "suspend_entry": 0,
+          "kernel_fatal": 0,
+          "SMBB_or_VADC_error": 0,
+          "lockup": 0,
+          "normal_return_service_rows": 3,
+          "normal_return_service_success": 2,
+          "orderly_shutdown": 3
+        },
+        "automatic_return_journal_verified": true,
+        "USB_route_verified": true,
+        "recorded_UTC": "2026-11-19T06:58:27+00:00"
+      },
+      "protected_boot_and_package_data_match_preflight": true,
+      "experimental_modules_activated": false,
+      "display_and_touch_physically_checked": false
     }
   }
 }
