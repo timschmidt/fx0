@@ -1458,6 +1458,26 @@ It also matched the worker receipt and three suspend entries and exits
 in the saved journal. The phase-notification kernel ran from RAM.
 [Handset and return evidence](../evidence/2026-11-19-fx0-direct-charger-suspend.json)
 
+#### Voltage ADC driver removal
+
+The same RAM candidate entered automatic charge with a fresh policy
+sample and a readable battery voltage. The first observer hit a trace
+parser error before issuing the unbind. The corrected observer reached
+the unbind test, then failed before recording a post-unbind sample. Its
+final inhibit check also encountered a missing sysfs path. The candidate
+returned on schedule and the independent USB audit matched all 482
+installed module files and the protected hashes. The saved journal
+contained the worker receipt. No register trace was available after
+reboot. Charge cutoff and recovery after VADC removal remain open.
+
+The device tree declares a VADC dependency for the parent charger’s
+`voltage_now` property. Linux can unbind the parent through that firmware
+device link when VADC is removed. A repeat needs to track the parent,
+policy child and USB gadget through that transition, and record hardware
+cutoff independently of the disappearing power-supply sysfs entries.
+[Trial evidence](../evidence/2026-11-19-fx0-vadc-driver-removal.json)
+[Charger device-tree node](https://github.com/timschmidt/fx0-linux/blob/614a0266edf151ea8cb174c944614e54e6477352/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts#L450)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce
