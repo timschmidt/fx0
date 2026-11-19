@@ -1,0 +1,279 @@
+{
+  "recorded_UTC": "2026-11-19T17:56:44.130613+00:00",
+  "tested_kernel_source": "614a0266edf151ea8cb174c944614e54e6477352",
+  "tested_RAM_image_SHA256": "43ee9fe6b7d315590aa9dca8be23346eab9b8c55ed3a3734fd2918a2e4187db0",
+  "WLAN_disabled_in_RAM": true,
+  "entered_in_fast_charge": true,
+  "VADC_loss_and_restore": {
+    "index": 0,
+    "user_inhibit": false,
+    "starting_charge": {
+      "SPMI_reads": 14,
+      "stable_fresh_policy": true,
+      "votes": 0,
+      "state": 0,
+      "temperature_decic": 311,
+      "voltage_uV": 4294989,
+      "age_ms": 240,
+      "charge_control": [
+        128,
+        128
+      ],
+      "comparator": [
+        130,
+        130
+      ],
+      "temperature_status": [
+        128,
+        128
+      ],
+      "temperature_OK": [
+        true,
+        true
+      ],
+      "charge_IRQ": [
+        32,
+        33
+      ],
+      "fast": [
+        true,
+        true
+      ],
+      "trickle": [
+        false,
+        false
+      ],
+      "done": [
+        false,
+        false
+      ]
+    },
+    "before_topology": {
+      "supplier_driver": "qcom-spmi-vadc",
+      "parent_driver": "qcom-smbb",
+      "policy_device_exists": true,
+      "policy_driver": "smbb-charge-policy",
+      "policy_status_exists": true,
+      "parent_VADC_link": true,
+      "policy_VADC_link": true,
+      "charger_USB_supply_exists": true,
+      "charger_behaviour_exists": true,
+      "battery_voltage_uV": {
+        "value": 4292931
+      },
+      "USB_online": {
+        "value": 1
+      },
+      "USB_input_uA": {
+        "value": 500000
+      },
+      "UDC_states": [
+        {
+          "value": "configured"
+        }
+      ]
+    },
+    "stage": "complete",
+    "after_unbind": {
+      "supplier_driver": null,
+      "parent_driver": null,
+      "policy_device_exists": false,
+      "policy_driver": null,
+      "policy_status_exists": false,
+      "parent_VADC_link": true,
+      "policy_VADC_link": false,
+      "charger_USB_supply_exists": false,
+      "charger_behaviour_exists": false,
+      "battery_voltage_uV": {
+        "errno": 2
+      },
+      "USB_online": {
+        "errno": 2
+      },
+      "USB_input_uA": {
+        "errno": 2
+      },
+      "UDC_states": []
+    },
+    "disabled_snapshots": [
+      {
+        "SPMI_reads": 14,
+        "charge_control": [
+          0,
+          0
+        ],
+        "comparator": [
+          129,
+          129
+        ],
+        "USB_physical_status": [
+          3,
+          3
+        ],
+        "charge_IRQ": [
+          0,
+          0
+        ],
+        "cutoff": true
+      },
+      {
+        "SPMI_reads": 14,
+        "charge_control": [
+          0,
+          0
+        ],
+        "comparator": [
+          129,
+          129
+        ],
+        "USB_physical_status": [
+          3,
+          3
+        ],
+        "charge_IRQ": [
+          0,
+          0
+        ],
+        "cutoff": true
+      }
+    ],
+    "parent_automatic_recovery": false,
+    "before_manual_parent_probe": {
+      "supplier_driver": "qcom-spmi-vadc",
+      "parent_driver": null,
+      "policy_device_exists": false,
+      "policy_driver": null,
+      "policy_status_exists": false,
+      "parent_VADC_link": true,
+      "policy_VADC_link": false,
+      "charger_USB_supply_exists": false,
+      "charger_behaviour_exists": false,
+      "battery_voltage_uV": {
+        "errno": 2
+      },
+      "USB_online": {
+        "errno": 2
+      },
+      "USB_input_uA": {
+        "errno": 2
+      },
+      "UDC_states": []
+    },
+    "policy_automatic_recovery": true,
+    "after_rebind": {
+      "supplier_driver": "qcom-spmi-vadc",
+      "parent_driver": "qcom-smbb",
+      "policy_device_exists": true,
+      "policy_driver": "smbb-charge-policy",
+      "policy_status_exists": true,
+      "parent_VADC_link": true,
+      "policy_VADC_link": true,
+      "charger_USB_supply_exists": true,
+      "charger_behaviour_exists": true,
+      "battery_voltage_uV": {
+        "value": 4216839
+      },
+      "USB_online": {
+        "value": 1
+      },
+      "USB_input_uA": {
+        "value": 100000
+      },
+      "UDC_states": []
+    },
+    "restored": {
+      "votes": 0,
+      "state": 0,
+      "temperature_decic": 318,
+      "voltage_uV": 4216545,
+      "error": 0,
+      "age_ms": 524,
+      "stable_fresh_policy": true,
+      "charge_control": [
+        128,
+        128
+      ],
+      "comparator": [
+        130,
+        130
+      ],
+      "fast": [
+        false,
+        false
+      ]
+    },
+    "trace_SHA256": "b43bb196bf07f4dec8f5122391cf2701cfabd9ed3bf0f82aeaa9e1c495211ef5",
+    "trace": {
+      "charge_disable_readback_before_IIO_unregister": true,
+      "enabled_writes_after_disable": 1,
+      "enabled_writes_while_provider_unbound": 0,
+      "trace_lost": 0,
+      "fresh_ADC_channels_before_enable": [
+        48,
+        6
+      ]
+    }
+  },
+  "independent_trace_replay": {
+    "trace_entries": 264,
+    "exact_trace_matches_worker": true,
+    "unbind_request_to_rebind_request_seconds": 4.925127,
+    "policy_stop_completed_before_ADC_unregister_seconds": 0.048218,
+    "charge_disable_readback_before_IIO_unregister": true,
+    "enabled_writes_after_disable": 1,
+    "enabled_writes_while_provider_unbound": 0,
+    "trace_lost": 0,
+    "fresh_ADC_channels_before_enable": [
+      48,
+      6
+    ]
+  },
+  "user_inhibit_cycle_skipped_after_parent_driver_removal": true,
+  "final_inhibit": {
+    "SPMI_reads": 14,
+    "charge_control": [
+      0,
+      0
+    ],
+    "comparator": [
+      129,
+      129
+    ],
+    "USB_physical_status": [
+      3,
+      3
+    ],
+    "charge_IRQ": [
+      0,
+      0
+    ],
+    "cutoff": true
+  },
+  "automatic_installed_return": {
+    "module_files_verified": 482,
+    "protected_hashes_match": true,
+    "trial_receipt_and_trace_recovered_from_journal": true,
+    "journal_counts": {
+      "journal_rows": 1434,
+      "kernel_rows": 469,
+      "early_return_guard_armed": 1,
+      "full_module_overlay_ready": 1,
+      "early_guard_or_overlay_failure": 0,
+      "suspend_entry": 0,
+      "kernel_fatal": 0,
+      "SMBB_or_VADC_error": 0,
+      "lockup": 0,
+      "normal_return_service_rows": 3,
+      "normal_return_service_success": 2,
+      "orderly_shutdown": 3,
+      "suspend_exit": 0
+    }
+  },
+  "isolation_candidate": {
+    "kernel_source": "5796fb92a078920740ee70857837cc070101c1ba",
+    "ARM_charger_object_and_device_tree_compiled": true,
+    "IIO_provider_absence_and_return_host_tests": true,
+    "compiled_device_tree_changes_only_two_parent_VADC_properties": true,
+    "handset_test_performed": false
+  }
+}

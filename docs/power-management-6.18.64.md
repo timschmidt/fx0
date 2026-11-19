@@ -1478,6 +1478,31 @@ cutoff independently of the disappearing power-supply sysfs entries.
 [Trial evidence](../evidence/2026-11-19-fx0-vadc-driver-removal.json)
 [Charger device-tree node](https://github.com/timschmidt/fx0-linux/blob/614a0266edf151ea8cb174c944614e54e6477352/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts#L450)
 
+The repeat started in verified fast charge. Removing VADC unbound the
+parent charger, removed the policy child, and dropped the USB gadget.
+The PMIC still reported the physical USB source. The trace verified
+charge disable and the conservative `0x81` comparator window before
+IIO unregister. Two independent register captures about four seconds
+apart confirmed that charge and fast/trickle status stayed off.
+
+VADC rebound successfully. The charger parent was still unbound after
+seven seconds and required an explicit reprobe. Its policy child then
+bound automatically. The trace verified fresh thermistor and voltage
+conversions before charge re-enable. USB gadget state stayed absent at
+the post-rebind capture, and the host recovered the report and the
+complete 264-event trace from the journal after the scheduled return.
+All 482 installed module files and the protected hashes matched.
+
+The isolation candidate uses the policy child’s named voltage input
+for on-demand battery readings. The Madai charger parent no longer
+declares its own VADC reference. The legacy parent input path is still
+supported. The ARM charger object and DTB compiled, and host tests
+covered missing, restored and concurrently removed IIO providers.
+The managed path still needs a handset test of USB continuity and the
+independent user-inhibit vote across supplier removal and rebind.
+[Repeat and candidate evidence](../evidence/2026-11-19-fx0-vadc-cutoff-and-reprobe.json)
+[Isolation candidate](https://github.com/timschmidt/fx0-linux/commit/5796fb92a078920740ee70857837cc070101c1ba)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce
