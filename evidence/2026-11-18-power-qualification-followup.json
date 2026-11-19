@@ -2471,8 +2471,6 @@
       "retry_passed_both_variants": true,
       "temporary_build_trees_removed": true
     },
-    "phone_updated_or_contacted_for_comparator_candidate": false,
-    "actual_charge_current_or_thermal_source_loss_qualified": false,
     "linked_RAM_candidate": {
       "passed": true,
       "recorded_UTC": "2026-11-19T09:15:40+00:00",
@@ -2493,7 +2491,186 @@
       "WLAN_blacklist_and_signature_enforcement_preserved": true,
       "temporary_build_tree_MiB_rounded": 918,
       "temporary_build_tree_and_duplicate_kernel_and_DTB_removed": true,
-      "booted_on_phone": false
+      "booted_on_phone": true
+    },
+    "offline_preparation_contacted_phone": false,
+    "hardware_trial": {
+      "passed": true,
+      "recorded_UTC": "2026-11-19T09:28:35+00:00",
+      "initial_installed_boot": "94e6d5a3-6319-4b4e-8bd4-bc64abdf8ce3",
+      "candidate_boot": "a5778048-6e43-457c-9562-b7be32d49295",
+      "paired_firmware": "fx0-pm-host-01",
+      "paired_firmware_SHA256": "690a4a25fcecde534163ff81ab94a86790dab8a30b99076be71e4b7341275cea",
+      "comparator_RAM_SHA256": "694bf98b8c627a1c60869ec8cb7d4b642e19bb4a37dfe153d6800e34c79d246b",
+      "exact_firmware_and_kernel_RAM_readbacks": true,
+      "candidate_signed_modules": 468,
+      "candidate_overlay_files": 482,
+      "both_automatic_return_guards_verified": true,
+      "WLAN_unavailable_on_trial": true,
+      "runtime_profile": "tocad-madai",
+      "temperature_decic_min_max": [
+        308,
+        312
+      ],
+      "voltage_uV_min_max": [
+        4198329,
+        4243869
+      ],
+      "maximum_sample_age_ms": 1039,
+      "USB_valid_with_fixed_input_limit_uA": 500000,
+      "charge_behaviour_requests": [
+        "inhibit-charge",
+        "auto",
+        "inhibit-charge"
+      ],
+      "phases": [
+        {
+          "phase": "initial_auto",
+          "snapshots": 3,
+          "comparator": 130,
+          "charge_control": 128,
+          "raw_battery_temperature_status": 128,
+          "temperature_OK": true,
+          "fast_charge": true,
+          "trickle_charge": false,
+          "charge_done": false,
+          "IADC_internal_and_external_uA": [
+            [
+              263232,
+              243200
+            ],
+            [
+              317150,
+              297600
+            ],
+            [
+              306082,
+              299200
+            ]
+          ]
+        },
+        {
+          "phase": "inhibited",
+          "snapshots": 3,
+          "comparator": 129,
+          "charge_control": 0,
+          "raw_battery_temperature_status": 64,
+          "temperature_OK": false,
+          "fast_charge": false,
+          "trickle_charge": false,
+          "charge_done": false,
+          "IADC_internal_and_external_uA": [
+            [
+              -1753,
+              -7200
+            ],
+            [
+              -1753,
+              -7200
+            ],
+            [
+              -1753,
+              -7200
+            ]
+          ]
+        },
+        {
+          "phase": "resumed_auto",
+          "snapshots": 3,
+          "comparator": 130,
+          "charge_control": 128,
+          "raw_battery_temperature_status": 128,
+          "temperature_OK": true,
+          "fast_charge": true,
+          "trickle_charge": false,
+          "charge_done": false,
+          "IADC_internal_and_external_uA": [
+            [
+              331178,
+              288600
+            ],
+            [
+              321972,
+              265100
+            ],
+            [
+              314630,
+              299200
+            ]
+          ]
+        },
+        {
+          "phase": "final_inhibit",
+          "snapshots": 2,
+          "comparator": 129,
+          "charge_control": 0,
+          "raw_battery_temperature_status": 64,
+          "temperature_OK": false,
+          "fast_charge": false,
+          "trickle_charge": false,
+          "charge_done": false,
+          "IADC_internal_and_external_uA": [
+            [
+              -1753,
+              -7200
+            ],
+            [
+              -1753,
+              -7200
+            ]
+          ]
+        }
+      ],
+      "direct_SPMI_status_reads": 154,
+      "direct_SPMI_status_writes": 0,
+      "sustained_final_inhibit": {
+        "verified": true,
+        "snapshot_uptimes_seconds": [
+          238.8,
+          244.12,
+          249.52
+        ],
+        "direct_SPMI_status_reads": 42,
+        "charger_sysfs_writes": 0
+      },
+      "installed_return": {
+        "passed": true,
+        "installed_boot": "c7bf9898-81d2-478c-bc24-b4ffa08054d8",
+        "trial_boot": "a5778048-6e43-457c-9562-b7be32d49295",
+        "installed_module_files_verified": 482,
+        "protected_hashes_match": true,
+        "installed_Sway_IPC_active_outputs": 1,
+        "touch_devices_enumerated": 1,
+        "USB_power_online": true,
+        "signature_enforced": true,
+        "no_physical_display_touch_assertion": true,
+        "journal_returncode": 0,
+        "journal_counts": {
+          "journal_rows": 2162,
+          "kernel_rows": 470,
+          "early_return_guard_armed": 1,
+          "full_module_overlay_ready": 1,
+          "early_guard_or_overlay_failure": 0,
+          "suspend_entry": 0,
+          "kernel_fatal": 0,
+          "SMBB_or_VADC_error": 0,
+          "lockup": 0,
+          "normal_return_service_rows": 3,
+          "normal_return_service_success": 2,
+          "orderly_shutdown": 3
+        },
+        "automatic_return_journal_verified": true,
+        "USB_route_verified": true,
+        "recorded_UTC": "2026-11-19T09:28:35+00:00"
+      },
+      "observed_fast_charge_and_relative_current_transition": true,
+      "independent_current_calibration": false,
+      "charge_completion_thermal_and_source_transitions_verified": false,
+      "persistent_firmware_or_OS_update_performed": false,
+      "cleanup": {
+        "duplicate_firmware_and_kernel_RAM_readbacks_removed": true,
+        "empty_USB_startup_captures_removed": 18
+      }
     }
   }
 }

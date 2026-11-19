@@ -1065,11 +1065,42 @@ verifies the existing 468 signed modules, 482 overlay files and
 enforcement and trial WLAN blacklist match the paired handoff run.
 The temporary build and standalone kernel and DTB copies were removed.
 
-These checks exercise driver code with modeled PMIC transactions.
-Actual charge current, cutoff during a stalled CPU or persistent bus
-fault, and temperature and power-source transitions require hardware
-evidence. [Comparator source](https://github.com/timschmidt/fx0-linux/commit/91d201fde1f89de650c7bcafc14856f9a983b781)
+[Comparator source](https://github.com/timschmidt/fx0-linux/commit/91d201fde1f89de650c7bcafc14856f9a983b781)
 [Comparator evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
+### Managed comparator handset trial
+
+The installed loader chainloaded the previously verified
+`fx0-pm-host-01` loader and the new managed comparator kernel in RAM.
+Both images matched their USB readbacks. The live tree carried the
+expected inhibition handoff and `tocad-madai` profile. The exact
+kernel and module overlay passed verification with both return timers
+active.
+
+In both automatic phases the comparator read `0x82`, the charger
+reported temperature OK and the fast-charge line was asserted in all
+six snapshots. Each inhibit request cleared charge enable and the
+fast-charge line and restored `0x81`. The tighter window reported HOT
+in all five inhibited snapshots. The software policy reported
+30.8–31.2 °C throughout. USB remained valid at a programmed 500 mA
+input limit.
+
+The installed IADC driver reported 263–331 mA on its internal channel
+and 243–299 mA on its external channel during automatic charging.
+During inhibit it reported approximately −1.8 mA and −7.2 mA,
+respectively. The mode-dependent current response agrees with the PMIC
+charge-state line. The external sense resistance and absolute accuracy
+remain unverified. The charge-done line stayed clear during the trial.
+
+A separate read-only check confirmed that final inhibition, `0x81`
+and valid USB persisted through 250 seconds of kernel uptime. The
+scheduled service returned to installed r2. The protected boot and
+package hashes and all 482 module files matched. The journal recorded
+an orderly reboot and no charger or VADC errors.
+
+Charge completion, thermal and power-source transitions, and cutoff
+during a stalled CPU or persistent bus fault require further hardware
+evidence. [Handset evidence](../evidence/2026-11-18-power-qualification-followup.json)
 
 ## PM8226 hardware key reset
 
