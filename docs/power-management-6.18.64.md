@@ -1324,6 +1324,15 @@ interrupts. The installed snapshots leave the cause of the missing
 interrupt unresolved. A validated taper-current measurement and
 samples during the transition are still needed to qualify `Full`.
 
+#### Installed charger timer state
+
+Two PM8226 snapshots on installed r2 agreed. Both read `0x00` at the
+charge-duration enable register `0x1060` and the charger watchdog enable
+register `0x1065`. The raw values at `0x1061`, `0x1062` and `0x1063` were
+`0x1d`, `0x20` and `0x50`. The trace verified ten reads and zero PMIC
+writes. Hardware charge cutoff with a stalled CPU remains unqualified.
+[Trace validation](../diagnostics/pm8226-reset-reasons/read-installed.py)
+
 #### Managed charger suspend refusal and wake notifications
 
 The paired managed RAM image started with fast charge active at the
@@ -1416,9 +1425,38 @@ after resume or an abort. Temperature, battery presence, charge
 completion and power-source notification paths are preserved. The
 charger object compiled for ARM with `W=1`. The lifetime model passed
 29 cases and rejected five mutations, including early notification
-and lost notification on abort. Direct automatic-charge suspend with
-this kernel change still needs hardware qualification.
+and lost notification on abort.
 [Charge-phase kernel candidate](https://github.com/timschmidt/fx0-linux/commit/614a0266edf151ea8cb174c944614e54e6477352)
+
+#### Direct suspend from fast charge
+
+The linked charge-phase candidate matched all 11,718 built-in kernel
+exports, 468 module signatures, 482 installed overlay files and 25,592
+module import CRCs. It reused the verified device tree, initramfs,
+temporary loader and return guards. WLAN stayed disabled in the RAM boot.
+
+Two direct `s2idle` cycles started in automatic fast charge. The driver
+verified charge disable and the conservative `0x81` comparator window
+before each sleep. In both cycles the fast-charge IRQ handler ran after
+device PM prepare and before machine suspend. The trace recorded zero
+battery wake-source activations from the handler in either window. The
+RTC woke the phone after 14.073 and 14.151 seconds. The trace recorded
+zero charge-control writes during sleep. The resume worker converted
+both thermistor and battery voltage channels before verifying the
+`0x82` comparator and enabling charging again.
+
+The separate user-inhibit cycle woke by RTC after 14.420 seconds. Its
+trace verified zero charge enables after resume and a conservative
+comparator readback. Seven later samples with the inhibit held triggered
+zero battery wake-source activations. The trace also captured a
+battery-temperature notification after an automatic-charge wake.
+[Trace checker](../diagnostics/smbb-charging-policy/check-suspend-trace.py)
+
+After the scheduled return to installed r2, an independent USB audit
+matched all seven protected hashes and all 482 installed module files.
+It also matched the worker receipt and three suspend entries and exits
+in the saved journal. The phase-notification kernel ran from RAM.
+[Handset and return evidence](../evidence/2026-11-19-fx0-direct-charger-suspend.json)
 
 ## PM8226 hardware key reset
 

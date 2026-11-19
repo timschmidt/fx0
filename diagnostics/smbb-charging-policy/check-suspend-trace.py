@@ -6,7 +6,10 @@ CHARGE_CTRL = 0x1049
 BTC_CTRL = 0x1249
 ADC_CHANNEL = 0x3148
 ADC_RESULT = 0x3160
-REGISTERS = (CHARGE_CTRL, BTC_CTRL, ADC_CHANNEL, ADC_RESULT)
+BAT_TEMP_STATUS = 0x1209
+USB_STATUS = 0x1310
+CONTROL_AND_ADC = (CHARGE_CTRL, BTC_CTRL, ADC_CHANNEL, ADC_RESULT)
+REGISTERS = CONTROL_AND_ADC + (BAT_TEMP_STATUS, USB_STATUS)
 MASKS = {CHARGE_CTRL: 0x81, BTC_CTRL: 0x83}
 
 
@@ -122,7 +125,8 @@ def verify(raw, user_inhibit):
         readback(after, enabled)
     return dict(suspend_inhibit_and_readback=True, control_writes_during_sleep=0,
                 enable_writes_after_wake=len(enables), post_wake_ADC_before_enable=samples,
-                control_and_VADC_transfers=len(events), lost_trace_entries=0)
+                control_and_VADC_transfers=sum(event['address'] in CONTROL_AND_ADC for event in events),
+                lost_trace_entries=0)
 
 
 def verify_prepared(raw):
