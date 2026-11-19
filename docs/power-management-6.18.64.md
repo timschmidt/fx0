@@ -1102,6 +1102,33 @@ Charge completion, thermal and power-source transitions, and cutoff
 during a stalled CPU or persistent bus fault require further hardware
 evidence. [Handset evidence](../evidence/2026-11-18-power-qualification-followup.json)
 
+### Capped charge completion test
+
+The same RAM kernel started fast charge at the original 4.35 V
+ceiling. The observer then set `voltage_max` to 4.20 V. Direct
+readback confirmed the ceiling changed and the hardware termination
+register stayed at `0x08`. The recharge threshold stayed at 4.28 V,
+above the temporary ceiling. USB remained valid at a programmed
+500 mA input limit.
+
+The observed battery voltage settled to about 4.210 V. The internal
+IADC reported 54–68 mA and the external IADC 47–63 mA across 19 capped
+snapshots spanning 118 seconds. The charge-done IRQ count rose from
+zero to 74 between the last uncapped sample and the first capped
+sample. The count then held at 74. All capped snapshots showed the
+charge-done line low, fast charge asserted and Linux status
+`Charging`. Completion at the cap remains unverified. The ceiling
+and recharge-threshold mismatch is one candidate explanation for the
+IRQ burst.
+
+The observer requested inhibit before restoring the original 4.35 V
+ceiling, verified the conservative comparator window and checked that
+all three charger configuration registers matched their initial values.
+The scheduled return restored installed r2. The independent audit
+matched the protected boot and package hashes and all 482 module
+files. The journal showed an orderly shutdown with zero charger or
+VADC errors. [Capped-charge evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce
