@@ -736,6 +736,24 @@ metadata files. The VADC driver and its dependency account for the new
 module files. All non-module entries matched the baseline. The runs used
 a private mount and network namespace with deployment intercepted. The
 live boot and package files matched the preflight hashes afterwards.
+
+The Fx0 now holds a private recovery copy of the 32 MiB boot partition,
+783 archive entries and the package commit state. The archive verifier
+checked 563 package-owned paths against the exact installed APKs. Native
+APK verified all six forward and rollback packages and selected exactly
+the intended three upgrades in a read-only simulation.
+
+In an isolated workstation rehearsal, a partial candidate boot write
+caused the transaction to roll back. The recovery restored the original
+APK database, world file, 563 package paths and complete modeled boot
+partition. It preserved the 512 KiB lk2nd prefix. A second recovery
+performed zero writes.
+
+The handset's `mkbootimg-osm0sis` reproduced the installed boot image
+byte for byte. It also generated the candidate image using the
+qualified native initramfs. An independent encoder produced identical
+bytes and the candidate retained the installed command line. The live
+boot partition matched its original hash after this preparation.
 Persistent deployment and hardware wake qualification remain open.
 [Handset and package recipe evidence](../evidence/2026-11-18-power-qualification-followup.json)
 [Package recipes](https://github.com/timschmidt/fx0-pmaports/commit/a8174d382680372082827ae97b7b6f93a86f7d7a)

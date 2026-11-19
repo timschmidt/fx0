@@ -652,6 +652,124 @@
         "recorded_UTC": "2026-11-19T05:14:17.505335+00:00",
         "USB_route_verified": true,
         "APK_kernel_SHA256": "07c6d7339f961105059dcdd572487d6c7ab54cbd33024917ab62680fa35090d0"
+      },
+      "persistent_preparation": {
+        "passed": true,
+        "preserved_installed_backup": {
+          "passed": true,
+          "recorded_UTC": "2026-11-19T05:21:24.690635+00:00",
+          "boot_id": "491467dc-5490-4045-b457-fa8abfb97f66",
+          "boot_offset": 524288,
+          "raw_boot_bytes": 33554432,
+          "raw_boot_sha256": "4330a8ba94f3ff2545fa1fecd419d455d9ffaa5ba1e22a88df5175a6a2ea9a8b",
+          "lk2nd_prefix_sha256": "073271d9d5361af7bc6fbda9e137862831bf36f88dd5489b7bb3d29fa28499ba",
+          "archive_entries_verified": 783,
+          "commit_paths_verified": 582,
+          "original_signed_package_paths_verified": 563,
+          "recovery_material_kept_on_handset": true,
+          "live_boot_and_packages_unchanged": true,
+          "USB_route_verified": true
+        },
+        "native_readonly_APK_selection": {
+          "passed": true,
+          "boot_id": "491467dc-5490-4045-b457-fa8abfb97f66",
+          "native_signature_verifications": 6,
+          "forward_selection_exactly": [
+            [
+              "linux-postmarketos-qcom-msm8226",
+              "6.18.64-r0",
+              "6.18.64-r2"
+            ],
+            [
+              "device-lg-madai",
+              "1-r2",
+              "1-r3"
+            ],
+            [
+              "fx0-dmp-reader",
+              "6.18.64-r0",
+              "6.18.64-r2"
+            ]
+          ],
+          "read_only_mounts": true,
+          "isolated_network_namespace": true,
+          "live_unchanged": true,
+          "APKs_staged_root_private": true,
+          "USB_route_verified": true,
+          "recorded_UTC": "2026-11-19T05:23:52.441330+00:00"
+        },
+        "interrupted_deployment_fixture": {
+          "passed": true,
+          "recorded_UTC": "2026-11-19T05:21:56.394702+00:00",
+          "checked_no_real_hardware": true,
+          "actual_APK_transaction_with_scripts_and_hooks_disabled": true,
+          "injected_partial_real_package_image_write_to_regular_file": true,
+          "stages": [
+            {
+              "stage": "preflight"
+            },
+            {
+              "stage": "signed-APK-selection-committed"
+            },
+            {
+              "stage": "incomplete-boot-deploy-injected",
+              "bytes_written": 2784256
+            },
+            {
+              "stage": "update-failed",
+              "error": "Candidate boot readback incomplete"
+            },
+            {
+              "stage": "signed-rollback-APK-selection-committed"
+            },
+            {
+              "stage": "rolled-back"
+            }
+          ],
+          "preflight_originated_from_exact_live_APK_metadata": true,
+          "candidate_package_files_before_deploy": 563,
+          "modeled_boot_restore": {
+            "written": true,
+            "bootloader_prefix_preserved": true,
+            "first_write_offset": 524288,
+            "bytes_written": 33030144
+          },
+          "exact_package_files_after_rollback": 563,
+          "complete_APK_database_recovered_exactly": true,
+          "APK_world_recovered_exactly": true,
+          "complete_modeled_boot_recovered_exactly": true,
+          "second_recovery_writes_nothing": true
+        },
+        "native_boot_image_preparation": {
+          "passed": true,
+          "boot_id": "491467dc-5490-4045-b457-fa8abfb97f66",
+          "exact_installed_boot_image_rebuilt": true,
+          "candidate_generated_by_native_tool": true,
+          "independent_byte_for_byte_encoder_match": true,
+          "candidate_boot_image_SHA256": "caa9a0243f45db1b932f6e315bd1dfa7f939707d2a6edb1c0edfaba39ee60c66",
+          "candidate_boot_image_bytes": 17526784,
+          "candidate_kernel_SHA256": "b3780b1bd593412c56f082901ae007a47d41b058b41e71cab490f37913a31577",
+          "candidate_DTB_SHA256": "aa5662b13b302f0338eec2d6b378085445ac9ac6e65d3da8e47774d374a72700",
+          "candidate_initramfs_inventory_SHA256": "dc7801fa5fda72fa3cab48c824ddfc63e14d9873f96bcdefd0743c22ba21125a",
+          "modeled_partition_SHA256": "3fd2c91f80d8017e5e0c37b9dfb20da58ac54eedf17bebf763418dd43d0be736",
+          "same_command_line": true,
+          "modeled_partition_prefix_and_unused_tail_preserved": true,
+          "bootloader_prefix_sha256": "073271d9d5361af7bc6fbda9e137862831bf36f88dd5489b7bb3d29fa28499ba",
+          "native_tool_sha256": "ac9a3b69d43f1caf893cdd8205a3c502a2e0f420a5d62dc04deb2e4806ed1595",
+          "verify_actual_boot_files_unchanged": true,
+          "deployment_or_boot_test_performed": false,
+          "recorded_UTC": "2026-11-19T05:26:24.259670+00:00",
+          "USB_route_verified": true
+        },
+        "native_shadow_isolation_control": {
+          "passed": true,
+          "boot_id": "491467dc-5490-4045-b457-fa8abfb97f66",
+          "namespace_setup_returncode": 0,
+          "live_APK_hashes_unchanged": true,
+          "guarded_fixture_chroot_checked": true,
+          "APK_or_hook_execution": false,
+          "overlay_registered_after": true
+        }
       }
     }
   },
