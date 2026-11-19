@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-19T12:54:47+00:00",
+  "last_updated_UTC": "2026-11-19T13:08:52+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -3006,6 +3006,116 @@
         "persistent_installation_performed": false,
         "earlier_expansion_required_for_failure": false,
         "production_resolution_change_qualified": false
+      },
+      "firmware_command_trace": {
+        "recorded_UTC": "2026-11-19T13:08:52+00:00",
+        "same_signed_RAM_image_SHA256": "58eba6f2830393b0f1e1f3b0302b3b0b8f0d95760c234a66bcff251a109f3d7b",
+        "signed_decoder_source_commit": "9bb2e3c38d164e9f34107e4b155ee59b43506918",
+        "same_coded_downshift_fixture_SHA256": "4cc5e2ffe25a7cf1a5ef7655cd3e25efa1358c5212aea4bc90b9dc9db26b776d",
+        "first_segment_ARM_software_match": true,
+        "hardware_output_frames": 12,
+        "capture_LAST_and_restart_qualified": false,
+        "kprobe_registration_errors": {
+          "hfi_command": 22,
+          "hfi_command_return": 22,
+          "hfi_flush": 22,
+          "hfi_flush_return": 22,
+          "hfi_event": 22,
+          "hfi_flush_done": 22,
+          "vb2_stop_path": 22,
+          "vb2_start_path": 22,
+          "decoder_cmd": 22
+        },
+        "kprobe_trial_installed_return_boot": "28c77c31-406b-482e-bfdd-44fb7f554f64",
+        "functions_traced": [
+          "hfi_event_notify",
+          "hfi_session_continue",
+          "hfi_session_flush",
+          "hfi_session_flush_done",
+          "hfi_session_set_buffers",
+          "vdec_decoder_cmd",
+          "vdec_event_change",
+          "vdec_event_notify",
+          "vdec_start_streaming",
+          "vdec_stop_streaming",
+          "venus_event_notify",
+          "venus_iface_cmdq_write",
+          "venus_session_continue",
+          "venus_session_etb",
+          "venus_session_flush"
+        ],
+        "function_events_recorded": 139,
+        "trace_ring_discarded_events": 0,
+        "function_event_window_from_downshift": [
+          {
+            "offset_us": 0,
+            "function": "vdec_event_change",
+            "caller": "hfi_event_notify"
+          },
+          {
+            "offset_us": 481,
+            "function": "hfi_session_flush",
+            "caller": "vdec_event_change"
+          },
+          {
+            "offset_us": 484,
+            "function": "venus_session_flush",
+            "caller": "hfi_session_flush"
+          },
+          {
+            "offset_us": 487,
+            "function": "venus_iface_cmdq_write",
+            "caller": "venus_session_flush"
+          },
+          {
+            "offset_us": 2507,
+            "function": "hfi_event_notify",
+            "caller": "hfi_process_msg_packet"
+          },
+          {
+            "offset_us": 2510,
+            "function": "vdec_event_notify",
+            "caller": "hfi_event_notify"
+          },
+          {
+            "offset_us": 10881,
+            "function": "hfi_event_notify",
+            "caller": "hfi_process_msg_packet"
+          },
+          {
+            "offset_us": 19585,
+            "function": "venus_event_notify",
+            "caller": "hfi_process_msg_packet"
+          },
+          {
+            "offset_us": 19591,
+            "function": "vdec_event_notify",
+            "caller": "venus_event_notify"
+          },
+          {
+            "offset_us": 43419,
+            "function": "vdec_stop_streaming",
+            "caller": "__vb2_queue_cancel"
+          },
+          {
+            "offset_us": 43428,
+            "function": "hfi_session_flush",
+            "caller": "vdec_stop_streaming"
+          }
+        ],
+        "source_change_flush_queue_call_to_system_error_callback_us": 19098,
+        "system_error_callback_to_first_stop_us": 23834,
+        "other_command_queue_calls_between_flush_and_system_error_callback": 0,
+        "firmware_flush_completions_between_downshift_and_error": 0,
+        "driver_source_change_flush_mode": "HFI_FLUSH_OUTPUT, nonblocking",
+        "firmware_fatal_file": "vfw_h264_main.c",
+        "firmware_fatal_line": 2124,
+        "causal_suppression_control_performed": false,
+        "function_tracer_removed": true,
+        "RAM_readback_removed": true,
+        "installed_return_boot": "9e72a95d-61cc-4017-a9f2-c89e6d6d5039",
+        "installed_module_files_verified": 482,
+        "protected_hashes_match": true
       }
     },
     "default_startup_qualified": false,

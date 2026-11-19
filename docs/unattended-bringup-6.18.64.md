@@ -1022,6 +1022,18 @@ restart. All four traced failures reported
 expansion. Both controls used the same signed RAM image and returned to
 installed r2 with all 482 modules and protected hashes verified.
 
+A repeat with function tracing captured 139 events without ring
+overruns. The signed driver's `vdec_event_change()` called
+`hfi_session_flush()` with `HFI_FLUSH_OUTPUT`. The low-level
+`venus_session_flush()` reached the firmware command queue. The trace
+recorded no further command-queue calls before the firmware's system
+error callback, 19.1 ms later. The first `vdec_stop_streaming()` call
+followed 23.8 ms after that callback. The later stop paths entered
+`hfi_session_flush()` without reaching the low-level routine. The
+source-change output flush was the last observed firmware command
+before the fault. Its causal role and the V4L2 LAST and restart
+contract still need verification.
+
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
 its synthetic completion. The matched ordinary STOP test still failed
