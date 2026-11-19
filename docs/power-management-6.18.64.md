@@ -1041,6 +1041,36 @@ Battery current, charge completion and protection across
 temperature and power-source changes still require qualification.
 [Paired-handoff evidence](../evidence/2026-11-18-power-qualification-followup.json)
 
+### Managed comparator candidate
+
+The candidate keeps the conservative `0x81` window during handoff.
+A fresh, uninhibited managed policy can request the stock `0x82` window.
+The driver verifies charge disable before changing the window, checks
+the comparator readback, and tests sample age immediately before and
+after enabling charge. It restores `0x81` on inhibit, including after
+sensor errors, pack loss, expiry or suspend. The comparator stays
+enabled, and the transaction preserves unrelated PMIC bits.
+
+The host fixture passed 44 comparator cases covering ordering, failed
+and dropped writes, readback, expiry and recovery. It also passed the
+existing 2,604 policy and 6,242 legacy control cases. All 27 child
+lifetime cases passed. The complete ARM charger object compiled with
+`W=1` in both managed and legacy configurations. The USB input fixture
+passed 59 cases on each source after its extractor was corrected to
+read the attribute enum without the adjacent battery property table.
+
+The linked RAM candidate matches all 11,718 built-in exports and
+verifies the existing 468 signed modules, 482 overlay files and
+25,592 import CRCs. The device tree, initramfs, return timers, signature
+enforcement and trial WLAN blacklist match the paired handoff run.
+The temporary build and standalone kernel and DTB copies were removed.
+
+These checks exercise driver code with modeled PMIC transactions.
+Actual charge current, cutoff during a stalled CPU or persistent bus
+fault, and temperature and power-source transitions require hardware
+evidence. [Comparator source](https://github.com/timschmidt/fx0-linux/commit/91d201fde1f89de650c7bcafc14856f9a983b781)
+[Comparator evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce

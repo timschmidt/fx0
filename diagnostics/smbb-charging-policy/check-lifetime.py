@@ -104,7 +104,7 @@ static void setup(void)
  f.chg.attr[ATTR_BAT_IMAX]=1200000;f.chg.attr[ATTR_BAT_VMAX]=4350000;
  mutex_init(&f.chg.charge_lock);mutex_init(&f.chg.statlock);
  f.io.lock=&f.chg.charge_lock;f.io.error=-EIO;
- f.io.registers[0x49]=0x55;f.io.registers[0x208]=0x80;
+ f.io.registers[0x49]=0x55;f.io.registers[0x208]=0x80;f.io.registers[0x249]=0x81;
  f.io.registers[0x44]=24;f.io.registers[0x40]=111;
  f.info.constant_charge_voltage_max_uv=4350000;f.info.charge_full_design_uah=2370000;
  f.battery.charger=&f.chg;f.battery.battery_info=&f.info;f.chg.bat_psy=&f.battery;
@@ -115,6 +115,9 @@ static void setup(void)
 static void finish(void)
 {
  release_devres(consumer);assert(!allocated_policy && !(f.io.registers[0x49]&0x80));
+#ifdef BTC_CTRL_STOCK
+ assert(f.io.registers[0x249] == 0x81);
+#endif
  assert(!pthread_mutex_destroy(&f.chg.charge_lock.gate));
  assert(!pthread_mutex_destroy(&f.chg.statlock.gate));
 }
@@ -162,12 +165,18 @@ int main(void)
  assert(!smbb_policy_suspend(&f.child.dev));
  assert(!p->running && !p->sample_work.pending && !p->age_work.pending && canceled==2);
  assert(f.chg.charge_inhibit&SMBB_INHIBIT_SUSPEND);assert(!(f.io.registers[0x49]&0x80));
+#ifdef BTC_CTRL_STOCK
+ assert(f.io.registers[0x249] == 0x81);
+#endif
  assert(!smbb_policy_resume(&f.child.dev));
  assert(p->running && !p->last_valid_ns && p->sample_work.pending && p->age_work.pending);
  assert((f.chg.charge_inhibit&(SMBB_INHIBIT_SAMPLE|SMBB_INHIBIT_SUSPEND))==(SMBB_INHIBIT_SAMPLE|SMBB_INHIBIT_SUSPEND));
  therm.error=-EIO;smbb_policy_sample_work(&p->sample_work.work);assert(!(f.io.registers[0x49]&0x80));
  therm.error=0;smbb_policy_sample_work(&p->sample_work.work);assert(f.io.registers[0x49]&0x80);
  smbb_policy_shutdown(&f.child);assert(!p->running && !(f.io.registers[0x49]&0x80));
+#ifdef BTC_CTRL_STOCK
+ assert(f.io.registers[0x249] == 0x81);
+#endif
  finish();assert(!strcmp(release_order,"SRRF"));cases++;
  setup();p=probe();smbb_policy_sample_work(&p->sample_work.work);
  f.io.fail_at=f.io.operations+1;assert(smbb_policy_suspend(&f.child.dev)==-EIO);

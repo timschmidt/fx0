@@ -30,7 +30,9 @@ def main():
     macros = re.findall(r'^#define (?:'+names+r')\s+[^\n]+$', source, re.MULTILINE)
     if '\tbool usb_budget_managed;' in source:
         macros.append('#define HAVE_USB_BUDGET_MANAGED')
-    enum = source[source.index('enum smbb_attr {'):source.index('struct smbb_charger {')]
+    enum_start = source.index('enum smbb_attr {')
+    enum_end = source.index('\n};', enum_start) + len('\n};')
+    enum = source[enum_start:enum_end]
     (out/'driver-definitions.h').write_text('\n'.join(macros)+'\n'+enum)
     limits = source[source.index('static int smbb_vbat_weak_fn('):source.index('static int smbb_charger_attr_read(')]
     functions = ['smbb_usb_input_supported', 'smbb_usb_input_suspend', 'smbb_usb_input_get_limit',

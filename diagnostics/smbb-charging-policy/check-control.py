@@ -81,12 +81,27 @@ stubs = stubs.replace('unsigned long status;', '''unsigned long status;
 stubs = stubs.replace('void *dev;', 'struct device *dev;')
 stubs = stubs.replace('m->operations++;', 'm->operations++;clock_ns+=bus_delay_ns;')
 stubs = stubs.replace('assert(value < 256);', 'assert(value < 256);if(audit_warm && reg==0x1044)assert(value<=9);')
-defines = '\n'.join(re.findall(r'^#define (?:SMBB_\w+|STATUS_\w+|CTRL_EN|PRES_STATUS_BAT_PRES)\s+.*$', source, re.M))
+stubs = stubs.replace('control_writes, enables;', 'control_writes, btc_writes, enables;')
+stubs = stubs.replace('assert(reg == 0x1049 && mask == 0x80 && !(value & ~mask));', '''
+ assert(!(value & ~mask));
+ if (reg == 0x1249) {
+  assert(mask == 0x83 && (value == 0x81 || value == 0x82));
+  if (value == 0x82)
+   assert(!(m->registers[0x49] & 0x80));
+  m->btc_writes++;
+ } else {
+  assert(reg == 0x1049 && mask == 0x80);
+ }
+''')
+defines = '\n'.join(re.findall(
+    r'^#define (?:SMBB_\w+|STATUS_\w+|BTC_CTRL_\w+|CTRL_EN|PRES_STATUS_BAT_PRES)\s+.*$', source, re.M))
 attrs = source[source.index('enum smbb_attr {'):source.index('struct smbb_charger {')]
 attrs = re.sub(r'^static const enum power_supply_property smbb_battery_properties\[\] = \{\n.*?^\};\n',
                '', attrs, flags=re.M | re.S)
 limits = source[source.index('static int smbb_vbat_weak_fn('):source.index('static int smbb_charger_attr_read(')]
-controls = source[source.index('static int smbb_charge_verify('):source.index('static enum power_supply_property smbb_charger_properties')]
+control_start = ('static int smbb_charge_enable(' if 'static int smbb_charge_set_btc(' in source
+                 else 'static int smbb_charge_verify(')
+controls = source[source.index(control_start):source.index('static enum power_supply_property smbb_charger_properties')]
 
 def definition(name):
     start = source.index(name)
@@ -110,7 +125,8 @@ static void setup(struct smbb_charger *c,struct regmap *m,struct power_supply *p
 {
  reset(c,m,0x55,SMBB_INHIBIT_POLICY);clock_ns=10000000000ULL;bus_delay_ns=0;queued=canceled=0;
  c->battery_present_sampled=false;
- m->registers[0x208]=0x80;c->software_control=true;c->board_current=c->user_current=1200000;
+ m->registers[0x208]=0x80;m->registers[0x249]=0x81;
+ c->software_control=true;c->board_current=c->user_current=1200000;
  m->registers[0x44]=24;m->registers[0x40]=111;
  c->board_voltage=c->user_voltage=4350000;c->thermal_current=1200000;c->policy_valid_until_ns=0;
  c->attr[ATTR_BAT_IMAX]=1200000;c->attr[ATTR_BAT_VMAX]=4350000;c->bat_psy=p;
@@ -130,6 +146,104 @@ static void *warm_worker(void *data)
  }
  return NULL;
 }
+
+#ifdef BTC_CTRL_STOCK
+static void btc_cases(struct smbb_charger *charger, struct regmap *io,
+                      struct power_supply *supply, struct smbb_policy *policy)
+{
+ unsigned int cases = 0;
+ unsigned int enabling_ops, inhibiting_ops;
+
+ setup(charger, io, supply, policy);
+ io->registers[0x49] = 0xd5;
+ io->registers[0x249] = 0xa1;
+ assert(!apply(policy, 0, 313, 4190000, clock_ns));
+ assert(io->registers[0x49] == 0xd5 && io->registers[0x249] == 0xa2);
+ enabling_ops = io->operations;
+ assert(!apply(policy, 0, 313, 4190000, clock_ns));
+ assert(io->btc_writes == 1);
+ io->operations = 0;
+ assert(!smbb_set_charge_behaviour(charger, POWER_SUPPLY_CHARGE_BEHAVIOUR_INHIBIT_CHARGE));
+ assert(io->registers[0x49] == 0x55 && io->registers[0x249] == 0xa1);
+ inhibiting_ops = io->operations;
+ assert(!smbb_set_charge_behaviour(charger, POWER_SUPPLY_CHARGE_BEHAVIOUR_AUTO));
+ assert(io->registers[0x49] == 0xd5 && io->registers[0x249] == 0xa2);
+ cases++;
+
+ for (unsigned int stopping = 0; stopping < 2; stopping++) {
+  unsigned int operations = stopping ? inhibiting_ops : enabling_ops;
+  unsigned int first_operation = stopping ? 1 : 2;
+  for (unsigned int at = first_operation; at <= operations; at++) {
+   for (unsigned int after = 0; after < 2; after++) {
+    setup(charger, io, supply, policy);
+    io->registers[0x249] = 0xa1;
+    if (stopping)
+     assert(!apply(policy, 0, 313, 4190000, clock_ns));
+    io->operations = 0;
+    io->fail_at = at;
+    io->fail_after = after;
+    int result;
+    if (stopping)
+     result = smbb_set_charge_behaviour(charger, POWER_SUPPLY_CHARGE_BEHAVIOUR_INHIBIT_CHARGE);
+    else
+     result = apply(policy, 0, 313, 4190000, clock_ns);
+    assert(result == -EIO && (charger->charge_inhibit & SMBB_INHIBIT_FAULT));
+    assert(io->registers[0x49] == 0x55 && io->registers[0x249] == 0xa1);
+    assert(!smbb_set_charge_behaviour(charger, POWER_SUPPLY_CHARGE_BEHAVIOUR_AUTO));
+    assert(io->registers[0x49] == 0x55 && io->registers[0x249] == 0xa1);
+    cases++;
+   }
+  }
+ }
+
+ for (unsigned int mode = 0; mode < 2; mode++) {
+  setup(charger, io, supply, policy);
+  if (mode)
+   io->corrupt_at = enabling_ops - 3; /* BTC verification readback. */
+  else
+   io->drop_at = enabling_ops - 4; /* BTC write acknowledged but dropped. */
+  assert(apply(policy, 0, 313, 4190000, clock_ns) == -EIO);
+  assert(!io->enables && io->registers[0x249] == 0x81);
+  cases++;
+ }
+
+ /* Longer bus operations make the sample expire either before setting
+  * charge enable or during its write and readback.
+  */
+ for (unsigned int in_flight = 0; in_flight < 2; in_flight++) {
+  setup(charger, io, supply, policy);
+  bus_delay_ns = in_flight ? 300000000ULL : 380000000ULL;
+  assert(!apply(policy, 0, 313, 4190000, clock_ns));
+  assert(charger->charge_inhibit & SMBB_INHIBIT_SAMPLE);
+  assert(io->enables == in_flight);
+  assert(io->registers[0x49] == 0x55 && io->registers[0x249] == 0x81);
+  cases++;
+ }
+
+ for (unsigned int stop = 0; stop < 5; stop++) {
+  setup(charger, io, supply, policy);
+  assert(!apply(policy, 0, 313, 4190000, clock_ns));
+  if (stop == 0)
+   assert(!apply(policy, -ENODEV, 313, 4190000, clock_ns));
+  if (stop == 1)
+   assert(!apply(policy, 0, 560, 4190000, clock_ns));
+  if (stop == 2) {
+   io->registers[0x208] = 0;
+   assert(!apply(policy, 0, 313, 4190000, clock_ns));
+  }
+  if (stop == 3)
+   assert(!smbb_policy_quiesce(policy, SMBB_INHIBIT_SUSPEND));
+  if (stop == 4) {
+   clock_ns += 3100000000ULL;
+   smbb_policy_age_work(&policy->age_work.work);
+  }
+  assert(io->registers[0x49] == 0x55 && io->registers[0x249] == 0x81);
+  cases++;
+ }
+ printf("PASS: %u managed comparator transition, rollback and expiry cases\n", cases);
+}
+#endif
+
 int main(void)
 {
  setbuf(stdout,NULL);
@@ -250,6 +364,9 @@ int main(void)
  io.registers[0x49]=0;io.registers[0x249]=0x81;
  assert(smbb_pack_identity_lost);smbb_policy_setup(&c);
  assert((c.charge_inhibit & SMBB_INHIBIT_PACK) && !(c.charge_inhibit & SMBB_INHIBIT_HANDOFF));count++;
+#ifdef BTC_CTRL_STOCK
+ btc_cases(&c, &io, &p, &policy);
+#endif
  assert(!pthread_mutex_destroy(&c.charge_lock.gate));assert(!pthread_mutex_destroy(&c.statlock.gate));
  printf("PASS: %u actual policy worker/actuator/fault/stale/PM/handoff cases (including 2500 concurrent requests) plus 6242 legacy control cases\n",count);
 }

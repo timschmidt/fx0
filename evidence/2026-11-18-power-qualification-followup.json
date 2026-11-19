@@ -2422,5 +2422,78 @@
         "empty_USB_startup_captures_removed": 17
       }
     }
+  },
+  "SMBB_managed_stock_comparator_candidate": {
+    "recorded_UTC": "2026-11-19T09:10:24+00:00",
+    "source": "91d201fde1f89de650c7bcafc14856f9a983b781",
+    "parent_with_live_paired_handoff": "6d7f378fc071fc88dbfdc9ee37c66cad27a13843",
+    "prior_hardware_stock_window_comparison": "evidence/2026-10-30-stock-BTC-window.json",
+    "prior_paired_hardware_HOT_and_inactive_charge_IRQ": true,
+    "conservative_handoff_and_inhibit_window_hex": "0x81",
+    "fresh_uninhibited_managed_window_hex": "0x82",
+    "charge_disable_verified_before_window_change": true,
+    "stock_window_read_back_before_charge_enable": true,
+    "sample_deadline_rechecked_around_charge_enable": true,
+    "masked_updates_preserve_unrelated_PMIC_bits": true,
+    "tests": {
+      "comparator_transition_rollback_expiry_cases": 44,
+      "legacy_control_cases": 6242,
+      "managed_worker_actuator_PM_cases": 2604,
+      "managed_child_lifetime_cases": 27,
+      "rejected_comparator_mutations": [
+        "widen while charging is enabled",
+        "discard comparator readback",
+        "ignore sample expiry after enable",
+        "skip conservative restoration on inhibit"
+      ],
+      "rejected_child_lifetime_mutations": [
+        "omit cleanup action",
+        "discard resume restrictions",
+        "accept unknown profile"
+      ],
+      "historical_control_fixture_compatibility_verified": true,
+      "ASan_and_UBSan_enabled": true,
+      "initial_LeakSanitizer_retry_used_untraced_runner": true,
+      "actual_control_lifetime_model_and_IRQ_fixtures_passed_with_leak_checking": true,
+      "model_conversion_and_transition_cases": 21496,
+      "exact_stock_NTC_points": 83,
+      "temperature_IRQ_cases": 1026,
+      "temperature_IRQ_read_errors": 4,
+      "USB_input_fixture_enum_extraction_repaired_for_both_sources": true,
+      "USB_input_cases_each_on_baseline_and_candidate": 59
+    },
+    "ARM_charger_object": {
+      "toolchain": "Alpine Clang 22.1.3",
+      "real_managed_and_legacy_Kconfig_builds": true,
+      "policy_probe_symbol_present_only_in_managed_object": true,
+      "W_1_warning_count": 0,
+      "first_run_second_variant_blocked_by_missing_Bash_in_cached_tool_root": true,
+      "retry_passed_both_variants": true,
+      "temporary_build_trees_removed": true
+    },
+    "phone_updated_or_contacted_for_comparator_candidate": false,
+    "actual_charge_current_or_thermal_source_loss_qualified": false,
+    "linked_RAM_candidate": {
+      "passed": true,
+      "recorded_UTC": "2026-11-19T09:15:40+00:00",
+      "kernel_release": "6.18.64-fx0-lts-alpine",
+      "kernel_notes_SHA256": "186c562d6d8f55fc0489176b29ce48d245896893377b6e69923a31d20e5c3d8e",
+      "boot_image_SHA256": "694bf98b8c627a1c60869ec8cb7d4b642e19bb4a37dfe153d6800e34c79d246b",
+      "boot_image_bytes": 17307648,
+      "identical_built_in_symbol_exports": 11718,
+      "public_module_certificate_SHA256": "de086e266ec1d82ea17ebbd51f10242e591df3cf74e958e269bdd91b9176d370",
+      "signed_modules": 468,
+      "overlay_files": 482,
+      "module_import_CRCs": 25592,
+      "dtb_and_initramfs_match_prior_trial": true,
+      "firmware_version": "fx0-pm-host-01",
+      "firmware_SHA256": "690a4a25fcecde534163ff81ab94a86790dab8a30b99076be71e4b7341275cea",
+      "early_return_seconds": 420,
+      "normal_return_seconds": 360,
+      "WLAN_blacklist_and_signature_enforcement_preserved": true,
+      "temporary_build_tree_MiB_rounded": 918,
+      "temporary_build_tree_and_duplicate_kernel_and_DTB_removed": true,
+      "booted_on_phone": false
+    }
   }
 }
