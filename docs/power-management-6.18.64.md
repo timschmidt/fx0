@@ -1434,10 +1434,30 @@ the journal and verified the installed timer, charger control and failure
 latch registers, seven protected hashes and 482 module files. The initial
 register comparison also detected a change in the live `vbat-det-lo`
 signal. The repeated check treated that one real-time IRQ bit separately.
-Independent battery-current measurement and camera recovery from system
+Independent battery-current measurement and camera recovery from deep
 suspend remain open.
 [LG charger IRQ mapping](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/boot/dts/msm-pm8226.dtsi#L95-L112)
 [Camera and charging evidence](../evidence/2026-11-19-fx0-camera-while-charging.json)
+
+#### Camera reopen after RTC-woken suspend
+
+The same RAM kernel captured front IMX132 and full-resolution rear IMX179
+frames before an RTC cycle, then reopened both cameras after 13.703 seconds
+of `s2idle`. Both sensors were runtime-suspended when system suspend began.
+Each of the four sessions delivered 24 contiguous RAW10 buffers, with 69
+verified sensor color-bar buffers in total. Both sensors runtime-suspended
+after every close. Sway kept the same process, both pattern controls were
+restored and the temporary frame files were removed.
+
+The charger entered the suspend request in fast charge. The SPMI trace
+confirmed inhibition before sleep, zero charge-control writes during sleep,
+and fresh temperature and voltage conversions before re-enabling after wake.
+The timer setting stayed armed and the RTC alarm was cleared. The matched
+journal and wired receipt showed a single RTC wake. The scheduled return
+matched the installed charger settings, seven protected hashes and all 482
+module files. Recovery of a stream left open during suspend still needs
+qualification.
+[Camera reopen evidence](../evidence/2026-11-19-fx0-camera-reopen-after-s2idle.json)
 
 #### Managed charger suspend refusal and wake notifications
 

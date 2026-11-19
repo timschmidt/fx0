@@ -506,6 +506,10 @@ capture while the PM8226 reported fast charge. Both sensors runtime-suspended
 after each session, and the workload journal showed zero camera or IOMMU
 faults. [Procedure and evidence](power-management-6.18.64.md#camera-capture-during-fast-charge)
 
+The front and full-resolution rear cameras also delivered complete captures
+before and after an RTC-woken `s2idle` cycle. The sensors were closed for
+suspend and both runtime-suspended again after capture. [Suspend and reopen evidence](power-management-6.18.64.md#camera-reopen-after-rtc-woken-suspend)
+
 Six subsequent full-resolution rear cases alternate frame-file writing and
 discard and retain all completion timestamps and capture stdout. All 144 buffers
 arrive; writing cases have 23/69 intervals above 1.5 times their session median,
