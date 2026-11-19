@@ -1385,6 +1385,41 @@ worker's receipt in the retained journal. The journal recorded four
 [Trace checker](../diagnostics/smbb-charging-policy/check-suspend-trace.py)
 [Handset and return evidence](../evidence/2026-11-19-fx0-managed-charger-suspend.json)
 
+#### Inhibit charging before requesting sleep
+
+The same linked RAM image completed two prepared cycles. The first
+started in fast charge. The second started with automatic charging
+enabled and the charger idle. The diagnostic set a temporary user
+inhibit and verified the charge-disable write and conservative `0x81`
+comparator readback. It waited for charger wake-source counters to stay
+quiet for at least 0.9 seconds before starting the RTC suspend request.
+
+The RTC woke both cycles after 14.509 and 14.010 seconds. The PMIC
+trace recorded zero charge-control writes during sleep. The resume
+worker converted both the thermistor and battery-voltage channels
+before the diagnostic released the temporary inhibit. The first charge
+enable followed those conversions and the `0x82` comparator readback.
+The probe then verified the enable bit. The trace checker replayed both
+cycles and rejected four mutations covering charger readback, missing
+temperature conversion, missing suspend completion and early enable.
+
+The workstation observer was interrupted after capturing both cycles.
+The resumed observer verified the scheduled return to installed r2. An
+independent USB check matched the worker receipt in the journal, all
+seven protected hashes and all 482 installed module files.
+[Handset evidence](../evidence/2026-11-19-fx0-prepared-charger-suspend.json)
+
+A separate kernel candidate defers fast- and trickle-charge status
+notifications between device PM prepare and complete. The IRQ handlers
+still update charge status, and PM complete delivers a pending update
+after resume or an abort. Temperature, battery presence, charge
+completion and power-source notification paths are preserved. The
+charger object compiled for ARM with `W=1`. The lifetime model passed
+29 cases and rejected five mutations, including early notification
+and lost notification on abort. Direct automatic-charge suspend with
+this kernel change still needs hardware qualification.
+[Charge-phase kernel candidate](https://github.com/timschmidt/fx0-linux/commit/614a0266edf151ea8cb174c944614e54e6477352)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce

@@ -1,0 +1,135 @@
+{
+  "recorded_UTC": "2026-11-19T16:57:31+00:00",
+  "booted_kernel_source": "1562a10bf78522776079c2aa7880d4b539324583",
+  "RAM_SHA256": "cb8e0821241e01ce4ea83a1045dd0bab7ec1eea66fee2f19c6846ce69c5c2e42",
+  "WLAN_disabled": true,
+  "temporary_user_inhibit_used": true,
+  "cycles": [
+    {
+      "started_in_fast_charge": true,
+      "asleep_seconds": 14.509,
+      "charger_quiet_seconds": 0.924,
+      "rtc_irq": 33,
+      "RTC_interrupt_increment": 1,
+      "prepared_control": [
+        0,
+        0
+      ],
+      "prepared_comparator": [
+        129,
+        129
+      ],
+      "resume_sample_age_ms": 109,
+      "restored_auto_control": [
+        128,
+        128
+      ],
+      "restored_auto_comparator": [
+        130,
+        130
+      ],
+      "trace_checks": {
+        "inhibit_verified_before_RTC_entry": true,
+        "conservative_window_verified": true,
+        "charge_enable_before_release": false,
+        "control_writes_during_sleep": 0,
+        "ADC_results_from_resume_worker_before_release": [
+          {
+            "channel": 48,
+            "conversion": [
+              156,
+              122
+            ]
+          },
+          {
+            "channel": 6,
+            "conversion": [
+              38,
+              153
+            ]
+          }
+        ],
+        "automatic_charge_enable_readback_verified": true,
+        "trace_lost": 0
+      }
+    },
+    {
+      "started_in_fast_charge": false,
+      "asleep_seconds": 14.01,
+      "charger_quiet_seconds": 0.915,
+      "rtc_irq": 33,
+      "RTC_interrupt_increment": 1,
+      "prepared_control": [
+        0,
+        0
+      ],
+      "prepared_comparator": [
+        129,
+        129
+      ],
+      "resume_sample_age_ms": 207,
+      "restored_auto_control": [
+        128,
+        128
+      ],
+      "restored_auto_comparator": [
+        130,
+        130
+      ],
+      "trace_checks": {
+        "inhibit_verified_before_RTC_entry": true,
+        "conservative_window_verified": true,
+        "charge_enable_before_release": false,
+        "control_writes_during_sleep": 0,
+        "ADC_results_from_resume_worker_before_release": [
+          {
+            "channel": 48,
+            "conversion": [
+              174,
+              122
+            ]
+          },
+          {
+            "channel": 6,
+            "conversion": [
+              29,
+              153
+            ]
+          }
+        ],
+        "automatic_charge_enable_readback_verified": true,
+        "trace_lost": 0
+      }
+    }
+  ],
+  "actual_trace_replay_passed": 2,
+  "invalid_trace_mutations_rejected": 4,
+  "automated_return": {
+    "installed_module_files_verified": 482,
+    "protected_hashes_match": true,
+    "installed_Sway_IPC_active_outputs": 1,
+    "touch_devices_enumerated": 1,
+    "journal_counts": {
+      "journal_rows": 1993,
+      "kernel_rows": 495,
+      "early_return_guard_armed": 1,
+      "full_module_overlay_ready": 1,
+      "early_guard_or_overlay_failure": 0,
+      "suspend_entry": 2,
+      "kernel_fatal": 0,
+      "SMBB_or_VADC_error": 0,
+      "lockup": 0,
+      "normal_return_service_rows": 3,
+      "normal_return_service_success": 2,
+      "orderly_shutdown": 3,
+      "suspend_exit": 2
+    },
+    "matches_captured_RAM_receipt": true
+  },
+  "local_return_observer_interrupted_and_resumed": true,
+  "next_kernel_source": "614a0266edf151ea8cb174c944614e54e6477352",
+  "next_kernel_ARM_W1_clean": true,
+  "next_kernel_host_lifetime_cases": 29,
+  "next_kernel_negative_lifetime_controls_rejected": 5,
+  "next_kernel_physically_tested": false
+}

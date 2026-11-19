@@ -225,6 +225,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('linux', type=Path)
     parser.add_argument('--negative-controls', action='store_true')
+    parser.add_argument('--check-phase-notifications', action='store_true')
     args = parser.parse_args()
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
     root = Path(__file__).resolve().parents[2]
@@ -242,7 +243,49 @@ def main():
                  [('smbb_policy_stop', 'void'), ('smbb_policy_probe', 'int'),
                   ('smbb_policy_suspend', 'int'), ('smbb_policy_resume', 'int'),
                   ('smbb_policy_shutdown', 'void')]}
+    tests = TESTS
+    phase_defines = ''
+    if args.check_phase_notifications:
+        stubs = stubs.replace('bool software_control,battery_present_sampled;',
+                              'bool software_control,battery_present_sampled;\n'
+                              ' bool defer_charge_phase,charge_phase_pending;')
+        # The temperature IRQ reads status without taking charge_lock.
+        read_lock = 'locked(m->lock); assert(reg >= 0x1000 && reg < 0x1800); m->operations++;'
+        assert stubs.count(read_lock) == 1
+        stubs = stubs.replace(read_lock, 'if (reg != 0x1209) ' + read_lock)
+        phase_defines = '\n'.join(line for line in parts['source'].splitlines()
+                                  if line.startswith(('#define TEMP_STATUS_OK', '#define TEMP_STATUS_HOT')))
+        assert len(phase_defines.splitlines()) == 2
+        functions.update({name: definition('static ' + kind + ' ' + name + '(') for name, kind in
+                          [('smbb_charge_phase_changed', 'void'), ('smbb_chg_fast_handler', 'irqreturn_t'),
+                           ('smbb_chg_trkl_handler', 'irqreturn_t'), ('smbb_bat_temp_handler', 'irqreturn_t'),
+                           ('smbb_policy_prepare', 'int'), ('smbb_policy_complete', 'void')]})
+        position = tests.index(' printf("PASS:')
+        tests = tests[:position] + r'''
+ setup();p=probe();
+ irq_error=0;irq_level=true;
+ smbb_chg_fast_handler(7,&f.chg);
+ assert((f.chg.status & STATUS_CHG_FAST) && f.battery.notifications == 1);
+ assert(!smbb_policy_prepare(&f.child.dev));
+ irq_level=false;smbb_chg_fast_handler(7,&f.chg);
+ irq_level=true;smbb_chg_trkl_handler(7,&f.chg);
+ assert(!(f.chg.status & STATUS_CHG_FAST) && (f.chg.status & STATUS_CHG_TRKL));
+ assert(f.chg.charge_phase_pending && f.battery.notifications == 1);
+ f.io.registers[0x209]=TEMP_STATUS_HOT;
+ smbb_bat_temp_handler(7,&f.chg);
+ assert((f.chg.status & STATUS_BAT_HOT) && f.battery.notifications == 2);
+ smbb_policy_complete(&f.child.dev);
+ assert(!f.chg.charge_phase_pending && !f.chg.defer_charge_phase && f.battery.notifications == 3);
+ assert(!smbb_policy_prepare(&f.child.dev));
+ smbb_policy_complete(&f.child.dev);
+ assert(f.battery.notifications == 3);
+ irq_level=false;smbb_chg_trkl_handler(7,&f.chg);
+ assert(!(f.chg.status & STATUS_CHG_TRKL) && f.battery.notifications == 4);
+ finish();cases++;
+ puts("PASS: deferred phase IRQ notifications, preserved thermal notification and abort cleanup");
+''' + tests[position:]
     prefix = stubs + '\n#define EPROBE_DEFER 517\n' + parts['defines'] + '\n'
+    prefix += phase_defines + '\n'
     prefix += parts['attrs'] + parts['limits'] + parts['controls'] + parts['policy'] + API
     variants = [('actual', functions)]
     if args.negative_controls:
@@ -254,6 +297,13 @@ def main():
             ('unknown-profile-accepted', 'smbb_policy_probe',
              'if (ret || strcmp(profile, "tocad-madai"))', 'if (ret)'),
         ]
+        if args.check_phase_notifications:
+            mutations += [
+                ('early-charge-phase-notify', 'smbb_charge_phase_changed',
+                 'if (chg->defer_charge_phase)', 'if (false)'),
+                ('lost-charge-phase-notify', 'smbb_policy_complete',
+                 'power_supply_changed(chg->bat_psy);', '(void)chg;'),
+            ]
         for label, name, before, after in mutations:
             changed = dict(functions)
             if changed[name].count(before) != 1:
@@ -265,7 +315,7 @@ def main():
         for label, bodies in variants:
             source = temporary / (label + '.c')
             binary = temporary / label
-            source.write_text(prefix + '\n'.join(bodies.values()) + TESTS)
+            source.write_text(prefix + '\n'.join(bodies.values()) + tests)
             subprocess.run(['clang', '-std=gnu11', '-Wall', '-Wextra', '-Werror',
                             '-Wno-unused-function', '-Wno-unused-parameter', '-Wno-sign-compare',
                             '-Wno-misleading-indentation', '-fsanitize=address,undefined',

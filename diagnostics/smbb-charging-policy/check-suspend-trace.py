@@ -125,6 +125,64 @@ def verify(raw, user_inhibit):
                 control_and_VADC_transfers=len(events), lost_trace_entries=0)
 
 
+def verify_prepared(raw):
+    markers, events = decode(raw)
+    charge, btc = CHARGE_CTRL, BTC_CTRL
+    annotated = {}
+    samples = []
+    for index, line in enumerate(raw.splitlines()):
+        marker = re.search(r'tracing_mark_write: fx0_charge_sleep_(prepare|quiet|release)\b', line)
+        if marker:
+            assert marker[1] not in annotated, 'duplicate preparation marker'
+            annotated[marker[1]] = index
+        worker = re.search(r'-(\d+)\s+\[.*: prepared_sample_start:', line)
+        if worker:
+            samples.append((int(worker[1]), index))
+    start, quiet, release = (annotated[name] for name in ('prepare', 'quiet', 'release'))
+    enter, asleep, slept, resume, resumed = (markers[name] for name in (
+        'smbb_pm_suspend_enter:', 'suspend_resume: machine_suspend[1] begin',
+        'suspend_resume: machine_suspend[1] end', 'smbb_pm_resume_enter:', 'smbb_pm_resume_exit:'))
+    end = markers['smbb_pm_suspend_exit:']
+    assert start < quiet < enter < end < asleep < slept < resume < resumed < release
+    controls = [event for event in events if event['address'] in (charge, btc)]
+    assert all(not value(event) & 1 for event in controls if event['address'] == charge)
+    assert all(value(event) & 0x80 for event in controls if event['address'] == btc)
+    prep = [event for event in controls if start < event['start'] and event['end'] < quiet]
+    disabled = matching(prep, charge, 0, True)
+    check = readback(prep, disabled)
+    narrowed = matching(prep, btc, 0x81, True, check['end'])
+    window = readback(prep, narrowed)
+    while_held = [event for event in controls if window['end'] < event['start'] < release]
+    assert all(value(event) == (0 if event['address'] == charge else 0x81) for event in while_held)
+    assert not any(event['write'] and event['start'] < slept and event['end'] > asleep for event in controls)
+    inside_suspend = [event for event in controls if enter < event['start'] and event['end'] < end]
+    quiesce = readback(inside_suspend, matching(inside_suspend, charge, 0, True))
+    matching(inside_suspend, btc, 0x81, False, quiesce['end'])
+    enables = [event for event in controls if event['write'] and event['address'] == charge
+               and value(event) == 0x80 and event['start'] > disabled['end']]
+    assert enables and all(release < event['start'] for event in enables)
+    enabled = enables[0]
+    readback(controls, enabled)
+    opened = matching(controls, btc, 0x82, True, release)
+    assert readback(controls, opened)['end'] < enabled['start']
+    pid, worker_start = next((pid, index) for pid, index in samples if resume < index < release)
+    transactions = [event for event in events if event['pid'] == pid and
+                    worker_start < event['start'] and event['end'] < release]
+    before = worker_start
+    measured = []
+    for channel in (0x30, 0x06):
+        select = matching(transactions, ADC_CHANNEL, channel, True, before)
+        reading = next((event for event in transactions if event['address'] == ADC_RESULT
+                        and not event['write'] and event['start'] > select['end'] and len(event['data']) == 2), None)
+        assert reading, f'missing wake conversion for channel {channel:#x}'
+        measured.append(dict(channel=channel, conversion=reading['data']))
+        before = reading['end']
+    return dict(inhibit_verified_before_RTC_entry=True, conservative_window_verified=True,
+                charge_enable_before_release=False, control_writes_during_sleep=0,
+                ADC_results_from_resume_worker_before_release=measured,
+                automatic_charge_enable_readback_verified=True, trace_lost=0)
+
+
 def main():
     import argparse
     import json
@@ -132,11 +190,15 @@ def main():
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('trace', type=Path)
-    parser.add_argument('--user-inhibit', action='store_true')
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--user-inhibit', action='store_true')
+    mode.add_argument('--prepared', action='store_true')
     args = parser.parse_args()
     if not __debug__:
         parser.error('run with Python assertions enabled')
-    print(json.dumps(verify(args.trace.read_text(), args.user_inhibit), indent=2))
+    raw = args.trace.read_text()
+    result = verify_prepared(raw) if args.prepared else verify(raw, args.user_inhibit)
+    print(json.dumps(result, indent=2))
 
 
 if __name__ == '__main__':
