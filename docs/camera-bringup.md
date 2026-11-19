@@ -562,6 +562,13 @@ front-camera timing gap remains open. The installed kernel, module tree and
 charger registers passed verification after automatic return.
 [Handset qualification](../evidence/2026-11-19-fx0-camss-stopping-completion-handset.json)
 
+On the same signed image, roughly 2.09- and 2.16-second front-camera gaps
+recurred during ordinary capture with buffers still owned by the VFE driver.
+The VFE continued to interrupt and the write-master callback ran again at the
+next buffer completion. The durations align with the programmed frame-drop
+period values. Shorter gaps around suspend refusal included an empty queue.
+[Queue and interrupt trace](../diagnostics/camera-reopen/vfe-queue-credit.md)
+
 Resuming the same stream requires CAMSS to stop DMA at suspend, preserve
 ownership of queued buffers, bring the pipeline back after its suppliers
 resume and surface a queue error if restart fails. The closed-sensor RTC

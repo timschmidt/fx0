@@ -1,0 +1,998 @@
+{
+  "date_UTC": "2026-11-19",
+  "kernel_source": "2150f900adaf27c32a5bd620bd12ab04345aa99b",
+  "RAM_image_SHA256": "251e90924d2cc4c21307872f2918ec101306f942545cb17220909dd450e094c9",
+  "capture_scope": "four seconds after the selected treatment, using RAW10 frame metadata",
+  "initial_run": {
+    "IRQ95_filter_without_capture_coverage": true,
+    "cases": [
+      {
+        "camera": "front",
+        "condition": "control",
+        "treatment": {},
+        "matched_delivered_frames": 31,
+        "median_gap_ns": 69608646.0,
+        "outlier_count": 4,
+        "VB2_events": {
+          "vb2_qbuf": 35,
+          "vb2_buf_queue": 35,
+          "vb2_buf_done": 35,
+          "vb2_dqbuf": 31
+        },
+        "largest_intervals": [
+          {
+            "sequences": [
+              17,
+              18
+            ],
+            "gap_ns": 2157669895,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 30.99715,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              1,
+              2
+            ],
+            "gap_ns": 2157663906,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 30.99707,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              27,
+              28
+            ],
+            "gap_ns": 139066927,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99784,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              10,
+              11
+            ],
+            "gap_ns": 138949427,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99615,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      },
+      {
+        "camera": "front",
+        "condition": "pause",
+        "treatment": {
+          "live_threads_stopped": 2,
+          "all_live_threads_resumed": true
+        },
+        "matched_delivered_frames": 68,
+        "median_gap_ns": 69598073,
+        "outlier_count": 2,
+        "VB2_events": {
+          "vb2_qbuf": 72,
+          "vb2_buf_queue": 72,
+          "vb2_buf_done": 72,
+          "vb2_dqbuf": 68
+        },
+        "largest_intervals": [
+          {
+            "sequences": [
+              8,
+              9
+            ],
+            "gap_ns": 139190729,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 0,
+            "gap_as_multiple_of_case_median": 1.99992,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              46,
+              47
+            ],
+            "gap_ns": 139181562,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99979,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      },
+      {
+        "camera": "front",
+        "condition": "suspend",
+        "treatment": {
+          "camss_prepare_returns": [
+            -16
+          ],
+          "machine_suspend_entries": 0,
+          "unattributed_busy_retries": 0
+        },
+        "matched_delivered_frames": 39,
+        "median_gap_ns": 69602370.0,
+        "outlier_count": 5,
+        "VB2_events": {
+          "vb2_qbuf": 43,
+          "vb2_buf_queue": 43,
+          "vb2_buf_done": 43,
+          "vb2_dqbuf": 39
+        },
+        "largest_intervals": [
+          {
+            "sequences": [
+              9,
+              10
+            ],
+            "gap_ns": 2157615259,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 30.99916,
+            "treatment_markers_inside_gap_ns_from_start": {
+              "SUSPEND_RETURN_0": 1764684000
+            }
+          },
+          {
+            "sequences": [
+              5,
+              6
+            ],
+            "gap_ns": 2157399686,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 30.99607,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              3,
+              4
+            ],
+            "gap_ns": 139194010,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99985,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              27,
+              28
+            ],
+            "gap_ns": 139179323,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99963,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      },
+      {
+        "camera": "front",
+        "condition": "control",
+        "treatment": {},
+        "matched_delivered_frames": 36,
+        "median_gap_ns": 69595990,
+        "outlier_count": 1,
+        "VB2_events": {
+          "vb2_qbuf": 40,
+          "vb2_buf_queue": 40,
+          "vb2_buf_done": 40,
+          "vb2_dqbuf": 36
+        },
+        "largest_intervals": [
+          {
+            "sequences": [
+              9,
+              10
+            ],
+            "gap_ns": 2157510051,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 31.00049,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      },
+      {
+        "camera": "front",
+        "condition": "suspend",
+        "treatment": {
+          "camss_prepare_returns": [
+            -16
+          ],
+          "machine_suspend_entries": 0,
+          "unattributed_busy_retries": 0
+        },
+        "matched_delivered_frames": 54,
+        "median_gap_ns": 69600886,
+        "outlier_count": 5,
+        "VB2_events": {
+          "vb2_qbuf": 58,
+          "vb2_buf_queue": 58,
+          "vb2_buf_done": 58,
+          "vb2_dqbuf": 54
+        },
+        "largest_intervals": [
+          {
+            "sequences": [
+              39,
+              40
+            ],
+            "gap_ns": 2088151770,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 30.0018,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              18,
+              19
+            ],
+            "gap_ns": 487096197,
+            "owned_after_first_done": 0,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 338006000,
+            "VB2_driver_enqueue_events": 4,
+            "gap_as_multiple_of_case_median": 6.99842,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              28,
+              29
+            ],
+            "gap_ns": 139214270,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 2.00018,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              49,
+              50
+            ],
+            "gap_ns": 139099740,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99853,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      },
+      {
+        "camera": "back",
+        "condition": "suspend",
+        "treatment": {
+          "camss_prepare_returns": [
+            -16
+          ],
+          "machine_suspend_entries": 0,
+          "unattributed_busy_retries": 0
+        },
+        "matched_delivered_frames": 166,
+        "median_gap_ns": 33271770,
+        "outlier_count": 1,
+        "VB2_events": {
+          "vb2_qbuf": 170,
+          "vb2_buf_queue": 170,
+          "vb2_buf_done": 170,
+          "vb2_dqbuf": 166
+        },
+        "largest_intervals": [
+          {
+            "sequences": [
+              26,
+              27
+            ],
+            "gap_ns": 532208438,
+            "owned_after_first_done": 0,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 490544000,
+            "VB2_driver_enqueue_events": 4,
+            "gap_as_multiple_of_case_median": 15.9958,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      }
+    ],
+    "extra_enqueue_timing": {
+      "front-0.trace": [
+        {
+          "enqueue_after_last_completion_ns": 856000,
+          "owned_after_enqueue": 4
+        },
+        {
+          "enqueue_after_last_completion_ns": 1024000,
+          "owned_after_enqueue": 4
+        }
+      ],
+      "front-2.trace": [
+        {
+          "enqueue_after_last_completion_ns": 1195000,
+          "owned_after_enqueue": 4
+        },
+        {
+          "enqueue_after_last_completion_ns": 1317000,
+          "owned_after_enqueue": 4
+        }
+      ],
+      "front-3.trace": [
+        {
+          "enqueue_after_last_completion_ns": 1234000,
+          "owned_after_enqueue": 4
+        }
+      ],
+      "front-4.trace": [
+        {
+          "enqueue_after_last_completion_ns": 752000,
+          "owned_after_enqueue": 4
+        }
+      ]
+    },
+    "return": {
+      "modules_verified": 482,
+      "protected_hashes_match": true,
+      "charger_registers_restored": true,
+      "matching_independent_journal_receipt": true,
+      "redundant_RAM_readbacks_removed": true
+    }
+  },
+  "corrected_run": {
+    "IRQ_handler_name_resolved_to_live_number": true,
+    "cases": [
+      {
+        "camera": "front",
+        "condition": "control",
+        "treatment": {},
+        "matched_delivered_frames": 46,
+        "median_gap_ns": 69602969,
+        "outlier_count": 5,
+        "VB2_events": {
+          "vb2_qbuf": 50,
+          "vb2_buf_queue": 50,
+          "vb2_buf_done": 50,
+          "vb2_dqbuf": 46
+        },
+        "VFE_interrupts": 87,
+        "largest_intervals": [
+          {
+            "sequences": [
+              18,
+              19
+            ],
+            "gap_ns": 139196823,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99987,
+            "VFE_IRQ_entries_between_completions": 2,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              12,
+              13
+            ],
+            "gap_ns": 139192188,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.9998,
+            "VFE_IRQ_entries_between_completions": 2,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              8,
+              9
+            ],
+            "gap_ns": 139187813,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99974,
+            "VFE_IRQ_entries_between_completions": 2,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              26,
+              27
+            ],
+            "gap_ns": 139071614,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99807,
+            "VFE_IRQ_entries_between_completions": 2,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      },
+      {
+        "camera": "front",
+        "condition": "pause",
+        "treatment": {
+          "live_threads_stopped": 2,
+          "all_live_threads_resumed": true
+        },
+        "matched_delivered_frames": 22,
+        "median_gap_ns": 69593281,
+        "outlier_count": 2,
+        "VB2_events": {
+          "vb2_qbuf": 26,
+          "vb2_buf_queue": 26,
+          "vb2_buf_done": 26,
+          "vb2_dqbuf": 22
+        },
+        "VFE_interrupts": 89,
+        "largest_intervals": [
+          {
+            "sequences": [
+              16,
+              17
+            ],
+            "gap_ns": 2157564895,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 31.00249,
+            "VFE_IRQ_entries_between_completions": 32,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              11,
+              12
+            ],
+            "gap_ns": 139211406,
+            "owned_after_first_done": 0,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 37021000,
+            "VB2_driver_enqueue_events": 4,
+            "gap_as_multiple_of_case_median": 2.00036,
+            "VFE_IRQ_entries_between_completions": 2,
+            "treatment_markers_inside_gap_ns_from_start": {
+              "GROUP_RESUME_ACK": 40206000
+            }
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      },
+      {
+        "camera": "front",
+        "condition": "suspend",
+        "treatment": {
+          "camss_prepare_returns": [
+            -16
+          ],
+          "machine_suspend_entries": 0,
+          "unattributed_busy_retries": 0
+        },
+        "matched_delivered_frames": 28,
+        "median_gap_ns": 69601771,
+        "outlier_count": 3,
+        "VB2_events": {
+          "vb2_qbuf": 32,
+          "vb2_buf_queue": 32,
+          "vb2_buf_done": 32,
+          "vb2_dqbuf": 28
+        },
+        "VFE_interrupts": 143,
+        "largest_intervals": [
+          {
+            "sequences": [
+              24,
+              25
+            ],
+            "gap_ns": 2157585728,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 30.99901,
+            "VFE_IRQ_entries_between_completions": 32,
+            "treatment_markers_inside_gap_ns_from_start": {
+              "SUSPEND_RETURN_0": 196355000
+            }
+          },
+          {
+            "sequences": [
+              4,
+              5
+            ],
+            "gap_ns": 2088100208,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 30.00068,
+            "VFE_IRQ_entries_between_completions": 31,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              18,
+              19
+            ],
+            "gap_ns": 487060312,
+            "owned_after_first_done": 0,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 387647000,
+            "VB2_driver_enqueue_events": 4,
+            "gap_as_multiple_of_case_median": 6.99781,
+            "VFE_IRQ_entries_between_completions": 7,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      },
+      {
+        "camera": "front",
+        "condition": "control",
+        "treatment": {},
+        "matched_delivered_frames": 57,
+        "median_gap_ns": 69601094.0,
+        "outlier_count": 6,
+        "VB2_events": {
+          "vb2_qbuf": 61,
+          "vb2_buf_queue": 61,
+          "vb2_buf_done": 61,
+          "vb2_dqbuf": 57
+        },
+        "VFE_interrupts": 122,
+        "largest_intervals": [
+          {
+            "sequences": [
+              3,
+              4
+            ],
+            "gap_ns": 2157627863,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 30.99991,
+            "VFE_IRQ_entries_between_completions": 32,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              24,
+              25
+            ],
+            "gap_ns": 139194896,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.9999,
+            "VFE_IRQ_entries_between_completions": 2,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              37,
+              38
+            ],
+            "gap_ns": 139179843,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99968,
+            "VFE_IRQ_entries_between_completions": 2,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              43,
+              44
+            ],
+            "gap_ns": 139074843,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99817,
+            "VFE_IRQ_entries_between_completions": 2,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      },
+      {
+        "camera": "front",
+        "condition": "suspend",
+        "treatment": {
+          "camss_prepare_returns": [
+            -16
+          ],
+          "machine_suspend_entries": 0,
+          "unattributed_busy_retries": 0
+        },
+        "matched_delivered_frames": 81,
+        "median_gap_ns": 69598672.0,
+        "outlier_count": 5,
+        "VB2_events": {
+          "vb2_qbuf": 85,
+          "vb2_buf_queue": 85,
+          "vb2_buf_done": 85,
+          "vb2_dqbuf": 81
+        },
+        "VFE_interrupts": 144,
+        "largest_intervals": [
+          {
+            "sequences": [
+              20,
+              21
+            ],
+            "gap_ns": 556896354,
+            "owned_after_first_done": 0,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 424511000,
+            "VB2_driver_enqueue_events": 4,
+            "gap_as_multiple_of_case_median": 8.00154,
+            "VFE_IRQ_entries_between_completions": 8,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              3,
+              4
+            ],
+            "gap_ns": 139209427,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 2.00017,
+            "VFE_IRQ_entries_between_completions": 2,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              27,
+              28
+            ],
+            "gap_ns": 139202396,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 2.00007,
+            "VFE_IRQ_entries_between_completions": 2,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              36,
+              37
+            ],
+            "gap_ns": 139198542,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 2.00002,
+            "VFE_IRQ_entries_between_completions": 2,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      },
+      {
+        "camera": "back",
+        "condition": "suspend",
+        "treatment": {
+          "camss_prepare_returns": [
+            -16
+          ],
+          "machine_suspend_entries": 0,
+          "unattributed_busy_retries": 0
+        },
+        "matched_delivered_frames": 169,
+        "median_gap_ns": 33271458.5,
+        "outlier_count": 1,
+        "VB2_events": {
+          "vb2_qbuf": 173,
+          "vb2_buf_queue": 173,
+          "vb2_buf_done": 173,
+          "vb2_dqbuf": 169
+        },
+        "VFE_interrupts": 361,
+        "largest_intervals": [
+          {
+            "sequences": [
+              29,
+              30
+            ],
+            "gap_ns": 565593802,
+            "owned_after_first_done": 0,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 500648000,
+            "VB2_driver_enqueue_events": 4,
+            "gap_as_multiple_of_case_median": 16.99937,
+            "VFE_IRQ_entries_between_completions": 17,
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      }
+    ],
+    "return": {
+      "modules_verified": 482,
+      "protected_hashes_match": true,
+      "charger_registers_restored": true,
+      "matching_independent_journal_receipt": true,
+      "redundant_RAM_readbacks_removed": true
+    }
+  },
+  "callback_followup": {
+    "cases": [
+      {
+        "camera": "front",
+        "condition": "control",
+        "treatment": {},
+        "matched_delivered_frames": 62,
+        "median_gap_ns": 69600209,
+        "outlier_count": 4,
+        "VB2_events": {
+          "vb2_qbuf": 66,
+          "vb2_buf_queue": 66,
+          "vb2_buf_done": 66,
+          "vb2_dqbuf": 62
+        },
+        "VFE_interrupts": 100,
+        "largest_intervals": [
+          {
+            "sequences": [
+              26,
+              27
+            ],
+            "gap_ns": 139210520,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 2.00015,
+            "VFE_IRQ_entries_between_completions": 2,
+            "VFE_callback_entries_between_completions": {
+              "vfe_isr": 2,
+              "vfe_isr_reg_update": 1,
+              "vfe_isr_wm_done": 1
+            },
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              56,
+              57
+            ],
+            "gap_ns": 139196667,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99995,
+            "VFE_IRQ_entries_between_completions": 2,
+            "VFE_callback_entries_between_completions": {
+              "vfe_isr": 2,
+              "vfe_isr_reg_update": 1,
+              "vfe_isr_wm_done": 1
+            },
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              36,
+              37
+            ],
+            "gap_ns": 139195781,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99993,
+            "VFE_IRQ_entries_between_completions": 2,
+            "VFE_callback_entries_between_completions": {
+              "vfe_isr": 2,
+              "vfe_isr_reg_update": 1,
+              "vfe_isr_wm_done": 1
+            },
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              41,
+              42
+            ],
+            "gap_ns": 139061041,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.998,
+            "VFE_IRQ_entries_between_completions": 2,
+            "VFE_callback_entries_between_completions": {
+              "vfe_isr": 2,
+              "vfe_isr_reg_update": 1,
+              "vfe_isr_wm_done": 1
+            },
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      },
+      {
+        "camera": "front",
+        "condition": "control",
+        "treatment": {},
+        "matched_delivered_frames": 32,
+        "median_gap_ns": 69616146,
+        "outlier_count": 5,
+        "VB2_events": {
+          "vb2_qbuf": 36,
+          "vb2_buf_queue": 36,
+          "vb2_buf_done": 36,
+          "vb2_dqbuf": 32
+        },
+        "VFE_interrupts": 116,
+        "largest_intervals": [
+          {
+            "sequences": [
+              11,
+              12
+            ],
+            "gap_ns": 2157496457,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 30.99132,
+            "VFE_IRQ_entries_between_completions": 32,
+            "VFE_callback_entries_between_completions": {
+              "vfe_isr": 32,
+              "vfe_isr_reg_update": 1,
+              "vfe_isr_wm_done": 1
+            },
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              4,
+              5
+            ],
+            "gap_ns": 2087827603,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 29.99057,
+            "VFE_IRQ_entries_between_completions": 31,
+            "VFE_callback_entries_between_completions": {
+              "vfe_isr": 31,
+              "vfe_isr_reg_update": 1,
+              "vfe_isr_wm_done": 1
+            },
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              19,
+              20
+            ],
+            "gap_ns": 139207344,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99964,
+            "VFE_IRQ_entries_between_completions": 2,
+            "VFE_callback_entries_between_completions": {
+              "vfe_isr": 2,
+              "vfe_isr_reg_update": 1,
+              "vfe_isr_wm_done": 1
+            },
+            "treatment_markers_inside_gap_ns_from_start": {}
+          },
+          {
+            "sequences": [
+              23,
+              24
+            ],
+            "gap_ns": 139195469,
+            "owned_after_first_done": 3,
+            "ownership_events_ordered": true,
+            "VB2_zero_owned_ns": 0,
+            "VB2_driver_enqueue_events": 1,
+            "gap_as_multiple_of_case_median": 1.99947,
+            "VFE_IRQ_entries_between_completions": 2,
+            "VFE_callback_entries_between_completions": {
+              "vfe_isr": 2,
+              "vfe_isr_reg_update": 1,
+              "vfe_isr_wm_done": 1
+            },
+            "treatment_markers_inside_gap_ns_from_start": {}
+          }
+        ],
+        "lossless_trace_and_cleanup_verified": true
+      }
+    ],
+    "both_capture_cases_completed": true,
+    "service_cap_expired_during_final_health_snapshot": true,
+    "cutoff_health_snapshot_replaced_by_same_boot_cleanup_check": {
+      "cases_after_cleanup": [
+        {
+          "gap_trace_ns": 2157501000,
+          "reg_update_callback_after_first_done_ns": 119000,
+          "wm_done_callback_before_last_done_ns": 16000
+        },
+        {
+          "gap_trace_ns": 2087826000,
+          "reg_update_callback_after_first_done_ns": 58000,
+          "wm_done_callback_before_last_done_ns": 15000
+        }
+      ],
+      "sensor_power": {
+        "imx132": "suspended",
+        "imx179": "suspended"
+      },
+      "ui_services_active": true
+    },
+    "same_receipt_verified_against_retained_trial_journal": true
+  },
+  "hardware_frame_drop_register_latch_or_phase_sampled": false,
+  "raw_image_contents_collected": false
+}
