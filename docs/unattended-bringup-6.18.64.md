@@ -1060,6 +1060,21 @@ set the padded 320 × 256 CAPTURE format for 320 × 240 video. It exited
 before requesting the new buffer pool in both runs. A direct V4L2 test
 can explicitly request and start the replacement queue.
 
+The direct V4L2 client verified all 12 opening frames at 640 × 360
+against a native-size software reference. Its first run stopped at the
+source-change boundary. The revised client recorded a 147,456-byte
+buffer flagged as a keyframe and kept it out of the picture comparison.
+That size matches the padded 320 × 240 picture. The old queue supplied
+no `LAST` marker before the diagnostic proceeded with the restart.
+
+The driver restarted CAPTURE with 32 buffers of 368,768 bytes and
+confirmed that it kept the old scratch allocation. The function trace
+showed no buffer set or unset command between restart and the error.
+After 32 fill-buffer commands, the firmware again failed at
+`vbuffer.c:623`, with the same `a6fc0` error data. The fault can occur
+while retaining scratch. CAPTURE buffer ownership and frame delivery
+across the source-change boundary remain unqualified.
+
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
 its synthetic completion. The matched ordinary STOP test still failed

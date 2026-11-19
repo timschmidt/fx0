@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-19T13:40:36+00:00",
+  "last_updated_UTC": "2026-11-19T14:10:49+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -3317,6 +3317,178 @@
           "installed_module_files_verified": 482
         },
         "persistent_installation_performed": false
+      },
+      "direct_V4L2_downshift_control": {
+        "recorded_UTC": "2026-11-19T14:10:49+00:00",
+        "host_ioctl_cases": [
+          "normal",
+          "missing-old-last",
+          "boundary-buffer",
+          "reject-restart"
+        ],
+        "source_SHA256": "9326337d6158432dce1086006fe45a0f6af59008e75c8660be5f0db9dc717d5a",
+        "ARM_binary_SHA256": "56e017f9e48089b99e64a6f711fc0bfbb602cd66cdfc39ff4eb79369a90bcd65",
+        "initial_ARM_binary_SHA256": "560231b3d8d3dceceac15713cddaff62cfe795f8a62d3ee9bd078b49c2d1b415",
+        "reproducible_ARM_binary": true,
+        "framed_fixture_SHA256": "1248aceb7234bd86467bd026533eed9d05cc4c8902f81bedb881ea155cc3b7a3",
+        "reference_frame_bytes": [
+          345600,
+          115200
+        ],
+        "full_reference_bytes": 5529600,
+        "all_24_frame_reference_SHA256": "7c1d988036813b841d7a4cb1136305d75834dd58c7b5d3975a92d733c525cdc7",
+        "retained_decoded_video": false,
+        "persistent_installation_performed": false,
+        "retain": {
+          "candidate_image_SHA256": "1733dda1f34e2e464a8306e4a245505019a4c0da2f0d40cbf883255a6f0d42c9",
+          "controller_exit_status": 1,
+          "direct_V4L2_client": true,
+          "capture_before_coded_input": true,
+          "capture_STREAMON_calls_accepted": 1,
+          "capture_plane_lengths": [
+            {
+              "count": 32,
+              "min_bytes": 368768,
+              "max_bytes": 368768
+            }
+          ],
+          "sequence": {
+            "queued": 13,
+            "returned": 12,
+            "old": 12,
+            "new": 0,
+            "event": true,
+            "replacement_stream_started": false,
+            "old_LAST": false,
+            "new_LAST": false,
+            "STOP": false
+          },
+          "unclassified_boundary_buffers": [],
+          "output_frames": 12,
+          "output_bytes": 4147200,
+          "output_SHA256": "a67311aa0758e2ff18b0d841c940dc973d00b23a4669b77fad7f0a0ca649da0d",
+          "matches_software_prefix": true,
+          "matches_software_reference": false,
+          "coded_input_records": 13,
+          "source_resource_events": [
+            [
+              null,
+              "640",
+              "368"
+            ],
+            [
+              null,
+              "320",
+              "240"
+            ]
+          ],
+          "source_flush_suppressed": true,
+          "scratch_retained_marker": false,
+          "scratch_registration_records": [
+            [
+              "0x1000001",
+              "0",
+              "1",
+              "0"
+            ]
+          ],
+          "system_errors": [],
+          "firmware_fatal_source": [],
+          "new_CAPTURE_FILL_BUFFER_calls": 0,
+          "after_CAPTURE_restart_set_or_unset_buffers_calls": 0,
+          "panic_IOMMU_or_PM_faults": [],
+          "ftrace_events": 143,
+          "capture_restart_and_LAST_qualified": false,
+          "RAM_readback_removed": true,
+          "installed_return_boot": "1ff70925-ade5-413c-971a-f774f8004bbd",
+          "installed_module_files_verified": 482,
+          "protected_hashes_match": true
+        },
+        "retry": {
+          "candidate_image_SHA256": "1733dda1f34e2e464a8306e4a245505019a4c0da2f0d40cbf883255a6f0d42c9",
+          "controller_exit_status": 1,
+          "direct_V4L2_client": true,
+          "capture_before_coded_input": true,
+          "capture_STREAMON_calls_accepted": 2,
+          "capture_plane_lengths": [
+            {
+              "count": 32,
+              "min_bytes": 368768,
+              "max_bytes": 368768
+            },
+            {
+              "count": 32,
+              "min_bytes": 368768,
+              "max_bytes": 368768
+            }
+          ],
+          "sequence": {
+            "queued": 14,
+            "returned": 13,
+            "old": 12,
+            "new": 0,
+            "event": true,
+            "replacement_stream_started": true,
+            "old_LAST": false,
+            "new_LAST": false,
+            "STOP": false
+          },
+          "unclassified_boundary_buffers": [
+            {
+              "flags": 16392,
+              "bytesused": 147456
+            }
+          ],
+          "output_frames": 12,
+          "output_bytes": 4147200,
+          "output_SHA256": "a67311aa0758e2ff18b0d841c940dc973d00b23a4669b77fad7f0a0ca649da0d",
+          "matches_software_prefix": true,
+          "matches_software_reference": false,
+          "coded_input_records": 14,
+          "source_resource_events": [
+            [
+              null,
+              "640",
+              "368"
+            ],
+            [
+              null,
+              "320",
+              "240"
+            ]
+          ],
+          "source_flush_suppressed": true,
+          "scratch_retained_marker": true,
+          "scratch_registration_records": [
+            [
+              "0x1000001",
+              "0",
+              "1",
+              "0"
+            ]
+          ],
+          "system_errors": [
+            [
+              "1",
+              "a6fc0"
+            ]
+          ],
+          "firmware_fatal_source": [
+            [
+              "vbuffer.c",
+              "623"
+            ]
+          ],
+          "new_CAPTURE_FILL_BUFFER_calls": 32,
+          "after_CAPTURE_restart_set_or_unset_buffers_calls": 0,
+          "panic_IOMMU_or_PM_faults": [],
+          "ftrace_events": 182,
+          "capture_restart_and_LAST_qualified": false,
+          "RAM_readback_removed": true,
+          "installed_return_boot": "53a82350-8b40-4f57-882c-a329c2eda154",
+          "installed_module_files_verified": 482,
+          "protected_hashes_match": true
+        }
       }
     },
     "default_startup_qualified": false,
