@@ -1,0 +1,132 @@
+{
+  "signed_package_build": {
+    "passed": true,
+    "recorded_UTC": "2026-11-19T23:53:03.690443+00:00",
+    "recipe_commit": "d1fc4d4d5e993116bee3706494a1d5f78b1e9065",
+    "kernel_release_source": "539a7cccccac57f48e112bf5f8b6b95eca91cc5a",
+    "kernel_version": "6.18.64-r3",
+    "kernel_APK": {
+      "SHA256": "bf9afecd7282ca285399e0c9c5f01299563bb87cc41d5dfcc111713b99a2733b",
+      "bytes": 18763223,
+      "control_checksum": "Q1Vjs71TIJgc+xtWIIY8c8rHpTd3Y="
+    },
+    "reader_APK": {
+      "SHA256": "4ee04c66c4bdb62a66a0c40da9ffe52ab75fd7ac3a66c3519243d5beab9e7c4f",
+      "bytes": 4761,
+      "control_checksum": "Q1bKUU2fai8MrnND0e38U1w+QhwrE="
+    },
+    "reader_payload_byte_identical_to_r2": true,
+    "same_installed_package_payload_paths_modes_and_owners": true,
+    "source_files_checked_against_release_commit": [
+      "Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml",
+      "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts",
+      "drivers/media/platform/qcom/camss/camss-vfe-gen1.c",
+      "drivers/media/platform/qcom/camss/camss-vfe.h",
+      "drivers/media/platform/qcom/camss/camss.c",
+      "drivers/power/supply/qcom_smbb.c"
+    ],
+    "RAM_CAMSS_source_exact": "ecf268bf5d66c17e545a1a06792ec679cdaf3eaa",
+    "RAM_CAMSS_signed_payload_equal_excluding_signature": false,
+    "RAM_CAMSS_executable_text_byte_identical": true,
+    "unchanged_DTBs": 65,
+    "same_config_and_module_certificate": true,
+    "same_total_exports": 14885,
+    "same_built_in_exports": 11718,
+    "signed_modules_verified": 468,
+    "module_files_verified": 482,
+    "signed_module_bad_payload_rejected": true,
+    "verified_module_import_CRCs": 25593,
+    "build_log_SHA256": "888008d4b2c2671d7f179d9ad6014c774e07a5e990bf743b0b7209a4d8342e70",
+    "one_clean_offline_signed_abuild": true
+  },
+  "APKINDEX": {
+    "sha256": "c23517d92dfdc5d7029965f9150528fd5ebcb53db67fd53940977c2fba827a56",
+    "exact_installed_APK_public_key": true,
+    "RSA_signature_encodes_expected_SHA1_digest": true
+  },
+  "CAMSS_remaining_ELF_differences_from_RAM_test": [
+    ".note.gnu.build-id",
+    ".rodata",
+    ".rodata.str1.1",
+    ".symtab",
+    "__dyndbg"
+  ],
+  "compressed_module_files_changed_from_r2": 468,
+  "file_only_transaction": {
+    "passed": true,
+    "steps": [
+      {
+        "step": "simulate-kernel-only-rejected",
+        "returncode": 1
+      },
+      {
+        "step": "simulate-upgrade",
+        "returncode": 0
+      },
+      {
+        "step": "upgrade",
+        "returncode": 0
+      },
+      {
+        "step": "simulate-rollback",
+        "returncode": 0
+      },
+      {
+        "step": "rollback",
+        "returncode": 0
+      }
+    ],
+    "USB_or_phone_access": false,
+    "native_scripts_commit_hooks_and_boot_unqualified": true,
+    "APK_count_before_during_and_after": 776,
+    "unchanged_full_APK_records": 774,
+    "reader_payload_entries_byte_identical": 10,
+    "full_APK_records_restored": 776,
+    "original_raw_database_equal": true,
+    "exact_original_world_restored": true,
+    "unchanged_device_payload_files": 8,
+    "kernel_only_upgrade_rejected": true,
+    "verified_rollback_payload_files": 554,
+    "verified_upgraded_payload_files": 554,
+    "exact_installed_rollback_APKs_verified": true,
+    "selected_packages": {
+      "new-kernel": {
+        "package": "linux-postmarketos-qcom-msm8226",
+        "version": "6.18.64-r3",
+        "control_checksum": "Q1Vjs71TIJgc+xtWIIY8c8rHpTd3Y="
+      },
+      "new-reader": {
+        "package": "fx0-dmp-reader",
+        "version": "6.18.64-r3",
+        "control_checksum": "Q1bKUU2fai8MrnND0e38U1w+QhwrE="
+      },
+      "old-kernel": {
+        "package": "linux-postmarketos-qcom-msm8226",
+        "version": "6.18.64-r2",
+        "control_checksum": "Q1u0bnPZ3T4Y0GTXyEGbMaKMsN/TM="
+      },
+      "old-device": {
+        "package": "device-lg-madai",
+        "version": "1-r3",
+        "control_checksum": "Q153A4tg4mzUsc0Wx8NPVh9LeZT4Q="
+      },
+      "old-reader": {
+        "package": "fx0-dmp-reader",
+        "version": "6.18.64-r2",
+        "control_checksum": "Q1+asosSvWcRH+SufEU+HuzLADCJs="
+      }
+    },
+    "finished_UTC": "2026-11-19T23:53:05.043571+00:00"
+  },
+  "initial_tmpfs_local_APK_cache_check_recovered": true,
+  "normal_abuild_metadata_warnings": [
+    ">>> WARNING: linux-postmarketos-qcom-msm8226*: Packages must not put anything under /lib, use /usr/lib instead",
+    ">>> WARNING: linux-postmarketos-qcom-msm8226*: No arch specific binaries found so arch should probably be set to \"noarch\"",
+    ">>> WARNING: fx0-dmp-reader: No maintainer"
+  ],
+  "kernel_notes_SHA256": "beba3aac58cfa0623de8181119002c0ef2dd56b70234c7c1673b74ced08561ab",
+  "installed_r2_boot_and_package_selections_verified_after_host_work": true,
+  "package_exact_handset_boot_performed": false,
+  "native_install_hooks_qualified": false,
+  "second_clean_build_performed": false
+}

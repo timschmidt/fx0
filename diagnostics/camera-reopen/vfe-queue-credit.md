@@ -138,3 +138,27 @@ reported during the run. Active-stream suspend and resume remain open.
 The scheduled return restored the installed kernel. The independent audit
 verified 482 installed module files, the protected files, and the charger
 timer and control registers. [Signed RAM qualification](../../evidence/2026-11-19-fx0-camss-rdi-sof-rearm-handset.json)
+
+## Signed 6.18.64-r3 package candidate
+
+The r3 kernel recipe starts with the installed r2 source and carries the
+three tested CAMSS changes. Its in-tree CAMSS source and the executable
+`.text` section of its module match the RAM-tested revision. The complete
+module payload differs in ELF build metadata, read-only data and symbols.
+The build kept all 65 packaged DTBs, the configuration and the installed
+module certificate, and verified signatures for all 468 loadable modules.
+[Release source](https://github.com/timschmidt/fx0-linux/commit/539a7cccccac57f48e112bf5f8b6b95eca91cc5a)
+[Package recipe](https://github.com/timschmidt/fx0-pmaports/commit/d1fc4d4d5e993116bee3706494a1d5f78b1e9065)
+
+The paired DMP reader keeps its r2 payload and pins the r3 kernel. A shadow
+transaction rejected the kernel alone because of the existing r2 reader
+dependency. Upgrading the pair changed two of 776 records and left the
+device package at 1-r3. Rollback restored the original database and world
+selection byte for byte and checked the restored package files. The isolated
+root required explicit permission for local APK files on tmpfs. The APKs and
+repository index passed verification with the existing trusted public key.
+
+One clean signed build and the file-only transaction have passed. The second
+clean build, package-exact handset trial and native boot hooks still need
+qualification. The installed phone continues to run r2.
+[Signed build and rollback evidence](../../evidence/2026-11-19-fx0-camss-r3-package.json)
