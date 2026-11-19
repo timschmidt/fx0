@@ -889,6 +889,28 @@ override disabled, known dimensions and an early capture pool. Ordinary
 FFmpeg startup and resolution changes still need handset qualification.
 [Capture-first comparison](https://github.com/timschmidt/fx0-linux/commit/9bb2e3c38d164e9f34107e4b155ee59b43506918)
 
+A separate HFI1xx diagnostic sends the existing sequence-header parse
+command after session start. It uses the 630-byte prefix that ends before
+the first coded slice. The probe leaves CAPTURE idle and retains the coded
+buffer while observing replies. Host sanitizer tests cover 14 submission
+cases and 128 reply cases. The exact RAM image replaces the Venus core
+and decoder modules, and matches all 59 core export CRCs and 488 module
+records.
+[Sequence-header diagnostic](https://github.com/timschmidt/fx0-linux/commit/feff5a3ffb233a60f569f1c994d39d8838b9e2ad)
+
+The first parser boot loaded both codec children. The Venus IOMMU later
+timed out synchronizing its TLB during runtime resume. Its runtime state
+was `error`, so the guard stopped before the parser workload. The installed
+return matched all 482 module files and the protected hashes.
+
+On the repeat with the same image, resource loading and session start
+succeeded. The driver queued the parse command and submitted no coded
+picture. The retained firmware log contains a system error and an
+exception, with no parser reply. Userspace saw no source-change event
+over 2.5 seconds. The repeat recorded no IOMMU timeout, and the installed
+return matched all 482 module files and the protected hashes. The
+capture-first decode remains the verified path.
+
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
 its synthetic completion. The matched ordinary STOP test still failed
