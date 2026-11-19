@@ -84,6 +84,10 @@ regulator schemas. Omitting the regulator dependency produces misleading
 `otg-vbus` diagnostics. Baseline schemas reject the new references; the candidate
 bindings and both generated R4/BMS DTBs pass without diagnostics.
 
+Add `--unknown-pack` to run the same firmware selector on the supplied DTB
+with an unknown battery ID. The check requires the complete output to match
+the input byte for byte.
+
 ## Device procedure
 
 Preserve the current installed bootloader prefix and both GPT regions on two

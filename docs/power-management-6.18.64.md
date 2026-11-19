@@ -909,6 +909,33 @@ the single activation. An independent journal check verified automatic
 return to the installed kernel and matching boot, package and module
 hashes. The active trace covers the gauge bind and unbind processes.
 
+## Installed pack identity and charging-policy handoff
+
+The installed r2 boot exposes neither the stock battery-ID argument nor a
+battery-ID IIO channel. The firmware supplied no selected profile, monitored
+battery reference, or charge-inhibited handoff marker. The managed policy
+driver is unbound. The preserved stock evidence identifies the TOCAD Madai
+selection, and the current boot still lacks live pack identification.
+
+The PM8226 reported Good immediately before three 665 mV thermistor reads
+and HOT immediately after them. Both sysfs health and the hardware status
+changed. Separate four-register snapshots confirmed BTC stayed at `0x81`
+and USB input remained at 500 mA. HOT was still present four minutes later
+when the check requested only register snapshots. The stock table maps
+665 mV to 30.9°C under its calibration assumptions. This is a model estimate
+and the read sequence does not establish what caused the comparator change.
+
+The existing firmware selector and inhibition hooks pass on the exact
+packaged r2 DTB in either order with simulated pack and PMIC inputs. Both
+orders preserve the 16 existing charger properties and produce matching
+profile data and references, including all 155 vendor OCV points. The
+unknown-pack fixture leaves both the original DTB and the gated DTB byte
+identical. The managed and legacy charger and VADC objects build with the
+same Alpine Clang toolchain as r2. The installed configuration still has
+the managed policy disabled. The firmware and policy pairing remains to
+qualify on the handset.
+[Installed observations and exact-r2 host checks](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce

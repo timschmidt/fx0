@@ -13,8 +13,11 @@ parser.add_argument("--vendor", type=Path)
 parser.add_argument("--dtb-in", type=Path)
 parser.add_argument("--dtb-out", type=Path)
 parser.add_argument("--expect-unaligned-failure", action="store_true")
+parser.add_argument("--unknown-pack", action="store_true",
+                    help="verify an unidentified pack leaves the supplied DTB byte-identical")
 args = parser.parse_args()
 assert bool(args.dtb_in) == bool(args.dtb_out)
+assert not args.unknown_pack or args.dtb_in
 if args.dtb_out:
     assert not args.dtb_out.exists(), "Keep generated DT artifacts immutable"
 source = args.lk2nd.resolve() / "lk2nd/device/2nd/gpl/lg-madai-battery.c"
@@ -142,18 +145,31 @@ static void verify(bool bms) {
  assert(!fdt_getprop(tree,battery,"constant-charge-current-max-microamp",NULL));
 }
 int main(int argc,char **argv) {
- if(argc==3) {
+ if(argc==3 || argc==4) {
   FILE *input=fopen(argv[1],"rb");assert(input);
   assert(fseek(input,0,SEEK_END)==0);long length=ftell(input);assert(length>0 && length<1024*1024);
   rewind(input);void *image=malloc(length+8192);assert(image);
   assert(fread(image,1,length,input)==(size_t)length);fclose(input);
-  assert(fdt_open_into(image,image,length+8192)==0);
-  lk2nd_dev.cmdline="lge.battid=ISL6296_L";assert(madai_battery_detect(NULL,0)==0);
-  assert(madai_battery_update_dt(image,"ignored",0)==0);
-  assert(fdt_path_offset(image,"/battery")>=0);assert(fdt_pack(image)==0);
+  size_t output_length;
+  if(argc==4) {
+   assert(!strcmp(argv[3],"unknown") && fdt_check_header(image)==0);
+   void *before=malloc(length);assert(before);memcpy(before,image,length);
+   lk2nd_dev.cmdline="lge.battid=unknown";assert(madai_battery_detect(NULL,0)==0);
+   assert(!madai_known_battery && !lk2nd_dev.battery);
+   assert(madai_battery_update_dt(image,"ignored",0)==0);
+   assert(!memcmp(before,image,length));free(before);output_length=length;
+  } else {
+   assert(fdt_open_into(image,image,length+8192)==0);
+   lk2nd_dev.cmdline="lge.battid=ISL6296_L";assert(madai_battery_detect(NULL,0)==0);
+   assert(madai_battery_update_dt(image,"ignored",0)==0);
+   assert(fdt_path_offset(image,"/battery")>=0);assert(fdt_pack(image)==0);
+   output_length=fdt_totalsize(image);
+  }
   FILE *output=fopen(argv[2],"wb");assert(output);
-  assert(fwrite(image,1,fdt_totalsize(image),output)==(size_t)fdt_totalsize(image));
-  assert(fclose(output)==0);free(image);puts("Generated private DTB using actual firmware hook");return 0;
+  assert(fwrite(image,1,output_length,output)==output_length);
+  assert(fclose(output)==0);free(image);
+  puts(argc==4?"Unknown pack left the supplied DTB byte-identical":
+               "Generated private DTB using actual firmware hook");return 0;
  }
  assert(argc==1);
  if(EXPECT_UNALIGNED_FAILURE) {
@@ -226,6 +242,9 @@ with tempfile.TemporaryDirectory(prefix="fx0-battery-handoff-") as temporary:
                     "-lfdt", "-Wl,--wrap=fdt_setprop", "-Wl,--wrap=fdt_add_subnode",
                     "-Wl,--wrap=fdt_open_into", "-o", str(root / "check")], check=True)
     if args.dtb_in:
-        subprocess.run([str(root / "check"), str(args.dtb_in), str(args.dtb_out)], check=True)
+        command = [str(root / "check"), str(args.dtb_in), str(args.dtb_out)]
+        if args.unknown_pack:
+            command.append("unknown")
+        subprocess.run(command, check=True)
     else:
         subprocess.run([str(root / "check")], check=True)

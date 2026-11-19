@@ -1640,5 +1640,199 @@
       "physical_current_accuracy_or_SOC_qualified": false,
       "persistent_update_performed": false
     }
+  },
+  "SMBB_r2_pack_and_policy_handoff": {
+    "recorded_UTC": "2026-11-19T07:23:20+00:00",
+    "installed_linux_source": "0f2c00771fd1fa728c5775a4b8a69d440d31d527",
+    "retained_firmware_source": "2ce757408f364ec6f1197b1d5d0be4128a309b1e",
+    "original_stock_source_reference": "03aba4427a7666d57b5ae06d375e259ea337f351",
+    "installed_profile_and_BTC_observation": {
+      "passed": true,
+      "boot_id": "bfd6258e-d278-48de-a343-bb10790d3f28",
+      "profile_marker_present": false,
+      "charge_inhibit_marker_present": false,
+      "monitored_battery_present": false,
+      "known_battid_token_in_runtime_cmdline": {
+        "token_count": 0,
+        "exact_known_selector": false
+      },
+      "known_battid_token_in_live_DT_bootargs": {
+        "token_count": 0,
+        "exact_known_selector": false
+      },
+      "battery_ID_0x31_in_live_DT": false,
+      "battery_ID_0x31_IIO_attributes": 0,
+      "managed_policy_driver_bound": false,
+      "thermistor_mV": [
+        665,
+        665,
+        665
+      ],
+      "comparator_before_thermistor": {
+        "raw_temperature_status": [
+          128,
+          128
+        ],
+        "temperature_OK_interrupt": [
+          true,
+          true
+        ],
+        "BTC": [
+          129,
+          129
+        ],
+        "sysfs_health_before": "Good",
+        "sysfs_health_after": "Good",
+        "SPMI_reads": 8,
+        "SPMI_writes": 0
+      },
+      "comparator_after_thermistor": {
+        "raw_temperature_status": [
+          64,
+          64
+        ],
+        "temperature_OK_interrupt": [
+          false,
+          false
+        ],
+        "BTC": [
+          129,
+          129
+        ],
+        "sysfs_health_before": "Overheat",
+        "sysfs_health_after": "Overheat",
+        "SPMI_reads": 8,
+        "SPMI_writes": 0
+      },
+      "USB_input_limit_uA": 500000,
+      "charger_settings_written": false,
+      "live_pack_authenticated": false,
+      "USB_route_verified": true,
+      "recorded_UTC": "2026-11-19T07:19:17+00:00"
+    },
+    "comparator_only_followup": {
+      "passed": true,
+      "boot_id": "bfd6258e-d278-48de-a343-bb10790d3f28",
+      "profile_marker_present": false,
+      "charge_inhibit_marker_present": false,
+      "monitored_battery_present": false,
+      "known_battid_token_in_runtime_cmdline": {
+        "token_count": 0,
+        "exact_known_selector": false
+      },
+      "known_battid_token_in_live_DT_bootargs": {
+        "token_count": 0,
+        "exact_known_selector": false
+      },
+      "battery_ID_0x31_in_live_DT": false,
+      "battery_ID_0x31_IIO_attributes": 0,
+      "managed_policy_driver_bound": false,
+      "thermistor_mV": [],
+      "thermistor_conversion_requested": false,
+      "comparator_before_thermistor": {
+        "raw_temperature_status": [
+          64,
+          64
+        ],
+        "temperature_OK_interrupt": [
+          false,
+          false
+        ],
+        "BTC": [
+          129,
+          129
+        ],
+        "sysfs_health_before": "Overheat",
+        "sysfs_health_after": "Overheat",
+        "SPMI_reads": 8,
+        "SPMI_writes": 0
+      },
+      "comparator_after_thermistor": {
+        "raw_temperature_status": [
+          64,
+          64
+        ],
+        "temperature_OK_interrupt": [
+          false,
+          false
+        ],
+        "BTC": [
+          129,
+          129
+        ],
+        "sysfs_health_before": "Overheat",
+        "sysfs_health_after": "Overheat",
+        "SPMI_reads": 8,
+        "SPMI_writes": 0
+      },
+      "USB_input_limit_uA": 500000,
+      "charger_settings_written": false,
+      "live_pack_authenticated": false,
+      "USB_route_verified": true,
+      "recorded_UTC": "2026-11-19T07:23:20+00:00"
+    },
+    "comparator_followup_seconds_after_thermistor_read": 243.0,
+    "stock_thermistor_table_model": {
+      "interpolation_mV": 665,
+      "stock_table_model_deciC": 309,
+      "state_model_at_example_4193000_uV": "normal",
+      "physical_temperature_measured": false
+    },
+    "comparator_cause_proven": false,
+    "host_policy_fixtures": {
+      "exact_stock_NTC_points": 83,
+      "actual_conversion_and_transition_cases": 21496,
+      "policy_control_cases": 2604,
+      "legacy_control_cases": 6242,
+      "child_probe_PM_devres_cases": 27,
+      "negative_lifetime_controls": 3,
+      "actual_firmware_selector_FDT_cases": 128,
+      "actual_firmware_gate_FDT_SPMI_cases": 307,
+      "exact_r2_unknown_pack_cases": 2,
+      "unknown_pack_fixture_SHA256": "7fba8f4987b81beb73caef05fde2b6459db8d7ac5aa3b1d4f0b43c2f80ceddc5"
+    },
+    "host_exact_DTB_contract": {
+      "passed": true,
+      "exact_packaged_r2_DTB_SHA256": "aa5662b13b302f0338eec2d6b378085445ac9ac6e65d3da8e47774d374a72700",
+      "generated_DTB_SHA256": {
+        "profile-then-gate": "9804aa3c074fbf34201b3e8fbf92bec7e7cc27e12f2ec17b7a90cc312e0a1e71",
+        "gate-then-profile": "f8246234f78fd0b27efa6d5e384f542550cfcbfb5f501ea8b1de107bf7f6253c"
+      },
+      "known_pack_and_PMIC_inputs_simulated": true,
+      "both_firmware_hook_orders_pass": true,
+      "exact_profile_and_phandle_values_match": true,
+      "unchanged_charger_properties": 16,
+      "unknown_pack_preserves_exact_DTB_before_and_after_gate": true,
+      "stock_OCV_points": 155,
+      "selected_static_and_runtime_schema_checks_passed": true,
+      "test_generated_runtime_DTBs_removed_by_wrapper": true
+    },
+    "host_ARM_build": {
+      "passed": true,
+      "compiler": "Alpine Clang 22.1.3",
+      "real_Kconfig_profiles": {
+        "managed": {
+          "ARM_objects_SHA256": {
+            "qcom_smbb.o": "0efba1024d9a6f7206ced70eac4d1cfa0d5bbd5ac76ddc0f783eba64cbc56224",
+            "qcom-spmi-vadc.o": "d8a305e6cb5aad11dfd14bcd0bdbb0a6713f5c2666c746b5758320cb786c3203"
+          },
+          "policy_probe_present": true
+        },
+        "legacy": {
+          "ARM_objects_SHA256": {
+            "qcom_smbb.o": "1de566222f654a5a810ad400def55ac3dbe3a7d542f92be18eeadfdd5d3aac36",
+            "qcom-spmi-vadc.o": "d263a8fb5801a3a7f48a52e646d0e6aee2c3971a7165f2bbbbde5819307d11c7"
+          },
+          "policy_probe_present": false
+        }
+      },
+      "only_Kconfig_toggle": "CHARGER_QCOM_SMBB_POLICY",
+      "W1_warnings": 0,
+      "W1_errors": 0,
+      "temporary_output_removed_by_wrapper": true
+    },
+    "reboot_or_firmware_and_package_change_performed": false,
+    "managed_policy_enabled_on_installed_boot": false,
+    "physical_pack_and_charging_qualified": false
   }
 }
