@@ -1395,6 +1395,31 @@ with a stalled CPU still require measurement.
 [Four-minute device tree](https://github.com/timschmidt/fx0-linux/commit/507b8a17314cb5cc5aaa157572e87c9f7ad3a6b4)
 [Handset expiry evidence](../evidence/2026-11-19-fx0-charge-duration-expiry.json)
 
+#### Camera capture during fast charge
+
+The verified 480-minute RAM image ran five camera sessions over the
+high-speed USB connection. Each session delivered 24 contiguous RAW10
+buffers. The front IMX132 and binned rear IMX179 each ran twice, followed
+by the rear sensor at 3280 × 2464. Sensor-generated RGGB color bars
+passed the pattern check in 89 buffers. Both sensors runtime-suspended
+after each close, and the test restored both pattern controls and removed
+the temporary frame files. The workload kernel log contained no camera,
+IOMMU or display faults, including the earlier missing-ready-buffer warning.
+
+Two PM8226 snapshots during each stream showed fast charge active,
+the 480-minute timer armed and comparator `0x82`. The charge policy
+sample was fresh and reported 30.9–31.1 °C during the captures. The
+observer accounted for 84 SPMI reads and zero PMIC writes. After the
+scheduled reboot, the independent audit matched the camera receipt to
+the journal and verified the installed timer, charger control and failure
+latch registers, seven protected hashes and 482 module files. The initial
+register comparison also detected a change in the live `vbat-det-lo`
+signal. The repeated check treated that one real-time IRQ bit separately.
+Independent battery-current measurement and camera recovery from system
+suspend remain open.
+[LG charger IRQ mapping](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/boot/dts/msm-pm8226.dtsi#L95-L112)
+[Camera and charging evidence](../evidence/2026-11-19-fx0-camera-while-charging.json)
+
 #### Managed charger suspend refusal and wake notifications
 
 The paired managed RAM image started with fast charge active at the

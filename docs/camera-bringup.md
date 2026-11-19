@@ -499,6 +499,13 @@ needed. Delivered V4L2 sequences alone cannot exclude hardware drops. This run
 does not qualify active charging, system suspend, every-pixel integrity or the
 unbooted r6 combination. [Evidence and limits](../evidence/2026-11-14-camera-current-r1-reopen.json)
 
+## November 19 capture during active charging
+
+Five guarded RAM sessions on 6.18.64 verified front and rear RAW10
+capture while the PM8226 reported fast charge. Both sensors runtime-suspended
+after each session, and the workload journal showed zero camera or IOMMU
+faults. [Procedure and evidence](power-management-6.18.64.md#camera-capture-during-fast-charge)
+
 Six subsequent full-resolution rear cases alternate frame-file writing and
 discard and retain all completion timestamps and capture stdout. All 144 buffers
 arrive; writing cases have 23/69 intervals above 1.5 times their session median,
