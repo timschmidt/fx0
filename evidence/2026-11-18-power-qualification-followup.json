@@ -1175,6 +1175,79 @@
     "installed": false,
     "handset_rebooted": false,
     "charging_limits_or_pack_profile_changed": false,
-    "charge_current_or_SOC_qualified": false
+    "charge_current_or_SOC_qualified": false,
+    "first_probe_and_teardown_followup": {
+      "recorded_UTC": "2026-11-19T06:32:04+00:00",
+      "linux_commit": "f9e46d93ede4c7115180352886830cd0bf7b63be",
+      "remote_exact_head_verified": true,
+      "installed_read_only_baseline": {
+        "boot_id": "90a41554-e833-4a2b-b448-482777e92132",
+        "captured_UTC": "2026-11-19T06:08:55.713296+00:00",
+        "existing_trace_reused": true,
+        "masked_register_fields": [
+          {
+            "output_hold_asserted": false,
+            "counter_clear_asserted": false,
+            "companion_channel_selection": 0,
+            "companion_sense_selection": 0
+          },
+          {
+            "output_hold_asserted": false,
+            "counter_clear_asserted": false,
+            "companion_channel_selection": 0,
+            "companion_sense_selection": 0
+          }
+        ]
+      },
+      "host_sanitizer_checks_passed": {
+        "BMS_arithmetic": 20033,
+        "BMS_snapshot_restart_and_sense_lifecycle": 94,
+        "BMS_getter_properties_cache_and_teardown": 38,
+        "IADC_provider_calibration_cache_and_reset": 34,
+        "IADC_raw_references_translation_and_cache": 27
+      },
+      "prior_driver_fixture_checks_retained": {
+        "I_O": 70,
+        "properties": 37
+      },
+      "removed_protections_detected_by_actual_function_fixtures": [
+        "initial_counter_idle_check",
+        "sense_selection_readback_before_counter_reset",
+        "companion_sense_restoration",
+        "prevent_property_sampling_during_teardown"
+      ],
+      "ARM_modules": {
+        "passed": true,
+        "module_metadata": {
+          "qcom-spmi-iadc.ko": {
+            "matching_import_CRCs": 40,
+            "kernel_release": "6.18.64-fx0-lts-alpine"
+          },
+          "qcom_pm8226_bms.ko": {
+            "matching_import_CRCs": 47,
+            "kernel_release": "6.18.64-fx0-lts-alpine"
+          }
+        },
+        "binding_and_targeted_DTB_schema_passed": true,
+        "external_Kbuild_link": true,
+        "signed_or_loaded": false,
+        "temp_build_removed_by_wrapper": true
+      },
+      "DTB_hashes_match_port": true,
+      "checkpatch_errors": 0,
+      "checkpatch_warnings": 0,
+      "temporary_ARM_build_size_MiB_rounded": 6.1,
+      "configuration_changes_reverted_by_lifecycle": [
+        "companion_channel_selection",
+        "companion_sense_selection"
+      ],
+      "operations_outside_companion_rollback": [
+        "BMS_counter_epoch_reset",
+        "IADC_provider_trim_commit"
+      ],
+      "first_probe_on_hardware_verified": false,
+      "charge_current_or_SOC_qualified": false,
+      "installed": false
+    }
   }
 }

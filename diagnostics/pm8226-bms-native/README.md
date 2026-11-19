@@ -35,6 +35,12 @@ error. The separate [thermistor check](../battery-thermistor/README.md) exercise
 the actual conversion and unit/table handoff; getter checks alone do not qualify
 temperature conversion or physical accuracy.
 
+The 6.18.64 first-probe update adds coverage for active hold/clear commands,
+ignored sense writes, companion rollback and reads during teardown. Run
+`check_io.py` and `check_properties.py` with `--require-sense-lifecycle` to
+enforce the new cases. It passes 94 I/O cases and 38 getter cases. The
+earlier diagnostic continues to run the original 70 and 37 cases.
+
 Mock register behavior cannot qualify the physical analog path. RAM testing finds
 an unresolved USB-idle discrepancy: BMS reports about +155 mA while
 manual IADC reports zero, and its relative counter also integrates that suspect

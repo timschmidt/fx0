@@ -25,7 +25,7 @@ union power_supply_propval { int intval; };
 struct pm8226_bms {
  int lock, present_error, voltage_error, current_error, average_error, charge_error, temperature_error;
  int voltage_uv, current_ua, average_ua, temperature_decic;
- bool present; uint64_t last_sample_ns;
+ bool present, stopping; uint64_t last_sample_ns;
  struct { int64_t charge_uah; } counter;
 };
 struct power_supply { struct pm8226_bms *bms; };
@@ -78,6 +78,10 @@ int main(void)
  assert(samples==0);
  now=NSEC_PER_SEC+101;
  assert(bms_get_property(&p,POWER_SUPPLY_PROP_CURRENT_NOW,&v)==0 && samples==1);count++;
+#ifdef STOPS_SAMPLING
+ b.stopping=true;
+ assert(bms_get_property(&p,POWER_SUPPLY_PROP_CURRENT_NOW,&v)==-ENODEV && samples==1);count++;
+#endif
  printf("%d actual live/average current, property error, status and cache cases pass\n",count);
  return 0;
 }
@@ -85,12 +89,14 @@ int main(void)
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('driver', type=Path)
+parser.add_argument('--require-sense-lifecycle', action='store_true')
 args = parser.parse_args()
 text = args.driver.read_text()
 source = text[text.index('static int bms_get_property('):text.index('static const enum power_supply_property bms_properties')]
+definitions = '#define STOPS_SAMPLING\n' if 'static void bms_cleanup(' in text or args.require_sense_lifecycle else ''
 with tempfile.TemporaryDirectory(prefix='fx0-bms-properties-') as temporary:
     root = Path(temporary)
-    (root / 'check.c').write_text(STUBS + source + MAIN)
+    (root / 'check.c').write_text(definitions + STUBS + source + MAIN)
     subprocess.run(['clang', '-std=c11', '-Wall', '-Wextra', '-Werror',
                     '-fsanitize=address,undefined', '-fno-sanitize-recover=all',
                     str(root / 'check.c'), '-o', str(root / 'check')], check=True)

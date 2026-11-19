@@ -842,6 +842,25 @@ desktop charge telemetry.
 [Diagnostic kernel source](https://github.com/timschmidt/fx0-linux/commit/9833a659ee487887893e47bca12db38886f1ef88)
 [Read-only capture and build checks](../evidence/2026-11-18-power-qualification-followup.json)
 
+The first-probe follow-up checks for an active output hold or counter clear
+before calibration and again before resetting the counter. Both companion
+IADC sense fields must read back correctly before reset. The driver attempts
+to restore the original fields on probe unwind, unbind and shutdown, and
+warns if verification fails. If configuration is retried after a rollback
+failure, it uses the original values for recovery. Property reads stop
+sampling when teardown begins. The installed baseline captured idle control
+bits and zero selections in both companion sense fields twice.
+
+Host fault injection covers busy controls, ignored register writes, late
+rollback and blocked sampling during teardown. Both ARM modules linked with
+all 87 imported symbol CRCs matching the installed build. This validates the
+driver's control flow and module ABI. A hardware probe must still capture
+the initial current disagreement before any reprobe, verify the companion
+fields after unbind, and compare measurements with a known current reference.
+The counter reset and provider trim commits are outside the sense-field
+rollback. The phone remains on installed r2.
+[First-probe and teardown correction](https://github.com/timschmidt/fx0-linux/commit/f9e46d93ede4c7115180352886830cd0bf7b63be)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce
