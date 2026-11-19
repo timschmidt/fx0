@@ -1,0 +1,173 @@
+{
+  "date_UTC": "2026-11-19",
+  "RAM_build": {
+    "kernel_source": "2150f900adaf27c32a5bd620bd12ab04345aa99b",
+    "boot_image_SHA256": "251e90924d2cc4c21307872f2918ec101306f942545cb17220909dd450e094c9",
+    "boot_image_bytes": 17405952,
+    "Madai_DTB_SHA256": "d390bd11f0025787b6bbe27b5fb16840c45e755fd586e057d70ec08287d53a12",
+    "unchanged_built_in_exports": 11718,
+    "unchanged_total_exports": 14885,
+    "verified_CAMSS_symbol_imports": 133,
+    "unchanged_installed_module_files_in_RAM": 481,
+    "original_module_certificate_SHA256": "de086e266ec1d82ea17ebbd51f10242e591df3cf74e958e269bdd91b9176d370",
+    "trial_certificate_SHA256": "21485b19dca2dd28aa50755194458ca267bffd4ded2a38c7ffd63f93c65c3e82",
+    "trial_signer_private_key_removed": true,
+    "tampered_payload_and_wrong_certificate_rejected": true,
+    "retained_signature_enforcement_and_WLAN_blacklist": true,
+    "early_return_seconds": 420,
+    "standard_return_seconds": 360
+  },
+  "firmware_and_kernel_RAM_readbacks_verified": true,
+  "active_streams": [
+    {
+      "camera": "front",
+      "checks_passed": true,
+      "camss_prepare_returns": [
+        -16
+      ],
+      "machine_suspend_entries": 0,
+      "buffers_after_refusal_verified": 6,
+      "capture_timing": {
+        "buffers": 32,
+        "median_seconds": 0.0696,
+        "longest_seconds": 2.087868,
+        "longest_adjacent_sequence": [
+          27,
+          28
+        ]
+      },
+      "sensors_runtime_suspended_after_close": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "camera": "back",
+      "checks_passed": true,
+      "camss_prepare_returns": [
+        -16
+      ],
+      "machine_suspend_entries": 0,
+      "buffers_after_refusal_verified": 6,
+      "capture_timing": {
+        "buffers": 53,
+        "median_seconds": 0.033271,
+        "longest_seconds": 0.532281,
+        "longest_adjacent_sequence": [
+          28,
+          29
+        ]
+      },
+      "sensors_runtime_suspended_after_close": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    }
+  ],
+  "longest_frame_intervals_relative_to_prepare_refusal": {
+    "front": {
+      "gap_seconds": 2.087868,
+      "sequence": [
+        27,
+        28
+      ],
+      "gap_start_relative_to_refusal_seconds": 1.172251,
+      "gap_end_relative_to_refusal_seconds": 3.260119
+    },
+    "back": {
+      "gap_seconds": 0.532281,
+      "sequence": [
+        28,
+        29
+      ],
+      "gap_start_relative_to_refusal_seconds": -0.116883,
+      "gap_end_relative_to_refusal_seconds": 0.415398
+    }
+  },
+  "finite_capture_drains": [
+    {
+      "camera": "front",
+      "run": 1,
+      "timing": {
+        "buffers": 24,
+        "median_seconds": 0.069597,
+        "longest_seconds": 0.139039,
+        "longest_adjacent_sequence": [
+          2,
+          3
+        ]
+      },
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "camera": "front",
+      "run": 2,
+      "timing": {
+        "buffers": 24,
+        "median_seconds": 0.069597,
+        "longest_seconds": 0.139249,
+        "longest_adjacent_sequence": [
+          20,
+          21
+        ]
+      },
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "camera": "back",
+      "run": 1,
+      "timing": {
+        "buffers": 24,
+        "median_seconds": 0.033272,
+        "longest_seconds": 0.033483,
+        "longest_adjacent_sequence": [
+          19,
+          20
+        ]
+      },
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "camera": "back",
+      "run": 2,
+      "timing": {
+        "buffers": 24,
+        "median_seconds": 0.033271,
+        "longest_seconds": 0.033396,
+        "longest_adjacent_sequence": [
+          18,
+          19
+        ]
+      },
+      "sensors": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    }
+  ],
+  "closed_streams": {
+    "first_wakeup_source": "rtc",
+    "inactive_clock_seconds": 14.525,
+    "RTC_interrupt_increment": 1,
+    "camss_prepare_returns": [
+      0
+    ],
+    "cleared_alarm": true
+  },
+  "camera_warnings": 0,
+  "matched_retained_return_journal": true,
+  "installed_module_files_verified": 482,
+  "installed_charger_registers_restored": true,
+  "installed_protected_hashes_verified": true,
+  "camera_replay_passed": true,
+  "separate_STOPPING_interrupt_not_traced_directly": true
+}

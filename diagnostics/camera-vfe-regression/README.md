@@ -54,8 +54,9 @@ register update. They check that the stray completion leaves the final buffer,
 pending queue and sequence available for the matching acknowledgement and the
 first fresh frame. All 99 dispatcher executions and 30 negative controls
 passed with Clang 21.1.8, ASan, UBSan and LeakSanitizer. The complete ARM CAMSS
-component also compiled with `W=1`. Hardware capture with this change is
-pending.
+component also compiled with `W=1`. The handset replay checked finite
+captures, the active-stream sleep refusal, RTC wake and the installed return.
+[Handset qualification](../../evidence/2026-11-19-fx0-camss-stopping-completion-handset.json)
 
 The original native buffers and callbacks remain in
 [the callback witness](../camera-reopen/vfe-callback-order.md). Host regression

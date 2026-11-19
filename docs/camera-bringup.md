@@ -548,9 +548,19 @@ installed seven-hash and 482-module checks.
 The follow-up CAMSS source keeps the final buffer under the gen1 output lock
 until the register update acknowledges the frame-drop change. An intervening
 completion leaves the pending queue and ping/pong index untouched. The ARM
-component build and sanitizer tests passed. A handset replay is still needed
-to check the warning and frame timing. [Driver change](https://github.com/timschmidt/fx0-linux/commit/2150f900adaf27c32a5bd620bd12ab04345aa99b)
+component build and sanitizer tests passed. [Driver change](https://github.com/timschmidt/fx0-linux/commit/2150f900adaf27c32a5bd620bd12ab04345aa99b)
 [Regression procedure](../diagnostics/camera-vfe-regression/README.md)
+
+The signed RAM replay logged no camera warnings. Each camera delivered six
+verified buffers after CAMSS refused sleep, and four finite capture runs each
+delivered 24 consecutive buffers and released both sensors. The closed-camera
+RTC wake completed after 14.525 seconds. The separate late interrupt was
+exercised in the host regression. On the handset, the longest front-camera
+interval was 2.088 seconds and started 1.172 seconds after the refusal. The
+rear-camera interval spanning refusal was 0.532 seconds. The cause of the
+front-camera timing gap remains open. The installed kernel, module tree and
+charger registers passed verification after automatic return.
+[Handset qualification](../evidence/2026-11-19-fx0-camss-stopping-completion-handset.json)
 
 Resuming the same stream requires CAMSS to stop DMA at suspend, preserve
 ownership of queued buffers, bring the pipeline back after its suppliers
