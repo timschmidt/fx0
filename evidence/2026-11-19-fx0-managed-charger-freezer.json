@@ -1,0 +1,172 @@
+{
+  "recorded_UTC": "2026-11-19T16:22:05+00:00",
+  "base_kernel_source": "8e5eacff1484771c0c96de28b018896a2cd7b738",
+  "experimental_kernel_source": "1562a10bf78522776079c2aa7880d4b539324583",
+  "RAM_image_SHA256": "f433b380f0d006afe79a2c3a13c158b0f9a65646d66042167b79b08c090c2ddc",
+  "firmware": "fx0-pm-host-01",
+  "verified_RAM_module_files": 482,
+  "WLAN_disabled": true,
+  "both_return_guards": true,
+  "before": {
+    "SPMI_reads": 14,
+    "stable_fresh_policy": true,
+    "votes": 0,
+    "state": 0,
+    "temperature_decic": 313,
+    "voltage_uV": 4288107,
+    "age_ms": 500,
+    "charge_control": [
+      128,
+      128
+    ],
+    "comparator": [
+      130,
+      130
+    ],
+    "temperature_status": [
+      128,
+      128
+    ],
+    "temperature_OK": [
+      true,
+      true
+    ],
+    "charge_IRQ": [
+      32,
+      32
+    ],
+    "fast": [
+      true,
+      true
+    ],
+    "trickle": [
+      false,
+      false
+    ],
+    "done": [
+      false,
+      false
+    ]
+  },
+  "suspend_refusal": {
+    "suspend_stats": {
+      "last_failed_dev": "",
+      "last_failed_errno": "-16",
+      "last_failed_step": "freeze",
+      "success": "0",
+      "fail": "1",
+      "failed_suspend": "0",
+      "failed_suspend_late": "0",
+      "failed_suspend_noirq": "0",
+      "failed_freeze": "1",
+      "failed_prepare": "0"
+    },
+    "kernel_messages": [
+      "PM: suspend exit",
+      "Freezing user space processes aborted after 0.001 seconds (108 tasks refusing to freeze, wq_busy=0):",
+      "PM: suspend entry (s2idle)"
+    ],
+    "errno": 16,
+    "alarm_cleared": true,
+    "hardware_sleep_entry_verified": false,
+    "repeat_dispatched": false,
+    "refused_wakeup_source_verified": false
+  },
+  "final_inhibit": {
+    "SPMI_reads": 14,
+    "stable_fresh_policy": true,
+    "votes": 2,
+    "state": 0,
+    "temperature_decic": 312,
+    "voltage_uV": 4295454,
+    "age_ms": 940,
+    "charge_control": [
+      0,
+      0
+    ],
+    "comparator": [
+      129,
+      129
+    ],
+    "temperature_status": [
+      128,
+      128
+    ],
+    "temperature_OK": [
+      true,
+      true
+    ],
+    "charge_IRQ": [
+      0,
+      0
+    ],
+    "fast": [
+      false,
+      false
+    ],
+    "trickle": [
+      false,
+      false
+    ],
+    "done": [
+      false,
+      false
+    ]
+  },
+  "steady_inhibit_trace": {
+    "worker_entries": 7,
+    "worker_returns": 7,
+    "activations": 7,
+    "activations_inside_policy_worker": 7,
+    "deactivations": 7,
+    "trace_lost": 0,
+    "user_inhibit_held": true,
+    "cadence_seconds": [
+      1.0388,
+      1.04,
+      1.0411,
+      1.0398,
+      1.0399,
+      1.0404
+    ],
+    "cleanup_verified": true
+  },
+  "return_audit": {
+    "installed_module_files_verified": 482,
+    "protected_hashes_match": true,
+    "installed_Sway_IPC_active_outputs": 1,
+    "touch_devices_enumerated": 1,
+    "journal_counts": {
+      "journal_rows": 2526,
+      "kernel_rows": 487,
+      "early_return_guard_armed": 1,
+      "full_module_overlay_ready": 1,
+      "early_guard_or_overlay_failure": 0,
+      "suspend_entry": 1,
+      "kernel_fatal": 0,
+      "SMBB_or_VADC_error": 0,
+      "lockup": 0,
+      "normal_return_service_rows": 3,
+      "normal_return_service_success": 2,
+      "orderly_shutdown": 3,
+      "suspend_exit": 1
+    },
+    "matches_captured_RAM_receipt": true
+  },
+  "host_verification": {
+    "managed_ARM_Clang_21_W1_clean": true,
+    "checkpatch_errors": 0,
+    "checkpatch_warnings": 0,
+    "ASan": true,
+    "UBSan": true,
+    "LSan_environment_failure": true,
+    "policy_and_legacy_cases": [
+      2614,
+      6242
+    ],
+    "comparator_cases": 44,
+    "recharge_cases": 143,
+    "unmodified_source_rejected_by_notification_check": true
+  },
+  "patched_kernel_linked_or_booted": false
+}

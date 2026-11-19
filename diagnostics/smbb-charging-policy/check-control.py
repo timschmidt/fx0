@@ -11,6 +11,8 @@ import tempfile
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('linux', type=Path)
+parser.add_argument('--check-notifications', action='store_true',
+                    help='check that steady charging samples do not wake the battery supply')
 args = parser.parse_args()
 resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
 root = Path(__file__).resolve().parents[2]
@@ -522,6 +524,56 @@ int main(void)
  printf("PASS: %u actual policy worker/actuator/fault/stale/PM/handoff cases (including 2500 concurrent requests) plus 6242 legacy control cases\n",count);
 }
 '''
+if args.check_notifications:
+    notification_cases = r'''
+ setup(&c, &io, &p, &policy);
+ therm = (struct iio_channel){.value=737};
+ voltage = (struct iio_channel){.value=3900000};
+ policy.thermistor = &therm;
+ policy.voltage = &voltage;
+ smbb_policy_sample_work(&policy.sample_work.work);
+ assert(p.notifications == 1 && (io.registers[0x49] & 0x80));
+ unsigned int previous_writes = io.control_writes;
+ voltage.value += 1234;
+ smbb_policy_sample_work(&policy.sample_work.work);
+ assert(p.notifications == 1 && policy.microvolts == voltage.value);
+ assert(io.control_writes > previous_writes && (io.registers[0x49] & 0x80));
+ assert(!smbb_charge_vote(&c, SMBB_INHIBIT_USER, true));
+ smbb_policy_sample_work(&policy.sample_work.work);
+ assert(p.notifications == 1 && !(io.registers[0x49] & 0x80));
+ assert(!smbb_charge_vote(&c, SMBB_INHIBIT_USER, false));
+ clock_ns += (u64)SMBB_POLICY_MAX_AGE_MS * NSEC_PER_MSEC + 1;
+ smbb_policy_age_work(&policy.age_work.work);
+ assert(p.notifications == 2 && !(io.registers[0x49] & 0x80));
+ previous_writes = io.control_writes;
+ smbb_policy_age_work(&policy.age_work.work);
+ assert(p.notifications == 2 && (c.charge_inhibit & SMBB_INHIBIT_SAMPLE));
+ assert(io.control_writes > previous_writes && !(io.registers[0x49] & 0x80));
+ smbb_policy_sample_work(&policy.sample_work.work);
+ assert(p.notifications == 3 && (io.registers[0x49] & 0x80));
+ voltage.error = -EIO;
+ smbb_policy_sample_work(&policy.sample_work.work);
+ assert(p.notifications == 4 && !(io.registers[0x49] & 0x80));
+ smbb_policy_sample_work(&policy.sample_work.work);
+ assert(p.notifications == 4 && !(io.registers[0x49] & 0x80));
+ assert(!smbb_policy_quiesce(&policy, SMBB_INHIBIT_SUSPEND));
+ smbb_policy_sample_work(&policy.sample_work.work);
+ assert(p.notifications == 4 && (c.charge_inhibit & SMBB_INHIBIT_SUSPEND));
+ setup(&c, &io, &p, &policy);
+ policy.thermistor = &therm;
+ policy.voltage = &voltage;
+ voltage.error = 0;
+ smbb_policy_sample_work(&policy.sample_work.work);
+ therm.value = 539;
+ smbb_policy_sample_work(&policy.sample_work.work);
+ assert(!c.charge_inhibit && c.attr[ATTR_BAT_IMAX] == 450000);
+ assert(p.notifications == 2);
+ puts("PASS: quiet steady samples and age retries, notifications on fault and recovery");
+'''
+    insertion = ' assert(!pthread_mutex_destroy(&c.charge_lock.gate));'
+    assert extra.count(insertion) == 1
+    extra = extra.replace(insertion, notification_cases + insertion)
+
 with tempfile.TemporaryDirectory(prefix='fx0-smbb-policy-control-') as directory:
     directory = Path(directory)
     (directory/'check.c').write_text(stubs+'\n#define EPROBE_DEFER 517\n'+defines+'\n'+attrs+limits+controls+policy+tests+extra)

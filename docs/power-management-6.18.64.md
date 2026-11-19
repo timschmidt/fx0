@@ -1324,6 +1324,36 @@ interrupts. The installed snapshots leave the cause of the missing
 interrupt unresolved. A validated taper-current measurement and
 samples during the transition are still needed to qualify `Full`.
 
+#### Managed charger suspend refusal and wake notifications
+
+The paired managed RAM image started with fast charge active at the
+nominal voltage settings. The RTC-backed `s2idle` request returned
+`EBUSY` during userspace freeze, before the charger suspend callback.
+The alarm was cleared, and the final PMIC readback showed charge disabled
+and the conservative `0x81` comparator window. A second request was
+gated by the RAM trial's readiness and time limits.
+
+A separate 7.25-second trace in the same boot held the user inhibit
+vote. All seven `smbb-bif` wake-source activations occurred inside the
+managed sample worker, about 1.04 seconds apart. The trace captured all
+seven deactivations and reported zero lost events. This establishes
+steady policy polling as a source of wake activity during inhibition.
+The wake source for the original freezer refusal remains unverified.
+
+The source change keeps the sample and age workers' safety checks and
+register verification. These workers now notify the battery supply when
+the inhibit votes or effective current limit change. The regression
+rejected the old steady-sample notifications and verified notifications
+on expiry, recovery, fault and a reduced-current transition. The full
+charger object compiled for ARM with `W=1`. The change still needs a
+guarded handset repeat to qualify charge disable through sleep and the
+fresh-sample requirement on wake. [Kernel change](https://github.com/timschmidt/fx0-linux/commit/1562a10bf78522776079c2aa7880d4b539324583)
+
+The candidate returned through the scheduled reboot. The independent
+audit matched all seven protected hashes and all 482 installed module
+files, and the journal matched the failed suspend receipt.
+[Handset and regression evidence](../evidence/2026-11-19-fx0-managed-charger-freezer.json)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce
