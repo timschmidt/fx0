@@ -947,9 +947,34 @@ the fixed-resolution, capture-first path with the opt-in flag.
 The retained journal verified capture submission before coded input
 and recorded zero firmware errors or IOMMU timeouts. The installed
 r2 return matched the protected hashes and all 482 module files.
-Default startup, dynamic resolution changes and longer decode
-workloads remain open.
+Default startup and dynamic resolution changes remain open.
 [Decoder qualification evidence](../evidence/2026-11-18-venus-interconnect-isolation.json)
+
+The sustained capture-first run used 720 distinct 320 × 240 pictures in
+one constrained-baseline H.264 stream. The corrected FFmpeg passed all
+82,944,000 decoded YUV420P bytes through a streaming SHA-256 check in
+21.4 seconds. The digest matched the ARM software decoder reference.
+The check bounded both runtime and output size, and discarded the
+pixels as it hashed them. The retained journal confirmed all 720
+coded-input submissions and recorded zero decoder or IOMMU faults.
+
+The mixed-resolution fixture contains 12 pictures each at 320 × 240,
+640 × 360 and 320 × 240. Software decode and normalization produced
+36 pictures and three reference segment digests. The handset output
+matched the first segment exactly and ended after 12 pictures, with
+FFmpeg exit status zero. Firmware reported insufficient resources
+at 640 × 368 coded dimensions, and FFmpeg observed a capture allocation
+change from 320 × 256 to 640 × 384. The retained kernel log recorded no
+firmware rejection, IOMMU timeout or panic.
+
+The ioctl-traced repeat produced 24 pictures. The larger CAPTURE queue
+allocated 32 buffers and accepted `STREAMON`. The decoder rejected
+`S_SELECTION` with `ENOTTY`, and FFmpeg fed the filter a 640 × 384 NV12
+image for the 640 × 360 segment. Its normalized digest differed from
+software. On the switch back, firmware reported a session error and
+FFmpeg again exited with status zero. Both runs returned to installed
+r2 and passed the protected-hash and 482-module audit. Resolution
+changes remain unqualified.
 
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored

@@ -2219,5 +2219,242 @@
     "persistent_installation_performed": false,
     "duplicate_RAM_readbacks_removed": true,
     "temporary_build_removed": true
+  },
+  "Venus_FFmpeg_extended_capture_first_qualification": {
+    "recorded_UTC": "2026-11-19T12:23:45+00:00",
+    "same_signed_RAM_image_SHA256": "58eba6f2830393b0f1e1f3b0302b3b0b8f0d95760c234a66bcff251a109f3d7b",
+    "corrected_FFmpeg_binary_SHA256": "0cec981536d3bce78160a953b27f569cf812f06705d3ec6689cd5690c6330f3e",
+    "sustained_fixed_resolution": {
+      "fixture": {
+        "passed": true,
+        "width": 320,
+        "height": 240,
+        "fps": 15,
+        "frames": 720,
+        "distinct_software_frames": 720,
+        "compressed_bytes": 2272934,
+        "fixture_h264_SHA256": "48f92a4b5820b4bc158742ed9bbbba3bd62790d408b9f6256d2d0c212c7adfaa",
+        "software_YUV420P_SHA256": "f628d103eb3e3d3e2a98cad0314f74da9f343e07284b1fab3b0b55c3e88ddf64",
+        "software_output_bytes": 82944000,
+        "FFmpeg_ARM_binary_SHA256": "0cec981536d3bce78160a953b27f569cf812f06705d3ec6689cd5690c6330f3e",
+        "encoder": "libx264 constrained baseline, no B frames, one reference",
+        "synthetic_source": "testsrc2",
+        "retained_decoded_video": false
+      },
+      "handset": {
+        "output": {
+          "exit_status": 0,
+          "probe_completed": true,
+          "hardware_output_frames": 720,
+          "output_bytes": 82944000,
+          "elapsed_seconds": 21.396,
+          "sequence_SHA256": "f628d103eb3e3d3e2a98cad0314f74da9f343e07284b1fab3b0b55c3e88ddf64",
+          "matches_software_reference": true,
+          "capture_started_before_output": true,
+          "output_quartile_times_seconds": [
+            6.238,
+            11.36,
+            16.538,
+            21.362
+          ]
+        },
+        "independent_postflight": {
+          "passed": true,
+          "boot_id": "e20a1886-3385-4a3b-bff9-e0f7f5887694",
+          "candidate_boot": "7bb50a75-21e3-441d-96d7-c0a6a1aba653",
+          "installed_module_files_verified": 482,
+          "protected_hashes_match": true,
+          "early_capture_firmware_submission_before_input": true,
+          "coded_input_buffer_records": 720,
+          "firmware_resource_events": [
+            {
+              "sufficient": true,
+              "width": 320,
+              "height": 240
+            }
+          ],
+          "fault_counts": {
+            "firmware_errors": 0,
+            "firmware_rejected_properties": 0,
+            "iommu_timeouts": 0,
+            "panics": 0,
+            "PM_usage_underflows": 0
+          }
+        },
+        "temporary_files_cleaned": true,
+        "exact_signed_RAM_readback_verified": true
+      },
+      "sustained_720_frame_capture_first_qualified": true
+    },
+    "mixed_resolution": {
+      "fixture": {
+        "passed": true,
+        "frames": 36,
+        "width": 320,
+        "height": 240,
+        "source_segment_dimensions": [
+          [
+            320,
+            240
+          ],
+          [
+            640,
+            360
+          ],
+          [
+            320,
+            240
+          ]
+        ],
+        "frames_per_segment": 12,
+        "output_filter": "scale=320:240",
+        "compressed_bytes": 10174,
+        "fixture_h264_SHA256": "a48a5dd0db15be55fc937e76d2e6b6abbf31934603b0c97701a5045192413e72",
+        "software_YUV420P_SHA256": "9dfb5883f402ea8f6e346d1d514e5522df2798c519b14e8e15df3ad5eb80b731",
+        "raw_segment_hashes": [
+          "d44f9522cb30d7b8a64fb82270010758564d7dba45a11b97a4236c0e6bc176d0",
+          "872f2be2f01635945c6fc2bc3d393e389536a7068047f97615a6fb47e9b16779",
+          "1eb729624e34b0742f37b9cba3c22da5d88f264d3ac61e34570d0bb0e05bfb08"
+        ],
+        "software_output_bytes": 4147200,
+        "FFmpeg_ARM_binary_SHA256": "0cec981536d3bce78160a953b27f569cf812f06705d3ec6689cd5690c6330f3e",
+        "retained_decoded_video": false
+      },
+      "untraced_handset": {
+        "output": {
+          "exit_status": 0,
+          "probe_completed": false,
+          "hardware_output_frames": 12,
+          "output_bytes": 1382400,
+          "elapsed_seconds": 1.371,
+          "sequence_SHA256": "d44f9522cb30d7b8a64fb82270010758564d7dba45a11b97a4236c0e6bc176d0",
+          "matches_software_reference": false,
+          "capture_started_before_output": true,
+          "output_quartile_times_seconds": [
+            1.31
+          ],
+          "filter_input_geometry": [
+            [
+              320,
+              240,
+              "nv12"
+            ]
+          ],
+          "decoded_segment_SHA256": [
+            "d44f9522cb30d7b8a64fb82270010758564d7dba45a11b97a4236c0e6bc176d0"
+          ]
+        },
+        "independent_postflight": {
+          "passed": true,
+          "boot_id": "7656f9b7-e731-4e9e-bbf3-b220d8221d72",
+          "candidate_boot": "15d57939-e95c-4fee-98d5-e7824b1a5947",
+          "installed_module_files_verified": 482,
+          "protected_hashes_match": true,
+          "early_capture_firmware_submission_before_input": true,
+          "coded_input_buffer_records": 14,
+          "firmware_resource_events": [
+            {
+              "sufficient": true,
+              "width": 320,
+              "height": 240
+            },
+            {
+              "sufficient": false,
+              "width": 640,
+              "height": 368
+            }
+          ],
+          "fault_counts": {
+            "firmware_errors": 0,
+            "firmware_rejected_properties": 0,
+            "iommu_timeouts": 0,
+            "panics": 0,
+            "PM_usage_underflows": 0
+          }
+        },
+        "temporary_files_cleaned": true,
+        "exact_signed_RAM_readback_verified": true
+      },
+      "ioctl_traced_handset": {
+        "output": {
+          "exit_status": 0,
+          "probe_completed": false,
+          "hardware_output_frames": 24,
+          "output_bytes": 2764800,
+          "elapsed_seconds": 3.836,
+          "sequence_SHA256": "9f663a9d905c4ba8cfc9a9ec2c87dd390762a530bd0a35342340107b284108e4",
+          "matches_software_reference": false,
+          "capture_started_before_output": true,
+          "output_quartile_times_seconds": [
+            1.428,
+            2.483
+          ],
+          "filter_input_geometry": [
+            [
+              320,
+              240,
+              "nv12"
+            ],
+            [
+              640,
+              384,
+              "nv12"
+            ]
+          ],
+          "decoded_segment_SHA256": [
+            "d44f9522cb30d7b8a64fb82270010758564d7dba45a11b97a4236c0e6bc176d0",
+            "d970e60bdf71c799708f9a884a04fdc948a3f100e372d82f8ba86712708648ad"
+          ]
+        },
+        "independent_postflight": {
+          "passed": true,
+          "boot_id": "bd5a9202-5361-41b6-8ad1-efe1ef46dbad",
+          "candidate_boot": "878a9697-58cf-49fa-9de2-461be17762a6",
+          "installed_module_files_verified": 482,
+          "protected_hashes_match": true,
+          "early_capture_firmware_submission_before_input": true,
+          "coded_input_buffer_records": 25,
+          "firmware_resource_events": [
+            {
+              "sufficient": true,
+              "width": 320,
+              "height": 240
+            },
+            {
+              "sufficient": false,
+              "width": 640,
+              "height": 368
+            },
+            {
+              "sufficient": true,
+              "width": 320,
+              "height": 240
+            }
+          ],
+          "fault_counts": {
+            "firmware_errors": 2,
+            "firmware_rejected_properties": 0,
+            "iommu_timeouts": 0,
+            "panics": 0,
+            "PM_usage_underflows": 0
+          }
+        },
+        "temporary_files_cleaned": true,
+        "exact_signed_RAM_readback_verified": true,
+        "verified_ioctl_observations": {
+          "larger_capture_allocation": [
+            640,
+            384
+          ],
+          "larger_capture_buffers_allocated": 32,
+          "larger_capture_STREAMON_succeeded": true,
+          "S_SELECTION_returned_ENOTTY": true,
+          "late_DECODER_CMD_returned_EIO": true
+        }
+      },
+      "full_resolution_changes_qualified": false
+    },
+    "default_startup_qualified": false,
+    "persistent_installation_performed": false
   }
 }
