@@ -696,10 +696,31 @@ touchscreen was enumerated. Physical touch was outside this test.
 The separate package recipes use the cached 6.18.64 release archive and
 the exact patch that reconstructs the three tested kernel files. The Fx0
 device recipe requests `qcom-spmi-vadc` in its early module list. The
-archive and recipe checksums pass. Building and deploying the signed
-package pair remains open.
+archive and recipe checksums pass.
+
+The signed kernel `6.18.64-r2`, device `1-r3` and DMP reader
+`6.18.64-r2` passed offline package verification. The installed device
+package was already `1-r2`. Its wcn36xx PMF configuration is preserved
+byte for byte, and the early module list is the sole changed device
+payload entry. The reader package retains its exact kernel-version
+dependency and has identical payload bytes. Its host tests passed all
+17 cases.
+
+The packaged kernel has the installed configuration, public module
+certificate and complete `Module.symvers`. All 468 module signatures
+and 25,592 import CRCs passed verification. All three Madai DTBs changed,
+and the normal Madai DTB matches the one from the earlier RAM trial.
+The packaged zImage differs from the earlier trial image and still
+requires boot qualification.
+
+An isolated APK transaction used the phone's captured package database
+and verified the original and replacement signatures. Both simulations
+and both transactions passed. The three packages were the only database
+records changed during upgrade. Rollback restored the original database
+and world files byte for byte, and both directions verified 562 payload
+files. Native boot hooks and deployment remain open.
 [Handset and package recipe evidence](../evidence/2026-11-18-power-qualification-followup.json)
-[Package recipes](https://github.com/timschmidt/fx0-pmaports/commit/59c9d580dea650f24879ca7dca0cfff44fcf82bf)
+[Package recipes](https://github.com/timschmidt/fx0-pmaports/commit/a8174d382680372082827ae97b7b6f93a86f7d7a)
 
 ## PM8226 hardware key reset
 
@@ -788,6 +809,18 @@ also acknowledged, so the journal and the PMIC bytes cannot uniquely
 identify the owner's reboot or attribute the freeze to a reset source.
 The retained boots show no suspend entry or matching display, touchscreen
 or IOMMU failure. Pstore contains no new crash dump.
+
+On a subsequent owner report that the visible desktop was unresponsive
+until reboot, a USB-only audit confirmed the running installed kernel and
+package baseline. Sway reported one active output and Linux enumerated
+the touchscreen. The immediately preceding retained boot was the
+battery-voltage RAM trial. Its journal logged an orderly shutdown, and
+the newly archived pstore console record contains a shutdown marker with
+zero panic, oops, lockup or suspend markers. Both boots show the same
+early Adreno firmware warning. The journal and console cannot distinguish
+the owner's reboot from the trial's scheduled return or identify the
+cause of the freeze. Physical touch after recovery remains unverified.
+[USB freeze follow-up](../evidence/2026-11-18-power-qualification-followup.json)
 
 The LG kernel release's only direct caller of `qpnp_pon_wd_config()`
 disables the PMIC watchdog when preparing emergency download mode. The

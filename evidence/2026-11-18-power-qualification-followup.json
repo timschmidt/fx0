@@ -464,6 +464,143 @@
       "deployed": false,
       "recipe_head": "59c9d580dea650f24879ca7dca0cfff44fcf82bf",
       "exact_remote_ref_verified": true
+    },
+    "signed_package_cohort": {
+      "passed": true,
+      "published_recipe_head": "a8174d382680372082827ae97b7b6f93a86f7d7a",
+      "published_recipe_exact_remote_verified": true,
+      "recorded_UTC": "2026-11-19T04:56:09.562816+00:00",
+      "candidate_versions": {
+        "linux-postmarketos-qcom-msm8226": "6.18.64-r2",
+        "device-lg-madai": "1-r3",
+        "fx0-dmp-reader": "6.18.64-r2"
+      },
+      "exact_rollback_versions": {
+        "linux-postmarketos-qcom-msm8226": "6.18.64-r0",
+        "device-lg-madai": "1-r2",
+        "fx0-dmp-reader": "6.18.64-r0"
+      },
+      "kernel_package_verification": {
+        "passed": true,
+        "recorded_UTC": "2026-11-19T04:51:24.981936+00:00",
+        "recipe_commit": "59c9d580dea650f24879ca7dca0cfff44fcf82bf",
+        "package_version": "6.18.64-r2",
+        "package_sha256": "07c6d7339f961105059dcdd572487d6c7ab54cbd33024917ab62680fa35090d0",
+        "package_size": 18763127,
+        "trusted_APK_verified": true,
+        "exact_installed_build_config": true,
+        "exact_installed_module_certificate": true,
+        "certificate_linked": true,
+        "ABI_complete_Module_symvers_match": true,
+        "built_in_exports": 11718,
+        "packaged_module_files": 482,
+        "signed_modules_verified": 468,
+        "import_crc_checks": 25592,
+        "signed_module_bad_payload_rejected": true,
+        "unchanged_signed_module_files": 0,
+        "packaged_zImage_sha256": "b3780b1bd593412c56f082901ae007a47d41b058b41e71cab490f37913a31577",
+        "zImage_matches_previous_RAM_build": false,
+        "packaged_DTBs": 65,
+        "changed_DTBs": [
+          "boot/dtbs/qcom-msm8926-lg-madai-cpr.dtb",
+          "boot/dtbs/qcom-msm8926-lg-madai-suspend.dtb",
+          "boot/dtbs/qcom-msm8926-lg-madai.dtb"
+        ],
+        "exact_qualified_normal_Fx0_DTB": true,
+        "no_device_io": true
+      },
+      "device_package_verification": {
+        "passed": true,
+        "recorded_UTC": "2026-11-19T04:47:46.027631+00:00",
+        "recipe_commit": "0396563e5eb56e5c333422f76a738543534f5325",
+        "device_APK_sha256": "20d61233b61ad55518777a7d85f05e34b8e1467d6b4e0b8f34b723c708dd9e81",
+        "device_APK_bytes": 4142,
+        "device_index_sha256": "447520151303985fad4c5c02f2f77434b1006f849bf14fe6a88e7871e974e35a",
+        "existing_accepted_signer_verified": true,
+        "modified_payload_rejected": true,
+        "unchanged_device_payload_entries": 26,
+        "changed_entries": [
+          "usr/share/mkinitfs/modules/00-device-lg-madai.modules"
+        ],
+        "package_version": "1-r3",
+        "compared_against_exact_installed_version": "1-r2",
+        "wifi_default_bytes_preserved": true,
+        "prior_package_verified": true,
+        "handset_contacted": false
+      },
+      "reader_package_sha256": "b29d304ddac0a6b1bd5f056dc646813ef25dcd0c26b2c4c7e03d0693e2ef55e4",
+      "reader_exact_kernel_release_dependency": true,
+      "reader_host_tests_passed": 17,
+      "reader_payload_entries_byte_identical": 10,
+      "exact_APK_rollback": {
+        "APK_count_before_during_and_after": 776,
+        "unchanged_full_APK_records": 773,
+        "full_APK_records_restored": 776,
+        "original_raw_database_equal": true,
+        "exact_original_world_restored": true,
+        "verified_rollback_payload_files": 562,
+        "verified_upgraded_payload_files": 562,
+        "exact_installed_rollback_APKs_verified": true,
+        "steps": [
+          {
+            "step": "simulate-upgrade",
+            "returncode": 0
+          },
+          {
+            "step": "upgrade",
+            "returncode": 0
+          },
+          {
+            "step": "simulate-rollback",
+            "returncode": 0
+          },
+          {
+            "step": "rollback",
+            "returncode": 0
+          }
+        ]
+      },
+      "native_install_scripts_and_boot_deployment_qualified": false,
+      "packaged_zImage_booted": false,
+      "deployed": false
     }
+  },
+  "desktop_freeze_followup": {
+    "reported_symptom": "Visible Sxmo desktop unresponsive until owner reboot",
+    "recorded_UTC": "2026-11-19T04:51:59.841751+00:00",
+    "running_installed_kernel_release": "6.18.64-fx0-lts-alpine",
+    "installed_kernel_notes_and_package_database_world_hashes_verified": true,
+    "installed_boot_id": "ecac56ad-5749-478e-ac4c-61ef6a18bc52",
+    "previous_retained_boot_id": "766cc63544c742718ef641f9ebba88e4",
+    "previous_retained_boot_role": "battery voltage trial",
+    "USB_online": true,
+    "Sway_active_outputs_from_IPC": 1,
+    "touch_input_devices_enumerated": 1,
+    "physical_touch_confirmed_after_reboot": false,
+    "previous_boot_journal_rows": 2128,
+    "installed_boot_journal_rows": 1186,
+    "previous_boot_orderly_shutdown_messages": 4,
+    "suspend_or_kernel_lockup_markers_in_examined_journals": 0,
+    "previous_and_recovered_boots_share_early_Adreno_firmware_warning": true,
+    "newly_archived_pstore_record": {
+      "type": "console",
+      "bytes": 6520,
+      "sample_truncated": false,
+      "markers": {
+        "panic": 0,
+        "oops": 0,
+        "lockup": 0,
+        "shutdown": 1,
+        "boot_marker": 0,
+        "suspend_entry": 0,
+        "GPU_fault": 0
+      }
+    },
+    "live_pstore_files": 0,
+    "previous_desktop_journal_rows_recognized": 0,
+    "manual_reboot_distinguished_from_scheduled_return": false,
+    "cause_identified": false,
+    "read_only_USB": true,
+    "phone_changes": false
   }
 }
