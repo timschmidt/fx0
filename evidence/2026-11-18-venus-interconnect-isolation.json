@@ -2132,5 +2132,92 @@
         "installed_protected_hashes_match": true
       }
     }
+  },
+  "Venus_FFmpeg_capture_pixel_format": {
+    "recorded_UTC": "2026-11-19T11:59:33+00:00",
+    "same_signed_RAM_image_SHA256": "58eba6f2830393b0f1e1f3b0302b3b0b8f0d95760c234a66bcff251a109f3d7b",
+    "prior_wrong_layout_actual": {
+      "candidate_boot": "af98e712-141d-480b-8119-97155d2597a7",
+      "installed_return_boot": "4586a5a1-ba5b-4bda-bb25-6d78c636cf97",
+      "V4L2_capture_format": "NV12",
+      "capture_allocation_width_height": [
+        320,
+        256
+      ],
+      "bytes_per_line": 384,
+      "incorrect_FFmpeg_frame_pixel_format": "YUV420P",
+      "mismatched_raw_NV12_SHA256": "fb0837ab81b9afc3ed33d457b8ea4ce3d615bca70c91823e663c17ce050589f5",
+      "first_two_chroma_rows_means": [
+        [
+          127.05,
+          127.0
+        ],
+        [
+          101.6,
+          101.6
+        ]
+      ],
+      "padded_NV12_interpreted_as_planar_model_exact_row_pairs": 120
+    },
+    "host_qualification": {
+      "build": {
+        "passed": true,
+        "binary_SHA256": "0cec981536d3bce78160a953b27f569cf812f06705d3ec6689cd5690c6330f3e",
+        "binary_bytes": 2898460,
+        "patch_SHA256": "2c5d0518fdbbaad86f7d91dcae95fa801b6b43bdd6f75b929bc8acf97ad4ebfd",
+        "v4l2_m2m_dec_SHA256": "bc1721ca1c66a29435dcabd323bcfa20482f754345ae05e8f946ba615e634d2b",
+        "prequeue_option_available": true,
+        "reference_h264_SHA256": "fdaf0a527a0a00d74e039c79ac30ce6a1b31dc8eb5dbe095ac03160b465fc5c5",
+        "software_output_SHA256": "d44f9522cb30d7b8a64fb82270010758564d7dba45a11b97a4236c0e6bc176d0",
+        "output_frames": 12,
+        "static_ARM_elf_verified": true
+      },
+      "UBSan_negotiated_format_cases": 4,
+      "compiled_production_negotiated_format_block": true,
+      "software_reference_NV12_deinterleaves_byte_exactly": true,
+      "patch_replayed_on_cached_FFmpeg_7_1_5_without_fuzz": true
+    },
+    "corrected_handset_result": {
+      "FFmpeg_explicit_capture_prequeue": true,
+      "candidate_boot": "76c22e62-16e6-4a10-b2e8-1c2c812eb7bb",
+      "installed_return_boot": "554e0cde-97bd-43f9-82e2-af01f9f3b6e5",
+      "FFmpeg_filter_input_pixel_format": "NV12",
+      "decoded_YUV420P_SHA256": "d44f9522cb30d7b8a64fb82270010758564d7dba45a11b97a4236c0e6bc176d0",
+      "software_reference_byte_exact": true,
+      "frame_verification": {
+        "frames": 12,
+        "luma_cells": 144,
+        "max_luma_mean_error": 0,
+        "chroma_planes": 24
+      },
+      "journal_verified_capture_before_coded_input": true,
+      "coded_access_unit_bytes": [
+        940,
+        181,
+        91,
+        142,
+        164,
+        79,
+        82,
+        206,
+        101,
+        81,
+        140,
+        85
+      ],
+      "trial_faults": {
+        "firmware_errors": 0,
+        "iommu_timeouts": 0,
+        "panics": 0
+      },
+      "installed_protected_hashes_matched": true,
+      "installed_module_files_verified": 482
+    },
+    "standard_default_startup_qualified": false,
+    "dynamic_resolution_change_qualified": false,
+    "longer_decode_qualified": false,
+    "persistent_installation_performed": false,
+    "duplicate_RAM_readbacks_removed": true,
+    "temporary_build_removed": true
   }
 }

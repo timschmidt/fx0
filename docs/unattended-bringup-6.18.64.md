@@ -926,6 +926,31 @@ firmware session error or Venus IOMMU timeout. All 482 installed module
 files and the protected hashes matched on return.
 [FFmpeg capture prequeue patch](../diagnostics/venus-arm32/ffmpeg-7.1.5-v4l2-prequeue-capture.patch)
 
+The layout replay used the same signed image and uncorrected FFmpeg.
+V4L2 provided NV12 capture at 320 × 256 with a 384-byte stride.
+FFmpeg still passed planar YUV420P metadata to the filter graph.
+The requested NV12 output then interleaved those incorrectly
+interpreted planes. Applying the old planar offsets and strides to a
+padded NV12 reference reproduced all 120 pairs of first-frame chroma
+row means exactly.
+
+The corrected early-capture path derives the FFmpeg pixel format from
+the negotiated V4L2 FourCC before starting capture. The host checks
+passed for NV12 through both V4L2 buffer APIs, planar YUV420P, and an
+unmapped FourCC. The static ARM build decoded the software reference
+byte for byte in QEMU.
+
+On the handset, the same signed image and 12-access-unit fixture gave
+an NV12 filter input with the corrected FFmpeg. All 12 YUV420P output
+frames matched the software reference byte for byte. This qualifies
+the fixed-resolution, capture-first path with the opt-in flag.
+The retained journal verified capture submission before coded input
+and recorded zero firmware errors or IOMMU timeouts. The installed
+r2 return matched the protected hashes and all 482 module files.
+Default startup, dynamic resolution changes and longer decode
+workloads remain open.
+[Decoder qualification evidence](../evidence/2026-11-18-venus-interconnect-isolation.json)
+
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
 its synthetic completion. The matched ordinary STOP test still failed
