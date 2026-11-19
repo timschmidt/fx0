@@ -60,6 +60,34 @@ static int allocate(int fd, enum v4l2_buf_type type, unsigned int count)
     return (int)request.count;
 }
 
+static int report_capture_lengths(int fd, unsigned int count)
+{
+    unsigned int min_length = 0, max_length = 0;
+
+    for (unsigned int index = 0; index < count; index++) {
+        struct v4l2_plane plane = {0};
+        struct v4l2_buffer buffer = {
+            .type = capture, .memory = V4L2_MEMORY_MMAP, .index = index,
+            .length = 1, .m.planes = &plane,
+        };
+
+        if (video_ioctl(fd, VIDIOC_QUERYBUF, &buffer) < 0)
+            return -1;
+        if (buffer.length != 1 || !plane.length) {
+            errno = EPROTO;
+            return -1;
+        }
+        if (!min_length || plane.length < min_length)
+            min_length = plane.length;
+        if (plane.length > max_length)
+            max_length = plane.length;
+    }
+
+    fprintf(stderr, "CAPTURE planes: count %u min %u max %u\n",
+            count, min_length, max_length);
+    return 0;
+}
+
 static int verify_decoder(int fd)
 {
     struct v4l2_capability capability = {0};
@@ -245,6 +273,9 @@ int main(int argc, char **argv)
         step = "CAPTURE preallocation";
         capture_buffers = allocate(fd, capture, MAX_BUFFERS);
         if (capture_buffers < 0)
+            goto done;
+        step = "CAPTURE lengths";
+        if (report_capture_lengths(fd, (unsigned int)capture_buffers) < 0)
             goto done;
     }
     step = "first coded buffer";

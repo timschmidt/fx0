@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-19T01:05:11.406444+00:00",
+  "last_updated_UTC": "2026-11-19T01:26:34.805908+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -1326,6 +1326,19 @@
         "0x40000000",
         "0x7fffffff"
       ]
+    },
+    "HFI_drain_trace_preparation": {
+      "source_commit": "14edfd206702060296240d83d4fa6d92b0345d4b",
+      "image_sha256": "38915d638b3a762646b344b86d3f03275a34ddaa94e2b2064268551a7c8cbdcd",
+      "parent_image_sha256": "cbb5a571135df6e5816b11a1380004347647f5bbc757380e25bfc650e85be8af",
+      "imports_checked": 154,
+      "exports_checked": 59,
+      "manifest_records_verified": 488,
+      "changed_archive_entries": [
+        "etc/fx0-native-modules.sha256",
+        "usr/lib/modules/6.18.64-fx0-lts-alpine/kernel/drivers/media/platform/qcom/venus/venus-core.ko"
+      ],
+      "handset_tested": false
     }
   },
   "Venus_direct_decoder_startup_comparison": {
@@ -1503,6 +1516,88 @@
       "installed_return_boot": "1ccd736d-c639-42d2-9838-61ba459a1d4b",
       "installed_modules_verified": 482,
       "installed_protected_hashes_match": true
+    },
+    "firmware_capture_size_comparison": {
+      "baseline": {
+        "candidate_boot": "2d9b181e-91e9-4e0b-8797-b0785bd86d11",
+        "USB_readback_exact": true,
+        "installed_return_boot": "b4bd0e82-9498-49e6-8f5a-c17de96c8c6e",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true,
+        "workload_started": true,
+        "firmware_size_option_enabled": false,
+        "queried_plane_count": 32,
+        "min_plane_bytes": 147456,
+        "max_plane_bytes": 147456,
+        "load_resources_firmware_status": "0x1001",
+        "resource_load_and_start_messages": [
+          "decoder HFI load resources reply: status 0x1001",
+          "decoder HFI load resources returned -5"
+        ],
+        "first_compressed_input_trace": [],
+        "probe_exit": 1,
+        "firmware_system_error_observed": false,
+        "IOMMU_timeouts": 0,
+        "verified_frames": 0
+      },
+      "first_sized_boot": {
+        "candidate_boot": "1f9b502a-df30-4867-857d-6fcd0c197fec",
+        "USB_readback_exact": true,
+        "installed_return_boot": "271387a9-c41c-4f9c-881d-4526ebdba187",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true,
+        "workload_started": false,
+        "decoder_debug_sites": 11,
+        "original_controller_required_debug_sites": 10
+      },
+      "repeated_sized_boot": {
+        "candidate_boot": "da4892ff-5528-4e08-af59-874ea0c66597",
+        "USB_readback_exact": true,
+        "installed_return_boot": "fbd83f8c-6d29-4065-bc08-2fa0d532777b",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true,
+        "workload_started": true,
+        "firmware_size_option_enabled": true,
+        "queried_plane_count": 32,
+        "min_plane_bytes": 147584,
+        "max_plane_bytes": 147584,
+        "load_resources_firmware_status": "0x0",
+        "resource_load_and_start_messages": [
+          "decoder HFI load resources reply: status 0x0",
+          "decoder HFI load resources returned 0",
+          "decoder HFI session start reply: status 0x0",
+          "decoder HFI session start returned 0"
+        ],
+        "first_compressed_input_trace": [
+          "decoder input buffer: alloc 491520 payload 630 offset 0 flags 0x0"
+        ],
+        "probe_exit": 0,
+        "firmware_system_error_observed": false,
+        "IOMMU_timeouts": 0,
+        "verified_frames": 0,
+        "decoder_capture_allocation": {
+          "calculated": 147456,
+          "firmware": 147584,
+          "selected": 147584
+        },
+        "observation_ms": 2513,
+        "reported_IO_error": false,
+        "source_change_observed": false,
+        "input_returned": false,
+        "capture_stream_started": false
+      },
+      "source_commit": "701b3cfb1cade941660b977347e865c00189f3fe",
+      "image_sha256": "70edd0f69ea27e59dd5e4d28daf8905dd5761f523a30c2e19df7850ab25dbbe2",
+      "parent_image_sha256": "c2cc7fd86737e5a42c6a654e0bb54bde50d28322806683b42645db8a70f78ad5",
+      "verified_import_CRCs": 129,
+      "same_kernel_DTB_and_arguments": true,
+      "changed_archive_entries": [
+        "etc/fx0-native-modules.sha256",
+        "usr/lib/modules/6.18.64-fx0-venus-ram-alpine/kernel/drivers/media/platform/qcom/venus/venus-dec.ko"
+      ],
+      "manifest_records_verified": 488,
+      "matched_fixture_bytes": 630,
+      "same_probe_binary": true
     }
   }
 }

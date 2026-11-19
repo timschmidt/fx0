@@ -661,8 +661,10 @@ The [direct startup probe](../diagnostics/venus-arm32/decoder-startup.c)
 compares startup on separate sessions with one coded input buffer. Use
 `output-first` as the control and `headers-only` with the exact bytes
 preceding its first picture slice. The `preallocate-capture` mode retains
-the same input and allocates the destination queue before startup. Its
-firmware-registration comparison applies in static buffer mode. Each mode
+the same input and allocates the destination queue before startup. It
+uses `VIDIOC_QUERYBUF` on each capture buffer to report the minimum and
+maximum plane lengths. The firmware-registration comparison applies in
+static buffer mode. Each mode
 reports source change, the input buffer return and driver errors over the
 same 2.5-second window. The probe leaves CAPTURE idle, so frame
 qualification uses the full workload. Pair the observation with the
@@ -762,11 +764,22 @@ responded to load-resources with `0x1001` (`HFI_ERR_SESSION_FATAL`).
 The driver returned `EIO` before it sent session-start or input.
 At 320×240, the firmware's primary capture entry requested 147,584
 bytes. The driver's NV12 size calculation gives 147,456 bytes for
-those dimensions. A matched comparison still needs to verify the
-registered plane length and exercise allocation at the firmware size.
-The installed return again passed the independent 482-module and
-protected-hash audit.
+those dimensions. The installed return again passed the independent
+482-module and protected-hash audit.
 [HFI reply trace](https://github.com/timschmidt/fx0-linux/commit/cde92e377925361b9cd32a1b4e52aa949d7c7bbb)
+
+The matched baseline measured 147,456 bytes in each of the 32 capture
+planes. The signed size control reused the firmware requirement from the
+existing buffer query. Its first boot loaded the drivers but skipped the
+workload because the observer expected 10 decoder debug sites and the
+new allocation log made 11. The repeat kept the image and fixture exact
+and used the corrected observer. It measured 147,584 bytes in every
+plane. Firmware returned zero for resource loading and session start,
+and the driver submitted the 630-byte header input. The probe reported
+no I/O error during its 2.5-second observation. It observed neither a
+source-change event nor an input return. Capture streaming and decoded
+frame verification remain open.
+[Capture size control](https://github.com/timschmidt/fx0-linux/commit/701b3cfb1cade941660b977347e865c00189f3fe)
 
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
@@ -779,11 +792,14 @@ falls outside the codec's IOVA range. The mapped-address handset test
 returned the same 11 nonempty buffers and one empty buffer, then failed
 polling before the final input and LAST. The candidate journal recorded
 no firmware system fault or IOMMU timeout. The installed return matched
-all 482 module files and the protected hashes. The next comparison should
-record firmware input and capture completions around STOP and the exact
-userspace poll flags.
+all 482 module files and the protected hashes. A signed trace derived
+from that exact image records firmware input and capture submissions,
+completion tags, status codes and flags. The host audit matched all 154
+import CRCs, 59 export CRCs and 488 module records. The trace and the
+probe that reports the exact userspace poll flags await handset testing.
 [Reserved tag](https://github.com/timschmidt/fx0-linux/commit/cfac2aa935f6e6b235db9da58a7bbae33c254ca4)
 [Mapped EOS buffer](https://github.com/timschmidt/fx0-linux/commit/df0da6c7c770dc705bf5992ef2a18a02b37a2d96)
+[Encoder HFI trace](https://github.com/timschmidt/fx0-linux/commit/14edfd206702060296240d83d4fa6d92b0345d4b)
 
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
