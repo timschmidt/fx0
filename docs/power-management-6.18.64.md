@@ -194,6 +194,31 @@ verified trace cleanup, an empty test cgroup, all four CPUs online, and the
 desktop and gesture processes running. Deep suspend and battery standby
 remain open. [Eight-cycle handset evidence](../evidence/2026-11-18-rtc-s2idle-series.json)
 
+### USB wake routing
+
+Both the installed r2 board DTB and the booted experimental suspend DTB
+describe the USB controller with GIC SPI 134 alone. The LG kernel
+describes a second interrupt, SPI 140, for asynchronous USB wake, and
+the suspend DTB maps that SPI to MPM pin 47. The USB controller has no
+reference to that pin in either current DTB. The PM8226 `usb-valid`
+interrupt is a separate cable-power signal. Its parent SPMI arbiter uses
+MPM pin 62 in the suspend DTB. The installed wake inventory reported
+`usb-valid` disabled while awake. [LG USB interrupt description](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/boot/dts/msm8226.dtsi#L270-L274)
+[LG USB wake handling](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/usb/otg/msm_otg.c#L1102-L1117)
+
+Four s2idle cycles on the signed r2 kernel used the RTC as a fallback.
+The USB controller's wake setting alternated between disabled and
+enabled. In every cycle, only the RTC interrupt was recorded as a wake
+source. The host could not reach the pinned USB link at either scheduled
+send time, so both packet bursts were withheld. The host USB port was
+in its ordinary active policy. ChipIdea's gadget suspend path can
+disconnect the gadget when the host bus has not suspended. A separate
+host bus suspend and resume test remains open. [USB wake comparison](../evidence/2026-11-19-fx0-rtc-usb-wake.json)
+
+The RAM worker restored the USB wake setting, cleared the alarm and
+removed its trace instance and probe. The return audit verified the
+installed boot and all 482 modules.
+
 ### Capped deep-suspend boot
 
 The signed capped kernel booted the Madai suspend DTB with WLAN disabled.

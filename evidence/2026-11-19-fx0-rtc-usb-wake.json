@@ -1,0 +1,111 @@
+{
+  "recorded_UTC": "2026-11-19T14:56:46+00:00",
+  "obsolete_manifest_control": {
+    "probe_dispatched": false,
+    "installed_return_passed": true,
+    "rejected_installed_module_checksums": true,
+    "duplicate_image_readback_removed": true
+  },
+  "signed_r2_comparison": {
+    "kernel_SHA256": "b3780b1bd593412c56f082901ae007a47d41b058b41e71cab490f37913a31577",
+    "RAM_image_SHA256": "a655f6ccf7fbea6d57aab914b56ede483f4751d705691d07503cc2e982fb8a26",
+    "same_packaged_kernel": true,
+    "WLAN_devices": 0,
+    "early_and_normal_return_guards_active": true,
+    "USB_controller_linux_irq": 71,
+    "worker_source_SHA256": "6bdcc6cf3c865a8bb5c57a0f48eb7c0deb9c90d9a99f504eabfe51728db17068",
+    "RTC_probe_source_commit": "7f48adbecddc2420be92c70b0904fcc09ba3e0e6",
+    "wake_classification_host_checks": 10,
+    "cycles": [
+      {
+        "cycle": 1,
+        "USB_device_wake": "disabled",
+        "host_burst_scheduled": false,
+        "host_burst_sent": false,
+        "wake_source": "RTC",
+        "irq": 33,
+        "RTC_alarm_IRQ_increase": 1,
+        "trace_events_lost": 0,
+        "inactive_clock_seconds": 14.107
+      },
+      {
+        "cycle": 2,
+        "USB_device_wake": "enabled",
+        "host_burst_scheduled": false,
+        "host_burst_sent": false,
+        "wake_source": "RTC",
+        "irq": 33,
+        "RTC_alarm_IRQ_increase": 1,
+        "trace_events_lost": 0,
+        "inactive_clock_seconds": 14.187
+      },
+      {
+        "cycle": 3,
+        "USB_device_wake": "disabled",
+        "host_burst_scheduled": true,
+        "host_burst_sent": false,
+        "wake_source": "RTC",
+        "irq": 33,
+        "RTC_alarm_IRQ_increase": 1,
+        "trace_events_lost": 0,
+        "inactive_clock_seconds": 13.93
+      },
+      {
+        "cycle": 4,
+        "USB_device_wake": "enabled",
+        "host_burst_scheduled": true,
+        "host_burst_sent": false,
+        "wake_source": "RTC",
+        "irq": 33,
+        "RTC_alarm_IRQ_increase": 1,
+        "trace_events_lost": 0,
+        "inactive_clock_seconds": 14.04
+      }
+    ],
+    "planned_USB_packet_bursts_sent": 0,
+    "pinned_link_unavailable_at_both_sends": true,
+    "host_USB_enumeration_samples": 26,
+    "host_USB_port_absent_samples": 18,
+    "live_USB_setting_restored": true,
+    "live_alarm_cleared": true,
+    "live_trace_removed": true,
+    "owned_test_service_cgroup_empty": true,
+    "duplicate_image_readback_removed": true
+  },
+  "interrupt_routes": {
+    "live_installed_USB_controller_SPI": 134,
+    "LG_downstream_source": "03aba4427a7666d57b5ae06d375e259ea337f351",
+    "LG_downstream_USB_controller_SPI": 134,
+    "LG_downstream_USB_async_SPI": 140,
+    "prior_booted_suspend_DTB_SHA256": "577d54838cd0d739297ce1c9c9143c1c7623da33e18d38df9d0806cd4b4fbc63",
+    "suspend_DTB_USB_controller_interrupts": [
+      134
+    ],
+    "suspend_DTB_MPM_SPI_map": {
+      "2": 184,
+      "47": 140,
+      "53": 72,
+      "62": 190
+    },
+    "suspend_DTB_PMIC_arbiter_MPM_pin": 62
+  },
+  "installed_postflight": {
+    "boot_id": "fa0e7330-1f6f-417b-82e6-ed1616ff95b7",
+    "module_files_verified": 482,
+    "protected_hashes_match": true,
+    "USB_wakeup_disabled": true,
+    "RTC_alarm_clear": true,
+    "desktop_compositor_and_gesture_service_running": true,
+    "s2idle_entries_in_RAM_journal": 4,
+    "s2idle_exits_in_RAM_journal": 4,
+    "temporary_service_result_matches_retained_journal": true
+  },
+  "qualification": {
+    "RTC_s2idle_wakes": 4,
+    "USB_packet_wake_qualified": false,
+    "USB_bus_suspend_and_resume_qualified": false,
+    "deep_suspend_or_recovery_qualified": false,
+    "persistent_installation_performed": false,
+    "workstation_USB_policy_changed": false
+  }
+}
