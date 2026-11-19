@@ -243,7 +243,7 @@ int main(int argc, char **argv)
         goto done;
     if (preallocate) {
         step = "CAPTURE preallocation";
-        capture_buffers = allocate(fd, capture, 16);
+        capture_buffers = allocate(fd, capture, MAX_BUFFERS);
         if (capture_buffers < 0)
             goto done;
     }

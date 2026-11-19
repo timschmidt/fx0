@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-18T17:37:54.831325+00:00",
+  "last_updated_UTC": "2026-11-19T00:42:15.313474+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -1267,10 +1267,43 @@
         "installed_return_boot": "c7db82e9-fb3b-497c-b98c-0d33b1f72653",
         "installed_modules_verified": 482,
         "installed_protected_hashes_match": true
+      },
+      "direct_V4L2_reserved_EOS_tag": {
+        "candidate_boot": "af5b0174-defb-4a88-a944-2c12714b168e",
+        "exact_readback": true,
+        "installed_return_boot": "722e7532-ab67-4c95-855e-8013094766eb",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true,
+        "source_commit": "cfac2aa935f6e6b235db9da58a7bbae33c254ca4",
+        "image_sha256": "68db78f23760e4ce234bace9593036bb6acd8bc3812cdd7ed445c61451ae70e2",
+        "parent_image_sha256": "0da1b656d271d017da0f6b7e09b8b1b0f168b0e5cb39e1e298bdbf40b674ca4e",
+        "verified_import_CRCs": 101,
+        "module_records_verified": 488,
+        "synthetic_client_tag": 4294967295,
+        "capture_nonempty_buffers_returned": 11,
+        "empty_capture_buffers_returned": 1,
+        "final_input_returned": false,
+        "end_of_stream_flag_observed": false,
+        "encoder_queue_poll_failed": true,
+        "firmware_system_errors": 0,
+        "IOMMU_timeouts": 0
       }
     },
     "direct_native_encode_delayed_STOP_qualified": true,
-    "ordinary_STOP_and_FFmpeg_workloads_qualified": false
+    "ordinary_STOP_and_FFmpeg_workloads_qualified": false,
+    "mapped_EOS_preparation": {
+      "source_commit": "df0da6c7c770dc705bf5992ef2a18a02b37a2d96",
+      "image_sha256": "cbb5a571135df6e5816b11a1380004347647f5bbc757380e25bfc650e85be8af",
+      "parent_image_sha256": "68db78f23760e4ce234bace9593036bb6acd8bc3812cdd7ed445c61451ae70e2",
+      "verified_import_CRCs": 103,
+      "module_records_verified": 488,
+      "handset_tested": false,
+      "former_empty_buffer_address": "0xdeadb000",
+      "codec_IOVA_range": [
+        "0x40000000",
+        "0x7fffffff"
+      ]
+    }
   },
   "Venus_direct_decoder_startup_comparison": {
     "same_signed_RAM_image": "1d74c7019500ae8679e40ba4561dd2e574d14f37dde34265aae25c7957c2b7ed",
@@ -1319,6 +1352,60 @@
       "usr/lib/modules/6.18.64-fx0-venus-ram-alpine/kernel/drivers/media/platform/qcom/venus/venus-core.ko"
     ],
     "handset_qualified": false,
-    "exact_public_source_ref_verified": true
+    "exact_public_source_ref_verified": true,
+    "HFI_trace_handset": {
+      "candidate_boot": "88f57c50-8574-473e-b55a-6501a5baf29a",
+      "exact_readback": true,
+      "installed_return_boot": "fd2d6b40-3f64-435c-b884-d175604be3f7",
+      "installed_modules_verified": 482,
+      "installed_protected_hashes_match": true,
+      "capture_mode": "dynamic",
+      "HFI_start_errno": 0,
+      "scratch": {
+        "buffer_type": "0x1000001",
+        "bytes": 613696,
+        "count": 1,
+        "minimum": 1,
+        "firmware_alignment": 128,
+        "firmware_contiguous": true,
+        "registration_errno": 0
+      },
+      "requirements_lookup_EINVAL_types": [
+        "0x1000005",
+        "0x1000006",
+        "0x4",
+        "0x5"
+      ],
+      "first_input": {
+        "allocated_bytes": 491520,
+        "used_bytes": 630,
+        "offset": 0,
+        "flags": 0
+      },
+      "firmware_exception_cause": 16,
+      "output_dequeue_errno": 5,
+      "source_change_observed": false,
+      "verified_decoded_frames": 0
+    },
+    "static_capture_handset_control": {
+      "candidate_boot": "541f38c5-278b-42e7-8c48-4ca3e94c78ca",
+      "exact_readback": true,
+      "installed_return_boot": "ab76abff-7ac3-4180-bf6b-c27f8dc44e7f",
+      "installed_modules_verified": 482,
+      "installed_protected_hashes_match": true,
+      "source_commit": "477a3b91d924f7effc5bc8951cb0707b876cf37a",
+      "image_sha256": "fe20d55cc5945cac87cbe6d1096ecefbefa8971e22f23f274452ad2e75645562",
+      "parent_image_sha256": "ecf0d2e4e77dd667b41e0a8cc96f1f666a12ae8853ae809c2fe7723e27a07a4f",
+      "matching_import_CRCs": 155,
+      "matching_export_CRCs": 59,
+      "manifest_records_verified": 488,
+      "opt_in_module_parameter": "fx0_decoder_static_capture",
+      "unchanged_kernel_dtb_and_arguments": true,
+      "capture_buffers_registered": 32,
+      "HFI_start_errno": 5,
+      "compressed_input_submitted": false,
+      "firmware_system_error_observed": false,
+      "verified_decoded_frames": 0
+    }
   }
 }

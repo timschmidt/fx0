@@ -744,6 +744,30 @@ changes the Venus core module and its manifest entry. The audit retained
 154 import CRCs, 59 export CRCs and all 488 module records.
 [Decoder trace source](https://github.com/timschmidt/fx0-linux/commit/1d5d51085b8bfd54de48310777f375aea89419d2)
 
+With the same headers-only input, the trace registered one 613,696-byte
+scratch buffer. Four other requirement lookups returned `EINVAL`. HFI
+started in dynamic capture mode and then reported the same firmware
+system error after the first 630-byte input submission. A separate
+static-capture control allocated and registered 32 capture buffers
+before HFI startup. Startup returned `EIO` before the driver submitted
+any compressed input, with no firmware system-error event in that run.
+The next trace needs to distinguish resource-load and session-start
+replies and report which buffer types the firmware returned. Both
+installed returns passed the 482-module and protected-hash audit.
+[Static capture control](https://github.com/timschmidt/fx0-linux/commit/477a3b91d924f7effc5bc8951cb0707b876cf37a)
+
+The encoder's synthetic EOS marker used the same client tag as real
+input buffer zero. A signed control reserved a separate tag and ignored
+its synthetic completion. The matched ordinary STOP test still failed
+after 11 nonempty capture buffers and one empty buffer. It returned to
+the installed kernel and passed the 482-module and protected-hash audit.
+A second signed control retains the separate tag and uses a coherent DMA
+page for the empty marker on MSM8226. The previous placeholder address
+falls outside the codec's IOVA range. This control has passed host build
+and signature checks and awaits handset testing.
+[Reserved tag](https://github.com/timschmidt/fx0-linux/commit/cfac2aa935f6e6b235db9da58a7bbae33c254ca4)
+[Mapped EOS buffer](https://github.com/timschmidt/fx0-linux/commit/df0da6c7c770dc705bf5992ef2a18a02b37a2d96)
+
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)
