@@ -1204,6 +1204,34 @@ before triggering orderly return. The observation window ends at
 approximately 57 minutes of boot uptime if those criteria are still
 unmet.
 
+#### Handset charge and recharge
+
+At the normal voltage settings, the last sample in the initial fast
+charge measured 4.349 V. The next sample, 29 seconds later, measured
+4.302 V with fast and trickle charge inactive. The two onboard current
+readings dropped to −1.2 mA and −4.4 mA. Charge enable stayed set, the
+comparator stayed at `0x82`, and the policy registered no inhibit vote.
+
+The handset resumed fast charge automatically about 14 minutes after
+the first idle sample. The last idle sample before the restart measured
+4.287 V. The sample interval leaves the exact hardware trip voltage
+unresolved. In the second fast-charge phase, the last active sample
+measured 4.346 V before current again returned near zero.
+
+Across 117 samples, the charge-done bit stayed clear and the
+charge-done interrupt count stayed at zero. Linux reported `Charging`
+during fast charge and `Discharging` during both idle periods. The
+observation verifies two charge-to-idle transitions and automatic
+recharge at the normal limits. Hardware charge-done, `Full` reporting
+and absolute current accuracy remain open.
+
+Every sample confirmed a timer renewal. At the observation limit, the
+observer verified that charging was inhibited and requested orderly
+return. The independent audit verified the return service and shutdown
+in the journal. The installed r2 boot matched the protected boot and
+package hashes and all 482 module files.
+[Nominal charge evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce

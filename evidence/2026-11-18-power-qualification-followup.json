@@ -3172,7 +3172,409 @@
       "simulated_consecutive_full_and_bounded_completion": true,
       "simulated_error_attempts_inhibit_and_ends_sampling": true
     },
-    "unattended_watchdog_coverage_during_kernel_stall": false
+    "unattended_watchdog_coverage_during_kernel_stall": false,
+    "handset_trial": {
+      "recorded_UTC": "2026-11-19T11:28:26+00:00",
+      "firmware": "fx0-pm-host-01",
+      "firmware_and_kernel_readbacks_matched": true,
+      "initial_installed_boot": "080e3d52-be9c-4210-bfc1-174014678532",
+      "candidate_boot": "6fea2b76-6a84-443a-a566-6978d19806a8",
+      "installed_return_boot": "b5c856d6-7d4f-4225-845a-7123484cb3e4",
+      "tested_board_settings": {
+        "voltage_max_uV": 4350000,
+        "recharge_threshold_uV": 4280000,
+        "termination_register": 8,
+        "USB_input_limit_uA": 500000
+      },
+      "charger_voltage_or_threshold_requests": 0,
+      "charge_to_idle_observed_at_nominal_settings": true,
+      "hardware_recharge_trip_voltage_measured": false,
+      "onboard_current_independently_calibrated": false,
+      "candidate_verified_module_files": 482,
+      "candidate_verified_module_signatures": 468,
+      "WLAN_unavailable_on_candidate": true,
+      "observations": {
+        "samples": 117,
+        "boot_uptime_range_seconds": [
+          67.8,
+          3448.29
+        ],
+        "voltage_uV_range": [
+          4249959,
+          4348659
+        ],
+        "temperature_decic_range": [
+          308,
+          317
+        ],
+        "sample_period_seconds": [
+          28.96,
+          29.48
+        ],
+        "current_uA_ranges_per_channel": [
+          [
+            -1205,
+            331726
+          ],
+          [
+            -4400,
+            307700
+          ]
+        ],
+        "charger_status_counts": {
+          "Charging": 67,
+          "Discharging": 50
+        },
+        "fast_samples": 67,
+        "trickle_samples": 0,
+        "hardware_done_samples": 0,
+        "strict_full_samples": 0,
+        "charge_done_IRQ_delta": 0,
+        "sustained_full_observed": false,
+        "guard_acknowledgements": 117,
+        "early_guard_original_deadline_survived": true,
+        "first": {
+          "uptime_seconds": 67.8,
+          "charger_status": "Charging",
+          "voltage_uV": 4249959,
+          "temperature_decic": 309,
+          "reported_IADC_uA": [
+            298630,
+            287600
+          ],
+          "charge_done_IRQ_count": 0,
+          "done": [
+            false,
+            false
+          ],
+          "fast": [
+            true,
+            true
+          ],
+          "trickle": [
+            false,
+            false
+          ]
+        },
+        "last": {
+          "uptime_seconds": 3448.29,
+          "charger_status": "Discharging",
+          "voltage_uV": 4289910,
+          "temperature_decic": 309,
+          "reported_IADC_uA": [
+            -1205,
+            -4400
+          ],
+          "charge_done_IRQ_count": 0,
+          "done": [
+            false,
+            false
+          ],
+          "fast": [
+            false,
+            false
+          ],
+          "trickle": [
+            false,
+            false
+          ]
+        },
+        "phases": [
+          {
+            "phase": "fast_charge",
+            "samples": 63,
+            "first": {
+              "uptime_seconds": 67.8,
+              "charger_status": "Charging",
+              "voltage_uV": 4249959,
+              "temperature_decic": 309,
+              "reported_IADC_uA": [
+                298630,
+                287600
+              ],
+              "charge_done_IRQ_count": 0,
+              "done": [
+                false,
+                false
+              ],
+              "fast": [
+                true,
+                true
+              ],
+              "trickle": [
+                false,
+                false
+              ]
+            },
+            "last": {
+              "uptime_seconds": 1875.13,
+              "charger_status": "Charging",
+              "voltage_uV": 4348659,
+              "temperature_decic": 315,
+              "reported_IADC_uA": [
+                243616,
+                267400
+              ],
+              "charge_done_IRQ_count": 0,
+              "done": [
+                false,
+                false
+              ],
+              "fast": [
+                true,
+                true
+              ],
+              "trickle": [
+                false,
+                false
+              ]
+            }
+          },
+          {
+            "phase": "enabled_idle",
+            "samples": 29,
+            "first": {
+              "uptime_seconds": 1904.32,
+              "charger_status": "Discharging",
+              "voltage_uV": 4301952,
+              "temperature_decic": 317,
+              "reported_IADC_uA": [
+                -1205,
+                -4400
+              ],
+              "charge_done_IRQ_count": 0,
+              "done": [
+                false,
+                false
+              ],
+              "fast": [
+                false,
+                false
+              ],
+              "trickle": [
+                false,
+                false
+              ]
+            },
+            "last": {
+              "uptime_seconds": 2720.18,
+              "charger_status": "Discharging",
+              "voltage_uV": 4286679,
+              "temperature_decic": 310,
+              "reported_IADC_uA": [
+                -1205,
+                -4400
+              ],
+              "charge_done_IRQ_count": 0,
+              "done": [
+                false,
+                false
+              ],
+              "fast": [
+                false,
+                false
+              ],
+              "trickle": [
+                false,
+                false
+              ]
+            }
+          },
+          {
+            "phase": "fast_charge",
+            "samples": 4,
+            "first": {
+              "uptime_seconds": 2749.18,
+              "charger_status": "Charging",
+              "voltage_uV": 4336029,
+              "temperature_decic": 308,
+              "reported_IADC_uA": [
+                323726,
+                288100
+              ],
+              "charge_done_IRQ_count": 0,
+              "done": [
+                false,
+                false
+              ],
+              "fast": [
+                true,
+                true
+              ],
+              "trickle": [
+                false,
+                false
+              ]
+            },
+            "last": {
+              "uptime_seconds": 2836.47,
+              "charger_status": "Charging",
+              "voltage_uV": 4346310,
+              "temperature_decic": 309,
+              "reported_IADC_uA": [
+                318246,
+                299300
+              ],
+              "charge_done_IRQ_count": 0,
+              "done": [
+                false,
+                false
+              ],
+              "fast": [
+                true,
+                true
+              ],
+              "trickle": [
+                false,
+                false
+              ]
+            }
+          },
+          {
+            "phase": "enabled_idle",
+            "samples": 21,
+            "first": {
+              "uptime_seconds": 2865.64,
+              "charger_status": "Discharging",
+              "voltage_uV": 4300191,
+              "temperature_decic": 311,
+              "reported_IADC_uA": [
+                -1205,
+                -4400
+              ],
+              "charge_done_IRQ_count": 0,
+              "done": [
+                false,
+                false
+              ],
+              "fast": [
+                false,
+                false
+              ],
+              "trickle": [
+                false,
+                false
+              ]
+            },
+            "last": {
+              "uptime_seconds": 3448.29,
+              "charger_status": "Discharging",
+              "voltage_uV": 4289910,
+              "temperature_decic": 309,
+              "reported_IADC_uA": [
+                -1205,
+                -4400
+              ],
+              "charge_done_IRQ_count": 0,
+              "done": [
+                false,
+                false
+              ],
+              "fast": [
+                false,
+                false
+              ],
+              "trickle": [
+                false,
+                false
+              ]
+            }
+          }
+        ],
+        "charge_to_idle": {
+          "last_active_sample": {
+            "uptime_seconds": 1875.13,
+            "charger_status": "Charging",
+            "voltage_uV": 4348659,
+            "temperature_decic": 315,
+            "reported_IADC_uA": [
+              243616,
+              267400
+            ],
+            "charge_done_IRQ_count": 0,
+            "done": [
+              false,
+              false
+            ],
+            "fast": [
+              true,
+              true
+            ],
+            "trickle": [
+              false,
+              false
+            ]
+          },
+          "first_idle_sample": {
+            "uptime_seconds": 1904.32,
+            "charger_status": "Discharging",
+            "voltage_uV": 4301952,
+            "temperature_decic": 317,
+            "reported_IADC_uA": [
+              -1205,
+              -4400
+            ],
+            "charge_done_IRQ_count": 0,
+            "done": [
+              false,
+              false
+            ],
+            "fast": [
+              false,
+              false
+            ],
+            "trickle": [
+              false,
+              false
+            ]
+          },
+          "transition_interval_seconds": 29.19,
+          "consecutive_enabled_idle_samples": 29,
+          "consecutive_enabled_idle_span_seconds": 815.86,
+          "enabled_idle_voltage_uV_range": [
+            4286091,
+            4301952
+          ],
+          "enabled_idle_current_uA_ranges_per_channel": [
+            [
+              -1205,
+              -1205
+            ],
+            [
+              -4400,
+              -4400
+            ]
+          ],
+          "recharge_observed": true
+        }
+      },
+      "end_reason": "bounded_observation_complete",
+      "inhibit_verified_before_orderly_return": true,
+      "installed_return": {
+        "module_files_verified": 482,
+        "protected_hashes_match": true,
+        "Sway_active_outputs": 1,
+        "touch_inputs_enumerated": 1,
+        "physical_display_and_touch_rechecked": false,
+        "journal_verified": true,
+        "journal_counts": {
+          "journal_rows": 6000,
+          "kernel_rows": 448,
+          "early_return_guard_armed": 1,
+          "full_module_overlay_ready": 1,
+          "early_guard_or_overlay_failure": 0,
+          "suspend_entry": 0,
+          "kernel_fatal": 0,
+          "SMBB_or_VADC_error": 0,
+          "lockup": 0,
+          "normal_return_service_rows": 3,
+          "normal_return_service_success": 2,
+          "orderly_shutdown": 3
+        }
+      },
+      "duplicate_image_readback_removed": true,
+      "persistent_package_or_firmware_installation_performed": false
+    }
   },
   "USB_gadget_current_budget_qualification": {
     "nominal_6_18_64_kernel_ancestry_and_host_verification": {
