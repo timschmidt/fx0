@@ -1,0 +1,88 @@
+{
+  "date_UTC": "2026-11-19",
+  "RAM_build": {
+    "kernel_source": "c595fe52cc30df4430cf752a831e8f4616bd6993",
+    "boot_image_SHA256": "bc82e36e4c0347b9d07c66f7a1af88552d4422ebbe6a09442eeab299098d3ceb",
+    "boot_image_bytes": 17405952,
+    "Madai_DTB_SHA256": "d390bd11f0025787b6bbe27b5fb16840c45e755fd586e057d70ec08287d53a12",
+    "unchanged_built_in_exports": 11718,
+    "unchanged_total_exports": 14885,
+    "verified_CAMSS_symbol_imports": 133,
+    "unchanged_installed_module_files_in_RAM": 481,
+    "original_module_certificate_SHA256": "de086e266ec1d82ea17ebbd51f10242e591df3cf74e958e269bdd91b9176d370",
+    "trial_certificate_SHA256": "d5410c9e0acbd7752fc6dbcd00b7308ff5f5c9068c09d577aa11426e1b1af831",
+    "trial_signer_private_key_removed": true,
+    "tampered_payload_and_wrong_certificate_rejected": true,
+    "retained_signature_enforcement_and_WLAN_blacklist": true,
+    "early_return_seconds": 420,
+    "standard_return_seconds": 360
+  },
+  "loader": {
+    "initial_permission_failure_before_RAM_transfer": true,
+    "first_verified_installed_return": true,
+    "retry_of_open_on_same_pinned_loader": 1,
+    "firmware_and_kernel_RAM_readbacks_verified": true
+  },
+  "active_streams": [
+    {
+      "camera": "front",
+      "camss_prepare_returns": [
+        -16
+      ],
+      "machine_suspend_entries": 0,
+      "buffers_after_refusal_verified": 6,
+      "sensors_runtime_suspended_after_close": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "camera": "back",
+      "camss_prepare_returns": [
+        -16
+      ],
+      "machine_suspend_entries": 0,
+      "buffers_after_refusal_verified": 6,
+      "sensors_runtime_suspended_after_close": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    }
+  ],
+  "closed_streams": {
+    "RTC_wake_seconds": 13.768,
+    "camss_prepare_returns": [
+      0
+    ],
+    "RTC_IRQ_increment": 1,
+    "RTC_alarm_cleared": true
+  },
+  "front_capture_warning": {
+    "message": "Missing ready buf 0 5!",
+    "buffer_slot": 0,
+    "VFE_output_state": "VFE_OUTPUT_STOPPING",
+    "seconds_after_prepare_refusal": 0.419434,
+    "two_adjacent_buffer_records": [
+      {
+        "seconds": 72.846018,
+        "buffer_sequence": 15,
+        "bytes": 2966400
+      },
+      {
+        "seconds": 73.402797,
+        "buffer_sequence": 16,
+        "bytes": 2966400
+      }
+    ],
+    "seconds_between_adjacent_buffer_timestamps": 0.556779
+  },
+  "automatic_installed_return": {
+    "installed_module_files_verified": 482,
+    "protected_hashes_match": true,
+    "installed_charger_registers_restored": true,
+    "receipt_matches_retained_journal": true
+  },
+  "guard_behavior_verified": true,
+  "camera_capture_qualification_clean": false,
+  "open_stream_system_sleep_supported": false
+}

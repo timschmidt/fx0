@@ -526,9 +526,24 @@ the PM core starts any suspend callbacks. It returns `-EBUSY` if a stream
 is active. The ARM CAMSS object and aggregate driver compiled with `W=1`.
 The source also compiled with system sleep disabled, and a host fixture
 verified idle, busy and multiple-VFE states with balanced stream locks.
-The candidate requires a signed handset build for physical qualification.
 [Guard source](https://github.com/timschmidt/fx0-linux/commit/c595fe52cc30df4430cf752a831e8f4616bd6993)
 [Build and host evidence](../evidence/2026-11-19-fx0-camss-suspend-guard.json)
+
+The signed RAM image replaced just the CAMSS module in its in-memory
+module tree. All 14,885 export entries matched the installed reference
+and the module's 133 versioned imports passed. Both active streams
+reached CAMSS `prepare` and received `-EBUSY` before the machine entered
+sleep. Both streams delivered at least six more consecutive buffers
+after refusal. With both cameras closed, CAMSS `prepare` returned zero
+and the RTC woke the handset after 13.768 seconds of `s2idle`.
+
+The front-camera run logged one `Missing ready buf 0 5!` diagnostic in
+`VFE_OUTPUT_STOPPING`, 419 ms after CAMSS refused the request. It fell
+within a 557 ms interval between consecutive delivered buffers. The
+guard behavior passed and the camera workload's clean-log check failed.
+The scheduled reboot restored the charger registers and passed the
+installed seven-hash and 482-module checks.
+[Signed RAM and handset evidence](../evidence/2026-11-19-fx0-camss-suspend-guard-handset.json)
 
 Resuming the same stream requires CAMSS to stop DMA at suspend, preserve
 ownership of queued buffers, bring the pipeline back after its suppliers
