@@ -1470,11 +1470,38 @@ USB audit checked the active output, zero remaining transient units or
 trace objects, and no matching DRM, RMI4 or I²C timeout errors in the
 recent kernel journal. The corrected probe accepts inactive units that
 systemd has already collected. The first attempt treated this as a cleanup
-error after a successful restore. The test exercised display power with the system
-awake. Physical touch events and display recovery from system sleep
-require separate verification.
+error after a successful restore. This test exercised display power with
+the system awake. Physical touch events still require verification.
 [Handset evidence](../evidence/2026-11-19-fx0-display-power.json)
 [Display test](../diagnostics/sxmo-fx0-profile/check-display-power.py)
+
+### Display recovery after RTC wake
+
+The guarded RAM trial reused the exact signed r2 kernel and device tree
+from the installed package, with WLAN disabled and all 482 module files
+verified. It completed three `s2idle` cycles. Each trace recorded the RTC
+alarm as the only wake IRQ. The IRQ counter advanced by one per cycle,
+and the inactive-clock intervals ranged from 13.905 to 14.492 seconds.
+
+The active Sway output returned to the same DRM CRTC at 720 × 1280 and
+60 Hz. The vblank sequence advanced seven frames over each 110 ms sample.
+The RMI4 suspend, resume and panel-follower prepare callbacks all returned
+zero once per cycle. The same Sway and gesture processes survived. The
+probe cleared the RTC alarm and removed its trace objects after each
+cycle. On the workstation the combined probe also rejected three
+negative controls covering the wrong wake IRQ, a failed RMI4 resume and
+a changed DRM CRTC.
+
+The scheduled return restored installed r2. An independent USB audit
+matched all seven protected hashes and all 482 installed module files.
+The saved kernel journal contained three `s2idle` entries and three
+exits, and the worker's journal result matched the wired receipt. The
+installed Sway output also passed the vblank check.
+
+Physical touch, power-key or motion wake, and display recovery from
+deep suspend remain open.
+[Combined probe](../diagnostics/rtc-s2idle/display.py)
+[Handset and return evidence](../evidence/2026-11-19-fx0-rtc-display-recovery.json)
 
 ## Remaining physical scope
 
