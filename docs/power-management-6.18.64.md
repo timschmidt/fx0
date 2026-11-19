@@ -1468,13 +1468,13 @@ final inhibit check also encountered a missing sysfs path. The candidate
 returned on schedule and the independent USB audit matched all 482
 installed module files and the protected hashes. The saved journal
 contained the worker receipt. No register trace was available after
-reboot. Charge cutoff and recovery after VADC removal remain open.
+reboot, so that run could not establish cutoff or recovery.
 
 The device tree declares a VADC dependency for the parent charger’s
 `voltage_now` property. Linux can unbind the parent through that firmware
-device link when VADC is removed. A repeat needs to track the parent,
-policy child and USB gadget through that transition, and record hardware
-cutoff independently of the disappearing power-supply sysfs entries.
+device link when VADC is removed. The repeat tracked the parent, policy
+child and USB gadget through that transition. It measured hardware cutoff
+independently of the disappearing power-supply sysfs entries.
 [Trial evidence](../evidence/2026-11-19-fx0-vadc-driver-removal.json)
 [Charger device-tree node](https://github.com/timschmidt/fx0-linux/blob/614a0266edf151ea8cb174c944614e54e6477352/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts#L450)
 
