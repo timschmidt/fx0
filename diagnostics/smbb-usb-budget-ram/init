@@ -86,12 +86,16 @@ bind_gadget() {
     echo "$budget" >configs/c.1/MaxPower || return_native maxpower-write-failed
     echo "bind_${budget}" >/tmp/phase
     echo ci_hdrc.0 >UDC || return_native UDC-bind-failed
-    ip link set usb0 up && ip address add 172.16.42.1/24 dev usb0 || return_native USB-network-failed
+    # NCM can retain usb0 and its IPv4 address across UDC unbind.
+    ifconfig usb0 172.16.42.1 netmask 255.255.255.0 up || return_native USB-network-failed
     nc -lk -s 172.16.42.1 -p 80 -e /bin/serve-http &
     server=$!
 }
 unbind_gadget() {
-    if test -n "$server"; then kill "$server" 2>/dev/null || :; fi
+    if test -n "$server"; then
+        kill "$server" 2>/dev/null || :
+        wait "$server" 2>/dev/null || :
+    fi
     echo detach >/tmp/phase
     echo '' >UDC || return_native UDC-unbind-failed
     set_mmc_read_only || return_native mmc-readonly-failed

@@ -3173,5 +3173,71 @@
       "simulated_error_attempts_inhibit_and_ends_sampling": true
     },
     "unattended_watchdog_coverage_during_kernel_stall": false
+  },
+  "USB_gadget_current_budget_qualification": {
+    "nominal_6_18_64_kernel_ancestry_and_host_verification": {
+      "recorded_UTC": "2026-11-19T10:38:54+00:00",
+      "kernel_source": "8e5eacff1484771c0c96de28b018896a2cd7b738",
+      "inherited_exact_ancestors": [
+        "2dfb18e84efccc1c6ad7b146ec3bf6f6aa19f325",
+        "d10a194d04f0e2971273cdce601bb332e1e7e5e8",
+        "a0b13a54ac791f821ce3cb98dd6de123e0648d22",
+        "ffca0186636a981adbe55d156b5c1fd5354ddcda",
+        "f71b29239d140872c4970d8381f5d297a604c6da"
+      ],
+      "source_sha256": {
+        "Documentation/devicetree/bindings/power/supply/qcom,pm8941-charger.yaml": "7ed161f8533a621b955ee8da5005982a8fac893d3eabbbda9d572477cf5d72cd",
+        "Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml": "9811c85e0b0da8ed4ce9e8c9497a2992ade1ab5585d33ac1364f451aeea21227",
+        "Documentation/devicetree/bindings/usb/usb-drd.yaml": "7f5a84c51f81dc3cdb8a9e49dd8f6985361dbf0a989c01b3c3d2562890ba7f59",
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "c5a2f5ecd1c2a9b84ac5af598ca77829962c4933a9565e28030366b927780e0c",
+        "drivers/power/supply/qcom_smbb.c": "68709d941e7d2c81bb95736956b8af348007cfaea8f9b2be40de782d862e2f2e",
+        "drivers/usb/chipidea/ci.h": "9642f91d60730e7c71eb4366276f17de2878e35fd7681ec4e6fa4e7c671cae16",
+        "drivers/usb/chipidea/udc.c": "7ef9579c7a0a88d9182584d205f9e1d9bf0bc4ef5412b915f8dcf709a1f34e8d"
+      },
+      "runtime_source_fixtures": {
+        "SMBB_input_actuator": {
+          "cases": 59,
+          "failed": 0,
+          "scope": "Extracted candidate driver callbacks with simulated register and power-supply I/O under ASan/UBSan.",
+          "driver_sha256": "68709d941e7d2c81bb95736956b8af348007cfaea8f9b2be40de782d862e2f2e",
+          "harness_sha256": "bcc1f3f856b0b8d7ef8bdfa0bc3b1a5bbd65d1c0ad30a009b903c2ea8b79cf65"
+        },
+        "ChipIdea_gadget": {
+          "cases": 59,
+          "failed": 0,
+          "scope": "Actual ChipIdea budget callbacks with simulated device links, work and supplier I/O.",
+          "driver_sha256": "7ef9579c7a0a88d9182584d205f9e1d9bf0bc4ef5412b915f8dcf709a1f34e8d",
+          "harness_sha256": "f6bca3df3da76bb2947384045fb333b3d4c5c4dab5f262a7074b88bba5dfc673"
+        }
+      },
+      "nominal_image_DTB_was_extracted_and_hash_verified": true,
+      "exact_DTB_connects_ChipIdea_to_managed_SMBB": true,
+      "previous_moduleless_control_and_managed_images_still_verify": true,
+      "physical_dynamic_budget_or_USB_current_verified": false,
+      "temporary_source_and_fixture_binaries_removed": true
+    },
+    "separate_moduleless_rebind_diagnostic": {
+      "independently_parsed_images": 2,
+      "android_header_digest_verified": true,
+      "same_kernel_initramfs_and_cmdline": true,
+      "initramfs_entries": 12,
+      "early_independent_return_timer_seconds": 180,
+      "module_or_filesystem_payloads": false,
+      "staged_or_booted": false,
+      "recorded_UTC": "2026-11-19T10:43:27+00:00",
+      "only_init_payload_changed": true,
+      "same_kernel_DTB_and_arguments_as_each_parent": true,
+      "parent_images_SHA256": {
+        "control": "4e4e13a10b2f04dee61b488b25603e81a3535cfe2416e86252d2036796e1a091",
+        "managed": "1079c0bf6ce53ce0f853d584dc9a417eefc980f5137e6adddcdcee7d32423c05"
+      },
+      "new_images_SHA256": {
+        "control": "ce3d9b55799fd5f354cf59a1f86a1794683aa6b6f9a3ee1137d132e59d84a459",
+        "managed": "06b1d18f0e8b6d69705ea6c7fb75206fa604db25793895d4f2bbf830ac6d94f7"
+      },
+      "pinned_ARM_BusyBox_repeated_address_assignment_qualified": true,
+      "duplicate_address_regression_reproduced_in_isolated_network": true,
+      "USB_gadget_reconfiguration_or_current_physically_tested": false
+    }
   }
 }

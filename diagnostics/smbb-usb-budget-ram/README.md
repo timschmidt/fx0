@@ -46,3 +46,15 @@ The images are prepared for RAM boot. The published evidence covers the
 kernel build, image layout, exact decompression and synthetic fixtures.
 [Image manifest](../../manifests/smbb-usb-budget-ram.json) ·
 [Evidence](../../evidence/2026-11-10-smbb-usb-budget-ram.json)
+
+### NCM rebind
+
+The NCM function can retain its network interface and IPv4 address when
+the UDC is unbound. The script waits for the previous listener to exit
+before detach and sets the address with `ifconfig` on each bind.
+With the exact ARM BusyBox in an isolated network namespace, the former
+second `ip address add` failed with an existing address and both
+`ifconfig` calls succeeded. The rebuilt control and managed images
+replace only the init script and retain the 180-second return timer.
+Handset reconfiguration and measured input current remain unverified.
+[Rebind evidence](../../evidence/2026-11-18-power-qualification-followup.json)
