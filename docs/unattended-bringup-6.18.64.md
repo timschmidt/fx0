@@ -795,8 +795,21 @@ every plane length before starting capture with the preallocated buffers.
 Seven host cases cover reuse and rejection. The ARM probe strips stride
 and height padding, converts NV12 to planar YUV420 and uses the existing
 content checks for the first picture. Host conversion and malformed
-length checks passed. Handset capture still awaits this test.
+length checks passed. On the handset, the pool passed validation and
+CAPTURE streaming started. The decoder then returned an I/O error
+before a frame was available. The journal recorded a fatal firmware
+error after the driver registered a replacement scratch buffer of the
+same size. The installed return matched all 482 module files and the
+protected hashes.
 [Capture pool validation](https://github.com/timschmidt/fx0-linux/commit/57be812a9b1015f6094516f8c4a513783f9ae130)
+
+A signed comparison is ready with the same image contents outside the
+decoder module and its manifest entry. It keeps the session's scratch
+buffers and skips a second firmware continue command when the initial
+event says resources are sufficient for the same dimensions and bit
+depth. Seven host cases cover when to retain resources, and four cover
+capture startup. The comparison is awaiting its first handset run.
+[Retained-resource comparison](https://github.com/timschmidt/fx0-linux/commit/ee828e634cb3cffdd83e4fa366f3076921b2ae7e)
 
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored
@@ -833,8 +846,22 @@ documents an empty-EOS case with no valid output buffer.
 The next signed encoder control discards only the observed successful
 addressless acknowledgement for the synthetic MSM8226 input tag. The
 valid EOS and capture payloads still follow the existing completion
-path. Eleven host cases check the exact signature and variants. The
-corrected image awaits handset repetition.
+path. Eleven host cases check the exact signature and variants.
+On the handset, firmware again sent both replies. Userspace dequeued
+12 payloads and only one empty capture buffer, with `LAST` set. STOP
+was accepted while five inputs remained outstanding. Software decoding
+verified all 12 frames and the installed return matched all 482 module
+files and the protected hashes.
+
+A separate RAM boot of the exact image repeated the FFmpeg workload
+with the same binary that previously aborted. FFmpeg completed hardware
+encoding, and software decoding verified 12 frames, 144 luma cells and
+24 chroma planes. The trace again recorded one addressless acknowledgement
+and one addressed EOS completion. It recorded no firmware system errors,
+IOMMU timeouts or unexpected buffer states. The installed return matched
+all 482 module files and the protected hashes. This qualifies the two
+tested encoder workloads on the signed image. Decoder and sustained
+encoder operation remain open.
 [Reserved tag](https://github.com/timschmidt/fx0-linux/commit/cfac2aa935f6e6b235db9da58a7bbae33c254ca4)
 [Mapped EOS buffer](https://github.com/timschmidt/fx0-linux/commit/df0da6c7c770dc705bf5992ef2a18a02b37a2d96)
 [Encoder HFI trace](https://github.com/timschmidt/fx0-linux/commit/14edfd206702060296240d83d4fa6d92b0345d4b)
