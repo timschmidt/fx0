@@ -292,5 +292,53 @@
       "protected_hashes_match": true,
       "candidate_suspend_markers": 0
     }
+  },
+  "PM8226_reset_reason_inventory_handset": {
+    "recorded_UTC": "2026-11-19T00:52:43.728447+00:00",
+    "source_commit": "eb2e1d27f6eaa10591d809c5dc1212b0c28aa5b2",
+    "RAM_image_sha256": "7ab8cc94bb8c578d79eb2b063af9e7d5728ee8b35d7141a1cfa4542b63e69558",
+    "parent_RAM_image_sha256": "334878d4a8b6f3d0cb01a74a1fbd8b6792cf1567ff63166fbe04348019c098b2",
+    "matched_built_in_export_CRCs": 11740,
+    "matched_public_certificate": true,
+    "same_DTB_initramfs_and_arguments": true,
+    "RAM_transfer_readback_exact": true,
+    "candidate_boot": "1a7b714f-61c8-4ecd-aa8f-96a36f5420a9",
+    "initiated_by_normal_software_reboot_to_fastboot": true,
+    "both_return_guards_present": true,
+    "matched_reads": 2,
+    "register_order": [
+      "0x808",
+      "0x80a",
+      "0x80b",
+      "0x80c",
+      "0x80d"
+    ],
+    "raw_reason_bytes": [
+      "0x91",
+      "0x02",
+      "0x00",
+      "0xa0",
+      "0x00"
+    ],
+    "gen1_power_off_reason_set_bits": [
+      5,
+      7
+    ],
+    "PMIC_watchdog_and_stage_3_power_off_bits_set": false,
+    "watchdog_and_S3_configuration_matches_prior": true,
+    "PMIC_register_writes": 0,
+    "manual_WiFi_scans": 0,
+    "candidate_WLAN_driver_blacklisted": true,
+    "candidate_kernel_event_counts": {
+      "suspend": 0,
+      "watchdog_expiration": 0,
+      "critical_kernel_fault": 0,
+      "cpu_panic_or_timeout": 0
+    },
+    "causal_attribution_to_previous_freeze_established": false,
+    "PMIC_watchdog_expiration_or_deep_recovery_qualified": false,
+    "installed_return_boot": "dd1f4611-f1ca-4e33-93bf-8e9d7efda336",
+    "installed_modules_verified": 482,
+    "installed_protected_hashes_match": true
   }
 }

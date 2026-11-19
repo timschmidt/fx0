@@ -671,14 +671,28 @@ PS_HOLD and stage-3 reset. Attribution to a specific event also requires
 the preceding boot and a comparison with the earlier register values.
 [Qualcomm Gen1 reason definitions](https://android.googlesource.com/kernel/msm/%2B/20f6203c302caa77d7de6e662c0062da58850c65/drivers/input/misc/qpnp-power-on.c#262)
 
-The ARM object builds with the existing diagnostic kernel configuration.
-A host test exercises each possible byte value in each position and checks
-both read failures. The handler issues only the two selected read
-transactions and propagates errors without returning a partial record.
-Handset verification of those registers and autonomous recovery remain
-open.
+The ARM kernel builds with the existing diagnostic configuration. All
+11,740 built-in export CRCs and the public module certificate match the
+previous S3 image. The DTB, initramfs and command line are byte-identical.
+A host test exercises every byte value in each position and both read
+failures. The handler issues two read transactions and returns no partial
+record on error.
+
+After an ordinary software reboot into fastboot and one RAM boot, two
+reads on the handset returned `91 02 00 a0 00`. The `0x00a0` power-off
+mask has both the combined-key and long-power-key bits set in the Gen1
+definitions. The PMIC watchdog and stage-3 bits are clear. Those reads
+provide a baseline for later comparison. They cannot attribute the
+reported desktop freeze to a reset source, and the watchdog's ability
+to recover the phone from deep sleep remains unverified. The watchdog
+and S3 configuration bytes matched the earlier handset inventory.
+
+The controller could not confirm the early return request over USB. It
+observed a new installed boot, and the independent USB audit matched all
+482 installed module files and the protected hashes. The candidate's
+journal recorded no suspend, watchdog expiry or critical kernel fault.
 [Diagnostic source](https://github.com/timschmidt/fx0-linux/commit/eb2e1d27f6eaa10591d809c5dc1212b0c28aa5b2)
-[Host evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
+[Qualification evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
 
 ## Remaining physical scope
 
