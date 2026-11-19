@@ -1,0 +1,65 @@
+{
+  "recorded_UTC": "2026-11-19T19:01:11.396073+00:00",
+  "kernel_candidate": "272ba42f0202498b83c2cabfe922464c46c0cf0c",
+  "installed_register_baseline": {
+    "snapshots": [
+      {
+        "0x1004": "02",
+        "0x1005": "31",
+        "0x1010": "00",
+        "0x1049": "00",
+        "0x104a": "00",
+        "0x1060": "00",
+        "0x1061": "1d",
+        "0x1065": "00",
+        "0x1249": "81",
+        "0x1310": "03"
+      },
+      {
+        "0x1004": "02",
+        "0x1005": "31",
+        "0x1010": "00",
+        "0x1049": "00",
+        "0x104a": "00",
+        "0x1060": "00",
+        "0x1061": "1d",
+        "0x1065": "00",
+        "0x1249": "81",
+        "0x1310": "03"
+      }
+    ],
+    "SPMI_reads": 20,
+    "SPMI_writes": 0,
+    "lost_trace_entries": 0
+  },
+  "configured_minutes": 480,
+  "charger_failure_IRQ": {
+    "SID": 0,
+    "peripheral": 16,
+    "interrupt": 6,
+    "trigger": "rising"
+  },
+  "ARM_compile": {
+    "charger_object_SHA256": "6211e9df1a521f825f2ad1a786a709e1d56b83644a522e1b473495e1e114d944",
+    "Madai_DTB_SHA256": "9dcbdd70d53b610feb22be2f7890325bf0307d9c4ab7b1835a82d72b7b595d3c"
+  },
+  "schema_validation": {
+    "binding_and_DTB_passed": true,
+    "configured_timer_without_irq_rejected": true
+  },
+  "host_controls": {
+    "duration_values_checked": 521,
+    "normal_restore_and_io_fault_retries_passed": true,
+    "preserves_hardware_failure_latch": true,
+    "rollback_requires_verified_cutoff": true,
+    "separate_async_failure_IRQ_cutoff_passed": true,
+    "negative_controls_rejected": [
+      "wrong saved period",
+      "missing fault vote in IRQ",
+      "forgot saved period before uncertain write"
+    ],
+    "existing_policy_and_legacy_fixture_passed": true
+  },
+  "physical_timer_rollback_passed": false,
+  "physical_timer_expiry_passed": false
+}

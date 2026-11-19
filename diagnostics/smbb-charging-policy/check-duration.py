@@ -28,13 +28,16 @@ struct regmap {
     unsigned int values[0x300];
     unsigned int accesses, fail_access, control_writes, force_writes;
     unsigned int ignore_write;
-    bool fail_on_charge_enable;
+    bool fail_on_charge_enable, fail_after_write;
 };
 struct smbb_charger {
     struct device *dev;
     struct regmap *regmap;
     unsigned int addr, charge_lock, charge_inhibit;
     bool software_control, charge_timer_enabled;
+    bool charge_timer_restore_pending;
+    unsigned int charge_timer_previous_period;
+    void *bat_psy;
     uint64_t policy_valid_until_ns;
 };
 static bool of_property_present(struct device_node *node, const char *property) {
@@ -58,7 +61,8 @@ static int regmap_read(struct regmap *map, unsigned int reg, unsigned int *value
 static int write_masked(struct regmap *map, unsigned int reg, unsigned int mask,
                         unsigned int value, bool force) {
     assert(reg < 0x300 && !(value & ~mask));
-    if (++map->accesses == map->fail_access)
+    bool fails = ++map->accesses == map->fail_access;
+    if (fails && !map->fail_after_write)
         return -ETIMEDOUT;
     if (!force && (map->values[reg] & mask) == value)
         return 0;
@@ -72,7 +76,7 @@ static int write_masked(struct regmap *map, unsigned int reg, unsigned int mask,
     }
     if (reg != map->ignore_write)
         map->values[reg] = (map->values[reg] & ~mask) | value;
-    return 0;
+    return fails ? -ETIMEDOUT : 0;
 }
 static int regmap_write_bits(struct regmap *map, unsigned int reg, unsigned int mask,
                              unsigned int val) {
@@ -82,7 +86,9 @@ static int regmap_update_bits(struct regmap *map, unsigned int reg, unsigned int
                               unsigned int val) {
     return write_masked(map, reg, mask, val, false);
 }
-#define dev_err(dev, ...) assert((dev)->of_node)
+static void dev_err(struct device *dev, const char *message, ...) {
+    assert(dev->of_node && message);
+}
 static uint64_t ktime_get_boottime_ns(void) { return 1; }
 static void mutex_lock(unsigned int *lock) {
     assert(!*lock);
@@ -92,6 +98,16 @@ static void mutex_unlock(unsigned int *lock) {
     assert(*lock);
     *lock = 0;
 }
+
+#ifdef TEST_RESTORE
+typedef int irqreturn_t;
+#define IRQ_HANDLED 1
+static unsigned int fault_notifications;
+static void power_supply_changed(void *supply) {
+    assert(supply);
+    fault_notifications++;
+}
+#endif
 '''
 
 CASES = r'''
@@ -105,6 +121,7 @@ static void reset(void) {
     chg = (struct smbb_charger){.dev = &dev,
                                 .regmap = &map,
                                 .software_control = true,
+                                .bat_psy = &map,
                                 .charge_inhibit = SMBB_INHIBIT_INIT,
                                 .policy_valid_until_ns = 2};
     map.values[SMBB_CHG_TCHG_MAX] = 0x80;
@@ -140,7 +157,7 @@ static void verify_setup(void) {
     reset();
     node.minutes = UINT_MAX;
     assert(smbb_configure_charge_timer(&chg) == -EINVAL && !chg.charge_timer_enabled);
-    for (unsigned int failure = 1; failure <= 5; failure++) {
+    for (unsigned int failure = 1; failure <= SETUP_OPS; failure++) {
         reset();
         map.fail_access = failure;
         assert(smbb_configure_charge_timer(&chg) == -ETIMEDOUT && !chg.charge_timer_enabled);
@@ -193,7 +210,7 @@ static void verify_votes(void) {
 
     reset();
     assert(!smbb_configure_charge_timer(&chg));
-    for (unsigned int failing_read = 1; failing_read <= 4; failing_read++) {
+    for (unsigned int failing_read = 1; failing_read <= ENABLE_OPS; failing_read++) {
         const unsigned int first = map.accesses;
         map.fail_access = first + failing_read;
         assert(smbb_charge_enable(&chg, true) == -ETIMEDOUT);
@@ -207,9 +224,85 @@ static void verify_votes(void) {
     assert(!smbb_charge_enable(&chg, true) && !smbb_charge_enable(&chg, true));
     assert(map.control_writes == 2 && map.force_writes == 2);
 }
+
+#ifdef TEST_RESTORE
+static void assert_timer_restored(void) {
+    assert(!chg.charge_timer_enabled && !chg.charge_timer_restore_pending);
+    assert(map.values[SMBB_CHG_TCHG_MAX_EN] == 0x20);
+    assert(map.values[SMBB_CHG_TCHG_MAX] == 0x9d);
+    assert(map.values[SMBB_CHG_CTRL] == BIT(0));
+}
+
+static void verify_restore(void) {
+    reset();
+    map.values[SMBB_CHG_TCHG_MAX] = 0x9d;
+    assert(!smbb_configure_charge_timer(&chg));
+    assert(!smbb_charge_vote(&chg, SMBB_INHIBIT_INIT, false));
+    map.values[SMBB_CHG_FAILED] = CHG_FAILED_LATCHED;
+    smbb_charge_cleanup(&chg);
+    assert_timer_restored();
+    assert(map.values[SMBB_CHG_FAILED] == CHG_FAILED_LATCHED);
+    assert(map.values[SMBB_BAT_BTC_CTRL] == BTC_CTRL_CONSERVATIVE);
+
+    /* An unverified cutoff leaves the timer armed and the saved period pending. */
+    reset();
+    assert(!smbb_configure_charge_timer(&chg));
+    assert(!smbb_charge_vote(&chg, SMBB_INHIBIT_INIT, false));
+    map.ignore_write = SMBB_CHG_CTRL;
+    smbb_charge_cleanup(&chg);
+    assert(chg.charge_timer_restore_pending);
+    assert(map.values[SMBB_CHG_TCHG_MAX_EN] & TCHG_MAX_EN);
+
+    for (unsigned int fail = 1; fail <= 4; fail++) {
+        reset();
+        map.values[SMBB_CHG_TCHG_MAX] = 0x9d;
+        assert(!smbb_configure_charge_timer(&chg));
+        map.fail_access = map.accesses + fail;
+        assert(smbb_restore_charge_timer(&chg) == -ETIMEDOUT);
+        assert(chg.charge_timer_restore_pending);
+        assert(!smbb_restore_charge_timer(&chg));
+        assert_timer_restored();
+    }
+
+    /* A timed-out programming write may have changed either hardware register. */
+    for (unsigned int fail = 3; fail <= 5; fail += 2) {
+        reset();
+        map.values[SMBB_CHG_TCHG_MAX] = 0x9d;
+        map.fail_access = fail;
+        map.fail_after_write = true;
+        assert(smbb_configure_charge_timer(&chg) == -ETIMEDOUT);
+        assert(chg.charge_timer_restore_pending && !chg.charge_timer_enabled);
+        smbb_charge_cleanup(&chg);
+        assert_timer_restored();
+    }
+}
+
+static void verify_failure_irq(void) {
+    reset();
+    assert(!smbb_configure_charge_timer(&chg));
+    map.values[SMBB_CHG_INT_RT_STS] = CHG_FAILED_IRQ;
+    assert(smbb_charge_enable(&chg, true) == -EIO && !map.control_writes);
+
+    reset();
+    assert(!smbb_configure_charge_timer(&chg));
+    assert(!smbb_charge_vote(&chg, SMBB_INHIBIT_INIT, false));
+    assert(smbb_chg_failed_handler(6, &chg) == IRQ_HANDLED);
+    assert(fault_notifications == 1);
+    assert(chg.charge_inhibit == SMBB_INHIBIT_FAULT);
+    assert(map.values[SMBB_CHG_CTRL] == BIT(0));
+    assert(map.values[SMBB_BAT_BTC_CTRL] == BTC_CTRL_CONSERVATIVE);
+    assert(!smbb_charge_vote(&chg, SMBB_INHIBIT_USER, false));
+    assert(map.values[SMBB_CHG_CTRL] == BIT(0));
+}
+#endif
+
 int main(void) {
     verify_setup();
     verify_votes();
+#ifdef TEST_RESTORE
+    verify_restore();
+    verify_failure_irq();
+#endif
     return 0;
 }
 '''
@@ -220,21 +313,32 @@ def main():
     args = parser.parse_args()
     source = args.source.read_text()
     constants = '\n'.join(row for row in source.splitlines() if re.match(
-        r'#define (SMBB_CHG_|CTRL_EN\b|CHG_FAILED_LATCHED\b|TCHG_|SMBB_BAT_BTC_CTRL\b|BTC_CTRL_|SMBB_INHIBIT_)',
+        r'#define (SMBB_CHG_|CTRL_EN\b|CHG_FAILED_(?:LATCHED|IRQ)\b|TCHG_|SMBB_BAT_BTC_CTRL\b|BTC_CTRL_|SMBB_INHIBIT_)',
         row))
     votes = source[source.index('static int smbb_read_charge_failure('):
                    source.index('static int smbb_get_charge_behaviour(')]
     setup = source[source.index('static int smbb_configure_charge_timer('):
                    source.index('static int smbb_charger_probe(')]
+    restore = 'static int smbb_restore_charge_timer(' in source
+    if restore:
+        constants += '\n#define TEST_RESTORE\n#define SETUP_OPS 6\n#define ENABLE_OPS 6'
+        setup += source[source.index('static int smbb_restore_charge_timer('):
+                        source.index('static int smbb_battery_init_voltage(')]
+        setup += source[source.index('static irqreturn_t smbb_chg_failed_handler('):
+                        source.index('static irqreturn_t smbb_chg_gone_handler(')]
+    else:
+        constants += '\n#define SETUP_OPS 5\n#define ENABLE_OPS 4'
     with TemporaryDirectory(prefix='fx0-smbb-timer-check-') as scratch:
         fixture = Path(scratch) / 'check.c'
         fixture.write_text(constants + '\n' + HEAD + votes + setup + CASES)
         binary = Path(scratch) / 'check'
-        subprocess.run(['clang-21', '-std=c11', '-Wall', '-Wextra', '-Werror',
+        subprocess.run(['clang-21', '-std=c11', '-Wall', '-Wextra', '-Werror', '-Wno-unused-parameter',
                         '-fsanitize=undefined', '-fno-sanitize-recover=all',
                         str(fixture), '-o', str(binary)], check=True)
         subprocess.run([str(binary)], check=True)
     print('Charger-duration controls passed for all 521 duration values, I/O faults, expiry races and legacy operation.')
+    if restore:
+        print('Charger failure IRQ, timer restoration, and retry controls passed.')
 
 if __name__ == '__main__':
     main()

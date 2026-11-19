@@ -106,7 +106,7 @@ stubs = stubs.replace('assert(reg == 0x1049 && mask == 0x80 && !(value & ~mask))
  }
 ''')
 defines = '\n'.join(re.findall(
-    r'^#define (?:SMBB_\w+|STATUS_\w+|BTC_CTRL_\w+|CTRL_EN|CHG_FAILED_LATCHED|PRES_STATUS_BAT_PRES)\s+.*$', source, re.M))
+    r'^#define (?:SMBB_\w+|STATUS_\w+|BTC_CTRL_\w+|CTRL_EN|CHG_FAILED_\w+|PRES_STATUS_BAT_PRES)\s+.*$', source, re.M))
 if 'static int smbb_set_managed_voltage(' in source:
     defines += '\n#define TEST_MANAGED_RECHARGE'
 attrs = source[source.index('enum smbb_attr {'):source.index('struct smbb_charger {')]

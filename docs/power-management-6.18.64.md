@@ -1352,6 +1352,22 @@ on the handset remain open.
 [Candidate source](https://github.com/timschmidt/fx0-linux/commit/1e75e586a6e8f03fd013430135e5abf86a8643e0)
 [Host checks](../diagnostics/smbb-charging-policy/check-duration.py)
 
+The follow-up adds the charger-failure IRQ from LG's PM8226 device tree.
+It latches the existing fault vote even if the failure signal pulses
+between samples. Orderly shutdown and driver cleanup verify charge
+cutoff, disarm the duration timer and restore the saved period. They
+leave the PMIC failure latch intact. The model exercised retries after
+uncertain writes and rejected rollback when cutoff could not be verified.
+[IRQ mapping](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/arch/arm/boot/dts/msm-pm8226.dtsi#L95)
+[Charger return candidate](https://github.com/timschmidt/fx0-linux/commit/272ba42f0202498b83c2cabfe922464c46c0cf0c)
+
+The installed reference read charger subtype `0x31`, period `0x1d`,
+and zero at the timer enable, charger watchdog enable and failure latch
+registers. Both read-only snapshots agreed. This is the reference for
+the 480-minute RAM rollback rehearsal. A separate short timer test is
+needed to measure expiry and establish its post-reboot behavior.
+[Installed reference and host controls](../evidence/2026-11-19-fx0-charge-duration-return-controls.json)
+
 #### Managed charger suspend refusal and wake notifications
 
 The paired managed RAM image started with fast charge active at the
