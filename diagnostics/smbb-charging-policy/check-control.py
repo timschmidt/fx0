@@ -26,6 +26,7 @@ stubs = stubs.replace('struct regmap {', r'''
 typedef unsigned long long u64;
 static u64 clock_ns=10000000000ULL,bus_delay_ns;
 static bool audit_warm;
+static bool audit_voltage_pair;
 static bool smbb_pack_identity_lost;
 #define READ_ONCE(x) (x)
 #define WRITE_ONCE(x,v) ((x)=(v))
@@ -40,6 +41,7 @@ static int irq_get_irqchip_state(int irq,int which,bool *level)
 static u64 ktime_get_boottime_ns(void) {return clock_ns;}
 #define NSEC_PER_MSEC 1000000ULL
 #define min(a,b) ((a)<(b)?(a):(b))
+#define min_t(type,a,b) min((type)(a),(type)(b))
 #define min3(a,b,c) min(min(a,b),c)
 #define container_of(p,t,f) ((t *)((char *)(p)-offsetof(t,f)))
 struct work_struct {int dummy;};
@@ -74,13 +76,21 @@ stubs = stubs.replace('POWER_SUPPLY_PROP_CHARGE_BEHAVIOUR };',
                       'POWER_SUPPLY_PROP_CHARGE_BEHAVIOUR, POWER_SUPPLY_PROP_VOLTAGE_NOW };')
 stubs = stubs.replace('unsigned long status;', '''unsigned long status;
  bool software_control,battery_present_sampled;
- unsigned int board_current,board_voltage,user_current,user_voltage,thermal_current;
+ unsigned int board_current,board_voltage,board_recharge_voltage,user_current,user_voltage,thermal_current;
  u64 policy_valid_until_ns;
  struct iio_channel *vbat;
  struct power_supply *bat_psy;''')
 stubs = stubs.replace('void *dev;', 'struct device *dev;')
 stubs = stubs.replace('m->operations++;', 'm->operations++;clock_ns+=bus_delay_ns;')
-stubs = stubs.replace('assert(value < 256);', 'assert(value < 256);if(audit_warm && reg==0x1044)assert(value<=9);')
+stubs = stubs.replace('assert(value < 256);', '''
+ assert(value < 256);
+ if (audit_warm && reg == 0x1044)
+  assert(value <= 9);
+ if (audit_voltage_pair && (reg == 0x1040 || reg == 0x105d))
+  assert(!(m->registers[0x49] & 0x80));
+ if (audit_voltage_pair && reg == 0x1049 && (value & 0x80))
+  assert(m->registers[0x5d] * 2 < m->registers[0x40]);
+''')
 stubs = stubs.replace('control_writes, enables;', 'control_writes, btc_writes, enables;')
 stubs = stubs.replace('assert(reg == 0x1049 && mask == 0x80 && !(value & ~mask));', '''
  assert(!(value & ~mask));
@@ -95,6 +105,8 @@ stubs = stubs.replace('assert(reg == 0x1049 && mask == 0x80 && !(value & ~mask))
 ''')
 defines = '\n'.join(re.findall(
     r'^#define (?:SMBB_\w+|STATUS_\w+|BTC_CTRL_\w+|CTRL_EN|PRES_STATUS_BAT_PRES)\s+.*$', source, re.M))
+if 'static int smbb_set_managed_voltage(' in source:
+    defines += '\n#define TEST_MANAGED_RECHARGE'
 attrs = source[source.index('enum smbb_attr {'):source.index('struct smbb_charger {')]
 attrs = re.sub(r'^static const enum power_supply_property smbb_battery_properties\[\] = \{\n.*?^\};\n',
                '', attrs, flags=re.M | re.S)
@@ -129,6 +141,7 @@ static void setup(struct smbb_charger *c,struct regmap *m,struct power_supply *p
  c->software_control=true;c->board_current=c->user_current=1200000;
  m->registers[0x44]=24;m->registers[0x40]=111;
  c->board_voltage=c->user_voltage=4350000;c->thermal_current=1200000;c->policy_valid_until_ns=0;
+ m->registers[0x5d]=52;c->board_recharge_voltage=4280000;c->attr[ATTR_CHG_VDET]=4280000;
  c->attr[ATTR_BAT_IMAX]=1200000;c->attr[ATTR_BAT_VMAX]=4350000;c->bat_psy=p;
  *policy=(struct smbb_policy){.chg=c,.state=SMBB_POLICY_STOP,.running=true};p->notifications=0;
 }
@@ -244,6 +257,139 @@ static void btc_cases(struct smbb_charger *charger, struct regmap *io,
 }
 #endif
 
+#ifdef TEST_MANAGED_RECHARGE
+static void *voltage_caps_worker(void *data)
+{
+ struct smbb_charger *charger = data;
+
+ for (unsigned int i = 0; i < 200; i++) {
+  int voltage = i % 2 ? 4200000 : 4340000;
+  assert(!smbb_set_battery_limit(charger, ATTR_BAT_VMAX, voltage));
+ }
+ return NULL;
+}
+
+static void assert_voltage_pair(struct smbb_charger *charger, struct regmap *io,
+                               unsigned int ceiling, unsigned int recharge)
+{
+ assert(charger->attr[ATTR_BAT_VMAX] == ceiling);
+ assert(charger->attr[ATTR_CHG_VDET] == recharge);
+ assert(io->registers[0x40] == (ceiling - 3240000) / 10000);
+ assert(io->registers[0x5d] == (recharge - 3240000) / 20000);
+ assert(recharge < ceiling);
+}
+
+static void recharge_cases(struct smbb_charger *charger, struct regmap *io,
+                           struct power_supply *supply, struct smbb_policy *policy)
+{
+ unsigned int cases = 0;
+ audit_voltage_pair = true;
+
+ setup(charger, io, supply, policy);
+ assert(!apply(policy, 0, 313, 4240000, clock_ns));
+ io->operations = 0;
+ assert(!smbb_set_battery_limit(charger, ATTR_BAT_VMAX, 4200000));
+ unsigned int transaction_ops = io->operations;
+ assert_voltage_pair(charger, io, 4200000, 4120000);
+ assert(io->registers[0x49] == 0x55 && io->registers[0x249] == 0x81);
+ assert(charger->charge_inhibit == SMBB_INHIBIT_SAMPLE);
+ assert(!smbb_set_charge_behaviour(charger, POWER_SUPPLY_CHARGE_BEHAVIOUR_AUTO));
+ assert(!(io->registers[0x49] & 0x80));
+ assert(!apply(policy, 0, 313, 4200000, clock_ns));
+ assert(io->registers[0x49] == 0xd5 && io->registers[0x249] == 0x82);
+ assert(!smbb_set_battery_limit(charger, ATTR_BAT_VMAX, 4350000));
+ assert_voltage_pair(charger, io, 4350000, 4280000);
+ cases++;
+
+ for (unsigned int ceiling = 3250000; ceiling <= 4350000; ceiling += 10000) {
+  setup(charger, io, supply, policy);
+  assert(!smbb_set_battery_limit(charger, ATTR_BAT_VMAX, ceiling + 9999));
+  unsigned int threshold = ceiling > 3310000 ? ceiling - 70000 : 3240000;
+  threshold = 3240000 + ((threshold - 3240000) / 20000) * 20000;
+  assert_voltage_pair(charger, io, ceiling, threshold);
+  cases++;
+ }
+
+ setup(charger, io, supply, policy);
+ assert(smbb_set_battery_limit(charger, ATTR_BAT_VMAX, 3249999) == -ERANGE);
+ assert(!io->operations);
+ assert_voltage_pair(charger, io, 4350000, 4280000);
+ charger->board_recharge_voltage = charger->board_voltage;
+ assert(smbb_set_battery_limit(charger, ATTR_BAT_VMAX, 4200000) == -EINVAL);
+ assert(!io->operations);
+ cases++;
+
+ setup(charger, io, supply, policy);
+ io->registers[0x41] = 92;
+ assert(!smbb_set_battery_limit(charger, ATTR_BAT_VMAX, 4200000));
+ assert_voltage_pair(charger, io, 4160000, 4080000);
+ assert(!apply(policy, 0, 451, 3900000, clock_ns));
+ assert_voltage_pair(charger, io, 4160000, 4080000);
+ cases++;
+
+ for (unsigned int at = 1; at <= transaction_ops; at++) {
+  for (unsigned int after = 0; after < 2; after++) {
+   setup(charger, io, supply, policy);
+   assert(!apply(policy, 0, 313, 4240000, clock_ns));
+   io->operations = 0;
+   io->fail_at = at;
+   io->fail_after = after;
+   assert(smbb_set_battery_limit(charger, ATTR_BAT_VMAX, 4200000) == -EIO);
+   assert_voltage_pair(charger, io, 4350000, 4280000);
+   assert(charger->charge_inhibit & SMBB_INHIBIT_FAULT);
+   assert(io->registers[0x49] == 0x55 && io->registers[0x249] == 0x81);
+   assert(!apply(policy, 0, 313, 4240000, clock_ns));
+   assert(io->registers[0x49] == 0x55);
+   cases++;
+  }
+ }
+
+ for (unsigned int failure = 0; failure < 3; failure++) {
+  setup(charger, io, supply, policy);
+  assert(!apply(policy, 0, 313, 4240000, clock_ns));
+  io->operations = 0;
+  if (failure == 0)
+   io->drop_at = transaction_ops - 3;
+  else if (failure == 1)
+   io->drop_at = transaction_ops - 1;
+  else
+   io->corrupt_at = transaction_ops;
+  assert(smbb_set_battery_limit(charger, ATTR_BAT_VMAX, 4200000) == -EIO);
+  assert_voltage_pair(charger, io, 4350000, 4280000);
+  assert(charger->charge_inhibit & SMBB_INHIBIT_FAULT);
+  assert(io->registers[0x49] == 0x55);
+  cases++;
+ }
+
+ setup(charger, io, supply, policy);
+ assert(!apply(policy, 0, 313, 4240000, clock_ns));
+ io->operations = 0;
+ io->fail_at = transaction_ops - 1;
+ io->persistent = true;
+ assert(smbb_set_battery_limit(charger, ATTR_BAT_VMAX, 4200000) == -EIO);
+ assert(charger->charge_inhibit & SMBB_INHIBIT_FAULT);
+ assert(io->registers[0x49] == 0x55 && io->registers[0x249] == 0x81);
+ cases++;
+
+ setup(charger, io, supply, policy);
+ pthread_t writers[2], sampler;
+ for (unsigned int i = 0; i < ARRAY_SIZE(writers); i++)
+  assert(!pthread_create(&writers[i], NULL, voltage_caps_worker, charger));
+ assert(!pthread_create(&sampler, NULL, warm_worker, policy));
+ for (unsigned int i = 0; i < ARRAY_SIZE(writers); i++)
+  assert(!pthread_join(writers[i], NULL));
+ assert(!pthread_join(sampler, NULL));
+ assert_voltage_pair(charger, io, 4200000, 4120000);
+ assert(!(charger->charge_inhibit & SMBB_INHIBIT_FAULT));
+ assert(!smbb_set_charge_behaviour(charger, POWER_SUPPLY_CHARGE_BEHAVIOUR_INHIBIT_CHARGE));
+ assert(io->registers[0x49] == 0x55 && io->registers[0x249] == 0x81);
+ cases++;
+
+ audit_voltage_pair = false;
+ printf("PASS: %u managed voltage and recharge transaction cases\n", cases);
+}
+#endif
+
 int main(void)
 {
  setbuf(stdout,NULL);
@@ -306,7 +452,9 @@ int main(void)
   assert(!apply(&policy,0,250,3900000,clock_ns));assert(c.charge_inhibit & SMBB_INHIBIT_PACK);
   assert(!(io.registers[0x49]&0x80));count++;
  }
- for(unsigned int at=2;at<=13;at++)for(int after=0;after<2;after++) {
+ setup(&c,&io,&p,&policy);assert(!apply(&policy,0,451,3900000,clock_ns));
+ unsigned int warm_ops=io.operations;
+ for(unsigned int at=2;at<=warm_ops;at++)for(int after=0;after<2;after++) {
   setup(&c,&io,&p,&policy);io.fail_at=at;io.fail_after=after;
   int ret=apply(&policy,0,451,3900000,clock_ns);
   assert(ret==-EIO && (c.charge_inhibit & SMBB_INHIBIT_FAULT) && !(io.registers[0x49]&0x80));count++;
@@ -366,6 +514,9 @@ int main(void)
  assert((c.charge_inhibit & SMBB_INHIBIT_PACK) && !(c.charge_inhibit & SMBB_INHIBIT_HANDOFF));count++;
 #ifdef BTC_CTRL_STOCK
  btc_cases(&c, &io, &p, &policy);
+#endif
+#ifdef TEST_MANAGED_RECHARGE
+ recharge_cases(&c, &io, &p, &policy);
 #endif
  assert(!pthread_mutex_destroy(&c.charge_lock.gate));assert(!pthread_mutex_destroy(&c.statlock.gate));
  printf("PASS: %u actual policy worker/actuator/fault/stale/PM/handoff cases (including 2500 concurrent requests) plus 6242 legacy control cases\n",count);

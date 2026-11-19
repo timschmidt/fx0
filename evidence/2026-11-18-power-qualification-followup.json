@@ -2862,5 +2862,270 @@
         "empty_USB_startup_captures_removed": 17
       }
     }
+  },
+  "SMBB_managed_recharge_tracking_candidate": {
+    "recorded_UTC": "2026-11-19T09:53:47+00:00",
+    "kernel_source": "8e5eacff1484771c0c96de28b018896a2cd7b738",
+    "hardware_tested_parent": "91d201fde1f89de650c7bcafc14856f9a983b781",
+    "prior_capped_test_commit": "2977e507832b99af40747bbbc5e3dc69549900ee",
+    "prior_observed_ceiling_and_recharge_threshold_uV": [
+      4200000,
+      4280000
+    ],
+    "board_recharge_gap_uV": 70000,
+    "new_modeled_4200_mV_ceiling_and_recharge_uV": [
+      4200000,
+      4120000
+    ],
+    "old_effective_register_values_preserved_on_one_shot_failure": true,
+    "persistent_failure_latches_charge_inhibition": true,
+    "resumption_awaits_fresh_policy_sample": true,
+    "tests": {
+      "managed_voltage_and_recharge_transaction_cases": 143,
+      "concurrent_cap_writes_with_parallel_policy_sampling": 400,
+      "managed_comparator_cases": 44,
+      "managed_worker_actuator_PM_cases": 2614,
+      "legacy_control_cases": 6242,
+      "managed_child_lifetime_cases": 28,
+      "temperature_IRQ_cases": 1026,
+      "temperature_IRQ_read_errors": 4,
+      "main_regressions_passed_with_ASan_UBSan_and_leak_checking": true,
+      "historical_comparator_fixture_compatibility_verified": true,
+      "rejected_recharge_mutations": [
+        "writes while charging is enabled",
+        "ignores the actual ceiling",
+        "leaves the old recharge threshold",
+        "skips recharge rollback",
+        "allows immediate resume on stale configuration"
+      ],
+      "USB_input_regressions": 59,
+      "RAM_observer_mock_cases": [
+        "sustained_completion",
+        "interrupt_burst_without_completion",
+        "stale_sample_restore"
+      ]
+    },
+    "ARM_charger_object": {
+      "toolchain": "Alpine Clang 22.1.3",
+      "real_managed_and_legacy_Kconfig_builds": true,
+      "policy_probe_symbol_present_only_in_managed_object": true,
+      "W_1_warning_count": 0,
+      "temporary_build_tree_removed": true
+    },
+    "hardware_test_of_recharge_tracking_performed": true,
+    "linked_RAM_candidate": {
+      "passed": true,
+      "recorded_UTC": "2026-11-19T10:03:08+00:00",
+      "boot_image_SHA256": "f433b380f0d006afe79a2c3a13c158b0f9a65646d66042167b79b08c090c2ddc",
+      "boot_image_bytes": 17307648,
+      "kernel_notes_SHA256": "478ddff517a51602e85d9c95f0642bddaee312ce61e900be5c2badd86c3887d6",
+      "installed_built_in_symbol_exports": 11718,
+      "module_import_CRCs": 25592,
+      "signed_modules": 468,
+      "overlay_files": 482,
+      "known_DTB_and_initramfs_reused": true,
+      "existing_signature_enforcement_and_trial_WLAN_blacklist_preserved": true,
+      "same_early_and_normal_return_seconds": [
+        420,
+        360
+      ],
+      "temporary_build_tree_MiB_rounded": 918,
+      "temporary_build_tree_and_duplicate_kernel_and_DTB_removed": true
+    },
+    "hardware_trial": {
+      "recorded_UTC": "2026-11-19T10:12:24+00:00",
+      "observation_restore_and_automatic_return_verified": true,
+      "initial_installed_boot": "d0a41272-cefa-4795-b4fa-4f0ed3fac275",
+      "candidate_boot": "f8191c68-f4dc-4668-bd39-1397f834eb97",
+      "exact_firmware_and_kernel_RAM_readbacks": true,
+      "both_return_guards_active": true,
+      "firmware": "fx0-pm-host-01",
+      "signature_enforcement_and_WLAN_blacklist_verified": true,
+      "candidate_verified_module_files": 482,
+      "candidate_verified_module_signatures": 468,
+      "USB_valid_with_fixed_input_limit_uA": 500000,
+      "charger_config": {
+        "original": {
+          "max_voltage_uV": 4350000,
+          "vmax_register": 111,
+          "termination_register": 8,
+          "recharge_threshold_register": 52,
+          "SPMI_reads": 6
+        },
+        "capped": {
+          "max_voltage_uV": 4200000,
+          "vmax_register": 96,
+          "termination_register": 8,
+          "recharge_threshold_register": 44,
+          "SPMI_reads": 6
+        },
+        "capped_final": {
+          "max_voltage_uV": 4200000,
+          "vmax_register": 96,
+          "termination_register": 8,
+          "recharge_threshold_register": 44,
+          "SPMI_reads": 6
+        },
+        "restored": {
+          "max_voltage_uV": 4350000,
+          "vmax_register": 111,
+          "termination_register": 8,
+          "recharge_threshold_register": 52,
+          "SPMI_reads": 6
+        }
+      },
+      "capped_ceiling_and_recharge_uV": [
+        4200000,
+        4120000
+      ],
+      "voltage_requests_uV": [
+        4200000,
+        4350000
+      ],
+      "charge_behaviour_requests": [
+        "inhibit-charge"
+      ],
+      "observations": {
+        "initial_auto": {
+          "snapshots": 3,
+          "elapsed_seconds": [
+            1.64,
+            6.55
+          ],
+          "voltage_uV": [
+            4236306,
+            4249527
+          ],
+          "temperature_decic": [
+            309,
+            310
+          ],
+          "IADC_internal_uA": [
+            299068,
+            313753
+          ],
+          "IADC_external_uA": [
+            268800,
+            294000
+          ],
+          "charge_done_IRQ_counts": [
+            0
+          ],
+          "charger_IRQ_RT_STS": [
+            32
+          ],
+          "Linux_status": [
+            "Charging"
+          ]
+        },
+        "capped_auto": {
+          "snapshots": 19,
+          "elapsed_seconds": [
+            13.44,
+            131.98
+          ],
+          "voltage_uV": [
+            4200162,
+            4203984
+          ],
+          "temperature_decic": [
+            310,
+            312
+          ],
+          "IADC_internal_uA": [
+            -4821,
+            -4821
+          ],
+          "IADC_external_uA": [
+            -7200,
+            -7200
+          ],
+          "charge_done_IRQ_counts": [
+            0
+          ],
+          "charger_IRQ_RT_STS": [
+            1
+          ],
+          "Linux_status": [
+            "Discharging"
+          ]
+        },
+        "restored_inhibit": {
+          "snapshots": 1,
+          "elapsed_seconds": [
+            136.02,
+            136.02
+          ],
+          "voltage_uV": [
+            4200456,
+            4200456
+          ],
+          "temperature_decic": [
+            310,
+            310
+          ],
+          "IADC_internal_uA": [
+            -4821,
+            -4821
+          ],
+          "IADC_external_uA": [
+            -7200,
+            -7200
+          ],
+          "charge_done_IRQ_counts": [
+            0
+          ],
+          "charger_IRQ_RT_STS": [
+            1
+          ],
+          "Linux_status": [
+            "Discharging"
+          ]
+        }
+      },
+      "capped_sample_span_seconds": 118.54,
+      "charge_to_idle_at_cap_verified": true,
+      "prior_burst_cause_isolated": false,
+      "sustained_charge_done_at_cap_verified": false,
+      "full_status_or_normal_4350_mV_completion_verified": false,
+      "independent_current_accuracy_verified": false,
+      "final_inhibit_and_original_limits_verified": true,
+      "persistent_firmware_or_OS_update_performed": false,
+      "installed_return": {
+        "passed": true,
+        "installed_boot": "080e3d52-be9c-4210-bfc1-174014678532",
+        "trial_boot": "f8191c68-f4dc-4668-bd39-1397f834eb97",
+        "installed_module_files_verified": 482,
+        "protected_hashes_match": true,
+        "installed_Sway_IPC_active_outputs": 1,
+        "touch_devices_enumerated": 1,
+        "USB_power_online": true,
+        "signature_enforced": true,
+        "no_physical_display_touch_assertion": true,
+        "journal_returncode": 0,
+        "journal_counts": {
+          "journal_rows": 1817,
+          "kernel_rows": 470,
+          "early_return_guard_armed": 1,
+          "full_module_overlay_ready": 1,
+          "early_guard_or_overlay_failure": 0,
+          "suspend_entry": 0,
+          "kernel_fatal": 0,
+          "SMBB_or_VADC_error": 0,
+          "lockup": 0,
+          "normal_return_service_rows": 3,
+          "normal_return_service_success": 2,
+          "orderly_shutdown": 3
+        },
+        "automatic_return_journal_verified": true,
+        "USB_route_verified": true,
+        "recorded_UTC": "2026-11-19T10:12:24+00:00"
+      },
+      "cleanup": {
+        "duplicate_firmware_and_kernel_RAM_readbacks_removed": true,
+        "empty_USB_startup_captures_removed": 16
+      },
+      "prior_charge_done_IRQ_burst_recurred_on_repeat": false
+    }
   }
 }

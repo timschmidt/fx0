@@ -101,11 +101,12 @@ static void setup(void)
  f.chg.software_control=true;f.chg.charge_inhibit=SMBB_INHIBIT_POLICY;
  f.chg.board_current=f.chg.user_current=f.chg.thermal_current=1200000;
  f.chg.board_voltage=f.chg.user_voltage=4350000;
+ f.chg.board_recharge_voltage=4280000; f.chg.attr[ATTR_CHG_VDET]=4280000;
  f.chg.attr[ATTR_BAT_IMAX]=1200000;f.chg.attr[ATTR_BAT_VMAX]=4350000;
  mutex_init(&f.chg.charge_lock);mutex_init(&f.chg.statlock);
  f.io.lock=&f.chg.charge_lock;f.io.error=-EIO;
  f.io.registers[0x49]=0x55;f.io.registers[0x208]=0x80;f.io.registers[0x249]=0x81;
- f.io.registers[0x44]=24;f.io.registers[0x40]=111;
+ f.io.registers[0x44]=24;f.io.registers[0x40]=111;f.io.registers[0x5d]=52;
  f.info.constant_charge_voltage_max_uv=4350000;f.info.charge_full_design_uah=2370000;
  f.battery.charger=&f.chg;f.battery.battery_info=&f.info;f.chg.bat_psy=&f.battery;
  adc=(struct iio_dev){.dev={.parent=supplier}};other_adc=adc;
@@ -132,7 +133,11 @@ static struct smbb_policy *probe(void)
 int main(void)
 {
  setbuf(stdout,NULL);
- for(unsigned int fault=0;fault<20;fault++) {
+ unsigned int rejected_probes=20;
+#ifdef TEST_MANAGED_RECHARGE
+ rejected_probes++;
+#endif
+ for(unsigned int fault=0;fault<rejected_probes;fault++) {
   setup();int expected=-EINVAL;
   switch(fault) {
   case 0:f.parent.drvdata=NULL;expected=-ENODEV;break;
@@ -155,6 +160,7 @@ int main(void)
   case 17:voltage.kind=IIO_TEMP;break;
   case 18:type_error=-EIO;break;
   case 19:action_fail=true;expected=-ENOMEM;break;
+  case 20:f.chg.board_recharge_voltage=f.chg.board_voltage;break;
   }
   assert(smbb_policy_probe(&f.child)==expected);
   assert(!queued && !(f.io.registers[0x49]&0x80));

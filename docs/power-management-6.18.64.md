@@ -1129,6 +1129,56 @@ matched the protected boot and package hashes and all 482 module
 files. The journal showed an orderly shutdown with zero charger or
 VADC errors. [Capped-charge evidence](../evidence/2026-11-18-power-qualification-followup.json)
 
+### Managed recharge tracking candidate
+
+The driver records the board's effective charge ceiling and recharge
+threshold at probe. A managed voltage change verifies charge disable,
+programs the ceiling, and derives the recharge threshold from the
+verified ceiling and the board's gap. The observed 4.35 V and 4.28 V
+board settings give a 70 mV gap. At a 4.20 V ceiling the driver's 20 mV
+recharge step rounds the threshold down to 4.12 V.
+
+The transaction verifies both writes. On a write or readback error
+it attempts to restore both original values and latches the existing
+charge fault. Following a successful change, a fresh policy sample
+authorizes charge to resume. The worker adjusts thermal current without
+rewriting the voltage ceiling.
+
+The host fixture passed 143 voltage and recharge cases, including the
+representable voltage range, safe-limit clamping, rollback and 400
+concurrent cap requests interleaved with policy sampling. It rejected
+five mutations that bypassed the transaction
+checks. The complete ARM charger object compiled with `W=1` in
+both managed and legacy configurations. The linked RAM image matched
+all 11,718 built-in exports and verified 468 installed module
+signatures, 482 overlay files and 25,592 import CRCs. It retained the
+prior DTB, initramfs and return timers.
+[Recharge tracking source](https://github.com/timschmidt/fx0-linux/commit/8e5eacff1484771c0c96de28b018896a2cd7b738)
+
+### Handset repeat with recharge tracking
+
+The RAM trial read back the 4.20 V ceiling and 4.12 V recharge
+threshold. The termination register stayed at `0x08`. Across 19
+samples over 119 seconds, the PMIC kept the fast-charge, trickle-charge
+and charge-done lines low, and the charge-done IRQ count stayed at
+zero. USB stayed valid at a programmed 500 mA. The reported battery
+voltage was 4.200–4.204 V.
+
+The onboard ADCs reported 269–314 mA during the initial automatic
+phase and −7.2 to −4.8 mA after the cap. Linux reported `Discharging`
+in all capped samples while the charge-enable bit stayed set. This
+verifies charge-to-idle at the cap. The repeat
+changed the recharge threshold and the order of programming, so the
+comparison leaves the cause of the earlier interrupt burst unresolved.
+Full-charge reporting, normal 4.35 V completion, thermal boundaries
+and source-loss behavior remain unverified.
+
+The observer restored the original 4.35 V ceiling and 4.28 V
+threshold under inhibit and verified both registers. The scheduled
+return brought the phone back to installed r2. The protected boot and
+package hashes and all 482 module files matched, and the retained
+journal showed a clean shutdown. [Recharge tracking evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce
