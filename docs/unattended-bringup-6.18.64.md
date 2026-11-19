@@ -805,9 +805,10 @@ protected hashes.
 
 The signed comparison keeps the same image contents outside the
 decoder module and its manifest entry. It retains the session's scratch
-buffers and skips a second firmware continue command when the initial
-event says resources are sufficient for the same dimensions and bit
-depth. Seven host cases cover when to retain resources, and four cover
+buffers and bypasses the reconfiguration path when the initial event
+says resources are sufficient for the same dimensions and bit depth.
+The existing HFI1xx continue helper returns without sending a command.
+Seven host cases cover when to retain resources, and four cover
 capture startup. The handset logged one 613,696-byte scratch allocation
 and queued all 32 preallocated capture buffers with resources retained.
 It returned one decoded picture. After removing stride and height
@@ -816,6 +817,7 @@ matched the software reference byte for byte. The journal showed no
 firmware session error or IOMMU timeout. The installed return matched
 all 482 module files and the protected hashes.
 [Retained-resource comparison](https://github.com/timschmidt/fx0-linux/commit/ee828e634cb3cffdd83e4fa366f3076921b2ae7e)
+[HFI1xx continue helper](https://github.com/timschmidt/fx0-linux/blob/ee828e634cb3cffdd83e4fa366f3076921b2ae7e/drivers/media/platform/qcom/venus/hfi.c#L326-L338)
 
 The full-sequence probe uses 12 length-prefixed Annex-B access units
 from the existing 320×240 fixture. It keeps one coded buffer outstanding
@@ -839,6 +841,30 @@ IOMMU timeout or runtime PM underflow. The installed return matched all
 482 module files and the protected hashes. This run used the preallocated
 capture path at one resolution. Standalone FFmpeg decoder compatibility,
 resolution changes and sustained playback remain open.
+
+The matched dynamic capture control used that same image, executable
+and input, with only the static allocation override disabled. The
+firmware accepted resource loading and session start. It reported
+sufficient resources after the first access unit, then raised a system
+error. The probe timed out before capture streaming and produced no
+pictures. The installed return matched all 482 module files and the
+protected hashes. A host-tested late allocation mode now requests the
+capture pool only after observing source change. Its handset test is
+pending while the dynamic startup error is isolated.
+
+LG's downstream decoder defaults to disabling continued data transfer.
+An opt-in MSM8226 comparison changes only that initial property and its
+debug message. The module retained all 130 import CRCs, and the signed
+RAM image matched all 488 module records. Sixteen host cases checked
+the option, compatible, HFI version and reconfiguration gates. On the
+handset, the firmware reported sufficient resources. The driver retained
+scratch and accepted all 32 capture buffers. The probe reached CAPTURE
+STREAMON and timed out with one coded input pending and no pictures.
+The firmware error from the preceding dynamic run did not recur in the
+comparison. The installed return matched all 482 module files and the
+protected hashes. Dynamic capture decoding remains unqualified.
+[LG downstream property default](https://github.com/peremen/android-kernel-lg-madai/blob/03aba4427a7666d57b5ae06d375e259ea337f351/drivers/media/platform/msm/vidc/msm_vdec.c#L179-L187)
+[Initial transfer comparison](https://github.com/timschmidt/fx0-linux/commit/a81cacc5ca1a04f4ef64060d065257363fe883ce)
 
 The encoder's synthetic EOS marker used the same client tag as real
 input buffer zero. A signed control reserved a separate tag and ignored

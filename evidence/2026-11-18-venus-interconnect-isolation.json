@@ -366,7 +366,7 @@
     "H264_workload_dispatched": false,
     "initialization_observer": "The detector compared V4L2 card descriptions with sysfs node names and missed the hardware roles."
   },
-  "last_updated_UTC": "2026-11-19T02:36:41.404560+00:00",
+  "last_updated_UTC": "2026-11-19T02:52:21.178684+00:00",
   "combined_codec_H264_workload": {
     "same_exact_RAM_image_as_firmware_control": true,
     "RAM_readback_exact": true,
@@ -1886,6 +1886,67 @@
         "installed_protected_hashes_match": true,
         "FFmpeg_decoder_compatibility_qualified": false,
         "resolution_change_qualified": false
+      },
+      "dynamic_capture_handset": {
+        "same_input_executable_and_image_as_static_sequence": true,
+        "static_capture_override": false,
+        "exact_readback": true,
+        "candidate_boot": "5d42a832-e684-4346-ad0f-734f138e0a2f",
+        "firmware_loaded_resources": true,
+        "firmware_started_session": true,
+        "firmware_reported_sufficient_resources": true,
+        "firmware_system_error": true,
+        "firmware_exception_retained": true,
+        "capture_stream_started": false,
+        "startup_exit": "ETIMEDOUT",
+        "verified_hardware_decoded_frames": 0,
+        "IOMMU_timeout_count": 0,
+        "installed_return": "ab03fc90-cfe7-45b9-a4cb-a49127a99209",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true
+      },
+      "late_capture_probe_preparation": {
+        "host_cases_passed": 8,
+        "host_verified_capture_allocation_after_source_change": true,
+        "arm_binary_sha256": "b8756c8990d8d70153048aad4296e8568b28d0e03a72e7b5082076277cdde616",
+        "handset_tested": false
+      },
+      "dynamic_capture_initial_pause_comparison": {
+        "source_commit": "a81cacc5ca1a04f4ef64060d065257363fe883ce",
+        "parent_image_sha256": "deb8a3c7fec5ffac17343d430d36d3808463b407a1cc769564b39fefd733b8b8",
+        "image_sha256": "27dc2d64bb3f54bde266c5e9cf1d1c7c628cb47867581dcfc535523f3b410622",
+        "decoder_signature_checked": true,
+        "matching_import_CRCs": 130,
+        "manifest_records_verified": 488,
+        "modified_entries": [
+          "etc/fx0-native-modules.sha256",
+          "usr/lib/modules/6.18.64-fx0-venus-ram-alpine/kernel/drivers/media/platform/qcom/venus/venus-dec.ko"
+        ],
+        "sanitizer_cases_passed": 16,
+        "exact_public_source_ref_verified": true,
+        "exact_RAM_readback": true,
+        "candidate_boot": "16f64239-de14-4b42-9e4f-598f85d4843d",
+        "continued_data_transfer_property_value": 0,
+        "host_command_enqueue_status": 0,
+        "firmware_reported_sufficient_resources": true,
+        "capture_buffer_count": 32,
+        "CAPTURE_STREAMON_accepted": true,
+        "retained_scratch_allocations": 1,
+        "firmware_system_error_count": 0,
+        "firmware_exception_retained": false,
+        "IOMMU_timeout_count": 0,
+        "decoded_sequence": {
+          "queued": 1,
+          "returned": 0,
+          "frames": 0,
+          "STOP": false,
+          "LAST": false
+        },
+        "startup_exit": "ETIMEDOUT",
+        "dynamic_capture_decoding_qualified": false,
+        "installed_return": "2780d66b-2951-488d-a52d-50cc0e3981b4",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true
       }
     }
   }

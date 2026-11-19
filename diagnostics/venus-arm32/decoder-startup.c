@@ -303,7 +303,7 @@ static int queue_capture(int fd, unsigned int index)
     return video_ioctl(fd, VIDIOC_QBUF, &buffer);
 }
 
-static int start_capture(int fd, unsigned int count, struct v4l2_format *format)
+static int start_capture(int fd, int count, struct v4l2_format *format)
 {
     struct v4l2_event event = {0};
     struct v4l2_pix_format_mplane *pixels = &format->fmt.pix_mp;
@@ -320,13 +320,19 @@ static int start_capture(int fd, unsigned int count, struct v4l2_format *format)
         errno = EPROTO;
         return -1;
     }
-    for (unsigned int index = 0; index < count; index++)
-        if (queue_capture(fd, index) < 0)
+    if (!count) {
+        fputs("Allocating CAPTURE after the source-change event\n", stderr);
+        count = allocate(fd, capture, MAX_BUFFERS);
+        if (count < 0 || report_capture_lengths(fd, (unsigned int)count) < 0)
+            return -1;
+    }
+    for (int index = 0; index < count; index++)
+        if (queue_capture(fd, (unsigned int)index) < 0)
             return -1;
     if (video_ioctl(fd, VIDIOC_STREAMON, &stream) < 0)
         return -1;
     fputs("CAPTURE STREAMON accepted\n", stderr);
-    return 0;
+    return count;
 }
 
 static int capture_first_frame(int fd, unsigned int count, const char *destination)
@@ -394,7 +400,7 @@ invalid:
     return -1;
 }
 
-static int capture_sequence(int fd, unsigned int count, const char *destination,
+static int capture_sequence(int fd, int count, const char *destination,
                             FILE *input, const struct access_unit *units)
 {
     struct v4l2_format format = { .type = capture };
@@ -405,7 +411,8 @@ static int capture_sequence(int fd, unsigned int count, const char *destination,
     int status = -1, saved_errno;
     FILE *file;
 
-    if (start_capture(fd, count, &format) < 0)
+    count = start_capture(fd, count, &format);
+    if (count < 0)
         return -1;
     file = fopen(destination, "wbx");
     if (!file)
@@ -480,7 +487,7 @@ static int capture_sequence(int fd, unsigned int count, const char *destination,
                 goto finish;
             }
             last = buffer.flags & V4L2_BUF_FLAG_LAST;
-            if (buffer.index >= count || buffer.length != 1 || buffer.flags & V4L2_BUF_FLAG_ERROR ||
+            if (buffer.index >= (unsigned int)count || buffer.length != 1 || buffer.flags & V4L2_BUF_FLAG_ERROR ||
                 (last && !draining) || (!plane.bytesused && !last))
                 goto invalid_sequence;
             if (plane.bytesused) {
@@ -518,22 +525,23 @@ int main(int argc, char **argv)
     struct stat metadata;
     int fd = -1, capture_buffers = 0, status = 1;
     const char *step = "input";
-    bool preallocate, first_frame, sequence;
+    bool preallocate, first_frame, sequence, late_capture;
     struct access_unit units[SEQUENCE_FRAMES];
     size_t initial_bytes;
     FILE *input;
 
     first_frame = argc == 5 && !strcmp(argv[1], "capture-first-frame");
-    sequence = argc == 5 && !strcmp(argv[1], "capture-sequence");
+    late_capture = argc == 5 && !strcmp(argv[1], "capture-sequence-late");
+    sequence = late_capture || (argc == 5 && !strcmp(argv[1], "capture-sequence"));
     if (!first_frame && !sequence && (argc != 4 ||
         (strcmp(argv[1], "output-first") && strcmp(argv[1], "preallocate-capture") &&
          strcmp(argv[1], "headers-only")))) {
         fprintf(stderr, "Usage: %s {output-first|preallocate-capture|headers-only} VIDEO CHUNK\n", argv[0]);
         fprintf(stderr, "       %s capture-first-frame VIDEO ACCESS_UNIT RESULT\n", argv[0]);
-        fprintf(stderr, "       %s capture-sequence VIDEO FRAMED_ACCESS_UNITS RESULT\n", argv[0]);
+        fprintf(stderr, "       %s {capture-sequence|capture-sequence-late} VIDEO FRAMED_ACCESS_UNITS RESULT\n", argv[0]);
         return 2;
     }
-    preallocate = first_frame || sequence || !strcmp(argv[1], "preallocate-capture");
+    preallocate = first_frame || (sequence && !late_capture) || !strcmp(argv[1], "preallocate-capture");
     input = fopen(argv[3], "rb");
     if (!input)
         goto done;
@@ -577,7 +585,7 @@ int main(int argc, char **argv)
         goto done;
     if (sequence) {
         step = "CAPTURE sequence";
-        if (!capture_sequence(fd, (unsigned int)capture_buffers, argv[4], input, units))
+        if (!capture_sequence(fd, capture_buffers, argv[4], input, units))
             status = 0;
     } else if (first_frame) {
         step = "CAPTURE first frame";
