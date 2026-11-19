@@ -992,6 +992,27 @@ Their live handoff, charging decisions and automatic return are still open.
 [Firmware source](https://github.com/timschmidt/fx0-lk2nd/commit/b3332cf75d7c5b58a6890c2be431f95f84f0fd55)
 [Linked candidate evidence](../evidence/2026-11-18-power-qualification-followup.json)
 
+### Managed boot with the installed loader
+
+The linked managed kernel booted in RAM using the installed loader. The
+live tree contained neither the charging handoff marker nor a selected
+pack profile. The driver logged a protocol rejection and the managed
+policy child stayed unbound with the voltage ADC loaded.
+
+The charger reported `inhibit-charge`. Two snapshots 12 seconds apart
+showed the PMIC charge-enable bits clear, BTC at `0x81`, and USB online
+with a configured 500 mA input limit. The process-scoped capture recorded
+16 SPMI reads and zero writes. The observer issued no charger sysfs
+writes. Both return timers were active during the observations.
+
+The normal return service brought the phone back to installed r2. The
+independent audit matched the protected boot and package hashes and all
+482 module files. Its only SMBB/VADC diagnostic was the policy-child
+probe returning `-EPROTO`, the expected consequence of the missing
+handoff. The test qualifies that rejection using the installed loader.
+The paired firmware's live profile handoff and charging behavior remain
+open. [Missing-handoff evidence](../evidence/2026-11-18-power-qualification-followup.json)
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce

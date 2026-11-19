@@ -2214,6 +2214,118 @@
     "r2_parent_probe_can_defer_for_VADC_before_registering_power_supplies": true,
     "temporary_link_build_tree_MiB_at_completion_rounded": 918,
     "temporary_build_and_verification_trees_removed": true,
-    "managed_policy_runtime_charging_or_transition_qualified": false
+    "managed_policy_runtime_charging_or_transition_qualified": false,
+    "missing_handoff_hardware_trial": {
+      "passed": true,
+      "recorded_UTC": "2026-11-19T08:33:09+00:00",
+      "initial_attempt_timed_out_before_any_reboot": true,
+      "full_integrity_checks_retained_on_retry": true,
+      "installed_loader_used": "fx0-pon-reboot",
+      "initial_installed_boot": "ca3956a4-fcd6-4ce8-a6ba-47681e357f1f",
+      "managed_RAM_image_SHA256": "9ca12f7e1865262c6dcd9e7fab7faa340d0b0ca9cc29667c3343786c66e2bc39",
+      "charger_observation": {
+        "passed": true,
+        "boot_id": "7e5ddd03-d553-45ae-99b9-6be257374d5d",
+        "exact_managed_kernel": true,
+        "firmware_handoff_present": false,
+        "runtime_profile_present": false,
+        "handoff_protocol_rejections": 1,
+        "policy_child_present": true,
+        "policy_child_bound": false,
+        "VADC_loaded": true,
+        "both_return_paths_active": true,
+        "signature_enforced": true,
+        "WLAN_unavailable": true,
+        "observation_seconds_floor": 12,
+        "snapshots": [
+          {
+            "raw_charge_control": [
+              0,
+              0
+            ],
+            "raw_temperature_status": [
+              128,
+              128
+            ],
+            "BTC_control": [
+              129,
+              129
+            ],
+            "charge_enable_clear": true,
+            "charge_behaviour": "auto [inhibit-charge]",
+            "USB_online": true,
+            "input_current_limit_uA": 500000,
+            "SPMI_reads": 8,
+            "SPMI_writes": 0
+          },
+          {
+            "raw_charge_control": [
+              0,
+              0
+            ],
+            "raw_temperature_status": [
+              128,
+              128
+            ],
+            "BTC_control": [
+              129,
+              129
+            ],
+            "charge_enable_clear": true,
+            "charge_behaviour": "auto [inhibit-charge]",
+            "USB_online": true,
+            "input_current_limit_uA": 500000,
+            "SPMI_reads": 8,
+            "SPMI_writes": 0
+          }
+        ],
+        "SPMI_reads": 16,
+        "SPMI_writes": 0,
+        "charger_sysfs_writes": 0
+      },
+      "installed_return_audit": {
+        "passed": true,
+        "installed_boot": "3f8cb430-f459-44fa-8853-cb58b5a77e65",
+        "trial_boot": "7e5ddd03-d553-45ae-99b9-6be257374d5d",
+        "installed_module_files_verified": 482,
+        "protected_hashes_match": true,
+        "installed_Sway_IPC_active_outputs": 1,
+        "touch_devices_enumerated": 1,
+        "USB_power_online": true,
+        "signature_enforced": true,
+        "no_physical_display_touch_assertion": true,
+        "journal_returncode": 0,
+        "journal_counts": {
+          "journal_rows": 2182,
+          "kernel_rows": 494,
+          "early_return_guard_armed": 1,
+          "full_module_overlay_ready": 1,
+          "early_guard_or_overlay_failure": 0,
+          "suspend_entry": 0,
+          "kernel_fatal": 0,
+          "SMBB_or_VADC_error": 1,
+          "lockup": 0,
+          "normal_return_service_rows": 3,
+          "normal_return_service_success": 2,
+          "orderly_shutdown": 3
+        },
+        "automatic_return_journal_verified": false,
+        "USB_route_verified": true,
+        "recorded_UTC": "2026-11-19T08:33:09+00:00"
+      },
+      "expected_journal_probe_rejection": {
+        "boot_id": "3f8cb430-f459-44fa-8853-cb58b5a77e65",
+        "SMBB_or_VADC_match": [
+          "smbb-charge-policy fc4cf000.spmi:pm8226@0:charger@1000:charge-policy: probe with driver smbb-charge-policy failed with error -71"
+        ]
+      },
+      "unexpected_SMBB_or_VADC_errors": 0,
+      "automatic_return_journal_verified_with_expected_rejection": true,
+      "same_482_module_files_after_return": true,
+      "duplicate_RAM_readback_removed": true,
+      "empty_temporary_USB_captures_removed": 18,
+      "new_firmware_or_persistent_update_performed": false,
+      "paired_firmware_charging_qualified": false
+    }
   }
 }
