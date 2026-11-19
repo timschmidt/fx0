@@ -1179,6 +1179,31 @@ return brought the phone back to installed r2. The protected boot and
 package hashes and all 482 module files matched, and the retained
 journal showed a clean shutdown. [Recharge tracking evidence](../evidence/2026-11-18-power-qualification-followup.json)
 
+### Nominal-voltage charge diagnostic
+
+The nominal-voltage diagnostic uses the same kernel, device tree and
+signed module payloads as the tracked-recharge trial. It checks the
+board's 4.35 V ceiling, 4.28 V recharge threshold and termination
+register `0x08` during each sample. An observation checks the USB input
+limit, the reported battery voltage and temperature, charger status,
+PMIC charge state, charge-done interrupts and both onboard current
+readings.
+
+The early helper initially arms a return at 420 seconds of boot uptime.
+Once the host is sampling, each healthy sample sends a root-only
+heartbeat. The host checks the helper's identity and reads its actual
+boot-time timer to confirm a fresh 120-second deadline. The helper caps
+renewals at 3,720 seconds, and systemd independently schedules an
+orderly return at 3,600 seconds. ARM emulation verified timer expiry
+and renewal. Both return paths depend on a running kernel.
+
+The observer requires three consecutive samples with Linux `Full`,
+the PMIC charge-done line asserted, fast and trickle charge inactive,
+and both current readings within 20 mA of zero. It requests inhibit
+before triggering orderly return. The observation window ends at
+approximately 57 minutes of boot uptime if those criteria are still
+unmet.
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce

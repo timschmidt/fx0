@@ -3127,5 +3127,51 @@
       },
       "prior_charge_done_IRQ_burst_recurred_on_repeat": false
     }
+  },
+  "SMBB_nominal_charge_diagnostic": {
+    "image_preparation": {
+      "recorded_UTC": "2026-11-19T10:19:18+00:00",
+      "source": "8e5eacff1484771c0c96de28b018896a2cd7b738",
+      "base_image_SHA256": "f433b380f0d006afe79a2c3a13c158b0f9a65646d66042167b79b08c090c2ddc",
+      "image_SHA256": "acec48b0f4171f411df94c163f71bc1caba0d8ec1d3eb48c11c8270a02791126",
+      "image_bytes": 17389568,
+      "unchanged_kernel_DTB_and_module_payloads": true,
+      "command_line_added_only_diagnostic_permit": true,
+      "archive_members": 3,
+      "changed_payloads": {
+        "usr/bin/fx0-native-return": "910e43f4686e3b12dbd89aa890ccdc07bdf5de4ff438c263e5b7a9558af5770d",
+        "etc/fx0-native-return.timer": "a178a99a2cafce2bfad8b99653414134242d97807bdad25b4096e35639f9a75d"
+      },
+      "static_ARM_helper_reproducible": true,
+      "QEMU_expiry_and_root_signal_verified": true,
+      "initial_return_seconds": 420,
+      "root_heartbeat_lease_seconds": 120,
+      "maximum_early_return_seconds": 3720,
+      "normal_return_seconds": 3600,
+      "systemd_unit_verification_passed": true,
+      "WLAN_blacklist_and_module_signatures_preserved": true,
+      "temporary_build_removed": true
+    },
+    "board_config": {
+      "voltage_max_uV": 4350000,
+      "recharge_threshold_uV": 4280000,
+      "termination_register": 8,
+      "USB_input_limit_uA": 500000
+    },
+    "qualification_criteria": {
+      "required_consecutive_samples": 3,
+      "required_Linux_status": "Full",
+      "requires_hardware_charge_done": true,
+      "requires_fast_and_trickle_inactive": true,
+      "maximum_absolute_onboard_current_uA": 20000,
+      "observation_uptime_limit_seconds": 3420
+    },
+    "offline_observer_controls": {
+      "assembled_against_exact_inputs": true,
+      "host_pidfd_and_timerfd_checks": true,
+      "simulated_consecutive_full_and_bounded_completion": true,
+      "simulated_error_attempts_inhibit_and_ends_sampling": true
+    },
+    "unattended_watchdog_coverage_during_kernel_stall": false
   }
 }
