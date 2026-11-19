@@ -165,7 +165,8 @@ static int dequeue(int fd, const struct queue *queue, struct v4l2_buffer *buffer
 }
 
 static void stream(int fd, struct queue *output, struct queue *capture,
-		   unsigned int stride, unsigned int height, FILE *encoded)
+		   unsigned int stride, unsigned int height, FILE *encoded,
+		   bool stop_after_input_return)
 {
 	struct v4l2_encoder_cmd stop = {.cmd = V4L2_ENC_CMD_STOP};
 	unsigned int submitted = 0, returned = 0, payloads = 0;
@@ -186,12 +187,17 @@ static void stream(int fd, struct queue *output, struct queue *capture,
 			.events = (last ? 0 : POLLIN) | (returned < FRAMES ? POLLOUT : 0),
 		};
 
-		if (!stopping && submitted == FRAMES) {
+		if (!stopping && submitted == FRAMES &&
+		    (!stop_after_input_return || returned == FRAMES)) {
 			must_ioctl(fd, VIDIOC_ENCODER_CMD, &stop, "VIDIOC_ENCODER_CMD stop");
 			stopping = true;
 			puts("stop_accepted");
 		}
 		require(poll(&watched, 1, 4000) > 0, "encoder queue poll timed out");
+		if (watched.revents & (POLLERR | POLLHUP | POLLNVAL))
+			fprintf(stderr,
+				"poll events %#x after %u submitted, %u returned and %u encoded buffers; stopping %d\n",
+				(unsigned int)watched.revents, submitted, returned, payloads, stopping);
 		require(!(watched.revents & (POLLERR | POLLHUP | POLLNVAL)),
 			"encoder queue poll failed");
 		if (watched.revents & POLLOUT) {
@@ -252,8 +258,11 @@ int main(int argc, char **argv)
 	unsigned int stride, height;
 	int fd, out;
 	FILE *encoded;
+	bool stop_after_input_return;
 
-	require(argc == 2, "usage: encoder-queue /dev/videoN");
+	require(argc == 2 || (argc == 3 && !strcmp(argv[2], "--stop-after-input-return")),
+		"usage: encoder-queue /dev/videoN [--stop-after-input-return]");
+	stop_after_input_return = argc == 3;
 	setvbuf(stdout, NULL, _IOLBF, 0);
 	alarm(22);
 	fd = open(argv[1], O_RDWR | O_NONBLOCK | O_CLOEXEC | O_NOFOLLOW);
@@ -284,7 +293,7 @@ int main(int argc, char **argv)
 	require(out >= 0, "could not create hardware.h264");
 	encoded = fdopen(out, "wb");
 	require(encoded != NULL, "could not open encoded output stream");
-	stream(fd, &output, &capture, stride, height, encoded);
+	stream(fd, &output, &capture, stride, height, encoded, stop_after_input_return);
 	require(fclose(encoded) == 0, "could not finish hardware.h264");
 	close(fd);
 	return EXIT_SUCCESS;

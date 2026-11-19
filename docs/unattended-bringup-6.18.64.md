@@ -710,6 +710,40 @@ kernel notes and unique boot token identify it before the temporary
 module mount is installed. The 360-second systemd timer and 420-second
 early return helper both require the trial token.
 
+The native package boot loaded both interconnect providers, the IOMMU
+and both Venus nodes. A read-only audit matched the 488 module files
+and all four firmware files at the active lookup path. The first
+observer compared V4L2 card labels against sysfs node names and skipped
+the encoder workload. A repeat with the corrected observer reached the
+workload, where FFmpeg exited on SIGABRT. The journal retained one
+userspace stack frame in musl's signal delivery code. It did not record
+a Venus firmware exception or the caller of abort.
+
+A separate native boot used the earlier direct V4L2 encoder binary.
+The encoder accepted all 12 inputs, returned 11 nonempty output
+buffers and failed polling during drain after STOP. It followed the same
+queue sequence as the earlier pass through an empty capture buffer,
+then failed before returning the final input and end-of-stream marker.
+The installed return passed the 482-module and protected-hash audit.
+An optional direct probe waits for all input buffers to return before
+issuing STOP and reports the poll flags on failure.
+
+On the same signed native image, the delayed STOP control dequeued all
+12 inputs, wrote 1,522 bytes in 12 encoded capture buffers and observed
+the final empty capture buffer with the LAST flag. Software decoding
+verified all 12 frames, 144 luma cells and 24 chroma planes. This result
+qualifies direct H.264 encoding with delayed STOP. The driver still
+needs to handle an ordinary STOP with inputs pending, as required by
+the stateful encoder API.
+[Linux stateful encoder drain](https://docs.kernel.org/6.18/userspace-api/media/v4l/dev-encoder.html#drain)
+
+The next decoder trace records the internal buffer requirements and
+registration status before logging the compressed input buffer's
+allocated length, payload, offset and flags. Its signed RAM image
+changes the Venus core module and its manifest entry. The audit retained
+154 import CRCs, 59 export CRCs and all 488 module records.
+[Decoder trace source](https://github.com/timschmidt/fx0-linux/commit/1d5d51085b8bfd54de48310777f375aea89419d2)
+
 [Workload source](../diagnostics/venus-arm32/codec-acceptance.py)
 [Host verification](../evidence/2026-11-18-venus-codec-workload.json)
 [FFmpeg release verification](https://ffmpeg.org/download.html#releases)

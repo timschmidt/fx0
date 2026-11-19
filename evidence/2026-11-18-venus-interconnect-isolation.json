@@ -1204,8 +1204,73 @@
     "native_RAM_image_SHA256": "0da1b656d271d017da0f6b7e09b8b1b0f168b0e5cb39e1e298bdbf40b674ca4e",
     "native_RAM_module_records_verified": 488,
     "exact_source_and_recipe_refs_verified": true,
-    "platform_coldplug_claimed": false,
-    "installed_on_handset": false
+    "installed_on_handset": false,
+    "platform_coldplug_verified": true,
+    "handset_trials": {
+      "read_only_coldplug": {
+        "candidate_boot": "001af4a4-4691-4c8a-8761-170c33a1c679",
+        "natural_driver_coldplug": true,
+        "live_firmware_files_verified": 4,
+        "module_records_verified": 488,
+        "installed_return_boot": "27692cd0-2be7-46c8-ad06-9a3a47229d2e",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true,
+        "observer_compared_wrong_node_names": true,
+        "encoder_workload_started": false
+      },
+      "FFmpeg_wrapper": {
+        "candidate_boot": "55e7cd66-e34e-424e-b622-f44ae6434ca8",
+        "natural_driver_coldplug": true,
+        "live_firmware_files_verified": 4,
+        "module_records_verified": 488,
+        "installed_return_boot": "782b6520-10bc-470b-a765-83bc5273ff1c",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true,
+        "encoder_exit_status": -6,
+        "userspace_crash_signal": 6,
+        "retained_stack_leaf": "musl __restore_sigs",
+        "firmware_system_errors": 0,
+        "hardware_encoder_workload_qualified": false
+      },
+      "direct_V4L2": {
+        "candidate_boot": "4ada3fcb-83bd-4371-802a-6add4a463f33",
+        "natural_driver_coldplug": true,
+        "live_firmware_files_verified": 4,
+        "module_records_verified": 488,
+        "installed_return_boot": "963b17ca-2b56-4ea7-84f9-dc907d9fd944",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true,
+        "capture_nonempty_buffers_returned": 11,
+        "empty_capture_buffers_returned": 1,
+        "final_input_returned": false,
+        "end_of_stream_flag_observed": false,
+        "first_failure": "encoder queue poll failed during drain",
+        "firmware_system_errors": 0,
+        "hardware_encoder_workload_qualified": false
+      },
+      "direct_V4L2_STOP_after_input_returns": {
+        "candidate_boot": "6d010dfa-c552-4b1f-b85c-1f4e908b9475",
+        "same_signed_native_RAM_image": true,
+        "natural_driver_coldplug": true,
+        "module_records_verified": 488,
+        "live_firmware_files_verified": 4,
+        "all_inputs_returned_before_STOP": true,
+        "capture_payloads": 12,
+        "encoded_bytes": 1522,
+        "V4L2_last_buffer_flag": true,
+        "verified_content": {
+          "frames": 12,
+          "luma_cells": 144,
+          "max_luma_mean_error": 0,
+          "chroma_planes": 24
+        },
+        "installed_return_boot": "c7db82e9-fb3b-497c-b98c-0d33b1f72653",
+        "installed_modules_verified": 482,
+        "installed_protected_hashes_match": true
+      }
+    },
+    "direct_native_encode_delayed_STOP_qualified": true,
+    "ordinary_STOP_and_FFmpeg_workloads_qualified": false
   },
   "Venus_direct_decoder_startup_comparison": {
     "same_signed_RAM_image": "1d74c7019500ae8679e40ba4561dd2e574d14f37dde34265aae25c7957c2b7ed",
@@ -1240,5 +1305,20 @@
     "V4L2_empty_event_queue_handling_fixed": true,
     "host_mocked_empty_event_queue_cases": 4,
     "decoded_frames_qualified": false
+  },
+  "Venus_decoder_internal_buffer_trace_preparation": {
+    "source_commit": "1d5d51085b8bfd54de48310777f375aea89419d2",
+    "image_sha256": "ecf0d2e4e77dd667b41e0a8cc96f1f666a12ae8853ae809c2fe7723e27a07a4f",
+    "parent_image_sha256": "1d74c7019500ae8679e40ba4561dd2e574d14f37dde34265aae25c7957c2b7ed",
+    "matching_import_CRCs": 154,
+    "matching_export_CRCs": 59,
+    "manifest_records_verified": 488,
+    "unchanged_kernel_dtb_and_arguments": true,
+    "modified_entries": [
+      "etc/fx0-native-modules.sha256",
+      "usr/lib/modules/6.18.64-fx0-venus-ram-alpine/kernel/drivers/media/platform/qcom/venus/venus-core.ko"
+    ],
+    "handset_qualified": false,
+    "exact_public_source_ref_verified": true
   }
 }
