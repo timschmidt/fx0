@@ -708,6 +708,16 @@ bits supply no additional attribution for the reported desktop freeze.
 [Installed reader](../diagnostics/pm8226-reset-reasons/read-installed.py)
 [Qualification evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
 
+An installed capture before and after a guarded RAM test returned the
+same reason and watchdog configuration bytes. The controller recorded
+its request to reboot into Fastboot, the acknowledged RAM boot and the
+request to return to the installed kernel. The retained journal showed
+the expected three boot IDs in order. It had no kernel restart message
+independently identifying either reset. On the returned boot, the
+reader again verified 18 reads and zero writes. The unchanged reason
+bytes do not distinguish the two observed boot transitions.
+[Qualification evidence](../evidence/2026-11-18-fx0-watchdog-recovery.json)
+
 ## Remaining physical scope
 
 The installed firmware lacks the verified early charge-inhibition marker.
