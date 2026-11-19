@@ -885,9 +885,29 @@ matched the signed r2 package manifest in the RAM overlay.
 The normal return service rebooted to installed r2. An independent audit
 matched the boot files, package state and all 482 installed module files.
 It found one active Sway output and one touchscreen input. The trial
-journal had zero suspend entries, kernel faults or lockups. This qualifies
-the passive boot and return. The signed experimental modules still need a
-controlled first activation and current calibration.
+journal had zero suspend entries, kernel faults or lockups.
+
+A second RAM boot activated the signed IADC and BMS pair once. The
+process-scoped bind trace verified the two sense writes, the counter
+clear and release, and the first output hold and release in order. It
+recorded 109 writes in the VADC, IADC and gauge blocks. The unbind trace
+recorded two writes, both restoring companion sense fields. Both field
+readbacks matched the pre-probe values, and the original IADC provider
+rebound. The USB input limit read 500 mA before and after the run.
+
+Twelve samples spanned 13 seconds beginning after probe. The supply
+reported Not charging and Good throughout. Live current read 0 mA and
+the background reading ranged from 0 to −2.584 mA. The relative counter
+changed by −7 µAh. This window did not reproduce the much larger earlier
+disagreement under the hardware Overheat condition. Current accuracy,
+the charging-to-idle transition and usable remaining charge remain open.
+
+The upload was retried on the same boot after the unprivileged receiver
+failed to read the root-only timer marker. The privileged observer
+rechecked the timers and confirmed the gauge was still unloaded before
+the single activation. An independent journal check verified automatic
+return to the installed kernel and matching boot, package and module
+hashes. The active trace covers the gauge bind and unbind processes.
 
 ## PM8226 hardware key reset
 
