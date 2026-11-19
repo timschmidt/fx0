@@ -1248,6 +1248,50 @@
       "first_probe_on_hardware_verified": false,
       "charge_current_or_SOC_qualified": false,
       "installed": false
+    },
+    "guarded_RAM_preparation": {
+      "passed": true,
+      "recorded_UTC": "2026-11-19T06:41:30+00:00",
+      "linux_source": "f9e46d93ede4c7115180352886830cd0bf7b63be",
+      "compiler": "Alpine Clang 22.1.3",
+      "module_CFI_integer_normalization": true,
+      "module_config_diff": [
+        "CONFIG_BATTERY_QCOM_PM8226_BMS=m"
+      ],
+      "parent_image_SHA256": "0480189638d7dbce25a43b405c21bc39a413c0c369372daffd2b5c53441ec8bb",
+      "image_SHA256": "a655f6ccf7fbea6d57aab914b56ede483f4751d705691d07503cc2e982fb8a26",
+      "image_bytes": 17307648,
+      "identical_zImage_SHA256": "b3780b1bd593412c56f082901ae007a47d41b058b41e71cab490f37913a31577",
+      "diagnostic_DTB_SHA256": "128811bb4f22e60ae7124be22eb4da752d87a23a34b025a12eb5cdcd70d8fe96",
+      "identical_ramdisk_SHA256": "1e975dec10d71b866c979c89b145d9b682514d920c98cade3d3e7d80fb34d6ea",
+      "command_line_identical_and_module_signatures_enforced": true,
+      "same_WLAN_blacklist": true,
+      "previously_verified_RAM_overlay_SHA256": "38709847fd9bdb6d300782748ed297eb00d1aa7480d2599cb0e741d0f1a33766",
+      "unchanged_return_guards_seconds": {
+        "early": 420,
+        "systemd": 360
+      },
+      "experimental_modules_absent_from_initial_RAM_boot": true,
+      "packed_modules_and_DTB_hardware_boot_verified": false,
+      "certificate_embedded_in_installed_kernel_SHA256": "de086e266ec1d82ea17ebbd51f10242e591df3cf74e958e269bdd91b9176d370",
+      "separate_signed_module_payload": {
+        "qcom-spmi-iadc.ko": {
+          "bytes": 103209,
+          "SHA256": "9121c8eed6204b75368ca2c5e8cb1b0677e2a01ac3ccf45f8010de00d138c399",
+          "installed_import_CRCs": 40
+        },
+        "qcom_pm8226_bms.ko": {
+          "bytes": 111289,
+          "SHA256": "32c9c33e71ed08622156d55595cd573a3b3c2754068fbf93b2186fc8fa06237f",
+          "installed_import_CRCs": 47
+        }
+      },
+      "staged_on_device": false,
+      "phone_booted": false,
+      "identical_image_reassembly": true,
+      "normal_DTB_byte_for_byte_rebuilt": true,
+      "native_build_scratch_MiB_rounded": 5.7,
+      "signing_and_build_temporary_directories_removed": true
     }
   }
 }

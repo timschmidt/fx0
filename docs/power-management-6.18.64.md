@@ -861,6 +861,21 @@ The counter reset and provider trim commits are outside the sense-field
 rollback. The phone remains on installed r2.
 [First-probe and teardown correction](https://github.com/timschmidt/fx0-linux/commit/f9e46d93ede4c7115180352886830cd0bf7b63be)
 
+A private RAM image now pairs the exact signed r2 kernel with the diagnostic
+DTB. Independent parsing verified the same initramfs, command line, WLAN
+blacklist and early and systemd return guards as the previously tested
+package RAM image. The image uses the original early modules and the same
+checksum-verified module overlay. The two experimental payloads are kept
+separate for controlled activation after the return guards are confirmed.
+
+Alpine Clang 22.1.3 reproduced the normal DTB byte for byte and built both
+modules with the installed kernel's CFI settings. The sole configuration
+addition selects the diagnostic BMS as a module. Both module signatures
+verify against the certificate embedded in the installed kernel, and all
+87 imported symbol CRCs match. The locally prepared image and modules passed
+offline verification. Handset staging, the first probe and the automatic
+return still require a hardware run with this image.
+
 ## PM8226 hardware key reset
 
 An opt-in read-only diagnostic sampled the PM8226 S3 source and debounce
