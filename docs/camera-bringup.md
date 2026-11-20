@@ -624,9 +624,23 @@ about 1.6 seconds after the attempt. The initial software observer
 rejected the abbreviated error message. The corrected run passed on the
 same RAM boot, and the result matched the boot journal after return. The
 installed r2 boot, package files, charger and sensor defaults passed the
-return checks. The test removed its handset staging tree. Same-queue
-handset retry and suspend with an active stream remain open.
+return checks. The test removed its handset staging tree.
 [Handset rollback and RTC evidence](../evidence/2026-11-19-fx0-camss-handset-start-rollback.json)
+
+The same signed module packet booted again to test retry on a single open
+capture queue. Libcamera configured each camera route. The test adapter
+queued four MMAP buffers on the configured descriptor before the first
+`VIDIOC_STREAMON`. The injected `EIO` left all four indices queued.
+The adapter issued the second `STREAMON` on that descriptor and received
+frames 0 through 23 through all four buffer indices on each sensor. Both
+sensors runtime-suspended after release. A closed-camera RTC suspension
+lasted 13.510 seconds.
+
+An additional front-camera control reached the existing `EBUSY` guard,
+recorded zero suspend entries and received six more frames after refusal.
+The return deadline prevented the rear control from requesting suspend.
+Suspend and resume with an active stream remain open.
+[Same-queue handset evidence](../evidence/2026-11-19-fx0-camss-same-queue-retry.json)
 
 Six subsequent full-resolution rear cases alternate frame-file writing and
 discard and retain all completion timestamps and capture stdout. All 144 buffers

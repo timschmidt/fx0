@@ -1,0 +1,79 @@
+{
+  "adapter": {
+    "SHA256": "e2731a170a8f82e80f4ec393be006ccc2d34762a6b4fe45055189c36e566ac00",
+    "source_SHA256": "3d8c47a536209f8b4c417fcb925af3c02b06dc4dc78bc64aecf06c5c31422686",
+    "ELF32_ARM": true,
+    "musl_shared_object": true,
+    "bytes": 10736,
+    "ARM_mock_accepted_retained_queue": true,
+    "ARM_mock_rejected_missing_buffer": true,
+    "ARM_mock_checked_ioctl_argument_passthrough": true,
+    "candidate_module_packet_unchanged_from_prior_hardware_trial": true,
+    "release_module_identity": "5c1338e237e49b0189ee14362f58b77d8c19bdcaac906810e32d21996ccdbd9f"
+  },
+  "diagnostic_module": "5c1338e237e49b0189ee14362f58b77d8c19bdcaac906810e32d21996ccdbd9f",
+  "kernel_signature_enforced": true,
+  "WLAN_disabled_on_candidate": true,
+  "candidate_boot": "3359adbe-2e6c-43df-87dc-3ea8d71a0437",
+  "capture_attempts": [
+    {
+      "fd": 17,
+      "first_errno": 5,
+      "queued_after_error": 4,
+      "frames": 24,
+      "width": 1976,
+      "height": 1200,
+      "stride": 2472,
+      "indices_mask": 15,
+      "first_sequence": 0,
+      "last_sequence": 23,
+      "sensor": "imx132",
+      "elapsed_seconds": 3.629,
+      "stop_timeouts": [
+        "sof",
+        "reg update"
+      ],
+      "runtime_after_release": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "fd": 17,
+      "first_errno": 5,
+      "queued_after_error": 4,
+      "frames": 24,
+      "width": 1640,
+      "height": 1232,
+      "stride": 2056,
+      "indices_mask": 15,
+      "first_sequence": 0,
+      "last_sequence": 23,
+      "sensor": "imx179",
+      "elapsed_seconds": 2.565,
+      "stop_timeouts": [
+        "sof",
+        "reg update"
+      ],
+      "runtime_after_release": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    }
+  ],
+  "closed_camera_sleep_seconds": 13.51,
+  "closed_camera_wake_source": "rtc",
+  "installed_r2_boot": "d7a7fd54-0db9-4c8d-a5c1-973de29d02b4",
+  "installed_r2_module_files_verified": 482,
+  "original_boot_and_package_hashes_match": true,
+  "test_result_matched_journal_on_return": true,
+  "staged_module_files_removed": 482,
+  "existing_active_stream_guard_control": {
+    "matching_candidate_journal": true,
+    "front_refused_suspend": true,
+    "machine_suspend_entries": 0,
+    "front_frames_after_refusal": 6,
+    "rear_test_stopped_at_return_deadline": true
+  },
+  "active_stream_suspend_resume_implemented": false
+}
