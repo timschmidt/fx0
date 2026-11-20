@@ -1,0 +1,40 @@
+{
+  "r3_baseline": "539a7cccccac57f48e112bf5f8b6b95eca91cc5a",
+  "source_head": "18436657e9cfc0688309459c0e089ead4e62468c",
+  "r3_package_SHA256": "bf9afecd7282ca285399e0c9c5f01299563bb87cc41d5dfcc111713b99a2733b",
+  "release_config_SHA256": "eaffd964f13930d2b050588925b85050991faaba5010457c6d70f13882792ff1",
+  "ARM_toolchain": "Alpine clang 22.1.3",
+  "ARM_driver_and_module_linked": true,
+  "identical_r3_versioned_module_imports": 133,
+  "same_vermagic_as_signed_r3_CAMSS": true,
+  "module_payload_SHA256": "225842438bb8e59c0ddaf64338a4c986f839536ee9f2a6ad0bf563ffd46ea3f7",
+  "compressed_module_SHA256": "8fd4e89fb13b4053e5ee78d5a6b3a26ada011220994b33e2a6fa627d3a6e7d13",
+  "compressed_module_bytes": 1558120,
+  "module_signed": false,
+  "initial_ARM_attempt_failed_in_read_only_compiler_temp_directory": true,
+  "fresh_ARM_attempt_with_private_writable_tmpfs_passed": true,
+  "host_compilers": {
+    "cc": [
+      "Seven callback failures or conflicts unwind in capture-to-source order",
+      "Pre-callback failures, retry and normal stop pass",
+      "VFE returns each active, last and pending buffer once",
+      "Base kernel fails both negative controls"
+    ],
+    "clang-21": [
+      "Seven callback failures or conflicts unwind in capture-to-source order",
+      "Pre-callback failures, retry and normal stop pass",
+      "VFE returns each active, last and pending buffer once",
+      "Base kernel fails both negative controls"
+    ]
+  },
+  "callback_failures": 5,
+  "callback_failure_with_missing_s_stream": 1,
+  "foreign_subdevice_conflict": 1,
+  "pre_callback_failures": 2,
+  "passed_baseline_negative_controls": 2,
+  "kernel_checkpatch_errors": 0,
+  "kernel_checkpatch_warnings": 0,
+  "handset_changed": false,
+  "handset_fault_path_verified": false,
+  "active_stream_system_sleep_implemented": false
+}

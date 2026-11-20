@@ -596,6 +596,21 @@ ownership of queued buffers, bring the pipeline back after its suppliers
 resume and surface a queue error if restart fails. The closed-sensor RTC
 trial establishes the reopen baseline for that work.
 
+The startup rollback branch stops every earlier stage before releasing the
+media pipeline and returning buffers to videobuf2 for retry. It preserves an
+already enabled legacy subdevice on a conflicting route. VFE clears its
+active slots and final-buffer reference as it returns those buffers.
+
+Host tests execute the driver function bodies with stubbed media callbacks.
+They cover errors at all five stages, a missing callback, a conflicting
+route, early setup errors, a successful retry and two consecutive buffer
+flushes. The two regression controls fail on the r3 baseline. The ARM module
+linked with the r3 configuration and matches the signed module's vermagic
+and all 133 imported symbol versions. Hardware fault recovery and
+active-stream suspend still need testing.
+[Startup rollback source](https://github.com/timschmidt/fx0-linux/commit/18436657e9cfc0688309459c0e089ead4e62468c)
+[Host validation](../evidence/2026-11-19-fx0-camss-stream-start-unwind.json)
+
 Six subsequent full-resolution rear cases alternate frame-file writing and
 discard and retain all completion timestamps and capture stdout. All 144 buffers
 arrive; writing cases have 23/69 intervals above 1.5 times their session median,
