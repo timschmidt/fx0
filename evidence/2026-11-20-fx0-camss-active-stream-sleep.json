@@ -1,0 +1,129 @@
+{
+  "date_UTC": "2026-11-20",
+  "title": "MSM8226 CAMSS system sleep with an open raw capture stream",
+  "kernel_source": {
+    "repository": "timschmidt/fx0-linux",
+    "branch": "development/fx0-camss-active-sleep-02",
+    "commit": "7ed6a2856b34f1a1f2b68c207c713f17f22c9a79",
+    "parent": "f4c7e7472cd9c23de584accc63e4c356eae4c870",
+    "r3_base": "539a7cccccac57f48e112bf5f8b6b95eca91cc5a"
+  },
+  "prior_failure": {
+    "candidate": "f4c7e7472cd9",
+    "result": "camss_prepare returned -EBUSY on both sensors",
+    "cause": "each MSM8226 CSID powers its parent VFE in s_power, so one route holds two VFE power references; the check required exactly one",
+    "observed_counts": "graph=1 power=2 streams=1 on both sensors"
+  },
+  "fix": "count one VFE reference for the VFE line plus one per CSID in the route that powers this VFE",
+  "module": {
+    "compressed_SHA256": "3eb17391bdc10cbad0f88570bcf9cfa8a7134e5544c2a1872c348924486eadb3",
+    "signed_SHA256": "d69164a6e3f70c7f9838d3e3f2e1108a67452c47cbc87be82e3ef29a6447541a",
+    "signature_verified_against_r3_certificate": "de086e266ec1d82ea17ebbd51f10242e591df3cf74e958e269bdd91b9176d370",
+    "versioned_imports_unchanged": 133,
+    "added_imports": [
+      "synchronize_irq",
+      "vb2_queue_error"
+    ],
+    "toolchain": "Alpine clang 22.1.3",
+    "checkpatch": "only the intentionally absent Signed-off-by"
+  },
+  "host_checks": [
+    "Seven callback failures or conflicts unwind in capture-to-source order",
+    "Pre-callback failures, retry and normal stop pass",
+    "VFE returns each active, last and pending buffer once",
+    "Base kernel fails both negative controls"
+  ],
+  "RAM_image_SHA256": "8a678beec23ffe1fc38e7e3075c050ae2731a74db09bc81d0a7ed2258b8d57d6",
+  "kernel_signature_enforced": true,
+  "WLAN_disabled_on_candidate": true,
+  "candidate_boot": "e14d0eef-be69-432c-a80b-704d5d12b479",
+  "candidate_module_files_verified": 482,
+  "attempts": [
+    {
+      "camera": "front",
+      "sensor": "imx132",
+      "mode": [
+        1976,
+        1200,
+        2472
+      ],
+      "frames_before_sleep_request": 8,
+      "frames_after_wake_on_same_open_queue": 24,
+      "camss_prepare_returns": [
+        0
+      ],
+      "machine_suspend_entries": 1,
+      "first_wakeup_source": "rtc",
+      "RTC_interrupt_increment": 1,
+      "sleep_seconds": 13.458,
+      "VFE_halt_returned_zero": true,
+      "driver_resume_called": true,
+      "userspace_STREAMON_or_STREAMOFF_during_sleep": 0,
+      "capture_timing": {
+        "buffers": 56,
+        "median_seconds": 0.069598,
+        "longest_seconds": 5.876775,
+        "longest_adjacent_sequence": [
+          19,
+          20
+        ]
+      },
+      "runtime_after_release": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    },
+    {
+      "camera": "back",
+      "sensor": "imx179",
+      "mode": [
+        1640,
+        1232,
+        2056
+      ],
+      "frames_before_sleep_request": 9,
+      "frames_after_wake_on_same_open_queue": 25,
+      "camss_prepare_returns": [
+        0
+      ],
+      "machine_suspend_entries": 1,
+      "first_wakeup_source": "rtc",
+      "RTC_interrupt_increment": 1,
+      "sleep_seconds": 14.446,
+      "VFE_halt_returned_zero": true,
+      "driver_resume_called": true,
+      "userspace_STREAMON_or_STREAMOFF_during_sleep": 0,
+      "capture_timing": {
+        "buffers": 88,
+        "median_seconds": 0.033272,
+        "longest_seconds": 5.791378,
+        "longest_adjacent_sequence": [
+          40,
+          41
+        ]
+      },
+      "runtime_after_release": {
+        "front": "suspended",
+        "back": "suspended"
+      }
+    }
+  ],
+  "candidate_kernel_log": {
+    "suspend_entries": 2,
+    "suspend_exits": 2,
+    "CAMSS_VFE_IOMMU_or_STOPPING_warnings": 0,
+    "kernel_fatal": 0
+  },
+  "installed_return_boot": "61317756-ea42-4ee6-96f5-db3396ae3130",
+  "installed_module_files_verified": 482,
+  "protected_boot_and_package_hashes_match": true,
+  "automatic_return_journal_verified": true,
+  "staged_module_files_removed": 482,
+  "limits": [
+    "s2idle only; deep suspend not tested",
+    "one raw RDI route; PIX output and multiple concurrent routes still refuse sleep with EBUSY",
+    "RAM trial only; not packaged or installed",
+    "no physical display or touch assertion",
+    "frame contents were not compared across sleep"
+  ]
+}

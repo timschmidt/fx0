@@ -639,8 +639,37 @@ lasted 13.510 seconds.
 An additional front-camera control reached the existing `EBUSY` guard,
 recorded zero suspend entries and received six more frames after refusal.
 The return deadline prevented the rear control from requesting suspend.
-Suspend and resume with an active stream remain open.
+Suspend and resume with an active stream remained open at that point.
 [Same-queue handset evidence](../evidence/2026-11-19-fx0-camss-same-queue-retry.json)
+
+## November 20 system sleep with an open capture stream
+
+The first active-sleep candidate (`f4c7e7472cd9`) pauses the single raw
+route in the CAMSS `prepare` callback, halts the Gen1 VFE bus, keeps the
+videobuf2 queue and its buffers, and restarts the same route in `complete`.
+On the handset it still returned `EBUSY` for both sensors. The refusal
+recorded two VFE power references for one stream. Each MSM8226 CSID powers
+its parent VFE in `s_power`, so a route holds one reference for the VFE line
+and one for its CSID, but the check required exactly one. The follow-up
+commit `7ed6a2856b34` on `development/fx0-camss-active-sleep-02` counts the
+references the route itself holds. Its signed module keeps all 133 r3
+versioned imports. The host unwind fixture and its negative controls pass.
+
+In a guarded RAM boot with signature enforcement, each sensor streamed
+through one open libcamera queue. `camss_prepare` returned 0, the handset
+entered s2idle once and the RTC woke it after 13.5 s (IMX132) and 14.4 s
+(IMX179). The VFE halt returned 0 and the driver resume path ran. The same
+descriptor then delivered 24 and 25 more frames without any userspace
+`STREAMON` or `STREAMOFF`, with consecutive sequence numbers across the
+sleep gap. Both sensors runtime-suspended after release. The candidate's
+kernel log has two clean suspend entries and exits and no CAMSS, VFE,
+IOMMU or `STOPPING` warnings. The automatic return to the installed r2
+boot verified all 482 module files and the protected hashes.
+
+This covers s2idle with one raw route. PIX output and concurrent routes
+still refuse sleep, deep suspend is untested, frame contents were not
+compared across sleep, and the change is not packaged or installed.
+[Active-stream sleep evidence](../evidence/2026-11-20-fx0-camss-active-stream-sleep.json)
 
 Six subsequent full-resolution rear cases alternate frame-file writing and
 discard and retain all completion timestamps and capture stdout. All 144 buffers

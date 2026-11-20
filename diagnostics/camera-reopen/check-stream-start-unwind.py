@@ -361,6 +361,7 @@ def build_fixture(temp, cc, video, vfe):
     functions = [
         function(video, "video_pipeline_upstream", optional=True),
         function(video, "video_pipeline_stop_subdevs", optional=True),
+        function(video, "video_pipeline_start_subdevs", optional=True),
         function(video, "video_start_streaming"),
         function(video, "video_stop_streaming"),
         function(vfe, "vfe_flush_buffers"),
