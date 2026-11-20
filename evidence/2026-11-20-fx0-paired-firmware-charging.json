@@ -1,0 +1,112 @@
+{
+  "date_UTC": "2026-11-20",
+  "title": "Fx0 charging with the paired lk2nd: installed r4 versus r5 with the managed policy",
+  "finding": "The installed r2/r4 kernels never charge: CONFIG_CHARGER_QCOM_SMBB_POLICY is unset and the installed lk2nd publishes no handoff, so SMBB keeps HANDOFF and POLICY inhibit votes. USB only powers the system.",
+  "paired_firmware": {
+    "version": "fx0-pm-host-01",
+    "image_SHA256": "690a4a25fcecde534163ff81ab94a86790dab8a30b99076be71e4b7341275cea",
+    "loaded_in_RAM_only": true,
+    "eMMC_writes": false
+  },
+  "installed_r4_under_paired_firmware": {
+    "boot": "8067eccb-57df-4f95-9857-d6c9225016db",
+    "handoff_marker": true,
+    "handoff_rejected": false,
+    "charge_behaviour": "auto [inhibit-charge]",
+    "samples": 20,
+    "statuses": [
+      "Not charging"
+    ],
+    "result": "handoff accepted but charging stays inhibited because r4 lacks the policy driver"
+  },
+  "r5_candidate": {
+    "recipe": "timschmidt/fx0-pmaports development/fx0-charging-policy-package-01 b20746ff2cfb",
+    "source": "timschmidt/fx0-linux development/fx0-r5-charging-camera-01 301ccdbce1dd (r4 + three SMBB policy commits)",
+    "patched_archive_git_tree": "e7127983f014ad329b9868dfe1d1ae288a4dca5f",
+    "packages": {
+      "linux-postmarketos-qcom-msm8226-6.18.64-r5.apk": {
+        "bytes": 18765089,
+        "SHA256": "6ff39b072e8cf2ff0cb1f03d5b531aaa366b36b27938c3e218eda57262a0ed5f"
+      },
+      "fx0-dmp-reader-6.18.64-r5.apk": {
+        "bytes": 4761,
+        "SHA256": "725b9ba340809eee9110d2dca556d5c093c35bf11a3ac297ce69086576149d33"
+      }
+    },
+    "exported_symbols_identical_to_r4": true,
+    "RAM_image": {
+      "SHA256": "4db9eb26ff6dc97f1d3ee4eb423ee86c9a678f777be14fdc3cfc83592df7fa1e",
+      "kernel": "r5 zImage",
+      "DTB_identical_to_installed": true,
+      "initramfs": "installed r4 initramfs",
+      "cmdline": "installed"
+    }
+  },
+  "r5_under_paired_firmware": {
+    "boot": "8f9e6677-b061-45bf-b5ee-83ed099cd023",
+    "kernel_notes_match_r5": true,
+    "policy_bound": true,
+    "first_policy": "running=1 votes=0x0 state=0 temp_decic=306 voltage_uV=4288440 error=0 age_ms=424",
+    "charge_behaviour": "[auto] inhibit-charge",
+    "samples": 20,
+    "timeline": [
+      {
+        "uptime": 76.32,
+        "status": "Charging",
+        "voltage_uV": "4327215",
+        "policy": "running=1 votes=0x0 state=0 temp_decic=306 voltage_uV=4326039 error=0 age_ms=244"
+      },
+      {
+        "uptime": 172.19,
+        "status": "Discharging",
+        "voltage_uV": "4300191",
+        "policy": "running=1 votes=0x0 state=0 temp_decic=307 voltage_uV=4300779 error=0 age_ms=440"
+      },
+      {
+        "uptime": 267.92,
+        "status": "Discharging",
+        "voltage_uV": "4296666",
+        "policy": "running=1 votes=0x0 state=0 temp_decic=306 voltage_uV=4296960 error=0 age_ms=490"
+      },
+      {
+        "uptime": 363.71,
+        "status": "Discharging",
+        "voltage_uV": "4296372",
+        "policy": "running=1 votes=0x0 state=0 temp_decic=306 voltage_uV=4296666 error=0 age_ms=592"
+      },
+      {
+        "uptime": 459.53,
+        "status": "Discharging",
+        "voltage_uV": "4296078",
+        "policy": "running=1 votes=0x0 state=0 temp_decic=306 voltage_uV=4296078 error=0 age_ms=738"
+      },
+      {
+        "uptime": 555.39,
+        "status": "Discharging",
+        "voltage_uV": "4295490",
+        "policy": "running=1 votes=0x0 state=0 temp_decic=305 voltage_uV=4296078 error=0 age_ms=920"
+      },
+      {
+        "uptime": 651.22,
+        "status": "Discharging",
+        "voltage_uV": "4295490",
+        "policy": "running=1 votes=0x0 state=0 temp_decic=305 voltage_uV=4296078 error=0 age_ms=21"
+      }
+    ],
+    "result": "charging enabled (auto); charged near full, PMIC ended charge near 4.33 V, policy votes 0 and errors 0 throughout"
+  },
+  "returned_to_installed": {
+    "boot": "b2f11cb2-0e97-4448-8d54-8fbd29f23b30",
+    "kernel_notes_match_r4": true,
+    "handoff_rejected": true,
+    "charge_behaviour": "auto [inhibit-charge]",
+    "taint": "0",
+    "systemd": "running"
+  },
+  "limits": [
+    "charge-done IRQ and Full reporting still not observed",
+    "thermal limits, source loss (unplug) and standby unqualified",
+    "r5 not installed and paired lk2nd not flashed",
+    "single short window starting near full charge"
+  ]
+}
