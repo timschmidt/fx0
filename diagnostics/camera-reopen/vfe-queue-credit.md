@@ -158,7 +158,34 @@ selection byte for byte and checked the restored package files. The isolated
 root required explicit permission for local APK files on tmpfs. The APKs and
 repository index passed verification with the existing trusted public key.
 
-One clean signed build and the file-only transaction have passed. The second
-clean build, package-exact handset trial and native boot hooks still need
-qualification. The installed phone continues to run r2.
-[Signed build and rollback evidence](../../evidence/2026-11-19-fx0-camss-r3-package.json)
+[Signed build and file-only rollback evidence](../../evidence/2026-11-19-fx0-camss-r3-package.json)
+
+### Package-exact handset trial
+
+The temporary image booted the signed r3 APK's kernel and Madai DTB, with
+21 exact early modules and all 482 module files verified in the RAM overlay.
+Software checks found one active Sway output and one touch input.
+
+Four front runs at default vertical blanking and both rear RAW10 modes
+produced 760 steady frame starts and 760 write-master completions. All
+818 delivered frames, including the capture boundaries, matched VFE IRQs.
+The longest front interval was 69.848 ms, and none of the runs missed a
+frame period. Each of the 706 continuous pattern-3 writes occurred in the
+frame-start IRQ. Both finite captures drained all 24 buffers.
+
+CAMSS refused suspend while each camera was streaming. Both streams delivered
+six more buffers after refusal. With both sensors closed, the RTC woke the
+phone after 14.409 seconds. The automatic return restored r2. An independent
+audit matched the camera report to the journal and verified the installed
+files, charger controls and sensor defaults.
+
+Two native initramfs previews agreed byte for byte. The 247-entry archive
+preserved the device's early module list and differed from r2 only in the
+21 signed module bodies. In an isolated handset overlay, native APK hooks
+produced those same r3 initramfs bytes. Rollback reproduced the installed
+r2 initramfs and all 776 original package records. The harness restored the
+saved world ordering after confirming that APK preserved its selections.
+The trial module staging and native rehearsal workspaces were removed.
+The installed phone continues to run r2. Active-stream suspend and resume
+remain open.
+[Exact handset and native package qualification](../../evidence/2026-11-19-fx0-camss-r3-native-qualification.json)

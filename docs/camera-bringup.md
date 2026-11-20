@@ -585,10 +585,11 @@ rearms in the frame-start IRQ. Both finite captures drained normally, the
 open-stream sleep guard refused suspend, and the closed-camera RTC wake
 passed. [Timing procedure and trials](../diagnostics/camera-reopen/vfe-queue-credit.md#frame-start-rearm-handset-qualification)
 
-The signed 6.18.64-r3 kernel and matching DMP reader passed host package
-verification and an isolated two-package upgrade and exact rollback. The
-package-exact boot and native install hooks are pending.
-[Release qualification](../diagnostics/camera-reopen/vfe-queue-credit.md#signed-61864-r3-package-candidate)
+The signed 6.18.64-r3 kernel passed the same camera and RTC workload in RAM
+with all 482 package module files verified. Native upgrade and rollback hooks
+for the kernel and matching DMP reader reproduced the previewed r3 and
+installed r2 initramfs bytes. The phone returned to its installed r2 image.
+[Release qualification](../diagnostics/camera-reopen/vfe-queue-credit.md#package-exact-handset-trial)
 
 Resuming the same stream requires CAMSS to stop DMA at suspend, preserve
 ownership of queued buffers, bring the pipeline back after its suppliers
