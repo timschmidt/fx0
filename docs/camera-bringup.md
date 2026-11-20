@@ -700,7 +700,9 @@ warnings. The owner confirmed display and touch. The r2 recovery set
 remains on the handset.
 On the installed r4 boot, a libcamera capture on each camera survived a
 12 s RTC-woken s2idle in the same process and kept delivering frames, with
-no camera messages in the kernel log.
+no camera messages in the kernel log. A follow-up kept one capture process
+per camera open through ten consecutive 10 s s2idle cycles; all twenty
+cycles suspended once and resumed frame delivery.
 [r4 installation evidence](../evidence/2026-11-20-fx0-kernel-r4-installed.json)
 
 Six subsequent full-resolution rear cases alternate frame-file writing and

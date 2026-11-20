@@ -59,7 +59,8 @@
     "candidate initramfs kept from a repeated native preview"
   ],
   "limits": [
-    "deep suspend, PIX output, concurrent routes and repeated sleep cycles untested"
+    "deep suspend, PIX output and concurrent routes untested",
+    "frame contents not compared across sleep"
   ],
   "installed_open_stream_s2idle": {
     "boot_id": "36dfed3c-bc00-4a74-921f-067314d49e85",
@@ -86,5 +87,199 @@
       "frame contents not compared",
       "single cycle per camera"
     ]
+  },
+  "installed_open_stream_s2idle_repeat": {
+    "boot_id": "36dfed3c-bc00-4a74-921f-067314d49e85",
+    "script": "diagnostics/camera-reopen/installed-open-stream-s2idle-repeat.sh",
+    "cycles_per_camera": 10,
+    "rtc_seconds": 10,
+    "passed": {
+      "front": 10,
+      "back": 10
+    },
+    "criterion": "rtcwake returns 0, exactly one successful suspend, at least 8 new frames from the same cam process after each wake",
+    "cycles": [
+      {
+        "camera": "front",
+        "cycle": 1,
+        "rc": 0,
+        "suspended": 1,
+        "before": 8,
+        "after": 20,
+        "alive": "yes"
+      },
+      {
+        "camera": "front",
+        "cycle": 2,
+        "rc": 0,
+        "suspended": 1,
+        "before": 20,
+        "after": 34,
+        "alive": "yes"
+      },
+      {
+        "camera": "front",
+        "cycle": 3,
+        "rc": 0,
+        "suspended": 1,
+        "before": 34,
+        "after": 47,
+        "alive": "yes"
+      },
+      {
+        "camera": "front",
+        "cycle": 4,
+        "rc": 0,
+        "suspended": 1,
+        "before": 48,
+        "after": 63,
+        "alive": "yes"
+      },
+      {
+        "camera": "front",
+        "cycle": 5,
+        "rc": 0,
+        "suspended": 1,
+        "before": 63,
+        "after": 76,
+        "alive": "yes"
+      },
+      {
+        "camera": "front",
+        "cycle": 6,
+        "rc": 0,
+        "suspended": 1,
+        "before": 76,
+        "after": 90,
+        "alive": "yes"
+      },
+      {
+        "camera": "front",
+        "cycle": 7,
+        "rc": 0,
+        "suspended": 1,
+        "before": 90,
+        "after": 103,
+        "alive": "yes"
+      },
+      {
+        "camera": "front",
+        "cycle": 8,
+        "rc": 0,
+        "suspended": 1,
+        "before": 103,
+        "after": 115,
+        "alive": "yes"
+      },
+      {
+        "camera": "front",
+        "cycle": 9,
+        "rc": 0,
+        "suspended": 1,
+        "before": 115,
+        "after": 128,
+        "alive": "yes"
+      },
+      {
+        "camera": "front",
+        "cycle": 10,
+        "rc": 0,
+        "suspended": 1,
+        "before": 128,
+        "after": 136,
+        "alive": "yes"
+      },
+      {
+        "camera": "back",
+        "cycle": 1,
+        "rc": 0,
+        "suspended": 1,
+        "before": 16,
+        "after": 25,
+        "alive": "yes"
+      },
+      {
+        "camera": "back",
+        "cycle": 2,
+        "rc": 0,
+        "suspended": 1,
+        "before": 26,
+        "after": 37,
+        "alive": "yes"
+      },
+      {
+        "camera": "back",
+        "cycle": 3,
+        "rc": 0,
+        "suspended": 1,
+        "before": 38,
+        "after": 47,
+        "alive": "yes"
+      },
+      {
+        "camera": "back",
+        "cycle": 4,
+        "rc": 0,
+        "suspended": 1,
+        "before": 47,
+        "after": 59,
+        "alive": "yes"
+      },
+      {
+        "camera": "back",
+        "cycle": 5,
+        "rc": 0,
+        "suspended": 1,
+        "before": 60,
+        "after": 68,
+        "alive": "yes"
+      },
+      {
+        "camera": "back",
+        "cycle": 6,
+        "rc": 0,
+        "suspended": 1,
+        "before": 68,
+        "after": 77,
+        "alive": "yes"
+      },
+      {
+        "camera": "back",
+        "cycle": 7,
+        "rc": 0,
+        "suspended": 1,
+        "before": 77,
+        "after": 87,
+        "alive": "yes"
+      },
+      {
+        "camera": "back",
+        "cycle": 8,
+        "rc": 0,
+        "suspended": 1,
+        "before": 87,
+        "after": 95,
+        "alive": "yes"
+      },
+      {
+        "camera": "back",
+        "cycle": 9,
+        "rc": 0,
+        "suspended": 1,
+        "before": 96,
+        "after": 107,
+        "alive": "yes"
+      },
+      {
+        "camera": "back",
+        "cycle": 10,
+        "rc": 0,
+        "suspended": 1,
+        "before": 108,
+        "after": 122,
+        "alive": "yes"
+      }
+    ],
+    "kernel_log": "no CAMSS, VFE, CSID, sensor or IOMMU messages after boot; 22 clean s2idle exits on this boot"
   }
 }
