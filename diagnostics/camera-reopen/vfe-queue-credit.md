@@ -185,6 +185,10 @@ preserved the device's early module list and differed from r2 only in the
 produced those same r3 initramfs bytes. Rollback reproduced the installed
 r2 initramfs and all 776 original package records. The harness restored the
 saved world ordering after confirming that APK preserved its selections.
+The native image tool reproduced the installed r2 Android image and built
+the r3 image from the same rehearsed initramfs. An independent encoder
+matched both images byte for byte. Modeling the replacement preserved the
+lk2nd prefix and the partition bytes after the replacement range.
 The trial module staging and native rehearsal workspaces were removed.
 The installed phone continues to run r2. Active-stream suspend and resume
 remain open.
