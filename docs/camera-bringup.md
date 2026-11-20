@@ -606,10 +606,27 @@ They cover errors at all five stages, a missing callback, a conflicting
 route, early setup errors, a successful retry and two consecutive buffer
 flushes. The two regression controls fail on the r3 baseline. The ARM module
 linked with the r3 configuration and matches the signed module's vermagic
-and all 133 imported symbol versions. Hardware fault recovery and
-active-stream suspend still need testing.
+and all 133 imported symbol versions.
 [Startup rollback source](https://github.com/timschmidt/fx0-linux/commit/18436657e9cfc0688309459c0e089ead4e62468c)
 [Host validation](../evidence/2026-11-19-fx0-camss-stream-start-unwind.json)
+
+A signed diagnostic module ran on the guarded r3 RAM image with 481 other
+module files byte-identical to the r3 package. It refused each sensor's
+first start immediately before the sensor callback. On each route it
+stopped VFE, ISPIF, CSID and CSIPHY in order, returned `-EIO` to the
+application and let both sensors runtime-suspend. A fresh client then
+captured 24 frames per camera. Closed-camera RTC wake took 14.415 seconds
+and a second pair of captures returned another 24 frames per camera.
+
+VFE waited for both frame start and register update during each injected
+failure. Both waits timed out, and the application received the error
+about 1.6 seconds after the attempt. The initial software observer
+rejected the abbreviated error message. The corrected run passed on the
+same RAM boot, and the result matched the boot journal after return. The
+installed r2 boot, package files, charger and sensor defaults passed the
+return checks. The test removed its handset staging tree. Same-queue
+handset retry and suspend with an active stream remain open.
+[Handset rollback and RTC evidence](../evidence/2026-11-19-fx0-camss-handset-start-rollback.json)
 
 Six subsequent full-resolution rear cases alternate frame-file writing and
 discard and retain all completion timestamps and capture stdout. All 144 buffers

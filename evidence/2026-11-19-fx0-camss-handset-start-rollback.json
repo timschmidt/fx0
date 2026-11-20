@@ -1,0 +1,112 @@
+{
+  "signed_diagnostic_module": {
+    "source": "18436657e9cfc0688309459c0e089ead4e62468c",
+    "verified_original_symbol_versions": 133,
+    "verified_added_symbol_versions": [
+      "_dev_info",
+      "param_ops_uint"
+    ],
+    "in_tree": true,
+    "accepted_r3_certificate_SHA256": "de086e266ec1d82ea17ebbd51f10242e591df3cf74e958e269bdd91b9176d370",
+    "signed_module_SHA256": "714f336478652bf47ff8498d6443c972019cd01a36cfd0af94ce9a9cca66204c",
+    "compressed_module_SHA256": "5c1338e237e49b0189ee14362f58b77d8c19bdcaac906810e32d21996ccdbd9f",
+    "original_packaged_module_SHA256": "66295e55fd8c05b57f3eaa4f23820c3c4094b183dcee1f671640398a8d558213",
+    "diagnostic_patch_SHA256": "13f61dff5cba8453c10636fc1072d2bf1f1a0dc939353b23785d7d7f91fa891b",
+    "original_package_SHA256": "bf9afecd7282ca285399e0c9c5f01299563bb87cc41d5dfcc111713b99a2733b",
+    "module_path": "lib/modules/6.18.64-fx0-lts-alpine/kernel/drivers/media/platform/qcom/camss/qcom-camss.ko.zst",
+    "module_signature_verified": true
+  },
+  "reference_comparison": {
+    "passed": true,
+    "kernel_DTB_and_command_line_byte_identical": true,
+    "initramfs_changed": [
+      "etc/fx0-native-modules.sha256",
+      "hooks-cleanup/85-fx0-native-modules.sh"
+    ],
+    "exact_packaged_module_files_unchanged": 481,
+    "replaced_module_path": "lib/modules/6.18.64-fx0-lts-alpine/kernel/drivers/media/platform/qcom/camss/qcom-camss.ko.zst",
+    "normal_and_early_return_unchanged": true,
+    "candidate_image_SHA256": "e44b08ee5dbd4819356072531a15ea0181563a874442581f17826a83adf7e7f2",
+    "reference_image_SHA256": "06dd302d05d64bab3b10f2a0d755547eacb176aac8a3d47aaa8d115801f78b31"
+  },
+  "candidate_RAM_boot": "b60ac891-7184-40bf-af79-8d4185eb741b",
+  "verified_RAM_module_files": 482,
+  "candidate_signature_enforced": true,
+  "candidate_WLAN_disabled": true,
+  "initial_observer_rejected_the_IO_error_spelling": true,
+  "corrected_observer_repeated_on_same_guarded_boot": true,
+  "sensor_start_faults": [
+    {
+      "sensor": "imx132",
+      "application_errno": -5,
+      "stopped_in_order": [
+        "vfe",
+        "ispif",
+        "csid",
+        "csiphy"
+      ],
+      "fault_return_seconds": 1.606,
+      "injected_stop_timeouts": [
+        "sof",
+        "reg update"
+      ],
+      "runtime_after_rollback": {
+        "front": "suspended",
+        "back": "suspended"
+      },
+      "fresh_client_retry_frames": 24
+    },
+    {
+      "sensor": "imx179",
+      "application_errno": -5,
+      "stopped_in_order": [
+        "vfe",
+        "ispif",
+        "csid",
+        "csiphy"
+      ],
+      "fault_return_seconds": 1.601,
+      "injected_stop_timeouts": [
+        "sof",
+        "reg update"
+      ],
+      "runtime_after_rollback": {
+        "front": "suspended",
+        "back": "suspended"
+      },
+      "fresh_client_retry_frames": 24
+    }
+  ],
+  "wake_after_camera_close": {
+    "inactive_clock_seconds": 14.415,
+    "first_wakeup_source": "rtc",
+    "RTC_interrupt_increment": 1,
+    "machine_suspend_entries": 1,
+    "cleared_alarm": true,
+    "camss_prepare_returns": [
+      0
+    ]
+  },
+  "post_wake_captures": [
+    {
+      "camera": "front",
+      "frames": 24
+    },
+    {
+      "camera": "back",
+      "frames": 24
+    }
+  ],
+  "installed_r2_return": {
+    "installed_boot": "f6d1f8c3-a8e6-4358-9cff-371d6dea89bd",
+    "installed_module_files_verified": 482,
+    "protected_hashes_match": true,
+    "automatic_return_journal_verified": true,
+    "matching_camera_report": true
+  },
+  "installed_charger_registers_restored": true,
+  "staged_module_files_removed": 482,
+  "installed_system_changed": false,
+  "hardware_same_open_queue_retry_verified": false,
+  "active_stream_suspend_resume_implemented": false
+}
