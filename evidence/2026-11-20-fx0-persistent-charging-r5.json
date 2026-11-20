@@ -1,0 +1,99 @@
+{
+  "date_UTC": "2026-11-20",
+  "title": "Fx0 persistent charging: Linux 6.18.64-r5 managed policy and paired lk2nd fx0-pm-01",
+  "owner_approval": "The owner approved installing r5 and flashing the paired lk2nd in this session.",
+  "r5_package": {
+    "recipe": "timschmidt/fx0-pmaports development/fx0-charging-policy-package-01 b20746ff2cfb",
+    "source": "timschmidt/fx0-linux development/fx0-r5-charging-camera-01 301ccdbce1dd",
+    "kernel_APK": {
+      "SHA256": "6ff39b072e8cf2ff0cb1f03d5b531aaa366b36b27938c3e218eda57262a0ed5f",
+      "bytes": 18765089,
+      "control_checksum": "Q1hsWM1Z/4DyGForYS0e4pgJizaZk="
+    },
+    "reader_APK": {
+      "SHA256": "725b9ba340809eee9110d2dca556d5c093c35bf11a3ac297ce69086576149d33",
+      "bytes": 4761,
+      "control_checksum": "Q1d/8f2QZycudxLKzDxxeNZIfHZEk="
+    },
+    "config_difference": "CONFIG_CHARGER_QCOM_SMBB_POLICY=y only",
+    "signed_modules_verified": 468,
+    "import_CRCs": 25595,
+    "exports_identical_to_r4": true,
+    "CAMSS_text_identical_to_handset_module": true,
+    "offline_r4_to_r5_rehearsal": {
+      "kernel_only_rejected": true,
+      "database_restored": true
+    }
+  },
+  "r5_exact_RAM_camera_trial": {
+    "sensors": [
+      [
+        "imx132",
+        24,
+        [
+          0
+        ]
+      ],
+      [
+        "imx179",
+        24,
+        [
+          0
+        ]
+      ]
+    ],
+    "note": "booted from the old lk2nd: policy probe refused with -EPROTO and charging stayed inhibited, as designed; the strict journal check counted that line"
+  },
+  "r5_install": {
+    "stage": "updated-and-verified",
+    "exact_candidate_files": 554,
+    "unrelated_records": 774,
+    "boot_image_SHA256": "44d066d4e7721bdfa98f0d9560423bf51d61d7bd31e47560ddb5b817af7b083d",
+    "raw_boot_SHA256": "722bc995a1d48bbea89c1f4eeeceb57ea175f4179229b78b976e8fab599771c0",
+    "first_boot": "ef29cae4-a617-4bb3-9910-47e6819d006e",
+    "notes_match": true,
+    "modules": 482,
+    "sig_enforce": true
+  },
+  "lk2nd": {
+    "previous": "fx0-pon-reboot",
+    "new": "fx0-pm-01",
+    "source": "lk2nd-fx0-power-management-01 b3332cf75d7c",
+    "build": "LK2ND_PON_REBOOT_MODE=1 LK2ND_EXTLINUX=0 LK2ND_FORCE_FASTBOOT=0; two byte-identical builds; only FORCE_FASTBOOT differs from the RAM-qualified fx0-pm-host-01",
+    "image_SHA256": "4e9fd5eef4f0918f421f6e95851de57387f1d3cac5e138fe2b4e455fa16b100e",
+    "RAM_test": "booted the installed r4 unattended and published the handoff",
+    "method": "installed lk2nd fastboot 'flash lk2nd'",
+    "prefix_starts_with_new_image": true,
+    "boot_image_after_512KiB_unchanged": true,
+    "old_prefix_saved_on_host": true
+  },
+  "after_flash": {
+    "boot": "f321b704-794b-48f4-85d1-cd3e64e431c3",
+    "unattended_boot": true,
+    "lk2nd_version": "fx0-pm-01",
+    "handoff_present": true,
+    "handoff_rejections": 0,
+    "policy": "running=1 votes=0x0 state=0 temp_decic=321 voltage_uV=4312029 error=0",
+    "charge_behaviour": "[auto]",
+    "status": "Charging",
+    "voltage_uV": 4325250,
+    "taint": 0,
+    "systemd": "running",
+    "owner_display_touch_confirmed": true
+  },
+  "unplug_test": {
+    "owner_performed": true,
+    "usb_link_down_s": 376.7,
+    "usb_link_up_s": 418.7,
+    "same_boot": true,
+    "policy_after": "votes=0x0 error=0",
+    "charger_or_policy_errors": 0,
+    "status_after": "Discharging (above the 4.28 V recharge threshold)"
+  },
+  "limits": [
+    "Linux still never reports Full (no charge-done interrupt); the PMIC terminates on its own near 4.33 V",
+    "temperature extremes and overnight standby not qualified",
+    "single unplug cycle",
+    "IADC current scale not independently measured"
+  ]
+}

@@ -797,3 +797,30 @@ abuilds have started in empty workspaces. Full package equality, signatures,
 ABI and payload audits remain pending. No phone or publication change occurs;
 electrical USB/charging/BMS, the r2 physical base and full acceptance remain open.
 [Current USB port report](../diagnostics/smbb-charging-policy/current-usb-budget-port.md)
+
+## November 20 persistent charging
+
+The installed r2 and r4 kernels never charged the battery. Their charger kept
+the fail-safe handoff and policy inhibit votes because the installed lk2nd
+published no handoff and `CONFIG_CHARGER_QCOM_SMBB_POLICY` was unset, so USB
+only powered the system. A RAM-loaded paired lk2nd confirmed that r4 accepts
+the handoff but stays inhibited without the policy driver.
+
+Linux 6.18.64-r5 adds the three SMBB policy commits from the managed charging
+trials to r4 and enables the policy. Under the RAM-loaded paired firmware it
+charged and ended the charge near full on its own. With the owner's approval,
+r5 was installed with the guarded native transaction. A production paired
+lk2nd, `fx0-pm-01`, then replaced `fx0-pon-reboot`. It differs from the
+RAM-qualified `fx0-pm-host-01` only in having forced fastboot disabled, and two
+builds are byte-identical. The flash changed only the lk2nd window; the boot
+image after 512 KiB is byte-for-byte unchanged.
+
+The phone boots unattended through the new lk2nd. The handoff is accepted,
+the policy runs with no inhibit votes and the battery charges. The owner
+confirmed display and touch and unplugged USB for about 40 seconds without a
+charger or policy error. Linux still never reports Full, because no
+charge-done interrupt arrives; the PMIC terminates on its own near 4.33 V.
+Temperature limits, overnight standby and repeated unplug cycles remain to
+qualify. The r4 recovery set stays on the handset and the old lk2nd image is
+kept on the host.
+[Persistent charging evidence](../evidence/2026-11-20-fx0-persistent-charging-r5.json)
