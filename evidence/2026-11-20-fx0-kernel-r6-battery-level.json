@@ -1,0 +1,91 @@
+{
+  "date_UTC": "2026-11-20",
+  "title": "Fx0 Linux 6.18.64-r6: battery level, Full reporting and suspend while charging",
+  "owner_approval": "The owner approved installing r6 in this session.",
+  "source": {
+    "repository": "timschmidt/fx0-linux",
+    "branch": "development/fx0-smbb-ocv-capacity-02",
+    "commits": {
+      "e77e4fb6e90c": "estimate capacity from the firmware OCV tables and report Full when idle at or above the recharge threshold",
+      "9322d0b374d1": "notify policy samples only on change (r5 emitted one power_supply uevent per second)",
+      "6027ecb30af7": "register the battery supply without a wakeup source under software control (r5 aborted suspend while charging)"
+    }
+  },
+  "recipe": "timschmidt/fx0-pmaports development/fx0-battery-capacity-package-01 22817543a4f9",
+  "package": {
+    "kernel_APK": {
+      "SHA256": "246dcd06272853b34c421e97377cf52ae903c9c44f7f6317b8e48246cf537d65",
+      "bytes": 18764151,
+      "control_checksum": "Q1N4VLhrFKblgN4yo4JEwXjbvPCq8="
+    },
+    "reader_APK": {
+      "SHA256": "ceb5ca97b7a1da4e30d73379765b37a56ed8c9f797390f1fa508ec436ae15567",
+      "bytes": 4760,
+      "control_checksum": "Q12KDpaLpP5Awo2uzmB1yko6fKaPI="
+    },
+    "same_config_as_r5": true,
+    "exports_identical": true,
+    "signed_modules": 468,
+    "import_CRCs": 25595
+  },
+  "findings_on_r5": {
+    "uevents_per_10s": 10,
+    "suspend_while_charging": "aborted: Some devices failed to suspend, or early wake event detected",
+    "status_when_plugged_and_full": "Discharging",
+    "UPower": "battery-missing 0%"
+  },
+  "RAM_results": {
+    "UPower_first": "charging 99% then fully-charged 98%; patch changed to report 100% when idle full",
+    "UPower_after": "charging 99% then fully-charged 100%",
+    "uevents_per_10s_after": [
+      0,
+      1
+    ],
+    "s2idle_cycles_passed": "3/3 and 3/3",
+    "exact_camera_trial_during_post_boot_charge": [
+      [
+        "imx132",
+        24,
+        [
+          0
+        ]
+      ],
+      [
+        "imx179",
+        24,
+        [
+          0
+        ]
+      ]
+    ]
+  },
+  "install": {
+    "stage": "updated-and-verified",
+    "exact_candidate_files": 554,
+    "boot": "fc1bbf13-5bdd-4ebb-8474-f9356e3ced02",
+    "notes_match": true,
+    "modules": 482,
+    "sig_enforce": true
+  },
+  "installed_state": {
+    "lk2nd": "fx0-pm-01",
+    "status": "Full",
+    "capacity": 100,
+    "UPower": "fully-charged 100% battery-full-charged-symbolic",
+    "uevents_10s": 0,
+    "taint": 0,
+    "failed_units": 0,
+    "owner_display_touch_battery_confirmed": true
+  },
+  "harness_updates": [
+    "installed loader pin fx0-pm-01 in the r6 trial",
+    "postflight allows policy-owned charge enable and comparator 0x81/0x82",
+    "boot-image rehearsal uses the post-flash fx0-pm-01 prefix",
+    "installed audits use the staged r5 manifest"
+  ],
+  "limits": [
+    "capacity is a voltage/OCV estimate; while discharging under load it reads low by the IR drop, while charging it is capped at 99%",
+    "no coulomb counting; PM8226 BMS fuel gauge not used",
+    "unplugged accuracy, low-battery behaviour and overnight standby not yet observed"
+  ]
+}

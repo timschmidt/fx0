@@ -824,3 +824,31 @@ Temperature limits, overnight standby and repeated unplug cycles remain to
 qualify. The r4 recovery set stays on the handset and the old lk2nd image is
 kept on the host.
 [Persistent charging evidence](../evidence/2026-11-20-fx0-persistent-charging-r5.json)
+
+## November 20 battery level
+
+UPower ignored the SMBB battery because it reported no charge data, so Sxmo
+showed no battery. Linux 6.18.64-r6 estimates capacity from the battery
+voltage with the OCV tables that the paired lk2nd publishes for the
+identified pack. It uses the policy's thermistor reading when fresh and 25 C
+otherwise. It repeats the last value on a transient read failure, stays below
+100 % while charging, and reports Full and 100 % when the charger is idle at
+or above the recharge threshold. PM8226 never raises charge-done, and r5
+reported Discharging in that state.
+
+Two r5 problems were fixed on the way. The policy called
+`power_supply_changed()` after every one-second sample, so the handset sent
+a uevent every second. Its wakeup source also made a suspend request abort
+with "Some devices failed to suspend, or early wake event detected" while
+the battery charged. r6 notifies only on state changes and once a minute,
+and registers the battery supply without a wakeup source under software
+control.
+
+The exact r6 package passed the open-stream camera sleep trial during the
+post-boot charge on both sensors. It also passed the offline rollback and
+native install rehearsals. With the owner's approval it was installed:
+UPower reports fully-charged at 100 %, no uevents arrived in 10 seconds, and
+the owner confirmed display, touch and the battery level. The capacity is a
+voltage estimate without coulomb counting, so unplugged accuracy, low-battery
+behaviour and overnight standby remain to observe.
+[r6 evidence](../evidence/2026-11-20-fx0-kernel-r6-battery-level.json)
