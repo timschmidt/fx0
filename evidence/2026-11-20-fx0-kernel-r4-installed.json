@@ -59,7 +59,32 @@
     "candidate initramfs kept from a repeated native preview"
   ],
   "limits": [
-    "no installed-kernel camera sleep repeat yet",
-    "deep suspend, PIX output and concurrent routes untested"
-  ]
+    "deep suspend, PIX output, concurrent routes and repeated sleep cycles untested"
+  ],
+  "installed_open_stream_s2idle": {
+    "boot_id": "36dfed3c-bc00-4a74-921f-067314d49e85",
+    "script": "diagnostics/camera-reopen/installed-open-stream-s2idle.sh",
+    "method": "libcamera cam raw capture per camera; rtcwake -m freeze -s 12 while the stream runs; frames counted from the same process after wake",
+    "results": [
+      {
+        "camera": "front",
+        "frames_before_sleep": 8,
+        "frames_after_wake_total": 70,
+        "suspend_success_delta": 1,
+        "same_process_alive": true
+      },
+      {
+        "camera": "back",
+        "frames_before_sleep": 16,
+        "frames_after_wake_total": 145,
+        "suspend_success_delta": 1,
+        "same_process_alive": true
+      }
+    ],
+    "kernel_log": "two s2idle entries and exits; no CAMSS, VFE, CSID or sensor messages",
+    "limits": [
+      "frame contents not compared",
+      "single cycle per camera"
+    ]
+  }
 }

@@ -698,6 +698,9 @@ and partition. The phone rebooted into r4 with matching kernel notes, all
 482 module files, signature enforcement, taint 0 and no new kernel
 warnings. The owner confirmed display and touch. The r2 recovery set
 remains on the handset.
+On the installed r4 boot, a libcamera capture on each camera survived a
+12 s RTC-woken s2idle in the same process and kept delivering frames, with
+no camera messages in the kernel log.
 [r4 installation evidence](../evidence/2026-11-20-fx0-kernel-r4-installed.json)
 
 Six subsequent full-resolution rear cases alternate frame-file writing and
