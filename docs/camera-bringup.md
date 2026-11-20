@@ -691,6 +691,15 @@ handset still runs r2. Native install hooks and boot deployment for r4
 remain to be rehearsed.
 [r4 package evidence](../evidence/2026-11-20-fx0-kernel-r4-camss-active-sleep-package.json)
 
+With the owner's approval, r4 was then installed with the same guarded
+native transaction used for r2, limited to the kernel and DMP reader. The
+installer verified all 554 payload paths and the exact modeled boot image
+and partition. The phone rebooted into r4 with matching kernel notes, all
+482 module files, signature enforcement, taint 0 and no new kernel
+warnings. The owner confirmed display and touch. The r2 recovery set
+remains on the handset.
+[r4 installation evidence](../evidence/2026-11-20-fx0-kernel-r4-installed.json)
+
 Six subsequent full-resolution rear cases alternate frame-file writing and
 discard and retain all completion timestamps and capture stdout. All 144 buffers
 arrive; writing cases have 23/69 intervals above 1.5 times their session median,

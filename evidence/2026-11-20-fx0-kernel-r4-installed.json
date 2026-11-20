@@ -1,0 +1,65 @@
+{
+  "date_UTC": "2026-11-20",
+  "title": "Fx0 Linux 6.18.64-r4 installed persistently",
+  "owner_approval": "The owner approved installing r4 in this session after the RAM and native qualification.",
+  "packages": {
+    "kernel": "linux-postmarketos-qcom-msm8226 6.18.64-r2 -> 6.18.64-r4",
+    "reader": "fx0-dmp-reader 6.18.64-r2 -> 6.18.64-r4"
+  },
+  "preflight": {
+    "read_only": true,
+    "signed_APKs_verified": 4,
+    "workspace_free_bytes": 313536512,
+    "measured_workspace_bytes": 83113187,
+    "known_good_RAM_fallback_verified": true
+  },
+  "recovery_set": {
+    "kept_on_handset": true,
+    "raw_boot_bytes": 33554432,
+    "original_package_paths": 554,
+    "archive_entries": 774,
+    "commit_paths": 582
+  },
+  "native_candidate": {
+    "boot_image_SHA256": "74a2ed985cf175b17017de6551849b45be5be1ce937d8d5397fd1a7d545793ee",
+    "modeled_partition_SHA256": "a315aeabd8106c69aac7da651b519f127a15fe9bbf384cd4f4f0de871f65b4f6",
+    "bootloader_prefix_and_unused_tail_preserved": true
+  },
+  "install": {
+    "stage": "updated-and-verified",
+    "hooks_terminal": true,
+    "exact_candidate_files": 554,
+    "unrelated_package_records_unchanged": 774,
+    "boot_image_matches_model": true,
+    "raw_boot_matches_model": true,
+    "rollback_needed": false
+  },
+  "first_boot": {
+    "boot_id": "36dfed3c-bc00-4a74-921f-067314d49e85",
+    "release": "6.18.64-fx0-lts-alpine",
+    "matching_candidate_notes": true,
+    "systemd": "running",
+    "active_Sway_outputs": 1,
+    "touch_input_devices": 1,
+    "exact_signed_APK_payload_files": 554,
+    "exact_persistent_module_files": 482,
+    "native_signature_enforcement": true,
+    "protected_candidate_hashes_verified": true,
+    "recovery_hashes_verified": true
+  },
+  "first_boot_taint": 0,
+  "failed_units": 0,
+  "new_kernel_warnings_vs_r2": 0,
+  "owner_display_touch_confirmed": true,
+  "adaptations_from_r2_chain": [
+    "two-package cohort (kernel, reader); device package unchanged",
+    "554 payload paths per cohort",
+    "hook rehearsal from the r4 RAM-trial directory; its extra write paths are exactly changed kernel payload paths",
+    "known-good RAM fallback is the r2 exact-APK image",
+    "candidate initramfs kept from a repeated native preview"
+  ],
+  "limits": [
+    "no installed-kernel camera sleep repeat yet",
+    "deep suspend, PIX output and concurrent routes untested"
+  ]
+}
