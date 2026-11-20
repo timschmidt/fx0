@@ -1,0 +1,90 @@
+{
+  "date_UTC": "2026-11-20",
+  "title": "Fx0 Sxmo idle and auto-suspend: fixtures removed and Linux 6.18.64-r7 with wakelocks",
+  "owner_approval": "The owner approved enabling idle and suspend and installing r7 in this session.",
+  "blockers_found": [
+    {
+      "item": "~/.cache/sxmo/sxmo.noidle and sxmo.nosuspend flags (since 2026-10-29)",
+      "action": "removed"
+    },
+    {
+      "item": "export SXMO_STATES=unlock in /usr/local/libexec/fx0-sxmo-test (documented bring-up fixture)",
+      "action": "removed, backup fx0-sxmo-test.fx0-before-states-20261120, session restarted",
+      "symptom": "power button never locked and idle never left unlock"
+    },
+    {
+      "item": "kernel CONFIG_PM_WAKELOCKS unset (no /sys/power/wake_lock)",
+      "action": "r7 enables it",
+      "symptom": "sxmo_autosuspend never started, so the phone never suspended by itself"
+    }
+  ],
+  "power_key": {
+    "s2idle_wake_by_press": true,
+    "interrupt_attribution": "not recorded (pwrkey IRQ counter unchanged)",
+    "evtest": "one KEY_POWER press and release per physical press"
+  },
+  "r7": {
+    "recipe": "timschmidt/fx0-pmaports development/fx0-wakelocks-package-01 2bbbe55f9949",
+    "source_unchanged_from_r6": "6027ecb30af7",
+    "config": "CONFIG_PM_WAKELOCKS=y, LIMIT=100, GC=y; otherwise identical to r6",
+    "packages": {
+      "kernel": {
+        "SHA256": "8018745bb879b74c43715b9e1bedc62c18704d014a5aa152c0876dfe8e4d9e68",
+        "bytes": 18767331,
+        "control_checksum": "Q1RF9hqOwN3OjCVGoanpjJZ8zIbgg="
+      },
+      "reader": {
+        "SHA256": "c21be60f5d9469b9bb7ead2a5cf0b51f009bbfbbb54ef587d027513932de7438",
+        "bytes": 4760,
+        "control_checksum": "Q11NIvLdbXDR8L9kBKhbK25Et1afg="
+      }
+    },
+    "exports_identical": true,
+    "signed_modules": 468
+  },
+  "RAM_check": {
+    "wake_lock_present": true,
+    "sxmo_autosuspend_started": true,
+    "observed": "idle about 2 min -> lock -> screenoff -> sxmo_suspend s2idle; power button woke it"
+  },
+  "exact_trial": {
+    "sensors": [
+      [
+        "imx132",
+        24,
+        [
+          0
+        ]
+      ],
+      [
+        "imx179",
+        24,
+        [
+          0
+        ]
+      ]
+    ],
+    "note": "the workload releases userspace wakelocks before its RTC request; Sxmo holds sxmo_not_suspendable while unlocked, which blocks reading wakeup_count"
+  },
+  "install": {
+    "stage": "updated-and-verified",
+    "exact_candidate_files": 554,
+    "boot": "4efe781d-9033-42b3-8997-c943b31d00bf",
+    "notes_match": true,
+    "modules": 482
+  },
+  "installed_state": {
+    "wake_lock_present": true,
+    "sxmo_autosuspend": "started",
+    "taint": 0,
+    "failed_units": 0,
+    "auto_suspend_observed_after_install": true,
+    "owner_checks": "display and power button OK; touch works after the second press (lock stage)"
+  },
+  "standby_logger": "/var/lib/fx0-standby/log.sh every 5 min via transient timer fx0-standby-log -> /var/log/fx0-standby/log.jsonl (until reboot)",
+  "limits": [
+    "overnight unplugged standby not yet observed",
+    "SSH sessions block Sxmo suspend by design",
+    "deep (mem) suspend unavailable; s2idle only"
+  ]
+}

@@ -852,3 +852,24 @@ the owner confirmed display, touch and the battery level. The capacity is a
 voltage estimate without coulomb counting, so unplugged accuracy, low-battery
 behaviour and overnight standby remain to observe.
 [r6 evidence](../evidence/2026-11-20-fx0-kernel-r6-battery-level.json)
+
+## November 20 idle and auto-suspend
+
+The phone never slept by itself, for three stacked reasons. The Sxmo
+`sxmo.noidle` and `sxmo.nosuspend` flags had been set since October 29. The
+Fx0 session wrapper exported the documented bring-up fixture
+`SXMO_STATES=unlock`, so the power button and idle never left the unlock
+stage. And the kernel lacked `CONFIG_PM_WAKELOCKS`, so `/sys/power/wake_lock`
+was missing and Sxmo never started `sxmo_autosuspend`. With the owner's
+approval the flags and the fixture were removed, and Linux 6.18.64-r7 (r6
+plus wakelocks, no source change) was qualified and installed.
+
+On r7 the phone locks and turns the screen off after about two minutes idle,
+then enters s2idle, and wakes on the power button. As usual for Sxmo, the
+first press from screen-off shows the lock stage with touch ignored, and a
+second press unlocks. While unlocked Sxmo holds the `sxmo_not_suspendable`
+wakelock, which also blocks reading `wakeup_count`, so RTC suspend trials now
+release userspace wakelocks first. SSH sessions block Sxmo suspend by design.
+Overnight unplugged standby remains to measure; a five-minute battery logger
+writes `/var/log/fx0-standby/log.jsonl` until the next reboot.
+[Auto-suspend evidence](../evidence/2026-11-20-fx0-sxmo-autosuspend-r7.json)
