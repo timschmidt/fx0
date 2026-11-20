@@ -158,6 +158,13 @@ selection byte for byte and checked the restored package files. The isolated
 root required explicit permission for local APK files on tmpfs. The APKs and
 repository index passed verification with the existing trusted public key.
 
+Both signed APKs and the signed repository index reproduced byte for byte
+from a second clean build workspace with networking disabled. The kernel
+completed during the initial invocation. The reader needed a fresh package
+directory, its two pinned sources added to the offline cache and writable
+ownership restored on the disposable repository directory before indexing.
+The recovered reader build signed the final index with the reproduced
+kernel already present.
 [Signed build and file-only rollback evidence](../../evidence/2026-11-19-fx0-camss-r3-package.json)
 
 ### Package-exact handset trial
