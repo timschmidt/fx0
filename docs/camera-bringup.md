@@ -671,6 +671,26 @@ still refuse sleep, deep suspend is untested, frame contents were not
 compared across sleep, and the change is not packaged or installed.
 [Active-stream sleep evidence](../evidence/2026-11-20-fx0-camss-active-stream-sleep.json)
 
+### Signed 6.18.64-r4 package
+
+The r4 recipe (fx0-pmaports `547924389d5b`) adds the four CAMSS commits
+since r3 as patches 0005-0008. The patched source archive has the same Git
+tree as fx0-linux `7ed6a2856b34`. One offline signed build reuses the
+existing module signer. Its CAMSS executable text is byte-identical to the
+handset-tested module. All 468 module signatures, 25,595 import CRCs, the
+unchanged export table, configuration, certificate and 65 DTBs verify. An
+offline r2-to-r4 upgrade and rollback against the captured installed
+database restores the original database and world exactly.
+
+A guarded RAM boot built only from the r4 APK bytes repeated the
+open-stream sleep on both sensors. Each slept once in s2idle for about
+14 s, woke on the RTC and delivered 24 or 25 more frames on the same
+queue, with no camera warnings. The automatic return verified the
+installed r2 boot, its 482 module files and the protected hashes. The
+handset still runs r2. Native install hooks and boot deployment for r4
+remain to be rehearsed.
+[r4 package evidence](../evidence/2026-11-20-fx0-kernel-r4-camss-active-sleep-package.json)
+
 Six subsequent full-resolution rear cases alternate frame-file writing and
 discard and retain all completion timestamps and capture stdout. All 144 buffers
 arrive; writing cases have 23/69 intervals above 1.5 times their session median,

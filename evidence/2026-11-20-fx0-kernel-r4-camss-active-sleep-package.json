@@ -1,0 +1,147 @@
+{
+  "date_UTC": "2026-11-20",
+  "title": "Signed Fx0 Linux 6.18.64-r4 package with CAMSS active-stream sleep",
+  "recipe": {
+    "repository": "timschmidt/fx0-pmaports",
+    "branch": "development/fx0-camss-active-sleep-package-01",
+    "commit": "547924389d5b261716cde563219797fd3bf6cac0",
+    "added_patches": [
+      "0005-camss-clear-vfe-buffer-slots-when-flushing.patch",
+      "0006-camss-unwind-partially-started-pipeline.patch",
+      "0007-camss-msm8226-preserve-rdi-capture-across-sleep.patch",
+      "0008-camss-msm8226-count-csid-vfe-references.patch"
+    ],
+    "patched_archive_git_tree": "ca9ed4d8ef3b557978b3d3422492cdfafe0a8a66",
+    "equals_tree_of": "fx0-linux 7ed6a2856b34"
+  },
+  "build": {
+    "offline": true,
+    "toolchain": "Alpine clang 22.1.3 native chroot",
+    "container_image": "6213355c8ea96806ce237d1ca509cfda6b5db33acff2d9addb80501baa6f2301",
+    "abuild_exit": 0,
+    "packages": {
+      "linux-postmarketos-qcom-msm8226-6.18.64-r4.apk": {
+        "bytes": 18767528,
+        "SHA256": "42c68a5503b8e57b50820808463ea7e17312b4315a307a18fb95adb4a3d0dfcd"
+      },
+      "fx0-dmp-reader-6.18.64-r4.apk": {
+        "bytes": 4759,
+        "SHA256": "f8fde71d76c7357032dbe036056e8caed99249232a5d5a6b40c7a518b981c97e"
+      }
+    },
+    "existing_module_signer_reused": true,
+    "second_independent_build_performed": false
+  },
+  "verification": {
+    "reader_payload_byte_identical_to_r3": true,
+    "same_installed_package_payload_paths_modes_and_owners": true,
+    "RAM_CAMSS_executable_text_byte_identical": true,
+    "unchanged_DTBs": 65,
+    "same_config_and_module_certificate": true,
+    "same_total_exports": 14885,
+    "same_built_in_exports": 11718,
+    "signed_modules_verified": 468,
+    "module_files_verified": 482,
+    "signed_module_bad_payload_rejected": true,
+    "verified_module_import_CRCs": 25595,
+    "source_files_checked_against_release_commit": [
+      "drivers/media/platform/qcom/camss/camss-vfe-gen1.c",
+      "drivers/media/platform/qcom/camss/camss-vfe.c",
+      "drivers/media/platform/qcom/camss/camss-video.c",
+      "drivers/media/platform/qcom/camss/camss-video.h",
+      "drivers/media/platform/qcom/camss/camss.c",
+      "drivers/media/platform/qcom/camss/camss.h"
+    ]
+  },
+  "offline_upgrade_rollback": {
+    "APK_count_before_during_and_after": 776,
+    "unchanged_full_APK_records": 774,
+    "kernel_only_upgrade_rejected": true,
+    "original_raw_database_equal": true,
+    "exact_original_world_restored": true,
+    "verified_upgraded_payload_files": 554,
+    "verified_rollback_payload_files": 554
+  },
+  "exact_package_RAM_trial": {
+    "image_SHA256": "309a1c814e7ea3bdcc917addc0d408c4e013f3518667c10e030a8aaee0d9c4af",
+    "kernel_notes_SHA256": "cbd9722ff3b2d990e42df60e41dbeb189b7afa531b1be9fd40070557f03978af",
+    "every_module_from_signed_APK": 482,
+    "signature_enforced": true,
+    "WLAN_disabled": true,
+    "candidate_boot": "d44d08dc-d597-457b-9205-fc56a7423b96",
+    "attempts": [
+      {
+        "sensor": "imx132",
+        "mode": [
+          1976,
+          1200,
+          2472
+        ],
+        "frames_after_wake_on_same_open_queue": 24,
+        "sleep_seconds": 13.993,
+        "first_wakeup_source": "rtc",
+        "camss_prepare_returns": [
+          0
+        ],
+        "userspace_restart_ioctls": 0,
+        "capture_timing": {
+          "buffers": 60,
+          "median_seconds": 0.069598,
+          "longest_seconds": 5.893424,
+          "longest_adjacent_sequence": [
+            21,
+            22
+          ]
+        },
+        "runtime_after_release": {
+          "front": "suspended",
+          "back": "suspended"
+        }
+      },
+      {
+        "sensor": "imx179",
+        "mode": [
+          1640,
+          1232,
+          2056
+        ],
+        "frames_after_wake_on_same_open_queue": 25,
+        "sleep_seconds": 14.393,
+        "first_wakeup_source": "rtc",
+        "camss_prepare_returns": [
+          0
+        ],
+        "userspace_restart_ioctls": 0,
+        "capture_timing": {
+          "buffers": 92,
+          "median_seconds": 0.033271,
+          "longest_seconds": 5.786373,
+          "longest_adjacent_sequence": [
+            38,
+            39
+          ]
+        },
+        "runtime_after_release": {
+          "front": "suspended",
+          "back": "suspended"
+        }
+      }
+    ],
+    "suspend_entries": 2,
+    "CAMSS_VFE_IOMMU_or_STOPPING_warnings": 0,
+    "kernel_fatal": 0
+  },
+  "installed_return": {
+    "boot": "01dcbeb4-d64e-4db1-b061-a4f8afb4cf81",
+    "module_files_verified": 482,
+    "protected_hashes_match": true,
+    "automatic_return_journal_verified": true,
+    "staged_files_removed": 482
+  },
+  "limits": [
+    "not installed; the handset still runs 6.18.64-r2",
+    "native install hooks, initramfs and boot-image deployment not yet rehearsed for r4",
+    "one build only; byte-identical replay not performed",
+    "s2idle only; deep suspend, PIX output and concurrent routes untested"
+  ]
+}
