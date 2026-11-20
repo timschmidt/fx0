@@ -1,0 +1,61 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Fri, 20 Nov 2026 13:42:10 -0500
+Subject: [PATCH] media: qcom: camss: allow a CSID without a same-index VFE
+
+Since the VFE get/put special case was removed, every CSID powers the
+VFE with its own index before switching on. MSM8916, MSM8226, MSM8939 and
+MSM8953 have more CSIDs than VFEs and route every CSID through ISPIF, so
+on those SoCs CSID1 and above first indexed past the VFE array and, after
+the parent device ops were introduced, failed to power on with -EINVAL.
+A sensor connected through CSID1 therefore cannot stream.
+
+The ordering is only needed from SDM845 onwards. When ISPIF is present
+and no VFE has the CSID's index, power the CSID without a parent.
+
+This change was developed with an AI coding assistant, which traced the
+power path and wrote the patch; it was build-tested for ARM with the
+MSM8226 configuration. It has not yet been tested on hardware with a
+sensor routed through CSID1.
+
+Fixes: b2c2715e5aaf ("media: qcom: camss: Remove special case for VFE get/put")
+Fixes: b1e6eef535df ("media: qcom: camss: Decouple VFE from CSID")
+Assisted-by: LLM [tools]
+---
+ drivers/media/platform/qcom/camss/camss.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index df8af4923..bc2d94b64 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -3643,17 +3643,18 @@ void camss_pm_domain_off(struct camss *camss, int id)
+ 	}
+ }
+ 
++/*
++ * A CSID powers the VFE with the same index first, which SDM845 and later
++ * require. SoCs such as MSM8916 and MSM8226 have more CSIDs than VFEs and
++ * route every CSID through ISPIF, so a CSID without a same-index VFE has no
++ * parent to power.
++ */
+ static int vfe_parent_dev_ops_get(struct camss *camss, int id)
+ {
+-	int ret = -EINVAL;
+-
+-	if (id < camss->res->vfe_num) {
+-		struct vfe_device *vfe = &camss->vfe[id];
+-
+-		ret = vfe_get(vfe);
+-	}
++	if (id >= camss->res->vfe_num)
++		return camss->ispif ? 0 : -EINVAL;
+ 
+-	return ret;
++	return vfe_get(&camss->vfe[id]);
+ }
+ 
+ static int vfe_parent_dev_ops_put(struct camss *camss, int id)
+-- 
+2.56.0
+
