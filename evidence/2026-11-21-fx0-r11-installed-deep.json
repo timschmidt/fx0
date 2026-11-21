@@ -1,0 +1,144 @@
+{
+  "recorded_UTC": "2026-11-21T22:48:49.294690+00:00",
+  "release": "6.18.64-r11 installed",
+  "boot": "ec396ed0-c1c2-4663-8f84-9591cfe3992c",
+  "first_attempt": {
+    "default_wake_sources": true,
+    "usb_attached": true,
+    "governor": "schedutil",
+    "ok": [
+      "0",
+      "1"
+    ],
+    "xosd": [
+      "0",
+      "3"
+    ],
+    "cpus": "0-3"
+  },
+  "rtc_soak": [
+    {
+      "planned": 20,
+      "rtc_elapsed": 21,
+      "ok": true,
+      "xosd": [
+        "3",
+        "5"
+      ],
+      "cpus": "0-3"
+    },
+    {
+      "planned": 45,
+      "rtc_elapsed": 46,
+      "ok": true,
+      "xosd": [
+        "5",
+        "9"
+      ],
+      "cpus": "0-3"
+    },
+    {
+      "planned": 15,
+      "rtc_elapsed": 16,
+      "ok": true,
+      "xosd": [
+        "9",
+        "11"
+      ],
+      "cpus": "0-3"
+    },
+    {
+      "planned": 90,
+      "rtc_elapsed": 91,
+      "ok": true,
+      "xosd": [
+        "11",
+        "18"
+      ],
+      "cpus": "0-3"
+    },
+    {
+      "planned": 30,
+      "rtc_elapsed": 31,
+      "ok": true,
+      "xosd": [
+        "18",
+        "21"
+      ],
+      "cpus": "0-3"
+    },
+    {
+      "planned": 60,
+      "rtc_elapsed": 61,
+      "ok": true,
+      "xosd": [
+        "21",
+        "26"
+      ],
+      "cpus": "0-3"
+    },
+    {
+      "planned": 20,
+      "rtc_elapsed": 21,
+      "ok": true,
+      "xosd": [
+        "26",
+        "29"
+      ],
+      "cpus": "0-3"
+    },
+    {
+      "planned": 120,
+      "rtc_elapsed": 121,
+      "ok": true,
+      "xosd": [
+        "29",
+        "38"
+      ],
+      "cpus": "0-3"
+    },
+    {
+      "planned": 25,
+      "rtc_elapsed": 26,
+      "ok": true,
+      "xosd": [
+        "38",
+        "41"
+      ],
+      "cpus": "0-3"
+    },
+    {
+      "planned": 40,
+      "rtc_elapsed": 41,
+      "ok": true,
+      "xosd": [
+        "41",
+        "45"
+      ],
+      "cpus": "0-3"
+    }
+  ],
+  "sxmo_autosuspend_deep": {
+    "entry": "2026-11-21T07:04:20-05:00",
+    "exit": "2026-11-21T17:39:30-05:00",
+    "duration_hours": 10.59,
+    "path": "sxmo_suspend.sh -> fx0-hotspot-suspend -> rtcwake -m mem (mem_sleep=deep)",
+    "wake": "power key (logind: Power key pressed short)",
+    "xosd": [
+      45,
+      2586
+    ],
+    "suspend_fail": 0,
+    "taint": "0",
+    "owner_display_touch_ok": true,
+    "usb_attached": true,
+    "battery_after": "98% charging"
+  },
+  "modem": "rmtfs + ModemManager active throughout (no SIM)",
+  "untested": [
+    "modem-originated wake (no SIM)",
+    "unplugged long deep standby on installed r11"
+  ],
+  "sxmo_nosuspend_flag_removed": true,
+  "mem_sleep_now": "s2idle (tmpfiles rule; restore timer)"
+}
