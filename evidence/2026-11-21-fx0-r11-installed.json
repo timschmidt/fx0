@@ -1,0 +1,19 @@
+{
+  "recorded_UTC": "2026-11-21T11:51:39.425218+00:00",
+  "chain": "deep-r11-package-01",
+  "exact_apk_ram_trial": "passed on attempt 4 (cameras + two s2idle sleeps); attempts 1-3 were harness readiness checks expecting [s2idle] only",
+  "native_hooks": "passed: update 552 paths (two folded Madai DTBs removed), rollback 554, boot image reproduced",
+  "candidate_boot_image_sha256": "9b0c5c90179224062ce8b20ccc303a99a12948add1cb2d25bc13c3c88cbd33ee",
+  "preflight_passed": true,
+  "rollback_set": "/var/lib/fx0-rollback/charging-6.18.64-r11-recovery-01 (= r10)",
+  "mem_sleep_policy": "/etc/tmpfiles.d/fx0-mem-sleep.conf writes s2idle at boot (sha256 61e8ceef...); r11 kernel otherwise defaults to deep",
+  "awaiting": null,
+  "boot_id": "ec396ed0-c1c2-4663-8f84-9591cfe3992c",
+  "owner_display_touch_ok": true,
+  "package_files": 552,
+  "modules": 482,
+  "mem_sleep": "[s2idle] deep via /etc/tmpfiles.d/fx0-mem-sleep.conf",
+  "cpufreq": "cpufreq-dt schedutil 300-1190.4 MHz",
+  "modem": "rmtfs + ModemManager active",
+  "kernel_errors": "same set as r10"
+}
