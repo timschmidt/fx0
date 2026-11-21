@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-21",
+  "kernel": "6.18.64-r10 installed (r9 + madai modem/RMTFS DT); boot fdd89af1",
+  "recipe": "timschmidt/fx0-pmaports development/fx0-modem-package-01 @ badae966b7533d0769df38d25077b406dfd8054f",
+  "verification": {
+    "madai_DTB_equals_RAM_tested_modem_DTB": true,
+    "changed_DTBs": [
+      "qcom-msm8926-lg-madai-cpr.dtb",
+      "qcom-msm8926-lg-madai-suspend.dtb",
+      "qcom-msm8926-lg-madai.dtb"
+    ],
+    "config_identical_to_r9": true,
+    "signed_modules": 468
+  },
+  "ram_trial": {
+    "camera_open_stream_RTC_sleep": "imx132 and imx179 24 frames after wake each",
+    "modem_up_via_rmtfs_read_write": true
+  },
+  "installed": {
+    "rmtfs": "active (rmtfs -P -s, read-write EFS by owner decision; EFS backed up first)",
+    "modem": "fc880000.remoteproc running; wwan0at0/wwan0at1/wwan0qmi0; ModemManager modem present (no SIM)",
+    "owner_display_touch": "OK"
+  },
+  "rpm_master_stats": {
+    "MPSS_shutdown_count": 73,
+    "MPSS_active_cores": "0x0",
+    "APSS_shutdown_count": 0,
+    "vmin_count": 0,
+    "xosd_count": 0
+  },
+  "deep_suspend_attempts": {
+    "trial": "rtc-deep-machine-trial-01 on the 2026-11-18 restart image",
+    "charger_wakeup_sources_abort_on_USB_power": true,
+    "single_attempt_return_values": {
+      "prepare_late": 0,
+      "cpr_ready": 1,
+      "rpm_sleep_ready": 1,
+      "mpm_sleep_ready": 0,
+      "suspend_enter": -16
+    },
+    "conclusion": "MPM wake coverage refuses entry; identify the uncovered interrupt next"
+  }
+}
