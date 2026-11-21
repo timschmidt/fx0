@@ -1,0 +1,11 @@
+To: Allan Siriani <allan@fatecpompeia.edu.br>
+Cc: Bryan O'Donoghue <bod@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, Loic Poulain <loic.poulain@oss.qualcomm.com>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Todor Tomov <todor.too@gmail.com>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20261111135338.27008-5-allan@fatecpompeia.edu.br>
+Subject: Re: [PATCH v3 4/4] media: qcom: camss: do not fail CSID power up without a matching VFE
+
+On an LG Fx0 (MSM8226) both sensors fail through CSID1 without this
+("Failed to power up pipeline: -22") and stream with it; CSID0 is
+unaffected. With 2/4 as well, both sensors stream at once (CSID0 and
+CSID1 into RDI0 and RDI1). Tested on 6.18.64.
+
+Tested-by: Timothy Schmidt <timschmidt@gmail.com> # LG Fx0 (MSM8226)

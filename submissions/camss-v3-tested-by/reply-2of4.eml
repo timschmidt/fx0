@@ -1,0 +1,13 @@
+To: Allan Siriani <allan@fatecpompeia.edu.br>
+Cc: Bryan O'Donoghue <bod@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, Loic Poulain <loic.poulain@oss.qualcomm.com>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Todor Tomov <todor.too@gmail.com>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20261111135338.27008-3-allan@fatecpompeia.edu.br>
+Subject: Re: [PATCH v3 2/4] media: qcom: camss: vfe-4-1: program the RDI write master buffer size
+
+On an LG Fx0 (MSM8226, CAMSS behind the IOMMU) with IMX179 and IMX132,
+this also fixes two RDI streams at once on VFE0. Without it the first
+write master reports bus overflow (IRQ_STATUS_1 = 0x200) continuously,
+about 225k VFE interrupts per second, until CPU0 stalls (RCU stall
+report). With it, both streams run at full rate (30 and 14 fps) with
+about 90 VFE interrupts per second. Tested on 6.18.64 with 4/4.
+
+Tested-by: Timothy Schmidt <timschmidt@gmail.com> # LG Fx0 (MSM8226)
