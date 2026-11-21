@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-20",
+  "device": "LG Fx0 (MSM8226), installed kernel 6.18.64-r7, live qcom_camss module swaps (signed, in-tree, CRC-identical imports); stock module restored after every run; no eMMC writes",
+  "standby_unplugged_r7": {
+    "suspend": "s2idle",
+    "continuous_hours": 6.85,
+    "spurious_wakes": 0,
+    "suspend_failures": 0,
+    "capacity_percent": [
+      97,
+      68
+    ],
+    "voltage_uV": [
+      4288356,
+      3984081
+    ],
+    "drain_percent_per_hour": 4.2
+  },
+  "CSID1_negative_control_r7": "imx132 and imx179 via CSID1: VIDIOC_STREAMON EINVAL ('Failed to power up pipeline: -22'); via CSID0 both stream",
+  "CSID1_with_fix": {
+    "imx132_CSID1": "24 frames",
+    "imx179_CSID1": "24 frames",
+    "CSID0": "both sensors stream"
+  },
+  "VFE_irq_storm": {
+    "symptom": "two RDI routes on VFE0: IRQ camss_msm_vfe0 ~225k/s, status1=0x00000200 (IMAGE_MASTER_0_BUS_OVERFLOW); RCU self-detected stall on CPU0; 4 MiB fsync 4.1-13 s; suspend sync 18-23 s, lost RTC alarm",
+    "variant_A_upstream_2of4_only": {
+      "back_first_vfe_irqs_2s": 177,
+      "fsync_4MiB_s": 0.22,
+      "front_first": "back refused -EBUSY (clock check)"
+    },
+    "variant_B_clock_change_only": {
+      "back_first_vfe_irqs_2s": 450235,
+      "front_first_vfe_irqs_2s": 482332
+    },
+    "conclusion": "the storm is the unprogrammed RDI WR_BUFFER_CFG fixed by the posted upstream patch 2/4; the reverse-order failure is the VFE clock check"
+  },
+  "candidate_C": {
+    "kernel_branch": "timschmidt/fx0-linux development/fx0-camss-two-sensor-01 @ 603a788eda425fd76ce7919ff7abc6048f907243",
+    "stack": [
+      "upstream v3 4/4 do not fail CSID power up without a matching VFE (Allan Siriani, linux-kernel 2026/11/11/2186)",
+      "upstream v3 2/4 vfe-4-1: program the RDI write master buffer size (Allan Siriani, linux-kernel 2026/11/11/2162)",
+      "Fx0: retain every raw route across MSM8226 system sleep",
+      "Fx0: raise the VFE clock for a route added later"
+    ],
+    "module_sha256": "21eb1feea1d6fa21ef15e1f1a42cca98dccd851d58a51ae8b0974902e8e53099",
+    "W1_warnings": 0,
+    "dual_stream_back_first": {
+      "vfe_irqs_2s": 178,
+      "fsync_4MiB_s": 0.22,
+      "back_fps": 30,
+      "front_fps": 14
+    },
+    "dual_stream_front_first": {
+      "vfe_irqs_2s": 164,
+      "fsync_4MiB_s": 0.21,
+      "both_stream": true
+    },
+    "dual_stream_s2idle": {
+      "frames_at_suspend": {
+        "imx179": 263,
+        "imx132": 111
+      },
+      "suspend_sync_s": 0.001,
+      "rtc_alarm_s": 40,
+      "rtc_elapsed_s": 46,
+      "rtc_irq_increment": 1,
+      "suspend_fail": 0,
+      "camss_suspend_callback_s": 0.241,
+      "camss_resume_callback_s": 0.099,
+      "frames_final_same_open_queues": {
+        "imx179": 1500,
+        "imx132": 700
+      },
+      "stream_exit_codes": [
+        0,
+        0
+      ],
+      "taint": 0
+    }
+  },
+  "unplanned_reboot": "reading /sys/kernel/debug/clk/clk_summary while CAMSS streamed hung the SoC; watchdog reset; installed r7 came back (boot 2db0dbd9)",
+  "upstream_sent": false
+}
