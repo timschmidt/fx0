@@ -1,0 +1,165 @@
+{
+  "recorded_UTC": "2026-11-21T10:25:22.115986+00:00",
+  "image": "r11-cpr-qual-ram-01 (exact r11 zImage+DTB, installed r10 initramfs)",
+  "recipe": "fx0-pmaports development/fx0-deep-suspend-package-01 @ 02f3ed19",
+  "source": "fx0-linux development/fx0-msm8226-deep-suspend-01 @ f3e4afc9",
+  "package_verification": "deep-r11-package-01/records/package-verification.json passed",
+  "cpufreq": {
+    "driver": "cpufreq-dt",
+    "governor": "schedutil",
+    "freqs": "300000 384000 600000 787200 998400 1094400 1190400",
+    "governors": "performance schedutil",
+    "min": "300000",
+    "max": "1190400"
+  },
+  "mem_sleep_default": "s2idle [deep]",
+  "cpu_load": [
+    {
+      "freq": 300000,
+      "ok": true,
+      "blocks": 3264
+    },
+    {
+      "freq": 384000,
+      "ok": true,
+      "blocks": 7616
+    },
+    {
+      "freq": 600000,
+      "ok": true,
+      "blocks": 13760
+    },
+    {
+      "freq": 787200,
+      "ok": true,
+      "blocks": 18816
+    },
+    {
+      "freq": 998400,
+      "ok": true,
+      "blocks": 23424
+    },
+    {
+      "freq": 1094400,
+      "ok": true,
+      "blocks": 26432
+    },
+    {
+      "freq": 1190400,
+      "ok": true,
+      "blocks": 28800
+    }
+  ],
+  "schedutil_run": {
+    "governor": "schedutil",
+    "digests_ok": true,
+    "blocks": [
+      18304,
+      18112,
+      18624,
+      18304
+    ]
+  },
+  "deep_cycles": [
+    {
+      "cycle": 0,
+      "errno": null,
+      "rtc_elapsed": 21,
+      "success": [
+        "0",
+        "1"
+      ],
+      "fail": [
+        "0",
+        "0"
+      ],
+      "cpus": "0-3",
+      "before": {
+        "APSS": "0",
+        "MPSS": "73",
+        "LPSS": "26",
+        "PRONTO": "2625",
+        "vmin": "0",
+        "xosd": "0"
+      },
+      "after": {
+        "APSS": "1",
+        "MPSS": "73",
+        "LPSS": "26",
+        "PRONTO": "2626",
+        "vmin": "0",
+        "xosd": "2"
+      },
+      "cur_freq": "1190400"
+    },
+    {
+      "cycle": 1,
+      "errno": null,
+      "rtc_elapsed": 21,
+      "success": [
+        "1",
+        "2"
+      ],
+      "fail": [
+        "0",
+        "0"
+      ],
+      "cpus": "0-3",
+      "before": {
+        "APSS": "1",
+        "MPSS": "73",
+        "LPSS": "26",
+        "PRONTO": "2641",
+        "vmin": "0",
+        "xosd": "2"
+      },
+      "after": {
+        "APSS": "2",
+        "MPSS": "73",
+        "LPSS": "26",
+        "PRONTO": "2645",
+        "vmin": "0",
+        "xosd": "4"
+      },
+      "cur_freq": "1190400"
+    },
+    {
+      "cycle": 2,
+      "errno": null,
+      "rtc_elapsed": 21,
+      "success": [
+        "2",
+        "3"
+      ],
+      "fail": [
+        "0",
+        "0"
+      ],
+      "cpus": "0-3",
+      "before": {
+        "APSS": "2",
+        "MPSS": "73",
+        "LPSS": "26",
+        "PRONTO": "2660",
+        "vmin": "0",
+        "xosd": "4"
+      },
+      "after": {
+        "APSS": "3",
+        "MPSS": "73",
+        "LPSS": "26",
+        "PRONTO": "2664",
+        "vmin": "0",
+        "xosd": "6"
+      },
+      "cur_freq": "1190400"
+    }
+  ],
+  "taint": "0",
+  "returned_boot": "bb2be5f6-3060-4417-a912-56faa8b579d6",
+  "notes": [
+    "first attempt failed in the harness (Python 3.14 forkserver); fork context used",
+    "mem_sleep defaults to deep on r11 (no mem_sleep_default on the installed cmdline)",
+    "MPM-routed wakes: RTC/PMIC (pin 62), tsens (2), mdss (53), USB async (47); modem/GPIO wakes from deep not yet qualified"
+  ]
+}
