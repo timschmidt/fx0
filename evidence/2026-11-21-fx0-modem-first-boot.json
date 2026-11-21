@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-21",
+  "kernel": "installed 6.18.64-r9 zImage + installed initramfs, RAM-booted with a modem DTB (no eMMC writes)",
+  "dt_branch": "timschmidt/fx0-linux diagnostic/fx0-modem-mss-enable-01 @ d1dee45e3 (RMTFS 0x0fd80000/0x180000 client 1; MSS L3/L8/S5, S5 1.15 V)",
+  "dtb_reproduction": "unmodified build reproduces packaged r9 madai DTB aa5662b1...",
+  "rmtfs": "rmtfs 1.3-r1 (reproducible fx0 build) run from /run with -r (RAM shadow, no partition writes) -P -s",
+  "modem_boot": {
+    "MBA": "booted without debug policy",
+    "MPSS": "loaded; remote processor up ~4.5 s after start",
+    "WWAN": [
+      "wwan0at0",
+      "wwan0at1",
+      "wwan0qmi0"
+    ],
+    "ModemManager": "Qualcomm MPSS.DI.3.0.c9.5 M8926 (gsm-umts, lte, cdma-evdo); state failed: sim-missing (no SIM fitted); power off"
+  },
+  "rpm_master_stats": {
+    "MPSS_shutdown_count": [
+      0,
+      75
+    ],
+    "MPSS_active_cores": [
+      "0x1",
+      "0x0"
+    ],
+    "APSS_shutdown_count_after": 0,
+    "vmin_count": 0,
+    "xosd_count": 0
+  },
+  "efs_partitions_unchanged": [
+    "modemst1",
+    "modemst2",
+    "fsg",
+    "fsc"
+  ],
+  "clean_stop": true,
+  "taint": 0,
+  "paired_boot": "c10582cd-7215-4bc8-9097-50ee4598e217",
+  "returned_boot": "227fd9bb-c8ac-40a5-8d88-aa13a197c113",
+  "returned_to_installed_r9": true
+}
