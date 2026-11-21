@@ -1,0 +1,55 @@
+{
+  "recorded_UTC": "2026-11-21T09:12:04.419538+00:00",
+  "image": "rtc-deep-xo-a-image-01 (805f5811)",
+  "kernel_branch": "timschmidt/fx0-linux diagnostic/fx0-msm8226-mpm-coverage-01 @ fbcb24f5",
+  "dt_change": "MMCC xo input and USB HS PHY ref clock use RPM_SMD_XO_A_CLK_SRC (active-only) instead of RPM_SMD_XO_CLK_SRC",
+  "attribution": "bi_tcxo (sleep-set XO) holders on installed r10: display-on 4 MMCC children (dsi0vco, esc0, mmpll0, vsync) + USB HS PHY ref; display-off mmpll0 (via prepared-not-enabled mdss_ahb_clk) + USB PHY ref; modem, ADSP and WCNSS ruled out by stop/start",
+  "sleep_seconds": 60,
+  "usb_connected": true,
+  "xo_prepare_counts_before": {
+    "bi_tcxo": "1",
+    "bi_tcxo_a": "5"
+  },
+  "rpm_xosd": {
+    "count": 4,
+    "duration": 1140587418
+  },
+  "rpm_vmin": {
+    "count": 0,
+    "duration": 0
+  },
+  "xo_off_seconds": 59.4,
+  "masters_after": {
+    "APSS": {
+      "shutdown": "1",
+      "xo_shutdown": "0",
+      "active_cores": "0x1",
+      "wakeup_reason": "0x0"
+    },
+    "MPSS": {
+      "shutdown": "90",
+      "xo_shutdown": "0",
+      "active_cores": "0x0",
+      "wakeup_reason": "0x0"
+    },
+    "LPSS": {
+      "shutdown": "12",
+      "xo_shutdown": "0",
+      "active_cores": "0x0",
+      "wakeup_reason": "0x0"
+    },
+    "PRONTO": {
+      "shutdown": "59",
+      "xo_shutdown": "0",
+      "active_cores": "0x1",
+      "wakeup_reason": "0x0"
+    }
+  },
+  "all_cpus_restored": true,
+  "returned_to_installed": true,
+  "next": [
+    "VDD-min: CX/MX retention votes in the RPM sleep set",
+    "find the last bi_tcxo holder (count 1)",
+    "port the deep-suspend stack (coordinator, MPM timer coverage, ACC restart, active-only XO DT) to the r-series source for an installed kernel"
+  ]
+}
