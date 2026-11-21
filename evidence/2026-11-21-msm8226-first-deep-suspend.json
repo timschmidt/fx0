@@ -34,5 +34,62 @@
   "candidate_boot": "ae90c460-ff4a-4206-86a4-4f82102afcae",
   "returned_boot": "5bb56968-c036-4ae3-9bc8-95fcd13c04d4",
   "returned_to_installed": true,
-  "earlier_attempts": "attempt-01..09 in the trial dir: charger wakeups, CPR re-prepare, MPM timer coverage, secondary SGI wake loss"
+  "earlier_attempts": "attempt-01..09 in the trial dir: charger wakeups, CPR re-prepare, MPM timer coverage, secondary SGI wake loss",
+  "repeat_with_modem": {
+    "image": "rtc-deep-modem-image-01 (2d3d7748; modem+RMTFS deep DTB bffb9116 from linux-fx0-power-cap 574d6817)",
+    "passes": 2,
+    "rpm_master_stats_before": {
+      "APSS": {
+        "shutdown": "0",
+        "xo_shutdown": "0",
+        "active_cores": "0x1",
+        "wakeup_reason": "0x0"
+      },
+      "MPSS": {
+        "shutdown": "80",
+        "xo_shutdown": "0",
+        "active_cores": "0x0",
+        "wakeup_reason": "0x0"
+      },
+      "LPSS": {
+        "shutdown": "0",
+        "xo_shutdown": "0",
+        "active_cores": "0x1",
+        "wakeup_reason": "0x0"
+      },
+      "PRONTO": {
+        "shutdown": "0",
+        "xo_shutdown": "0",
+        "active_cores": "0x1",
+        "wakeup_reason": "0x0"
+      }
+    },
+    "rpm_master_stats_after": {
+      "APSS": {
+        "shutdown": "1",
+        "xo_shutdown": "0",
+        "active_cores": "0x1",
+        "wakeup_reason": "0x0"
+      },
+      "MPSS": {
+        "shutdown": "80",
+        "xo_shutdown": "0",
+        "active_cores": "0x0",
+        "wakeup_reason": "0x0"
+      },
+      "LPSS": {
+        "shutdown": "0",
+        "xo_shutdown": "0",
+        "active_cores": "0x1",
+        "wakeup_reason": "0x0"
+      },
+      "PRONTO": {
+        "shutdown": "0",
+        "xo_shutdown": "0",
+        "active_cores": "0x1",
+        "wakeup_reason": "0x0"
+      }
+    },
+    "finding": "APSS RPM shutdown count 0 -> 1 (RPM acknowledged the APSS sleep handshake); MPSS asleep; LPSS(ADSP) and PRONTO(WCNSS, wcn36xx blacklisted in the diagnostic cmdline) active -> they block XO shutdown in this trial image"
+  }
 }
