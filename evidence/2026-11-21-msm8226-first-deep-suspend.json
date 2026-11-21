@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-21",
+  "result": "first complete MSM8226 deep suspend cycle on the Fx0 (mem/deep, RTC wake)",
+  "kernel_branch": "timschmidt/fx0-linux diagnostic/fx0-msm8226-mpm-coverage-01 @ 6c41f3a7ca1f64b60631901c05d985f51119e9a8 (base eb2e1d27 restart/coordinator work)",
+  "image_sha256": "ac63133b06ad092d09944e267350817401dde930b7357773773816f7a724bb55",
+  "module_certificate": "unchanged (original diagnostic key)",
+  "vmlinux_export_CRCs_matching": 11740,
+  "fixes": [
+    "MPM wake coverage: do not require coverage for IRQF_TIMER clock events (arch_mem_timer GIC SPI 39 was the only uncovered IRQ)",
+    "secondary restart after a real cluster collapse: power cores up through ACC (banked SGI wake state is lost)"
+  ],
+  "test_conditions": "USB connected; charger power-supply wakeup sources disabled for the request; CPR prepared at 600 MHz with feedback; WLAN driver blacklisted; no modem in this DTB",
+  "trace": {
+    "cpr_ready": 1,
+    "rpm_sleep_ready": 1,
+    "mpm_sleep_ready": 1,
+    "l2_spm_collapse_rpm": 0,
+    "cpu_suspend": 0,
+    "suspend_enter": 0
+  },
+  "rtc_alarm_seconds": 20,
+  "rtc_elapsed_seconds": 21,
+  "suspend_stats_after": {
+    "success": 1,
+    "fail": 0
+  },
+  "secondaries": "CPU1-3 ACC power-up, hotplug suspend context restored, all up",
+  "all_cpus_restored": true,
+  "rpm_vmin_xosd_counts": [
+    0,
+    0
+  ],
+  "rpm_note": "XO shutdown/VDD-min not reached here: MPSS (no modem in this DTB) and the connected USB still hold it",
+  "candidate_boot": "ae90c460-ff4a-4206-86a4-4f82102afcae",
+  "returned_boot": "5bb56968-c036-4ae3-9bc8-95fcd13c04d4",
+  "returned_to_installed": true,
+  "earlier_attempts": "attempt-01..09 in the trial dir: charger wakeups, CPR re-prepare, MPM timer coverage, secondary SGI wake loss"
+}
