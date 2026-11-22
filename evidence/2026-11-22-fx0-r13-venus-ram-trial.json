@@ -1,0 +1,73 @@
+{
+  "recorded_UTC": "2026-11-22T05:31:39.425019+00:00",
+  "candidate": "6.18.64-r13 exact APK pair (recipe 611cbbd24, source 1c060de0b) in RAM",
+  "package_verified": true,
+  "camera_passed": true,
+  "postflight_passed": true,
+  "kernel_fatal": 0,
+  "taint": "0",
+  "venus_probe": {
+    "devices": {
+      "video0": "msm_vfe0_video0",
+      "video1": "msm_vfe0_video1",
+      "video2": "msm_vfe0_video2",
+      "video3": "qcom-venus-encoder",
+      "video4": "qcom-venus-decoder"
+    },
+    "modules": [
+      "venus_dec",
+      "venus_enc",
+      "videobuf2_dma_contig",
+      "venus_core",
+      "v4l2_mem2mem",
+      "videobuf2_v4l2",
+      "videobuf2_common",
+      "videodev",
+      "qnoc_msm8226",
+      "icc_smd_rpm",
+      "mdt_loader"
+    ]
+  },
+  "encode": {
+    "result": "FFmpeg h264_v4l2m2m encoder SIGSEGV (twice, before and after deep suspend)",
+    "detail": {
+      "rc": -11,
+      "err": "",
+      "bytes": 0,
+      "probe": {
+        "width": 0,
+        "height": 0
+      },
+      "psnr_avg": null
+    }
+  },
+  "decode": {
+    "result": "default FFmpeg h264_v4l2m2m decode returned 2 of 120 frames (both byte-identical to software)",
+    "detail": {
+      "rc": 0,
+      "err": "",
+      "hw_frames": 2,
+      "sw_frames": 120,
+      "matching": 2
+    }
+  },
+  "deep": {
+    "errno": null,
+    "ok": true,
+    "vmin": [
+      [
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "265071660"
+      ]
+    ],
+    "vmin_seconds": 13.8,
+    "cpus": "0-3"
+  },
+  "interconnect_note": "mmcc sync_state pending due to fc478000.interconnect at 24 s",
+  "decision": "r13 not installable yet; r12 stays installed. Needed: carry the encoder EOS/buffer-owner fix and the decoder startup/sufficient-resources fixes into r13, check interconnect sync_state, requalify.",
+  "returned_boot": "45732afc-f42c-44f5-b4cf-5d2cf930c83f"
+}
