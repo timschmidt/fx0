@@ -1,0 +1,87 @@
+{
+  "recorded_UTC": "2026-11-22T07:11:08.516919+00:00",
+  "candidate": "6.18.64-r13 (recipe ce4195fc9, source 1aa491277: r13 + encoder EOS stack) in RAM",
+  "camera_passed": true,
+  "taint": "0",
+  "ffmpeg": "Alpine FFmpeg 8.1.3 (not the patched FFmpeg of the earlier qualification)",
+  "encode_file_input": {
+    "frames12": {
+      "rc": 0,
+      "err": "",
+      "bytes": 210358,
+      "probe": {
+        "profile": "High",
+        "width": 384,
+        "height": 256,
+        "nb_read_frames": "12"
+      },
+      "psnr_avg": null
+    },
+    "frames30": {
+      "rc": 0,
+      "err": "",
+      "bytes": 261039,
+      "probe": {
+        "profile": "High",
+        "width": 384,
+        "height": 256,
+        "nb_read_frames": "30"
+      },
+      "psnr_avg": null
+    },
+    "after_deep": {
+      "rc": 0,
+      "err": "",
+      "bytes": 210358,
+      "probe": {
+        "profile": "High",
+        "width": 384,
+        "height": 256,
+        "nb_read_frames": "12"
+      },
+      "psnr_avg": null
+    },
+    "issue": "stream coded at 384x256 without crop to 320x240"
+  },
+  "encode_lavfi_input": {
+    "rc": -11,
+    "err": ""
+  },
+  "decode_12_frame_baseline": {
+    "rc": 0,
+    "err": "",
+    "hw_frames": 2,
+    "sw_frames": 12,
+    "matching": 2
+  },
+  "decode_120_fixture": {
+    "rc": 0,
+    "err": "",
+    "hw_frames": 2,
+    "sw_frames": 120,
+    "matching": 2
+  },
+  "deep": {
+    "errno": null,
+    "ok": true,
+    "vmin": [
+      [
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "257475163"
+      ]
+    ],
+    "vmin_seconds": 13.4,
+    "cpus": "0-3"
+  },
+  "kernel_venus_errors": 0,
+  "conclusions": [
+    "hardware H.264 encode works from raw input, including after deep suspend",
+    "encoder output lacks SPS crop (aligned 384x256)",
+    "FFmpeg lavfi->h264_v4l2m2m crashes in userspace",
+    "stock FFmpeg decode delivers 2 frames then stops cleanly; earlier byte-exact decode used opt-in venus_dec switches and a patched FFmpeg"
+  ]
+}
