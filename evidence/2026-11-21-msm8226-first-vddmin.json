@@ -1,0 +1,119 @@
+{
+  "recorded_UTC": "2026-11-22T00:12:50.231294+00:00",
+  "image": {
+    "zImage": "2146e98bb20fb5ecd936df23da23648db72cb46d4094091cbdecbb0bd0d5ea50",
+    "source": "fx0-linux diagnostic/fx0-msm8226-vddmin-mx-01 @ c7ee0bb2c",
+    "r11_DTB": "a72e284b1a3cf41be3a0fa2d395324dba6240c40cf1e951796f5c4a783696680",
+    "installed_r11_ramdisk": "2c31df9eec9f61692fc227248ad74813baf8d3a36477d6349800722376b11555",
+    "image": "f635596b409121c40ba8312423f7a4ee63db8e5ec717aed9231c0ac382701aff"
+  },
+  "base": "installed r11 initramfs/rootfs, r11 DTB",
+  "source": "timschmidt/fx0-linux diagnostic/fx0-msm8226-vddmin-mx-01 @ c7ee0bb2c",
+  "root_cause": "CPR held the sleep-only MX vote (l3-so) at 1287.5 mV; with that lowered to 750 mV in the suspend window the paired SMD regulator still sent max(both-set cached voltage, sleep-only) = 1287 mV because the disabled remoteproc proxy MX voters (MSS, WCNSS) kept a cached 1287 mV request. Stock 3.10 votes 8226_l3_so at 750 mV with no consumers.",
+  "attempt_01": {
+    "patch": "CPR sleep MX 750 mV only",
+    "vmin": [
+      [
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0"
+      ]
+    ],
+    "xosd_counts": [
+      "5",
+      "10",
+      "15",
+      "20"
+    ]
+  },
+  "attempt_02": {
+    "patch": "CPR sleep MX 750 mV + ignore disabled both-set voltage in paired sleep vote",
+    "cycles": [
+      {
+        "ok": true,
+        "rtc_elapsed": 61,
+        "vmin": [
+          [
+            "0",
+            "0"
+          ],
+          [
+            "5",
+            "1157572688"
+          ]
+        ],
+        "cpus": "0-3"
+      },
+      {
+        "ok": true,
+        "rtc_elapsed": 61,
+        "vmin": [
+          [
+            "5",
+            "1157572688"
+          ],
+          [
+            "10",
+            "2307741936"
+          ]
+        ],
+        "cpus": "0-3"
+      },
+      {
+        "ok": true,
+        "rtc_elapsed": 61,
+        "vmin": [
+          [
+            "10",
+            "2307741936"
+          ],
+          [
+            "15",
+            "3458471404"
+          ]
+        ],
+        "cpus": "0-3"
+      },
+      {
+        "ok": true,
+        "rtc_elapsed": 61,
+        "vmin": [
+          [
+            "15",
+            "3458471404"
+          ],
+          [
+            "20",
+            "4609313376"
+          ]
+        ],
+        "cpus": "0-3"
+      }
+    ],
+    "vmin_ticks_per_60s_cycle": 1150000000,
+    "load_after": {
+      "freq": "1190400",
+      "ok": true,
+      "blocks": [
+        12032,
+        12288,
+        12160,
+        11968
+      ]
+    },
+    "taint": "0",
+    "returned_boot": "c778aa9d-cbbe-412e-b266-e09d6934e12d"
+  },
+  "conclusion": "RPM VDD-min (CX/MX retention) reached for ~60.3 s of each 61 s deep suspend; all CPUs and CPR restored; returned to installed r11."
+}
