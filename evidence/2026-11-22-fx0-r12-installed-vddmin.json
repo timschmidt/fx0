@@ -1,0 +1,103 @@
+{
+  "recorded_UTC": "2026-11-22T02:54:57.642717+00:00",
+  "release": "6.18.64-r12 installed (owner display/touch OK)",
+  "boot": "380504a5-2741-4020-b30e-ee4d4d614e6e",
+  "source": "fx0-linux development/fx0-msm8226-vddmin-01 @ 0a7e426d; recipe fx0-pmaports development/fx0-vddmin-package-01 @ 6dbe87f3",
+  "soak_radio_searching": [
+    {
+      "planned": 20,
+      "rtc_elapsed": 21,
+      "ok": true,
+      "vmin_seconds": 0.0,
+      "cpus": "0-3"
+    },
+    {
+      "planned": 45,
+      "rtc_elapsed": 46,
+      "ok": true,
+      "vmin_seconds": 14.3,
+      "cpus": "0-3"
+    },
+    {
+      "planned": 15,
+      "rtc_elapsed": 16,
+      "ok": true,
+      "vmin_seconds": 14.9,
+      "cpus": "0-3"
+    },
+    {
+      "planned": 90,
+      "rtc_elapsed": 91,
+      "ok": true,
+      "vmin_seconds": 28.2,
+      "cpus": "0-3"
+    },
+    {
+      "planned": 30,
+      "rtc_elapsed": 12,
+      "ok": true,
+      "vmin_seconds": 4.7,
+      "cpus": "0-3"
+    },
+    {
+      "planned": 60,
+      "rtc_elapsed": 61,
+      "ok": true,
+      "vmin_seconds": 7.8,
+      "cpus": "0-3"
+    },
+    {
+      "planned": 20,
+      "rtc_elapsed": 21,
+      "ok": true,
+      "vmin_seconds": 19.9,
+      "cpus": "0-3"
+    },
+    {
+      "planned": 120,
+      "rtc_elapsed": 115,
+      "ok": true,
+      "vmin_seconds": 45.0,
+      "cpus": "0-3"
+    },
+    {
+      "planned": 25,
+      "rtc_elapsed": 26,
+      "ok": true,
+      "vmin_seconds": 0.0,
+      "cpus": "0-3"
+    },
+    {
+      "planned": 40,
+      "rtc_elapsed": 41,
+      "ok": true,
+      "vmin_seconds": 24.4,
+      "cpus": "0-3"
+    }
+  ],
+  "soak_radio_low_power": [
+    {
+      "planned": 60,
+      "rtc_elapsed": 61,
+      "ok": true,
+      "vmin_seconds": 60.1,
+      "cpus": "0-3"
+    },
+    {
+      "planned": 60,
+      "rtc_elapsed": 61,
+      "ok": true,
+      "vmin_seconds": 60.6,
+      "cpus": "0-3"
+    },
+    {
+      "planned": 60,
+      "rtc_elapsed": 61,
+      "ok": true,
+      "vmin_seconds": 60.6,
+      "cpus": "0-3"
+    }
+  ],
+  "taint": "0",
+  "interpretation": "with the SIM inserted the modem is out of service (no US network on the Fx0 au band set) and keeps scanning, which limits VDD-min residency and caused one early wake; with the radio in low power VDD-min covers ~60.5 s of each 61 s sleep"
+}
