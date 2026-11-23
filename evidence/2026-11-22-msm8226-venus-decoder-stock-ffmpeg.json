@@ -1,0 +1,24 @@
+{
+  "recorded_UTC": "2026-11-23T01:00:36.130237+00:00",
+  "device": "LG Fx0 (MSM8926), Venus HFI 1xx firmware VIDEO.VE.1.6-00005 (Jan 2014)",
+  "ffmpeg": "Alpine FFmpeg 8.1.3, h264_v4l2m2m, default settings",
+  "method": "r13 RAM candidate with a consistent diagnostic venus-core/dec/enc set in the module overlay (out-of-tree taint only)",
+  "findings": [
+    "stock flow: firmware rejects CONTINUE_DATA_TRANSFER / UNCOMPRESSED_FORMAT_SELECT / BUFFER_ALLOC_MODE when resent after the first sequence event, then crashes (SFR IP 0x9fec)",
+    "firmware returns decoded pictures without timestamps; earliest-pending-input fallback restores them; input completions must not consume the table",
+    "with continue-data-transfer the firmware faults when it decodes a picture before any capture buffer exists (stock FFmpeg waits for the source change first)",
+    "shrinking/re-registering the internal scratch after the sequence event crashes the firmware; keeping a sufficient scratch avoids it",
+    "HFI_CMD_SESSION_CONTINUE is fatal on this firmware (VenusHostDriver.c:1980); continue-data-transfer off stalls",
+    "capture-first emulation (report negotiated geometry at OUTPUT streamon, hold coded input until CAPTURE streams, ignore the confirming event) works"
+  ],
+  "result": {
+    "raw_h264_120_frames": "120/120 byte-exact (passthrough)",
+    "mkv_12": "12/12 byte-exact, timestamps equal software",
+    "mkv_120": "120/120 byte-exact, timestamps equal software",
+    "firmware_errors": 0,
+    "encoder_after_decode": "ok"
+  },
+  "diagnostic_branch": "fx0-linux diagnostic/fx0-venus-r13-retain-props-01",
+  "release_commit": "fx0-linux development/fx0-venus-r13-01 @ 674ca0eec (squashed, fw_capture_size default on)",
+  "recipe": "fx0-pmaports development/fx0-venus-package-01 @ e3616d66 (patch 0066)"
+}
