@@ -1,0 +1,79 @@
+{
+  "recorded_UTC": "2026-11-23T01:45:05.434720+00:00",
+  "release": "6.18.64-r13 (recipe e3616d66, source 674ca0eec)",
+  "package_verification": "passed (474 signed modules, 488 module files, 26130 import CRCs)",
+  "exact_apk_ram_trial": {
+    "camera_passed": true,
+    "postflight_passed": true,
+    "taint": "0",
+    "venus_before": {
+      "enc12": {
+        "rc": 0,
+        "err": "",
+        "frames": "12"
+      },
+      "enc30": {
+        "rc": 0,
+        "err": "",
+        "frames": "30"
+      },
+      "dec12": {
+        "tag": "mkv12",
+        "rc": 0,
+        "frames": 12,
+        "sw_frames": 12,
+        "match": 12,
+        "pts_match": true,
+        "err": ""
+      },
+      "dec120": {
+        "tag": "mkv120",
+        "rc": 0,
+        "frames": 120,
+        "sw_frames": 120,
+        "match": 120,
+        "pts_match": true,
+        "err": ""
+      }
+    },
+    "venus_after": {
+      "enc12": {
+        "rc": 0,
+        "err": "",
+        "frames": "12"
+      },
+      "dec12": {
+        "tag": "mkv12",
+        "rc": 0,
+        "frames": 12,
+        "sw_frames": 12,
+        "match": 12,
+        "pts_match": true,
+        "err": ""
+      },
+      "dec120": {
+        "tag": "mkv120",
+        "rc": 0,
+        "frames": 120,
+        "sw_frames": 120,
+        "match": 120,
+        "pts_match": true,
+        "err": ""
+      }
+    },
+    "deep_after_codec": {
+      "ok": true,
+      "vmin_seconds": 20.5,
+      "cpus": "0-3"
+    },
+    "deep_failure_seen": "one deep entry aborted: CPR suspend drain busy after 10 ms (msm8226_pm_suspend_late -110); system continued"
+  },
+  "native_hooks": {
+    "update_paths": 558,
+    "rollback_paths": 552,
+    "boot_image_reproduced": true
+  },
+  "preflight_passed": true,
+  "firmware": "stock Venus firmware installed privately at /lib/firmware/qcom/msm8226 (not packaged)",
+  "awaiting": "owner OK for launch-live --apply-approved, then display/touch check"
+}
