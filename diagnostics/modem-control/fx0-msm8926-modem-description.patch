@@ -1,0 +1,38 @@
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -234,6 +234,19 @@
+ 	status = "okay";
+ };
+ 
++&modem {
++	compatible = "qcom,msm8926-mss-pil";
++
++	/delete-property/ qcom,ext-bhs-reg;
++
++	mx-supply = <&pm8226_l3>;
++	pll-supply = <&pm8226_l8>;
++	mss-supply = <&pm8226_s5>;
++
++	/* Enable only with a separately qualified modem startup procedure. */
++	status = "disabled";
++};
++
+ &pm8226_vadc {
+ 	channel@6 {
+ 		reg = <VADC_VBAT_SNS>;
+@@ -276,6 +289,15 @@
+ &rpm_requests {
+ 	regulators {
+ 		compatible = "qcom,rpm-pm8226-regulators";
++
++		pm8226_s5: s5 {
++			regulator-min-microvolt = <1150000>;
++			regulator-max-microvolt = <1150000>;
++			regulator-allow-set-load;
++
++			/* Keep the new rail unavailable with the disabled modem. */
++			status = "disabled";
++		};
+ 
+ 		pm8226_s4: s4 {
+ 			regulator-min-microvolt = <1800000>;

@@ -1,0 +1,264 @@
+{
+  "date": "2026-11-08",
+  "recorded_UTC": "2026-11-08T22:15:56.613085+00:00",
+  "status": "Independent Alpine r55 RAM startup/signed-registration image prepared and host-verified; unstaged/unbooted; previous native return physical UI result pending",
+  "source_commit": "b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8",
+  "source_package_evidence": "evidence/2026-11-08-cpr-observation-source-package.json",
+  "image": {
+    "image_path": "local/alpine-cpr-registration/fx0-alpine-cpr-registration-ram.img",
+    "image_sha256": "529161ee532508bc69fe2eb313f642630db8a8bac0d45821860b085e9d205c59",
+    "image_bytes": 6240256,
+    "kernel_sha256": "746d40e30fb95d10d86ef2ac7dd886f068f0cf09ad7a3ee8006535d396a03923",
+    "kernel_bytes": 5526016,
+    "kernel_release": "6.18.59-fx0-cpr-observe-alpine",
+    "certificate_sha256": "edc7d3cd556be62ff28bae1e201652d5c39166c34a9172a53a7390dc38972260",
+    "source_package_sha256": "a60821c69c6f72f48458934c5d48741c4ed5408714fe8aaffa5a6bf99407d4ca",
+    "source_recipe_commit": "b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9",
+    "DTB_sha256": "589d17908c2bd9584b0f3f51bc4c19ced467b60791e3fd13bc4ee3fbcd9e0284",
+    "kernel_and_DTB_exact_signed_APK_bytes": true,
+    "kernel_encoding_workaround_applied": false,
+    "kernel_Image_bytes": 21202160,
+    "kernel_text_to_end_bytes_including_BSS": 21499600,
+    "kernel_footprint_plus_load_offset_below_forced_ramdisk_address": true,
+    "header_digest_and_addresses_verified": true,
+    "return_after_seconds": 180,
+    "initially_moduleless": true,
+    "allowed_module_loads": [
+      "cpufreq_userspace.ko",
+      "cpufreq-dt.ko"
+    ],
+    "explicit_frequency_requests": [],
+    "signature_enforcement": true,
+    "default_governor": "userspace",
+    "bootstrap_expectations": {
+      "online_CPUs": "0-3",
+      "taint": 0,
+      "CPU_mux_Hz": 300000000,
+      "CPU_PLL_enable_count": 0,
+      "APC_target_uV": 1150000,
+      "MX_consumer_use_count": 1,
+      "MX_summary_floor_mV_truncated": 1287,
+      "MX_requested_floor_uV_from_qualified_source": 1287500,
+      "corner_voltage_applied": false,
+      "feedback_allowed": false,
+      "LOOP_EN": false,
+      "thermal_sensor_count": 2,
+      "temperature_upper_mC_exclusive": 60000
+    },
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\" cpufreq.default_governor=userspace module.sig_enforce=1",
+    "registration_script_sha256": "314873d48c05cb04869e24fcfea9ecf083df0341b68a0074342c0f7260a17a1d",
+    "ARM_BusyBox_shell_syntax_check": "pass under qemu-arm-static; same static binary as qualified RAM family",
+    "entries_sha256": {
+      "bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dev": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sys": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tmp": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "www": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bin/busybox": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+      "bin/sh": "9d75f0d7c398df565d7ac04c6819b62d6d8f9560f5eb4672596ecd8f7e96ae91",
+      "bin/serve-http": "4005fed0312bc216b3c32129ffdd2ceac06544a2503ecd572349e729af543d5e",
+      "init": "8a25f6757a7f0de87cb7433def659d0fee00981c2a311ed816a12bac439ac0d1",
+      "etc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modules": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "etc/fx0-cpr-trial": "f78d0e5c421d12d516679ca54493aa5bb4a3d8374241b81e0e6ae27bd713e7f5",
+      "bin/cpr-register": "314873d48c05cb04869e24fcfea9ecf083df0341b68a0074342c0f7260a17a1d",
+      "modules/cpufreq_userspace.ko": "6c036ae9ccca42baaca7e51efe7ec103b1ede743523d06c1f5dbcfb77fb34935",
+      "modules/cpufreq-dt.ko": "9b376b8013d1182d9fc414339c7dc24dced5d2bdc6ab5256696c04f7240bf3e7",
+      "etc/fx0-cpr-modules.sha256": "03706d4d988924f5f9bee80e7b1e50324c9f92f866287083ec517dd846eeadd8"
+    },
+    "changed_initramfs_entries": [
+      "bin/cpr-register",
+      "etc/fx0-cpr-modules.sha256",
+      "etc/fx0-cpr-trial",
+      "modules/cpufreq-dt.ko",
+      "modules/cpufreq_userspace.ko"
+    ],
+    "init_BusyBox_HTTP_timer_and_cmdline_unchanged": true,
+    "previous_native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "previous_UI_result_required_before_stage": "local/ram-cpr-load-01/owner-display-touch.json; matching boot ID and passed status"
+  },
+  "selected_modules": {
+    "cpufreq_userspace.ko": {
+      "sha256": "6c036ae9ccca42baaca7e51efe7ec103b1ede743523d06c1f5dbcfb77fb34935",
+      "bytes": 10481,
+      "packaged_compressed_sha256": "2f682c1376022d2828e30bb8227c40f8c38bd63f8dcf238c1fe9a03dc1a63fed",
+      "signed_payload_sha256": "35c401e313eab44f6b21965549438f92b314ed4c932eb29e2c955b0a3e859685",
+      "release": "6.18.59-fx0-cpr-observe-alpine",
+      "certificate_sha256": "edc7d3cd556be62ff28bae1e201652d5c39166c34a9172a53a7390dc38972260",
+      "explicit_CMS_verification": true,
+      "dependencies": []
+    },
+    "cpufreq-dt.ko": {
+      "sha256": "9b376b8013d1182d9fc414339c7dc24dced5d2bdc6ab5256696c04f7240bf3e7",
+      "bytes": 15533,
+      "packaged_compressed_sha256": "161856bb28c76a47fcad72cbacfe46045bb9bc5d61151c0876eef17c0aceb878",
+      "signed_payload_sha256": "59324b716ca2c07c50f8124949583163a4e6f41638b5e7eaf42d5a01e49afc5b",
+      "release": "6.18.59-fx0-cpr-observe-alpine",
+      "certificate_sha256": "edc7d3cd556be62ff28bae1e201652d5c39166c34a9172a53a7390dc38972260",
+      "explicit_CMS_verification": true,
+      "dependencies": []
+    }
+  },
+  "host_tests": {
+    "tests": 3,
+    "simulated_modes": 36,
+    "failures": 0,
+    "observed_result": "all three real-shell registration tests pass",
+    "scope": "instrumented host filesystem/module loads; exact precondition/load/postcondition failures and load order; not kernel module loading or hardware qualification",
+    "postcondition_drift_guards": [
+      "MX vote",
+      "PLL enable count",
+      "temperature threshold",
+      "raw CPU clock",
+      "CPU topology",
+      "taint"
+    ],
+    "files_sha256": {
+      "diagnostics/cpu-cpr-runtime/register-alpine.sh": "314873d48c05cb04869e24fcfea9ecf083df0341b68a0074342c0f7260a17a1d",
+      "tests/test_cpr_alpine_registration.py": "427944e31cafb810f58c0a49e93d085bfd7e2a754d4b272c85eca67cc59a3276"
+    }
+  },
+  "physical_entry_gate": {
+    "actual_stage_process_exit": 1,
+    "expected_failure": "Previous native return display/touch check is pending; no reboot or transfer allowed",
+    "previous_native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "phone_commands_sent": false,
+    "bootloader_entry_controller_created": false,
+    "transfer_directory_created": false,
+    "BOOT_request_created": false,
+    "scope": "host entry-gate check only; no device operation"
+  },
+  "expected_stage_sequence": [
+    "independent Alpine kernel starts initially moduleless from RAM with no eMMC filesystem mount",
+    "enforced signatures, userspace boot default and full 300 MHz/1.15 V/unapplied/MX/topology/temperature bootstrap verified before modules",
+    "userspace loads successfully before cpufreq-dt, then retained bootstrap and userspace/300 MHz policy verified",
+    "no explicit performance request; existing timer returns to original installed r50",
+    "independent native hash/PMIC/policy/services/network checks and newest physical UI result required afterward"
+  ],
+  "last_verified_native_phone": {
+    "checked_UTC": "2026-11-08T21:45:24.740961+00:00",
+    "boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "kernel": "6.18.59-fx0-dmp",
+    "installed_kernel_package": "6.18.59-r50",
+    "systemd": "running",
+    "failed_units": [],
+    "pending_jobs": [],
+    "NTP_synchronized": true,
+    "taint": 0,
+    "Sway": true,
+    "sensor_proxy": "active",
+    "original_boot_hash": true,
+    "PMIC_S2": {
+      "method": "two exact nine-byte pread rows after dense-map metadata check",
+      "registers": {
+        "0x1740": 1,
+        "0x1741": 115
+      }
+    },
+    "APC_target_uV": 1150000,
+    "candidate_installed": false,
+    "phone_activity": "read-only postflight only; no reboot/flash/install",
+    "owner_display_touch": "latest 600 MHz load return result still pending"
+  },
+  "latest_UI": {
+    "native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "status": "pending on this newest native return",
+    "question": "The five-round-trip and four-core 600 MHz RAM load trial has returned to installed r50. Its original boot hash and 1.15 V PMIC target are restored, with Sway and the sensor proxy active. Do display and touch work normally on this newest boot?"
+  },
+  "hardware_operations_this_preparation": {
+    "phone_commands": 0,
+    "reboots": 0,
+    "USB_staging_attempts": 0,
+    "BOOT_requests": 0,
+    "Alpine_kernel_booted": false,
+    "modules_loaded_into_any_real_kernel": false,
+    "explicit_performance_requests": 0,
+    "candidate_installed": false,
+    "eMMC_flashed": false,
+    "audio_tested": false,
+    "host_builtin_WiFi_changed": false
+  },
+  "scope": [
+    "Host shell tests instrument files/module loads; no Alpine kernel execution or hardware result",
+    "ARM BusyBox only parses the script under emulation; this does not execute registration",
+    "MX is a requested vote/summary and APC is a provider target; no physical analogue rail measurement",
+    "Original APK kernel encoding is preserved; exact staging/readback remains required and the content-dependent USB defect remains open",
+    "Matching source/DTB does not transfer the Fedora hardware acceptance to this independent Alpine kernel/module/certificate family"
+  ],
+  "remaining": [
+    "matching latest native return display/touch result before physical entry",
+    "independent Alpine startup, enforced signed registration, timer/native recovery and physical UI",
+    "controlled Alpine OPP/governor/feedback/load/thermal/suspend and higher rates",
+    "stable/edge, installed update/recovery and all broader hardware/reliability/upstream gates"
+  ],
+  "files_sha256": {
+    "configs/linux-6.18.59-fx0-cpr-observe-alpine.armv7": "18a13809f3aa5042fb8447b1ae171b660b9321d85b9de6fd3c42134c7c8234fc",
+    "diagnostics/cpu-cpr-runtime/README.md": "387b3d11774a19e02519784ec9cb974c3be76992d87cb0f546667f6864c0cc75",
+    "diagnostics/cpu-cpr-runtime/register-alpine.sh": "314873d48c05cb04869e24fcfea9ecf083df0341b68a0074342c0f7260a17a1d",
+    "docs/building.md": "5cf74fdcd9966c41e522783756c4faccf743dc2b70091bf8e39947ebc49f909d",
+    "docs/development-log.md": "87c908760a60d8489a97e1375bdc71ed594db1e4685647512cefbe0c2161b190",
+    "docs/hardware-acceptance.md": "7e4102f714790900c719294fa6f696760a9d2e25769710de6c19aa33d6e2c03a",
+    "docs/msm8226-cpu-performance.md": "131d4f60d7162c046a3ad1c1d115d1a03d15b5b0334fb0eb4d2947f627f766f6",
+    "evidence/2026-11-08-cpr-observation-source-package.json": "5ec80886e6bbaa7553ec8b7ad360f3d33fdbbebbfcc0baee699eedb0b3af7f82",
+    "local/alpine-cpr-registration/RAM-image.json": "70516c1aba4332ac20a14bfc1b3e55e4f54f61a6453dc98736d47372d35677bc",
+    "local/alpine-cpr-registration/busybox-from-qualified-RAM": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+    "local/alpine-cpr-registration/fx0-alpine-cpr-registration-ram.img": "529161ee532508bc69fe2eb313f642630db8a8bac0d45821860b085e9d205c59",
+    "local/alpine-cpr-registration/host-tests.json": "911e4e5b1386f3d76305bcda281cea0879fa99de19733b1a8d720372f2470995",
+    "local/alpine-cpr-registration/modules/cpufreq-dt.ko": "9b376b8013d1182d9fc414339c7dc24dced5d2bdc6ab5256696c04f7240bf3e7",
+    "local/alpine-cpr-registration/modules/cpufreq_userspace.ko": "6c036ae9ccca42baaca7e51efe7ec103b1ede743523d06c1f5dbcfb77fb34935",
+    "local/alpine-cpr-registration/physical-entry-gate-check.json": "2a56a15d44a6942e9077820ce36f7bd20b7ba57df9c5bf33b23898e124e523e4",
+    "local/alpine-cpr-registration/prepare-image.py": "083ea10bbab2776da316ee8f2b7791bd985d67f92a7ad676034d734ed1764b1f",
+    "local/alpine-cpr-registration/record-preparation.py": "7c1da854febe3eda149b371ea48f5d6d012b621afdfc41dc97293915dc83d38d",
+    "local/alpine-cpr-registration/select-modules.py": "3e91f98427d295abf0dbfdf390aabe1093d45792b874ef6be5228782ba7a1669",
+    "local/alpine-cpr-registration/selected-modules.json": "95282584c1ae118e153dbe55b05af92b04050ed02310bfdb7632cef0de6893d0",
+    "local/kernel-observation-package/export-retry01/package.json": "b913d59691111203a93042be92059d15e6fef7431d0a7b6bbbf84fa49423a762",
+    "local/kernel-observation-package/phone-postflight.json": "971689b2a0161ed92dc9e684732c2550461d82d19b54da26c0e59b991d5ae7cc",
+    "local/kernel-observation-package/r55-artifact-inspection.json": "ff646ea85fe8937260eeb59047e6c57716af1c888f28c29f4194d7f04ef3569f",
+    "local/kernel-observation-package/r55-postbuild-checks.json": "4316bad25da8f28d8b6b31614e3780d78657e062a55710e708c0025a4b93ec66",
+    "local/ram-alpine-cpr-registration-01/boot-once.py": "02b5bf54a962d665f7ffa19f33bae5a400b6486c7f5cd44df5f4c9bf60f61e0b",
+    "local/ram-alpine-cpr-registration-01/image-verification.json": "70516c1aba4332ac20a14bfc1b3e55e4f54f61a6453dc98736d47372d35677bc",
+    "local/ram-alpine-cpr-registration-01/observe.py": "3bdf68f8b2f2dc4b16731711f54915c456fadca61d6ecd4484adde1d63e0b495",
+    "local/ram-alpine-cpr-registration-01/postflight.py": "4b0caf8c5761755d7975d30683c85a91d09113f07dcbd7827305f9c3053794fc",
+    "local/ram-alpine-cpr-registration-01/preflight.py": "5e9998c3b0f313fca760c9c8b70bed3e76762bc28ef466b115623a6853fe6e61",
+    "local/ram-alpine-cpr-registration-01/ram-observation.json": "2f4342c40a9d374898ae09a76fee88b97e3147392f5bca9bc3a5e14bd7b4421b",
+    "local/ram-alpine-cpr-registration-01/run-process.py": "0eac33ecf8506abf2ee5ab1ddf8b32c9523799c55be0fb110fb5709226058c66",
+    "local/ram-alpine-cpr-registration-01/stage.py": "2a77a130177c9a17c4ac17f4ea3124b8330dec99919feae40326573291b5d18b",
+    "local/ram-alpine-cpr-registration-01/wait-native.py": "dc6e3f0a9641955cf5dc7eea29a2b1a27b4f5ca8bf3e524597d82f109bd5feb3",
+    "local/ram-cpr-load-01/owner-display-touch.json": "58d123649220ed3f84f20b6f9e0a11b6ebc3716423cb625134a70d81d87749c8",
+    "scripts/make_diagnostic_image.py": "cd9c976a758d2f4b0282afe88a4c6038750e1fc11f08fdb289737e9f1cc9613f",
+    "tests/test_cpr_alpine_registration.py": "427944e31cafb810f58c0a49e93d085bfd7e2a754d4b272c85eca67cc59a3276"
+  },
+  "prior_checkpoint_file_versions": {
+    "diagnostics/cpu-cpr-runtime/README.md": {
+      "prior_commit": "67b0fbe651f2c501bf10f759c819c268ef80cddd",
+      "prior_sha256": "86996c33d387cff43ceac9ba0edd25690b5631f1cea6085113c3246e641a2584",
+      "current_sha256": "387b3d11774a19e02519784ec9cb974c3be76992d87cb0f546667f6864c0cc75",
+      "meaning": "Preparation documentation update; prior evidence/hashes remain historical and unchanged."
+    },
+    "docs/building.md": {
+      "prior_commit": "67b0fbe651f2c501bf10f759c819c268ef80cddd",
+      "prior_sha256": "40ccb26e0a4b7d40c67d014f5f8baa63c156841a1708796682ff27e02481b916",
+      "current_sha256": "5cf74fdcd9966c41e522783756c4faccf743dc2b70091bf8e39947ebc49f909d",
+      "meaning": "Preparation documentation update; prior evidence/hashes remain historical and unchanged."
+    },
+    "docs/hardware-acceptance.md": {
+      "prior_commit": "67b0fbe651f2c501bf10f759c819c268ef80cddd",
+      "prior_sha256": "07be82f1df15e71b83773238c455cf00c496642975512c637d46781615500f3f",
+      "current_sha256": "7e4102f714790900c719294fa6f696760a9d2e25769710de6c19aa33d6e2c03a",
+      "meaning": "Preparation documentation update; prior evidence/hashes remain historical and unchanged."
+    },
+    "docs/msm8226-cpu-performance.md": {
+      "prior_commit": "67b0fbe651f2c501bf10f759c819c268ef80cddd",
+      "prior_sha256": "42a91dd2cab0c74c2ec774d15c9cbc23f01b466934b85d0e4943c379676d3b1e",
+      "current_sha256": "131d4f60d7162c046a3ad1c1d115d1a03d15b5b0334fb0eb4d2947f627f766f6",
+      "meaning": "Preparation documentation update; prior evidence/hashes remain historical and unchanged."
+    },
+    "docs/development-log.md": {
+      "prior_commit": "67b0fbe651f2c501bf10f759c819c268ef80cddd",
+      "prior_sha256": "ca5930e52fc4a21a62f891a3ea3bacaa315c4eced042ab7b181c449dbcde70c3",
+      "current_sha256": "87c908760a60d8489a97e1375bdc71ed594db1e4685647512cefbe0c2161b190",
+      "meaning": "Preparation documentation update; prior evidence/hashes remain historical and unchanged."
+    }
+  }
+}

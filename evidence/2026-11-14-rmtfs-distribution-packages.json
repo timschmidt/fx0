@@ -1,0 +1,908 @@
+{
+  "recorded_UTC": "2026-11-14T10:14:47.877079+00:00",
+  "scope": "Normal signed distribution packages and isolated ARM software checks; no native daemon or physical modem qualification",
+  "recipe_commit": "3b2f30decd987cbb6ad14259e64189ef2092dc1c",
+  "recipe_branch": "development/fx0-rmtfs-userspace-01",
+  "recipe_publication_pending": true,
+  "upstream_commits": {
+    "qrtr_1_2": "b51ffaf22707b6000ecfb894c5b750f3bb7843b2",
+    "rmtfs_1_3": "b30a3eb38f9af283f18dbd3c7755653efc52c094",
+    "qmic_1_0": "4574736afce75aa5eec1e1069a19563410167c9f"
+  },
+  "standard_abuild_command": [
+    "abuild",
+    "-d",
+    "-D",
+    "postmarketOS",
+    "-f"
+  ],
+  "build_profile": {
+    "CHOST": "armv7",
+    "CBUILDROOT": "/mnt/sysroot",
+    "CROSS_COMPILE": "armv7-alpine-linux-musleabihf-",
+    "CC": "clang --target=armv7-alpine-linux-musleabihf --sysroot=/mnt/sysroot --gcc-toolchain=/mnt/sysroot/usr",
+    "LD": "ld.lld",
+    "LDFLAGS": "-Wl,-rpath-link=/mnt/sysroot/usr/lib -fuse-ld=lld",
+    "native_generator": "qmic 1.0-r2; previously qualified native package pair",
+    "native_and_target_inputs_readonly": true,
+    "independent_empty_home_and_tmp_for_each_build": true,
+    "network_disabled": true,
+    "private_APK_signer_used_in_place_readonly_by_normal_signing_tools": true
+  },
+  "toolchain": {
+    "native_packages": 76,
+    "initial_target_packages": 28,
+    "all_104_archives_independently_signature_verified": true,
+    "all_source_commit_metadata_match_signed_archives": true,
+    "all_7360_nonsetup_paths_exact": true,
+    "three_setup_files_exactly_reconciled": true,
+    "signed_package_manifest": [
+      {
+        "root": "native",
+        "package": "abuild",
+        "version": "3.17.0-r0",
+        "source_commit": "c34e25a150fccc32194346cb335ed746d6878031",
+        "archive_SHA256": "87209e11d18011c67414a577a9cc4e025738346e4d56e8ffb25fa8f74fe2cec3"
+      },
+      {
+        "root": "native",
+        "package": "abuild-meson",
+        "version": "1.11.1-r0",
+        "source_commit": "cf1b0ed30f6e9324cac7ba2a13f890bf9c78ca3c",
+        "archive_SHA256": "a77122b82cac98bf9b6b6929df297ba6f168c0bae1b056785380186659b5d01d"
+      },
+      {
+        "root": "native",
+        "package": "abuild-sudo",
+        "version": "3.17.0-r0",
+        "source_commit": "c34e25a150fccc32194346cb335ed746d6878031",
+        "archive_SHA256": "ae0cfde4cade591290cbc2edc0d0fe93491562991b18923a96a41004ba33f05b"
+      },
+      {
+        "root": "native",
+        "package": "acl-libs",
+        "version": "2.3.2-r1",
+        "source_commit": "8bac74716d06c84627ab02d101fd9d2bafd0a34c",
+        "archive_SHA256": "3f02851d586c25d97ba8b5b845615aacc209ae7eaeb6f7843eca76d85da2249d"
+      },
+      {
+        "root": "native",
+        "package": "alpine-baselayout",
+        "version": "3.7.2-r1",
+        "source_commit": "60a7585bbab2fa0f762504eb617dbca90216e31f",
+        "archive_SHA256": "b41ddec2088fd7c794ab4fcd79945016d61eadcab56d2414c51463c8c13e7c65"
+      },
+      {
+        "root": "native",
+        "package": "alpine-baselayout-data",
+        "version": "3.7.2-r1",
+        "source_commit": "60a7585bbab2fa0f762504eb617dbca90216e31f",
+        "archive_SHA256": "2eaa18c8535f6c50bd5846b1a3c27edd9b45a2672d81f13e1f8bf79bd18c41e3"
+      },
+      {
+        "root": "native",
+        "package": "apk-tools",
+        "version": "3.0.9-r0",
+        "source_commit": "13685e8f2cf1c103cbba2fb9efcfcf19f4918df0",
+        "archive_SHA256": "11e164b878d143d9062ca28ffc72b17e9379e2db7724d5b0bad13d879f879445"
+      },
+      {
+        "root": "native",
+        "package": "binutils",
+        "version": "2.45.1-r1",
+        "source_commit": "673df4f3ce2e71e9bcfbf64939332917a35795fc",
+        "archive_SHA256": "15682887459d216585feb438bbfb7ec63e1f33e77c453f44637d2d9d8c35977d"
+      },
+      {
+        "root": "native",
+        "package": "binutils-armv7",
+        "version": "2.45.1-r1",
+        "source_commit": "673df4f3ce2e71e9bcfbf64939332917a35795fc",
+        "archive_SHA256": "9a406eb59a1df439e13270bd4345f8cdfbb3c9622c930e664e4cff3abcb84cad"
+      },
+      {
+        "root": "native",
+        "package": "busybox",
+        "version": "1.37.0-r31",
+        "source_commit": "c3ef5d10e6ef6528852c51f0564963e2f8c1be19",
+        "archive_SHA256": "0e626fa97cf937fda7bba4ed4dde8e2f2dbb5083ac34e02180cec0c4eba9351b"
+      },
+      {
+        "root": "native",
+        "package": "busybox-binsh",
+        "version": "1.37.0-r31",
+        "source_commit": "c3ef5d10e6ef6528852c51f0564963e2f8c1be19",
+        "archive_SHA256": "93f803ae5db6b729c0f66f4afba6e907ccc17d7d5f8b8c3d25bdb4636de2c48a"
+      },
+      {
+        "root": "native",
+        "package": "ca-certificates-bundle",
+        "version": "20261020-r0",
+        "source_commit": "e78f5987166c6ffbe23f6472e2e8f040298fe2da",
+        "archive_SHA256": "bb008f6d214b6af7576324659856fb63dc8dcb4373f8345ff706388696f1254d"
+      },
+      {
+        "root": "native",
+        "package": "clang22",
+        "version": "22.1.3-r2",
+        "source_commit": "ae31ee6bd9b88ee679224bbb0105585725b33cdc",
+        "archive_SHA256": "2a6d8bdff328196d5c73300bd5d4d3e55b3d3ee3d9bdccff8d8ceb7398d0f6b9"
+      },
+      {
+        "root": "native",
+        "package": "clang22-headers",
+        "version": "22.1.3-r2",
+        "source_commit": "ae31ee6bd9b88ee679224bbb0105585725b33cdc",
+        "archive_SHA256": "a987e1e1b7e0c42a1868ca44b703fe07367cbdda4a71675a2517d5f5d0bc86fe"
+      },
+      {
+        "root": "native",
+        "package": "clang22-libs",
+        "version": "22.1.3-r2",
+        "source_commit": "ae31ee6bd9b88ee679224bbb0105585725b33cdc",
+        "archive_SHA256": "fbc673dd4057cec92532f9ae70fa1304ae56e3bc320b9fbbc54a99627b83be80"
+      },
+      {
+        "root": "native",
+        "package": "fakeroot",
+        "version": "1.37.2-r0",
+        "source_commit": "a3fd560179276f98b5cc52155c1393be48319885",
+        "archive_SHA256": "b6a0d6759bef6fc477857f1b74241d16a0b85f1dc9fa4a6a273e53b1e42bfb5d"
+      },
+      {
+        "root": "native",
+        "package": "file",
+        "version": "5.47-r2",
+        "source_commit": "a05d36fa86411cd0ce86d756f818e525d0eee1c3",
+        "archive_SHA256": "4681c153c509aec126e2b9ea2c959730309b24a792d49fc8cc26fa5fa87e8fdd"
+      },
+      {
+        "root": "native",
+        "package": "fortify-headers",
+        "version": "3.0.1-r2",
+        "source_commit": "363be18be4b1f33af5a058990ba9b297e8fb547b",
+        "archive_SHA256": "5ffaebd9f141ac3e3fa0cc99f798f64b4c0aa16fb06a7a77e68f63f350fe23aa"
+      },
+      {
+        "root": "native",
+        "package": "g++",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "35c39e8d3667d8603fe209dbafe67681c64b1cda66bf9c836bfb4d05b19a71fd"
+      },
+      {
+        "root": "native",
+        "package": "gcc",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "d1d482472ed91240731c60dbae8176bc1e32e1dfb694856da6759f6d32716325"
+      },
+      {
+        "root": "native",
+        "package": "gdbm",
+        "version": "1.26-r0",
+        "source_commit": "1ea03990396db618edfcc8a9a0bc6b72662bac8f",
+        "archive_SHA256": "3278ccba30b241168ca4ab93c919be805411b918fdc062f06d3684d12dc33ae3"
+      },
+      {
+        "root": "native",
+        "package": "gmp",
+        "version": "6.3.0-r4",
+        "source_commit": "206e7b39f7884d62a174aba4d33a42454518c1c2",
+        "archive_SHA256": "85323ef5bce8ff234736dc2d6592ea37aebdc6348a531e27430bdfe38364d256"
+      },
+      {
+        "root": "native",
+        "package": "isl26",
+        "version": "0.26-r2",
+        "source_commit": "4f94ecd650b5ea9d18882e45048ad78536fd3149",
+        "archive_SHA256": "30999fb66e296c8ea7aa102cad0d3095519b3022abb622d2951dd29367310ea9"
+      },
+      {
+        "root": "native",
+        "package": "jansson",
+        "version": "2.15.0-r0",
+        "source_commit": "88919740865a31680e7f1c4cb568dfd7a87e9f08",
+        "archive_SHA256": "7681b41486e1f2b2efce11875c839533464ae8857d30fc49130f0039c6585fdb"
+      },
+      {
+        "root": "native",
+        "package": "libapk",
+        "version": "3.0.9-r0",
+        "source_commit": "13685e8f2cf1c103cbba2fb9efcfcf19f4918df0",
+        "archive_SHA256": "24c6116eac6162e74be22026087de1a45bb43351a89f2914f62243b6d1deb76c"
+      },
+      {
+        "root": "native",
+        "package": "libatomic",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "c5ec550c73dd7b4e81e206fdff3cf4c46b0ae1b29fec1db5cd4e12d88416abbf"
+      },
+      {
+        "root": "native",
+        "package": "libbz2",
+        "version": "1.0.8-r6",
+        "source_commit": "33283848034c9885d984c8e8697c645c57324938",
+        "archive_SHA256": "2737e2b23ed08d4911ee62cd0163b5f4bf0379cacf4dc35b23a00209584c98fd"
+      },
+      {
+        "root": "native",
+        "package": "libcap-getcap",
+        "version": "2.78-r0",
+        "source_commit": "0c35848136c4c16a1b1672cb812efa88fffef1c2",
+        "archive_SHA256": "649b1de7cc4932d538b9d3f8760f1520b8f18babffb8e996dd9680f3e55bff27"
+      },
+      {
+        "root": "native",
+        "package": "libcap2",
+        "version": "2.78-r0",
+        "source_commit": "0c35848136c4c16a1b1672cb812efa88fffef1c2",
+        "archive_SHA256": "42886a7b4bcde26347c712925c8dc7db202b6029ef9b8c7ee81577ab7bdd8fad"
+      },
+      {
+        "root": "native",
+        "package": "libcrypto3",
+        "version": "3.5.9-r0",
+        "source_commit": "29b9ec24b1b5b39aeef51fa2a044210e2ec5258e",
+        "archive_SHA256": "6632d758d8f5e9ea3b650fe966f23bbf9a202f8b8dceecac93da135dec5e3689"
+      },
+      {
+        "root": "native",
+        "package": "libexpat",
+        "version": "2.10.0-r0",
+        "source_commit": "af0fa42036cd6e626768c0d65fddaa1d1b30cf21",
+        "archive_SHA256": "e7e7408ea787ed06d00159b0ff1f9b65a63cf634f36d9e0fa7512ce2c489a503"
+      },
+      {
+        "root": "native",
+        "package": "libffi",
+        "version": "3.5.2-r1",
+        "source_commit": "2c2a7bb4a8b16066834e90402567b2c19403a790",
+        "archive_SHA256": "6da1a19313a40c56cac756fb11e2c4d5267831e1c22fc8323f24c943c94da6e0"
+      },
+      {
+        "root": "native",
+        "package": "libgcc",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "393dcd32629f06d7d85409c272d142d0c082772d10b87ef55ee82f47de3be637"
+      },
+      {
+        "root": "native",
+        "package": "libgcc-static",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "563244a562f5c48b921f7f0b4a571e373cfcba65175fe2d4f752c5f975738bcd"
+      },
+      {
+        "root": "native",
+        "package": "libgomp",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "e7204aad00e31d544e0a34eac5a7eb7d3586d2b7b22afd6e5907189c4e0337cc"
+      },
+      {
+        "root": "native",
+        "package": "libmagic",
+        "version": "5.47-r2",
+        "source_commit": "a05d36fa86411cd0ce86d756f818e525d0eee1c3",
+        "archive_SHA256": "1820acd299025619a848b19ac98c7996fd92c06965255898800b6a790a8b03a2"
+      },
+      {
+        "root": "native",
+        "package": "libncursesw",
+        "version": "6.6_p20260516-r0",
+        "source_commit": "2cee8a7328d061418336ad327b512d96bcd7bc5e",
+        "archive_SHA256": "cf8caa8a88bc4ce9d9e395567fefaf9ef7fbd55c50ae6155b35c1b58f3755023"
+      },
+      {
+        "root": "native",
+        "package": "libpanelw",
+        "version": "6.6_p20260516-r0",
+        "source_commit": "2cee8a7328d061418336ad327b512d96bcd7bc5e",
+        "archive_SHA256": "057be8b1b788580f4cb72c382a6dcc03467d15bd69700f32192bd709e7a57a12"
+      },
+      {
+        "root": "native",
+        "package": "libssl3",
+        "version": "3.5.9-r0",
+        "source_commit": "29b9ec24b1b5b39aeef51fa2a044210e2ec5258e",
+        "archive_SHA256": "05e3393fb95aa5751ca2f9d242f659f6cff82c1cc7767cc2df4a086f7ad01877"
+      },
+      {
+        "root": "native",
+        "package": "libstdc++",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "14c987b556f5385a5db18376e788c75f37d85321b8dc1920d926ea7daac1d6f6"
+      },
+      {
+        "root": "native",
+        "package": "libstdc++-dev",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "62ce308cdbf127dcac6eee1520a4ffec8dc98b30974653908842fe4cc7d90b43"
+      },
+      {
+        "root": "native",
+        "package": "libxml2",
+        "version": "2.13.9-r2",
+        "source_commit": "f1bd5b6767a0e7fdda380c95138a1c938eb6e102",
+        "archive_SHA256": "4b2f986159c659f014b942fe8a5d70c67af475153ca826c3dd53389eea46a300"
+      },
+      {
+        "root": "native",
+        "package": "lld22",
+        "version": "22.1.3-r0",
+        "source_commit": "9d0ca4ff20830fc07268b0c2cf2042db6e480070",
+        "archive_SHA256": "758669cb183a6ddd6f36226a4cef07f260e37bdac3ac1486e65216c7e77bfd76"
+      },
+      {
+        "root": "native",
+        "package": "lld22-libs",
+        "version": "22.1.3-r0",
+        "source_commit": "9d0ca4ff20830fc07268b0c2cf2042db6e480070",
+        "archive_SHA256": "09baed80d6e836d2a09c7319e3a8406e09f2a798aa4e9cf066aa78024a3f6daf"
+      },
+      {
+        "root": "native",
+        "package": "llvm22-libs",
+        "version": "22.1.3-r1",
+        "source_commit": "7d10bc6cb2ec4d1202cc140ecc753d3200d84fc2",
+        "archive_SHA256": "dec15bdd29b6ec7fc22aee43bac153a22e6b132c599e5e5d9ccd0d159eae764f"
+      },
+      {
+        "root": "native",
+        "package": "llvm22-linker-tools",
+        "version": "22.1.3-r1",
+        "source_commit": "7d10bc6cb2ec4d1202cc140ecc753d3200d84fc2",
+        "archive_SHA256": "6ac25b0354487cbf43c78f9eaf1ba944cb8b4006a488508043841b129e31de25"
+      },
+      {
+        "root": "native",
+        "package": "lzip",
+        "version": "1.26-r0",
+        "source_commit": "585466346d7b86ff71b65703aa82d9ba69892511",
+        "archive_SHA256": "e1caf938ef0a668e386b74de165366f0cce2e172b0121930f1cef3a1924b21a8"
+      },
+      {
+        "root": "native",
+        "package": "make",
+        "version": "4.4.1-r4",
+        "source_commit": "9368161bd37f74fb11747ba79197f8480aaca7dc",
+        "archive_SHA256": "a916626a876f64c6b6fb32a6bf0fa93351d09fae0aa7684135642390da647e60"
+      },
+      {
+        "root": "native",
+        "package": "meson",
+        "version": "1.11.1-r0",
+        "source_commit": "cf1b0ed30f6e9324cac7ba2a13f890bf9c78ca3c",
+        "archive_SHA256": "643167c448e8303dbd7acebbaa33cfb670d67a861641c49727caa54a64f7dd28"
+      },
+      {
+        "root": "native",
+        "package": "meson-pyc",
+        "version": "1.11.1-r0",
+        "source_commit": "cf1b0ed30f6e9324cac7ba2a13f890bf9c78ca3c",
+        "archive_SHA256": "772b0bd3e7988810435e551b6be2d037c4ee50de16f63b5c85086e987dc83513"
+      },
+      {
+        "root": "native",
+        "package": "mpc1",
+        "version": "1.3.1-r1",
+        "source_commit": "84a227baf001b6e0208e3352b294e4d7a40e93de",
+        "archive_SHA256": "c2247438e163f1c11646428f07576ceb3cf3167f9a9a5c6526021f778d77adb6"
+      },
+      {
+        "root": "native",
+        "package": "mpdecimal",
+        "version": "4.0.1-r0",
+        "source_commit": "c0519b85456e9b838e3142e1d233aab0b433b476",
+        "archive_SHA256": "1278f374bbc8b4aad674244458cca5fc63e0780a921138eef400d5db64381a31"
+      },
+      {
+        "root": "native",
+        "package": "mpfr4",
+        "version": "4.2.2-r0",
+        "source_commit": "011955c827a3e7545ea82225e1f20c6a06617c7a",
+        "archive_SHA256": "93620a803d416e8c05150fb14413796df14ea370322dff6bd106455deab15646"
+      },
+      {
+        "root": "native",
+        "package": "musl",
+        "version": "1.2.6-r3",
+        "source_commit": "8f79d39391b46d6dbf1800fb68b8212a21d5ee2e",
+        "archive_SHA256": "e142255d0fa397f14318996bc10378093dcc069dc3dd1b6818c8f28a789c21da"
+      },
+      {
+        "root": "native",
+        "package": "musl-dev",
+        "version": "1.2.6-r3",
+        "source_commit": "8f79d39391b46d6dbf1800fb68b8212a21d5ee2e",
+        "archive_SHA256": "310b51cff12e1d5ce5f135c558a82e2550427da5465bbd16c9ff9b05e63ee3d9"
+      },
+      {
+        "root": "native",
+        "package": "musl-utils",
+        "version": "1.2.6-r3",
+        "source_commit": "8f79d39391b46d6dbf1800fb68b8212a21d5ee2e",
+        "archive_SHA256": "47263d05842c5e12d01e0369e5b5bea51733323501c00ca21968a5102de137ca"
+      },
+      {
+        "root": "native",
+        "package": "ncurses-terminfo-base",
+        "version": "6.6_p20260516-r0",
+        "source_commit": "2cee8a7328d061418336ad327b512d96bcd7bc5e",
+        "archive_SHA256": "ce83be6d0bd10584a53c3a5868cc1595ce5f0f8e0b621f8f7f70b6144e521fc9"
+      },
+      {
+        "root": "native",
+        "package": "openssl",
+        "version": "3.5.9-r0",
+        "source_commit": "29b9ec24b1b5b39aeef51fa2a044210e2ec5258e",
+        "archive_SHA256": "9358e8f38eb19a1e035355626570c76bda1e5a49084c768fb0edc1e607251e99"
+      },
+      {
+        "root": "native",
+        "package": "patch",
+        "version": "2.8.1-r0",
+        "source_commit": "5120e945a123efcb74ac4f3e9617165ea551c7d2",
+        "archive_SHA256": "9ea3be7dca8efce2031dbf3f885a54ad75515f2afe9a19e238d79e2ffbbe4240"
+      },
+      {
+        "root": "native",
+        "package": "pkgconf",
+        "version": "2.5.1-r0",
+        "source_commit": "c6f80aa8e59c70d19e2d556c526f151656058536",
+        "archive_SHA256": "20cc47b76b82e9424a35ecc4fdd7bd904ef49ada1684214910fae31bc0cab737"
+      },
+      {
+        "root": "native",
+        "package": "python3",
+        "version": "3.14.10-r1",
+        "source_commit": "831cfeb7301d5010c027905e42958312698f4e4a",
+        "archive_SHA256": "32ae9c446a79f965f942ae704c5121fa4744c5fee76ec86955fe0fc9a6e6c412"
+      },
+      {
+        "root": "native",
+        "package": "python3-pycache-pyc0",
+        "version": "3.14.10-r1",
+        "source_commit": "831cfeb7301d5010c027905e42958312698f4e4a",
+        "archive_SHA256": "19a814d76898adbf90ec0f33ff1fd85fb8454be8615f4993fba0b69b7b978926"
+      },
+      {
+        "root": "native",
+        "package": "readline",
+        "version": "8.3.3-r1",
+        "source_commit": "a854c03acdac188901fb012f7acbee70a36e8041",
+        "archive_SHA256": "766911ecb986a6c5cf0841a6b556cd1e9dbbf22b3559726de32416486cd15c81"
+      },
+      {
+        "root": "native",
+        "package": "samurai",
+        "version": "1.2-r8",
+        "source_commit": "d7d0e7c6dea902bafc0462da51e5e5a6c0b685d5",
+        "archive_SHA256": "f959c2baf5a6438bd7d74aa16b56c8526c116233052a71d598940e6f5b4400f9"
+      },
+      {
+        "root": "native",
+        "package": "scanelf",
+        "version": "1.3.9-r1",
+        "source_commit": "c61801eeacb3ffcd9c2025b09e402153bb93fb39",
+        "archive_SHA256": "524e1c0b09bbf85a3474f98904dc30628472fcb0d37aa8f7201407f5c5e72c31"
+      },
+      {
+        "root": "native",
+        "package": "scudo-malloc",
+        "version": "22.1.3-r0",
+        "source_commit": "511a3625b684ad3e2c58130e233bb0a9f83aacae",
+        "archive_SHA256": "3a34e54040c95c585a49fcb0d07e794cc0e9093d1dd61860a508c300d0edf3d4"
+      },
+      {
+        "root": "native",
+        "package": "sqlite-libs",
+        "version": "3.53.4-r0",
+        "source_commit": "a9c3ba8b9129ec0f294d0a9bf538c2f1632bb016",
+        "archive_SHA256": "a8a216e53d22faa3f04d2e3650c1991af66f8d0b42fadff5afcdb9afb60b19e5"
+      },
+      {
+        "root": "native",
+        "package": "ssl_client",
+        "version": "1.37.0-r31",
+        "source_commit": "c3ef5d10e6ef6528852c51f0564963e2f8c1be19",
+        "archive_SHA256": "e578a140670e4cf9816117b0c2063632bf3754ecbe8fa593a7fd2b4039372bf0"
+      },
+      {
+        "root": "native",
+        "package": "tar",
+        "version": "1.35-r5",
+        "source_commit": "a9e2a2dc46f377eb25884f7fea9834492de7f518",
+        "archive_SHA256": "5dad2fe0c7d18394dd7ffb64682760ce63718a7a1552b661f6e63036ce8b4958"
+      },
+      {
+        "root": "native",
+        "package": "xz-libs",
+        "version": "5.8.4-r0",
+        "source_commit": "0c088d609f9fe69eedd6b4c7f4b99cdad847c20a",
+        "archive_SHA256": "ab362dd515ead04c31a6c302163248da7aa4813e283c971e6dd3f789b453a1d9"
+      },
+      {
+        "root": "native",
+        "package": "zlib",
+        "version": "1.4-r0",
+        "source_commit": "bdf501c870a92a05c097857401f69c48c4810384",
+        "archive_SHA256": "7b05bc778b8b25cd880835b40114182bd4d1581717504d0129c810c0a14291cb"
+      },
+      {
+        "root": "native",
+        "package": "zstd-libs",
+        "version": "1.5.7-r2",
+        "source_commit": "3c6e2ee2b16f403d53eab39c4426eb61f003c322",
+        "archive_SHA256": "23c6065b0049b2406441564bcf0032515a43f78e80d76fcb85535a3803ef5d4e"
+      },
+      {
+        "root": "native",
+        "package": "build-base",
+        "version": "0.5-r4",
+        "source_commit": "1eff03395e9533e60c804a7a21400e59d5c8a1bf",
+        "archive_SHA256": "3ac72e74e96150995e8d797b6c33fc3b46d69e3667c47bd0ff25ce89f9fc4eaf"
+      },
+      {
+        "root": "native",
+        "package": "pyc",
+        "version": "3.14.10-r1",
+        "source_commit": "831cfeb7301d5010c027905e42958312698f4e4a",
+        "archive_SHA256": "8b1678559e6c29db978a923b611cd21a8bfda26d4814edefbb2d62a903bf7df8"
+      },
+      {
+        "root": "native",
+        "package": "python3-pyc",
+        "version": "3.14.10-r1",
+        "source_commit": "831cfeb7301d5010c027905e42958312698f4e4a",
+        "archive_SHA256": "bc63349707d5658ee2d852e415846246b8d71ece5007120b1d2aee85b4a2ad0a"
+      },
+      {
+        "root": "native",
+        "package": "qmic",
+        "version": "1.0-r2",
+        "source_commit": "ddba0e12b7667a29df359e68d37ebdf222f501ef",
+        "archive_SHA256": "1e281a0eb72d7796111a52ccf169e1f3334f4b4c35f86727b49f5cc600385e39"
+      },
+      {
+        "root": "target",
+        "package": "binutils",
+        "version": "2.45.1-r1",
+        "source_commit": "673df4f3ce2e71e9bcfbf64939332917a35795fc",
+        "archive_SHA256": "a26ba698213c0509afb7444beaeae1f8d69dbe0d6bd336c1b8c180ae322fb284"
+      },
+      {
+        "root": "target",
+        "package": "eudev-dev",
+        "version": "3.2.14-r6",
+        "source_commit": "4133df77f8cc98f92679b79de07736589fa48bff",
+        "archive_SHA256": "ea7f66deb900b93a5b280492b819b25b6b305cbc849eb916241338b100b934fa"
+      },
+      {
+        "root": "target",
+        "package": "eudev-libs",
+        "version": "3.2.14-r6",
+        "source_commit": "4133df77f8cc98f92679b79de07736589fa48bff",
+        "archive_SHA256": "d3318584962ac04321075e61c0fe3d1ca2991cf801ee3d8b1568ab8edb27d5a0"
+      },
+      {
+        "root": "target",
+        "package": "file",
+        "version": "5.47-r2",
+        "source_commit": "a05d36fa86411cd0ce86d756f818e525d0eee1c3",
+        "archive_SHA256": "05ea9a8733b3a1acb9ea8db5f7773b6236b7f220ae8311c0d3ac7dce38221009"
+      },
+      {
+        "root": "target",
+        "package": "fortify-headers",
+        "version": "3.0.1-r2",
+        "source_commit": "363be18be4b1f33af5a058990ba9b297e8fb547b",
+        "archive_SHA256": "6ac20d96c08a508e4f470214657b55614d68d15c48c338943cddc8558b324e2f"
+      },
+      {
+        "root": "target",
+        "package": "g++",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "491e32951d284e19ae9ca69a437b4f61911467f84b6005ba774c186e39e98b25"
+      },
+      {
+        "root": "target",
+        "package": "gcc",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "5a09f1654ff4e4b724dae867fcf92a9fc2055691af368bc5c90205d5540c84c9"
+      },
+      {
+        "root": "target",
+        "package": "gmp",
+        "version": "6.3.0-r4",
+        "source_commit": "206e7b39f7884d62a174aba4d33a42454518c1c2",
+        "archive_SHA256": "b280bd56f442aa12abc377f40000e683974fe9ca430d7a1a09cb8a2e8229f7fe"
+      },
+      {
+        "root": "target",
+        "package": "isl26",
+        "version": "0.26-r2",
+        "source_commit": "4f94ecd650b5ea9d18882e45048ad78536fd3149",
+        "archive_SHA256": "4fe3ef352ca81467948a718c41fcc2b501bcad1c37914bc0fe91519a77229c76"
+      },
+      {
+        "root": "target",
+        "package": "jansson",
+        "version": "2.15.0-r0",
+        "source_commit": "88919740865a31680e7f1c4cb568dfd7a87e9f08",
+        "archive_SHA256": "448a028a84226bb710d5101e8ead9f652ef0e6e5e2abde7b13378e25a2c87d42"
+      },
+      {
+        "root": "target",
+        "package": "libatomic",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "f4e32956cf9d353f6b6f1c1e570a896eb7934047c635c89f6a12ec599befbeeb"
+      },
+      {
+        "root": "target",
+        "package": "libgcc",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "70aa586717f20bf57f80c06d454712095964261c02c92f8d3a120a0aecd05934"
+      },
+      {
+        "root": "target",
+        "package": "libgcc-static",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "9a8f82b607183621c03c5e0caaf65695f5d3c66643133649e0d030dc3416fcf3"
+      },
+      {
+        "root": "target",
+        "package": "libgomp",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "a12f05478d71db2d416081c17b1de3cfe23dd603b328d7642f276e8a844c6413"
+      },
+      {
+        "root": "target",
+        "package": "libmagic",
+        "version": "5.47-r2",
+        "source_commit": "a05d36fa86411cd0ce86d756f818e525d0eee1c3",
+        "archive_SHA256": "7e847fd8658a5dfbb851ea931a51fe71a601fb048097514947f11c1038fb97bf"
+      },
+      {
+        "root": "target",
+        "package": "libstdc++",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "c57f103f92812e2c6c8fb81ffa61df3dcb08a49917a2284aff64bddeade6f310"
+      },
+      {
+        "root": "target",
+        "package": "libstdc++-dev",
+        "version": "15.2.0-r5",
+        "source_commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+        "archive_SHA256": "95057d417dcfe05ba78ad680d37a27d90b435e9a5cc87e1ad446c948f2a3608f"
+      },
+      {
+        "root": "target",
+        "package": "linux-headers",
+        "version": "7.0.0-r1",
+        "source_commit": "4568bf119fd5a67f5d895a2a68a1dcf8b7bfa606",
+        "archive_SHA256": "88acd70556ed1aa85fe617c9ad02012f8cc36eaf7d06da09e701c47fc8a98222"
+      },
+      {
+        "root": "target",
+        "package": "make",
+        "version": "4.4.1-r4",
+        "source_commit": "9368161bd37f74fb11747ba79197f8480aaca7dc",
+        "archive_SHA256": "b0cfd942aa5c5bae9889ba40ddc5bae4c465df11a13857e786ff0b72bb036135"
+      },
+      {
+        "root": "target",
+        "package": "mpc1",
+        "version": "1.3.1-r1",
+        "source_commit": "84a227baf001b6e0208e3352b294e4d7a40e93de",
+        "archive_SHA256": "60617a1afaefe06fbcc1dcc85adadf4c4395ee32a08e94b82bc906ee16133bde"
+      },
+      {
+        "root": "target",
+        "package": "mpfr4",
+        "version": "4.2.2-r0",
+        "source_commit": "011955c827a3e7545ea82225e1f20c6a06617c7a",
+        "archive_SHA256": "310fbc9ee2264b70b9fc8e3287fce481293f1cf726b7d99eb3344091646a1f64"
+      },
+      {
+        "root": "target",
+        "package": "musl",
+        "version": "1.2.6-r3",
+        "source_commit": "8f79d39391b46d6dbf1800fb68b8212a21d5ee2e",
+        "archive_SHA256": "9fca75b09538f9788b1ca800d56cd93dd4d584fac76a57c959666a9a0b93d397"
+      },
+      {
+        "root": "target",
+        "package": "musl-dev",
+        "version": "1.2.6-r3",
+        "source_commit": "8f79d39391b46d6dbf1800fb68b8212a21d5ee2e",
+        "archive_SHA256": "f088a30a2ce46fc3ad4f108465a9399b668a99ee3d167cd805f6826a961d072e"
+      },
+      {
+        "root": "target",
+        "package": "patch",
+        "version": "2.8.1-r0",
+        "source_commit": "5120e945a123efcb74ac4f3e9617165ea551c7d2",
+        "archive_SHA256": "a4cf15dbf83b03e018ca5e360a13ddff9d1263dde8bfa013cceac4014a465071"
+      },
+      {
+        "root": "target",
+        "package": "pkgconf",
+        "version": "2.5.1-r0",
+        "source_commit": "c6f80aa8e59c70d19e2d556c526f151656058536",
+        "archive_SHA256": "f28a0d95d7cbf7460d59d9a169cdc8cbf56ac9cfb4a7ecb0a2029883da5a1d55"
+      },
+      {
+        "root": "target",
+        "package": "zlib",
+        "version": "1.4-r0",
+        "source_commit": "bdf501c870a92a05c097857401f69c48c4810384",
+        "archive_SHA256": "7ff3adec6ee811a8e7ac2c37e3119fa0923d087590ff52507362bbaa67b12b81"
+      },
+      {
+        "root": "target",
+        "package": "zstd-libs",
+        "version": "1.5.7-r2",
+        "source_commit": "3c6e2ee2b16f403d53eab39c4426eb61f003c322",
+        "archive_SHA256": "15a00d79b69cb9b3ce7252dc35a370406623ebc96e8631e04f6d48c7421a55d4"
+      },
+      {
+        "root": "target",
+        "package": "build-base",
+        "version": "0.5-r4",
+        "source_commit": "1eff03395e9533e60c804a7a21400e59d5c8a1bf",
+        "archive_SHA256": "6f82e968455fb290c3dc165e0e142fc6d39cde9464d8c4a77ebf846fa27f21ef"
+      }
+    ],
+    "original_dirty_cross_GCC_attempt_retained_and_not_used": true
+  },
+  "qrtr": {
+    "version": "1.2-r2",
+    "normal_builds": 2,
+    "complete_source_paths_verified_each": 40,
+    "raw_ELF_outputs_identical": 14,
+    "artifacts": [
+      {
+        "name": "qrtr-1.2-r2.apk",
+        "bytes": 7675,
+        "SHA256": "64666d090e6dbb61c75a44e4f0a2d5a7ce64f04442b7fa6fac1511d28d4f6c46",
+        "independent_RSA_signature_and_changed_signature_control_pass": true
+      },
+      {
+        "name": "qrtr-dev-1.2-r2.apk",
+        "bytes": 3659,
+        "SHA256": "9f9d0ff1bf65f93e75ca65821a4822832e30ca7b6bde66e5acf785654638ce70",
+        "independent_RSA_signature_and_changed_signature_control_pass": true
+      },
+      {
+        "name": "qrtr-doc-1.2-r2.apk",
+        "bytes": 2424,
+        "SHA256": "4cf47cdc422ed8f26f1a9c2908dcfb55f01df8bcaa015211ccd65ad8fbe49202",
+        "independent_RSA_signature_and_changed_signature_control_pass": true
+      },
+      {
+        "name": "qrtr-libs-1.2-r2.apk",
+        "bytes": 8229,
+        "SHA256": "a79033a3b571c451c50a60963d38ae4ae8598109fc7eed54a2acc0935deba056",
+        "independent_RSA_signature_and_changed_signature_control_pass": true
+      },
+      {
+        "name": "APKINDEX.tar.gz",
+        "bytes": 1322,
+        "SHA256": "1ed7325e923e2a3e57b622a6112415e788d9b4d1a9d9c2d3f2bfa0e127fd4a4b",
+        "independent_RSA_signature_and_changed_signature_control_pass": true
+      }
+    ],
+    "signed_library_ARM_QEMU_cases_passed": 52,
+    "signed_library_ARM_QEMU_cases_failed": 0
+  },
+  "rmtfs": {
+    "version": "1.3-r1",
+    "normal_builds": 2,
+    "complete_source_paths_verified_each": 18,
+    "actual_qmic_generation_and_exact_C_header_contracts_passed_each": true,
+    "raw_ELF_outputs_identical": 7,
+    "artifacts": [
+      {
+        "name": "rmtfs-1.3-r1.apk",
+        "bytes": 14690,
+        "SHA256": "bfab3df30eb12485fc5aa826fb736a4b1a5eaf101a9523d9c31fc3837d547042",
+        "independent_RSA_signature_and_changed_signature_control_pass": true
+      },
+      {
+        "name": "rmtfs-doc-1.3-r1.apk",
+        "bytes": 2417,
+        "SHA256": "b5664f4b2ae0b518818bd75319e31ba93ff086c7c5d40e5189f9dc5f1d08b037",
+        "independent_RSA_signature_and_changed_signature_control_pass": true
+      },
+      {
+        "name": "rmtfs-openrc-1.3-r1.apk",
+        "bytes": 2123,
+        "SHA256": "0b0f840b7bf4e4997f8e1f7654ff138ef129db36d38cb00bd5ad06e23d271d63",
+        "independent_RSA_signature_and_changed_signature_control_pass": true
+      },
+      {
+        "name": "rmtfs-systemd-1.3-r1.apk",
+        "bytes": 1882,
+        "SHA256": "38288b06d17d1194797968db66d6c786c1ad61a98b626b8ae779fb17e4ca5b1e",
+        "independent_RSA_signature_and_changed_signature_control_pass": true
+      },
+      {
+        "name": "rmtfs-udev-1.3-r1.apk",
+        "bytes": 2121,
+        "SHA256": "e70d72349b03936c39853c8cd2fe09886eb689fc27b9fcab306f2bae3173427c",
+        "independent_RSA_signature_and_changed_signature_control_pass": true
+      },
+      {
+        "name": "APKINDEX.tar.gz",
+        "bytes": 1333,
+        "SHA256": "525f8a5c09509baaf9f68fa9818c4c8994914b494189a7dc6b630f0a296a717f",
+        "independent_RSA_signature_and_changed_signature_control_pass": true
+      }
+    ],
+    "ARM_early_CLI_exits": [
+      {
+        "case": "unknown-option",
+        "returncode": 1,
+        "no_socket_or_device_open_in_QEMU_syscall_trace": true
+      },
+      {
+        "case": "invalid-slot",
+        "returncode": 255,
+        "no_socket_or_device_open_in_QEMU_syscall_trace": true
+      }
+    ],
+    "no_install_hooks_in_control_archives": true,
+    "distribution_service_rules_license_and_attribution_preserved": true,
+    "standard_service_includes_remoteproc_management_s_option": true,
+    "first_physical_trial_requires_separate_reviewed_service_configuration": true
+  },
+  "integrity": {
+    "all_artifact_pairs_byte_identical": true,
+    "independent_RSA_and_payload_datahash_checks": true,
+    "altered_signed_bytes_rejected": true,
+    "signed_index_C_checks_match_actual_package_controls": true,
+    "ARM_EABI5_hardfloat_VFPv3_D16_verified": true,
+    "expected_dynamic_dependencies_only_no_RPATH_or_RUNPATH": true
+  },
+  "compiler_warning_limits": {
+    "no_C_source_warnings": true,
+    "unsupported_standard_GCC_options_have_no_effect_with_this_ARM_Clang_profile": true,
+    "ignored_options_not_claimed_as_enabled_hardening": true,
+    "occurrences_per_build": {
+      "qrtr-standard-package-03": {
+        "-fstack-clash-protection": 7,
+        "-fno-plt": 7
+      },
+      "qrtr-standard-package-04": {
+        "-fstack-clash-protection": 7,
+        "-fno-plt": 7
+      },
+      "rmtfs-standard-package-01": {
+        "-fstack-clash-protection": 6,
+        "-fno-plt": 6
+      },
+      "rmtfs-standard-package-02": {
+        "-fstack-clash-protection": 6,
+        "-fno-plt": 6
+      }
+    }
+  },
+  "prior_lifecycle_memory_protocol_source_continuity_preserved": true,
+  "new_Clang_cohort_lifecycle_memory_protocol_reexecution_pending": true,
+  "no_daemon_modem_or_phone_action": true,
+  "physical_RFSA_firmware_modem_GNSS_acceptance": false,
+  "full_bringup_complete": false
+}

@@ -1,0 +1,108 @@
+{
+  "recorded_UTC": "2026-11-14T17:23:06.608267+00:00",
+  "state": "PASS public bounded private-console workflow qualification; no new phone capture",
+  "qualification_contexts": [
+    {
+      "name": "clean-review-checkout",
+      "actual_returncode": 0,
+      "passed_methods": 19,
+      "skipped": 0,
+      "ignored_local_program_tree_present": false
+    },
+    {
+      "name": "source-only-export",
+      "actual_returncode": 0,
+      "passed_methods": 19,
+      "skipped": 0,
+      "ignored_local_program_tree_present": false
+    }
+  ],
+  "source_files_SHA256": {
+    "diagnostics/kernel-maintenance/native-console.md": "85f103c205f498400386dda5235270c90b34f97b93102b65acdba86c9791425c",
+    "diagnostics/kernel-maintenance/native_console.py": "6b1a83707a88970b93549790bb937e19fb5f5d59d8ac4279b5d777b8e0f11591",
+    "diagnostics/kernel-maintenance/native_console_analysis.py": "e00aead0978ef38592e0bdb5157ec79c72614a7fd1bbb0d15a2bbdad8365b520",
+    "diagnostics/kernel-maintenance/native_console_probe.py": "1e948b1e2c5b6dedc4e2ce479b53c84d20d68b274c45b39770a4c9a04ac93801",
+    "diagnostics/kernel-maintenance/native_trial_adapter.py": "d3e11d466cf86bcef252df9820d1e2e2c662e6fcdbc533cdb078f614645ab889",
+    "diagnostics/kernel-maintenance/native_trial_health_probe.py": "f7e5d35c3ed73743cac2892b50f90ec05b0190d7b296346bc5ae9d35d6792326",
+    "diagnostics/kernel-maintenance/native_trial_observer.py": "a69a3e2e1ab51ad6cb666bde324f171967e04aec92e8ee9cc5ec4fad9195d2d1",
+    "diagnostics/kernel-maintenance/native_trial_stage_probe.py": "be9f1993630cdaa9d52f1875372cba54183e24d70ab14f5add831e62e1f2500d",
+    "diagnostics/modem-control/passive_adapter.py": "ce40e5bbaacfffcc4db17396d9404d75b9e266f9d5277f565d7cccf230f96cb3",
+    "diagnostics/modem-control/passive_native_probe.py": "56fd575e52c6b5bd059cb0e1667053896e1e504cab389bf491d7df7f8e3e5488",
+    "diagnostics/modem-control/passive_runtime.py": "31629e68235fbb689c9e3ecb15bb7f230b790d9923af31c4ee6236219d2d0e08",
+    "diagnostics/modem-control/passive_trial.py": "24e5cd675f40f787298dbbf1ea0a21f46a2d39033512075b40e31bfb67e487f8",
+    "manifests/display-handoff-trace-sites.json": "b331b04fb2399b643a24312219d14a693eef8295d560a19b36a27dea1679d5b4",
+    "manifests/native-console-capture.json": "ec6543b416fcb5ce4988837b5de656865a54b24b40f1c23ab088672f6e34f062",
+    "scripts/boot_fx0_ram.py": "fea54ce86d19f1a51665446095e9ae3dce60b34a0f38bfc70f7764f5611409b6",
+    "scripts/transfer_fx0_ram.py": "f402151d94422c895632276ec996b2a47f29dfa6269ddd4c7739b64fc1b5299c",
+    "tests/test_native_console.py": "fbd0d1c94a83565a91785938b59b6117c00fd5ce3018f21715d945362d0209f8"
+  },
+  "source_lock_SHA256": "ec6543b416fcb5ce4988837b5de656865a54b24b40f1c23ab088672f6e34f062",
+  "actual_static_input_check": {
+    "plan_SHA256": "7b0526540fefae5941bf057224acfed506595f03983e8a35c41e2dcb2d09ace3",
+    "exit_code": 0,
+    "inputs_verified": true,
+    "credential_client_loaded": false,
+    "device_actions": false
+  },
+  "capture_contract": {
+    "fixed_console_paths": 8,
+    "maximum_bytes_per_file": 1048576,
+    "maximum_raw_bytes_total": 4194304,
+    "maximum_host_transport_bytes": 8388608,
+    "no_symlink_following_in_path_components_or_final_file": true,
+    "regular_root_owned_not_group_or_world_writable_files": true,
+    "double_read_and_metadata_stability_checked": true,
+    "native_boot_and_notes_bound_before_and_after_read": true,
+    "read_only_SSH_timeout_seconds": 20,
+    "raw_outputs_private_modes": "0600 files in0700 directories",
+    "claim_or_reboot_or_stage_operations": false
+  },
+  "phase_gates": {
+    "before": "Specific current repeat operator gate and undispatched attempt",
+    "after": "Durable claim and distinct fully verified installed-r1 return",
+    "source_drift_and_private_client_or_device_record_hash_roles_reject": true,
+    "existing_capture_workspace_rejects_before_client_load": true,
+    "optimized_Python_rejects": true
+  },
+  "trace_catalog": {
+    "source_commit": "de5568bfc81f221984b8e82519af9a15b00b5b6f",
+    "source_files_verified": 4,
+    "known_sites": 15,
+    "exact_formats_already_verified_in_linked_outputs": true,
+    "C_escapes_verified_as_actual_newlines": true,
+    "initial_escape_assumption_rejected_by_byte_check_before_catalog_write": true
+  },
+  "retained_first_r2_tail_replay": {
+    "input_scope": "Retained sanitized banner and last12 lines from the first completed r2 trial; not fresh capture",
+    "input_SHA256": "d2d51b0fd503450c70e298bd3161b3a0ef4a979cede27ce20d2d6d7913f4ce80",
+    "full_record": false,
+    "context_fault_messages": 1,
+    "last_observed_seconds": 6.164901,
+    "missing_trace_is_inconclusive": true,
+    "candidate_boot_attribution_proven": false,
+    "reset_cause_proven": false,
+    "raw_lines_included": false
+  },
+  "summary_contract": [
+    "Fixed trace IDs and known release labels only; no arbitrary raw line/prefix/command line/address/PID echo",
+    "Bound event list at512 while retaining exact known-site counts",
+    "Distinguish changed/unchanged/new/disappeared/missing/inconclusive records",
+    "Changed record is not proven candidate-boot attribution",
+    "A fault/panic marker or missing trace is not a proven reset cause"
+  ],
+  "native_runtime_plan_and_images_unchanged": true,
+  "private_client_body_or_device_record_read_hashed_or_copied": false,
+  "root_index_unchanged": true,
+  "actual_device_providers_replaced_by_fixture_responses": true,
+  "phone_access": false,
+  "new_console_capture_performed": false,
+  "trial_dispatched": false,
+  "publication": false,
+  "full_goal_complete": false,
+  "limitations": [
+    "Native pstore filesystems and current phone contents have not been exercised by these tests.",
+    "The retained replay is a sanitized banner and12 tail lines, not a new full console or paired capture.",
+    "All new transport/identity responses are fixtures.",
+    "Physical r2/R5 startup, display/touch, automatic return and the full nonaudio bringup remain open."
+  ]
+}

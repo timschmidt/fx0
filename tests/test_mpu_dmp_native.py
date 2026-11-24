@@ -1,11 +1,13 @@
 """Compile actual native transport against a fault-injected banked regmap model."""
+import os
 import pathlib
 import subprocess
 import tempfile
 import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-SOURCE = ROOT / 'worktrees/linux-dmp-recovery/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c'
+KERNEL = pathlib.Path(os.environ.get('FX0_KERNEL_SOURCE', ROOT/'worktrees/linux-fx0-cpr'))
+SOURCE = KERNEL/'drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c'
 
 SHIM = r'''
 #include <assert.h>
@@ -147,6 +149,13 @@ int main(void) {
  return 0;
 }
 '''
+
+# Stream lifecycle tests compile only stream/recovery entry points. SMD PM
+# entry points are covered by test_mpu_dmp_smd with their own PM/IRQ model.
+STREAM_SHIM = SHIM.replace('unsigned user_ctrl, int_enable, fifo_r_w;',
+                           'unsigned user_ctrl, int_enable, fifo_r_w, int_status;')
+STREAM_SHIM = STREAM_SHIM.replace('bool dmp_active,dmp_saved_valid,dmp_overflow;',
+                                 'bool dmp_active,dmp_saved_valid,dmp_overflow,dmp_smd_mode;')
 
 LIFECYCLE_SHIM = r'''
 typedef uint64_t u64; typedef int64_t s64;
@@ -304,7 +313,7 @@ class NativeTransportTest(unittest.TestCase):
     def test_real_c_configuration_and_decoder(self):
         code = SOURCE.read_text()
         prefix = code.split('#define INV_MPU6515_DMP_FIRMWARE')[0]
-        suffix = code[code.index('int inv_mpu6515_dmp_configure('):].split('/* Registers changed by the DMP mode;')[0]
+        suffix = code[code.index('int inv_mpu6515_dmp_configure('):].split('/* Manufacturer SMD defaults;')[0]
         code = '\n'.join(line for line in (prefix + suffix).splitlines()
                          if not line.startswith('#include'))
         with tempfile.TemporaryDirectory(prefix='fx0-native-packet-') as directory:
@@ -319,13 +328,13 @@ class NativeTransportTest(unittest.TestCase):
     def test_real_c_lifecycle_and_fifo(self):
         source = SOURCE.read_text()
         prefix = source.split('#define INV_MPU6515_DMP_FIRMWARE')[0]
-        suffix = source[source.index('int inv_mpu6515_dmp_configure('):]
+        suffix = source[source.index('int inv_mpu6515_dmp_configure('):].split('\nint inv_mpu6515_dmp_smd_set(')[0]
         code = '\n'.join(line for line in (prefix + suffix).splitlines()
                          if not line.startswith('#include'))
         with tempfile.TemporaryDirectory(prefix='fx0-native-fifo-') as directory:
             src = pathlib.Path(directory) / 'fifo.c'
             exe = pathlib.Path(directory) / 'fifo'
-            src.write_text(SHIM + PACKET_SHIM + LIFECYCLE_SHIM + code + LIFECYCLE_MAIN)
+            src.write_text(STREAM_SHIM + PACKET_SHIM + LIFECYCLE_SHIM + code + LIFECYCLE_MAIN)
             subprocess.run(['cc', '-std=gnu11', '-Wall', '-Wextra', '-Werror',
                             str(src), '-o', str(exe)], check=True)
             result = subprocess.run([str(exe)], check=True, text=True, capture_output=True)

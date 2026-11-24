@@ -1,0 +1,948 @@
+From 24a6bdb6bf27822b25288db0c6ecaabe99afa1fb Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Mon, 9 Nov 2026 01:13:12 -0500
+Subject: [PATCH] linux: validate battery readings and retry recovered supplies
+
+Keep failed, malformed, non-finite and out-of-range readings distinct from a real zero. Validate remaining charge with full/design data before exposing a battery, read charge fields once per refresh, and retain last good properties and update time on an unusable sample. Retry an ignored supply after usable telemetry appears, using the existing removal path to clear sibling links first.
+
+Prefer valid capacity, then actual remaining charge, then recognized capacity levels. Preserve peripheral Unknown levels and MacBook peripheral percentages, and do not replace zero energy with an older average. Keep charger-only/design-only/relative-counter interfaces ignored and retain genuine empty-battery warnings.
+
+Add 28 UMockdev/private D-Bus validity and lifecycle cases and build the test-only libudev NULL-read shim through Meson. The shim models ENODATA at the library boundary; it does not inject a kernel error. Base the existing simulated 1 W charge/discharge fixture on elapsed monotonic time so host scheduling does not change the simulated power.
+
+Backport the current core positive-denominator guard when inferring percentage, preventing division by zero for a valid zero-capacity battery without full metadata.
+
+All 122 configured Linux tests pass with iDevice disabled. These are x86_64 mock tests; ARM packaging and native deployment remain open.
+---
+ src/linux/integration-test.py        | 371 ++++++++++++++++++++++++++-
+ src/linux/tests/sysfs-read-error.c   |  48 ++++
+ src/linux/up-device-supply-battery.c | 154 ++++++++---
+ src/linux/up-device-supply-battery.h |   6 +
+ src/linux/up-device-supply.c         |  52 +++-
+ src/linux/up-device-supply.h         |   3 +
+ src/linux/up-enumerator-udev.c       |  37 ++-
+ src/meson.build                      |   8 +-
+ src/up-device-battery.c              |   2 +-
+ 9 files changed, 614 insertions(+), 67 deletions(-)
+ create mode 100644 src/linux/tests/sysfs-read-error.c
+
+diff --git a/src/linux/integration-test.py b/src/linux/integration-test.py
+index b997e8b..7053eb4 100755
+--- a/src/linux/integration-test.py
++++ b/src/linux/integration-test.py
+@@ -18,6 +18,7 @@
+ # GNU General Public License for more details.
+ 
+ import os
++import json
+ import sys
+ import dbus
+ import tempfile
+@@ -722,6 +723,348 @@ class Tests(dbusmock.DBusTestCase):
+             self.get_dbus_display_property("WarningLevel"), UP_DEVICE_LEVEL_CRITICAL
+         )
+ 
++    def _validity_snapshot(self, label):
++        snapshot = {
++            "label": label,
++            "devices": list(self.proxy.EnumerateDevices()),
++            "present": self.get_dbus_display_property("IsPresent"),
++            "percentage": self.get_dbus_display_property("Percentage"),
++            "state": self.get_dbus_display_property("State"),
++            "warning": self.get_dbus_display_property("WarningLevel"),
++            "on_battery": self.get_dbus_property("OnBattery"),
++        }
++        print("FX0_VALIDITY_OBSERVATION " + json.dumps(snapshot), flush=True)
++        return snapshot
++
++    def _validity_add_battery(self, attributes):
++        if "energy_full" not in attributes and "charge_full" not in attributes:
++            attributes = [
++                "energy_full",
++                "10000000",
++                "energy_full_design",
++                "10000000",
++            ] + attributes
++        return self.testbed.add_device(
++            "power_supply",
++            "validity-battery",
++            None,
++            [
++                "type",
++                "Battery",
++                "present",
++                "1",
++                "status",
++                "Discharging",
++                "voltage_now",
++                "3800000",
++            ]
++            + attributes,
++            [],
++        )
++
++    def _validity_assert_unusable(self, label, attributes):
++        self._validity_add_battery(attributes)
++        self.start_daemon()
++        observed = self._validity_snapshot(label)
++        self.assertEqual(observed["warning"], UP_DEVICE_LEVEL_NONE, observed)
++        self.assertEqual(observed["devices"], [], observed)
++        self.assertFalse(observed["present"], observed)
++
++    def test_validity_empty_capacity(self):
++        self._validity_assert_unusable("empty_capacity", ["capacity", ""])
++
++    def test_validity_malformed_capacity(self):
++        self._validity_assert_unusable("malformed_capacity", ["capacity", "invalid"])
++
++    def test_validity_nan_capacity(self):
++        self._validity_assert_unusable("nan_capacity", ["capacity", "nan"])
++
++    def test_validity_infinite_capacity(self):
++        self._validity_assert_unusable("infinite_capacity", ["capacity", "inf"])
++
++    def test_validity_negative_capacity(self):
++        self._validity_assert_unusable("negative_capacity", ["capacity", "-1"])
++
++    def test_validity_malformed_energy(self):
++        self._validity_assert_unusable(
++            "malformed_energy", ["energy_full", "10000000", "energy_now", "invalid"]
++        )
++
++    def test_validity_malformed_average_energy(self):
++        self._validity_assert_unusable(
++            "malformed_average_energy",
++            ["energy_full", "10000000", "energy_avg", "invalid"],
++        )
++
++    def test_validity_malformed_charge(self):
++        self._validity_assert_unusable(
++            "malformed_charge", ["charge_full", "2370000", "charge_now", "invalid"]
++        )
++
++    def _validity_read_error_environment(self, trigger=None):
++        import unittest.mock
++
++        library = os.environ["FX0_GUDEV_READ_ERROR_LIBRARY"]
++        self.assertTrue(os.path.isfile(library), "Test shim not built")
++        directory = tempfile.mkdtemp(prefix="upower-validity-")
++        self.addCleanup(shutil.rmtree, directory)
++        log = os.path.join(directory, "read-errors")
++        environment = {
++            "LD_PRELOAD": library + " " + os.environ.get("LD_PRELOAD", ""),
++            "FX0_GUDEV_READ_ERROR_ATTRIBUTE": "capacity",
++            "FX0_GUDEV_READ_ERROR_LOG": log,
++        }
++        if trigger:
++            environment["FX0_GUDEV_READ_ERROR_TRIGGER"] = trigger
++        return unittest.mock.patch.dict(os.environ, environment), log
++
++    def test_validity_unavailable_coldplug_read(self):
++        """GUdev NULL-read model, not an injected kernel sysfs errno."""
++        self._validity_add_battery(["capacity", "50"])
++        environment, log = self._validity_read_error_environment()
++        with environment:
++            self.start_daemon()
++        self.assertTrue(os.path.getsize(log) > 0, "Read error not injected")
++        observed = self._validity_snapshot("unavailable_coldplug_read")
++        self.assertEqual(observed["devices"], [], observed)
++        self.assertEqual(observed["warning"], UP_DEVICE_LEVEL_NONE, observed)
++
++    def _validity_assert_refresh_not_empty(self, mode):
++        bat = self._validity_add_battery(["capacity", "50"])
++        if mode == "unavailable":
++            directory = tempfile.mkdtemp(prefix="upower-validity-trigger-")
++            self.addCleanup(shutil.rmtree, directory)
++            trigger = os.path.join(directory, "enabled")
++            environment, log = self._validity_read_error_environment(trigger)
++            with environment:
++                self.start_daemon()
++        else:
++            self.start_daemon()
++        before = self._validity_snapshot(mode + "_before")
++        self.assertEqual(before["percentage"], 50.0, before)
++        self.assertEqual(before["warning"], UP_DEVICE_LEVEL_NONE, before)
++        if mode == "unavailable":
++            with open(trigger, "w"):
++                pass
++        else:
++            self.testbed.set_attribute(bat, "capacity", "invalid")
++        self.testbed.uevent(bat, "change")
++        self.daemon_log.check_line("refreshing device for path " + bat, timeout=5)
++        time.sleep(0.5)  # Allow the composite display-device idle update to run.
++        after = self._validity_snapshot(mode + "_after")
++        if mode == "unavailable":
++            self.assertTrue(os.path.getsize(log) > 0, "Read error not injected")
++        self.assertEqual(after["warning"], UP_DEVICE_LEVEL_NONE, after)
++        self.assertEqual(after["percentage"], before["percentage"], after)
++
++    def test_validity_malformed_refresh_not_empty(self):
++        self._validity_assert_refresh_not_empty("malformed")
++
++    def test_validity_unavailable_refresh_not_empty(self):
++        self._validity_assert_refresh_not_empty("unavailable")
++
++    def test_validity_ignored_supply_can_gain_telemetry(self):
++        bat = self._validity_add_battery(["health", "Good"])
++        self.start_daemon()
++        before = self._validity_snapshot("ignored_before")
++        self.assertEqual(before["devices"], [], before)
++        self.testbed.set_attribute(bat, "capacity", "50")
++        self.testbed.uevent(bat, "change")
++        self.daemon_log.check_line("Received uevent change on device", timeout=5)
++        time.sleep(0.5)
++        after = self._validity_snapshot("ignored_after")
++        self.assertEqual(len(after["devices"]), 1, after)
++        self.assertTrue(after["present"], after)
++        self.assertEqual(after["percentage"], 50.0, after)
++
++    def _validity_assert_report(self, attributes, percentage, empty=False):
++        self._validity_add_battery(attributes)
++        self.start_daemon()
++        self.assertEventually(lambda: self.get_dbus_display_property("IsPresent"))
++        self.assertEqual(self.get_dbus_display_property("Percentage"), percentage)
++        if empty:
++            self.assertGreaterEqual(
++                self.get_dbus_display_property("WarningLevel"), UP_DEVICE_LEVEL_CRITICAL
++            )
++        else:
++            self.assertEqual(
++                self.get_dbus_display_property("WarningLevel"), UP_DEVICE_LEVEL_NONE
++            )
++
++    def test_validity_zero_energy_not_replaced_by_average(self):
++        self._validity_assert_report(
++            ["energy_now", "0", "energy_avg", "5000000"], 0.0, empty=True
++        )
++
++    def test_validity_bad_capacity_uses_valid_energy(self):
++        self._validity_assert_report(
++            ["capacity", "invalid", "energy_now", "5000000"], 50.0
++        )
++
++    def test_validity_unknown_level_with_real_energy(self):
++        self._validity_assert_report(
++            ["capacity_level", "Unknown", "energy_now", "5000000"], 50.0
++        )
++
++    def test_validity_whitespace_capacity(self):
++        self._validity_assert_report(["capacity", " 50 \n"], 50.0)
++
++    def test_validity_zero_capacity_with_unknown_level(self):
++        self._validity_assert_report(
++            ["capacity", "0", "capacity_level", "Unknown"], 0.0, empty=True
++        )
++
++    def test_validity_unknown_system_level_not_charge(self):
++        self._validity_assert_unusable(
++            "unknown_system_level", ["capacity_level", "Unknown"]
++        )
++
++    def test_validity_invalid_system_level_not_charge(self):
++        self._validity_assert_unusable(
++            "invalid_system_level", ["capacity_level", "invalid"]
++        )
++
++    def test_validity_trailing_numeric_junk(self):
++        self._validity_assert_unusable(
++            "trailing_numeric_junk", ["capacity", "50garbage"]
++        )
++
++    def test_validity_invalid_full_cannot_qualify_remaining(self):
++        self._validity_assert_unusable(
++            "invalid_full", ["energy_full", "nan", "energy_now", "5000000"]
++        )
++
++    def test_validity_normal_system_level(self):
++        self._validity_assert_report(["capacity_level", "Normal"], 55.0)
++
++    def test_validity_capacity_zero_without_full_metadata(self):
++        self.testbed.add_device(
++            "power_supply",
++            "validity-battery",
++            None,
++            [
++                "type",
++                "Battery",
++                "present",
++                "1",
++                "status",
++                "Discharging",
++                "voltage_now",
++                "3800000",
++                "capacity",
++                "0",
++            ],
++            [],
++        )
++        self.start_daemon()
++        self.assertEqual(len(self.proxy.EnumerateDevices()), 1)
++        self.assertEqual(self.get_dbus_display_property("Percentage"), 0.0)
++        self.assertGreaterEqual(
++            self.get_dbus_display_property("WarningLevel"), UP_DEVICE_LEVEL_CRITICAL
++        )
++
++    def _validity_peripheral(self, attributes, macbook=False):
++        if macbook:
++            self.testbed.add_device(
++                "virtual", "virtual/dmi", None, ["id/product_name", "MacBookAir7,2"], []
++            )
++        self._validity_add_battery(["scope", "Device"] + attributes)
++        self.start_daemon()
++        devices = self.proxy.EnumerateDevices()
++        self.assertEqual(len(devices), 1)
++        self.assertEqual(self.get_dbus_dev_property(devices[0], "Percentage"), 50.0)
++        self.assertFalse(self.get_dbus_dev_property(devices[0], "PowerSupply"))
++        self.assertFalse(self.get_dbus_display_property("IsPresent"))
++
++    def test_validity_unknown_peripheral_level_preserved(self):
++        self._validity_peripheral(["capacity_level", "Unknown"])
++
++    def test_validity_macbook_peripheral_percentage_preserved(self):
++        self._validity_peripheral(["capacity", "50"], macbook=True)
++
++    def test_validity_failed_refresh_recovers_then_real_empty(self):
++        bat = self._validity_add_battery(["capacity", "50"])
++        self.start_daemon()
++        path = self.proxy.EnumerateDevices()[0]
++        before = self.get_dbus_dev_property(path, "UpdateTime")
++        time.sleep(1.1)
++        self.testbed.set_attribute(bat, "capacity", "invalid")
++        self.testbed.uevent(bat, "change")
++        self.daemon_log.check_line("refreshing device for path " + bat, timeout=5)
++        time.sleep(0.5)
++        self.assertEqual(self.get_dbus_display_property("Percentage"), 50.0)
++        self.assertEqual(self.get_dbus_dev_property(path, "UpdateTime"), before)
++        for percentage in [30, 0]:
++            self.testbed.set_attribute(bat, "capacity", str(percentage))
++            self.testbed.uevent(bat, "change")
++            self.assertEventually(
++                lambda: self.get_dbus_display_property("Percentage") == percentage
++            )
++        self.assertGreaterEqual(
++            self.get_dbus_display_property("WarningLevel"), UP_DEVICE_LEVEL_CRITICAL
++        )
++
++    def test_validity_removal_is_observed_with_bad_telemetry(self):
++        bat = self._validity_add_battery(["capacity", "50"])
++        self.start_daemon()
++        self.testbed.set_attribute(bat, "capacity", "invalid")
++        self.testbed.set_attribute(bat, "present", "0")
++        self.testbed.uevent(bat, "change")
++        self.assertEventually(lambda: not self.get_dbus_display_property("IsPresent"))
++        self.assertEqual(
++            self.get_dbus_display_property("WarningLevel"), UP_DEVICE_LEVEL_NONE
++        )
++
++    def test_validity_recovered_supply_keeps_sibling_lifetime(self):
++        parent = self.testbed.add_device(
++            "usb", "validity-parent", None, [], ["DEVTYPE", "usb_device"]
++        )
++        self.testbed.add_device(
++            "power_supply",
++            "validity-usb",
++            parent,
++            ["type", "USB", "online", "0", "usb_type", "[SDP]"],
++            [],
++        )
++        bat = self.testbed.add_device(
++            "power_supply",
++            "validity-battery",
++            parent,
++            [
++                "type",
++                "Battery",
++                "present",
++                "1",
++                "status",
++                "Discharging",
++                "voltage_now",
++                "3800000",
++                "energy_full",
++                "10000000",
++            ],
++            [],
++        )
++        self.start_daemon()
++        self.assertEqual(len(self.proxy.EnumerateDevices()), 1)
++        self.daemon_log.check_line(
++            "device validity-battery has parent id: " + parent, timeout=5
++        )
++        self.testbed.set_attribute(bat, "capacity", "50")
++        self.testbed.uevent(bat, "change")
++        self.assertEventually(lambda: len(self.proxy.EnumerateDevices()) == 2)
++        for percentage in [30, 40]:
++            self.testbed.set_attribute(bat, "capacity", str(percentage))
++            self.testbed.uevent(bat, "change")
++            self.assertEventually(
++                lambda: self.get_dbus_display_property("Percentage") == percentage
++            )
++            self.assertEqual(len(self.proxy.EnumerateDevices()), 2)
++        self.testbed.uevent(bat, "remove")
++        self.assertEventually(lambda: len(self.proxy.EnumerateDevices()) == 1)
++        self.testbed.uevent(bat, "add")
++        self.assertEventually(lambda: len(self.proxy.EnumerateDevices()) == 2)
++        self.assertEqual(self.get_dbus_display_property("Percentage"), 40.0)
++
+     def test_tool_device_enumeration_failure(self):
+         """A failed EnumerateDevices call must not crash or start monitoring."""
+         mock_process, mock = self.spawn_server_template(
+@@ -1256,12 +1599,20 @@ class Tests(dbusmock.DBusTestCase):
+         self.assertDevs(
+             {"battery_BAT0": {"State": UP_DEVICE_STATE_UNKNOWN}, "line_power_AC": {}}
+         )
+-        # Discharge for 20s:
+-        for i in range(25):
+-            time.sleep(1)
+-            # 1W usage over 1 second
+-            energy_now -= 1.0 * 1000000 / 3600
+-            self.testbed.set_attribute(bat0, "energy_now", str(int(energy_now)))
++
++        def change_energy(duration, power):
++            nonlocal energy_now
++            initial_energy = energy_now
++            started = time.monotonic()
++            while time.monotonic() - started < duration:
++                time.sleep(1)
++                elapsed = time.monotonic() - started
++                # Keep the simulated power constant even when the host is busy.
++                energy_now = initial_energy + power * elapsed * 1000000 / 3600
++                self.testbed.set_attribute(bat0, "energy_now", str(int(energy_now)))
++
++        # Discharge at 1 W for at least 25 seconds.
++        change_energy(25, -1.0)
+ 
+         self.assertDevs(
+             {
+@@ -1279,12 +1630,8 @@ class Tests(dbusmock.DBusTestCase):
+         # https://gitlab.freedesktop.org/upower/upower/-/issues/230
+         # self.assertDevs({ 'battery_BAT0': { 'State' : UP_DEVICE_STATE_UNKNOWN }, 'line_power_AC' : {} })
+ 
+-        # Charge for a while
+-        for i in range(40):
+-            time.sleep(1)
+-            # 1W charge over 1 second
+-            energy_now += 1.0 * 1000000 / 3600
+-            self.testbed.set_attribute(bat0, "energy_now", str(int(energy_now)))
++        # Charge at 1 W for at least 40 seconds.
++        change_energy(40, 1.0)
+ 
+         self.assertDevs(
+             {"battery_BAT0": {"State": UP_DEVICE_STATE_CHARGING}, "line_power_AC": {}}
+diff --git a/src/linux/tests/sysfs-read-error.c b/src/linux/tests/sysfs-read-error.c
+new file mode 100644
+index 0000000..ea0cb51
+--- /dev/null
++++ b/src/linux/tests/sysfs-read-error.c
+@@ -0,0 +1,48 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Test-only libudev NULL-read injection as observed through GUdev. No host sysfs or hardware writes. */
++#define _GNU_SOURCE
++#include <dlfcn.h>
++#include <errno.h>
++#include <fcntl.h>
++#include <pthread.h>
++#include <stdlib.h>
++#include <string.h>
++#include <unistd.h>
++
++static const char *(*real_get_attr)(void *, const char *);
++static const char *(*real_get_path)(void *);
++static pthread_once_t initialized = PTHREAD_ONCE_INIT;
++
++static void resolve_symbols(void)
++{
++	real_get_attr = dlsym(RTLD_NEXT, "udev_device_get_sysattr_value");
++	real_get_path = dlsym(RTLD_NEXT, "udev_device_get_syspath");
++	if (!real_get_attr || !real_get_path)
++		abort();
++}
++
++const char *udev_device_get_sysattr_value(void *device, const char *key)
++{
++	const char *wanted = getenv("FX0_GUDEV_READ_ERROR_ATTRIBUTE");
++	const char *trigger = getenv("FX0_GUDEV_READ_ERROR_TRIGGER");
++	const char *log = getenv("FX0_GUDEV_READ_ERROR_LOG");
++	const char *path;
++
++	pthread_once(&initialized, resolve_symbols);
++	path = real_get_path(device);
++	if (wanted && !strcmp(key, wanted) && path &&
++	    strstr(path, "/validity-battery") &&
++	    (!trigger || access(trigger, F_OK) == 0)) {
++		if (log) {
++			int fd = open(log, O_WRONLY | O_CREAT | O_APPEND, 0600);
++			if (fd >= 0) {
++				(void)write(fd, key, strlen(key));
++				(void)write(fd, "\n", 1);
++				close(fd);
++			}
++		}
++		errno = ENODATA;
++		return NULL;
++	}
++	return real_get_attr(device, key);
++}
+diff --git a/src/linux/up-device-supply-battery.c b/src/linux/up-device-supply-battery.c
+index 8dff2a2..73a94af 100644
+--- a/src/linux/up-device-supply-battery.c
++++ b/src/linux/up-device-supply-battery.c
+@@ -85,6 +85,106 @@ struct _UpDeviceSupplyBattery
+ 
+ G_DEFINE_TYPE (UpDeviceSupplyBattery, up_device_supply_battery, UP_TYPE_DEVICE_BATTERY)
+ 
++
++static gdouble
++get_sysfs_number (GUdevDevice *native, const gchar *attribute)
++{
++	gdouble value = 0;
++
++	up_device_supply_read_number (native, attribute, &value);
++	return value;
++}
++
++/* info and values are zero-initialized by the caller. capacity_level is owned
++ * by the caller, including when the reading is not usable.
++ */
++gboolean
++up_device_supply_battery_read_charge (GUdevDevice *native,
++                                     gboolean ignore_system_percentage,
++                                     UpBatteryInfo *info,
++                                     UpBatteryValues *values)
++{
++	gdouble energy_full = 0, charge_full = 0;
++	gdouble energy_design = 0, charge_design = 0;
++	gdouble energy = 0, energy_avg = 0, charge = 0, percentage = 0;
++	gboolean have_energy_full, have_charge_full;
++	gboolean have_energy, have_energy_avg, have_charge, have_percentage;
++	gboolean have_remaining;
++	g_autofree gchar *level = NULL;
++	gboolean have_level = FALSE;
++	guint i;
++	static const struct {
++		const gchar *name;
++		gdouble percentage;
++	} levels[] = {
++		{ "Normal", 55.0 }, { "High", 70.0 }, { "Low", 10.0 },
++		{ "Critical", 5.0 }, { "Full", 100.0 }, { "Unknown", 50.0 }
++	};
++
++	have_energy_full = up_device_supply_read_number (native, "energy_full", &energy_full) && energy_full >= 0;
++	have_charge_full = up_device_supply_read_number (native, "charge_full", &charge_full) && charge_full >= 0;
++	if (!up_device_supply_read_number (native, "energy_full_design", &energy_design) || energy_design < 0)
++		energy_design = 0;
++	if (!up_device_supply_read_number (native, "charge_full_design", &charge_design) || charge_design < 0)
++		charge_design = 0;
++	have_energy = up_device_supply_read_number (native, "energy_now", &energy);
++	have_energy_avg = up_device_supply_read_number (native, "energy_avg", &energy_avg);
++	have_charge = up_device_supply_read_number (native, "charge_now", &charge);
++	have_percentage = !ignore_system_percentage &&
++		up_device_supply_read_number (native, "capacity", &percentage) &&
++		percentage >= 0 && percentage <= 100;
++
++	level = g_strdup (g_udev_device_get_sysfs_attr_uncached (native, "capacity_level"));
++	if (level) {
++		g_strstrip (level);
++		for (i = 0; i < G_N_ELEMENTS (levels); i++) {
++			if (g_str_equal (level, levels[i].name)) {
++				/* Preserve the legacy peripheral Unknown level, but do
++				 * not invent a system state of charge from it.
++				 */
++				have_level = !g_str_equal (level, "Unknown") ||
++					g_ascii_strcasecmp (g_udev_device_get_sysfs_attr (native, "scope") ?: "", "device") == 0;
++				if (!have_percentage && have_level)
++					percentage = levels[i].percentage;
++				values->capacity_level = g_steal_pointer (&level);
++				break;
++			}
++		}
++	}
++
++	if (have_energy_full) {
++		info->units = UP_BATTERY_UNIT_ENERGY;
++	} else if (have_charge_full) {
++		info->units = UP_BATTERY_UNIT_CHARGE;
++	} else if (!have_energy && !have_energy_avg && have_charge) {
++		info->units = UP_BATTERY_UNIT_CHARGE;
++	} else {
++		info->units = UP_BATTERY_UNIT_ENERGY;
++	}
++
++	values->units = info->units;
++	if (info->units == UP_BATTERY_UNIT_ENERGY) {
++		info->energy.full = have_energy_full ? energy_full / 1000000.0 : 0;
++		info->energy.design = energy_design / 1000000.0;
++		have_remaining = have_energy || have_energy_avg;
++		/* A real zero must not be replaced with an old average. */
++		values->energy.cur = fabs (have_energy ? energy : energy_avg) / 1000000.0;
++	} else {
++		info->charge.full = have_charge_full ? charge_full / 1000000.0 : 0;
++		info->charge.design = charge_design / 1000000.0;
++		have_remaining = have_charge;
++		values->charge.cur = fabs (charge) / 1000000.0;
++	}
++	have_remaining = have_remaining && (info->energy.full > 0 || info->energy.design > 0);
++	/* Prefer a real remaining-charge sample to an approximate level. The
++	 * battery core infers percentage from the captured remaining/full pair.
++	 */
++	values->percentage = have_percentage ? percentage :
++		(have_remaining ? 0 : (have_level ? percentage : 0));
++
++	return have_percentage || have_level || have_remaining;
++}
++
+ static gdouble
+ up_device_supply_battery_get_design_voltage (UpDeviceSupplyBattery *self,
+ 					     GUdevDevice *native)
+@@ -93,21 +193,21 @@ up_device_supply_battery_get_design_voltage (UpDeviceSupplyBattery *self,
+ 	const gchar *device_type = NULL;
+ 
+ 	/* design maximum */
+-	voltage = g_udev_device_get_sysfs_attr_as_double_uncached (native, "voltage_max_design") / 1000000.0;
++	voltage = get_sysfs_number (native, "voltage_max_design") / 1000000.0;
+ 	if (voltage > 1.00f) {
+ 		g_debug ("using max design voltage");
+ 		return voltage;
+ 	}
+ 
+ 	/* design minimum */
+-	voltage = g_udev_device_get_sysfs_attr_as_double_uncached (native, "voltage_min_design") / 1000000.0;
++	voltage = get_sysfs_number (native, "voltage_min_design") / 1000000.0;
+ 	if (voltage > 1.00f) {
+ 		g_debug ("using min design voltage");
+ 		return voltage;
+ 	}
+ 
+ 	/* current voltage, alternate form */
+-	voltage = g_udev_device_get_sysfs_attr_as_double_uncached (native, "voltage_now") / 1000000.0;
++	voltage = get_sysfs_number (native, "voltage_now") / 1000000.0;
+ 	if (voltage > 1.00f) {
+ 		g_debug ("using present voltage (alternate)");
+ 		return voltage;
+@@ -394,6 +494,7 @@ up_device_supply_battery_refresh (UpDevice *device,
+ 	g_autofree gchar *serial = NULL;
+ 	g_autofree gchar *technology = NULL;
+ 	g_autofree gchar *capacity_level = NULL;
++	gboolean usable;
+ 
+ 	native = G_UDEV_DEVICE (up_device_get_native (device));
+ 
+@@ -411,6 +512,14 @@ up_device_supply_battery_refresh (UpDevice *device,
+ 		return TRUE;
+ 	}
+ 
++	/* Read each charge value once and keep the last good properties on error. */
++	usable = up_device_supply_battery_read_charge (native,
++	                                                       self->ignore_system_percentage,
++	                                                       &info, &values);
++	capacity_level = values.capacity_level;
++	if (!usable)
++		return FALSE;
++
+ 	vendor = up_make_safe_string (get_sysfs_attr_uncached (native, "manufacturer"));
+ 	model = up_make_safe_string (get_sysfs_attr_uncached (native, "model_name"));
+ 	serial = up_make_safe_string (get_sysfs_attr_uncached (native, "serial_number"));
+@@ -422,21 +531,11 @@ up_device_supply_battery_refresh (UpDevice *device,
+ 	info.voltage_design = up_device_supply_battery_get_design_voltage (self, native);
+ 	info.charge_cycles = g_udev_device_get_sysfs_attr_as_int_uncached (native, "cycle_count");
+ 
+-	info.units = UP_BATTERY_UNIT_ENERGY;
+-	info.energy.full = g_udev_device_get_sysfs_attr_as_double_uncached (native, "energy_full") / 1000000.0;
+-	info.energy.design = g_udev_device_get_sysfs_attr_as_double_uncached (native, "energy_full_design") / 1000000.0;
+-
+-	/* Assume we couldn't read anything if energy.full is extremely small */
+-	if (info.energy.full < 0.01) {
+-		info.units = UP_BATTERY_UNIT_CHARGE;
+-		info.energy.full = g_udev_device_get_sysfs_attr_as_double_uncached (native, "charge_full") / 1000000.0;
+-		info.energy.design = g_udev_device_get_sysfs_attr_as_double_uncached (native, "charge_full_design") / 1000000.0;
+-	}
+ 	technology = get_sysfs_attr_uncached (native, "technology");
+ 	info.technology = up_convert_device_technology (technology);
+ 
+-	info.voltage_max_design = g_udev_device_get_sysfs_attr_as_double_uncached (native, "voltage_max_design") / 1000000.0;
+-	info.voltage_min_design = g_udev_device_get_sysfs_attr_as_double_uncached (native, "voltage_min_design") / 1000000.0;
++	info.voltage_max_design = get_sysfs_number (native, "voltage_max_design") / 1000000.0;
++	info.voltage_min_design = get_sysfs_number (native, "voltage_min_design") / 1000000.0;
+ 
+ 	if (up_device_supply_battery_get_charge_control_limits (native, &info)) {
+ 		info.charge_control_supported = TRUE;
+@@ -470,12 +569,9 @@ up_device_supply_battery_refresh (UpDevice *device,
+ 	 */
+ 	values.units = info.units;
+ 
+-	values.voltage = g_udev_device_get_sysfs_attr_as_double_uncached (native, "voltage_now") / 1000000.0;
++	values.voltage = get_sysfs_number (native, "voltage_now") / 1000000.0;
+ 	if (values.voltage < 0.01)
+-		values.voltage = g_udev_device_get_sysfs_attr_as_double_uncached (native, "voltage_avg") / 1000000.0;
+-
+-	capacity_level = up_make_safe_string (get_sysfs_attr_uncached (native, "capacity_level"));
+-	values.capacity_level = capacity_level;
++		values.voltage = get_sysfs_number (native, "voltage_avg") / 1000000.0;
+ 
+ 	switch (values.units) {
+ 	case UP_BATTERY_UNIT_CHARGE:
+@@ -489,18 +585,14 @@ up_device_supply_battery_refresh (UpDevice *device,
+ 		 * which's reports energy_now of 15.05 Wh while our calculation
+ 		 * will be ~16.4Wh by multiplying charge with voltage).
+ 		 */
+-		values.energy.rate = fabs (g_udev_device_get_sysfs_attr_as_double_uncached (native, "current_now") / 1000000.0);
+-		values.energy.cur = fabs (g_udev_device_get_sysfs_attr_as_double_uncached (native, "charge_now") / 1000000.0);
++		values.energy.rate = fabs (get_sysfs_number (native, "current_now") / 1000000.0);
+ 		break;
+ 	case UP_BATTERY_UNIT_ENERGY:
+-		values.energy.rate = fabs (g_udev_device_get_sysfs_attr_as_double_uncached (native, "power_now") / 1000000.0);
+-		values.energy.cur = fabs (g_udev_device_get_sysfs_attr_as_double_uncached (native, "energy_now") / 1000000.0);
+-		if (values.energy.cur < 0.01)
+-			values.energy.cur = g_udev_device_get_sysfs_attr_as_double_uncached (native, "energy_avg") / 1000000.0;
++		values.energy.rate = fabs (get_sysfs_number (native, "power_now") / 1000000.0);
+ 
+ 		/* Legacy case: If we have energy units but no power_now, then current_now is in uW. */
+ 		if (values.energy.rate < 0)
+-			values.energy.rate = fabs (g_udev_device_get_sysfs_attr_as_double_uncached (native, "current_now") / 1000000.0);
++			values.energy.rate = fabs (get_sysfs_number (native, "current_now") / 1000000.0);
+ 		break;
+ 	default:
+ 		g_assert_not_reached ();
+@@ -511,10 +603,6 @@ up_device_supply_battery_refresh (UpDevice *device,
+ 	 * That doesn't really make any sense after doing the floating point math.
+ 	 */
+ 
+-	if (!self->ignore_system_percentage) {
+-		values.percentage = g_udev_device_get_sysfs_attr_as_double_uncached (native, "capacity");
+-		values.percentage = CLAMP(values.percentage, 0.0f, 100.0f);
+-	}
+ 
+ 	/* For some battery solutions, for example axp20x-battery, the kernel reports
+ 	 * status = charging but the battery actually discharges when connecting a
+@@ -523,10 +611,10 @@ up_device_supply_battery_refresh (UpDevice *device,
+ 	values.state = up_device_supply_get_state (native);
+ 
+ 	if (values.state != UP_DEVICE_STATE_FULLY_CHARGED &&
+-	    g_udev_device_get_sysfs_attr_as_double_uncached (native, "current_now") < 0.0)
++	    get_sysfs_number (native, "current_now") < 0.0)
+ 		values.state = UP_DEVICE_STATE_DISCHARGING;
+ 
+-	values.temperature = g_udev_device_get_sysfs_attr_as_double_uncached (native, "temp") / 10.0;
++	values.temperature = get_sysfs_number (native, "temp") / 10.0;
+ 
+ 	up_device_battery_report (battery, &values, reason);
+ 
+diff --git a/src/linux/up-device-supply-battery.h b/src/linux/up-device-supply-battery.h
+index 1b6c531..7fa1c1f 100644
+--- a/src/linux/up-device-supply-battery.h
++++ b/src/linux/up-device-supply-battery.h
+@@ -30,4 +30,10 @@ G_BEGIN_DECLS
+ 
+ G_DECLARE_FINAL_TYPE (UpDeviceSupplyBattery, up_device_supply_battery, UP, DEVICE_SUPPLY_BATTERY, UpDeviceBattery)
+ 
++/* values->capacity_level is allocated, even on an unusable reading. */
++gboolean up_device_supply_battery_read_charge (GUdevDevice *native,
++                                               gboolean ignore_system_percentage,
++                                               UpBatteryInfo *info,
++                                               UpBatteryValues *values);
++
+ G_END_DECLS
+diff --git a/src/linux/up-device-supply.c b/src/linux/up-device-supply.c
+index 889367f..fff4180 100644
+--- a/src/linux/up-device-supply.c
++++ b/src/linux/up-device-supply.c
+@@ -23,6 +23,7 @@
+ 
+ #include <string.h>
+ #include <math.h>
++#include <errno.h>
+ 
+ #include <glib.h>
+ #include <glib/gstdio.h>
+@@ -50,6 +51,34 @@ static gboolean		 up_device_supply_refresh	 	(UpDevice *device,
+ static UpDeviceKind	 up_device_supply_guess_type		(GUdevDevice *native,
+ 								 const char *native_path);
+ 
++
++/* Keep an unavailable or malformed value distinct from a valid zero. */
++gboolean
++up_device_supply_read_number (GUdevDevice *native, const gchar *attribute,
++                             gdouble *number)
++{
++	const gchar *text;
++	gchar *end;
++	gdouble value;
++
++	text = g_udev_device_get_sysfs_attr_uncached (native, attribute);
++	if (!text)
++		return FALSE;
++
++	errno = 0;
++	value = g_ascii_strtod (text, &end);
++	if (end == text || errno == ERANGE || !isfinite (value) ||
++	    value < (gdouble) G_MININT64 || value >= -(gdouble) G_MININT64)
++		return FALSE;
++	while (g_ascii_isspace (*end))
++		end++;
++	if (*end)
++		return FALSE;
++
++	*number = value;
++	return TRUE;
++}
++
+ static gboolean
+ up_device_supply_refresh_line_power (UpDeviceSupply *supply,
+ 				     UpRefreshReason reason)
+@@ -222,18 +251,13 @@ sysfs_get_capacity_level (GUdevDevice   *native,
+ 
+ 	g_return_val_if_fail (level != NULL, -1.0);
+ 
+-	if (!g_udev_device_has_sysfs_attr_uncached (native, "capacity_level")) {
+-		g_debug ("capacity_level doesn't exist, skipping");
+-		*level = UP_DEVICE_LEVEL_NONE;
+-		return -1.0;
+-	}
+-
+ 	*level = UP_DEVICE_LEVEL_UNKNOWN;
+-	str = g_strchomp (g_strdup (g_udev_device_get_sysfs_attr_uncached (native, "capacity_level")));
++	str = g_strdup (g_udev_device_get_sysfs_attr_uncached (native, "capacity_level"));
+ 	if (!str) {
+-		g_debug ("Failed to read capacity_level!");
++		*level = UP_DEVICE_LEVEL_NONE;
+ 		return ret;
+ 	}
++	g_strstrip (str);
+ 
+ 	for (i = 0; i < G_N_ELEMENTS(levels); i++) {
+ 		if (strcmp (levels[i].str, str) == 0) {
+@@ -296,9 +320,17 @@ up_device_supply_refresh_device (UpDeviceSupply *supply,
+ 		is_present = g_udev_device_get_sysfs_attr_as_boolean_uncached (native, "present");
+ 
+ 	/* get a precise percentage */
+-	percentage = g_udev_device_get_sysfs_attr_as_double_uncached (native, "capacity");
+-	if (percentage == 0.0f)
++	if (!up_device_supply_read_number (native, "capacity", &percentage) ||
++	    percentage < 0 || percentage > 100) {
+ 		percentage = sysfs_get_capacity_level (native, &level);
++		if (percentage < 0 && is_present)
++			return FALSE;
++	} else if (percentage == 0) {
++		gdouble approximate = sysfs_get_capacity_level (native, &level);
++
++		if (approximate >= 0)
++			percentage = approximate;
++	}
+ 
+ 	if (percentage < 0.0) {
+ 		/* Probably talking to the device over Bluetooth */
+diff --git a/src/linux/up-device-supply.h b/src/linux/up-device-supply.h
+index dace142..e531c85 100644
+--- a/src/linux/up-device-supply.h
++++ b/src/linux/up-device-supply.h
+@@ -51,6 +51,9 @@ GType		 up_device_supply_get_type	(void);
+ 
+ UpDeviceState up_device_supply_get_state (GUdevDevice *native);
+ 
++gboolean up_device_supply_read_number (GUdevDevice *native, const gchar *attribute,
++                                     gdouble *number);
++
+ G_END_DECLS
+ 
+ #endif /* __UP_DEVICE_SUPPLY_H__ */
+diff --git a/src/linux/up-enumerator-udev.c b/src/linux/up-enumerator-udev.c
+index 505f25e..d9a0a6e 100644
+--- a/src/linux/up-enumerator-udev.c
++++ b/src/linux/up-enumerator-udev.c
+@@ -98,6 +98,21 @@ is_macbook (gpointer data)
+ 	return GINT_TO_POINTER(g_str_has_prefix (product, "MacBook"));
+ }
+ 
++static gboolean
++battery_has_usable_charge (GUdevDevice *native)
++{
++	UpBatteryInfo info = { 0 };
++	UpBatteryValues values = { 0 };
++	gboolean usable;
++
++	usable = up_device_supply_battery_read_charge (native,
++	                                             g_ascii_strcasecmp (g_udev_device_get_sysfs_attr (native, "scope") ?: "", "device") != 0 &&
++	                                             GPOINTER_TO_INT (is_macbook (NULL)),
++	                                             &info, &values);
++	g_free (values.capacity_level);
++	return usable;
++}
++
+ static UpDevice *
+ device_new (UpEnumeratorUdev *self, GUdevDevice *native)
+ {
+@@ -112,17 +127,10 @@ device_new (UpEnumeratorUdev *self, GUdevDevice *native)
+ 		UpDevice *device;
+ 		const gchar *type = g_udev_device_get_sysfs_attr (native, "type");
+ 
+-		/* Some charger interfaces are labelled Battery but cannot report
+-		 * charge. Do not turn missing measurements into an empty battery.
+-		 * Check attribute presence so a valid zero reading is retained.
+-		 */
++		/* Missing or unusable data must not identify an empty battery. */
+ 		if (type && g_ascii_strcasecmp (type, "battery") == 0 &&
+-		    !g_udev_device_has_sysfs_attr_uncached (native, "capacity") &&
+-		    !g_udev_device_has_sysfs_attr_uncached (native, "capacity_level") &&
+-		    !g_udev_device_has_sysfs_attr_uncached (native, "energy_now") &&
+-		    !g_udev_device_has_sysfs_attr_uncached (native, "energy_avg") &&
+-		    !g_udev_device_has_sysfs_attr_uncached (native, "charge_now")) {
+-			g_debug ("Ignoring battery interface without charge information");
++		    !battery_has_usable_charge (native)) {
++			g_debug ("Ignoring battery interface without usable charge information");
+ 			return NULL;
+ 		}
+ 
+@@ -367,6 +375,15 @@ uevent_signal_handler_cb (UpEnumeratorUdev *self,
+ 			obj = NULL;
+ 		}
+ 
++		/* A driver may gain telemetry after its first (failed) probe. */
++		if (obj && !UP_IS_DEVICE (obj) &&
++		    g_strcmp0 (g_udev_device_get_subsystem (device), "power_supply") == 0 &&
++		    g_ascii_strcasecmp (g_udev_device_get_sysfs_attr (device, "type") ?: "", "battery") == 0 &&
++		    battery_has_usable_charge (device)) {
++			uevent_signal_handler_cb (self, "remove", device, client);
++			obj = NULL;
++		}
++
+ 		if (!obj) {
+ 			if (is_kbd_backlight)
+ 				kbd_backlight_add_helper (self, action, device, client, obj, device_key);
+diff --git a/src/meson.build b/src/meson.build
+index bf36c2d..bf68a9e 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -130,6 +130,12 @@ if os_backend == 'linux' and gobject_introspection.found()
+     env.prepend('top_builddir', join_paths(meson.project_build_root()))
+     env.prepend('LD_LIBRARY_PATH', join_paths(meson.project_build_root(), 'libupower-glib'))
+     env.prepend('GI_TYPELIB_PATH', join_paths(meson.project_build_root(), 'libupower-glib'))
++    sysfs_read_error = shared_module('upower-test-sysfs-read-error',
++        'linux/tests/sysfs-read-error.c',
++        dependencies: [dependency('threads'), cc.find_library('dl')],
++        install: false,
++    )
++    env.set('FX0_GUDEV_READ_ERROR_LIBRARY', sysfs_read_error.full_path())
+ 
+     python3 = find_program('python3')
+     unittest_inspector = find_program('linux/unittest_inspector.py')
+@@ -143,7 +149,7 @@ if os_backend == 'linux' and gobject_introspection.found()
+              python3,
+              args: ut_args,
+              env: env,
+-             depends: [ libupower_glib_typelib, upowerd ],
++             depends: [ libupower_glib_typelib, upowerd, sysfs_read_error ],
+              timeout: 150,
+             )
+     endforeach
+diff --git a/src/up-device-battery.c b/src/up-device-battery.c
+index 0e51aab..2be9350 100644
+--- a/src/up-device-battery.c
++++ b/src/up-device-battery.c
+@@ -313,7 +313,7 @@ up_device_battery_report (UpDeviceBattery *self,
+ 	}
+ 
+ 	/* Infer percentage if unknown */
+-	if (values->percentage <= 0)
++	if (values->percentage <= 0 && priv->energy_full > 0.0)
+ 		values->percentage = values->energy.cur / priv->energy_full * 100;
+ 
+ 	/* NOTE: We used to do more for the UNKNOWN state. However, some of the

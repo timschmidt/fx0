@@ -76,3 +76,93 @@ and [evidence](../../evidence/2026-10-30-upower-telemetry-r4.json) for exact rev
 package hashes and native smoke-test scope. Review metadata and any required
 author certification still need review before submission; no trailers have been
 invented.
+
+## November 9: validity gaps reproduced, correction pending
+
+The [unusable-telemetry probes](../../diagnostics/upower-telemetry-validity/README.md)
+extend the two pinned review/backport sources without modifying production C.
+Each has eleven failing contracts and five passing controls. Unusable numeric
+data and failed refreshes can become false critical warnings; infinity becomes
+100%, and ignored supplies do not recover on change. The backport also aborts
+on NaN under fatal diagnostics. A NULL read at coldplug is already rejected,
+and the genuine zero-charge control passes. This distinguishes availability
+from numeric validity and recovery. These diagnostic fixtures and libudev
+read-failure model are not yet an additional production patch or submission.
+Native r50 and UPower r4 remain unchanged; [evidence](../../evidence/2026-11-09-battery-telemetry-validity.json)
+records the precise x86_64/mock scope and earlier excluded setup attempts.
+
+## November 9: numeric validity and recovery correction
+
+Apply [0003](0003-linux-validate-battery-telemetry-and-retry-ignored-supplies.patch)
+after the two current-tree drafts above, at base
+`d8e650c3180db30b4c7df59caadefae9c2ff2866`. It corrects the
+[reproduced validity gaps](../../diagnostics/upower-telemetry-validity/README.md)
+and adds 28 validity/lifecycle cases. The separate
+[1.91.0 backport patch](backport-1.91.0-validate-battery-telemetry.patch) applies to
+`1ddb4275a13932db1a64d8549182947066c57fb0`, the source base used for installed r4.
+Do not apply the two version-specific corrections together.
+
+Final complete Linux suites pass 131 tests on the current tree and 122 on the
+backport. Parsing failure stays distinct from zero, failed refreshes hold prior
+properties/update time, and ignored supplies can recover on change without
+losing sibling lifetime. Real remaining charge outranks approximate levels;
+peripheral Unknown and MacBook handling remain covered. The backport also gains
+the current core's positive-denominator inference guard. Genuine-empty,
+overfull and existing critical-action controls pass. The current NaN-only test
+now requires no battery or warning instead of fabricated zero charge.
+
+The current Wacom fixture paces identical records after its burst event-send
+failure is reproduced against unchanged pinned production C. Both trees'
+simulated 1 W state fixture tracks elapsed time so host scheduling cannot lower
+the intended power. All original final assertions remain. Earlier fixture and
+partial-selection runs are retained and excluded from complete-pass claims.
+
+See [build/reproduction instructions](../../diagnostics/upower-telemetry-fix/README.md)
+and [evidence](../../evidence/2026-11-09-battery-telemetry-fix.json) for exact source
+trees, patch/test hashes and replay. These are x86_64 mock results, with no ARM
+package or native deployment yet. Installed r50/UPower r4 remain unchanged.
+These additional review drafts have no fabricated author certification; no
+upstream issue, merge request or message has been sent.
+
+## ARM r5 packaging checkpoint
+
+The [r5 recipe](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-upower-r5/extra-repos/systemd/upower)
+is published at `4c5db910dd68205cc26303325186ccb39cb17521`. All 159 retained
+ARM source files match the validated recipe, including its inherited Nura timing
+patch. Two same-target/toolchain builds produce identical original APKs. The six
+candidates are signed inside the container using the key already trusted by the
+phone, preserving the built control/data bytes and adding no trust-store key.
+Native-key verification, a signed-metadata tamper rejection and an offline plan
+against the actual r50 database pass; only the three installed UPower packages
+would upgrade.
+
+Five ARM core bodies pass under QEMU; two system-bus-dependent bodies are not
+exercised. The full Linux integration suite remains x86_64 coverage. Temporary
+native CLI/read-only and updated-daemon help checks pass with eager loading,
+while installed r4 and its daemon PID remain unchanged. CLI/shared-library bytes
+match the original r4 APK; the new daemon's service/telemetry behavior is not
+native-qualified by a help check. Probe files are removed. See
+[manifest](../../manifests/upower-telemetry-r5.json),
+[procedure and limits](../../diagnostics/upower-telemetry-fix/README.md#arm-r5-candidate)
+and [evidence](../../evidence/2026-11-09-upower-r5-arm-candidate.json).
+At that packaging checkpoint the candidate was not installed. The later native
+installation is recorded below. No upstream message or author certification is added.
+
+## Native r5 installation checkpoint
+
+The owner-approved r5 update is installed on the same r50 boot. Current
+rollback/config/database/boot/module backups are verified on the host and phone
+eMMC, and isolated r5-to-r4 file/database restoration passes. Only the three
+UPower package versions change, with the expected recipe identity and running
+r5 daemon hash. Native CLI and real incomplete-interface/no-warning behavior
+pass, including more than 30 seconds after the temporary inhibitor is released.
+Normal services and the same Sway PID remain; temporary mask, inhibitor, unit
+and transfer files are cleaned up.
+
+Normal APK hooks **rewrite the existing r50 boot image** after regenerating
+initramfs. Full readback proves all boot files and the complete raw partition
+are byte-identical, both GPTs match, and module/initramfs contents are unchanged.
+The 524,288-byte bootloader prefix is preserved. No reboot, live rollback,
+physical UI or native malformed-telemetry/power-action qualification is claimed.
+See [installed manifest](../../manifests/upower-telemetry-r5.json) and
+[native evidence](../../evidence/2026-11-09-upower-r5-native-install.json).

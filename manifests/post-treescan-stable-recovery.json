@@ -1,0 +1,873 @@
+{
+  "recorded_UTC": "2026-11-12T07:35:24.243592+00:00",
+  "subject": "Fresh post-treescan baseline and native stable userspace recovery rehearsal",
+  "kernel": "6.18.63-fx0-vibrator-alpine",
+  "kernel_package": "6.18.63-r1",
+  "treescan": "0.1-r1",
+  "boot_id": "991042aa-9e97-4848-b54c-ad391c06bae0",
+  "fresh_coherent_capture": {
+    "boot_id": "991042aa-9e97-4848-b54c-ad391c06bae0",
+    "kernel": "6.18.63-fx0-vibrator-alpine",
+    "current_r1_capture": true,
+    "manifest_sha256": "3ae427aff2b8fa640e247afd1389721283d14978ea3ee5f71beaa45dabe71ab8",
+    "manifest_bytes": 2935288,
+    "archive_sha256": "625b60aac57c6ded13e0370cfdd0e794dd1326de5e34679a01f737a8c4dcbaae",
+    "archive_bytes": 166047434,
+    "empty_delta_sha256": "4f9cfb843c696c9ed32990cf6f8fc1769c125100e1a6008029c9dbd885bedc19",
+    "raw_boot_sha256": "44dfbb6c64148071d2983dd053d7c04b02f21f9200dc917ee70455f3b40a65c2",
+    "combined_paths": 7002,
+    "prior_scope_paths_retained": 7002,
+    "directory_memberships": 701,
+    "hardlink_aliases": 254,
+    "SELinux_label_paths": 1480,
+    "actual_lock_types_verified_before_after": [
+      "FLOCK",
+      "POSIX"
+    ],
+    "lock_file_hashed_through_held_descriptor": true,
+    "all_archived_file_payloads_verified": true,
+    "all_live_rows_and_namespace_reverified": true,
+    "native_package_or_boot_changes": false
+  },
+  "private_backups_verified": 5,
+  "private_backup_payloads_published": false,
+  "baseline_paths": 7002,
+  "directory_memberships": 701,
+  "hardlink_aliases": 254,
+  "SELinux_label_paths": 1480,
+  "source_worker": "diagnostics/stable-update/rehearse_post_treescan.py",
+  "source_worker_sha256": "3391b68235f2f40861f0c6021b62b9e92c6473a19648d1bff2a1a3800d25cf3c",
+  "current_native_signature_and_solver_qualification": {
+    "status": "prepared",
+    "started_UTC": "2026-11-12T07:04:26.618748+00:00",
+    "actual_ARM_kernel": true,
+    "QEMU_used": false,
+    "live_OS_transaction": false,
+    "private_fixture_removed": false,
+    "audio_testing": false,
+    "initial_paths_verified": 7002,
+    "initial_memberships_verified": 701,
+    "current_native_runtime_paths_verified": 17,
+    "commands": {
+      "index-load": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-zlib": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libapk": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-apk-tools": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libexpat": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libarchive": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-openssh-keygen": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-openssh-server-common": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-openssh-server-pam": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-tzdata": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-alpine-release": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-openssh-client-common": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-openssh-client-default": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-openssh-sftp-server": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-openssh-server": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-openssh": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-openssh-nftrules": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libheif-dav1d": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libheif-libde265": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libheif": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libheif-jpeg": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libheif-aom": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libheif-rav1e": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libheif-x264": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libheif-x265": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libheif-ffmpeg": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-libopenmpt": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-vim-common": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-xxd": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-vim": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-xwayland": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "simulate": {
+        "returncode": 0,
+        "descendants_reaped": true
+      }
+    },
+    "captured_paths_verified": 7002,
+    "directory_memberships_verified": 701,
+    "native_all_30_archive_verifications_passed": true,
+    "native_simulated_upgrades": 30,
+    "host_and_native_solver_selection_agree": true,
+    "world_and_kernel_and_treescan_preserved": true,
+    "fixture_path": "/var/lib/fx0-rollback/stable-post-treescan-fixture-01/root",
+    "initial_namespace_paths": 6375,
+    "initial_namespace_sha256": "f19892b312554e578e62efb9ea68ba2c15ff2dede07dd61d4381a99204b34d83",
+    "all_owned_processes_terminal": true,
+    "live_package_or_boot_changes": false,
+    "finished_UTC": "2026-11-12T07:12:59.631169+00:00"
+  },
+  "native_rehearsal": {
+    "status": "passed",
+    "started_UTC": "2026-11-12T07:18:26.572355+00:00",
+    "live_OS_transaction": false,
+    "QEMU_used": false,
+    "audio_testing": false,
+    "cases": [
+      {
+        "name": "success",
+        "package_parent_returncode": 0,
+        "installed_identities_changed": 30,
+        "unselected_745_identities_preserved": true,
+        "kernel_and_treescan_and_world_preserved": true,
+        "hook_exec_failure_injected": false,
+        "injection_before_OpenSSH_hook_body": false,
+        "synthetic_retained_executor_injected": false,
+        "owned_executor_files_removed": [],
+        "recovered_paths": 7002,
+        "recovered_memberships": 701,
+        "original_775_identities_recovered": true,
+        "unit_entries_and_timestamps_verified": 545,
+        "actual_upgraded_APK": "3.0.9-r0",
+        "actual_restored_APK": "3.0.8-r0",
+        "exact_private_namespace_restored": true,
+        "all_owned_processes_reaped_before_recovery": true
+      },
+      {
+        "name": "hook-exec-failure",
+        "package_parent_returncode": 1,
+        "installed_identities_changed": 30,
+        "unselected_745_identities_preserved": true,
+        "kernel_and_treescan_and_world_preserved": true,
+        "hook_exec_failure_injected": true,
+        "injection_before_OpenSSH_hook_body": true,
+        "synthetic_retained_executor_injected": true,
+        "owned_executor_files_removed": [
+          "openssh-server-10.3_p1-r2.post-upgrade"
+        ],
+        "recovered_paths": 7002,
+        "recovered_memberships": 701,
+        "original_775_identities_recovered": true,
+        "unit_entries_and_timestamps_verified": 545,
+        "actual_upgraded_APK": "3.0.9-r0",
+        "actual_restored_APK": "3.0.8-r0",
+        "exact_private_namespace_restored": true,
+        "all_owned_processes_reaped_before_recovery": true
+      }
+    ],
+    "actual_ARM_kernel": true,
+    "native_normal_hooks_verified": true,
+    "current_baseline_recovered_after_success_and_hook_failure": true,
+    "private_fixture_retained_for_exact_controller_qualification": true,
+    "fixture_path": "/var/lib/fx0-rollback/stable-post-treescan-fixture-01/root",
+    "all_owned_processes_terminal": true,
+    "live_package_or_boot_changes": false,
+    "live_transaction_controller_not_qualified": true,
+    "power_loss_or_stop_signal_matrix_qualified": false,
+    "finished_UTC": "2026-11-12T07:32:52.532892+00:00"
+  },
+  "actual_PID1_completion_verified": true,
+  "known_cgroup_empty": true,
+  "current_package_selection": [
+    {
+      "package": "zlib",
+      "action": "Upgrading",
+      "installed": "1.3.2-r1",
+      "candidate": "1.4-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "1.4-r0",
+          "checksum": "Q1gzyvxSzIFlNmsw3HwFOuFwAj+CA=",
+          "repository": 2,
+          "archive_bytes": 44616,
+          "installed_bytes": 66892
+        }
+      ]
+    },
+    {
+      "package": "libapk",
+      "action": "Upgrading",
+      "installed": "3.0.8-r0",
+      "candidate": "3.0.9-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "3.0.9-r0",
+          "checksum": "Q1QRC33e3GG7kvpFATP1NSwPJVUA0=",
+          "repository": 2,
+          "archive_bytes": 120938,
+          "installed_bytes": 198444
+        }
+      ]
+    },
+    {
+      "package": "apk-tools",
+      "action": "Upgrading",
+      "installed": "3.0.8-r0",
+      "candidate": "3.0.9-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "3.0.9-r0",
+          "checksum": "Q1UnerhTN6trx0E4CXVB+NrHO1dlo=",
+          "repository": 2,
+          "archive_bytes": 50365,
+          "installed_bytes": 80468
+        }
+      ]
+    },
+    {
+      "package": "libexpat",
+      "action": "Upgrading",
+      "installed": "2.9.0-r0",
+      "candidate": "2.10.0-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "2.10.0-r0",
+          "checksum": "Q1cVhm/AXSAOc4jI2NNoaIoc/DpuE=",
+          "repository": 2,
+          "archive_bytes": 54580,
+          "installed_bytes": 99712
+        }
+      ]
+    },
+    {
+      "package": "libarchive",
+      "action": "Upgrading",
+      "installed": "3.8.10-r0",
+      "candidate": "3.8.11-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "3.8.11-r0",
+          "checksum": "Q1/64CuPXtrRao0kQbRj4HiJj6fBA=",
+          "repository": 2,
+          "archive_bytes": 290321,
+          "installed_bytes": 488820
+        }
+      ]
+    },
+    {
+      "package": "openssh-keygen",
+      "action": "Upgrading",
+      "installed": "10.3_p1-r1",
+      "candidate": "10.3_p1-r2",
+      "signed_repository_candidates": [
+        {
+          "version": "10.3_p1-r2",
+          "checksum": "Q1YVTBGF6F53ADZMoJw8DfncNA9eM=",
+          "repository": 2,
+          "archive_bytes": 155465,
+          "installed_bytes": 259596
+        }
+      ]
+    },
+    {
+      "package": "openssh-server-common",
+      "action": "Upgrading",
+      "installed": "10.3_p1-r1",
+      "candidate": "10.3_p1-r2",
+      "signed_repository_candidates": [
+        {
+          "version": "10.3_p1-r2",
+          "checksum": "Q1pDB9noCUwUh05PyNLMhs6SMCL1M=",
+          "repository": 2,
+          "archive_bytes": 3169,
+          "installed_bytes": 3542
+        }
+      ]
+    },
+    {
+      "package": "openssh-server-pam",
+      "action": "Upgrading",
+      "installed": "10.3_p1-r1",
+      "candidate": "10.3_p1-r2",
+      "signed_repository_candidates": [
+        {
+          "version": "10.3_p1-r2",
+          "checksum": "Q1Kuv1NBtW+lRbf/NUMSzAzAc7vio=",
+          "repository": 2,
+          "archive_bytes": 821516,
+          "installed_bytes": 1390477
+        }
+      ]
+    },
+    {
+      "package": "tzdata",
+      "action": "Upgrading",
+      "installed": "2026e-r0",
+      "candidate": "2026f-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "2026f-r0",
+          "checksum": "Q1SwYtN0kfrpTnpz9CwCQQ/TsFwQw=",
+          "repository": 2,
+          "archive_bytes": 190850,
+          "installed_bytes": 452202
+        }
+      ]
+    },
+    {
+      "package": "alpine-release",
+      "action": "Upgrading",
+      "installed": "3.24.3-r0",
+      "candidate": "3.24.4-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "3.24.4-r0",
+          "checksum": "Q1trM4D57Jg4mSgG3VMqmqWB61JP0=",
+          "repository": 2,
+          "archive_bytes": 2076,
+          "installed_bytes": 343
+        }
+      ]
+    },
+    {
+      "package": "openssh-client-common",
+      "action": "Upgrading",
+      "installed": "10.3_p1-r1",
+      "candidate": "10.3_p1-r2",
+      "signed_repository_candidates": [
+        {
+          "version": "10.3_p1-r2",
+          "checksum": "Q1PIm3dETbe+LP1/l3Nc7ALwXubFg=",
+          "repository": 2,
+          "archive_bytes": 650162,
+          "installed_bytes": 1848815
+        }
+      ]
+    },
+    {
+      "package": "openssh-client-default",
+      "action": "Upgrading",
+      "installed": "10.3_p1-r1",
+      "candidate": "10.3_p1-r2",
+      "signed_repository_candidates": [
+        {
+          "version": "10.3_p1-r2",
+          "checksum": "Q1mTGGRQBhkTkn+bN1Mh+jqOPwuDU=",
+          "repository": 2,
+          "archive_bytes": 322496,
+          "installed_bytes": 538380
+        }
+      ]
+    },
+    {
+      "package": "openssh-sftp-server",
+      "action": "Upgrading",
+      "installed": "10.3_p1-r1",
+      "candidate": "10.3_p1-r2",
+      "signed_repository_candidates": [
+        {
+          "version": "10.3_p1-r2",
+          "checksum": "Q1Juio8bLKM2JMujs5P3+9P9ole0s=",
+          "repository": 2,
+          "archive_bytes": 56328,
+          "installed_bytes": 95568
+        }
+      ]
+    },
+    {
+      "package": "openssh-server",
+      "action": "Upgrading",
+      "installed": "10.3_p1-r1",
+      "candidate": "10.3_p1-r2",
+      "signed_repository_candidates": [
+        {
+          "version": "10.3_p1-r2",
+          "checksum": "Q1CwwkkGp4R6uujUTKPLRbghhd6pQ=",
+          "repository": 2,
+          "archive_bytes": 801502,
+          "installed_bytes": 1357324
+        }
+      ]
+    },
+    {
+      "package": "openssh",
+      "action": "Upgrading",
+      "installed": "10.3_p1-r1",
+      "candidate": "10.3_p1-r2",
+      "signed_repository_candidates": [
+        {
+          "version": "10.3_p1-r2",
+          "checksum": "Q1EXQdv1hv0qmtz5EynSog6cZPdY0=",
+          "repository": 2,
+          "archive_bytes": 91980,
+          "installed_bytes": 157112
+        }
+      ]
+    },
+    {
+      "package": "openssh-nftrules",
+      "action": "Upgrading",
+      "installed": "10.3_p1-r1",
+      "candidate": "10.3_p1-r2",
+      "signed_repository_candidates": [
+        {
+          "version": "10.3_p1-r2",
+          "checksum": "Q1p5ojfbKu249Ssina/wj7Xhgu6Mc=",
+          "repository": 2,
+          "archive_bytes": 1673,
+          "installed_bytes": 83
+        }
+      ]
+    },
+    {
+      "package": "libheif-dav1d",
+      "action": "Upgrading",
+      "installed": "1.23.4-r0",
+      "candidate": "1.23.7-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "1.23.7-r0",
+          "checksum": "Q1ug4nZ3dmIbcg8b+r3lxTXpiT7Qs=",
+          "repository": 3,
+          "archive_bytes": 7575,
+          "installed_bytes": 13748
+        }
+      ]
+    },
+    {
+      "package": "libheif-libde265",
+      "action": "Upgrading",
+      "installed": "1.23.4-r0",
+      "candidate": "1.23.7-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "1.23.7-r0",
+          "checksum": "Q18V5owrMU4jOYFM+14rtfOTgYN7U=",
+          "repository": 3,
+          "archive_bytes": 6841,
+          "installed_bytes": 13736
+        }
+      ]
+    },
+    {
+      "package": "libheif",
+      "action": "Upgrading",
+      "installed": "1.23.4-r0",
+      "candidate": "1.23.7-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "1.23.7-r0",
+          "checksum": "Q1NpQGN1slTkSNOyQK7Q8zIKWgFpQ=",
+          "repository": 3,
+          "archive_bytes": 642388,
+          "installed_bytes": 1173891
+        }
+      ]
+    },
+    {
+      "package": "libheif-jpeg",
+      "action": "Upgrading",
+      "installed": "1.23.4-r0",
+      "candidate": "1.23.7-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "1.23.7-r0",
+          "checksum": "Q1o1npKnMIO/BXGhM8EP8Z5CuuvUw=",
+          "repository": 3,
+          "archive_bytes": 9683,
+          "installed_bytes": 19352
+        }
+      ]
+    },
+    {
+      "package": "libheif-aom",
+      "action": "Upgrading",
+      "installed": "1.23.4-r0",
+      "candidate": "1.23.7-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "1.23.7-r0",
+          "checksum": "Q1zxjwAaa6oLjgDdsinA1u3pITZxA=",
+          "repository": 3,
+          "archive_bytes": 20925,
+          "installed_bytes": 35712
+        }
+      ]
+    },
+    {
+      "package": "libheif-rav1e",
+      "action": "Upgrading",
+      "installed": "1.23.4-r0",
+      "candidate": "1.23.7-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "1.23.7-r0",
+          "checksum": "Q1eB8bcRqbceiM+IEilKDnlpd/pOc=",
+          "repository": 3,
+          "archive_bytes": 11654,
+          "installed_bytes": 22016
+        }
+      ]
+    },
+    {
+      "package": "libheif-x264",
+      "action": "Upgrading",
+      "installed": "1.23.4-r0",
+      "candidate": "1.23.7-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "1.23.7-r0",
+          "checksum": "Q1XVWIEndPPMETJmOOeYAwyQao8GM=",
+          "repository": 3,
+          "archive_bytes": 14562,
+          "installed_bytes": 22000
+        }
+      ]
+    },
+    {
+      "package": "libheif-x265",
+      "action": "Upgrading",
+      "installed": "1.23.4-r0",
+      "candidate": "1.23.7-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "1.23.7-r0",
+          "checksum": "Q1Ln7by4qNWzIajLfJLDYBgjlCDwc=",
+          "repository": 3,
+          "archive_bytes": 18805,
+          "installed_bytes": 30204
+        }
+      ]
+    },
+    {
+      "package": "libheif-ffmpeg",
+      "action": "Upgrading",
+      "installed": "1.23.4-r0",
+      "candidate": "1.23.7-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "1.23.7-r0",
+          "checksum": "Q1fCA2eJBSMsI8ijiy2H+bG4KojSI=",
+          "repository": 3,
+          "archive_bytes": 11639,
+          "installed_bytes": 17940
+        }
+      ]
+    },
+    {
+      "package": "libopenmpt",
+      "action": "Upgrading",
+      "installed": "0.8.9-r0",
+      "candidate": "0.8.10-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "0.8.10-r0",
+          "checksum": "Q1Wt0090sJGHiImElzy2+1JU21eLc=",
+          "repository": 3,
+          "archive_bytes": 597383,
+          "installed_bytes": 980444
+        }
+      ]
+    },
+    {
+      "package": "vim-common",
+      "action": "Upgrading",
+      "installed": "9.2.1202-r0",
+      "candidate": "9.2.1310-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "9.2.1310-r0",
+          "checksum": "Q1ZN54fgCRdFojphE+5UaT60RwGs4=",
+          "repository": 3,
+          "archive_bytes": 8502799,
+          "installed_bytes": 27984821
+        }
+      ]
+    },
+    {
+      "package": "xxd",
+      "action": "Upgrading",
+      "installed": "9.2.1202-r0",
+      "candidate": "9.2.1310-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "9.2.1310-r0",
+          "checksum": "Q16MAc9G80fPbi8wiKQHNeV1iYGjg=",
+          "repository": 3,
+          "archive_bytes": 9896,
+          "installed_bytes": 17660
+        }
+      ]
+    },
+    {
+      "package": "vim",
+      "action": "Upgrading",
+      "installed": "9.2.1202-r0",
+      "candidate": "9.2.1310-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "9.2.1310-r0",
+          "checksum": "Q1WGDjXz+xzUXCFevg+ZVhJ6Rc8vE=",
+          "repository": 3,
+          "archive_bytes": 1671635,
+          "installed_bytes": 2627924
+        }
+      ]
+    },
+    {
+      "package": "xwayland",
+      "action": "Upgrading",
+      "installed": "24.1.14-r0",
+      "candidate": "24.1.15-r0",
+      "signed_repository_candidates": [
+        {
+          "version": "24.1.15-r0",
+          "checksum": "Q18Jm2eqBnGZP6L5RdoovYWlLVoq0=",
+          "repository": 3,
+          "archive_bytes": 719321,
+          "installed_bytes": 1192059
+        }
+      ]
+    }
+  ],
+  "selected_packages": 30,
+  "unselected_protected_identities": 745,
+  "current_authenticated_indexes": [
+    {
+      "repository": 0,
+      "index_sha256": "c52a218aeb8dd67b2c3bb7bece1280609f1859f2b276ea850b0f4780f84545b4",
+      "key": "build.postmarketos.org.rsa.pub",
+      "key_sha256": "b70e6ffc64a652d63aee0c28cb9ecb2ca3b49d759ca7a023bcb854d08780964b",
+      "independently_verified": true,
+      "package_records": 198
+    },
+    {
+      "repository": 1,
+      "index_sha256": "6d7cdaf94e5af3d4a3b089de24831c0fd71c4f46d342c2f59c0dd245b3314f34",
+      "key": "build.postmarketos.org.rsa.pub",
+      "key_sha256": "b70e6ffc64a652d63aee0c28cb9ecb2ca3b49d759ca7a023bcb854d08780964b",
+      "independently_verified": true,
+      "package_records": 724
+    },
+    {
+      "repository": 2,
+      "index_sha256": "79035cd87db61c92d028b2f7fd75bc10a5849f9f3fe237235197c84647b51d35",
+      "key": "alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+      "key_sha256": "ebe717d228555aa58133c202314a451f81e71f174781fd7ff8d8970d6cfa60da",
+      "independently_verified": true,
+      "package_records": 5958
+    },
+    {
+      "repository": 3,
+      "index_sha256": "ec7454c9471ab7a3c85e139d34b9c2ec9cfc9d0e754e169f5c07d3685786a5ca",
+      "key": "alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+      "key_sha256": "ebe717d228555aa58133c202314a451f81e71f174781fd7ff8d8970d6cfa60da",
+      "independently_verified": true,
+      "package_records": 21152
+    }
+  ],
+  "candidate_signatures_and_payloads_verified": 30,
+  "candidate_tamper_controls_rejected": 2,
+  "retained_old_signed_APKs_verified": 21,
+  "missing_old_signed_APKs": [
+    "alpine-release",
+    "openssh-client-common",
+    "openssh-client-default",
+    "openssh-keygen",
+    "openssh-nftrules",
+    "openssh-server",
+    "openssh-server-common",
+    "openssh-server-pam",
+    "openssh-sftp-server"
+  ],
+  "old_APK_tamper_controls_rejected": 2,
+  "complete_file_backed_recovery_required": true,
+  "payload_scope_draft": {
+    "old_owned_paths": 2810,
+    "new_owned_paths": 2820,
+    "combined_paths": 2824,
+    "old_package_paths_absent_in_baseline": 0,
+    "candidate_etc_sidecars": 18,
+    "all_etc_sidecars_captured": true,
+    "native_protected_path_policy_not_yet_classified": true
+  },
+  "independent_postflight": {
+    "recorded_UTC": "2026-11-12T07:35:02.269157+00:00",
+    "boot_id": "991042aa-9e97-4848-b54c-ad391c06bae0",
+    "kernel": "6.18.63-fx0-vibrator-alpine",
+    "package_version": "6.18.63-r1",
+    "taint": 0,
+    "kernel_notes_sha256": "05292e44d9f13de78b5ebf602b0b3f9ff22b7820d765f6e796cf3473beee4377",
+    "signature_enforcement": "Y",
+    "persistent_signature_cmdline": true,
+    "native_trial_marker": false,
+    "return_timer": false,
+    "modules_on_persistent_storage": true,
+    "candidate_payload_files_verified": 545,
+    "candidate_module_files_verified": 464,
+    "initramfs_payload_entries_verified": 243,
+    "other_original_package_identities_unchanged": 773,
+    "kernel_and_treescan_only_package_identity_changes": true,
+    "treescan_package_version": "0.1-r1",
+    "treescan_ELF_sha256": "933ebbc4bfe8017a5a6e39bc97d76a499cfaecf5598bacde68744a69206ad4a0",
+    "unit_inventory_paths_verified": 545,
+    "installed_treescan_scans_verified": true,
+    "installed_world_exact": true,
+    "boot_image_sha256": "ee851c81968b86a80b47eb2e5c2f07d9d4298cffa17c9347e437036c128e2c64",
+    "raw_boot_sha256": "44dfbb6c64148071d2983dd053d7c04b02f21f9200dc917ee70455f3b40a65c2",
+    "bootloader_prefix_preserved": true,
+    "original_r50_backups_still_verified": true,
+    "systemd": "running",
+    "Sway_PID": 1488,
+    "gesture_PID": 2432,
+    "gesture_touchscreen_open": true,
+    "display_PM_auto": {
+      "fd900000.display-subsystem": "auto",
+      "fd928000.iommu": "auto",
+      "fd922800.dsi": "auto",
+      "fd922a00.phy": "auto"
+    },
+    "CPUs_online": "0-3",
+    "temperatures_mC": {
+      "thermal_zone1": 45000,
+      "thermal_zone0": 43000
+    },
+    "PMIC_registers": {
+      "0xc041": "c041: 00\n",
+      "0xc046": "c046: 00\n",
+      "0x1740": "1740: 01\n",
+      "0x1741": "1741: 73\n"
+    },
+    "serious_kernel_warnings": [],
+    "audio_testing": false,
+    "read_only": true,
+    "actual_public_source_sha256": "c384647bbe1d9788d6ba0b20ca402557a630ad2c0dabb54126b7de9aad13bd71",
+    "observed_UTC": "2026-11-12T07:35:04.705702+00:00",
+    "owner_UI_already_confirmed_for_same_boot": true,
+    "repeated_UI_question": false
+  },
+  "installed_time64_verification": {
+    "passed": true,
+    "actual_installed_executable": true,
+    "paths": 9,
+    "repeats": 3,
+    "negative_and_2038_and_2100_timestamps": true,
+    "missing_directory_rejected": true,
+    "native_temporary_fixture_removed": true,
+    "stdout": "Timestamp, recursion, symlink and missing-directory checks passed",
+    "actual_public_source_sha256": "07f2d5e3b75290b4b434e60d53782cc4e35edf4421a463b3c1a300f6a1c00b83",
+    "observed_UTC": "2026-11-12T07:34:31.202738+00:00",
+    "owner_UI_already_confirmed_for_same_boot": true,
+    "repeated_UI_question": false
+  },
+  "native_service_properties": [
+    "Type=exec",
+    "KillMode=control-group",
+    "MemorySwapMax=0",
+    "CPUQuota=50%",
+    "Nice=10",
+    "IOWeight=10",
+    "UMask=0077",
+    "PrivateDevices=yes",
+    "PrivateNetwork=yes",
+    "PrivateTmp=yes",
+    "ProtectSystem=strict",
+    "ProtectHome=yes",
+    "ProtectKernelTunables=yes",
+    "ProtectKernelModules=yes",
+    "ProtectControlGroups=yes",
+    "NoNewPrivileges=yes",
+    "MemoryMax=400M",
+    "TimeoutStopSec=30",
+    "ReadWritePaths=/var/lib/fx0-rollback/stable-post-treescan-rehearsal-01 /var/lib/fx0-rollback/stable-post-treescan-fixture-01",
+    "RuntimeMaxSec=3000"
+  ],
+  "private_fixture_retained": true,
+  "all_started_processes_terminal": true,
+  "stable_30_update_installed_on_live_OS": false,
+  "live_stable_transaction_controller_qualified": false,
+  "generic_FileRollback_live_root_refusal_retained": true,
+  "boot_written": false,
+  "reboot": false,
+  "no_new_UI_prompt": true,
+  "existing_phone_update_and_push_approval": true,
+  "abrupt_power_loss_qualified": false,
+  "stop_signal_matrix_qualified": false,
+  "runtime_private_keys_read_hashed_or_exported": false,
+  "audio_testing": false,
+  "full_bringup": "active"
+}

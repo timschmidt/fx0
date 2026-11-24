@@ -12,6 +12,53 @@ patches also carry the AI-assistance disclosure and `Assisted-by: LLM`
 trailer required by the target tree's `Documentation/process/coding-assistants.rst`,
 and no Signed-off-by, which the owner adds before sending.
 
+## 2026-11-11 vibrator drafts on the current input tree
+
+The three PM8xxx voltage/active-strength fixes now have
+[unsigned review material](../submissions/pm8xxx-vibrator/README.md) based on
+input `master`/`next` at `8e16f8bbf1bd528975fd6f4081eaf00513c1d83e`.
+The base and all three prefixes pass ARM `W=1` object builds with KCFI and
+compressed DWARF5; each patch passes strict checkpatch with only sign-off
+checking disabled. The existing 768-case actual-C fixtures are byte-identical
+and their earlier sanitizer results are reused. Earlier Fx0 RAM tests cover
+the same voltage functions; this full maintainer kernel has not been linked
+or booted, and PMI632 upper-byte encoding remains outside the fixtures.
+
+The pinned current tree requires AI-assistance disclosure in the cover letter
+or changelog, and prohibits agents from adding sign-offs or sending patches.
+This bundle follows those current rules; the older draft requirements described
+above belong to their respective pinned trees. Human review/certification and
+additional physical qualification remain. No email or PR was sent.
+
+## 2026-11-11 NFC removal drafts on the advertised fixes branch
+
+The two [NXP removal drafts](../submissions/nxp-nci-remove/README.md) target
+the NFC maintainer's Codeberg `for-linus` tip
+`b61732f47316d45f27706db7812950145d3327b5`. Both advertised NFC branch tips
+are older than the newer input tree checked above; that newer source still
+contains the same removal problems. The series preserves intervening upstream
+changes, separates clock/binding/board features, and avoids exporting the
+intermediate ordering that stopped receive before the closing reset.
+
+Six host tests pass nine modeled lifecycle cases and reject six independent
+regression controls. Matching core/I2C/firmware objects pass `W=1` on the base
+and both prefixes: nine ARM objects with KCFI and compressed DWARF5. Strict
+checkpatch and exported-tree replay pass. The pinned NFC tree requires the
+included `Assisted-by: LLM` tags and prohibits agent-added DCO sign-offs.
+
+The later [full-build qualification](../evidence/2026-11-11-nfc-remove-full-build.json)
+passes normal ARM kernel/module builds on the candidate and unmodified base.
+Both verify 457 signed modules, complete dependencies and 24,813 imported CRCs;
+all 233 warning lines match, with none added or removed. Real wrong-certificate
+and baseline-ABI combinations are rejected. The
+[two-commit source branch](https://github.com/timschmidt/fx0-linux/tree/submit/nxp-nci-remove-v1)
+is published and independently verified.
+
+These remain review drafts. Broader networking config builds, GCC, physical
+open/unregister/IRQ timing, concurrent firmware, RF/PM and human certification
+remain open. No email or PR was sent; no phone image is qualified by these host
+builds.
+
 ## Prepared, not sent
 
 | Change | Target | Material |
@@ -88,3 +135,30 @@ Each integration rebase drops commits that have landed upstream. Each
 downstream commit keeps a row here until it is merged or replaced. Hardware
 retests use the existing evidence harnesses: Wi-Fi association and soak,
 Bluetooth pairing, display and GPU, reboot loops and the system soak.
+
+## NFC optional reference-clock drafts
+
+The [separate clock series](../submissions/nxp-nci-ref-clock/README.md) targets
+advertised NFC `for-next` at `fd73f4a6659897191fa0d40695fe370925dd3780` and is
+published at `8616767b2b9e01846b1a61af2055ab7965a2f245`. Nine actual C cases,
+five runtime controls, five binding tests, two strict style checks and exact
+prefix replay pass. Full pinned-archive ARM builds produce six matching driver
+objects with no diagnostics, KCFI and actual compressed DWARF5. Full links and
+hardware remain open; the absent Madai board file needs broader board support.
+
+The removal series has now attempted full GCC and Clang `allmodconfig` builds.
+Both stop in byte-identical upstream code on base and candidate; complete
+warning comparison and broad qualification remain open. No warning suppression
+or configuration override was added. `allyesconfig` is still untested.
+[Evidence](../evidence/2026-11-11-nfc-clock-drafts.json)
+
+
+The later [clock full-build comparison](../submissions/nxp-nci-ref-clock/full-build-comparison.json)
+passes both normal ARM kernels and all 457 modules, with identical 233 warnings,
+no changed export CRCs and actual wrong-certificate rejection. Standalone host
+qualification does not establish a Madai boot, broader configs or hardware.
+An extra MSM payload difference remains without exact original section attribution;
+the generator independently varies header order with matching C tokens. A
+[fresh stable update preparation](../diagnostics/stable-update/README.md) verifies
+all 30 candidate APKs and 21 originals; rollback and native activation remain open.
+[Evidence](../evidence/2026-11-11-clock-full-and-stable-update.json)

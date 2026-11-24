@@ -1,0 +1,433 @@
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD b/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD
+index f22e3a47c..a9279141d 100644
+--- a/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD
++++ b/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD
+@@ -3,7 +3,7 @@ maintainer="Newbyte <newbie13xd@gmail.com>"
+ _flavor="postmarketos-qcom-msm8226"
+ pkgname=linux-$_flavor
+ pkgver=6.18.59
+-pkgrel=54
++pkgrel=55
+ pkgdesc="Mainline Kernel fork for APQ8026/MSM8226/MSM8926 devices"
+ arch="armv7"
+ _carch="arm"
+@@ -75,6 +75,10 @@ source="
+ 	fx0-msm8926-runtime-clock-binding.patch
+ 	fx0-msm8926-runtime-clock-guard.patch
+ 	fx0-msm8926-runtime-clock-dt.patch
++	fx0-msm8926-probe-diagnostics.patch
++	fx0-msm8926-cpr-xo-handoff.patch
++	fx0-msm8926-cpr-disabled-reference.patch
++	fx0-msm8926-cpr-voltage-observation.patch
+ "
+ builddir="$srcdir/fx0-linux-$_commit"
+ 
+@@ -107,7 +111,7 @@ package() {
+ 
+ sha512sums="
+ 3479e7b9d3e753f4dddde1b88cb6544d2304e46aa92b3ba0aab8cd0ce1108869efd8cc36692a05bc094ccdff6213e0cae0433dc5b742289c57023a838fda8741  linux-fx0-4b800b920c7db82e8012a580a17cc2d8ff9d5e66.tar.gz
+-48b66acd1d70192ced5f51de24991fe8579d54a15ab696071783baeee31cf53f11afe40065da0f2a0bb2205ef76ac3bf8cb3d62cafc5719d4cf0e52330893b43  config-postmarketos-qcom-msm8226.armv7
++1ed1c5fe45ce59e5183aeb87c0f8346b6246c17dfddb0f644d8a8b0d21110e88689468ef4ea93c3018b0fd5116f88fae8e12b193243d4e06bb91379a9623f31e  config-postmarketos-qcom-msm8226.armv7
+ 638996e6df8e96a1ba54560fc5075840876b788c8e5a534b1f2178a0269a765ec34b05a999287bdc7da5f22f9666ac7e122c63818a54fb76133797cb4ce586de  fx0-mpu6515-dmp.patch
+ 14435047cf0bd838eb3c246ac5689a5f3bb908e23f55ef0c5655436ea15a75d26023dae63dcb52d4b6f7e0cd3f170a6e4a018a39a241f7670913fb90dc17cbda  iio-preserve-tiny-log2-scale.patch
+ 197cc0debb094c372a25a3e46efc1451e554e679084b285df8c8786b5f7c372d9358acc568f641042b2fa94d88f0659caf7d3e4da2df740c6a3a481eefcb1d4d  fx0-mpu6515-dmp-smd-awake.patch
+@@ -147,4 +151,8 @@ b8cea407695e91dd517a013f70ea7e209cf8b2686ceefebf7225c768601c7895bf479855954572dd
+ ccf8f214a3f081df9d17cac7240dec532e607a0b208920e5b544069ce2c36eaa6000e1325209e5ec8bc0494b5b78bb8f07af580189bce76efcabdf0c193adbd7  fx0-msm8926-runtime-clock-binding.patch
+ f4f7eb2a44cb38ca615b135d60b4a994f1abd22e77ec0f1d877c0bf8c24bdeda05dbc1f169f5bc839a0480124af84750f2486a13798f79d59964a7708baf484e  fx0-msm8926-runtime-clock-guard.patch
+ 9b067b0597cdbda17602f8b7b6e5f01add835651e24845442336d06096c5b8083022548f4467d71b8d8b795213cb55d4c949aac477e0846e15508bb93047fc3f  fx0-msm8926-runtime-clock-dt.patch
++8171d8063729002ccf4e8e7a430a2e56406e73dd655b7d3e88334509dcff8dd68b19bae8659d1fe80d22efd378fa7b1f4b7d684b66545c1d8ab921d2aa4542ea  fx0-msm8926-probe-diagnostics.patch
++70431b69b48c382f89bff72b9f2dea4b417aeceaa73541308a8559a8a3b8f56533944423af41940e1ea7e2b303345b64741b11fd2461193816af1dd251a8af43  fx0-msm8926-cpr-xo-handoff.patch
++117d36d0959697648515250bc7ec0c87f790237eb77e774378938690bb04e5ca6ec4997d6828cbb238b88e8f25456e057edf361d7ffb615bded6648735d67fb6  fx0-msm8926-cpr-disabled-reference.patch
++096c904704308a449d2c72328cdea747b22534ebade18ecf6f25523f27db5a680b1e7b8a2cc7f5db39ec8363879b60dd98ea3962da392bbc25b0f0b28d75a314  fx0-msm8926-cpr-voltage-observation.patch
+ "
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7 b/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7
+index 9faef04ab..b0156c8d0 100644
+--- a/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7
++++ b/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7
+@@ -38,7 +38,7 @@ CONFIG_THREAD_INFO_IN_TASK=y
+ CONFIG_INIT_ENV_ARG_LIMIT=32
+ # CONFIG_COMPILE_TEST is not set
+ # CONFIG_WERROR is not set
+-CONFIG_LOCALVERSION="-fx0-cpr-runtime"
++CONFIG_LOCALVERSION="-fx0-cpr-observe-alpine"
+ # CONFIG_LOCALVERSION_AUTO is not set
+ CONFIG_BUILD_SALT=""
+ CONFIG_HAVE_KERNEL_GZIP=y
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/fx0-msm8926-cpr-disabled-reference.patch b/device/testing/linux-postmarketos-qcom-msm8226/fx0-msm8926-cpr-disabled-reference.patch
+new file mode 100644
+index 000000000..fda5f1334
+--- /dev/null
++++ b/device/testing/linux-postmarketos-qcom-msm8226/fx0-msm8926-cpr-disabled-reference.patch
+@@ -0,0 +1,54 @@
++diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
++index bc4d1d60d1e0..5c096ac6b2c5 100644
++--- a/drivers/pmdomain/qcom/cpr.c
+++++ b/drivers/pmdomain/qcom/cpr.c
++@@ -14,7 +14,6 @@
++ #include <linux/list.h>
++ #include <linux/init.h>
++ #include <linux/io.h>
++-#include <linux/iopoll.h>
++ #include <linux/bitops.h>
++ #include <linux/slab.h>
++ #include <linux/of.h>
++@@ -765,7 +764,6 @@ static int cpr_msm8926_check_refclock(struct regmap *apcs)
++  */
++ static int cpr_msm8926_init_refclock(struct cpr_drv *drv, struct regmap *apcs)
++ {
++-	u32 value;
++ 	int ret;
++ 
++ 	writel(0, drv->base + REG_RBIF_IRQ_EN(0));
++@@ -775,10 +773,11 @@ static int cpr_msm8926_init_refclock(struct cpr_drv *drv, struct regmap *apcs)
++ 	    readl(drv->base + REG_RBCPR_CTL))
++ 		return -EIO;
++ 
++-	ret = readl_poll_timeout(drv->base + REG_RBCPR_RESULT_0, value,
++-				!(value & RBCPR_RESULT0_BUSY_MASK), 1, 1000);
++-	if (ret)
++-		return ret;
+++	/*
+++	 * Fx0 retains RESULT_0.BUSY with CTL clear before XO setup. The IRQ
+++	 * path uses BUSY only while LOOP_EN is set; it is not an idle ack
+++	 * for a stopped controller. Verify CTL/IRQ instead of polling it.
+++	 */
++ 	writel(CPR_INT_ALL, drv->base + REG_RBIF_IRQ_CLEAR);
++ 
++ 	/* Preserve every APCS bit except the CPR XO/AHB selector. */
++@@ -787,7 +786,16 @@ static int cpr_msm8926_init_refclock(struct cpr_drv *drv, struct regmap *apcs)
++ 		return ret;
++ 
++ 	/* A successful bus write alone does not prove that XO was selected. */
++-	return cpr_msm8926_check_refclock(apcs);
+++	ret = cpr_msm8926_check_refclock(apcs);
+++	if (ret)
+++		return ret;
+++
+++	/* Changing the reference must not restart measurements or IRQs. */
+++	if (readl(drv->base + REG_RBIF_IRQ_EN(0)) ||
+++	    readl(drv->base + REG_RBCPR_CTL))
+++		return -EIO;
+++
+++	return 0;
++ }
++ 
++ static int cpr_config(struct cpr_drv *drv)
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/fx0-msm8926-cpr-voltage-observation.patch b/device/testing/linux-postmarketos-qcom-msm8226/fx0-msm8926-cpr-voltage-observation.patch
+new file mode 100644
+index 000000000..338c70f19
+--- /dev/null
++++ b/device/testing/linux-postmarketos-qcom-msm8226/fx0-msm8926-cpr-voltage-observation.patch
+@@ -0,0 +1,30 @@
++diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
++index 5c096ac6b2c5..5b2a7d2663c4 100644
++--- a/drivers/pmdomain/qcom/cpr.c
+++++ b/drivers/pmdomain/qcom/cpr.c
++@@ -1996,8 +1996,23 @@ static int cpr_debug_info_show(struct seq_file *s, void *unused)
++ 	}
++ 	fuse_corner = corner->fuse_corner;
++ 
++-	seq_printf(s, "corner, current_volt = %d uV\n",
++-		       corner->last_uV);
+++	if (drv->msm8926) {
+++		int apc_uV = regulator_get_voltage(drv->rails.apc);
+++
+++		/* The corner cache is only a plan before the first request. */
+++		seq_printf(s, "corner, planned_volt = %d uV\n", corner->uV);
+++		seq_printf(s, "corner, cached_volt = %d uV\n", corner->last_uV);
+++		seq_printf(s, "corner_voltage_applied = %u\n",
+++			   drv->msm8926->applied);
+++		seq_printf(s, "feedback_allowed = %u\n", cpr_is_allowed(drv));
+++		if (apc_uV < 0)
+++			seq_printf(s, "apc_target_read_error = %d\n", apc_uV);
+++		else
+++			seq_printf(s, "apc_target = %d uV\n", apc_uV);
+++	} else {
+++		seq_printf(s, "corner, current_volt = %d uV\n",
+++			   corner->last_uV);
+++	}
++ 
++ 	ro_sel = fuse_corner->ring_osc_idx;
++ 	gcnt = cpr_read(drv, REG_RBCPR_GCNT_TARGET(ro_sel));
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/fx0-msm8926-cpr-xo-handoff.patch b/device/testing/linux-postmarketos-qcom-msm8226/fx0-msm8926-cpr-xo-handoff.patch
+new file mode 100644
+index 000000000..6401b3c5b
+--- /dev/null
++++ b/device/testing/linux-postmarketos-qcom-msm8226/fx0-msm8926-cpr-xo-handoff.patch
+@@ -0,0 +1,80 @@
++diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
++index f35c3d3fdde3..bc4d1d60d1e0 100644
++--- a/drivers/pmdomain/qcom/cpr.c
+++++ b/drivers/pmdomain/qcom/cpr.c
++@@ -14,6 +14,7 @@
++ #include <linux/list.h>
++ #include <linux/init.h>
++ #include <linux/io.h>
+++#include <linux/iopoll.h>
++ #include <linux/bitops.h>
++ #include <linux/slab.h>
++ #include <linux/of.h>
++@@ -758,6 +759,37 @@ static int cpr_msm8926_check_refclock(struct regmap *apcs)
++ 	return value & BIT(0) ? -EINVAL : 0;
++ }
++ 
+++/*
+++ * Probe has not installed an IRQ handler yet; configuration/resume holds the
+++ * domain lock. Stop inherited measurements before changing their reference.
+++ */
+++static int cpr_msm8926_init_refclock(struct cpr_drv *drv, struct regmap *apcs)
+++{
+++	u32 value;
+++	int ret;
+++
+++	writel(0, drv->base + REG_RBIF_IRQ_EN(0));
+++	writel(0, drv->base + REG_RBCPR_CTL);
+++	/* Ordered readbacks complete the CPR writes before accessing APCS. */
+++	if (readl(drv->base + REG_RBIF_IRQ_EN(0)) ||
+++	    readl(drv->base + REG_RBCPR_CTL))
+++		return -EIO;
+++
+++	ret = readl_poll_timeout(drv->base + REG_RBCPR_RESULT_0, value,
+++				!(value & RBCPR_RESULT0_BUSY_MASK), 1, 1000);
+++	if (ret)
+++		return ret;
+++	writel(CPR_INT_ALL, drv->base + REG_RBIF_IRQ_CLEAR);
+++
+++	/* Preserve every APCS bit except the CPR XO/AHB selector. */
+++	ret = regmap_update_bits(apcs, 0x64, BIT(0), 0);
+++	if (ret)
+++		return ret;
+++
+++	/* A successful bus write alone does not prove that XO was selected. */
+++	return cpr_msm8926_check_refclock(apcs);
+++}
+++
++ static int cpr_config(struct cpr_drv *drv)
++ {
++ 	int i, ret;
++@@ -765,9 +797,9 @@ static int cpr_config(struct cpr_drv *drv)
++ 	struct corner *corner;
++ 	const struct cpr_desc *desc = drv->desc;
++ 
++-	/* Do not program XO-derived targets against an inherited AHB source. */
+++	/* Establish XO with the measurement engine stopped before target setup. */
++ 	if (drv->msm8926) {
++-		ret = cpr_msm8926_check_refclock(drv->msm8926->apcs);
+++		ret = cpr_msm8926_init_refclock(drv, drv->msm8926->apcs);
++ 		if (ret)
++ 			return ret;
++ 	}
++@@ -1193,7 +1225,7 @@ static int __maybe_unused cpr_msm8926_init(struct cpr_drv *drv)
++ 	if (IS_ERR(data->apcs))
++ 		return dev_err_probe(drv->dev, PTR_ERR(data->apcs),
++ 				     "APCS reference register map unavailable\n");
++-	ret = cpr_msm8926_check_refclock(data->apcs);
+++	ret = cpr_msm8926_init_refclock(drv, data->apcs);
++ 	if (ret)
++ 		return dev_err_probe(drv->dev, ret,
++ 				     "CPR reference source check failed\n");
++@@ -1246,7 +1278,7 @@ static int __maybe_unused cpr_msm8926_init(struct cpr_drv *drv)
++ 					     cpr_msm8926_rates[i], rounded);
++ 	}
++ 
++-	/* Read/calculation only. Attachment establishes the live MX vote later. */
+++	/* Attachment establishes the live MX vote and CPU rate later. */
++ 	for (i = 0; i < 3; i++) {
++ 		fuse = &drv->fuse_corners[i];
++ 		fuse->min_uV = data->plan.floor_uV[i];
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/fx0-msm8926-probe-diagnostics.patch b/device/testing/linux-postmarketos-qcom-msm8226/fx0-msm8926-probe-diagnostics.patch
+new file mode 100644
+index 000000000..582644bf3
+--- /dev/null
++++ b/device/testing/linux-postmarketos-qcom-msm8226/fx0-msm8926-probe-diagnostics.patch
+@@ -0,0 +1,143 @@
++diff --git a/drivers/pmdomain/qcom/cpr-msm8926-fuses.h b/drivers/pmdomain/qcom/cpr-msm8926-fuses.h
++index 7bc8e8400a36..0c4ec3ea7339 100644
++--- a/drivers/pmdomain/qcom/cpr-msm8926-fuses.h
+++++ b/drivers/pmdomain/qcom/cpr-msm8926-fuses.h
++@@ -2,6 +2,7 @@
++ #ifndef __QCOM_CPR_MSM8926_FUSES_H__
++ #define __QCOM_CPR_MSM8926_FUSES_H__
++ 
+++#include <linux/device.h>
++ #include <linux/err.h>
++ #include <linux/firmware/qcom/qcom_scm.h>
++ #include <linux/nvmem-consumer.h>
++@@ -21,13 +22,17 @@ static inline int cpr_msm8926_read_row(struct device *dev, const char *name,
++ 
++ 	cell = nvmem_cell_get(dev, name);
++ 	if (IS_ERR(cell))
++-		return PTR_ERR(cell);
+++		return dev_err_probe(dev, PTR_ERR(cell),
+++				     "%s cell lookup failed\n", name);
++ 	data = nvmem_cell_read(cell, &length);
++ 	nvmem_cell_put(cell);
++ 	if (IS_ERR(data))
++-		return PTR_ERR(data);
+++		return dev_err_probe(dev, PTR_ERR(data),
+++				     "%s cell read failed\n", name);
++ 	if (length != sizeof(*row))
++-		ret = -EINVAL;
+++		ret = dev_err_probe(dev, -EINVAL,
+++				    "%s cell has %zu bytes, expected %zu\n",
+++				    name, length, sizeof(*row));
++ 	else
++ 		*row = get_unaligned_le64(data);
++ 	kfree_sensitive(data);
++@@ -55,7 +60,8 @@ cpr_msm8926_read_calibration(struct device *dev,
++ 
++ 	ret = qcom_scm_legacy_fuse_read(0xfc4b81b0, &conditional);
++ 	if (ret)
++-		return ret < 0 ? ret : -EIO;
+++		return dev_err_probe(dev, ret < 0 ? ret : -EIO,
+++				     "conditional fuse SCM read failed\n");
++ 	fuses.conditional_matches = ((conditional >> 42) & 63) == 7;
++ 	ret = cpr_msm8926_read_row(dev, "cpu_calibration", &fuses.row22);
++ 	if (ret)
++@@ -67,7 +73,12 @@ cpr_msm8926_read_calibration(struct device *dev,
++ 	if (ret)
++ 		return ret;
++ 
++-	return cpr_msm8926_decode(&fuses, calibration);
+++	ret = cpr_msm8926_decode(&fuses, calibration);
+++	if (ret)
+++		return dev_err_probe(dev, ret,
+++				     "MSM8926 fuse calibration decode failed\n");
+++
+++	return 0;
++ }
++ 
++ #endif
++diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
++index f874bfc95ce9..f35c3d3fdde3 100644
++--- a/drivers/pmdomain/qcom/cpr.c
+++++ b/drivers/pmdomain/qcom/cpr.c
++@@ -1182,52 +1182,68 @@ static int __maybe_unused cpr_msm8926_init(struct cpr_drv *drv)
++ 
++ 	data = devm_kzalloc(drv->dev, sizeof(*data), GFP_KERNEL);
++ 	if (!data)
++-		return -ENOMEM;
+++		return dev_err_probe(drv->dev, -ENOMEM,
+++				     "MSM8926 state allocation failed\n");
++ 	ret = cpr_msm8926_read_calibration(drv->dev, &data->calibration);
++ 	if (ret)
++-		return ret;
+++		return dev_err_probe(drv->dev, ret,
+++				     "MSM8926 calibration acquisition failed\n");
++ 	data->apcs = syscon_regmap_lookup_by_phandle(drv->dev->of_node,
++ 						     "qcom,apcs-syscon");
++ 	if (IS_ERR(data->apcs))
++-		return PTR_ERR(data->apcs);
+++		return dev_err_probe(drv->dev, PTR_ERR(data->apcs),
+++				     "APCS reference register map unavailable\n");
++ 	ret = cpr_msm8926_check_refclock(data->apcs);
++ 	if (ret)
++-		return ret;
+++		return dev_err_probe(drv->dev, ret,
+++				     "CPR reference source check failed\n");
++ 	mx = devm_regulator_get(drv->dev, "vdd-mx");
++ 	if (IS_ERR(mx))
++-		return PTR_ERR(mx);
+++		return dev_err_probe(drv->dev, PTR_ERR(mx),
+++				     "MX supply unavailable\n");
++ 	boot_uV = regulator_get_voltage(drv->rails.apc);
++ 	ret = cpr_msm8926_plan_voltages(&data->calibration, drv->rails.apc,
++ 					mx, boot_uV, 1337500, &data->plan);
++ 	if (ret)
++-		return ret;
+++		return dev_err_probe(drv->dev, ret,
+++				     "APC/MX voltage plan rejected (boot APC %d uV)\n",
+++				     boot_uV);
++ 
++ 	ret = cpr_msm8926_supported_hw(&data->calibration, &data->plan,
++ 				       &data->supported_hw);
++ 	if (ret)
++-		return ret;
+++		return dev_err_probe(drv->dev, ret,
+++				     "CPU eligibility mask rejected\n");
++ 
++ 	/* The provider owns this handle across virtual CPU detach/probe retries. */
++ 	cpu_clk = devm_clk_get(drv->dev, "cpu");
++ 	if (IS_ERR(cpu_clk))
++-		return PTR_ERR(cpu_clk);
+++		return dev_err_probe(drv->dev, PTR_ERR(cpu_clk),
+++				     "CPU cluster clock unavailable\n");
++ 	data->aux_clk = devm_clk_get(drv->dev, "aux");
++ 	if (IS_ERR(data->aux_clk))
++-		return PTR_ERR(data->aux_clk);
+++		return dev_err_probe(drv->dev, PTR_ERR(data->aux_clk),
+++				     "GPLL0 auxiliary clock unavailable\n");
++ 	/* The source-4, HID-3 notifier path must be the lowest CPU OPP. */
++ 	if (clk_get_rate(data->aux_clk) != 600000000)
++-		return -ERANGE;
+++		return dev_err_probe(drv->dev, -ERANGE,
+++				     "startup auxiliary clock must be 600 MHz\n");
++ 	data->pll_clk = devm_clk_get(drv->dev, "pll");
++ 	if (IS_ERR(data->pll_clk))
++-		return PTR_ERR(data->pll_clk);
+++		return dev_err_probe(drv->dev, PTR_ERR(data->pll_clk),
+++				     "A7 PLL clock unavailable\n");
++ 	for (i = 0; i < ARRAY_SIZE(cpr_msm8926_rates); i++) {
++ 		if (!(data->supported_hw & (1U << i)))
++ 			continue;
++ 		rounded = clk_round_rate(cpu_clk, cpr_msm8926_rates[i]);
++ 		if (rounded < 0)
++-			return rounded;
+++			return dev_err_probe(drv->dev, rounded,
+++					     "CPU rate rounding failed for %lu Hz\n",
+++					     cpr_msm8926_rates[i]);
++ 		if ((unsigned long)rounded != cpr_msm8926_rates[i])
++-			return -ERANGE;
+++			return dev_err_probe(drv->dev, -ERANGE,
+++					     "CPU rate %lu Hz rounded to %ld Hz\n",
+++					     cpr_msm8926_rates[i], rounded);
++ 	}
++ 
++ 	/* Read/calculation only. Attachment establishes the live MX vote later. */
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/source-provenance.json b/device/testing/linux-postmarketos-qcom-msm8226/source-provenance.json
+index 9565de7e3..6bafd51a4 100644
+--- a/device/testing/linux-postmarketos-qcom-msm8226/source-provenance.json
++++ b/device/testing/linux-postmarketos-qcom-msm8226/source-provenance.json
+@@ -1,11 +1,11 @@
+ {
+-  "manifest_sha256": "82510913fa74c0e0db1753b0b29605e8911e6038f789ef072953dfa54d8fefed",
++  "manifest_sha256": "46c04b4e05b0595cc9d69eabcbcd7cc12c78b118d834c2726e355e6d05717598",
+   "profile": "cpr",
+   "base_commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+-  "configuration_sha256": "0d854c32f419049108cc23b02c50f95a421b28de04bdd3415aaf44c76698dd9c",
++  "configuration_sha256": "18a13809f3aa5042fb8447b1ae171b660b9321d85b9de6fd3c42134c7c8234fc",
+   "template_sha256": "68f4f53292d6e05f78cc46b97db62f4dc2163678647e8eafb61b52082ed29cdc",
+   "source_archive_sha512": "3479e7b9d3e753f4dddde1b88cb6544d2304e46aa92b3ba0aab8cd0ce1108869efd8cc36692a05bc094ccdff6213e0cae0433dc5b742289c57023a838fda8741",
+-  "pkgrel": 54,
++  "pkgrel": 55,
+   "patch_order": [
+     "fx0-mpu6515-dmp.patch",
+     "iio-preserve-tiny-log2-scale.patch",
+@@ -45,7 +45,11 @@
+     "fx0-msm8226-cpu-clock-errors.patch",
+     "fx0-msm8926-runtime-clock-binding.patch",
+     "fx0-msm8926-runtime-clock-guard.patch",
+-    "fx0-msm8926-runtime-clock-dt.patch"
++    "fx0-msm8926-runtime-clock-dt.patch",
++    "fx0-msm8926-probe-diagnostics.patch",
++    "fx0-msm8926-cpr-xo-handoff.patch",
++    "fx0-msm8926-cpr-disabled-reference.patch",
++    "fx0-msm8926-cpr-voltage-observation.patch"
+   ],
+   "exported_sha256": {
+     "fx0-mpu6515-dmp.patch": "9ad19adac6fa9aa3eb995e41e031daa556595d0a3f7e3713757e19f32f6c0ce4",
+@@ -87,8 +91,12 @@
+     "fx0-msm8926-runtime-clock-binding.patch": "fae83d0ee35ac0b6a84c92fd3051a75271e28069e2be71f6fb4cb3f9bfdd74c8",
+     "fx0-msm8926-runtime-clock-guard.patch": "009bfbdde5a801987525907a77825d29b07f4ef0f5ffd0de05e8c6d55d721cbe",
+     "fx0-msm8926-runtime-clock-dt.patch": "235a5bcb5004ffed9e71086dce3325091dc7f5281af45db53b2d7ad4ac7783d5",
+-    "config-postmarketos-qcom-msm8226.armv7": "0d854c32f419049108cc23b02c50f95a421b28de04bdd3415aaf44c76698dd9c",
+-    "APKBUILD": "09dee5fa5686746556b5b902bee808c4de914a2568fb4c1fdbc74532c25607ee"
++    "fx0-msm8926-probe-diagnostics.patch": "9dfbccdc362a70b15aaf28644a91f9f855f366bf530bb9f73f5232bb159260eb",
++    "fx0-msm8926-cpr-xo-handoff.patch": "4d215e04ef19ce6c011dbdf99ef1539d73d3f7a5be240d0d2160dfacf9ab126a",
++    "fx0-msm8926-cpr-disabled-reference.patch": "1fd7047761a4dd448907661396a7cfd5b82263e2ab97f88e753d99327e7a8e98",
++    "fx0-msm8926-cpr-voltage-observation.patch": "993c85b5b1abedbe0a4920dd0b4e2dd59fb4cdb3af1081ac21bb92115f735dbc",
++    "config-postmarketos-qcom-msm8226.armv7": "18a13809f3aa5042fb8447b1ae171b660b9321d85b9de6fd3c42134c7c8234fc",
++    "APKBUILD": "37d34dcff89f754fc47a8110f737dff166c0b808a439abcd7f84a0226553a2c1"
+   },
+   "status": "exported only; source build and hardware acceptance separate"
+ }

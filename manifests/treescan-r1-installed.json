@@ -1,0 +1,545 @@
+{
+  "recorded_UTC": "2026-11-12T06:24:57.306385+00:00",
+  "subject": "Verified native treescan 0.1-r1 activation with guarded exact recovery",
+  "installed_kernel": "6.18.63-fx0-vibrator-alpine",
+  "installed_kernel_package": "6.18.63-r1",
+  "installed_treescan": "0.1-r1",
+  "Sxmo": "1.18.1-r7",
+  "UPower": "r5",
+  "candidate_APK_sha256": "24f63c20f7197468a005b08c023242e70c491edb40c965372c540d70736ddf11",
+  "rollback_APK_sha256": "4a43c233172270107b04f8438b24cb880c38ca006f8bd8ccf49989bbcd56e2fb",
+  "signed_index_sha256": "0a4a578a2e36909a43f29b1b7cd46a4082b6b9a7e4f3161a80381c73b97516e0",
+  "candidate_control_checksum": "Q1ReYHEKb42riq9D9r5JZ4CWKD8I4=",
+  "controller_sha256": "b62542995cf98283fee9d0e196149ca2ffd438e1ffcff6b62818353e31bf3bd5",
+  "transaction_helper_sha256": "62c41c46c495f5de30b40f2e0373bbd1f93558c5c3466e893989f8b32d37c9dc",
+  "host_guard_tests": {
+    "command": "python3 -B -m unittest discover -s tests -p test_treescan_transaction.py -v",
+    "tests": 6,
+    "passed": true,
+    "exit_code": 0,
+    "temporary_directory": "normal tempfile default; no untracked-repository dependency",
+    "controller_sha256": "b62542995cf98283fee9d0e196149ca2ffd438e1ffcff6b62818353e31bf3bd5",
+    "test_source_sha256": "72f69da185c0f471c905979949f5686a8f98f9061d16db2e9af650ab32e7d318",
+    "Python": "3.14.8 (main, Oct  1 2026, 00:00:00) [GCC 15.3.1 20260722 (Red Hat 15.3.1-1)]"
+  },
+  "actual_prepared_fixture": {
+    "status": "prepared",
+    "started_UTC": "2026-11-12T05:05:43.166696+00:00",
+    "actual_ARM_kernel": true,
+    "QEMU_used": false,
+    "live_OS_transaction": false,
+    "private_fixture_removed": false,
+    "audio_testing": false,
+    "initial_paths_verified": 7002,
+    "initial_memberships_verified": 701,
+    "current_native_runtime_paths_verified": 17,
+    "commands": {
+      "index-load": {
+        "returncode": 0,
+        "descendants_reaped": true
+      }
+    },
+    "captured_paths_verified": 7002,
+    "directory_memberships_verified": 701,
+    "fixture_path": "/var/lib/fx0-rollback/treescan-controller-fixture-01/root",
+    "initial_namespace_paths": 6338,
+    "initial_namespace_sha256": "52e430c80146bad7eef8b47cdca3c4ab7bc378b0a27f146e41d924a60baca15b",
+    "normal_index_loading_complete": true,
+    "all_owned_processes_terminal": true,
+    "live_package_or_boot_changes": false,
+    "finished_UTC": "2026-11-12T05:13:49.652702+00:00"
+  },
+  "native_private_controller_qualification": {
+    "status": "passed",
+    "live_OS_transaction": false,
+    "actual_ARM_kernel": true,
+    "QEMU_used": false,
+    "audio_testing": false,
+    "private_fixture_removed": true,
+    "started_UTC": "2026-11-12T05:16:25.029465+00:00",
+    "success": {
+      "stage": "updated-and-verified",
+      "other_package_identities_unchanged": 774,
+      "unit_timestamps_verified": 545,
+      "world_exact": true
+    },
+    "synthetic_known_retained_executor": {
+      "synthetic": true,
+      "signed_captured_script_sha256": "c7840b111dd82669de2074ea3c7e345c063928db2bbff650a81289777b3ff98f",
+      "all_owned_hooks_reaped_before_injection": true,
+      "recognised_and_removed": true
+    },
+    "post_commit_failure": {
+      "injected_only_after_actual_commit_and_refresh": true,
+      "terminal_stage": "rolled-back",
+      "original_775_identities_recovered": true,
+      "recovered_paths": 7002,
+      "recovered_memberships": 701
+    },
+    "controller_sha256": "b62542995cf98283fee9d0e196149ca2ffd438e1ffcff6b62818353e31bf3bd5",
+    "same_source_success_and_failure": true,
+    "normal_native_signed_APK_hooks_verified": true,
+    "normal_upgrade_and_downgrade_logs_sha256": {
+      "success-05-upgrade.log": "4313d7aeb22592ea1e4037bdd5c19bc171184927d4cf01e7180cb64fe4a3219e",
+      "success-07-rollback-apk.log": "b6455ec900d8c0c32c938d6238e4cacb38491a9e9ee7dc6b1b7db907c8f27e97",
+      "post-commit-failure-05-upgrade.log": "4313d7aeb22592ea1e4037bdd5c19bc171184927d4cf01e7180cb64fe4a3219e",
+      "post-commit-failure-07-rollback-apk.log": "b6455ec900d8c0c32c938d6238e4cacb38491a9e9ee7dc6b1b7db907c8f27e97"
+    },
+    "recovered_paths": 7002,
+    "recovered_memberships": 701,
+    "hardlink_aliases": 254,
+    "SELinux_label_paths": 1480,
+    "complete_private_namespace_verified": true,
+    "live_DB_world_repositories_boot_image_unchanged": true,
+    "boot_written": false,
+    "live_transaction_still_not_started": true,
+    "all_owned_processes_terminal": true,
+    "finished_UTC": "2026-11-12T05:47:03.294670+00:00"
+  },
+  "qualification_actual_current_boot_PID1_verified": true,
+  "qualification_native_status_sha256": "f3e9ca613d28466069447c75b3c1f94c5cc5de00341f6ebfd5d5a70e33aa3b7a",
+  "actual_live_permission_check": {
+    "mode": "check",
+    "terminal_unit": {
+      "ActiveState": "inactive",
+      "MainPID": "0",
+      "Result": "success",
+      "ControlGroup": ""
+    },
+    "no_remaining_cgroup_processes": true,
+    "known_unit_cgroup_directly_checked": true,
+    "current_boot_PID1_success": true,
+    "all_staged_sources_exact": true,
+    "status": {
+      "stage": "preflight-verified",
+      "live_OS_transaction": true,
+      "automatic_reboot": false,
+      "started_UTC": "2026-11-12T05:56:45.687193+00:00",
+      "history": [
+        {
+          "stage": "version-terminal",
+          "UTC": "2026-11-12T05:59:22.488335+00:00"
+        },
+        {
+          "stage": "verify-candidate-terminal",
+          "UTC": "2026-11-12T05:59:22.766768+00:00"
+        },
+        {
+          "stage": "verify-rollback-terminal",
+          "UTC": "2026-11-12T05:59:22.992461+00:00"
+        },
+        {
+          "stage": "simulate-terminal",
+          "UTC": "2026-11-12T05:59:23.806369+00:00"
+        },
+        {
+          "stage": "preflight-verified",
+          "UTC": "2026-11-12T06:00:56.846829+00:00"
+        }
+      ],
+      "package_parent_returncode": 0,
+      "all_owned_process_groups_terminal": true,
+      "baseline_paths": 7002,
+      "memberships": 701,
+      "candidate_and_rollback_signature_verified": true,
+      "simulated_actions": [
+        "treescan"
+      ]
+    },
+    "sha256": {
+      "/lib/apk/db/installed": "6e3abad1cd73acf471c333f647934fd5283fd8c9842bdc13c81d045e4a914b42",
+      "/etc/apk/world": "8dcb9d843a2805ae9ab8fe925fc34f9b95c7beef798c5019617d8720cb52c64a",
+      "/etc/apk/repositories": "37534543d9a1defca831a5b104f2e871f363555df8b817ec8a54b59d1138562a",
+      "/dev/mmcblk0p15": "44dfbb6c64148071d2983dd053d7c04b02f21f9200dc917ee70455f3b40a65c2",
+      "/boot/boot.img": "ee851c81968b86a80b47eb2e5c2f07d9d4298cffa17c9347e437036c128e2c64"
+    },
+    "systemd": "running",
+    "boot_id": "991042aa-9e97-4848-b54c-ad391c06bae0",
+    "recorded_UTC": "2026-11-12T06:05:01.082563+00:00"
+  },
+  "actual_live_installation": {
+    "mode": "install",
+    "terminal_unit": {
+      "ActiveState": "inactive",
+      "MainPID": "0",
+      "Result": "success",
+      "ControlGroup": ""
+    },
+    "no_remaining_cgroup_processes": true,
+    "known_unit_cgroup_directly_checked": true,
+    "current_boot_PID1_success": true,
+    "all_staged_sources_exact": true,
+    "status": {
+      "stage": "updated-and-verified",
+      "live_OS_transaction": true,
+      "automatic_reboot": false,
+      "started_UTC": "2026-11-12T06:06:32.421336+00:00",
+      "history": [
+        {
+          "stage": "version-terminal",
+          "UTC": "2026-11-12T06:08:59.525122+00:00"
+        },
+        {
+          "stage": "verify-candidate-terminal",
+          "UTC": "2026-11-12T06:08:59.738181+00:00"
+        },
+        {
+          "stage": "verify-rollback-terminal",
+          "UTC": "2026-11-12T06:08:59.960625+00:00"
+        },
+        {
+          "stage": "simulate-terminal",
+          "UTC": "2026-11-12T06:09:00.820857+00:00"
+        },
+        {
+          "stage": "preflight-verified",
+          "UTC": "2026-11-12T06:10:33.721963+00:00"
+        },
+        {
+          "stage": "installing",
+          "UTC": "2026-11-12T06:10:33.734954+00:00"
+        },
+        {
+          "stage": "upgrade-terminal",
+          "UTC": "2026-11-12T06:10:35.096366+00:00"
+        },
+        {
+          "stage": "refresh-inventory-terminal",
+          "UTC": "2026-11-12T06:12:09.722491+00:00"
+        },
+        {
+          "stage": "candidate-verified",
+          "UTC": "2026-11-12T06:13:50.050399+00:00"
+        },
+        {
+          "stage": "updated-and-verified",
+          "UTC": "2026-11-12T06:13:50.060835+00:00"
+        }
+      ],
+      "package_parent_returncode": 0,
+      "all_owned_process_groups_terminal": true,
+      "baseline_paths": 7002,
+      "memberships": 701,
+      "candidate_and_rollback_signature_verified": true,
+      "simulated_actions": [
+        "treescan"
+      ],
+      "native_installation_started": true,
+      "baseline_paths_guarded": 7002,
+      "memberships_guarded": 701,
+      "other_package_identities_unchanged": 774,
+      "world_exact": true,
+      "unit_entries_and_timestamps_verified": 545,
+      "changed_captured_paths": {
+        "/etc/apk": [
+          "mtime_ns"
+        ],
+        "/etc/apk/world": [
+          "mtime_ns"
+        ],
+        "/usr/bin": [
+          "mtime_ns"
+        ],
+        "/usr/bin/treescan": [
+          "mtime_ns",
+          "sha256"
+        ],
+        "/usr/lib/apk/db": [
+          "mtime_ns"
+        ],
+        "/usr/lib/apk/db/installed": [
+          "mtime_ns",
+          "sha256"
+        ],
+        "/usr/lib/apk/db/scripts.tar.gz": [
+          "mtime_ns"
+        ],
+        "/usr/lib/apk/db/triggers": [
+          "mtime_ns"
+        ],
+        "/var/lib/systemd-apk/installed.units": [
+          "mtime_ns",
+          "sha256",
+          "size"
+        ]
+      },
+      "database_sha256": "024fb3155e9b00240ec9b9137bdd5b4611d9304388ee44b9addf3f96219ebc17",
+      "treescan_ELF_sha256": "933ebbc4bfe8017a5a6e39bc97d76a499cfaecf5598bacde68744a69206ad4a0",
+      "boot_written": false
+    },
+    "sha256": {
+      "/lib/apk/db/installed": "024fb3155e9b00240ec9b9137bdd5b4611d9304388ee44b9addf3f96219ebc17",
+      "/etc/apk/world": "8dcb9d843a2805ae9ab8fe925fc34f9b95c7beef798c5019617d8720cb52c64a",
+      "/etc/apk/repositories": "37534543d9a1defca831a5b104f2e871f363555df8b817ec8a54b59d1138562a",
+      "/dev/mmcblk0p15": "44dfbb6c64148071d2983dd053d7c04b02f21f9200dc917ee70455f3b40a65c2",
+      "/boot/boot.img": "ee851c81968b86a80b47eb2e5c2f07d9d4298cffa17c9347e437036c128e2c64"
+    },
+    "systemd": "running",
+    "boot_id": "991042aa-9e97-4848-b54c-ad391c06bae0",
+    "recorded_UTC": "2026-11-12T06:17:29.276874+00:00"
+  },
+  "first_live_check_failure": {
+    "terminal_unit": {
+      "ActiveState": "failed",
+      "MainPID": "0",
+      "Result": "exit-code",
+      "ControlGroup": ""
+    },
+    "no_remaining_cgroup_processes": true,
+    "install_not_started": true,
+    "all_baseline_hashes_unchanged": true,
+    "journal": "Starting [systemd-run] /usr/bin/python3 -B /var/lib/fx0-rollback/treescan-live-r1-01/treescan_transaction.py /var/lib/fx0-rollback/treescan-live-r1-01/check-plan.json --check...\nStarted [systemd-run] /usr/bin/python3 -B /var/lib/fx0-rollback/treescan-live-r1-01/treescan_transaction.py /var/lib/fx0-rollback/treescan-live-r1-01/check-plan.json --check.\nTraceback (most recent call last):\n  File \"/var/lib/fx0-rollback/treescan-live-r1-01/treescan_transaction.py\", line 608, in <module>\n    main()\n    ~~~~^^\n  File \"/var/lib/fx0-rollback/treescan-live-r1-01/treescan_transaction.py\", line 604, in main\n    execute(plan, args.plan.resolve().parent, fixture_failure=args.fixture_fail_after_commit, check=args.check)\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/var/lib/fx0-rollback/treescan-live-r1-01/treescan_transaction.py\", line 577, in execute\n    ops.preflight()\n    ~~~~~~~~~~~~~^^\n  File \"/var/lib/fx0-rollback/treescan-live-r1-01/treescan_transaction.py\", line 412, in preflight\n    self.snapshot.verify()\n    ~~~~~~~~~~~~~~~~~~~~^^\n  File \"/var/lib/fx0-rollback/treescan-live-r1-01/treescan_transaction.py\", line 195, in verify\n    assert {k: v for k, v in actual.items() if k not in ignored} == {\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        k: v for k, v in wanted.items() if k not in ignored}, ('Unowned state changed', name, actual, wanted)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: ('Unowned state changed', '/usr/lib/modules', {'mode': 0, 'uid': 0, 'gid': 0, 'mtime_ns': 1794452227477534999, 'xattrs': {}, 'kind': 'directory'}, {'mode': 493, 'uid': 0, 'gid': 0, 'mtime_ns': 1794451937630783006, 'xattrs': {'security.selinux': '756e636f6e66696e65645f753a6f626a6563745f723a756e6c6162656c65645f743a733000'}, 'kind': 'directory'})\nfx0-treescan-live-r1-check-01.service: Main process exited, code=exited, status=1/FAILURE\nfx0-treescan-live-r1-check-01.service: Failed with result 'exit-code'.\nfx0-treescan-live-r1-check-01.service: Consumed 36.851s CPU time over 1min 13.654s wall clock time, 103.5M memory peak.\n"
+  },
+  "live_permission_revision": {
+    "new_plan_sha256": "f172ebc5652cc5eb90ef2e3f0e1a7a1643a067b274ce82c2f20ffc1151fd91d8",
+    "original_failed_result_preserved": true,
+    "original_failed_unit_reset_only_after_harvest_and_empty_cgroup": true,
+    "real_module_directory_matches_capture": {
+      "kind": "directory",
+      "mode": 493,
+      "uid": 0,
+      "gid": 0,
+      "mtime_ns": 1794451937630783006,
+      "xattrs": {
+        "security.selinux": "756e636f6e66696e65645f753a6f626a6563745f723a756e6c6162656c65645f743a733000"
+      }
+    },
+    "no_package_installation": true,
+    "controller_source_unchanged": true,
+    "recorded_UTC": "2026-11-12T05:55:33.938863+00:00"
+  },
+  "actual_installation_namespace_permissions": {
+    "unit": {
+      "ActiveState": "active",
+      "MainPID": "23575",
+      "DevicePolicy": "closed",
+      "DeviceAllow": "/dev/mmcblk0p15 r",
+      "CapabilityBoundingSet": "cap_chown cap_dac_override cap_dac_read_search cap_fowner cap_fsetid cap_kill cap_setgid cap_setuid cap_setpcap cap_linux_immutable cap_net_bind_service cap_net_broadcast cap_net_admin cap_net_raw cap_ipc_lock cap_ipc_owner cap_sys_rawio cap_sys_chroot cap_sys_ptrace cap_sys_pacct cap_sys_admin cap_sys_boot cap_sys_nice cap_sys_resource cap_sys_time cap_sys_tty_config cap_mknod cap_lease cap_audit_write cap_audit_control cap_setfcap cap_mac_override cap_mac_admin cap_syslog cap_wake_alarm cap_block_suspend cap_audit_read cap_perfmon cap_bpf cap_checkpoint_restore",
+      "ReadWritePaths": "/usr/bin /usr/sbin /usr/lib/apk/db /usr/lib/apk/exec /etc/apk /var/lib/systemd-apk /var/log/apk.log /var/lib/fx0-rollback/treescan-live-r1-01",
+      "ReadOnlyPaths": "/usr/lib/modules /usr/share/kernel /boot /dev/mmcblk0p15 /etc/apk/keys /etc/apk/commit_hooks.d /etc/apk/repositories",
+      "ProtectKernelModules": "no"
+    },
+    "active_namespace_captured": true,
+    "effective_mounts": {
+      "/usr/lib/modules": [
+        "/",
+        [
+          "ro",
+          "nosuid",
+          "relatime"
+        ]
+      ],
+      "/boot": [
+        "/",
+        [
+          "ro",
+          "nosuid",
+          "relatime"
+        ]
+      ],
+      "/usr/share/kernel": [
+        "/",
+        [
+          "ro",
+          "nosuid",
+          "relatime"
+        ]
+      ],
+      "/etc/apk/keys": [
+        "/etc/apk/keys",
+        [
+          "ro",
+          "nosuid",
+          "relatime"
+        ]
+      ],
+      "/etc/apk/commit_hooks.d": [
+        "/etc/apk/commit_hooks.d",
+        [
+          "ro",
+          "nosuid",
+          "relatime"
+        ]
+      ],
+      "/etc/apk/repositories": [
+        "/etc/apk/repositories",
+        [
+          "ro",
+          "nosuid",
+          "relatime"
+        ]
+      ],
+      "/dev/mmcblk0p15": [
+        "/dev/mmcblk0p15",
+        [
+          "ro",
+          "nosuid",
+          "relatime"
+        ]
+      ],
+      "/usr/bin": [
+        "/usr/bin",
+        [
+          "rw",
+          "nosuid",
+          "relatime"
+        ]
+      ],
+      "/usr/sbin": [
+        "/usr/sbin",
+        [
+          "rw",
+          "nosuid",
+          "relatime"
+        ]
+      ],
+      "/usr/lib/apk/db": [
+        "/usr/lib/apk/db",
+        [
+          "rw",
+          "nosuid",
+          "relatime"
+        ]
+      ],
+      "/var/lib/systemd-apk": [
+        "/var/lib/systemd-apk",
+        [
+          "rw",
+          "nosuid",
+          "relatime"
+        ]
+      ]
+    },
+    "no_new_privileges": true,
+    "module_loading_capability_absent": true,
+    "real_module_directory_mode": 493,
+    "observed_UTC": "2026-11-12T06:08:05.270303+00:00"
+  },
+  "failed_check_not_relabelled": true,
+  "installed_service_properties": [
+    "Type=exec",
+    "KillMode=control-group",
+    "UMask=0077",
+    "MemoryMax=400M",
+    "MemorySwapMax=0",
+    "CPUQuota=50%",
+    "Nice=10",
+    "IOWeight=10",
+    "PrivateNetwork=yes",
+    "PrivateTmp=yes",
+    "ProtectSystem=strict",
+    "ProtectHome=yes",
+    "ProtectKernelTunables=yes",
+    "CapabilityBoundingSet=~CAP_SYS_MODULE",
+    "ProtectControlGroups=yes",
+    "NoNewPrivileges=yes",
+    "DevicePolicy=closed",
+    "DeviceAllow=/dev/mmcblk0p15 r",
+    "ReadOnlyPaths=/usr/lib/modules /usr/share/kernel /boot /dev/mmcblk0p15 /etc/apk/keys /etc/apk/commit_hooks.d /etc/apk/repositories",
+    "ReadWritePaths=/usr/bin /usr/sbin /usr/lib/apk/db /usr/lib/apk/exec /etc/apk /var/lib/systemd-apk /var/log/apk.log /var/lib/fx0-rollback/treescan-live-r1-01",
+    "TimeoutStopSec=infinity"
+  ],
+  "separate_check_completed_before_install": true,
+  "independent_postflight": {
+    "recorded_UTC": "2026-11-12T06:21:06.721411+00:00",
+    "boot_id": "991042aa-9e97-4848-b54c-ad391c06bae0",
+    "kernel": "6.18.63-fx0-vibrator-alpine",
+    "package_version": "6.18.63-r1",
+    "taint": 0,
+    "kernel_notes_sha256": "05292e44d9f13de78b5ebf602b0b3f9ff22b7820d765f6e796cf3473beee4377",
+    "signature_enforcement": "Y",
+    "persistent_signature_cmdline": true,
+    "native_trial_marker": false,
+    "return_timer": false,
+    "modules_on_persistent_storage": true,
+    "candidate_payload_files_verified": 545,
+    "candidate_module_files_verified": 464,
+    "initramfs_payload_entries_verified": 243,
+    "other_original_package_identities_unchanged": 773,
+    "kernel_and_treescan_only_package_identity_changes": true,
+    "treescan_package_version": "0.1-r1",
+    "treescan_ELF_sha256": "933ebbc4bfe8017a5a6e39bc97d76a499cfaecf5598bacde68744a69206ad4a0",
+    "unit_inventory_paths_verified": 545,
+    "installed_treescan_scans_verified": true,
+    "installed_world_exact": true,
+    "boot_image_sha256": "ee851c81968b86a80b47eb2e5c2f07d9d4298cffa17c9347e437036c128e2c64",
+    "raw_boot_sha256": "44dfbb6c64148071d2983dd053d7c04b02f21f9200dc917ee70455f3b40a65c2",
+    "bootloader_prefix_preserved": true,
+    "original_r50_backups_still_verified": true,
+    "systemd": "running",
+    "Sway_PID": 1488,
+    "gesture_PID": 2432,
+    "gesture_touchscreen_open": true,
+    "display_PM_auto": {
+      "fd900000.display-subsystem": "auto",
+      "fd928000.iommu": "auto",
+      "fd922800.dsi": "auto",
+      "fd922a00.phy": "auto"
+    },
+    "CPUs_online": "0-3",
+    "temperatures_mC": {
+      "thermal_zone1": 43000,
+      "thermal_zone0": 42000
+    },
+    "PMIC_registers": {
+      "0xc041": "c041: 00\n",
+      "0xc046": "c046: 00\n",
+      "0x1740": "1740: 01\n",
+      "0x1741": "1741: 73\n"
+    },
+    "serious_kernel_warnings": [],
+    "audio_testing": false,
+    "read_only": true,
+    "actual_public_source_sha256": "c384647bbe1d9788d6ba0b20ca402557a630ad2c0dabb54126b7de9aad13bd71",
+    "observed_UTC": "2026-11-12T06:21:09.319794+00:00",
+    "owner_UI_already_confirmed_for_same_boot": true,
+    "repeated_UI_question": false
+  },
+  "actual_installed_time64_checks": {
+    "passed": true,
+    "actual_installed_executable": true,
+    "paths": 9,
+    "repeats": 3,
+    "negative_and_2038_and_2100_timestamps": true,
+    "missing_directory_rejected": true,
+    "native_temporary_fixture_removed": true,
+    "stdout": "Timestamp, recursion, symlink and missing-directory checks passed",
+    "actual_public_source_sha256": "07f2d5e3b75290b4b434e60d53782cc4e35edf4421a463b3c1a300f6a1c00b83",
+    "observed_UTC": "2026-11-12T06:20:36.199084+00:00",
+    "owner_UI_already_confirmed_for_same_boot": true,
+    "repeated_UI_question": false
+  },
+  "fixed_recovery_files": [
+    "/usr/bin/treescan",
+    "/usr/lib/apk/db/installed",
+    "/usr/lib/apk/db/scripts.tar.gz",
+    "/usr/lib/apk/db/triggers",
+    "/etc/apk/world",
+    "/var/lib/systemd-apk/installed.units"
+  ],
+  "guarded_paths": 7002,
+  "directory_memberships": 701,
+  "other_post_kernel_package_identities_unchanged": 774,
+  "other_pre_kernel_package_identities_unchanged": 773,
+  "existing_world_and_kernel_hold_preserved": true,
+  "boot_and_kernel_payloads_unchanged": true,
+  "existing_public_APK_trust_retained": true,
+  "normal_hooks_enabled": true,
+  "private_post_r1_backup_copies_still_verified": 5,
+  "generic_file_rollback_live_root_refusal_retained": true,
+  "all_owned_processes_terminal": true,
+  "all_native_qualification_fixtures_removed": true,
+  "no_reboot": true,
+  "same_boot_physical_UI_confirmation_reused": true,
+  "UI_question_pending": false,
+  "phone_updates_and_GitHub_pushes_previously_approved": true,
+  "new_permission_not_requested": true,
+  "audio_testing": false,
+  "DiskB_read_only": true,
+  "runtime_private_keys_read_hashed_or_exported": false,
+  "abrupt_power_loss_recovery_qualified": false,
+  "stop_signal_failure_matrix_qualified": false,
+  "stable_30_package_update_installed": false,
+  "upstream_messages_sent": 0,
+  "full_bringup": "active"
+}

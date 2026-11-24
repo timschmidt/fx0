@@ -1,0 +1,394 @@
+{
+  "date": "2026-11-08",
+  "checked_UTC": "2026-11-08T14:31:56.825290+00:00",
+  "status": "complete 39-patch source/build and host verification; checked first L2/S2 RAM image prepared but not booted; no native CPR/high-OPP qualification",
+  "source": {
+    "base": {
+      "repository": "https://github.com/timschmidt/fx0-linux.git",
+      "commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66"
+    },
+    "manifest": "manifests/kernel-runtime.json",
+    "manifest_sha256": "82510913fa74c0e0db1753b0b29605e8911e6038f789ef072953dfa54d8fefed",
+    "patch_count": 39,
+    "changed_source_files": 48,
+    "files_sha256": {
+      "Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml": "1edc12e56435e5f1e7f36817aff0a9a0d709bb614bdedb3581e0061ebd4a5d32",
+      "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml": "060f4f058680afff9429ad25331e15797fdc009e73e6fb61b5e43e366b0d3a63",
+      "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml": "155a952f9a6c233b589da25852fdaa8019eba713e190409391637ac8fa03dc28",
+      "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml": "97ee6589da29592af33aba6c531e4e87187aa3fa0298c71d33f78c5e7af32f61",
+      "Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml": "123cc228fa0a718a38e509c10518f5513c3704fe352129c4633739a23d0fa10c",
+      "Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml": "ff596a7d082d24acceade1bad26fb6c2e6e2cc4788e1a5bb4094211dc41aeef5",
+      "MAINTAINERS": "bc53190fad73776bb46eb59f36a1ba227b18341cb99671dcf4619e967857c1f9",
+      "arch/arm/boot/dts/qcom/Makefile": "d23e64aa14250dfa84c0b2437b69382b1b31eed5267525aac6f29ee33306a0c0",
+      "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts": "52eb39bf4a19cce8251297dc189a15917df371c2a41af91e2b8a547f3220cae7",
+      "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "8661666b4319f3eef085016fbfb49595943b671e62687a3589d82596ce0a8448",
+      "drivers/clk/qcom/a53-pll.c": "84a91c06729b2c5190f1dc47b53ae564f1399adfd699ea518cf800dd3b0dc256",
+      "drivers/clk/qcom/apcs-msm8916.c": "4fd79329d44473d5335c0510bc357f37ce5de6ce97d99e8cd464224a32c2036c",
+      "drivers/clk/qcom/clk-pll.c": "bfbaf9e47a56e0e37a670a26bdeda82a3072b8966fc644cb25b96eacacddafda",
+      "drivers/clk/qcom/clk-pll.h": "2a7fdfbe8e1569e402a2064e43990751212e0f6bab127b6bebb0460f026a5240",
+      "drivers/clk/qcom/clk-regmap-mux-div.c": "3395adb60d400564bd432404003efbe42db92f28b55c31e66fd0b632a24b4a92",
+      "drivers/clk/qcom/clk-regmap-mux-div.h": "330cab12a04f019c3bba132a6d37d34a4264e2c6cf9a84b75e1b5cc0d3b10bd8",
+      "drivers/clk/qcom/gcc-msm8974.c": "4b0de15d4c41226ce92462d1800efd25156b60e2b8335e6cc8bc727e95e678b1",
+      "drivers/cpufreq/cpufreq-dt-platdev.c": "d71050ae44d69720ac21a3a0d53c4e57f5071b56d604e59ab1ed885c415b5a4a",
+      "drivers/cpufreq/qcom-cpufreq-nvmem.c": "2f61370f6c4f6a8410830a523483b1395ecfb5e98be6c0f293f52364a5e173b8",
+      "drivers/firmware/qcom/qcom_scm.c": "b485f55c5a292473cc55e22a1bb14cfc1ec8bcfafd7bcbaa15b2a2e69243c361",
+      "drivers/firmware/qcom/qcom_scm.h": "15193474dde0e5aa271becd519bf2bf55ac5b3c9aff1b8c68cf51049091f70ce",
+      "drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c": "eb436a6b6e0df8f04dc2643a3a018ab4438dd547f3a38d86f5c8616d0e7f600f",
+      "drivers/iio/imu/inv_mpu6050/Kconfig": "f8df4dbd5d3e3cf02d5886c24d2e07e2333847156473479679d83efc4c81c27a",
+      "drivers/iio/imu/inv_mpu6050/Makefile": "3f89dfed1f10d488a793f045992275093a701496e26f12192d62d21e980165f4",
+      "drivers/iio/imu/inv_mpu6050/inv_mpu_core.c": "c325173917089dcbf6390fd23863c62588ea94e45de96b6b6f03c17523d9d070",
+      "drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c": "db058a8d300bd8caa7068b0980f923dba70795c90209a7a7f6033482f078a852",
+      "drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h": "ad506b4d40c92487219fb0c8724c969a95cd0fa493c69983d72a0ccfed3b0589",
+      "drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c": "57488c497ee5b5e2ec8b49a11d4bfc4cf521897b8f447db717da3ffd4d836436",
+      "drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c": "315c183376f33ba0a0643c370fc73c9e499009aecf5f916c42e8ecd3f2ffbf8a",
+      "drivers/iio/industrialio-core.c": "d066c5ba9d75ce08c9b0f27021c83ee4e2e1931e91dbc140ed3d772b72c30859",
+      "drivers/iio/test/iio-test-format.c": "487f3c14538983dee027df1ab29ae8336738f06c29a5cd76f89f0c526a183a0f",
+      "drivers/nvmem/qfprom.c": "8fd41aa45c1ee3d841ff54a122e3b01a873d6274f5e2638fa004ea7c40734578",
+      "drivers/pmdomain/qcom/Kconfig": "0bd37273aed1805ad6971d6682632c32fdbefb84ce25046bf30e2214b45cac19",
+      "drivers/pmdomain/qcom/cpr-msm8926-corner.h": "b72a60b781fd3b589f55aef7de4f5c3c178b4f5588a24c581d396a63cbf76a81",
+      "drivers/pmdomain/qcom/cpr-msm8926-fuses.h": "df62e27cf377db1c087725d23f6cf628262e715495f5ea9baab52ef0c02beab5",
+      "drivers/pmdomain/qcom/cpr-msm8926-voltage.h": "6ddb8af84ae4e31b8287e83d80ff961fb35019164e17a26635a92265015165d2",
+      "drivers/pmdomain/qcom/cpr-msm8926.h": "dde85c29a2ecff778775a937cffd5d38fc6c82efbe4716b562ffa449d89774bc",
+      "drivers/pmdomain/qcom/cpr-voltage.h": "6d7e30127931256752b48a8fd5e9db243e1625696e7de5e83b9afd352cc8057b",
+      "drivers/pmdomain/qcom/cpr.c": "9419023afe171f01fa297ccd48d53f706fcc69a4a6edd5d67c1dbd517398e81f",
+      "drivers/regulator/qcom-spmi-saw-fts2.h": "c9a6e1d5be97d0738c67720ec8e1a80733cb08fe6b123a201f2fa4d2fddc2c68",
+      "drivers/regulator/qcom_spmi-regulator.c": "3bee5456222e9b4b319e15bfb73fe9e11f94406cb5e35e4d2751f3cc4f4b5beb",
+      "drivers/soc/qcom/Kconfig": "d7e8e9523bccd2bca28cd628984b155c8d580018bdcf4085f8d1ad9b7d4cd2bb",
+      "drivers/soc/qcom/smd-rpm.c": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+      "drivers/soc/qcom/spm-msm8226-l2.h": "5cc4d9161aaf621ee236bc475e8265069e91b8ebc6dd0070f21a0e7a4659625d",
+      "drivers/soc/qcom/spm.c": "6bec54b0b0c9ca8c087798941341d6fed88af04d9a2db0491bce91d0704e413b",
+      "include/dt-bindings/opp/qcom,msm8926.h": "89c62bbea61fddd0e9eaffa78faa5278c92aafc72bcbc504526260fdd7fdb6f6",
+      "include/linux/firmware/qcom/qcom_scm.h": "3c0b20a0e3fcf4ae3a04c237ad470ad3ea17849fbc7942cda4327ef881bbf1ef",
+      "include/linux/soc/qcom/cpr.h": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3"
+    },
+    "preserved_idle_peripheral_audio_base_sha256": {
+      "arch/arm/boot/dts/qcom/qcom-msm8226.dtsi": "20f9aa62a67fa37b80344901a7497f0c35aa0144e81b7b6288cdd204d5bd9d1f",
+      "drivers/slimbus/qcom-ngd-ctrl.c": "2c851434a69b69f37fc722ecd072f11e1a07e7a4505f8f30b200a5b084684eed",
+      "sound/soc/codecs/wcd9306.c": "d04b33e4417df34562b8280f8021cf45bee2e48cebe39e2799327094da021b4f",
+      "sound/soc/qcom/apq8096.c": "67f1e135b8956e9187a371c0de0c7859d472fa38a46a6eea907a59d7a96b2669",
+      "sound/soc/qcom/qdsp6/q6afe.c": "236c6a59132661bdc5720dc928e9482ece81bb3a13ac3c6a56328ba6bec44997"
+    },
+    "previous_checkpoints_preserved": [
+      "r50 reconstruction",
+      "32-patch CPR full build",
+      "35-patch startup source/object build"
+    ],
+    "main_CPU_series": "27-entry checkpoint retained; runtime draft has its own complete manifest"
+  },
+  "clock_contract": {
+    "CPR_voltage_gate": "refresh GPLL0 and CPU PLL, then noncached mux; reject unknown or above-corner rates before APC writes",
+    "provider_error_contract": "MSM8226 CPU PLL/mux programming or activation errors panic before CCF can discard the error and continue reparenting",
+    "provider_success_readback": [
+      "PLL exact rate",
+      "PLL enable mode and lock",
+      "settled mux CMD/CFG"
+    ],
+    "read_errors": "zero rate or invalid parent index; no uninitialized mux/PLL result",
+    "scope": "MSM8226 provider probes select strict CPU behavior and fresh rate flags; shared read hardening and ordinary error propagation retained for other users",
+    "clock_references": "provider owns cpu, aux and pll handles; compiled DTB matches both parent inputs to APCS wiring"
+  },
+  "host_tests": {
+    "modules": [
+      "test_cpr_domain_state",
+      "test_cpr_mx_recovery",
+      "test_cpr_voltage",
+      "test_cpu_voltage_recovery",
+      "test_msm8926_calibration",
+      "test_msm8926_corner",
+      "test_msm8926_cpufreq",
+      "test_msm8926_fuses",
+      "test_msm8926_voltage_plan",
+      "test_qfprom_raw_binding",
+      "test_qfprom_raw_keepouts",
+      "test_qfprom_raw_probe",
+      "test_saw_fts2",
+      "test_saw_fts2_binding",
+      "test_scm_legacy_fuse",
+      "test_smd_rpm_ack",
+      "test_spm_l2_binding",
+      "test_spm_l2_master",
+      "test_kernel_integration",
+      "test_mpu_dmp",
+      "test_mpu_dmp_execution",
+      "test_mpu_dmp_native",
+      "test_mpu_dmp_reader",
+      "test_mpu_dmp_recovery",
+      "test_mpu_dmp_scale",
+      "test_mpu_dmp_smd",
+      "test_mpu_dmp_wake_verifier",
+      "test_cpr_runtime_clock",
+      "test_msm8226_clock_policy",
+      "test_cpr_runtime_binding"
+    ],
+    "replaced_by_current_runtime_fixtures": [
+      "test_cpr_attach",
+      "test_msm8926_cpr_binding",
+      "test_msm8926_domain",
+      "test_msm8926_opp_binding"
+    ],
+    "additional_actual_attachment_case": true,
+    "run": 114,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "source_receipt": "local/cpu-runtime/replay-final.json",
+    "after_ARM_division_fix": true
+  },
+  "clock_model_results": {
+    "pll": "PLL: 76 I/O fault controls; critical writes/activation never return, legacy errors propagate, reads and ARM32 overflow fail closed",
+    "mux": "MUX: 25 I/O/unstable-state controls; critical programming never returns; actual source selection readback passed",
+    "cpr": "CPR: stale PLL/topology, 28 I/O controls, unknown/too-fast mux rejection; voltage ordering and legacy bypass passed",
+    "startup": "startup passed with real runtime parent refresh, actual PLL/mux readback, idempotent references and no APC voltage write"
+  },
+  "unsafe_source_controls": {
+    "source_receipt": "local/cpu-runtime/replay-final.json",
+    "controls": {
+      "skip-main-PLL-refresh": {
+        "rejected": true,
+        "compiled_and_executed": true
+      },
+      "return-after-CPU-PLL-program-error": {
+        "rejected": true,
+        "compiled_and_executed": true
+      },
+      "omit-critical-mux-readback": {
+        "rejected": true,
+        "compiled_and_executed": true
+      },
+      "omit-critical-PLL-rate-readback": {
+        "rejected": true,
+        "compiled_and_executed": true
+      },
+      "cache-CPU-mux": {
+        "rejected": true,
+        "compiled_and_executed": true
+      }
+    }
+  },
+  "other_checks": {
+    "six_ARM_W1_objects": "pass",
+    "ordinary_and_qualification_DTBS": "pass; three inherited common-DTS warnings each",
+    "schema_document": "pass",
+    "compiled_targeted_bindings": "pass",
+    "checkpatch": "zero errors, warnings and checks with CAMELCASE/FILE_PATH_CHANGES ignored",
+    "whole_series_replay": "all 48 files match independently replayed 39 patches"
+  },
+  "full_build": {
+    "state": "terminal",
+    "returncode": 0,
+    "release": "6.18.59-fx0-cpr-runtime",
+    "build_ID": "46782da2b9e4e69be2db5acbb3a2df4a5eb486eb",
+    "build_user_host": "fx0@reconstruction",
+    "fixed_timestamp": "2026-11-08 14:00:00 UTC",
+    "provenance": "host Clang21.1.8/LLD18.1.8; not an Alpine source-package build",
+    "ARM_division_correction": "preemptively stopped identified live build, verified quiescence, replaced wide post-divider division with do_div, replayed source, resumed incrementally and succeeded",
+    "undefined_symbols": [
+      "         U __bpf_callback_fn",
+      "         U __bpf_prog_runX",
+      "         w efi_attr_config_table",
+      "         w efi_attr_fw_vendor",
+      "         w efi_attr_runtime"
+    ],
+    "introduced_undefined_symbols": [],
+    "undefined_comparison": "exactly matches twice-RAM-booted r50 reconstruction, not a claim that the ELF symbol table contains none"
+  },
+  "modules": {
+    "count": 464,
+    "stage": "local/cpu-runtime/stage/lib/modules/6.18.59-fx0-cpr-runtime",
+    "ARM_architecture_and_release": "all pass",
+    "signature": "all CMS signatures verify against exact kernel trust-list DER; embedded CMS certificates ignored",
+    "certificate_sha256": "9bf7658fb32b034d1b9b7ba5b2c7ecb994f8d4c6e4517ce46722136beb6183d3",
+    "certificate_bytes": 1324,
+    "key_remains_private_mode": "0600",
+    "negative_controls": [
+      "modified payload rejected",
+      "modified CMS signature rejected",
+      "other kernel certificate rejected"
+    ]
+  },
+  "first_RAM_image": {
+    "path": "local/cpu-runtime/fx0-runtime-l2-s2-ram.img",
+    "Android_v0_header_and_load_addresses": true,
+    "exact_kernel_and_ordinary_DTB": true,
+    "gzip_newc_independent_parse_and_GNU_cpio": true,
+    "init_shell_syntax": true,
+    "return_after_seconds": 180,
+    "moduleless": true,
+    "clock_governor_not_loaded": true,
+    "mounts_only_pseudo_filesystems": true,
+    "image_sha256": "5c732301ff18ea6ed43deff7ea10d18fef3dfe558575dc19f803092a2d80352e",
+    "image_bytes": 6246400,
+    "kernel_sha256": "eefac76c4bfea551693fe7f176bb211b3189d2dad1b67eab2f043bab1fbdcacd",
+    "ordinary_DTB_sha256": "c251a13f8a92ff86c024e8ccd3114760aec4c4febb78ef67e16c3b03ba94613f",
+    "booted": false,
+    "reviewed_mount_commands": [
+      "mount -t proc proc /proc",
+      "mount -t sysfs sysfs /sys",
+      "mount -t devtmpfs devtmpfs /dev",
+      "mount -t devpts devpts /dev/pts",
+      "mount -t debugfs debugfs /sys/kernel/debug",
+      "mount -t configfs configfs /sys/kernel/config"
+    ],
+    "profile": "ordinary DTB, L2/S2 provider baseline, CPR node absent, no modules or CPUfreq governor loaded"
+  },
+  "native_preflight": {
+    "release": "6.18.59-fx0-dmp",
+    "boot_id": "6d7040ee-ac95-4263-a0c4-2964dba2e7a9",
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "taint": 0,
+    "available_CPU_kHz": [
+      300000,
+      384000,
+      600000,
+      787200
+    ],
+    "minimum_CPU_kHz": 300000,
+    "maximum_CPU_kHz": 787200,
+    "governor": "schedutil",
+    "systemd_startup": "running",
+    "sensor_proxy": "active",
+    "Sway_process_present": true,
+    "power": "USB online, charging reported",
+    "clock_register_snapshots": {
+      "read_only": true,
+      "samples": [
+        {
+          "APCS_CMD": "0x2",
+          "APCS_CFG": "0x501",
+          "PLL_MODE": "0x7",
+          "PLL_STATUS": "0x10001"
+        },
+        {
+          "APCS_CMD": "0x2",
+          "APCS_CFG": "0x501",
+          "PLL_MODE": "0x7",
+          "PLL_STATUS": "0x10001"
+        }
+      ],
+      "taint": 0
+    },
+    "clock_read_note": "BusyBox devmem absent; Python mapped only two known clock pages read-only and read four registers, without writes; no package installation",
+    "scope": "existing r50 baseline and bit-layout check; no new controller/OPP pass"
+  },
+  "host_resource_issue": "/tmp user quota prevented sandbox setup; approved task-local checks used workspace TMPDIR; unrelated temporary files preserved",
+  "public_inputs_sha256": {
+    "manifests/kernel-runtime.json": "82510913fa74c0e0db1753b0b29605e8911e6038f789ef072953dfa54d8fefed",
+    "patches/linux-integration/fx0-msm8226-cpu-clock-errors.diff": "7f1f97cafbe29c8c2cf92adc6b3f5b5ce5d342019c0420b7c439b4abf35f723b",
+    "patches/linux-integration/fx0-msm8926-runtime-clock-binding.diff": "fae83d0ee35ac0b6a84c92fd3051a75271e28069e2be71f6fb4cb3f9bfdd74c8",
+    "patches/linux-integration/fx0-msm8926-runtime-clock-guard.diff": "009bfbdde5a801987525907a77825d29b07f4ef0f5ffd0de05e8c6d55d721cbe",
+    "patches/linux-integration/fx0-msm8926-runtime-clock-dt.diff": "235a5bcb5004ffed9e71086dce3325091dc7f5281af45db53b2d7ad4ac7783d5",
+    "tests/test_cpr_runtime_clock.py": "db815112f71d3e05ca2b1fc5cca7ef4aff31c1d774df17e8a760b6774da999e7",
+    "tests/test_msm8226_clock_policy.py": "68b3e2f39acbcf7a2312d995303bb8fb0768d4f7dd0671d5f47f3b079de9b241",
+    "tests/test_cpr_runtime_binding.py": "6834848922fc152db868ae5a20f0f2aa2c508c11a33e9cb5f4d1697810b35458",
+    "scripts/prepare_kernel_integration.py": "3879872fcaf0da3247597381a1985b7878f617ef3d28def138ad1a7b6f8b461c",
+    "scripts/verify_kernel_modules.py": "8ec7fb98373bb51128a3cedfbf489054de41606c565e9fac3e1a332df8f740ac",
+    "scripts/boot_fx0_ram.py": "fea54ce86d19f1a51665446095e9ae3dce60b34a0f38bfc70f7764f5611409b6",
+    "scripts/connect_fx0_ram_usb.py": "faead9b555e83d13845e4631f212791b3e7fdd0e5211202ed5a51818645c0fcc",
+    "scripts/make_diagnostic_image.py": "cd9c976a758d2f4b0282afe88a4c6038750e1fc11f08fdb289737e9f1cc9613f"
+  },
+  "private_evidence_sha256": {
+    "local/cpu-runtime/replay-final.json": "967dc0b24c43ca33ab7c1075f0ac3dc4f3e397d38cb9a5df9850c8c4d42f3694",
+    "local/cpu-runtime/full-build.json": "ab7feb0a27119c2c6b0ebb4e66decb7a78daede2ce831445ede9dae5137ec0f0",
+    "local/cpu-runtime/full-build.log": "5d9b58ea30a0f0c26c4b390eb07c55c3ceff441e20f982fd9296ba2edb95c081",
+    "local/cpu-runtime/stage.json": "cd1de385e0fd5f29a9ae93a788369310f14eefa3fd1a797b4f049b946b7343b5",
+    "local/cpu-runtime/stage.log": "92f2b787c7d40e82c7fb841faf5ff1399cee928f6b310e52e880e812e63544a4",
+    "local/cpu-runtime/linked-kernel-verification.json": "963f64c91d09e39d7912e78859a0a43dfde85523c86bd513026d63c22bff14da",
+    "local/cpu-runtime/module-verification.json": "1dd94d2a369835de4aa863ee5bb844d3b30e837782e11430199bcce5dfb949f7",
+    "local/cpu-runtime/module-verification.log": "d962bf0f8cbb1d89de39db4b95e47950d2053dd10032d0f1e49c0526543d8a3c",
+    "local/cpu-runtime/wrong-certificate-control.json": "ff862b79c97024e3788151bc97c1d2fce7feeadc9fc105b9f8d9208885498ab6",
+    "local/cpu-runtime/integration-tests.json": "5a76066b11b082733a449a150a2b816c5a42b10ed5323c9aeef6874a5fcca730",
+    "local/cpu-runtime/integration-tests.log": "b6369f94ab6315c31060bf9ca36c8ea7a0f376bc4833c63103c1698e8492ebdf",
+    "local/cpu-runtime/tests.log": "3fc5ab9bf3fa3ae7a98a37e37ba7bf81c2f558695a530ff7d25d31fafdf99abc",
+    "local/cpu-runtime/negative-controls.json": "28c9e1211d5b0050b22280f8b51b0ef327132808715e5192250fb14ed416da96",
+    "local/cpu-runtime/model-results.json": "ed1e5c590ac14d8254e58961505ef59ad920ea9481976d6ac6a5b8900b2cae12",
+    "local/cpu-runtime/checkpatch.log": "08b26e7f829b45169c40926b5c533c10c88a05907ed38718c5c49321fa1e4a90",
+    "local/cpu-runtime/objects-DTBs-final.log": "9431b23c5412ac42c01aad4de88807e0b99990542715f0ce811b347e5177e8ae",
+    "local/cpu-runtime/schema-processing.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/cpu-runtime/schema-document.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local/cpu-runtime/PLL-ARM-division-fix.log": "ef2c783e4b210296e9db63bcf739368202779461ea84ee884d74ec147ce2656a",
+    "local/cpu-runtime/PLL-ARM-undefined-symbols.txt": "79e05fde223e537ba889e2dd1c2646d3538657c4bdd034473f8c45082a1fb289",
+    "local/cpu-runtime/build-interruption-for-ARM-division.json": "9058a8d3d343e7600cd863a186afcdf774f9e2c22122c475827b4de75b90a6e8",
+    "local/cpu-runtime/full-build-before-ARM-division.json": "8c8ccb2e7a46283e0e3529409e36f7c2a6b934bd0ea7f31c3eda1e712f0fd492",
+    "local/cpu-runtime/preserved-source-audit.json": "360a0447fa5728444d77cd902f00267b613f278d374b07bd6f8f7b1f6b0e51bf",
+    "local/cpu-runtime/l2-s2-ram-image.json": "7db147f165a9dcaf056fcd2f4d7160c402cef98c7ed6dd932b43231a1000e268",
+    "local/cpu-runtime/l2-s2-image-verification.json": "9d1736089a98975e0e8440994b83021e2a74380c20334799fa6e8840de45adf6",
+    "local/cpu-runtime/l2-s2-init.sh": "8a25f6757a7f0de87cb7433def659d0fee00981c2a311ed816a12bac439ac0d1",
+    "local/cpu-runtime/l2-s2-cpio-list.txt": "80128edb1af14fe531d4abe650ac4a89841a1ac4334437589900cf88faa2314d",
+    "local/cpu-runtime/native-preflight.txt": "2d99ca88fdc94b8dbe114cd23745923f6a204b58c4e8bb3b0d48c0ab3190b119",
+    "local/cpu-runtime/native-preflight-command.json": "3887b0d7d6eae6a101d79738fed97cfa4bdbf758ed55e77cdd128f238f42c8d4",
+    "local/cpu-runtime/native-clock-read-diagnostic.txt": "7219819262f2ea391f4ebb07e02da8662366681e8c4a996db0ed09ef9d3b04f6",
+    "local/cpu-runtime/native-clock-readonly-python.json": "4ca7207daae1a844ca956896b5a883a204b6bcb9f3f69931d651a5cfdad669fb",
+    "local/cpu-runtime/negative-return-after-CPU-PLL-program-error.log": "9037e6f9b385809211999486f737245b6e08bb30583fbb37027d1379a2a0c200",
+    "local/cpu-runtime/negative-omit-critical-PLL-rate-readback.log": "dcfe824c44f79fe73dba817e0e283f67eb2e9ff318bc7d46a407e3ea7facf796",
+    "local/cpu-runtime/negative-skip-main-PLL-refresh.log": "aa4870f1810cd577f469ba506ba717cb24d035506dc5273a77e68f6bb2d28aa7",
+    "local/cpu-runtime/negative-cache-CPU-mux.log": "f8f57779931194b5a5eac47959c72cd7d239fa06f5fe5564dccb52e0346ff005",
+    "local/cpu-runtime/negative-omit-critical-mux-readback.log": "0331f5c6277ec70223ed099f4e2e05d856c8f7b15cad4e5ce7436116f6423926"
+  },
+  "build_artifacts_sha256": {
+    "build/fx0-cpr-runtime/.config": "0d854c32f419049108cc23b02c50f95a421b28de04bdd3415aaf44c76698dd9c",
+    "build/fx0-cpr-runtime/vmlinux": "a48a0a9d411007c59fb34d0a6136ae30c6823ea86da1cc915370bb83f86b1e45",
+    "build/fx0-cpr-runtime/System.map": "e4a5f06508d770f4778964a4c982b0757d791a90c45af2e67b6c7f2755f318af",
+    "build/fx0-cpr-runtime/Module.symvers": "c3b94138ac5a136a3f494ff441179f81b6c6619a845a3ebeeb37f1db88624486",
+    "build/fx0-cpr-runtime/arch/arm/boot/zImage": "eefac76c4bfea551693fe7f176bb211b3189d2dad1b67eab2f043bab1fbdcacd",
+    "build/fx0-cpr-runtime/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb": "c251a13f8a92ff86c024e8ccd3114760aec4c4febb78ef67e16c3b03ba94613f",
+    "build/fx0-cpr-runtime/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dtb": "589d17908c2bd9584b0f3f51bc4c19ced467b60791e3fd13bc4ee3fbcd9e0284",
+    "build/fx0-cpr-runtime/drivers/clk/qcom/clk-pll.o": "8830b4a951be54016bfa361c2f7318db0ce77e2700c41b2a6b4635229178b28f",
+    "build/fx0-cpr-runtime/processed-schema.json": "53396ece1636fd9f84cd6c6e59f0d478611c7e40fd7c32fd0f885d39ce59398a"
+  },
+  "constraints": {
+    "phone_package_or_boot_write": false,
+    "candidate_RAM_booted": false,
+    "deliberate_CPU_or_voltage_transition_on_hardware": false,
+    "audio_tested": false,
+    "host_builtin_WiFi_changed": false
+  },
+  "remaining": [
+    "first ordinary-DTB moduleless L2/S2 RAM boot and verified return",
+    "separate moduleless CPR startup/rail-floor RAM qualification",
+    "controlled governor/CPUfreq attachment and eligible-rate trials; current default schedutil must not be allowed to request high OPPs without controls",
+    "physical rail/feedback, settling, fail-stop recovery, thermal, suspend and peripheral qualification",
+    "maintained stable/edge source packages, deployment and upstream integration",
+    "all remaining hardware/reliability gates; full bringup remains active"
+  ],
+  "image_builder_followup": {
+    "UTC": "2026-11-08T15:33:54.416476+00:00",
+    "earlier_builder_sha256": "9be178d61076330a793fb5aad48a329e4b16dde6b3663cf8af62bc48beb6a5dd",
+    "earlier_builder_archived_at": "local/ram-runtime-l2-s2-gzip1/make_diagnostic_image-before-gzip-option.py",
+    "current_builder_sha256": "cd9c976a758d2f4b0282afe88a4c6038750e1fc11f08fdb289737e9f1cc9613f",
+    "change": "optional --gzip-level; default9 unchanged",
+    "default9_reproduces_original_image": true,
+    "level1_reproduces_physically_booted_encoding": true,
+    "native_trial_record": "evidence/2026-11-08-l2-s2-ram-bootstrap.json"
+  },
+  "L2_S2_native_followup": {
+    "UTC": "2026-11-08T15:41:58.247501+00:00",
+    "record": "evidence/2026-11-08-l2-s2-ram-bootstrap.json",
+    "ordinary_DTB_moduleless_boot_and_timed_return_pass": true,
+    "successful_image_sha256": "2b1fcff1dd28f1f2b14b4b5b3f466d1dae2678ff4fc2acd333c8d85a0fc3f74f",
+    "original_default_compressed_image_in_this_record_remains_unbooted": true,
+    "physical_UI_confirmation": "pending",
+    "next_CPU_gate": "separate moduleless CPR bootstrap, then controlled CPUfreq/governor trials",
+    "startup_later_settled": "running; zero failed services or jobs; same r50 boot and original boot-partition hash",
+    "next_CPR_image_prepared": "evidence/2026-11-08-cpr-bootstrap-preparation.json"
+  },
+  "distribution_source_package_followup": {
+    "checked_UTC": "2026-11-08T16:27:02.906618+00:00",
+    "record": "evidence/2026-11-08-runtime-kernel-source-package.json",
+    "normalized_Alpine_source_build_pass": true,
+    "signed_APK_sha256": "dde3bb2bcc611aafe1f77f13464830478d87c18c7cf4ba3e76026811ba2f0551",
+    "verified_modules": 464,
+    "kernel_trust_list_exact": true,
+    "Alpine_artifact_booted_or_installed": false,
+    "source_branch_publication": "local, awaiting explicit approval after automatic review rejected the GitHub push"
+  },
+  "CPR_first_RAM_followup": {
+    "record": "evidence/2026-11-08-cpr-bootstrap-first-ram.json",
+    "image_booted": true,
+    "startup_gate": "fails: provider probe -EINVAL, CPU remains 800 MHz; no CPUfreq policy",
+    "timed_return_seconds": 181.623794,
+    "returned_native_release": "6.18.59-fx0-dmp",
+    "native_boot_id": "82018c60-6d13-4af3-afae-8c3e4a3d9306",
+    "boot_hash_unchanged": true,
+    "latest_native_display_touch_owner_confirmed": true
+  }
+}

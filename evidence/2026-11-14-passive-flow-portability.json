@@ -1,0 +1,56 @@
+{
+  "recorded_UTC": "2026-11-14T14:20:44.500922+00:00",
+  "scope": "Public callback ordering and source portability only; no device adapter or physical trial acceptance",
+  "tested_source_commit": "aaa89ee07860d3db60022abcced78f2711817e58",
+  "source_files_SHA256": {
+    "diagnostics/modem-control/passive_trial.py": "24e5cd675f40f787298dbbf1ea0a21f46a2d39033512075b40e31bfb67e487f8",
+    "diagnostics/modem-control/passive-trial-flow.md": "f44c8f9c285ceb0f4f3203772b68dcff0440ae4ee5c4ef34e84bb16c28a873cd",
+    "tests/test_passive_trial_flow.py": "6875a4a54035bdac953ced7fae4e82a77fd00322d8b69a26fe9a07d90a5d1c6b"
+  },
+  "test_command": "python3 -B -m unittest discover -s tests -p test_passive_trial_flow.py -v",
+  "contexts": [
+    {
+      "context": "clean-review-checkout",
+      "actual_returncode": 0,
+      "ignored_local_tree_present": false,
+      "test_methods": 14,
+      "skipped": 0,
+      "source_inputs_unchanged": true
+    },
+    {
+      "context": "source-only-export",
+      "actual_returncode": 0,
+      "ignored_local_tree_present": false,
+      "test_methods": 14,
+      "skipped": 0,
+      "source_inputs_unchanged": true
+    }
+  ],
+  "Python_version": "3.14.8",
+  "source_only_export_contains_no_Git_or_ignored_local_tree": true,
+  "source_only_archive_SHA256": "dcde5d1e128d1b11e9a44f66a6ba9c0de0f9cc509be149e3fc043fe321ae338e",
+  "verified_policies": [
+    "Preflight before device-action callbacks",
+    "One execute call per instance, including after failure",
+    "Unknown transfer ownership/status forbids BOOT and recovery",
+    "Only a nonzero known terminal timeout permits pre-BOOT reset",
+    "Readback mismatch with successful transfer cannot reset",
+    "Live observers and durable intent precede one BOOT callback",
+    "Failed observer stop prevents pre-BOOT recovery",
+    "No BOOT/reset/reboot retry after the intent barrier",
+    "Intent/report/observation errors and interrupts still attempt native verification",
+    "Failed native verification cannot return success"
+  ],
+  "prepared_controller_source_snapshots_unchanged": 9,
+  "existing_prepared_r1_controller_replaced": false,
+  "root_index_unchanged": true,
+  "private_device_ids_images_or_credentials_in_export": false,
+  "phone_access": false,
+  "physical_trial_dispatched": false,
+  "publication": false,
+  "limitations": [
+    "Actual adapter bindings, durable ownership and process reaping remain separate requirements.",
+    "The frozen prepared controller retains its original generic-flow snapshot and outer guards.",
+    "Callback tests establish no physical RFSA, USB, independent return, firmware or modem/GNSS pass."
+  ]
+}

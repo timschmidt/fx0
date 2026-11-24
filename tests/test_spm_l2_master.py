@@ -8,7 +8,8 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-HEADER = Path(os.environ.get('FX0_SPM_L2_HEADER', ROOT/'worktrees/linux-cpu-cpr/drivers/soc/qcom/spm-msm8226-l2.h'))
+KERNEL = Path(os.environ.get('FX0_KERNEL_SOURCE', ROOT/'worktrees/linux-fx0-cpr'))
+HEADER = Path(os.environ.get('FX0_SPM_L2_HEADER', KERNEL/'drivers/soc/qcom/spm-msm8226-l2.h'))
 HARNESS = r'''
 #include <stdio.h>
 #include <stdlib.h>

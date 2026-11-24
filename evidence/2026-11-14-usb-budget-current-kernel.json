@@ -1,0 +1,95 @@
+{
+  "recorded_UTC": "2026-11-14T19:20:09.002260+00:00",
+  "state": "USB budget source port and normal power-package preparation; full signed package pair validation pending",
+  "kernel_commit": "f71b29239d140872c4970d8381f5d297a604c6da",
+  "kernel_base": "83564de797ccf907c45a4b711ebd21e8b18b2d5b",
+  "recipe_commit": "5b863dcb43f9eac6965b7b7f6160266d252b3712",
+  "paired_firmware_commit": "2ce757408f364ec6f1197b1d5d0be4128a309b1e",
+  "manifest": "manifests/usb-budget-current-kernel.json",
+  "three_original_patches_authenticated_and_applied_in_order": true,
+  "additional_schema_only_corrections": [
+    "Nested PHY-select tuple matching existing fixed-argument parser and board examples",
+    "Boolean usb-role-switch presence flag"
+  ],
+  "all_compiled_C_headers_and_DTS_unchanged_after_schema_corrections": true,
+  "five_message_series_replays_to_all_seven_changed_files": true,
+  "runtime_callback_contexts": [
+    "isolated source checkout",
+    "16-file source-only export"
+  ],
+  "cases_each_runtime_context": {
+    "ChipIdea_budget": 59,
+    "managed_SMBB_input": 59,
+    "original_actuator_compatibility": 48,
+    "policy_worker_actuator_fault_stale_PM_handoff": 2604,
+    "legacy_controls": 6242,
+    "child_probe_PM_devres_order_model": 27
+  },
+  "three_lifetime_negative_controls_rejected_each_context": true,
+  "ASan_UBSan_enabled": true,
+  "ignored_local_program_tree_required": false,
+  "ARM": {
+    "fresh_actual_Kconfig_profiles": [
+      "managed community",
+      "legacy community",
+      "minimal ARM with POWER_SUPPLY disabled"
+    ],
+    "objects_ELF32_ARM": true,
+    "compiler": "Alpine Clang 22.1.3; retained prior-audited toolchain mounted read-only",
+    "W1_driver_warning_count": 0,
+    "two_community_profiles_preserve_main_HID_options": true,
+    "no_power_supply_profile_verified_disabled_after_Kconfig": true,
+    "budget_worker_symbol_present_only_with_power_supply_support": true,
+    "two_failed_community_based_no_PS_attempts_excluded": true,
+    "all_retained_prepared_input_hash_guards_unchanged": true
+  },
+  "board_DTB": {
+    "build_passed": true,
+    "W1_warning_count": 3,
+    "warnings_at_unchanged_eFuse_display_definitions": true,
+    "complete_warning_free_board_claimed": false,
+    "firmware_profile_and_gate_hooks_pass_on_current_tree": true,
+    "pack_and_PMIC_inputs_simulated": true
+  },
+  "schema": {
+    "version": "2026.9",
+    "corrected_documents_and_reference_closure_processing_stderr_empty": true,
+    "selected_USB_charger_policy_battery_nodes_pass_static_and_simulated_runtime": true,
+    "whole_board_schema_validation_claimed": false,
+    "host_role_and_manual_limit_negative_DTBs_diagnosed": true,
+    "manual_limit_diagnostic_name_omission_reconciled_against_false_value_schema_message": true,
+    "binding_property_contract_cases": 14,
+    "binding_contract_three_file_export_passed": true,
+    "valid_and_malformed_PHY_tuples_and_role_flags_tested": true,
+    "managed_host_role_role_switch_and_manual_limit_contracts_tested": true
+  },
+  "normal_package": {
+    "version": "6.18.63-r6",
+    "kernel_release": "6.18.63-fx0-power-policy-alpine",
+    "only_config_changes": [
+      "LOCALVERSION",
+      "CHARGER_QCOM_SMBB_POLICY=y"
+    ],
+    "source_archive_Git_bodies_links_modes_verified": 91271,
+    "archive_representation": "Local deterministic archive; no verified public server representation yet",
+    "two_separate_empty_build_workspaces_prepared_and_dispatched": true,
+    "normal_abuild_Kbuild_and_signers": true,
+    "keys_consumed_by_normal_tools_read_only_in_place": true,
+    "launcher_or_audit_private_key_bodies_inspected_hashed_or_copied": false,
+    "build_containers_network_enabled": false,
+    "complete_artifact_equality_signature_ABI_package_qualification_claimed": false,
+    "independent_current_native_key_or_phone_reaudit_claimed": false
+  },
+  "excluded_preparations": [
+    "Two community-based no-POWER_SUPPLY profiles were reselected by HID dependencies; guards rejected them. Hash-verified minimal profile succeeds.",
+    "Shared pmaports clone exceeded Git alternate depth; independent-object replacement succeeds.",
+    "Initial selected-schema subset omitted common type providers and initial negative diagnostic matcher expected a property name omitted by false-schema errors; corrected checks and 14-case schema contract cover the actual behavior."
+  ],
+  "phone_access_or_firmware_boot_package_clock_policy_writes": false,
+  "source_recipe_or_new_evidence_published": false,
+  "maintainer_messages_sent": false,
+  "existing_trial_plans_sources_and_console_lock_unchanged": true,
+  "hardware_USB_current_timing_charging_SOC_thermal_suspend_reliability_qualified": false,
+  "failed_e7c_r2_physical_base_gate_satisfied": false,
+  "full_goal_complete": false
+}

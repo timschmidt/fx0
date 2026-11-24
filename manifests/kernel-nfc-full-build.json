@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "status": "Complete host kernel and staged signed-module verification pass; unbooted/uninstalled; not a source APK",
+  "source": {
+    "repository": "https://github.com/timschmidt/fx0-linux.git",
+    "branch": "integration/fx0-nfc",
+    "commit": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+    "base": "789d5197844d5268197a17a94605316eedae9fdb",
+    "source_preparation_manifest": "manifests/kernel-nfc-preparation.json"
+  },
+  "release": "6.18.59-fx0-nfc-prep",
+  "configuration": {
+    "base": "configs/linux-6.18.59-fx0-r50.armv7",
+    "base_sha256": "f20d2270cf1cabf6129e4a7a659861a3981d98792f38afaf6741f5896cec8703",
+    "fragments": {
+      "configs/msm8926-nfc.fragment": "4de759ada41c2b14bf767bb2df3514760d017e540173cc90f9818fc8bf4081f7",
+      "configs/nfc-debug-storage.fragment": "dbd241744b338fa2c91b36c4c6878bacf9e42a6ea06978c0b6038e70c808c54a"
+    },
+    "targeted_NFC_config_sha256": "4ff4e9b68edba6a6e7dd62d401f3196cbff0f599e5ecabfbd1e42a3f1101af8f",
+    "full_build_config_sha256": "3dbf9d407de91cb8b4234fc3403f322c2c3b60cf4096d94474f1403e69c71272",
+    "changes_from_targeted_preparation": {
+      "CONFIG_DEBUG_INFO_COMPRESSED_NONE": {
+        "before": "y",
+        "after": "n"
+      },
+      "CONFIG_DEBUG_INFO_COMPRESSED_ZLIB": {
+        "before": "n",
+        "after": "y"
+      }
+    },
+    "CFI_signature_debug_detail_and_runtime_choices_retained": true
+  },
+  "host_tools": {
+    "clang": "clang version 21.1.8 (Fedora 21.1.8-6.fc43)",
+    "linker": "LLD 18.1.8 (compatible with GNU linkers)",
+    "LLVM_object_tools": "llvm-objcopy, compatible with GNU objcopy",
+    "openssl": "OpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)",
+    "zstd": "*** Zstandard CLI (64-bit) v1.5.7, by Yann Collet ***"
+  },
+  "build_seconds": 355.874434,
+  "kernel": {
+    "zImage_sha256": "beec0d412887d3951dc154fa13ae790e1c9ffb409d4e699bbfed2e5a8f26f180",
+    "zImage_bytes": 5558784,
+    "Image_sha256": "f2599005bb9a2fd5dff8a06ea22d7487e4e08be6dd086e3c633caf68f43353ea",
+    "ELF_sha256": "1da076a6c8eae3e29e6f4ecec6afb9e1abef7f454d5c95b400c73ce9fc0fc0ba",
+    "GNU_build_id": "564bc6cc2495d415b23e3d6e44e7a58764e5bd7b",
+    "DTB_sha256": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483",
+    "Module_symvers_sha256": "bd6f0c08ca376deef1e1c3887cb8201afa13f206ce1db71723fda89ff44efdf8",
+    "certificate_sha256": "2ed0452afe89c4cdb0675f83efff3fc8339bed1adb9b36cf69d378fb2b041edd",
+    "exact_certificate_embedded": true,
+    "KCFI_linked": true,
+    "kernel_BSS_span_bytes": 21499728
+  },
+  "staged_modules": {
+    "count": 468,
+    "all_explicit_kernel_certificate_CMS_verified": true,
+    "all_release_ARM_ELF_and_intree_checks_pass": true,
+    "imported_symbol_CRC_checks": 25562,
+    "all_imported_CRCs_match_current_full_build": true,
+    "NFC_dependency_order": [
+      "kernel/net/rfkill/rfkill.ko.zst",
+      "kernel/net/nfc/nfc.ko.zst",
+      "kernel/net/nfc/nci/nci.ko.zst",
+      "kernel/drivers/nfc/nxp-nci/nxp-nci.ko.zst",
+      "kernel/drivers/nfc/nxp-nci/nxp-nci_i2c.ko.zst"
+    ],
+    "private_file_manifest": "local/nfc-full-build/module-verification.json",
+    "private_file_manifest_sha256": "6acb4030f8ba71a58a0f9e8b828024200fb0a0816de3e27886fecc01f6089753",
+    "private_ABI_report_sha256": "6ed74971a5834ec9d4648a43df702c95c04d7eca1771a1fb8c28484d566fb64f"
+  },
+  "constraints": [
+    "All artifacts/key remain private; kernel/module/config/source fingerprints identify this measured build, not independent bit-identical reproduction with a different signing key",
+    "No runtime signature enforcement, NFC operation or distribution qualification inferred from host verification",
+    "Future RAM registration must enforce module signatures and use this exact family",
+    "No audio tests, host built-in Wi-Fi changes or recovery-disk writes"
+  ],
+  "remaining": [
+    "source APK and independent Alpine build",
+    "bounded RAM image/startup/signed registration after latest native UI gate",
+    "NCI reset/init, controller/tag/RF/userspace, restart/error unwind and suspend/wake",
+    "installed update/recovery, final hardware and broader bringup/upstream qualification"
+  ],
+  "evidence": "evidence/2026-11-08-nfc-full-build.json"
+}

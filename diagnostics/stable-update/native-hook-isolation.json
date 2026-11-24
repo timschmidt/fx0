@@ -1,0 +1,121 @@
+{
+  "isolation": {
+    "unit": {
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "Result": "success",
+      "ExecMainCode": "0",
+      "ExecMainStatus": "0"
+    },
+    "worker_result": {
+      "status": "passed",
+      "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+      "readonly_mounts": {
+        "/": true,
+        "/etc": true,
+        "/usr": true,
+        "/proc/sys": true,
+        "/sys/fs/cgroup": true
+      },
+      "owned_backup_subtree_writable": true,
+      "owned_write_probe_removed": true,
+      "physical_boot_device_absent": true,
+      "top_level_block_devices": [],
+      "isolated_network_interfaces": [
+        "lo"
+      ],
+      "network_namespace_differs_from_PID1": true,
+      "NoNewPrivileges": true,
+      "package_transaction_executed": false,
+      "live_OS_files_written": false
+    },
+    "current_boot_success_journal": true,
+    "journal_success_realtime_microseconds": "1794429836518770",
+    "recorded_UTC": "2026-11-11T20:44:30.873949+00:00",
+    "passed": true,
+    "unloaded_unit_default_exit_fields_not_used_as_exit_proof": true
+  },
+  "isolation_properties": [
+    "Type=exec",
+    "RuntimeMaxSec=30",
+    "KillMode=control-group",
+    "MemoryMax=64M",
+    "MemorySwapMax=0",
+    "CPUQuota=50%",
+    "Nice=10",
+    "IOWeight=10",
+    "UMask=0077",
+    "PrivateDevices=yes",
+    "PrivateNetwork=yes",
+    "PrivateTmp=yes",
+    "ProtectSystem=strict",
+    "ProtectHome=yes",
+    "ProtectKernelTunables=yes",
+    "ProtectKernelModules=yes",
+    "ProtectControlGroups=yes",
+    "NoNewPrivileges=yes",
+    "ReadWritePaths=/var/lib/fx0-rollback/stable-native-hooks-01"
+  ],
+  "permission_execution_probe": {
+    "unit": {
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "Result": "success",
+      "ExecMainCode": "0",
+      "ExecMainStatus": "0"
+    },
+    "worker_result": {
+      "status": "passed",
+      "actual_ARM_kernel": "6.18.59-fx0-dmp",
+      "live_OS_files_written": false,
+      "package_transaction_executed": false,
+      "ownership_and_setuid_mode_roundtrip": true,
+      "SELinux_and_user_xattrs_roundtrip": true,
+      "actual_native_chroot_shell_APK_and_strace": true,
+      "native_APK_version": "3.0.8-r0",
+      "native_hook_version_comparisons": [
+        {
+          "installed": "10.3_p1-r1",
+          "threshold": "10.0_p1-r2",
+          "comparison": ">"
+        },
+        {
+          "installed": "1.23.4-r0",
+          "threshold": "1.21.2-r1",
+          "comparison": ">"
+        }
+      ],
+      "all_owned_children_reaped": true,
+      "actual_cgroup_ownership_verified": true,
+      "private_fixture_removed": true
+    },
+    "current_boot_success_journal": true,
+    "journal_success_realtime_microseconds": "1794430631008335",
+    "recorded_UTC": "2026-11-11T20:57:57.700440+00:00",
+    "passed": true,
+    "unloaded_unit_default_exit_fields_not_used_as_exit_proof": true
+  },
+  "probe_properties": [
+    "Type=exec",
+    "KillMode=control-group",
+    "MemorySwapMax=0",
+    "CPUQuota=50%",
+    "Nice=10",
+    "IOWeight=10",
+    "UMask=0077",
+    "PrivateDevices=yes",
+    "PrivateNetwork=yes",
+    "PrivateTmp=yes",
+    "ProtectSystem=strict",
+    "ProtectHome=yes",
+    "ProtectKernelTunables=yes",
+    "ProtectKernelModules=yes",
+    "ProtectControlGroups=yes",
+    "NoNewPrivileges=yes",
+    "ReadWritePaths=/var/lib/fx0-rollback/stable-native-hooks-01",
+    "RuntimeMaxSec=90",
+    "MemoryMax=128M"
+  ]
+}

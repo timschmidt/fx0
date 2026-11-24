@@ -1,0 +1,624 @@
+diff --git a/rmtfs.c b/rmtfs.c
+--- a/rmtfs.c
++++ b/rmtfs.c
+@@ -1,3 +1,4 @@
++#define _GNU_SOURCE
+ #include <sys/mman.h>
+ #include <sys/socket.h>
+ #include <sys/types.h>
+@@ -9,6 +10,7 @@
+ #include <libqrtr.h>
+ #include <limits.h>
+ #include <inttypes.h>
++#include <poll.h>
+ #include <signal.h>
+ #include <stdarg.h>
+ #include <stdbool.h>
+@@ -27,7 +29,7 @@
+ #define RMTFS_QMI_INSTANCE	0
+ 
+ static struct rmtfs_mem *rmem;
+-static sig_atomic_t sig_int_count;
++static volatile sig_atomic_t terminate;
+ static char slot_suffix[SLOT_SUFFIX_LEN];
+ 
+ static bool dbgprintf_enabled;
+@@ -434,87 +436,127 @@
+ 	return ret;
+ }
+ 
+-static int sig_int_count;
+-
+-static int run_rmtfs(int rprocfd)
+-{
+-	bool sig_int_handled = false;
+-	int rmtfs_fd;
+-	fd_set rfds;
+-	char done;
+-	int nfds;
+-	int ret;
+-
+-	rmtfs_fd = qrtr_open(RMTFS_QMI_SERVICE);
+-	if (rmtfs_fd < 0) {
++static int publish_rmtfs(void)
++{
++	int fd;
++	int ret;
++
++	fd = qrtr_open(RMTFS_QMI_SERVICE);
++	if (fd < 0) {
+ 		fprintf(stderr, "failed to create qrtr socket\n");
+-		return rmtfs_fd;
+-	}
+-
+-	dbgprintf("registering services\n");
+-
+-	ret = qrtr_publish(rmtfs_fd, RMTFS_QMI_SERVICE,
+-			   RMTFS_QMI_VERSION, RMTFS_QMI_INSTANCE);
+-	if (ret < 0) {
+-		fprintf(stderr, "failed to publish rmtfs service");
++		return fd;
++	}
++
++	ret = qrtr_publish(fd, RMTFS_QMI_SERVICE, RMTFS_QMI_VERSION, RMTFS_QMI_INSTANCE);
++	if (ret < 0) {
++		fprintf(stderr, "failed to publish rmtfs service\n");
++		qrtr_close(fd);
+ 		return ret;
+ 	}
+-
+-	if (rprocfd >= 0)
+-		rproc_start();
++	return fd;
++}
++
++static int run_rmtfs(bool manage_rproc, const sigset_t *wait_mask)
++{
++	bool owns_power = false;
++	bool stopping = false;
++	int command_fd = -1;
++	int result = 0;
++	int sock;
++	int ret;
++
++	sock = publish_rmtfs();
++	if (sock < 0)
++		return sock;
++
++	/* Deliver a shutdown already pending before starting firmware. */
++	ret = ppoll(NULL, 0, &(struct timespec){ 0 }, wait_mask);
++	if (ret < 0 && errno != EINTR) {
++		result = -errno;
++		goto out;
++	}
++	if (manage_rproc && !terminate) {
++		command_fd = rproc_start();
++		if (command_fd < 0) {
++			result = command_fd;
++			goto out;
++		}
++	}
+ 
+ 	for (;;) {
+-		if (sig_int_count == 1 && !sig_int_handled) {
+-			if (rprocfd < 0)
++		struct pollfd fds[2];
++
++		if ((terminate || result < 0) && command_fd < 0) {
++			if (!owns_power)
+ 				break;
+-
+-			rproc_stop();
+-			sig_int_handled = true;
+-		} else if (sig_int_count > 1) {
+-			break;
+-		}
+-
+-		FD_ZERO(&rfds);
+-		FD_SET(rmtfs_fd, &rfds);
+-		if (rprocfd >= 0)
+-			FD_SET(rprocfd, &rfds);
+-		nfds = MAX(rmtfs_fd, rprocfd) + 1;
+-
+-		ret = select(nfds, &rfds, NULL, NULL, NULL);
+-		if (ret < 0 && errno != EINTR)
+-			break;
+-		else if (ret < 0 && errno == EINTR)
+-			continue;
+-
+-		if (rprocfd >= 0 && FD_ISSET(rprocfd, &rfds)) {
+-			ret = read(rprocfd, &done, 1);
+-			if (!ret || done == 'Y')
++			command_fd = rproc_stop();
++			if (command_fd < 0) {
++				result = command_fd;
+ 				break;
+-		}
+-
+-		if (FD_ISSET(rmtfs_fd, &rfds)) {
+-			ret = handle_rmtfs(rmtfs_fd);
+-			if (ret == -ENETRESET)
++			}
++			stopping = true;
++		}
++
++		fds[0] = (struct pollfd){ .fd = sock, .events = POLLIN };
++		fds[1] = (struct pollfd){ .fd = command_fd, .events = POLLIN };
++		ret = ppoll(fds, 2, NULL, wait_mask);
++		if (ret < 0) {
++			if (errno == EINTR)
++				continue;
++			result = -errno;
++			/* A failed poll cannot service QRTR. Reap any in-flight write. */
++			fds[0].revents = 0;
++			fds[1].revents = POLLERR;
++		}
++
++		if (command_fd >= 0 && fds[1].revents) {
++			ret = rproc_complete();
++			command_fd = -1;
++			if (ret < 0) {
++				fprintf(stderr, "remoteproc %s failed: %s\n",
++					stopping ? "stop" : "start", strerror(-ret));
++				result = ret;
+ 				break;
+-		}
+-	}
+-
+-	close(rmtfs_fd);
+-
+-	return ret;
++			}
++			if (stopping)
++				break;
++			owns_power = true;
++		}
++
++		if (fds[0].revents & (POLLHUP | POLLNVAL)) {
++			result = -EIO;
++			qrtr_close(sock);
++			sock = -1;
++		} else if (fds[0].revents & (POLLIN | POLLERR)) {
++			ret = handle_rmtfs(sock);
++			if (ret == -ENETRESET) {
++				qrtr_close(sock);
++				sock = publish_rmtfs();
++				if (sock < 0)
++					result = sock;
++			}
++		}
++	}
++out:
++	if (sock >= 0)
++		qrtr_close(sock);
++	return result;
+ }
+ 
+ static void sig_int_handler(int signo)
+ {
+-	sig_int_count++;
++	(void)signo;
++	terminate = 1;
+ }
+ 
+ int main(int argc, char **argv)
+ {
+ 	struct sigaction action;
++	sigset_t signals;
++	sigset_t wait_mask;
+ 	bool use_partitions = false;
+ 	bool read_only = false;
+-	int rprocfd = -1;
++	bool manage_rproc = false;
+ 	int ret;
+ 	int option;
+ 	const char *storage_root = NULL;
+@@ -542,12 +584,7 @@
+ 
+ 		/* enable sync for the mss rproc instance */
+ 		case 's':
+-			rprocfd = rproc_init();
+-			if (rprocfd < 0) {
+-				fprintf(stderr, "Failed to get rprocfd\n");
+-				return 1;
+-			}
+-
++			manage_rproc = true;
+ 			break;
+ 
+ 		/* Partlabel slot suffix on A/B devices */
+@@ -575,16 +612,25 @@
+ 		}
+ 	}
+ 
++	sigemptyset(&signals);
++	sigaddset(&signals, SIGINT);
++	sigaddset(&signals, SIGTERM);
++	if (sigprocmask(SIG_BLOCK, &signals, &wait_mask) < 0)
++		return 1;
++	sigdelset(&wait_mask, SIGINT);
++	sigdelset(&wait_mask, SIGTERM);
++
+ 	sigemptyset(&action.sa_mask);
+ 	action.sa_handler = sig_int_handler;
+ 	action.sa_flags = 0;
+-
+-	sigaction(SIGINT, &action, NULL);
+-	sigaction(SIGTERM, &action, NULL);
++	if (sigaction(SIGINT, &action, NULL) < 0 || sigaction(SIGTERM, &action, NULL) < 0)
++		return 1;
+ 
+ 	rmem = rmtfs_mem_open();
+-	if (!rmem)
++	if (!rmem) {
++		fprintf(stderr, "failed to initialize shared memory: %s\n", strerror(errno));
+ 		return 1;
++	}
+ 
+ 	ret = storage_init(storage_root, read_only, use_partitions);
+ 	if (ret) {
+@@ -592,13 +638,20 @@
+ 		goto close_rmtfs_mem;
+ 	}
+ 
+-	do {
+-		ret = run_rmtfs(rprocfd);
+-	} while (ret == -ENETRESET);
+-
++	if (manage_rproc) {
++		ret = rproc_init();
++		if (ret < 0) {
++			fprintf(stderr, "failed to initialize remoteproc: %s\n", strerror(-ret));
++			goto close_storage;
++		}
++	}
++
++	ret = run_rmtfs(manage_rproc, &wait_mask);
++	if (manage_rproc)
++		rproc_exit();
++close_storage:
+ 	storage_exit();
+ close_rmtfs_mem:
+ 	rmtfs_mem_close(rmem);
+-
+-	return 0;
+-}
++	return ret ? 1 : 0;
++}
+diff --git a/rmtfs.h b/rmtfs.h
+--- a/rmtfs.h
++++ b/rmtfs.h
+@@ -39,7 +39,10 @@
+ int storage_sync(struct rmtfd *rmtfd);
+ 
+ int rproc_init(void);
++/* Start and stop return a completion fd, or a negative error. */
+ int rproc_start(void);
+ int rproc_stop(void);
++int rproc_complete(void);
++void rproc_exit(void);
+ 
+ #endif
+diff --git a/rproc.c b/rproc.c
+--- a/rproc.c
++++ b/rproc.c
+@@ -1,8 +1,9 @@
+-#include <sys/syscall.h>
++#define _GNU_SOURCE
+ #include <sys/types.h>
+ #include <dirent.h>
+ #include <errno.h>
+ #include <fcntl.h>
++#include <stdbool.h>
+ #include <stdint.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+@@ -15,10 +16,15 @@
+ #define RPROC_BASE_PATH		"/sys/bus/platform/drivers/qcom-q6v5-mss/"
+ #define RPROC_CLASS_PATH	"/sys/class/remoteproc/"
+ 
+-static pthread_t start_thread;
+-static pthread_t stop_thread;
+-static int rproc_state_fd;
+-static int rproc_pipe[2];
++enum rproc_command { IDLE, START, STOP, EXIT };
++
++static pthread_t worker;
++static pthread_mutex_t command_lock = PTHREAD_MUTEX_INITIALIZER;
++static pthread_cond_t command_ready = PTHREAD_COND_INITIALIZER;
++static enum rproc_command pending;
++static bool active;
++static int state_fd = -1;
++static int completion[2];
+ 
+ static int rproc_init_by_modalias(void)
+ {
+@@ -31,7 +37,7 @@
+ 	int base_fd;
+ 	int ret;
+ 
+-	base_fd = open(RPROC_CLASS_PATH, O_RDONLY | O_DIRECTORY);
++	base_fd = open(RPROC_CLASS_PATH, O_RDONLY | O_DIRECTORY | O_CLOEXEC);
+ 	if (base_fd < 0)
+ 		return -1;
+ 
+@@ -47,11 +53,11 @@
+ 		    !strcmp(rproc_de->d_name, ".."))
+ 			continue;
+ 
+-		rproc_fd = openat(base_fd, rproc_de->d_name, O_RDONLY | O_DIRECTORY);
++		rproc_fd = openat(base_fd, rproc_de->d_name, O_RDONLY | O_DIRECTORY | O_CLOEXEC);
+ 		if (rproc_fd < 0)
+ 			continue;
+ 
+-		modalias_fd = openat(rproc_fd, "device/modalias", O_RDONLY);
++		modalias_fd = openat(rproc_fd, "device/modalias", O_RDONLY | O_CLOEXEC);
+ 		if (modalias_fd < 0)
+ 			goto close_rproc_fd;
+ 
+@@ -63,7 +69,7 @@
+ 		if (!strstr(modalias, "-mpss-pas") && !strstr(modalias, "-mss-pil"))
+ 			goto close_modalias_fd;
+ 
+-		state_fd = openat(rproc_fd, "state", O_WRONLY);
++		state_fd = openat(rproc_fd, "state", O_WRONLY | O_CLOEXEC);
+ 		if (state_fd < 0) {
+ 			fprintf(stderr,
+ 				"unable to open remoteproc \"state\" control file of %s\n",
+@@ -76,7 +82,6 @@
+ 		close(rproc_fd);
+ 	}
+ 	closedir(base_dir);
+-	close(base_fd);
+ 
+ 	return state_fd;
+ }
+@@ -93,7 +98,7 @@
+ 	int state_fd = -1;
+ 	int base_fd;
+ 
+-	base_fd = open(RPROC_BASE_PATH, O_RDONLY | O_DIRECTORY);
++	base_fd = open(RPROC_BASE_PATH, O_RDONLY | O_DIRECTORY | O_CLOEXEC);
+ 	if (base_fd < 0)
+ 		return -1;
+ 
+@@ -109,27 +114,32 @@
+ 		    !strcmp(device_de->d_name, ".."))
+ 			continue;
+ 
+-		device_fd = openat(base_fd, device_de->d_name, O_RDONLY | O_DIRECTORY);
++		device_fd = openat(base_fd, device_de->d_name, O_RDONLY | O_DIRECTORY | O_CLOEXEC);
+ 		if (device_fd < 0)
+ 			continue;
+ 
+-		rproc_base_fd = openat(device_fd, "remoteproc", O_RDONLY | O_DIRECTORY);
++		rproc_base_fd = openat(device_fd, "remoteproc", O_RDONLY | O_DIRECTORY | O_CLOEXEC);
+ 		if (rproc_base_fd < 0) {
+ 			close(device_fd);
+ 			continue;
+ 		}
+ 
+ 		rproc_dir = fdopendir(rproc_base_fd);
++		if (!rproc_dir) {
++			close(rproc_base_fd);
++			close(device_fd);
++			continue;
++		}
+ 		while (state_fd < 0 && (rproc_de = readdir(rproc_dir)) != NULL) {
+ 			if (!strcmp(rproc_de->d_name, ".") ||
+ 			    !strcmp(rproc_de->d_name, ".."))
+ 				continue;
+ 
+-			rproc_fd = openat(rproc_base_fd, rproc_de->d_name, O_RDONLY | O_DIRECTORY);
++			rproc_fd = openat(rproc_base_fd, rproc_de->d_name, O_RDONLY | O_DIRECTORY | O_CLOEXEC);
+ 			if (rproc_fd < 0)
+ 				continue;
+ 
+-			state_fd = openat(rproc_fd, "state", O_WRONLY);
++			state_fd = openat(rproc_fd, "state", O_WRONLY | O_CLOEXEC);
+ 			if (state_fd < 0) {
+ 				fprintf(stderr,
+ 					"unable to open remoteproc \"state\" control file of %s\n",
+@@ -140,86 +150,136 @@
+ 
+ 		}
+ 		closedir(rproc_dir);
+-		close(rproc_base_fd);
+ 		close(device_fd);
+ 	}
+ 	closedir(base_dir);
+-	close(base_fd);
+ 
+ 	return state_fd;
+ }
+ 
++static void *command_worker(void *unused)
++{
++	(void)unused;
++	for (;;) {
++		enum rproc_command command;
++		const char *text;
++		size_t len;
++		ssize_t n;
++		int result;
++
++		pthread_mutex_lock(&command_lock);
++		while (pending == IDLE)
++			pthread_cond_wait(&command_ready, &command_lock);
++		command = pending;
++		pending = IDLE;
++		pthread_mutex_unlock(&command_lock);
++		if (command == EXIT)
++			break;
++
++		text = command == START ? "start" : "stop";
++		len = strlen(text);
++		n = pwrite(state_fd, text, len, 0);
++		if (n < 0)
++			result = -errno;
++		else if ((size_t)n != len)
++			result = -EIO;
++		else
++			result = 0;
++
++		do {
++			n = write(completion[1], &result, sizeof(result));
++		} while (n < 0 && errno == EINTR);
++		if (n != sizeof(result))
++			break;
++	}
++	close(completion[1]);
++	return NULL;
++}
++
+ int rproc_init(void)
+ {
+-	int state_fd;
+ 	int ret;
+ 
++	if (state_fd >= 0)
++		return -EBUSY;
++
+ 	state_fd = rproc_init_by_modalias();
+-	if (state_fd < 0) {
++	if (state_fd < 0)
+ 		state_fd = rproc_init_by_mss_driver();
+-		if (state_fd < 0)
+-			return -1;
+-	}
+-
+-	ret = pipe(rproc_pipe);
+-	if (ret < 0) {
+-		close(state_fd);
+-		return -1;
+-	}
+-
+-	rproc_state_fd = state_fd;
+-
+-	return rproc_pipe[0];
+-}
+-
+-static void *do_rproc_start(void *unused)
+-{
+-	ssize_t ret;
+-
+-	ret = pwrite(rproc_state_fd, "start", 5, 0);
+-	if (ret < 4) {
+-		fprintf(stderr, "failed to update start state: %s\n",
+-			strerror(errno));
+-	}
+-
+-	return NULL;
+-}
+-
+-int rproc_start()
+-{
+-	pthread_attr_t attr;
+-
+-	pthread_attr_init(&attr);
+-	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+-
+-	return pthread_create(&start_thread, &attr, do_rproc_start, NULL);
+-}
+-
+-static void *do_rproc_stop(void *unused)
+-{
+-	ssize_t ret;
+-
+-	ret = pwrite(rproc_state_fd, "stop", 4, 0);
+-	if (ret < 4) {
+-		fprintf(stderr, "failed to update stop state: %s\n",
+-			strerror(errno));
+-	}
+-
+-	ret = write(rproc_pipe[1], "Y", 1);
+-	if (ret != 1) {
+-		fprintf(stderr, "failed to signal event loop about exit\n");
+-		exit(0);
+-	}
+-
+-	return NULL;
++	if (state_fd < 0)
++		return -ENODEV;
++
++	if (pipe2(completion, O_CLOEXEC) < 0) {
++		ret = -errno;
++		goto close_state;
++	}
++	ret = pthread_create(&worker, NULL, command_worker, NULL);
++	if (ret) {
++		ret = -ret;
++		close(completion[0]);
++		close(completion[1]);
++		goto close_state;
++	}
++	return 0;
++
++close_state:
++	close(state_fd);
++	state_fd = -1;
++	return ret;
++}
++
++static void queue_command(enum rproc_command command)
++{
++	pthread_mutex_lock(&command_lock);
++	pending = command;
++	pthread_cond_signal(&command_ready);
++	pthread_mutex_unlock(&command_lock);
++}
++
++static int begin_command(enum rproc_command command)
++{
++	if (state_fd < 0)
++		return -ENODEV;
++	if (active)
++		return -EBUSY;
++	active = true;
++	queue_command(command);
++	return completion[0];
++}
++
++int rproc_start(void)
++{
++	return begin_command(START);
+ }
+ 
+ int rproc_stop(void)
+ {
+-	pthread_attr_t attr;
+-
+-	pthread_attr_init(&attr);
+-	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+-
+-	return pthread_create(&stop_thread, &attr, do_rproc_stop, NULL);
+-}
++	return begin_command(STOP);
++}
++
++int rproc_complete(void)
++{
++	int result;
++	ssize_t n;
++
++	do {
++		n = read(completion[0], &result, sizeof(result));
++	} while (n < 0 && errno == EINTR);
++	active = false;
++	if (n < 0)
++		return -errno;
++	return n == sizeof(result) ? result : -EIO;
++}
++
++void rproc_exit(void)
++{
++	if (state_fd < 0)
++		return;
++
++	queue_command(EXIT);
++	pthread_join(worker, NULL);
++	close(completion[0]);
++	close(state_fd);
++	state_fd = -1;
++	pending = IDLE;
++}

@@ -1,0 +1,324 @@
+{
+  "scope": "tentative routing from the exact integration MAINTAINERS file; current upstream maintainer trees and addresses must be revalidated before any submission",
+  "MAINTAINERS_sha256": "bc53190fad73776bb46eb59f36a1ba227b18341cb99671dcf4619e967857c1f9",
+  "script_sha256": "bd9536506505c44283cec8e8f306c0df22ae3e5844b4db42bb1fab07c3e54dd5",
+  "integration_tip": "57e61d7961e7367d24b65b7969bdfe6f652b85bc",
+  "sent": false,
+  "patches": [
+    {
+      "position": 1,
+      "commit": "250f944e5e5074e767252fc69a59709c5f189c07",
+      "subject": "iio: inv_mpu6050: add guarded MPU6515 DMP execution",
+      "patch": "submissions/linux-runtime-integration/0001-iio-inv_mpu6050-add-guarded-MPU6515-DMP-execution.patch",
+      "patch_sha256": "8ddc7156f954b46c672ba15b5606d691a18754c52b4c498d34b0c3fcced0432a",
+      "routing": "Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nJonathan Cameron <jic23@kernel.org>\nDavid Lechner <dlechner@baylibre.com>\n\"Nuno S\u00e1\" <nuno.sa@analog.com>\nAndy Shevchenko <andy@kernel.org>\nlinux-kernel@vger.kernel.org\nlinux-iio@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git\nBuried alive in reporters\nMaintained\nTHE REST\nINVENSENSE MPU-6050 IMU DRIVER\nIIO SUBSYSTEM AND DRIVERS",
+      "diagnostics": ""
+    },
+    {
+      "position": 2,
+      "commit": "383c3b717e5d4d16a7fad5ef5da471b71b23b645",
+      "subject": "iio: core: preserve precision in small fractional log2 values",
+      "patch": "submissions/linux-runtime-integration/0002-iio-core-preserve-precision-in-small-fractional-log2.patch",
+      "patch_sha256": "8957c349bc1423cfcb8f16cf9d45ac68f4fd20d1225406e4cc11631e6bc0eac8",
+      "routing": "Jonathan Cameron <jic23@kernel.org>\nDavid Lechner <dlechner@baylibre.com>\n\"Nuno S\u00e1\" <nuno.sa@analog.com>\nAndy Shevchenko <andy@kernel.org>\nlinux-iio@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nIIO SUBSYSTEM AND DRIVERS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 3,
+      "commit": "9c6cb08d33bf3153eb443f8cffe22ad76b8487f5",
+      "subject": "iio: inv_mpu6050: expose verified significant-motion events",
+      "patch": "submissions/linux-runtime-integration/0003-iio-inv_mpu6050-expose-verified-significant-motion-e.patch",
+      "patch_sha256": "f8d035910bf71bd43a0b337406da7c6cef30740fb01085af44eb8d8e2e76cfed",
+      "routing": "Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nJonathan Cameron <jic23@kernel.org>\nDavid Lechner <dlechner@baylibre.com>\n\"Nuno S\u00e1\" <nuno.sa@analog.com>\nAndy Shevchenko <andy@kernel.org>\nlinux-iio@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nINVENSENSE MPU-6050 IMU DRIVER\nIIO SUBSYSTEM AND DRIVERS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 4,
+      "commit": "ca17e5cf5eca2dedcba928f9995261f955fac96c",
+      "subject": "iio: inv_mpu6050: retain significant-motion state through s2idle",
+      "patch": "submissions/linux-runtime-integration/0004-iio-inv_mpu6050-retain-significant-motion-state-thro.patch",
+      "patch_sha256": "a234fdd69d6dc4a957c8c94907ee2d200840feca51be7000cce4aea76ff1e66d",
+      "routing": "Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>\nJonathan Cameron <jic23@kernel.org>\nDavid Lechner <dlechner@baylibre.com>\n\"Nuno S\u00e1\" <nuno.sa@analog.com>\nAndy Shevchenko <andy@kernel.org>\nlinux-iio@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nINVENSENSE MPU-6050 IMU DRIVER\nIIO SUBSYSTEM AND DRIVERS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 5,
+      "commit": "e13016e7cc2dcdb5f10c0a3e379a1683ebb41ece",
+      "subject": "drm/msm/mdp5: flush staged scanout before starting video timing",
+      "patch": "submissions/linux-runtime-integration/0005-drm-msm-mdp5-flush-staged-scanout-before-starting-vi.patch",
+      "patch_sha256": "a5851d87f545072c50d51c578ae010e77b4a6c9203b0b7648aec58a5fdd73d5e",
+      "routing": "Rob Clark <robin.clark@oss.qualcomm.com>\nDmitry Baryshkov <lumag@kernel.org>\nAbhinav Kumar <abhinav.kumar@linux.dev>\nJessica Zhang <jessica.zhang@oss.qualcomm.com>\nSean Paul <sean@poorly.run>\nMarijn Suijten <marijn.suijten@somainline.org>\nDavid Airlie <airlied@gmail.com>\nSimona Vetter <simona@ffwll.ch>\nlinux-arm-msm@vger.kernel.org\ndri-devel@lists.freedesktop.org\nfreedreno@lists.freedesktop.org\nlinux-kernel@vger.kernel.org\ngit https://gitlab.freedesktop.org/drm/msm.git\ngit https://gitlab.freedesktop.org/drm/kernel.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nDRM DRIVER for Qualcomm display hardware\nDRM DRIVERS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 6,
+      "commit": "9ff336ca6bac0255da67d6a48e038995200cc23d",
+      "subject": "dt-bindings: nvmem: describe MSM8926 raw calibration rows",
+      "patch": "submissions/linux-runtime-integration/0006-dt-bindings-nvmem-describe-MSM8926-raw-calibration-r.patch",
+      "patch_sha256": "78f08b46de7daa0f1739f7489a483fc12aaaeb9176b3b86977700719eaff3b4d",
+      "routing": "Srinivas Kandagatla <srini@kernel.org>\nRob Herring <robh@kernel.org>\nKrzysztof Kozlowski <krzk+dt@kernel.org>\nConor Dooley <conor+dt@kernel.org>\nlinux-arm-msm@vger.kernel.org\ndevicetree@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/srini/nvmem.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nARM/QUALCOMM MAILING LIST\nNVMEM FRAMEWORK\nOPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 7,
+      "commit": "b55bb8f959a17c4ade641f1dd1471c92630eaffe",
+      "subject": "nvmem: qfprom: add a bounded raw MSM8926 calibration view",
+      "patch": "submissions/linux-runtime-integration/0007-nvmem-qfprom-add-a-bounded-raw-MSM8926-calibration-v.patch",
+      "patch_sha256": "734e1fff1c85247c5562bc6e966632b82845c3eac02ef31165b803cbe47c9e2b",
+      "routing": "Srinivas Kandagatla <srini@kernel.org>\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/srini/nvmem.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nNVMEM FRAMEWORK\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 8,
+      "commit": "90e124443e734b29660a96a9019cac3dce49e15b",
+      "subject": "ARM: dts: qcom: madai: describe raw CPU calibration cells",
+      "patch": "submissions/linux-runtime-integration/0008-ARM-dts-qcom-madai-describe-raw-CPU-calibration-cell.patch",
+      "patch_sha256": "e91c0d0f0d4e68c2090f44572346e6b432ede9bdbd5ad5ac2c88d1e459f1fd87",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nRob Herring <robh@kernel.org>\nKrzysztof Kozlowski <krzk+dt@kernel.org>\nConor Dooley <conor+dt@kernel.org>\nlinux-arm-msm@vger.kernel.org\ndevicetree@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nARM/QUALCOMM SUPPORT\nARM/QUALCOMM MAILING LIST\nOPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 9,
+      "commit": "86969789ab8decafd97681edb240dd214487bafe",
+      "subject": "pmdomain: qcom: cpr: sequence MX and APC voltage requests",
+      "patch": "submissions/linux-runtime-integration/0009-pmdomain-qcom-cpr-sequence-MX-and-APC-voltage-reques.patch",
+      "patch_sha256": "dfd95ef287443640842c5c9cee83897ab2e435792fde31c3a0adf21855459a31",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nUlf Hansson <ulf.hansson@linaro.org>\nlinux-kernel@vger.kernel.org\nlinux-pm@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\nBuried alive in reporters\nMaintained\nSupported\nTHE REST\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nARM/QUALCOMM MAILING LIST\nGENERIC PM DOMAINS",
+      "diagnostics": ""
+    },
+    {
+      "position": 10,
+      "commit": "789d5197844d5268197a17a94605316eedae9fdb",
+      "subject": "firmware: qcom: scm: support the legacy conditional fuse read",
+      "patch": "submissions/linux-runtime-integration/0010-firmware-qcom-scm-support-the-legacy-conditional-fus.patch",
+      "patch_sha256": "02fc983c009dc25c096dba800cd2b2da676f8e1d1104642b5dfe75cd3e2d90e8",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nlinux-arm-msm@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nARM/QUALCOMM MAILING LIST\nARM/QUALCOMM SUPPORT\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 11,
+      "commit": "11275b541e4c2844645d0eb238c9cbc23ff49923",
+      "subject": "pmdomain: qcom: cpr: decode MSM8926 calibration metadata",
+      "patch": "submissions/linux-runtime-integration/0011-pmdomain-qcom-cpr-decode-MSM8926-calibration-metadat.patch",
+      "patch_sha256": "5f153fe61fc4bd235a1c20b7f20c8d358a33f17d28e8758e80c39b8f3fc5cb37",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nUlf Hansson <ulf.hansson@linaro.org>\nlinux-kernel@vger.kernel.org\nlinux-pm@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\nBuried alive in reporters\nMaintained\nSupported\nTHE REST\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nARM/QUALCOMM MAILING LIST\nGENERIC PM DOMAINS",
+      "diagnostics": ""
+    },
+    {
+      "position": 12,
+      "commit": "c24c35f69fc4becd77ebd0b43d40489a9c160ace",
+      "subject": "dt-bindings: regulator: describe the PM8226 SAW fixed range",
+      "patch": "submissions/linux-runtime-integration/0012-dt-bindings-regulator-describe-the-PM8226-SAW-fixed-.patch",
+      "patch_sha256": "b1d29b805bca8f2e5fde33fd95613cac5c56a3a87eb0e3a98150aff090b2ff9a",
+      "routing": "Liam Girdwood <lgirdwood@gmail.com>\nMark Brown <broonie@kernel.org>\nRob Herring <robh@kernel.org>\nKrzysztof Kozlowski <krzk+dt@kernel.org>\nConor Dooley <conor+dt@kernel.org>\nRobert Marko <robimarko@gmail.com>\nlinux-arm-msm@vger.kernel.org\nlinux-kernel@vger.kernel.org\ndevicetree@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nSupported\nMaintained\nBuried alive in reporters\nARM/QUALCOMM MAILING LIST\nVOLTAGE AND CURRENT REGULATOR FRAMEWORK\nOPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 13,
+      "commit": "03fdca136034f3f62162b26e061e05d41f68a33d",
+      "subject": "regulator: qcom-spmi: add the fixed-range PM8226 SAW provider",
+      "patch": "submissions/linux-runtime-integration/0013-regulator-qcom-spmi-add-the-fixed-range-PM8226-SAW-p.patch",
+      "patch_sha256": "656fde88645c427d40305aef5b6f8460e0d7040e992b0e19a439044d7a75fcd1",
+      "routing": "Liam Girdwood <lgirdwood@gmail.com>\nMark Brown <broonie@kernel.org>\nlinux-kernel@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git\nBuried alive in reporters\nSupported\nTHE REST\nARM/QUALCOMM MAILING LIST\nVOLTAGE AND CURRENT REGULATOR FRAMEWORK",
+      "diagnostics": ""
+    },
+    {
+      "position": 14,
+      "commit": "84adf38f7463e6a58543008749afe41b5bb4d7f5",
+      "subject": "dt-bindings: soc: qcom: describe the MSM8226 L2 master owner",
+      "patch": "submissions/linux-runtime-integration/0014-dt-bindings-soc-qcom-describe-the-MSM8226-L2-master-.patch",
+      "patch_sha256": "c530267d8e594062cd31209690d6bc97aa2a84409b1e37793038b7f3a45b71ba",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nRob Herring <robh@kernel.org>\nKrzysztof Kozlowski <krzk+dt@kernel.org>\nConor Dooley <conor+dt@kernel.org>\nAndy Gross <agross@kernel.org>\nlinux-arm-msm@vger.kernel.org\ndevicetree@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nARM/QUALCOMM MAILING LIST\nARM/QUALCOMM SUPPORT\nOPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 15,
+      "commit": "846f609040cfdc2dba49020eb4d048458e8dbe59",
+      "subject": "soc: qcom: spm: register the MSM8226 L2 master owner",
+      "patch": "submissions/linux-runtime-integration/0015-soc-qcom-spm-register-the-MSM8226-L2-master-owner.patch",
+      "patch_sha256": "d2e36b711e252920ec57b2e001ffd454811172c6d6329e078ff3f55d2f67414c",
+      "routing": "Liam Girdwood <lgirdwood@gmail.com>\nMark Brown <broonie@kernel.org>\nBjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nlinux-kernel@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git\nBuried alive in reporters\nSupported\nMaintained\nTHE REST\nARM/QUALCOMM MAILING LIST\nVOLTAGE AND CURRENT REGULATOR FRAMEWORK\nARM/QUALCOMM SUPPORT",
+      "diagnostics": ""
+    },
+    {
+      "position": 16,
+      "commit": "0813d9bdbd2e78bd47bc713605f6dec9d0c56655",
+      "subject": "ARM: dts: qcom: madai: connect the L2 master and APC provider",
+      "patch": "submissions/linux-runtime-integration/0016-ARM-dts-qcom-madai-connect-the-L2-master-and-APC-pro.patch",
+      "patch_sha256": "8791dbf46f80b8fcee33762cc1512d0f10d669c904c9bb77909e7ac1cdba0249",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nRob Herring <robh@kernel.org>\nKrzysztof Kozlowski <krzk+dt@kernel.org>\nConor Dooley <conor+dt@kernel.org>\nlinux-arm-msm@vger.kernel.org\ndevicetree@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nARM/QUALCOMM MAILING LIST\nARM/QUALCOMM SUPPORT\nOPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 17,
+      "commit": "92d8237aa93e26cf32ea0f94c2edc86c219d3d0f",
+      "subject": "dt-bindings: regulator: require the PM8226 APC supply to stay on",
+      "patch": "submissions/linux-runtime-integration/0017-dt-bindings-regulator-require-the-PM8226-APC-supply-.patch",
+      "patch_sha256": "b213e1eddc933d4461ad095a6973a51789be7b03ff4e93fdb780414152e9a279",
+      "routing": "Liam Girdwood <lgirdwood@gmail.com>\nMark Brown <broonie@kernel.org>\nRob Herring <robh@kernel.org>\nKrzysztof Kozlowski <krzk+dt@kernel.org>\nConor Dooley <conor+dt@kernel.org>\nRobert Marko <robimarko@gmail.com>\nlinux-arm-msm@vger.kernel.org\nlinux-kernel@vger.kernel.org\ndevicetree@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nSupported\nMaintained\nBuried alive in reporters\nARM/QUALCOMM MAILING LIST\nVOLTAGE AND CURRENT REGULATOR FRAMEWORK\nOPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 18,
+      "commit": "a193ee6f505ccf545ad78e4803fe6c26c6b6cfe2",
+      "subject": "regulator: qcom-spmi: retain the always-on SAW APC supply",
+      "patch": "submissions/linux-runtime-integration/0018-regulator-qcom-spmi-retain-the-always-on-SAW-APC-sup.patch",
+      "patch_sha256": "224857cdaf751f13c56645dea46ed838d089cf0681f106544d9d64cc56f513c7",
+      "routing": "Liam Girdwood <lgirdwood@gmail.com>\nMark Brown <broonie@kernel.org>\nlinux-arm-msm@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nSupported\nBuried alive in reporters\nARM/QUALCOMM MAILING LIST\nVOLTAGE AND CURRENT REGULATOR FRAMEWORK\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 19,
+      "commit": "a029a72552c0a8c732c7635327857343979c0b32",
+      "subject": "pmdomain: qcom: cpr: plan MSM8926 APC and MX voltages",
+      "patch": "submissions/linux-runtime-integration/0019-pmdomain-qcom-cpr-plan-MSM8926-APC-and-MX-voltages.patch",
+      "patch_sha256": "cdda857edc80348724664ff75528129d57254915ae0df3b3abfd0e84eb1437ff",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nUlf Hansson <ulf.hansson@linaro.org>\nlinux-kernel@vger.kernel.org\nlinux-pm@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\nBuried alive in reporters\nMaintained\nSupported\nTHE REST\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nARM/QUALCOMM MAILING LIST\nGENERIC PM DOMAINS",
+      "diagnostics": ""
+    },
+    {
+      "position": 20,
+      "commit": "c599aefe00366d3eb95225f24c46b8860947d414",
+      "subject": "pmdomain: qcom: cpr: activate the MX floor before APC changes",
+      "patch": "submissions/linux-runtime-integration/0020-pmdomain-qcom-cpr-activate-the-MX-floor-before-APC-c.patch",
+      "patch_sha256": "2fef6467f44dcd6cc047c764fe4aeaf0c7930e621b291348a03afe7f07139c91",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nUlf Hansson <ulf.hansson@linaro.org>\nlinux-pm@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nSupported\nBuried alive in reporters\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nARM/QUALCOMM MAILING LIST\nGENERIC PM DOMAINS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 21,
+      "commit": "816d35ff8fc630320c706a82327bc66253fb9f88",
+      "subject": "pmdomain: qcom: cpr: retry incomplete domain attachment",
+      "patch": "submissions/linux-runtime-integration/0021-pmdomain-qcom-cpr-retry-incomplete-domain-attachment.patch",
+      "patch_sha256": "2e85b76055fa6bc3272d06f172e6919ea796c31de72eedabf2e3f459515af580",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nUlf Hansson <ulf.hansson@linaro.org>\nlinux-pm@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nSupported\nBuried alive in reporters\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nARM/QUALCOMM MAILING LIST\nGENERIC PM DOMAINS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 22,
+      "commit": "1fccd13822d1b851f711cb66aede1416ba395cf5",
+      "subject": "pmdomain: qcom: cpr: map MSM8926 rates to calibrated corners",
+      "patch": "submissions/linux-runtime-integration/0022-pmdomain-qcom-cpr-map-MSM8926-rates-to-calibrated-co.patch",
+      "patch_sha256": "bc06dcba784b8491a26e0da45935bb15929ac9eacb168187015863503c9ef341",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nUlf Hansson <ulf.hansson@linaro.org>\nlinux-kernel@vger.kernel.org\nlinux-pm@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\nBuried alive in reporters\nMaintained\nSupported\nTHE REST\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nARM/QUALCOMM MAILING LIST\nGENERIC PM DOMAINS",
+      "diagnostics": ""
+    },
+    {
+      "position": 23,
+      "commit": "02d2367460be2ce84b24dfba9bf71590e632684f",
+      "subject": "pmdomain: qcom: cpr: acquire MSM8926 calibration atomically",
+      "patch": "submissions/linux-runtime-integration/0023-pmdomain-qcom-cpr-acquire-MSM8926-calibration-atomic.patch",
+      "patch_sha256": "39e899c9b9bb54f4448be6d2856cd5bee8ecda0bf4dc5ec5dc615be4551fddfc",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nRob Herring <robh@kernel.org>\nKrzysztof Kozlowski <krzk+dt@kernel.org>\nConor Dooley <conor+dt@kernel.org>\nUlf Hansson <ulf.hansson@linaro.org>\nlinux-arm-msm@vger.kernel.org\ndevicetree@vger.kernel.org\nlinux-kernel@vger.kernel.org\nlinux-pm@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\nMaintained\nBuried alive in reporters\nSupported\nARM/QUALCOMM SUPPORT\nARM/QUALCOMM MAILING LIST\nOPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS\nTHE REST\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nGENERIC PM DOMAINS",
+      "diagnostics": ""
+    },
+    {
+      "position": 24,
+      "commit": "8994edc4732edfec2c8e84902fce460bb16a660c",
+      "subject": "dt-bindings: power: qcom: describe the MSM8926 CPR domain",
+      "patch": "submissions/linux-runtime-integration/0024-dt-bindings-power-qcom-describe-the-MSM8926-CPR-doma.patch",
+      "patch_sha256": "b5b189a24129e216415d630b15b0fd25e69bd75c23dccc0c577b12d42bbe5fb5",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nRob Herring <robh@kernel.org>\nKrzysztof Kozlowski <krzk+dt@kernel.org>\nConor Dooley <conor+dt@kernel.org>\nNiklas Cassel <nks@flawful.org>\nlinux-pm@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\ndevicetree@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nOPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 25,
+      "commit": "e41aec2547c0b01b67847134abec4bacea36100a",
+      "subject": "pmdomain: qcom: cpr: add the MSM8926 calibrated CPU domain",
+      "patch": "submissions/linux-runtime-integration/0025-pmdomain-qcom-cpr-add-the-MSM8926-calibrated-CPU-dom.patch",
+      "patch_sha256": "796863c2823316c43394e84b04854453a0b71bcc1e7951f8c357e9bc47b9bfc4",
+      "routing": "Ulf Hansson <ulf.hansson@linaro.org>\nBjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nlinux-arm-msm@vger.kernel.org\nlinux-pm@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nSupported\nBuried alive in reporters\nMaintained\nARM/QUALCOMM MAILING LIST\nGENERIC PM DOMAINS\nTHE REST\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER",
+      "diagnostics": ""
+    },
+    {
+      "position": 26,
+      "commit": "0c3e6bf4ea07841f73e18bbf90f49cd27b3435cb",
+      "subject": "regulator: qcom-spmi: restore uncertain SAW voltage writes",
+      "patch": "submissions/linux-runtime-integration/0026-regulator-qcom-spmi-restore-uncertain-SAW-voltage-wr.patch",
+      "patch_sha256": "e38ee91d297476edbbfe009da198a22b6d4803bb8fbe972876c65857cdf9806e",
+      "routing": "Liam Girdwood <lgirdwood@gmail.com>\nMark Brown <broonie@kernel.org>\nlinux-arm-msm@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nSupported\nBuried alive in reporters\nARM/QUALCOMM MAILING LIST\nVOLTAGE AND CURRENT REGULATOR FRAMEWORK\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 27,
+      "commit": "856e094d8e5c02889ab159f57e3793bad18c14f8",
+      "subject": "soc: qcom: smd-rpm: correlate replies with pending requests",
+      "patch": "submissions/linux-runtime-integration/0027-soc-qcom-smd-rpm-correlate-replies-with-pending-requ.patch",
+      "patch_sha256": "937cb7386a997aa3bb092ac7abf56754b2cac811e5883d784c91d4fab2675700",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nlinux-arm-msm@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nARM/QUALCOMM MAILING LIST\nARM/QUALCOMM SUPPORT\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 28,
+      "commit": "2a8130e74de8d74607729231d8d2249271d5d18d",
+      "subject": "pmdomain: qcom: cpr: confirm MX vote restoration after errors",
+      "patch": "submissions/linux-runtime-integration/0028-pmdomain-qcom-cpr-confirm-MX-vote-restoration-after-.patch",
+      "patch_sha256": "e7cde3c80b5dbb335d35653d1e06c28bd5d993a8551b6b38d58cda9976465a76",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nUlf Hansson <ulf.hansson@linaro.org>\nlinux-pm@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nSupported\nBuried alive in reporters\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nARM/QUALCOMM MAILING LIST\nGENERIC PM DOMAINS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 29,
+      "commit": "a852c5ceb7b7f623c5e94a664c0106a1f92335e7",
+      "subject": "pmdomain: qcom: cpr: restore feedback after recovered voltage errors",
+      "patch": "submissions/linux-runtime-integration/0029-pmdomain-qcom-cpr-restore-feedback-after-recovered-v.patch",
+      "patch_sha256": "f8fafdda7dd6e84023234a9c1a87bdcdca91d35c6ac584e9c9f12ef7fd86c0c4",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nUlf Hansson <ulf.hansson@linaro.org>\nlinux-pm@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nSupported\nBuried alive in reporters\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nARM/QUALCOMM MAILING LIST\nGENERIC PM DOMAINS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 30,
+      "commit": "a72edae2351c247e1578229d2a77512acddcc0d2",
+      "subject": "dt-bindings: opp: describe calibrated MSM8926 CPU eligibility",
+      "patch": "submissions/linux-runtime-integration/0030-dt-bindings-opp-describe-calibrated-MSM8926-CPU-elig.patch",
+      "patch_sha256": "0a9d16e5b192a7a64e82ce5330dbc2455989b66166c0fd6bc7dd978abe68f150",
+      "routing": "Ilia Lin <ilia.lin@kernel.org>\nViresh Kumar <vireshk@kernel.org>\nNishanth Menon <nm@ti.com>\nStephen Boyd <sboyd@kernel.org>\nRob Herring <robh@kernel.org>\nKrzysztof Kozlowski <krzk+dt@kernel.org>\nConor Dooley <conor+dt@kernel.org>\nBjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nNiklas Cassel <nks@flawful.org>\nlinux-pm@vger.kernel.org\ndevicetree@vger.kernel.org\nlinux-kernel@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/vireshk/pm.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nQUALCOMM CPUFREQ DRIVER MSM8996/APQ8096\nOPERATING PERFORMANCE POINTS (OPP)\nOPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS\nTHE REST\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nARM/QUALCOMM MAILING LIST",
+      "diagnostics": ""
+    },
+    {
+      "position": 31,
+      "commit": "8a5bc73ffd9e4d47b4cf77dbc756257da7db5701",
+      "subject": "cpufreq: qcom-nvmem: attach MSM8926 CPUs to calibrated CPR",
+      "patch": "submissions/linux-runtime-integration/0031-cpufreq-qcom-nvmem-attach-MSM8926-CPUs-to-calibrated.patch",
+      "patch_sha256": "fbcdd7bef4b564f9aa4ef05a84091806c3899496db687b85fa82b24371e8f47a",
+      "routing": "\"Rafael J. Wysocki\" <rafael@kernel.org>\nViresh Kumar <viresh.kumar@linaro.org>\nIlia Lin <ilia.lin@kernel.org>\nBjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nUlf Hansson <ulf.hansson@linaro.org>\nlinux-kernel@vger.kernel.org\nlinux-pm@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/vireshk/pm.git (For ARM Updates)\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git\nBuried alive in reporters\nMaintained\nSupported\nTHE REST\nCPU FREQUENCY SCALING FRAMEWORK\nQUALCOMM CPUFREQ DRIVER MSM8996/APQ8096\nARM/QUALCOMM MAILING LIST\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nGENERIC PM DOMAINS\nARM/QUALCOMM SUPPORT",
+      "diagnostics": ""
+    },
+    {
+      "position": 32,
+      "commit": "c171e74c753dfadc4de3b3271a7653fde62190e0",
+      "subject": "ARM: dts: qcom: add a separate Madai CPR qualification target",
+      "patch": "submissions/linux-runtime-integration/0032-ARM-dts-qcom-add-a-separate-Madai-CPR-qualification-.patch",
+      "patch_sha256": "aa53b72e5c7368c27efc128396a2bb230d34dd88bcbd9a599d97ca29d429b687",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nRob Herring <robh@kernel.org>\nKrzysztof Kozlowski <krzk+dt@kernel.org>\nConor Dooley <conor+dt@kernel.org>\nlinux-arm-msm@vger.kernel.org\ndevicetree@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nMaintained\nBuried alive in reporters\nARM/QUALCOMM MAILING LIST\nARM/QUALCOMM SUPPORT\nOPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 33,
+      "commit": "8e33a6edfd2d6ed5955176860a17a1516d212b48",
+      "subject": "pmdomain: qcom: cpr: normalize the MSM8926 startup clock",
+      "patch": "submissions/linux-runtime-integration/0033-pmdomain-qcom-cpr-normalize-the-MSM8926-startup-cloc.patch",
+      "patch_sha256": "e2814bfa434ad5d25fc40b1361c43c67ed29a415ee1d2604f27e0a822ddfee8d",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nRob Herring <robh@kernel.org>\nKrzysztof Kozlowski <krzk+dt@kernel.org>\nConor Dooley <conor+dt@kernel.org>\nUlf Hansson <ulf.hansson@linaro.org>\nNiklas Cassel <nks@flawful.org>\nlinux-pm@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\ndevicetree@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\nMaintained\nBuried alive in reporters\nSupported\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nOPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS\nTHE REST\nARM/QUALCOMM SUPPORT\nARM/QUALCOMM MAILING LIST\nGENERIC PM DOMAINS",
+      "diagnostics": ""
+    },
+    {
+      "position": 34,
+      "commit": "b2506c2bea8a13719004be0a19cd57b00e92f1c6",
+      "subject": "clk: qcom: verify MSM8226 CPU PLL and mux programming",
+      "patch": "submissions/linux-runtime-integration/0034-clk-qcom-verify-MSM8226-CPU-PLL-and-mux-programming.patch",
+      "patch_sha256": "0c07e7b9b7a2d329a24edc2d76a71c13b36a841efbc97c8dc37737d4dea0b1da",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nMichael Turquette <mturquette@baylibre.com>\nStephen Boyd <sboyd@kernel.org>\nlinux-arm-msm@vger.kernel.org\nlinux-clk@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\nSupported\nMaintained\nBuried alive in reporters\nQUALCOMM CLOCK DRIVERS\nARM/QUALCOMM MAILING LIST\nCOMMON CLK FRAMEWORK\nTHE REST",
+      "diagnostics": ""
+    },
+    {
+      "position": 35,
+      "commit": "57e61d7961e7367d24b65b7969bdfe6f652b85bc",
+      "subject": "pmdomain: qcom: cpr: guard APC changes with fresh parent rates",
+      "patch": "submissions/linux-runtime-integration/0035-pmdomain-qcom-cpr-guard-APC-changes-with-fresh-paren.patch",
+      "patch_sha256": "ad5f8f3a0650edf8cf3edb2c4d829186272aeb834bb062408d5123d20459d336",
+      "routing": "Bjorn Andersson <andersson@kernel.org>\nKonrad Dybcio <konradybcio@kernel.org>\nRob Herring <robh@kernel.org>\nKrzysztof Kozlowski <krzk+dt@kernel.org>\nConor Dooley <conor+dt@kernel.org>\nUlf Hansson <ulf.hansson@linaro.org>\nNiklas Cassel <nks@flawful.org>\nlinux-pm@vger.kernel.org\nlinux-arm-msm@vger.kernel.org\ndevicetree@vger.kernel.org\nlinux-kernel@vger.kernel.org\ngit git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git\ngit git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/linux-pm.git\nMaintained\nBuried alive in reporters\nSupported\nQUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER\nOPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS\nTHE REST\nARM/QUALCOMM MAILING LIST\nARM/QUALCOMM SUPPORT\nGENERIC PM DOMAINS",
+      "diagnostics": ""
+    }
+  ]
+}

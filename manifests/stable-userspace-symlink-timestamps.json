@@ -1,0 +1,22 @@
+{
+  "recorded_UTC": "2026-11-13T04:06:44.561503+00:00",
+  "status": "revision 3 native forward update passed; recovery cohorts running",
+  "evidence": "evidence/2026-11-13-stable-symlink-timestamps.json",
+  "source_sha256": {
+    "diagnostics/stable-update/stable_transaction.py": "c82c7081bc45272796b08593d13f394a9dfc7d5f43283bb3dc387bec37b2dbed",
+    "diagnostics/stable-update/apk_payload_ownership.py": "1668a38cc1d9976103d5aae5dc922637b0d762ca309b18407def8aeefe407f87",
+    "diagnostics/stable-update/qualify_stable_transaction.py": "3ea8f967787fd7dbe40eca8cf10e85b46c3f5fde72031772967087b7ff86ba10",
+    "diagnostics/stable-update/verify_stable_userspace.py": "3b746ac9dd0858eb7e9fac325818074eb20751992662077396fadf33a12be840",
+    "tests/test_stable_userspace_transaction.py": "a07b1766b711a198c3fa2985bb132878f85b8ccab0b37b8e32e8cea19e6a3a40",
+    "tests/test_apk_payload_ownership.py": "d481ae0e790a28c25253564c4d8168a44259566a99dc4e9d182fd604c0c29c4e",
+    "manifests/stable-userspace-transaction-scope-03.json": "543794c39a150a26044f806285893c82c76f7ac5ddd6a926188cdf0025eacc80"
+  },
+  "scope_manifest": "manifests/stable-userspace-transaction-scope-03.json",
+  "scope_sha256": "543794c39a150a26044f806285893c82c76f7ac5ddd6a926188cdf0025eacc80",
+  "host_tests_passed": 26,
+  "prior_7002_path_recovery_verified": true,
+  "native_qualification_unit": "fx0-stable-userspace-qualification-03.service",
+  "live_package_update": false,
+  "full_bringup": "active",
+  "successful_native_forward_cohort": true
+}

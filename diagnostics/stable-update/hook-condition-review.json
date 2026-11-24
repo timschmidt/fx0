@@ -1,0 +1,23 @@
+{
+  "recorded_UTC": "2026-11-11T18:25:56.284793+00:00",
+  "actual_control_scripts": "candidate-control-scripts.json",
+  "conditions": [
+    {
+      "package": "openssh-server",
+      "installed": "10.3_p1-r1",
+      "hook_restart_or_advice_threshold": "10.0_p1-r2",
+      "actual_apk_version_comparison": ">",
+      "conditional_less_than_branch_selected": false
+    },
+    {
+      "package": "libheif",
+      "installed": "1.23.4-r0",
+      "hook_restart_or_advice_threshold": "1.21.2-r1",
+      "actual_apk_version_comparison": ">",
+      "conditional_less_than_branch_selected": false
+    }
+  ],
+  "host_version_comparison_only": true,
+  "native_hooks_executed": false,
+  "installed_trigger_execution_not_qualified": true
+}

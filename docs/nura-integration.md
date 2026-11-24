@@ -1,5 +1,17 @@
 # Nura integration layer
 
+**Currency audit, 2026-11-11:** Nura still advertises v26.06 as stable.
+Fresh host-only simulations using independently authenticated repository
+indexes find 30 stable upgrades. The edge projection has 486 actions: 441
+upgrades, 31 installations, 13 removals and one downgrade. Both retain the
+native world's ten exact signed-control checksum holds, including the custom
+kernel and peripheral packages. Solver success does not establish current-edge
+hardware compatibility. No phone repository, index, trust key or package was
+changed. That audit made no native changes; the separately authorized eight-package
+Sxmo r7 transaction below has since completed.
+See the [audit scope and results](../diagnostics/kernel-maintenance/README.md)
+and [evidence](../evidence/2026-11-11-kernel-maintenance-6.18.63.json).
+
 **Update 2026-11-01:** `device-lg-madai` now replaces `device-qcom-msm8226` on
 the phone and carries the deviceinfo, kernel cmdline, initramfs modules and
 speaker UCM. The local deviceinfo, cmdline and module overrides are gone
@@ -88,3 +100,25 @@ prefix and unused partition tail remained unchanged. The configuration is now
 package-owned. Default `nmcli device wifi hotspot` succeeds after reboot with
 the generated profile still at `pmf=0`. See
 [package/update evidence](../evidence/2026-11-06-hotspot-package-installed.json).
+
+## Fx0 Sxmo haptics profile
+
+The existing `/usr/local/bin/sxmo_deviceprofile_lg,madai.sh` now exports the persistent PM8226 vibrator event path and strength 39168. The original profile is backed up on the phone. A graphical-user command through Sxmo's normal environment loader activates the vibrator and returns it off. The file remains a local device-profile override covered by the expanded upstream draft. The next native boot after the vibrator transfer timeout verifies that Sway inherits the device path and strength. The original boot, module and package hashes remain intact. The corrected driver RAM image did not reach BOOT. [Recovery evidence](../evidence/2026-11-10-vibrator-ram-transfer-timeout.json) [Procedure and evidence](../diagnostics/vibrator/README.md)
+
+
+## Fx0 notification haptics and write completion
+
+The installed `/usr/bin/sxmo_notifs.sh` has a backed-up local correction to handle close-write and atomic move events instead of attributes. The original is retained at `/var/tmp/fx0-notifications-01/sxmo_notifs.before.sh`. The login user's `sxmo/hooks/lg,madai/sxmo_hook_notification.sh` requests one 300 ms pulse and respects `.novibrate`. Only `superctl`'s notification service restarts; the existing Sway session stays active. Normal/muted/re-enabled real notifications pass, including exact Dunst replies, PMIC timing and cleanup. The APK database is unchanged: this file correction and user hook still need reproducible package/configuration integration for the final installation. [Repair and rollback](../diagnostics/sxmo-notifications/README.md)
+
+
+**r7 installed, 2026-11-11:** The reproducible signed package now owns the
+profile, notification correction and board hook. The explicitly authorized
+transaction upgrades exactly eight packages, with an exercised exact r6 rollback
+and corrected successful retry. Normal package hooks write byte-identical r50
+boot images; the installed kernel remains r50. The two superseded overrides are
+backed up and retired. Fresh sessions inherit the packaged profile/hooks, and
+real normal/muted/re-enabled notifications pass. A dependent user gesture
+wrapper is migrated to resolve the packaged profile while retaining `-r 25`;
+it starts automatically after reboot and the owner confirms display/touch.
+Final configuration reproduction, lock and suspend remain open.
+[Native evidence](../evidence/2026-11-11-sxmo-r7-and-vibrator-ram.json)

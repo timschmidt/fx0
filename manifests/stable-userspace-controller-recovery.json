@@ -1,0 +1,24 @@
+{
+  "recorded_UTC": "2026-11-13T03:25:06.779096+00:00",
+  "status": "cohort 2 failed on symlink timestamp expectation; complete scoped rollback verified",
+  "evidence": "evidence/2026-11-13-stable-controller-recovery.json",
+  "source_sha256": {
+    "diagnostics/stable-update/stable_transaction.py": "45d5fe8ac6af534ab516517bf684333a405fa2844962caabb52243eb8e03e8b5",
+    "diagnostics/stable-update/apk_payload_ownership.py": "1668a38cc1d9976103d5aae5dc922637b0d762ca309b18407def8aeefe407f87",
+    "diagnostics/stable-update/qualify_stable_transaction.py": "03baeb47e2ec8e02dbd18c6b6478dc293f6990ca72321d630f7861e757b68c6f",
+    "diagnostics/stable-update/verify_stable_userspace.py": "b1dea6577f173f8808375d25b5420b4a13eae352d4fc92670f80349fb65b690a",
+    "tests/test_stable_userspace_transaction.py": "bdb941c39f3df2a4192d12d149bd65f79f9226b44cdcfb9ad5b557b04f6417a6",
+    "tests/test_apk_payload_ownership.py": "d481ae0e790a28c25253564c4d8168a44259566a99dc4e9d182fd604c0c29c4e"
+  },
+  "scope_manifest": "manifests/stable-userspace-transaction-scope-02.json",
+  "scope_sha256": "4e4472f4baeb245a4a7b6d2f4f24cbe4f779d10b8aee9f3ae5c971b6ed71d92d",
+  "baseline_manifest_sha256": "815afabfc4705e77ac322a39627503271425b1d21ea4ac9611696d47703ca4da",
+  "baseline_archive_sha256": "813662124af17fafbccba10c575c56a2503716e3d1a9803e034af008c7a882b2",
+  "boot_id": "6114df77-29f2-43ac-8ede-1ca72c743895",
+  "host_tests_passed": 21,
+  "native_fixture_preparation_passed": true,
+  "native_controller_qualification_unit": "fx0-stable-userspace-qualification-02.service",
+  "full_bringup": "active",
+  "source_sha256_are_historical": true,
+  "superseded_by_manifest": "manifests/stable-userspace-symlink-timestamps.json"
+}

@@ -1,0 +1,56 @@
+From e33d4f520c20cf3002183ad0bd1d31df61f226a2 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Wed, 11 Nov 2026 20:42:27 -0500
+Subject: [PATCH 1/1] Input: rmi4 - complete suspend after powering down I2C
+ transport
+
+rmi_i2c_suspend() disables the transport supplies even when suspending the
+RMI functions failed. Returning that error makes the PM core abort system
+suspend without marking this device suspended. Its resume callback is
+therefore skipped and the touchscreen remains powered down.
+
+Report the failed sleep command and complete the callback successfully,
+as rmi_i2c_runtime_suspend() already does. This lets the PM core restore
+the supplies and resume the RMI functions on either normal resume or
+unwind after another device fails. Correct the copied resume diagnostic
+at the same time.
+
+The downstream LG Fx0 encountered a sleep-command timeout when display
+shutdown made its in-cell controller unavailable. Adapt the existing
+downstream fix by Timothy Schmidt without requiring its separate reset
+GPIO or panel-follower additions.
+
+This draft was prepared with an AI coding assistant. Human review and
+DCO certification remain pending.
+
+Fixes: 946c8432aab0 ("Input: synaptics-rmi4 - support regulator supplies")
+---
+ drivers/input/rmi4/rmi_i2c.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/input/rmi4/rmi_i2c.c b/drivers/input/rmi4/rmi_i2c.c
+index b0b36ddb2760..58009c0c1cea 100644
+--- a/drivers/input/rmi4/rmi_i2c.c
++++ b/drivers/input/rmi4/rmi_i2c.c
+@@ -294,12 +294,16 @@ static int rmi_i2c_suspend(struct device *dev)
+ 
+ 	ret = rmi_driver_suspend(rmi_i2c->xport.rmi_dev, true);
+ 	if (ret)
+-		dev_warn(dev, "Failed to resume device: %d\n", ret);
++		dev_warn(dev, "Failed to suspend device: %d\n", ret);
+ 
+ 	regulator_bulk_disable(ARRAY_SIZE(rmi_i2c->supplies),
+ 			       rmi_i2c->supplies);
+ 
+-	return ret;
++	/*
++	 * The transport is powered down even if the sleep command failed.
++	 * Complete suspend so the PM core will call our resume callback.
++	 */
++	return 0;
+ }
+ 
+ static int rmi_i2c_resume(struct device *dev)
+-- 
+2.56.0
+

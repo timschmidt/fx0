@@ -1,0 +1,33 @@
+From aa3287187d99f770f76b09fada9fae1531838b9e Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Wed, 11 Nov 2026 03:38:40 -0500
+Subject: [RFC PATCH 2/3] Input: pm8xxx-vibrator - clamp the inclusive maximum
+ voltage
+
+VIB_MAX_LEVELS includes one extra step so scaling can reach every drive
+level. At speed 255 this produces a voltage one step above the variant's
+advertised maximum. With the legacy range, 3200 mV becomes drive code 32,
+which wraps to zero when encoded in the five-bit drive field.
+
+Clamp the scaled voltage to the variant maximum before encoding it. This
+retains the inclusive level distribution while keeping the endpoint in
+range.
+
+Fixes: 48c0687a322d ("Input: pm8xxx-vibrator - correct VIB_MAX_LEVELS calculation")
+---
+ drivers/input/misc/pm8xxx-vibrator.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/input/misc/pm8xxx-vibrator.c b/drivers/input/misc/pm8xxx-vibrator.c
+index 26476a3e3837..e1d69089d4bd 100644
+--- a/drivers/input/misc/pm8xxx-vibrator.c
++++ b/drivers/input/misc/pm8xxx-vibrator.c
+@@ -159,6 +159,8 @@ static void pm8xxx_work_handler(struct work_struct *work)
+ 		vib->level = VIB_MIN_LEVEL_mV(vib);
+ 	}
+ 
++	vib->level = min(vib->level, VIB_MAX_LEVEL_mV(vib));
++
+ 	pm8xxx_vib_set(vib, vib->active);
+ }
+ 

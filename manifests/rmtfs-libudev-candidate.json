@@ -1,0 +1,26 @@
+{
+  "subject": "Verified eudev provider and clean static runtime inputs; diagnostic ARM RMTFS only",
+  "provider": "eudev-dev/eudev-libs 3.2.14-r6 armv7",
+  "provider_recipe": "4133df77f8cc98f92679b79de07736589fa48bff",
+  "provider_archive_sha256": "057e1625ec53f185ca856bc9095b45dea8399e4e5018d3594e2f928d6a8c132a",
+  "provider_header_sha256": "efa3a64936cb86e71f1ff157684cefce5f291cdee7862a2fcefa5cc396b598d2",
+  "public_source_sha512": "1e7593b53c5508a99fe7ff5d24d1d09b3753d9cfba086e7d8cc6ab80cc88013ec687dc4f1eac7b7889051f4e5fd5c40d2b87f5f2d948479d679c8836014d08e0",
+  "five_used_API_functions": [
+    "udev_device_get_sysattr_value",
+    "udev_device_new_from_devnum",
+    "udev_device_unref",
+    "udev_new",
+    "udev_unref"
+  ],
+  "synthetic_API_cases_passed": 5,
+  "synthetic_API_failures": 0,
+  "every_persistent_link_input_matches_signed_clean_recipe_package": true,
+  "candidate_bytes": 785476,
+  "candidate_sha256": "94417a96f826276a811f30d0ff1caee5147d38b5346e2c64e192526d36d8bed4",
+  "ELF32_ARM_hardfloat_static_PIE_no_INTERP_or_NEEDED": true,
+  "cross_compiler_executable_recipe_identity_qualified": false,
+  "full_daemon_dependency_and_toolchain_source_closure_qualified": false,
+  "full_daemon_started_or_installed": false,
+  "physical_RMTFS_operation_qualified": false,
+  "prior_dirty_library_and_builds_preserved": true
+}

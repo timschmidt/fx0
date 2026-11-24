@@ -1,4 +1,5 @@
 """Real native significant-motion lifecycle against fault-injected regmap/PM."""
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -6,7 +7,8 @@ import unittest
 from test_mpu_dmp_native import SHIM, PACKET_SHIM, LIFECYCLE_SHIM
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / 'worktrees/linux-dmp/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c'
+KERNEL = Path(os.environ.get('FX0_KERNEL_SOURCE', ROOT/'worktrees/linux-fx0-cpr'))
+SOURCE = KERNEL/'drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c'
 PM_SHIM = r'''
 struct device;
 #define regmap_get_device(m) ((struct device *)(m))

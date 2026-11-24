@@ -28,7 +28,19 @@ The device is available for development and flashing. No personal data needs to 
 | [Kernel gaps](docs/kernel-gaps.md) | Maintained-kernel target and missing shared SoC/camera infrastructure |
 | [Wireless work](docs/wireless-bringup.md) | WCNSS supplies, firmware start, Wi-Fi/Bluetooth results and upstream fixes |
 
-## Current state
+## Latest checkpoint
+
+The November 13 UTC checkpoint runs Linux 6.18.63-r1, treescan 0.1-r1,
+Sxmo r7 and UPower r5. Thirty stable userspace updates passed exact-source
+native qualification, live installation and independent payload/boot/service
+verification. Fresh signed stable indexes propose zero further changes,
+preserving the custom holds. No reboot or boot write occurred. Display and
+touch were confirmed earlier on this same boot. See the
+[update and recovery results](docs/stable-userspace-controller.md) and
+[hardware acceptance record](docs/hardware-acceptance.md). Full hardware,
+edge, reliability and upstream readiness remain open.
+
+## October 31 baseline
 
 As of 2026-10-31 the Fx0 runs Nura v26.06 as an ordinary Linux system:
 

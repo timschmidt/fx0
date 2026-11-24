@@ -95,4 +95,95 @@ Published development history and ready-to-send material meet the submission-pre
 
 These are development branches, not submission-ready or fully functional releases. Upstream patch sending and PR creation have not occurred.
 
+## Runtime integration history checkpoint (2026-11-08)
+
+The complete runtime candidate now has a local 35-commit review history at
+`57e61d7961e7367d24b65b7969bdfe6f652b85bc`, based on
+`4b800b920c7db82e8012a580a17cc2d8ff9d5e66`. Its final tree exactly matches the
+39-patch source composition already built and tested. The original 39-commit
+draft is retained: four intermediate prefixes require clocks absent from their
+qualification DTB. Grouping source patches 33–35 and 37–39 into atomic
+integration transitions removes those failures without changing any final
+source blob. Every exposed CPR DTB prefix validates against its own binding.
+
+All 35 prefixes pass the 20 affected ARM object targets with `W=1` and no
+compiler warnings. These are object checks, not complete intermediate links.
+The [exported mail patches](../submissions/linux-runtime-integration/series)
+replay from the exact base to the same commit ID, tree and 48 source hashes;
+the local thin bundle also verifies and unbundles. The
+[history manifest](../manifests/kernel-runtime-history.json) maps the 35 commits
+back to all 39 source patches. The frozen source checkout, HEAD and original
+index remain unchanged.
+
+The [cover letter](../submissions/linux-runtime-integration/0000-cover-letter.patch)
+states the measured build/RAM scope and remaining gates. Tentative routing uses
+the integration tree's `MAINTAINERS`; current receiving-tree bases and contacts
+must be revalidated before submission. Raw diffs contain no author or sign-off
+headers, so reconstruction uses the existing repository identity, preserves
+file notices and base history, and adds no DCO/review/test trailers. Contributor
+certification, maintainer-base splitting/rebases, complete intermediate links
+and physical qualification remain open. The Linux review series remains local;
+no mail or PR has been sent. After the owner explicitly authorized GitHub pushes
+for all fx0 development, the prepared pmaports package branch was published at
+[`4f17b6905c75`](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-cpu-runtime-package).
+Its remote ref matches the reviewed local commit. See
+[history evidence](../evidence/2026-11-08-runtime-integration-history.json) and
+[package publication evidence](../evidence/2026-11-08-runtime-kernel-source-package.json).
+
 - [Nura pmaports development fork](https://github.com/timschmidt/fx0-pmaports), branch `integration/fx0-v26.06`: maintained-kernel package/configuration integration. This is an Fx0 development branch; the shared MSM8226 upgrade is not proposed upstream until its external dependencies and regressions are qualified.
+
+The later [CPR startup follow-up](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-cpr-disabled-reference)
+is published at `86a9e78ce4b645f6df46d97d165c18875042595f`, after the original
+[XO candidate](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-cpr-xo)
+at `a9c68b1b25b6`. Both remote refs are independently verified. Their 41/42 raw
+patch profiles extend the preserved 35-commit review history; the latter
+passes one moduleless 300 MHz startup RAM gate. These development publications
+do not claim receiving-tree/DCO readiness or runtime DVFS/feedback qualification.
+The r54 pmaports branch still packages the earlier 39-patch source and requires
+a separate update and independent Alpine RAM trial.
+
+The [observation source branch](https://github.com/timschmidt/fx0-linux/tree/integration/fx0-cpr-observe)
+is published and independently verified at
+`b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8`. Its 43 raw patches replay to the
+exact tree, with only read-only debug output added after the qualified startup
+source. The host-built family passes signed-module registration and the first
+300–384 MHz fixed-corner requests; the original 35-mail review export remains
+a separate frozen 39-patch source and must not inherit these later results.
+DCO, receiving-tree rebases/routing and broad runtime qualification remain open.
+
+That same observation source subsequently passes a bounded 600 MHz RAM
+feedback trial: one handled floor-clamp interrupt, fifty checked samples and
+verified 300 MHz return. No new kernel patch or source commit is involved.
+The [trial evidence](../evidence/2026-11-08-cpr-feedback-600.json) keeps this
+result scoped to the host-built family; the frozen 39-patch mail export and
+unbooted Alpine r54 package do not inherit it.
+
+The observation family also passes five bounded 300–600 MHz round trips and
+a short four-core checksum load at 600 MHz, with verified worker affinity,
+CPU accounting, temperatures, feedback and fixed-corner return. The
+[repeat/load evidence](../evidence/2026-11-08-cpr-load-600.json) belongs to the
+same `b721ebaecd7d` kernel/module family. Only RAM userspace control/load files
+are new; no kernel patch or receiving-tree readiness is implied.
+
+The pmaports diagnostic recipe is now published at
+[`b234cd8bb1de`](https://github.com/timschmidt/fx0-pmaports/commit/b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9).
+R55 packages the same 43-patch observation source, preserving the original 39
+patch bytes and using a distinct Alpine module release. Full source/config,
+kernel/DTB/trust-list, 464 module signatures, package tamper controls and offline
+ARMv7 simulation pass. It remains unbooted/uninstalled and does not inherit
+host RAM acceptance. The [source-only review diff](../patches/pmaports/fx0-cpr-observation-packaging.patch)
+extends r54; the frozen 39-patch Linux mail export remains unchanged. See
+[r55 evidence](../evidence/2026-11-08-cpr-observation-source-package.json).
+
+## NFC teardown source fixes
+
+The isolated `integration/fx0-nfc-teardown` Linux branch adds two commits after
+the conservative PN547 source: release/drain the threaded I2C IRQ before NCI
+state is freed, and run NCI unregister outside the mode mutex before final cold
+shutdown/free. Actual C callback tests reject each restored old behavior; strict
+style, exact patch replay, targeted ARM W=1 and the complete independent Alpine
+r58 source build pass. Existing firmware-work handling is retained and firmware
+concurrency is unqualified. Owner-fork source/recipe publication is separate from
+current receiving-tree, DCO/routing, maintainer review and hardware acceptance.
+No upstream email or PR is sent. See
+[NFC evidence](../evidence/2026-11-08-nfc-teardown-source-package.json).

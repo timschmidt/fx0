@@ -1,0 +1,55 @@
+From 90b565dc429ae13ce0b02d89b382083b5c35f720 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 14 Nov 2026 08:38:29 -0500
+Subject: [PATCH] kernel: reserve string terminators and emit optional validity
+ fields
+
+Keep the descriptor wire maximum unchanged while allowing the decoded C string terminator. Generate optional string validity members and descriptors consistently. Preserve existing accessor generation and the upstream BSD license.
+---
+ kernel.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/kernel.c b/kernel.c
+index 24e0d05..086b3b9 100644
+--- a/kernel.c
++++ b/kernel.c
+@@ -34,7 +34,7 @@ static void emit_struct_definition(FILE *fp, const char *package,
+ 			break;
+ 		case TYPE_STRING:
+ 			fprintf(fp, "\tuint32_t %s_len;\n", qsm->name);
+-			fprintf(fp, "\tchar %s[256];\n", qsm->name);
++			fprintf(fp, "\tchar %s[256 + 1];\n", qsm->name);
+ 			break;
+ 		}
+ 	}
+@@ -142,8 +142,10 @@ static void emit_msg_struct(FILE *fp, const char *package, struct qmi_message *q
+ 			emit_native_type(fp, package, qm, qmm);
+ 			break;
+ 		case TYPE_STRING:
++			if (!qmm->required)
++				fprintf(fp, "\tbool %s_valid;\n", qmm->name);
+ 			fprintf(fp, "\tuint32_t %s_len;\n", qmm->name);
+-			fprintf(fp, "\tchar %s[256];\n", qmm->name);
++			fprintf(fp, "\tchar %s[256 + 1];\n", qmm->name);
+ 			break;
+ 		case TYPE_STRUCT:
+ 			emit_struct_type(fp, package, qm, qmm);
+@@ -289,6 +291,15 @@ static void emit_elem_info_array(FILE *fp, const char *package, struct qmi_messa
+ 			emit_struct_ref_ei(fp, package, qm, qmm);
+ 			break;
+ 		case TYPE_STRING:
++			if (!qmm->required)
++				fprintf(fp, "\t{\n"
++				    "\t\t.data_type = QMI_OPT_FLAG,\n"
++				    "\t\t.elem_len = 1,\n"
++				    "\t\t.elem_size = sizeof(uint8_t),\n"
++				    "\t\t.tlv_type = %4$d,\n"
++				    "\t\t.offset = offsetof(struct %1$s_%2$s, %3$s_valid),\n"
++				    "\t},\n",
++				    package, qm->name, qmm->name, qmm->id);
+ 			fprintf(fp, "\t{\n"
+ 				    "\t\t.data_type = QMI_STRING,\n"
+ 				    "\t\t.elem_len = 256,\n"
+-- 
+2.56.0
+

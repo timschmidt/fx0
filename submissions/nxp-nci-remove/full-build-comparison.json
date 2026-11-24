@@ -1,0 +1,48 @@
+{
+  "full_kernel_and_all_module_builds_passed": true,
+  "same_normalized_config_and_release": true,
+  "raw_undefined_symbol_sets_identical": true,
+  "intentional_BPF_type_only_symbols": [
+    "__bpf_callback_fn",
+    "__bpf_prog_runX"
+  ],
+  "full_module_count": 457,
+  "candidate_source": "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea",
+  "baseline_source": "b61732f47316d45f27706db7812950145d3327b5",
+  "candidate_warning_count": 233,
+  "baseline_warning_count": 233,
+  "added_warning_rows": {},
+  "removed_warning_rows": {},
+  "all_warning_source_paths_unchanged": true,
+  "warning_paths": [
+    "arch/arm/mm/dma-mapping.c",
+    "block/blk-map.c",
+    "block/blk-mq-dma.c",
+    "drivers/gpu/drm/drm_gem_shmem_helper.c",
+    "drivers/hid/hid-lg-g15.c",
+    "drivers/perf/arm_v7_pmu.c",
+    "drivers/rpmsg/qcom_smd.c",
+    "fs/f2fs/segment.c",
+    "fs/fuse/ioctl.c",
+    "fs/iomap/iter.c",
+    "fs/xfs/xfs_reflink.c",
+    "ipc/sem.c",
+    "lib/842/842_compress.c",
+    "lib/842/842_decompress.c",
+    "lib/rhashtable.c",
+    "net/ipv4/igmp.c"
+  ],
+  "changed_export_CRCs": {
+    "nxp_nci_probe": {
+      "baseline": "0x7f5e64fb",
+      "candidate": "0x49d5b923"
+    }
+  },
+  "candidate_I2C_module_rejects_actual_baseline_export_map": [
+    "nxp_nci_probe"
+  ],
+  "both_actual_wrong_build_certificate_pairs_rejected": true,
+  "runtime_private_keys_inspected_or_hashed_or_exported": false,
+  "hardware_or_native_installation": false,
+  "broader_allyesconfig_allmodconfig_GCC_tests": false
+}

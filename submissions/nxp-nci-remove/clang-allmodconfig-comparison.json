@@ -1,0 +1,67 @@
+{
+  "recorded_UTC": "2026-11-11T17:47:59.645369+00:00",
+  "actual_full_Clang_allmodconfig_builds_both_failed": true,
+  "identical_generated_config_sha256": "56b39ba680833fb1f338d94b521904ba9e3901a8930b1215aef8b6d0fc8083fb",
+  "identical_blocking_diagnostics": [
+    "/source/fs/coda/upcall.c:115:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+    "/source/fs/coda/upcall.c:164:20: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+    "/source/fs/coda/upcall.c:238:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+    "/source/fs/coda/upcall.c:306:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+    "/source/fs/coda/upcall.c:329:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+    "/source/fs/coda/upcall.c:383:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+    "/source/fs/coda/upcall.c:410:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+    "/source/fs/coda/upcall.c:443:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+    "/source/fs/coda/upcall.c:459:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+    "/source/fs/coda/upcall.c:577:20: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]"
+  ],
+  "unchanged_Coda_source_sha256": {
+    "b61732f47316d45f27706db7812950145d3327b5": "f618e62a0cf93a18d52c44f1943f6dfda36c26f9c03695e03a2699201992a2d7",
+    "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea": "f618e62a0cf93a18d52c44f1943f6dfda36c26f9c03695e03a2699201992a2d7"
+  },
+  "CC_entries": {
+    "candidate": 1840,
+    "baseline": 1726
+  },
+  "warning_rows": {
+    "candidate": [
+      "Warning: /source/arch/x86/virt/vmx/tdx/tdx.c:110 This comment starts with '/**', but isn't a kernel-doc comment. Refer to Documentation/doc-guide/kernel-doc.rst",
+      "Warning: /source/block/blk-map.c:366 Excess function parameter 'op' description in 'bio_copy_kern'",
+      "Warning: /source/block/blk-map.c:366 Excess function parameter 'op' description in 'bio_copy_kern'",
+      "Warning: /source/block/blk-mq-dma.c:379 Excess function parameter 'state' description in 'blk_rq_integrity_dma_map_iter_next'",
+      "Warning: /source/block/blk-mq-dma.c:379 Excess function parameter 'state' description in 'blk_rq_integrity_dma_map_iter_next'",
+      "Warning: /source/block/partitions/aix.c:113 function parameter 'lba' not described in 'alloc_pvd'",
+      "Warning: /source/block/partitions/aix.c:113 function parameter 'lba' not described in 'alloc_pvd'",
+      "Warning: /source/block/partitions/aix.c:113 function parameter 'state' not described in 'alloc_pvd'",
+      "Warning: /source/block/partitions/aix.c:113 function parameter 'state' not described in 'alloc_pvd'",
+      "Warning: /source/block/partitions/aix.c:138 function parameter 'lba' not described in 'alloc_lvn'",
+      "Warning: /source/block/partitions/aix.c:138 function parameter 'lba' not described in 'alloc_lvn'",
+      "Warning: /source/block/partitions/aix.c:138 function parameter 'state' not described in 'alloc_lvn'",
+      "Warning: /source/block/partitions/aix.c:138 function parameter 'state' not described in 'alloc_lvn'",
+      "Warning: /source/block/partitions/aix.c:80 function parameter 'buffer' not described in 'read_lba'",
+      "Warning: /source/block/partitions/aix.c:80 function parameter 'buffer' not described in 'read_lba'",
+      "Warning: /source/block/partitions/aix.c:80 function parameter 'count' not described in 'read_lba'",
+      "Warning: /source/block/partitions/aix.c:80 function parameter 'count' not described in 'read_lba'",
+      "Warning: /source/block/partitions/aix.c:80 function parameter 'lba' not described in 'read_lba'",
+      "Warning: /source/block/partitions/aix.c:80 function parameter 'lba' not described in 'read_lba'",
+      "Warning: /source/block/partitions/aix.c:80 function parameter 'state' not described in 'read_lba'",
+      "Warning: /source/block/partitions/aix.c:80 function parameter 'state' not described in 'read_lba'",
+      "Warning: /source/fs/iomap/iter.c:64 function parameter 'ret' not described in 'iomap_iter_continue'",
+      "Warning: /source/fs/iomap/iter.c:64 function parameter 'ret' not described in 'iomap_iter_continue'",
+      "Warning: /source/ipc/sem.c:629 This comment starts with '/**', but isn't a kernel-doc comment. Refer to Documentation/doc-guide/kernel-doc.rst",
+      "Warning: /source/security/smack/smack_access.c:593 expecting prototype for smk_import_valid_allocated_label(). Prototype was for smk_import_allocated_label() instead"
+    ],
+    "baseline": [
+      "Warning: /source/arch/x86/virt/vmx/tdx/tdx.c:110 This comment starts with '/**', but isn't a kernel-doc comment. Refer to Documentation/doc-guide/kernel-doc.rst",
+      "Warning: /source/fs/iomap/iter.c:64 function parameter 'ret' not described in 'iomap_iter_continue'",
+      "Warning: /source/fs/iomap/iter.c:64 function parameter 'ret' not described in 'iomap_iter_continue'",
+      "Warning: /source/ipc/sem.c:629 This comment starts with '/**', but isn't a kernel-doc comment. Refer to Documentation/doc-guide/kernel-doc.rst",
+      "Warning: /source/security/smack/smack_access.c:593 expecting prototype for smk_import_valid_allocated_label(). Prototype was for smk_import_allocated_label() instead"
+    ]
+  },
+  "full_warning_sets_equal": false,
+  "warning_equivalence_scope": "Incomplete builds reach different files before stopping; no complete warning or kernel/module qualification claimed",
+  "configuration_overrides": [],
+  "warnings_suppressed": false,
+  "all_actual_owned_processes_reaped": true,
+  "phone_mutations": false
+}

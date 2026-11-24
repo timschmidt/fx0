@@ -1,0 +1,99 @@
+{
+  "recorded_UTC": "2026-11-14T07:42:23.547063+00:00",
+  "source_recipe_commit": "ca9dd83b1241f9059ac1242068bb1d1453a942e3",
+  "qualified_controller_SHA256": "05269c291f744bf6d9203314b8683caa061e4a5bc57f0b74cbcbf9b1b918425c",
+  "native_cases": [
+    {
+      "case": "normal",
+      "actual_controller_entry": true,
+      "expected_failure_handled": false,
+      "all_1929_guards_and_64_memberships_exact_after_recovery": true,
+      "all_775_original_identities_and_complete_records_exact": true,
+      "original_world_and_22_keys_exact": true,
+      "original_APK_lock_inode_preserved": true,
+      "owned_children_terminal": true
+    },
+    {
+      "case": "before-commit",
+      "actual_controller_entry": true,
+      "expected_failure_handled": true,
+      "all_1929_guards_and_64_memberships_exact_after_recovery": true,
+      "all_775_original_identities_and_complete_records_exact": true,
+      "original_world_and_22_keys_exact": true,
+      "original_APK_lock_inode_preserved": true,
+      "owned_children_terminal": true
+    },
+    {
+      "case": "after-commit",
+      "actual_controller_entry": true,
+      "expected_failure_handled": true,
+      "all_1929_guards_and_64_memberships_exact_after_recovery": true,
+      "all_775_original_identities_and_complete_records_exact": true,
+      "original_world_and_22_keys_exact": true,
+      "original_APK_lock_inode_preserved": true,
+      "owned_children_terminal": true
+    },
+    {
+      "case": "hook-exec-EIO",
+      "actual_controller_entry": true,
+      "expected_failure_handled": true,
+      "all_1929_guards_and_64_memberships_exact_after_recovery": true,
+      "all_775_original_identities_and_complete_records_exact": true,
+      "original_world_and_22_keys_exact": true,
+      "original_APK_lock_inode_preserved": true,
+      "owned_children_terminal": true
+    }
+  ],
+  "guard_paths": 1929,
+  "directory_memberships": 64,
+  "complete_baseline_package_records": 775,
+  "trusted_public_keys": 22,
+  "mutable_scope_files": 11,
+  "mutable_directory_metadata": 9,
+  "normal_signed_APK_and_normal_hook_execution": true,
+  "controlled_before_commit_after_commit_and_three_known_hook_exec_EIO": true,
+  "all_cases_restored_original_baseline_and_lock_inode": true,
+  "synthetic_offset_unchanged_all_cases": true,
+  "private_PID1_and_network_run_device_isolation": true,
+  "package_children_setup_and_label_capabilities_removed": true,
+  "five_production_service_links_temporarily_modeled_then_removed": true,
+  "original_1924_guard_fixture_restored": true,
+  "actual_current_boot_PID1_completion_MainPID0_and_empty_cgroup": true,
+  "partial_inventory_component": {
+    "owned_synthetic_writer_SIGKILL": true,
+    "writer_reaped_before_restore": true,
+    "partial_bytes": 73,
+    "initially_absent_sidecar_restored_absent": true,
+    "fault_scope": "Synthetic writer to the exact inventory sidecar; not a killed APK transaction",
+    "unchanged_sidecar_method_AST_in_expanded_controller": true
+  },
+  "production_readonly_preflight": {
+    "passed": true,
+    "guard_paths": 1929,
+    "memberships": 64,
+    "unchanged_775_package_baseline": true,
+    "exact_two_upgrade_solver": true
+  },
+  "actual_baseline_PID1_rehearsal": {
+    "passed": true,
+    "commands": [
+      "daemon-reload",
+      "enqueue-marked"
+    ],
+    "both_returncodes_zero": true,
+    "all_guard_rows_reverified_before_and_after": true,
+    "clock_invocation_and_core_processes_unchanged": true,
+    "no_marked_units_before_or_after": true
+  },
+  "retained_preparatory_failures": [
+    "First production capture refused the five additional guard paths before backup or package writes; expanded qualification added all five as immutable guards.",
+    "First manager rehearsal refused a live snapshot without explicit read-only live mode before any manager command; a new source revision passed."
+  ],
+  "live_clock_packages": "0.3.0-r0",
+  "fixed_clock_package_installed": false,
+  "fixed_clock_unit_boot_qualified": false,
+  "pre_NTP_wall_time_restoration_qualified": false,
+  "cold_and_longterm_retention_qualified": false,
+  "private_backup_offset_bodies_images_credentials_and_hook_logs_published": false,
+  "full_bringup_complete": false
+}

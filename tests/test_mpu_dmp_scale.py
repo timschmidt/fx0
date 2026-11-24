@@ -1,4 +1,5 @@
 """Execute real IIO tiny-scale formatter code against exact Decimal fractions."""
+import os
 from decimal import Decimal, localcontext
 from pathlib import Path
 import subprocess
@@ -6,7 +7,8 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / 'worktrees/linux-dmp/drivers/iio/industrialio-core.c'
+KERNEL = Path(os.environ.get('FX0_KERNEL_SOURCE', ROOT/'worktrees/linux-fx0-cpr'))
+SOURCE = KERNEL/'drivers/iio/industrialio-core.c'
 SHIM = r'''
 #include <stdint.h>
 #include <stdio.h>

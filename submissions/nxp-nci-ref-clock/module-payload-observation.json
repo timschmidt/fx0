@@ -1,0 +1,15 @@
+{
+  "recorded_UTC": "2026-11-11T18:39:23.592844+00:00",
+  "module_count": 457,
+  "changed_signed_payloads": [
+    "kernel/drivers/gpu/drm/msm/msm.ko.zst",
+    "kernel/drivers/nfc/nxp-nci/nxp-nci.ko.zst",
+    "kernel/drivers/nfc/nxp-nci/nxp-nci_i2c.ko.zst"
+  ],
+  "unchanged_signed_payloads": 454,
+  "matching_each_build_certificate_already_verified": true,
+  "comparison_excludes_signature_bytes": true,
+  "private_keys_not_accessed": true,
+  "interpretation": "Two NFC modules and msm differ in signed ELF payload hashes. Full signatures/ABI/source verification passed. Original msm payloads were not exported, so exact section-level attribution is not yet available; reproducibility is not claimed.",
+  "followup": "Investigate unchanged MSM register generator set iteration and debug metadata before attributing the difference."
+}

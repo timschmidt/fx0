@@ -1,0 +1,114 @@
+--- a/rmtfs.c
++++ b/rmtfs.c
+@@ -8,6 +8,7 @@
+ #include <fcntl.h>
+ #include <libqrtr.h>
+ #include <limits.h>
++#include <inttypes.h>
+ #include <signal.h>
+ #include <stdarg.h>
+ #include <stdbool.h>
+@@ -58,7 +59,7 @@
+ 	struct rmtfs_open_req req = {};
+ 	DEFINE_QRTR_PACKET(resp_buf, 256);
+ 	struct rmtfd *rmtfd;
+-	unsigned int txn;
++	unsigned int txn = 0;
+ 	ssize_t len;
+ 	int caller_id = -1;
+ 	int ret;
+@@ -106,7 +107,7 @@
+ 	struct rmtfs_close_req req = {};
+ 	DEFINE_QRTR_PACKET(resp_buf, 256);
+ 	struct rmtfd *rmtfd;
+-	unsigned int txn;
++	unsigned int txn = 0;
+ 	ssize_t len;
+ 	int ret;
+ 
+@@ -127,7 +128,7 @@
+ 	rmtfs_mem_free(rmem);
+ 
+ respond:
+-	dbgprintf("[RMTFS] close %s => %d (%d:%d)\n",
++	dbgprintf("[RMTFS] close %u => (%d:%d)\n",
+ 		  req.caller_id, resp.result.result, resp.result.error);
+ 
+ 	len = qmi_encode_message(&resp_buf,
+@@ -159,14 +160,14 @@
+ 	uint8_t is_write = 0;
+ 	off_t phys_base;
+ 	uint8_t force = 0;
+-	unsigned txn;
++	unsigned txn = 0;
+ 	off_t offset;
+ 	ssize_t len;
+ 	ssize_t n;
+ 	char buf[SECTOR_SIZE];
+ 	int ret;
+ 	int i;
+-	int j;
++	uint32_t j;
+ 
+ 	ret = qmi_decode_message(&req, &txn, pkt, QMI_REQUEST,
+ 				 QMI_RMTFS_RW_IOVEC, rmtfs_iovec_req_ei);
+@@ -190,7 +191,7 @@
+ 
+ 	for (i = 0; i < num_entries; i++) {
+ 		phys_base = entries[i].phys_offset;
+-		sector_base = entries[i].sector_addr * SECTOR_SIZE;
++		sector_base = (off_t)entries[i].sector_addr * SECTOR_SIZE;
+ 		offset = 0;
+ 
+ 		for (j = 0; j < entries[i].num_sector; j++) {
+@@ -219,11 +220,12 @@
+ 	}
+ 
+ respond:
++	if (is_write && rmtfd && storage_sync(rmtfd) < 0)
++		qmi_result_error(&resp.result, QMI_RMTFS_ERR_INTERNAL);
++
+ 	dbgprintf("[RMTFS] iovec %d, %sforced => (%d:%d)\n", caller_id, force ? "" : "not ",
+ 							     resp.result.result, resp.result.error);
+ 
+-	if (is_write)
+-		storage_sync(rmtfd);
+ 
+ 	for (i = 0; i < num_entries; i++) {
+ 		dbgprintf("[RMTFS]       %s %d:%d 0x%x\n", is_write ? "write" : "read",
+@@ -256,7 +258,7 @@
+ 	uint32_t alloc_size = 0;
+ 	uint32_t caller_id = 0;
+ 	int64_t address = 0;
+-	unsigned txn;
++	unsigned txn = 0;
+ 	ssize_t len;
+ 	int ret;
+ 
+@@ -279,7 +281,7 @@
+ 	resp.buff_address = address;
+ 	resp.buff_address_valid = true;
+ respond:
+-	dbgprintf("[RMTFS] alloc %d, %d => 0x%lx (%d:%d)\n", caller_id, alloc_size, address, resp.result.result, resp.result.error);
++	dbgprintf("[RMTFS] alloc %d, %d => 0x%" PRIx64 " (%d:%d)\n", caller_id, alloc_size, (uint64_t)address, resp.result.result, resp.result.error);
+ 
+ 	len = qmi_encode_message(&resp_buf,
+ 				 QMI_RESPONSE, QMI_RMTFS_ALLOC_BUFF, txn, &resp,
+@@ -303,7 +305,7 @@
+ 	struct rmtfs_dev_error_req req = {};
+ 	DEFINE_QRTR_PACKET(resp_buf, 256);
+ 	struct rmtfd *rmtfd;
+-	unsigned txn;
++	unsigned txn = 0;
+ 	ssize_t len;
+ 	int ret;
+ 
+@@ -316,7 +318,7 @@
+ 	}
+ 
+ 	rmtfd = storage_get(pkt->node, req.caller_id);
+-	if (rmtfd) {
++	if (!rmtfd) {
+ 		qmi_result_error(&resp.result, QMI_RMTFS_ERR_INTERNAL);
+ 		goto respond;
+ 	}

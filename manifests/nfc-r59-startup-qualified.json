@@ -1,0 +1,123 @@
+{
+  "recorded_UTC": "2026-11-11T09:24:46.286435+00:00",
+  "purpose": "First physical moduleless startup of the corrected NFC r59 family on the working USB port",
+  "source_build_manifest": "manifests/kernel-nfc-open-teardown-build.json",
+  "image_preparation_manifest": "manifests/nfc-open-teardown-startup-ram.json",
+  "unchanged_prepared_image_sha256": "0fff381eeb94f8ce8673404a3fb5d896e4767c0d9fb2eb3a942b00cb70980dce",
+  "physical_result": {
+    "recorded_UTC": "2026-11-11T08:51:45.041703+00:00",
+    "image_sha256": "0fff381eeb94f8ce8673404a3fb5d896e4767c0d9fb2eb3a942b00cb70980dce",
+    "RAM_boot_id": "e00b83d5-9cd7-4e80-92d9-9dbcb7d40f31",
+    "kernel_release": "6.18.59-fx0-nfc-open-teardown-alpine",
+    "runtime_kernel_notes_exact_published_build": true,
+    "checker_exit_status": 0,
+    "checker_invocations": 1,
+    "checker_source_sha256": "7d6c3a7f90959db4f9ed215189168b108367fccd5b7d22d2d247e49a57f794a6",
+    "checker_PASS": true,
+    "unbound_QUP3_client": "/sys/bus/i2c/devices/1-0028",
+    "loaded_modules": 0,
+    "kernel_taint": 0,
+    "signature_enforcement": true,
+    "default_governor": "schedutil",
+    "CPUfreq_policy_absent": true,
+    "CPR_provider_absent": true,
+    "four_CPUs_online": true,
+    "two_temperature_sensors_within_guard_bounds": true,
+    "NFC_pins_unclaimed": [
+      20,
+      21,
+      22
+    ],
+    "VEN_FIRM_low": true,
+    "reference_clock_votes": [
+      0,
+      0,
+      0
+    ],
+    "reference_clock_rate_Hz": 19200000,
+    "original_boot_partition_readback_unchanged_in_RAM": true,
+    "timer_return_uptime_seconds": 181.626278,
+    "full_transfer_and_exact_readback": true,
+    "BOOT_attempts": 1,
+    "all_owned_children_reaped": true,
+    "raw_serial_sha256": "209f8e4f02ccc4dd3b7dc947ba4582e905194c26f03fd85d7c6ca1d35f01d4b9",
+    "NFC_controller_communication_RF_firmware_or_GPIO_actions": false,
+    "scope": "Moduleless r59 corrected-family startup and return only; module registration, open/unregister, controller NCI, RF/tag and suspend remain unqualified"
+  },
+  "native_return": {
+    "boot_id": "9bf6a0b3-75a0-489a-b6f8-b7a6bf16be87",
+    "kernel": "6.18.59-fx0-dmp",
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "Sxmo": "1.18.1-r7",
+    "taint": 0,
+    "systemd": "running",
+    "failed_units": [],
+    "pending_jobs": [],
+    "all_original_boot_files_and_modules_match": true,
+    "world_and_r7_package_payloads_unchanged": true,
+    "gesture_auto_started_and_touchscreen_open": true,
+    "notification_checks": [
+      {
+        "label": "r7-fresh-enabled",
+        "muted": false,
+        "notification_bus_calls": 1,
+        "notification_id": 2,
+        "writer_exit": 0,
+        "samples": 174,
+        "enabled_samples": 40,
+        "PMIC_drive_code": 21,
+        "programmed_target_mV": 2100,
+        "enable_duration_bounds_ms": [
+          293.05,
+          306.38
+        ],
+        "PMIC_off_after": true
+      },
+      {
+        "label": "r7-fresh-muted",
+        "muted": true,
+        "notification_bus_calls": 1,
+        "notification_id": 3,
+        "writer_exit": 0,
+        "samples": 178,
+        "enabled_samples": 0,
+        "PMIC_off_after": true
+      },
+      {
+        "label": "r7-fresh-reenabled",
+        "muted": false,
+        "notification_bus_calls": 1,
+        "notification_id": 4,
+        "writer_exit": 0,
+        "samples": 179,
+        "enabled_samples": 44,
+        "PMIC_drive_code": 21,
+        "programmed_target_mV": 2100,
+        "enable_duration_bounds_ms": [
+          298.62,
+          313.08
+        ],
+        "PMIC_off_after": true
+      }
+    ],
+    "owner_display_touch": {
+      "recorded_UTC": "2026-11-11T08:53:54.782040+00:00",
+      "native_boot_id": "9bf6a0b3-75a0-489a-b6f8-b7a6bf16be87",
+      "status": "confirmed",
+      "answer": "Display and touch work",
+      "display_confirmed": true,
+      "touch_confirmed": true,
+      "source": "Owner response to moduleless NFC r59 return question"
+    }
+  },
+  "NFC_modules_physically_loaded": false,
+  "NCI_controller_communication": false,
+  "explicit_NFC_GPIO_or_reference_clock_operations": false,
+  "RF_tag_firmware_or_open_unregister_qualified": false,
+  "remaining": [
+    "Matching r59 signed-module registration and cold lifecycle",
+    "One bounded NCI up/down with real reset/init/map responses and manufacturer/version",
+    "Open removal with receive available through reset, pending IRQ and concurrency",
+    "Tag/RF/userspace, suspend and installed stable-family integration"
+  ]
+}

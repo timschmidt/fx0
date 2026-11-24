@@ -1,0 +1,9 @@
+[Unit]
+Description=Reboot to the unchanged installed Fx0 kernel
+DefaultDependencies=no
+ConditionKernelVersion=6.18.63-fx0-handoff-trace-alpine
+ConditionKernelCommandLine=fx0.native_trial=display-handoff-r5-01
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl --no-block reboot

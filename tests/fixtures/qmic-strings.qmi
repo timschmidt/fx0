@@ -1,0 +1,17 @@
+package qmicstrings;
+
+struct leaf {
+    string label;
+    u32 marker;
+};
+
+request transfer_req {
+    required string title = 1;
+    optional string alias = 0x10;
+    required leaf item = 2;
+    required leaf items(2) = 3;
+} = 1;
+
+response transfer_resp {
+    required string reply_text = 1;
+} = 1;

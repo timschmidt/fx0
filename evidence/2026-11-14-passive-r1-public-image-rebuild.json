@@ -1,0 +1,177 @@
+{
+  "recorded_UTC": "2026-11-14T16:15:36.586655+00:00",
+  "state": "PASS complete public-source prepared-image replay; physical qualification open",
+  "qualification_contexts": [
+    {
+      "name": "clean-review-checkout",
+      "steps": [
+        {
+          "name": "helpers",
+          "actual_returncode": 0
+        },
+        {
+          "name": "description",
+          "actual_returncode": 0
+        },
+        {
+          "name": "materials",
+          "actual_returncode": 0
+        },
+        {
+          "name": "image-one",
+          "actual_returncode": 0
+        },
+        {
+          "name": "image-two",
+          "actual_returncode": 0
+        },
+        {
+          "name": "input-controls",
+          "actual_returncode": 0,
+          "passed_methods": 6,
+          "skipped": 0
+        },
+        {
+          "name": "worker-controls",
+          "actual_returncode": 0,
+          "passed_methods": 7,
+          "skipped": 0
+        }
+      ],
+      "helpers_compiled": 6,
+      "ARM_QEMU_controls": 4,
+      "target_link_inputs_checked_per_build": 7,
+      "selected_APKs": 8,
+      "materials": 13,
+      "identical_image_builds": 2,
+      "image_bytes": 6785024,
+      "image_SHA256": "428779913614a376bd40844bf80b10d004de0571d721b1bb29b85b68f31d4f53",
+      "tests_passed": 13,
+      "output_reuse_rejected_without_change": true,
+      "ignored_local_program_tree_present": false
+    },
+    {
+      "name": "source-only-export",
+      "steps": [
+        {
+          "name": "helpers",
+          "actual_returncode": 0
+        },
+        {
+          "name": "description",
+          "actual_returncode": 0
+        },
+        {
+          "name": "materials",
+          "actual_returncode": 0
+        },
+        {
+          "name": "image-one",
+          "actual_returncode": 0
+        },
+        {
+          "name": "image-two",
+          "actual_returncode": 0
+        },
+        {
+          "name": "input-controls",
+          "actual_returncode": 0,
+          "passed_methods": 6,
+          "skipped": 0
+        },
+        {
+          "name": "worker-controls",
+          "actual_returncode": 0,
+          "passed_methods": 7,
+          "skipped": 0
+        }
+      ],
+      "helpers_compiled": 6,
+      "ARM_QEMU_controls": 4,
+      "target_link_inputs_checked_per_build": 7,
+      "selected_APKs": 8,
+      "materials": 13,
+      "identical_image_builds": 2,
+      "image_bytes": 6785024,
+      "image_SHA256": "428779913614a376bd40844bf80b10d004de0571d721b1bb29b85b68f31d4f53",
+      "tests_passed": 13,
+      "output_reuse_rejected_without_change": true,
+      "ignored_local_program_tree_present": false
+    }
+  ],
+  "source_files_SHA256": {
+    "diagnostics/modem-control/build-passive-r1-dtb.py": "733de2cf4740aa709840292f3a6a0b2d09e9fffdba5aef6991656725429a0eff",
+    "diagnostics/modem-control/build-passive-r1-helpers.py": "2a203916af31a1fca789101eea96808053401cc673715465ec1027ff7821b982",
+    "diagnostics/modem-control/build-passive-r1-image.py": "fc678993edf0de35221436f4c2b52fdf352109840e36b1b5da8a4ef51b8412e8",
+    "diagnostics/modem-control/fx0-rmtfs-memory.patch": "badef68d524a7ad498dee8dd06c64254785aea6bd0fb2ed4dbf485daad2caad0",
+    "diagnostics/modem-control/passive-r1-helpers/native-return-harness.c": "ac177721569814ad9ec913c5c086263a16823dafc37c71877a0c948e61b0212a",
+    "diagnostics/modem-control/passive-r1-helpers/native-return.c": "8f2aa7135ef438cdf48d31e65fe7cfd99e162540e372031ba9014a3b037d6e73",
+    "diagnostics/modem-control/passive-r1-helpers/observer-test.c": "6caf07e055cc5fefe06750395ae9ba18e50829fa1034c518d22fd9984f910738",
+    "diagnostics/modem-control/passive-r1-helpers/qrtr-local-rmtfs.c": "e51eb2ba8ca44715c088e5de471e31c99d223565585b3a7d3122572db09c2bb7",
+    "diagnostics/modem-control/passive-r1-image-rebuild.md": "ec293ced9ec7fa6a833bfb057869bcc298c0f42a510cb392a8adafdf78fed374",
+    "diagnostics/modem-control/prepare-passive-r1-materials.py": "8dcf43520548fd0463ccb89d8e73a92430c5f085196e84de3d4f475e8b1d2ce9",
+    "diagnostics/modem-control/qrtr-local-rmtfs.c": "e51eb2ba8ca44715c088e5de471e31c99d223565585b3a7d3122572db09c2bb7",
+    "diagnostics/modem-control/rmtfs-passive-r1-init-v2.sh": "85585388f27819972414dbf3c6320c4bc078683a5fb8733b7abbaf7d486921f3",
+    "diagnostics/modem-control/rmtfs-passive-r1.md": "4ad8f8a14cd71510da852af9a7db09750366039e39f29441d729dd32605b8f32",
+    "diagnostics/modem-control/rmtfs-passive-r1.sh": "2a9c10f5716182969e399575613740202f71a97de0193b4a5da6d484c8d3b451",
+    "diagnostics/modem-control/rmtfs-passive.sh": "6f69f4b375890b2981e94c7b8b8e397f4dcbbd5d8d959e42d01966bc14c6947c",
+    "diagnostics/modem-control/verify-description.py": "df31da47ab02c5bfd525c098a6835a946e10a831ea3dc4659b592a5800131faf",
+    "diagnostics/modem-control/verify-rmtfs-description.py": "7bd1d65716a223299adacac1c29c2c2d3c8040fc22432ea612fd433cae459d7b",
+    "evidence/2026-11-14-rmtfs-passive-r1-preparation.json": "3a5d0e10ac2940e8683f530b157ba90c81c95d637fff411cde20485221b02209",
+    "manifests/passive-r1-dtb.json": "c14a16c11930c6799a29ae1ffc379015870acf437d10dbc86d9df680b6931ec9",
+    "manifests/passive-r1-helpers.json": "3188dbbbe66694555753242054f2e6b6b48c3e59a2ea6ba2209c0e40ca9dafdc",
+    "manifests/passive-r1-image.json": "0232033e1cd743fb31f30fff79ce7b93899484fc37844dfc4009e941f84b570b",
+    "manifests/passive-r1-materials.json": "e56cc437d00f723ba2a941df57e339056cdf3407f1844cdadc6417e7e155d544",
+    "scripts/make_diagnostic_image.py": "cd9c976a758d2f4b0282afe88a4c6038750e1fc11f08fdb289737e9f1cc9613f",
+    "tests/test_rmtfs_passive.py": "71c3c324ce8633b73617742f115289421999b41a73a22095797df3d348a54760",
+    "tests/test_rmtfs_passive_image_inputs.py": "25f4e4f1e827295d5e5ff4e21fee503d53d7832fb524057ee130f4d842854a55",
+    "tests/test_rmtfs_passive_r1.py": "38b1171f840323a7c8b02abc2b4482e217ce59554ba87733b11ad6504f92f37f"
+  },
+  "actual_terminal_tool_observation": {
+    "handle": 8887,
+    "returncode": 0
+  },
+  "image_comparison": "Each output compared byte for byte with the original independently qualified image, not only a report or digest",
+  "archive_trust": "Eight exact previously RSA/datahash-qualified APK archives; this material extractor checks full archive SHA256 and datahash, without repeating RSA",
+  "helper_roots": "Authenticated public userspace bootstrap rmtfs profile; native/target databases and all seven static target link inputs match the qualified cohort",
+  "DTB_scope": "Rebuilt from public accepted-r1 source and RFSA patch without stock dump; baseline and candidate byte identities and exactly five property differences checked",
+  "preserved_failures": [
+    {
+      "case": "First helper rebuild sandbox namespace denial",
+      "compiler_started": false,
+      "actual_exit_code": 1,
+      "source_and_attempt_preserved": true
+    },
+    {
+      "case": "First source-only roster omitted observer source used by inherited C fixture",
+      "actual_exit_code": 1,
+      "runtime_sources_changed": false,
+      "exact_image_builds_passed": 4,
+      "clean_context_tests_passed": 13,
+      "source_only_tests_passed": 12,
+      "fresh_corrected_export_passed": true
+    },
+    {
+      "case": "Initial material manifest write targeted a nonexistent directory",
+      "runtime_source_written": false,
+      "selected_materials_preserved": true
+    }
+  ],
+  "older_trial_source_rosters_exact": {
+    "1": 9,
+    "2": 12
+  },
+  "public_plan_runtime_sources_unchanged": true,
+  "prepared_real_workspaces_undispatched": 3,
+  "root_index_unchanged": true,
+  "private_keys_credentials_native_initramfs_firmware_or_calibration_read_or_copied": false,
+  "physical_trial_dispatched": false,
+  "phone_access": false,
+  "publication": false,
+  "full_goal_complete": false,
+  "limitations": [
+    "Uses the exact historical accepted-r1 kernel APK; it does not rebuild or qualify a replacement kernel.",
+    "The public DT builder does not repeat the earlier schema, stock comparison and full source inventory audits; output bytes match those qualified inputs.",
+    "QEMU fixtures substitute return and protocol state. Real USB/RFSA/automatic return, modem/GNSS and the remaining nonaudio physical matrix stay open."
+  ]
+}

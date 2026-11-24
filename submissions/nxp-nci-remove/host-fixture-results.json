@@ -1,0 +1,117 @@
+{
+  "actual_driver_and_NCI_callback_bodies_preserved": true,
+  "clock_feature_included": false,
+  "host_ASan_UBSan": true,
+  "modeled_positive_cases": 9,
+  "independent_regression_controls": 6,
+  "real_kernel_or_hardware_operations": false,
+  "concurrent_firmware_timing_modeled": false,
+  "fixture_sha256": "678642d77358f377c2f3d221078b91b3a154ee4863cc61f513ad0d06b0db3a6f",
+  "results": [
+    {
+      "label": "candidate",
+      "mode": "cold",
+      "returncode": 0,
+      "expected_success": true,
+      "stdout": "cold: events=QQQUID reset_tx=0 reset_ack=0 reset_timeout=0 IRQ_drain=1"
+    },
+    {
+      "label": "candidate",
+      "mode": "cold_pending_irq",
+      "returncode": 0,
+      "expected_success": true,
+      "stdout": "cold_pending_irq: events=QQQUID reset_tx=0 reset_ack=0 reset_timeout=0 IRQ_drain=1"
+    },
+    {
+      "label": "candidate",
+      "mode": "firmware_pending_irq",
+      "returncode": 0,
+      "expected_success": true,
+      "stdout": "firmware_pending_irq: events=QQQUID reset_tx=0 reset_ack=0 reset_timeout=0 IRQ_drain=1"
+    },
+    {
+      "label": "candidate",
+      "mode": "probe_irq_failure",
+      "returncode": 0,
+      "expected_success": true,
+      "stdout": "probe_irq_failure: events=QQQUD reset_tx=0 reset_ack=0 reset_timeout=0 IRQ_drain=0"
+    },
+    {
+      "label": "candidate",
+      "mode": "open_timeout_pending_irq",
+      "returncode": 0,
+      "expected_success": true,
+      "stdout": "open_timeout_pending_irq: events=TXQQQUID reset_tx=1 reset_ack=0 reset_timeout=1 IRQ_drain=1"
+    },
+    {
+      "label": "candidate",
+      "mode": "open",
+      "returncode": 0,
+      "expected_success": true,
+      "stdout": "open: events=TAQQQUID reset_tx=1 reset_ack=1 reset_timeout=0 IRQ_drain=1"
+    },
+    {
+      "label": "candidate",
+      "mode": "open_pending_irq",
+      "returncode": 0,
+      "expected_success": true,
+      "stdout": "open_pending_irq: events=TAQQQUID reset_tx=1 reset_ack=1 reset_timeout=0 IRQ_drain=1"
+    },
+    {
+      "label": "candidate",
+      "mode": "open_data_exchange",
+      "returncode": 0,
+      "expected_success": true,
+      "stdout": "open_data_exchange: events=TAQQQUID reset_tx=1 reset_ack=1 reset_timeout=0 IRQ_drain=1"
+    },
+    {
+      "label": "candidate",
+      "mode": "core_legacy",
+      "returncode": 0,
+      "expected_success": true,
+      "stdout": "core_legacy: events=QQQUD reset_tx=0 reset_ack=0 reset_timeout=0 IRQ_drain=0"
+    },
+    {
+      "label": "unregister-under-lock",
+      "mode": "open",
+      "returncode": 1,
+      "expected_success": false,
+      "stdout": ""
+    },
+    {
+      "label": "drain-before-reset",
+      "mode": "open",
+      "returncode": 1,
+      "expected_success": false,
+      "stdout": "open: events=ITXQQQUD reset_tx=1 reset_ack=0 reset_timeout=1 IRQ_drain=1"
+    },
+    {
+      "label": "drain-after-free",
+      "mode": "cold_pending_irq",
+      "returncode": 1,
+      "expected_success": false,
+      "stdout": ""
+    },
+    {
+      "label": "lock-during-drain",
+      "mode": "cold_pending_irq",
+      "returncode": 1,
+      "expected_success": false,
+      "stdout": ""
+    },
+    {
+      "label": "missing-stop-wiring",
+      "mode": "cold",
+      "returncode": 1,
+      "expected_success": false,
+      "stdout": ""
+    },
+    {
+      "label": "unowned-IRQ-release",
+      "mode": "probe_irq_failure",
+      "returncode": 1,
+      "expected_success": false,
+      "stdout": ""
+    }
+  ]
+}

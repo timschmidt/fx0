@@ -8,7 +8,8 @@ import tempfile
 import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
-HEADER=Path(os.environ.get('FX0_CPR_VOLTAGE_PLAN_HEADER',ROOT/'worktrees/linux-cpu-cpr/drivers/pmdomain/qcom/cpr-msm8926-voltage.h'))
+KERNEL = Path(os.environ.get('FX0_KERNEL_SOURCE', ROOT/'worktrees/linux-fx0-cpr'))
+HEADER=Path(os.environ.get('FX0_CPR_VOLTAGE_PLAN_HEADER',KERNEL/'drivers/pmdomain/qcom/cpr-msm8926-voltage.h'))
 spec=importlib.util.spec_from_file_location('calibration_reference',ROOT/'tests/test_msm8926_calibration.py')
 REFERENCE=importlib.util.module_from_spec(spec);spec.loader.exec_module(REFERENCE)
 WRAPPER=r'''
@@ -78,6 +79,7 @@ class VoltagePlanTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.tmp=tempfile.TemporaryDirectory();base=Path(cls.tmp.name);(base/'linux/regulator').mkdir(parents=True)
+        (base/'linux/array_size.h').write_text('#define ARRAY_SIZE(a) (sizeof(a)/sizeof((a)[0]))\n')
         (base/'linux/types.h').write_text('#include <stdint.h>\n#include <stdbool.h>\ntypedef uint64_t u64;typedef uint32_t u32;\n')
         (base/'linux/errno.h').write_text('#define EINVAL 22\n#define EIO 5\n#define ENODEV 19\n#define ERANGE 34\n#define EOPNOTSUPP 95\n')
         (base/'linux/minmax.h').write_text('#define min(a,b) ((a)<(b)?(a):(b))\n#define max(a,b) ((a)>(b)?(a):(b))\n#define clamp(x,l,h) min(max(x,l),h)\n')

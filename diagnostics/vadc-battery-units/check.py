@@ -96,6 +96,7 @@ def main():
         root = Path(temporary)
         (root/'check.c').write_text(STUBS+multiply+driver+MAIN)
         subprocess.run(['clang','-std=c11','-Wall','-Wextra','-Werror',
+                        '-Wno-unused-parameter',
                         '-fsanitize=undefined,address','-fno-sanitize-recover=all',
                         str(root/'check.c'),'-o',str(root/'check')],check=True)
         subprocess.run([str(root/'check')],check=True)

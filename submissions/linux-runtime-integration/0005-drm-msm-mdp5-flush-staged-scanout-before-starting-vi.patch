@@ -1,0 +1,39 @@
+From e13016e7cc2dcdb5f10c0a3e379a1683ebb41ece Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:33:09 +0000
+Subject: [PATCH 05/35] drm/msm/mdp5: flush staged scanout before starting
+ video timing
+
+Flush the staged scanout state before enabling the video timing engine so the first scanout does not start with stale state. Retain the existing enable sequence after the flush.
+
+Source-patch: patches/linux-integration/fx0-mdp5-video-flush-before-enable.diff
+Source-sha256: d626c745802e9c7b5230b8dbc5e524fe4eae78b522cf15b4bf947fd0f6acdbb3
+---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
+index eaba3b2d73b5..d9062aa58876 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
+@@ -164,12 +164,17 @@ static void mdp5_vid_encoder_enable(struct drm_encoder *encoder)
+ 	if (WARN_ON(mdp5_encoder->enabled))
+ 		return;
+ 
++	/*
++	 * Flush the staged scanout state before starting the video timing
++	 * engine. Otherwise the first scanout can begin with stale state and
++	 * underrun before the encoder flush reaches the hardware.
++	 */
++	mdp5_ctl_commit(ctl, pipeline, mdp_ctl_flush_mask_encoder(intf), true);
++	mdp5_ctl_set_encoder_state(ctl, pipeline, true);
++
+ 	spin_lock_irqsave(&mdp5_encoder->intf_lock, flags);
+ 	mdp5_write(mdp5_kms, REG_MDP5_INTF_TIMING_ENGINE_EN(intfn), 1);
+ 	spin_unlock_irqrestore(&mdp5_encoder->intf_lock, flags);
+-	mdp5_ctl_commit(ctl, pipeline, mdp_ctl_flush_mask_encoder(intf), true);
+-
+-	mdp5_ctl_set_encoder_state(ctl, pipeline, true);
+ 
+ 	mdp5_encoder->enabled = true;
+ }

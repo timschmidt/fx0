@@ -1,11 +1,13 @@
 """Compile the recovery follow-up against the same modeled native bus."""
+import os
 import pathlib
 import subprocess
 import tempfile
 import unittest
-from test_mpu_dmp_native import SHIM, PACKET_SHIM, LIFECYCLE_SHIM
+from test_mpu_dmp_native import STREAM_SHIM, PACKET_SHIM, LIFECYCLE_SHIM
 
-SOURCE = pathlib.Path(__file__).resolve().parents[1] / 'worktrees/linux-dmp-recovery/drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c'
+KERNEL = pathlib.Path(os.environ.get('FX0_KERNEL_SOURCE', pathlib.Path(__file__).resolve().parents[1]/'worktrees/linux-fx0-cpr'))
+SOURCE = KERNEL/'drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c'
 MAIN = r'''
 int main(void) {
  struct regmap m={0}; struct regs r={.user_ctrl=0x6a,.int_enable=0x38,.fifo_r_w=0x74};
@@ -37,12 +39,12 @@ class RecoveryGate(unittest.TestCase):
         self.assertTrue(SOURCE.exists(), 'recovery worktree is required')
         source = SOURCE.read_text()
         code = source.split('#define INV_MPU6515_DMP_FIRMWARE')[0]
-        code += source[source.index('int inv_mpu6515_dmp_configure('):]
+        code += source[source.index('int inv_mpu6515_dmp_configure('):].split('\nint inv_mpu6515_dmp_smd_set(')[0]
         code = '\n'.join(line for line in code.splitlines() if not line.startswith('#include'))
         with tempfile.TemporaryDirectory(prefix='fx0-native-recovery-') as directory:
             src = pathlib.Path(directory) / 'recovery.c'
             exe = pathlib.Path(directory) / 'recovery'
-            src.write_text(SHIM + PACKET_SHIM + LIFECYCLE_SHIM + code + MAIN)
+            src.write_text(STREAM_SHIM + PACKET_SHIM + LIFECYCLE_SHIM + code + MAIN)
             subprocess.run(['cc', '-std=gnu11', '-Wall', '-Wextra', '-Werror',
                             str(src), '-o', str(exe)], check=True)
             result = subprocess.run([str(exe)], check=True, text=True, capture_output=True)

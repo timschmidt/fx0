@@ -1,0 +1,144 @@
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD b/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD
+index 17fcf1a07..18d1d0965 100644
+--- a/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD
++++ b/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD
+@@ -3,7 +3,7 @@ maintainer="Newbyte <newbie13xd@gmail.com>"
+ _flavor="postmarketos-qcom-msm8226"
+ pkgname=linux-$_flavor
+ pkgver=6.18.59
+-pkgrel=56
++pkgrel=58
+ pkgdesc="Mainline Kernel fork for APQ8026/MSM8226/MSM8926 devices"
+ arch="armv7"
+ _carch="arm"
+@@ -51,6 +51,8 @@ source="
+ 	fx0-nxp-nci-ref-clock-binding.patch
+ 	fx0-nxp-nci-ref-clock.patch
+ 	fx0-madai-pn547-nfc.patch
++	fx0-nxp-nci-irq-teardown.patch
++	fx0-nxp-nci-unregister-lock.patch
+ "
+ builddir="$srcdir/fx0-linux-$_commit"
+ 
+@@ -83,7 +85,7 @@ package() {
+ 
+ sha512sums="
+ 3479e7b9d3e753f4dddde1b88cb6544d2304e46aa92b3ba0aab8cd0ce1108869efd8cc36692a05bc094ccdff6213e0cae0433dc5b742289c57023a838fda8741  linux-fx0-4b800b920c7db82e8012a580a17cc2d8ff9d5e66.tar.gz
+-9032c18665cfd6f0929943b6d6cc009123fe98bd4a681fd677c322ed44c7a6ebe1c92994372e29c2a9a5a1d0d24a8c60c53921bfe3fb19ab7cdc7f7d4f5af17e  config-postmarketos-qcom-msm8226.armv7
++888e13b5ae6f71341df6e2ea3fa924082a10ed7c15aa11f324bbacf4b29faf756158318592314c561437811f7ad203504e35d2dc94d4011dc1a400953e810246  config-postmarketos-qcom-msm8226.armv7
+ 638996e6df8e96a1ba54560fc5075840876b788c8e5a534b1f2178a0269a765ec34b05a999287bdc7da5f22f9666ac7e122c63818a54fb76133797cb4ce586de  fx0-mpu6515-dmp.patch
+ 14435047cf0bd838eb3c246ac5689a5f3bb908e23f55ef0c5655436ea15a75d26023dae63dcb52d4b6f7e0cd3f170a6e4a018a39a241f7670913fb90dc17cbda  iio-preserve-tiny-log2-scale.patch
+ 197cc0debb094c372a25a3e46efc1451e554e679084b285df8c8786b5f7c372d9358acc568f641042b2fa94d88f0659caf7d3e4da2df740c6a3a481eefcb1d4d  fx0-mpu6515-dmp-smd-awake.patch
+@@ -98,4 +100,6 @@ aab6122205087065f32f2386f4fdb52b6cf3561195de8afc0ad86d04e9bf0f4ceb59ee5789a8f7d2
+ 481d4601a838e5928308bf8944b74d25c9c50c1a8e4a5da9bbeba689bab1fcb6bb986f406df9aae6174106576efcd494f4b23acb3d6cf9c6b48a4e786c7b76f7  fx0-nxp-nci-ref-clock-binding.patch
+ 66ee34352ffbae3859690b7674e418039ec8e8ac252633b579b83c5bf05f4740ebfc1028a1b1e9629434d75d7460dc59ef68b685a7b762e07f8c794dbc2ba7e2  fx0-nxp-nci-ref-clock.patch
+ 12082451c80e6388bc6e0e0c56f0c690d79708d2ad8753d765029a5f72af78bf1f28b3ca7585d21c0b52a5befe277c8bf7f2817f32a803d7d5599767e4f719e5  fx0-madai-pn547-nfc.patch
++1aef965214d822bf727e9491c1b5605c41eefee6d15eb4a8043d4fc806bb440e96bfd69dd19eac4d9e8f7a7231510653f03507dcbebaf1659ae8b3a91b043823  fx0-nxp-nci-irq-teardown.patch
++a75ce39e0a41178410289c3bae6c90a8fa9836906f58e0cb633e134080609fd67e918b8c936cd0f55925352447d1d01bc9bc5e6212c0360c16448a22f6501c08  fx0-nxp-nci-unregister-lock.patch
+ "
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7 b/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7
+index b5e5ba824..077a89a6c 100644
+--- a/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7
++++ b/device/testing/linux-postmarketos-qcom-msm8226/config-postmarketos-qcom-msm8226.armv7
+@@ -38,7 +38,7 @@ CONFIG_THREAD_INFO_IN_TASK=y
+ CONFIG_INIT_ENV_ARG_LIMIT=32
+ # CONFIG_COMPILE_TEST is not set
+ # CONFIG_WERROR is not set
+-CONFIG_LOCALVERSION="-fx0-nfc-alpine"
++CONFIG_LOCALVERSION="-fx0-nfc-teardown-alpine"
+ # CONFIG_LOCALVERSION_AUTO is not set
+ CONFIG_BUILD_SALT=""
+ CONFIG_HAVE_KERNEL_GZIP=y
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/fx0-nxp-nci-irq-teardown.patch b/device/testing/linux-postmarketos-qcom-msm8226/fx0-nxp-nci-irq-teardown.patch
+new file mode 100644
+index 000000000..37e4ee4f1
+--- /dev/null
++++ b/device/testing/linux-postmarketos-qcom-msm8226/fx0-nxp-nci-irq-teardown.patch
+@@ -0,0 +1,14 @@
++diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
++index 9c5bb27cb7fd..8f1e8e5fc106 100644
++--- a/drivers/nfc/nxp-nci/i2c.c
+++++ b/drivers/nfc/nxp-nci/i2c.c
++@@ -359,8 +359,8 @@ static void nxp_nci_i2c_remove(struct i2c_client *client)
++ {
++ 	struct nxp_nci_i2c_phy *phy = i2c_get_clientdata(client);
++ 
++-	nxp_nci_remove(phy->ndev);
++ 	free_irq(client->irq, phy);
+++	nxp_nci_remove(phy->ndev);
++ }
++ 
++ static const struct i2c_device_id nxp_nci_i2c_id_table[] = {
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/fx0-nxp-nci-unregister-lock.patch b/device/testing/linux-postmarketos-qcom-msm8226/fx0-nxp-nci-unregister-lock.patch
+new file mode 100644
+index 000000000..7e835fb83
+--- /dev/null
++++ b/device/testing/linux-postmarketos-qcom-msm8226/fx0-nxp-nci-unregister-lock.patch
+@@ -0,0 +1,24 @@
++diff --git a/drivers/nfc/nxp-nci/core.c b/drivers/nfc/nxp-nci/core.c
++index b84ad0ef2ca1..613aa0a2813a 100644
++--- a/drivers/nfc/nxp-nci/core.c
+++++ b/drivers/nfc/nxp-nci/core.c
++@@ -188,15 +188,15 @@ void nxp_nci_remove(struct nci_dev *ndev)
++ 		nxp_nci_fw_work_complete(info, -ESHUTDOWN);
++ 	cancel_work_sync(&info->fw_info.work);
++ 
++-	mutex_lock(&info->info_lock);
+++	nci_unregister_device(ndev);
++ 
+++	mutex_lock(&info->info_lock);
++ 	if (info->phy_ops->set_mode)
++ 		info->phy_ops->set_mode(info->phy_id, NXP_NCI_MODE_COLD);
+++	info->mode = NXP_NCI_MODE_COLD;
+++	mutex_unlock(&info->info_lock);
++ 
++-	nci_unregister_device(ndev);
++ 	nci_free_device(ndev);
++-
++-	mutex_unlock(&info->info_lock);
++ }
++ EXPORT_SYMBOL(nxp_nci_remove);
++ 
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/source-provenance.json b/device/testing/linux-postmarketos-qcom-msm8226/source-provenance.json
+index 5b90d2fd3..aaa6f33d1 100644
+--- a/device/testing/linux-postmarketos-qcom-msm8226/source-provenance.json
++++ b/device/testing/linux-postmarketos-qcom-msm8226/source-provenance.json
+@@ -1,11 +1,11 @@
+ {
+-  "manifest_sha256": "1d1a85535048041609c20476b3aeaa487f682bd60cfb92def8c6307c8d88c902",
++  "manifest_sha256": "0b014ccab7d91b55a676fab5c78fc9583abb0a317ee00329af2dac3df2d06391",
+   "profile": "nfc",
+   "base_commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+-  "configuration_sha256": "3144faaa3f3f0f44fc7afe8e4f82fb48ec264dfb6354448511cad4029cdcbd5a",
++  "configuration_sha256": "cf07cd609c78832e613cb111edcf14574785f0b158bfe409ea88aa3047b0ba02",
+   "template_sha256": "1db21f51e35974da6ab4a8eb2e9ce57f48cba688bc43ebb6c6001f8f72356bdb",
+   "source_archive_sha512": "3479e7b9d3e753f4dddde1b88cb6544d2304e46aa92b3ba0aab8cd0ce1108869efd8cc36692a05bc094ccdff6213e0cae0433dc5b742289c57023a838fda8741",
+-  "pkgrel": 56,
++  "pkgrel": 58,
+   "patch_order": [
+     "fx0-mpu6515-dmp.patch",
+     "iio-preserve-tiny-log2-scale.patch",
+@@ -20,7 +20,9 @@
+     "fx0-nxp-nci-irq-unwind.patch",
+     "fx0-nxp-nci-ref-clock-binding.patch",
+     "fx0-nxp-nci-ref-clock.patch",
+-    "fx0-madai-pn547-nfc.patch"
++    "fx0-madai-pn547-nfc.patch",
++    "fx0-nxp-nci-irq-teardown.patch",
++    "fx0-nxp-nci-unregister-lock.patch"
+   ],
+   "exported_sha256": {
+     "fx0-mpu6515-dmp.patch": "9ad19adac6fa9aa3eb995e41e031daa556595d0a3f7e3713757e19f32f6c0ce4",
+@@ -37,8 +39,10 @@
+     "fx0-nxp-nci-ref-clock-binding.patch": "31bfbb060aa142b2e4e8b4faef5b238e1c2289b8532ac3c50cbbbb4100c30ce6",
+     "fx0-nxp-nci-ref-clock.patch": "120beb388d538aabf5e09a42176ca5c093dbddf266f55fd6a2c179c9b6470a13",
+     "fx0-madai-pn547-nfc.patch": "ed20b4a846b8def6bdcc5640a2692a7777cff35f22b8bc1ff358cc241569dcc0",
+-    "config-postmarketos-qcom-msm8226.armv7": "3144faaa3f3f0f44fc7afe8e4f82fb48ec264dfb6354448511cad4029cdcbd5a",
+-    "APKBUILD": "6509184d6c572c61c158c7d7f025ebeb8cd0f4c192de0783d09799c693fd358e"
++    "fx0-nxp-nci-irq-teardown.patch": "487c88dc83c51406c0d9227aa8ab761cbb68d801446b94239d8d7580080f8fd8",
++    "fx0-nxp-nci-unregister-lock.patch": "1b5a88fb46285739e9f0c14242aa03076d13dd9a8526a5ceebc42a7ba63eb39e",
++    "config-postmarketos-qcom-msm8226.armv7": "cf07cd609c78832e613cb111edcf14574785f0b158bfe409ea88aa3047b0ba02",
++    "APKBUILD": "c28403e9fefb770ae605311fce11c28ff73e49005e039dc7fa86f8750a48a23e"
+   },
+   "status": "exported only; source build and hardware acceptance separate"
+ }

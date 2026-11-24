@@ -1,0 +1,314 @@
+{
+  "recorded_UTC": "2026-11-11T06:38:32.592357+00:00",
+  "purpose": "Alpine source-package qualification of the Linux 6.18.63 r50 feature baseline",
+  "source_commit": "29edb2b9893edd18c445a648081b12038a033d51",
+  "recipe_publication": {
+    "recorded_UTC": "2026-11-11T06:38:20.585843+00:00",
+    "repository": "https://github.com/timschmidt/fx0-pmaports.git",
+    "branch": "maintenance/fx0-6.18.63-r50-package",
+    "commit": "59423a9616933d1a5939eeedc12f942ba4471fae",
+    "remote_ref_verified": true,
+    "source_package_built": true,
+    "Alpine_toolchain": "22.1.3",
+    "verified_modules": 464,
+    "compiled_source_files_and_symlinks_matched": 91269,
+    "root_index_unchanged": true,
+    "native_installation": false,
+    "physical_boot": false
+  },
+  "package": {
+    "name": "linux-postmarketos-qcom-msm8226-6.18.63-r0.apk",
+    "bytes": 18603838,
+    "sha256": "60300efe12bf472586869ca00b41b353d742d9a277cadb760f3cae8841812ae3",
+    "recipe_commit": "59423a9616933d1a5939eeedc12f942ba4471fae",
+    "source_build": true
+  },
+  "release": "6.18.63-fx0-r50-maint-alpine",
+  "input_configuration": "configs/linux-6.18.63-fx0-r50-maint-alpine.armv7",
+  "input_configuration_sha256": "2ad2a70bc33e6d81841c2931c2fad133e09b5614e0ddad981c2b423a8d6146c1",
+  "actual_configuration_sha256": "2d0c2e357dcdb567e7986788a8a169ef3b464311425b6f4e716c95f03770f74e",
+  "configuration_normalization": {
+    "recorded_UTC": "2026-11-11T06:36:48.422084+00:00",
+    "input_to_actual_option_differences": 19,
+    "differences": {
+      "CONFIG_CLANG_VERSION": {
+        "input": "210108",
+        "actual": "220103"
+      },
+      "CONFIG_RUSTC_HAS_COERCE_POINTEE": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_ARCH_USES_CFI_GENERIC_LLVM_PASS": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_CC_OPT_INLINE_MEMSET": {
+        "input": null,
+        "actual": "\"-mllvm -max-store-memset=4294967294\""
+      },
+      "CONFIG_RUSTC_HAS_SPAN_FILE": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_HAVE_LD_DEAD_CODE_DATA_ELIMINATION": {
+        "input": null,
+        "actual": "y"
+      },
+      "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION": {
+        "input": null,
+        "actual": "n"
+      },
+      "CONFIG_DRM_MSM_VALIDATE_XML": {
+        "input": "n",
+        "actual": null
+      },
+      "CONFIG_RUSTC_LLVM_VERSION": {
+        "input": "220108",
+        "actual": "0"
+      },
+      "CONFIG_RUSTC_HAS_FILE_AS_C_STR": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_LLD_VERSION": {
+        "input": "180108",
+        "actual": "220103"
+      },
+      "CONFIG_LD_CAN_USE_KEEP_IN_OVERLAY": {
+        "input": null,
+        "actual": "y"
+      },
+      "CONFIG_AS_VERSION": {
+        "input": "210108",
+        "actual": "220103"
+      },
+      "CONFIG_CC_VERSION_TEXT": {
+        "input": "\"clang version 21.1.8 (Fedora 21.1.8-6.fc43)\"",
+        "actual": "\"Alpine clang version 22.1.3\""
+      },
+      "CONFIG_RUSTC_VERSION": {
+        "input": "109801",
+        "actual": "0"
+      },
+      "CONFIG_DEBUG_INFO_COMPRESSED_ZSTD": {
+        "input": null,
+        "actual": "n"
+      },
+      "CONFIG_RUSTC_HAS_FILE_WITH_NUL": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES": {
+        "input": "y",
+        "actual": null
+      }
+    },
+    "compiler_capability_and_disabled_option_changes_only": true
+  },
+  "actual_community_check": {
+    "actual_community_check_passed": true,
+    "configuration_sha256": "2d0c2e357dcdb567e7986788a8a169ef3b464311425b6f4e716c95f03770f74e",
+    "configuration_modified_by_audit": false,
+    "CFI_nonpermissive": true,
+    "full_compressed_DWARF": true,
+    "schedutil_retained": true,
+    "CPR_NFC_remain_disabled": true
+  },
+  "toolchain": "Alpine Clang/LLD 22.1.3, standard pmbootstrap cross-native ARM build",
+  "build_inputs": {
+    "recorded_UTC": "2026-11-11T06:20:58.890579+00:00",
+    "recipe_commit": "59423a9616933d1a5939eeedc12f942ba4471fae",
+    "recipe_base_commit": "056ba2e6b2328d656d229dfe1785d4842fae0a39",
+    "source_commit": "29edb2b9893edd18c445a648081b12038a033d51",
+    "release": "6.18.63-fx0-r50-maint-alpine",
+    "version": "6.18.63-r0",
+    "source_archive_sha512": "6189dae30190b4997f1f38a01410be43616d740c6a407859b5a9ab3eaeb9517022f70dba8cfa5ca7fe5bfd3059d248062d4e3a32e965fdb9f4fe48505da501e4",
+    "cached_tool_image": "6213355c8ea96806ce237d1ca509cfda6b5db33acff2d9addb80501baa6f2301",
+    "isolated_pmos_HOME": true,
+    "reused_cached_buildroots": true,
+    "prior_build_HOMEs_untouched": true,
+    "native_installation": false,
+    "space_available_before_build": 8991068160
+  },
+  "source_archive_verification": {
+    "recorded_UTC": "2026-11-11T06:20:24.266298+00:00",
+    "source_commit": "29edb2b9893edd18c445a648081b12038a033d51",
+    "archive_sha512": "6189dae30190b4997f1f38a01410be43616d740c6a407859b5a9ab3eaeb9517022f70dba8cfa5ca7fe5bfd3059d248062d4e3a32e965fdb9f4fe48505da501e4",
+    "blob_count": 91269,
+    "every_archive_file_and_symlink_matches_published_Git_tree": true,
+    "file_executable_modes_match": true,
+    "unexpected_or_duplicate_paths": false,
+    "source_checkout_clean": true,
+    "native_installation": false
+  },
+  "compiled_source_verification": {
+    "recorded_UTC": "2026-11-11T06:37:10.868794+00:00",
+    "source_commit": "29edb2b9893edd18c445a648081b12038a033d51",
+    "all_tracked_source_paths_match_published_Git_tree": true,
+    "source_files_and_symlinks_compared": 91269,
+    "no_build_generated_files_treated_as_Git_source": true,
+    "native_installation": false
+  },
+  "build_artifacts": {
+    "recorded_UTC": "2026-11-11T06:36:49.169465+00:00",
+    "source_commit": "29edb2b9893edd18c445a648081b12038a033d51",
+    "release": "6.18.63-fx0-r50-maint-alpine",
+    "artifacts_sha256": {
+      "arch/arm/boot/zImage": "c61ca209ea263ef6e7b573f8b806a80ed1d08121fc91aa139cf3c1114f0ab39a",
+      "vmlinux": "db819c3d206d2c3a6248d87e867545b9bcd823e9950e2415e19e976447d986a8",
+      "Module.symvers": "320b1d48e30781260728adf0ed370c7b3127484f53336ed1905bd96719135180",
+      ".config": "2d0c2e357dcdb567e7986788a8a169ef3b464311425b6f4e716c95f03770f74e",
+      "certs/signing_key.x509": "e97cc0297fb209b39f401de69903ef34902976c22fe4ccb921935eded363e5cb",
+      "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+      "modules.order": "80970f53911e4d3b504dd0c2941e3e36a82e8ba79366cb010e450d28bde06f17"
+    },
+    "r50_DTB_byte_identical": true,
+    "native_installation": false
+  },
+  "linked_kernel": {
+    "verified_UTC": "2026-11-11T06:37:23.166590+00:00",
+    "release": "6.18.63-fx0-r50-maint-alpine",
+    "ELF": "ARM32 little-endian",
+    "GNU_build_id": "23e925c5d3dac8fbc139c582f0b03b3dc6bc8d32",
+    "CFI_type_ids_handler_and_object_flags_verified": true,
+    "undefined_symbols_equal_r50": [
+      "         U __bpf_callback_fn",
+      "         U __bpf_prog_runX",
+      "         w efi_attr_config_table",
+      "         w efi_attr_fw_vendor",
+      "         w efi_attr_runtime"
+    ],
+    "embedded_runtime_trust_list_exact_generated_certificate": true,
+    "certificate_sha256": "e97cc0297fb209b39f401de69903ef34902976c22fe4ccb921935eded363e5cb",
+    "all_464_module_verifier_certificate_matches_runtime_trust": true,
+    "wrong_build_certificate_rejected": true,
+    "new_module_private_key": "Generated and used by Kbuild; audit checks mode only, never inspects or exports contents",
+    "private_key_mode": "0600",
+    "uncompressed_kernel_footprint_bytes": 21499728,
+    "footprint_plus_load_offset_below_0x02000000": true,
+    "zImage_header_magic_verified": true,
+    "r50_DTB_byte_identical": true,
+    "physical_boot": false,
+    "native_installation": false
+  },
+  "signature_and_empty_database_simulation": {
+    "verified_UTC": "2026-11-11T06:37:33.154482+00:00",
+    "package": {
+      "name": "linux-postmarketos-qcom-msm8226-6.18.63-r0.apk",
+      "bytes": 18603838,
+      "sha256": "60300efe12bf472586869ca00b41b353d742d9a277cadb760f3cae8841812ae3",
+      "recipe_commit": "59423a9616933d1a5939eeedc12f942ba4471fae",
+      "source_build": true
+    },
+    "APK_signature_verified": true,
+    "modified_signed_recipe_metadata_rejected": true,
+    "modified_metadata_message": "BAD signature; original signature retained and modified control stream recompressed with valid gzip CRC",
+    "no_private_keys_or_firmware_in_APK": true,
+    "normal_offline_ARMv7_simulation": {
+      "returncode": 0,
+      "stdout": "(1/1) Installing linux-postmarketos-qcom-msm8226 (6.18.63-r0)\nOK: 22.8 MiB in 1 packages\n",
+      "stderr": "",
+      "scope": "empty initialized usermode database; package resolution only; no installation or update hooks"
+    },
+    "actual_device_install": false
+  },
+  "modules": {
+    "count": 464,
+    "all_signatures_match_embedded_certificate": true,
+    "all_intree": true,
+    "imported_symbol_CRC_checks": 25309,
+    "all_imported_CRCs_match_built_kernel": true,
+    "ABI_negative_controls": [
+      "modified import CRC rejected",
+      "wrong export ABI map rejected"
+    ],
+    "dependencies": {
+      "verified_modules": 464,
+      "declared_dependency_edges": 385,
+      "transitive_dependency_edges": 567,
+      "all_modules_dep_entries_match_module_metadata": true,
+      "modules_dep_sha256": "fd84f711abe7f02170c677e0dedd849e43e7efdece794a38360fec32fb1f77a0",
+      "scope": "Dependency metadata only; signatures, ABI, runtime loading and install hooks separate"
+    }
+  },
+  "full_compressed_DWARF": {
+    "recorded_UTC": "2026-11-11T06:36:49.036993+00:00",
+    "full_DWARF5": true,
+    "reduced_debug_disabled": true,
+    "compressed_debug_sections": {
+      ".debug_aranges": {
+        "compression": "zlib",
+        "compressed_bytes": 790,
+        "uncompressed_bytes": 2088
+      },
+      ".debug_info": {
+        "compression": "zlib",
+        "compressed_bytes": 67710207,
+        "uncompressed_bytes": 106693506,
+        "first_DWARF_unit_version": 5
+      },
+      ".debug_abbrev": {
+        "compression": "zlib",
+        "compressed_bytes": 931176,
+        "uncompressed_bytes": 3146925
+      },
+      ".debug_line": {
+        "compression": "zlib",
+        "compressed_bytes": 6132969,
+        "uncompressed_bytes": 14169418
+      },
+      ".debug_frame": {
+        "compression": "zlib",
+        "compressed_bytes": 391639,
+        "uncompressed_bytes": 1718352
+      },
+      ".debug_str": {
+        "compression": "zlib",
+        "compressed_bytes": 1653778,
+        "uncompressed_bytes": 3959782
+      },
+      ".debug_addr": {
+        "compression": "zlib",
+        "compressed_bytes": 799387,
+        "uncompressed_bytes": 1866124
+      },
+      ".debug_line_str": {
+        "compression": "zlib",
+        "compressed_bytes": 27651,
+        "uncompressed_bytes": 71126
+      },
+      ".debug_loclists": {
+        "compression": "zlib",
+        "compressed_bytes": 6081319,
+        "uncompressed_bytes": 12950935
+      },
+      ".debug_rnglists": {
+        "compression": "zlib",
+        "compressed_bytes": 1000090,
+        "uncompressed_bytes": 1758029
+      },
+      ".debug_str_offsets": {
+        "compression": "zlib",
+        "compressed_bytes": 7172185,
+        "uncompressed_bytes": 24412512
+      }
+    },
+    "compressed_sections_decompress_and_match_declared_sizes": true,
+    "native_installation": false
+  },
+  "selected_source_regressions": {
+    "reference_evidence": "evidence/2026-11-11-kernel-maintenance-6.18.63.json",
+    "source_commit_unchanged": true,
+    "cases_in_previous_phase": 31,
+    "new_repetition_in_this_phase": false
+  },
+  "physical_boot": false,
+  "native_installation": false,
+  "normal_phone_install_hooks_exercised": false,
+  "current_r50_feature_baseline_only": true
+}

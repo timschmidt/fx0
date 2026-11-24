@@ -1,0 +1,100 @@
+{
+  "target": "LG Fx0 / MADAI",
+  "status": "host verified, pending physical RAM trial",
+  "image_path": "local/rmtfs-passive-ram-01/fx0-r50-rmtfs-passive-ram.img",
+  "image_sha256": "b97bff31b998150c1e9621f4e99662eaeda9e82143487600d4996d530e588b27",
+  "image_bytes": 6762496,
+  "kernel_sha256": "7e896bb7c3fc80d7d8c8306a659fa57c1bcb3924ec2aaf37b77924e23c274417",
+  "kernel_bytes": 5558784,
+  "base_image_sha256": "349ab28ce8d8c48a9699d67e9b84ed53e9038baeac896f3a8fd923c96b1d853b",
+  "base_reconstructed_kernel_sha256": "32610058b1d03c1e16df671be169ded43aae7b2f46224d3bea82f3c5751c5416",
+  "base_DTB_sha256": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+  "DTB_sha256": "674788b21487182bfca96a9d3d280b538e5717fd92d002843fe382216e573385",
+  "DT_property_differences": [
+    [
+      "/reserved-memory/reserved@fb00000",
+      "reg"
+    ],
+    [
+      "/reserved-memory/rmtfs@fd80000",
+      "compatible"
+    ],
+    [
+      "/reserved-memory/rmtfs@fd80000",
+      "no-map"
+    ],
+    [
+      "/reserved-memory/rmtfs@fd80000",
+      "qcom,client-id"
+    ],
+    [
+      "/reserved-memory/rmtfs@fd80000",
+      "reg"
+    ]
+  ],
+  "MSS_disabled": true,
+  "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\" module.sig_enforce=1",
+  "ramdisk_sha256": "92cc4ee18fb350df35a89efe7dfa9d8a47795d801cbba754ee323146a117cb67",
+  "CPIO_entries": 19,
+  "qualified_base_entries_preserved": 10,
+  "timer_seconds": 180,
+  "init_launches_worker": false,
+  "initially_moduleless": true,
+  "module_names": [
+    "qrtr"
+  ],
+  "firmware_files": 0,
+  "entries_sha256": {
+    "bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "dev": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "proc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sys": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tmp": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "www": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bin/busybox": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+    "bin/sh": "9d75f0d7c398df565d7ac04c6819b62d6d8f9560f5eb4672596ecd8f7e96ae91",
+    "bin/serve-http": "4005fed0312bc216b3c32129ffdd2ceac06544a2503ecd572349e729af543d5e",
+    "init": "8a25f6757a7f0de87cb7433def659d0fee00981c2a311ed816a12bac439ac0d1",
+    "etc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "modules": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bin/rmtfs": "281b6d358ff6ddc44523821d79876e362024eaf5168dce796760ce976336cfae",
+    "bin/qrtr-local-rmtfs": "8c04e1f328cf7d2e53a4e88864e9819aaf46c97dd561164a818cd6597281951f",
+    "bin/rmtfs-passive": "6f69f4b375890b2981e94c7b8b8e397f4dcbbd5d8d959e42d01966bc14c6947c",
+    "etc/fx0-rmtfs-trial": "8b8c876fd3b892508b66ff2c09c74553b12b60714b26835415a7033ab92b302d",
+    "etc/fx0-rmtfs-notes.sha256": "0ae9cd24f66ef1d482bb280a727cad744456f02bf813704821c3e14a77882be1",
+    "etc/fx0-rmtfs-inputs.sha256": "d594b028d62bfa1069a1cbed29843954ab8718da6448dfee6190ef25eb6e0bd1",
+    "modules/qrtr.ko": "ee922e99e1be948af029926dc7ec3acf4b21db6b46f7fc4e8d25cff8043b3329"
+  },
+  "QRTR_core": {
+    "sha256": "ee922e99e1be948af029926dc7ec3acf4b21db6b46f7fc4e8d25cff8043b3329",
+    "bytes": 58609,
+    "vermagic": "6.18.59-fx0-dmp SMP preempt mod_unload modversions ARMv7 p2v8",
+    "imports_verified": 119,
+    "exports": 5,
+    "exact_r50_kernel_certificate_CMS": true,
+    "changed_payload_rejected": true,
+    "changed_module_layout_rejected": true,
+    "kernel_exports_checked": 11709,
+    "kernel_notes_sha256": "cb8ff4d80009dbd0b4542ce5d28d7ce10e4d84e0db4e332c749ff8ae18a08269",
+    "depends": [],
+    "QRTR_transport_modules": [],
+    "compressed_sha256": "f5bff47622ce5c0dfc6f4ca36f186d0d1d6ff0560fd5254217935d675c87f900",
+    "archive_sha256": "abbaed40f197afa6fd49d0eead6f68b62479ae7e7422faffb500032ea18ac5cb"
+  },
+  "observer_SHA256": "8c04e1f328cf7d2e53a4e88864e9819aaf46c97dd561164a818cd6597281951f",
+  "RMTFS_arguments": [
+    "-r",
+    "-o",
+    "/tmp/rmtfs-passive/storage"
+  ],
+  "RFSA_region": {
+    "start": "0x0fd80000",
+    "size": "0x00180000",
+    "client_id": 1
+  },
+  "read_only_RMTFS_storage_mode": true,
+  "RMTFS_request_count_expected": 0,
+  "physical_transfer_or_boot_attempted": false,
+  "procedure": "diagnostics/modem-control/rmtfs-passive-ram.md",
+  "evidence": "evidence/2026-11-10-rmtfs-passive-ram.json"
+}

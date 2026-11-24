@@ -1,0 +1,503 @@
+diff --git a/drivers/clk/qcom/clk-pll.c b/drivers/clk/qcom/clk-pll.c
+--- a/drivers/clk/qcom/clk-pll.c
++++ b/drivers/clk/qcom/clk-pll.c
+@@ -10,6 +10,8 @@
+ #include <linux/delay.h>
+ #include <linux/export.h>
+ #include <linux/clk-provider.h>
++#include <linux/limits.h>
++#include <linux/panic.h>
+ #include <linux/regmap.h>
+ 
+ #include <asm/div64.h>
+@@ -62,18 +64,38 @@
+ 				 PLL_OUTCTRL);
+ }
+ 
+-static void clk_pll_disable(struct clk_hw *hw)
+-{
+-	struct clk_pll *pll = to_clk_pll(hw);
++static int clk_pll_rate_error(struct clk_pll *pll, int ret)
++{
++	if (ret && pll->critical_rate)
++		panic("%s: CPU PLL programming failed: %d",
++		      clk_hw_get_name(&pll->clkr.hw), ret);
++	return ret;
++}
++
++static int clk_pll_disable_checked(struct clk_hw *hw)
++{
++	struct clk_pll *pll = to_clk_pll(hw);
++	int ret;
+ 	u32 mask;
+ 	u32 val;
+ 
+-	regmap_read(pll->clkr.regmap, pll->mode_reg, &val);
++	ret = regmap_read(pll->clkr.regmap, pll->mode_reg, &val);
++	if (ret)
++		return ret;
+ 	/* Skip if in FSM mode */
+ 	if (val & PLL_VOTE_FSM_ENA)
+-		return;
++		return 0;
+ 	mask = PLL_OUTCTRL | PLL_RESET_N | PLL_BYPASSNL;
+-	regmap_update_bits(pll->clkr.regmap, pll->mode_reg, mask, 0);
++	return regmap_update_bits(pll->clkr.regmap, pll->mode_reg, mask, 0);
++}
++
++static void clk_pll_disable(struct clk_hw *hw)
++{
++	struct clk_pll *pll = to_clk_pll(hw);
++	int ret = clk_pll_rate_error(pll, clk_pll_disable_checked(hw));
++
++	if (ret)
++		pr_err("%s: PLL disable failed: %d\n", clk_hw_get_name(hw), ret);
+ }
+ 
+ static unsigned long
+@@ -81,18 +103,18 @@
+ {
+ 	struct clk_pll *pll = to_clk_pll(hw);
+ 	u32 l, m, n, config;
+-	unsigned long rate;
+-	u64 tmp;
+-
+-	regmap_read(pll->clkr.regmap, pll->l_reg, &l);
+-	regmap_read(pll->clkr.regmap, pll->m_reg, &m);
+-	regmap_read(pll->clkr.regmap, pll->n_reg, &n);
++	u64 rate, tmp;
++
++	if (regmap_read(pll->clkr.regmap, pll->l_reg, &l) ||
++	    regmap_read(pll->clkr.regmap, pll->m_reg, &m) ||
++	    regmap_read(pll->clkr.regmap, pll->n_reg, &n))
++		return 0;
+ 
+ 	l &= 0x3ff;
+ 	m &= 0x7ffff;
+ 	n &= 0x7ffff;
+ 
+-	rate = parent_rate * l;
++	rate = (u64)parent_rate * l;
+ 	if (n) {
+ 		tmp = parent_rate;
+ 		tmp *= m;
+@@ -100,13 +122,14 @@
+ 		rate += tmp;
+ 	}
+ 	if (pll->post_div_width) {
+-		regmap_read(pll->clkr.regmap, pll->config_reg, &config);
++		if (regmap_read(pll->clkr.regmap, pll->config_reg, &config))
++			return 0;
+ 		config >>= pll->post_div_shift;
+ 		config &= BIT(pll->post_div_width) - 1;
+-		rate /= config + 1;
+-	}
+-
+-	return rate;
++		do_div(rate, config + 1);
++	}
++
++	return rate > ULONG_MAX ? 0 : rate;
+ }
+ 
+ static const
+@@ -268,13 +291,13 @@
+ 
+ 	ret = regmap_read(pll->clkr.regmap, pll->mode_reg, &mode);
+ 	if (ret)
+-		return ret;
++		return clk_pll_rate_error(pll, ret);
+ 
+ 	/* Disable PLL bypass mode. */
+ 	ret = regmap_update_bits(pll->clkr.regmap, pll->mode_reg, PLL_BYPASSNL,
+ 				 PLL_BYPASSNL);
+ 	if (ret)
+-		return ret;
++		return clk_pll_rate_error(pll, ret);
+ 
+ 	/*
+ 	 * H/W requires a 5us delay between disabling the bypass and
+@@ -286,15 +309,24 @@
+ 	ret = regmap_update_bits(pll->clkr.regmap, pll->mode_reg, PLL_RESET_N,
+ 				 PLL_RESET_N);
+ 	if (ret)
+-		return ret;
++		return clk_pll_rate_error(pll, ret);
+ 
+ 	ret = wait_for_pll(pll);
+ 	if (ret)
+-		return ret;
++		return clk_pll_rate_error(pll, ret);
+ 
+ 	/* Enable PLL output. */
+-	return regmap_update_bits(pll->clkr.regmap, pll->mode_reg, PLL_OUTCTRL,
++	ret = regmap_update_bits(pll->clkr.regmap, pll->mode_reg, PLL_OUTCTRL,
+ 				 PLL_OUTCTRL);
++	if (!ret && pll->critical_rate) {
++		ret = regmap_read(pll->clkr.regmap, pll->mode_reg, &mode);
++		if (!ret && (mode & (PLL_OUTCTRL | PLL_BYPASSNL | PLL_RESET_N)) !=
++		    (PLL_OUTCTRL | PLL_BYPASSNL | PLL_RESET_N))
++			ret = -EIO;
++		if (!ret)
++			ret = wait_for_pll(pll);
++	}
++	return clk_pll_rate_error(pll, ret);
+ }
+ 
+ static int
+@@ -303,25 +335,39 @@
+ 	struct clk_pll *pll = to_clk_pll(hw);
+ 	const struct pll_freq_tbl *f;
+ 	bool enabled;
++	int ret;
+ 	u32 mode;
+ 	u32 enable_mask = PLL_OUTCTRL | PLL_BYPASSNL | PLL_RESET_N;
+ 
+ 	f = find_freq(pll->freq_tbl, rate);
+ 	if (!f)
+-		return -EINVAL;
+-
+-	regmap_read(pll->clkr.regmap, pll->mode_reg, &mode);
++		return clk_pll_rate_error(pll, -EINVAL);
++
++	ret = regmap_read(pll->clkr.regmap, pll->mode_reg, &mode);
++	if (ret)
++		return clk_pll_rate_error(pll, ret);
+ 	enabled = (mode & enable_mask) == enable_mask;
+ 
++	if (enabled) {
++		ret = clk_pll_disable_checked(hw);
++		if (ret)
++			return clk_pll_rate_error(pll, ret);
++	}
++
++	ret = regmap_update_bits(pll->clkr.regmap, pll->l_reg, 0x3ff, f->l);
++	if (ret)
++		return clk_pll_rate_error(pll, ret);
++	ret = regmap_update_bits(pll->clkr.regmap, pll->m_reg, 0x7ffff, f->m);
++	if (ret)
++		return clk_pll_rate_error(pll, ret);
++	ret = regmap_update_bits(pll->clkr.regmap, pll->n_reg, 0x7ffff, f->n);
++	if (ret)
++		return clk_pll_rate_error(pll, ret);
++	if (pll->critical_rate && clk_pll_recalc_rate(hw, prate) != f->freq)
++		return clk_pll_rate_error(pll, -EIO);
++
+ 	if (enabled)
+-		clk_pll_disable(hw);
+-
+-	regmap_update_bits(pll->clkr.regmap, pll->l_reg, 0x3ff, f->l);
+-	regmap_update_bits(pll->clkr.regmap, pll->m_reg, 0x7ffff, f->m);
+-	regmap_update_bits(pll->clkr.regmap, pll->n_reg, 0x7ffff, f->n);
+-
+-	if (enabled)
+-		clk_pll_sr2_enable(hw);
++		return clk_pll_sr2_enable(hw);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/clk/qcom/clk-pll.h b/drivers/clk/qcom/clk-pll.h
+--- a/drivers/clk/qcom/clk-pll.h
++++ b/drivers/clk/qcom/clk-pll.h
+@@ -34,6 +34,7 @@
+  * @status_reg: status register
+  * @status_bit: ANDed with @status_reg to determine if PLL is enabled
+  * @freq_tbl: PLL frequency table
++ * @critical_rate: Stop on uncertain CPU PLL programming; CCF can discard errors
+  * @hw: handle between common and hardware-specific interfaces
+  */
+ struct clk_pll {
+@@ -46,6 +47,7 @@
+ 	u8	status_bit;
+ 	u8	post_div_width;
+ 	u8	post_div_shift;
++	bool	critical_rate;
+ 
+ 	const struct pll_freq_tbl *freq_tbl;
+ 
+diff --git a/drivers/clk/qcom/clk-regmap-mux-div.c b/drivers/clk/qcom/clk-regmap-mux-div.c
+--- a/drivers/clk/qcom/clk-regmap-mux-div.c
++++ b/drivers/clk/qcom/clk-regmap-mux-div.c
+@@ -7,6 +7,7 @@
+ #include <linux/bitops.h>
+ #include <linux/delay.h>
+ #include <linux/kernel.h>
++#include <linux/panic.h>
+ #include <linux/regmap.h>
+ 
+ #include "clk-regmap-mux-div.h"
+@@ -20,63 +21,97 @@
+ #define to_clk_regmap_mux_div(_hw) \
+ 	container_of(to_clk_regmap(_hw), struct clk_regmap_mux_div, clkr)
+ 
++static int mux_div_rate_error(struct clk_regmap_mux_div *md, int ret)
++{
++	if (ret && md->critical_rate)
++		panic("%s: CPU mux programming failed: %d",
++		      clk_hw_get_name(&md->clkr.hw), ret);
++	return ret;
++}
++
+ int mux_div_set_src_div(struct clk_regmap_mux_div *md, u32 src, u32 div)
+ {
+ 	int ret, count;
+-	u32 val, mask;
++	u32 val, mask, expected;
+ 	const char *name = clk_hw_get_name(&md->clkr.hw);
+ 
+-	val = (div << md->hid_shift) | (src << md->src_shift);
++	expected = (div << md->hid_shift) | (src << md->src_shift);
+ 	mask = ((BIT(md->hid_width) - 1) << md->hid_shift) |
+ 	       ((BIT(md->src_width) - 1) << md->src_shift);
+ 
+ 	ret = regmap_update_bits(md->clkr.regmap, CFG_RCGR + md->reg_offset,
+-				 mask, val);
+-	if (ret)
+-		return ret;
++				 mask, expected);
++	if (ret)
++		return mux_div_rate_error(md, ret);
+ 
+ 	ret = regmap_update_bits(md->clkr.regmap, CMD_RCGR + md->reg_offset,
+ 				 CMD_RCGR_UPDATE, CMD_RCGR_UPDATE);
+ 	if (ret)
+-		return ret;
++		return mux_div_rate_error(md, ret);
+ 
+ 	/* Wait for update to take effect */
+ 	for (count = 500; count > 0; count--) {
+ 		ret = regmap_read(md->clkr.regmap, CMD_RCGR + md->reg_offset,
+ 				  &val);
+ 		if (ret)
+-			return ret;
+-		if (!(val & CMD_RCGR_UPDATE))
++			return mux_div_rate_error(md, ret);
++		if (!(val & CMD_RCGR_UPDATE)) {
++			if (md->critical_rate) {
++				ret = regmap_read(md->clkr.regmap, CFG_RCGR + md->reg_offset, &val);
++				if (ret)
++					return mux_div_rate_error(md, ret);
++				if ((val & mask) != expected)
++					return mux_div_rate_error(md, -EIO);
++				ret = regmap_read(md->clkr.regmap, CMD_RCGR + md->reg_offset, &val);
++				if (ret)
++					return mux_div_rate_error(md, ret);
++				if (val & (CMD_RCGR_UPDATE | CMD_RCGR_DIRTY_CFG |
++					   CMD_RCGR_ROOT_OFF))
++					return mux_div_rate_error(md, -EIO);
++			}
+ 			return 0;
++		}
+ 		udelay(1);
+ 	}
+ 
+ 	pr_err("%s: RCG did not update its configuration", name);
+-	return -EBUSY;
++	return mux_div_rate_error(md, -EBUSY);
+ }
+ EXPORT_SYMBOL_GPL(mux_div_set_src_div);
+ 
+-static void mux_div_get_src_div(struct clk_regmap_mux_div *md, u32 *src,
+-				u32 *div)
+-{
+-	u32 val, d, s;
++static int mux_div_get_src_div(struct clk_regmap_mux_div *md, u32 *src, u32 *div)
++{
++	u32 val, cfg, after, cfg_after;
++	u32 busy = CMD_RCGR_UPDATE | CMD_RCGR_DIRTY_CFG;
++	int ret;
+ 	const char *name = clk_hw_get_name(&md->clkr.hw);
+ 
+-	regmap_read(md->clkr.regmap, CMD_RCGR + md->reg_offset, &val);
+-
+-	if (val & CMD_RCGR_DIRTY_CFG) {
++	if (md->critical_rate)
++		busy |= CMD_RCGR_ROOT_OFF;
++	ret = regmap_read(md->clkr.regmap, CMD_RCGR + md->reg_offset, &val);
++	if (ret)
++		return ret;
++
++	if (val & busy) {
+ 		pr_err("%s: RCG configuration is pending\n", name);
+-		return;
+-	}
+-
+-	regmap_read(md->clkr.regmap, CFG_RCGR + md->reg_offset, &val);
+-	s = (val >> md->src_shift);
+-	s &= BIT(md->src_width) - 1;
+-	*src = s;
+-
+-	d = (val >> md->hid_shift);
+-	d &= BIT(md->hid_width) - 1;
+-	*div = d;
++		return -EBUSY;
++	}
++
++	ret = regmap_read(md->clkr.regmap, CFG_RCGR + md->reg_offset, &cfg);
++	if (ret)
++		return ret;
++	ret = regmap_read(md->clkr.regmap, CMD_RCGR + md->reg_offset, &after);
++	if (ret)
++		return ret;
++	ret = regmap_read(md->clkr.regmap, CFG_RCGR + md->reg_offset, &cfg_after);
++	if (ret)
++		return ret;
++	if ((after & busy) || cfg != cfg_after)
++		return -EBUSY;
++
++	*src = cfg >> md->src_shift & (BIT(md->src_width) - 1);
++	*div = cfg >> md->hid_shift & (BIT(md->hid_width) - 1);
++	return 0;
+ }
+ 
+ static inline bool is_better_rate(unsigned long req, unsigned long best,
+@@ -151,6 +186,8 @@
+ 		}
+ 	}
+ 
++	if (!best_rate || best_rate != rate)
++		return mux_div_rate_error(md, -EINVAL);
+ 	ret = mux_div_set_src_div(md, best_src, best_div);
+ 	if (!ret) {
+ 		md->div = best_div;
+@@ -166,7 +203,8 @@
+ 	const char *name = clk_hw_get_name(hw);
+ 	u32 i, div, src = 0;
+ 
+-	mux_div_get_src_div(md, &src, &div);
++	if (mux_div_get_src_div(md, &src, &div))
++		return clk_hw_get_num_parents(hw);
+ 
+ 	for (i = 0; i < clk_hw_get_num_parents(hw); i++)
+ 		if (src == md->parent_map[i])
+@@ -207,7 +245,8 @@
+ 	int i, num_parents = clk_hw_get_num_parents(hw);
+ 	const char *name = clk_hw_get_name(hw);
+ 
+-	mux_div_get_src_div(md, &src, &div);
++	if (mux_div_get_src_div(md, &src, &div))
++		return 0;
+ 	for (i = 0; i < num_parents; i++)
+ 		if (src == md->parent_map[i]) {
+ 			struct clk_hw *p = clk_hw_get_parent_by_index(hw, i);
+diff --git a/drivers/clk/qcom/clk-regmap-mux-div.h b/drivers/clk/qcom/clk-regmap-mux-div.h
+--- a/drivers/clk/qcom/clk-regmap-mux-div.h
++++ b/drivers/clk/qcom/clk-regmap-mux-div.h
+@@ -23,6 +23,7 @@
+  * @clkr:	handle between common and hardware-specific interfaces
+  * @pclk:	the input PLL clock
+  * @clk_nb:	clock notifier for rate changes of the input PLL
++ * @critical_rate: Stop on uncertain CPU clock programming; CCF can discard errors
+  */
+ struct clk_regmap_mux_div {
+ 	u32				reg_offset;
+@@ -36,6 +37,7 @@
+ 	struct clk_regmap		clkr;
+ 	struct clk			*pclk;
+ 	struct notifier_block		clk_nb;
++	bool				critical_rate;
+ };
+ 
+ extern const struct clk_ops clk_regmap_mux_div_ops;
+diff --git a/drivers/clk/qcom/a53-pll.c b/drivers/clk/qcom/a53-pll.c
+--- a/drivers/clk/qcom/a53-pll.c
++++ b/drivers/clk/qcom/a53-pll.c
+@@ -9,6 +9,7 @@
+ #include <linux/clk.h>
+ #include <linux/clk-provider.h>
+ #include <linux/kernel.h>
++#include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_opp.h>
+ #include <linux/regmap.h>
+@@ -113,6 +114,8 @@
+ 	pll->mode_reg = 0x00;
+ 	pll->status_reg = 0x1c;
+ 	pll->status_bit = 16;
++	/* Returning an uncertain CPU PLL to CCF can select it after an error. */
++	pll->critical_rate = of_device_is_compatible(np, "qcom,msm8226-a7pll");
+ 
+ 	pll->freq_tbl = qcom_a53pll_get_freq_tbl(dev);
+ 	if (!pll->freq_tbl) {
+@@ -131,6 +134,8 @@
+ 	};
+ 	init.num_parents = 1;
+ 	init.ops = &clk_pll_sr2_ops;
++	if (pll->critical_rate)
++		init.flags = CLK_GET_RATE_NOCACHE;
+ 	pll->clkr.hw.init = &init;
+ 
+ 	ret = devm_clk_register_regmap(dev, &pll->clkr);
+diff --git a/drivers/clk/qcom/apcs-msm8916.c b/drivers/clk/qcom/apcs-msm8916.c
+--- a/drivers/clk/qcom/apcs-msm8916.c
++++ b/drivers/clk/qcom/apcs-msm8916.c
+@@ -10,6 +10,7 @@
+ #include <linux/clk-provider.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
++#include <linux/of.h>
+ #include <linux/slab.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+@@ -36,7 +37,7 @@
+ 						     struct clk_regmap_mux_div,
+ 						     clk_nb);
+ 	if (event == PRE_RATE_CHANGE)
+-		/* set the mux and divider to safe frequency (400mhz) */
++		/* GPLL0 / 2: 300 MHz on MSM8226, 400 MHz on MSM8916. */
+ 		ret = mux_div_set_src_div(md, 4, 3);
+ 
+ 	return notifier_from_errno(ret);
+@@ -72,6 +73,9 @@
+ 	init.num_parents = ARRAY_SIZE(pdata);
+ 	init.ops = &clk_regmap_mux_div_ops;
+ 	init.flags = CLK_IS_CRITICAL | CLK_SET_RATE_PARENT;
++	a53cc->critical_rate = of_device_is_compatible(np, "qcom,msm8226-apcs-kpss-global");
++	if (a53cc->critical_rate)
++		init.flags |= CLK_GET_RATE_NOCACHE;
+ 
+ 	a53cc->clkr.hw.init = &init;
+ 	a53cc->clkr.regmap = regmap;
+diff --git a/drivers/clk/qcom/gcc-msm8974.c b/drivers/clk/qcom/gcc-msm8974.c
+--- a/drivers/clk/qcom/gcc-msm8974.c
++++ b/drivers/clk/qcom/gcc-msm8974.c
+@@ -31,6 +31,15 @@
+ 	P_GPLL4,
+ };
+ 
++static struct clk_init_data gpll0_init = {
++	.name = "gpll0",
++	.parent_data = &(const struct clk_parent_data){
++		.fw_name = "xo", .name = "xo_board",
++	},
++	.num_parents = 1,
++	.ops = &clk_pll_ops,
++};
++
+ static struct clk_pll gpll0 = {
+ 	.l_reg = 0x0004,
+ 	.m_reg = 0x0008,
+@@ -39,14 +48,7 @@
+ 	.mode_reg = 0x0000,
+ 	.status_reg = 0x001c,
+ 	.status_bit = 17,
+-	.clkr.hw.init = &(struct clk_init_data){
+-		.name = "gpll0",
+-		.parent_data = &(const struct clk_parent_data){
+-			.fw_name = "xo", .name = "xo_board",
+-		},
+-		.num_parents = 1,
+-		.ops = &clk_pll_ops,
+-	},
++	.clkr.hw.init = &gpll0_init,
+ };
+ 
+ static struct clk_regmap gpll0_vote = {
+@@ -2849,6 +2851,7 @@
+ 
+ static void msm8226_clock_override(void)
+ {
++	gpll0_init.flags |= CLK_GET_RATE_NOCACHE;
+ 	ce1_clk_src.freq_tbl = ftbl_gcc_ce1_clk_msm8226;
+ 	gp1_clk_src.freq_tbl = ftbl_gcc_gp_clk_msm8226;
+ 	gp2_clk_src.freq_tbl = ftbl_gcc_gp_clk_msm8226;

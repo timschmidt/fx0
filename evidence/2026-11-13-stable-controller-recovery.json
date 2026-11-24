@@ -1,0 +1,362 @@
+{
+  "recorded_UTC": "2026-11-13T04:06:44.559392+00:00",
+  "subject": "Fresh current-boot backup and corrected stable userspace controller qualification",
+  "objective": "complete the fx0 bringup",
+  "full_bringup": "active",
+  "previous_evidence": "evidence/2026-11-12-post-treescan-stable-recovery.json",
+  "current_boot_id": "6114df77-29f2-43ac-8ede-1ca72c743895",
+  "current_boot_display_and_touch_owner_confirmed": true,
+  "kernel": "6.18.63-fx0-vibrator-alpine",
+  "installed_kernel_package": "6.18.63-r1",
+  "installed_treescan": "0.1-r1",
+  "fresh_capture": {
+    "boot_id": "6114df77-29f2-43ac-8ede-1ca72c743895",
+    "kernel": "6.18.63-fx0-vibrator-alpine",
+    "current_r1_capture": true,
+    "manifest_sha256": "815afabfc4705e77ac322a39627503271425b1d21ea4ac9611696d47703ca4da",
+    "manifest_bytes": 2935288,
+    "archive_sha256": "813662124af17fafbccba10c575c56a2503716e3d1a9803e034af008c7a882b2",
+    "archive_bytes": 166047408,
+    "empty_delta_sha256": "bd6906c87630b14c89079c074118a7ba98ec95a39e8db7ca08cf19746153f724",
+    "raw_boot_sha256": "44dfbb6c64148071d2983dd053d7c04b02f21f9200dc917ee70455f3b40a65c2",
+    "combined_paths": 7002,
+    "prior_scope_paths_retained": 7002,
+    "directory_memberships": 701,
+    "hardlink_aliases": 254,
+    "SELinux_label_paths": 1480,
+    "actual_lock_types_verified_before_after": [
+      "FLOCK",
+      "POSIX"
+    ],
+    "lock_file_hashed_through_held_descriptor": true,
+    "all_archived_file_payloads_verified": true,
+    "all_live_rows_and_namespace_reverified": true,
+    "native_package_or_boot_changes": false
+  },
+  "all_five_host_and_phone_private_backup_copies_verified": true,
+  "private_backup_payloads_published": false,
+  "runtime_private_keys_excluded": true,
+  "host_tests": {
+    "recorded_UTC": "2026-11-13T03:21:32.751620+00:00",
+    "passed": true,
+    "tests": 21,
+    "controller_sha256": "45d5fe8ac6af534ab516517bf684333a405fa2844962caabb52243eb8e03e8b5",
+    "ownership_helper_sha256": "1668a38cc1d9976103d5aae5dc922637b0d762ca309b18407def8aeefe407f87",
+    "scope_sha256": "4e4472f4baeb245a4a7b6d2f4f24cbe4f779d10b8aee9f3ae5c971b6ed71d92d",
+    "results": [
+      {
+        "pattern": "test_stable_userspace_transaction.py",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.062s\n\nOK\n"
+      },
+      {
+        "pattern": "test_apk_payload_ownership.py",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nOK\n"
+      }
+    ],
+    "actual_native_APK_qualification": false
+  },
+  "scope": {
+    "scope_sha256": "4e4472f4baeb245a4a7b6d2f4f24cbe4f779d10b8aee9f3ae5c971b6ed71d92d",
+    "mutable_files": 2708,
+    "mutable_directories": 133,
+    "candidates": 2820,
+    "directory_candidate_ACL_differences": 1,
+    "configs": 7,
+    "upstream_unchanged_configs": 6,
+    "config_sidecars": 14,
+    "new_file_policies": 11,
+    "cross_boundary_hardlinks": 0,
+    "candidate_hardlink_aliases": 254,
+    "live_writes": false,
+    "retained_owner_files_immutable": [
+      "/etc/issue",
+      "/etc/os-release",
+      "/usr/lib/os-release"
+    ]
+  },
+  "scope_manifest": "manifests/stable-userspace-transaction-scope-02.json",
+  "ownership_primary_sources": [
+    {
+      "URL": "https://gitlab.alpinelinux.org/alpine/apk-tools/-/raw/v3.0.8/src/package.c",
+      "file": "apk-3.0.8-package.c",
+      "sha256": "6d7abea38f045d3132d73da0720f5e193658644548b53e85d8110af0db5e55b6",
+      "replacement_function_sha256": "03a8ef4900988ae77501c62f8f80ed15f8ca4105c226532de2c5d4a3cfef80ac"
+    },
+    {
+      "URL": "https://gitlab.alpinelinux.org/alpine/apk-tools/-/raw/v3.0.9/src/package.c",
+      "file": "apk-3.0.9-package.c",
+      "sha256": "8685e53606cf3c5ada180a14a83ff5cdad210b69b8963eac49dc00735e872e83",
+      "replacement_function_sha256": "03a8ef4900988ae77501c62f8f80ed15f8ca4105c226532de2c5d4a3cfef80ac"
+    }
+  ],
+  "prior_exact_controller_qualification": {
+    "status": "failed",
+    "error": "RolledBack: ('Missing changed upstream configuration', '/etc/issue')",
+    "original_source_and_receipts_retained": true,
+    "no_live_package_changes": true
+  },
+  "fresh_native_fixture": {
+    "native_boot_id": "6114df77-29f2-43ac-8ede-1ca72c743895",
+    "unit": {
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "Result": "success",
+      "ExecMainCode": "0",
+      "ExecMainStatus": "0",
+      "MemoryCurrent": "[not set]",
+      "CPUUsageNSec": "[not set]"
+    },
+    "worker_result": {
+      "status": "prepared",
+      "started_UTC": "2026-11-13T03:13:47.128326+00:00",
+      "actual_ARM_kernel": true,
+      "QEMU_used": false,
+      "live_OS_transaction": false,
+      "private_fixture_removed": false,
+      "audio_testing": false,
+      "initial_paths_verified": 7002,
+      "initial_memberships_verified": 701,
+      "current_native_runtime_paths_verified": 17,
+      "commands": {
+        "index-load": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-zlib": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libapk": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-apk-tools": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libexpat": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libarchive": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-openssh-keygen": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-openssh-server-common": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-openssh-server-pam": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-tzdata": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-alpine-release": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-openssh-client-common": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-openssh-client-default": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-openssh-sftp-server": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-openssh-server": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-openssh": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-openssh-nftrules": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libheif-dav1d": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libheif-libde265": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libheif": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libheif-jpeg": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libheif-aom": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libheif-rav1e": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libheif-x264": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libheif-x265": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libheif-ffmpeg": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-libopenmpt": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-vim-common": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-xxd": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-vim": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "verify-xwayland": {
+          "returncode": 0,
+          "descendants_reaped": true
+        },
+        "simulate": {
+          "returncode": 0,
+          "descendants_reaped": true
+        }
+      },
+      "captured_paths_verified": 7002,
+      "directory_memberships_verified": 701,
+      "native_all_30_archive_verifications_passed": true,
+      "native_simulated_upgrades": 30,
+      "host_and_native_solver_selection_agree": true,
+      "world_and_kernel_and_treescan_preserved": true,
+      "fixture_path": "/var/lib/fx0-rollback/stable-post-treescan-fixture-02/root",
+      "initial_namespace_paths": 6375,
+      "initial_namespace_sha256": "f19892b312554e578e62efb9ea68ba2c15ff2dede07dd61d4381a99204b34d83",
+      "all_owned_processes_terminal": true,
+      "live_package_or_boot_changes": false,
+      "finished_UTC": "2026-11-13T03:22:16.012469+00:00"
+    },
+    "current_boot_success_journal": true,
+    "journal_success_realtime_microseconds": "1794540136929088",
+    "observed_UTC": "2026-11-13T03:22:25.063679+00:00",
+    "passed": true,
+    "unloaded_unit_default_exit_fields_not_used_as_exit_proof": true
+  },
+  "current_repository_selection": {
+    "recorded_UTC": "2026-11-13T03:16:44.921502+00:00",
+    "current_authenticated_repositories": 4,
+    "same_30_package_versions_and_signed_control_identities": true,
+    "custom_holds_preserved": true,
+    "scope_requalification_due_to_repository_selection_change_needed": false,
+    "latest_stable_release": "v26.06",
+    "release_source": "https://nura.eco/install/",
+    "native_index_or_package_changes": false
+  },
+  "native_controller_qualification": {
+    "status": "failed; scoped rollback verified",
+    "unit": "fx0-stable-userspace-qualification-02.service",
+    "latest_actual_observation": {
+      "native_boot_id": "6114df77-29f2-43ac-8ede-1ca72c743895",
+      "unit": {
+        "LoadState": "loaded",
+        "ActiveState": "failed",
+        "SubState": "failed",
+        "Result": "exit-code",
+        "ExecMainCode": "1",
+        "ExecMainStatus": "1",
+        "MemoryCurrent": "[not set]",
+        "CPUUsageNSec": "648344834000"
+      },
+      "worker_result": {
+        "status": "failed",
+        "live_OS_transaction": false,
+        "actual_ARM_kernel": true,
+        "QEMU_used": false,
+        "audio_testing": false,
+        "private_fixture_removed": false,
+        "started_UTC": "2026-11-13T03:22:46.338417+00:00",
+        "error": "RolledBack: ('Candidate payload differs from signed archive', '/usr/bin/ex')",
+        "finished_UTC": "2026-11-13T03:44:24.262367+00:00"
+      },
+      "current_boot_success_journal": false,
+      "journal_success_realtime_microseconds": null,
+      "observed_UTC": "2026-11-13T03:44:39.293620+00:00",
+      "passed": false,
+      "unloaded_unit_default_exit_fields_not_used_as_exit_proof": true
+    },
+    "source_sha256": "45d5fe8ac6af534ab516517bf684333a405fa2844962caabb52243eb8e03e8b5",
+    "live_OS_read_only": true,
+    "private_network_and_devices": true,
+    "MemoryMax_bytes": 419430400,
+    "CPUQuota_percent": 50,
+    "RuntimeMaxSec": 5400,
+    "recovery": {
+      "boot_id": "6114df77-29f2-43ac-8ede-1ca72c743895",
+      "prior_unit": "fx0-stable-userspace-qualification-02.service",
+      "prior_directory": "/var/lib/fx0-rollback/stable-userspace-qualification-02",
+      "terminal_unit": {
+        "ActiveState": "failed",
+        "MainPID": "0",
+        "ControlGroup": ""
+      },
+      "no_remaining_cgroup_processes": true,
+      "prior_status_sha256": "a01026dc7e4996d50bc23a1aca4cb54ea6dba3f6b6eb5b5b5d76df85f7744cf7",
+      "prior_success_sha256": "520a1ed14f094be2f3ddc560bf7e3d2385c03c5e6eee626c96dba70bdb407267",
+      "prior_initial_namespace_sha256": "148fefab0ecceb2a1fccfad7863a595569eb78e3c85e90c7e0db5ad16c7e47ed",
+      "verified_recovered_paths": 7002,
+      "verified_recovered_memberships": 701,
+      "verified_original_775_identities": true,
+      "owned_fixture_root": "/var/lib/fx0-rollback/stable-post-treescan-fixture-02/root",
+      "observed_UTC": "2026-11-13T03:51:52.828567+00:00"
+    }
+  },
+  "source_sha256": {
+    "diagnostics/stable-update/stable_transaction.py": "45d5fe8ac6af534ab516517bf684333a405fa2844962caabb52243eb8e03e8b5",
+    "diagnostics/stable-update/apk_payload_ownership.py": "1668a38cc1d9976103d5aae5dc922637b0d762ca309b18407def8aeefe407f87",
+    "diagnostics/stable-update/qualify_stable_transaction.py": "03baeb47e2ec8e02dbd18c6b6478dc293f6990ca72321d630f7861e757b68c6f",
+    "diagnostics/stable-update/verify_stable_userspace.py": "b1dea6577f173f8808375d25b5420b4a13eae352d4fc92670f80349fb65b690a",
+    "tests/test_stable_userspace_transaction.py": "bdb941c39f3df2a4192d12d149bd65f79f9226b44cdcfb9ad5b557b04f6417a6",
+    "tests/test_apk_payload_ownership.py": "d481ae0e790a28c25253564c4d8168a44259566a99dc4e9d182fd604c0c29c4e"
+  },
+  "live_package_update": false,
+  "boot_write": false,
+  "reboot": false,
+  "audio_testing": false,
+  "remaining": [
+    "Actual native controller success and both controlled failure recoveries",
+    "Independent postflight and separate live service check",
+    "Live stable userspace activation and current package acceptance",
+    "Full hardware, edge, reliability and upstream readiness"
+  ],
+  "source_sha256_are_historical": true,
+  "superseded_by_evidence": "evidence/2026-11-13-stable-symlink-timestamps.json"
+}

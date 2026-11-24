@@ -1,0 +1,66 @@
+{
+  "recorded_UTC": "2026-11-14T07:58:34.927886+00:00",
+  "source_commit": "68b0a4f369ed767b0c8061284d0017ed63f158ec",
+  "scope": "Host-only disabled MSM8926 modem supply description and RMTFS reservation on maintained Linux 6.18.63 NFC source",
+  "selected_DT_schema_and_header_Git_paths_verified_before_and_after": 9954,
+  "full_kernel_source_audit_claimed_by_this_test": false,
+  "existing_patches_applied_without_fuzz": true,
+  "stock_supply_mapping": {
+    "mx": {
+      "stock_regulator": "8226_l3",
+      "minimum_uV": 750000,
+      "maximum_uV": 1337500
+    },
+    "pll": {
+      "stock_regulator": "8226_l8",
+      "minimum_uV": 1800000,
+      "maximum_uV": 1800000
+    },
+    "mss": {
+      "stock_regulator": "8226_s5",
+      "minimum_uV": 1150000,
+      "maximum_uV": 1150000
+    }
+  },
+  "modem_and_S5_disabled": true,
+  "modem_RPM_and_RMTFS_schema_diagnostics": 0,
+  "new_DTC_warnings": 0,
+  "inherited_DTC_warnings": 3,
+  "enabled_schema_copies_used_without_enabling_actual_candidate": true,
+  "description_controls": [
+    {
+      "mode": "baseline-wrong-description",
+      "rejected": true
+    },
+    {
+      "mode": "wrong-MSS-supply",
+      "rejected": true
+    },
+    {
+      "mode": "S5-unexpectedly-enabled",
+      "rejected": true
+    }
+  ],
+  "obsolete_external_BHS_schema_control_rejected": true,
+  "rmtfs_controls": [
+    "wrong-base",
+    "wrong-client",
+    "reservation-overlap",
+    "reservation-gap"
+  ],
+  "missing_client_schema_control_rejected": true,
+  "RMTFS_base": "0x0fd80000",
+  "RMTFS_bytes": 1572864,
+  "RMTFS_client_id": 1,
+  "prior_reserved_union_exactly_preserved": true,
+  "RMTFS_change_only_five_expected_properties": true,
+  "other_compiled_property_paths_and_bytes_unchanged_by_RMTFS_addition": true,
+  "baseline_NFC_DTB_SHA256": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483",
+  "disabled_modem_DTB_SHA256": "c965e8e4f9744f238a91596e69abe6ca6adc7d52bce5ba9f823af29f8cc7ce03",
+  "combined_DTB_SHA256": "eeb2d88c15f4fc4cfef1f0f086a07a8e2f8805789e7ecc4b6ac3c5916255f0da",
+  "modem_driver_auto_boot": false,
+  "driver_source_exact_Git_bodies": true,
+  "private_stock_DTB_or_firmware_calibration_and_provisioning_bodies_included": false,
+  "physical_mapping_voltage_modem_firmware_RF_or_GNSS_qualified": false,
+  "phone_access_or_boot_or_package_changes": false
+}

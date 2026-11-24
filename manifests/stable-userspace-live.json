@@ -1,0 +1,246 @@
+{
+  "recorded_UTC": "2026-11-13T05:23:45.561476+00:00",
+  "status": "native stable update and independent postflight passed; fresh stable indexes propose zero changes",
+  "evidence": "evidence/2026-11-13-stable-userspace-live.json",
+  "evidence_sha256": "a3d06b7f8294820522ffb7ab977f5b21cbfca3899c481e9e240983133e59631a",
+  "source_sha256": {
+    "diagnostics/stable-update/stable_transaction.py": "c82c7081bc45272796b08593d13f394a9dfc7d5f43283bb3dc387bec37b2dbed",
+    "diagnostics/stable-update/apk_payload_ownership.py": "1668a38cc1d9976103d5aae5dc922637b0d762ca309b18407def8aeefe407f87",
+    "diagnostics/stable-update/qualify_stable_transaction.py": "3ea8f967787fd7dbe40eca8cf10e85b46c3f5fde72031772967087b7ff86ba10",
+    "diagnostics/stable-update/verify_stable_userspace.py": "3b746ac9dd0858eb7e9fac325818074eb20751992662077396fadf33a12be840",
+    "tests/test_stable_userspace_transaction.py": "a07b1766b711a198c3fa2985bb132878f85b8ccab0b37b8e32e8cea19e6a3a40",
+    "tests/test_apk_payload_ownership.py": "d481ae0e790a28c25253564c4d8168a44259566a99dc4e9d182fd604c0c29c4e",
+    "manifests/stable-userspace-transaction-scope-03.json": "543794c39a150a26044f806285893c82c76f7ac5ddd6a926188cdf0025eacc80"
+  },
+  "scope_manifest": "manifests/stable-userspace-transaction-scope-03.json",
+  "packages": [
+    {
+      "package": "zlib",
+      "version": "1.4-r0",
+      "sha256": "7ff3adec6ee811a8e7ac2c37e3119fa0923d087590ff52507362bbaa67b12b81",
+      "index_control_checksum": "Q1gzyvxSzIFlNmsw3HwFOuFwAj+CA=",
+      "repository": 2
+    },
+    {
+      "package": "libapk",
+      "version": "3.0.9-r0",
+      "sha256": "bfaf739d2489f8cea9d0d9de43616ba1726b57a290a01c7df844ffbf01590601",
+      "index_control_checksum": "Q1QRC33e3GG7kvpFATP1NSwPJVUA0=",
+      "repository": 2
+    },
+    {
+      "package": "apk-tools",
+      "version": "3.0.9-r0",
+      "sha256": "2ac1a0c9e158503e515d52be355904f1850e38bea336909ed66560330405f9ed",
+      "index_control_checksum": "Q1UnerhTN6trx0E4CXVB+NrHO1dlo=",
+      "repository": 2
+    },
+    {
+      "package": "libexpat",
+      "version": "2.10.0-r0",
+      "sha256": "7e8e1e95c28a5b56498a16709e9bf9d3c9d18f6f63b17bc31d280e21763ddf32",
+      "index_control_checksum": "Q1cVhm/AXSAOc4jI2NNoaIoc/DpuE=",
+      "repository": 2
+    },
+    {
+      "package": "libarchive",
+      "version": "3.8.11-r0",
+      "sha256": "0580babdf843aafa0e128a06e71a119e20936cc84c23055c6fdec2387b3f6a01",
+      "index_control_checksum": "Q1/64CuPXtrRao0kQbRj4HiJj6fBA=",
+      "repository": 2
+    },
+    {
+      "package": "openssh-keygen",
+      "version": "10.3_p1-r2",
+      "sha256": "0d17c0d72bb0d4f079d6cb3d3502bb93d06ab7d3d69d6efc7c244ae4c8b116dc",
+      "index_control_checksum": "Q1YVTBGF6F53ADZMoJw8DfncNA9eM=",
+      "repository": 2
+    },
+    {
+      "package": "openssh-server-common",
+      "version": "10.3_p1-r2",
+      "sha256": "d3741364f6d5ca24cf06055aba3a836f18c296481aa9f68b2d07f9c50a037f70",
+      "index_control_checksum": "Q1pDB9noCUwUh05PyNLMhs6SMCL1M=",
+      "repository": 2
+    },
+    {
+      "package": "openssh-server-pam",
+      "version": "10.3_p1-r2",
+      "sha256": "80fde2949af140e6f102036003b4c576f8199ef640592d7f8217d66effc56011",
+      "index_control_checksum": "Q1Kuv1NBtW+lRbf/NUMSzAzAc7vio=",
+      "repository": 2
+    },
+    {
+      "package": "tzdata",
+      "version": "2026f-r0",
+      "sha256": "807366b6050364f4568a338f16259472e3a2e7b8eb7a7bec98332dbc825d6911",
+      "index_control_checksum": "Q1SwYtN0kfrpTnpz9CwCQQ/TsFwQw=",
+      "repository": 2
+    },
+    {
+      "package": "alpine-release",
+      "version": "3.24.4-r0",
+      "sha256": "b5bec3102a2a1fcc2dd2bf79eca05c79f0da65c4508535ee3a8608abaa905367",
+      "index_control_checksum": "Q1trM4D57Jg4mSgG3VMqmqWB61JP0=",
+      "repository": 2
+    },
+    {
+      "package": "openssh-client-common",
+      "version": "10.3_p1-r2",
+      "sha256": "f98c509ec3ada96145629d2ad13cacac3b99e5fcab90be9e4f0e93618fa9e778",
+      "index_control_checksum": "Q1PIm3dETbe+LP1/l3Nc7ALwXubFg=",
+      "repository": 2
+    },
+    {
+      "package": "openssh-client-default",
+      "version": "10.3_p1-r2",
+      "sha256": "679da0ce65f0a9ac9a69837a67f1c70c6c4c455d2dab5b2ec49e12759db2ceb2",
+      "index_control_checksum": "Q1mTGGRQBhkTkn+bN1Mh+jqOPwuDU=",
+      "repository": 2
+    },
+    {
+      "package": "openssh-sftp-server",
+      "version": "10.3_p1-r2",
+      "sha256": "0c2fc9496c805d60a0f5716824e47c22bc2123edf65e0b40838253fd051762df",
+      "index_control_checksum": "Q1Juio8bLKM2JMujs5P3+9P9ole0s=",
+      "repository": 2
+    },
+    {
+      "package": "openssh-server",
+      "version": "10.3_p1-r2",
+      "sha256": "3e46d2f0b4c178d9c7d78e27574b4d513190eb9d74548cc9266212ea1fde0898",
+      "index_control_checksum": "Q1CwwkkGp4R6uujUTKPLRbghhd6pQ=",
+      "repository": 2
+    },
+    {
+      "package": "openssh",
+      "version": "10.3_p1-r2",
+      "sha256": "3a45f90c33cbf9a9a683284bf83bc865b42226132220715eaec38d26bf7ece35",
+      "index_control_checksum": "Q1EXQdv1hv0qmtz5EynSog6cZPdY0=",
+      "repository": 2
+    },
+    {
+      "package": "openssh-nftrules",
+      "version": "10.3_p1-r2",
+      "sha256": "86fd2b68fcec2e3eb2b50de3cc8032069c564dcfbfd25a8aa17db73d06646fe0",
+      "index_control_checksum": "Q1p5ojfbKu249Ssina/wj7Xhgu6Mc=",
+      "repository": 2
+    },
+    {
+      "package": "libheif-dav1d",
+      "version": "1.23.7-r0",
+      "sha256": "62d5d7e30d40f558d277e82fabf0cbb687983f4d0cc8b4f8de7681474956c2ce",
+      "index_control_checksum": "Q1ug4nZ3dmIbcg8b+r3lxTXpiT7Qs=",
+      "repository": 3
+    },
+    {
+      "package": "libheif-libde265",
+      "version": "1.23.7-r0",
+      "sha256": "2a8b0457c84479b7cbfc51ee2eae4e8d27b8a23965a88207b8efa091246faa57",
+      "index_control_checksum": "Q18V5owrMU4jOYFM+14rtfOTgYN7U=",
+      "repository": 3
+    },
+    {
+      "package": "libheif",
+      "version": "1.23.7-r0",
+      "sha256": "a1a0a5c8b92278a7abb484c9317a7bbc0930ce8192c68d0ecd67ccf4c2fd6718",
+      "index_control_checksum": "Q1NpQGN1slTkSNOyQK7Q8zIKWgFpQ=",
+      "repository": 3
+    },
+    {
+      "package": "libheif-jpeg",
+      "version": "1.23.7-r0",
+      "sha256": "e5c5180d4cb12562ddcc1a5b466393278958f55d50bccb8c9851605057a7c38b",
+      "index_control_checksum": "Q1o1npKnMIO/BXGhM8EP8Z5CuuvUw=",
+      "repository": 3
+    },
+    {
+      "package": "libheif-aom",
+      "version": "1.23.7-r0",
+      "sha256": "b951869869f237c7d3b3dcdadf22e56142270b8c7beba3536ce73666f6018bcf",
+      "index_control_checksum": "Q1zxjwAaa6oLjgDdsinA1u3pITZxA=",
+      "repository": 3
+    },
+    {
+      "package": "libheif-rav1e",
+      "version": "1.23.7-r0",
+      "sha256": "7c9faefa6032ea502631be74a6f85e57cad0b618c67fea7337c5abf69e524f4b",
+      "index_control_checksum": "Q1eB8bcRqbceiM+IEilKDnlpd/pOc=",
+      "repository": 3
+    },
+    {
+      "package": "libheif-x264",
+      "version": "1.23.7-r0",
+      "sha256": "dc56fa873e73f2d373c3b20bba90ba47b1b1e60a2acd4cac29cb0db5456921e2",
+      "index_control_checksum": "Q1XVWIEndPPMETJmOOeYAwyQao8GM=",
+      "repository": 3
+    },
+    {
+      "package": "libheif-x265",
+      "version": "1.23.7-r0",
+      "sha256": "9fd7d57dd4528dd7cb658f83dd12d331b3b3f274d50e2d2eb9387d217c272599",
+      "index_control_checksum": "Q1Ln7by4qNWzIajLfJLDYBgjlCDwc=",
+      "repository": 3
+    },
+    {
+      "package": "libheif-ffmpeg",
+      "version": "1.23.7-r0",
+      "sha256": "a61962539e5e03ec597eb3c0e4f2af47da9a8a9aaeee7ef5e3b473bfa34e24e8",
+      "index_control_checksum": "Q1fCA2eJBSMsI8ijiy2H+bG4KojSI=",
+      "repository": 3
+    },
+    {
+      "package": "libopenmpt",
+      "version": "0.8.10-r0",
+      "sha256": "ca28b52a1adc79bd9751242648e030de35563cbe72846c733ed99cae5770805a",
+      "index_control_checksum": "Q1Wt0090sJGHiImElzy2+1JU21eLc=",
+      "repository": 3
+    },
+    {
+      "package": "vim-common",
+      "version": "9.2.1310-r0",
+      "sha256": "b072b5bfd6f04be97c36dc3bf5ce55c6aec991004d96247ed73544b8c08346f7",
+      "index_control_checksum": "Q1ZN54fgCRdFojphE+5UaT60RwGs4=",
+      "repository": 3
+    },
+    {
+      "package": "xxd",
+      "version": "9.2.1310-r0",
+      "sha256": "aeae321fab704834fd51cbb2519a8c0da8c6647eec044998d74d7fe1b5fe6499",
+      "index_control_checksum": "Q16MAc9G80fPbi8wiKQHNeV1iYGjg=",
+      "repository": 3
+    },
+    {
+      "package": "vim",
+      "version": "9.2.1310-r0",
+      "sha256": "11af989aa7095247d513fa59db86c62f5e017752e37f63e15cd973413ff9a6d7",
+      "index_control_checksum": "Q1WGDjXz+xzUXCFevg+ZVhJ6Rc8vE=",
+      "repository": 3
+    },
+    {
+      "package": "xwayland",
+      "version": "24.1.15-r0",
+      "sha256": "04c8a9fcc2b518570c0d4a3dd3b4093d6b717613ca42a84f309365dfff227a74",
+      "index_control_checksum": "Q18Jm2eqBnGZP6L5RdoovYWlLVoq0=",
+      "repository": 3
+    }
+  ],
+  "kernel": "6.18.63-r1",
+  "treescan": "0.1-r1",
+  "Sxmo": "1.18.1-r7",
+  "host_tests_passed": 26,
+  "native_qualification_passed": true,
+  "live_update_passed": true,
+  "independent_postflight_passed": true,
+  "stable_pending_changes": 0,
+  "current_stable_indexes_sha256": [
+    "c52a218aeb8dd67b2c3bb7bece1280609f1859f2b276ea850b0f4780f84545b4",
+    "6d7cdaf94e5af3d4a3b089de24831c0fd71c4f46d342c2f59c0dd245b3314f34",
+    "c64e761dc08bc30512a04f9e61e29f80e557ac09dfb281704a5561793d6eae6d",
+    "396c2762d15fef52f4235560b641ab4b2447964fd7e84d8195a1e60fa094bb93"
+  ],
+  "reboot": false,
+  "boot_write": false,
+  "audio_testing": false,
+  "full_bringup": "active"
+}

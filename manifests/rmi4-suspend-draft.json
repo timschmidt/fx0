@@ -1,0 +1,334 @@
+{
+  "recorded_UTC": "2026-11-12T02:19:50.479112+00:00",
+  "subject": "RMI4 I2C system-suspend recovery review draft on the current Input tree",
+  "draft": {
+    "recorded_UTC": "2026-11-12T01:42:27.196238+00:00",
+    "base_commit": "8e16f8bbf1bd528975fd6f4081eaf00513c1d83e",
+    "draft_commit": "e33d4f520c20cf3002183ad0bd1d31df61f226a2",
+    "draft_tree": "fff0c8eeb66183d86542ac61790293a6b5102024",
+    "original_downstream_commit": "6d3c6c42f7bbfcc93dfac4e46da6debe23e4f3bd",
+    "original_author_preserved": true,
+    "source_path": "drivers/input/rmi4/rmi_i2c.c",
+    "base_sha256": "56581b09ccd9e90a9b8d0a2b9f5a3de07f9d0d32c389f0c5763df2e709c9c70a",
+    "patched_sha256": "e1a582e0b977c97af0d4686141399d72bd7e1e36689e94e80a5d836ebc134a93",
+    "source_policy_hashes_verified": {
+      "README": "d9e6892ff2c83807c34f4aeb06bff724068803d0e03470bfb81a8f5cbde5f090",
+      "COPYING": "fb5a425bd3b3cd6071a3a9aff9909a859e7c1158d54d32e07658398cd67eb6a0",
+      "Documentation/process/coding-assistants.rst": "9e5b0b0141195df17150125b7c087a06fa38eacd4c96e03dd5eba0f27a56d17b",
+      "Documentation/process/development-process.rst": "f24d59021efe8f62eca826b750c89b5d4907af4068657cbfa690e04cbadc6950",
+      "Documentation/process/generated-content.rst": "828f797e5827530bf23c61f9d893f36aa48c2bff01d2001e0b48ecf21dc6bc2f",
+      "Documentation/process/threat-model.rst": "2ca392f6b448b6ff39a6c7bbeab133f0c005470cd19a026bb4cbe59a7df6b30b",
+      "Documentation/process/coding-style.rst": "332454d2ab9a0462dd9f292c52291cf3b5e1afcd638aa06df15f557c47a126f5",
+      "Documentation/process/submitting-patches.rst": "7f7b46a27ffbc71654af03a07e55345229138a7f4d3b0c70bf736b2551100355",
+      "Documentation/process/license-rules.rst": "635a61aa47349007033c64fcdf403d33be35040b62284494bbbd4a9b546ec06d",
+      "Documentation/process/security-bugs.rst": "0918dcfa7979f348c9004bf3ce6e183507367185fe69f4e0c7688521e9346f40",
+      "Documentation/process/1.Intro.rst": "18e0275139d8d378a72eb8a4bdc688ac4ccdc831822862d9308bd598d7a7bad7",
+      "Documentation/process/2.Process.rst": "81e460ab193df312ae9d2384c5e467167223706fb67dbd7f75351e7b55596d0f",
+      "Documentation/process/3.Early-stage.rst": "929b76481c24484abd2cbbfe48805d992b73d25cf7a2ac2a6fe7b415ccb63cd1",
+      "Documentation/process/4.Coding.rst": "cf1bae31184c5b8fc89495a3ce3d105e0172522514f66d0bc6c3e87e21876585",
+      "Documentation/process/5.Posting.rst": "eb9e01452fa5715f17790288efb040154fe5e3c81550c9de2937fac583f2adc0",
+      "Documentation/process/6.Followthrough.rst": "d570e0096b0dfc472b9f731fdd1669bb441b46a80675aed45cf4af62fb58055b",
+      "Documentation/process/7.AdvancedTopics.rst": "58e2891fe77b1b285d085ee23e43938a8fcbd4db4e3e53c579c3ee582c137037",
+      "Documentation/process/8.Conclusion.rst": "a60430109d7b517d78d92189c30797c5639dcbd4e0bae0629aea62c4fda54b61",
+      "Documentation/process/changes.rst": "63cc8c6f0d6ec350239c1635a257ad8bb95f55c4824c9e00047af68d1b9421d2",
+      "Documentation/process/code-of-conduct.rst": "49da8480786d906685172ace9b860d53d78f2783f6da1e5bb6f8889dbe5352ff"
+    },
+    "reset_GPIO_dependency": false,
+    "panel_follower_dependency": false,
+    "agent_added_DCO_signoffs": false,
+    "human_review_pending": true,
+    "no_upstream_message_sent": true,
+    "physical_test_of_this_exact_tree": false,
+    "message_only_amend_from": "05885fde94807e2028feaf19c11c3fd555a8170c"
+  },
+  "upstream_ref_check": {
+    "recorded_UTC": "2026-11-12T02:09:39.500961+00:00",
+    "refs": {
+      "master": "8e16f8bbf1bd528975fd6f4081eaf00513c1d83e",
+      "next": "8e16f8bbf1bd528975fd6f4081eaf00513c1d83e",
+      "for-linus": "9def7caa2e55d0c5708385ae0d0039e9eaa26c47"
+    },
+    "primary_and_official_mirror_match": true,
+    "qualified_base_still_current": true,
+    "primary_body_sha256": "0514444b0ffd1fc01d41c58485dce095be7d08cc56e4abfdb34158ff1d97d1d6",
+    "mirror_body_sha256": "d50e6d51de67f396ccf273d4aec671fc19ebdf130e18a7820b0d7472afcd70d6"
+  },
+  "source_publication": {
+    "recorded_UTC": "2026-11-12T02:18:15.461633+00:00",
+    "repository": "https://github.com/timschmidt/fx0-linux.git",
+    "branch": "refs/heads/submit/rmi4-suspend-completion-v1",
+    "commit": "e33d4f520c20cf3002183ad0bd1d31df61f226a2",
+    "remote_ref_verified": true,
+    "unsigned_review_draft": true,
+    "force": false,
+    "tool_session": 95836,
+    "actual_tool_terminal_exit_code": 0,
+    "actual_systemd_main_status": "0/SUCCESS",
+    "actual_systemd_result": "success",
+    "source_push_runtime_seconds": 53.076,
+    "memory_peak_reported": "1G",
+    "swap_reported": "0B",
+    "upstream_history_preserved": true,
+    "full_mainline_history_claimed": false,
+    "upstream_email_or_PR_sent": false,
+    "standing_GitHub_push_approval_used": true
+  },
+  "actual_callback_behavior": {
+    "recorded_UTC": "2026-11-12T01:54:31.158943+00:00",
+    "extracted_actual_callbacks": true,
+    "candidate_lifecycle_cases": 119,
+    "original_defect_rejected": true,
+    "independent_regression_controls_rejected": 4,
+    "sanitizer": "ASan and UBSan",
+    "results": [
+      {
+        "name": "candidate",
+        "returncode": 0,
+        "compiler_diagnostics": 0,
+        "stdout": "PASS 119 callback lifecycle cases\n",
+        "stderr": "",
+        "fixture_sha256": "667a0446e1fd918dceadce64a164873bef3d80d31ba0b9ca377e141257e5bb9d"
+      },
+      {
+        "name": "original-current-tree",
+        "returncode": 2,
+        "compiler_diagnostics": 0,
+        "stdout": "",
+        "stderr": "FAIL line 124: result == 0 && sequence == 12 && !powered\n",
+        "fixture_sha256": "b66ff2bec88018145f2a3f01870c9e46676b635ae85e0986751ca10e8354b6a0"
+      },
+      {
+        "name": "regression-propagate-sleep-error",
+        "returncode": 2,
+        "compiler_diagnostics": 0,
+        "stdout": "",
+        "stderr": "FAIL line 128: result == 0 && sequence == 12 && !powered\n",
+        "fixture_sha256": "b9f6bf1e8c4058ea648728dc199451a2380103dabdce37d4ada89c0777c56b0e"
+      },
+      {
+        "name": "regression-skip-supply-disable",
+        "returncode": 2,
+        "compiler_diagnostics": 0,
+        "stdout": "",
+        "stderr": "FAIL line 127: result == 0 && sequence == 12 && !powered\n",
+        "fixture_sha256": "c2c3ae21a1e60a82f7d47d766e9a5f81385d7cab5a24956b62e69ddea26f29bc"
+      },
+      {
+        "name": "regression-ignore-resume-supply-error",
+        "returncode": 2,
+        "compiler_diagnostics": 0,
+        "stdout": "",
+        "stderr": "FAIL line 139: rmi_i2c_resume(&dev) == -5 && sequence == 3 && !powered\n",
+        "fixture_sha256": "a92a826e823567461d25219bda76bacd3b2b34d22d8add516f874198201c828b"
+      },
+      {
+        "name": "regression-wrong-diagnostic",
+        "returncode": 2,
+        "compiler_diagnostics": 0,
+        "stdout": "",
+        "stderr": "FAIL line 130: strcmp(warning, \"Failed to suspend device: %d\\n\") == 0\n",
+        "fixture_sha256": "e00c4e2155cf6d97a088d519262e7e20f1851262ed3a995578ab46079a095bf9"
+      }
+    ],
+    "runtime_and_system_resume_callbacks_byte_unchanged": true,
+    "PM_core_behavior": "Source-checked model; the kernel PM core is not executed by this host fixture",
+    "power_disable_failure_injection": false,
+    "actual_regulators_I2C_IRQs_or_hardware": false,
+    "full_kernel_or_module_link": false,
+    "physical_test": false
+  },
+  "ARM_object_builds": {
+    "stage": "complete",
+    "builds": [
+      {
+        "ARM_ELF32": true,
+        "object_sha256": "e8abc3c536f91c33541285b5d94acc6ddbeb067f1f662e18e00ad6d227f0c539",
+        "KCFI_compile_flag": true,
+        "ARM_callback_type_words": {
+          "rmi_i2c_suspend": "0x2a703c0b",
+          "rmi_i2c_resume": "0x2a703c0b",
+          "rmi_i2c_runtime_suspend": "0x2a703c0b",
+          "rmi_i2c_runtime_resume": "0x2a703c0b"
+        },
+        "compressed_debug_info": true,
+        "actual_DWARF_version": 5,
+        "label": "base",
+        "source_paths_verified": 97264,
+        "diagnostic_lines": 0
+      },
+      {
+        "ARM_ELF32": true,
+        "object_sha256": "666b4fca80114ab566f109949a16d4b3914d7d95d036867619a93c2d31d678a0",
+        "KCFI_compile_flag": true,
+        "ARM_callback_type_words": {
+          "rmi_i2c_suspend": "0x2a703c0b",
+          "rmi_i2c_resume": "0x2a703c0b",
+          "rmi_i2c_runtime_suspend": "0x2a703c0b",
+          "rmi_i2c_runtime_resume": "0x2a703c0b"
+        },
+        "compressed_debug_info": true,
+        "actual_DWARF_version": 5,
+        "label": "patched",
+        "source_paths_verified": 97264,
+        "diagnostic_lines": 0
+      }
+    ],
+    "phone_commands": 0,
+    "complete": true,
+    "updated_UTC": "2026-11-12T01:47:26.135315+00:00",
+    "actual_ARM_objects": 2,
+    "full_kernel_or_module_link": false,
+    "physical_boot": false,
+    "normalized_config_preserved": true,
+    "configured_security_features_reduced": false,
+    "source_read_only_during_build": true,
+    "runtime_private_keys_read_or_hashed_or_exported": false,
+    "finished_UTC": "2026-11-12T01:47:30.117664+00:00"
+  },
+  "actual_memory_limits": {
+    "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/fx0-rmi4-suspend-arm-01.service",
+    "actual": {
+      "memory.max": "4294967296",
+      "memory.swap.max": "0",
+      "cpu.max": "200000 100000"
+    },
+    "immutable_inputs_verified": true
+  },
+  "actual_ARM_controller": {
+    "state": "terminal",
+    "unit": "fx0-rmi4-suspend-arm-01.service",
+    "service_argv": [
+      "systemd-run",
+      "--user",
+      "--pipe",
+      "--wait",
+      "--collect",
+      "--unit=fx0-rmi4-suspend-arm-01",
+      "--property=MemoryMax=4294967296",
+      "--property=MemorySwapMax=0",
+      "--property=CPUQuota=200%",
+      "--property=RuntimeMaxSec=600",
+      "--property=TimeoutStopSec=20",
+      "--property=KillMode=control-group",
+      "/usr/bin/python3",
+      "-B",
+      "/home/tim/Documents/GitHub/fx0/local/vibrator-full-build-01/service-entry.py",
+      "/home/tim/Documents/GitHub/fx0/local/rmi4-suspend-upstream-01/arm-run01"
+    ],
+    "archive_argv": [
+      "git",
+      "-C",
+      "/home/tim/Documents/GitHub/fx0/worktrees/fx0-rmi4-suspend-review",
+      "archive",
+      "--format=tar",
+      "8e16f8bbf1bd528975fd6f4081eaf00513c1d83e"
+    ],
+    "observations": [
+      {
+        "available_memory_bytes": 9329516544,
+        "stage": "starting"
+      },
+      {
+        "available_memory_bytes": 7541792768,
+        "stage": "patched-verify-full-source"
+      }
+    ],
+    "phone_commands": 0,
+    "started_UTC": "2026-11-12T01:46:51.889620+00:00",
+    "PIDs_informational_only": {
+      "archive": 3850948,
+      "waited_service_wrapper": 3850949
+    },
+    "worker_returncode": 0,
+    "archive_returncode": 0,
+    "all_owned_processes_reaped": true,
+    "finished_UTC": "2026-11-12T01:47:31.895496+00:00"
+  },
+  "message_only_amend_equivalence": {
+    "recorded_UTC": "2026-11-12T01:49:59.533740+00:00",
+    "tested_commit": "05885fde94807e2028feaf19c11c3fd555a8170c",
+    "review_commit": "e33d4f520c20cf3002183ad0bd1d31df61f226a2",
+    "exact_source_tree": "fff0c8eeb66183d86542ac61790293a6b5102024",
+    "source_tree_unchanged": true,
+    "reason": "Commit-message attribution wording fixed after strict checkpatch; no source/config/compiler change",
+    "build_receipt": "arm-run01/verification.json"
+  },
+  "strict_checkpatch": {
+    "returncode": 0,
+    "errors": 0,
+    "warnings": 0,
+    "checks": 0,
+    "only_signoff_check_disabled": true
+  },
+  "export_replay": {
+    "recorded_UTC": "2026-11-12T01:52:14.280396+00:00",
+    "base": "8e16f8bbf1bd528975fd6f4081eaf00513c1d83e",
+    "draft": "e33d4f520c20cf3002183ad0bd1d31df61f226a2",
+    "actual_tree": "fff0c8eeb66183d86542ac61790293a6b5102024",
+    "expected_tree": "fff0c8eeb66183d86542ac61790293a6b5102024",
+    "exact_tree_match": true,
+    "alternate_index_only": true,
+    "patch_sha256": "308bdd151fa3037cc542b7fc54e6d927f4f3d36679e3fdaa222bef046faf4e5d"
+  },
+  "maintainer_lookup": {
+    "argv": [
+      "perl",
+      "scripts/get_maintainer.pl",
+      "--no-tree",
+      "--no-git",
+      "--no-git-fallback",
+      "/home/tim/Documents/GitHub/fx0/local/rmi4-suspend-upstream-01/unsigned-drafts/0001-Input-rmi4-complete-suspend-after-powering-down-I2C-.patch"
+    ],
+    "returncode": 0,
+    "stdout": "Dmitry Torokhov <dmitry.torokhov@gmail.com> (maintainer:INPUT (KEYBOARD, MOUSE, JOYSTICK, TOUCHSCREEN)...,blamed_fixes:1/1=100%)\nBjorn Andersson <bjorn.andersson@sonymobile.com> (blamed_fixes:2/1=100%)\nAndrew Duggan <aduggan@synaptics.com> (blamed_fixes:1/1=100%)\nRob Herring <robh@kernel.org> (blamed_fixes:1/1=100%)\nlinux-input@vger.kernel.org (open list:INPUT (KEYBOARD, MOUSE, JOYSTICK, TOUCHSCREEN)...)\nlinux-kernel@vger.kernel.org (open list)\n",
+    "stderr": "",
+    "messages_sent": 0
+  },
+  "exact_source_history_recovery": {
+    "recorded_UTC": "2026-11-12T02:14:01.298521+00:00",
+    "branch_commit": "e33d4f520c20cf3002183ad0bd1d31df61f226a2",
+    "exact_tree": "fff0c8eeb66183d86542ac61790293a6b5102024",
+    "source_worktree_clean": true,
+    "reachable_commits": 64,
+    "reachable_objects": 143003,
+    "missing_reachable_objects": 0,
+    "all_parent_edges_resolved_until_known_boundaries": true,
+    "GitHub_confirmed_shallow_boundaries": [
+      "37a1c20052235e505a0fd27ce687d366e98d3b08",
+      "7475ea8b58616b33c04afb976cf0fbaad9dd63fb",
+      "c03c1a14507dfaf8b856c2608f9ac216021fc222"
+    ],
+    "exact_public_Gitiles_commits_imported": 60,
+    "preserved_original_signed_merge_bytes": true,
+    "full_mainline_history_claimed": false,
+    "new_source_or_index_changes": false,
+    "phone_changes": false
+  },
+  "historical_physical_evidence": "evidence/2026-11-01-s2idle-touch-mdp5.json",
+  "historical_physical_scope": "Combined downstream touch-panel and MDP5 integration; not this standalone tree",
+  "full_kernel_or_module_link": false,
+  "exact_tree_physical_boot_or_suspend": false,
+  "regulator_disable_failure_coverage": false,
+  "GCC_qualified": false,
+  "human_review_and_DCO_pending": true,
+  "upstream_messages_sent": 0,
+  "native_postflight_recorded_UTC": "2026-11-12T02:12:59.386883+00:00",
+  "native_boot_database_world_repositories_unchanged": true,
+  "native_systemd_running": true,
+  "native_Sway_and_gesture_daemon_running": true,
+  "native_package_or_boot_changes": false,
+  "current_return_physical_UI_pending": true,
+  "current_return_UI_question_already_asked": true,
+  "kernel_installer_revision_02_still_prepared": true,
+  "vibrator_full_builds_started": false,
+  "vibrator_full_build_hold": "Host MemAvailable below the preserved 16 GiB start threshold",
+  "all_owned_phase_processes_terminal": true,
+  "DiskB_read_only": true,
+  "runtime_private_keys_read_hashed_or_exported": false,
+  "standing_phone_update_and_fx0_GitHub_push_approval": true,
+  "installed_kernel_remains": "r50",
+  "Sxmo": "1.18.1-r7",
+  "UPower": "r5",
+  "audio_testing": false,
+  "full_bringup": "active"
+}

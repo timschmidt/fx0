@@ -1,6 +1,6 @@
 # sxmo-utils draft submission
 
-One patch for [sxmo-utils](https://git.sr.ht/~mil/sxmo-utils), based on
+Four patches for [sxmo-utils](https://git.sr.ht/~mil/sxmo-utils), based on
 `master` at `303c755e88d2a25c01bdbc5b46aba1939318f839` (fetched October 31,
 2026). Sxmo takes patches by email to `~mil/sxmo-devel@lists.sr.ht`. **Not
 sent:** sending needs the owner's approval and Signed-off-by.
@@ -18,3 +18,36 @@ needed, so it is not part of the patch.
 Checks: `sh -n` and shellcheck (Alpine 3.24) are clean. On the phone the same
 variables, used from `/usr/local/bin`, give working Sxmo gestures and buttons;
 the owner confirmed input under the GLES2 session.
+
+The [haptics follow-up](0002-deviceprofiles-fix-LG-Fx0-haptics.patch) exports
+the board's persistent PM8226 input path and strength 39168. The native Sxmo
+environment loader and installed utility pass as the graphical user. The
+uncorrected r50 driver programs a 2.1 V target at that strength, and a
+separate kernel candidate restores the intended range. The two profile
+exports are installed locally and the next native Sway session inherits
+both. System suspend and tactile qualification remain open. [Measurements and scope](../../diagnostics/vibrator/README.md)
+
+
+The [notification completion draft](0003-notifs-dispatch-after-write-completion.patch)
+removes attribute-triggered dispatch from the pinned master source. A real-inotify
+fixture reproduces partial-file deletion and checks seven complete deliveries
+without empty or early dispatch. The first three patches apply in order with zero
+fuzz. The installed 1.18.1 script also needs close-write monitoring and removal
+of its premature touch; that release-specific correction and an opt-in Fx0 user
+haptics hook are maintained in [the diagnostic](../../diagnostics/sxmo-notifications/README.md).
+The real phone passes normal, muted and re-enabled notifications, including
+Dunst replies and PMIC timing. The user hook is outside this upstream patch.
+The drafts remain unsent.
+
+
+The [packaged device-hook draft](0004-hooks-load-device-specific-packaged-defaults.patch)
+searches per-device defaults below user hooks and above generic packaged hooks,
+then ships the qualified Fx0 notification hook there. Missing device directories
+do not add an empty PATH entry. Seven real-loader fixture cases pass; the
+packaged loader/profile/hook and rebuilt utility also pass a temporary native
+notification probe. All four drafts apply in order with zero fuzz. The matching
+1.18.1 r7 package candidate builds twice with 14 byte-identical signed APKs;
+the authorized native installation now runs all eight r7 packages, with an
+exercised exact r6 rollback and fresh-session qualification. The dependent
+custom user gesture wrapper now resolves the packaged profile and retains
+its `-r 25` option. The upstream drafts remain unsent. [Package scope](../../diagnostics/sxmo-notifications/README.md#reproducible-r7-package-candidate)

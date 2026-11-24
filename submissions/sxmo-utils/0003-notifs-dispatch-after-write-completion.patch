@@ -1,0 +1,35 @@
+Subject: [PATCH 3/3] notifs: dispatch after close-write or move, not attributes
+
+An attribute event can arrive while the writer is still filling a new
+notification file. The handler can then delete the partial record or
+attempt a later dispatch after the file has disappeared. Watch for a
+completed write or an atomic move instead. Keep delete events for the
+notification-count hook.
+
+The native real-inotify fixture reproduces the original partial-write
+loss and checks delayed writes, the normal writer and atomic moves.
+The desktop and hardware hooks are mocked in that regression fixture.
+
+Based on sxmo-utils 303c755e88d2a25c01bdbc5b46aba1939318f839.
+Unsent draft; no Signed-off-by is asserted.
+
+--- a/scripts/core/sxmo_notifs.sh
++++ b/scripts/core/sxmo_notifs.sh
+@@ -60,7 +60,7 @@
+ 
+ 	fifo="$(mktemp -u)"
+ 	mkfifo "$fifo"
+-	inotifywait -mq -e attrib,move,delete,close_write "$SXMO_NOTIFDIR"  >> "$fifo" &
++	inotifywait -mq -e move,delete,close_write "$SXMO_NOTIFDIR"  >> "$fifo" &
+ 	inotif_pid=$!
+ 
+ 	finish() {
+@@ -71,7 +71,7 @@
+ 	trap 'finish' TERM INT EXIT
+ 
+ 	while read -r notif_folder notif_type notif_file; do
+-		if echo "$notif_type" | grep -qE "CREATE|MOVED_TO|ATTRIB|CLOSE_WRITE"; then
++		if echo "$notif_type" | grep -qE "MOVED_TO|CLOSE_WRITE"; then
+ 			_handle_new_notif_file "$notif_folder$notif_file"
+ 		fi
+ 		_notifications_hook

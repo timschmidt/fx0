@@ -1,0 +1,108 @@
+From 2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 23:24:07 -0500
+Subject: [RFC PATCH net 2/2] nfc: nxp-nci: drain receive before freeing the
+ NCI device
+
+The I2C remove callback releases the IRQ after nxp_nci_remove() frees the
+NCI device. A pending threaded handler still uses phy->ndev and its driver
+data, so it must finish before that state is released.
+
+Simply releasing the IRQ before unregister is too early for an open
+controller: NCI close sends CORE_RESET and needs the receive IRQ to obtain
+its response. Preserve receive through unregister, then stop and drain it
+before the final cold-mode cleanup and nci_free_device().
+
+Add an optional transport stop_rx operation and invoke it without holding
+info_lock. The I2C implementation tracks successful IRQ registration so
+the existing failed-request unwind does not release an unowned IRQ.
+
+Fixes: 6be88670fc59 ("NFC: nxp-nci_i2c: Add I2C support to NXP NCI driver")
+Assisted-by: LLM
+---
+ drivers/nfc/nxp-nci/core.c    |  5 +++++
+ drivers/nfc/nxp-nci/i2c.c     | 16 +++++++++++++++-
+ drivers/nfc/nxp-nci/nxp-nci.h |  1 +
+ 3 files changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/nfc/nxp-nci/core.c b/drivers/nfc/nxp-nci/core.c
+index 8e6b6ece5db2..b6d7d7486bac 100644
+--- a/drivers/nfc/nxp-nci/core.c
++++ b/drivers/nfc/nxp-nci/core.c
+@@ -186,8 +186,13 @@ void nxp_nci_remove(struct nci_dev *ndev)
+ 		nxp_nci_fw_work_complete(info, -ESHUTDOWN);
+ 	cancel_work_sync(&info->fw_info.work);
+ 
++	/* Keep RX available until NCI has completed its closing reset. */
+ 	nci_unregister_device(ndev);
+ 
++	/* Drain RX before freeing NCI state, without holding info_lock. */
++	if (info->phy_ops->stop_rx)
++		info->phy_ops->stop_rx(info->phy_id);
++
+ 	mutex_lock(&info->info_lock);
+ 	if (info->phy_ops->set_mode)
+ 		info->phy_ops->set_mode(info->phy_id, NXP_NCI_MODE_COLD);
+diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
+index 92ce096e9b18..1089d7bf448d 100644
+--- a/drivers/nfc/nxp-nci/i2c.c
++++ b/drivers/nfc/nxp-nci/i2c.c
+@@ -36,6 +36,7 @@ struct nxp_nci_i2c_phy {
+ 
+ 	struct gpio_desc *gpiod_en;
+ 	struct gpio_desc *gpiod_fw;
++	bool irq_requested;
+ 
+ 	int hard_fault; /*
+ 			 * < 0 if hardware error occurred (e.g. i2c err)
+@@ -89,9 +90,21 @@ static int nxp_nci_i2c_write(void *phy_id, struct sk_buff *skb)
+ 	return r;
+ }
+ 
++static void nxp_nci_i2c_stop_rx(void *phy_id)
++{
++	struct nxp_nci_i2c_phy *phy = phy_id;
++
++	if (!phy->irq_requested)
++		return;
++
++	free_irq(phy->i2c_dev->irq, phy);
++	phy->irq_requested = false;
++}
++
+ static const struct nxp_nci_phy_ops i2c_phy_ops = {
+ 	.set_mode = nxp_nci_i2c_set_mode,
+ 	.write = nxp_nci_i2c_write,
++	.stop_rx = nxp_nci_i2c_stop_rx,
+ };
+ 
+ static int nxp_nci_i2c_fw_read(struct nxp_nci_i2c_phy *phy,
+@@ -337,6 +350,8 @@ static int nxp_nci_i2c_probe(struct i2c_client *client)
+ 	if (r < 0) {
+ 		nfc_err(&client->dev, "Unable to register IRQ handler\n");
+ 		nxp_nci_remove(phy->ndev);
++	} else {
++		phy->irq_requested = true;
+ 	}
+ 
+ 	return r;
+@@ -347,7 +362,6 @@ static void nxp_nci_i2c_remove(struct i2c_client *client)
+ 	struct nxp_nci_i2c_phy *phy = i2c_get_clientdata(client);
+ 
+ 	nxp_nci_remove(phy->ndev);
+-	free_irq(client->irq, phy);
+ }
+ 
+ static const struct i2c_device_id nxp_nci_i2c_id_table[] = {
+diff --git a/drivers/nfc/nxp-nci/nxp-nci.h b/drivers/nfc/nxp-nci/nxp-nci.h
+index ae3fb2735a4e..fb4e17e37c53 100644
+--- a/drivers/nfc/nxp-nci/nxp-nci.h
++++ b/drivers/nfc/nxp-nci/nxp-nci.h
+@@ -31,6 +31,7 @@ enum nxp_nci_mode {
+ struct nxp_nci_phy_ops {
+ 	int (*set_mode)(void *id, enum nxp_nci_mode mode);
+ 	int (*write)(void *id, struct sk_buff *skb);
++	void (*stop_rx)(void *id);
+ };
+ 
+ struct nxp_nci_fw_info {

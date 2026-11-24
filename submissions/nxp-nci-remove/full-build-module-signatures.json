@@ -1,0 +1,1841 @@
+{
+  "release": "7.3.0-rc3-fx0-nfc-alpine",
+  "certificate_sha256": "3fd6d6e566b865f9ec5342b4cd63d48338924f71a8fc0dddf8886d326a8eb4a2",
+  "modules": {
+    "kernel/crypto/af_alg.ko.zst": {
+      "file_sha256": "938aa701767aa123f685155c19a44aa4e54fffe8f52a81ef213914ed124ab00f",
+      "signed_payload_sha256": "f222339e3d86418ffaba73445fb59ab12bf0e969efc06457350ab967d6206c67"
+    },
+    "kernel/crypto/algif_aead.ko.zst": {
+      "file_sha256": "136854d48504e87bfef77046ed2ec31b83f075c387feda708a0215ebfae920dd",
+      "signed_payload_sha256": "b3b8305037a5901734c2a37e39d05be940e8cd6557e84b28f9fb7f00e7aa04d7"
+    },
+    "kernel/crypto/algif_hash.ko.zst": {
+      "file_sha256": "4ab0add14b89c29f7b5bc2650b21298fa83ff4fcc90b3df1a4ef545f102119a3",
+      "signed_payload_sha256": "52c633283f671e9c23fd9d246ad563ff9d828d9b3cbfd1369e486624a112deae"
+    },
+    "kernel/crypto/algif_rng.ko.zst": {
+      "file_sha256": "4ccbf9ebe46690ff5a916c1a0595d3c5268cdac8ab161ca90f7eb6c8bf589dca",
+      "signed_payload_sha256": "fa6577d9ca1e77c90ab0b87d851058e49907e855b2fdeffb1ef1e252482f413e"
+    },
+    "kernel/crypto/algif_skcipher.ko.zst": {
+      "file_sha256": "d4915ded3f06369d74fc01271b5e1df27e3c885997f76a652e9bc56643831b9b",
+      "signed_payload_sha256": "e2249c56437798153a687645e799754502790320f1ef5f3e5bce6ee5cf486bad"
+    },
+    "kernel/crypto/asymmetric_keys/pkcs8_key_parser.ko.zst": {
+      "file_sha256": "69a6efffd2a3b873a7e4aba9bb4dd6e15263db43006d65079c9b6d06d38f896f",
+      "signed_payload_sha256": "6104d1ac01c651751d725d06ed35d4923c3c70215a421f8fac70cd13083b16b7"
+    },
+    "kernel/crypto/async_tx/async_tx.ko.zst": {
+      "file_sha256": "b3ef9b67d07b3050eb20114774d74ae0e348d5c1b3d36e5dc8e2bef314cde459",
+      "signed_payload_sha256": "43d4d248491e59be5866560ae05358ac458f17c4d323aa6a6198ef7d73f09260"
+    },
+    "kernel/crypto/async_tx/async_xor.ko.zst": {
+      "file_sha256": "8ea7e96ca9d9e7cbfb65ac7727301729291595163e472533c435d18080f9d769",
+      "signed_payload_sha256": "3e7c2fff4f2e90fe8558bd86d30a9992c49b3b7a493f52d1dffb20448e352204"
+    },
+    "kernel/crypto/camellia_generic.ko.zst": {
+      "file_sha256": "7ece8d6eb137b96e6cbca781ad848a732b0b55766d841455ebb0c828155bddde",
+      "signed_payload_sha256": "ac09fb301e9147b17511dd812015b9af0879a5019b49e934865ac270746fbb98"
+    },
+    "kernel/crypto/cmac.ko.zst": {
+      "file_sha256": "55b28a8dc5ca2f9daeedbe9a690950b9129d2417cb1cc243e633b12aa5cc388d",
+      "signed_payload_sha256": "550166c6cccf0d51ef1a262b027252e727a070d0b4a41b1b08f7e6f08801daca"
+    },
+    "kernel/crypto/crc32-cryptoapi.ko.zst": {
+      "file_sha256": "5431b98dd53f46c8e5e667e4eb5fde942eea5043d8eb146a8d7691e91c647830",
+      "signed_payload_sha256": "6148f59d579a6a45b92bd857f13fe81a1405b5878b78ee924d6473fbad7a8f4a"
+    },
+    "kernel/crypto/crypto_user.ko.zst": {
+      "file_sha256": "caaf493dfc51a8066915f4aa18f21d8be416cb74a73304b2d16b0e6b7b8a5845",
+      "signed_payload_sha256": "55d2b1c6b76df37bfecafaf8858893eb1b5dd1124b4e0595d9aaebf8c0932dca"
+    },
+    "kernel/crypto/des_generic.ko.zst": {
+      "file_sha256": "384d863db86f0aec8b8aceaeb97396bb675348d9dbeb3f57664200685488dd99",
+      "signed_payload_sha256": "ba26e5bc2cff82adb440003d1851ada134bcc81cdc36f52b8c86930d37f31682"
+    },
+    "kernel/crypto/drbg.ko.zst": {
+      "file_sha256": "7303ba306e99704ee51f78cb9a61e658dad3eb983eecc140457f14998a1b5a90",
+      "signed_payload_sha256": "06abbe5f56e67630dd201ce146d9a75dadc4f7d298c796043873bb581aff1638"
+    },
+    "kernel/crypto/ecc.ko.zst": {
+      "file_sha256": "a4a562b35faf0821e87a9948ed77f8135ca030a64b0baa1c1051eb881df6f11f",
+      "signed_payload_sha256": "cc866be712f67021c346b5c2db8c21d25ceb15b77fa3e92544aabd0c6092c4a3"
+    },
+    "kernel/crypto/ecdh_generic.ko.zst": {
+      "file_sha256": "05eaeab34d4e7d2320554a9fc159164bf4f556be781decc32544bfa91293efb6",
+      "signed_payload_sha256": "af6fdff45284c065a6d088be22cf21db5f84c4042f9b135ca674737febffa416"
+    },
+    "kernel/crypto/jitterentropy_rng.ko.zst": {
+      "file_sha256": "05dc23c29a10558689ee48264574c9802eefb28d1eadca600ff2c51efec3a9da",
+      "signed_payload_sha256": "931a0bfee53f5e89662f45ab5abfd3a6b2e1063605679b419d8c77f5f5108587"
+    },
+    "kernel/crypto/krb5/krb5.ko.zst": {
+      "file_sha256": "f4cbbe94d38fe6a58771f5291972e6cc0a413589a8c0ff860468f509610fae2b",
+      "signed_payload_sha256": "841dc0b9b97ce02fe06275a2960a71230f56473c0d916a15bf7d707d184a5e0d"
+    },
+    "kernel/crypto/krb5enc.ko.zst": {
+      "file_sha256": "fdcc6d0a2320f0c579fe45804643c262423e5328cb61514eaf5fc7462d2c6a79",
+      "signed_payload_sha256": "410be9863bfbc0daa37ae76202f4979679bbfe068e0f326646593cbb35a24457"
+    },
+    "kernel/crypto/md4.ko.zst": {
+      "file_sha256": "2530d746e168bf6653d5fa6fe4772ffae10c2bf4354fcd9a2a0b3d790b31dbba",
+      "signed_payload_sha256": "c77b7858f8552d5bb396c4f55bb92f2f8c2730f49128ba45d100dbad8d1ddd92"
+    },
+    "kernel/crypto/rng.ko.zst": {
+      "file_sha256": "bf5cd87e6aade3aab83d3eaecce05fbd462cf3f0025dfdd58b97b1759fd86d65",
+      "signed_payload_sha256": "c977bf8f254656890908213a2c7d5f2a3bd9c9028ee35cffbc6f1f9a014cfcbc"
+    },
+    "kernel/crypto/sha3.ko.zst": {
+      "file_sha256": "d402cf889d1bba67f77c72ec303f0f2cb9fd8451a4e6f00b2cf2d8ff691fca03",
+      "signed_payload_sha256": "118c3a2dc1b6c38135cfb3cbdb0316f784dea85bd365abe1b61e32f90f0cf48e"
+    },
+    "kernel/crypto/zstd.ko.zst": {
+      "file_sha256": "1395a78ce3806a897f2177a52665fbd344c1f6209dfdcf23000c2ddda6e11473",
+      "signed_payload_sha256": "f7bc0b7b7644907f16a918fb32f7aca5e7efa0dede4337f14285fb53eeae994f"
+    },
+    "kernel/drivers/accessibility/speakup/speakup.ko.zst": {
+      "file_sha256": "ea4da86171bd3cf066682e5ccc58f98cfcc3df9822f5686eea2693be5741fbc5",
+      "signed_payload_sha256": "8f4fa99ccca7153e54e55b135af93d7b5ede8fdc19de91fdde2c5e3fb9622087"
+    },
+    "kernel/drivers/accessibility/speakup/speakup_acntsa.ko.zst": {
+      "file_sha256": "38561f926b36ada50c21ebdb492d66ea7b1e489961f0796b2f9ff353bf2e0ac2",
+      "signed_payload_sha256": "e317899d4e341ff88c5ce13e825a71bd70d6ef6ce26f582869c57c889d00434d"
+    },
+    "kernel/drivers/accessibility/speakup/speakup_apollo.ko.zst": {
+      "file_sha256": "38353c68cd4e4468d3a5c385e21752f20a6811efe58e8ac3f45bab2780367f46",
+      "signed_payload_sha256": "e992aa2a2a25be5e169e386975b5dd9599cede7b82d20c1fb4ac08aa26bfa583"
+    },
+    "kernel/drivers/accessibility/speakup/speakup_audptr.ko.zst": {
+      "file_sha256": "8c86856f7852d265f87b4d4d4a1c9e3c9675acc1bfaf573eed586beea6763939",
+      "signed_payload_sha256": "2e080ff8293e0638ae42f2b214cb61a4480c077405048c42c4010d949b694272"
+    },
+    "kernel/drivers/accessibility/speakup/speakup_bns.ko.zst": {
+      "file_sha256": "169091af5eb63bd667070a2610876a5b888bdb9252a780cc629a0c77bc38da66",
+      "signed_payload_sha256": "fe73413d69d64e9e9e7d384ba85bfdb8105aaae6929860aa60713254737fb5b6"
+    },
+    "kernel/drivers/accessibility/speakup/speakup_decext.ko.zst": {
+      "file_sha256": "3276d177565e12b22501a40eb089f1b33494db88516d708732b0b42431002329",
+      "signed_payload_sha256": "181a89652baf37ff5155d7a974de7995ff0e3b3a919b76370c22a1a8da5be67c"
+    },
+    "kernel/drivers/accessibility/speakup/speakup_dectlk.ko.zst": {
+      "file_sha256": "6e3071c73f8921706faf8432369b780568ada55c4517d802c27487e706d172ce",
+      "signed_payload_sha256": "2e585892d68c7488ff02720ecc06703dc8b6dc704b3e8cb01873bff28fe9e3cc"
+    },
+    "kernel/drivers/accessibility/speakup/speakup_ltlk.ko.zst": {
+      "file_sha256": "add821c25f91b05d2b02e6afc0af9a4dff42cb4abf16097b2c69239cb10c6597",
+      "signed_payload_sha256": "2b91d4b8eaed35219de5e4e5be9ed80c5b7ef6cc0bbf0a63e3a06b4100fb01f7"
+    },
+    "kernel/drivers/accessibility/speakup/speakup_soft.ko.zst": {
+      "file_sha256": "137899724c8c514b654b628445c129f5419e2a308b882373133ff9aa7d0e7ded",
+      "signed_payload_sha256": "fdc82762161423476c702e5a69117f8c25d4af14b15191828908440df99440a0"
+    },
+    "kernel/drivers/accessibility/speakup/speakup_spkout.ko.zst": {
+      "file_sha256": "261a7b133621e3fdbd74c8ba4f34d5cf835f7db13b76305ba3223d890d6dc1c9",
+      "signed_payload_sha256": "9eb158fd5a43823ef0f0ecce3a83dc53c969d09e762b5e6b8376eff3c897adca"
+    },
+    "kernel/drivers/accessibility/speakup/speakup_txprt.ko.zst": {
+      "file_sha256": "9e60e29082b4d189a35ac3ce34a06e1137bf211afab3b59b0a4ebcff74df4a15",
+      "signed_payload_sha256": "bf519f9ea1ab2cbba2207fced42668fc90cd9c1b4a989dbea1097d0a817ad1c5"
+    },
+    "kernel/drivers/block/nbd.ko.zst": {
+      "file_sha256": "6dba33e3fa8d12df7e578d1aeeac2285e5ec045fe3bcd452751da5b344f61a4e",
+      "signed_payload_sha256": "9622e2b9d55c475d3bfe350179d57ffbbd223b5f29b69599b73bd11003374b1b"
+    },
+    "kernel/drivers/block/ublk_drv.ko.zst": {
+      "file_sha256": "bf5693cb7677761e0b368cb2f521fe4ebd77913e248658d3fd84ffbc2efb003e",
+      "signed_payload_sha256": "13bd2be48f31c380b2f1e615e2a58743ff107ae1bdeb0625e1aef3d9dde687a1"
+    },
+    "kernel/drivers/bluetooth/btbcm.ko.zst": {
+      "file_sha256": "e640ea324cdec020792c1660345a4491942ffeb8b6fc6c8e00532246fdba59a9",
+      "signed_payload_sha256": "2b56f482f22f709e113bc360bb8ad8682a08ad7a30722242b50c1d07f8ac55cb"
+    },
+    "kernel/drivers/bluetooth/btqca.ko.zst": {
+      "file_sha256": "3474bbe31d772e23b13c262c3f2d37be61b79a6fe589ed84ee3918da0d303e5d",
+      "signed_payload_sha256": "a43ca8757f5729e04fab0876fedf34c4826eec084ef20d4ef95b30e4109a3657"
+    },
+    "kernel/drivers/bluetooth/btqcomsmd.ko.zst": {
+      "file_sha256": "e7f30b23ee05cb5532c6479e01105bcb68bb05a4ad50cf452f06369922c4302e",
+      "signed_payload_sha256": "e3b739601fd2567057e0c0a8313a4e7ea5a7408ad42b908edc4394273a31cbce"
+    },
+    "kernel/drivers/bluetooth/hci_uart.ko.zst": {
+      "file_sha256": "e755adcc900263a3ff4b504cd42215fa8b6ffb04ebecddeda8954124d28611a3",
+      "signed_payload_sha256": "962edec292e6e8aaf0ea1753a96e0123b61d7eeba7685cad934242644b51e6f3"
+    },
+    "kernel/drivers/cdrom/cdrom.ko.zst": {
+      "file_sha256": "2559d28c30ad8e83958dc5f6bf6b0905d7aa37accca1f19c3d724ae5977b692e",
+      "signed_payload_sha256": "66adb82cc09f8bded3d6bed25374e40ff6e09d11e61c72713e64670ea3d4960a"
+    },
+    "kernel/drivers/cpufreq/cpufreq-dt.ko.zst": {
+      "file_sha256": "ccc44d271baec4476968460341e7cad9d889640a59b6369fe393f2b1054d7a15",
+      "signed_payload_sha256": "fcb753c604f93566dee66042a8280512289e8ee4022bf5aa1a5e4c46f1c2c1e4"
+    },
+    "kernel/drivers/cpufreq/cpufreq_conservative.ko.zst": {
+      "file_sha256": "2a597bf4df21fdf8ec4a685a832936648bfa7fa57ee21533aaa95fb3d73a9b7c",
+      "signed_payload_sha256": "e188d7fe6404c5cf6e5f983b9cee8d4b63ff56014d606f07e3e3e9b1cc19d096"
+    },
+    "kernel/drivers/cpufreq/cpufreq_ondemand.ko.zst": {
+      "file_sha256": "93a45855534aaf143e064dbdf04a15449e83e4b46a9d5e459a06743ac5c88096",
+      "signed_payload_sha256": "995ef55e130cfb51eb7ba965e007cfea75fb4ad21bee27526889ade1ff485e0d"
+    },
+    "kernel/drivers/cpufreq/cpufreq_powersave.ko.zst": {
+      "file_sha256": "bb50000267ec4ecf8c7a6bdfc1add7dd97c65925259459dbbf104354ee0ab252",
+      "signed_payload_sha256": "a6a195285c2d41292433ef5b1a0ed64c524e12a83023983b7e689382c7c9e6e9"
+    },
+    "kernel/drivers/cpufreq/cpufreq_userspace.ko.zst": {
+      "file_sha256": "7cfb1feb1d4ea201e1ec5eb293a2aa8f0dcebdde2f79b64745e791e678cd62f4",
+      "signed_payload_sha256": "ea1b2b8c5a09c30e43bd9cefa5181549622d3439590120ee69c76597030353c0"
+    },
+    "kernel/drivers/extcon/extcon-sm5502.ko.zst": {
+      "file_sha256": "15ae9c25c4a71d705ffe768d8cf9cb78eab3821e30c8ad519fed151105de9481",
+      "signed_payload_sha256": "0b754230143e8d0a258b8061e76484b9f61d38d1475bfb2ba2d87ddf722b67d5"
+    },
+    "kernel/drivers/gpu/drm/bridge/analogix/analogix-anx78xx.ko.zst": {
+      "file_sha256": "e9b3c083e54be3f4b87ba994eaaee06041216ea5cdc70a8bead4bfdd74295a04",
+      "signed_payload_sha256": "8b158e6be1c3659bbf8eada181acfe9504c5cc2756643d264b14187a1ab298ae"
+    },
+    "kernel/drivers/gpu/drm/bridge/analogix/analogix_dp.ko.zst": {
+      "file_sha256": "d1d8c92b0331f38020388196dc1170fb51ce19361df7550b5d0896de90572cf0",
+      "signed_payload_sha256": "94b23d6971bc37574be5b25bb1671d9d3189dd5e7bf345fc031416ce61656fdd"
+    },
+    "kernel/drivers/gpu/drm/display/drm_display_helper.ko.zst": {
+      "file_sha256": "01c6a76f6795ab8dc61c862f6db42d6fe651347115486e0569930223bb9df96a",
+      "signed_payload_sha256": "b71eb118532cccc2ca1b758655925920ffabe842c899154e2e25853b1aa9ff42"
+    },
+    "kernel/drivers/gpu/drm/display/drm_dp_aux_bus.ko.zst": {
+      "file_sha256": "d328248a665aa633292c480cc0bbcd745b074679edd024dca29247e9907d37e2",
+      "signed_payload_sha256": "c8a125f09840a444b61ceb4e6273d0a69dd4eadc0893f6909a0e2ac040deaba4"
+    },
+    "kernel/drivers/gpu/drm/drm_exec.ko.zst": {
+      "file_sha256": "7293769c8740e8ca8ed2230188f3def9ab51da1beee54e496714e699001eecd9",
+      "signed_payload_sha256": "f0df7bd77593536e46855c9f2b8b26e7000e06f2b5ef4237da6a4a3fe5454194"
+    },
+    "kernel/drivers/gpu/drm/drm_gpuvm.ko.zst": {
+      "file_sha256": "a99dfa9d82658ead6370465a025f5cdf760ed6dbb725e6d83d530edd5599f0f0",
+      "signed_payload_sha256": "96ddb279419692e4c378d4a09f5741a37cf7d8325a5baa80803e29ad7da20743"
+    },
+    "kernel/drivers/gpu/drm/msm/msm.ko.zst": {
+      "file_sha256": "740ba431389ee0f5717b440c80db33215b8817367801297aed3c62201eeab3e0",
+      "signed_payload_sha256": "d1aa7695b8a1a18ed53cdf84788bb247344cd9b4ccd413f2a59aa7cd09c6fc7b"
+    },
+    "kernel/drivers/gpu/drm/scheduler/gpu-sched.ko.zst": {
+      "file_sha256": "5fcbc79d873fa3254468c32c7ad093879fbcdc1b3ce572b1f89039d81cb8202a",
+      "signed_payload_sha256": "a051f4781dee35a4edcd30ca5aaf302eb67511edbc9e31c6e068170865fc2d5f"
+    },
+    "kernel/drivers/gpu/drm/udl/udl.ko.zst": {
+      "file_sha256": "bc576198cab55e45ca6b55f4106a4da01d22a9f22409ce148690cb07459ab0b6",
+      "signed_payload_sha256": "18d4d638380b1d9d5fff9a5ce0fb59f4be0d855b69e173537ef47337e96dbac6"
+    },
+    "kernel/drivers/hid/hid-a4tech.ko.zst": {
+      "file_sha256": "aae0834b5dd588665db8d9b0246985d6172a51f1c0402d1ee28fd47c6865f3de",
+      "signed_payload_sha256": "b5df2a061c2ce2a286de9b6e570164c584851f7a65850439337c4713ea079140"
+    },
+    "kernel/drivers/hid/hid-accutouch.ko.zst": {
+      "file_sha256": "2883a6c2ad6beb8c869bb2b66ab8894d012ed20850f43c67eb0b7edb3161cc30",
+      "signed_payload_sha256": "98b31cc2f0d18375781f375d4b858e919359713f4cac3c063cc8a2dfcfc4a83a"
+    },
+    "kernel/drivers/hid/hid-alps.ko.zst": {
+      "file_sha256": "9ccc6c13119a021d5e69700d1dfc3d7ef4d8b13329eec2c7c0dd34ff373f4af6",
+      "signed_payload_sha256": "576de050319969899bfc053f2bfe5e223228dca9f8a9bb27fa0a325f5bc4d0d3"
+    },
+    "kernel/drivers/hid/hid-apple.ko.zst": {
+      "file_sha256": "a3109cce36c4140b620a652ff4b210fdb249f4ece313f056d8b1dd858261b425",
+      "signed_payload_sha256": "bf7a5ffd56bc0b8002ca24537df33b44b47b938c03bb2024c10180ee8fbd4e96"
+    },
+    "kernel/drivers/hid/hid-appleir.ko.zst": {
+      "file_sha256": "ddd678f6416d9f555ca8bb7ff0ada8b518044f28f08f304fe862eb3451ea3ced",
+      "signed_payload_sha256": "67e2ccc032fd282f6c3c5222f0554d11ccb4288195dcb67e08cfe444fb1abc8a"
+    },
+    "kernel/drivers/hid/hid-aureal.ko.zst": {
+      "file_sha256": "7d9555e0b3a5ea426eb56fe15c37336b4c877b3bedcecee1a369f303fe7b659f",
+      "signed_payload_sha256": "e5c49e090668a8f1d511784f291a5144beeeafeffe1e5cefe56cf364f4b28388"
+    },
+    "kernel/drivers/hid/hid-axff.ko.zst": {
+      "file_sha256": "28387884f06979365ae0fbaa16c82dab4f77e1c10b3a2c86f0eaa90eb6e4a42d",
+      "signed_payload_sha256": "4d60b2065a4b243c1ee7f77d3e6342d763aac07571d2e7e3d8a5820cb6fb55fd"
+    },
+    "kernel/drivers/hid/hid-belkin.ko.zst": {
+      "file_sha256": "eeb70b7deecd39f7c86678de28e1173d7e1b484e26c2d393b7a6c1a402729319",
+      "signed_payload_sha256": "2c8c1d662102473f91121a26b53b743a3f2a3578593e978e03f2d4ba231b6c0f"
+    },
+    "kernel/drivers/hid/hid-betopff.ko.zst": {
+      "file_sha256": "58ca0ffea5d79ff8a181417ead994468fd4cd3f61a04237a9d5f0816aa1eede6",
+      "signed_payload_sha256": "7c6e4cc9aae98863f258b8a9106707ec96243eea87768cc5c89d0cd46cce36e6"
+    },
+    "kernel/drivers/hid/hid-bigbenff.ko.zst": {
+      "file_sha256": "146c06f9017710645698547def49228d3db2a5d037c663b04ced55834c8ee52e",
+      "signed_payload_sha256": "6a230e92093ef0e59610b1979355801d8d36760da1d73093058d22017420fc2d"
+    },
+    "kernel/drivers/hid/hid-cherry.ko.zst": {
+      "file_sha256": "682f828f74374e73cc44fca9fd46d6ee27d49718cd53689ef15556e1fc858a7c",
+      "signed_payload_sha256": "19e48a772f7e89ffd49f8705ac71b1c43dd3a3207d42429ebeb05814cce70323"
+    },
+    "kernel/drivers/hid/hid-chicony.ko.zst": {
+      "file_sha256": "9638f00561f32c37a47fb1b182cf887dba4f2b99da2a936423584498c6b3b736",
+      "signed_payload_sha256": "31887c24095030b46b3ee25b0ec60c0c5575184170b6919f23fc54aaf9b77760"
+    },
+    "kernel/drivers/hid/hid-cmedia.ko.zst": {
+      "file_sha256": "8d79d8c19c46d36f941f2dd0a3a0f03e05c2f5d1b0c7c32f0a57da5e28ef1f23",
+      "signed_payload_sha256": "89e9ee60889a4a994ff02e1ce4cbd59d64d1097ad36192897893d9d5b7b5eaf8"
+    },
+    "kernel/drivers/hid/hid-corsair-void.ko.zst": {
+      "file_sha256": "7225bd697137586f98869320c06daacee02bd07796c27675ec55e1ee47ddcf87",
+      "signed_payload_sha256": "88a7fbe71bf757d6872b4b08ee31446615d315d55eace000381110ef79e8debb"
+    },
+    "kernel/drivers/hid/hid-corsair.ko.zst": {
+      "file_sha256": "4a2d44bb266f3e5c7c1f359ab29693115bf121dc53cf268ef949837b2ed99337",
+      "signed_payload_sha256": "53e8dd1f717bdad1384a227ef99758852b1a54ca2a2ad6b738c00b1be82c64c8"
+    },
+    "kernel/drivers/hid/hid-cougar.ko.zst": {
+      "file_sha256": "7e20ad679e558f93fc8ccbd2422cb041b3f3201b1e685ed824da8aa36d1eb954",
+      "signed_payload_sha256": "f4975c278540df7424b3397746886d81c37f1e8a37621185c86a228a8f74709c"
+    },
+    "kernel/drivers/hid/hid-cp2112.ko.zst": {
+      "file_sha256": "221f9ce76891eecbdf4c1993973a33657c2ef49847f5f15e6489e7edf44f57b5",
+      "signed_payload_sha256": "f5594ac638cf30da5ef0603fd70748e256b0dee4b8e9612a7bb9ae6b7f98dda9"
+    },
+    "kernel/drivers/hid/hid-creative-sb0540.ko.zst": {
+      "file_sha256": "c58debd8d8913c72f07d417347b4fcb322a4c51bf6a4e14c447bf1b52f356cb9",
+      "signed_payload_sha256": "86d97f9e2c9f834553fc55e6b5edf84470d83220491b4970f4d17e0c7d912bcf"
+    },
+    "kernel/drivers/hid/hid-cypress.ko.zst": {
+      "file_sha256": "4bc56dcc571868d5f0e672be93658fbcb8e5688b0c458f3ea994472ae25540c4",
+      "signed_payload_sha256": "970c070e35cf75de5e03095046ba81acc73c84a5d646e6bfe6880dd2dc51aa0c"
+    },
+    "kernel/drivers/hid/hid-dr.ko.zst": {
+      "file_sha256": "6d842e8a36eb03e6d04efba05c54f556ebd414972f43ec5d7abd1c15f2630977",
+      "signed_payload_sha256": "d9a3bd7a112d0e020ae800ceb210808afeb15f9a42a8d420bae024dc7e69ac4a"
+    },
+    "kernel/drivers/hid/hid-elan.ko.zst": {
+      "file_sha256": "4d940f81bb9e5abbce690e9664bd1c514626a4b1fc21639cc89f82b2afd63f01",
+      "signed_payload_sha256": "8fe5333cd38686eb847922d070b3a19d30d2914344a2e152aec797222c8fa643"
+    },
+    "kernel/drivers/hid/hid-elecom.ko.zst": {
+      "file_sha256": "6c3957fefc4eeae84954e521f80245d61ddf0f659657c4876165866ed1f660f7",
+      "signed_payload_sha256": "8e0d540b9f55d64718fa57c3f9f3ce1fc07714f4fc5080b308c2ad12a196b442"
+    },
+    "kernel/drivers/hid/hid-elo.ko.zst": {
+      "file_sha256": "801bd92c5e8d710041c8dabef0c159a68982b1946dbc02806a72600e365db682",
+      "signed_payload_sha256": "b85afe49f97fa5d4867260d4ce06e7e166fd20efcda0daa2308ecf576e68d59c"
+    },
+    "kernel/drivers/hid/hid-emsff.ko.zst": {
+      "file_sha256": "a9bf1a7f972be19626516713fbba9ed29c706fb0ee0aab029b8218afe0624298",
+      "signed_payload_sha256": "b6b5e66e556735b8344634f18f8ac05810275e79668d7d2aee7ee828ba1922d7"
+    },
+    "kernel/drivers/hid/hid-evision.ko.zst": {
+      "file_sha256": "80137e8caa8ac72be2f8fd53e31e28dcd0f0fd509c0c9e306bc5b1508bda225c",
+      "signed_payload_sha256": "9ca82ee4389e03f7072da5dba80053a1d9586b08a7e14346e7287755bb1ca4a2"
+    },
+    "kernel/drivers/hid/hid-ezkey.ko.zst": {
+      "file_sha256": "36b3804897b0a7a1ce108999af05825224c797773e11bbce0fffc0f519e737ee",
+      "signed_payload_sha256": "3ab2cae9295f540e0184bbafbf68b5ef615183f031c1d27163bdb808d6c04946"
+    },
+    "kernel/drivers/hid/hid-ft260.ko.zst": {
+      "file_sha256": "35f18afe0ab95e4f7fabd33157c315f05f3d7f61ff9c0679e6483667eca8e13e",
+      "signed_payload_sha256": "067b496f3debd69cb9bfbb7ccfdb4a4cd60a3e3c4450afeab2658787bf5dc63a"
+    },
+    "kernel/drivers/hid/hid-gaff.ko.zst": {
+      "file_sha256": "260c5b07bc31c42622a21221eb8d7791af948bfb6c4562eb2821bb6b894f178b",
+      "signed_payload_sha256": "4ae3b7325aee5857a5c242c58b4ae0b8d3ffbe41e32e2ea1059459e26d4c748b"
+    },
+    "kernel/drivers/hid/hid-gembird.ko.zst": {
+      "file_sha256": "d8f5d6d22de15992853696989635de3abc697e8abe00eb0dd3b63b5f5a2ef5a7",
+      "signed_payload_sha256": "7d379aaee13e19160d46cd80c1bd424cfe581d69b2c116378608a4b29fbb4441"
+    },
+    "kernel/drivers/hid/hid-generic.ko.zst": {
+      "file_sha256": "7ccd0b3c6271086a77058c862a6f4d2eb77a10d8a8828662d3e483f5a90df095",
+      "signed_payload_sha256": "a6167124aebbada32f8b737e7efc1023115baf37f096e4ace07e1cc479db1626"
+    },
+    "kernel/drivers/hid/hid-gfrm.ko.zst": {
+      "file_sha256": "e11c99764afdf96e433b64ffa479815e6b4db7e2e5bf7a49c47e62c770c67be0",
+      "signed_payload_sha256": "2cdafc353a0d7dd5bea53e9863b79982fdc32b01a41331547efc934380ccb5ab"
+    },
+    "kernel/drivers/hid/hid-glorious.ko.zst": {
+      "file_sha256": "d0c2ca0c65a5e2189a0623408c756c837619911b60e5f4a5b4f0a657c23c3cdc",
+      "signed_payload_sha256": "6ac9085a559b314f5f81cdd71fef06cb2966796179ad96ea423bc9fb05edb760"
+    },
+    "kernel/drivers/hid/hid-goodix-spi.ko.zst": {
+      "file_sha256": "210aaeb658e836bcde4e3451db6febd5ae08a1070f525402f0071cda62308227",
+      "signed_payload_sha256": "c817a82c3d513baec942fc36603be0747849dedea3a4b2b513615671709381cd"
+    },
+    "kernel/drivers/hid/hid-google-stadiaff.ko.zst": {
+      "file_sha256": "ce8031fd015af4013cd8f484a49f73ab58221980c18b2d188385f517e6e59c36",
+      "signed_payload_sha256": "c8932717c0d1a63c2cb9d29ed192bb5998c39b23d6d78220eb8c169f698fd2f8"
+    },
+    "kernel/drivers/hid/hid-gt683r.ko.zst": {
+      "file_sha256": "6d2449a173737d04e8522798f4e226460fba05fc924586217da88ec947b0f0f8",
+      "signed_payload_sha256": "40277eb9dc93ab706a19a5c0f29dd92c82d82af4c4d208ca706dd0f0428077e0"
+    },
+    "kernel/drivers/hid/hid-gyration.ko.zst": {
+      "file_sha256": "c8ab7390f5ae9277547e27fef092e6059f29ebed5660c1366180ac563598809d",
+      "signed_payload_sha256": "f1c4b25fb1d1bd52fc39df500cb35cb63f80bb977e5c2f4d06183bcf4359b89f"
+    },
+    "kernel/drivers/hid/hid-holtek-kbd.ko.zst": {
+      "file_sha256": "663169ae199f1c4079056fe8bb1798c5234c2dcd5387e70420fe526f3d37c56b",
+      "signed_payload_sha256": "1d46eb1ab5b894d23a137d78b1dc20fa2a5efd0006c824a927e2347b200bcf90"
+    },
+    "kernel/drivers/hid/hid-holtek-mouse.ko.zst": {
+      "file_sha256": "b82fe60d0459d9a35f5f95f49caa0cd4b714e53a2cf2a4cb65f4ba50ef6dc973",
+      "signed_payload_sha256": "4c85f44266a9ff237576aa8f8664a73ab1d4e4897a762f5f07fd0a526c2c6627"
+    },
+    "kernel/drivers/hid/hid-holtekff.ko.zst": {
+      "file_sha256": "0180001ee3f6d6843eee5b12299ff08efc063e4d554b49fc296675148ae51b09",
+      "signed_payload_sha256": "bd5f2dbc41b939861118655eb2dc519deb52b934ddda1243b6495236c91cd2a6"
+    },
+    "kernel/drivers/hid/hid-icade.ko.zst": {
+      "file_sha256": "d6e993ea6a5aec8d55cfe1fa0ab6b7eb5609eaa3c8acbcb61b28e3bb2eec53ee",
+      "signed_payload_sha256": "78fe74ce52e8ef102e7d36e14d4874c903890ec44fd29994f6f5dcb3ddd3a53c"
+    },
+    "kernel/drivers/hid/hid-ite.ko.zst": {
+      "file_sha256": "d545e92e4620d4a7fa458ad47dd465c304ca129c5e371a09fb0801a1e525b01c",
+      "signed_payload_sha256": "e6586b11fda5678d4e49683628fa11e64a51428ff03b679fc0931a278c0cb8ec"
+    },
+    "kernel/drivers/hid/hid-jabra.ko.zst": {
+      "file_sha256": "006c6f07b9349ffda7e9d983ef69fb385bfec60ffa55c14e82232f98c29eb299",
+      "signed_payload_sha256": "717fb8352c9578b1dbf5af65f0e1bc7117328df208f0c0496ef0e1eff67975c3"
+    },
+    "kernel/drivers/hid/hid-kensington.ko.zst": {
+      "file_sha256": "ee2457854d76cce52e4569a25bedc57fc70ba8ed52f24fa00a7c1bb417696097",
+      "signed_payload_sha256": "e0878e31c7ac0085707e850cbdae34217134226b9722fdf44f260a063d40b2fd"
+    },
+    "kernel/drivers/hid/hid-keytouch.ko.zst": {
+      "file_sha256": "362f04ee6d662cd2a4b25cbaa53dbc4419580976a2694164bd4d44d0e329df9f",
+      "signed_payload_sha256": "86049b64ee28b67d91ea8b3cf99791b81df8d3f803b69ac7645a42f5b7558f67"
+    },
+    "kernel/drivers/hid/hid-kye.ko.zst": {
+      "file_sha256": "3b9267994d16ba2e7c5f20ad887de3c094e61ca42d5ad3e196f8088cd8a903cc",
+      "signed_payload_sha256": "a1ea1692b3e580089462f4bf68e8518894d53444eabde379b37c281c243b401e"
+    },
+    "kernel/drivers/hid/hid-lcpower.ko.zst": {
+      "file_sha256": "cf135808885ad8f4a4bc465304de293a560be91121492f995f90ba2a5a4394f5",
+      "signed_payload_sha256": "f849de16011211d0b60b4db273ad48f00468d8ba09f76029cfc1e4b155cbbb78"
+    },
+    "kernel/drivers/hid/hid-led.ko.zst": {
+      "file_sha256": "4515a239ce41c15e810f5d22d78756748f26b2e21e341fa4b046550d2598b6d2",
+      "signed_payload_sha256": "b633cb0644c644dc55eaf9c1d481e1ed963b6da554c3eb31346ed7063459ed29"
+    },
+    "kernel/drivers/hid/hid-letsketch.ko.zst": {
+      "file_sha256": "848c317985cc1027b0e7b1480460918c6b51b650b3ca90deae3eb869838676bc",
+      "signed_payload_sha256": "a2890e5c82f9d36de34c5660f9046d468c043ca76f338859a9cb5232b8665e38"
+    },
+    "kernel/drivers/hid/hid-lg-g15.ko.zst": {
+      "file_sha256": "e3c84ed118a072e70c7aabc7972098e52751c700e5093c6a372eb0073742f392",
+      "signed_payload_sha256": "b7a30f3c9d38312ae67efbc6e9cbea20a37b6043840cc4b3511c276d1c0b1d7d"
+    },
+    "kernel/drivers/hid/hid-logitech-dj.ko.zst": {
+      "file_sha256": "948d6ee5441a98756419d1e97a6dffd7188335460b9aa775929d820c9cc67e7a",
+      "signed_payload_sha256": "5aa5470b3bf31db9b59d092922641b76d4f6f7af264ffc847eaa7c35c6299ee2"
+    },
+    "kernel/drivers/hid/hid-logitech-hidpp.ko.zst": {
+      "file_sha256": "8940b7787b387330ca92a7e937f429c21bb844c23948c1ef458b26d2b486a008",
+      "signed_payload_sha256": "aa5d3dad01b035719a53517f2ad29865ff18645be2d3c6939f2ac1efb0242afe"
+    },
+    "kernel/drivers/hid/hid-logitech.ko.zst": {
+      "file_sha256": "fd67bc97cd9f2f91f102df2124fbbbbc3c502fa5add1fdf11f3bbb86be4bafd7",
+      "signed_payload_sha256": "f13eb7ed064d335f1e01d55b3959fecf4b23490b7962fffe6ef57c1cbb10edfd"
+    },
+    "kernel/drivers/hid/hid-macally.ko.zst": {
+      "file_sha256": "10d7d59fc3ca3c5fd7f5f0d690063cc6e622c7953bdcb3303d2d16f517403c2d",
+      "signed_payload_sha256": "4992796d595c62dc66cfca98a403553744332a47502340fda24d509d561054ec"
+    },
+    "kernel/drivers/hid/hid-magicmouse.ko.zst": {
+      "file_sha256": "f46326ae2c238308b9bbbe89f92470d2a659bb4d5f1f1c5a4e7cf225fdf11ac2",
+      "signed_payload_sha256": "636045cc3e9688650e25c47fc014dcf671a5334453a00d140de5e6597ba5c72f"
+    },
+    "kernel/drivers/hid/hid-maltron.ko.zst": {
+      "file_sha256": "cd212ac902e42065ba43d8a34f414cb9505b50e05c101de0caea0bd978722fef",
+      "signed_payload_sha256": "8958b02368e4b48cfbaf8a2b1cd4ca93a5c7fd820d29f712263ad948717321fb"
+    },
+    "kernel/drivers/hid/hid-mcp2221.ko.zst": {
+      "file_sha256": "fea240aa6ca19e5aa0a30d7d44e8d9680061f8ed109c3c10a3526d8ecab9e0fd",
+      "signed_payload_sha256": "a835f5af943564b3b17a81ece1865453364064a5d9faf2731c2488713f0d7ecf"
+    },
+    "kernel/drivers/hid/hid-megaworld.ko.zst": {
+      "file_sha256": "ec8187e25b32aace9bbb97ad88d0d852656c53f3d1ea2d4e9c5f1fa0994759ec",
+      "signed_payload_sha256": "9cae69a130f432a2ecc9dfa34fcc24df6455a1a30b1cfca177ea9019acc21660"
+    },
+    "kernel/drivers/hid/hid-mf.ko.zst": {
+      "file_sha256": "ff5e3bdd09b001ba0990f7556809a88120b822e0b62be6f47dc5293a7da7e51f",
+      "signed_payload_sha256": "c1116876cb4c13081a72d038ffa91c170bb822f3a2e06d30c818000b6265dc1f"
+    },
+    "kernel/drivers/hid/hid-microsoft.ko.zst": {
+      "file_sha256": "4860883e213fb29e5901f116571b7302e0f57917eebe292f6457628a933ac84a",
+      "signed_payload_sha256": "cbdf8d62848e4950318e681a8f8bb3d78bec1718216345cab505d876bc51bc45"
+    },
+    "kernel/drivers/hid/hid-monterey.ko.zst": {
+      "file_sha256": "b3e0e921152610fc34596128a7816a4ef15816fe745e85459c5b003d1eaaa25f",
+      "signed_payload_sha256": "fbe1ba4fc788b25d5eece70a817c2f2941d508d4ec4b8847a5f7084758bdbdb3"
+    },
+    "kernel/drivers/hid/hid-multitouch.ko.zst": {
+      "file_sha256": "ba6bec77a1794f41cf5df2c3ae964feca536576f50d27f1edd88806d2df7c275",
+      "signed_payload_sha256": "382558520e2894f8edb2ecd7948b36266c6392113fdffcdf1cbb5c7675bb5d3a"
+    },
+    "kernel/drivers/hid/hid-nintendo.ko.zst": {
+      "file_sha256": "a719d4851e410c28c2095b0f71dfd01e2cd6c18072a1b94565e527ed5bb9a781",
+      "signed_payload_sha256": "a3b7f699ac3fc35aeef571adc7ecb3971c75d57e1710657ae45e0d344f5823af"
+    },
+    "kernel/drivers/hid/hid-nti.ko.zst": {
+      "file_sha256": "16bc1b1bca19e29dbc48625ff4a9ff0d6a5c83a730875cbcc6b6ca9da7965c3c",
+      "signed_payload_sha256": "e1e4fbac8fd4fa801a2cc5a890a6abbfaff6857a72415eca40ba933cbfd6f9f2"
+    },
+    "kernel/drivers/hid/hid-ntrig.ko.zst": {
+      "file_sha256": "86aa7fa2e964ac6682c1b69207c0fc91f81a7e3c39a9c3cec0a9d9f26225d31b",
+      "signed_payload_sha256": "bc339217d96cee370a231537bffeda89c79926d5e7663753dfca0c19a638e416"
+    },
+    "kernel/drivers/hid/hid-nvidia-shield.ko.zst": {
+      "file_sha256": "29b164e8ce85a2fda85e7c3d4335c35a71ff7ab7cd3bc17ee8c57be5cb408e19",
+      "signed_payload_sha256": "8ad075b5a328c3b2143077ec218430af67d07eb5030d701fab7c161ba47abe62"
+    },
+    "kernel/drivers/hid/hid-ortek.ko.zst": {
+      "file_sha256": "f1471f27b6db4a3321495a9459fa516d294773a5661b08ef203ea0c65f469023",
+      "signed_payload_sha256": "c670a56be17f98b2e5c8d0d8bb5c0638fa7026a7f1b6aa2606af817c3b1c2066"
+    },
+    "kernel/drivers/hid/hid-penmount.ko.zst": {
+      "file_sha256": "11c989da6c1d7b5f8eb23da7711823cb91f0523d0827fc2ee91aecada1284540",
+      "signed_payload_sha256": "f23aa94a2d703bb7c37aa2926ca618b40eda827e69a49e52fffeab5e9d2c24b5"
+    },
+    "kernel/drivers/hid/hid-petalynx.ko.zst": {
+      "file_sha256": "88e41107d6e882ba19f8f48279d681ee59b7ed74e58caa8175a1a7652bb92e11",
+      "signed_payload_sha256": "cd78d73abbfc79a3f74821a2f38cbb10370ec647b4061747a4d8da51a083e75f"
+    },
+    "kernel/drivers/hid/hid-picolcd.ko.zst": {
+      "file_sha256": "7ce9fa38d07ff1d1dc78e15885d46e906dba5e35d198110c3857270e60cb9b82",
+      "signed_payload_sha256": "3d15f9c08462cbf42bf763b2bfe3c5185fe84e60e421c08be44b12343270527d"
+    },
+    "kernel/drivers/hid/hid-pl.ko.zst": {
+      "file_sha256": "156f3247769a52c760ddc660f85a27a19788a9769d54d3f265bdd569e49ad147",
+      "signed_payload_sha256": "ea24577ef336cd68cdbc581b2936ac2d71cbc66d7d69124a343ba61aca817ec4"
+    },
+    "kernel/drivers/hid/hid-plantronics.ko.zst": {
+      "file_sha256": "634a55150d0e630c69b5b73a3e058380aed7a72c7eef0d2f26fd7d388e1dc488",
+      "signed_payload_sha256": "f84309206fe06af685560f7c5f32bd0d13bb8862d0fd1e9b965e3fcb403ce2f8"
+    },
+    "kernel/drivers/hid/hid-playstation.ko.zst": {
+      "file_sha256": "10a7c6f3e294c083eb3dc03491735da693007c85067bb03d4cf461c8b6095147",
+      "signed_payload_sha256": "a0bccfed1f4a40e27de6f0b097eaf422a67f4d5c264b8f33996523671074cb52"
+    },
+    "kernel/drivers/hid/hid-primax.ko.zst": {
+      "file_sha256": "6d4f5660587a307558f986c07c4291e598b77ba414438c37776974dc1220f4c7",
+      "signed_payload_sha256": "7c96187482723b4ebb4a1bc3d16579a921e4ad31f2bf8dd66fad5d7d047a7f43"
+    },
+    "kernel/drivers/hid/hid-prodikeys.ko.zst": {
+      "file_sha256": "114b59a14f072472f73d29e077c833c74ddfcf5dfff16c23d0429e4bb68e30cd",
+      "signed_payload_sha256": "b5bec3be7c2257b29472f85590bbfbbf183dc2bd0b47a84f5296e842bdf91ce0"
+    },
+    "kernel/drivers/hid/hid-pxrc.ko.zst": {
+      "file_sha256": "fd4c71e37a480ddb158ecfcedfa2c69d454514b378e80f9007995384a79bfde5",
+      "signed_payload_sha256": "10fa8c6648e88b08cfe9626f82bb6766250f2b80b17a6c460c1ed2f7adb9dfce"
+    },
+    "kernel/drivers/hid/hid-razer.ko.zst": {
+      "file_sha256": "7b07578843bc499d023e98d77ce45a39d7db8427885f88beb6ca1887854fa708",
+      "signed_payload_sha256": "315b5a6c39b1c4c8f9654bec70c89267e02e3048b4875db8014e0f602ee41a89"
+    },
+    "kernel/drivers/hid/hid-retrode.ko.zst": {
+      "file_sha256": "83c3a2dbbbd5065242bbfdc54b0b6287649aa1d74b7dcdf878755e53b55bd434",
+      "signed_payload_sha256": "e5ab4ed17510ddef18490ad7c8afa54589629566870791b2c9a1fab89e002065"
+    },
+    "kernel/drivers/hid/hid-rmi.ko.zst": {
+      "file_sha256": "4708d9ec7ac6c573d076bc20d60579d31ec2b6604d47abed5fd3b4edd17ed639",
+      "signed_payload_sha256": "1eb7c18b7f5d8e2d2b84f6b76494e56eb9b9a7cb0fd1fc4a7ba7ce41e5fee797"
+    },
+    "kernel/drivers/hid/hid-roccat-arvo.ko.zst": {
+      "file_sha256": "d0d0fbe266c56a7b5dfc3fc501c56b3a87c35f6dd8f297eb6637c8c10113111d",
+      "signed_payload_sha256": "382302b1729bfda1f96e90315d5e6cf1ecdba62e947ae015733fdf6bd29baba1"
+    },
+    "kernel/drivers/hid/hid-roccat-common.ko.zst": {
+      "file_sha256": "a5fd4582afa0b8d3101ac468c7d950a2d6d1a73161935c0f1f08147ca93156f8",
+      "signed_payload_sha256": "ac720cf216c3b21abd1cd787a4bad39744de06a8f9c3d2e341facc47ee2ce41d"
+    },
+    "kernel/drivers/hid/hid-roccat-isku.ko.zst": {
+      "file_sha256": "1e759a5c259a11fde2c7291e601066329769a21f5023a90c756d8c371df7d987",
+      "signed_payload_sha256": "a3c03df44cc22c65c2c7dbc35135e8b054d9f12a617f7016747b013e29bfbd6e"
+    },
+    "kernel/drivers/hid/hid-roccat-kone.ko.zst": {
+      "file_sha256": "f7c9b602e740770176ed9e1a60c4a0301516585463ba05aa56a48d1b2acd6db8",
+      "signed_payload_sha256": "d8384abb79a333371538a3c67e70982743d0575d8a2ff549f03a8b7dd55d5ca2"
+    },
+    "kernel/drivers/hid/hid-roccat-koneplus.ko.zst": {
+      "file_sha256": "9b3cbd7ac5d0bab0b96387f40333a4e91ea631519b20cd45ea9d8e8d1e3a3f72",
+      "signed_payload_sha256": "84e9389f94706f8eb85af1ea5f104f6610b1295cb3ee845f97f7a96ef007b0ff"
+    },
+    "kernel/drivers/hid/hid-roccat-konepure.ko.zst": {
+      "file_sha256": "daf46d7739964a4454aff902cad97b97749ecbe3fa7a40c3ac00dbe0ca06da7d",
+      "signed_payload_sha256": "7b061b28638ead0c3df9df048adda3f9090cde2479e4b72e7a139ac580ed21af"
+    },
+    "kernel/drivers/hid/hid-roccat-kovaplus.ko.zst": {
+      "file_sha256": "40ab9da4a588f8bbcf1bc930a3b4cd40cd696afe6643425f217ce294d0fc690a",
+      "signed_payload_sha256": "a937384be5b44f007e4b6bb8afd41977e545421780e5fc1213a41aa41b4ad9c7"
+    },
+    "kernel/drivers/hid/hid-roccat-lua.ko.zst": {
+      "file_sha256": "517567010f50fe34843454e78e1f205ae1440cf4366ba2275475391bd6622a51",
+      "signed_payload_sha256": "069904287167dd0bca1474c8da65caeaa5014af279ef67d8f8277f6418f2863a"
+    },
+    "kernel/drivers/hid/hid-roccat-pyra.ko.zst": {
+      "file_sha256": "41ab97e5d63a1863f07eb0eaad94f4a237e6b9bfa91626fd6b6b1b98b98c17f0",
+      "signed_payload_sha256": "488a1dc868cb2a8259d73b22ea2b2fc18571049929eba5bccfbc7b08cefbcf79"
+    },
+    "kernel/drivers/hid/hid-roccat-ryos.ko.zst": {
+      "file_sha256": "851e3a2941d03738b58347a013a2d4f3093e1bc946f994a0adde7c8a1c180660",
+      "signed_payload_sha256": "e429f858ee2f53eb3f6f35d442323f5a632fbdd3c644dde0c540d77096a19ac6"
+    },
+    "kernel/drivers/hid/hid-roccat-savu.ko.zst": {
+      "file_sha256": "3abe764c6f1e143b215cf12ce834449eb5e40e543492f8fdc68ecef97edfb3b8",
+      "signed_payload_sha256": "160bb124d6ae2bd7d349678a8785ccfeec899714a5fc12a511e088f0dfe4bb88"
+    },
+    "kernel/drivers/hid/hid-roccat.ko.zst": {
+      "file_sha256": "966bbbfc92c974e84bb6b0c76772940c619c8dbd85625db5b5c6e7f6f6362954",
+      "signed_payload_sha256": "4007fcd032ad52830d57dfd5b213b202de20d09788fa65eb740dc596f5f5e679"
+    },
+    "kernel/drivers/hid/hid-saitek.ko.zst": {
+      "file_sha256": "511b46688212aac7f8aab97f28aca1d28222f0e06f3e75a3ef2760de1b655683",
+      "signed_payload_sha256": "de2d1e89a5f2d696adadb71c4863179d286d48bf8c88d63c067f6aaafd0743d6"
+    },
+    "kernel/drivers/hid/hid-samsung.ko.zst": {
+      "file_sha256": "9029578686068ba61d88ee2ccece877441e0adda99fbf870105947ad3db2c8fa",
+      "signed_payload_sha256": "17579f68e6029e457d76f00371ba2f1b48376ebb4e78f5eb071c6f3c6673b3a9"
+    },
+    "kernel/drivers/hid/hid-semitek.ko.zst": {
+      "file_sha256": "6d05e16dcf7dc4da0d4484743b41d3d855a57897a12d62f8a92c333f6213353f",
+      "signed_payload_sha256": "3ef66e13aa6ae023c7146d4e1f1b35b7e0fdbfca471715a97888b49529de121c"
+    },
+    "kernel/drivers/hid/hid-sensor-hub.ko.zst": {
+      "file_sha256": "93437ab62464dccc378a4bac9536ff562306eaa48510b25d736a6a35e090995c",
+      "signed_payload_sha256": "8ca250c13da214ab0cd0b806cf7df829e28f99352cd852744170eec872e6fde3"
+    },
+    "kernel/drivers/hid/hid-sigmamicro.ko.zst": {
+      "file_sha256": "3a3cca74fd3ef23a75c3a333331e6a568d825290313150e4c88f2030c04b57aa",
+      "signed_payload_sha256": "e447a513d117c1060e3791035cd58d33acd42f4867224af18da0e8db1d33dab6"
+    },
+    "kernel/drivers/hid/hid-sjoy.ko.zst": {
+      "file_sha256": "c61a9480d809dfa822c691a778f8764bf57bf6f4aeea5cc44d4016cd2ae2b52a",
+      "signed_payload_sha256": "e47dc70e7942043bc2e7e457a554db9a4bf436f27f7dabb821c5580391a662c0"
+    },
+    "kernel/drivers/hid/hid-sony.ko.zst": {
+      "file_sha256": "819f9169022b5f816897e739d9f097ce782684a2a3433a394d2bbd53bc968d26",
+      "signed_payload_sha256": "3e60b7eaa62be49fd05d6664e8d9d30e25637f1adfb11a4cc95b47a41dfb7a5f"
+    },
+    "kernel/drivers/hid/hid-speedlink.ko.zst": {
+      "file_sha256": "6bf7655d512ad14750d6a2eb2aa5331624432afb907d79e857fa3e2d25114862",
+      "signed_payload_sha256": "08da05a818d1548707ca3ed0c78d56726a9631608a48b57c10c8ac69ca102b71"
+    },
+    "kernel/drivers/hid/hid-steam.ko.zst": {
+      "file_sha256": "3640d9d9aba6ed3b6f32cef87a5e0c0bb2189c1f126dbf3ea10c009068f5cc1a",
+      "signed_payload_sha256": "2e75510608fd7256d027db909c75c23e84b8fd3164b51707f50fca7c568b70fd"
+    },
+    "kernel/drivers/hid/hid-steelseries-arctis.ko.zst": {
+      "file_sha256": "e99baf62d4b0c195041a3a4c037ff4e0b6249f33bca73d7ff60486db1724e3d3",
+      "signed_payload_sha256": "72344062489f5cb62d965e9061ec9bc758cc3138689af8fbc2caa973ac0bc695"
+    },
+    "kernel/drivers/hid/hid-steelseries.ko.zst": {
+      "file_sha256": "40e7c28eae2ee44b7b2e952416b226fc3ca72194ad6240b20bb504d1d1325f86",
+      "signed_payload_sha256": "267d6f9ed26f68ed00b4811ba5b4bccc91b904b76a38f35712e73347d1834a39"
+    },
+    "kernel/drivers/hid/hid-sunplus.ko.zst": {
+      "file_sha256": "6adcb735bf979cdb746cad21ed5644347c700a1ace9f1eadbcfe87f38676fa2a",
+      "signed_payload_sha256": "bf8f8cddff61293b5904e2185964255934c5ebf025cf66e7a785a86375b7d2ea"
+    },
+    "kernel/drivers/hid/hid-thrustmaster.ko.zst": {
+      "file_sha256": "f19106092d28172cd67ea0b26e288b4aff3e099e9bfbc4ba831e6b8350fd7b97",
+      "signed_payload_sha256": "3d3e1a7ca5f17cef6e120420664d2160db471c9731d3b8824207a0aa08e77632"
+    },
+    "kernel/drivers/hid/hid-tivo.ko.zst": {
+      "file_sha256": "43bdf95ea5b708a04e227e169ec91292b28d6a0b493f7e7db6a49d09eb7d1abc",
+      "signed_payload_sha256": "5e1b774f1befaf578eee7e940a74d56be8c761c3e8c0878147daddb4f16fd2f3"
+    },
+    "kernel/drivers/hid/hid-tmff.ko.zst": {
+      "file_sha256": "9c8a5329beea3339b4194d9bfc528f914f6953995a711218ab5308e34b231ffb",
+      "signed_payload_sha256": "f64c886e959e8e404b3598d06c5432642e4bb79d89f302e89c0cb66107b02718"
+    },
+    "kernel/drivers/hid/hid-topre.ko.zst": {
+      "file_sha256": "3b02f93da7c10140d14d8dfe6c6bdd90c3f0ce88a35f7a9e6efbfb238e07f2a7",
+      "signed_payload_sha256": "342c2000e1c3be7da73769a175237c8f84fabbfa2877e40d01a6bfdff0a44331"
+    },
+    "kernel/drivers/hid/hid-topseed.ko.zst": {
+      "file_sha256": "5fa69b974e0a9d701444a2da849ca4e0c421ae909e1c86c9c02b572f9dec3f65",
+      "signed_payload_sha256": "3f9afd6a6bc67dd25afbb0fc8da5131788bde031e1b848d3be3ab5b0eac65683"
+    },
+    "kernel/drivers/hid/hid-twinhan.ko.zst": {
+      "file_sha256": "d6017eb5469f48bab14dba23b6aee120d22230ce1cf52702352b507a0de86ef1",
+      "signed_payload_sha256": "baa447062e2e7581c51971a0cb39a84b4a5b877f60cf0de4366876dc1fa03fe1"
+    },
+    "kernel/drivers/hid/hid-u2fzero.ko.zst": {
+      "file_sha256": "fc1a6042333fbbdd584afb7b6d99fe7dc90eae8736356d8c0b51f67482b317d9",
+      "signed_payload_sha256": "453fea649bb7e0f400746187aedd05cd1ae25db9e1cb36d4df48d4b5c05a191c"
+    },
+    "kernel/drivers/hid/hid-uclogic.ko.zst": {
+      "file_sha256": "c7066fd48f9e98ffb560679b06d0d148468e48406f295fecff08c25c16355043",
+      "signed_payload_sha256": "742f9ccc769be26019618c7712c7ba20541fd2e17157fa03f7d36b8467600878"
+    },
+    "kernel/drivers/hid/hid-udraw-ps3.ko.zst": {
+      "file_sha256": "d636c7736ab10d3bde6b5ae890179d502eac1338094744dfefa6a213f07c9369",
+      "signed_payload_sha256": "cef8f79f7965a683f88fb0a4edb1455cda727da10a59cc06fa1948beca1b1cd1"
+    },
+    "kernel/drivers/hid/hid-viewsonic.ko.zst": {
+      "file_sha256": "13e41b6dcca57099357daa813b750dc8d07056b778834dc813709af5a1865b73",
+      "signed_payload_sha256": "6ef0cca6e749d217ad303c40354d96f9550532221de7adb3c585d8d1022c423f"
+    },
+    "kernel/drivers/hid/hid-vivaldi-common.ko.zst": {
+      "file_sha256": "f9a49caca7bb7da3c3644062767ba9db7f920853931cd10e4fcdd33c095f0060",
+      "signed_payload_sha256": "2ee0c29250f1340810ac2a613c56c41501408d48ad0277b5fdc9983d12dca9d2"
+    },
+    "kernel/drivers/hid/hid-vivaldi.ko.zst": {
+      "file_sha256": "4264edeaad1aba9eeb62791b9a1c435bd86aa8e629887ce85f67213fb7d5e144",
+      "signed_payload_sha256": "98d56614d08a9073becf7ffaa35e52232e12ebae394885bc48bf711586ea6674"
+    },
+    "kernel/drivers/hid/hid-waltop.ko.zst": {
+      "file_sha256": "fdff7bdcc7b23c6c04361edceba3a462706173689c18f274007bb99cf35cfdf2",
+      "signed_payload_sha256": "4082a60680e170cbd6b36ff74724f561b0600f7d49969915f81ecdfdae0b8199"
+    },
+    "kernel/drivers/hid/hid-wiimote.ko.zst": {
+      "file_sha256": "254649ec6745be1fdc252394baabe820fd8e7593cbed9955fb37948f69c9dc41",
+      "signed_payload_sha256": "bf9cd6c17bb2ce0ef689f6813b193dc3550106b071015adf8131b66854f8d851"
+    },
+    "kernel/drivers/hid/hid-winwing.ko.zst": {
+      "file_sha256": "98fd2946757ca639e95f11b538bb10c8d44050066d2434442014561ba96bf35d",
+      "signed_payload_sha256": "dfc7a8100e41c616e86d1b1bb016940d48decf3c9f4ad179410f232cfa22b1ab"
+    },
+    "kernel/drivers/hid/hid-xiaomi.ko.zst": {
+      "file_sha256": "eee3aed8d944856ec76342d6bb56d2ba88139d19499755b88ef0aced27bf63d7",
+      "signed_payload_sha256": "0bc47b9020a8c2cc606eb59a2e27ff1f1363d1afc5e155fdfeb9a28084bd7ba5"
+    },
+    "kernel/drivers/hid/hid-xinmo.ko.zst": {
+      "file_sha256": "c5ae340b68a645a8a781386537ea1333c19031219e734451cb40c7443f5f4cfa",
+      "signed_payload_sha256": "3f3cf12863df982185d1d1b013240c6fffbf6e6123384b6055caac143f63c784"
+    },
+    "kernel/drivers/hid/hid-zpff.ko.zst": {
+      "file_sha256": "45c2a6f9d8628cafaa6c9be86ecc855a94524a7d5e4bde1d3f220d098a0bd235",
+      "signed_payload_sha256": "a226e7bd47355abb1f1dcf46b4c298c3158755ab32d43a682dbda59825f0cc47"
+    },
+    "kernel/drivers/hid/hid-zydacron.ko.zst": {
+      "file_sha256": "8790515757eb61e469b719b829f968f3365263640bb76d24bedf2951b29a46cb",
+      "signed_payload_sha256": "47a563673f326f756b6ff0fd9291838f8aa002622dcf3f082a32f171339bbb05"
+    },
+    "kernel/drivers/hid/uhid.ko.zst": {
+      "file_sha256": "8d7f5ece18765a99488c269bd1ca42c30d46c29845989b8ce68cf5a6975787d6",
+      "signed_payload_sha256": "25dfc46c2fe25e6d6b46cab7465b47792c65999f07367f78f889441aa7404c21"
+    },
+    "kernel/drivers/hid/wacom.ko.zst": {
+      "file_sha256": "368a4892d461269d52c25fc46ed32b1f16c106dd520ac9f3ca24aef353f49677",
+      "signed_payload_sha256": "0323fb9e97d191dee36ddb59fe5cffc8c775677c04df44f59fae48baa9fbc587"
+    },
+    "kernel/drivers/hwmon/tmp108.ko.zst": {
+      "file_sha256": "0fbcdf73c4f733f9c7f2c6d81aa17c9f4155d8ab2be26fbf63f8e0b688c1eb9c",
+      "signed_payload_sha256": "9957641826e276465af0634d664e5757cf01bc76e946a94dc6c7a73702eea268"
+    },
+    "kernel/drivers/i2c/algos/i2c-algo-bit.ko.zst": {
+      "file_sha256": "b478403b47e4352a4f7ada0977a8b49a5cf8099fe577fbcbd0589365d34bfaec",
+      "signed_payload_sha256": "59e2014420a9b425aba76914226341384eff8203d9350920e0aa86e8dd6206ea"
+    },
+    "kernel/drivers/i2c/busses/i2c-gpio.ko.zst": {
+      "file_sha256": "bb57c8abe33b58c88bc6ea7ed6c063a7169270ac398e502b35fc44aa6c358266",
+      "signed_payload_sha256": "ffd8d51852590b33cd8b72d6114813284c18b0504904386ae4feed84c0cadd9c"
+    },
+    "kernel/drivers/i2c/busses/i2c-qcom-cci.ko.zst": {
+      "file_sha256": "f0c9ad7af5fc1d1a3ff1d6ed937ce68465281e124f0ad0ba2b5933c9ba8c74bc",
+      "signed_payload_sha256": "04ec47495f1620dbb6b235a60db9ec8ef11e04357a407f6dd1c5d0445456240b"
+    },
+    "kernel/drivers/iio/accel/bmc150-accel-core.ko.zst": {
+      "file_sha256": "8d91f1e832eb632a9af37382e843b32c98f1d9b1741703d12df015b2bfd319a9",
+      "signed_payload_sha256": "beead5d76724595a10c12b6b589c4fa30349925a9f5873d98f9e72a7fbc1482d"
+    },
+    "kernel/drivers/iio/accel/bmc150-accel-i2c.ko.zst": {
+      "file_sha256": "76cecd776e8b055d69bb15f932c4b107b38a62c08096fd69175d1508a1e86c0f",
+      "signed_payload_sha256": "6edac91607472a21ef924739fc9e90d6a5d520efb5e15b64622c896514ede5f2"
+    },
+    "kernel/drivers/iio/accel/bmc150-accel-spi.ko.zst": {
+      "file_sha256": "b8d1adc7245408387713172ad8d7d1c3c6bdb0e66b1160a6e2bab0d076c2934f",
+      "signed_payload_sha256": "3455bb55677cbe9b168818f83c854f5262b157e204ed0928f4468c8cc2259640"
+    },
+    "kernel/drivers/iio/accel/hid-sensor-accel-3d.ko.zst": {
+      "file_sha256": "223aaf1c245a8837e40821d0d87a3ae103b8c0b0698476ce45da12c76de90273",
+      "signed_payload_sha256": "4f661347ff0d57bb48509c197b17572eebd8b7d46517c6e7dcebdf5d61b93e45"
+    },
+    "kernel/drivers/iio/accel/kxsd9-i2c.ko.zst": {
+      "file_sha256": "30fae276c75994acd52cdfd89f8bee55ee94e75c95db938f559d4bd7631a8b83",
+      "signed_payload_sha256": "1598a569854b69568d529e098a220eec5de0ef605271180a10fda879fdacd973"
+    },
+    "kernel/drivers/iio/accel/kxsd9-spi.ko.zst": {
+      "file_sha256": "589683c2256cd24ae09c1de78524b494cd1dccd04e365884c89c6b7f2e882196",
+      "signed_payload_sha256": "5e489110856c82ad71c393d81cbb8896f5792ddcfaed2c35636791583368a97b"
+    },
+    "kernel/drivers/iio/accel/kxsd9.ko.zst": {
+      "file_sha256": "eb37b370762c3f2cefb0e6a672caff9cdbd7a5b5346e0e4e97f8e00ce9161e70",
+      "signed_payload_sha256": "e299e53b32abd43fec64cb03b945033e87367fdcb262a1cdce5dee670f76497c"
+    },
+    "kernel/drivers/iio/accel/st_accel.ko.zst": {
+      "file_sha256": "3e4061813d3aac47d0df521374546d13c07927ab70289e9a1dff053f078c47fc",
+      "signed_payload_sha256": "069051a58a01a2ed9ff14f5ba584bb5ebb7958c1d19d91eaf211821d4231a3d8"
+    },
+    "kernel/drivers/iio/accel/st_accel_i2c.ko.zst": {
+      "file_sha256": "c79d6f7a64afe77ac625b7c760e3ad8c0949ed7aac19b79bff8c7c8a2056f6e1",
+      "signed_payload_sha256": "6bc959b18171510f995a50afdae0c1121a8f3b9d65a22f2830384efdc15ee4a5"
+    },
+    "kernel/drivers/iio/accel/st_accel_spi.ko.zst": {
+      "file_sha256": "f202432c11f70a25100c36598f366be6a9021fc69a78b0d77eeb4364744726ac",
+      "signed_payload_sha256": "afb7b09fdf002d519b3092d62c2ec26dac580ab4b9595fa9cd628311cf702dfc"
+    },
+    "kernel/drivers/iio/adc/qcom-spmi-iadc.ko.zst": {
+      "file_sha256": "3b2ef606e30b46e43490f12f691de7cc409fe2366edfb87c9fb68f210d390578",
+      "signed_payload_sha256": "bff8b1d8240f034deca1f184e401e9d8edb9dc6f0486753ae9d851dbc4a1e5ed"
+    },
+    "kernel/drivers/iio/adc/qcom-spmi-vadc.ko.zst": {
+      "file_sha256": "91f6c25abdffaffac4ba7b1c0dd9d05c4554b3a43193ae14e9bdc7e5d0e93945",
+      "signed_payload_sha256": "7d244d593627837efdc3e1a23ca2f73ba17db12ab91827b51e064413b4ded0f2"
+    },
+    "kernel/drivers/iio/adc/qcom-vadc-common.ko.zst": {
+      "file_sha256": "a58385cc9a88a843fa9bd9ece3318e57e48fac99f7f5b79cf4365be92a5837b4",
+      "signed_payload_sha256": "ad4e388c4bb2671680bdc927c25801d0656417065118375e55a8f566e3b67b3f"
+    },
+    "kernel/drivers/iio/buffer/industrialio-buffer-cb.ko.zst": {
+      "file_sha256": "4c7662eef7478b3f7a9b15a30af2d28b0489c146e1f113ebb5eb6d356972f78d",
+      "signed_payload_sha256": "34082fa3d5196d8b14be896c1b1fe5e93516d8cda65acfd8b4dedce777e2a567"
+    },
+    "kernel/drivers/iio/common/hid-sensors/hid-sensor-iio-common.ko.zst": {
+      "file_sha256": "f6aff42443399cde99f08c5e837e3a852a754ddd253b94a2caf7eb69f7955349",
+      "signed_payload_sha256": "cfbf065b4e6d17326df8b1677410796a2d190592b956fffaad426534da6300b5"
+    },
+    "kernel/drivers/iio/common/hid-sensors/hid-sensor-trigger.ko.zst": {
+      "file_sha256": "106e45ef5f46bc22139c92e163d692fdd6761f3d7bccd75abe51fbd3b3386c1b",
+      "signed_payload_sha256": "340aa1e120fa44a29f8b64100c8871fa41e7b269b7f5dc586fb7c053ed1d8c01"
+    },
+    "kernel/drivers/iio/common/inv_sensors/inv_sensors_timestamp.ko.zst": {
+      "file_sha256": "0eef481beea7eafd81f2cf9bbc82ba75ca53a2a264b22261bbfbfae7d6a5cc72",
+      "signed_payload_sha256": "61515a23eb6beec2db3e18efbfa1d464d935b8842b5349102b2ac9e29e5766e7"
+    },
+    "kernel/drivers/iio/common/st_sensors/st_sensors.ko.zst": {
+      "file_sha256": "6d541fe94cd05658900cff59deff79655ca078aebed60459309d5db18e4a8774",
+      "signed_payload_sha256": "e7b12ff4bab600485dd04abe2bdb3b2bc549e55a61a0db0ad3fbeb6232ba04a8"
+    },
+    "kernel/drivers/iio/common/st_sensors/st_sensors_i2c.ko.zst": {
+      "file_sha256": "4b2c9f2c4e9844d5c1ab385d490688551572b6fa5123b6587c129a0604533972",
+      "signed_payload_sha256": "11437b5aa94183d16061dbc864c24e41284cc037dd9b2cedf75afd0c5072376b"
+    },
+    "kernel/drivers/iio/common/st_sensors/st_sensors_spi.ko.zst": {
+      "file_sha256": "91d69a15333b8e75e2a16e038ad6a11388c054c843d1551b10e2f20c3180b942",
+      "signed_payload_sha256": "ec4189314001507da59ad4ddba3054e19cb5bc5c4a65804bfdd670a30efac1c2"
+    },
+    "kernel/drivers/iio/gyro/hid-sensor-gyro-3d.ko.zst": {
+      "file_sha256": "4356e4518b4a0df1b958ce86d2abe1eeffca49be85c3d607e5c06ba6942947ab",
+      "signed_payload_sha256": "35184146639d55140fc218f01dc76ef486c0cabc9c86e0554656a43ca2eb51ce"
+    },
+    "kernel/drivers/iio/humidity/hid-sensor-humidity.ko.zst": {
+      "file_sha256": "847c4166c4431da245d7d218428e82c84d59f00e524988abeeb422f2e01d67ac",
+      "signed_payload_sha256": "175e663f696aeee5061a484114964b112f3fb58f13dc26275732dfd9a6d7c4ef"
+    },
+    "kernel/drivers/iio/imu/inv_mpu6050/inv-mpu6050-i2c.ko.zst": {
+      "file_sha256": "8defd67ea6dc09b027e8d202ec618dcbcce927909e41abb6b20c522209c86607",
+      "signed_payload_sha256": "9fe2f1f9c9215f6d694b205775e9385a84b04f2cb617ef308b6db3a698464478"
+    },
+    "kernel/drivers/iio/imu/inv_mpu6050/inv-mpu6050.ko.zst": {
+      "file_sha256": "6ba3ece1cbe49f843062082f6e713c44cea4f57bc5097855c516949c8b120cb3",
+      "signed_payload_sha256": "03604f9a2c6af31575924eb00db1ab91868a65779cf0ec64e62fba50bda487ed"
+    },
+    "kernel/drivers/iio/light/hid-sensor-als.ko.zst": {
+      "file_sha256": "0069bf9175e8cac18e08f90ed25391cb5313cd067016cd841907cf4b25d87b59",
+      "signed_payload_sha256": "7e7f9749023a4e399ef3196fd7499d83168543b440c91ccf95284252f00b3c76"
+    },
+    "kernel/drivers/iio/light/tsl2772.ko.zst": {
+      "file_sha256": "8af3ac1808bf4acab67f4a47395e404042e47c55ff6a529736713a80a08e7baf",
+      "signed_payload_sha256": "52082e1b78876d9f01c3f2650667d2b3c5658cde78e72e597ce00d0a1f9433e2"
+    },
+    "kernel/drivers/iio/magnetometer/ak8974.ko.zst": {
+      "file_sha256": "5f0b2ae3470678a298f7527d88eb32545899386febb8b7387638c92ef767d7bd",
+      "signed_payload_sha256": "2fd215146dfe4f0f52f3d74535161428ffe5c6f9921718dec04511613941c211"
+    },
+    "kernel/drivers/iio/magnetometer/ak8975.ko.zst": {
+      "file_sha256": "cefe69efafdbf704b0927bc974b6b26d112071d3c047de8e51af44bcf9658b21",
+      "signed_payload_sha256": "ab782cb41c5188cd819a0beb04e9f51e75dc59d8cd461296cb58cfe3fecdba6d"
+    },
+    "kernel/drivers/iio/magnetometer/hid-sensor-magn-3d.ko.zst": {
+      "file_sha256": "b0b63ffdc419f6423ebf267d5412bf2225a12f088a318529a5b762064e4f036a",
+      "signed_payload_sha256": "1d23427fa2d2bb9f8b877a235dbbc5b078511c6697b4b17519b49146c663496e"
+    },
+    "kernel/drivers/iio/orientation/hid-sensor-incl-3d.ko.zst": {
+      "file_sha256": "d9d916c2fbdaf903ff8f6dc2835ea8f805149c006e8dc77c19729962bd6b0199",
+      "signed_payload_sha256": "38776e2d29ac6ddc70cc53a0f352e9d562b8e98c1fde914f6b23c92553adf975"
+    },
+    "kernel/drivers/iio/orientation/hid-sensor-rotation.ko.zst": {
+      "file_sha256": "3b8ee854a8c3ddd7b7b1961df8b9d2f13c693b956b92053f69b68fdbee609d01",
+      "signed_payload_sha256": "24d1db8b8608a212002321c74e5617b7fafec456482b1550fc1b5d39649cc29c"
+    },
+    "kernel/drivers/iio/position/hid-sensor-custom-intel-hinge.ko.zst": {
+      "file_sha256": "114da92e03f8fa4aa2764f4e8495498f4093731b71c326fb12c468691cc06b87",
+      "signed_payload_sha256": "375acc5c2fa6c96b8806dad2995eca0d9c3311cfa4f18b2ae248f61715e2ab86"
+    },
+    "kernel/drivers/iio/pressure/bmp280-i2c.ko.zst": {
+      "file_sha256": "e98a82480265f2bf1f34d8bb917db54a70874846c4f22253dfb9f37b4ecbd504",
+      "signed_payload_sha256": "be84b5556be29c4ef1517b37c470b873f0db0944bee2e04cb40716fcec9a593a"
+    },
+    "kernel/drivers/iio/pressure/bmp280-spi.ko.zst": {
+      "file_sha256": "40010048169214d104e051920155e670f8b5aefc4f30e80f510bedfd34260422",
+      "signed_payload_sha256": "1bd8d121ca5334be693a0fb69f684fb182f26d2b6989c7635682873ba9354260"
+    },
+    "kernel/drivers/iio/pressure/bmp280.ko.zst": {
+      "file_sha256": "e2c131ef5713ba10be6ce01d279971bd1365344bfb0f9c7f9a6680ebed501757",
+      "signed_payload_sha256": "4ebc341249f2acefe7090568b0e5645d5f32907271f44786bdbdd6bd83918b77"
+    },
+    "kernel/drivers/iio/temperature/hid-sensor-temperature.ko.zst": {
+      "file_sha256": "e17881d7623605cd254035f5958a5cb758ecd07590f259e78f8f735aa4d581e8",
+      "signed_payload_sha256": "a587c3f98b50e8066228ee158e1d67a4b7c0b3590a20d695cba1f0ff69d058c7"
+    },
+    "kernel/drivers/input/evdev.ko.zst": {
+      "file_sha256": "15a819a98118fbe5de6339c6630a0ffc85527ba7a7e4ca150e2ed0a65a19eb96",
+      "signed_payload_sha256": "8b2a15390098a38c768b42eb775b8f202b5101770b9f535633ba8a4acc922730"
+    },
+    "kernel/drivers/input/joystick/xpad.ko.zst": {
+      "file_sha256": "46f002ab748850f3f6fb1fd5b168d8dbf1bb7a36a4ea45a01e907f016723250d",
+      "signed_payload_sha256": "4718d750f101bc0c83630baeaec661d6d5ef777e20e8931f6215b72be34cd03e"
+    },
+    "kernel/drivers/input/keyboard/tm2-touchkey.ko.zst": {
+      "file_sha256": "97c5a167b243d8dd8b604b263466c5f9bfa07e25927954c0d6399f21bf9ad1ef",
+      "signed_payload_sha256": "1e8f0bc927c1ce78d94a092f2f03a0a1a324fff53ff332e49b1b7c9dc602db89"
+    },
+    "kernel/drivers/input/misc/drv260x.ko.zst": {
+      "file_sha256": "e7ff52dbc4f4e394b900ead9eaf8c20b1fa939600863f1e9907722d425511103",
+      "signed_payload_sha256": "0a842685d50bcca4de60ec29071e7af5b7d59ea614b8b92048064faebfb14b96"
+    },
+    "kernel/drivers/input/misc/pm8xxx-vibrator.ko.zst": {
+      "file_sha256": "63666c31dc4e86f2008087fdc7c4b6c7d3bcec03fbb139ab6718fa9499cef580",
+      "signed_payload_sha256": "c0dcec1a40f6396839825b62810206ac54ee98cfe15654fae61c1955b08ff71f"
+    },
+    "kernel/drivers/input/misc/pmic8xxx-pwrkey.ko.zst": {
+      "file_sha256": "0168f7d286a1f6948b2c16451f1462243cf73d7d048444e3cb262dc6467564a2",
+      "signed_payload_sha256": "65edff25860c10a06d11a8e8b0e2ffc4312e4b1149fbade94b41a1bb0bac18c4"
+    },
+    "kernel/drivers/input/misc/pwm-vibra.ko.zst": {
+      "file_sha256": "e1da09dd1d769f3888de217549bcbdaaa4aa19aec9ae510e382074032d2ef3c9",
+      "signed_payload_sha256": "0b8cd9a2e538bb63609c5f1a2d2a1a10806b909a6e6583ab78c78424813d91c1"
+    },
+    "kernel/drivers/input/misc/regulator-haptic.ko.zst": {
+      "file_sha256": "e362ab82827a2a4ef21f430a1a12071b6dedf88d06c6ce09ea77d7a723af0398",
+      "signed_payload_sha256": "2dd941bcbcad4ba8196d8966fb8716d5e1cd1e3668f9a265d3eb08b665c6e1a4"
+    },
+    "kernel/drivers/input/rmi4/rmi_core.ko.zst": {
+      "file_sha256": "cf7860a3f0c429cda7547e120f83299ed5da0bf59ecdfe60976f87799eac720d",
+      "signed_payload_sha256": "93d5ab8c0eef4e37d666d8e399b29d84dc8ba8aca1fd9fab2e80254d0a126168"
+    },
+    "kernel/drivers/input/rmi4/rmi_i2c.ko.zst": {
+      "file_sha256": "ea16c37efe942468dfe3e20ca6163b551ae7da5fdadcfb0d6382ba7936a3da80",
+      "signed_payload_sha256": "b3ef68662587efcd56741dbfdfb0d663027e03e428e3fbcafef35de3a1708b42"
+    },
+    "kernel/drivers/input/touchscreen/atmel_mxt_ts.ko.zst": {
+      "file_sha256": "9a6f0770921a3780c4337250d8660a757e793b02b14094d09de9349f1b5dabed",
+      "signed_payload_sha256": "59633653356f6dd9aa10a5476667f8a96de29db3d700174a6fc4d5d52d3151be"
+    },
+    "kernel/drivers/input/touchscreen/mms114.ko.zst": {
+      "file_sha256": "8f3bd7c4723fb711f8118b816c068c5ea904619571dc6f09cd04753ddb4d6df7",
+      "signed_payload_sha256": "10a2bb126cd72840364f2e62f16c404ae1901887b5ebcde41a1648f88ac83ead"
+    },
+    "kernel/drivers/input/touchscreen/zinitix.ko.zst": {
+      "file_sha256": "e488cd3b691b8b23a202ebe70f45bff28608a630da63c24dbed28d3491722ffb",
+      "signed_payload_sha256": "fd4d07fe592862e94e15254051ec7d4044f838484b8fc6ef5ff42cb291b5309b"
+    },
+    "kernel/drivers/input/vivaldi-fmap.ko.zst": {
+      "file_sha256": "44c9275b4b404e26a551414ace78d40acbb6629fefbc3770f4b7297f324d424e",
+      "signed_payload_sha256": "76e1731366102712da66a35edd641e2d64373c017fd74c97d825f10726b72328"
+    },
+    "kernel/drivers/interconnect/qcom/icc-smd-rpm.ko.zst": {
+      "file_sha256": "c9a7e4610a2cbf09ddad2b5c72aece117434c9934c3805379e25b834de81c088",
+      "signed_payload_sha256": "21ef0e307d76ddd5edc1486e03ceae0de6b66ca32e94961eacef7a3721e09168"
+    },
+    "kernel/drivers/interconnect/qcom/qnoc-msm8974.ko.zst": {
+      "file_sha256": "0497009dfbd904a09d95d18adb405e29de6405d4eb2b8bbac69befea4dee8b2f",
+      "signed_payload_sha256": "e1fec39e507fe59598e8604441168ce5c51266f3139c7f7108420c0036f21f75"
+    },
+    "kernel/drivers/leds/led-class-flash.ko.zst": {
+      "file_sha256": "1f621dea118e41196f0d48da93c28186233d1bfb605a5230be47cf0bea624419",
+      "signed_payload_sha256": "e3beb9a6a659f9afca9f6b310a2afceefb45ce0a20dccc82a0e23e8e65830694"
+    },
+    "kernel/drivers/leds/led-class-multicolor.ko.zst": {
+      "file_sha256": "83b4a2627117d4445e10ac5cd49ed8c3ac7b788470cced0b433d6e94464ac3be",
+      "signed_payload_sha256": "81a30deaf53cbd51b3c4761cc9340261334076056e42eca2508f2cd62c27b5de"
+    },
+    "kernel/drivers/leds/leds-pm8058.ko.zst": {
+      "file_sha256": "1682c91a73d33f2f1c2f14d9360aedfb2f9a59b6d4d4b7e4e01e9c5bbf649d03",
+      "signed_payload_sha256": "636721394fefe3f0e08bb8c9ca0cd5a3b4f3ad16680b01da731f0565af075d8e"
+    },
+    "kernel/drivers/leds/rgb/leds-qcom-lpg.ko.zst": {
+      "file_sha256": "772e61a6607a1529a0eb66dc018c86e1b84bc6d0fcc6a676acdf1c39a32e0441",
+      "signed_payload_sha256": "7c8f93d05c178a6465620a8241bf8c8d2ac7e418aa322ea90ca913cf84ec080c"
+    },
+    "kernel/drivers/leds/trigger/ledtrig-heartbeat.ko.zst": {
+      "file_sha256": "44abf860e7a283df32c2ced1c71685e1c5e250a1d308b417bee70b5ecf494fd8",
+      "signed_payload_sha256": "654043c4c82dd803555b36137ccfb9648d802c8211505b4a2d3eae832feaeba9"
+    },
+    "kernel/drivers/leds/trigger/ledtrig-pattern.ko.zst": {
+      "file_sha256": "f2fc8ee7ec44e43a2389a0739b31ce6b3d21a18850ee7ae7d2d776865760ee2b",
+      "signed_payload_sha256": "45af1965ee1b7547f97abf625c479af6e02845c99c678d2f7a434af5d7449f31"
+    },
+    "kernel/drivers/leds/trigger/ledtrig-timer.ko.zst": {
+      "file_sha256": "adbc381e26f178435fe7df169396f6052e3e85007ad8ed007530a58669f1fe29",
+      "signed_payload_sha256": "36c205750448251ebad8796b503d8d32c57f688f252733ebefc9f4c45a31d824"
+    },
+    "kernel/drivers/md/dm-bio-prison.ko.zst": {
+      "file_sha256": "3dacc3861cd5b2bd11fef6177d99bdecf4ac3519202570cf745686f623f13f6c",
+      "signed_payload_sha256": "41f8462caaf33a8170ff579b86bb714859b6b61310922efebc614ec9542593f5"
+    },
+    "kernel/drivers/md/dm-bufio.ko.zst": {
+      "file_sha256": "531420a7fb9cf2894a978852ae356ea86f78aee68f8270aaa2a801a59723b941",
+      "signed_payload_sha256": "0f0ab179ddfd514246a191c5f5b081ce4df61de8a4e0e9f779a14594f18e1817"
+    },
+    "kernel/drivers/md/dm-integrity.ko.zst": {
+      "file_sha256": "822f59c9aad8dcaf5312a6954effee4816d1de5522d60a4e4f9f6e243a102f1d",
+      "signed_payload_sha256": "611c2bb737e2d8ef30078e38e7beda6e089cca38d1a8e136aa5cfdc85431d862"
+    },
+    "kernel/drivers/md/dm-thin-pool.ko.zst": {
+      "file_sha256": "8804115f8a68bcfdbcb481092689925c9b956dbb28073e0eeeffed363b43a110",
+      "signed_payload_sha256": "79bfca6e7dd7214b81c2d7de0eeeaefb9149b7128bed3bfe2d7c3fb59078fbfd"
+    },
+    "kernel/drivers/md/dm-verity.ko.zst": {
+      "file_sha256": "4a8794cdf0ed00fcaeaf14993d01f7d997c6aa91d92a5c192f8ad784d313d835",
+      "signed_payload_sha256": "94a143f90b35bd893667f6bdbcefe2c51f6a4b42b8ab6744afa50d3d61fe10ae"
+    },
+    "kernel/drivers/md/persistent-data/dm-persistent-data.ko.zst": {
+      "file_sha256": "eca366ecc09f02c8f5828617bed1e9954a4c0fa6b0f4a3eea03d3424333976bb",
+      "signed_payload_sha256": "159f94fd2121bb890d185c00a12ab8ffba8dce4fe944e3864fd3aa047daa76ad"
+    },
+    "kernel/drivers/media/cec/core/cec.ko.zst": {
+      "file_sha256": "e321cdaddb17a46e5a4b50bfffd1caa07170beb0f0a08e905682e4cb1bfab25c",
+      "signed_payload_sha256": "58a8ff46b3ef5808ac61e0ebe1608a29cf4148130b883ca92810e5d29dda419c"
+    },
+    "kernel/drivers/media/mc/mc.ko.zst": {
+      "file_sha256": "b9a60e16c9b328095a22d9e6b7e53f078f06896a87c952bcb70c59fe2adf66f3",
+      "signed_payload_sha256": "c02502d9b93e746a2a048f75c253ae3edb872a1378be621cadf076468bf0eb58"
+    },
+    "kernel/drivers/media/v4l2-core/v4l2-async.ko.zst": {
+      "file_sha256": "264dc350c474dab2e271f8a7ede8081eb49f2c1f608a75394720f98e9e215bae",
+      "signed_payload_sha256": "18c2fb8a9becebb2f96bc0972589a83315129aa66175a1321dce18ac849b65f8"
+    },
+    "kernel/drivers/media/v4l2-core/v4l2-dv-timings.ko.zst": {
+      "file_sha256": "45b05af003f3928de631870387de97a28a81475edf2938de64324fac93302378",
+      "signed_payload_sha256": "a4062d96f4d229bf1112e8567343875b6b80d82add58139c2a6d17ff85912823"
+    },
+    "kernel/drivers/media/v4l2-core/v4l2-fwnode.ko.zst": {
+      "file_sha256": "eb45fba28fb1e5697f2ac508b691aaafc30226d4bd4472c2d5bf5e76318e491a",
+      "signed_payload_sha256": "8f6621d18d5160818295415ba357656cb6bdb37934d0e7665aacff6c7cc95c75"
+    },
+    "kernel/drivers/media/v4l2-core/videodev.ko.zst": {
+      "file_sha256": "69e2b13edf46900b32349ac90e8a3e67dd1d434350f07973dc5d4497eb689c33",
+      "signed_payload_sha256": "92126b4c315a777c767aba3a874610ced4046bdb01c8662a7fed27d50a6c4c04"
+    },
+    "kernel/drivers/misc/ntsync.ko.zst": {
+      "file_sha256": "11b401b9b82332e976702cc0d84feabafb3f00966522b856819db81a23d306ca",
+      "signed_payload_sha256": "37640b6ae9322a54126565dd51ac7fb6852a93c778a270f8f0191c5114952e36"
+    },
+    "kernel/drivers/net/dummy.ko.zst": {
+      "file_sha256": "7a6d5d9280e7006246ff74d41da523a6e6a6e333a2cb81b0c8140e83e4acefa9",
+      "signed_payload_sha256": "de44a415ec0c675efe2cb1d3bf1dcc73652b53f6c59bafa637d5f7aae46ce686"
+    },
+    "kernel/drivers/net/ipvlan/ipvlan.ko.zst": {
+      "file_sha256": "18defb5485ba9b10553f37b946a2b30168da1aedf4c09f93f32a25c18485bc23",
+      "signed_payload_sha256": "5eb8e73ae7774f4547b04ad1ff49231974abbcb52ecf1aabfb22b7945c05270a"
+    },
+    "kernel/drivers/net/macvlan.ko.zst": {
+      "file_sha256": "76f887c6991d19ef033524465e7bdfb3d073ee232ebff77d5cd66208aff9d415",
+      "signed_payload_sha256": "9c496bed818bce014b98d2f39f372c047dadb88c049bd649e6b2c8e47da85457"
+    },
+    "kernel/drivers/net/mii.ko.zst": {
+      "file_sha256": "415b95322b0b53e3f253f2d3db01f79ace051af886b63d0ee888716e1ef74b30",
+      "signed_payload_sha256": "1e4acf3985d0fce505ee0d9dc5f6509fc2680a48519ba54a94072cf66602a6f9"
+    },
+    "kernel/drivers/net/tun.ko.zst": {
+      "file_sha256": "78527ddb911801cd6936177a541c3a1c49297ec93485f33e39c1220a1d44e5a6",
+      "signed_payload_sha256": "a81db935eb0f9f6569af718c15a6c406e449558e54eecc2a7c25d75cdc55cf7f"
+    },
+    "kernel/drivers/net/usb/ax88179_178a.ko.zst": {
+      "file_sha256": "3c1756e8d50e448531d280e0cc7a99ccf32d9c4627510fa6979479a21b33abd4",
+      "signed_payload_sha256": "81c1586a02928f7f3fb4a50a51686921697e645926734d74773e40882bf72404"
+    },
+    "kernel/drivers/net/usb/cdc_ether.ko.zst": {
+      "file_sha256": "f7816e37ec6abaf2674c64d7d9eedfd8e2ae67febfb9c3fadd0253b5bdc0a1d3",
+      "signed_payload_sha256": "673d305bd369b728211718c533f51704e6edb13d9cf60a837ca0249fdbd98d14"
+    },
+    "kernel/drivers/net/usb/cdc_ncm.ko.zst": {
+      "file_sha256": "f8340a25ffa800048bd1617cd0c95af8b2dbfeab7d08c199eac93be656ebcad5",
+      "signed_payload_sha256": "dcd507e53b08054db71edf879c7995370dbd4e63558ec52604d5de5f2a6deed5"
+    },
+    "kernel/drivers/net/usb/cdc_subset.ko.zst": {
+      "file_sha256": "2bf4f6865161a7920d0071d3fdaabde3558bb5e9e3d6b6ee41dbdd71dc91c824",
+      "signed_payload_sha256": "d1bb39197721c236345cee0c9bb64ce670282206f1b972916ae576fdf4623b73"
+    },
+    "kernel/drivers/net/usb/net1080.ko.zst": {
+      "file_sha256": "f707ec56bdc078523e229ef0572db4534a33edabfb010100c28d576938c72d04",
+      "signed_payload_sha256": "708183d6d4fa8f6016cfb42e00c2a4472cb5c94d1f37835b7b710f24d27168d9"
+    },
+    "kernel/drivers/net/usb/r8152.ko.zst": {
+      "file_sha256": "f78ebe44d2c513fe79ffb1c6f3498b62aaf3b3d9b012f4c6f92f2cee62e7e9cb",
+      "signed_payload_sha256": "449df4b72da4faa9dd979f67133e1568fb8f80755324ad474ba45200b255d5f5"
+    },
+    "kernel/drivers/net/usb/r8153_ecm.ko.zst": {
+      "file_sha256": "620c8149074dc8204199111203cc019752bab3cc8d715f99622ff2ab08249876",
+      "signed_payload_sha256": "ff2f35e6023e4bd9580e2378ce2428a26c88b4a5a2bd01ee8fe8558de7dcebff"
+    },
+    "kernel/drivers/net/usb/rndis_host.ko.zst": {
+      "file_sha256": "8d517da6f069b36e37a15273161b6f0e2f4ac1a160ecfabaf27c2934e6ab28c4",
+      "signed_payload_sha256": "f1e0652d68b1eac9cf83ec3652cf51d2a5e0b02d753dfce5aedf71f41511eb8c"
+    },
+    "kernel/drivers/net/usb/usbnet.ko.zst": {
+      "file_sha256": "de40512b1f80d03eb6cbf96a0c6311d91f5346501d3ad32ef8d21f740059dbc4",
+      "signed_payload_sha256": "3e060199bae987ccbb1d2a35b95cbaba83b2429f2a561cb1487a3a9be897a102"
+    },
+    "kernel/drivers/net/veth.ko.zst": {
+      "file_sha256": "7ea8234ed79a19e7b94ec04d17892f25ed75a7e7d7bda8785b08b3d49f34a846",
+      "signed_payload_sha256": "ea2eba5366bd3723318ae08411c2e80f46e0421ec5cd7d9bb7568905d118b351"
+    },
+    "kernel/drivers/net/vxlan/vxlan.ko.zst": {
+      "file_sha256": "ec3a21641a752c3397c5045b62ae69c0f71a6fa3b4b3dc819658dcde94215868",
+      "signed_payload_sha256": "e9433cfe1cb9cf78d5bf9dbc71fe36cf69459821334d81656ff7f6202f078bce"
+    },
+    "kernel/drivers/net/wireguard/wireguard.ko.zst": {
+      "file_sha256": "9de0c8a6900be58984ef45efae674c9a77b7dbb34a0d433c0390903affbccb45",
+      "signed_payload_sha256": "2ce2b8a9bb68ed1da1c10c730e65afdc59550223580e720a81232b0ec57a21c2"
+    },
+    "kernel/drivers/net/wireless/ath/wcn36xx/wcn36xx.ko.zst": {
+      "file_sha256": "f88f954f74b6c1062fe3e9356f91533cd7b4b0d34a908aa113fb3d77bfbf80dc",
+      "signed_payload_sha256": "3fb4503f77c5e96264e61da2e21940cf09698c81189c68b899aaa937af6f8a80"
+    },
+    "kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bca/brcmfmac-bca.ko.zst": {
+      "file_sha256": "3030c77a2c7798b64801ba106408476c275b5517932209c4036e50e3f678b9b3",
+      "signed_payload_sha256": "4bf7aa3dae2c0d0b490f671dad92579e2aa1e13f9c253c5eda519640784bb5c1"
+    },
+    "kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko.zst": {
+      "file_sha256": "b4cf84afd2cd54dc512d9370e4161eb825550e902aa61fc2be216c27458cd32a",
+      "signed_payload_sha256": "2a052c38cfc98f05894f7936d680535fb3261f93e99361e0f07cf48b5b1a716c"
+    },
+    "kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/brcmfmac-cyw.ko.zst": {
+      "file_sha256": "46a835db915f8a09482b2369aae015a78751e4b1ee03b5980b673d0cecaed8b0",
+      "signed_payload_sha256": "c873b18194ef01370d7b67df230d68281aa3d3211ca84ce55086ca93ea396fe3"
+    },
+    "kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/wcc/brcmfmac-wcc.ko.zst": {
+      "file_sha256": "a38aa295b5e8be5391e868f8fb67f671c9347e0a89e437bae7d060b93205a196",
+      "signed_payload_sha256": "25f5bc4c844734da33ed990ced1c882895d92fdf8e3db125d5533c6b5a8e0a01"
+    },
+    "kernel/drivers/net/wireless/broadcom/brcm80211/brcmutil/brcmutil.ko.zst": {
+      "file_sha256": "79aff801dc83d8baf8d9f835dbef22146dcf0e850c26eb34110024103aa0edc6",
+      "signed_payload_sha256": "b4b6db63638588d7fa158bffd5609516ec45efb092b77df4e22f6ed61a8a8342"
+    },
+    "kernel/drivers/net/wwan/qcom_bam_dmux.ko.zst": {
+      "file_sha256": "26887edffc716e29388b085470dd5232b30c9cd3487966121a97ab62f69d625c",
+      "signed_payload_sha256": "05892dbceeff92c6f3df3f945122cb67464751c4e16aeca54d23cb29369795b7"
+    },
+    "kernel/drivers/net/wwan/rpmsg_wwan_ctrl.ko.zst": {
+      "file_sha256": "4d93439f188a92837e35384b6874a65a1d0131b4fd73d2958d093c72ac6c2dfd",
+      "signed_payload_sha256": "996a5b76b3ea8de525ac0e863e07ba90c0083f6a2704c0d83e28512e5896b607"
+    },
+    "kernel/drivers/nfc/nxp-nci/nxp-nci.ko.zst": {
+      "file_sha256": "e1da8ff6da4bf073b9e3797af5e168c088e123783305bada2f3d208ee90a4c94",
+      "signed_payload_sha256": "12530d640d5d071834b983b3de01a617c9dea1e93ed311176aa7fbf6f7f34062"
+    },
+    "kernel/drivers/nfc/nxp-nci/nxp-nci_i2c.ko.zst": {
+      "file_sha256": "36beb77f7d835863a18cde0d6c72d84f2f95d0ec80f6719ee4151f13b75c7633",
+      "signed_payload_sha256": "c8b6b649a09a37e41ad025eec12bc71488ba3b53fe5a85e8c12f427e45937b54"
+    },
+    "kernel/drivers/power/reset/syscon-reboot-mode.ko.zst": {
+      "file_sha256": "096822d0e53d31a966609c3a56fc94b4a07b62508fedb29fd997878bb506ff5c",
+      "signed_payload_sha256": "1ededb91d7599c65073ac43cb7f03937f1a6ba3f1640d8c7ca0d3dcc2235032b"
+    },
+    "kernel/drivers/power/supply/bq24190_charger.ko.zst": {
+      "file_sha256": "7e0f1a1a28bd24047fca4e165f1d3192b6742c3f4c8b60a69c1166c5c55c636e",
+      "signed_payload_sha256": "68bff3f608f09e3f75df9277e484970c8b6ebcb33293885f98689276280b8ba7"
+    },
+    "kernel/drivers/power/supply/bq27xxx_battery.ko.zst": {
+      "file_sha256": "51715ea4e50180c2c698414c3197b87b73f80afb68a2cfce2a285028d7fb90dc",
+      "signed_payload_sha256": "136cf486ced18a7b3ac884c2a397a4b71a45c76a1df6ad5cd772867883005e8a"
+    },
+    "kernel/drivers/power/supply/bq27xxx_battery_i2c.ko.zst": {
+      "file_sha256": "9e4fb95cbeff0f831a780b773df45f6b7a7b57f2e668d9991e83eab24f2730a3",
+      "signed_payload_sha256": "f34e10a59676689c000f9aaf4d549c1063b68129c18b330ba05ac0b50399a348"
+    },
+    "kernel/drivers/power/supply/smb347-charger.ko.zst": {
+      "file_sha256": "77706abce4862a234632711dedb28c987559c6c1040dec441b410bff781de980",
+      "signed_payload_sha256": "eac365d0890c9ed16ac4e647500227107b9dd827c9b9900d674440f528e20264"
+    },
+    "kernel/drivers/pwm/pwm-clk.ko.zst": {
+      "file_sha256": "3a9b2703466bd9bc25a1ff96a62ab33589012b424f878c724714faa86733d4eb",
+      "signed_payload_sha256": "8f91732a6cb0e1811238075837edda1b51f7f9e429ba4f14438e18b327ef6c14"
+    },
+    "kernel/drivers/regulator/tps65132-regulator.ko.zst": {
+      "file_sha256": "67399a97851c9a942ae13bcc01063cbfcf3d746e2258ad50ace0abdfa731c0ed",
+      "signed_payload_sha256": "9f685f76017daaf365bd92d47f8e02ede1824931afe24f5b64fe870e2b398c20"
+    },
+    "kernel/drivers/remoteproc/qcom_common.ko.zst": {
+      "file_sha256": "bd8cbf30c501d39ba5d93375e5d0e85dd581fc60a6c2bb80f58fea0f481b1a43",
+      "signed_payload_sha256": "d4506f993d0862cc2c8b75201e9fb9e962fdb07121d35afa45d51cc438361cda"
+    },
+    "kernel/drivers/remoteproc/qcom_pil_info.ko.zst": {
+      "file_sha256": "865cb8cf60fe9e24947348263aa773ba0fe3e5a86995042a8fc9fe418b63b15c",
+      "signed_payload_sha256": "910bc0896c1c1cbb2b626953ab88d9f7ce73e8efcc537d003fce43f4ada18cd4"
+    },
+    "kernel/drivers/remoteproc/qcom_q6v5.ko.zst": {
+      "file_sha256": "11764d612879739fbc1897dad3e49011c7c6ff168e8101c5ddd89ba160d46702",
+      "signed_payload_sha256": "e5507a52a358d98c0582babfefed1a82b7081e725eb6254cbf955955b60fe64a"
+    },
+    "kernel/drivers/remoteproc/qcom_q6v5_mss.ko.zst": {
+      "file_sha256": "8fc2b3113eb1bea7ca987a2d41d08104a82d822cfd0dc258ae2098dcaff90f9b",
+      "signed_payload_sha256": "e8c3068c3b7089a2141210b6ed085e135522f80e1abdfbf57a3139a1a312697b"
+    },
+    "kernel/drivers/remoteproc/qcom_q6v5_pas.ko.zst": {
+      "file_sha256": "491ea36a0151e0a8d888e4dbf64ffcb12a3e89fe837fb6c7d0ac96bf6c021bc3",
+      "signed_payload_sha256": "2d8e312a8fb0b784165f2a1b0033a940eb92c5f893df880e3c99291e6d0e2dea"
+    },
+    "kernel/drivers/remoteproc/qcom_wcnss_pil.ko.zst": {
+      "file_sha256": "b21edaede80c0ed4afa25f93bf53f679ef74338290638f132a407e3c45f28da0",
+      "signed_payload_sha256": "14cda30bced5e653d71be1f76f7839dbafa24160052ff27e0ab072dc2c4482cb"
+    },
+    "kernel/drivers/scsi/sr_mod.ko.zst": {
+      "file_sha256": "3a3b3b63d05b6548ff9c88dd4f4db9c1c71a3a2b1cad692168f698fcf27ae2ea",
+      "signed_payload_sha256": "bc50d518597ac288d2a8a444fc338b0d7ba83b34c0a8a6bfa421bfdd67fc77e1"
+    },
+    "kernel/drivers/slimbus/slim-qcom-ngd-ctrl.ko.zst": {
+      "file_sha256": "719ec7d1715026c16c9b60a21e00ae11e59df519e617b9da76f113d5445a28db",
+      "signed_payload_sha256": "e817a172361311c3989b4ed86ce3a963f2dae0f25837f6281ed50b0f35fbcf0c"
+    },
+    "kernel/drivers/slimbus/slimbus.ko.zst": {
+      "file_sha256": "d93042eecd505ccf1b1537fb638bad2be494ebf1f50f2399bdfcfefcf40d76cb",
+      "signed_payload_sha256": "7c2ef9d33c441416edf0a8b0688ad3301fe0623f5754b7f3c7caa179263b2c95"
+    },
+    "kernel/drivers/soc/qcom/apr.ko.zst": {
+      "file_sha256": "2f9614c874deadf8d07c73f902e4572673236743eeee536ab11c01622df79661",
+      "signed_payload_sha256": "6e8672c43e63e73ac98e575c833ab244e501cdd612cd7a366f47bf9620f49b87"
+    },
+    "kernel/drivers/soc/qcom/mdt_loader.ko.zst": {
+      "file_sha256": "d9490113976eaf1b02434da5d338947260f5feb8601d337de1834e86af3a19b1",
+      "signed_payload_sha256": "7c3622cda92b7a7662ab4d49ba37ac39972628499b307a02db8fd7b0d493719b"
+    },
+    "kernel/drivers/soc/qcom/pdr_interface.ko.zst": {
+      "file_sha256": "7b823d5487ac9c9fb8a751ec3123469153864e9e09f72bc683a44841b182da81",
+      "signed_payload_sha256": "2854949d4a9de2d0d4474b2d3d88e443725569cd1c91af19789266f09873b119"
+    },
+    "kernel/drivers/soc/qcom/qcom_pdr_msg.ko.zst": {
+      "file_sha256": "afb333cf5720b7559c648c81b13d15733eebd028cc2e57b2d9e54554c6904b5b",
+      "signed_payload_sha256": "96a73e9026b4231b994d9d3f7cf90e6d0536015965f8868a8a0502c469bd9656"
+    },
+    "kernel/drivers/soc/qcom/qcom_stats.ko.zst": {
+      "file_sha256": "347aa8072a528334bcd99c48f63075c72fa7152b5817b260d4ace0a7b2aeb115",
+      "signed_payload_sha256": "79c28b848fd394ae41a5c2b5e3471f901eed3c7484297efb5591fed1ae3056f4"
+    },
+    "kernel/drivers/soc/qcom/qmi_helpers.ko.zst": {
+      "file_sha256": "5b1f9926564ebd3554706442f887c0b9d5b6e560927898e58f833153da023789",
+      "signed_payload_sha256": "9678751fd4828157329d05cc7dcf2f7e3f470faac424133d7dea18f2140504e6"
+    },
+    "kernel/drivers/soc/qcom/rpm_master_stats.ko.zst": {
+      "file_sha256": "2e943334d617adf9656c3a7593d5c19a3f668100c2a52d958f141ddacfb36583",
+      "signed_payload_sha256": "007772f8748e7bc6292d1b1046501a571ebacfadfad5dd538b8fe1eb7528a14b"
+    },
+    "kernel/drivers/soc/qcom/ubwc_config.ko.zst": {
+      "file_sha256": "6d659bf6a71e378696d986d94aa86b3e120aaa64abba754ca81d819dd474f3fa",
+      "signed_payload_sha256": "3925265a27145cb0c253a82e6824786ef034a47c30a5ca57f8829118e85cd96e"
+    },
+    "kernel/drivers/tty/ttynull.ko.zst": {
+      "file_sha256": "7740e184d9515c82df67d4ae8ce941530be83dc9c72bb176365f447351467bd8",
+      "signed_payload_sha256": "f1f4a484938568e6e56c50bc9540f91710b19d983e392608d8d0948fd0ff1cb1"
+    },
+    "kernel/drivers/usb/class/usblp.ko.zst": {
+      "file_sha256": "59f6dd8cbef68e1d3e58d291b9cc2266b2e5c89300b32186d4c00ecd5528c658",
+      "signed_payload_sha256": "ef22185215313e929bae6b528d204153afbafcb394743477461c0f2ff430887d"
+    },
+    "kernel/drivers/usb/serial/cp210x.ko.zst": {
+      "file_sha256": "afc566e6b28a2151bc28a52643d04954f7a39ac4c1d907489392ad2abf008acd",
+      "signed_payload_sha256": "fbc0a7d27941e0cc5357b9e072761c40045c1686e298357899a8e7f523dfbf70"
+    },
+    "kernel/drivers/usb/serial/usb-serial-simple.ko.zst": {
+      "file_sha256": "965d34b696d68ecae032ae344135b4cba5c7bfd4363a12570dadec7094a80a5e",
+      "signed_payload_sha256": "ff264c2322983d1275505eebafc34e3d33822d62892d247fb49bc691f513e1c7"
+    },
+    "kernel/drivers/usb/serial/usbserial.ko.zst": {
+      "file_sha256": "a51a6d4c67b3a38a704c2ace32c34a6474419951bcb5ebae45a795280b7d528c",
+      "signed_payload_sha256": "01847f43b5fd302cae6cd33791a50fb70921f784162992cec0df59075da2d14e"
+    },
+    "kernel/drivers/usb/storage/uas.ko.zst": {
+      "file_sha256": "57403afb220a2d028c01e128951770b6ad6dba77c0705301e749654e13b3b687",
+      "signed_payload_sha256": "4cbdb2c88b948a52d2f16e5e2f08528c1089c49ee3b35a22435ba9bc06570ddb"
+    },
+    "kernel/drivers/usb/storage/usb-storage.ko.zst": {
+      "file_sha256": "eaa978080ab3355bfe589f00ba2e44ee3fb58af7126d9eef43118d28de3147d0",
+      "signed_payload_sha256": "8a8634f2b19a3d2d07d5dc5d9700bb195277d0a3191e084d6d8648aa294971bf"
+    },
+    "kernel/drivers/video/backlight/lcd.ko.zst": {
+      "file_sha256": "c7a048585870a74e29bd92e6492821fcead65121c76b63cab3ff516159401305",
+      "signed_payload_sha256": "cb620df451a95bf99574096832ffb43c394843aee5fea863cbe742cf14fd59a4"
+    },
+    "kernel/drivers/video/backlight/qcom-wled.ko.zst": {
+      "file_sha256": "8328607bc233bad6f10f7f8f2f9a9c67b16329369e95c0976758b9ba59bb59f6",
+      "signed_payload_sha256": "2951ef61933710e32642c5fd25cf9262fb06b47973a86c2b2ef185720c49142f"
+    },
+    "kernel/fs/autofs/autofs4.ko.zst": {
+      "file_sha256": "eac13eb590168efa46c274131110435af7a5403ab6034f2348142a93062785a6",
+      "signed_payload_sha256": "ba0de3b3980e8340a78bd9f825ad9855199e89190163fbc4b890eb2278e3e3d2"
+    },
+    "kernel/fs/binfmt_misc.ko.zst": {
+      "file_sha256": "70171da592f9523458933804dfdba3ab0ea3e652910c641657f6f7ea621eed09",
+      "signed_payload_sha256": "7cf9a74f549d777b7eecb5c7a832a208dabd8c7f36c8fc043d00ef842f2fa512"
+    },
+    "kernel/fs/btrfs/btrfs.ko.zst": {
+      "file_sha256": "284240741fb5c35907a946897239642d0d622f7409cf4803225c45102817a639",
+      "signed_payload_sha256": "3c25036048f637bfca680a6fd95be5e09a0fe12da81bb72df245cfd9638c16a6"
+    },
+    "kernel/fs/cachefiles/cachefiles.ko.zst": {
+      "file_sha256": "399865824de6f2ddb301e6b5c777dfa73c18ec084f9b4ffcde171deeb1ee1f06",
+      "signed_payload_sha256": "280b263bb70698b58a24ac5987717173db24d2a3edb46884716a8d905f25a63f"
+    },
+    "kernel/fs/efivarfs/efivarfs.ko.zst": {
+      "file_sha256": "ebfdef334c7e002f579854103c61b93d28933dd5e62ac4d6ac1189d2c6995607",
+      "signed_payload_sha256": "893919bd7e8a12f52363adfb94defb95230e3549314204fd21e2333879f3fdf4"
+    },
+    "kernel/fs/erofs/erofs.ko.zst": {
+      "file_sha256": "c7b12bbb79d20754bfcbbc96980f5b046da94cfdf27d7875b7fb39fa9f84d89f",
+      "signed_payload_sha256": "0b9ce886714bc278536fedd715cd3fbf28611e8491ac7397eb6c87fa9ab2d3fa"
+    },
+    "kernel/fs/exfat/exfat.ko.zst": {
+      "file_sha256": "5aecff708ed8465f392068eac0e77c1a422c325d21a04ff418a86298cbdeeea1",
+      "signed_payload_sha256": "4d7f8ed963ad4c92a2af439edae0f8f18b82ec4c844914b12cdd5d772a79cf63"
+    },
+    "kernel/fs/ext2/ext2.ko.zst": {
+      "file_sha256": "d77b6ba3980345012fd39ac4e573e6a9e9251e498b9f7b6793a74faf332cfdb3",
+      "signed_payload_sha256": "905da2fe21f177b4481544607a2eb8a50d096139e3bfe508f47b89e0c413aa0c"
+    },
+    "kernel/fs/f2fs/f2fs.ko.zst": {
+      "file_sha256": "6e50b726c296fa73423e3bd9dbc862333946186265946c30e527fa367a62cfb3",
+      "signed_payload_sha256": "dd643ec8791a4feef3173f0bb7d000c236725bcd5dfef3bb6a369b8bf58c0ca9"
+    },
+    "kernel/fs/fuse/fuse.ko.zst": {
+      "file_sha256": "73324fb894e1e2af5faa96eefeee5235efc42238993fd5b5c43bc84ae8c418cd",
+      "signed_payload_sha256": "699631d8b997ad567b0b43008742c1a5220fb4e88563e211b44a5487c6a38d5f"
+    },
+    "kernel/fs/isofs/isofs.ko.zst": {
+      "file_sha256": "4fd42ae1a3acd07cdc84d2cc5ed13c167ed91f6df8cd35d8439aae75ae7bfed5",
+      "signed_payload_sha256": "d0c4d0804b614677575b217d45a968a982fb4d35edea7896ee226939c7682b0f"
+    },
+    "kernel/fs/lockd/lockd.ko.zst": {
+      "file_sha256": "31c0380ed32c4ef1a7a627c07266f6f8c277e88c88314010c0299ed66850d5bb",
+      "signed_payload_sha256": "8abe53f1fd5f084353527497832985e0b2f0392bfe33670f8672c5b59987dfd3"
+    },
+    "kernel/fs/netfs/netfs.ko.zst": {
+      "file_sha256": "ce5627adbc456b86873597403fa96734d3aeb491dd9f79bf72486a2b4d467fef",
+      "signed_payload_sha256": "e970dc89a2cb9801bf0f0c2ad4ddffdc5f92ab4fe052512de9b4225b08500dd1"
+    },
+    "kernel/fs/nfs/blocklayout/blocklayoutdriver.ko.zst": {
+      "file_sha256": "a7afab22d1ce9be3901fdbc4bb183f72dd6b1eabe4fdacb1727fae7b4440c5da",
+      "signed_payload_sha256": "9c709b8cfe704494a4ea90728b66e4514ad9d8fe6e4a74da973c2b0b67bba91b"
+    },
+    "kernel/fs/nfs/filelayout/nfs_layout_nfsv41_files.ko.zst": {
+      "file_sha256": "8dc842dc66619e1c6b9399b0db8ea56b44e59493826a83bb6fb1c217e206feeb",
+      "signed_payload_sha256": "eec94be25d6bd5e8e1cc6dbc7e16c46eb30759310285d49b407a245b5c60fd1f"
+    },
+    "kernel/fs/nfs/flexfilelayout/nfs_layout_flexfiles.ko.zst": {
+      "file_sha256": "f2063258234a31a2eb65a196fc934aa363a476d228467b9006d4af405c3a611d",
+      "signed_payload_sha256": "3d5d4537ed508aeb370ecec253b8e27e51b5848a6c4bee8d912ea7ce9f421f9a"
+    },
+    "kernel/fs/nfs/nfs.ko.zst": {
+      "file_sha256": "20fd34da7164d91bd12c0b5deda0a3b6f904e9f2e0455159f76c24b655a381b3",
+      "signed_payload_sha256": "6afb3e541136fabb93a174e0f73a07ffe70bf17898a471b2008cc22632a9c2fb"
+    },
+    "kernel/fs/nfs/nfsv2.ko.zst": {
+      "file_sha256": "61e64388c55a2c39c0913fc3952883b56c9dace49e3139211cc88c747c927d62",
+      "signed_payload_sha256": "906bc24dbea8ac5d661481082315556296816b6aa8e5f66e9970616196c73a57"
+    },
+    "kernel/fs/nfs/nfsv3.ko.zst": {
+      "file_sha256": "0b966a490caaedc063199d3532c14ee9fb07a1b122a69abee8988b379bd9292d",
+      "signed_payload_sha256": "e7c2c88372fd3bab7a1336ecee36049ff42a10cc58a47f311ed1460a09198449"
+    },
+    "kernel/fs/nfs/nfsv4.ko.zst": {
+      "file_sha256": "3db7ee7579ab415297c9d560189e1b3cf251c35a1081931b0e86446c886cc9a4",
+      "signed_payload_sha256": "81d322eb5ee859ac0cef23bb1198906931b817f38bfcd4e6a82d84255b49e46e"
+    },
+    "kernel/fs/nfs_common/grace.ko.zst": {
+      "file_sha256": "bf6ca5d3585fe4b8ec6bbb7a1489fbedd21b967d20932a8866986abfcfb6da56",
+      "signed_payload_sha256": "ae64ef52fa5386fb9096a6d3c491b85173f67b5ccb92f28500c581df62cdc540"
+    },
+    "kernel/fs/nfs_common/nfs_acl.ko.zst": {
+      "file_sha256": "d455975986e1797f57d836b55335551728a88a7d3b677e4f622fc42a1ca42b82",
+      "signed_payload_sha256": "36810d6503495fa0245397e54f67263c46ba5e07cea03eeab17ec18e8805ea65"
+    },
+    "kernel/fs/nfsd/nfsd.ko.zst": {
+      "file_sha256": "bfa0192ffee6250fb1360c3e1add1bac115e45e0a89ca8abc9f74335674473bc",
+      "signed_payload_sha256": "9b911a06da00e1e54d53f5279fca8e7229da1adaa3401d9c7141089365e107f4"
+    },
+    "kernel/fs/nls/nls_ucs2_utils.ko.zst": {
+      "file_sha256": "b04b94427d399fe9543906a5f6360f03791e15835cb32fe407e99f4fddbc9714",
+      "signed_payload_sha256": "91d7b5581dbdf396cee5b1276070dfb4d61467843281bd7f7eca3cfc26810fd1"
+    },
+    "kernel/fs/ntfs3/ntfs3.ko.zst": {
+      "file_sha256": "5ad4d6ae468748900b8e33ddddf333b769828dfb1701bc51eaf3cbe0be90ed61",
+      "signed_payload_sha256": "a2f8cfb6b4861971096f95be6312cfbbb40776f1c910049b0952f8788526a56e"
+    },
+    "kernel/fs/overlayfs/overlay.ko.zst": {
+      "file_sha256": "3e952ca92a762ae091ff6ad2b7bdced3be839e62e340ffc16337af830c1969fd",
+      "signed_payload_sha256": "0072f0f515a9354c68582aa2c11cc568a04818786c4feb66e1c4524279df6f36"
+    },
+    "kernel/fs/quota/quota_tree.ko.zst": {
+      "file_sha256": "68387945a5b2c7e1ea3f27d7c1c24f6b6184bfa232e4edf7337d49adf0e7688d",
+      "signed_payload_sha256": "cca35cb0dcda822c657fd195039ba873eac858b46eb5a69ea1f69132b156aff6"
+    },
+    "kernel/fs/quota/quota_v2.ko.zst": {
+      "file_sha256": "8b2daaa1e9203fd9325915a0e57708dfb0e6eb626470d4784b187fdd65884434",
+      "signed_payload_sha256": "eb2037109d1ae283108d84ede2709361fca95b77c07d449e6bceed9aa4b3ebae"
+    },
+    "kernel/fs/smb/client/cifs.ko.zst": {
+      "file_sha256": "ec911fbac3f490c034a0c5448befc2905ce43f6fc6531b1054f2a6d15a5e4107",
+      "signed_payload_sha256": "a38334183f196a110a19f7929d6deb71c6e1f945155c4aeaa00941b590d31325"
+    },
+    "kernel/fs/smb/common/cifs_md4.ko.zst": {
+      "file_sha256": "46a0cb4f5c456773ff8724559b25b96c5245fda26ffec5294750cb996bb672a7",
+      "signed_payload_sha256": "efc38a2a8874a164b05a96f5b7c46a606fb51956ddd8319625d1a37b71867c02"
+    },
+    "kernel/fs/smb/common/smb_compress.ko.zst": {
+      "file_sha256": "a24057bc79f6530be3902549e30adbd03384f237edc7dd7ff7c12d54d24cd3e0",
+      "signed_payload_sha256": "25745c621b0539f4a7001465d47dd8d2efec6986fad3b5ac6ff2d62f4e49b31b"
+    },
+    "kernel/fs/squashfs/squashfs.ko.zst": {
+      "file_sha256": "d3ddfd611eb839930b2ecbf66e9ceb2e58cf8ffd96e6d61bec5fbc88fbf4c81b",
+      "signed_payload_sha256": "25e2624c3854ddcecb1636d7d1a87694c73c481194cfc893e08a1205b3eca600"
+    },
+    "kernel/fs/udf/udf.ko.zst": {
+      "file_sha256": "9e834cb7c29d06771ccc6719c03f0f61540a3e1fb96735f618744e5a4d4b2405",
+      "signed_payload_sha256": "118f04d443b2f3ca94e51a68dd177f7951344bfa998a333b8247941c2c08bd63"
+    },
+    "kernel/fs/xfs/xfs.ko.zst": {
+      "file_sha256": "a94a7b296887a8133056c5f70ceed926e0edc28b59f66e90e4b5382d4c9fe589",
+      "signed_payload_sha256": "85bdbc4b37b42b9f3208bd076a7a3d18731296f23a58293851f4d7603ef24485"
+    },
+    "kernel/lib/crc/crc-itu-t.ko.zst": {
+      "file_sha256": "338e8235eaadf3f50cea246db7c5e89fdc004771c23a3cbc4ecf145320b2f0d4",
+      "signed_payload_sha256": "d86a1257e471984c32527e9d4d546ffa68ed354c17cfeb9caa380ba64cad0e0a"
+    },
+    "kernel/lib/crypto/libarc4.ko.zst": {
+      "file_sha256": "bd52cb7c7582f7793d2b555e64ed0dccb08a20086042f7f8284dfbfba03c2264",
+      "signed_payload_sha256": "f3280fb0af9b6fc4fc7cca9adcb5e8cf8758d21b07536f5e0786d50e2a2008e4"
+    },
+    "kernel/lib/crypto/libchacha.ko.zst": {
+      "file_sha256": "92864f0fffd91bfe97fae99792c5cc3d1329c8ed08bfc492f0f86eba1844c11e",
+      "signed_payload_sha256": "12a7a5dc39a35640bbe9cc5f0fe430a5bf459e04e63fe48750c6f3905f92facc"
+    },
+    "kernel/lib/crypto/libchacha20poly1305.ko.zst": {
+      "file_sha256": "045fad7c0f040a847c807b6b3f4a58db25221ec8ef24ae897e8a8a0db14a23d4",
+      "signed_payload_sha256": "69f99b699e8492b5769323f067a58ac90ec737b2b30bf8328ef87548d0d0a697"
+    },
+    "kernel/lib/crypto/libcurve25519.ko.zst": {
+      "file_sha256": "32cc4798c328638323155a2278a0cb9f3f02de2d4058af994857023ba44268ea",
+      "signed_payload_sha256": "4c0639221d9502b13fbb95d5fd44f996c2a5a500ddcbf31e79bd226be08ba9d9"
+    },
+    "kernel/lib/crypto/libdes.ko.zst": {
+      "file_sha256": "845cdc653c8eda805b9559e11c68e78b69fa75b80fdbfb1cc9690f02724c6f87",
+      "signed_payload_sha256": "7ffcfa7e0bb83ed08fc8fcfe32b74322db585ed528342c5f7e33657e63635963"
+    },
+    "kernel/lib/crypto/libpoly1305.ko.zst": {
+      "file_sha256": "b4d4208f7a1f519ade97b5d82036dfe2476964beacf261ad9e464a3bceacb67c",
+      "signed_payload_sha256": "74cf7fd8c8934b2b9eecd3afb659dfbf61d40a0182251893ac27c5c3c69c4477"
+    },
+    "kernel/lib/crypto/libsha3.ko.zst": {
+      "file_sha256": "3529daa012669c068abf7ddf65a953aa7f40815a80365be564f59de495713c14",
+      "signed_payload_sha256": "44a7c90dc7c7e95b7d85c07777f3340440e5997251cc527b32661ab3ead76176"
+    },
+    "kernel/lib/raid/raid6/raid6_pq.ko.zst": {
+      "file_sha256": "212cada550b39aad4ab5bc59c6b2e542376a304667076d112e8d650f484b400a",
+      "signed_payload_sha256": "cf72cf8bb43a81764d860418eddada3146803d80fb0f97e88061d53742a29ce4"
+    },
+    "kernel/lib/raid/xor/xor.ko.zst": {
+      "file_sha256": "bc4c5ead50ab70019d04174f5474070eb0986dd6e5747f8128be6bc85a8ae812",
+      "signed_payload_sha256": "945286818298b777ac3056a38feba4d6f014f1408dd23e59d3172b2cf96b03a1"
+    },
+    "kernel/net/802/psnap.ko.zst": {
+      "file_sha256": "691cac1e259908d77f7db1b0e937cbb1788da78a4fc90064567983b2a58ec8a0",
+      "signed_payload_sha256": "e441a4ad98d1db91b7f1d05165297947df63b65bf5ffd90f7843cf2df76abcfe"
+    },
+    "kernel/net/802/stp.ko.zst": {
+      "file_sha256": "8d66d4c9bc808d3fd0bd594961418a9f80c9e06b83fe4aaf34da37667cdb39b5",
+      "signed_payload_sha256": "3b343d3ae27616b28f2a10ac933e3e07761c6a73775ed986c1d9a41e2ef77926"
+    },
+    "kernel/net/8021q/8021q.ko.zst": {
+      "file_sha256": "97bfe42a5cfb759d0539309b3dd0273f4930ce0ff2866e5af0b127bf54f14962",
+      "signed_payload_sha256": "58cc882c584741cf416f13bb7e7946553baf0331a705cb739672600e13fc1cef"
+    },
+    "kernel/net/bluetooth/bluetooth.ko.zst": {
+      "file_sha256": "bc4568bb825d5e79100ae10b89f04a65df1f3631cae9328322d4b061bb572ba8",
+      "signed_payload_sha256": "b87215e2a05c8b6eecc26b5ee4e110d3755299c7639be0d5dffaf946226d8936"
+    },
+    "kernel/net/bluetooth/bnep/bnep.ko.zst": {
+      "file_sha256": "df960c55c7e97a3079a5b7a96945a890cc72dfc30b07ba1a24ff36361f3b4187",
+      "signed_payload_sha256": "7f6b9dcadea24909a52069e6cbbf01471e852a6232c48f84dac1da3f9e2992f0"
+    },
+    "kernel/net/bluetooth/hidp/hidp.ko.zst": {
+      "file_sha256": "3cf2a858c1b3aea4509ac5291d5f9fc12f1c0a05524ac90bde083035863f94f5",
+      "signed_payload_sha256": "34f2867cc9db3192a15af514abbe644453322ea3880d382020c81f28a576774f"
+    },
+    "kernel/net/bluetooth/rfcomm/rfcomm.ko.zst": {
+      "file_sha256": "b59d634cd87cf032a27db4453faa63f2cd1900d5a8a126004397ad17f3666c52",
+      "signed_payload_sha256": "a124540b80215dc91b0371abbc432483afcfac72db911da4f7dad72d86c619bb"
+    },
+    "kernel/net/bridge/br_netfilter.ko.zst": {
+      "file_sha256": "b5adadd4a2f55ec9752df22a08cb0240d0c48bcb4987031451f64680ade6e034",
+      "signed_payload_sha256": "5e4009e828ebdacf4ccdfaddb8066f5c9dffefd977651a21dd25f800f340151b"
+    },
+    "kernel/net/bridge/bridge.ko.zst": {
+      "file_sha256": "08d1c0fd461992ab47b4f1353fdca9ec8e2ecf6d0fdf43617f1b050ba92540d9",
+      "signed_payload_sha256": "1c5d5bd7bf8686810eb6ba8d68e5605ddde8eea10538c87c854bd7671d0ecce4"
+    },
+    "kernel/net/ipv4/ip_tunnel.ko.zst": {
+      "file_sha256": "e3bb99a57dbc17c7de543642ff455557906ad875110b9c455733858314e6c128",
+      "signed_payload_sha256": "e0b02bc66b7691aae1e440654690ca262e652f227bbccbb6746a24230fe4cd3a"
+    },
+    "kernel/net/ipv4/netfilter/ip_tables.ko.zst": {
+      "file_sha256": "c7a68661128461e490f9f14b9552e57a4dd76501970dcd55989914180f4c8496",
+      "signed_payload_sha256": "9284dd40ceb78db2a2b00988e243d338a1c033ff1273d2d49e585bde20c095d0"
+    },
+    "kernel/net/ipv4/netfilter/ipt_REJECT.ko.zst": {
+      "file_sha256": "df6f4391255d6bda407b5353854f6b41d23c6fcd18f5b09645e28677d5aa81ba",
+      "signed_payload_sha256": "4ac41a28555fad0c8edcf7cf144b7c2b46dea3af9d540830f23ff3260f217bb4"
+    },
+    "kernel/net/ipv4/netfilter/iptable_filter.ko.zst": {
+      "file_sha256": "5097f0b78f68e296bcfe8bf81094c261384950723422e70b606dc5be48cd2606",
+      "signed_payload_sha256": "a2d13708d0dd155995e6991c0a67375c4f7b99ac95794a085cc72057decb49f2"
+    },
+    "kernel/net/ipv4/netfilter/iptable_mangle.ko.zst": {
+      "file_sha256": "832e1dd7e246d4105ab0ce59afa11ce5f40f584702a677d3520fcf216e9f83d0",
+      "signed_payload_sha256": "d5977ac3f651d06a3685ef2e02e53aff00f07ccb22d501b0c8725cee6d57a39c"
+    },
+    "kernel/net/ipv4/netfilter/iptable_nat.ko.zst": {
+      "file_sha256": "68eff1e5bfa40fbfc48435453b54e561bfdf41f85285999fdae66ae22610a71d",
+      "signed_payload_sha256": "e5cb3780a3e4ea7f2264f1e457302e73fa66adac0ecbe403a2179c86bb977dc0"
+    },
+    "kernel/net/ipv4/netfilter/iptable_raw.ko.zst": {
+      "file_sha256": "77242d0e713818ec8e87354b1bab84306d507073b4f5db9929d64be419cfc263",
+      "signed_payload_sha256": "71f6c242db881a05a41c83b817677caf217ed79ff394f52c199393241eb136a9"
+    },
+    "kernel/net/ipv4/netfilter/nf_defrag_ipv4.ko.zst": {
+      "file_sha256": "c91e63ef91fe17640cc4d90a3e781b0a0db70861651558822ce1d6f7c224d49a",
+      "signed_payload_sha256": "79bc49ac8c035bb03059c2b9e51c95ef20512b645f5d97fcd5de741e755480f5"
+    },
+    "kernel/net/ipv4/netfilter/nf_reject_ipv4.ko.zst": {
+      "file_sha256": "cbfd965e4370f61694eb8db7874d4fcc271d3cff2a868ac825c9b20864d105ba",
+      "signed_payload_sha256": "d51c0ec1352b7a93c8032225846b8c67db733a9c3773fb260009a77dabde230b"
+    },
+    "kernel/net/ipv4/netfilter/nft_fib_ipv4.ko.zst": {
+      "file_sha256": "d38f0f684867e485f725f345d511ff5238c8ab8e4903740230cb72ac3144dfcc",
+      "signed_payload_sha256": "16fb54b765fa5ae05d73668ddd8590802df620fd74db075b96da9224dff60267"
+    },
+    "kernel/net/ipv4/netfilter/nft_reject_ipv4.ko.zst": {
+      "file_sha256": "d8f6e33d35f505b5987ae8345eb2774ed3ef282e7bd4dbac30a9078b2c263f5e",
+      "signed_payload_sha256": "c956b8113a4e7c20c37f2a022cd01f6b5b1733aa105aabb0350b7789c7d4b8fd"
+    },
+    "kernel/net/ipv4/tunnel4.ko.zst": {
+      "file_sha256": "876c57e66a120c5ba7af3e404d135f24c9f3db765507be2341c4d61e215eab45",
+      "signed_payload_sha256": "c18bb5d6b43276810f1a6461083c07b9c6d950dd113a2fe9f5c8cd8658249ec3"
+    },
+    "kernel/net/ipv4/udp_tunnel.ko.zst": {
+      "file_sha256": "1154eaf2a2b105333fbe559a65a227da357ff90c2f60773b5dd3b7e535ad3754",
+      "signed_payload_sha256": "e93337b38af65abb534e9490d29ba4e9e8bad1dd817db48c7c24c2063da9c07f"
+    },
+    "kernel/net/ipv6/ip6_udp_tunnel.ko.zst": {
+      "file_sha256": "aedbbb643a080f55490936e678816175200d92910198e33f45f98163d41f4135",
+      "signed_payload_sha256": "5c81b849a0ec21810dee5f16bd7eaa7aa7deb86c6607edd819a24b433d7de317"
+    },
+    "kernel/net/ipv6/netfilter/ip6_tables.ko.zst": {
+      "file_sha256": "c4e857fdf4d79cf23561dd3c0b17d39e817b807b9e93be728fdc2a6c008d6d4c",
+      "signed_payload_sha256": "00b8ea1af8208e5eff5127e575e275e5983d899437ed6134a7c8d27f8126c4c6"
+    },
+    "kernel/net/ipv6/netfilter/ip6t_REJECT.ko.zst": {
+      "file_sha256": "31fe761246f989bac07cd47f1d1360d031143722f71057f145aebe40ba041ffb",
+      "signed_payload_sha256": "6b02edddf37fc6dac3dfe96201254e62442e8d461c69472da2fe2790d1340238"
+    },
+    "kernel/net/ipv6/netfilter/ip6table_filter.ko.zst": {
+      "file_sha256": "14c01b7df346330a817e5628b62f1363d6f0e42520277f8ad5f56f5813a6028a",
+      "signed_payload_sha256": "d03d41b1ddcd10ff08c37d672aadd17e7c02fbf523231d7d7d739a614e79ed30"
+    },
+    "kernel/net/ipv6/netfilter/ip6table_mangle.ko.zst": {
+      "file_sha256": "288a6ec8c73ad099bcb213d9331e2438ba9e1780580bd043bbe533ee0c07c450",
+      "signed_payload_sha256": "892dcd30f12003436ca1568e490699294f8e2286a24b9cafc8b05ca8ffb1ad12"
+    },
+    "kernel/net/ipv6/netfilter/ip6table_nat.ko.zst": {
+      "file_sha256": "72d5a4c7970bac0c2cf6e1728d02fca089ad3625592b070fa1bfb5b2ebac91e9",
+      "signed_payload_sha256": "a08a65d5c0e8cfa26dfc447448b8101d2135072f0bd847d42f82d958d68b1902"
+    },
+    "kernel/net/ipv6/netfilter/ip6table_raw.ko.zst": {
+      "file_sha256": "85ab9548b27342316d9c46644c9dd38a5f74fc7af222081e2d7cf1ef97c7cc67",
+      "signed_payload_sha256": "19535649b840f78f104b6d5e726d465537d8f1ec44675858938c421bf969318d"
+    },
+    "kernel/net/ipv6/netfilter/nf_defrag_ipv6.ko.zst": {
+      "file_sha256": "bec6eb82a366d4fa882e53e840e37fc10ae9bf53000d5f56d130506cc83c7e9d",
+      "signed_payload_sha256": "c9c275741b65dea1ab0d61d8f1e7b24605111dc932eb186bd98d703e127c2df4"
+    },
+    "kernel/net/ipv6/netfilter/nf_reject_ipv6.ko.zst": {
+      "file_sha256": "8777def9157098bc1d037581694df0d6dbb8cdc9d7c800cacdc1603690767542",
+      "signed_payload_sha256": "68597d22ae1d1585655292a65c7101aea59189acbf32a26a4f55e0c8577d44f1"
+    },
+    "kernel/net/ipv6/netfilter/nft_fib_ipv6.ko.zst": {
+      "file_sha256": "22342b06e4f1f16f44489b43390c454a67389b31bab31d7e2199c13f3f5ecb26",
+      "signed_payload_sha256": "592acb56d4b1d7b8a87f5e123fa930113fdf09d41bb20e0eba313e157a5873f0"
+    },
+    "kernel/net/ipv6/netfilter/nft_reject_ipv6.ko.zst": {
+      "file_sha256": "619f22382fae13cb02ea2ec5651f1ab6f9bb3c17450048d460555ac854f18fe3",
+      "signed_payload_sha256": "01414d4f68a222d4333b40864f3908c42dd2eb8e296c32b6424b1dbcb7ae3e1e"
+    },
+    "kernel/net/ipv6/sit.ko.zst": {
+      "file_sha256": "be4f4e2ad3bf74ea3dd6d83da4237e9c5ef514a0512b5967f08c1593d53378ab",
+      "signed_payload_sha256": "d870e044298915557ee6d2aee1d760ede5069fb2ee9bf8f0588932eac2a71b16"
+    },
+    "kernel/net/llc/llc.ko.zst": {
+      "file_sha256": "affe84a2876a0f5baeb747425a2b4f80ef0fc1633f1d080af0b5463ff6c95cfb",
+      "signed_payload_sha256": "0da6d1c9a291aa6344954e3301fc8b8aed88ebdcf9684b623b1fc9fe9589c8ce"
+    },
+    "kernel/net/mac80211/mac80211.ko.zst": {
+      "file_sha256": "5bb581ab3f3be0c1ac64367d1f02a5bfd1828df11ad115fc19ccf5e00b2b376a",
+      "signed_payload_sha256": "feec67bdfd5ce53b86a9ff525542163dbc0ca6d48d79c1aba433901b77d65b1f"
+    },
+    "kernel/net/netfilter/ipvs/ip_vs.ko.zst": {
+      "file_sha256": "ed0e2d647b8027278723b652e23cc1b1c0b247aa8f982b5b3bcbee4c8f488b6f",
+      "signed_payload_sha256": "8aba185cb82db8cd384a29dbdd93dd0a784f784185ce209410c996a572d62193"
+    },
+    "kernel/net/netfilter/ipvs/ip_vs_rr.ko.zst": {
+      "file_sha256": "1e93e70619dfa2cc5f46046bcfb80d497a4daa3be7378339a8042e9aaff6dd49",
+      "signed_payload_sha256": "c53db724bde0013770b0733c7f40f8cf40f4bdfc5d99d88aa59c3351b9c94693"
+    },
+    "kernel/net/netfilter/nf_conntrack.ko.zst": {
+      "file_sha256": "1ee8038b9927085e9f2acc0d0a773278dba197ffad3b2634cb970946d5b39272",
+      "signed_payload_sha256": "753715c493f6438003cd8974ceee9bbaf6698ff0f42be8f27e86979c101e46cc"
+    },
+    "kernel/net/netfilter/nf_nat.ko.zst": {
+      "file_sha256": "b0d8d599490f3ac3adb57db2cfd86027f724a36c4ac055a1f3d1118cee6822f0",
+      "signed_payload_sha256": "fb505596cce60f4b5dc529c80c0798ee9e56064569c09a6b42722aa00791ed5f"
+    },
+    "kernel/net/netfilter/nf_tables.ko.zst": {
+      "file_sha256": "6f78d1c191f2d26815f45c0005f9a4a77d8de7573e9dced3eba7245bf6be7edb",
+      "signed_payload_sha256": "1856a4387668460c383a7f99c39b44f5342950b81c120644c3256d1562016de7"
+    },
+    "kernel/net/netfilter/nft_chain_nat.ko.zst": {
+      "file_sha256": "92c2c8b36dfa6304b309f52680efa4bc752ee8b5ceaba5c86deef370bd1c5fc5",
+      "signed_payload_sha256": "0aa97b82933c4b233c2606a06e28d1a95ab0a4e73d7cd1ba97644a9641647784"
+    },
+    "kernel/net/netfilter/nft_compat.ko.zst": {
+      "file_sha256": "1464af8bfce158194d2f5d075e665fee2340b814cfe09ecc98e86a1d55d00d45",
+      "signed_payload_sha256": "94e0d131b7632fd5aa7784f430d65f93d1be6d1f905d276e0e5baf2ca2e5de98"
+    },
+    "kernel/net/netfilter/nft_ct.ko.zst": {
+      "file_sha256": "52fb0f907117bf8b3b88f65d293b5fcbb847799aca3ebc1000c0201277ac1aae",
+      "signed_payload_sha256": "58be7c8c4684d9cc302af5b6420decc940a17e4c2f0da0cc4d47cc6380c67a53"
+    },
+    "kernel/net/netfilter/nft_fib.ko.zst": {
+      "file_sha256": "7d2f4610a72d2b1d5151380ee02062ffcb2c60fcab704db9227ee624887e4847",
+      "signed_payload_sha256": "1505e5d61d566bacdeffb194c9fb8a1441bd1447aa9fbe4657595b2378bc6098"
+    },
+    "kernel/net/netfilter/nft_limit.ko.zst": {
+      "file_sha256": "eff0f7a51f59dbc0cd8cc8dd8d550d70f5e9be6e582064f2177df598ca8e985c",
+      "signed_payload_sha256": "7cfd1aeab3e7091b11cb757836a01283093aba2b3d9dac469b470abaae8a4e0f"
+    },
+    "kernel/net/netfilter/nft_log.ko.zst": {
+      "file_sha256": "5eb879eb3e769b6d1927b748ffa9f50bc1fce31069655b31d05ce78e07e1fa4a",
+      "signed_payload_sha256": "023fa456ab1410299bfa66acf49cee38eb565cb5bbc6097882bf9bb7464a6a76"
+    },
+    "kernel/net/netfilter/nft_masq.ko.zst": {
+      "file_sha256": "2004afbb543762615d88a5a6fbd29fbac9892736b27deb1bd3816fe9e5484f69",
+      "signed_payload_sha256": "1d94004fef232ce39ad61d58968a85e52f68762b8cd885ea41fde2636298cc77"
+    },
+    "kernel/net/netfilter/nft_nat.ko.zst": {
+      "file_sha256": "2edfb7cd8c3e6a496b42954375ad02a5ab5206179aaaf067360477a25343fe6c",
+      "signed_payload_sha256": "28afe7a4087044a6b52cfd0b640ff3d12b4a21a311f749188ba52aa75a2767c0"
+    },
+    "kernel/net/netfilter/nft_reject.ko.zst": {
+      "file_sha256": "d43d446a68a1d06ffaf4639c85f3006407e5090fd785e634f53855bc16acfe2f",
+      "signed_payload_sha256": "40ecb81126f5dbfa0b89e3749a51547cdcb2f118ec0d12c441ed6a9156ca95c5"
+    },
+    "kernel/net/netfilter/nft_reject_inet.ko.zst": {
+      "file_sha256": "9978777aaca71091812255d9b348db0efac790a469fec92537043465e56fd651",
+      "signed_payload_sha256": "594b9251eea6a3b5be774dc7fd75bf7a03baa26b1a1efc89ecad82a82f7c58b1"
+    },
+    "kernel/net/netfilter/x_tables.ko.zst": {
+      "file_sha256": "4b0bc860d534f5c94d66a31d235ae4f40f2fe25fe4a3fd96b87538359a0fbce5",
+      "signed_payload_sha256": "749f986fdadf872231a0445cf5a831091e1e950ca3296d7ab857e57f81f1d2f7"
+    },
+    "kernel/net/netfilter/xt_CHECKSUM.ko.zst": {
+      "file_sha256": "b880c2ca7c7142fd1f7ec04c76dbc98a40e2ebf6adf1b3ef6df5016768ab4741",
+      "signed_payload_sha256": "8f638d7fa223fe09f3e2a39a8f9e28c6e715583b412325d8c66af621bdb529bb"
+    },
+    "kernel/net/netfilter/xt_MASQUERADE.ko.zst": {
+      "file_sha256": "019f7a0906bed1f3c6e66bed0d64a1a32544fbe49a0f9f7bd952de1f227d09ad",
+      "signed_payload_sha256": "0ddb4a10d8dfc90382d6575961372ad0e05efd759cf247c0d99aef908748685f"
+    },
+    "kernel/net/netfilter/xt_REDIRECT.ko.zst": {
+      "file_sha256": "f2863fcdb45ff6de1c1618b7c3307f41bbdef6d93832b62e807eb17e18175ea1",
+      "signed_payload_sha256": "8bc0209e18d25b5b4c0a826fb0f2933d82b6a62b6f4b4d95206567f08bb2451c"
+    },
+    "kernel/net/netfilter/xt_TCPMSS.ko.zst": {
+      "file_sha256": "4c8e71661442ac4f23c814f2793417c05f120e66a58cfce6e43512555c838ccc",
+      "signed_payload_sha256": "c64421f35061555456143566c05b09716b43ddd9c68c12ec3834e26ecfbe64bd"
+    },
+    "kernel/net/netfilter/xt_addrtype.ko.zst": {
+      "file_sha256": "5ffddf59b1b7cd85bcb195e041dfd7708464d0fe3efa0ac4bc02ad5f2f4f64ca",
+      "signed_payload_sha256": "777e62c3bb7fd8c5c0bdbd39cd448f87e4cc60e8783d21a3c2c7ff4dd443f147"
+    },
+    "kernel/net/netfilter/xt_comment.ko.zst": {
+      "file_sha256": "e3b4ed4ab5ddf4a22a48a6ecfe452b2db799cd85deb9473879c7e15e12949d8c",
+      "signed_payload_sha256": "aa4fa57d6ab736b18cddbdb95ba92df731464085c4e63f6666562f6f07074bd6"
+    },
+    "kernel/net/netfilter/xt_conntrack.ko.zst": {
+      "file_sha256": "1f756b52eef485c8125a32da314060f97f548a90187540760e9122fd857d0566",
+      "signed_payload_sha256": "a8c6e42d7bfe6589aa9de9b7184d92fc807080cd10b81aced228518e57cd18f5"
+    },
+    "kernel/net/netfilter/xt_ipvs.ko.zst": {
+      "file_sha256": "ec261bd47c8c5051077d2ebe36631073e31bc43af032553159c947e5d3b983e0",
+      "signed_payload_sha256": "1bc02fe0f0838a6cd7585d5cde80178109c9d836bae41e6d149b8802a296aec6"
+    },
+    "kernel/net/netfilter/xt_mark.ko.zst": {
+      "file_sha256": "758df1d5e7280939fef5ce28428891d939906e11cf9bf4670aa3c2f669e82ce5",
+      "signed_payload_sha256": "e81f3f5d39945cbd1d429ac80d34a05a2d7eb307db7a1b77f3de994e1b45f49c"
+    },
+    "kernel/net/netfilter/xt_multiport.ko.zst": {
+      "file_sha256": "44372e04ad642c2be888e4863fb86cdf50255ced4949c9da3e037daf5b4a72fb",
+      "signed_payload_sha256": "6c72877a01401fe4ee80b6bb3532287b760487aeab881b147a3f3651f70a3e65"
+    },
+    "kernel/net/netfilter/xt_nat.ko.zst": {
+      "file_sha256": "3d51cc14cea51fcb24bba737050688389d29769f204478d6d58dc5654a7c86f1",
+      "signed_payload_sha256": "7cc1e987a0f1859d343c67857e74b4cbe04162fd2806c2b802e1da7474e0e07b"
+    },
+    "kernel/net/netfilter/xt_statistic.ko.zst": {
+      "file_sha256": "b7d1ceeadd0c369037e9c84882dca901d0cca8a8d7df182c4ffb0ee3dd913a86",
+      "signed_payload_sha256": "cd24254f22226150d72cd65ee5d00d61e16fda0340c7347b5384f8be1d05b676"
+    },
+    "kernel/net/netfilter/xt_tcpmss.ko.zst": {
+      "file_sha256": "894a154b947df11355918247d60d41f10446c0aed948423093b4f938cf9cd25e",
+      "signed_payload_sha256": "358d34b94d76787a7414b8e7774250e790d38f4415592584c7974f284e08f633"
+    },
+    "kernel/net/netfilter/xt_tcpudp.ko.zst": {
+      "file_sha256": "3f13534d8090182af92b803cf8fade0e860c8f1143e716b5fa769543dcd990f4",
+      "signed_payload_sha256": "f5c4b7fcb9c0ce31fefa1eb7bad5611f1eaf8f3ac023cafd3c0385b95ceb4101"
+    },
+    "kernel/net/nfc/nci/nci.ko.zst": {
+      "file_sha256": "0fcbd7da189203eaebf9b21d47a729ae9eda0f4eb7f0b0d7888db82ec81023f0",
+      "signed_payload_sha256": "c6d53f2014fac2176f757797d7f8f3cd6604ffc25cf5eb743d88bf213869dcdd"
+    },
+    "kernel/net/nfc/nfc.ko.zst": {
+      "file_sha256": "b11b32a280e300206910bf05843e2b960a499bb0a64d9b217226bb607afe046c",
+      "signed_payload_sha256": "158ecdeb384b69b436f7686ac8e1ad5ec8c5cbecc94ad07d079dd79093345b11"
+    },
+    "kernel/net/qrtr/qrtr-smd.ko.zst": {
+      "file_sha256": "2faff23a21857ee7fd57ae029a5a42cc84fdc7847890910cce743be2e45cd07d",
+      "signed_payload_sha256": "dac5b5d6d808ed14434a2903593e8aa7d4e8b089e9025cfc0f78446a6c1685dc"
+    },
+    "kernel/net/qrtr/qrtr.ko.zst": {
+      "file_sha256": "aff2ec224ea9c31ae1c6f743a99d7cebdc67d912bd3eb2557be9d80e94866fb1",
+      "signed_payload_sha256": "4a3ff13796bf12afb2c1de9e793dc08f1468d7377ed0a63dc756a25a3c1ac115"
+    },
+    "kernel/net/rfkill/rfkill.ko.zst": {
+      "file_sha256": "fadfb9a3e95921a1d03d274e9665a4005a7f31f1cc3e9fdca1b5336e0cc0f524",
+      "signed_payload_sha256": "d0191b4b5102fabd475b1a8abc6b1d886b1e8747779271b92c18a13e3f03dbd1"
+    },
+    "kernel/net/sched/cls_cgroup.ko.zst": {
+      "file_sha256": "3139fc429d905ffb02c0bbf7105604152dc8687e866bd2d1bcea9aa887ba0622",
+      "signed_payload_sha256": "a5043b6c5d841dc4188196ca3bbe82bc8ee0fb293b376d54715f4b247f3ad709"
+    },
+    "kernel/net/sunrpc/auth_gss/auth_rpcgss.ko.zst": {
+      "file_sha256": "d8f97187007c5db6e4e4e730bb8457a492249bfec15f43dc8f3034e6dcf10d1a",
+      "signed_payload_sha256": "c7564755183a2d6b375298053ef475e689535af8b13830d51eaeac0e5a81b72e"
+    },
+    "kernel/net/sunrpc/auth_gss/rpcsec_gss_krb5.ko.zst": {
+      "file_sha256": "5ce970a2b2b1d227d753ff5675db2f2e81de9e525059380bb544e350d4b8bb82",
+      "signed_payload_sha256": "a546809b26248811d0d4877623bd4213d69afab2f7f4c832b08f8f3b7acc7a6b"
+    },
+    "kernel/net/sunrpc/sunrpc.ko.zst": {
+      "file_sha256": "e3b9e8fe752653e55da275b34bc5ea45b742adc487126059ba8e23646a338844",
+      "signed_payload_sha256": "bfb8cd6e0c72c3f15be850faec528d9b212053e848c1a7095f1444bf7476fa2a"
+    },
+    "kernel/net/wireless/cfg80211.ko.zst": {
+      "file_sha256": "ba0ec74bb4a5ce39ceae5930e9edff6aa24170b9b3b73d66354a4a6d140f6ed3",
+      "signed_payload_sha256": "5c693d55b63dd10769e2c65865e1281b234bc74f327a42f1532bf0eedb54e0f5"
+    },
+    "kernel/sound/core/snd-hwdep.ko.zst": {
+      "file_sha256": "1a9151fe5d3f26791b80d7774c99ec903ff2eb61e168826fb58399a8e73a1ecf",
+      "signed_payload_sha256": "7357ad8dead07ed7a5121f90880bfe0f28fa81268bd169d9c06aff243bb5e553"
+    },
+    "kernel/sound/core/snd-rawmidi.ko.zst": {
+      "file_sha256": "8620a3223b6de03a09d8fa5c11daea027c9efccd5beb42aefc82bbdcab0c112d",
+      "signed_payload_sha256": "712c1a70bf39358eff1a6d942ed0adb71d625b73fe99aad1906732fc4ca61893"
+    },
+    "kernel/sound/core/snd-ump.ko.zst": {
+      "file_sha256": "23fe7f6ab10792193af810539d8b6b6f82919a80ab47e6568a8fbbeff6cf98a1",
+      "signed_payload_sha256": "5edde013af892a0edc95f5035d6ca1422263a83d7e167394f80ad12213526fa9"
+    },
+    "kernel/sound/soc/codecs/snd-soc-hdmi-codec.ko.zst": {
+      "file_sha256": "bb0f29b0740882a3c90cfb1536b2b9524c90f467406f85a14792557e5fa71025",
+      "signed_payload_sha256": "abacb050398942c8c6dff190d397312104fb9e4a4d97869ff49fcf06a55191d0"
+    },
+    "kernel/sound/soc/qcom/qdsp6/q6adm.ko.zst": {
+      "file_sha256": "0e1ee0fba483479e4cf6b96b602c55b90b70bac2bdd7788cc0cbb88cfd2cf7d4",
+      "signed_payload_sha256": "6467cc8ecc8cc1674e58882a75bc7db548320c78edcd04ac2f6e64f14698f3ba"
+    },
+    "kernel/sound/soc/qcom/qdsp6/q6afe-clocks.ko.zst": {
+      "file_sha256": "6c4d79a643703ca7d1579e29dd375a42da192a3b49da1bc545a958a26997eccd",
+      "signed_payload_sha256": "d2f9f7ad9e10bc1cd7ce1d7a2a9de3b47b1eca12d4c9454f623a253c7f9cefc2"
+    },
+    "kernel/sound/soc/qcom/qdsp6/q6afe-dai.ko.zst": {
+      "file_sha256": "cf987502200289d9aa9a2b8a41b7bc75384ff43fbe5c006b10d0ba1ae2851966",
+      "signed_payload_sha256": "410a2b2dea545d4bce6f1a521ad38ec7e20a333531295e9eee91989767adfaa9"
+    },
+    "kernel/sound/soc/qcom/qdsp6/q6afe.ko.zst": {
+      "file_sha256": "68d2ba888a5207f06032d4d1d81edf6d3fc746a36c391bc20f84df541c51ea8d",
+      "signed_payload_sha256": "acc290e6cf7ec31537d871570fcd407dd156649401f722ca6f99da44f35ff66f"
+    },
+    "kernel/sound/soc/qcom/qdsp6/q6apm-dai.ko.zst": {
+      "file_sha256": "315ef1ebfabe012df1aa8ef63766c7c09159e264c63bf94f75775a67e6ddcf75",
+      "signed_payload_sha256": "b624c6f86f35c7a2b93bae267dd3e0949e69eff5cc942b4e0c88d7be330f2e9a"
+    },
+    "kernel/sound/soc/qcom/qdsp6/q6apm-lpass-dais.ko.zst": {
+      "file_sha256": "afb14938eca0474650fd89254f42a373af3bf90c32a514cac2e75d4c86b40269",
+      "signed_payload_sha256": "a55ad432a3943e0064d8a484ef38ee915985457c5e086f202d6085e0d62b8e98"
+    },
+    "kernel/sound/soc/qcom/qdsp6/q6asm-dai.ko.zst": {
+      "file_sha256": "acb041bc8ea4d31eedc5bca0e8052c8d4bc8de06e545f8e86164d89a3064c826",
+      "signed_payload_sha256": "da87e91f340b7d426e68803eaa8cf994cd72e6e7fc9da55548e701a2f0c3e34b"
+    },
+    "kernel/sound/soc/qcom/qdsp6/q6asm.ko.zst": {
+      "file_sha256": "c144b6bef954b9bb84825ba0ef9a8ccefbfcb51002836c245c0a2789725ad149",
+      "signed_payload_sha256": "3f9e0d67e048e7522631b378ef6426219539141a218d527b544b496cfe5d3649"
+    },
+    "kernel/sound/soc/qcom/qdsp6/q6core.ko.zst": {
+      "file_sha256": "cb53f9067c22386e1cc15c7230b3348f6cd2168ff43db22e9bc24b4ebee04505",
+      "signed_payload_sha256": "dc0f1038f16bbd5427e33d8e5c47b82aa57eb5bfa7af4c7f6ed79a8bda8a99ec"
+    },
+    "kernel/sound/soc/qcom/qdsp6/q6prm-clocks.ko.zst": {
+      "file_sha256": "21df935af6e0da68fe7f18a6a04b9053eeefd12af671966034c14dc2f0ce291a",
+      "signed_payload_sha256": "fd7cdbaaef37a6d608a108280e35d82a5ab1b89bb697cb2ea42cb696b1f20ab3"
+    },
+    "kernel/sound/soc/qcom/qdsp6/q6prm.ko.zst": {
+      "file_sha256": "ffc0ffe281a3d635f9e816f356466685dfc7d22be65a26e32dd27b62f30adf12",
+      "signed_payload_sha256": "c8ac30b59997fa5660889bb946ccf473fcd9b03d55430cfaf5033032361378cd"
+    },
+    "kernel/sound/soc/qcom/qdsp6/q6routing.ko.zst": {
+      "file_sha256": "c589b62f46fb78c4c488b5732c7b83f563ac48c62c5bee24e4997e90c1244c71",
+      "signed_payload_sha256": "365a3f5dcb8f1ca466d90af735cc8d4c22c54e7eba672c7349088b729549fd9b"
+    },
+    "kernel/sound/soc/qcom/qdsp6/snd-q6apm.ko.zst": {
+      "file_sha256": "347252df2c6edeba9f9b498d036fbb7e427de446a9f3929a20feb3a14e2d1384",
+      "signed_payload_sha256": "6b57cfe4eb897377ea5b2b9d1e2b49a3b74e9b67f884f2ee0bac7d7e5b7176ab"
+    },
+    "kernel/sound/soc/qcom/qdsp6/snd-q6dsp-common.ko.zst": {
+      "file_sha256": "e63cd4424ed5116e8d71fc061e618dca06a72eaaaf3136431a383c4c0688817e",
+      "signed_payload_sha256": "1af0264014df258afb1e6e709d65999b68a6e6938c49a7e6510765fae7ddabd7"
+    },
+    "kernel/sound/soc/qcom/snd-soc-apq8096.ko.zst": {
+      "file_sha256": "206bcc04b25aa46450fb8d7debe11311aaf9aca76cbdcdcfad037aa384b410e3",
+      "signed_payload_sha256": "4453df627b25966d8fb450d4c497ee3ce0ee98a630d4d5232bb63fe4ab753820"
+    },
+    "kernel/sound/soc/qcom/snd-soc-qcom-common.ko.zst": {
+      "file_sha256": "3a15f27931e8271ccb876665c675a7a7388f9ddf24bf50c3fcd736e0814050e5",
+      "signed_payload_sha256": "0a104d223a81401456ebd55402df86ec6042c22cb694cf1253f56a6e762f065f"
+    },
+    "kernel/sound/usb/snd-usb-audio.ko.zst": {
+      "file_sha256": "a7c4d657ed724350fe56a6dab8b343b1689688719ca5ba295689cbfe90abe588",
+      "signed_payload_sha256": "b6d76f36db66012d131415f1a4594f647190f5959d918d77cd4932f09cf0b99d"
+    },
+    "kernel/sound/usb/snd-usbmidi-lib.ko.zst": {
+      "file_sha256": "b5205bdfa72d44a811a77f075dcde6c20d4f6380c03d940d30b9d69e7914beba",
+      "signed_payload_sha256": "79ff6bbcb5e5d40e44283d91db1cdc1679f8611685010fb71af3c2b445c86da4"
+    }
+  },
+  "signature_verification": "explicit certificate; CMS embedded certificates ignored",
+  "chain_validation": "disabled for the local self-signed development certificate",
+  "verified_modules": 457,
+  "negative_controls": [
+    "modified payload rejected",
+    "modified CMS signature rejected"
+  ]
+}

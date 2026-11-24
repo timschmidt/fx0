@@ -1,0 +1,175 @@
+{
+  "recorded_UTC": "2026-11-14T16:29:16.627407+00:00",
+  "state": "PASS host-only R5 private RAM image preparation; undispatched",
+  "source_commit": "de5568bfc81f221984b8e82519af9a15b00b5b6f",
+  "recipe_commit": "5126c3ea32047109b87bafbfa5e9588b7710902b",
+  "qualified_signed_APK_SHA256": "20ccaf9bfc19132384d68b9b7770e0dff6e3d9ea2b1852fcda7e46644f660209",
+  "kernel_release": "6.18.63-fx0-handoff-trace-alpine",
+  "kernel_SHA256": "d2bed4ce07507bbe25d493e97a7e6159658b38e7413e6c5501c248e025d635af",
+  "DTB_SHA256": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+  "expected_kernel_notes_SHA256": "f1c7d64b9514752d5a3515896424747657af424bbbf45a8de99ceb8bb5d7ec05",
+  "private_image": {
+    "SHA256": "0669a11a5c9ad05dfccf6335993ffdbeead8cac3fa9edc3d681553be992ca19c",
+    "bytes": 17272832,
+    "independent_assemblies_byte_identical": true,
+    "published": false
+  },
+  "return_helper": {
+    "source_logic": "Qualified passive-r1 implementation with release/token/deadline constants changed only",
+    "source_SHA256": "9b5233ea0100fa3b3abfb4485fd20f736bd5497ceaa5132e54b715d898b955f1",
+    "static_ARM_binary_SHA256": "b19488be705d25392996f53bb3d31ae3eca0d03277e1abc3497aeb50adc55364",
+    "pair_byte_identical": true,
+    "compiler_jobs": 3,
+    "target_link_inputs_per_build": 7,
+    "ARM_QEMU_controls": [
+      {
+        "case": "return-controls",
+        "actual_returncode": 0,
+        "expected": 0
+      },
+      {
+        "case": "bad-argument",
+        "actual_returncode": 1,
+        "expected": 1
+      }
+    ],
+    "early_absolute_BOOTTIME_seconds": 420,
+    "normal_systemd_seconds": 360
+  },
+  "image_audit": {
+    "passed": true,
+    "image_SHA256": "0669a11a5c9ad05dfccf6335993ffdbeead8cac3fa9edc3d681553be992ca19c",
+    "image_bytes": 17272832,
+    "two_private_images_byte_identical": true,
+    "independent_Android_header_digest_load_bounds_kernel_DTB_and_token_verified": true,
+    "CPIO_members": 2,
+    "original_entries": 243,
+    "final_entries": 249,
+    "renamed_module_paths": 60,
+    "early_module_files_replaced": 19,
+    "metadata_files_replaced": 14,
+    "nonmodule_original_records_byte_exact": 183,
+    "every_changed_header_field_except_name_and_size_preserved": true,
+    "GNU_cpio_lists_all_archives_and_compares_all33_replacements_and7_additions": true,
+    "full_module_manifest_files_checked": 478,
+    "module_members": 464,
+    "actual_image_ARM_controls": [
+      {
+        "case": "ARM_BusyBox_syntax_/init",
+        "returncode": 0
+      },
+      {
+        "case": "ARM_BusyBox_syntax_/init.fx0-original",
+        "returncode": 0
+      },
+      {
+        "case": "ARM_BusyBox_syntax_/hooks-cleanup/85-fx0-native-modules.sh",
+        "returncode": 0
+      },
+      {
+        "case": "actual_image_helper_invalid_argument",
+        "returncode": 1,
+        "expected": 1
+      }
+    ],
+    "systemd_unit_verify_returncode": 0,
+    "private_cmdline_not_output": true,
+    "private_files_modes_checked": true,
+    "physical_display_or_return_qualified": false,
+    "staged_or_booted": false,
+    "phone_access": false
+  },
+  "software_portability_contexts": [
+    {
+      "name": "clean-review-checkout",
+      "steps": [
+        {
+          "name": "module-record-relabel",
+          "actual_returncode": 0,
+          "methods_passed": 4,
+          "skipped": 0
+        },
+        {
+          "name": "modeled-native-overlay",
+          "actual_returncode": 0,
+          "methods_passed": 4,
+          "skipped": 0
+        }
+      ],
+      "passed_methods": 8,
+      "ignored_local_program_tree_present": false
+    },
+    {
+      "name": "source-only-export",
+      "steps": [
+        {
+          "name": "module-record-relabel",
+          "actual_returncode": 0,
+          "methods_passed": 4,
+          "skipped": 0
+        },
+        {
+          "name": "modeled-native-overlay",
+          "actual_returncode": 0,
+          "methods_passed": 4,
+          "skipped": 0
+        }
+      ],
+      "passed_methods": 8,
+      "ignored_local_program_tree_present": false
+    }
+  ],
+  "source_files_SHA256": {
+    "diagnostics/kernel-maintenance/display-handoff-trial/README.md": "5bae6c5bc654ae694654c89db1d10270add66a94a24345bf5e16086bce633c75",
+    "diagnostics/kernel-maintenance/display-handoff-trial/fx0-native-return.service": "8676fe9b14f139082023ed28eb1bfd6e8fdc25383241e603201f5fb95704487b",
+    "diagnostics/kernel-maintenance/display-handoff-trial/fx0-native-return.timer": "bdcb6bc169c191c0a713518627419184eeb00cb68d3e80ed73f3ed220768c887",
+    "diagnostics/kernel-maintenance/display-handoff-trial/native-init-prefix.sh": "58456639799ccbe859e94aa24cde4c60dfed4203afc1618f3299a19e83c26cca",
+    "diagnostics/kernel-maintenance/display-handoff-trial/native-modules-hook.sh": "e2f8d63717ce3cb91b8b657d37291b31fa0a3e664904010be1a769d93653e6b3",
+    "diagnostics/kernel-maintenance/display-handoff-trial/native-return-harness.c": "2ae8a34b825c218f4fb3d5519949f1a27661253971769e0669e52ed24132fd75",
+    "diagnostics/kernel-maintenance/display-handoff-trial/native-return.c": "9b5233ea0100fa3b3abfb4485fd20f736bd5497ceaa5132e54b715d898b955f1",
+    "diagnostics/kernel-maintenance/relabel_initramfs_modules.py": "e8475b8d262db713f2a2cb8ec63c11a08aaffc840dd46e7b23dcf8229f08181c",
+    "tests/test_initramfs_module_relabel.py": "47e47732781155e356ebb0b0dbb8e65f699fd8c0359b33310503b5ade5908092",
+    "tests/test_display_handoff_module_overlay.py": "cc1df5f09bd082a3556575a16fce95d7e32454bcb4b4a1b7267f18ab2cc97380",
+    "scripts/make_diagnostic_image.py": "cd9c976a758d2f4b0282afe88a4c6038750e1fc11f08fdb289737e9f1cc9613f"
+  },
+  "actual_terminal_tool_observations": [
+    {
+      "handle": 91100,
+      "returncode": 0,
+      "scope": "helper pair and harness ARM controls"
+    },
+    {
+      "handle": 4567,
+      "returncode": 0,
+      "scope": "private image pair assembly"
+    },
+    {
+      "handle": 82388,
+      "returncode": 0,
+      "scope": "independent actual private image audit"
+    }
+  ],
+  "private_plan": {
+    "dispatch_enabled": false,
+    "executable_controller_present": false,
+    "new_post_r2_baseline_and_specific_R5_availability_required": true
+  },
+  "unchanged_r2_repeat_remains_first_physical_diagnostic_step": true,
+  "original_trial_snapshots_unchanged": true,
+  "original_private_initramfs_and_r2_image_unchanged": true,
+  "root_index_unchanged": true,
+  "private_image_initramfs_command_line_and_raw_logs_included_in_public_review": false,
+  "private_keys_or_credential_bodies_manually_read_or_copied": false,
+  "no_new_phone_read_or_transfer": true,
+  "phone_access": false,
+  "image_staged_or_booted": false,
+  "publication": false,
+  "full_bringup_complete": false,
+  "limitations": [
+    "No physical R5 boot, display/touch or automatic return was observed.",
+    "The first r2 failure cause remains unproven; added logging can change timing.",
+    "The module-overlay mount/reboot behavior is a host fixture, not native acceptance.",
+    "The images reuse the existing specifically approved private initramfs and remain ignored local files.",
+    "Replacement kernel installation/update/recovery and the full nonaudio hardware matrix remain open."
+  ]
+}

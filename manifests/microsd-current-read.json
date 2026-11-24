@@ -1,0 +1,12 @@
+{
+  "format": "fx0-bounded-microsd-read-v1",
+  "diagnostic": "diagnostics/microsd/observe-sdhc2.py",
+  "diagnostic_sha256": "37ae5e873f9131f55728809036e702c90ea2fc12f0fe143e24cd1646578e7e45",
+  "kernel": "6.18.63-fx0-vibrator-alpine",
+  "package_database_sha256": "b106cfa76000084e240f6b1e40496a06b52f5d1820593364f8b13bfb54c9665f",
+  "boot_image_sha256": "ee851c81968b86a80b47eb2e5c2f07d9d4298cffa17c9347e437036c128e2c64",
+  "procedure": "With SDHC2 media unmounted and without block holders, observe three seconds idle, read and discard exactly 4 MiB using O_RDONLY|O_DIRECT|O_NOFOLLOW, then observe three seconds idle. Match DT/driver/GIC/GPIO identities before and after; count all CPUs.",
+  "read_bytes": 4194304,
+  "media_writes": false,
+  "payload_exported": false
+}

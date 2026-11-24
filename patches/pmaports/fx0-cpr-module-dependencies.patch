@@ -1,0 +1,46 @@
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD b/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD
+index a9279141d..5b2c92cb3 100644
+--- a/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD
++++ b/device/testing/linux-postmarketos-qcom-msm8226/APKBUILD
+@@ -3,7 +3,7 @@ maintainer="Newbyte <newbie13xd@gmail.com>"
+ _flavor="postmarketos-qcom-msm8226"
+ pkgname=linux-$_flavor
+ pkgver=6.18.59
+-pkgrel=55
++pkgrel=57
+ pkgdesc="Mainline Kernel fork for APQ8026/MSM8226/MSM8926 devices"
+ arch="armv7"
+ _carch="arm"
+@@ -18,6 +18,7 @@ makedepends="
+ 	clang
+ 	findutils
+ 	flex
++	kmod
+ 	lld
+ 	llvm
+ 	openssl-dev
+diff --git a/device/testing/linux-postmarketos-qcom-msm8226/source-provenance.json b/device/testing/linux-postmarketos-qcom-msm8226/source-provenance.json
+index 6bafd51a4..f7ce7a785 100644
+--- a/device/testing/linux-postmarketos-qcom-msm8226/source-provenance.json
++++ b/device/testing/linux-postmarketos-qcom-msm8226/source-provenance.json
+@@ -3,9 +3,9 @@
+   "profile": "cpr",
+   "base_commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+   "configuration_sha256": "18a13809f3aa5042fb8447b1ae171b660b9321d85b9de6fd3c42134c7c8234fc",
+-  "template_sha256": "68f4f53292d6e05f78cc46b97db62f4dc2163678647e8eafb61b52082ed29cdc",
++  "template_sha256": "1db21f51e35974da6ab4a8eb2e9ce57f48cba688bc43ebb6c6001f8f72356bdb",
+   "source_archive_sha512": "3479e7b9d3e753f4dddde1b88cb6544d2304e46aa92b3ba0aab8cd0ce1108869efd8cc36692a05bc094ccdff6213e0cae0433dc5b742289c57023a838fda8741",
+-  "pkgrel": 55,
++  "pkgrel": 57,
+   "patch_order": [
+     "fx0-mpu6515-dmp.patch",
+     "iio-preserve-tiny-log2-scale.patch",
+@@ -96,7 +96,7 @@
+     "fx0-msm8926-cpr-disabled-reference.patch": "1fd7047761a4dd448907661396a7cfd5b82263e2ab97f88e753d99327e7a8e98",
+     "fx0-msm8926-cpr-voltage-observation.patch": "993c85b5b1abedbe0a4920dd0b4e2dd59fb4cdb3af1081ac21bb92115f735dbc",
+     "config-postmarketos-qcom-msm8226.armv7": "18a13809f3aa5042fb8447b1ae171b660b9321d85b9de6fd3c42134c7c8234fc",
+-    "APKBUILD": "37d34dcff89f754fc47a8110f737dff166c0b808a439abcd7f84a0226553a2c1"
++    "APKBUILD": "b08a02b99c9fc8c2826094100a4ed583c189dc9a5b2487edb966723f266dee80"
+   },
+   "status": "exported only; source build and hardware acceptance separate"
+ }

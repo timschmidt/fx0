@@ -6,7 +6,8 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / 'worktrees/sxmo-hotspot/scripts/core/sxmo_suspend.sh'
+SCRIPT = Path(os.environ.get('SXMO_SUSPEND_SCRIPT',
+                             str(ROOT / 'worktrees/sxmo-hotspot/scripts/core/sxmo_suspend.sh')))
 FAKE = '''#!/usr/bin/python3
 import json,os,sys
 from pathlib import Path
@@ -19,6 +20,11 @@ elif name=='fx0-hotspot-suspend':sys.exit(int(os.environ['COORDINATOR_STATUS']))
 
 
 class SxmoSuspendIntegrationTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        if not SCRIPT.is_file():
+            raise RuntimeError('Set SXMO_SUSPEND_SCRIPT to the patched sxmo_suspend.sh under test')
+
     def invoke(self, device='lg,madai', mnc='100', coordinator_status=0):
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
@@ -34,7 +40,8 @@ class SxmoSuspendIntegrationTests(unittest.TestCase):
                        COORDINATOR_STATUS=str(coordinator_status))
             result = subprocess.run(['/bin/sh', str(SCRIPT)], env=env,
                                     capture_output=True, text=True, timeout=5)
-            return result, [json.loads(s) for s in events.read_text().splitlines()]
+            return result, ([json.loads(s) for s in events.read_text().splitlines()]
+                            if events.exists() else [])
 
     def test_fx0_uses_original_absolute_deadline(self):
         result, events = self.invoke()
@@ -46,6 +53,7 @@ class SxmoSuspendIntegrationTests(unittest.TestCase):
     def test_coordinator_failure_skips_postwake(self):
         result, events = self.invoke(coordinator_status=1)
         self.assertEqual(result.returncode, 1)
+        self.assertTrue(any(name == 'fx0-hotspot-suspend' for name, args in events))
         self.assertFalse(any(name == 'sxmo_hook_postwake.sh' for name, args in events))
 
     def test_imminent_cron_holds_wakelock_without_sleep(self):

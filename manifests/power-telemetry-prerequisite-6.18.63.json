@@ -1,0 +1,29 @@
+{
+  "subject": "Processed battery-voltage IIO prerequisite on reproducible Linux 6.18.63",
+  "source_repository": "https://github.com/timschmidt/fx0-linux",
+  "source_branch": "development/fx0-power-telemetry-prerequisites-01",
+  "source_commit": "e0e89468dcfc99500bcae40ce58bfa43fe570c15",
+  "source_base": "e7c72f8cb3c50a1ec089f96277b7d4b469212ba9",
+  "installed_reference_source": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+  "qualified_historical_prerequisite_source": "2457eebe0bb67bcb5eccee7916650629cc4e9bf0",
+  "source_files_changed": [
+    "drivers/iio/adc/qcom-spmi-vadc.c"
+  ],
+  "patch": "patches/linux-integration/vadc-processed-battery-voltages.patch",
+  "patch_SHA256": "09a689004c4b922e5b26dc2e10badd23d3313861950b677c6fa12fdf7a3ab13c",
+  "candidate_driver_SHA256": "74056ba7da45951434eedb746434c22da487b1e46ba87bb535b2a1f3ca3d52d6",
+  "baseline_driver_SHA256": "48c3da64d9888a113a9b3e79fea483a54351922391f0880b017d6f4cf9288c07",
+  "fixture_inputs_SHA256": {
+    "diagnostics/vadc-battery-units/check.py": "eabad449adbb9c5a8292e83046d9a60dd547b12d06f31fa072677c0724939cf6",
+    "diagnostics/vadc-battery-units/check-channel-metadata.py": "5ac043c851734020ee6a37628ea2f62606a3bdcce3a2595f7f3c0921da029bf3"
+  },
+  "ARM_object_SHA256": "df88aeb4dfaea6f46279985af6de33721c3e68b2131052866aaddc3e7da0cf78",
+  "ARM_object_bytes": 84660,
+  "normal_ARM_compiler": "Alpine Clang 22.1.3; retained prior-audited toolchain mounted read-only",
+  "host_fixture_compiler": "Fedora Clang 21.1.8 with ASan/UBSan",
+  "signed_kernel_package_built_for_this_source": false,
+  "physical_trial_or_install_performed": false,
+  "source_and_evidence_published": false,
+  "firmware_charging_BMS_USB_policy_changed": false,
+  "full_hardware_acceptance": false
+}

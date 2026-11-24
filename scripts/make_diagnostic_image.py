@@ -146,6 +146,8 @@ def main():
     p.add_argument('--simplefb', action='store_true', help='Use lk2nd inherited framebuffer for diagnostic console; requires built-in simpledrm')
     p.add_argument('--return-after', type=int, default=0, metavar='SECONDS', help='Return to lk2nd using a warm reboot for persistent-log retrieval (0 disables)')
     p.add_argument('--usb-debug', action='store_true', help='Enable dynamic USB/PHY probe logging')
+    p.add_argument('--gzip-level', type=int, choices=range(1, 10), default=9,
+                   help='Initramfs compression level; changes encoding only (default: 9)')
     a = p.parse_args()
     if a.return_after and not 30 <= a.return_after <= 3600:
         p.error('--return-after must be zero or 30–3600 seconds')
@@ -161,7 +163,7 @@ def main():
         init = init.replace("echo 'Fx0 RAM diagnostic init started'", "echo 'Fx0 RAM diagnostic init started'\n(sleep " + str(a.return_after) + "; echo 'Returning to lk2nd for diagnostic retrieval'; sync; reboot -f) &")
     entries = [(d, stat.S_IFDIR | 0o755, b'') for d in ('bin', 'dev', 'proc', 'sys', 'tmp', 'www')]
     entries += [('bin/busybox', stat.S_IFREG | 0o755, busybox), ('bin/sh', stat.S_IFLNK | 0o777, b'busybox'), ('bin/serve-http', stat.S_IFREG | 0o755, HTTP.encode()), ('init', stat.S_IFREG | 0o755, init.encode())]
-    ramdisk = gzip.compress(archive(entries), mtime=0)
+    ramdisk = gzip.compress(archive(entries), compresslevel=a.gzip_level, mtime=0)
     cmdline = 'console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap'
     if a.simplefb:
         cmdline += ' console=tty0 lk2nd.pass-simplefb=autorefresh'

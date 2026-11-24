@@ -1,5 +1,9 @@
 # Fx0 sensors, MPU-6515M and DMP
 
+## November 10 vibrator and IMU observation
+
+On installed r50, 150, 300 and 600 ms Sxmo pulses have bounded PM8226 enable intervals and a measured drive code of 21, corresponding to a 2.1 V target. The MPU-6515 shows increased motion variance and a remaining ring-down response. The Sxmo profile now selects the correct persistent input path and an explicit strength. The native loader invocation works as the graphical user and leaves both PMIC drive and enable clear. A separate driver candidate corrects the voltage-range selection, endpoint and active intensity update and passes host and ARM checks. Its physical qualification remains open. [Measurements](../diagnostics/vibrator/README.md)
+
 The required endpoint is native raw sensor access, actual MPU DMP execution and
 DMP-event wake from verified system suspend. The [acceptance gates](bringup-plan.md#61-mpu-6515m-dmp-access-and-interrupt-wake)
 remain open. Native WHO_AM_I `0x74` identifies the MPU-6515, and raw IIO

@@ -1,10 +1,12 @@
 """Exercise actual NVMEM keepout code and candidate match data with fake MMIO."""
+import os
 from pathlib import Path
 import subprocess
 import tempfile
 import unittest
 ROOT=Path(__file__).resolve().parents[1]
-TREE=ROOT/'worktrees/linux-cpu-cpr'
+KERNEL = Path(os.environ.get('FX0_KERNEL_SOURCE', ROOT/'worktrees/linux-fx0-cpr'))
+TREE=KERNEL
 
 def block(source,needle):
     start=source.index(needle);brace=source.index('{',start);end=brace+1;depth=1

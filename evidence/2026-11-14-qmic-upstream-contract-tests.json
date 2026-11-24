@@ -1,0 +1,114 @@
+{
+  "recorded_UTC": "2026-11-14T13:43:00.778195+00:00",
+  "scope": "Generic build-host qmic output-contract integration; no codec/device or physical modem qualification",
+  "upstream_default_branch_heads_verified_via_GitHub_API": {
+    "linux-msm/qmic": {
+      "ref": "refs/heads/master",
+      "SHA": "4574736afce75aa5eec1e1069a19563410167c9f",
+      "API_URL": "https://api.github.com/repos/linux-msm/qmic/git/ref/heads/master"
+    },
+    "linux-msm/qrtr": {
+      "ref": "refs/heads/master",
+      "SHA": "29e36ae164389580a0f8ea7a7fdb728140ae978d",
+      "API_URL": "https://api.github.com/repos/linux-msm/qrtr/git/ref/heads/master"
+    },
+    "linux-msm/rmtfs": {
+      "ref": "refs/heads/master",
+      "SHA": "b30a3eb38f9af283f18dbd3c7755653efc52c094",
+      "API_URL": "https://api.github.com/repos/linux-msm/rmtfs/git/ref/heads/master"
+    }
+  },
+  "source_base": "4574736afce75aa5eec1e1069a19563410167c9f",
+  "local_unsent_series_commits": [
+    "90b565dc429ae13ce0b02d89b382083b5c35f720",
+    "67f59de38399e580de7ec3e7fc36f14937f93b7d"
+  ],
+  "patches_SHA256": {
+    "0001-kernel-string-terminators-and-optional-flags.patch": "7a5cc0e21746acdc089ab45e9cd779e1df5a667a6e20224b1cd6d4c58596ef18",
+    "0002-tests-generated-kernel-string-contracts.patch": "7d5847fc8d4c747e6f527d9354ed805dd19180458811b8be50649acae0582d4f"
+  },
+  "fixture_files_SHA256": {
+    "tests/check-generated.sh": "ac3cc1f4dbbd9250cd5ce448f7446b52629cb85e1e7d8ecb386bf8f57543f3ae",
+    "tests/expected-rmtfs.c": "fdac6b8eef0c18cb93a4242f1b1acc811ce3bf207caa2fc201fdb97c25cef35d",
+    "tests/README": "6d9b3a8eed5e84990b0c03fb75b77620233ee13ec9dc66f4bf24866918c6a928",
+    "tests/duplicate_message_name.qmi": "3bf9e476e470f54d96a6175c7a8b5f450cd2c1edbbd4e8d8fea494ca9106890e",
+    "tests/expected-qmicstrings.c": "d845754c7151a047285c9551a475e2aa6860b48a5ce1c31185122cb3ea4ebf0d",
+    "tests/no_package.qmi": "1dca0164831d09eeb2d802b299bf192a2beb052fb31b52254c801ae7e9efa266",
+    "tests/bad_octal.qmi": "4fc43bddeee0fdefcc2a29f9aefa35df0fe569b82d5171b52eea2cff91605061",
+    "tests/bad_hex.qmi": "c6ada97705499cdbba3ca8e41c806de3e8ead766e6ec5ad99129b48fb0e232b1",
+    "tests/fixed.qmi": "05ce02609b6788f9922585dc9e598ccaf2cfae080def183ad56f22961baebdf7",
+    "tests/symbolic_values.qmi": "78761e70668e9a28b27039f833bf447e55bdc26fe7fc669846be3999e410fdb3",
+    "tests/single_digit_decimal.qmi": "fa53c1303e1f56cb9cd5c070465186b6c0ef8fcb87fbfa96de1d9c4af97f2941",
+    "tests/duplicate_const.qmi": "a86f3e65a1a9df7ca41f0d1967ccc5062630492d70269eb34df02be4aff13355",
+    "tests/rmtfs.qmi": "d02cc77f0a0138bee4a54d11c44150c5adb53a02ad083b6e4d3e4ed17587f2fa",
+    "tests/expected-qmicstrings.h": "febd49289d2a6c881bd75dd87cd040e4160515ea1e1383816c8f64522fa72c49",
+    "tests/num_large.qmi": "f838deb1468f163d03d813508f0193422c662ec27611e2152741a8a3d263a7ed",
+    "tests/hexdigits.qmi": "3f1a350db67a556dba4e607f89e4daf28878e79becba50445479ebbd4da25eac",
+    "tests/duplicate_message_val.qmi": "cee584aec5a6121fd058af0a4cbdc14dfe53adc1cb14d6fba99cce8cb000f569",
+    "tests/duplicate_struct_name.qmi": "cec8d0dcc1aa7153816226e3563dd569a3f299f30e9aad157b9ceaab21dd9c2a",
+    "tests/bad_decimal.qmi": "ae418a7fa80578fa59478defd8af3653f755f727240e6f48cfb863a2dac7b194",
+    "tests/two_packages.qmi": "852c0ca9aabb60cb7a83f39af2f7e408c373618fb9f489f5479e318c95d6ac60",
+    "tests/comments.qmi": "0852494893e7dec7ef397ffc52f4deafc101fc07c60163b01ce33a22b37a29cd",
+    "tests/bad_X.qmi": "1bf0f62d1b2ad8d6db193215f83b37f37401a51ed7c69f275794af1ac1056e09",
+    "tests/very_long_token.qmi": "51f83705753e42848554db0f1bfea602f586775f3432c467c019bed6f7968509",
+    "tests/qmicstrings.qmi": "718b3461394de3a2ea4ba389b1b753039bae4909eb0bdce264f06574d3d2c42e",
+    "tests/expected-rmtfs.h": "28dee9e06dda0e4a732831245a20ef8bfc4169414051e213abf4a5e4721d45bc",
+    "tests/num_too_big.qmi": "fdbda1da080258832edfb14ec4e91292e0d2e94b8e7532014d2808f5ce07ed00"
+  },
+  "six_fixture_and_golden_inputs_exact_previously_qualified_distribution_inputs": true,
+  "native_root_database_SHA256": "d0b6abd9ddefa8cafe589c63d86fad913d57bda59036d7d519ec57889a5ca214",
+  "make_check": {
+    "runner": "authenticated Alpine native BusyBox shell, normal Makefile/default GCC flags",
+    "cases": [
+      {
+        "name": "candidate-make-check",
+        "actual_returncode": 0,
+        "expected_success": true
+      },
+      {
+        "name": "upstream-generator-control",
+        "actual_returncode": 2,
+        "expected_success": false
+      },
+      {
+        "name": "first-comparison-failure",
+        "actual_returncode": 1,
+        "expected_success": false
+      },
+      {
+        "name": "last-comparison-failure",
+        "actual_returncode": 1,
+        "expected_success": false
+      },
+      {
+        "name": "generator-exit-failure",
+        "actual_returncode": 1,
+        "expected_success": false
+      }
+    ],
+    "all_five_contract_controls_passed": true,
+    "temporary_directories_cleaned_after_each_case": true,
+    "input_fixtures_unchanged": true
+  },
+  "private_signers_or_phone_or_network_used_during_tests": false,
+  "public_repository_write_or_maintainer_message": false,
+  "human_DCO_and_submission_review_pending": true,
+  "limitations": [
+    "Finite generator output contracts only; not a comprehensive descriptor/codec audit.",
+    "Legacy256-byte nested-string wire-length handling remains outside this change.",
+    "No physical RMTFS/firmware/modem/GNSS qualification."
+  ],
+  "exported_series_git_am_replay_tree_exact": true,
+  "replayed_tree": "7675dc4ccea5747d8cbcc7d4d127b7652904a98e",
+  "compiled_candidate_source_and_mode_paths_rechecked": 36,
+  "expected_git_am_whitespace_warnings": {
+    "count": 3,
+    "reason": "The mail-patch parser reports final blank lines in the Makefile and two exact generated C contracts. Git-am replayed tree matches exactly.",
+    "files": [
+      "Makefile",
+      "tests/expected-rmtfs.c",
+      "tests/expected-qmicstrings.c"
+    ],
+    "actual_mailinfo_warning_locations_checked": true
+  }
+}

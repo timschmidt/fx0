@@ -1,0 +1,31 @@
+diff --git a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+--- a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
++++ b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+@@ -34,11 +34,11 @@
+ 
+   clocks:
+     minItems: 1
+-    maxItems: 3
++    maxItems: 4
+ 
+   clock-names:
+     minItems: 1
+-    maxItems: 3
++    maxItems: 4
+ 
+   vdd-apc-supply:
+     description: APC regulator supply.
+@@ -85,11 +85,13 @@
+             - description: Reference clock.
+             - description: CPU cluster clock, retained across CPU attachments.
+             - description: GPLL0 vote supplying the 300 MHz startup/notifier path.
++            - description: CPU PLL supplying the higher CPU rates.
+         clock-names:
+           items:
+             - const: ref
+             - const: cpu
+             - const: aux
++            - const: pll
+         acc-syscon: false
+         nvmem-cells:
+           items:

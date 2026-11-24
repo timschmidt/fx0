@@ -1,0 +1,510 @@
+{
+  "date": "2026-11-08",
+  "recorded_UTC": "2026-11-08T23:57:42.119534+00:00",
+  "status": "Complete independent host NFC kernel and all staged signed modules verified; no RAM/image/package/installation or NFC hardware qualification",
+  "source": {
+    "repository": "https://github.com/timschmidt/fx0-linux.git",
+    "branch": "integration/fx0-nfc",
+    "commit": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+    "base": "789d5197844d5268197a17a94605316eedae9fdb",
+    "source_preparation_manifest": "manifests/kernel-nfc-preparation.json"
+  },
+  "release": "6.18.59-fx0-nfc-prep",
+  "build_seconds": 355.874434,
+  "successful_controller": {
+    "started_UTC": "2026-11-08T23:36:15.634564+00:00",
+    "source_commit": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+    "command": [
+      "make",
+      "-C",
+      "/home/tim/Documents/GitHub/fx0/worktrees/linux-fx0-nfc",
+      "O=/home/tim/Documents/GitHub/fx0/build/fx0-nfc-full-workspace",
+      "ARCH=arm",
+      "LLVM=1",
+      "LD=/usr/bin/ld.lld-18",
+      "HOSTCC=gcc",
+      "HOSTLD=ld",
+      "LOCALVERSION=",
+      "-j8",
+      "KBUILD_BUILD_USER=fx0",
+      "KBUILD_BUILD_HOST=nfc-preparation",
+      "KBUILD_BUILD_TIMESTAMP=2026-11-08 23:30:00 UTC",
+      "KBUILD_BUILD_VERSION=1",
+      "zImage",
+      "modules",
+      "qcom/qcom-msm8926-lg-madai.dtb"
+    ],
+    "operation": "Complete separate conservative NFC kernel, all modules and Fx0 DTB; no package installation or device action",
+    "reason": "Prior /tmp build terminal due per-user tmpfs quota; workspace output with lossless DWARF compression and verified intermediate archives",
+    "output_directory": "/home/tim/Documents/GitHub/fx0/build/fx0-nfc-full-workspace",
+    "previous_attempt_output_preserved": "/tmp/fx0-nfc-full-20261108",
+    "PID": 2716637,
+    "returncode": 0,
+    "finished_UTC": "2026-11-08T23:42:11.508998+00:00"
+  },
+  "initial_terminal_failure": {
+    "controller": {
+      "started_UTC": "2026-11-08T23:26:28.839097+00:00",
+      "source_commit": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+      "command": [
+        "make",
+        "-C",
+        "/home/tim/Documents/GitHub/fx0/worktrees/linux-fx0-nfc",
+        "O=/tmp/fx0-nfc-full-20261108",
+        "ARCH=arm",
+        "LLVM=1",
+        "LD=/usr/bin/ld.lld-18",
+        "HOSTCC=gcc",
+        "HOSTLD=ld",
+        "LOCALVERSION=",
+        "-j8",
+        "KBUILD_BUILD_USER=fx0",
+        "KBUILD_BUILD_HOST=nfc-preparation",
+        "KBUILD_BUILD_TIMESTAMP=2026-11-08 23:30:00 UTC",
+        "KBUILD_BUILD_VERSION=1",
+        "zImage",
+        "modules",
+        "qcom/qcom-msm8926-lg-madai.dtb"
+      ],
+      "operation": "Complete separate conservative NFC kernel, all modules and Fx0 DTB; no package installation or device action",
+      "output_directory": "/tmp/fx0-nfc-full-20261108",
+      "workspace_alias": "build/fx0-nfc-full",
+      "private_signing_key_expected_mode": "0600",
+      "PID": 2690122,
+      "returncode": 2,
+      "finished_UTC": "2026-11-08T23:27:16.888781+00:00"
+    },
+    "reason": "Real per-user tmpfs quota; 16 MiB probe had passed but did not establish full-build quota headroom",
+    "initial_output_preserved": true,
+    "retry_only_after_terminal_state_and_PID_gone": true
+  },
+  "configuration": {
+    "prepared_config_sha256": "4ff4e9b68edba6a6e7dd62d401f3196cbff0f599e5ecabfbd1e42a3f1101af8f",
+    "actual_config_sha256": "3dbf9d407de91cb8b4234fc3403f322c2c3b60cf4096d94474f1403e69c71272",
+    "changes_from_targeted_NFC_preparation": {
+      "CONFIG_DEBUG_INFO_COMPRESSED_NONE": {
+        "before": "y",
+        "after": "n"
+      },
+      "CONFIG_DEBUG_INFO_COMPRESSED_ZLIB": {
+        "before": "n",
+        "after": "y"
+      }
+    },
+    "lossless_debug_information_retained": true,
+    "CFI_signature_and_runtime_choices_unchanged": true,
+    "sparse_checkout_patterns": [
+      "/*",
+      "!/Documentation/",
+      "!/arch/",
+      "/arch/arm/",
+      "/arch/Kconfig",
+      "/arch/x86/entry/syscalls/syscall_32.tbl",
+      "**/Kconfig*",
+      "**/Makefile*",
+      "/Documentation/devicetree/bindings/net/nfc/",
+      "/Documentation/devicetree/bindings/vendor-prefixes.yaml"
+    ],
+    "workspace_free_before_build": 2958893056
+  },
+  "host_tools": {
+    "clang": "clang version 21.1.8 (Fedora 21.1.8-6.fc43)",
+    "linker": "LLD 18.1.8 (compatible with GNU linkers)",
+    "LLVM_object_tools": "llvm-objcopy, compatible with GNU objcopy",
+    "openssl": "OpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)",
+    "zstd": "*** Zstandard CLI (64-bit) v1.5.7, by Yann Collet ***"
+  },
+  "linked_kernel": {
+    "verified_UTC": "2026-11-08T23:45:56.723073+00:00",
+    "release": "6.18.59-fx0-nfc-prep",
+    "source_commit": "94010ddccf9aaa212870ecd0ea0058e33de482c9",
+    "ELF": "ARM ELF32 little-endian",
+    "kernel_build_id": "564bc6cc2495d415b23e3d6e44e7a58764e5bd7b",
+    "KCFI_enabled_in_compilation_and_link": true,
+    "debug_information": "DWARF5 retained with lossless zlib section compression",
+    "undefined_symbols": [
+      "U __bpf_callback_fn",
+      "U __bpf_prog_runX",
+      "w efi_attr_config_table",
+      "w efi_attr_fw_vendor",
+      "w efi_attr_runtime"
+    ],
+    "introduced_undefined_symbols": [],
+    "private_key_mode": "0600",
+    "certificate_sha256": "2ed0452afe89c4cdb0675f83efff3fc8339bed1adb9b36cf69d378fb2b041edd",
+    "ELF_certificate_list_exactly_matches": true,
+    "certificate_bytes": 1324,
+    "certificate_distinct_from_reconstructed_r50": true,
+    "NFC_DTB_matches_prepared_schema_checked_bytes": true,
+    "module_order_count": 468,
+    "NFC_modules": [
+      "net/nfc/nfc.ko",
+      "net/nfc/nci/nci.ko",
+      "drivers/nfc/nxp-nci/nxp-nci.ko",
+      "drivers/nfc/nxp-nci/nxp-nci_i2c.ko"
+    ],
+    "kernel_text_to_end_span_including_BSS": 21499728,
+    "kernel_footprint_plus_load_offset_below_forced_ramdisk": true,
+    "files_sha256": {
+      "build/fx0-nfc-full-workspace/vmlinux": "1da076a6c8eae3e29e6f4ecec6afb9e1abef7f454d5c95b400c73ce9fc0fc0ba",
+      "build/fx0-nfc-full-workspace/arch/arm/boot/Image": "f2599005bb9a2fd5dff8a06ea22d7487e4e08be6dd086e3c633caf68f43353ea",
+      "build/fx0-nfc-full-workspace/arch/arm/boot/zImage": "beec0d412887d3951dc154fa13ae790e1c9ffb409d4e699bbfed2e5a8f26f180",
+      "build/fx0-nfc-full-workspace/System.map": "bb54e234a802736afab6e7ba1192615f7301975f95c165a15c6e6aade054940c",
+      "build/fx0-nfc-full-workspace/Module.symvers": "bd6f0c08ca376deef1e1c3887cb8201afa13f206ce1db71723fda89ff44efdf8",
+      "build/fx0-nfc-full-workspace/.config": "3dbf9d407de91cb8b4234fc3403f322c2c3b60cf4096d94474f1403e69c71272",
+      "build/fx0-nfc-full-workspace/modules.order": "78f10e98cff3dda4c997887a73defd5f0f089b6649f1d1461c6e0f52c5e5cb63",
+      "build/fx0-nfc-full-workspace/certs/signing_key.x509": "2ed0452afe89c4cdb0675f83efff3fc8339bed1adb9b36cf69d378fb2b041edd",
+      "build/fx0-nfc-full-workspace/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483"
+    },
+    "scope": "Complete host-linked kernel; module staging/signature/ABI audit separate; unbooted/uninstalled"
+  },
+  "debug_information": {
+    "debug_sections": {
+      ".debug_info": {
+        "compressed_section_bytes": 67533887,
+        "uncompressed_bytes": 106634970,
+        "uncompressed_sha256": "eef8aadf1053f4417f95588f4e7259f4730e203f151093b4361aa8180c01f488",
+        "complete_zlib_stream_and_size_verified": true
+      },
+      ".debug_line": {
+        "compressed_section_bytes": 5550535,
+        "uncompressed_bytes": 13843028,
+        "uncompressed_sha256": "3b00f617ad50db34fd315af0b26cc5e689d93d5969b6938dbc99793ca925176d",
+        "complete_zlib_stream_and_size_verified": true
+      },
+      ".debug_str": {
+        "compressed_section_bytes": 1584512,
+        "uncompressed_bytes": 4061795,
+        "uncompressed_sha256": "ca2ec6246479af69cba5a196b3c8114b49090c363208753042ca376641bc4d98",
+        "complete_zlib_stream_and_size_verified": true
+      }
+    },
+    "DWARF_version": 5,
+    "debug_information_retained_not_stripped": true,
+    "compression": "Lossless zlib, actual ELF section streams verified"
+  },
+  "module_postflight": {
+    "verified_UTC": "2026-11-08T23:46:56.669459+00:00",
+    "release": "6.18.59-fx0-nfc-prep",
+    "verified_modules": 468,
+    "all_intree": true,
+    "all_ARM_ELF_release_and_CMS_signatures_verified": true,
+    "certificate_sha256": "2ed0452afe89c4cdb0675f83efff3fc8339bed1adb9b36cf69d378fb2b041edd",
+    "matches_exact_linked_kernel_certificate": true,
+    "corrupted_payload_and_signature_rejected": true,
+    "wrong_build_certificate_controls": [
+      {
+        "certificate_sha256": "d333295e9518c0c373d1a5d45111555685c8d04ee128abf59af9823dbb2d0f67",
+        "NFC_module_rejected": true
+      },
+      {
+        "certificate_sha256": "b788b077f154eb7c32a8fd71dd6cea5aa490a1ba79a6b915fdbf104a0a050b81",
+        "NFC_module_rejected": true
+      }
+    ],
+    "all_imported_symbol_CRCs_match_current_Module_symvers": true,
+    "imported_symbol_CRC_checks": 25562,
+    "ABI_negative_controls": [
+      "modified import CRC rejected",
+      "wrong export ABI map rejected"
+    ],
+    "NFC_modules": {
+      "net/nfc/nfc.ko": {
+        "path": "local/nfc-full-build/stage/lib/modules/6.18.59-fx0-nfc-prep/kernel/net/nfc/nfc.ko.zst",
+        "sha256": "44e05a2a842b7edcf1e88f18aee81a73d319d4f6c69035d1480d3995ce0afc8c",
+        "depends": [
+          "rfkill"
+        ],
+        "vermagic": "6.18.59-fx0-nfc-prep SMP preempt mod_unload modversions ARMv7 p2v8",
+        "intree": "Y"
+      },
+      "net/nfc/nci/nci.ko": {
+        "path": "local/nfc-full-build/stage/lib/modules/6.18.59-fx0-nfc-prep/kernel/net/nfc/nci/nci.ko.zst",
+        "sha256": "376638d600329ab938e4f57d9fc4f2d0db6fbe640a7b81a4fcf1fd97ba5b6fc5",
+        "depends": [
+          "nfc"
+        ],
+        "vermagic": "6.18.59-fx0-nfc-prep SMP preempt mod_unload modversions ARMv7 p2v8",
+        "intree": "Y"
+      },
+      "drivers/nfc/nxp-nci/nxp-nci.ko": {
+        "path": "local/nfc-full-build/stage/lib/modules/6.18.59-fx0-nfc-prep/kernel/drivers/nfc/nxp-nci/nxp-nci.ko.zst",
+        "sha256": "6c72ba1861b98544b613348f00e2307fd34f5b8e9ece352f53d4f05755bc17e1",
+        "depends": [
+          "nci",
+          "nfc"
+        ],
+        "vermagic": "6.18.59-fx0-nfc-prep SMP preempt mod_unload modversions ARMv7 p2v8",
+        "intree": "Y"
+      },
+      "drivers/nfc/nxp-nci/nxp-nci_i2c.ko": {
+        "path": "local/nfc-full-build/stage/lib/modules/6.18.59-fx0-nfc-prep/kernel/drivers/nfc/nxp-nci/nxp-nci_i2c.ko.zst",
+        "sha256": "a1611c9a43ed9087c709e9a2aeea1a068e784b0ab2be37d52d998627f52cf83f",
+        "depends": [
+          "nxp-nci",
+          "nci"
+        ],
+        "vermagic": "6.18.59-fx0-nfc-prep SMP preempt mod_unload modversions ARMv7 p2v8",
+        "intree": "Y"
+      }
+    },
+    "dependency_order_for_NXP_I2C": [
+      "kernel/net/rfkill/rfkill.ko.zst",
+      "kernel/net/nfc/nfc.ko.zst",
+      "kernel/net/nfc/nci/nci.ko.zst",
+      "kernel/drivers/nfc/nxp-nci/nxp-nci.ko.zst",
+      "kernel/drivers/nfc/nxp-nci/nxp-nci_i2c.ko.zst"
+    ],
+    "no_modules_loaded_or_forced": true,
+    "signature_chain": "Local self-signed development certificate; verification uses explicit kernel certificate, ignoring embedded CMS certificates"
+  },
+  "ABI_verification": {
+    "modules": 468,
+    "imported_symbol_CRC_checks": 25562,
+    "all_match_full_Module_symvers": true,
+    "negative_controls": [
+      "modified import CRC rejected",
+      "wrong export ABI map rejected"
+    ],
+    "report_sha256": "6ed74971a5834ec9d4648a43df702c95c04d7eca1771a1fb8c28484d566fb64f"
+  },
+  "corruption_and_wrong_build_controls": [
+    "modified module payload rejected",
+    "modified CMS signature rejected",
+    "reconstructed-r50 certificate rejected for NFC module",
+    "CPR-observation certificate rejected for NFC module",
+    "modified module_layout import CRC rejected",
+    "wrong export CRC map rejected"
+  ],
+  "preservation": {
+    "verified_UTC": "2026-11-08T23:49:54.156327+00:00",
+    "new_full_kernel_and_all_staged_modules_retained_in_workspace": true,
+    "new_private_key_mode": "0600",
+    "new_private_key_in_source_tree": false,
+    "original_r50_source_files_and_index_unchanged": true,
+    "prepared_NFC_artifacts_unchanged": true,
+    "original_final_kernel_config_DTB_symbol_and_certificate_hashes_unchanged": 46,
+    "top_link_intermediates_losslessly_archived": 7,
+    "archive_receipt": "local/link-intermediate-archives-20261108/receipt.json",
+    "archive_bytes_freed": 1129364904,
+    "root_index_entries_and_bytes_unchanged": true,
+    "full_output": "build/fx0-nfc-full-workspace",
+    "signed_module_stage": "local/nfc-full-build/stage/lib/modules/6.18.59-fx0-nfc-prep",
+    "recovery_disk_written": false,
+    "candidate_loaded_or_installed": false
+  },
+  "intermediate_archives": {
+    "receipt": "local/link-intermediate-archives-20261108/receipt.json",
+    "receipt_sha256": "9d9f9d957c105afe4db692358be7037478e0a739c693acad1db853413d9c7ba5",
+    "count": 7,
+    "bytes_freed": 1129364904,
+    "each_archive_independently_decompressed_and_SHA256_checked_before_original_removed": true,
+    "original_paths_and_archive_paths_and_hashes": [
+      {
+        "original_path": "build/fx0-cpr-disabled/vmlinux.o",
+        "original_bytes": 257033664,
+        "original_sha256": "ba1e2ad55572f3eac12f028642ca429b300b08b5d72dcae9f2e579123fe2c8ea",
+        "archive_path": "local/link-intermediate-archives-20261108/fx0-cpr-disabled-vmlinux.o.zst",
+        "archive_bytes": 95634501,
+        "archive_sha256": "71d75e11cf4ccf05bfbc262f4beec519847c43bdda4fda74c6cea09b57624844",
+        "independent_decompression_matches": true,
+        "original_removed": true
+      },
+      {
+        "original_path": "build/fx0-cpr-observe/vmlinux.o",
+        "original_bytes": 257034424,
+        "original_sha256": "a70c7f2f0475fff70ac5b40b882d569a982ceacc08d73711e0dcd5f3c4699d2a",
+        "archive_path": "local/link-intermediate-archives-20261108/fx0-cpr-observe-vmlinux.o.zst",
+        "archive_bytes": 95652885,
+        "archive_sha256": "c7f5fc56c37f377cb6ff5c9e014d346c990986921a89bacb2d8efeba45675ce4",
+        "independent_decompression_matches": true,
+        "original_removed": true
+      },
+      {
+        "original_path": "build/fx0-cpr-probe/vmlinux.o",
+        "original_bytes": 256984540,
+        "original_sha256": "511d4e3b0156dfa321d3f6760e565d25843aa56ddad13c6556821b5a86a03e26",
+        "archive_path": "local/link-intermediate-archives-20261108/fx0-cpr-probe-vmlinux.o.zst",
+        "archive_bytes": 95625344,
+        "archive_sha256": "a7178f71d12a6f178961e37c54fb7e8bac2b881a61954aaefff27ee506375d51",
+        "independent_decompression_matches": true,
+        "original_removed": true
+      },
+      {
+        "original_path": "build/fx0-cpr-reconstruction/vmlinux.o",
+        "original_bytes": 256955844,
+        "original_sha256": "7ba79757ecb78b1712234ccc0202dd51d58acd608c9072363cf6870c960a803f",
+        "archive_path": "local/link-intermediate-archives-20261108/fx0-cpr-reconstruction-vmlinux.o.zst",
+        "archive_bytes": 95629084,
+        "archive_sha256": "70aff13a241ef441df787e55df9ffe5196fc898f119a2068c0516eccc8bf5d94",
+        "independent_decompression_matches": true,
+        "original_removed": true
+      },
+      {
+        "original_path": "build/fx0-cpr-runtime/vmlinux.o",
+        "original_bytes": 256993952,
+        "original_sha256": "444c9ef14f0854e9d478c6e4ce6973250c5ebf8789859f07df27f38692d23b30",
+        "archive_path": "local/link-intermediate-archives-20261108/fx0-cpr-runtime-vmlinux.o.zst",
+        "archive_bytes": 95627892,
+        "archive_sha256": "45bc8227383124a205a599823a3d48c135fc38ab5b8f2e520ea2beb311a0c6d5",
+        "independent_decompression_matches": true,
+        "original_removed": true
+      },
+      {
+        "original_path": "build/fx0-cpr-xo/vmlinux.o",
+        "original_bytes": 256962900,
+        "original_sha256": "139096ba1a4d6868e104a1ce0b2ad514e66ef21d485273848818454678faecdf",
+        "archive_path": "local/link-intermediate-archives-20261108/fx0-cpr-xo-vmlinux.o.zst",
+        "archive_bytes": 95643567,
+        "archive_sha256": "5bd9b06b99ed14d16b919beb0e017c3758599b1a05a7200e2d2c36d352259608",
+        "independent_decompression_matches": true,
+        "original_removed": true
+      },
+      {
+        "original_path": "build/fx0-r50-reconstruction/vmlinux.o",
+        "original_bytes": 256718496,
+        "original_sha256": "0916bfb189b9baa92d18c6aeb87802eae7655c7568e84523351c999ac9f7441b",
+        "archive_path": "local/link-intermediate-archives-20261108/fx0-r50-reconstruction-vmlinux.o.zst",
+        "archive_bytes": 95505643,
+        "archive_sha256": "ff99b5262393bbf730bd9db9cfdddb1507124fe5ecf551e8daaf57421c66bf9d",
+        "independent_decompression_matches": true,
+        "original_removed": true
+      }
+    ],
+    "existing_final_artifact_hashes_preserved": 46,
+    "restore_before_old_incremental_relink": true,
+    "recovery_disk_written": false
+  },
+  "native_postflight": {
+    "kernel": "6.18.59-fx0-dmp",
+    "boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "taint": 0,
+    "startup": {
+      "returncode": 0,
+      "stdout": "running\n",
+      "stderr": ""
+    },
+    "failed_units": {
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "jobs": {
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sway": {
+      "returncode": 0,
+      "stdout": "1523\n",
+      "stderr": ""
+    },
+    "sensor_proxy": {
+      "returncode": 0,
+      "stdout": "active\n",
+      "stderr": ""
+    },
+    "time_sync": {
+      "returncode": 0,
+      "stdout": "NTPSynchronized=yes\n",
+      "stderr": ""
+    },
+    "boot_hash": {
+      "returncode": 0,
+      "stdout": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921  /dev/mmcblk0p15\n",
+      "stderr": ""
+    },
+    "policy": {
+      "scaling_governor": "schedutil",
+      "scaling_min_freq": "300000",
+      "scaling_max_freq": "787200"
+    },
+    "qup3_status": "disabled",
+    "loaded_NFC_modules": [],
+    "retained_eMMC_test_file_bytes": 536870912,
+    "verified_UTC": "2026-11-08T23:52:30.671915+00:00"
+  },
+  "latest_physical_UI": {
+    "native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "status": "pending on this newest native return",
+    "question": "The five-round-trip and four-core 600 MHz RAM load trial has returned to installed r50. Its original boot hash and 1.15 V PMIC target are restored, with Sway and the sensor proxy active. Do display and touch work normally on this newest boot?"
+  },
+  "hardware_operations": {
+    "reboots": 0,
+    "RAM_staging_or_BOOT": 0,
+    "candidate_module_loads": 0,
+    "package_installations": 0,
+    "GPIO_clock_NFC_bus_or_RF_changes": 0,
+    "firmware_download_or_nonvolatile_programming": 0,
+    "audio_tests": 0,
+    "host_builtin_WiFi_changes": 0
+  },
+  "limits": [
+    "Host full build/MODPOST/crypto/ABI/ELF checks do not qualify boot, real CCF/RPM/GPIO/I2C/IRQ/NCI or RF behavior",
+    "No source APK/distribution or independent Alpine result is implied",
+    "This distinct family inherits no native r50 or other RAM candidate hardware pass",
+    "Earlier 12 targeted C/schema checks remain tied to identical source and DTB; compression changes only debug representation",
+    "Final eMMC test-file size is observed; cross-boot content/persistence check remains pending"
+  ],
+  "remaining": [
+    "source APK and independent Alpine build",
+    "bounded RAM image/startup/signed registration after latest native UI gate",
+    "NCI reset/init, controller/tag/RF/userspace, restart/error unwind and suspend/wake",
+    "installed update/recovery, final hardware and broader bringup/upstream qualification"
+  ],
+  "files_sha256": {
+    "configs/msm8926-nfc.fragment": "4de759ada41c2b14bf767bb2df3514760d017e540173cc90f9818fc8bf4081f7",
+    "configs/nfc-debug-storage.fragment": "dbd241744b338fa2c91b36c4c6878bacf9e42a6ea06978c0b6038e70c808c54a",
+    "docs/development-log.md": "e5a49ce76b452f30722894e468aa79f4b6a1d114d57a6871a745fa095b95ebc3",
+    "docs/hardware-acceptance.md": "335d91b16f47400b9caf9f89d962b627bff5d5cae1b0e2102c0b8e82baada719",
+    "docs/nfc-bringup.md": "ae09a0ae2783abc54d3b27e7c0f1f24e8632ce6befcf6aaa6cec214953bff0a2",
+    "local/link-intermediate-archives-20261108/archive.py": "9a8936ebc455e9e00ed87c12346bdc12a243d49bb49199cb188da6945454530e",
+    "local/link-intermediate-archives-20261108/receipt.json": "9d9f9d957c105afe4db692358be7037478e0a739c693acad1db853413d9c7ba5",
+    "local/nfc-full-build/audit-debug.py": "54326291fd0cbdff67f4a80815a9623b3fb5e91464c15a1f4f31341979856a63",
+    "local/nfc-full-build/audit-kernel.py": "d98be4e216aadbb5655ab7a7bfe278417ea188489c19bce3e00986fd5a434550",
+    "local/nfc-full-build/before-build.json": "ef22640d543a61e7dadb567f12cb02070ddaa125f39c76853074e3344c29fc33",
+    "local/nfc-full-build/build.py": "d789176dcc3e0de8ba50bdec452a2fe523d92c2e9ade9729d9b3ea0c9d1afbd5",
+    "local/nfc-full-build/config.log": "d8446506c358a1f283a669e10b76aea9ef3ddcf9d612382432e1c3eea935f8f4",
+    "local/nfc-full-build/controller.json": "7ce2055229289d0e23975d63ac45133b968225a753db4d43ef948118fd0f023e",
+    "local/nfc-full-build/debug-compression-capacity.json": "e1f24d4a361a26c7f19d55c5dcb352a7b8e169abb64e631929db3b607699768b",
+    "local/nfc-full-build/debug-information-verification.json": "5f1dd5b6e95b5097f2ee76f9ae4d2e663288172fd6026b1fc1e4924cdf461fd8",
+    "local/nfc-full-build/final-preservation.json": "a7bdfd366328abb282314adf6cf4c2a11ee5350cb6279b8579e3f9b9c0a5ec5c",
+    "local/nfc-full-build/final-preservation.py": "5ca62140185096967516e0d23cb7a8949afd79f9880a079a10dde3253cad2817",
+    "local/nfc-full-build/kernel-build.log": "e17d083e680d0d408b10560f38099da9dd638ceea3306314b6e46dddde504a4a",
+    "local/nfc-full-build/linked-kernel-verification.json": "3ed5459c6bb257eb86b23e69143f58d2139a2329d85ce9150e270a3d7ff27996",
+    "local/nfc-full-build/module-ABI-verification.json": "6ed74971a5834ec9d4648a43df702c95c04d7eca1771a1fb8c28484d566fb64f",
+    "local/nfc-full-build/module-install.log": "2124d13a4bee0f68cc93535340e26ee65e69e57d5e9dfddfa23794dbdbe39437",
+    "local/nfc-full-build/module-postflight.json": "9dc721caeaba90e85235f364f6a5e059cbb77906c53be04588cbca9b465861a1",
+    "local/nfc-full-build/module-verification.json": "6acb4030f8ba71a58a0f9e8b828024200fb0a0816de3e27886fecc01f6089753",
+    "local/nfc-full-build/native-postflight.json": "8b0db292864a469a9a01d76b6042e2ef5904d84f57253e3bbef5bc0b9e2537c9",
+    "local/nfc-full-build/record-evidence.py": "ef354783aaa18185c0855ad468ed80e0082284d0dddd6e565906f4dc0a814c58",
+    "local/nfc-full-build/retry-build.py": "0081429d99135a7b62201dfda47420dcda8c4af8381d556b13a86fdd66889449",
+    "local/nfc-full-build/retry-config.log": "d54aa6f2bd0cae40300367220d233a1552727657fae41661db03e094735ddba4",
+    "local/nfc-full-build/retry-configuration.json": "b17dac36410aa62ba13de5fce5173f0009b7a282e1c6ca2645d6f788f942f426",
+    "local/nfc-full-build/retry-controller.json": "e8c63a382716f4531808fd19e028e54e1c9f4da27032aed8dc432aec0e6f8cc7",
+    "local/nfc-full-build/retry-kernel-build.log": "4424aeb26ee487450f4f1e08f23c46faf44ac89bfb8548226beddb347934fe38",
+    "local/nfc-full-build/stage-and-verify-modules.py": "ecb90e211c7ef6d7d153f0aaa3b9f891818fb917e764cec498540325fdbf690c",
+    "local/nfc-full-build/tool-versions.json": "c4030c933cf1b957d0c58f02c3ec70c8826a6e46e9eb0234df41a75a772cce50",
+    "manifests/kernel-nfc-full-build.json": "3eaa5279a8ef8a92b02ffcd24f74b9ff4e257c503b5d270ea63d2d012dd7c542",
+    "manifests/kernel-nfc-preparation.json": "f7f407e58500ce91dd1b9622199a7caad1d900ce0d33d61209cddad62a6f9498",
+    "scripts/verify_kernel_modules.py": "8ec7fb98373bb51128a3cedfbf489054de41606c565e9fac3e1a332df8f740ac"
+  },
+  "prior_checkpoint_file_versions": {
+    "docs/nfc-bringup.md": {
+      "commit": "9e0c3b9438aa56c389456697c0557c2136b65f17",
+      "sha256": "df861acf1457e2793c94aba56f551c7ea6ec836d61bdbb104b634aa94d8255ba",
+      "meaning": "Earlier source-preparation document version; frozen evidence keeps its original input hashes."
+    },
+    "docs/hardware-acceptance.md": {
+      "commit": "9e0c3b9438aa56c389456697c0557c2136b65f17",
+      "sha256": "6daeb25638d7bf15385610a6f3aa5d7960345021ed0d750af48e47ac67a8c4af",
+      "meaning": "Earlier source-preparation document version; frozen evidence keeps its original input hashes."
+    },
+    "docs/development-log.md": {
+      "commit": "9e0c3b9438aa56c389456697c0557c2136b65f17",
+      "sha256": "e019e38f05fe45a35c92108c723224873489bdd1b3d56a9a8c962c14607e4f7e",
+      "meaning": "Earlier source-preparation document version; frozen evidence keeps its original input hashes."
+    }
+  },
+  "full_bringup": "in progress"
+}

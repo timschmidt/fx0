@@ -1,0 +1,725 @@
+{
+  "schema": 1,
+  "created_UTC": "2026-11-08T16:42:00+0000",
+  "source_manifest": "manifests/kernel-runtime.json",
+  "source_manifest_sha256": "82510913fa74c0e0db1753b0b29605e8911e6038f789ef072953dfa54d8fefed",
+  "base_repository": "https://github.com/timschmidt/fx0-linux.git",
+  "base_commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+  "local_repository": "worktrees/linux-fx0-runtime",
+  "local_ref": "refs/heads/integration/fx0-runtime-history-v2",
+  "tip": "57e61d7961e7367d24b65b7969bdfe6f652b85bc",
+  "commit_count": 35,
+  "changed_files": 48,
+  "final_source_sha256": {
+    "Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml": "1edc12e56435e5f1e7f36817aff0a9a0d709bb614bdedb3581e0061ebd4a5d32",
+    "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml": "060f4f058680afff9429ad25331e15797fdc009e73e6fb61b5e43e366b0d3a63",
+    "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml": "155a952f9a6c233b589da25852fdaa8019eba713e190409391637ac8fa03dc28",
+    "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml": "97ee6589da29592af33aba6c531e4e87187aa3fa0298c71d33f78c5e7af32f61",
+    "Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml": "123cc228fa0a718a38e509c10518f5513c3704fe352129c4633739a23d0fa10c",
+    "Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml": "ff596a7d082d24acceade1bad26fb6c2e6e2cc4788e1a5bb4094211dc41aeef5",
+    "MAINTAINERS": "bc53190fad73776bb46eb59f36a1ba227b18341cb99671dcf4619e967857c1f9",
+    "arch/arm/boot/dts/qcom/Makefile": "d23e64aa14250dfa84c0b2437b69382b1b31eed5267525aac6f29ee33306a0c0",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts": "52eb39bf4a19cce8251297dc189a15917df371c2a41af91e2b8a547f3220cae7",
+    "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts": "8661666b4319f3eef085016fbfb49595943b671e62687a3589d82596ce0a8448",
+    "drivers/clk/qcom/a53-pll.c": "84a91c06729b2c5190f1dc47b53ae564f1399adfd699ea518cf800dd3b0dc256",
+    "drivers/clk/qcom/apcs-msm8916.c": "4fd79329d44473d5335c0510bc357f37ce5de6ce97d99e8cd464224a32c2036c",
+    "drivers/clk/qcom/clk-pll.c": "bfbaf9e47a56e0e37a670a26bdeda82a3072b8966fc644cb25b96eacacddafda",
+    "drivers/clk/qcom/clk-pll.h": "2a7fdfbe8e1569e402a2064e43990751212e0f6bab127b6bebb0460f026a5240",
+    "drivers/clk/qcom/clk-regmap-mux-div.c": "3395adb60d400564bd432404003efbe42db92f28b55c31e66fd0b632a24b4a92",
+    "drivers/clk/qcom/clk-regmap-mux-div.h": "330cab12a04f019c3bba132a6d37d34a4264e2c6cf9a84b75e1b5cc0d3b10bd8",
+    "drivers/clk/qcom/gcc-msm8974.c": "4b0de15d4c41226ce92462d1800efd25156b60e2b8335e6cc8bc727e95e678b1",
+    "drivers/cpufreq/cpufreq-dt-platdev.c": "d71050ae44d69720ac21a3a0d53c4e57f5071b56d604e59ab1ed885c415b5a4a",
+    "drivers/cpufreq/qcom-cpufreq-nvmem.c": "2f61370f6c4f6a8410830a523483b1395ecfb5e98be6c0f293f52364a5e173b8",
+    "drivers/firmware/qcom/qcom_scm.c": "b485f55c5a292473cc55e22a1bb14cfc1ec8bcfafd7bcbaa15b2a2e69243c361",
+    "drivers/firmware/qcom/qcom_scm.h": "15193474dde0e5aa271becd519bf2bf55ac5b3c9aff1b8c68cf51049091f70ce",
+    "drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c": "eb436a6b6e0df8f04dc2643a3a018ab4438dd547f3a38d86f5c8616d0e7f600f",
+    "drivers/iio/imu/inv_mpu6050/Kconfig": "f8df4dbd5d3e3cf02d5886c24d2e07e2333847156473479679d83efc4c81c27a",
+    "drivers/iio/imu/inv_mpu6050/Makefile": "3f89dfed1f10d488a793f045992275093a701496e26f12192d62d21e980165f4",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_core.c": "c325173917089dcbf6390fd23863c62588ea94e45de96b6b6f03c17523d9d070",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_dmp.c": "db058a8d300bd8caa7068b0980f923dba70795c90209a7a7f6033482f078a852",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h": "ad506b4d40c92487219fb0c8724c969a95cd0fa493c69983d72a0ccfed3b0589",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c": "57488c497ee5b5e2ec8b49a11d4bfc4cf521897b8f447db717da3ffd4d836436",
+    "drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c": "315c183376f33ba0a0643c370fc73c9e499009aecf5f916c42e8ecd3f2ffbf8a",
+    "drivers/iio/industrialio-core.c": "d066c5ba9d75ce08c9b0f27021c83ee4e2e1931e91dbc140ed3d772b72c30859",
+    "drivers/iio/test/iio-test-format.c": "487f3c14538983dee027df1ab29ae8336738f06c29a5cd76f89f0c526a183a0f",
+    "drivers/nvmem/qfprom.c": "8fd41aa45c1ee3d841ff54a122e3b01a873d6274f5e2638fa004ea7c40734578",
+    "drivers/pmdomain/qcom/Kconfig": "0bd37273aed1805ad6971d6682632c32fdbefb84ce25046bf30e2214b45cac19",
+    "drivers/pmdomain/qcom/cpr-msm8926-corner.h": "b72a60b781fd3b589f55aef7de4f5c3c178b4f5588a24c581d396a63cbf76a81",
+    "drivers/pmdomain/qcom/cpr-msm8926-fuses.h": "df62e27cf377db1c087725d23f6cf628262e715495f5ea9baab52ef0c02beab5",
+    "drivers/pmdomain/qcom/cpr-msm8926-voltage.h": "6ddb8af84ae4e31b8287e83d80ff961fb35019164e17a26635a92265015165d2",
+    "drivers/pmdomain/qcom/cpr-msm8926.h": "dde85c29a2ecff778775a937cffd5d38fc6c82efbe4716b562ffa449d89774bc",
+    "drivers/pmdomain/qcom/cpr-voltage.h": "6d7e30127931256752b48a8fd5e9db243e1625696e7de5e83b9afd352cc8057b",
+    "drivers/pmdomain/qcom/cpr.c": "9419023afe171f01fa297ccd48d53f706fcc69a4a6edd5d67c1dbd517398e81f",
+    "drivers/regulator/qcom-spmi-saw-fts2.h": "c9a6e1d5be97d0738c67720ec8e1a80733cb08fe6b123a201f2fa4d2fddc2c68",
+    "drivers/regulator/qcom_spmi-regulator.c": "3bee5456222e9b4b319e15bfb73fe9e11f94406cb5e35e4d2751f3cc4f4b5beb",
+    "drivers/soc/qcom/Kconfig": "d7e8e9523bccd2bca28cd628984b155c8d580018bdcf4085f8d1ad9b7d4cd2bb",
+    "drivers/soc/qcom/smd-rpm.c": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+    "drivers/soc/qcom/spm-msm8226-l2.h": "5cc4d9161aaf621ee236bc475e8265069e91b8ebc6dd0070f21a0e7a4659625d",
+    "drivers/soc/qcom/spm.c": "6bec54b0b0c9ca8c087798941341d6fed88af04d9a2db0491bce91d0704e413b",
+    "include/dt-bindings/opp/qcom,msm8926.h": "89c62bbea61fddd0e9eaffa78faa5278c92aafc72bcbc504526260fdd7fdb6f6",
+    "include/linux/firmware/qcom/qcom_scm.h": "3c0b20a0e3fcf4ae3a04c237ad470ad3ea17849fbc7942cda4327ef881bbf1ef",
+    "include/linux/soc/qcom/cpr.h": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3"
+  },
+  "reconstruction_identity": {
+    "name": "Timothy Schmidt",
+    "email": "timschmidt@gmail.com"
+  },
+  "authorship_policy": "Raw source diffs have no author/commit headers. New integration commits use the existing repository identity at reconstruction time, preserve file copyright/licenses and base history, and add no DCO, review or test trailers. Original-contributor/DCO review remains required.",
+  "checks": {
+    "all_final_blobs_equal_frozen_tested_source": true,
+    "source_worktree_HEAD_index_and_status_unchanged": true,
+    "bundle_verify": true,
+    "final_tree_identical_to_original_39_commit_draft": true,
+    "ARM_affected_object_prefix_builds": {
+      "prefixes": 35,
+      "targets": 20,
+      "W": 1,
+      "pass": true,
+      "full_intermediate_links": false
+    },
+    "CPR_DTB_binding_prefixes": {
+      "exposed_prefixes": [
+        32,
+        33,
+        34,
+        35
+      ],
+      "all_pass": true
+    },
+    "mail_roundtrip": {
+      "mail_patch_count": 35,
+      "git_am_from_exact_base": true,
+      "full_final_tree_matches_review_history": true,
+      "all_48_checked_out_files_match_frozen_candidate": true,
+      "sparse_replay_worktree_clean": true,
+      "bundle_unbundle": true,
+      "bundle_refs": "57e61d7961e7367d24b65b7969bdfe6f652b85bc refs/heads/integration/fx0-runtime-history-v2",
+      "replayed_tip": "57e61d7961e7367d24b65b7969bdfe6f652b85bc",
+      "original_history_tip": "f7c7123c34a46417d2c6626a32a348543de10aaa"
+    }
+  },
+  "publication": "local only; no external action authorized by this reconstruction",
+  "readiness": "local integration review history; current maintainer-base splitting, contributor/DCO review, full intermediate links and physical qualification remain open",
+  "commits": [
+    {
+      "position": 1,
+      "commit": "250f944e5e5074e767252fc69a59709c5f189c07",
+      "tree": "f1832d924ad8f15f81cb6029fc9462c5d162a15d",
+      "subject": "iio: inv_mpu6050: add guarded MPU6515 DMP execution",
+      "source_positions": [
+        1
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-mpu6515-dmp.diff",
+          "sha256": "9ad19adac6fa9aa3eb995e41e031daa556595d0a3f7e3713757e19f32f6c0ce4"
+        }
+      ]
+    },
+    {
+      "position": 2,
+      "commit": "383c3b717e5d4d16a7fad5ef5da471b71b23b645",
+      "tree": "8e9337d00ec09bd82070518c36fa039df5c93f22",
+      "subject": "iio: core: preserve precision in small fractional log2 values",
+      "source_positions": [
+        2
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/iio-preserve-tiny-log2-scale.diff",
+          "sha256": "7b01db1be9db0b1e73a4cb3034cd05d5b3eb164990fe6024fc58804278aaa0b0"
+        }
+      ]
+    },
+    {
+      "position": 3,
+      "commit": "9c6cb08d33bf3153eb443f8cffe22ad76b8487f5",
+      "tree": "c37439871bb3c9a449be404a9fe33c3854b5bf0e",
+      "subject": "iio: inv_mpu6050: expose verified significant-motion events",
+      "source_positions": [
+        3
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-mpu6515-dmp-smd-awake.diff",
+          "sha256": "97c1a1028b962414123e54bba812cbbe14e0dadcf7dfb66265a0178060dc8ec9"
+        }
+      ]
+    },
+    {
+      "position": 4,
+      "commit": "ca17e5cf5eca2dedcba928f9995261f955fac96c",
+      "tree": "2fcceec121bab97e2c0f300647128190de82a61b",
+      "subject": "iio: inv_mpu6050: retain significant-motion state through s2idle",
+      "source_positions": [
+        4
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-mpu6515-dmp-smd-wake.diff",
+          "sha256": "92f9acedd8ab3397fbb80bd47ee440914ff48382a355455f7dd1037ff06ccf85"
+        }
+      ]
+    },
+    {
+      "position": 5,
+      "commit": "e13016e7cc2dcdb5f10c0a3e379a1683ebb41ece",
+      "tree": "770361947249de9ce7db0f3f40e5bf6acc2a84f3",
+      "subject": "drm/msm/mdp5: flush staged scanout before starting video timing",
+      "source_positions": [
+        5
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-mdp5-video-flush-before-enable.diff",
+          "sha256": "d626c745802e9c7b5230b8dbc5e524fe4eae78b522cf15b4bf947fd0f6acdbb3"
+        }
+      ]
+    },
+    {
+      "position": 6,
+      "commit": "9ff336ca6bac0255da67d6a48e038995200cc23d",
+      "tree": "c5841505d35eeab74cd67fb8ef1225a460a0be1a",
+      "subject": "dt-bindings: nvmem: describe MSM8926 raw calibration rows",
+      "source_positions": [
+        6
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-raw-qfprom-binding.diff",
+          "sha256": "2affc2d26b7c7585d1cc0f847412da8011fcbc97754b3b1ca7fed9e3af164011"
+        }
+      ]
+    },
+    {
+      "position": 7,
+      "commit": "b55bb8f959a17c4ade641f1dd1471c92630eaffe",
+      "tree": "5d6d0fec00fb6d6edb3b489b36d78bb4f26e706b",
+      "subject": "nvmem: qfprom: add a bounded raw MSM8926 calibration view",
+      "source_positions": [
+        7
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-raw-qfprom-driver.diff",
+          "sha256": "d82fac0f63e2951e3485af0caf9182ffa78dada8f49e6c48ea8a7e864cce8a1a"
+        }
+      ]
+    },
+    {
+      "position": 8,
+      "commit": "90e124443e734b29660a96a9019cac3dce49e15b",
+      "tree": "f90c6920f86f9c022ae7be336a677f52a237218d",
+      "subject": "ARM: dts: qcom: madai: describe raw CPU calibration cells",
+      "source_positions": [
+        8
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-raw-qfprom-dt.diff",
+          "sha256": "08e458d5cca9c00441fa177cf38fbf74984a680bebc66ff014a80e73835f7aa1"
+        }
+      ]
+    },
+    {
+      "position": 9,
+      "commit": "86969789ab8decafd97681edb240dd214487bafe",
+      "tree": "91fe6a4bf09cbc367dd32d797bb198e9221297fc",
+      "subject": "pmdomain: qcom: cpr: sequence MX and APC voltage requests",
+      "source_positions": [
+        9
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-cpr-mx-voltage-sequencing.diff",
+          "sha256": "f5bdd80531d944f84c41eaabd7c381c988a9b6ae233956327d542a6f4c05a119"
+        }
+      ]
+    },
+    {
+      "position": 10,
+      "commit": "789d5197844d5268197a17a94605316eedae9fdb",
+      "tree": "e5c67949d985894c3b163b3d982fd02540f3f30c",
+      "subject": "firmware: qcom: scm: support the legacy conditional fuse read",
+      "source_positions": [
+        10
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-scm-legacy-fuse-read.diff",
+          "sha256": "a5d6a54661c3755d38112fe97aa84bbc10742b591fd782257e3cf11680474ac4"
+        }
+      ]
+    },
+    {
+      "position": 11,
+      "commit": "11275b541e4c2844645d0eb238c9cbc23ff49923",
+      "tree": "2fbea465805a3fcdf87a2f37c916c25071a03886",
+      "subject": "pmdomain: qcom: cpr: decode MSM8926 calibration metadata",
+      "source_positions": [
+        11
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-calibration-decoder.diff",
+          "sha256": "2ea51081968ed3a1d7d8877414eb5f5aa1bc2b29b6b6106fd87c6b8f6b71ec22"
+        }
+      ]
+    },
+    {
+      "position": 12,
+      "commit": "c24c35f69fc4becd77ebd0b43d40489a9c160ace",
+      "tree": "212129238cc65b674dcddfd2c0ae6013d781cbdf",
+      "subject": "dt-bindings: regulator: describe the PM8226 SAW fixed range",
+      "source_positions": [
+        12
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-pm8226-saw-fixed-range-binding.diff",
+          "sha256": "23cdad9ce596deed1beed66cdf898c4e2bad7c194f1e16762eb52f9bea323451"
+        }
+      ]
+    },
+    {
+      "position": 13,
+      "commit": "03fdca136034f3f62162b26e061e05d41f68a33d",
+      "tree": "daada6d37bd839c8f9d95b89b2406a630d59131f",
+      "subject": "regulator: qcom-spmi: add the fixed-range PM8226 SAW provider",
+      "source_positions": [
+        13
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-pm8226-saw-fixed-range.diff",
+          "sha256": "6267bd46d55d9e2cd868d3249efc7ca54c18de21d9c0d98d805f54903842bb64"
+        }
+      ]
+    },
+    {
+      "position": 14,
+      "commit": "84adf38f7463e6a58543008749afe41b5bb4d7f5",
+      "tree": "65a8b64735b5db4b472b4a517fb372c624dee3ca",
+      "subject": "dt-bindings: soc: qcom: describe the MSM8226 L2 master owner",
+      "source_positions": [
+        14
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8226-l2-master-binding.diff",
+          "sha256": "ff6540380e0d1e091b3ecdf98fd7ab0d3b3d7c160c20149b797d7d541d7816fa"
+        }
+      ]
+    },
+    {
+      "position": 15,
+      "commit": "846f609040cfdc2dba49020eb4d048458e8dbe59",
+      "tree": "65117f71be9a3b5ffee69df2e195b46eaffb1622",
+      "subject": "soc: qcom: spm: register the MSM8226 L2 master owner",
+      "source_positions": [
+        15
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8226-l2-master-driver.diff",
+          "sha256": "67b29ca5dd4f5a62225abc29253d890c72ecfebe6c06d4856170ba9d8efaeaab"
+        }
+      ]
+    },
+    {
+      "position": 16,
+      "commit": "0813d9bdbd2e78bd47bc713605f6dec9d0c56655",
+      "tree": "2b22e2fc8a38e7fe13cbf57241c6f1fff8c1db93",
+      "subject": "ARM: dts: qcom: madai: connect the L2 master and APC provider",
+      "source_positions": [
+        16
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-l2-master-dt.diff",
+          "sha256": "1de1ddd79c35e93ba2256d5091f076c8d6ad5b077423544e936d658b5424dc5e"
+        }
+      ]
+    },
+    {
+      "position": 17,
+      "commit": "92d8237aa93e26cf32ea0f94c2edc86c219d3d0f",
+      "tree": "1908ea7d44bf9126dbdacb6d409f064788ecf5ff",
+      "subject": "dt-bindings: regulator: require the PM8226 APC supply to stay on",
+      "source_positions": [
+        17
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-pm8226-saw-always-on-binding.diff",
+          "sha256": "584fadb90037884b23e0947fddbab8c325cf7b97b6695171f1963fcec0c3ef35"
+        }
+      ]
+    },
+    {
+      "position": 18,
+      "commit": "a193ee6f505ccf545ad78e4803fe6c26c6b6cfe2",
+      "tree": "f7b3868fba98aa858447ec1e2c2661ae39dfa29a",
+      "subject": "regulator: qcom-spmi: retain the always-on SAW APC supply",
+      "source_positions": [
+        18
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-pm8226-saw-no-enable.diff",
+          "sha256": "a7e1fa92a85e61404cd8d662fcffc755b28b02d0091763c3e1543c553f417980"
+        }
+      ]
+    },
+    {
+      "position": 19,
+      "commit": "a029a72552c0a8c732c7635327857343979c0b32",
+      "tree": "5d7abf1c10a2ed85f126aba1452b9b481193acb8",
+      "subject": "pmdomain: qcom: cpr: plan MSM8926 APC and MX voltages",
+      "source_positions": [
+        19
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-voltage-plan.diff",
+          "sha256": "7408b82182e6478c26eb9a57b7e83737965b91206412f083634558f459ea3ce3"
+        }
+      ]
+    },
+    {
+      "position": 20,
+      "commit": "c599aefe00366d3eb95225f24c46b8860947d414",
+      "tree": "f4e386ac3dd52e1a2e244c7d6489d190fe91bfc5",
+      "subject": "pmdomain: qcom: cpr: activate the MX floor before APC changes",
+      "source_positions": [
+        20
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-cpr-mx-activation.diff",
+          "sha256": "735e1d0c6116e8a33c1bd95034f6ba9901c9eb339c326aa873697ee2e123ec87"
+        }
+      ]
+    },
+    {
+      "position": 21,
+      "commit": "816d35ff8fc630320c706a82327bc66253fb9f88",
+      "tree": "748f42ae867e9716cf5b0ce46d26b14ddf36a356",
+      "subject": "pmdomain: qcom: cpr: retry incomplete domain attachment",
+      "source_positions": [
+        21
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-cpr-attach-retry.diff",
+          "sha256": "1d8d0182384519b8749afe4f38215c15cf7c481289299a14e188c0b9dd182d81"
+        }
+      ]
+    },
+    {
+      "position": 22,
+      "commit": "1fccd13822d1b851f711cb66aede1416ba395cf5",
+      "tree": "4adea08e8d07eb93f7cb39cd8e3774bc104697ca",
+      "subject": "pmdomain: qcom: cpr: map MSM8926 rates to calibrated corners",
+      "source_positions": [
+        22
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-corner-map.diff",
+          "sha256": "1d38fb2d95ea22b070029872c971fe8109e5b538bfb20f8d5c2cc7dedec95a62"
+        }
+      ]
+    },
+    {
+      "position": 23,
+      "commit": "02d2367460be2ce84b24dfba9bf71590e632684f",
+      "tree": "1f2c48da0795e356072efbb6d4bbcb71e7498314",
+      "subject": "pmdomain: qcom: cpr: acquire MSM8926 calibration atomically",
+      "source_positions": [
+        23
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-calibration-load.diff",
+          "sha256": "09c459db1158f514fec1ba940e4ddea0e88ced74bcfe8883b627e73a0aa6aa8e"
+        }
+      ]
+    },
+    {
+      "position": 24,
+      "commit": "8994edc4732edfec2c8e84902fce460bb16a660c",
+      "tree": "22fe16aeb47633a6dc9d434ec8eb70f92ebbf5f9",
+      "subject": "dt-bindings: power: qcom: describe the MSM8926 CPR domain",
+      "source_positions": [
+        24
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-cpr-domain-binding.diff",
+          "sha256": "0b821674cdeebb766b1df472408ee5927274c1ea3e84fb1c5c1a347f36102b28"
+        }
+      ]
+    },
+    {
+      "position": 25,
+      "commit": "e41aec2547c0b01b67847134abec4bacea36100a",
+      "tree": "d72af915c8fbd1d15d257399718e06f91ad741a8",
+      "subject": "pmdomain: qcom: cpr: add the MSM8926 calibrated CPU domain",
+      "source_positions": [
+        25
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-cpr-domain.diff",
+          "sha256": "1e17b59dcf211d70911e4ec9d7f447efdbf2047f37f5c885e9e4b24440ccab30"
+        }
+      ]
+    },
+    {
+      "position": 26,
+      "commit": "0c3e6bf4ea07841f73e18bbf90f49cd27b3435cb",
+      "tree": "9926e6cd671b362c7948c4546f617e00f99e6155",
+      "subject": "regulator: qcom-spmi: restore uncertain SAW voltage writes",
+      "source_positions": [
+        26
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-pm8226-saw-voltage-recovery.diff",
+          "sha256": "86e3f7abc9c7690487b52704484f8d5740393abe8b9f860d497fa4d17581d32d"
+        }
+      ]
+    },
+    {
+      "position": 27,
+      "commit": "856e094d8e5c02889ab159f57e3793bad18c14f8",
+      "tree": "c0fc8bf4370b51c598ac6e37689fd5b050208aa2",
+      "subject": "soc: qcom: smd-rpm: correlate replies with pending requests",
+      "source_positions": [
+        27
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-smd-rpm-request-acks.diff",
+          "sha256": "e98356b9a18208abf97b3c8e8a71c2ada24d699a500ec51295cc014a227ca58e"
+        }
+      ]
+    },
+    {
+      "position": 28,
+      "commit": "2a8130e74de8d74607729231d8d2249271d5d18d",
+      "tree": "f87cbac1fe24d1021e779a3b2d5c437e1bdad5b2",
+      "subject": "pmdomain: qcom: cpr: confirm MX vote restoration after errors",
+      "source_positions": [
+        28
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-cpr-mx-vote-recovery.diff",
+          "sha256": "bd0ed2c8b2d5eb24017e1e209e67cdeb1e61fe1c116658e16a118f09eeee127e"
+        }
+      ]
+    },
+    {
+      "position": 29,
+      "commit": "a852c5ceb7b7f623c5e94a664c0106a1f92335e7",
+      "tree": "96b48f27b0e78e77a2b0281ba64e2e1a51543c18",
+      "subject": "pmdomain: qcom: cpr: restore feedback after recovered voltage errors",
+      "source_positions": [
+        29
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-cpr-preserve-feedback-on-error.diff",
+          "sha256": "1db5e678882022f11f732c98eb5c3ac39e7a62c131d616542ba5280758b8e7bb"
+        }
+      ]
+    },
+    {
+      "position": 30,
+      "commit": "a72edae2351c247e1578229d2a77512acddcc0d2",
+      "tree": "1d940d662f4f539caab3fc0c604e3ecbc52294f7",
+      "subject": "dt-bindings: opp: describe calibrated MSM8926 CPU eligibility",
+      "source_positions": [
+        30
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-cpufreq-binding.diff",
+          "sha256": "12d14f6200c4f7b07f2c58848f0aaeca76f7fee1d7c8754e8e7b43c0073f4b98"
+        }
+      ]
+    },
+    {
+      "position": 31,
+      "commit": "8a5bc73ffd9e4d47b4cf77dbc756257da7db5701",
+      "tree": "5b4626d59ff7e167b31600c4b037beb77b7e43d4",
+      "subject": "cpufreq: qcom-nvmem: attach MSM8926 CPUs to calibrated CPR",
+      "source_positions": [
+        31
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-cpufreq-attachment.diff",
+          "sha256": "7475b0e1164770b065976a9e19b6128d4841330d634db50921652b017f665ecd"
+        }
+      ]
+    },
+    {
+      "position": 32,
+      "commit": "c171e74c753dfadc4de3b3271a7653fde62190e0",
+      "tree": "c916acdfbb89c2ceba97b7804ea7abf105a6bcd7",
+      "subject": "ARM: dts: qcom: add a separate Madai CPR qualification target",
+      "source_positions": [
+        32
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-cpr-qualification-dt.diff",
+          "sha256": "54d0770a66cb9f705844c4718cf9f6ba0a813373597516c1ab7ddec285706bd5"
+        }
+      ]
+    },
+    {
+      "position": 33,
+      "commit": "8e33a6edfd2d6ed5955176860a17a1516d212b48",
+      "tree": "b70050079443210ab03b15ded58b89aef578d8e1",
+      "subject": "pmdomain: qcom: cpr: normalize the MSM8926 startup clock",
+      "source_positions": [
+        33,
+        34,
+        35
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-startup-clock-binding.diff",
+          "sha256": "ab51749965a6fa8395613c14f3efae5c832b3929f57b1e40ea3e9fea2378b48d"
+        },
+        {
+          "path": "patches/linux-integration/fx0-msm8926-startup-clock.diff",
+          "sha256": "bc90b5109ba3caa5a7898bc53228c1080ece5a3b600393b88aace560c66e5e52"
+        },
+        {
+          "path": "patches/linux-integration/fx0-msm8926-startup-clock-dt.diff",
+          "sha256": "3727744c39fd0151a12c7f798de2e654df71b0c1d38e57f60aeef7b3c4345de8"
+        }
+      ]
+    },
+    {
+      "position": 34,
+      "commit": "b2506c2bea8a13719004be0a19cd57b00e92f1c6",
+      "tree": "300761a7b7ff6142aaf31901418dafd1dc4dfc5e",
+      "subject": "clk: qcom: verify MSM8226 CPU PLL and mux programming",
+      "source_positions": [
+        36
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8226-cpu-clock-errors.diff",
+          "sha256": "7f1f97cafbe29c8c2cf92adc6b3f5b5ce5d342019c0420b7c439b4abf35f723b"
+        }
+      ]
+    },
+    {
+      "position": 35,
+      "commit": "57e61d7961e7367d24b65b7969bdfe6f652b85bc",
+      "tree": "a72329e7394f7c0d5e2b84c6629ded44ae24b7ff",
+      "subject": "pmdomain: qcom: cpr: guard APC changes with fresh parent rates",
+      "source_positions": [
+        37,
+        38,
+        39
+      ],
+      "source_patches": [
+        {
+          "path": "patches/linux-integration/fx0-msm8926-runtime-clock-binding.diff",
+          "sha256": "fae83d0ee35ac0b6a84c92fd3051a75271e28069e2be71f6fb4cb3f9bfdd74c8"
+        },
+        {
+          "path": "patches/linux-integration/fx0-msm8926-runtime-clock-guard.diff",
+          "sha256": "009bfbdde5a801987525907a77825d29b07f4ef0f5ffd0de05e8c6d55d721cbe"
+        },
+        {
+          "path": "patches/linux-integration/fx0-msm8926-runtime-clock-dt.diff",
+          "sha256": "235a5bcb5004ffed9e71086dce3325091dc7f5281af45db53b2d7ad4ac7783d5"
+        }
+      ]
+    }
+  ],
+  "original_39_commit_history": {
+    "tip": "f7c7123c34a46417d2c6626a32a348543de10aaa",
+    "ref": "refs/heads/integration/fx0-runtime-history",
+    "record": "local/cpu-history/history.json",
+    "preserved": true,
+    "invalid_CPR_schema_prefixes": [
+      33,
+      34,
+      37,
+      38
+    ],
+    "resolution": "group original 33-35 and 37-39 as two atomic integration transitions; retain all final blobs and tree exactly"
+  },
+  "bundle": {
+    "path": "local/cpu-history/runtime-review-integration.bundle",
+    "sha256": "698976557055967c6930f7267fa78d7ccbfabaa1303f93173ff55b2ec37bb81c",
+    "bytes": 73854
+  },
+  "mail_patch_directory": "submissions/linux-runtime-integration",
+  "mail_patches_sha256": {
+    "submissions/linux-runtime-integration/0000-cover-letter.patch": "73bcde8bbd441b2c4b2b93ddf988b15d3ece0da8624c333337f26fd7f464681a",
+    "submissions/linux-runtime-integration/0001-iio-inv_mpu6050-add-guarded-MPU6515-DMP-execution.patch": "8ddc7156f954b46c672ba15b5606d691a18754c52b4c498d34b0c3fcced0432a",
+    "submissions/linux-runtime-integration/0002-iio-core-preserve-precision-in-small-fractional-log2.patch": "8957c349bc1423cfcb8f16cf9d45ac68f4fd20d1225406e4cc11631e6bc0eac8",
+    "submissions/linux-runtime-integration/0003-iio-inv_mpu6050-expose-verified-significant-motion-e.patch": "f8d035910bf71bd43a0b337406da7c6cef30740fb01085af44eb8d8e2e76cfed",
+    "submissions/linux-runtime-integration/0004-iio-inv_mpu6050-retain-significant-motion-state-thro.patch": "a234fdd69d6dc4a957c8c94907ee2d200840feca51be7000cce4aea76ff1e66d",
+    "submissions/linux-runtime-integration/0005-drm-msm-mdp5-flush-staged-scanout-before-starting-vi.patch": "a5851d87f545072c50d51c578ae010e77b4a6c9203b0b7648aec58a5fdd73d5e",
+    "submissions/linux-runtime-integration/0006-dt-bindings-nvmem-describe-MSM8926-raw-calibration-r.patch": "78f08b46de7daa0f1739f7489a483fc12aaaeb9176b3b86977700719eaff3b4d",
+    "submissions/linux-runtime-integration/0007-nvmem-qfprom-add-a-bounded-raw-MSM8926-calibration-v.patch": "734e1fff1c85247c5562bc6e966632b82845c3eac02ef31165b803cbe47c9e2b",
+    "submissions/linux-runtime-integration/0008-ARM-dts-qcom-madai-describe-raw-CPU-calibration-cell.patch": "e91c0d0f0d4e68c2090f44572346e6b432ede9bdbd5ad5ac2c88d1e459f1fd87",
+    "submissions/linux-runtime-integration/0009-pmdomain-qcom-cpr-sequence-MX-and-APC-voltage-reques.patch": "dfd95ef287443640842c5c9cee83897ab2e435792fde31c3a0adf21855459a31",
+    "submissions/linux-runtime-integration/0010-firmware-qcom-scm-support-the-legacy-conditional-fus.patch": "02fc983c009dc25c096dba800cd2b2da676f8e1d1104642b5dfe75cd3e2d90e8",
+    "submissions/linux-runtime-integration/0011-pmdomain-qcom-cpr-decode-MSM8926-calibration-metadat.patch": "5f153fe61fc4bd235a1c20b7f20c8d358a33f17d28e8758e80c39b8f3fc5cb37",
+    "submissions/linux-runtime-integration/0012-dt-bindings-regulator-describe-the-PM8226-SAW-fixed-.patch": "b1d29b805bca8f2e5fde33fd95613cac5c56a3a87eb0e3a98150aff090b2ff9a",
+    "submissions/linux-runtime-integration/0013-regulator-qcom-spmi-add-the-fixed-range-PM8226-SAW-p.patch": "656fde88645c427d40305aef5b6f8460e0d7040e992b0e19a439044d7a75fcd1",
+    "submissions/linux-runtime-integration/0014-dt-bindings-soc-qcom-describe-the-MSM8226-L2-master-.patch": "c530267d8e594062cd31209690d6bc97aa2a84409b1e37793038b7f3a45b71ba",
+    "submissions/linux-runtime-integration/0015-soc-qcom-spm-register-the-MSM8226-L2-master-owner.patch": "d2e36b711e252920ec57b2e001ffd454811172c6d6329e078ff3f55d2f67414c",
+    "submissions/linux-runtime-integration/0016-ARM-dts-qcom-madai-connect-the-L2-master-and-APC-pro.patch": "8791dbf46f80b8fcee33762cc1512d0f10d669c904c9bb77909e7ac1cdba0249",
+    "submissions/linux-runtime-integration/0017-dt-bindings-regulator-require-the-PM8226-APC-supply-.patch": "b213e1eddc933d4461ad095a6973a51789be7b03ff4e93fdb780414152e9a279",
+    "submissions/linux-runtime-integration/0018-regulator-qcom-spmi-retain-the-always-on-SAW-APC-sup.patch": "224857cdaf751f13c56645dea46ed838d089cf0681f106544d9d64cc56f513c7",
+    "submissions/linux-runtime-integration/0019-pmdomain-qcom-cpr-plan-MSM8926-APC-and-MX-voltages.patch": "cdda857edc80348724664ff75528129d57254915ae0df3b3abfd0e84eb1437ff",
+    "submissions/linux-runtime-integration/0020-pmdomain-qcom-cpr-activate-the-MX-floor-before-APC-c.patch": "2fef6467f44dcd6cc047c764fe4aeaf0c7930e621b291348a03afe7f07139c91",
+    "submissions/linux-runtime-integration/0021-pmdomain-qcom-cpr-retry-incomplete-domain-attachment.patch": "2e85b76055fa6bc3272d06f172e6919ea796c31de72eedabf2e3f459515af580",
+    "submissions/linux-runtime-integration/0022-pmdomain-qcom-cpr-map-MSM8926-rates-to-calibrated-co.patch": "bc06dcba784b8491a26e0da45935bb15929ac9eacb168187015863503c9ef341",
+    "submissions/linux-runtime-integration/0023-pmdomain-qcom-cpr-acquire-MSM8926-calibration-atomic.patch": "39e899c9b9bb54f4448be6d2856cd5bee8ecda0bf4dc5ec5dc615be4551fddfc",
+    "submissions/linux-runtime-integration/0024-dt-bindings-power-qcom-describe-the-MSM8926-CPR-doma.patch": "b5b189a24129e216415d630b15b0fd25e69bd75c23dccc0c577b12d42bbe5fb5",
+    "submissions/linux-runtime-integration/0025-pmdomain-qcom-cpr-add-the-MSM8926-calibrated-CPU-dom.patch": "796863c2823316c43394e84b04854453a0b71bcc1e7951f8c357e9bc47b9bfc4",
+    "submissions/linux-runtime-integration/0026-regulator-qcom-spmi-restore-uncertain-SAW-voltage-wr.patch": "e38ee91d297476edbbfe009da198a22b6d4803bb8fbe972876c65857cdf9806e",
+    "submissions/linux-runtime-integration/0027-soc-qcom-smd-rpm-correlate-replies-with-pending-requ.patch": "937cb7386a997aa3bb092ac7abf56754b2cac811e5883d784c91d4fab2675700",
+    "submissions/linux-runtime-integration/0028-pmdomain-qcom-cpr-confirm-MX-vote-restoration-after-.patch": "e7cde3c80b5dbb335d35653d1e06c28bd5d993a8551b6b38d58cda9976465a76",
+    "submissions/linux-runtime-integration/0029-pmdomain-qcom-cpr-restore-feedback-after-recovered-v.patch": "f8fafdda7dd6e84023234a9c1a87bdcdca91d35c6ac584e9c9f12ef7fd86c0c4",
+    "submissions/linux-runtime-integration/0030-dt-bindings-opp-describe-calibrated-MSM8926-CPU-elig.patch": "0a9d16e5b192a7a64e82ce5330dbc2455989b66166c0fd6bc7dd978abe68f150",
+    "submissions/linux-runtime-integration/0031-cpufreq-qcom-nvmem-attach-MSM8926-CPUs-to-calibrated.patch": "fbcdd7bef4b564f9aa4ef05a84091806c3899496db687b85fa82b24371e8f47a",
+    "submissions/linux-runtime-integration/0032-ARM-dts-qcom-add-a-separate-Madai-CPR-qualification-.patch": "aa53b72e5c7368c27efc128396a2bb230d34dd88bcbd9a599d97ca29d429b687",
+    "submissions/linux-runtime-integration/0033-pmdomain-qcom-cpr-normalize-the-MSM8926-startup-cloc.patch": "e2814bfa434ad5d25fc40b1361c43c67ed29a415ee1d2604f27e0a822ddfee8d",
+    "submissions/linux-runtime-integration/0034-clk-qcom-verify-MSM8226-CPU-PLL-and-mux-programming.patch": "0c07e7b9b7a2d329a24edc2d76a71c13b36a841efbc97c8dc37737d4dea0b1da",
+    "submissions/linux-runtime-integration/0035-pmdomain-qcom-cpr-guard-APC-changes-with-fresh-paren.patch": "ad5f8f3a0650edf8cf3edb2c4d829186272aeb834bb062408d5123d20459d336"
+  },
+  "CPR_native_followup": {
+    "record": "evidence/2026-11-08-cpr-bootstrap-first-ram.json",
+    "probe_errno": -22,
+    "startup_gate_pass": false,
+    "return_and_latest_native_UI_pass": true,
+    "prior_cover_letter_archive": "local/cpu-history/cover-letter-before-CPR-trial.patch",
+    "prior_cover_letter_sha256": "3c04b9104a8ca1c8b83662047ca5b1efbb0681c00254224479cb8d5a89159c59"
+  },
+  "reference_diagnostic_followup": {
+    "record": "evidence/2026-11-08-cpr-reference-first-diagnostic.json",
+    "stage": "CPR reference-source check",
+    "probe_errno": -22,
+    "native_reference_selector": 1,
+    "latest_native_boot_id": "a4972450-fe12-4a03-bb68-2a7f5b6d1055",
+    "latest_native_display_touch_owner_confirmed": true,
+    "prior_cover_letter_archive": "local/cpu-history/cover-letter-before-reference-diagnosis.patch",
+    "prior_cover_letter_sha256": "5afa0cc36ff453cf6ec9e421cee203a2f6af062d82da79066b772bfb27b0e954"
+  }
+}

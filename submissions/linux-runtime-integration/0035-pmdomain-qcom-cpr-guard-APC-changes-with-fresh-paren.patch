@@ -1,0 +1,151 @@
+From 57e61d7961e7367d24b65b7969bdfe6f652b85bc Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:42:00 +0000
+Subject: [PATCH 35/35] pmdomain: qcom: cpr: guard APC changes with fresh
+ parent rates
+
+Own both CPU parent clocks and refresh them before reading the uncached CPU mux. Reject unknown or excessive actual rates before an APC change, including during startup.
+
+Update the four-clock binding, provider and qualification DTB together in this integration history so the stricter requirement has no invalid intermediate device tree.
+
+Source-patch: patches/linux-integration/fx0-msm8926-runtime-clock-binding.diff
+Source-sha256: fae83d0ee35ac0b6a84c92fd3051a75271e28069e2be71f6fb4cb3f9bfdd74c8
+
+Source-patch: patches/linux-integration/fx0-msm8926-runtime-clock-guard.diff
+Source-sha256: 009bfbdde5a801987525907a77825d29b07f4ef0f5ffd0de05e8c6d55d721cbe
+
+Source-patch: patches/linux-integration/fx0-msm8926-runtime-clock-dt.diff
+Source-sha256: 235a5bcb5004ffed9e71086dce3325091dc7f5281af45db53b2d7ad4ac7783d5
+---
+ .../bindings/power/avs/qcom,cpr.yaml          |  6 ++--
+ .../dts/qcom/qcom-msm8926-lg-madai-cpr.dts    |  4 +--
+ drivers/pmdomain/qcom/cpr.c                   | 35 +++++++++++++++++--
+ 3 files changed, 39 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+index bd17eba5709a..b6e7b97f0654 100644
+--- a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
++++ b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+@@ -34,11 +34,11 @@ properties:
+ 
+   clocks:
+     minItems: 1
+-    maxItems: 3
++    maxItems: 4
+ 
+   clock-names:
+     minItems: 1
+-    maxItems: 3
++    maxItems: 4
+ 
+   vdd-apc-supply:
+     description: APC regulator supply.
+@@ -85,11 +85,13 @@ allOf:
+             - description: Reference clock.
+             - description: CPU cluster clock, retained across CPU attachments.
+             - description: GPLL0 vote supplying the 300 MHz startup/notifier path.
++            - description: CPU PLL supplying the higher CPU rates.
+         clock-names:
+           items:
+             - const: ref
+             - const: cpu
+             - const: aux
++            - const: pll
+         acc-syscon: false
+         nvmem-cells:
+           items:
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+index 77ba25737a6e..9aec5f531410 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts
+@@ -210,8 +210,8 @@ cpr: power-controller@f9018000 {
+ 		compatible = "qcom,msm8926-cpr", "qcom,cpr";
+ 		reg = <0xf9018000 0x1000>;
+ 		interrupts = <GIC_SPI 15 IRQ_TYPE_EDGE_RISING>;
+-		clocks = <&xo_board>, <&apcs>, <&gcc GPLL0_VOTE>;
+-		clock-names = "ref", "cpu", "aux";
++		clocks = <&xo_board>, <&apcs>, <&gcc GPLL0_VOTE>, <&a7pll>;
++		clock-names = "ref", "cpu", "aux", "pll";
+ 		qcom,apcs-syscon = <&apcs>;
+ 		vdd-apc-supply = <&pm8226_apc>;
+ 		vdd-mx-supply = <&pm8226_l3>;
+diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
+index ec47fc3e7e8d..f874bfc95ce9 100644
+--- a/drivers/pmdomain/qcom/cpr.c
++++ b/drivers/pmdomain/qcom/cpr.c
+@@ -10,6 +10,7 @@
+ #include <linux/debugfs.h>
+ #include <linux/string.h>
+ #include <linux/kernel.h>
++#include <linux/limits.h>
+ #include <linux/list.h>
+ #include <linux/init.h>
+ #include <linux/io.h>
+@@ -240,6 +241,7 @@ struct cpr_msm8926_data {
+ 	int opp_token;
+ 	struct regmap *apcs;
+ 	struct clk *aux_clk;
++	struct clk *pll_clk;
+ };
+ 
+ static struct platform_driver cpr_driver;
+@@ -454,12 +456,37 @@ static int cpr_post_voltage(struct cpr_drv *drv,
+ 	return 0;
+ }
+ 
++/* Refresh both PLLs before the noncached CPU mux query, without reprogramming. */
++static int cpr_msm8926_check_cpu_rate(struct cpr_drv *drv, unsigned long maximum)
++{
++	struct cpr_msm8926_data *data = drv->msm8926;
++	struct clk *gpll0;
++	unsigned long rate;
++
++	if (!data || !data->aux_clk || !data->pll_clk || !maximum)
++		return -EINVAL;
++	gpll0 = clk_get_parent(data->aux_clk);
++	if (!gpll0 || clk_get_rate(gpll0) != 600000000 ||
++	    clk_get_rate(data->aux_clk) != 600000000 || !clk_get_rate(data->pll_clk))
++		return -EIO;
++	rate = clk_get_rate(drv->cpu_clk);
++	if (!rate || rate > maximum)
++		return -ERANGE;
++	return 0;
++}
++
+ static int cpr_scale_voltage(struct cpr_drv *drv, struct corner *corner,
+ 			     int new_uV, enum voltage_change_dir dir)
+ {
+ 	int ret;
+ 	struct fuse_corner *fuse_corner = corner->fuse_corner;
+ 
++	if (drv->msm8926) {
++		/* A failed clock reduction must not authorize a lower APC target. */
++		ret = cpr_msm8926_check_cpu_rate(drv, corner->freq);
++		if (ret)
++			return ret;
++	}
+ 	ret = cpr_pre_voltage(drv, fuse_corner, dir);
+ 	if (ret)
+ 		return ret;
+@@ -1190,6 +1217,9 @@ static int __maybe_unused cpr_msm8926_init(struct cpr_drv *drv)
+ 	/* The source-4, HID-3 notifier path must be the lowest CPU OPP. */
+ 	if (clk_get_rate(data->aux_clk) != 600000000)
+ 		return -ERANGE;
++	data->pll_clk = devm_clk_get(drv->dev, "pll");
++	if (IS_ERR(data->pll_clk))
++		return PTR_ERR(data->pll_clk);
+ 	for (i = 0; i < ARRAY_SIZE(cpr_msm8926_rates); i++) {
+ 		if (!(data->supported_hw & (1U << i)))
+ 			continue;
+@@ -1732,8 +1762,9 @@ static int cpr_msm8926_bootstrap_clock(struct cpr_drv *drv)
+ 
+ 	if (!data || !drv->num_corners || drv->corners[0].freq != 300000000)
+ 		return -EINVAL;
+-	if (clk_get_rate(data->aux_clk) != 600000000)
+-		return -ERANGE;
++	ret = cpr_msm8926_check_cpu_rate(drv, ULONG_MAX);
++	if (ret)
++		return ret;
+ 	rate = clk_get_rate(drv->cpu_clk);
+ 	if (rate < drv->corners[0].freq)
+ 		return -ERANGE;

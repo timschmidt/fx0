@@ -1,0 +1,681 @@
+{
+  "recorded_UTC": "2026-11-11T09:24:46.282689+00:00",
+  "purpose": "Normal Linux6.18.63-r1 package with three vibrator corrections and exact package-kernel zero-taint RAM qualification",
+  "source": {
+    "recorded_UTC": "2026-11-11T08:38:40.797978+00:00",
+    "source_base": "29edb2b9893edd18c445a648081b12038a033d51",
+    "branch": "integration/fx0-6.18.63-vibrator",
+    "source_commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+    "commits": [
+      {
+        "subject": "input: pm8xxx-vibrator: select voltage range from register layout",
+        "commit": "7066eda348e47581aea911d19bdc4c67385b8782"
+      },
+      {
+        "subject": "input: pm8xxx-vibrator: clamp the inclusive maximum level",
+        "commit": "05eae43e8aaf8accba4870cd608174f6d3710d0a"
+      },
+      {
+        "subject": "input: pm8xxx-vibrator: replace drive bits when intensity changes",
+        "commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d"
+      }
+    ],
+    "original_driver_sha256": "821d4a18b3cd754e77d811ee293f72fc6102a2a03bdffce04bb107f7dfe01d4e",
+    "candidate_driver_sha256": "af56eec8b1864e318cc84f269599eb98c95924d242055722a08ea565d98eee06",
+    "candidate_driver_byte_identical_to_physically_tested_r50_source": true,
+    "only_changed_path": "drivers/input/misc/pm8xxx-vibrator.c",
+    "phone_changes": false
+  },
+  "source_publication": {
+    "recorded_UTC": "2026-11-11T08:39:39.850151+00:00",
+    "repository": "https://github.com/timschmidt/fx0-linux.git",
+    "branch": "integration/fx0-6.18.63-vibrator",
+    "commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+    "remote_ref_verified": true,
+    "three_reviewable_driver_commits": true,
+    "driver_matches_RAM_tested_source": true,
+    "host_cases": 768,
+    "strict_checkpatch_passed": true,
+    "private_identifier_scan_passed": true,
+    "root_index_unchanged": true,
+    "native_installation": false,
+    "stable_kernel_physical_boot": false
+  },
+  "recipe_publication": {
+    "recorded_UTC": "2026-11-11T09:00:22.892345+00:00",
+    "repository": "https://github.com/timschmidt/fx0-pmaports.git",
+    "branch": "integration/fx0-vibrator-6.18.63-package",
+    "commit": "b32a54f534c38103b935a30a324ae1d1aa08e74a",
+    "remote_ref_verified": true,
+    "source_package_built": true,
+    "Alpine_toolchain": "22.1.3",
+    "verified_modules": 464,
+    "compiled_source_files_and_symlinks_matched": 91269,
+    "root_index_unchanged": true,
+    "native_installation": false,
+    "physical_boot": false
+  },
+  "package": {
+    "name": "linux-postmarketos-qcom-msm8226-6.18.63-r1.apk",
+    "bytes": 18604354,
+    "sha256": "dd1577d5a8fbec110c9f60218d2ad22d88aafed72ad4bb6a90b73b4568d8c36a",
+    "recipe_commit": "b32a54f534c38103b935a30a324ae1d1aa08e74a",
+    "source_build": true
+  },
+  "phone_installation_package": {
+    "recorded_UTC": "2026-11-11T09:21:01.861351+00:00",
+    "name": "linux-postmarketos-qcom-msm8226-6.18.63-r1.apk",
+    "bytes": 18604354,
+    "sha256": "73d28444c42edf3feba6fa0c91f45240ef0cd12a4ae401a18ae343508e4fabc4",
+    "recipe_commit": "b32a54f534c38103b935a30a324ae1d1aa08e74a",
+    "source_package_built": true,
+    "original_build_package_sha256": "dd1577d5a8fbec110c9f60218d2ad22d88aafed72ad4bb6a90b73b4568d8c36a",
+    "original_builder_signature_not_trusted_by_native": true,
+    "native_trusted_signer": "pmos@local-6ae3f5f3.rsa.pub",
+    "native_trust_key_sha256": "d03c2c7d83f402a9fd24c844063c7286bcd73c25ccf8211b24776a126ee5ce87",
+    "native_trust_store_currently_rechecked": true,
+    "native_key_count": 22,
+    "standard_abuild_sign_used": true,
+    "original_compressed_control_and_data_streams_byte_exact": true,
+    "payload_and_PKGINFO_unchanged": true,
+    "compressed_data_stream_SHA256_matches_PKGINFO": true,
+    "independent_RSA_SHA1_verified": true,
+    "altered_control_rejected_by_RSA_and_APK": true,
+    "APK_verified_against_current_native_public_keys": true,
+    "original_build_APK_preserved": true,
+    "private_key_copied_read_by_audit_or_hashed": false,
+    "signing_tool_private_key_mount_read_only": true,
+    "Disk_B_writes": false,
+    "phone_trust_store_or_package_changes": false,
+    "kernel_DTB_and_modules_identical_to_RAM_tested_package": true
+  },
+  "offline_native_upgrade_plan": {
+    "recorded_UTC": "2026-11-11T09:23:31.167425+00:00",
+    "native_boot_id": "d38d1768-eff9-43f1-8779-831ffeef167b",
+    "native_database_sha256": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1",
+    "native_world_sha256": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+    "package_sha256": "73d28444c42edf3feba6fa0c91f45240ef0cd12a4ae401a18ae343508e4fabc4",
+    "candidate_signed_control_checksum": "Q1zTO1mlgs1wilduzQdkNU/kbwGNI=",
+    "proposed_world_only_replaces_kernel_exact_control_hold": true,
+    "other_nine_exact_control_holds_and_all_other_world_lines_unchanged": true,
+    "normal_offline_native_database_resolution": true,
+    "actions": [
+      "(1/1) Upgrading linux-postmarketos-qcom-msm8226 (6.18.59-r50 -> 6.18.63-r1)"
+    ],
+    "package_count_before": 775,
+    "other_774_packages_unchanged_by_plan": true,
+    "simulated_database_not_written": true,
+    "phone_world_database_or_package_changes": false,
+    "normal_native_hooks_exercised": false
+  },
+  "build_inputs": {
+    "recorded_UTC": "2026-11-11T08:41:26.964080+00:00",
+    "recipe_commit": "b32a54f534c38103b935a30a324ae1d1aa08e74a",
+    "recipe_base_commit": "59423a9616933d1a5939eeedc12f942ba4471fae",
+    "recipe_branch": "integration/fx0-vibrator-6.18.63-package",
+    "source_commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+    "release": "6.18.63-fx0-vibrator-alpine",
+    "version": "6.18.63-r1",
+    "source_archive_sha512": "9ad68807660a648c876f32e97564e914753ecf4433a58e83eacf5892d0181acee9eddcd1caf25e555047aad2ff0260305ffa3f1d9a11a2b1bcce87ddbe9409be",
+    "cached_tool_image": "6213355c8ea96806ce237d1ca509cfda6b5db33acff2d9addb80501baa6f2301",
+    "isolated_pmos_HOME": true,
+    "reused_cached_buildroots": true,
+    "prior_build_HOMEs_untouched": true,
+    "native_installation": false,
+    "space_available_before_build": 48016416768
+  },
+  "configuration": "configs/linux-6.18.63-fx0-vibrator-alpine.armv7",
+  "actual_config_community": {
+    "actual_community_check_passed": true,
+    "configuration_sha256": "0051180765d99867a2605e74f137aeb856ff6341eb09785fbedf71fcf0c9f26c",
+    "configuration_modified_by_audit": false,
+    "CFI_nonpermissive": true,
+    "full_compressed_DWARF": true,
+    "schedutil_retained": true,
+    "CPR_NFC_remain_disabled": true
+  },
+  "configuration_normalization": {
+    "recorded_UTC": "2026-11-11T08:56:41.086775+00:00",
+    "input_to_actual_option_differences": 19,
+    "differences": {
+      "CONFIG_DEBUG_INFO_COMPRESSED_ZSTD": {
+        "input": null,
+        "actual": "n"
+      },
+      "CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_CC_VERSION_TEXT": {
+        "input": "\"clang version 21.1.8 (Fedora 21.1.8-6.fc43)\"",
+        "actual": "\"Alpine clang version 22.1.3\""
+      },
+      "CONFIG_RUSTC_HAS_FILE_AS_C_STR": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_CC_OPT_INLINE_MEMSET": {
+        "input": null,
+        "actual": "\"-mllvm -max-store-memset=4294967294\""
+      },
+      "CONFIG_ARCH_USES_CFI_GENERIC_LLVM_PASS": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_RUSTC_LLVM_VERSION": {
+        "input": "220108",
+        "actual": "0"
+      },
+      "CONFIG_RUSTC_HAS_FILE_WITH_NUL": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION": {
+        "input": null,
+        "actual": "n"
+      },
+      "CONFIG_LD_CAN_USE_KEEP_IN_OVERLAY": {
+        "input": null,
+        "actual": "y"
+      },
+      "CONFIG_RUSTC_VERSION": {
+        "input": "109801",
+        "actual": "0"
+      },
+      "CONFIG_CLANG_VERSION": {
+        "input": "210108",
+        "actual": "220103"
+      },
+      "CONFIG_LLD_VERSION": {
+        "input": "180108",
+        "actual": "220103"
+      },
+      "CONFIG_DRM_MSM_VALIDATE_XML": {
+        "input": "n",
+        "actual": null
+      },
+      "CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_AS_VERSION": {
+        "input": "210108",
+        "actual": "220103"
+      },
+      "CONFIG_RUSTC_HAS_COERCE_POINTEE": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_HAVE_LD_DEAD_CODE_DATA_ELIMINATION": {
+        "input": null,
+        "actual": "y"
+      },
+      "CONFIG_RUSTC_HAS_SPAN_FILE": {
+        "input": "y",
+        "actual": null
+      }
+    },
+    "compiler_capability_and_disabled_option_changes_only": true
+  },
+  "source_archive_verification": {
+    "recorded_UTC": "2026-11-11T08:41:04.144979+00:00",
+    "source_commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+    "archive_sha512": "9ad68807660a648c876f32e97564e914753ecf4433a58e83eacf5892d0181acee9eddcd1caf25e555047aad2ff0260305ffa3f1d9a11a2b1bcce87ddbe9409be",
+    "blob_count": 91269,
+    "every_archive_file_and_symlink_matches_published_Git_tree": true,
+    "file_executable_modes_match": true,
+    "unexpected_or_duplicate_paths": false,
+    "source_checkout_clean": true,
+    "native_installation": false
+  },
+  "compiled_source_verification": {
+    "recorded_UTC": "2026-11-11T08:57:42.071269+00:00",
+    "source_commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+    "all_tracked_source_paths_match_published_Git_tree": true,
+    "source_files_and_symlinks_compared": 91269,
+    "no_build_generated_files_treated_as_Git_source": true,
+    "native_installation": false
+  },
+  "host_driver_cases": {
+    "host_ASan_UBSan_cases": 768,
+    "original_control_rejected": true,
+    "independent_regression_controls_rejected": [
+      "wrong-range",
+      "missing-limit",
+      "stale-drive"
+    ],
+    "results": {
+      "control": {
+        "source_sha256": "821d4a18b3cd754e77d811ee293f72fc6102a2a03bdffce04bb107f7dfe01d4e",
+        "returncode": -6,
+        "stdout": ""
+      },
+      "candidate": {
+        "source_sha256": "af56eec8b1864e318cc84f269599eb98c95924d242055722a08ea565d98eee06",
+        "returncode": 0,
+        "stdout": "768 speed/variant cases passed"
+      },
+      "wrong-range": {
+        "source_sha256": "a52cfc4e1e54f2639b887f5af59f972d438cfb98f11ffcd03a18c88c3ada4163",
+        "returncode": -6,
+        "stdout": ""
+      },
+      "missing-limit": {
+        "source_sha256": "c95898764b6a48f2eed196a2e89f8485881657c339364b4f26e463cc88bc7942",
+        "returncode": -6,
+        "stdout": ""
+      },
+      "stale-drive": {
+        "source_sha256": "bbcf6c7beaa234df78e8b812df56626964117ef5e65252079fe36604116a25d4",
+        "returncode": -6,
+        "stdout": ""
+      }
+    },
+    "scope": "Actual voltage selection, driver level and legacy drive fields. PMI632 high-byte encoding remains outside this check."
+  },
+  "strict_checkpatch": "0 errors, 0 warnings, 0 checks",
+  "build_artifacts": {
+    "recorded_UTC": "2026-11-11T08:57:23.178771+00:00",
+    "source_commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+    "release": "6.18.63-fx0-vibrator-alpine",
+    "artifacts_sha256": {
+      "arch/arm/boot/zImage": "286de8813a9f9027f6994281a8b484591391f8438337335043efbda0a6fd38ea",
+      "vmlinux": "16aa75390a9da8d834b6300da11670136102909c818eae2aa7daebac68a9bac1",
+      "Module.symvers": "320b1d48e30781260728adf0ed370c7b3127484f53336ed1905bd96719135180",
+      ".config": "0051180765d99867a2605e74f137aeb856ff6341eb09785fbedf71fcf0c9f26c",
+      "certs/signing_key.x509": "de086e266ec1d82ea17ebbd51f10242e591df3cf74e958e269bdd91b9176d370",
+      "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dtb": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+      "modules.order": "80970f53911e4d3b504dd0c2941e3e36a82e8ba79366cb010e450d28bde06f17"
+    },
+    "r50_DTB_byte_identical": true,
+    "native_installation": false
+  },
+  "linked_kernel": {
+    "verified_UTC": "2026-11-11T08:57:53.887733+00:00",
+    "release": "6.18.63-fx0-vibrator-alpine",
+    "ELF": "ARM32 little-endian",
+    "GNU_build_id": "1838e387a8a7fef3c1b4d40f2cd4cac133c61e4a",
+    "CFI_type_ids_handler_and_object_flags_verified": true,
+    "undefined_symbols_equal_r50": [
+      "         U __bpf_callback_fn",
+      "         U __bpf_prog_runX",
+      "         w efi_attr_config_table",
+      "         w efi_attr_fw_vendor",
+      "         w efi_attr_runtime"
+    ],
+    "embedded_runtime_trust_list_exact_generated_certificate": true,
+    "certificate_sha256": "de086e266ec1d82ea17ebbd51f10242e591df3cf74e958e269bdd91b9176d370",
+    "all_464_module_verifier_certificate_matches_runtime_trust": true,
+    "wrong_build_certificate_rejected": true,
+    "new_module_private_key": "Generated and used by Kbuild; audit checks mode only, never inspects or exports contents",
+    "private_key_mode": "0600",
+    "uncompressed_kernel_footprint_bytes": 21499728,
+    "footprint_plus_load_offset_below_0x02000000": true,
+    "zImage_header_magic_verified": true,
+    "r50_DTB_byte_identical": true,
+    "physical_boot": false,
+    "native_installation": false
+  },
+  "debug_information": {
+    "recorded_UTC": "2026-11-11T08:56:41.691743+00:00",
+    "full_DWARF5": true,
+    "reduced_debug_disabled": true,
+    "compressed_debug_sections": {
+      ".debug_aranges": {
+        "compression": "zlib",
+        "compressed_bytes": 791,
+        "uncompressed_bytes": 2088
+      },
+      ".debug_info": {
+        "compression": "zlib",
+        "compressed_bytes": 67710165,
+        "uncompressed_bytes": 106693482,
+        "first_DWARF_unit_version": 5
+      },
+      ".debug_abbrev": {
+        "compression": "zlib",
+        "compressed_bytes": 931176,
+        "uncompressed_bytes": 3146925
+      },
+      ".debug_line": {
+        "compression": "zlib",
+        "compressed_bytes": 6134718,
+        "uncompressed_bytes": 14169418
+      },
+      ".debug_frame": {
+        "compression": "zlib",
+        "compressed_bytes": 391639,
+        "uncompressed_bytes": 1718352
+      },
+      ".debug_str": {
+        "compression": "zlib",
+        "compressed_bytes": 1653793,
+        "uncompressed_bytes": 3959782
+      },
+      ".debug_addr": {
+        "compression": "zlib",
+        "compressed_bytes": 799499,
+        "uncompressed_bytes": 1866124
+      },
+      ".debug_line_str": {
+        "compression": "zlib",
+        "compressed_bytes": 27650,
+        "uncompressed_bytes": 71126
+      },
+      ".debug_loclists": {
+        "compression": "zlib",
+        "compressed_bytes": 6081319,
+        "uncompressed_bytes": 12950935
+      },
+      ".debug_rnglists": {
+        "compression": "zlib",
+        "compressed_bytes": 1000090,
+        "uncompressed_bytes": 1758029
+      },
+      ".debug_str_offsets": {
+        "compression": "zlib",
+        "compressed_bytes": 7165952,
+        "uncompressed_bytes": 24412512
+      }
+    },
+    "compressed_sections_decompress_and_match_declared_sizes": true,
+    "native_installation": false
+  },
+  "modules": {
+    "count": 464,
+    "all_signatures_match_actual_embedded_certificate": true,
+    "all_in_tree": true,
+    "imported_symbol_CRC_checks": 25309,
+    "all_imported_CRCs_match_built_kernel": true,
+    "ABI_negative_controls": [
+      "modified import CRC rejected",
+      "wrong export ABI map rejected"
+    ],
+    "dependencies": {
+      "verified_modules": 464,
+      "declared_dependency_edges": 385,
+      "transitive_dependency_edges": 567,
+      "all_modules_dep_entries_match_module_metadata": true,
+      "modules_dep_sha256": "fd84f711abe7f02170c677e0dedd849e43e7efdece794a38360fec32fb1f77a0",
+      "scope": "Dependency metadata only; signatures, ABI, runtime loading and install hooks separate"
+    }
+  },
+  "signature_and_empty_database_simulation": {
+    "verified_UTC": "2026-11-11T08:58:13.835550+00:00",
+    "package": {
+      "name": "linux-postmarketos-qcom-msm8226-6.18.63-r1.apk",
+      "bytes": 18604354,
+      "sha256": "dd1577d5a8fbec110c9f60218d2ad22d88aafed72ad4bb6a90b73b4568d8c36a",
+      "recipe_commit": "b32a54f534c38103b935a30a324ae1d1aa08e74a",
+      "source_build": true
+    },
+    "APK_signature_verified": true,
+    "modified_signed_recipe_metadata_rejected": true,
+    "modified_metadata_message": "BAD signature; original signature retained and modified control stream recompressed with valid gzip CRC",
+    "no_private_keys_or_firmware_in_APK": true,
+    "normal_offline_ARMv7_simulation": {
+      "returncode": 0,
+      "stdout": "(1/1) Installing linux-postmarketos-qcom-msm8226 (6.18.63-r1)\nOK: 22.8 MiB in 1 packages\n",
+      "stderr": "",
+      "scope": "empty initialized usermode database; package resolution only; no installation or update hooks"
+    },
+    "actual_device_install": false
+  },
+  "RAM_image_preparation_receipt": {
+    "image_path": "local/kernel-vibrator-6.18.63-ram-01/fx0-6.18.63-vibrator-ram.img",
+    "image_sha256": "5a39fc4949ff975fd4c9ae5ec1093700b268811dabc8603faf311181c492315a",
+    "image_bytes": 6387712,
+    "source_commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+    "recipe_commit": "b32a54f534c38103b935a30a324ae1d1aa08e74a",
+    "package_sha256": "dd1577d5a8fbec110c9f60218d2ad22d88aafed72ad4bb6a90b73b4568d8c36a",
+    "kernel_release": "6.18.63-fx0-vibrator-alpine",
+    "kernel_bytes": 5509632,
+    "kernel_sha256": "286de8813a9f9027f6994281a8b484591391f8438337335043efbda0a6fd38ea",
+    "DTB_sha256": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+    "kernel_notes_sha256": "05292e44d9f13de78b5ebf602b0b3f9ff22b7820d765f6e796cf3473beee4377",
+    "module_expected_taint": 0,
+    "modules_in_tree": true,
+    "kernel_and_DTB_byte_exact_signed_APK": true,
+    "return_timer_seconds": 180,
+    "worker_delay_seconds": 8,
+    "independent_state_snapshot_seconds": 20,
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\" module.sig_enforce=1",
+    "ramdisk_entries": 21,
+    "entries_sha256": {
+      "bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dev": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "proc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sys": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tmp": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "www": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bin/busybox": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+      "bin/sh": "9d75f0d7c398df565d7ac04c6819b62d6d8f9560f5eb4672596ecd8f7e96ae91",
+      "bin/serve-http": "0ce3d5f2f963d5f2acedbc1a87968f2d330419f695ede496b61847fca6650330",
+      "init": "417914b87d0e7b161c122c766e32ab7205b7bb2564d10c965612259d590e3bc5",
+      "etc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modules": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modules/evdev.ko": "96c4e613b4c64ea0df2c008fa24993f9649da56434a7b92244f9367fd3c4f037",
+      "modules/pm8xxx-vibrator.ko": "f8044b5b411a5533836d1c74c54863d5b51a2c801615c576eb30ccbd92938955",
+      "bin/vibrator-pulses": "abc83e25bceb0ed1701f474c13d3b29c71912f8575afe0ae752a3560b96afcd2",
+      "bin/vibrator-ram": "295e2c18d900a3b2bd761480120f708b3b34d52b45ebbd653bc65ed59dab3162",
+      "bin/vibrator-log": "63ca2b13aca7a95a9e969cae331ff03635937a7aeeeaefcc5958d2c7adadb8a4",
+      "bin/vibrator-snapshot": "caadd9748b8e7d6d8500cdee99a92eafeb06d58b70f1073d647f0212d5eb0700",
+      "etc/fx0-vibrator-trial": "53b1c71ac8b52ea2a0cb5e39c2eee5b46ddef9026978abcc9b2e89e3de7d24f9",
+      "etc/fx0-vibrator-notes.sha256": "a77d03971e6b2fb727e8f59688143f11d463a80591e22329b79725bd8c246773",
+      "etc/fx0-vibrator-inputs.sha256": "bd1eceeb8feade45123c00ac23dc4b503bfb6d6b9e7f4a416f3c1d46583e60f8"
+    },
+    "physical_boot": false,
+    "native_installation": false
+  },
+  "RAM_independent_preflight_verification": {
+    "image_sha256": "5a39fc4949ff975fd4c9ae5ec1093700b268811dabc8603faf311181c492315a",
+    "image_bytes": 6387712,
+    "independent_Android_CPIO_and_GNU_CPIO_verified": true,
+    "CPIO_entries": 21,
+    "kernel_DTB_and_both_intree_modules_exact_signed_APK_bytes": true,
+    "expected_taint": 0,
+    "signature_enforcement_enabled": true,
+    "original_independent_180_second_timer_byte_exact": true,
+    "init_only_adds_logged_worker_and_read_only_snapshot": true,
+    "worker_only_changes_pinned_release_permit_and_intree_taint": true,
+    "pulse_helper_and_RAM_logging_byte_exact_previously_qualified_sources": true,
+    "ARM_BusyBox_syntax_passed_for_five_scripts": true,
+    "no_firmware_or_CPU_registration_payload": true,
+    "physical_boot": false
+  },
+  "physical_RAM_result": {
+    "timer_return_uptime_seconds": 181.609495,
+    "recorded_UTC": "2026-11-11T09:08:09.317484+00:00",
+    "RAM_boot_id": "74d8e9cd-1fc0-4e56-8f6d-6fba0ae7afcd",
+    "kernel_release": "6.18.63-fx0-vibrator-alpine",
+    "source_commit": "c69b017cd9af9c589aeb921f901987fb26c55a4d",
+    "recipe_commit": "b32a54f534c38103b935a30a324ae1d1aa08e74a",
+    "signed_modules_in_tree": true,
+    "image_sha256": "5a39fc4949ff975fd4c9ae5ec1093700b268811dabc8603faf311181c492315a",
+    "exact_runtime_kernel_notes_verified": true,
+    "installed_boot_partition_readback_unchanged_in_RAM": true,
+    "worker_exit_status": 0,
+    "worker_completed_uptime_seconds": 12.81,
+    "pulses": [
+      {
+        "requested_ms": 150,
+        "observed_ms": 152,
+        "drive_code": 24,
+        "enabled_samples": 29
+      },
+      {
+        "requested_ms": 300,
+        "observed_ms": 303,
+        "drive_code": 24,
+        "enabled_samples": 58
+      },
+      {
+        "requested_ms": 600,
+        "observed_ms": 602,
+        "drive_code": 24,
+        "enabled_samples": 115
+      }
+    ],
+    "holds": [
+      {
+        "code": 0,
+        "duration_ms": 100,
+        "matched_samples": 11
+      },
+      {
+        "code": 24,
+        "duration_ms": 150,
+        "matched_samples": 15
+      },
+      {
+        "code": 17,
+        "duration_ms": 150,
+        "matched_samples": 15
+      },
+      {
+        "code": 22,
+        "duration_ms": 150,
+        "matched_samples": 15
+      },
+      {
+        "code": 0,
+        "duration_ms": 100,
+        "matched_samples": 10
+      },
+      {
+        "code": 0,
+        "duration_ms": 100,
+        "matched_samples": 11
+      }
+    ],
+    "programmed_target_mV": 2400,
+    "active_levels": [
+      24,
+      17,
+      22
+    ],
+    "final_off_holds": 2,
+    "both_modules_unloaded_at_worker_exit": true,
+    "kernel_taint": 0,
+    "independent_snapshot_no_modules_or_worker": true,
+    "helper_PASS": true,
+    "worker_PASS": true,
+    "artifacts_sha256": {
+      "HTTP-21-vibrator.log": "20a7876473ca2d4b7c044b1e424d53b1b26da5fbd19611ec4522a6db05887194",
+      "HTTP-21-vibrator-result.txt": "0fd3982759d568fa05e8547b51a5cf191fa387a50d97e1437bc812f8c461e01d",
+      "HTTP-21-vibrator-state.txt": "f379acc7707748bc50d9ccf4b2b21eb3ff68d5565aac962727cbc3dd2b2a124a"
+    },
+    "scope": "Bounded physical RAM electrical/register timing, active drive changes, stop and unload; analogue voltage, tactile quality and suspend unqualified"
+  },
+  "physical_boot_of_this_package_kernel": true,
+  "modules_physically_loaded": [
+    "evdev",
+    "pm8xxx_vibrator"
+  ],
+  "all_464_modules_physically_loaded": false,
+  "native_kernel_installation": false,
+  "native_kernel_update_hooks_exercised": false,
+  "native_full_OS_boot_of_candidate": false,
+  "native_return": {
+    "boot_id": "d38d1768-eff9-43f1-8779-831ffeef167b",
+    "kernel": "6.18.59-fx0-dmp",
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "taint": 0,
+    "Sxmo": "1.18.1-r7",
+    "systemd": "running",
+    "failed_units": [],
+    "pending_jobs": [],
+    "original_boot_modules_packages_world_verified": true,
+    "gesture_auto_started": true,
+    "notification_checks": [
+      {
+        "label": "r7-fresh-enabled",
+        "muted": false,
+        "notification_bus_calls": 1,
+        "notification_id": 2,
+        "writer_exit": 0,
+        "samples": 174,
+        "enabled_samples": 40,
+        "PMIC_drive_code": 21,
+        "programmed_target_mV": 2100,
+        "enable_duration_bounds_ms": [
+          291.33,
+          311.57
+        ],
+        "PMIC_off_after": true
+      },
+      {
+        "label": "r7-fresh-muted",
+        "muted": true,
+        "notification_bus_calls": 1,
+        "notification_id": 3,
+        "writer_exit": 0,
+        "samples": 177,
+        "enabled_samples": 0,
+        "PMIC_off_after": true
+      },
+      {
+        "label": "r7-fresh-reenabled",
+        "muted": false,
+        "notification_bus_calls": 1,
+        "notification_id": 4,
+        "writer_exit": 0,
+        "samples": 176,
+        "enabled_samples": 43,
+        "PMIC_drive_code": 21,
+        "programmed_target_mV": 2100,
+        "enable_duration_bounds_ms": [
+          294.54,
+          307.89
+        ],
+        "PMIC_off_after": true
+      }
+    ],
+    "physical_UI": {
+      "recorded_UTC": "2026-11-11T09:12:28.578958+00:00",
+      "native_boot_id": "d38d1768-eff9-43f1-8779-831ffeef167b",
+      "status": "confirmed",
+      "answer": "Display and touch work",
+      "display_confirmed": true,
+      "touch_confirmed": true,
+      "source": "Owner response after exact Linux6.18.63-r1 package-kernel RAM return"
+    }
+  },
+  "verification_stops": [
+    {
+      "stage": "Artifact collection",
+      "reason": "Read-only log-prefix parser expected no pmbootstrap PID prefix",
+      "source_build_repeated": false,
+      "already_passed_config_debug_check_repeated": false,
+      "corrected_audit_completed": true
+    },
+    {
+      "recorded_UTC": "2026-11-11T09:01:10.759254+00:00",
+      "exit_status": 1,
+      "failed_assertion": "Verifier incorrectly expected the newer USB-budget image timer syntax and pre-proc placement in the frozen reconstructed-r50 base",
+      "image_unchanged": true,
+      "phone_operations": false,
+      "correction": "Verify the exact original timer line and its placement before worker and USB gadget setup; do not claim pre-proc coverage"
+    }
+  ],
+  "upstream_submission_base_refresh": {
+    "recorded_UTC": "2026-11-11T08:56:27.328863+00:00",
+    "repository": "https://git.kernel.org/pub/scm/linux/kernel/git/dtor/input.git",
+    "requested_refs": [
+      "refs/heads/master",
+      "refs/heads/next"
+    ],
+    "result": "No response observed; explicitly interrupted read-only query",
+    "tool_session": 56347,
+    "terminal_exit_status": 130,
+    "upstream_submission_base_currentness_verified": false,
+    "stable_integration_source_unaffected": true
+  },
+  "limits": [
+    "This candidate retains the r50 feature baseline plus vibrator corrections; later CPU/CPR and NFC source families are separate, with full integration still required",
+    "RAM diagnostic does not qualify full native Sway boot, update hooks, suspend, tactile quality, analogue voltage or long reliability",
+    "Original return timer begins after baseline pseudo-filesystem mounts; no hard-lockup recovery claim",
+    "Fresh build HOME preserves prior artifacts; existing buildroots and dependency caches reused; reproducibility and fresh bootstrap not claimed",
+    "Image/build preflight receipts retain historical physical_boot=false values; the separate physical result records the later boot"
+  ]
+}

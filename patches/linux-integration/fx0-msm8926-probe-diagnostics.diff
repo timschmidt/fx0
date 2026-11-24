@@ -1,0 +1,143 @@
+diff --git a/drivers/pmdomain/qcom/cpr-msm8926-fuses.h b/drivers/pmdomain/qcom/cpr-msm8926-fuses.h
+index 7bc8e8400a36..0c4ec3ea7339 100644
+--- a/drivers/pmdomain/qcom/cpr-msm8926-fuses.h
++++ b/drivers/pmdomain/qcom/cpr-msm8926-fuses.h
+@@ -2,6 +2,7 @@
+ #ifndef __QCOM_CPR_MSM8926_FUSES_H__
+ #define __QCOM_CPR_MSM8926_FUSES_H__
+ 
++#include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/firmware/qcom/qcom_scm.h>
+ #include <linux/nvmem-consumer.h>
+@@ -21,13 +22,17 @@ static inline int cpr_msm8926_read_row(struct device *dev, const char *name,
+ 
+ 	cell = nvmem_cell_get(dev, name);
+ 	if (IS_ERR(cell))
+-		return PTR_ERR(cell);
++		return dev_err_probe(dev, PTR_ERR(cell),
++				     "%s cell lookup failed\n", name);
+ 	data = nvmem_cell_read(cell, &length);
+ 	nvmem_cell_put(cell);
+ 	if (IS_ERR(data))
+-		return PTR_ERR(data);
++		return dev_err_probe(dev, PTR_ERR(data),
++				     "%s cell read failed\n", name);
+ 	if (length != sizeof(*row))
+-		ret = -EINVAL;
++		ret = dev_err_probe(dev, -EINVAL,
++				    "%s cell has %zu bytes, expected %zu\n",
++				    name, length, sizeof(*row));
+ 	else
+ 		*row = get_unaligned_le64(data);
+ 	kfree_sensitive(data);
+@@ -55,7 +60,8 @@ cpr_msm8926_read_calibration(struct device *dev,
+ 
+ 	ret = qcom_scm_legacy_fuse_read(0xfc4b81b0, &conditional);
+ 	if (ret)
+-		return ret < 0 ? ret : -EIO;
++		return dev_err_probe(dev, ret < 0 ? ret : -EIO,
++				     "conditional fuse SCM read failed\n");
+ 	fuses.conditional_matches = ((conditional >> 42) & 63) == 7;
+ 	ret = cpr_msm8926_read_row(dev, "cpu_calibration", &fuses.row22);
+ 	if (ret)
+@@ -67,7 +73,12 @@ cpr_msm8926_read_calibration(struct device *dev,
+ 	if (ret)
+ 		return ret;
+ 
+-	return cpr_msm8926_decode(&fuses, calibration);
++	ret = cpr_msm8926_decode(&fuses, calibration);
++	if (ret)
++		return dev_err_probe(dev, ret,
++				     "MSM8926 fuse calibration decode failed\n");
++
++	return 0;
+ }
+ 
+ #endif
+diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
+index f874bfc95ce9..f35c3d3fdde3 100644
+--- a/drivers/pmdomain/qcom/cpr.c
++++ b/drivers/pmdomain/qcom/cpr.c
+@@ -1182,52 +1182,68 @@ static int __maybe_unused cpr_msm8926_init(struct cpr_drv *drv)
+ 
+ 	data = devm_kzalloc(drv->dev, sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+-		return -ENOMEM;
++		return dev_err_probe(drv->dev, -ENOMEM,
++				     "MSM8926 state allocation failed\n");
+ 	ret = cpr_msm8926_read_calibration(drv->dev, &data->calibration);
+ 	if (ret)
+-		return ret;
++		return dev_err_probe(drv->dev, ret,
++				     "MSM8926 calibration acquisition failed\n");
+ 	data->apcs = syscon_regmap_lookup_by_phandle(drv->dev->of_node,
+ 						     "qcom,apcs-syscon");
+ 	if (IS_ERR(data->apcs))
+-		return PTR_ERR(data->apcs);
++		return dev_err_probe(drv->dev, PTR_ERR(data->apcs),
++				     "APCS reference register map unavailable\n");
+ 	ret = cpr_msm8926_check_refclock(data->apcs);
+ 	if (ret)
+-		return ret;
++		return dev_err_probe(drv->dev, ret,
++				     "CPR reference source check failed\n");
+ 	mx = devm_regulator_get(drv->dev, "vdd-mx");
+ 	if (IS_ERR(mx))
+-		return PTR_ERR(mx);
++		return dev_err_probe(drv->dev, PTR_ERR(mx),
++				     "MX supply unavailable\n");
+ 	boot_uV = regulator_get_voltage(drv->rails.apc);
+ 	ret = cpr_msm8926_plan_voltages(&data->calibration, drv->rails.apc,
+ 					mx, boot_uV, 1337500, &data->plan);
+ 	if (ret)
+-		return ret;
++		return dev_err_probe(drv->dev, ret,
++				     "APC/MX voltage plan rejected (boot APC %d uV)\n",
++				     boot_uV);
+ 
+ 	ret = cpr_msm8926_supported_hw(&data->calibration, &data->plan,
+ 				       &data->supported_hw);
+ 	if (ret)
+-		return ret;
++		return dev_err_probe(drv->dev, ret,
++				     "CPU eligibility mask rejected\n");
+ 
+ 	/* The provider owns this handle across virtual CPU detach/probe retries. */
+ 	cpu_clk = devm_clk_get(drv->dev, "cpu");
+ 	if (IS_ERR(cpu_clk))
+-		return PTR_ERR(cpu_clk);
++		return dev_err_probe(drv->dev, PTR_ERR(cpu_clk),
++				     "CPU cluster clock unavailable\n");
+ 	data->aux_clk = devm_clk_get(drv->dev, "aux");
+ 	if (IS_ERR(data->aux_clk))
+-		return PTR_ERR(data->aux_clk);
++		return dev_err_probe(drv->dev, PTR_ERR(data->aux_clk),
++				     "GPLL0 auxiliary clock unavailable\n");
+ 	/* The source-4, HID-3 notifier path must be the lowest CPU OPP. */
+ 	if (clk_get_rate(data->aux_clk) != 600000000)
+-		return -ERANGE;
++		return dev_err_probe(drv->dev, -ERANGE,
++				     "startup auxiliary clock must be 600 MHz\n");
+ 	data->pll_clk = devm_clk_get(drv->dev, "pll");
+ 	if (IS_ERR(data->pll_clk))
+-		return PTR_ERR(data->pll_clk);
++		return dev_err_probe(drv->dev, PTR_ERR(data->pll_clk),
++				     "A7 PLL clock unavailable\n");
+ 	for (i = 0; i < ARRAY_SIZE(cpr_msm8926_rates); i++) {
+ 		if (!(data->supported_hw & (1U << i)))
+ 			continue;
+ 		rounded = clk_round_rate(cpu_clk, cpr_msm8926_rates[i]);
+ 		if (rounded < 0)
+-			return rounded;
++			return dev_err_probe(drv->dev, rounded,
++					     "CPU rate rounding failed for %lu Hz\n",
++					     cpr_msm8926_rates[i]);
+ 		if ((unsigned long)rounded != cpr_msm8926_rates[i])
+-			return -ERANGE;
++			return dev_err_probe(drv->dev, -ERANGE,
++					     "CPU rate %lu Hz rounded to %ld Hz\n",
++					     cpr_msm8926_rates[i], rounded);
+ 	}
+ 
+ 	/* Read/calculation only. Attachment establishes the live MX vote later. */

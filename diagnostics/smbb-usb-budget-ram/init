@@ -1,0 +1,109 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+/bin/busybox --install -s /bin
+export PATH=/bin
+set -u
+
+mount -t devtmpfs devtmpfs /dev
+exec </dev/console >/dev/console 2>&1
+
+log() { printf '<6>fx0-usb-budget: %s\n' "$*" >/dev/kmsg; }
+return_native() {
+    log "RETURN $*"
+    reboot -f
+    while :; do sleep 2; done
+}
+
+# Independent of USB, charger discovery and every later test stage.
+(sleep 180; return_native timer) &
+mount -t proc proc /proc || return_native proc-mount-failed
+mount -t sysfs sysfs /sys || return_native sysfs-mount-failed
+mount -t debugfs debugfs /sys/kernel/debug || return_native debugfs-mount-failed
+mount -t configfs configfs /sys/kernel/config || return_native configfs-mount-failed
+
+set_mmc_read_only() {
+    for device in /dev/mmcblk*; do
+        test ! -b "$device" || blockdev --setro "$device" || return 1
+    done
+}
+charge_inhibited() {
+    case "$1" in *' charging=inhibited '*) ;; *) return 1 ;; esac
+    case "$1" in *' charge_control='[0-7][02468ace]' '*) return 0 ;; *) return 1 ;; esac
+}
+set_mmc_read_only || return_native mmc-readonly-failed
+log "START notes=$(sha256sum /sys/kernel/notes | cut -d ' ' -f 1)"
+
+for attempt in $(seq 1 20); do
+    if sample=$(/bin/usb-budget-sample 2>/dev/null); then break; fi
+    sleep 1
+done
+sample=$(/bin/usb-budget-sample) || return_native initial-sample-failed
+charge_inhibited "$sample" || return_native charge-control-active
+case "$sample" in *' battery=1 '*) ;; *) return_native battery-not-present ;; esac
+set_mmc_read_only || return_native mmc-readonly-failed
+log "BASELINE $sample"
+
+gadget=/sys/kernel/config/usb_gadget/fx0-budget
+mkdir "$gadget" || return_native gadget-create-failed
+cd "$gadget" || return_native gadget-directory-failed
+echo 0x1d6b >idVendor && echo 0x0104 >idProduct || return_native descriptors-failed
+mkdir -p strings/0x409 configs/c.1/strings/0x409 functions/ncm.usb0 || return_native config-create-failed
+echo fx0-usb-budget-ram >strings/0x409/serialnumber &&
+    echo 'Fx0 USB budget RAM diagnostic' >strings/0x409/product &&
+    echo 'Fx0 development' >strings/0x409/manufacturer &&
+    echo 'NCM budget comparison' >configs/c.1/strings/0x409/configuration &&
+    echo 02:46:58:30:03:01 >functions/ncm.usb0/dev_addr &&
+    echo 02:46:58:30:03:02 >functions/ncm.usb0/host_addr &&
+    ln -s functions/ncm.usb0 configs/c.1/ || return_native config-populate-failed
+
+# Status is read-only over USB. The console trace continues through USB detach and suspend.
+echo 'pre_bind' >/tmp/phase
+(
+    previous=
+    while :; do
+        phase=$(cat /tmp/phase)
+        read -r uptime unused </proc/uptime
+        if state=$(/bin/usb-budget-sample 2>/dev/null); then
+            charge_inhibited "$state" || return_native charge-control-changed
+            state="phase=$phase $state"
+        else
+            state="phase=$phase sample_failed=1"
+        fi
+        if test "$state" != "$previous"; then
+            printf 'uptime_s=%s %s\n' "$uptime" "$state" >>/www/trace.txt
+            log "SAMPLE uptime_s=$uptime $state"
+            previous=$state
+        fi
+        printf 'uptime_s=%s %s\n' "$uptime" "$state" >/www/status.tmp
+        mv /www/status.tmp /www/status.txt
+        sleep 1
+    done
+) &
+
+server=
+bind_gadget() {
+    budget=$1
+    echo "$budget" >configs/c.1/MaxPower || return_native maxpower-write-failed
+    echo "bind_${budget}" >/tmp/phase
+    echo ci_hdrc.0 >UDC || return_native UDC-bind-failed
+    ip link set usb0 up && ip address add 172.16.42.1/24 dev usb0 || return_native USB-network-failed
+    nc -lk -s 172.16.42.1 -p 80 -e /bin/serve-http &
+    server=$!
+}
+unbind_gadget() {
+    if test -n "$server"; then kill "$server" 2>/dev/null || :; fi
+    echo detach >/tmp/phase
+    echo '' >UDC || return_native UDC-unbind-failed
+    set_mmc_read_only || return_native mmc-readonly-failed
+}
+
+sleep 10
+bind_gadget 500
+sleep 55
+unbind_gadget
+sleep 8
+bind_gadget 300
+sleep 55
+echo final_300 >/tmp/phase
+log "END automatic stages; waiting for return timer"
+while :; do sleep 2; done

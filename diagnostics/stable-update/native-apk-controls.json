@@ -1,0 +1,29 @@
+{
+  "scope": "Exact signed native ARM APK3.0.8 verify under explicit QEMU, isolated filesystem and no network",
+  "version": "apk-tools 3.0.8-r0, compiled for armv7.",
+  "results": [
+    {
+      "case": "good",
+      "returncode": 0,
+      "input_sha256": "9fca75b09538f9788b1ca800d56cd93dd4d584fac76a57c959666a9a0b93d397"
+    },
+    {
+      "case": "altered_control",
+      "returncode": 1,
+      "input_sha256": "773a4a8de44117745adff64240d508cf97d43f2b870677d69cad68ad52ce4e3c"
+    },
+    {
+      "case": "altered_payload",
+      "returncode": 1,
+      "input_sha256": "6855551a2a7398c95f47eef1c3c947193c13ed93d711970fbed616132dcededd"
+    }
+  ],
+  "signed_archive_accepted": true,
+  "valid_gzip_altered_control_signature_rejected": true,
+  "valid_tar_gzip_altered_payload_integrity_rejected": true,
+  "runtime_archive_sha256": "0ad858d00da676bc10ccaea89e0e49ddce8b0e93051d8e775fae3656b9ac099e",
+  "emulator_sha256": "173253722d7582d578073332d8c0c355c2d48c3eceba0672ea93beddb36aa75d",
+  "private_keys_read": false,
+  "native_changes": false,
+  "package_hooks_executed": false
+}

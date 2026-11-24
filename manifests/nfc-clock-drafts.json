@@ -1,0 +1,921 @@
+{
+  "recorded_UTC": "2026-11-11T17:57:57.846096+00:00",
+  "source": {
+    "receiving_tree": "https://codeberg.org/linux-nfc/linux.git",
+    "branch": "for-next",
+    "base": "fd73f4a6659897191fa0d40695fe370925dd3780",
+    "binding_commit": "04a022d7daf2623de9850f388e9657264e8a85a2",
+    "tip": "8616767b2b9e01846b1a61af2055ab7965a2f245",
+    "tree": "524ef2028b3daca01079f4e704b466c02fb8cf69",
+    "policy_documents": 21,
+    "all_policy_documents_identical_to_prior_whole_read": true,
+    "Assisted_by_LLM": true,
+    "AI_added_DCO": false,
+    "removal_fixes_mixed_in": false
+  },
+  "source_publication": {
+    "recorded_UTC": "2026-11-11T17:52:48.130606+00:00",
+    "repository": "https://github.com/timschmidt/fx0-linux.git",
+    "branch": "refs/heads/submit/nxp-nci-ref-clock-v1",
+    "commit": "8616767b2b9e01846b1a61af2055ab7965a2f245",
+    "remote_ref_verified": true,
+    "unsigned_review_draft": true,
+    "full_kernel_module_link": false,
+    "physical_hardware_qualification": false,
+    "upstream_email_or_PR_sent": false
+  },
+  "host_controls": {
+    "recorded_UTC": "2026-11-11T17:30:08.309978+00:00",
+    "actual_C_positive_cases": 9,
+    "independent_runtime_rejected_controls": 5,
+    "sanitizers": [
+      "ASan",
+      "UBSan"
+    ],
+    "leak_detection_not_disabled": true,
+    "actual_function_sha256": {
+      "mode": "d34147dbf3525d3d3b545606151573fd7a933582af02ec86325e0624fa1aa90e",
+      "open": "771769c7004c7854e06c2d7f2c062da3871fcf090a6fd37ba51b2c44ac095eeb",
+      "close": "df07fe2e1efab75d070cbfc5942d43d8e5e7ab49ca31ef79523bf3f89b566f2b",
+      "probe": "c09cc4e524ebe55591b5644fc73364ca21e5c7d79448985d6fc46a32941e6561"
+    },
+    "test_source_sha256": "ca1c293b9c776aa95ce87372f4debf8f2065f95a212f2388a7a4e03d01b194d9",
+    "outcomes": [
+      {
+        "label": "actual",
+        "mode": "cycle",
+        "returncode": 0
+      },
+      {
+        "label": "actual",
+        "mode": "failure_retry",
+        "returncode": 0
+      },
+      {
+        "label": "actual",
+        "mode": "legacy_no_clock",
+        "returncode": 0
+      },
+      {
+        "label": "actual",
+        "mode": "missing_firmware_pin",
+        "returncode": 0
+      },
+      {
+        "label": "actual",
+        "mode": "firmware_clock_failure",
+        "returncode": 0
+      },
+      {
+        "label": "actual",
+        "mode": "probe_defer",
+        "returncode": 0
+      },
+      {
+        "label": "actual",
+        "mode": "probe_irq_failure",
+        "returncode": 0
+      },
+      {
+        "label": "actual",
+        "mode": "probe_DT",
+        "returncode": 0
+      },
+      {
+        "label": "actual",
+        "mode": "probe_ACPI",
+        "returncode": 0
+      },
+      {
+        "label": "ignored_enable_failure",
+        "mode": "failure_retry",
+        "returncode": 1,
+        "independently_mutated_body": "mode",
+        "rejected_at_runtime": true
+      },
+      {
+        "label": "duplicate_clock_vote",
+        "mode": "cycle",
+        "returncode": 1,
+        "independently_mutated_body": "mode",
+        "rejected_at_runtime": true
+      },
+      {
+        "label": "missing_clock_release",
+        "mode": "cycle",
+        "returncode": 1,
+        "independently_mutated_body": "mode",
+        "rejected_at_runtime": true
+      },
+      {
+        "label": "open_ignores_failure",
+        "mode": "failure_retry",
+        "returncode": 1,
+        "independently_mutated_body": "open",
+        "rejected_at_runtime": true
+      },
+      {
+        "label": "probe_ignores_defer",
+        "mode": "probe_defer",
+        "returncode": 1,
+        "independently_mutated_body": "probe",
+        "rejected_at_runtime": true
+      }
+    ],
+    "kernel_sources_modified": false,
+    "physical_hardware": false
+  },
+  "binding_checks": {
+    "recorded_UTC": "2026-11-11T17:40:35.117411+00:00",
+    "source_commit": "8616767b2b9e01846b1a61af2055ab7965a2f245",
+    "commands": [
+      {
+        "name": "document",
+        "argv": [
+          "/tmp/fx0-storage/dtschema-venv/bin/python",
+          "/tmp/fx0-storage/dtschema-venv/bin/dt-doc-validate",
+          "/scratch/source/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml"
+        ],
+        "returncode": 0
+      },
+      {
+        "name": "schema",
+        "argv": [
+          "/tmp/fx0-storage/dtschema-venv/bin/python",
+          "/tmp/fx0-storage/dtschema-venv/bin/dt-mk-schema",
+          "-j",
+          "-u",
+          "-o",
+          "/receipts/processed-schema.json",
+          "/scratch/source/Documentation/devicetree/bindings"
+        ],
+        "returncode": 0
+      },
+      {
+        "name": "tests",
+        "argv": [
+          "/tmp/fx0-storage/dtschema-venv/bin/python",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "/tests",
+          "-p",
+          "test_nxp_nci_binding.py",
+          "-v"
+        ],
+        "returncode": 0
+      }
+    ],
+    "tests": 5,
+    "current_receiving_tree_binding_document_and_schema": true,
+    "NXP_clock_pairing_name_count_controls": true,
+    "existing_clockless_boards_valid": true,
+    "compiled_DTB": "Previously qualified 6.18 development Madai DTB; not a receiving-tree board build",
+    "compiled_DTB_sha256": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483",
+    "baseline_DTB_sha256": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+    "schema_sha256": "198b5f7724eca11925982b4ebeae7b6453a490c9d8240ebc88a6db72d991d958",
+    "scope": "Validate current receiving-tree schema against the previously compiled development Madai DTB and its r50 baseline. This does not build or boot a receiving-tree Madai board; that board file is absent there.",
+    "readonly_toolchain": true,
+    "Disk_B_writes": false,
+    "phone_mutations": false
+  },
+  "ARM_object_checks": {
+    "stages": [
+      {
+        "name": "base-olddefconfig",
+        "argv": [
+          "bwrap",
+          "--unshare-all",
+          "--die-with-parent",
+          "--clearenv",
+          "--setenv",
+          "PATH",
+          "/usr/bin:/usr/sbin:/bin:/sbin",
+          "--setenv",
+          "LC_ALL",
+          "C",
+          "--setenv",
+          "PYTHONDONTWRITEBYTECODE",
+          "1",
+          "--setenv",
+          "CCACHE_DISABLE",
+          "1",
+          "--setenv",
+          "TMPDIR",
+          "/output/.tmp",
+          "--setenv",
+          "KBUILD_BUILD_USER",
+          "fx0-validation",
+          "--setenv",
+          "KBUILD_BUILD_HOST",
+          "host",
+          "--setenv",
+          "KBUILD_BUILD_VERSION",
+          "1",
+          "--setenv",
+          "KBUILD_BUILD_TIMESTAMP",
+          "Wed, 11 Nov 2026 12:27:58 -0500",
+          "--ro-bind",
+          "/usr",
+          "/usr",
+          "--symlink",
+          "usr/bin",
+          "/bin",
+          "--symlink",
+          "usr/sbin",
+          "/sbin",
+          "--symlink",
+          "usr/lib",
+          "/lib",
+          "--symlink",
+          "usr/lib64",
+          "/lib64",
+          "--dev",
+          "/dev",
+          "--proc",
+          "/proc",
+          "--size",
+          "67108864",
+          "--tmpfs",
+          "/tmp",
+          "--ro-bind",
+          "/scratch/source",
+          "/source",
+          "--bind",
+          "/scratch/output-base",
+          "/output",
+          "--chdir",
+          "/output",
+          "make",
+          "-j4",
+          "-C",
+          "/source",
+          "O=/output",
+          "ARCH=arm",
+          "LLVM=1",
+          "CROSS_COMPILE=arm-linux-gnueabi-",
+          "HOSTLDFLAGS=-fuse-ld=lld",
+          "LOCALVERSION=",
+          "W=1",
+          "olddefconfig"
+        ],
+        "returncode": 0
+      },
+      {
+        "name": "base-ARM-objects",
+        "argv": [
+          "bwrap",
+          "--unshare-all",
+          "--die-with-parent",
+          "--clearenv",
+          "--setenv",
+          "PATH",
+          "/usr/bin:/usr/sbin:/bin:/sbin",
+          "--setenv",
+          "LC_ALL",
+          "C",
+          "--setenv",
+          "PYTHONDONTWRITEBYTECODE",
+          "1",
+          "--setenv",
+          "CCACHE_DISABLE",
+          "1",
+          "--setenv",
+          "TMPDIR",
+          "/output/.tmp",
+          "--setenv",
+          "KBUILD_BUILD_USER",
+          "fx0-validation",
+          "--setenv",
+          "KBUILD_BUILD_HOST",
+          "host",
+          "--setenv",
+          "KBUILD_BUILD_VERSION",
+          "1",
+          "--setenv",
+          "KBUILD_BUILD_TIMESTAMP",
+          "Wed, 11 Nov 2026 12:27:58 -0500",
+          "--ro-bind",
+          "/usr",
+          "/usr",
+          "--symlink",
+          "usr/bin",
+          "/bin",
+          "--symlink",
+          "usr/sbin",
+          "/sbin",
+          "--symlink",
+          "usr/lib",
+          "/lib",
+          "--symlink",
+          "usr/lib64",
+          "/lib64",
+          "--dev",
+          "/dev",
+          "--proc",
+          "/proc",
+          "--size",
+          "67108864",
+          "--tmpfs",
+          "/tmp",
+          "--ro-bind",
+          "/scratch/source",
+          "/source",
+          "--bind",
+          "/scratch/output-base",
+          "/output",
+          "--chdir",
+          "/output",
+          "make",
+          "-j4",
+          "-C",
+          "/source",
+          "O=/output",
+          "ARCH=arm",
+          "LLVM=1",
+          "CROSS_COMPILE=arm-linux-gnueabi-",
+          "HOSTLDFLAGS=-fuse-ld=lld",
+          "LOCALVERSION=",
+          "W=1",
+          "drivers/nfc/nxp-nci/core.o",
+          "drivers/nfc/nxp-nci/i2c.o",
+          "drivers/nfc/nxp-nci/firmware.o"
+        ],
+        "returncode": 0
+      },
+      {
+        "name": "clock-olddefconfig",
+        "argv": [
+          "bwrap",
+          "--unshare-all",
+          "--die-with-parent",
+          "--clearenv",
+          "--setenv",
+          "PATH",
+          "/usr/bin:/usr/sbin:/bin:/sbin",
+          "--setenv",
+          "LC_ALL",
+          "C",
+          "--setenv",
+          "PYTHONDONTWRITEBYTECODE",
+          "1",
+          "--setenv",
+          "CCACHE_DISABLE",
+          "1",
+          "--setenv",
+          "TMPDIR",
+          "/output/.tmp",
+          "--setenv",
+          "KBUILD_BUILD_USER",
+          "fx0-validation",
+          "--setenv",
+          "KBUILD_BUILD_HOST",
+          "host",
+          "--setenv",
+          "KBUILD_BUILD_VERSION",
+          "1",
+          "--setenv",
+          "KBUILD_BUILD_TIMESTAMP",
+          "Wed, 11 Nov 2026 12:27:58 -0500",
+          "--ro-bind",
+          "/usr",
+          "/usr",
+          "--symlink",
+          "usr/bin",
+          "/bin",
+          "--symlink",
+          "usr/sbin",
+          "/sbin",
+          "--symlink",
+          "usr/lib",
+          "/lib",
+          "--symlink",
+          "usr/lib64",
+          "/lib64",
+          "--dev",
+          "/dev",
+          "--proc",
+          "/proc",
+          "--size",
+          "67108864",
+          "--tmpfs",
+          "/tmp",
+          "--ro-bind",
+          "/scratch/source",
+          "/source",
+          "--bind",
+          "/scratch/output-clock",
+          "/output",
+          "--chdir",
+          "/output",
+          "make",
+          "-j4",
+          "-C",
+          "/source",
+          "O=/output",
+          "ARCH=arm",
+          "LLVM=1",
+          "CROSS_COMPILE=arm-linux-gnueabi-",
+          "HOSTLDFLAGS=-fuse-ld=lld",
+          "LOCALVERSION=",
+          "W=1",
+          "olddefconfig"
+        ],
+        "returncode": 0
+      },
+      {
+        "name": "clock-ARM-objects",
+        "argv": [
+          "bwrap",
+          "--unshare-all",
+          "--die-with-parent",
+          "--clearenv",
+          "--setenv",
+          "PATH",
+          "/usr/bin:/usr/sbin:/bin:/sbin",
+          "--setenv",
+          "LC_ALL",
+          "C",
+          "--setenv",
+          "PYTHONDONTWRITEBYTECODE",
+          "1",
+          "--setenv",
+          "CCACHE_DISABLE",
+          "1",
+          "--setenv",
+          "TMPDIR",
+          "/output/.tmp",
+          "--setenv",
+          "KBUILD_BUILD_USER",
+          "fx0-validation",
+          "--setenv",
+          "KBUILD_BUILD_HOST",
+          "host",
+          "--setenv",
+          "KBUILD_BUILD_VERSION",
+          "1",
+          "--setenv",
+          "KBUILD_BUILD_TIMESTAMP",
+          "Wed, 11 Nov 2026 12:27:58 -0500",
+          "--ro-bind",
+          "/usr",
+          "/usr",
+          "--symlink",
+          "usr/bin",
+          "/bin",
+          "--symlink",
+          "usr/sbin",
+          "/sbin",
+          "--symlink",
+          "usr/lib",
+          "/lib",
+          "--symlink",
+          "usr/lib64",
+          "/lib64",
+          "--dev",
+          "/dev",
+          "--proc",
+          "/proc",
+          "--size",
+          "67108864",
+          "--tmpfs",
+          "/tmp",
+          "--ro-bind",
+          "/scratch/source",
+          "/source",
+          "--bind",
+          "/scratch/output-clock",
+          "/output",
+          "--chdir",
+          "/output",
+          "make",
+          "-j4",
+          "-C",
+          "/source",
+          "O=/output",
+          "ARCH=arm",
+          "LLVM=1",
+          "CROSS_COMPILE=arm-linux-gnueabi-",
+          "HOSTLDFLAGS=-fuse-ld=lld",
+          "LOCALVERSION=",
+          "W=1",
+          "drivers/nfc/nxp-nci/core.o",
+          "drivers/nfc/nxp-nci/i2c.o",
+          "drivers/nfc/nxp-nci/firmware.o"
+        ],
+        "returncode": 0
+      }
+    ],
+    "builds": [
+      {
+        "label": "base",
+        "commit": "fd73f4a6659897191fa0d40695fe370925dd3780",
+        "objects": {
+          "core": {
+            "sha256": "02c41466248feaba6581c2e1855f15a7e6a1538ddbd0402219fa891d0cd519df",
+            "ARM_ELF32": true,
+            "KCFI": true,
+            "DWARF5_zlib": true
+          },
+          "i2c": {
+            "sha256": "be4c7d6ab0fb5678e7d321ea44e0b044d2b650f4fc972813e3c1c6293c26b3fe",
+            "ARM_ELF32": true,
+            "KCFI": true,
+            "DWARF5_zlib": true
+          },
+          "firmware": {
+            "sha256": "34e80315e1ee060c00574ed9acd169c3e86bbb161d73bfd40a011223a6614e58",
+            "ARM_ELF32": true,
+            "KCFI": true,
+            "DWARF5_zlib": true
+          }
+        },
+        "config_sha256": "693cbac5b0281252158c0f68a313adeb505469b21216154a24cebea849ad2a1b",
+        "diagnostic_lines": 0
+      },
+      {
+        "label": "clock",
+        "commit": "8616767b2b9e01846b1a61af2055ab7965a2f245",
+        "objects": {
+          "core": {
+            "sha256": "dd9a8483ddeed18e8fbfce0d3b73d4eddfad3bf9fbee8bf4185aa70fd56704c8",
+            "ARM_ELF32": true,
+            "KCFI": true,
+            "DWARF5_zlib": true
+          },
+          "i2c": {
+            "sha256": "72794d26c502bf383e2d07c9a17203e022777b22e4c234cd37d9eb4ef1776941",
+            "ARM_ELF32": true,
+            "KCFI": true,
+            "DWARF5_zlib": true
+          },
+          "firmware": {
+            "sha256": "34e80315e1ee060c00574ed9acd169c3e86bbb161d73bfd40a011223a6614e58",
+            "ARM_ELF32": true,
+            "KCFI": true,
+            "DWARF5_zlib": true
+          }
+        },
+        "config_sha256": "693cbac5b0281252158c0f68a313adeb505469b21216154a24cebea849ad2a1b",
+        "diagnostic_lines": 0
+      }
+    ],
+    "phone_commands": 0,
+    "complete": true,
+    "stage": "complete",
+    "updated_UTC": "2026-11-11T17:50:36.004169+00:00",
+    "actual_ARM_objects": 6,
+    "source_paths_verified_per_build": 95942,
+    "binding_only_prefix_compiler_inputs_byte_identical_to_base": true,
+    "full_kernel_or_module_link": false,
+    "source_read_only_during_compile": true,
+    "runtime_private_key_contents_not_inspected_or_hashed": true,
+    "finished_UTC": "2026-11-11T17:50:37.253776+00:00"
+  },
+  "object_inspection": {
+    "recorded_UTC": "2026-11-11T17:51:48.648692+00:00",
+    "objects": {
+      "base": {
+        "core": {
+          "sha256": "02c41466248feaba6581c2e1855f15a7e6a1538ddbd0402219fa891d0cd519df",
+          "ARM_ELF32": true,
+          "actual_callback_type_words": {
+            "nxp_nci_open": "0x38bb7c0c",
+            "nxp_nci_close": "0x38bb7c0c",
+            "nxp_nci_send": "0xaf1f2f41"
+          },
+          "actual_DWARF_version": 5,
+          "compressed_debug_info": true
+        },
+        "i2c": {
+          "sha256": "be4c7d6ab0fb5678e7d321ea44e0b044d2b650f4fc972813e3c1c6293c26b3fe",
+          "ARM_ELF32": true,
+          "actual_callback_type_words": {
+            "nxp_nci_i2c_probe": "0x0c5e2bbf",
+            "nxp_nci_i2c_irq_thread_fn": "0xd2f00be1",
+            "nxp_nci_i2c_remove": "0xa8cfcee2",
+            "nxp_nci_i2c_set_mode": "0xe2683a27",
+            "nxp_nci_i2c_write": "0x505261ea"
+          },
+          "actual_DWARF_version": 5,
+          "compressed_debug_info": true
+        },
+        "firmware": {
+          "sha256": "34e80315e1ee060c00574ed9acd169c3e86bbb161d73bfd40a011223a6614e58",
+          "ARM_ELF32": true,
+          "actual_callback_type_words": {
+            "nxp_nci_fw_work": "0xa607748c"
+          },
+          "actual_DWARF_version": 5,
+          "compressed_debug_info": true
+        }
+      },
+      "clock": {
+        "core": {
+          "sha256": "dd9a8483ddeed18e8fbfce0d3b73d4eddfad3bf9fbee8bf4185aa70fd56704c8",
+          "ARM_ELF32": true,
+          "actual_callback_type_words": {
+            "nxp_nci_open": "0x38bb7c0c",
+            "nxp_nci_close": "0x38bb7c0c",
+            "nxp_nci_send": "0xaf1f2f41"
+          },
+          "actual_DWARF_version": 5,
+          "compressed_debug_info": true
+        },
+        "i2c": {
+          "sha256": "72794d26c502bf383e2d07c9a17203e022777b22e4c234cd37d9eb4ef1776941",
+          "ARM_ELF32": true,
+          "actual_callback_type_words": {
+            "nxp_nci_i2c_probe": "0x0c5e2bbf",
+            "nxp_nci_i2c_irq_thread_fn": "0xd2f00be1",
+            "nxp_nci_i2c_remove": "0xa8cfcee2",
+            "nxp_nci_i2c_set_mode": "0xe2683a27",
+            "nxp_nci_i2c_write": "0x505261ea"
+          },
+          "actual_DWARF_version": 5,
+          "compressed_debug_info": true
+        },
+        "firmware": {
+          "sha256": "34e80315e1ee060c00574ed9acd169c3e86bbb161d73bfd40a011223a6614e58",
+          "ARM_ELF32": true,
+          "actual_callback_type_words": {
+            "nxp_nci_fw_work": "0xa607748c"
+          },
+          "actual_DWARF_version": 5,
+          "compressed_debug_info": true
+        }
+      }
+    },
+    "callback_type_words_checked": 18,
+    "base_clock_callback_types_identical": true,
+    "full_kernel_or_module_link": false,
+    "objects_are_not_loadable_modules": true
+  },
+  "style": {
+    "recorded_UTC": "2026-11-11T17:28:26.613108+00:00",
+    "checks": [
+      {
+        "argv": [
+          "perl",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/source-attempt02/scripts/checkpatch.pl",
+          "--strict",
+          "--no-signoff",
+          "--no-tree",
+          "/tmp/fx0-nfc-broad-20261111-5yicg5tx/clock-drafts-attempt02/patches-revised01/0001-dt-bindings-net-nfc-nxp-nci-describe-an-optional-ref.patch"
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "perl",
+          "/home/tim/Documents/GitHub/fx0/local/nfc-upstream-01/source-attempt02/scripts/checkpatch.pl",
+          "--strict",
+          "--no-signoff",
+          "--no-tree",
+          "/tmp/fx0-nfc-broad-20261111-5yicg5tx/clock-drafts-attempt02/patches-revised01/0002-nfc-nxp-nci-balance-an-optional-reference-clock-acro.patch"
+        ],
+        "returncode": 0
+      }
+    ],
+    "strict": true,
+    "no_signoff_check_only": true
+  },
+  "exported_patch_replay": {
+    "recorded_UTC": "2026-11-11T17:40:30.065983+00:00",
+    "base": "fd73f4a6659897191fa0d40695fe370925dd3780",
+    "tip": "8616767b2b9e01846b1a61af2055ab7965a2f245",
+    "each_exported_prefix_tree_exact": true,
+    "prefixes": [
+      {
+        "commit": "04a022d7daf2623de9850f388e9657264e8a85a2",
+        "tree": "e7332a11c49709fb63f47c0a786af64f414fb03e",
+        "patch": "/tmp/fx0-nfc-broad-20261111-5yicg5tx/clock-drafts-attempt02/patches-revised01/0001-dt-bindings-net-nfc-nxp-nci-describe-an-optional-ref.patch",
+        "replayed_exactly": true
+      },
+      {
+        "commit": "8616767b2b9e01846b1a61af2055ab7965a2f245",
+        "tree": "524ef2028b3daca01079f4e704b466c02fb8cf69",
+        "patch": "/tmp/fx0-nfc-broad-20261111-5yicg5tx/clock-drafts-attempt02/patches-revised01/0002-nfc-nxp-nci-balance-an-optional-reference-clock-acro.patch",
+        "replayed_exactly": true
+      }
+    ],
+    "temporary_replay_index_removed": true,
+    "root_and_coordination_indices_untouched": true,
+    "source_branch_pushed": false,
+    "phone_mutations": false
+  },
+  "source_verification": {
+    "base": {
+      "source_commit": "fd73f4a6659897191fa0d40695fe370925dd3780",
+      "source_tree": "cbae8a48f2303e6f3b038bd8b28a9052a6dfd91e",
+      "verified_paths": 95942,
+      "excluded_private_named_or_PEM_paths": 93,
+      "private_key_contents_not_inspected_or_hashed": true
+    },
+    "clock": {
+      "source_commit": "8616767b2b9e01846b1a61af2055ab7965a2f245",
+      "source_tree": "524ef2028b3daca01079f4e704b466c02fb8cf69",
+      "verified_paths": 95942,
+      "excluded_private_named_or_PEM_paths": 93,
+      "private_key_contents_not_inspected_or_hashed": true
+    }
+  },
+  "actual_build_scope": "Base and clock tip compile three ARM objects each; binding-only prefix reuses byte-identical compiler inputs and separately qualified schema",
+  "full_clock_kernel_module_link": false,
+  "objects_are_not_loadable_modules": true,
+  "Madai_board_file_present_in_receiving_tree": false,
+  "existing_DTB_schema_scope": "Validate current receiving-tree schema against the previously compiled development Madai DTB and its r50 baseline. This does not build or boot a receiving-tree Madai board; that board file is absent there.",
+  "separate_removal_allmodconfig_attempts": {
+    "GCC": {
+      "recorded_UTC": "2026-11-11T17:20:32.127496+00:00",
+      "full_GCC_allmodconfig_passed": false,
+      "both_actual_full_builds_failed": true,
+      "shared_blocking_diagnostics": [
+        "/source/arch/x86/kernel/callthunks.c:376:35: error: '%lu' directive writing between 1 and 10 bytes into a region of size 7 [-Werror=format-overflow=]",
+        "/source/kernel/locking/lockdep_proc.c:499:45: error: '%d' directive output may be truncated writing between 1 and 10 bytes into a region of size 2 [-Werror=format-truncation=]"
+      ],
+      "additional_baseline_diagnostics": [
+        "/source/fs/coda/upcall.c:115:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+        "/source/fs/coda/upcall.c:164:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+        "/source/fs/coda/upcall.c:238:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+        "/source/fs/coda/upcall.c:306:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+        "/source/fs/coda/upcall.c:329:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+        "/source/fs/coda/upcall.c:383:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+        "/source/fs/coda/upcall.c:410:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+        "/source/fs/coda/upcall.c:443:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+        "/source/fs/coda/upcall.c:459:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+        "/source/fs/coda/upcall.c:577:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]"
+      ],
+      "diagnostics": {
+        "candidate": [
+          "/source/arch/x86/kernel/callthunks.c:376:35: error: '%lu' directive writing between 1 and 10 bytes into a region of size 7 [-Werror=format-overflow=]",
+          "/source/kernel/locking/lockdep_proc.c:499:45: error: '%d' directive output may be truncated writing between 1 and 10 bytes into a region of size 2 [-Werror=format-truncation=]"
+        ],
+        "baseline": [
+          "/source/arch/x86/kernel/callthunks.c:376:35: error: '%lu' directive writing between 1 and 10 bytes into a region of size 7 [-Werror=format-overflow=]",
+          "/source/fs/coda/upcall.c:115:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+          "/source/fs/coda/upcall.c:164:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+          "/source/fs/coda/upcall.c:238:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+          "/source/fs/coda/upcall.c:306:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+          "/source/fs/coda/upcall.c:329:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+          "/source/fs/coda/upcall.c:383:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+          "/source/fs/coda/upcall.c:410:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+          "/source/fs/coda/upcall.c:443:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+          "/source/fs/coda/upcall.c:459:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+          "/source/fs/coda/upcall.c:577:27: error: variable 'outp' set but not used [-Werror=unused-but-set-variable]",
+          "/source/kernel/locking/lockdep_proc.c:499:45: error: '%d' directive output may be truncated writing between 1 and 10 bytes into a region of size 2 [-Werror=format-truncation=]"
+        ]
+      },
+      "warning_rows": {
+        "candidate": [
+          "Warning: /source/arch/x86/virt/vmx/tdx/tdx.c:110 This comment starts with '/**', but isn't a kernel-doc comment. Refer to Documentation/doc-guide/kernel-doc.rst"
+        ],
+        "baseline": [
+          "Warning: /source/fs/iomap/iter.c:64 function parameter 'ret' not described in 'iomap_iter_continue'",
+          "Warning: /source/fs/iomap/iter.c:64 function parameter 'ret' not described in 'iomap_iter_continue'"
+        ]
+      },
+      "full_diagnostic_sets_identical": false,
+      "parallel_build_progress_scope": "Baseline reached additional Coda files before make stopped; candidate did not. No complete warning equivalence or GCC NFC success claimed",
+      "unchanged_diagnostic_sources_sha256": {
+        "arch/x86/kernel/callthunks.c": {
+          "b61732f47316d45f27706db7812950145d3327b5": "804a53d575b3ca2375f93be393e9c4b1ae5002972559819399e6d46ea41678a8",
+          "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea": "804a53d575b3ca2375f93be393e9c4b1ae5002972559819399e6d46ea41678a8"
+        },
+        "fs/coda/upcall.c": {
+          "b61732f47316d45f27706db7812950145d3327b5": "f618e62a0cf93a18d52c44f1943f6dfda36c26f9c03695e03a2699201992a2d7",
+          "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea": "f618e62a0cf93a18d52c44f1943f6dfda36c26f9c03695e03a2699201992a2d7"
+        },
+        "kernel/locking/lockdep_proc.c": {
+          "b61732f47316d45f27706db7812950145d3327b5": "5fcf966b0ee0898eb9feaf53e3efb1ea374b968bb7787848ed4125cdeafb56e2",
+          "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea": "5fcf966b0ee0898eb9feaf53e3efb1ea374b968bb7787848ed4125cdeafb56e2"
+        }
+      },
+      "generated_config_identical": true,
+      "config_sha256": "b14f54b4cf95bbfae314b9f9eb0d71d7848f045fc999a477aeee91073e2059bc",
+      "configuration_overrides": [],
+      "warnings_suppressed": false,
+      "NFC_GCC_runtime_or_module_qualification": false,
+      "all_owned_processes_reaped": true,
+      "next": "Full unmodified Clang allmodconfig and allyesconfig baseline/candidate builds; GCC diagnostics remain explicitly reported",
+      "phone_mutations": false,
+      "full_bringup": "active"
+    },
+    "Clang": {
+      "recorded_UTC": "2026-11-11T17:47:59.645369+00:00",
+      "actual_full_Clang_allmodconfig_builds_both_failed": true,
+      "identical_generated_config_sha256": "56b39ba680833fb1f338d94b521904ba9e3901a8930b1215aef8b6d0fc8083fb",
+      "identical_blocking_diagnostics": [
+        "/source/fs/coda/upcall.c:115:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+        "/source/fs/coda/upcall.c:164:20: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+        "/source/fs/coda/upcall.c:238:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+        "/source/fs/coda/upcall.c:306:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+        "/source/fs/coda/upcall.c:329:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+        "/source/fs/coda/upcall.c:383:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+        "/source/fs/coda/upcall.c:410:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+        "/source/fs/coda/upcall.c:443:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+        "/source/fs/coda/upcall.c:459:27: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]",
+        "/source/fs/coda/upcall.c:577:20: error: variable 'outp' set but not used [-Werror,-Wunused-but-set-variable]"
+      ],
+      "unchanged_Coda_source_sha256": {
+        "b61732f47316d45f27706db7812950145d3327b5": "f618e62a0cf93a18d52c44f1943f6dfda36c26f9c03695e03a2699201992a2d7",
+        "2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea": "f618e62a0cf93a18d52c44f1943f6dfda36c26f9c03695e03a2699201992a2d7"
+      },
+      "CC_entries": {
+        "candidate": 1840,
+        "baseline": 1726
+      },
+      "warning_rows": {
+        "candidate": [
+          "Warning: /source/arch/x86/virt/vmx/tdx/tdx.c:110 This comment starts with '/**', but isn't a kernel-doc comment. Refer to Documentation/doc-guide/kernel-doc.rst",
+          "Warning: /source/block/blk-map.c:366 Excess function parameter 'op' description in 'bio_copy_kern'",
+          "Warning: /source/block/blk-map.c:366 Excess function parameter 'op' description in 'bio_copy_kern'",
+          "Warning: /source/block/blk-mq-dma.c:379 Excess function parameter 'state' description in 'blk_rq_integrity_dma_map_iter_next'",
+          "Warning: /source/block/blk-mq-dma.c:379 Excess function parameter 'state' description in 'blk_rq_integrity_dma_map_iter_next'",
+          "Warning: /source/block/partitions/aix.c:113 function parameter 'lba' not described in 'alloc_pvd'",
+          "Warning: /source/block/partitions/aix.c:113 function parameter 'lba' not described in 'alloc_pvd'",
+          "Warning: /source/block/partitions/aix.c:113 function parameter 'state' not described in 'alloc_pvd'",
+          "Warning: /source/block/partitions/aix.c:113 function parameter 'state' not described in 'alloc_pvd'",
+          "Warning: /source/block/partitions/aix.c:138 function parameter 'lba' not described in 'alloc_lvn'",
+          "Warning: /source/block/partitions/aix.c:138 function parameter 'lba' not described in 'alloc_lvn'",
+          "Warning: /source/block/partitions/aix.c:138 function parameter 'state' not described in 'alloc_lvn'",
+          "Warning: /source/block/partitions/aix.c:138 function parameter 'state' not described in 'alloc_lvn'",
+          "Warning: /source/block/partitions/aix.c:80 function parameter 'buffer' not described in 'read_lba'",
+          "Warning: /source/block/partitions/aix.c:80 function parameter 'buffer' not described in 'read_lba'",
+          "Warning: /source/block/partitions/aix.c:80 function parameter 'count' not described in 'read_lba'",
+          "Warning: /source/block/partitions/aix.c:80 function parameter 'count' not described in 'read_lba'",
+          "Warning: /source/block/partitions/aix.c:80 function parameter 'lba' not described in 'read_lba'",
+          "Warning: /source/block/partitions/aix.c:80 function parameter 'lba' not described in 'read_lba'",
+          "Warning: /source/block/partitions/aix.c:80 function parameter 'state' not described in 'read_lba'",
+          "Warning: /source/block/partitions/aix.c:80 function parameter 'state' not described in 'read_lba'",
+          "Warning: /source/fs/iomap/iter.c:64 function parameter 'ret' not described in 'iomap_iter_continue'",
+          "Warning: /source/fs/iomap/iter.c:64 function parameter 'ret' not described in 'iomap_iter_continue'",
+          "Warning: /source/ipc/sem.c:629 This comment starts with '/**', but isn't a kernel-doc comment. Refer to Documentation/doc-guide/kernel-doc.rst",
+          "Warning: /source/security/smack/smack_access.c:593 expecting prototype for smk_import_valid_allocated_label(). Prototype was for smk_import_allocated_label() instead"
+        ],
+        "baseline": [
+          "Warning: /source/arch/x86/virt/vmx/tdx/tdx.c:110 This comment starts with '/**', but isn't a kernel-doc comment. Refer to Documentation/doc-guide/kernel-doc.rst",
+          "Warning: /source/fs/iomap/iter.c:64 function parameter 'ret' not described in 'iomap_iter_continue'",
+          "Warning: /source/fs/iomap/iter.c:64 function parameter 'ret' not described in 'iomap_iter_continue'",
+          "Warning: /source/ipc/sem.c:629 This comment starts with '/**', but isn't a kernel-doc comment. Refer to Documentation/doc-guide/kernel-doc.rst",
+          "Warning: /source/security/smack/smack_access.c:593 expecting prototype for smk_import_valid_allocated_label(). Prototype was for smk_import_allocated_label() instead"
+        ]
+      },
+      "full_warning_sets_equal": false,
+      "warning_equivalence_scope": "Incomplete builds reach different files before stopping; no complete warning or kernel/module qualification claimed",
+      "configuration_overrides": [],
+      "warnings_suppressed": false,
+      "all_actual_owned_processes_reaped": true,
+      "phone_mutations": false
+    }
+  },
+  "default_broad_builds_qualified": false,
+  "allyesconfig_tested": false,
+  "warning_suppression_or_configuration_overrides": false,
+  "retained_stops": [
+    "Bare-index check originally compared with empty tree; explicit parent fixes the check",
+    "Optional export list included absent firmware.h; continued from actual commits without replay",
+    "LeakSanitizer cannot operate under sandbox ptrace; actual ASan/UBSan run outside tracer passes without disabling leak detection",
+    "Private downstream cherry-pick message annotations moved to separate provenance receipts; source tree unchanged",
+    "Tmpfs user quota interrupted schema extraction and one Clang baseline; stale status files are not liveness proof",
+    "Only own disposable binary/staging-index outputs removed, hashes retained; schema extraction moved into bounded RAM with workspace receipts",
+    "Sparse checkout audit stopped before compilation; full pinned archives then verify all95942 selected paths in both successful ARM builds"
+  ],
+  "resource_control": {
+    "object_build_scratch_bytes": 4294967296,
+    "full_schema_scratch_bytes": 134217728,
+    "make_jobs": 4,
+    "minimum_available_memory_bytes": 12884901888,
+    "minimum_workspace_free_bytes": 268435456,
+    "runtime_private_keys_not_inspected_or_hashed_or_exported": true,
+    "Disk_B_writes": false,
+    "all_owned_processes_terminal": true
+  },
+  "native_readonly_identity": {
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "kernel": "6.18.59-fx0-dmp",
+    "recorded_UTC": "2026-11-11T17:54:27.149779+00:00",
+    "read_only": true,
+    "phone_mutations": false,
+    "physical_UI_for_this_return": "pending"
+  },
+  "installed_kernel": "r50",
+  "installed_Sxmo": "1.18.1-r7",
+  "phone_mutations": false,
+  "native_installation_launched": false,
+  "current_return_UI_pending": true,
+  "remaining": [
+    "Clock-series full kernel/module links and broader/GCC configurations",
+    "Successful complete networking broad configuration qualification",
+    "Physical NFC open/clock/firmware/IRQ/RF/PM and reliability",
+    "Broader Madai receiving-tree board support",
+    "Exact native-return UI confirmation then approved r1 install and persistent qualification",
+    "Remaining full Fx0 hardware/software/update/reliability bringup",
+    "Human review and DCO certification before human-controlled upstream sending"
+  ],
+  "upstream_email_or_PR_sent": false,
+  "audio_testing_excluded": true,
+  "full_bringup": "active"
+}

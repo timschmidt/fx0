@@ -1,0 +1,709 @@
+From 67f59de38399e580de7ec3e7fc36f14937f93b7d Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sat, 14 Nov 2026 08:39:20 -0500
+Subject: [PATCH] tests: check generated kernel string output with make check
+
+Compare complete C and header output for the RMTFS interface and required, optional and nested strings. Run in an empty temporary directory, propagate compiler or comparison failures, and preserve the default build target. Keep these finite output contracts separate from codec and device qualification.
+---
+ Makefile                     |   5 +
+ tests/README                 |  19 +++
+ tests/check-generated.sh     |  26 ++++
+ tests/expected-qmicstrings.c |  83 ++++++++++++
+ tests/expected-qmicstrings.h |  34 +++++
+ tests/expected-rmtfs.c       | 256 +++++++++++++++++++++++++++++++++++
+ tests/expected-rmtfs.h       | 101 ++++++++++++++
+ tests/qmicstrings.qmi        |  17 +++
+ tests/rmtfs.qmi              |  77 +++++++++++
+ 9 files changed, 618 insertions(+)
+ create mode 100644 tests/README
+ create mode 100755 tests/check-generated.sh
+ create mode 100644 tests/expected-qmicstrings.c
+ create mode 100644 tests/expected-qmicstrings.h
+ create mode 100644 tests/expected-rmtfs.c
+ create mode 100644 tests/expected-rmtfs.h
+ create mode 100644 tests/qmicstrings.qmi
+ create mode 100644 tests/rmtfs.qmi
+
+diff --git a/Makefile b/Makefile
+index a3a81d7..a78ee9f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -10,9 +10,14 @@ OBJS := $(SRCS:.c=.o)
+ $(OUT): $(OBJS)
+ 	$(CC) $(LDFLAGS) -o $@ $^
+ 
++check: $(OUT)
++	sh tests/check-generated.sh "$(CURDIR)/$(OUT)"
++
+ install: $(OUT)
+ 	install -D -m 755 $< $(DESTDIR)$(prefix)/bin/$<
+ 
+ clean:
+ 	rm -f $(OUT) $(OBJS)
+ 
++.PHONY: check install clean
++
+diff --git a/tests/README b/tests/README
+new file mode 100644
+index 0000000..ec61fe0
+--- /dev/null
++++ b/tests/README
+@@ -0,0 +1,19 @@
++Run `make check` after building qmic. The check uses the built executable and
++compares its kernel C/header output byte for byte with four fixed contracts.
++It uses an empty temporary directory and removes only that directory on exit.
++
++rmtfs.qmi is the RMTFS 1.3 interface from linux-msm/rmtfs at
++b30a3eb38f9af283f18dbd3c7755653efc52c094. Its expected header retains the
++256-byte wire maximum and includes storage for the C string terminator.
++Its generated descriptor C output remains identical to the original.
++
++qmicstrings.qmi checks required, optional and nested string descriptors,
++including optional validity members and the matching OPT_FLAG descriptor.
++The golden files pin the complete generated output, not selected substrings.
++
++These are finite generator output contracts. They do not exercise a device,
++transport or full codec, and do not establish that every supported descriptor
++or legacy nested-string wire length is handled correctly. Review fixture and
++golden changes together when intentionally changing the output format.
++
++The fixtures and generated contracts use the repository's BSD-3-Clause license.
+diff --git a/tests/check-generated.sh b/tests/check-generated.sh
+new file mode 100755
+index 0000000..9b17e5b
+--- /dev/null
++++ b/tests/check-generated.sh
+@@ -0,0 +1,26 @@
++#!/bin/sh
++# SPDX-License-Identifier: BSD-3-Clause
++set -eu
++
++if [ "$#" -ne 1 ]; then
++	echo "usage: $0 /absolute/path/to/qmic" >&2
++	exit 2
++fi
++qmic=$1
++case "$qmic" in
++/*) ;;
++*) echo "qmic path must be absolute" >&2; exit 2 ;;
++esac
++fixtures=$(CDPATH= cd "$(dirname "$0")" && pwd)
++temporary=$(mktemp -d "${TMPDIR:-/tmp}/qmic-check.XXXXXX")
++trap 'rm -rf "$temporary"' 0
++trap 'exit 1' 1 2 15
++
++for fixture in rmtfs qmicstrings; do
++	(
++		cd "$temporary"
++		"$qmic" -k < "$fixtures/$fixture.qmi"
++		cmp "qmi_$fixture.c" "$fixtures/expected-$fixture.c"
++		cmp "qmi_$fixture.h" "$fixtures/expected-$fixture.h"
++	)
++done
+diff --git a/tests/expected-qmicstrings.c b/tests/expected-qmicstrings.c
+new file mode 100644
+index 0000000..254908e
+--- /dev/null
++++ b/tests/expected-qmicstrings.c
+@@ -0,0 +1,83 @@
++#include <errno.h>
++#include <string.h>
++#include "qmi_qmicstrings.h"
++
++struct qmi_elem_info qmicstrings_leaf_ei[] = {
++	{
++		.data_type = QMI_STRING,
++		.elem_len = 256,
++		.elem_size = sizeof(char),
++		.offset = offsetof(struct qmicstrings_leaf, label)
++	},
++	{
++		.data_type = QMI_UNSIGNED_4_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint32_t),
++		.offset = offsetof(struct qmicstrings_leaf, marker),
++	},
++	{}
++};
++
++struct qmi_elem_info qmicstrings_transfer_req_ei[] = {
++	{
++		.data_type = QMI_STRING,
++		.elem_len = 256,
++		.elem_size = sizeof(char),
++		.array_type = VAR_LEN_ARRAY,
++		.tlv_type = 1,
++		.offset = offsetof(struct qmicstrings_transfer_req, title)
++	},
++	{
++		.data_type = QMI_OPT_FLAG,
++		.elem_len = 1,
++		.elem_size = sizeof(uint8_t),
++		.tlv_type = 16,
++		.offset = offsetof(struct qmicstrings_transfer_req, alias_valid),
++	},
++	{
++		.data_type = QMI_STRING,
++		.elem_len = 256,
++		.elem_size = sizeof(char),
++		.array_type = VAR_LEN_ARRAY,
++		.tlv_type = 16,
++		.offset = offsetof(struct qmicstrings_transfer_req, alias)
++	},
++	{
++		.data_type = QMI_STRUCT,
++		.elem_len = 1,
++		.elem_size = sizeof(struct qmicstrings_leaf),
++		.tlv_type = 2,
++		.offset = offsetof(struct qmicstrings_transfer_req, item),
++		.ei_array = qmicstrings_leaf_ei,
++	},
++	{
++		.data_type = QMI_DATA_LEN,
++		.elem_len = 1,
++		.elem_size = sizeof(uint8_t),
++		.tlv_type = 3,
++		.offset = offsetof(struct qmicstrings_transfer_req, items_len),
++	},
++	{
++		.data_type = QMI_STRUCT,
++		.elem_len = 2,
++		.elem_size = sizeof(struct qmicstrings_leaf),
++		.array_type = VAR_LEN_ARRAY,
++		.tlv_type = 3,
++		.offset = offsetof(struct qmicstrings_transfer_req, items),
++		.ei_array = qmicstrings_leaf_ei,
++	},
++	{}
++};
++
++struct qmi_elem_info qmicstrings_transfer_resp_ei[] = {
++	{
++		.data_type = QMI_STRING,
++		.elem_len = 256,
++		.elem_size = sizeof(char),
++		.array_type = VAR_LEN_ARRAY,
++		.tlv_type = 1,
++		.offset = offsetof(struct qmicstrings_transfer_resp, reply_text)
++	},
++	{}
++};
++
+diff --git a/tests/expected-qmicstrings.h b/tests/expected-qmicstrings.h
+new file mode 100644
+index 0000000..c9f71c2
+--- /dev/null
++++ b/tests/expected-qmicstrings.h
+@@ -0,0 +1,34 @@
++#ifndef __QMI_QMICSTRINGS_H__
++#define __QMI_QMICSTRINGS_H__
++
++#include <stdint.h>
++#include <stdbool.h>
++
++#include "libqrtr.h"
++
++struct qmicstrings_leaf {
++	uint32_t label_len;
++	char label[256 + 1];
++	uint32_t marker;
++};
++
++struct qmicstrings_transfer_req {
++	uint32_t title_len;
++	char title[256 + 1];
++	bool alias_valid;
++	uint32_t alias_len;
++	char alias[256 + 1];
++	struct qmicstrings_leaf item;
++	uint32_t items_len;
++	struct qmicstrings_leaf items[2];
++};
++
++struct qmicstrings_transfer_resp {
++	uint32_t reply_text_len;
++	char reply_text[256 + 1];
++};
++
++extern struct qmi_elem_info qmicstrings_transfer_req_ei[];
++extern struct qmi_elem_info qmicstrings_transfer_resp_ei[];
++
++#endif
+diff --git a/tests/expected-rmtfs.c b/tests/expected-rmtfs.c
+new file mode 100644
+index 0000000..bda2b78
+--- /dev/null
++++ b/tests/expected-rmtfs.c
+@@ -0,0 +1,256 @@
++#include <errno.h>
++#include <string.h>
++#include "qmi_rmtfs.h"
++
++struct qmi_elem_info rmtfs_qmi_result_ei[] = {
++	{
++		.data_type = QMI_UNSIGNED_2_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint16_t),
++		.offset = offsetof(struct rmtfs_qmi_result, result),
++	},
++	{
++		.data_type = QMI_UNSIGNED_2_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint16_t),
++		.offset = offsetof(struct rmtfs_qmi_result, error),
++	},
++	{}
++};
++
++struct qmi_elem_info rmtfs_iovec_entry_ei[] = {
++	{
++		.data_type = QMI_UNSIGNED_4_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint32_t),
++		.offset = offsetof(struct rmtfs_iovec_entry, sector_addr),
++	},
++	{
++		.data_type = QMI_UNSIGNED_4_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint32_t),
++		.offset = offsetof(struct rmtfs_iovec_entry, phys_offset),
++	},
++	{
++		.data_type = QMI_UNSIGNED_4_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint32_t),
++		.offset = offsetof(struct rmtfs_iovec_entry, num_sector),
++	},
++	{}
++};
++
++struct qmi_elem_info rmtfs_open_req_ei[] = {
++	{
++		.data_type = QMI_STRING,
++		.elem_len = 256,
++		.elem_size = sizeof(char),
++		.array_type = VAR_LEN_ARRAY,
++		.tlv_type = 1,
++		.offset = offsetof(struct rmtfs_open_req, path)
++	},
++	{}
++};
++
++struct qmi_elem_info rmtfs_open_resp_ei[] = {
++	{
++		.data_type = QMI_STRUCT,
++		.elem_len = 1,
++		.elem_size = sizeof(struct rmtfs_qmi_result),
++		.tlv_type = 2,
++		.offset = offsetof(struct rmtfs_open_resp, result),
++		.ei_array = rmtfs_qmi_result_ei,
++	},
++	{
++		.data_type = QMI_OPT_FLAG,
++		.elem_len = 1,
++		.elem_size = sizeof(bool),
++		.tlv_type = 16,
++		.offset = offsetof(struct rmtfs_open_resp, caller_id_valid),
++	},
++	{
++		.data_type = QMI_UNSIGNED_4_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint32_t),
++		.tlv_type = 16,
++		.offset = offsetof(struct rmtfs_open_resp, caller_id),
++	},
++	{}
++};
++
++struct qmi_elem_info rmtfs_close_req_ei[] = {
++	{
++		.data_type = QMI_UNSIGNED_4_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint32_t),
++		.tlv_type = 1,
++		.offset = offsetof(struct rmtfs_close_req, caller_id),
++	},
++	{}
++};
++
++struct qmi_elem_info rmtfs_close_resp_ei[] = {
++	{
++		.data_type = QMI_STRUCT,
++		.elem_len = 1,
++		.elem_size = sizeof(struct rmtfs_qmi_result),
++		.tlv_type = 2,
++		.offset = offsetof(struct rmtfs_close_resp, result),
++		.ei_array = rmtfs_qmi_result_ei,
++	},
++	{}
++};
++
++struct qmi_elem_info rmtfs_iovec_req_ei[] = {
++	{
++		.data_type = QMI_UNSIGNED_4_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint32_t),
++		.tlv_type = 1,
++		.offset = offsetof(struct rmtfs_iovec_req, caller_id),
++	},
++	{
++		.data_type = QMI_UNSIGNED_1_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint8_t),
++		.tlv_type = 2,
++		.offset = offsetof(struct rmtfs_iovec_req, direction),
++	},
++	{
++		.data_type = QMI_DATA_LEN,
++		.elem_len = 1,
++		.elem_size = sizeof(uint8_t),
++		.tlv_type = 3,
++		.offset = offsetof(struct rmtfs_iovec_req, iovec_len),
++	},
++	{
++		.data_type = QMI_STRUCT,
++		.elem_len = 255,
++		.elem_size = sizeof(struct rmtfs_iovec_entry),
++		.array_type = VAR_LEN_ARRAY,
++		.tlv_type = 3,
++		.offset = offsetof(struct rmtfs_iovec_req, iovec),
++		.ei_array = rmtfs_iovec_entry_ei,
++	},
++	{
++		.data_type = QMI_UNSIGNED_1_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint8_t),
++		.tlv_type = 4,
++		.offset = offsetof(struct rmtfs_iovec_req, is_force_sync),
++	},
++	{}
++};
++
++struct qmi_elem_info rmtfs_iovec_resp_ei[] = {
++	{
++		.data_type = QMI_STRUCT,
++		.elem_len = 1,
++		.elem_size = sizeof(struct rmtfs_qmi_result),
++		.tlv_type = 2,
++		.offset = offsetof(struct rmtfs_iovec_resp, result),
++		.ei_array = rmtfs_qmi_result_ei,
++	},
++	{}
++};
++
++struct qmi_elem_info rmtfs_alloc_buf_req_ei[] = {
++	{
++		.data_type = QMI_UNSIGNED_4_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint32_t),
++		.tlv_type = 1,
++		.offset = offsetof(struct rmtfs_alloc_buf_req, caller_id),
++	},
++	{
++		.data_type = QMI_UNSIGNED_4_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint32_t),
++		.tlv_type = 2,
++		.offset = offsetof(struct rmtfs_alloc_buf_req, buff_size),
++	},
++	{}
++};
++
++struct qmi_elem_info rmtfs_alloc_buf_resp_ei[] = {
++	{
++		.data_type = QMI_STRUCT,
++		.elem_len = 1,
++		.elem_size = sizeof(struct rmtfs_qmi_result),
++		.tlv_type = 2,
++		.offset = offsetof(struct rmtfs_alloc_buf_resp, result),
++		.ei_array = rmtfs_qmi_result_ei,
++	},
++	{
++		.data_type = QMI_OPT_FLAG,
++		.elem_len = 1,
++		.elem_size = sizeof(bool),
++		.tlv_type = 16,
++		.offset = offsetof(struct rmtfs_alloc_buf_resp, buff_address_valid),
++	},
++	{
++		.data_type = QMI_UNSIGNED_8_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint64_t),
++		.tlv_type = 16,
++		.offset = offsetof(struct rmtfs_alloc_buf_resp, buff_address),
++	},
++	{}
++};
++
++struct qmi_elem_info rmtfs_dev_error_req_ei[] = {
++	{
++		.data_type = QMI_UNSIGNED_4_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint32_t),
++		.tlv_type = 1,
++		.offset = offsetof(struct rmtfs_dev_error_req, caller_id),
++	},
++	{}
++};
++
++struct qmi_elem_info rmtfs_dev_error_resp_ei[] = {
++	{
++		.data_type = QMI_STRUCT,
++		.elem_len = 1,
++		.elem_size = sizeof(struct rmtfs_qmi_result),
++		.tlv_type = 2,
++		.offset = offsetof(struct rmtfs_dev_error_resp, result),
++		.ei_array = rmtfs_qmi_result_ei,
++	},
++	{
++		.data_type = QMI_OPT_FLAG,
++		.elem_len = 1,
++		.elem_size = sizeof(bool),
++		.tlv_type = 16,
++		.offset = offsetof(struct rmtfs_dev_error_resp, status_valid),
++	},
++	{
++		.data_type = QMI_UNSIGNED_1_BYTE,
++		.elem_len = 1,
++		.elem_size = sizeof(uint8_t),
++		.tlv_type = 16,
++		.offset = offsetof(struct rmtfs_dev_error_resp, status),
++	},
++	{}
++};
++
++struct qmi_elem_info rmtfs_force_sync_ei[] = {
++	{
++		.data_type = QMI_DATA_LEN,
++		.elem_len = 1,
++		.elem_size = sizeof(uint8_t),
++		.tlv_type = 1,
++		.offset = offsetof(struct rmtfs_force_sync, caller_id_len),
++	},
++	{
++		.data_type = QMI_UNSIGNED_1_BYTE,
++		.elem_len = 10,
++		.elem_size = sizeof(uint32_t),
++		.array_type = VAR_LEN_ARRAY,
++		.tlv_type = 1,
++		.offset = offsetof(struct rmtfs_force_sync, caller_id),
++	},
++	{}
++};
++
+diff --git a/tests/expected-rmtfs.h b/tests/expected-rmtfs.h
+new file mode 100644
+index 0000000..64bacf2
+--- /dev/null
++++ b/tests/expected-rmtfs.h
+@@ -0,0 +1,101 @@
++#ifndef __QMI_RMTFS_H__
++#define __QMI_RMTFS_H__
++
++#include <stdint.h>
++#include <stdbool.h>
++
++#include "libqrtr.h"
++
++#define QMI_RMTFS_RESULT_SUCCESS 0
++#define QMI_RMTFS_RESULT_FAILURE 1
++#define QMI_RMTFS_ERR_NONE 0
++#define QMI_RMTFS_ERR_INTERNAL 1
++#define QMI_RMTFS_ERR_MALFORMED_MSG 2
++#define QMI_RMTFS_OPEN 1
++#define QMI_RMTFS_CLOSE 2
++#define QMI_RMTFS_RW_IOVEC 3
++#define QMI_RMTFS_ALLOC_BUFF 4
++#define QMI_RMTFS_GET_DEV_ERROR 5
++#define QMI_RMTFS_FORCE_SYNC_IND 6
++
++struct rmtfs_qmi_result {
++	uint16_t result;
++	uint16_t error;
++};
++
++struct rmtfs_iovec_entry {
++	uint32_t sector_addr;
++	uint32_t phys_offset;
++	uint32_t num_sector;
++};
++
++struct rmtfs_open_req {
++	uint32_t path_len;
++	char path[256 + 1];
++};
++
++struct rmtfs_open_resp {
++	struct rmtfs_qmi_result result;
++	bool caller_id_valid;
++	uint32_t caller_id;
++};
++
++struct rmtfs_close_req {
++	uint32_t caller_id;
++};
++
++struct rmtfs_close_resp {
++	struct rmtfs_qmi_result result;
++};
++
++struct rmtfs_iovec_req {
++	uint32_t caller_id;
++	uint8_t direction;
++	uint32_t iovec_len;
++	struct rmtfs_iovec_entry iovec[255];
++	uint8_t is_force_sync;
++};
++
++struct rmtfs_iovec_resp {
++	struct rmtfs_qmi_result result;
++};
++
++struct rmtfs_alloc_buf_req {
++	uint32_t caller_id;
++	uint32_t buff_size;
++};
++
++struct rmtfs_alloc_buf_resp {
++	struct rmtfs_qmi_result result;
++	bool buff_address_valid;
++	uint64_t buff_address;
++};
++
++struct rmtfs_dev_error_req {
++	uint32_t caller_id;
++};
++
++struct rmtfs_dev_error_resp {
++	struct rmtfs_qmi_result result;
++	bool status_valid;
++	uint8_t status;
++};
++
++struct rmtfs_force_sync {
++	uint32_t caller_id_len;
++	uint32_t caller_id[10];
++};
++
++extern struct qmi_elem_info rmtfs_open_req_ei[];
++extern struct qmi_elem_info rmtfs_open_resp_ei[];
++extern struct qmi_elem_info rmtfs_close_req_ei[];
++extern struct qmi_elem_info rmtfs_close_resp_ei[];
++extern struct qmi_elem_info rmtfs_iovec_req_ei[];
++extern struct qmi_elem_info rmtfs_iovec_resp_ei[];
++extern struct qmi_elem_info rmtfs_alloc_buf_req_ei[];
++extern struct qmi_elem_info rmtfs_alloc_buf_resp_ei[];
++extern struct qmi_elem_info rmtfs_dev_error_req_ei[];
++extern struct qmi_elem_info rmtfs_dev_error_resp_ei[];
++extern struct qmi_elem_info rmtfs_force_sync_ei[];
++
++#endif
+diff --git a/tests/qmicstrings.qmi b/tests/qmicstrings.qmi
+new file mode 100644
+index 0000000..03f7335
+--- /dev/null
++++ b/tests/qmicstrings.qmi
+@@ -0,0 +1,17 @@
++package qmicstrings;
++
++struct leaf {
++    string label;
++    u32 marker;
++};
++
++request transfer_req {
++    required string title = 1;
++    optional string alias = 0x10;
++    required leaf item = 2;
++    required leaf items(2) = 3;
++} = 1;
++
++response transfer_resp {
++    required string reply_text = 1;
++} = 1;
+diff --git a/tests/rmtfs.qmi b/tests/rmtfs.qmi
+new file mode 100644
+index 0000000..ca350d7
+--- /dev/null
++++ b/tests/rmtfs.qmi
+@@ -0,0 +1,77 @@
++package rmtfs;
++
++const QMI_RMTFS_RESULT_SUCCESS = 0;
++const QMI_RMTFS_RESULT_FAILURE = 1;
++
++const QMI_RMTFS_ERR_NONE = 0;
++const QMI_RMTFS_ERR_INTERNAL = 1;
++const QMI_RMTFS_ERR_MALFORMED_MSG = 2;
++
++const QMI_RMTFS_OPEN = 1;
++const QMI_RMTFS_CLOSE = 2;
++const QMI_RMTFS_RW_IOVEC = 3;
++const QMI_RMTFS_ALLOC_BUFF = 4;
++const QMI_RMTFS_GET_DEV_ERROR = 5;
++const QMI_RMTFS_FORCE_SYNC_IND = 6;
++
++struct qmi_result {
++	u16 result;
++	u16 error;
++};
++
++struct iovec_entry {
++	u32 sector_addr;
++	u32 phys_offset;
++	u32 num_sector;
++};
++
++request open_req {
++	required string path = 1;
++} = 1;
++
++response open_resp {
++	required qmi_result result = 2;
++	optional u32 caller_id = 0x10;
++} = 1;
++
++request close_req {
++	required u32 caller_id = 1;
++} = 2;
++
++response close_resp {
++	required qmi_result result = 2;
++} = 2;
++
++request iovec_req {
++	required u32 caller_id = 1;
++	required u8 direction = 2;
++	required iovec_entry iovec(255) = 3;
++	required u8 is_force_sync = 4;
++} = 3;
++
++response iovec_resp {
++	required qmi_result result = 2;
++} = 3;
++
++request alloc_buf_req {
++	required u32 caller_id = 1;
++	required u32 buff_size = 2;
++} = 4;
++
++response alloc_buf_resp {
++	required qmi_result result = 2;
++	optional u64 buff_address = 0x10;
++} = 4;
++
++request dev_error_req {
++	required u32 caller_id = 1;
++} = 5;
++
++response dev_error_resp {
++	required qmi_result result = 2;
++	optional u8 status = 0x10;
++} = 5;
++
++indication force_sync {
++	required u32 caller_id(10) = 1;
++} = 6;
+-- 
+2.56.0
+

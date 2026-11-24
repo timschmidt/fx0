@@ -1,0 +1,97 @@
+{
+  "recorded_UTC": "2026-11-11T20:27:31.433060+00:00",
+  "scope": "Exact signed native ARM APK3.0.8/runtime under QEMU userspace emulation; no phone or ARM kernel execution",
+  "native_ARM_version_observations": [
+    {
+      "phase": "original-native-runtime",
+      "output": "apk-tools 3.0.8-r0, compiled for armv7.",
+      "returncode": 0
+    },
+    {
+      "phase": "after-partial-upgrade",
+      "output": "apk-tools 3.0.9-r0, compiled for armv7.",
+      "returncode": 0
+    },
+    {
+      "phase": "file-backed-recovery",
+      "output": "apk-tools 3.0.8-r0, compiled for armv7.",
+      "returncode": 0
+    },
+    {
+      "phase": "after-complete-upgrade",
+      "output": "apk-tools 3.0.9-r0, compiled for armv7.",
+      "returncode": 0
+    },
+    {
+      "phase": "file-backed-recovery",
+      "output": "apk-tools 3.0.8-r0, compiled for armv7.",
+      "returncode": 0
+    },
+    {
+      "phase": "file-backed-recovery",
+      "output": "apk-tools 3.0.8-r0, compiled for armv7.",
+      "returncode": 0
+    }
+  ],
+  "native_ARM_corruption_controls": [
+    {
+      "kind": "altered-control",
+      "actual_ARM_apk_3_0_8_rejected": true,
+      "returncode": 1
+    },
+    {
+      "kind": "altered-payload",
+      "actual_ARM_apk_3_0_8_rejected": true,
+      "returncode": 1
+    }
+  ],
+  "missing_runtime_library_rejected": true,
+  "complete_signed_runtime_payload_match": true,
+  "runtime_archive_sha256": "0ad858d00da676bc10ccaea89e0e49ddce8b0e93051d8e775fae3656b9ac099e",
+  "emulator_sha256": "173253722d7582d578073332d8c0c355c2d48c3eceba0672ea93beddb36aa75d",
+  "emulator_version": "qemu-arm version 10.1.5 (qemu-10.1.5-1.fc43)",
+  "host_binfmt_registration_changed": false,
+  "native_package_hooks_exercised": false,
+  "native_source_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+  "captured_paths_verified": 5784,
+  "original_packages_restored": 775,
+  "selected_packages_upgraded": 30,
+  "partial_transaction_packages": 5,
+  "operations": [
+    {
+      "phase": "load-local-signed-indexes",
+      "returncode": 0,
+      "owned_child_reaped": true,
+      "native_hooks_disabled": true,
+      "network_disabled": true
+    },
+    {
+      "phase": "partial-upgrade",
+      "returncode": 0,
+      "owned_child_reaped": true,
+      "native_hooks_disabled": true,
+      "network_disabled": true
+    },
+    {
+      "phase": "complete-upgrade",
+      "returncode": 0,
+      "owned_child_reaped": true,
+      "native_hooks_disabled": true,
+      "network_disabled": true
+    }
+  ],
+  "partial_full_and_interrupted_restore_passed": true,
+  "file_bytes_modes_UID_GID_mtime_symlinks_absence_and_hardlinks_verified": true,
+  "hardlink_aliases_verified": 254,
+  "unexpected_user_xattr_removed": true,
+  "canonical_parent_escape_rejected": true,
+  "unknown_descendant_preserved_and_restore_refused": true,
+  "raw_boot_recovery_regular_RAM_file_only": true,
+  "first_512KiB_preserved": true,
+  "SELinux_labels_captured": 939,
+  "SELinux_labels_not_applied_on_host": true,
+  "native_hooks_exercised": false,
+  "native_package_installation": false,
+  "native_boot_partition_written": false,
+  "native_rollback_qualified": false
+}

@@ -1,0 +1,23 @@
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -157,10 +157,17 @@
+ 	};
+ 
+ 	reserved-memory {
+-		/* Stock firmware excludes 5 MiB here; the first MiB is SMEM. */
++		/* Preserve the stock exclusion up to its RMTFS shared region. */
+ 		reserved@fb00000 {
+-			reg = <0x0fb00000 0x400000>;
++			reg = <0x0fb00000 0x280000>;
+ 			no-map;
++		};
++
++		rmtfs@fd80000 {
++			compatible = "qcom,rmtfs-mem";
++			reg = <0x0fd80000 0x180000>;
++			no-map;
++			qcom,client-id = <1>;
+ 		};
+ 
+ 		smem_region: smem@fa00000 {

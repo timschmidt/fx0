@@ -1,0 +1,687 @@
+{
+  "recorded_UTC": "2026-11-11T11:01:48.983291+00:00",
+  "purpose": "Full native-OS RAM qualification of the exact Linux6.18.63-r1 package while installed r50 remains unchanged",
+  "kernel_build_manifest": "manifests/kernel-vibrator-6.18.63-alpine.json",
+  "image": {
+    "image_path": "local/kernel-native-6.18.63-03/fx0-native-6.18.63-stdio-fixed.private.img",
+    "image_sha256": "d5bde434e96f8cccb92bfade1a68ff6f0ba9d320c526157f75f7236eca649e20",
+    "image_bytes": 17272832,
+    "kernel_release": "6.18.63-fx0-vibrator-alpine",
+    "kernel_sha256": "286de8813a9f9027f6994281a8b484591391f8438337335043efbda0a6fd38ea",
+    "kernel_bytes": 5509632,
+    "DTB_sha256": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+    "ramdisk_sha256": "02a9ef1d7b2ebc37b6a8db142ba3e607fc30a4050c37fb64eb391f7d1a1c0008",
+    "ramdisk_bytes": 11718035,
+    "actual_ramdisk_load_start": 33554432,
+    "actual_ramdisk_load_end": 45272467,
+    "framebuffer_start": 52428800,
+    "ramdisk_below_inherited_framebuffer": true,
+    "native_original_CPIO_entries": 243,
+    "final_CPIO_entries": 249,
+    "CPIO_members": 2,
+    "native_base_entries_changed": [
+      "init"
+    ],
+    "matching_initramfs_module_files": 19,
+    "complete_staged_module_files": 464,
+    "complete_module_and_metadata_files": 478,
+    "module_manifest_sha256": "aeef2814022070ccc445af21a303343c387271a8cfef821e156eb7423cad3265",
+    "complete_module_source": "Hash-pinned private package staging on root; copied to a 64MiB tmpfs before switch_root",
+    "installed_module_files_replaced": false,
+    "return_helper_sha256": "c89f4b67db75dcbec57cb5ec7ef2dabdee17c5088906097f6d42625fbca9f523",
+    "early_static_return_deadline_seconds": 420,
+    "normal_systemd_return_deadline_seconds": 360,
+    "native_root_discovery_cmdline_preserved": true,
+    "cmdline_sha256": "2ede46a6a7211ad7931a53e291a2713581767f0eae30dd317e46f91a2df67e36",
+    "signature_enforcement": true,
+    "expected_taint": 0,
+    "native_package_installation": false,
+    "boot_partition_flash": false,
+    "physical_boot": false
+  },
+  "independent_image_verification": {
+    "image_sha256": "d5bde434e96f8cccb92bfade1a68ff6f0ba9d320c526157f75f7236eca649e20",
+    "image_bytes": 17272832,
+    "independent_Android_header_digest_and_addresses_verified": true,
+    "independent_GNU_CPIO_both_members_and_payloads_verified": true,
+    "native_base_entries_unchanged_except_init": true,
+    "ordinary_native_init_preserved_and_reached_by_prefix": true,
+    "all_478_module_and_metadata_hashes_match_verified_package": true,
+    "boot_module_subset_matches_same_package": true,
+    "actual_native_ARM_BusyBox_three_scripts_syntax_passed": true,
+    "static_ARM_helper_bad_arguments_refused": true,
+    "full_ramdisk_placement_below_framebuffer": true,
+    "ramdisk_bytes": 11718035,
+    "module_overlay_source_and_checksum_manifest_pinned": true,
+    "installed_module_tree_not_replaced": true,
+    "early_helper_420_seconds_and_primary_runtime_timer_360_seconds": true,
+    "physical_boot": false
+  },
+  "native_preview_staging": {
+    "native_boot_id": "d38d1768-eff9-43f1-8779-831ffeef167b",
+    "package_SHA256": "73d28444c42edf3feba6fa0c91f45240ef0cd12a4ae401a18ae343508e4fabc4",
+    "native_APK_signature_verified": true,
+    "isolated_candidate_root": "/var/lib/fx0-diagnostics/kernel-native-6.18.63-01/candidate",
+    "release": "6.18.63-fx0-vibrator-alpine",
+    "modules": 464,
+    "boot_partition_SHA256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "installed_DB_sha256": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1",
+    "world_sha256": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+    "package_installed": false,
+    "module_search_path_changed": false
+  },
+  "actual_ARM_helper_wrong_running_release_control": {
+    "kernel": "6.18.59-fx0-dmp",
+    "returncode": 2,
+    "stdout": "",
+    "stderr": "",
+    "check_only": true,
+    "marker_not_created": true,
+    "reboot_not_requested": true
+  },
+  "early_stdio_regression": {
+    "actual_native_ARM_BusyBox_used": true,
+    "missing_dev_null_background_launch_reproduced": true,
+    "present_dev_null_background_launch_succeeds": true,
+    "cases": {
+      "False": {
+        "returncode": 2,
+        "stdout": "",
+        "stderr": "ash: can't open '/dev/null': No such file or directory\n"
+      },
+      "True": {
+        "returncode": 0,
+        "stdout": "armed",
+        "stderr": ""
+      }
+    },
+    "phone_commands_or_reboot_requests": false
+  },
+  "host_return_helper_cases": 13,
+  "host_module_overlay_tests": 4,
+  "host_module_overlay_fixtures": 6,
+  "physical": {
+    "kernel": "6.18.63-fx0-vibrator-alpine",
+    "candidate_boot_id": "efc27030-bb41-4763-ba02-fa0808fc7fa4",
+    "full_native_root_boot": true,
+    "ordinary_native_init_preserved": true,
+    "native_root_writable": true,
+    "signature_enforcement": true,
+    "taint": 0,
+    "health": {
+      "boot_id": "efc27030-bb41-4763-ba02-fa0808fc7fa4",
+      "kernel": "6.18.63-fx0-vibrator-alpine",
+      "uptime_seconds": 190.67,
+      "taint": 0,
+      "kernel_notes_verified": true,
+      "boot_partition_unchanged": true,
+      "APK_database_world_and_installed_release_metadata_unchanged": true,
+      "modules_on_tmpfs": true,
+      "all_478_module_and_metadata_files_verified": true,
+      "module_files": 464,
+      "early_return_helper_PID": 121,
+      "early_return_helper_alive_and_exact_binary": true,
+      "runtime_return_timer": {
+        "ActiveState": "active",
+        "SubState": "waiting",
+        "FragmentPath": "/run/systemd/system/fx0-native-return.timer"
+      },
+      "normal_return_deadline_seconds": 360,
+      "forced_return_deadline_seconds": 420,
+      "systemd": "running",
+      "Sway_PID": 1556,
+      "supervisor_PID": 1692,
+      "gesture_PID": 2600,
+      "touchscreen": "/dev/input/event2",
+      "gesture_touchscreen_open": true,
+      "display_PM_auto": {
+        "fd900000.display-subsystem": "auto",
+        "fd928000.iommu": "auto",
+        "fd922800.dsi": "auto",
+        "fd922a00.phy": "auto"
+      },
+      "cpufreq": {
+        "policy0": {
+          "scaling_min_freq": "300000",
+          "scaling_max_freq": "787200",
+          "scaling_governor": "schedutil",
+          "scaling_available_frequencies": "300000 384000 600000 787200"
+        }
+      },
+      "temperatures_mC": {
+        "thermal_zone1": 42000,
+        "thermal_zone0": 43000
+      },
+      "PMIC_registers": {
+        "0xc041": "c041: 00\n",
+        "0xc046": "c046: 00\n",
+        "0x1740": "1740: 01\n",
+        "0x1741": "1741: 73\n"
+      },
+      "boot_files": {
+        "/boot/qcom-msm8926-samsung-matisselte.dtb": {
+          "size": 31694,
+          "sha256": "267f0fd96ef5c299ad91898ba570305397b4ec7ff97f2b16c910fc1becf2cb75"
+        },
+        "/boot/qcom-apq8026-samsung-matisse-wifi.dtb": {
+          "size": 32259,
+          "sha256": "cc7652040c5fbb5e5ce0780868b2bbd95f24230fd0e2ca4f06baf9ca72016759"
+        },
+        "/boot/System.map": {
+          "size": 3442429,
+          "sha256": "e866b3bf905f0028a5f640fbc68c1e02896626ddac6e030d00b702a07f3bd486"
+        },
+        "/boot/qcom-msm8926-lg-madai.dtb.before-touch": {
+          "size": 27593,
+          "sha256": "a560706a903513ffbc43fdd7a04ee2469def3237f1ad2c00711e27fba5600893"
+        },
+        "/boot/qcom-msm8926-motorola-peregrine.dtb": {
+          "size": 31153,
+          "sha256": "ed97b728add9173de82f0525df51e20aa8baf3b9b0a1e2b67e81be607e1ed003"
+        },
+        "/boot/qcom-msm8226-microsoft-makepeace.dtb": {
+          "size": 29711,
+          "sha256": "81eac72ae452d853c83fc14d80dd5b6228cff6a2205080c0fa203c37fe54c533"
+        },
+        "/boot/qcom-apq8026-huawei-sturgeon.dtb": {
+          "size": 30845,
+          "sha256": "3ca86ec94ae954587a5d4695afe68adffcda3ca52703393c0e1689b05351b613"
+        },
+        "/boot/qcom-msm8926-htc-memul.dtb": {
+          "size": 30076,
+          "sha256": "7b6436ae52dd1c33b57dc5f9f59133c65d8f1f824be776e0ab77108f9ca81024"
+        },
+        "/boot/qcom-apq8026-asus-sparrow.dtb": {
+          "size": 29783,
+          "sha256": "e7a72c2f450c7c3108c02315818298887386ffe90aabc51e9249ed6bfcc0de82"
+        },
+        "/boot/qcom-apq8026-lg-lenok.dtb": {
+          "size": 31057,
+          "sha256": "2bb909eb9dfa6137f416734b6190bef330821e4cda1038e2f1fce79ee45dabb5"
+        },
+        "/boot/msm8226-motorola-titan.dtb": {
+          "size": 31496,
+          "sha256": "deb72e6703ba49e21dfaf40d07106842f9fa5385159e85668e8edbf7200c1ad5"
+        },
+        "/boot/initramfs.fx0-known-good": {
+          "size": 11941660,
+          "sha256": "1a13ef4255971742287bffbc5db563ee1e4f573b147e7cb9c30b6b34828fcb3a"
+        },
+        "/boot/qcom-msm8226-samsung-ms013g.dtb": {
+          "size": 30743,
+          "sha256": "03dddaad080f03fb937170978bfaa565f0d7dfca6f859b07a33309aa0e039dfa"
+        },
+        "/boot/qcom-msm8926-microsoft-tesla.dtb": {
+          "size": 29751,
+          "sha256": "9e0fa5bda3cef21725e8d4da7cd1622e27480f3eedf08259b49448d255a77e46"
+        },
+        "/boot/qcom-apq8026-samsung-milletwifi.dtb": {
+          "size": 32905,
+          "sha256": "6914ed5a710208e598093c2cc860cbddc315221b7a5de6662e89b2bef124f6b8"
+        },
+        "/boot/qcom-msm8226-microsoft-moneypenny.dtb": {
+          "size": 29588,
+          "sha256": "8c047c3b475b237c05524739531fce50d79996f183a77feb77512cc990e1f7fd"
+        },
+        "/boot/fx0-known-good.dtb": {
+          "size": 27593,
+          "sha256": "a560706a903513ffbc43fdd7a04ee2469def3237f1ad2c00711e27fba5600893"
+        },
+        "/boot/vmlinuz": {
+          "size": 5558784,
+          "sha256": "7e896bb7c3fc80d7d8c8306a659fa57c1bcb3924ec2aaf37b77924e23c274417"
+        },
+        "/boot/msm8226-motorola-falcon.dtb": {
+          "size": 31364,
+          "sha256": "e0da36517770eba1d806f7e43abfe496f7491078b9a4f5dc231eb97ed5684d65"
+        },
+        "/boot/qcom-msm8926-microsoft-superman-lte.dtb": {
+          "size": 29682,
+          "sha256": "4356f70a9fa85c169d1d21bf17213452fbc070e8aa9fbd59613e1de7bf9d7fbd"
+        },
+        "/boot/qcom-msm8226-microsoft-dempsey.dtb": {
+          "size": 29703,
+          "sha256": "142852c668440be80183db3dc34dc8d3b7709da85d91a0fbe7c11228cc4da846"
+        },
+        "/boot/qcom-msm8926-lg-madai.dtb": {
+          "size": 40810,
+          "sha256": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda"
+        },
+        "/boot/initramfs": {
+          "size": 11945726,
+          "sha256": "acc24300e6b931f84cc8244f9006663cf33fa84a3f34930d06c72f3f109e8992"
+        },
+        "/boot/config": {
+          "size": 202393,
+          "sha256": "f20d2270cf1cabf6129e4a7a659861a3981d98792f38afaf6741f5896cec8703"
+        },
+        "/boot/initramfs.fx0-before-nosplash": {
+          "size": 13277407,
+          "sha256": "9b1dd7d7987e5eec74431a5b6368b8b2382b6d2dc4cae4196caccca749a920c1"
+        },
+        "/boot/vmlinuz.fx0-known-good": {
+          "size": 5517824,
+          "sha256": "be34bfbaf9b3679e99f651d66070c9a8cc2ae8144cf752fd71b10cf761702b31"
+        },
+        "/boot/boot.img": {
+          "size": 17549312,
+          "sha256": "85e4906004c0f40a9ba2c137ffe635f86f23b2434825d69c3f5990240ba1b579"
+        },
+        "/boot/qcom-msm8226-samsung-s3ve3g.dtb": {
+          "size": 23642,
+          "sha256": "ec942fb507e579209dde502aa19e955d4383732f953114a3265ec67b8db2c667"
+        }
+      },
+      "serious_kernel_warnings": []
+    },
+    "owner_display_touch": {
+      "boot_id": "efc27030-bb41-4763-ba02-fa0808fc7fa4",
+      "kernel": "6.18.63-fx0-vibrator-alpine",
+      "uptime": 260.55,
+      "recorded_UTC": "2026-11-11T10:52:54.747017+00:00",
+      "status": "confirmed",
+      "display_confirmed": true,
+      "touch_confirmed": true,
+      "answer": "Display and touch work",
+      "source": "Owner reply during exact candidate boot; SSH identity immediately rechecked"
+    },
+    "notifications": {
+      "boot_id": "efc27030-bb41-4763-ba02-fa0808fc7fa4",
+      "kernel": "6.18.63-fx0-vibrator-alpine",
+      "notification_PID": 2800,
+      "tests": [
+        {
+          "label": "native63-enabled",
+          "muted": false,
+          "notification_bus_calls": 1,
+          "notification_id": 2,
+          "writer_exit": 0,
+          "samples": 181,
+          "enabled_samples": 41,
+          "PMIC_drive_code": 24,
+          "programmed_target_mV": 2400,
+          "enable_duration_bounds_ms": [
+            305.45,
+            318.7
+          ],
+          "PMIC_off_after": true
+        },
+        {
+          "label": "native63-muted",
+          "muted": true,
+          "notification_bus_calls": 1,
+          "notification_id": 3,
+          "writer_exit": 0,
+          "samples": 176,
+          "enabled_samples": 0,
+          "PMIC_off_after": true
+        },
+        {
+          "label": "native63-reenabled",
+          "muted": false,
+          "notification_bus_calls": 1,
+          "notification_id": 4,
+          "writer_exit": 0,
+          "samples": 176,
+          "enabled_samples": 40,
+          "PMIC_drive_code": 24,
+          "programmed_target_mV": 2400,
+          "enable_duration_bounds_ms": [
+            291.6,
+            305.06
+          ],
+          "PMIC_off_after": true
+        }
+      ],
+      "only_expected_code_and_programmed_target_changed_in_checker": true,
+      "owned_notifications_history_and_mute_cleaned": true,
+      "PMIC_off_after": true
+    },
+    "final_snapshot": {
+      "boot_id": "efc27030-bb41-4763-ba02-fa0808fc7fa4",
+      "uptime": "293.09 821.88",
+      "taint": "0",
+      "systemd": "running",
+      "NTP": "NTPSynchronized=yes",
+      "runtime_IPv4_DNS": "IP4.DNS[1]:10.2.0.1",
+      "saved_profile_DNS_fields": [
+        {
+          "ipv4": {
+            "method": "auto"
+          },
+          "ipv6": {
+            "method": "auto"
+          }
+        },
+        {
+          "ipv4": {
+            "dns": "172.16.42.2;",
+            "method": "manual"
+          },
+          "ipv6": {
+            "method": "link-local"
+          }
+        }
+      ],
+      "temporary_fallback_absent_from_active_and_saved_DNS": true,
+      "prior_saved_profile_byte_identity_not_established": true,
+      "return_timer": "ActiveState=active\nSubState=waiting\nTimersMonotonic={ OnBootUSec=6min ; next_elapse=6min }\nNextElapseUSecMonotonic=6min",
+      "PMIC_registers": {
+        "0xc041": "c041: 00\n",
+        "0xc046": "c046: 00\n",
+        "0x1740": "1740: 01\n",
+        "0x1741": "1741: 73\n"
+      },
+      "serious_kernel_warnings": []
+    },
+    "return_timer_journal": {
+      "native_return_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+      "journal_returncode": 0,
+      "journal_stderr": "",
+      "candidate_runtime_return_journal": [
+        {
+          "_BOOT_ID": "efc27030bb414763ba02fa0808fc7fa4",
+          "__MONOTONIC_TIMESTAMP": "360052790",
+          "MESSAGE": "Starting Reboot to the unchanged installed Fx0 kernel...",
+          "UNIT": "fx0-native-return.service",
+          "_SYSTEMD_UNIT": "init.scope"
+        },
+        {
+          "_BOOT_ID": "efc27030bb414763ba02fa0808fc7fa4",
+          "__MONOTONIC_TIMESTAMP": "360270173",
+          "MESSAGE": "fx0-native-return.service: Deactivated successfully.",
+          "UNIT": "fx0-native-return.service",
+          "_SYSTEMD_UNIT": "init.scope"
+        },
+        {
+          "_BOOT_ID": "efc27030bb414763ba02fa0808fc7fa4",
+          "__MONOTONIC_TIMESTAMP": "360271325",
+          "MESSAGE": "Finished Reboot to the unchanged installed Fx0 kernel.",
+          "UNIT": "fx0-native-return.service",
+          "_SYSTEMD_UNIT": "init.scope"
+        }
+      ]
+    },
+    "shutdown": {
+      "reboot_uptime_seconds": 375.308318,
+      "systemd_normal_shutdown_observed": true,
+      "RAM_module_mount_unmounted": true,
+      "filesystems_unmounted_and_root_remounted_read_only": true,
+      "seven_minute_backup_deadline_not_reached": true,
+      "sanitized_console_lines": [
+        "[  374.774202] (sd-umount)[7688]: Unmounting '/usr/lib/modules'.",
+        "[  374.961840] systemd-shutdown[1]: All filesystems unmounted.",
+        "[  375.039256] systemd-shutdown[1]: Rebooting.",
+        "[  375.308318] reboot: Restarting system"
+      ]
+    },
+    "all_464_modules_loaded": false,
+    "C_helper_survived_switch_root": true,
+    "C_helper_actual_420_second_deadline_exercised": false,
+    "host_owned_transfer_and_observer_children_reaped": true,
+    "exact_image_readback": true,
+    "additional_read_only_observations": {
+      "DSI_outputs": [
+        {
+          "name": "DSI-1",
+          "active": true,
+          "power": true,
+          "scale": 1.5,
+          "current_mode": {
+            "width": 720,
+            "height": 1280,
+            "refresh": 60000,
+            "picture_aspect_ratio": "none"
+          }
+        }
+      ],
+      "input_device_count": 3,
+      "IIO": {
+        "iio:device3": {
+          "name": "fc4cf000.spmi:pm8226@0:adc@3100"
+        },
+        "iio:device1": {
+          "name": "mpu6515",
+          "in_accel_x_raw": "-248",
+          "in_accel_y_raw": "-77",
+          "in_accel_z_raw": "-14670",
+          "in_anglvel_x_raw": "33",
+          "in_anglvel_y_raw": "87",
+          "in_anglvel_z_raw": "-33",
+          "buffer/enable": "0"
+        },
+        "iio:device2": {
+          "name": "fc4cf000.spmi:pm8226@0:adc@3600"
+        },
+        "iio:device0": {
+          "name": "hscdtd008a",
+          "buffer/enable": "0"
+        }
+      },
+      "power_supplies": {
+        "smbb-bif": {
+          "type": "Battery",
+          "status": "Discharging"
+        },
+        "smbb-dcin": {
+          "type": "Mains",
+          "online": "0"
+        },
+        "smbb-usbin": {
+          "type": "USB",
+          "online": "1"
+        }
+      },
+      "DRM_nodes": [
+        "/dev/dri/card1",
+        "/dev/dri/renderD128"
+      ],
+      "hardware_GLES_renderer_not_verified": true
+    }
+  },
+  "early_attempts": [
+    {
+      "attempt": 1,
+      "native_return_boot_id": "940f684e-1733-44df-9add-1bca7eea6061",
+      "native_OS_reached": false
+    },
+    {
+      "attempt": 2,
+      "native_return_boot_id": "92ba6402-062a-40bf-afa6-a1b5399bbab9",
+      "native_OS_reached": false,
+      "root_cause": "BusyBox background launch fails without /dev/null before devtmpfs setup",
+      "foreground_helper_check_passed": true,
+      "background_helper_exec_reached": false
+    }
+  ],
+  "normal_return_service_start_seconds": 360.05279,
+  "normal_shutdown_reboot_seconds": 375.308318,
+  "native_kernel_installation": false,
+  "native_kernel_update_hooks_exercised": false,
+  "boot_partition_flashes_this_phase": 0,
+  "installed_kernel_remains": "6.18.59-fx0-dmp/r50",
+  "installed_Sxmo": "1.18.1-r7",
+  "native_return": {
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "kernel": "6.18.59-fx0-dmp",
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "systemd": "running",
+    "failed_units": [],
+    "pending_jobs": [],
+    "all_original_boot_files_and_modules_match": true,
+    "world_unchanged": true,
+    "fresh_session_notification_checks": [
+      {
+        "label": "r7-fresh-enabled",
+        "muted": false,
+        "notification_bus_calls": 1,
+        "notification_id": 2,
+        "writer_exit": 0,
+        "samples": 176,
+        "enabled_samples": 42,
+        "PMIC_drive_code": 21,
+        "programmed_target_mV": 2100,
+        "enable_duration_bounds_ms": [
+          290.18,
+          304.15
+        ],
+        "PMIC_off_after": true
+      },
+      {
+        "label": "r7-fresh-muted",
+        "muted": true,
+        "notification_bus_calls": 1,
+        "notification_id": 3,
+        "writer_exit": 0,
+        "samples": 173,
+        "enabled_samples": 0,
+        "PMIC_off_after": true
+      },
+      {
+        "label": "r7-fresh-reenabled",
+        "muted": false,
+        "notification_bus_calls": 1,
+        "notification_id": 4,
+        "writer_exit": 0,
+        "samples": 176,
+        "enabled_samples": 42,
+        "PMIC_drive_code": 21,
+        "programmed_target_mV": 2100,
+        "enable_duration_bounds_ms": [
+          292.89,
+          306.37
+        ],
+        "PMIC_off_after": true
+      }
+    ],
+    "files_sha256": {
+      "/lib/apk/db/installed": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1",
+      "/lib/apk/db/scripts.tar.gz": "68866f8e8ade05989c2add43fc47c5eb1b67f244333b593c7cbf7f9941635fc7",
+      "/lib/apk/db/triggers": "7f7d270d99b7414f7b1c5d8441a2d7d7ff2470276a304f15c0d6efa9daaffece",
+      "/etc/apk/world": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+      "/boot/vmlinuz": "7e896bb7c3fc80d7d8c8306a659fa57c1bcb3924ec2aaf37b77924e23c274417",
+      "/boot/initramfs": "acc24300e6b931f84cc8244f9006663cf33fa84a3f34930d06c72f3f109e8992",
+      "/usr/share/superd/services/sxmo_notificationmonitor.service": "92cea61812e44f5eaba2d3550f2dc869c0257e44a58cb4637e89e52f92ca4ef9"
+    }
+  },
+  "native_return_owner_display_touch": {
+    "status": "pending",
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "older_answer_not_reused": true
+  },
+  "return_startup_DNS_fallback": {
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "operation": "Temporary active-device DNS fallback; restore after bounded NTP observation",
+    "persistent_profile_changes": false,
+    "units_restarted": false,
+    "clock_manually_set": false,
+    "before_DNS": {
+      "returncode": 0,
+      "stdout": "IP4.DNS[1]:10.2.0.1",
+      "stderr": ""
+    },
+    "before_routes": {
+      "returncode": 0,
+      "stdout": "default via 10.2.0.1 dev wlan0  src 10.2.0.249  metric 20600 \ndefault via 172.16.42.2 dev usb0  metric 21000 \n10.2.0.0/16 dev wlan0 scope link  src 10.2.0.249  metric 600 \n172.16.0.0/16 dev usb0 scope link  src 172.16.42.1  metric 1000",
+      "stderr": ""
+    },
+    "startup_before": {
+      "returncode": 1,
+      "stdout": "starting",
+      "stderr": ""
+    },
+    "clock_before": {
+      "returncode": 0,
+      "stdout": "NTPSynchronized=no",
+      "stderr": ""
+    },
+    "NTP_log_before": {
+      "returncode": 0,
+      "stdout": "Started Network Time Synchronization.",
+      "stderr": ""
+    },
+    "help": {
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "Usage: nmcli device modify { ARGUMENTS | help }\n\nARGUMENTS := <ifname> ([+|-]<setting>.<property> <value>)+\n\nModify one or more properties that are currently active on the device without modifying\nthe connection profile. The changes have immediate effect. For multi-valued\nproperties you can use optional '+' or '-' prefix to the property name.\nThe '+' sign allows appending items instead of overwriting the whole value.\nThe '-' sign allows removing selected items instead of the whole value.\n\nExamples:\nnmcli dev mod em1 ipv4.method manual ipv4.addr \"192.168.1.2/24, 10.10.1.5/8\"\nnmcli dev mod em1 +ipv4.dns 8.8.4.4\nnmcli dev mod em1 -ipv4.dns 1\nnmcli dev mod em1 -ipv6.addr \"abbe::cafe/56\""
+    },
+    "add": {
+      "returncode": 0,
+      "stdout": "Connection successfully reapplied to device 'wlan0'.",
+      "stderr": ""
+    },
+    "during_DNS": {
+      "returncode": 0,
+      "stdout": "IP4.DNS[1]:1.1.1.1\nIP4.DNS[2]:10.2.0.1",
+      "stderr": ""
+    },
+    "lookup": {
+      "returncode": 0,
+      "stdout": "198.178.138.198   1.pool.ntp.org  1.pool.ntp.org",
+      "stderr": ""
+    },
+    "polls": [
+      {
+        "state": {
+          "returncode": 1,
+          "stdout": "starting",
+          "stderr": ""
+        },
+        "clock": {
+          "returncode": 0,
+          "stdout": "NTPSynchronized=yes",
+          "stderr": ""
+        }
+      },
+      {
+        "state": {
+          "returncode": 0,
+          "stdout": "running",
+          "stderr": ""
+        },
+        "clock": {
+          "returncode": 0,
+          "stdout": "NTPSynchronized=yes",
+          "stderr": ""
+        }
+      }
+    ],
+    "remove": {
+      "returncode": 0,
+      "stdout": "Connection successfully reapplied to device 'wlan0'.",
+      "stderr": ""
+    },
+    "after_DNS": {
+      "returncode": 0,
+      "stdout": "IP4.DNS[1]:10.2.0.1",
+      "stderr": ""
+    },
+    "after_routes": {
+      "returncode": 0,
+      "stdout": "default via 10.2.0.1 dev wlan0  src 10.2.0.249  metric 20600 \ndefault via 172.16.42.2 dev usb0  metric 21000 \n10.2.0.0/16 dev wlan0 scope link  src 10.2.0.249  metric 600 \n172.16.0.0/16 dev usb0 scope link  src 172.16.42.1  metric 1000",
+      "stderr": ""
+    },
+    "DNS_restored": true,
+    "routes_unchanged": true,
+    "state_after": {
+      "returncode": 0,
+      "stdout": "running",
+      "stderr": ""
+    },
+    "clock_after": {
+      "returncode": 0,
+      "stdout": "NTPSynchronized=yes",
+      "stderr": ""
+    },
+    "persistent_profile_file_bytes_unchanged": true
+  },
+  "limits": [
+    "Later CPU/CPR and NFC feature families are not integrated in this stable artifact",
+    "No suspend, all-OPP, long reliability, camera, modem/RF or broad hardware qualification",
+    "The runtime 360-second return works; fallback C helper deadline and hard-lockup recovery are not proved",
+    "Temporary DNS fallback cleanup is later verified, but its saved-profile byte-identity assertion failed during Wi-Fi activation; exact saved-profile byte preservation is not established",
+    "Wrong DSI PHY name in a read-only health verifier corrected to discovered fd922a00.phy",
+    "First journal query used hyphenated UUID; corrected format reads the exact candidate boot successfully",
+    "No audio tests; no upstream messages"
+  ]
+}

@@ -589,3 +589,211 @@ and [ADC reference evidence](../evidence/2026-10-30-battery-adc-references.json)
 the current development results. The signed installed r4 kernel is restored after
 the unsigned module tests; normal eMMC boot, taint 0, native framebuffer and active
 Sxmo/UPower pass. Native fuel-gauge and charging qualification remain unfinished.
+
+## November 9: native inventory and unusable-telemetry reproduction
+
+A read-only inventory on the unchanged r50 boot confirms three SMBB supplies.
+The battery-labelled interface still lacks voltage, current, temperature,
+capacity and remaining-charge attributes. USB is online with a 500 mA input
+setting and a 500 mA ConfigFS descriptor; the battery reports Good/Discharging.
+These are interface/configuration observations, not measured battery flow or
+automatic USB negotiation. VADC/IADC drivers are bound, but the required new
+processed battery channels, BMS consumer and firmware battery-profile handoff
+are absent from this native configuration. GNSS/radio class nodes are also
+absent; that does not prove product-feature absence. The installed UPower r4
+CLI/daemon hashes and original r50 boot hash still match their manifests.
+
+New [diagnostic probes](../diagnostics/upower-telemetry-validity/README.md) run
+the unchanged 1.91.5 guard and installed 1.91.0 backport source under UMockdev
+and private D-Bus. Each has eleven failing validity contracts and five passing
+controls. On 1.91.5 nine cases turn unusable data into a false 0% critical/action
+warning. The backport does so in eight; NaN instead aborts under fatal GObject
+diagnostics. Both report infinity as 100% and fail to reconsider an ignored
+supply when valid capacity arrives on a change event. Genuine zero charge
+still receives normal critical handling in both versions.
+
+The GUdev presence check already reads the attribute. A modeled unavailable
+read at coldplug is correctly ignored, while a later unavailable read can
+turn a valid 50% into 0%. The shim returns NULL at the shared libudev sysattr
+boundary with errno ENODATA; this is consumer-visible fault modeling, not a
+real kernel errno injection or phone test. Design/current/voltage/counter data
+still do not supply remaining charge. The next correction must validate
+retrieved values, avoid false-empty refreshes, and handle later availability
+without suppressing a genuine empty battery. Full malformed/partial/fault and
+recovery coverage remains required before gauge promotion. No production C,
+package or phone policy changes are part of this reproduction. See
+[evidence](../evidence/2026-11-09-battery-telemetry-validity.json).
+
+## November 9: correct unusable UPower readings and recover later telemetry
+
+Source corrections for the pinned 1.91.5 review tree and 1.91.0 backport now
+pass all 131 and 122 configured Linux tests respectively. The 28 validity cases
+per tree cover malformed/non-finite data, library-visible NULL reads, retaining
+a prior sample on failure, later availability, sibling lifetime, valid zero,
+capacity levels and peripheral/MacBook behavior. The parser keeps success
+separate from zero; real remaining charge takes priority over approximate
+levels, and an older average cannot replace real zero energy. The backport
+also receives the current core's positive-denominator inference guard.
+
+The old NaN-only expectation of an empty battery is corrected. Existing
+overfull and critical-action controls still pass. Wacom fixture pacing is
+checked against unchanged production code, and the simulated 1 W state fixture
+uses elapsed monotonic time; earlier fixture failures remain recorded. These
+are x86_64 UMockdev/private D-Bus results, with no native fault injection or
+power action. ARM packaging, deployment, stale-data policy, physical SOC/current
+accuracy and battery/charging qualification remain open. Installed r50/UPower r4
+are unchanged. See [review patches](../submissions/upower/README.md),
+[reproduction instructions](../diagnostics/upower-telemetry-fix/README.md) and
+[evidence](../evidence/2026-11-09-battery-telemetry-fix.json).
+
+## November 9: prepare a native-trusted ARM UPower r5 candidate
+
+The tested backport is now packaged by the published r5 recipe. All eight
+patches apply, and actual retained ARM source matches all 159 expected files.
+The only difference from the host-tested source is the unchanged Nura core-test
+timing patch. Two same-target/toolchain builds yield identical original APKs.
+Candidate signing uses the existing trusted key inside the container and
+preserves original control/data streams; no phone trust-store change occurs.
+All six signatures pass native public-key verification and altered signed
+metadata is rejected. Offline simulation against the current r50 database
+upgrades only upower, upower-lang and upower-systemd.
+
+Five dummy-backend/core test bodies pass under ARM QEMU; two system-bus bodies
+are not exercised. The Linux validity suite is still host coverage. A temporary
+native eager-loader probe passes CLI version/enumeration/dump/battery plus
+updated-daemon help as an unprivileged user. CLI/shared-library bytes match the
+original r4 APK. These checks do not run the new daemon service or battery
+refresh logic. Installed r4 binaries/database, original boot hash, boot ID and
+running daemon PID are unchanged, and temporary files are removed.
+
+The [candidate manifest](../manifests/upower-telemetry-r5.json) and
+[evidence](../evidence/2026-11-09-upower-r5-arm-candidate.json) preserve package,
+source, signature and probe scope. Current rollback/config/database/boot backup,
+actual deployment and native daemon acceptance remain pending, along with real
+telemetry faults, stale-data policy, gauge/current/SOC and charging acceptance.
+
+## November 9: install UPower r5 on native r50
+
+After explicit approval for the live update, r5 is installed with the exact
+packaged daemon running. Only upower, upower-lang and upower-systemd versions
+change. Fresh rollback APK/payload/config/state/database/world and complete
+boot/module/GPT backups are verified on the host and phone persistent eMMC.
+An isolated r5-to-r4 rehearsal restores every captured UPower payload/config
+file and all package versions; no live-phone rollback is claimed.
+
+The temporary runtime mask and owned shutdown/sleep inhibitor are removed.
+Native CLI modes, real incomplete SMBB battery rejection, finite unknown/absent
+display battery and no warning pass, including more than 30 seconds after the
+inhibitor is released. Normal services stay active, Sway retains its PID and
+all four display controls are auto. Temporary transfer files and the completed
+unit are cleaned up; persistent rollback copies remain.
+
+Normal APK hooks regenerate initramfs and **rewrite the same r50 boot image**
+with its 524,288-byte bootloader prefix preserved. Independent readback verifies
+all 99 boot paths and bytes, the entire raw boot partition, both GPTs and all
+478 module-file paths/bytes match the backup. All 243 initramfs entry payloads
+and modes remain identical; its 19 module payloads match installed r50. No new
+kernel package or reboot occurs. See [manifest](../manifests/upower-telemetry-r5.json)
+and [evidence](../evidence/2026-11-09-upower-r5-native-install.json).
+
+This qualifies native startup/integration and the real missing-telemetry case.
+Native malformed/failing reads, stale-data policy, battery current/SOC accuracy,
+charging/thermal behavior, live package/root rollback and final hardware
+acceptance remain open. The newest physical display/touch answer is still
+pending for the same boot; no older answer is reused.
+
+## November 9: native UPower r5 reboot acceptance
+
+After the fresh post-install display/touch confirmation, a moduleless r59
+download times out before BOOT. Terminal-only identified recovery returns to
+installed r50 on boot `c3ac8f04-888e-493c-bb5d-a1729a275f7d`. UPower r5 is
+already active before querying D-Bus; no explicit service start is used. All
+three r5 package/recipe records, daemon/CLI/library payload hashes and running
+daemon hash pass. Three samples retain absent/unknown state, finite unknown
+percentage 0, no warning and OnBattery false. This does not measure charge.
+Systemd finishes with no jobs, UI/sensor services are active and the boot hash,
+initramfs, kernel, installed package database and world remain unchanged.
+The newest physical UI check is pending. Gauge/current/SOC/charging/thermal,
+native telemetry faults/stale-data policy and live rollback remain open. See
+[return evidence](../evidence/2026-11-09-nfc-r59-transfer-timeout.json).
+
+
+## November 10 USB input actuator
+
+A native read-only check verifies the configured 500 mA high-speed gadget and the PM8226 USB selector on its actual SPMI slave. Source inspection finds that ChipIdea’s legacy PHY callback leaves the Fx0 generic PHY without a USB budget consumer. The experimental SMBB patch adds a battery-checked USB suspend request and verifies a positive limit before resuming. Forty-eight new callback cases, 8,846 existing policy/legacy cases and the ARM driver object pass. Automatic budgeting and physical charge, suspend and source-loss tests remain open. [Actuator and evidence](../diagnostics/smbb-charging-policy/usb-input-control.md)
+
+### Automatic USB gadget budget candidate
+
+The Madai controller now has a source candidate that routes gadget budgets to the verified PM8226 USB input actuator. It defaults to 100 mA and waits for successful USB configuration status completion before requesting up to 500 mA. The worker handles bus suspend, resume and detach. Managed sysfs limits are read-only and a battery-absent suspend retains 100 mA input. ARM object and DTB builds and actual-source host fixtures pass. Physical bus timing, VBUS-valid behavior during suspend, input current and wall charging remain open. [USB budget candidate](../diagnostics/smbb-charging-policy/usb-gadget-budget.md)
+
+### Timed RAM comparison for USB input budgeting
+
+A single moduleless ARM kernel now supplies matched control and managed RAM images. The DTBs differ only in the charger opt-in and controller reference. Both keep battery charging inhibited, use the same 500 mA and 300 mA NCM phases, and return after 180 seconds. The linked decompressor reproduces the kernel byte for byte. The verified images and fixed-register reader are ready for on-device current and suspend measurement. [RAM comparison and evidence](../diagnostics/smbb-usb-budget-ram/README.md)
+
+## November 14: installed-r1 read-only charging status
+
+Two bounded read-only snapshots on the accepted installed-r1 boot, about
+3.5 seconds apart, agree: USB online, battery present, health Good, status
+Discharging and charge type N/A. The installed-source SMBB driver maps N/A
+to no fast/trickle charge flag. Its Discharging fallback and USB-online flag
+do not measure battery current; Good reflects the cached temperature-OK flag.
+These sequential, IRQ-cached properties do not establish an atomic charger
+state or explain why the charge flags are absent. Current/voltage limits are
+configuration values, not current/voltage measurements.
+
+The battery interface exposes no capacity, temperature, current, voltage or
+remaining-energy/charge measurement. Already-running UPower reports an absent,
+unknown display battery and no warning; its finite zero percentage/energy
+fields are not physical measurements. Eight scalar queries succeed with
+D-Bus auto-activation disabled. The bounded package-version query times out,
+so this observation adds no fresh package-version or payload audit. A missing
+specific Sxmo unit in the SSH user manager does not establish whether another
+monitor process or manager is active.
+
+No charging limit, policy, service lifecycle, clock, package or boot setting
+is changed. Actual current/SOC, charging, thermal boundaries and source-loss
+behavior remain unqualified. Raw identities and telemetry stay private.
+[Read-only investigation evidence](../evidence/2026-11-14-power-readonly-investigation.json)
+
+## November 14: processed-voltage prerequisite on the reproducible kernel
+
+An isolated Linux 6.18.63 source revision now carries the preserved processed
+VADC battery-voltage prerequisite. Both host contexts pass 84 actual callback
+and consumer cases; compiled channel tables preserve the other 92 records, and
+the W=1 ARM object builds without warnings. The review patch reproduces the
+tested source from the public base. No phone access or candidate package/image
+build occurs. The runtime pack/firmware gate, BMS discrepancy, temperature and
+charging policy, USB budget port and physical power acceptance remain open.
+[Integration report and remaining gates](../diagnostics/vadc-battery-units/current-integration.md)
+
+## November 14: managed charging foundation port
+
+Seven preserved charger/control/policy commits now apply on the isolated
+6.18.63 voltage-prerequisite source, paired with the exact retained firmware
+profile/inhibition gate. Source and a 30-file export pass callback, LG model,
+firmware and new child-probe/PM/lifetime fixtures. Managed and legacy Kconfig
+profiles build their ARM charger objects without warnings. The current DTB
+passes the selected experimental schemas and firmware-hook checks with simulated
+pack/PMIC inputs; three W=1 warnings remain at unchanged eFuse/display definitions.
+
+No phone access, signed combined package, firmware/image update or physical
+charging qualification occurs. The r2 physical-base gate, ordered USB budget
+port, BMS discrepancy and complete electrical/thermal/reliability work remain
+open. [Port report](../diagnostics/smbb-charging-policy/current-kernel-port.md)
+
+## November 14: current-kernel USB budget port and r6 preparation
+
+The three preserved USB actuator/binding/gadget patches now apply after the
+current managed charging foundation. Callback and lifecycle regressions pass
+in source and a 16-file export. Managed/legacy ARM objects and an independently
+verified minimal no-power-supply profile compile; two USB metadata corrections
+make the selected document/schema checks clean. Fourteen property-contract cases
+cover valid and malformed PHY tuples, role flags and managed-budget restrictions.
+The board retains three W=1 warnings in unchanged eFuse/display definitions.
+
+All 91,271 archived source bodies, link targets and executable modes verify.
+A unique 6.18.63-r6 power-policy recipe is prepared and two normal offline
+abuilds have started in empty workspaces. Full package equality, signatures,
+ABI and payload audits remain pending. No phone or publication change occurs;
+electrical USB/charging/BMS, the r2 physical base and full acceptance remain open.
+[Current USB port report](../diagnostics/smbb-charging-policy/current-usb-budget-port.md)

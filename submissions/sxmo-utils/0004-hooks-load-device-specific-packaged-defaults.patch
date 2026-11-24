@@ -1,0 +1,26 @@
+--- a/configs/profile.d/sxmo_init.sh
++++ b/configs/profile.d/sxmo_init.sh
+@@ -135,12 +135,15 @@
+ 	fi
+ 	unset deviceprofile
+ 
++	sxmo_device_hooks="$(xdg_data_path "sxmo/default_hooks/$SXMO_DEVICE_NAME" 0 ':')"
+ 	PATH="\
+ $XDG_CONFIG_HOME/sxmo/hooks/$SXMO_DEVICE_NAME:\
+ $XDG_CONFIG_HOME/sxmo/hooks:\
++${sxmo_device_hooks:+$sxmo_device_hooks:}\
+ $(xdg_data_path "sxmo/default_hooks" 0 ':'):\
+ $PATH"
+ 	export PATH
++	unset sxmo_device_hooks
+ }
+ 
+ _sxmo_grab_session() {
+--- /dev/null
++++ b/configs/default_hooks/lg,madai/sxmo_hook_notification.sh
+@@ -0,0 +1,5 @@
++#!/bin/sh
++# SPDX-License-Identifier: MIT
++# Fx0: one bounded pulse for a completed Sxmo notification.
++[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/sxmo/.novibrate" ] || exit 0
++exec sxmo_vibrate 300 "${SXMO_VIBRATE_STRENGTH:-1}"

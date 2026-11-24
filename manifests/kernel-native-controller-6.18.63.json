@@ -1,0 +1,230 @@
+{
+  "recorded_UTC": "2026-11-11T12:15:23.580303+00:00",
+  "purpose": "Qualified and staged controller for the already-authorized stable-kernel update; no native installation yet",
+  "prior_RAM_manifest": "manifests/kernel-native-6.18.63-ram.json",
+  "prior_backup_manifest": "manifests/kernel-native-update-preparation-6.18.63.json",
+  "controller": {
+    "path": "diagnostics/kernel-maintenance/install_native.py",
+    "sha256": "0eec79d01a34d837dfa61256f2c75116242e601d78d460a3e9a5062b95e2aa7d",
+    "transaction_helper": "diagnostics/kernel-maintenance/update_transaction.py",
+    "helper_sha256": "62c41c46c495f5de30b40f2e0373bbd1f93558c5c3466e893989f8b32d37c9dc",
+    "plan_sha256": "623300d8f997a92aa767262b249c2b1b80e3b46c7ba259be802bf28dd868ba64",
+    "native_staging": {
+      "staged_files": [
+        "install_native-01.py",
+        "update_transaction.py",
+        "install-plan-preflight-01.json"
+      ],
+      "controller_sha256": "0eec79d01a34d837dfa61256f2c75116242e601d78d460a3e9a5062b95e2aa7d",
+      "owner_UI_status": "pending",
+      "upload_child_reaped": true,
+      "native_installation": false
+    },
+    "read_only_native_preflight": {
+      "read_only_preflight_passed": true,
+      "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+      "owner_UI_status": "pending",
+      "native_installation": false,
+      "boot_partition_written": false
+    },
+    "candidate_payload_files": 545,
+    "normal_initramfs_payloads": 243,
+    "normal_initramfs_signed_modules": 19,
+    "runtime_tool_config_and_public_key_inputs": 52,
+    "normal_APK_hooks_required": true,
+    "bootloader_prefix_preserved_bytes": 524288,
+    "automatic_reboot": false
+  },
+  "parser_validation_tests": {
+    "recorded_UTC": "2026-11-11T12:01:36.754803+00:00",
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_kernel_native_validation.py -v",
+    "returncode": 0,
+    "tests": 6,
+    "negative_controls": [
+      "Wrong Android header addresses/version",
+      "Kernel/digest/padding corruption",
+      "Hidden extra command-line payload",
+      "Truncated image",
+      "Appended RAM-wrapper CPIO archive",
+      "Duplicate canonical path, absolute and parent-traversal members"
+    ],
+    "files_sha256": {
+      "diagnostics/kernel-maintenance/install_native.py": "0eec79d01a34d837dfa61256f2c75116242e601d78d460a3e9a5062b95e2aa7d",
+      "tests/test_kernel_native_validation.py": "b61a3630ab876392c428cdd3bf0113a40d5f96481513581d65f8bff577e9f70f",
+      "scripts/make_diagnostic_image.py": "cd9c976a758d2f4b0282afe88a4c6038750e1fc11f08fdb289737e9f1cc9613f"
+    },
+    "native_installation": false
+  },
+  "actual_controller_host_fixtures": {
+    "controller_cases": [
+      {
+        "case": "success",
+        "passed": true,
+        "final_stage": "updated-and-verified",
+        "actual_APK_transactions": 1,
+        "candidate_payload_files_verified": 545,
+        "normal_initramfs_payloads_verified": 243,
+        "original_snapshot_paths_restored": null,
+        "boot_target_is_regular_fixture_file": true,
+        "physical_hardware_or_native_hooks_exercised": false,
+        "SELinux_labels_not_applied_on_host": true
+      },
+      {
+        "case": "post-verify-failure",
+        "passed": true,
+        "final_stage": "rolled-back",
+        "actual_APK_transactions": 2,
+        "candidate_payload_files_verified": 545,
+        "normal_initramfs_payloads_verified": 243,
+        "original_snapshot_paths_restored": 2595,
+        "boot_target_is_regular_fixture_file": true,
+        "physical_hardware_or_native_hooks_exercised": false,
+        "SELinux_labels_not_applied_on_host": true
+      },
+      {
+        "case": "pending-owner",
+        "passed": true,
+        "final_stage": "preflight-refused",
+        "actual_APK_transactions": 0,
+        "candidate_payload_files_verified": 0,
+        "normal_initramfs_payloads_verified": 0,
+        "original_snapshot_paths_restored": null,
+        "boot_target_is_regular_fixture_file": true,
+        "physical_hardware_or_native_hooks_exercised": false,
+        "SELinux_labels_not_applied_on_host": true
+      },
+      {
+        "case": "wrong-prefix",
+        "passed": true,
+        "final_stage": "preflight-refused",
+        "actual_APK_transactions": 0,
+        "candidate_payload_files_verified": 0,
+        "normal_initramfs_payloads_verified": 0,
+        "original_snapshot_paths_restored": null,
+        "boot_target_is_regular_fixture_file": true,
+        "physical_hardware_or_native_hooks_exercised": false,
+        "SELinux_labels_not_applied_on_host": true
+      }
+    ],
+    "all_passed": true,
+    "actual_APK_transactions": 3,
+    "native_controller_source_unmodified": true,
+    "bindings_replaced": [
+      "Native hardware and service identity",
+      "Physical block device replaced by regular fixture file",
+      "Native runtime tool hashes",
+      "SELinux labels",
+      "APK hooks disabled; known preview outputs model generated boot/initramfs"
+    ],
+    "owner_pending_and_changed_prefix_refused_before_mutation": true,
+    "full_candidate_verification_before_forced_rollback": true,
+    "actual_controller_archive_and_boot_tail_restoration_passed": true,
+    "native_installation": false
+  },
+  "fixture_setup_stop": {
+    "attempt": 1,
+    "stopped_during_preflight": true,
+    "reason": "Host SELinux labels on the fixture config directory differ from native Android labels",
+    "fixture_APK_or_boot_tail_writes": false,
+    "correction": "Model the unsupported SELinux binding consistently, retaining actual parent mode/UID/GID checks",
+    "native_controller_source_changed": false
+  },
+  "actual_native_cgroup_probe": {
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "controller_sha256": "0eec79d01a34d837dfa61256f2c75116242e601d78d460a3e9a5062b95e2aa7d",
+    "dedicated_systemd_scope_verified": true,
+    "scope": "/sys/fs/cgroup/system.slice/fx0-kernel-6.18.63-install-01.service",
+    "read_only_preflight_passed": true,
+    "direct_child_reaped": true,
+    "direct_process_group_gone": true,
+    "detached_new_process_group_descendant_detected_by_cgroup": true,
+    "all_owned_processes_terminal_before_exit": true,
+    "owner_UI_status": "pending",
+    "native_installation": false,
+    "boot_partition_written": false
+  },
+  "actual_native_owner_gate_and_final_state": {
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "kernel": "6.18.59-fx0-dmp",
+    "controller_sha256": "0eec79d01a34d837dfa61256f2c75116242e601d78d460a3e9a5062b95e2aa7d",
+    "all_preceding_native_preflight_checks_passed": true,
+    "owner_required_preflight_refused_at_exact_UI_assertion": true,
+    "installation_status_file_absent": true,
+    "new_signature_config_absent": true,
+    "current_module_signature_force": "N",
+    "native_scope_probe_unit_collected": true,
+    "systemd": "running",
+    "failed_units": [],
+    "pending_jobs": [],
+    "taint": 0,
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "APK_database_sha256": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1",
+    "world_sha256": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+    "PMIC_registers": {
+      "0xc041": "c041: 00\n",
+      "0xc046": "c046: 00\n",
+      "0x1740": "1740: 01\n",
+      "0x1741": "1741: 73\n"
+    },
+    "native_installation": false,
+    "boot_partition_written": false
+  },
+  "signature_enforcement": {
+    "kernel_config_FORCE": false,
+    "current_r50_runtime_enforcement": "N",
+    "qualified_RAM_trial_enforcement": true,
+    "planned_persistent_enforcement": true,
+    "config_path": "/etc/kernel-cmdline.d/90-fx0-module-signatures.conf",
+    "content": "module.sig_enforce=1\n",
+    "original_file_absence_captured": true,
+    "parent_mode": 493,
+    "parent_UID": 0,
+    "parent_GID": 0,
+    "parent_attribute_names": [
+      "security.selinux"
+    ],
+    "native_generator_preview": {
+      "before_generator_sha256": "83ba430887ba647ba502693699d0f863ab2a073bf62dae25c095caab47286f84",
+      "after_generator_sha256": "aca94d65f44b02d4f6667598833c047879c72591d2912c5192587fa1c585e302",
+      "native_generator_adds_exactly_one_required_token": true,
+      "all_other_generator_tokens_unchanged": true,
+      "installed_config_and_generator_output_unchanged": true,
+      "private_mount_namespace_only": true,
+      "boot_partition_written": false
+    }
+  },
+  "launcher": {
+    "path": "local/kernel-native-6.18.63-controller-01/launch-install.py",
+    "sha256": "feeb41dc82dd7fd7d2f3f1c9198268b7110d81cba8235450db8b2c24f33ce3d6",
+    "invoked": false,
+    "requires_current_UI_confirmation": true,
+    "one_service_launch_only": true,
+    "native_Python_environment_ignored_and_bytecode_disabled": true,
+    "transient_unit": "fx0-kernel-6.18.63-install-01.service",
+    "Type": "exec",
+    "KillMode": "process",
+    "TimeoutStopSec": "infinity",
+    "RequiresMountsFor": [
+      "/var/lib/fx0-rollback/kernel-6.18.63-01",
+      "/boot",
+      "/etc/kernel-cmdline.d"
+    ]
+  },
+  "current_boot_physical_UI": {
+    "status": "pending",
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "older_answer_not_reused": true
+  },
+  "native_kernel_installation": false,
+  "native_kernel_update_hooks_exercised": false,
+  "physical_boot_partition_writes_this_phase": 0,
+  "native_SELinux_restoration_not_exercised": true,
+  "persistent_boot_of_candidate_not_exercised": true,
+  "full_bringup": "active",
+  "remaining": [
+    "Record the pending exact-r50-return display/touch response; do not reuse older answers",
+    "Launch the qualified signed native transaction once and inspect its authoritative unit/status outcome",
+    "Qualify persistent new-kernel boot, signature enforcement, services and fresh physical UI",
+    "Continue CPU/CPR/NFC integration, whole-system currency, wider hardware/reliability and upstream submission work; audio remains excluded"
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "date": "2026-11-08",
+  "recorded_UTC": "2026-11-08T22:26:52.215529+00:00",
+  "status": "Host RAM transfer short-write handling and initial confirmed-byte reporting corrected; targeted checks pass; recurring hardware USB stall remains unresolved",
+  "checks": {
+    "verified_UTC": "2026-11-08T22:25:06.548711+00:00",
+    "current_tests": 25,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "actual_lk2nd_C_modes": [
+      "full",
+      "short_first",
+      "short_second",
+      "read_error",
+      "oversize"
+    ],
+    "short_OUT_counts_rejected_without_continuation": [
+      0,
+      1,
+      997,
+      8192,
+      16383
+    ],
+    "baseline_commit": "5a9290d49094cea33144ea9df01cfe7666466ba2",
+    "baseline_helper_sha256": "63474bf2b1a07e02a47be2e19480cfb4b48df83570e93920eacaa63636de5e02",
+    "baseline_regression_tests": [
+      "test_short_write_after_progress_preserves_confirmed_offset",
+      "test_identity_failure_report_has_zero_confirmed_bytes",
+      "test_data_failure_report_never_marks_unconfirmed_bytes"
+    ],
+    "all_three_regression_tests_fail_on_baseline": true,
+    "installed_lk2nd_source_commit": "079eebe745de650df02e92fd9ca8d9fec5110c56",
+    "lk2nd_source_files_sha256": {
+      "app/aboot/fastboot.c": "e85002f61f9283948000fb4beebb5454b37ba414cef2237e4f76ff4389f671ab",
+      "platform/msm_shared/hsusb.c": "fb960ff344b35e4a804b4b5d0b44863928ff4e370ac5c7d3d3536aa370f793f0"
+    },
+    "scope": "Host fake I/O plus actual extracted C functions with controlled completion callbacks; no USB hardware or DMA execution",
+    "files_sha256": {
+      "scripts/transfer_fx0_ram.py": "0d1b63978fddfa88def030e67cbb353495ed073f886bc1f2d784ff6b213997e0",
+      "tests/test_ram_transfer.py": "a255630aa40360eb8699d0f488946795c0e92782e1397504f03187766136aa72",
+      "tests/test_ram_boot.py": "e43e7d86c767cd5cdff777b27ba5af293d351eb4c975c82357c37ffc898d1024",
+      "tests/test_lk2nd_download_framing.py": "9686ee055119f9ebaf9a539bd5f9e442321d4a150956dfc79cbae9a3753c63ef"
+    }
+  },
+  "behavior": {
+    "data_write": "Every requested chunk must return its complete length; short or invalid completion stops immediately without remainder/upload/BOOT",
+    "failure_progress": "Initial bytes is zero; only full acknowledged chunks advance confirmed progress",
+    "short_readback": "Allowed within the requested bound; final length/status and exact payload comparison remain required",
+    "unchanged": [
+      "16 KiB chunk size",
+      "5 ms default optional pacing",
+      "30 s synchronous USB I/O timeout",
+      "identity requirements",
+      "exact readback",
+      "no automatic retry/reset/BOOT/storage command"
+    ]
+  },
+  "observed_stall_reference": {
+    "path": "local/ram-cpr-registration-01/transfer/result.json",
+    "sha256": "fd646a417a7d33192f9d5191dc83de67020dfdce30a29f8e08fa3fb3efdcd35c",
+    "last_confirmed_download_bytes": 3588096,
+    "terminal_error": "USB timeout",
+    "root_cause_identified": false,
+    "fixed_by_this_change": false
+  },
+  "limits": [
+    "Host fake I/O exercises the real helper/main report paths; it does not reproduce USB electrical/controller behavior",
+    "Actual C function extraction validates protocol state and callbacks; UDC, DMA, cache, endpoint IRQs and timing are stubbed",
+    "A host short OUT result need not mean the controller delivered a short packet; the host fails closed instead of guessing the device state",
+    "No new hardware transfer, reset, boot or bootloader modification was performed",
+    "Prepared images retain their exact bytes and remain unqualified/unstaged; old evidence hashes describe their original file versions"
+  ],
+  "prepared_images": [
+    {
+      "image_path": "local/alpine-cpr-registration/fx0-alpine-cpr-registration-ram.img",
+      "image_sha256": "529161ee532508bc69fe2eb313f642630db8a8bac0d45821860b085e9d205c59",
+      "image_unchanged": true,
+      "staged_or_booted": false
+    },
+    {
+      "image_path": "local/cpr-load-787/fx0-cpr-load-787-ram.img",
+      "image_sha256": "5fe346327a3f58a602c3c8a6984a6b8c302c9da78d2fce881c4bff71ecba9ad9",
+      "image_unchanged": true,
+      "staged_or_booted": false
+    }
+  ],
+  "latest_native_UI": {
+    "native_boot_id": "28db1c68-3b08-4a53-8e5a-3397b8315813",
+    "status": "pending on this newest native return",
+    "question": "The five-round-trip and four-core 600 MHz RAM load trial has returned to installed r50. Its original boot hash and 1.15 V PMIC target are restored, with Sway and the sensor proxy active. Do display and touch work normally on this newest boot?"
+  },
+  "hardware_operations_this_turn": {
+    "phone_commands": 0,
+    "USB_transfers": 0,
+    "USB_resets": 0,
+    "reboots": 0,
+    "BOOT_requests": 0,
+    "flashes": 0,
+    "audio_tests": 0,
+    "host_builtin_WiFi_changes": 0
+  },
+  "remaining": [
+    "Newest native physical UI result before device entry",
+    "Recurring content-dependent USB stall diagnosis and physical qualification",
+    "Independent Alpine startup/registration/recovery",
+    "CPU rates/governors/feedback/load/thermal/suspend and broader hardware acceptance",
+    "Stable/edge installed updates/recovery and upstream preparation"
+  ],
+  "files_sha256": {
+    "scripts/transfer_fx0_ram.py": "0d1b63978fddfa88def030e67cbb353495ed073f886bc1f2d784ff6b213997e0",
+    "tests/test_ram_transfer.py": "a255630aa40360eb8699d0f488946795c0e92782e1397504f03187766136aa72",
+    "tests/test_lk2nd_download_framing.py": "9686ee055119f9ebaf9a539bd5f9e442321d4a150956dfc79cbae9a3753c63ef",
+    "tests/test_ram_boot.py": "e43e7d86c767cd5cdff777b27ba5af293d351eb4c975c82357c37ffc898d1024",
+    "docs/building.md": "d312f5506e0fcdb1666655a6f4dfde64633ef5838ceb2a5f22e33086980796ec",
+    "docs/development-log.md": "af50eecedc5fa9cdd85a5693f81c3538f8588c46b20196b34e63d02f48f1914c",
+    "diagnostics/cpu-cpr-runtime/README.md": "19e0fc8af2eae3f4fa0d18dc41df9e3492dc9a51c87ab9055652a6cf12622e21",
+    "local/ram-transfer-framing/checks.json": "241bb0b9add6b66e10aef90d5779d7e25c0ca0b5be26cac5f745b203a6db19d3",
+    "local/ram-transfer-framing/checks.txt": "3cc7a7726d65c28401a6c5164ca92d3314c14a742f48f7f74bd3c02cfa4b423b",
+    "local/ram-transfer-framing/baseline-regression-controls.txt": "6610c7b34b79ce334207ff6fdb4e132e537b34f604ccca57254392e24f66391b",
+    "local/ram-transfer-framing/transfer-before.py": "63474bf2b1a07e02a47be2e19480cfb4b48df83570e93920eacaa63636de5e02",
+    "local/ram-transfer-framing/verify.py": "3fab357552efc4a08daeae2d63e955cd937c0ee7d18d5766639009ef1dccf2bc",
+    "local/ram-transfer-framing/record-evidence.py": "b7ab0e9c71a7fc65de9240406d15fee54cb1b88cf9000aec3bdeae12d5255c6d"
+  },
+  "prior_checkpoint_file_versions": {
+    "scripts/transfer_fx0_ram.py": {
+      "commit": "5a9290d49094cea33144ea9df01cfe7666466ba2",
+      "sha256": "63474bf2b1a07e02a47be2e19480cfb4b48df83570e93920eacaa63636de5e02",
+      "meaning": "Previous published version; frozen evidence retains its historical hashes."
+    },
+    "tests/test_ram_transfer.py": {
+      "commit": "5a9290d49094cea33144ea9df01cfe7666466ba2",
+      "sha256": "6a56e8e45040659bb9ea3f4f7cf232e72add7493d2c852677278359a6cc54050",
+      "meaning": "Previous published version; frozen evidence retains its historical hashes."
+    },
+    "docs/building.md": {
+      "commit": "5a9290d49094cea33144ea9df01cfe7666466ba2",
+      "sha256": "5cf74fdcd9966c41e522783756c4faccf743dc2b70091bf8e39947ebc49f909d",
+      "meaning": "Previous published version; frozen evidence retains its historical hashes."
+    },
+    "docs/development-log.md": {
+      "commit": "5a9290d49094cea33144ea9df01cfe7666466ba2",
+      "sha256": "87c908760a60d8489a97e1375bdc71ed594db1e4685647512cefbe0c2161b190",
+      "meaning": "Previous published version; frozen evidence retains its historical hashes."
+    },
+    "diagnostics/cpu-cpr-runtime/README.md": {
+      "commit": "5a9290d49094cea33144ea9df01cfe7666466ba2",
+      "sha256": "387b3d11774a19e02519784ec9cb974c3be76992d87cb0f546667f6864c0cc75",
+      "meaning": "Previous published version; frozen evidence retains its historical hashes."
+    }
+  },
+  "full_bringup": "in progress"
+}

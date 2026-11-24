@@ -1,0 +1,110 @@
+{
+  "base_commit": "8e16f8bbf1bd528975fd6f4081eaf00513c1d83e",
+  "draft_commit": "e33d4f520c20cf3002183ad0bd1d31df61f226a2",
+  "draft_tree": "fff0c8eeb66183d86542ac61790293a6b5102024",
+  "original_downstream_commit": "6d3c6c42f7bbfcc93dfac4e46da6debe23e4f3bd",
+  "build_commit_equivalence": {
+    "recorded_UTC": "2026-11-12T01:49:59.533740+00:00",
+    "tested_commit": "05885fde94807e2028feaf19c11c3fd555a8170c",
+    "review_commit": "e33d4f520c20cf3002183ad0bd1d31df61f226a2",
+    "exact_source_tree": "fff0c8eeb66183d86542ac61790293a6b5102024",
+    "source_tree_unchanged": true,
+    "reason": "Commit-message attribution wording fixed after strict checkpatch; no source/config/compiler change",
+    "build_receipt": "arm-run01/verification.json"
+  },
+  "ARM_object_builds": {
+    "stage": "complete",
+    "builds": [
+      {
+        "ARM_ELF32": true,
+        "object_sha256": "e8abc3c536f91c33541285b5d94acc6ddbeb067f1f662e18e00ad6d227f0c539",
+        "KCFI_compile_flag": true,
+        "ARM_callback_type_words": {
+          "rmi_i2c_suspend": "0x2a703c0b",
+          "rmi_i2c_resume": "0x2a703c0b",
+          "rmi_i2c_runtime_suspend": "0x2a703c0b",
+          "rmi_i2c_runtime_resume": "0x2a703c0b"
+        },
+        "compressed_debug_info": true,
+        "actual_DWARF_version": 5,
+        "label": "base",
+        "source_paths_verified": 97264,
+        "diagnostic_lines": 0
+      },
+      {
+        "ARM_ELF32": true,
+        "object_sha256": "666b4fca80114ab566f109949a16d4b3914d7d95d036867619a93c2d31d678a0",
+        "KCFI_compile_flag": true,
+        "ARM_callback_type_words": {
+          "rmi_i2c_suspend": "0x2a703c0b",
+          "rmi_i2c_resume": "0x2a703c0b",
+          "rmi_i2c_runtime_suspend": "0x2a703c0b",
+          "rmi_i2c_runtime_resume": "0x2a703c0b"
+        },
+        "compressed_debug_info": true,
+        "actual_DWARF_version": 5,
+        "label": "patched",
+        "source_paths_verified": 97264,
+        "diagnostic_lines": 0
+      }
+    ],
+    "phone_commands": 0,
+    "complete": true,
+    "updated_UTC": "2026-11-12T01:47:26.135315+00:00",
+    "actual_ARM_objects": 2,
+    "full_kernel_or_module_link": false,
+    "physical_boot": false,
+    "normalized_config_preserved": true,
+    "configured_security_features_reduced": false,
+    "source_read_only_during_build": true,
+    "runtime_private_keys_read_or_hashed_or_exported": false,
+    "finished_UTC": "2026-11-12T01:47:30.117664+00:00"
+  },
+  "behavior": {
+    "actual_callbacks": true,
+    "lifecycle_cases": 119,
+    "original_defect_rejected": true,
+    "independent_regression_controls_rejected": 4,
+    "sanitizers": "ASan and UBSan",
+    "PM_core": "Source-checked model; the kernel PM core is not executed by this host fixture"
+  },
+  "strict_checkpatch": {
+    "returncode": 0,
+    "only_signoff_check_disabled": true,
+    "errors": 0,
+    "warnings": 0,
+    "checks": 0
+  },
+  "export_replay": {
+    "exact_tree_match": true,
+    "patch_sha256": "308bdd151fa3037cc542b7fc54e6d927f4f3d36679e3fdaa222bef046faf4e5d"
+  },
+  "normalized_config_sha256": "30cf92af2d81facf317ce4a65072af09d21b026c7a92aaf25d7a2cfffc0a12d5",
+  "full_kernel_or_module_link": false,
+  "exact_tree_physical_boot_or_suspend": false,
+  "regulator_disable_failure_coverage": false,
+  "GCC": false,
+  "human_review_and_DCO_pending": true,
+  "upstream_messages_sent": 0,
+  "public_source_branch_pushed": true,
+  "source_publication": {
+    "recorded_UTC": "2026-11-12T02:18:15.461633+00:00",
+    "repository": "https://github.com/timschmidt/fx0-linux.git",
+    "branch": "refs/heads/submit/rmi4-suspend-completion-v1",
+    "commit": "e33d4f520c20cf3002183ad0bd1d31df61f226a2",
+    "remote_ref_verified": true,
+    "unsigned_review_draft": true,
+    "force": false,
+    "tool_session": 95836,
+    "actual_tool_terminal_exit_code": 0,
+    "actual_systemd_main_status": "0/SUCCESS",
+    "actual_systemd_result": "success",
+    "source_push_runtime_seconds": 53.076,
+    "memory_peak_reported": "1G",
+    "swap_reported": "0B",
+    "upstream_history_preserved": true,
+    "full_mainline_history_claimed": false,
+    "upstream_email_or_PR_sent": false,
+    "standing_GitHub_push_approval_used": true
+  }
+}

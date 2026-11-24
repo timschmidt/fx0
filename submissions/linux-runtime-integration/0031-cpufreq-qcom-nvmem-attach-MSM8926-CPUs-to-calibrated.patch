@@ -1,0 +1,665 @@
+From 8a5bc73ffd9e4d47b4cf77dbc756257da7db5701 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 16:33:09 +0000
+Subject: [PATCH 31/35] cpufreq: qcom-nvmem: attach MSM8926 CPUs to calibrated
+ CPR
+
+Obtain CPU eligibility from the already validated supplier and use it for CPU OPP filtering. Attach each CPU to the named domain before registering cpufreq-dt; retain provider-owned clock handles and reject an unexpected CPR reference source.
+
+Source-patch: patches/linux-integration/fx0-msm8926-cpufreq-attachment.diff
+Source-sha256: 7475b0e1164770b065976a9e19b6128d4841330d634db50921652b017f665ecd
+---
+ MAINTAINERS                                |   4 +-
+ drivers/cpufreq/cpufreq-dt-platdev.c       |  13 ++
+ drivers/cpufreq/qcom-cpufreq-nvmem.c       |  46 ++++-
+ drivers/pmdomain/qcom/cpr-msm8926-corner.h |  60 +++++--
+ drivers/pmdomain/qcom/cpr.c                | 186 ++++++++++++++++++---
+ include/linux/soc/qcom/cpr.h               |  20 +++
+ 6 files changed, 284 insertions(+), 45 deletions(-)
+ create mode 100644 include/linux/soc/qcom/cpr.h
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 08cfc86df790..2f8cc887c894 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -21127,8 +21127,9 @@ L:	linux-pm@vger.kernel.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+-F:	drivers/pmdomain/qcom/cpr*.h
+ F:	drivers/pmdomain/qcom/cpr.c
++F:	drivers/pmdomain/qcom/cpr*.h
++F:	include/linux/soc/qcom/cpr.h
+ 
+ QUALCOMM CPUCP MAILBOX DRIVER
+ M:	Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+@@ -21144,6 +21145,7 @@ S:	Maintained
+ F:	Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+ F:	Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+ F:	drivers/cpufreq/qcom-cpufreq-nvmem.c
++F:	include/dt-bindings/opp/qcom,msm8926.h
+ 
+ QUALCOMM CRYPTO DRIVERS
+ M:	Thara Gopinath <thara.gopinath@gmail.com>
+diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
+index 47dd76acd31e..e339f2aff39b 100644
+--- a/drivers/cpufreq/cpufreq-dt-platdev.c
++++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+@@ -220,6 +220,15 @@ static bool __init cpu0_node_has_opp_v2_prop(void)
+ 	return ret;
+ }
+ 
++static bool __init cpu0_uses_msm8926_cpr(void)
++{
++	struct device_node *cpu __free(device_node) = of_cpu_device_node_get(0);
++	struct device_node *opps __free(device_node) =
++		of_parse_phandle(cpu, "operating-points-v2", 0);
++
++	return of_device_is_compatible(opps, "operating-points-v2-msm8926-cpu");
++}
++
+ static int __init cpufreq_dt_platdev_init(void)
+ {
+ 	struct device_node *np __free(device_node) = of_find_node_by_path("/");
+@@ -229,6 +238,10 @@ static int __init cpufreq_dt_platdev_init(void)
+ 	if (!np)
+ 		return -ENODEV;
+ 
++	/* This table requires calibrated CPU/domain filtering before registration. */
++	if (cpu0_uses_msm8926_cpr())
++		return -ENODEV;
++
+ 	match = of_match_node(allowlist, np);
+ 	if (match) {
+ 		data = match->data;
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index 765a5bb81829..0fb5ee30f074 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -28,6 +28,7 @@
+ #include <linux/pm_opp.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/slab.h>
++#include <linux/soc/qcom/cpr.h>
+ #include <linux/soc/qcom/smem.h>
+ 
+ #include <dt-bindings/arm/qcom,ids.h>
+@@ -54,6 +55,7 @@ struct qcom_cpufreq_match_data {
+ 			   struct qcom_cpufreq_drv *drv);
+ 	const char **pd_names;
+ 	unsigned int num_pd_names;
++	bool cpr_supported_hw;
+ };
+ 
+ struct qcom_cpufreq_drv_cpu {
+@@ -419,6 +421,12 @@ static const struct qcom_cpufreq_match_data match_data_qcs404 = {
+ 	.num_pd_names = 1,
+ };
+ 
++static const struct qcom_cpufreq_match_data match_data_msm8926 = {
++	.pd_names = (const char *[]) { "cpr" },
++	.num_pd_names = 1,
++	.cpr_supported_hw = true,
++};
++
+ static const struct qcom_cpufreq_match_data match_data_ipq6018 = {
+ 	.get_version = qcom_cpufreq_ipq6018_name_version,
+ };
+@@ -452,8 +460,14 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 	char *pvs_name = pvs_name_buffer;
+ 	unsigned cpu;
+ 	const struct of_device_id *match;
++	const struct qcom_cpufreq_match_data *data;
+ 	int ret;
+ 
++	match = pdev->dev.platform_data;
++	if (!match || !match->data)
++		return -EINVAL;
++	data = match->data;
++
+ 	cpu_dev = get_cpu_device(0);
+ 	if (!cpu_dev)
+ 		return -ENODEV;
+@@ -463,8 +477,11 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 	if (!np)
+ 		return -ENOENT;
+ 
+-	ret = of_device_is_compatible(np, "operating-points-v2-kryo-cpu") ||
+-	      of_device_is_compatible(np, "operating-points-v2-krait-cpu");
++	if (data->cpr_supported_hw)
++		ret = of_device_is_compatible(np, "operating-points-v2-msm8926-cpu");
++	else
++		ret = of_device_is_compatible(np, "operating-points-v2-kryo-cpu") ||
++		      of_device_is_compatible(np, "operating-points-v2-krait-cpu");
+ 	if (!ret)
+ 		return -ENOENT;
+ 
+@@ -473,12 +490,14 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 	if (!drv)
+ 		return -ENOMEM;
+ 
+-	match = pdev->dev.platform_data;
+-	drv->data = match->data;
+-	if (!drv->data)
+-		return -ENODEV;
++	drv->data = data;
+ 
+-	if (drv->data->get_version) {
++	if (data->cpr_supported_hw) {
++		ret = qcom_cpr_msm8926_get_supported_hw(cpu_dev, &drv->versions);
++		if (ret)
++			return dev_err_probe(cpu_dev, ret, "CPR eligibility unavailable\n");
++		pvs_name = NULL;
++	} else if (data->get_version) {
+ 		speedbin_nvmem = of_nvmem_cell_get(np, NULL);
+ 		if (IS_ERR(speedbin_nvmem))
+ 			return dev_err_probe(cpu_dev, PTR_ERR(speedbin_nvmem),
+@@ -504,7 +523,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 			goto free_opp;
+ 		}
+ 
+-		if (drv->data->get_version) {
++		if (drv->data->get_version || drv->data->cpr_supported_hw) {
+ 			config.supported_hw = &drv->versions;
+ 			config.supported_hw_count = 1;
+ 
+@@ -592,6 +611,7 @@ static struct platform_driver qcom_cpufreq_driver = {
+ static const struct of_device_id qcom_cpufreq_match_list[] __initconst __maybe_unused = {
+ 	{ .compatible = "qcom,apq8096", .data = &match_data_kryo },
+ 	{ .compatible = "qcom,msm8909", .data = &match_data_msm8909 },
++	{ .compatible = "qcom,msm8926", .data = &match_data_msm8926 },
+ 	{ .compatible = "qcom,msm8996", .data = &match_data_kryo },
+ 	{ .compatible = "qcom,qcs404", .data = &match_data_qcs404 },
+ 	{ .compatible = "qcom,ipq5332", .data = &match_data_kryo },
+@@ -626,6 +646,16 @@ static int __init qcom_cpufreq_init(void)
+ 	if (!match)
+ 		return -ENODEV;
+ 
++	if (((const struct qcom_cpufreq_match_data *)match->data)->cpr_supported_hw) {
++		struct device_node *cpu __free(device_node) = of_cpu_device_node_get(0);
++		struct device_node *opps __free(device_node) =
++			of_parse_phandle(cpu, "operating-points-v2", 0);
++
++		/* Legacy MSM8926 boards keep their ordinary cpufreq-dt route. */
++		if (!of_device_is_compatible(opps, "operating-points-v2-msm8926-cpu"))
++			return -ENODEV;
++	}
++
+ 	ret = platform_driver_register(&qcom_cpufreq_driver);
+ 	if (unlikely(ret < 0))
+ 		return ret;
+diff --git a/drivers/pmdomain/qcom/cpr-msm8926-corner.h b/drivers/pmdomain/qcom/cpr-msm8926-corner.h
+index 67d15624d96f..7a84fe82cad3 100644
+--- a/drivers/pmdomain/qcom/cpr-msm8926-corner.h
++++ b/drivers/pmdomain/qcom/cpr-msm8926-corner.h
+@@ -2,6 +2,8 @@
+ #ifndef __QCOM_CPR_MSM8926_CORNER_H__
+ #define __QCOM_CPR_MSM8926_CORNER_H__
+ 
++#include <linux/array_size.h>
++
+ #include "cpr-msm8926-voltage.h"
+ 
+ struct cpr_msm8926_corner {
+@@ -15,6 +17,12 @@ struct cpr_msm8926_corner {
+ 	int mx_min_uV;
+ };
+ 
++static const unsigned long cpr_msm8926_rates[] = {
++	300000000, 384000000, 600000000, 787200000, 998400000,
++	1094400000, 1190400000, 1305600000, 1344000000,
++	1401600000, 1497600000, 1593600000, 1689600000, 1785600000,
++};
++
+ /*
+  * Reproduce clock-a7's first covering fmax entry, including its conservative
+  * speed0/v0 fallback. Clock and CPR speed-bin selectors are intentionally
+@@ -26,11 +34,7 @@ cpr_msm8926_map_corner(const struct cpr_msm8926_calibration *calibration,
+ 		       const struct cpr_msm8926_voltage_plan *plan,
+ 		       unsigned long rate, struct cpr_msm8926_corner *corner)
+ {
+-	static const unsigned long frequency[] = {
+-		300000000, 384000000, 600000000, 787200000, 998400000,
+-		1094400000, 1190400000, 1305600000, 1344000000,
+-		1401600000, 1497600000, 1593600000, 1689600000, 1785600000,
+-	};
++	const unsigned long *frequency = cpr_msm8926_rates;
+ 	struct cpr_msm8926_corner result = {};
+ 	unsigned int maximum = 7, selected, fuse, i;
+ 	bool extended = false;
+@@ -39,6 +43,9 @@ cpr_msm8926_map_corner(const struct cpr_msm8926_calibration *calibration,
+ 		return -EINVAL;
+ 	if (calibration->clock_speed_bin > 7 || calibration->pvs_version > 3)
+ 		return -EINVAL;
++	if (rate > 787200000 &&
++	    (!calibration->clock_bin_valid || !calibration->fuse_allows_loop))
++		return -ERANGE;
+ 	if (calibration->pvs_version == 1) {
+ 		switch (calibration->clock_speed_bin) {
+ 		case 0:
+@@ -73,18 +80,22 @@ cpr_msm8926_map_corner(const struct cpr_msm8926_calibration *calibration,
+ 		selected = i + 1;
+ 	}
+ 	fuse = selected <= 2 ? 0 : selected <= 4 ? 1 : 2;
+-	if (calibration->quotient_adjust[selected - 1] >= calibration->quotient[fuse] ||
+-	    calibration->quotient[fuse] > 4095 || calibration->ring_osc[fuse] > 7 ||
+-	    plan->floor_uV[fuse] <= 0 ||
++	if (plan->floor_uV[fuse] <= 0 ||
+ 	    plan->floor_uV[fuse] > plan->initial_uV[fuse] ||
+ 	    plan->initial_uV[fuse] > plan->ceiling_uV[fuse] ||
+ 	    plan->ceiling_uV[fuse] > plan->mx_min_uV[fuse])
+ 		return -EINVAL;
++	if (calibration->fuse_allows_loop &&
++	    (calibration->quotient_adjust[selected - 1] >= calibration->quotient[fuse] ||
++	     calibration->quotient[fuse] > 4095 || calibration->ring_osc[fuse] > 7))
++		return -EINVAL;
+ 	result.virtual_corner = selected;
+ 	result.fuse_corner = fuse + 1;
+-	result.quotient = calibration->quotient[fuse] -
+-			  calibration->quotient_adjust[selected - 1];
+-	result.ring_osc = calibration->ring_osc[fuse];
++	if (calibration->fuse_allows_loop) {
++		result.quotient = calibration->quotient[fuse] -
++				  calibration->quotient_adjust[selected - 1];
++		result.ring_osc = calibration->ring_osc[fuse];
++	}
+ 	result.floor_uV = plan->floor_uV[fuse];
+ 	result.ceiling_uV = plan->ceiling_uV[fuse];
+ 	result.initial_uV = plan->initial_uV[fuse];
+@@ -93,4 +104,31 @@ cpr_msm8926_map_corner(const struct cpr_msm8926_calibration *calibration,
+ 	return 0;
+ }
+ 
++/* One bit per canonical rate; CPU and CPR tables must use the same mask. */
++static inline int
++cpr_msm8926_supported_hw(const struct cpr_msm8926_calibration *calibration,
++			 const struct cpr_msm8926_voltage_plan *plan, u32 *mask)
++{
++	struct cpr_msm8926_corner corner;
++	u32 result = 0;
++	unsigned int i;
++	int ret;
++
++	if (!mask)
++		return -EINVAL;
++	for (i = 0; i < ARRAY_SIZE(cpr_msm8926_rates); i++) {
++		ret = cpr_msm8926_map_corner(calibration, plan, cpr_msm8926_rates[i],
++					     &corner);
++		if (ret == -ERANGE)
++			break;
++		if (ret)
++			return ret;
++		result |= 1U << i;
++	}
++	if (!result)
++		return -ERANGE;
++	*mask = result;
++	return 0;
++}
++
+ #endif
+diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
+index 80d24227bec4..b7e8b88aee12 100644
+--- a/drivers/pmdomain/qcom/cpr.c
++++ b/drivers/pmdomain/qcom/cpr.c
+@@ -16,6 +16,7 @@
+ #include <linux/bitops.h>
+ #include <linux/slab.h>
+ #include <linux/of.h>
++#include <linux/of_platform.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_domain.h>
+ #include <linux/pm_opp.h>
+@@ -26,6 +27,7 @@
+ #include <linux/clk.h>
+ #include <linux/nvmem-consumer.h>
+ #include <linux/suspend.h>
++#include <linux/soc/qcom/cpr.h>
+ 
+ #include "cpr-voltage.h"
+ #include "cpr-msm8926-corner.h"
+@@ -234,15 +236,20 @@ struct cpr_msm8926_data {
+ 	struct cpr_msm8926_voltage_plan plan;
+ 	bool apc_enabled;
+ 	bool applied;
++	u32 supported_hw;
++	int opp_token;
++	struct regmap *apcs;
+ };
+ 
++static struct platform_driver cpr_driver;
++
+ struct cpr_drv {
+ 	unsigned int		num_corners;
+ 	unsigned int		ref_clk_khz;
+ 
+ 	struct generic_pm_domain pd;
+ 	struct device		*dev;
+-	struct device		*attached_cpu_dev;
++	bool			initialized;
+ 	struct mutex		lock;
+ 	void __iomem		*base;
+ 	struct corner		*corner;
+@@ -711,13 +718,32 @@ static int cpr_disable(struct cpr_drv *drv)
+ 	return regulator_disable(drv->rails.apc);
+ }
+ 
++/* MSM8226 APCS + 0x64 bit 0: zero selects XO, one selects AHB. */
++static int cpr_msm8926_check_refclock(struct regmap *apcs)
++{
++	unsigned int value;
++	int ret;
++
++	ret = regmap_read(apcs, 0x64, &value);
++	if (ret)
++		return ret;
++	return value & BIT(0) ? -EINVAL : 0;
++}
++
+ static int cpr_config(struct cpr_drv *drv)
+ {
+-	int i;
++	int i, ret;
+ 	u32 val, gcnt;
+ 	struct corner *corner;
+ 	const struct cpr_desc *desc = drv->desc;
+ 
++	/* Do not program XO-derived targets against an inherited AHB source. */
++	if (drv->msm8926) {
++		ret = cpr_msm8926_check_refclock(drv->msm8926->apcs);
++		if (ret)
++			return ret;
++	}
++
+ 	/* Disable interrupt and CPR */
+ 	cpr_write(drv, REG_RBIF_IRQ_EN(0), 0);
+ 	cpr_write(drv, REG_RBCPR_CTL, 0);
+@@ -794,7 +820,7 @@ static int cpr_set_performance_state(struct generic_pm_domain *domain,
+ 		return -EBUSY;
+ 	if (!state)
+ 		return drv->msm8926 ? 0 : -EINVAL;
+-	if (!drv->attached_cpu_dev || state > drv->num_corners)
++	if (!drv->initialized || state > drv->num_corners)
+ 		return -EINVAL;
+ 
+ 	/*
+@@ -1121,6 +1147,8 @@ static int __maybe_unused cpr_msm8926_init(struct cpr_drv *drv)
+ 	struct cpr_msm8926_data *data;
+ 	struct regulator *mx;
+ 	struct fuse_corner *fuse;
++	struct clk *cpu_clk;
++	long rounded;
+ 	int ret, boot_uV;
+ 	unsigned int i;
+ 
+@@ -1128,6 +1156,13 @@ static int __maybe_unused cpr_msm8926_init(struct cpr_drv *drv)
+ 	if (!data)
+ 		return -ENOMEM;
+ 	ret = cpr_msm8926_read_calibration(drv->dev, &data->calibration);
++	if (ret)
++		return ret;
++	data->apcs = syscon_regmap_lookup_by_phandle(drv->dev->of_node,
++						     "qcom,apcs-syscon");
++	if (IS_ERR(data->apcs))
++		return PTR_ERR(data->apcs);
++	ret = cpr_msm8926_check_refclock(data->apcs);
+ 	if (ret)
+ 		return ret;
+ 	mx = devm_regulator_get(drv->dev, "vdd-mx");
+@@ -1139,6 +1174,25 @@ static int __maybe_unused cpr_msm8926_init(struct cpr_drv *drv)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = cpr_msm8926_supported_hw(&data->calibration, &data->plan,
++				       &data->supported_hw);
++	if (ret)
++		return ret;
++
++	/* The provider owns this handle across virtual CPU detach/probe retries. */
++	cpu_clk = devm_clk_get(drv->dev, "cpu");
++	if (IS_ERR(cpu_clk))
++		return PTR_ERR(cpu_clk);
++	for (i = 0; i < ARRAY_SIZE(cpr_msm8926_rates); i++) {
++		if (!(data->supported_hw & (1U << i)))
++			continue;
++		rounded = clk_round_rate(cpu_clk, cpr_msm8926_rates[i]);
++		if (rounded < 0)
++			return rounded;
++		if ((unsigned long)rounded != cpr_msm8926_rates[i])
++			return -ERANGE;
++	}
++
+ 	/* Read/calculation only. Attachment establishes the live MX vote later. */
+ 	for (i = 0; i < 3; i++) {
+ 		fuse = &drv->fuse_corners[i];
+@@ -1146,16 +1200,69 @@ static int __maybe_unused cpr_msm8926_init(struct cpr_drv *drv)
+ 		fuse->max_uV = data->plan.ceiling_uV[i];
+ 		fuse->uV = data->plan.initial_uV[i];
+ 		fuse->mx_min_uV = data->plan.mx_min_uV[i];
+-		fuse->quot = data->calibration.quotient[i];
+-		fuse->ring_osc_idx = data->calibration.ring_osc[i];
++		fuse->quot = data->calibration.fuse_allows_loop ?
++			data->calibration.quotient[i] : 0;
++		fuse->ring_osc_idx = data->calibration.fuse_allows_loop ?
++			data->calibration.ring_osc[i] : 0;
+ 		fuse->step_quot = 30;
+ 	}
++	drv->cpu_clk = cpu_clk;
+ 	drv->rails.mx = mx;
+ 	drv->rails.mx_max_uV = 1337500;
+ 	drv->msm8926 = data;
+ 	return 0;
+ }
+ 
++#if IS_ENABLED(CONFIG_QCOM_CPR_MSM8926)
++/**
++ * qcom_cpr_msm8926_get_supported_hw() - CPU eligibility from its CPR supplier
++ * @cpu: CPU device naming its zero-cell MSM8926 domain as "cpr"
++ * @mask: output mask shared with the supplier's already-filtered OPP table
++ *
++ * Calibration and provider voltages are validated once in the supplier probe.
++ * This sleepable query changes no regulator, clock or OPP configuration.
++ * Return: 0 on success, -EPROBE_DEFER until the supplier is ready, or an error.
++ */
++int qcom_cpr_msm8926_get_supported_hw(struct device *cpu, u32 *mask)
++{
++	struct of_phandle_args args;
++	struct platform_device *provider;
++	struct cpr_drv *drv;
++	int index, ret;
++
++	if (!cpu || !cpu->of_node || !mask)
++		return -EINVAL;
++	index = of_property_match_string(cpu->of_node, "power-domain-names", "cpr");
++	if (index < 0)
++		return index;
++	ret = of_parse_phandle_with_args(cpu->of_node, "power-domains",
++					 "#power-domain-cells", index, &args);
++	if (ret)
++		return ret;
++	if (args.args_count || !of_device_is_compatible(args.np, "qcom,msm8926-cpr")) {
++		of_node_put(args.np);
++		return -EINVAL;
++	}
++	provider = of_find_device_by_node(args.np);
++	of_node_put(args.np);
++	if (!provider)
++		return -EPROBE_DEFER;
++
++	device_lock(&provider->dev);
++	drv = platform_get_drvdata(provider);
++	ret = -EPROBE_DEFER;
++	if (provider->dev.driver == &cpr_driver.driver && drv && drv->msm8926) {
++		ret = drv->msm8926->supported_hw ? 0 : -EINVAL;
++		if (!ret)
++			*mask = drv->msm8926->supported_hw;
++	}
++	device_unlock(&provider->dev);
++	put_device(&provider->dev);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(qcom_cpr_msm8926_get_supported_hw);
++#endif
++
+ static int cpr_msm8926_corner_init(struct cpr_drv *drv, struct device *cpu_dev)
+ {
+ 	const struct cpr_msm8926_calibration *cal = &drv->msm8926->calibration;
+@@ -1169,7 +1276,8 @@ static int cpr_msm8926_corner_init(struct cpr_drv *drv, struct device *cpu_dev)
+ 	long rounded;
+ 	int ret;
+ 
+-	if (drv->num_corners > 14)
++	if (!drv->num_corners || drv->num_corners > 14 ||
++	    drv->msm8926->supported_hw != (1U << drv->num_corners) - 1)
+ 		return -EINVAL;
+ 	for (i = 0; i < 3; i++)
+ 		drv->fuse_corners[i].max_freq = 0;
+@@ -1180,7 +1288,8 @@ static int cpr_msm8926_corner_init(struct cpr_drv *drv, struct device *cpu_dev)
+ 		fc = cpr_get_fuse_corner(opp);
+ 		freq = cpr_get_opp_hz_for_req(opp, cpu_dev);
+ 		dev_pm_opp_put(opp);
+-		if (!freq || freq <= previous || !fc || fc > 3)
++		if (!freq || freq <= previous || !fc || fc > 3 ||
++		    freq != cpr_msm8926_rates[level - 1])
+ 			return -EINVAL;
+ 		/* Bad clock/feedback fuses cannot authorize faster CPU operation. */
+ 		if (freq > 787200000 && (!cal->clock_bin_valid || !cal->fuse_allows_loop))
+@@ -1615,11 +1724,10 @@ static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+ 	/*
+ 	 * This driver only supports scaling voltage for a CPU cluster
+ 	 * where all CPUs in the cluster share a single regulator.
+-	 * Therefore, save the struct device pointer only for the first
+-	 * CPU device that gets attached. There is no need to do any
+-	 * additional initialization when further CPUs get attached.
++	 * Initialize the shared plan once. Further CPU attachments reuse
++	 * the immutable calibration and OPP configuration.
+ 	 */
+-	if (drv->attached_cpu_dev)
++	if (drv->initialized)
+ 		return 0;
+ 
+ 	/*
+@@ -1631,10 +1739,12 @@ static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+ 	 * set by the bootloader, so that we can determine the direction
+ 	 * the first time cpr_set_performance_state() is called.
+ 	 */
+-	drv->cpu_clk = devm_clk_get(dev, NULL);
+-	if (IS_ERR(drv->cpu_clk))
+-		return dev_err_probe(drv->dev, PTR_ERR(drv->cpu_clk),
+-				     "could not get cpu clk\n");
++	if (!drv->msm8926) {
++		drv->cpu_clk = devm_clk_get(dev, NULL);
++		if (IS_ERR(drv->cpu_clk))
++			return dev_err_probe(drv->dev, PTR_ERR(drv->cpu_clk),
++					     "could not get cpu clk\n");
++	}
+ 
+ 	dev_dbg(drv->dev, "using cpu clk from: %s\n", dev_name(dev));
+ 
+@@ -1715,7 +1825,7 @@ static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+ 	}
+ 
+ 	/* Only a fully initialized attachment may bypass setup on retry. */
+-	drv->attached_cpu_dev = dev;
++	drv->initialized = true;
+ 
+ 	dev_info(drv->dev, "driver initialized with %u OPPs\n",
+ 		 drv->num_corners);
+@@ -1786,6 +1896,38 @@ static void cpr_debugfs_init(struct cpr_drv *drv)
+ 			    drv, &cpr_debug_info_fops);
+ }
+ 
++static int cpr_register_domain(struct cpr_drv *drv)
++{
++	struct device *dev = drv->dev;
++	int ret;
++
++	ret = pm_genpd_init(&drv->pd, NULL, !drv->msm8926);
++	if (ret)
++		return ret;
++	if (drv->msm8926) {
++		/* Configure filtering before provider registration parses its table. */
++		drv->pd.dev.of_node = dev->of_node;
++		ret = dev_pm_opp_set_supported_hw(&drv->pd.dev,
++						  &drv->msm8926->supported_hw, 1);
++		if (ret < 0)
++			goto err_remove_genpd;
++		drv->msm8926->opp_token = ret;
++	}
++
++	ret = of_genpd_add_provider_simple(dev->of_node, &drv->pd);
++	if (ret)
++		goto err_clear_opp;
++
++	return 0;
++
++err_clear_opp:
++	if (drv->msm8926)
++		dev_pm_opp_clear_config(drv->msm8926->opp_token);
++err_remove_genpd:
++	pm_genpd_remove(&drv->pd);
++	return ret;
++}
++
+ static int cpr_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -1889,22 +2031,14 @@ static int cpr_probe(struct platform_device *pdev)
+ 	if (drv->msm8926)
+ 		drv->pd.flags |= GENPD_FLAG_ALWAYS_ON | GENPD_FLAG_ACTIVE_WAKEUP;
+ 
+-	ret = pm_genpd_init(&drv->pd, NULL, !drv->msm8926);
++	ret = cpr_register_domain(drv);
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = of_genpd_add_provider_simple(dev->of_node, &drv->pd);
+-	if (ret)
+-		goto err_remove_genpd;
+-
+ 	platform_set_drvdata(pdev, drv);
+ 	cpr_debugfs_init(drv);
+ 
+ 	return 0;
+-
+-err_remove_genpd:
+-	pm_genpd_remove(&drv->pd);
+-	return ret;
+ }
+ 
+ static void cpr_remove(struct platform_device *pdev)
+@@ -1917,6 +2051,8 @@ static void cpr_remove(struct platform_device *pdev)
+ 	}
+ 
+ 	of_genpd_del_provider(pdev->dev.of_node);
++	if (drv->msm8926)
++		dev_pm_opp_clear_config(drv->msm8926->opp_token);
+ 	pm_genpd_remove(&drv->pd);
+ 
+ 	debugfs_remove_recursive(drv->debugfs);
+diff --git a/include/linux/soc/qcom/cpr.h b/include/linux/soc/qcom/cpr.h
+new file mode 100644
+index 000000000000..da153c7fb693
+--- /dev/null
++++ b/include/linux/soc/qcom/cpr.h
+@@ -0,0 +1,20 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef __LINUX_SOC_QCOM_CPR_H__
++#define __LINUX_SOC_QCOM_CPR_H__
++
++#include <linux/errno.h>
++#include <linux/kconfig.h>
++#include <linux/types.h>
++
++struct device;
++
++#if IS_ENABLED(CONFIG_QCOM_CPR_MSM8926)
++int qcom_cpr_msm8926_get_supported_hw(struct device *cpu, u32 *mask);
++#else
++static inline int qcom_cpr_msm8926_get_supported_hw(struct device *cpu, u32 *mask)
++{
++	return -EOPNOTSUPP;
++}
++#endif
++
++#endif

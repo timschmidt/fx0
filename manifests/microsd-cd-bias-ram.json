@@ -1,0 +1,44 @@
+{
+  "subject": "Fx0 SDHC2 GPIO37 stock-bias comparison",
+  "patch": "diagnostics/microsd/fx0-sdhc2-stock-cd-bias.patch",
+  "patch_sha256": "54f7b7eb9b8539b9dd427a36177efabd81977ea20d75026ecaf587eac7de74db",
+  "paired_RAM_images": {
+    "images": {
+      "pull-up-control": {
+        "path": "local/microsd-observation-01/fx0-r50-sdhc2-pull-up-control-ram.img",
+        "sha256": "88a5a66bd711f68ac38980c955a3f3320ed432fe045d9a2aa0dd5613062d2315",
+        "bytes": 6230016,
+        "dtb_sha256": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda"
+      },
+      "stock-bias-candidate": {
+        "path": "local/microsd-observation-01/fx0-r50-sdhc2-stock-bias-candidate-ram.img",
+        "sha256": "1eaab0bf37f805a7eca44ba2c3c2e3bb60fa3220b3b9bd43a044fc304f57017a",
+        "bytes": 6230016,
+        "dtb_sha256": "b38c7f7f865614c03976977575262702828bc9fcaf667e05a3ad457758fa1dea"
+      }
+    },
+    "kernel_sha256": "7e896bb7c3fc80d7d8c8306a659fa57c1bcb3924ec2aaf37b77924e23c274417",
+    "kernel_notes_sha256": "cb8ff4d80009dbd0b4542ce5d28d7ce10e4d84e0db4e332c749ff8ae18a08269",
+    "kernel_exact_retained_native_r50": true,
+    "cmdline": "console=ttyMSM0,115200 earlycon rdinit=/init loglevel=8 ignore_loglevel panic=60 reboot=w lk2nd.pass-ramoops=zap dyndbg=\"file drivers/usb/chipidea/* +p; file drivers/phy/qualcomm/phy-qcom-usb-hs.c +p\"",
+    "compressed_initramfs_sha256": "abca8a5717fe3063a19f285c2f2e2b4100cd6b061f647c21935cf00fa11edf3b",
+    "reference_ram_image_sha256": "349ab28ce8d8c48a9699d67e9b84ed53e9038baeac896f3a8fd923c96b1d853b",
+    "preserved_timer_seconds": 180,
+    "candidate_differs_only_in_DTB_bias_and_derived_header": true,
+    "booted_or_staged": false,
+    "moduleless_RAM_images": true
+  },
+  "live_read_control": {
+    "bytes": 4194304,
+    "sectors_read": 8192,
+    "sectors_written": 0,
+    "IRQ_delta": {
+      "controller": 18,
+      "power": 0,
+      "card_detect": 0
+    }
+  },
+  "card_detect_writeback_root_cause_identified": false,
+  "physical_bias_comparison_done": false,
+  "microSD_suspend_qualified": false
+}

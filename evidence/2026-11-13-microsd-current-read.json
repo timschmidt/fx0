@@ -1,0 +1,57 @@
+{
+  "recorded_UTC": "2026-11-13T20:22:12.865683+00:00",
+  "scope": "Bounded read-only SDHC2 subcheck on the accepted current installed kernel and post-Vim package baseline",
+  "manifest": "manifests/microsd-current-read.json",
+  "manifest_sha256": "71b4997647829892e5e8232ff5289b33a289939136bfc4a26541f5631aff3fa9",
+  "boot_id": "6114df77-29f2-43ac-8ede-1ca72c743895",
+  "kernel": "6.18.63-fx0-vibrator-alpine",
+  "media_type": "SD",
+  "filesystem": "FAT32 partition, initially unmounted",
+  "direct_read_bytes": 4194304,
+  "idle_delta": {
+    "seconds": 3.017316294994089,
+    "IRQ_delta": {
+      "controller": 0,
+      "power": 0,
+      "card_detect": 0
+    },
+    "sectors_read": 0,
+    "sectors_written": 0
+  },
+  "direct_read_delta": {
+    "seconds": 0.2230877210095059,
+    "IRQ_delta": {
+      "controller": 20,
+      "power": 0,
+      "card_detect": 0
+    },
+    "sectors_read": 8192,
+    "sectors_written": 0
+  },
+  "after_read_idle_delta": {
+    "seconds": 3.017447251986596,
+    "IRQ_delta": {
+      "controller": 0,
+      "power": 0,
+      "card_detect": 0
+    },
+    "sectors_read": 0,
+    "sectors_written": 0
+  },
+  "controller_counter_validated_by_direct_read": true,
+  "accepted_world_repositories_database_and_boot_image_hashes_unchanged": true,
+  "taint": 0,
+  "signature_enforcement": "Y",
+  "original_Sway_and_gesture_processes_running": true,
+  "source_diagnostic_sha256": "37ae5e873f9131f55728809036e702c90ea2fc12f0fe143e24cd1646578e7e45",
+  "SD_payload_bytes_exported": 0,
+  "media_package_or_boot_writes": false,
+  "remaining": [
+    "writeback/fsync behavior and GPIO37 interrupt burst investigation",
+    "safe removal/reinsertion, mount/unmount and ordinary removable-media policy",
+    "suspend/resume and boot with and without media",
+    "fresh-boot combined-image hardware acceptance"
+  ],
+  "full_microSD_acceptance": false,
+  "full_bringup_acceptance": false
+}

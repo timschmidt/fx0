@@ -1,0 +1,240 @@
+{
+  "recorded_UTC": "2026-11-11T11:24:03.706188+00:00",
+  "purpose": "Fresh backups and isolated rollback/native solver qualification before the already-authorized stable-kernel update",
+  "qualified_kernel_RAM_manifest": "manifests/kernel-native-6.18.63-ram.json",
+  "backup": {
+    "recorded_UTC": "2026-11-11T11:06:38.667638+00:00",
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "kernel": "6.18.59-fx0-dmp",
+    "backup_roots": [
+      "boot",
+      "usr/lib/modules",
+      "usr/share/kernel",
+      "lib/apk/db",
+      "etc/apk/world"
+    ],
+    "snapshot_paths": 2595,
+    "archive_sha256": "565c2b7826d6d13901c15c620d1b8a8842bcbf1f2c0c62de647608c9eed20e5a",
+    "archive_bytes": 147347436,
+    "raw_boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "raw_boot_bytes": 33554432,
+    "APK_database_sha256": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1",
+    "world_sha256": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+    "candidate_APK_sha256": "73d28444c42edf3feba6fa0c91f45240ef0cd12a4ae401a18ae343508e4fabc4",
+    "rollback_APK_sha256": "1790e7571564cffc1274831cee8025431a53b1255e35299865f36f95f31e2970",
+    "both_APK_signatures_verified": true,
+    "original_state_unchanged_during_backup": true,
+    "native_installation_started": false,
+    "boot_partition_written": false
+  },
+  "host_backup_verification": {
+    "recorded_UTC": "2026-11-11T11:08:11.132913+00:00",
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "host_and_phone_backup_hashes_match": true,
+    "two_independent_persistent_filesystems": true,
+    "storage_basis": "Encrypted workstation filesystem and phone eMMC ext4",
+    "host_backup": "local/kernel-native-6.18.63-install-01/host-backup",
+    "phone_backup": "/var/lib/fx0-rollback/kernel-6.18.63-01",
+    "archive_paths_verified": 2595,
+    "UID_GID_modes_symlink_targets_and_file_hashes_verified": true,
+    "nonempty_xattr_paths": 5,
+    "current_public_APK_keys_match_host_snapshot": true,
+    "ARMv7_architecture_verified": true,
+    "raw_boot_verified_on_both_phone_and_host": true,
+    "transfer_children": [
+      {
+        "name": "before-files.private.tar.gz",
+        "returncode": 0,
+        "owned_child_reaped": true,
+        "bytes": 147347436,
+        "sha256": "565c2b7826d6d13901c15c620d1b8a8842bcbf1f2c0c62de647608c9eed20e5a"
+      },
+      {
+        "name": "boot-partition.private.img",
+        "returncode": 0,
+        "owned_child_reaped": true,
+        "bytes": 33554432,
+        "sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921"
+      }
+    ],
+    "native_installation": false
+  },
+  "captured_native_SELinux_directory_labels": {
+    "paths": 5,
+    "host_rehearsal_does_not_apply_labels": true,
+    "actual_native_restore_still_required_if_rollback_runs": true
+  },
+  "isolated_APK_upgrade_and_rollback": {
+    "recorded_UTC": "2026-11-11T11:12:41.759250+00:00",
+    "scope": "Actual isolated APK upgrade/rollback and full captured tree restoration; native ARM helpers and update hooks are disabled",
+    "phases": [
+      {
+        "phase": "upgrade",
+        "returncode": 0,
+        "version": "6.18.63-r1",
+        "other_774_versions_and_signed_controls_unchanged": true,
+        "scripts_and_native_hooks_disabled": true
+      },
+      {
+        "phase": "rollback",
+        "returncode": 0,
+        "version": "6.18.59-r50",
+        "other_774_versions_and_signed_controls_unchanged": true,
+        "scripts_and_native_hooks_disabled": true
+      }
+    ],
+    "candidate_payload_files_verified": 545,
+    "original_snapshot_paths_verified": 2595,
+    "original_all_775_package_versions_and_signed_controls_restored": true,
+    "all_original_boot_modules_metadata_DB_world_bytes_and_modes_restored": true,
+    "candidate_module_directory_removed": true,
+    "normal_package_solver_retains_other_nine_exact_holds": true,
+    "raw_boot_backup_hash_verified": true,
+    "native_boot_partition_not_written": true,
+    "native_update_hooks_not_exercised": true,
+    "SELinux_directory_labels_captured_for_native_restore": 5,
+    "SELinux_labels_not_applied_on_host": true,
+    "host_or_phone_hardware_operations": false,
+    "native_installation": false
+  },
+  "native_solver_and_boot_update_input_guards": {
+    "recorded_UTC": "2026-11-11T11:18:35.338593+00:00",
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "actions": [
+      "(1/1) Upgrading linux-postmarketos-qcom-msm8226 (6.18.59-r50 -> 6.18.63-r1)"
+    ],
+    "normal_native_solver_used": true,
+    "private_mount_namespace_only": true,
+    "other_nine_exact_world_holds_preserved": true,
+    "installed_DB_world_and_raw_boot_unchanged": true,
+    "native_package_or_update_hooks_executed": false,
+    "deviceinfo": {
+      "deviceinfo_flash_kernel_on_update": "true",
+      "deviceinfo_flash_method": "fastboot",
+      "deviceinfo_flash_fastboot_partition_kernel": "",
+      "deviceinfo_flash_bootimg_offset": "524288",
+      "deviceinfo_generate_bootimg": "true",
+      "deviceinfo_append_dtb": "true",
+      "deviceinfo_dtb": "qcom-msm8926-lg-madai",
+      "deviceinfo_header_version": ""
+    },
+    "boot_deploy_mkinitfs_inputs_sha256": {
+      "/etc/deviceinfo": "05fe350fcb3c37a310388cf6991575d52842b31a476db71662c17062fc0cd2cc",
+      "/usr/share/deviceinfo/deviceinfo": "6fb7eff064b7cd6ebfa6c29ac26c74f3967973713d595d95338b02bf8d9ad03c",
+      "/usr/share/misc/source_deviceinfo": "debf1c4c75632966ec8839fd478e66ca80be57288b7f2099b8015ae95437db8f",
+      "/usr/bin/boot-deploy": "5457efb169cda3fd2fd43a80dcaede5eafe8a77800e2e15bcea1c0ca19d59e59",
+      "/usr/share/boot-deploy/os-customization": "e0772c63a732407f76044f68000b3e0d7682b5631fbe485462b24057bf7e00ce",
+      "/usr/share/boot-deploy/boot-deploy-functions.sh": "6ace3029eb96c402cba3530d4debecb0073758f2ac69732c09ad2a7975b10f9c",
+      "/usr/share/mkinitfs/files/10-wireless-regdb.files": "cab7e038a6302aa40acbfef933aedc07183daae4b9038fe9433bc47b80e1fc52",
+      "/usr/share/mkinitfs/files/00-device-lg-madai-modules.files": "5d40e35171732e6b156be9a421f6107a64f71ee17c67f78b7588761469257854",
+      "/usr/share/mkinitfs/files/postmarketos-base.files": "0f09c4438052eaf54a7a6c766dcf63e5a775b2a6f181e25348887cc74edd2c0a",
+      "/usr/share/mkinitfs/files/00-initramfs-base.files": "113198453d93f0cd1bb3dbd43de12b7442acb4a6b896b10d2a890499db409ad6",
+      "/usr/share/mkinitfs/files-extra/01-initramfs-base-systemd.files": "8de4a7e5eba171c386ccf70371bfeeab1bda57c325062ca0a5a092188a8100f0",
+      "/usr/share/mkinitfs/files-extra/00-initramfs-extra-base.files": "c2557f629bf6b8aa3b44e19155971182cc820337a78c54039b2f6a686d947220",
+      "/usr/share/mkinitfs/modules-extra/00-default-extra.modules": "6ee81e5b59b71f971b0a482c70fc39d3f23517ded8f7bf284321af92fe9ce5ca",
+      "/usr/share/mkinitfs/dirs/00-initramfs-base.dirs": "d399850dab2692d8b52458ffc58df12f29adbe2ae60a8c3378a43d3edfecdac6",
+      "/usr/share/mkinitfs/modules/00-device-lg-madai.modules": "a751bb6935068fbfa5cb958847d81b3040972013d00e1514672715b97bac9e3b",
+      "/usr/share/mkinitfs/modules/00-default.modules": "f246d26504e282ef80dd7caec1925ec8b056f898b9f804b2a73405063e380c3f",
+      "/usr/share/initramfs/init_2nd.sh": "ca07a22923cbec7d81a24581c76f33cecb683a668f2eaf3eacfb24ca42976287",
+      "/usr/share/initramfs/init.sh": "6640444ccdc102726548b378a97a6bca9465394e9db24b3f7b0e781555c76b52",
+      "/usr/share/initramfs/init_functions_2nd.sh": "be65032cd538c2f491eb0dba111859e755072d6b1cf31a9375b92ec0b43d9e06",
+      "/usr/share/initramfs/init_functions.sh": "a0c463d1068bd01b2e2cc47c97161f6f74ac4bab270c64f67217ff318e44d410",
+      "/usr/share/initramfs/mdev.conf": "848a63f3b7ef280f6d6dc0a939d7b388c106b74f62c714df5344e4cfbf8f9b62"
+    },
+    "lk2nd_prefix_bytes": 524288,
+    "lk2nd_prefix_sha256": "073271d9d5361af7bc6fbda9e137862831bf36f88dd5489b7bb3d29fa28499ba",
+    "boot_partition_resolved_from_label": true,
+    "backup_files_and_directory_fsynced": true,
+    "root_filesystem_synced": true,
+    "native_installation": false
+  },
+  "boot_layout": {
+    "installed_boot_image_bytes": 17549312,
+    "installed_boot_image_offset": 524288,
+    "raw_partition_bytes": 33554432,
+    "preserved_bootloader_prefix_bytes": 524288,
+    "preserved_bootloader_prefix_sha256": "073271d9d5361af7bc6fbda9e137862831bf36f88dd5489b7bb3d29fa28499ba",
+    "kernel_and_tail_sha256": "a112dc2e29479cdf714aa487eb3b5c0551fc15938627f96d470f4fc1649e976e",
+    "installed_boot_file_is_exact_raw_partition_substring": true,
+    "rollback_can_restore_kernel_and_tail_without_writing_bootloader": true
+  },
+  "transaction_and_boot_tail_tests": {
+    "recorded_UTC": "2026-11-11T11:24:03.529428+00:00",
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_kernel_update_transaction.py -v",
+    "returncode": 0,
+    "tests": 11,
+    "scope": [
+      "Transaction preflight isolation, successful update and verified rollback, dual failure preservation",
+      "Boot-tail writes begin at 512KiB, handle short writes, reject prefix/size/checksum/offset mismatch, no-op unchanged target, reject short initial reads and corrupt readback",
+      "Active owned hooks prevent verification and rollback after successful or failed installer return"
+    ],
+    "files_sha256": {
+      "diagnostics/kernel-maintenance/update_transaction.py": "62c41c46c495f5de30b40f2e0373bbd1f93558c5c3466e893989f8b32d37c9dc",
+      "tests/test_kernel_update_transaction.py": "bc0771a753d05ae4f9e17ec1bc8c33667e555ee803e0b0edc5988858b747c97c"
+    },
+    "phone_or_block_device_written": false,
+    "active_hooks_prevent_verification_or_rollback": true
+  },
+  "setup_stops": [
+    {
+      "attempt": 1,
+      "reason": "APK 3.0.9 rejects obsolete --allow-downgrade before upgrade begins",
+      "native_installation": false,
+      "APK_payload_written": false,
+      "correction": "Remove obsolete flag; exact restored world control and explicit local APK select rollback version"
+    },
+    {
+      "reason": "Initial read-only offset check incorrectly assumed minimum 1MiB; actual unchanged image is at 512KiB",
+      "installed_image_mismatch": false,
+      "native_write": false
+    },
+    {
+      "stage": "Native post-solver target guard",
+      "reason": "Empty explicit partition value uses installed boot-deploy default boot",
+      "normal_native_solver_already_passed": true,
+      "solver_not_repeated": true,
+      "corrected_read_only_check_completed": true
+    }
+  ],
+  "final_native_state": {
+    "recorded_UTC": "2026-11-11T11:21:25.448215+00:00",
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "kernel": "6.18.59-fx0-dmp",
+    "taint": 0,
+    "systemd": "running",
+    "failed_units": [],
+    "pending_jobs": [],
+    "Sway_PID": "1539",
+    "gesture_PID": "2525",
+    "UPower_and_sensor_proxy_active": true,
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "APK_database_sha256": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1",
+    "world_sha256": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+    "backups_and_APKs_still_match": true,
+    "candidate_not_installed": true,
+    "RAM_trial_timer_absent": true,
+    "PMIC_registers": {
+      "0xc041": "c041: 00\n",
+      "0xc046": "c046: 00\n",
+      "0x1740": "1740: 01\n",
+      "0x1741": "1741: 73\n"
+    }
+  },
+  "current_boot_owner_display_touch": {
+    "status": "pending",
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "older_answer_not_reused": true
+  },
+  "native_kernel_installation": false,
+  "native_kernel_update_hooks_exercised": false,
+  "boot_partition_writes": 0,
+  "backup_of_bootloader_prefix_does_not_authorize_or_require_rewriting_it": true,
+  "full_bringup": "active",
+  "remaining": [
+    "Obtain the pending exact-current-return display/touch confirmation before further phone trials or installation",
+    "Finish and review the native installation controller using these guards and recovery inputs",
+    "Run the signed APK transaction with normal native update hooks and verify raw/image/module/package state",
+    "Reboot persistently and qualify owner display/touch plus services and wider hardware",
+    "Integrate later CPU/CPR/NFC families, updated base userspace, reliability and submission work; no audio tests"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "subject": "RMTFS daemon lifecycle and remoteproc power ownership",
+  "RMTFS_base": "b30a3eb38f9af283f18dbd3c7755653efc52c094",
+  "QRTR_base": "29e36ae164389580a0f8ea7a7fdb728140ae978d",
+  "patch": "diagnostics/modem-control/rmtfs-lifecycle.patch",
+  "patch_sha256": "4aa936b8ed674299aafb8d52b2d8f1dad71e7a61cf75dc44bba3698fcca86029",
+  "host_cases": {
+    "lifecycle": 19,
+    "memory": 35,
+    "protocol": 15
+  },
+  "ARM_cases": {
+    "lifecycle": 19,
+    "memory": 35,
+    "protocol": 15
+  },
+  "failed": 0,
+  "candidate_bytes": 858724,
+  "candidate_sha256": "281b6d358ff6ddc44523821d79876e362024eaf5168dce796760ce976336cfae",
+  "authenticated_persistent_link_inputs": 11,
+  "one_start_stop_reference_across_synthetic_reconnect": true,
+  "passive_mode_makes_no_remoteproc_access": true,
+  "native_read_only_samples": 1,
+  "phone_installation_or_firmware_start": false,
+  "physical_modem_qualified": false
+}

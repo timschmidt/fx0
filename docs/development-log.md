@@ -2605,7 +2605,7 @@ The software reboot-to-bootloader instead enumerated Qualcomm 05c6:f006 with
 HID interfaces and a single interrupt IN endpoint. Neither fastboot nor ADB
 detects it. The DMP candidate has not been sent or booted. Asked the owner to
 restore lk2nd fastboot using the earlier physical method; a read-only fastboot
-product query remains live waiting for serial 10eceacd. No blind USB commands
+product query remains live waiting for the private device serial. No blind USB commands
 or flashing were attempted. This does not establish a cause for the unexpected
 mode, and the native candidate cannot have caused it because it never ran.
 
@@ -3419,3 +3419,2312 @@ Fixed premature CPU attachment publication and ignored ACC register errors. Actu
 ### 2026-11-07 — Vendor clock-to-CPR mapping
 
 Added the vendor fmax selection/fallback mapper connecting calibration and quantized rail metadata. All five reference tables match pinned source/hash; bin/version/boundary C tests, 13 calibration/planner regressions and ARM W=1 compilation pass. CPU patch 17 is uninstalled, with no native trial. CPR domain/OPP and suspend integration remain open. Audio excluded; built-in Wi-Fi unchanged. Evidence: evidence/2026-11-07-msm8926-corner-map-candidate.json.
+
+### 2026-11-08 — Calibration loading and restored-r50 suspend regression
+
+Re-established the missing storage alias and reconstructed a CPU validation
+checkout from the available local Linux base plus all 17 exported CPU patches.
+This is a subsystem validation tree, not a complete r50 source-image rebuild.
+Outside-sandbox SSH confirms r50 build51, taint0, no failed services and the
+unchanged 300–787.2MHz policy. The owner confirms normal display and touch.
+ModemManager still finds no modem; only WCNSS and ADSP remote processors run.
+
+Added CPU patch18: full-row NVMEM/secure-SCM calibration acquisition. The CPU
+cell must expand from four to eight bytes to include uplift bit53. Failed reads
+preserve output, all cell references are released and read buffers are freed
+with `kfree_sensitive()`. Four error types at each acquisition stage, 18 bad
+lengths, upper-row/redundancy/conditional cases and all earlier CPU foundation
+tests pass:46 tests, zero skips. ARM W=1 loader/CPR object and DTB compilation,
+full processed-schema validation and exact two-file patch reproduction pass.
+Checkpatch reports only the generic new-file ownership warning. No package,
+native loader execution, regulator activation or higher OPP is claimed.
+
+Five RTC-controlled suspends with DMP armed pass on the unchanged r50 boot.
+Each trace shows real s2idle for11.69–12.49s, RTC IRQ+1 and IMU IRQ+0; DMP
+execution is retained and373 quaternion samples recover. No MDP5 underruns or
+taint. SSH observations timed out during repeated USB disconnects; host USB
+records show reconnects, and the existing unit later completed with exit0.
+No test restart, recovery or power cycle was performed. Downloaded traces,
+IRQ records and samples independently reverify all five cycles. Final proxy,
+SMD/buffer/wakeup/RTC state is restored; SD stays unmounted. Post-test physical
+display/touch confirmation, motion-wake qualification on r50, battery standby
+and full hardware/reliability acceptance remain open. Audio excluded and host
+built-in Wi-Fi unchanged. See [CPU acquisition](../evidence/2026-11-08-msm8926-calibration-load-candidate.json)
+and [native regression](../evidence/2026-11-08-r50-rtc-regression.json).
+
+### 2026-11-08 — MSM8926 CPR domain integration candidate
+
+Rechecked the same restored r50 boot: build 51, taint 0 and only the existing
+300/384/600/787.2MHz OPPs. No device write or new physical test ran in this
+source work. Audio remains excluded and host built-in Wi-Fi is unchanged.
+
+CPU patches 19–20 add the MSM8926 binding and connect the calibration loader,
+voltage planner and fmax mapper to CPR probe/OPP construction. The path avoids
+QCS404-specific fuse/ACC assumptions, validates actual clock support and OPP
+references, initializes the always-on genpd as on, and activates/retains MX
+before the logical APC reference. Attachment publishes only after successful
+initialization and resets stale corner pointers on retry. Feedback waits for
+a confirmed nominal request; errors and PM quiesce it. The builtin-only opt-in
+defaults off, manual binding is suppressed, and deeper PM is rejected until
+sleep-state voting exists. Debug reads now handle an unattached domain safely.
+
+All 54 CPU foundation/domain/schema tests pass with no skips. The actual-C
+tests cover calibration failures, seven OPPs, malformed/unsupported descriptions,
+16 attachment failures and retries, and performance/PM ordering. ARM W=1
+builds pass with the option on and off; the legacy object has no reference to
+the new secure-fuse API. Binding meta/lint/example checks and exact three-file
+patch reproduction pass. Driver checkpatch is clean with existing uV naming
+checks ignored; binding checkpatch is clean without exclusions.
+
+This candidate has no board consumer, CPUfreq attachment, enabled higher OPP,
+package or native pass. Voltage-error handling still needs a complete caller
+audit: an uncertain APC write can leave hardware changed while OPP/genpd retain
+the old cached state. Feedback quiescing does not solve that clock-ordering
+problem. Complete recovery/fault tests and CPUfreq bin filtering before the
+first RAM-only trial, then rebuild the complete current DMP/display integration
+with verified r50 rollback. Full hardware qualification remains open. See
+[domain evidence](../evidence/2026-11-08-msm8926-cpr-domain-candidate.json).
+
+### 2026-11-08 — Transactional APC/MX recovery and correlated RPM replies
+
+Reproduced the stale-performance-state failure with actual OPP/genpd/CPR
+callbacks and the old SAW provider: four changed-on-error cases permit four
+unsafe clock increases in the host model. The new provider restores and
+verifies the old physical selector before returning an uncertain write error;
+eight patched cases produce no unsafe increase. Recovery uses PWM, acknowledged
+idle state, slew/mode delays and PMIC readback, with one bounded retry. Failed
+restoration stops the kernel to prevent further clock changes at an unknown
+CPU voltage. No host/device kernel was stopped by the tests.
+
+Found and fixed the corresponding MX uncertainty. A failed RPM reduction may
+already have applied; force the old consumer request through actual regulator
+sync/RPM callbacks before retaining the old floor. That exposed a transport
+prerequisite: SMD RPM ignored response IDs and did not retire completion state.
+Added per-channel IDs, pending-request locking/retirement, bounded unaligned
+TLV parsing and matching acknowledgements, including fast/late/duplicate/NACK
+and timeout-boundary cases. Reply matching precedes the new MX recovery patch.
+
+With transactional recovery, CPR now restores feedback for the old confirmed
+corner after a failed performance transition. It keeps an initial failed
+nominal request unarmed. This avoids leaving an adapted old voltage without
+feedback when genpd's cached state skips the next same-corner request.
+
+CPU patches 21–24 export these changes. All 58 targeted tests pass without
+skips, including 248 before/after-effect I/O cases, 12 recovery retry and 12
+permanent-failure no-return controls, plus 111,537 protected-page packet cases.
+ARM W=1 regulator/RPM/CPR object builds and all-24-patch reproduction of 23 files
+pass. Checkpatch has no errors/warnings; the only suggestions are the required
+atomic-context delay and existing uV field spelling. No full kernel or package
+was built. These are fault-model results, not physical voltage/firmware evidence.
+
+The phone remains on the same r50 build 51 boot with taint 0 and unchanged
+300–787.2MHz limits. No device write, native fault injection, audio test or host
+built-in Wi-Fi change occurred. CPUfreq attachment/bin filtering, reconstruction
+of the complete current DMP/display source, RAM bootstrap/recovery qualification
+and the full hardware objective remain open. See
+[transaction recovery evidence](../evidence/2026-11-08-cpu-voltage-recovery-candidate.json).
+
+### 2026-11-08 — Owner confirms restored-r50 interface
+
+The owner answered the restored-r50 boot check: “Display and touch work.”
+This closes the physical interface check for that recovery boot; it does not
+by itself establish a separate post-RTC-run observation or full display/touch
+acceptance. Updated the [recovery record](../evidence/2026-11-07-r50-restored-after-r51.json).
+
+### 2026-11-08 — CPUfreq filtering and opt-in CPR board candidate
+
+Exported CPU-series entries 25–27: one immutable supplier mask filters both CPU
+and CPR tables before parsing, the explicit MSM8926 CPU OPP type selects the
+calibrated driver, and ordinary boards retain their generic route. The provider
+owns its clock across virtual-CPU detach/retry; a boolean records successful
+shared initialization. Invalid feedback leaves only the four conservative rates
+and sanitized feedback metadata. Hard acquisition/rail-plan errors still fail
+or defer, rather than guessing voltages.
+
+Pinned vendor source exposes a missing reference check: APCS+0x64 bit 0 selects
+XO versus AHB. Added syscon readback before publication/configuration and on
+resume, rejecting AHB/read errors without writing the selector. The separate
+qualification DTB describes 14 matched CPU/domain states, four CPU attachments,
+SPI15/rising, APC/S2, MX/L3 and complete raw rows. The ordinary board DTS is
+unchanged by this candidate.
+
+All 71 targeted tests pass without skips; affected ARM objects compile with the
+MSM8926 option enabled/disabled, and symbol checks match. Binding meta/lint,
+examples and compiled candidate schema/link checks pass. Three inherited common
+DTS warnings remain. All 27 patches reproduce 31 changed files exactly. The first
+/tmp reproduction scratch copy hit quota; workspace scratch succeeded. No
+source or artifact was changed to bypass verification. Checkpatch has only its
+reviewed generic ownership reminders with existing uV naming ignored.
+
+Final read-only SSH shows the same r50 boot 8a837db4..., taint 0, four original
+rates and no failed services. No native voltage/frequency test or installation.
+Complete current-source reconstruction and RAM-only controller/recovery
+qualification remain next; full hardware/reliability closure remains open.
+Audio excluded and host built-in Wi-Fi unchanged. See
+[candidate evidence](../evidence/2026-11-08-msm8926-cpufreq-candidate.json).
+
+### 2026-11-08 — Reconstruct complete r50 and CPU/CPR kernel inputs
+
+Recovered the pinned pre-DMP commit 4b800b920c7d locally. Compared with the old
+CPU validation base, it restores standalone power collapse and preserves the
+pre-experiment peripheral files. Added a hashed integration manifest, exact
+running-r50 configuration, separate candidate fragment and a preparer that
+preflights the whole series before source edits. Real Git/patch refusal/order
+checks pass. r50 uses ten patches; the complete CPR profile uses 32 and matches
+all 31 CPU-series source files already validated. All 41 candidate changes are
+accounted for; the five differing base files retain pinned source bytes.
+
+The r50 DTB rebuild matches installed evidence exactly: 1658cb8c.... Full Clang/
+CFI builds with explicit LLD 18.1.8 link both kernels and produce 464 modules
+each. Native versus host configuration differences are compiler/Rust probe
+metadata; the candidate additionally has its explicit built-in CPR/CPUfreq and
+separate release. Module staging/signing passes; all 928 CMS signatures verify
+against the explicit certificate embedded in their kernel. Payload/signature
+corruption and the other build's certificate are rejected. No private key is
+published. These remain host builds, not Alpine abuild results.
+
+Updated source-test selection and stale stream/recovery harness boundaries for
+the full DMP source. All 109 combined tests pass with no skips, including the
+real loader and fault cases; three image-placement checks also pass. Automatic
+approval review rejected a proposed private firmware export from the phone;
+that action did not execute. Instead retrieved the pinned public AOSP source
+and agreement, verified both hashes and used the existing private extractor.
+No device firmware export or firmware publication occurred.
+
+A moduleless r50-source RAM baseline image is prepared with a 180-second return
+timer. Its header/load addresses, exact kernel/DTB bytes, gzip/newc, GNU cpio
+listing and shell syntax independently pass. No eMMC mount/flash commands. It
+has not booted. Final read-only SSH still shows boot 8a837db4..., r50, taint 0,
+no failed services and the original four rates. First RAM baseline/recovery,
+controller/OPP/thermal/suspend/peripheral qualification, source packaging and
+all broader hardware gates remain open. Audio excluded; host Wi-Fi unchanged.
+See [rebuild evidence](../evidence/2026-11-08-kernel-reconstruction.json).
+
+### Reconstructed-r50 RAM boots and inherited CPU clock (2026-11-08)
+
+The rebuilt r50-source image passes two physical RAM boots and returns to the
+unchanged installed r50 after each. Both keep four CPUs online, taint zero,
+only pseudo-filesystems mounted and the original boot-partition SHA-256.
+The first lacks HTTP evidence because the host attempted DHCP against a
+static-only diagnostic gadget. The second uses an identified, temporary
+NetworkManager USB profile, captures 22 HTTP status/dmesg pairs and continuous
+serial logs, including the return message at 181.641642 kernel seconds.
+The profile is removed afterward; default routes and resolver match before.
+The owner reports restored-r50 display and touch working. Native sensor proxy
+and Sway run, with no failed services; time synchronization still delays full
+systemd startup.
+
+An initial 40-second host action timeout interrupted the image download before
+any boot command reached lk2nd. A reset limited to the identified phone's USB
+device restores fastboot. Later successful image uploads take about 30 and
+58 seconds; exact staged readback precedes each boot. Public helper scripts
+preserve that sequence and the temporary USB addressing, with eight boot-tool
+host tests. The consolidated boot wrapper itself is not hardware-tested.
+
+The moduleless baseline has no CPUfreq policy because CPUFREQ_DT is a module.
+CCF reports its inherited CPU clock as 800 MHz. A host harness of the actual
+CPR corner lookup confirms the candidate rejects this unlisted frequency
+before MX/APC bootstrap. The notifier's source-4/divider-3 configuration uses
+the logged 600 MHz GPLL0 to give 300 MHz; its generic 400 MHz comment does
+not describe this board. Vendor clock-a7 also declares a 300 MHz safe rate.
+CCF ignores provider set-rate callback errors, so clock programming needs
+hardware-state verification before any voltage reduction. No candidate source
+fix is applied yet. A safe clock/rail handoff is now the next CPU source
+gate; no candidate-controller boot, voltage transition or higher OPP request
+occurred. Installed limits remain 300–787.2 MHz. Full bringup, source packaging
+and hardware/reliability qualification remain open. Audio and host built-in
+Wi-Fi are unchanged. Three host USB-network controls verify selected-device
+matching, own-UUID removal and cleanup after activation failure. See
+[RAM evidence](../evidence/2026-11-08-r50-ram-baseline.json).
+
+### Host startup-clock handoff draft (2026-11-08)
+
+Preserved the validated 32-patch checkpoint and created a separate startup
+source/build. Three split patches add the auxiliary-clock binding, startup
+handoff and qualification-DT dependency. The helper keeps boot APC unchanged,
+activates the prepared MX floor, takes one APC reference, requests 300 MHz and
+checks settled hardware mux registers before initial-corner lookup. Errors
+retain the floor/references and do not complete attachment or arm feedback.
+
+All 16 targeted host/binding/DTB tests pass, including 24 handoff faults and
+seven attachment failures/retries. Two unsafe source mutations compile but fail
+the executing harness. The CPR ARM W=1 object and both DTBs build; the ordinary
+DTB is identical to the earlier CPU candidate. The 35-patch manifest reproduces
+all 41 files, schema validation passes and split checkpatch is clean with uV
+naming ignored. No complete kernel/module link or hardware trial is claimed.
+
+Runtime clock-error handling and fresh PLL/mux verification before lowering
+APC remain the next source gate. Keep controller trials RAM-only after full
+link/module verification and staged recovery. This turn performs no device
+write, clock request, audio test or host Wi-Fi change. Full bringup and wider
+hardware/reliability qualification remain open. See
+[startup evidence](../evidence/2026-11-08-msm8926-startup-clock-candidate.json).
+
+### Runtime CPU-clock guard and complete build (2026-11-08)
+
+Created a separate runtime source profile: 39 patches reproduce all 48 changed
+files. CPR now owns both parent clock references and refreshes them before an
+uncached CPU mux query at every APC change. An unknown or too-fast clock blocks
+the voltage change. MSM8226 CPU PLL/mux programming errors stop execution before
+CCF can ignore the callback error and continue reparenting. Success requires
+rate/mode/lock and settled mux readback. Provider probes restrict the strict
+failure/cache policy to MSM8226; legacy probe behavior is covered separately.
+
+All 114 selected source/rail/DMP/calibration/binding/preparation tests pass
+against the final source with no skips. Actual-function models cover 76 PLL,
+25 mux and 28 CPR-query I/O/unstable-state controls, plus lost writes, timeouts,
+stale topology/caches, ARM32 overflow and startup. Five unsafe source mutations
+compile but fail at execution. Split checkpatch is clean with inherited uV
+naming ignored; six ARM W=1 objects, both DTBs and the schema document pass.
+
+The complete kernel/module build succeeds. During the first attempt, the new
+wide post-divider arithmetic was found to reference ARM's unavailable compiler
+division helper. The identified task build was explicitly stopped, quiescence
+verified, the operation changed to do_div(), source replay repeated and the
+build resumed incrementally to success. All 464 staged ARM module signatures
+match the exact kernel-embedded certificate; corrupt payload/signature and
+wrong-build certificate controls reject. The kernel has the same two BPF and
+three weak EFI undefined symbols as the twice-booted r50 reconstruction, with
+none introduced. Signing keys remain private. A host /tmp quota prevented
+sandbox startup; approved local checks used workspace temporary storage without
+removing other work's files.
+
+The moduleless L2/S2 image uses the ordinary DTB and a 180-second return timer;
+payload/header, gzip/newc/GNU cpio, exact BusyBox and init syntax checks pass.
+It has not booted. The current native phone remains on unchanged r50, taint zero,
+300–787.2 MHz, running systemd startup, Sway and sensor proxy. Read-only Python
+MMIO snapshots verify the existing APCS command/PLL mode/status layout after
+BusyBox devmem was found absent; no register write or package install occurred.
+The next step is RAM-only staged controller bootstrap/recovery, then controlled
+governor/OPP trials and actual rail/feedback/thermal/suspend qualification.
+Audio and host Wi-Fi remain untouched. Full bringup remains open. See
+[runtime evidence](../evidence/2026-11-08-msm8926-runtime-clock-candidate.json).
+
+### First native L2/S2 RAM bootstrap and input-dependent USB stall (2026-11-08)
+
+The ordinary-DTB runtime kernel passes its first moduleless RAM bootstrap and
+timed return. Four CPUs are online, taint is zero, all five SPM controllers
+including L2 bind, APC reports its 1.15 V programmed target, CPU0 records 344
+cpu-spc uses at the snapshot, and CCF reports inherited 800 MHz. Only pseudo
+filesystems are mounted; no modules/CPUfreq governor or CPR node is active.
+Twenty-two successful HTTP status/dmesg pairs and serial logs capture return
+at 181.611751 kernel seconds. A fresh r50 boot retains the original boot hash,
+limits, zero taint, Sway and sensor proxy. The temporary USB profile is removed
+and host routes/DNS match before. Time sync still delays full systemd startup;
+the owner's physical display/touch check is pending.
+
+The initial standard-fastboot download blocks for minutes. Attaching a syscall
+trace interrupts its USB write with EINTR before boot; this avoidable diagnostic
+interference is recorded. Phone-only USB reset restores command state. A new
+data-only synchronous transfer tool passes ten host checks and exact 1,000-byte,
+1 MiB and paced 6 MiB controls. The original image still fails after 5,783,552
+confirmed bytes, including with pacing, request-aligned padding and exact-6-MiB
+padding. Its isolated 32 KiB block fails after 16 KiB at a different staging
+address. The root cause is therefore still an open input-dependent preboot USB
+defect. No failed transfer here sends boot or writes phone storage.
+
+Re-encoding the identical initramfs at gzip level 1, with exact unchanged
+kernel/DTB/cmdline/unpacked contents, stages and reads back in 8.72 s and then
+boots successfully. The image builder now accepts --gzip-level, preserves
+default9 output and exactly reproduces the booted level1 variant. Its earlier
+source is archived and the revision/reproduction checks recorded explicitly.
+The combined boot/network/transfer suite passes all 21 checks. The original
+image remains unbooted; encoding is a workaround, not a USB repair.
+
+No persistent candidate installation, deliberate frequency/voltage transition,
+CPR feedback, audio test or host Wi-Fi change occurred. The r51 EDL cause remains
+open. Next qualify separate moduleless CPR bootstrap/MX/clock normalization,
+then controlled governor/eligible OPPs, analog rails, recovery, thermal, suspend
+and the remaining peripherals/reliability. See
+[native evidence](../evidence/2026-11-08-l2-s2-ram-bootstrap.json).
+
+### Settled r50 return and prepared CPR bootstrap (2026-11-08)
+
+A later read-only check confirms that the same r50 return boot has finished
+systemd startup: running, no failed services or pending jobs, one Sway process,
+active sensor proxy, taint zero and the unchanged boot-partition hash. The
+earlier restored-r50 display/touch confirmation remains scoped to its original
+recovery record; the separate physical check after this RAM trial is pending.
+All 139 recorded trial input/private and runtime input/source hashes verify;
+whitespace and Python syntax checks pass.
+
+Prepared a separate moduleless CPR-bootstrap image with the built qualification
+DTB and the exact compressed initramfs and command line of the successful L2
+trial. Independent Android header/digest/load-address, gzip/newc/GNU cpio and
+shell checks pass; all four CPUs name the CPR domain, have no CPU-level default
+required OPP, and cpufreq-dt remains an absent module. Source review confirms
+that the built-in calibration driver attaches the domains before registering
+the unloaded cpufreq-dt device, so this test can exercise 300 MHz clock
+normalization and MX startup without a CPUfreq policy. Feedback is gated by a
+later positive performance-state request. No new image is staged or booted,
+and these native behaviors remain unqualified. See
+[preparation evidence](../evidence/2026-11-08-cpr-bootstrap-preparation.json).
+
+### Complete Alpine runtime source package (2026-11-08)
+
+Added a local source-package exporter with seven passing integrity/preparation
+checks, a tracked shared-SoC recipe template and the exact runtime configuration.
+The exported recipe pins the complete base and all 39 ordered patches with
+SHA-512 checksums. An isolated workspace pmaports clone records the source and
+recipe composition in two local commits; the cached source archive stays
+read-only on the recovery disk. All 48 actual abuild-prepared source files match
+the frozen host candidate before and after compilation.
+
+The initial r53 source build succeeds in 15m39s and its signed APK verifies.
+Its noninteractive oldconfig retains the intended settings but emits EOF
+diagnostics for newly visible compiler-dependent choices. Updated preparation
+explicitly runs olddefconfig. The normalized r54 source build succeeds in 2m30s
+using dependency/compiler caches after fresh source unpacking, without those
+diagnostics. Alpine Clang/LLD 22.1.3 retains CFI, the existing no-LTO choice,
+module CPUfreq and built-in CPR. Compiler/Rust/helper capability differences are
+recorded; the actual normalized community configuration passes.
+
+The initial abuild default cleanup removes vmlinux after packaging because
+pmbootstrap's substitution misses commented cleanup assignments. The corrected
+private fixture sets CLEANUP/ERROR_CLEANUP explicitly and retains the r54
+outputs. Signed metadata identifies exact recipe commit
+4f17b6905c75da8a35f220b1f80724d2d07e997b. The 18,475,505-byte APK, exact kernel,
+both DTBs, exact embedded certificate and all 464 module signatures verify.
+Corrupt payload/signature, wrong-build module certificate and modified signed
+recipe metadata reject. The offline APK simulation passes in a fresh initialized
+usermode workspace database; this is not a phone/root-mode update test. The
+five undefined symbols match the accepted baseline. Signing keys stay private.
+
+The package is unbooted and uninstalled. Read-only phone postflight confirms
+installed r50 on the same boot ID, taint zero, running systemd, no failed units,
+Sway, sensor proxy, four rates/schedutil and original boot-partition hash.
+Physical display/touch after the earlier L2 trial remains a separate pending
+check. No audio or host built-in Wi-Fi test/change occurred.
+
+Automatic approval review rejects the GitHub push before execution: export of
+the complete commits and destination ownership lack explicit authorization in
+trusted user instructions. No publication is attempted indirectly. The exact
+local branch and public recipe diff are preserved for explicit owner approval.
+Native RAM/CPR/OPP/rails/thermal/suspend, installed update/recovery and the wider
+bringup remain open. See
+[package evidence](../evidence/2026-11-08-runtime-kernel-source-package.json).
+
+### Reconstructed and checked runtime integration history (2026-11-08)
+
+Built a local 39-commit integration draft through a separate Git index,
+preserving the frozen source checkout, HEAD and original index. All final blobs
+match the tested 48-file composition. The historical CPR binding audit finds
+four invalid prefixes: 33/34 require an auxiliary clock before DT supplies it,
+and 37/38 require the PLL before its DT addition. Including the generic nvmem
+consumer schema first resolves a checker setup omission, so only genuine clock
+count failures are attributed to the history.
+
+Retained that draft and formed a 35-commit review branch by grouping each
+binding/provider/DT clock transition atomically. Its full final tree is identical.
+All exposed CPR DTB prefixes now pass their own schemas. An independent local
+git-am replay produces the same final commit ID and tree; bundle verification
+and unbundle pass. Expanded only the isolated replay checkout and compiled the
+20 affected ARM objects at every one of the 35 prefixes with W=1: all pass with
+zero compiler warnings. No full intermediate links or new hardware claims are
+inferred from those object builds.
+
+Saved the ordered mail drafts, base-aware cover letter, source-patch mapping and
+tentative pinned-tree maintainer routing. Original file notices/base history are
+preserved; no DCO, reviewed or tested tags are added. Current receiving-tree
+rebases/splits, contributor certification and physical gates remain open.
+Publication is still pending the earlier explicit approval request; no external
+message or push is attempted. See
+[history evidence](../evidence/2026-11-08-runtime-integration-history.json).
+
+### First CPR RAM trial and stage diagnostics (2026-11-08)
+
+After the source-history checks, fresh preflight finds the same running r50
+boot, original hash/four rates, charging online and CPU zones at 43/44 C.
+The prepared gzip-level-1 qualification image stages and reads back exactly
+in 5.63 s; fresh serial/HTTP/network observers precede one acknowledged RAM
+boot. Diagnostic USB is live, four CPUs online and taint zero, but CPR probe
+returns -EINVAL. The provider never binds, the CPU calibration supplier defers,
+CPU stays at inherited 800 MHz and APC reports 1.15 V. No CPUfreq policy loads.
+The bootstrap gate fails, and no specific root cause is inferred from the
+generic calibration message.
+
+Twenty-two HTTP status/log pairs and serial capture the 180-second timer at
+181.623794 kernel seconds. Both observers terminate cleanly. The phone returns
+to r50 boot 82018c60-6d13-4af3-afae-8c3e4a3d9306 with running systemd, no failed
+units/jobs, Sway, sensor proxy, four rates/schedutil and the original boot hash.
+The owner confirms display/touch on that return. The temporary profile is gone
+and host default routes/resolver match before. No flash, package installation,
+higher OPP, audio test or host built-in Wi-Fi change occurs. See
+[trial evidence](../evidence/2026-11-08-cpr-bootstrap-first-ram.json).
+
+Prepared an isolated diagnostic commit, def9620bc91efe46b441ff399c60f6c4c45a1be2,
+adding only initialization-stage error context and no raw calibration output.
+Its 40 source patches replay independently to the exact tree. All 116 selected
+checks, including the original separate attachment case and two new executable
+diagnostic checks, pass without skips. Error values, output ownership and
+cell/buffer cleanup remain covered; ARM cpr.o builds with W=1 and no warnings,
+and checkpatch is clean with inherited naming/path notices ignored. Prior
+test-fixture versions are archived before the logging/header stub adaptation
+and linked explicitly to the old reconstruction record.
+
+A separate -fx0-cpr-probe built-in RAM kernel and both DTBs are building from
+the clean diagnostic source. Modules are not part of this moduleless diagnostic
+build and no follow-up image has booted. The actual failing stage, correction
+and repeat RAM startup gate remain next, followed by controlled governor/OPPs,
+real rails/feedback, thermal/suspend, Alpine artifact and wider bringup work.
+Publication still awaits the earlier explicit approval request; no rejected
+push is retried or bypassed. See
+[diagnostic preparation](../evidence/2026-11-08-cpr-probe-diagnostics-preparation.json).
+
+### Reference selector isolated by the diagnostic RAM trial (2026-11-08)
+
+The diagnostic kernel and both DTBs link successfully in 3m29s, with the same
+five undefined symbols as the accepted baseline and none introduced. Both
+DTBs match the tested runtime versions. The new moduleless image preserves the
+known initramfs/command line and stages/reads back in 4.60 s before one boot.
+Its exact stage message is -EINVAL from the CPR reference-source check.
+
+The serial collector opens before udev settles permissions and terminates with
+EACCES, before sending a snapshot command. HTTP still captures 22 status/log
+pairs. After return, systemd's archived pstore supplies the diagnostic kernel
+identity, failure line and timer message at 181.601496 kernel seconds. Native
+boot a4972450-fe12-4a03-bb68-2a7f5b6d1055 is running with taint zero, no failed
+units/jobs, Sway, sensor proxy, four rates/schedutil and the original boot hash.
+The owner confirms display/touch on this newest return. Host routes/resolver
+match before and the temporary profile is deleted. Missing RAM taint, CPU-clock
+and regulator snapshots are not inferred from the earlier trial.
+
+A read-only native mmap of just APCS+0x64 returns 1. The pinned stock driver
+defines bit0=1 as AHB and bit0=0 as 19.2 MHz XO; its DT names the word at
+0xf9011064 and its initialization explicitly selects XO. This connects the
+stage failure to the missing reference setup work while retaining the guard:
+implement owned/quiesced selection and verified readback before CPR use,
+including relevant failure/resume paths. No selector or voltage is changed by
+this investigation, and no startup/feedback/higher-OPP acceptance is claimed.
+The original images, history and source package remain unchanged. See
+[diagnostic trial evidence](../evidence/2026-11-08-cpr-reference-first-diagnostic.json).
+
+Prepared a fresh future observer template for the observed udev race. It retries
+only PermissionError before opening the serial node, checks physical port and
+RAM VID/PID/serial each time, and stops after ten seconds. Three host controls
+verify successful settling, the bound and device-change rejection before any
+serial command. No device permissions or current trial records are changed;
+hardware use of the corrected collector remains to verify.
+
+### GitHub publication authorized and package branch published (2026-11-08)
+
+The owner states: “Pushing to github is approved for all fx0 development.”
+This authorizes future fx0 development pushes as well as the previously prepared
+package branch. The earlier automatic rejection is historical and no longer
+blocks this explicitly authorized action.
+
+Published `integration/fx0-cpu-runtime-package` to
+[timschmidt/fx0-pmaports](https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-cpu-runtime-package).
+The push exits zero and an independent `ls-remote` verifies commit
+`4f17b6905c75da8a35f220b1f80724d2d07e997b`. The clean package checkout and
+reviewed source payload are unchanged. The Alpine r54 artifact remains unbooted
+and uninstalled; publication does not qualify it for deployment.
+
+CPR source inspection confirms that the reference guard runs before controller
+disable in both initialization and configuration. The next change must mask
+interrupts, stop and verify the controller, select XO while preserving other
+APCS bits, and retain the reference readback/error guard before use. No new
+controller code or device trial is included in this publication action.
+
+### CPR XO handoff and retained BUSY result (2026-11-08)
+
+Published the isolated XO handoff source at `a9c68b1b25b6`, with a 41-patch
+manifest and exact independent replay. The frozen diagnostic checkout remains
+clean. The new source passes 118 selected checks, its ARM W=1 object and
+checkpatch. A fresh full built-in kernel/both DTBs links in 7m09s; the RAM
+image retains the known moduleless initramfs, command line and 180-second timer.
+The audit checks this tree's CONFIG_CFI and actual KCFI type/failure symbols
+and changed-object compiler flag, correcting initial checks for obsolete names.
+
+One RAM boot reaches serial/HTTP with all four CPUs online, taint zero,
+800 MHz CPU clock and APC's reported 1.15 V target. The new stopped-engine
+BUSY poll returns -ETIMEDOUT after both zero IRQ/CTL readbacks and before the
+APCS selector write. CPR remains unbound and no CPUfreq policy appears. The
+udev-settling collector succeeds; serial captures the return at 181.597437
+kernel seconds. Both observers exit zero and host routes/resolver/profile
+cleanup verify. Installed r50 returns with its original boot hash, four
+rates/schedutil, Sway and sensor proxy; the owner confirms display/touch.
+Time synchronization is still pending in the first native snapshots, so
+complete systemd startup is not claimed. See
+[trial evidence](../evidence/2026-11-08-cpr-xo-handoff.json).
+
+The primary stock driver selects XO and disables the controller without a
+BUSY wait. Stock and upstream IRQ paths consult BUSY only after confirming
+LOOP_EN. On this hardware BUSY remains set while CTL is clear before XO
+selection, so treating that result-readiness bit as a stopped-controller idle
+acknowledgement prevents initialization. A separate follow-up keeps the
+original XO readback guard, checks disabled IRQ/CTL before and after selection,
+and omits that invalid prerequisite. Its 42 patches replay exactly; all 118
+selected checks and a separate ARM W=1 object/checkpatch pass, including
+retained-BUSY and failed pre/post-handoff readbacks. The source is published at
+`86a9e78ce4b6`; its separate full kernel is building. This is not CPR startup,
+feedback, higher-OPP or analogue rail acceptance. See
+[follow-up evidence](../evidence/2026-11-08-cpr-disabled-reference.json).
+
+The separate follow-up kernel links in 6m13s and passes the linked-release/CFI,
+source, undefined-symbol, DTB and image-layout audits. One RAM boot passes the
+startup gate: CPR initializes seven OPPs, all four virtual CPU consumers attach
+and the verified CPU mux reaches 300 MHz through GPLL0/2. APC's reported target
+remains 1.15 V; MX has an active bootstrap vote. LOOP_EN is zero, including
+while RESULT_0.BUSY remains one. The planned 1.08 V corner cache appears under
+the old debugfs current_volt label; it must not be interpreted as programmed
+APC voltage and needs a diagnostic correction before runtime qualification.
+
+Four CPUs, taint zero, five SPM bindings, CPU-SPC use, no deferred probes/modules
+or CPUfreq policy are captured. Serial records return at 181.782488 seconds;
+23 HTTP attempts and both observers finish, own-profile deletion and host
+routes/resolver restore. Native r50 boot 474246de-a397-44a1-84ce-efd9f4d3ae95
+has the original hash, four rates/schedutil, taint zero, Sway and sensor proxy.
+Only the existing time-sync target/service remain pending. Exact-status
+resolver probes are recorded separately rather than inferring the root cause
+from an earlier empty lookup stdout. The Alpine r54 package stays unbooted and
+uninstalled. Controlled module/governor/pstate/feedback, analogue rails,
+thermal/suspend, installed update/recovery and broader bringup remain open. See
+[successful startup evidence](../evidence/2026-11-08-cpr-disabled-reference.json).
+
+The owner confirms display and touch on the successful startup trial’s newest
+r50 return, closing that physical recovery check. Native time-sync remains
+open; bounded supported hosts lookup exits 124 and timesyncd has no server
+address/packets. The underlying DNS/network/service cause is not yet established.
+
+### Signed CPU modules and first fixed-corner performance requests (2026-11-08)
+
+Prepared isolated observation source b721ebaecd7d and 43-patch manifest, adding
+read-only planned/cache/applied/feedback/APC-target distinctions while preserving
+legacy output. All 120 selected C/schema/DMP checks, a separate ARM W=1 object
+and checkpatch pass. Two real-shell registration tests and two first-step tests
+exercise load ordering, preconditions, exact request limits and rejection after
+failed observations. The full kernel/both DTBs/all 464 modules build in 6m06s.
+Every staged module signature verifies against the certificate exactly embedded
+in the ELF trust list; corrupt contents/signatures and the prior certificate
+reject. Source publication is verified on the owner's observation branch.
+
+The first image's data-only transfer times out after 3,588,096 bytes, within
+the compressed kernel and before any BOOT. Only after terminal failure and
+confirmed process exit is the identified phone USB transport reset. XZ preset
+3 re-encoding preserves decompressed Image, ELF, certificate and symbol-version
+bytes exactly. This image stages/reads back and boots once; the underlying
+content-dependent USB defect remains open.
+
+Enforced signatures and checked userspace-first load order register both CPU
+modules at 300 MHz with APC held at 1.15 V, no positive performance state and
+feedback disabled. Taint is zero. The 181.722188-second timer returns to r50
+boot 48ddf314-a3e3-407b-bd8f-b330ede124e6, with running systemd, original hash,
+four rates/schedutil, Sway/sensor proxy and owner-confirmed display/touch.
+Host network state restores. See
+[registration evidence](../evidence/2026-11-08-cpr-voltage-observation.json).
+
+A separate RAM trial caps userspace at 300–384 MHz, requests 384 then 300 MHz
+and passes quiet holds at both. APC reads 1.08 V and the positive performance
+state is applied; LOOP_EN remains clear at the fixed-voltage corner. The PLL
+reads 768 MHz for the 384 MHz point, and return uses the 300 MHz auxiliary
+path. Active MX requests 1.0875 V while another L3 view remains at 1.2875 V;
+these are digital targets/votes, not analogue measurements. The timer returns
+at 181.756403 seconds to r50 boot d745a11f-71fa-4f23-9e0a-d1d7914d2927. Its
+original hash/policy, zero taint and Sway/sensor proxy verify; narrow dense-map
+PMIC reads confirm S2 range/VSET 1/115 and the 1.15 V target restored after the
+low-voltage warm return. Initial time-sync jobs and latest physical UI follow-up
+remain recorded separately. Later feedback/rates, physical rails, sustained
+load/thermal/suspend, distribution/install and wider bringup gates remain open.
+See [first fixed-corner evidence](../evidence/2026-11-08-cpr-first-fixed-corner.json).
+
+Native startup subsequently reaches running with no failed units/jobs, and the
+owner confirms display/touch on this newest first-fixed-corner return. The
+restored PMIC target, boot hash and physical UI checks close that bounded warm
+recovery gate; all broader qualification remains open.
+
+### First bounded 600 MHz CPR feedback response (2026-11-08)
+
+Added a guarded userspace 300→600→300 MHz RAM script and three real-shell host
+tests covering 22 simulated modes. Feedback requires interrupt progress plus
+a voltage adjustment or handled clamp; LOOP_EN or an interrupt alone remains
+inconclusive. All host tests pass. The new 6,899,712-byte RAM image keeps the
+qualified observation kernel, DTB, two signed modules, command line and timer
+unchanged; exact staging/readback precedes one BOOT.
+
+All fifty samples pass with the uncached CPU at 600 MHz, APC/cache/planned
+target 1.08 V, CTL 0x20000469 and one CPR interrupt. The unit starts at its
+second-corner floor, so the handler enables auto-NACK-DOWN rather than changing
+voltage. The active MX floor request is 1.1875 V. Explicit return to 300 MHz
+restores the fixed-corner target, MX floor 1.0875 V and CTL 0x20000428/LOOP_EN
+clear. No panic/Oops/BUG/lockup is recorded; temperatures remain below the
+script's 60°C cutoff. This is quiet floor-response evidence, not load or
+voltage-adjustment qualification.
+
+The timer fires at 181.741527 seconds. Both observers exit zero, host routes
+and resolver match before, and the temporary profile is absent. R50 boot
+8eda2570-36e5-43aa-a35c-6c531fdd349c has the original hash, four-rate schedutil
+policy, zero taint, Sway and sensor proxy. Two exact PMIC rows read S2 range/VSET
+1/115, restoring the native 1.15 V target. Initial startup has only the prior
+time-sync jobs pending. Latest physical UI/startup follow-up is tracked in
+[feedback evidence](../evidence/2026-11-08-cpr-feedback-600.json). Two host query
+format errors stop read-only verification before proceeding and are corrected
+without phone or network changes; their original records remain private.
+
+Higher rates, controlled load/thermal/suspend, repeated transitions, physical
+rails, stable/edge packaging, installed update/recovery and wider hardware
+qualification remain open. The content-dependent USB staging defect persists.
+
+The owner confirms display and touch on this newest 600 MHz trial's r50
+return, closing its physical recovery check. Follow-up retains the same boot
+ID, zero taint, Sway and sensor proxy; the two existing time-sync jobs remain
+pending, so running systemd startup is not claimed for this boot.
+
+### Repeated 600 MHz transitions and bounded four-core load (2026-11-08)
+
+Added a static ARM checksum worker and a guarded repeat/load RAM controller.
+Four Clang undefined-behavior-sanitized worker tests and six real-shell tests
+covering 17 controller modes pass, including failed mid-trial observations,
+worker affinity/accounting/deadline failures and cleanup after termination.
+The exact production ARM binary passes fifteen independent digest cases and
+its 30-second affinity/accounting lifecycle under emulation. The runtime
+worker uses the production 30-second default, not the host test's short variant.
+
+The 6,993,920-byte RAM image preserves the qualified kernel, DTB, two signed
+modules, command line and timer. Exact staging/readback precedes one BOOT.
+Five 300→600→300 MHz round trips pass, followed by four pinned workers at
+600 MHz and another verified 300 MHz return. Workers on CPUs 0–3 check
+362/365/365/371 one-MiB hashes, totaling 1,463 hashes and 113.737 process CPU
+seconds in approximately 30 elapsed seconds each. All workers terminate
+before the final request. All 90 state checks pass, including 37 during load;
+temperatures span 38–44°C. APC remains 1.08 V with one handled floor-clamp
+interrupt and no observed voltage adjustment. Return clears LOOP_EN and
+restores the first-corner MX floor.
+
+The timer fires at 181.714515 seconds. Both observers exit zero, the temporary
+profile is removed and host routes/resolver match before. R50 boot
+28db1c68-3b08-4a53-8e5a-3397b8315813 retains the original boot hash, four-rate
+schedutil policy, zero taint, Sway and sensor proxy. Two known PMIC rows confirm
+the native 1.15 V target restored. Latest physical UI/startup follow-up is
+tracked in [repeat/load evidence](../evidence/2026-11-08-cpr-load-600.json).
+The existing native time-sync wait is diagnosed separately with read-only
+service/DNS/route snapshots. Higher rates, long stress/whole RAM, physical
+rails, thermal throttling, battery, suspend, stable/edge/install/recovery and
+wider bringup remain open.
+
+On this same newest r50 boot, the bounded `getent hosts` probe succeeds.
+`resolvectl` is absent (status 127), so it cannot diagnose the active resolver;
+the first broad snapshot also used an unsupported JSON route invocation.
+Follow-up uses supported commands, captures stderr and records each status.
+Timesyncd subsequently contacts a public pool server and synchronizes
+naturally. The exact boot ID, zero taint, Sway/sensor proxy and running systemd
+startup with no failed units/jobs are verified. No network/time/unit settings
+are changed or services restarted. This closes startup for this boot, without
+claiming earlier intermittent DNS/startup delays fixed. See
+[time-sync follow-up](../evidence/2026-11-08-r50-time-sync-followup.json).
+
+### Prepared 787.2 MHz PLL transition/load trial (2026-11-08)
+
+Prepared a separate guarded userspace 787.2 MHz RAM controller and image,
+retaining the exact qualified kernel, DTB, signed modules, static worker,
+command line and timer. Three 787.2→600→787.2→300 MHz cycles precede the
+bounded four-core 787.2 MHz load and a 600→300 MHz return. All checks now
+include the uncached CPU PLL rate/enable state; high-rate feedback must be
+observed at 787.2 MHz. Both 600 and 787.2 MHz map to virtual corner 4/fuse
+corner 2 with APC bounds 1.08–1.18 V and MX floor 1.1875 V.
+
+Six real-shell tests covering 22 modes pass, including wrong CPU/PLL rates,
+wrong PLL enable state, worker faults and termination cleanup. Three new tests
+execute the actual PLL/mux selection functions with the board PLL OPP table,
+checking 42 canonical decisions and two negative parent controls. Four actual
+corner-mapper tests pass. The new 6,993,920-byte image verifies its header,
+digest, unchanged kernel/DTB/modules/worker and exact request list.
+
+No phone reboot, transfer or BOOT is performed. Native r50 boot
+28db1c68-3b08-4a53-8e5a-3397b8315813 remains running, NTP-synchronized and
+untainted. Its physical display/touch result is still pending. The actual
+next stage entry is tested to reject that result before any phone command
+or transfer/controller creation. This turn advances host preparation and
+verification; no 787.2 MHz hardware or broader qualification is claimed. See
+[preparation evidence](../evidence/2026-11-08-cpr-787-preparation.json).
+
+### Independent Alpine r55 observation source package (2026-11-08)
+
+Updated the isolated pmaports recipe from 39 to 43 patches, retaining the
+original patch bytes and explicit olddefconfig. The new input changes only
+LOCALVERSION to `-fx0-cpr-observe-alpine`, keeping this module family separate
+from the Fedora artifacts. Seven exporter integrity tests pass. R54's full
+source/build tree, ELF/certificate/config/symbols and original log are preserved.
+
+The first build attempt stops before compilation because a nonrecursive sysfs
+bind fails in the rootless container. Disposable controls reproduce ordinary
+bind failure and recursive success; recursive sysfs prebinds resolve the fixture.
+The recorded retry completes its full Alpine Clang 22.1.3 source build in
+9m24s of abuild time. All 48 actual prepared files match b721ebaecd7d. The actual
+normalized config passes the official community check; its 19 compiler-related
+differences exactly match the prior Alpine run, with CFI/LTO policy retained.
+
+The signed 18,481,234-byte r55 APK embeds the exact recipe commit, kernel and
+both DTBs. Its explicit certificate exactly matches the ELF trust list; all
+464 signed ARM modules and vermagic verify. Actual KCFI compile flags/linked
+symbols, zero introduced undefined symbols and 0600 module-key mode verify.
+Corrupt module payload/signature, modified signed APK metadata and certificates
+from both r54 Alpine and the qualified Fedora build reject. Offline simulation
+needs an initialized empty usermode database and explicit armv7 architecture
+on the x86_64 host; both fixture errors are retained, and the normal signed,
+offline ARMv7 simulation then passes. No trust or architecture guard is bypassed.
+
+Published the source-only recipe commit b234cd8bb1de3add3450c0ca86bcdcb9cc797bd9
+to the owner's existing package branch under standing GitHub authorization;
+the remote ref matches. Compiled packages, private keys, firmware and device
+logs remain private. Read-only postflight confirms the same native r50 boot,
+original boot hash/1.15 V target, zero taint, running startup/NTP, Sway and
+sensor proxy. The latest physical UI check remains pending. This Alpine
+artifact is unbooted and uninstalled; independent RAM, stable/edge, installed
+update/recovery and wider hardware qualification remain open. See
+[r55 package evidence](../evidence/2026-11-08-cpr-observation-source-package.json).
+
+### Prepared independent Alpine startup/signed registration (2026-11-08)
+
+Selected only the two r55 CPU modules, verifying their exact packaged payloads,
+Alpine release, empty dependency lists and detached CMS signatures against the
+certificate exactly embedded in the APK kernel. Added a separate release/permit
+guard and before/after bootstrap checks for four CPUs, taint, two thermal
+sensors, CPU mux/PLL, MX consumer, unapplied state, disabled feedback and the
+1.15 V APC target. Userspace must load successfully before cpufreq-dt; no
+explicit frequency/performance request occurs.
+
+Three real-shell tests cover 36 instrumented modes. Incorrect build families,
+preconditions, failed/silent loads and post-registration drift reject, with
+post-drift failures matched to the intended guard. The exact ARM BusyBox parses
+the script. Built a 6,240,256-byte RAM image preserving the original APK kernel
+encoding and exact DTB/modules, with only five registration-related initramfs
+entries changed from the qualified template. Init, BusyBox, HTTP, command line
+and 180-second timer remain unchanged. Header/digest and kernel/BSS footprint
+below the forced ramdisk address verify; the actual observer prefix emits the
+expected status and the complete command passes shell syntax.
+
+The actual stage entry rejects the previous native boot's pending physical UI
+result before any phone command, transfer or BOOT. Its checks bind the Alpine
+build controller, release, kernel and certificate instead of the Fedora family.
+No device operation is performed in this preparation. Independent Alpine
+startup, registration, recovery and later OPP/load tests remain open; the
+existing 787.2 MHz Fedora trial is also still unbooted. See
+[Alpine preparation](../evidence/2026-11-08-alpine-cpr-registration-preparation.json).
+
+### Corrected RAM transfer short-write handling (2026-11-08)
+
+Inspected the exact installed lk2nd source while investigating the recurring
+pre-BOOT content-dependent download stall. The host helper incorrectly
+continued after a positive short data write, although the bootloader's actual
+USB-read/download functions reject a short download. It also initialized
+confirmed progress to the full payload size, making an identity or first-write
+failure report misleading.
+
+The helper now rejects short/invalid data writes without sending a remainder,
+upload or BOOT, and initializes confirmed bytes to zero. Full writes, optional
+pacing, partial readback and exact final comparison retain their behavior.
+Fourteen transfer tests, eight boot tests and three actual-C framing tests
+pass without skips. Controlled C completions cover full/first-short/later-short/
+read-error/oversize paths; both extracted source files match installed commit
+`079eebe745de650df02e92fd9ca8d9fec5110c56`. Three new regression tests fail
+against the previous published helper, including real main-entry report checks.
+
+This is a host correctness fix. It does not exercise USB DMA/interrupts,
+identify the observed stall's cause, alter bootloader/image bytes or qualify a
+new transfer. No phone command or configuration change occurs; both prepared
+RAM trials remain gated on the newest native return's physical UI result.
+See [transfer framing evidence](../evidence/2026-11-08-ram-transfer-framing.json).
+
+### Native r50 eMMC direct-file integrity (2026-11-08)
+
+Ran a bounded filesystem integrity trial on the existing native p35 ext4
+root without rebooting or entering either prepared CPU RAM trial. Fresh
+preflight confirms the same r50 boot/hash, schedutil 300–787.2 MHz limits,
+untainted running startup, UI services, USB input and space reserve. Four
+host tests first exercise actual direct-file I/O and deliberately corrupt,
+misdirect, stale and truncate fixtures; all pass without skips.
+
+The phone then completes four 512 MiB write/fsync/close/reopen/direct-read
+rounds in 417.83 seconds. Every 512-byte sector binds its run, round and
+absolute position. All four SHA256 results match the host's precomputed
+values: 2 GiB written and 2 GiB directly read. The 512 guard samples report
+39–45°C, with the 2 GiB free-space reserve retained. Whole-device read/write
+counters rise by 4,194,416/4,266,240 sectors, including metadata/background I/O.
+Filesystem errors remain zero and the new kernel log has no storage errors.
+
+The exact service and worker PID reach successful terminal state before
+postflight. Original boot hash, native boot ID, policy, zero taint, running
+startup/NTP and Sway/sensor proxy are retained. Its temporary sleep inhibitor
+is released and only the finished transient unit is stopped/unloaded. The
+final 512 MiB synthetic file and host hash remain for a future changed-boot
+read; 7,615,930,368 bytes remain available. No raw block write, reboot, audio
+test or host Wi-Fi change occurs. The previous native physical UI question
+still belongs to this same boot. Same-boot integrity passes; cross-boot,
+power-loss, long soak and final-candidate regression remain open. See
+[worker](../diagnostics/emmc-integrity/README.md) and
+[native integrity evidence](../evidence/2026-11-08-emmc-native-integrity.json).
+
+### PN547 NFC reference-clock and board preparation (2026-11-08)
+
+Audited the pinned production PN547 C2 configuration, GPIO mapping and vendor
+clock driver. QUP3 uses address 0x28 and pins 10/11; VEN/FIRM use 20/22 and
+IRQ21 is requested rising despite the old DT flag. The selected PMIC path
+uses `cxo_d1_pin`, matching maintained RPM XO buffer ID 2 and clock binding 54.
+Native r50's read-only baseline confirms disabled QUP3, unclaimed relevant
+pins, no NFC stack and `AF_NFC` rejection without module-list changes.
+
+Created a separate sparse source branch from the clean conservative ancestor
+that exactly matches all 18 reconstructed-r50 changed files. Four commits add
+IRQ-failure NCI unregister, the optional reference-clock binding, balanced
+mode-dependent clock/error handling and the board wiring/cold states. Published
+`integration/fx0-nfc` at `94010ddccf9aaa212870ecd0ea0058e33de482c9` under the
+standing fx0 push approval; its remote ref and exact four-patch replay verify.
+All four patches pass strict checkpatch without sign-off checking.
+
+Twenty ARM objects/composites build with W=1 and KCFI retained, with no compiler
+warnings. Twelve actual-C/schema checks pass without skips, including nine
+mode/probe cases, clock-shape rejection and legacy controls, compiled
+GPIO/clock/pin/bus bindings and unchanged four-rate CPU semantics. Three new
+failure controls reject the unmodified driver. The rebuilt baseline DTB is
+byte-identical to original r50; all three DTC warnings are pre-existing.
+Sparse header/syscall/vendor-prefix fixture omissions were corrected, and the
+DT uses supported flat cold pin states with TLMM `output-disable`.
+
+The qualified source/index and build artifacts remain unchanged. Read-only
+postflight confirms the same native r50 boot/hash/policy, zero taint, running
+startup and UI services; QUP3 remains disabled and no candidate modules load.
+No full kernel/module/package/image or hardware NFC trial exists yet, and no
+firmware/library/calibration is exported or programmed. The latest native UI
+gate, controller/tag/RF/userspace/suspend and broader bringup remain open. See
+[NFC work](nfc-bringup.md) and
+[preparation evidence](../evidence/2026-11-08-nfc-source-preparation.json).
+
+### Complete NFC host kernel and signed module family (2026-11-08)
+
+Built the published conservative NFC source into a complete
+`6.18.59-fx0-nfc-prep` ARM kernel, all 468 modules and the exact schema-checked
+Fx0 DTB. The successful run finishes in 355.87 seconds. Linked KCFI and
+nonpermissive configuration verify, with no added undefined symbols beyond
+the baseline's two BPF and three weak EFI entries. The embedded certificate
+matches the new private mode-0600 signing key's 1,324-byte certificate, and
+kernel/BSS placement remains below the forced ramdisk address.
+
+The first process terminates on the per-user tmpfs quota. After confirming its
+exit/PID disappearance, the workspace retry changes only the DWARF section
+encoding to lossless zlib compression. Actual ELF debug streams fully
+decompress and retain DWARF5. Seven regenerable top-link objects are verified
+into lossless archives before removing those originals, freeing 1.13 GB.
+All 46 recorded prior final kernel/config/DTB/symbol/certificate hashes and
+the protected indices remain unchanged; the archive receipt provides exact
+restoration paths/hashes before any old incremental relink. Recovery storage
+is read-only throughout. Initial failed output and logs are preserved.
+
+All 468 staged modules pass architecture/release/in-tree and explicit-kernel
+certificate CMS verification, with embedded CMS certificates ignored. All
+25,562 imported CRCs match the current complete `Module.symvers`; modified
+payload/signature/import and wrong-certificate/export-map controls reject.
+The complete NFC dependency order includes matching `rfkill`, `nfc`, `nci`,
+`nxp-nci` and `nxp-nci_i2c` modules. No module is loaded or forced.
+
+Read-only postflight retains the same native r50 boot/hash, conservative
+policy, zero taint, running startup and UI services, with QUP3 disabled and
+no NFC candidate modules. The retained eMMC test file is untouched by this
+work. The exact native UI question remains pending, and no package install,
+RAM image/staging/boot, GPIO/clock/bus/RF/firmware operation, audio test or host
+Wi-Fi change occurs. Distribution/independent Alpine packaging, bounded RAM,
+controller/tag/userspace/PM and full bringup remain open. See
+[full-build manifest](../manifests/kernel-nfc-full-build.json) and
+[evidence](../evidence/2026-11-08-nfc-full-build.json).
+
+### Independent conservative PN547 Alpine package (2026-11-08)
+
+Exported and independently source-built r56 from the ten conservative r50
+patches plus four published NFC changes, excluding the later CPU/CPR series.
+All 16 source checksums verify and the raw recipe payload replays to the exact
+published Git tree. The distinct `6.18.59-fx0-nfc-alpine` family retains
+nonpermissive KCFI, module signing and full losslessly compressed DWARF.
+Its actual configuration passes the official community checker and has exactly
+the 19 known Alpine compiler/capability differences. All 468 packaged modules
+pass explicit embedded-kernel-certificate CMS and current `Module.symvers`
+import-CRC checks; corruption and wrong-family controls reject. APK signatures,
+modified signed-metadata rejection and normal offline ARMv7 resolution pass.
+
+The initial APK's BusyBox depmod metadata has 468 empty dependency lists.
+Requiring kmod in the canonical template and committed NFC recipe fixes that
+real defect. An authenticated `abuild rootpkg` run reuses the unchanged compiled
+kernel/configuration/key and repeats only packaging/signing/dependency
+generation. The final 391 direct and 577 transitive edges match every module's
+metadata. The new generic audit rejects the actual initial bad APK; two graph
+regression checks pass. The preserved uninstalled r55 package has the same
+464-entry defect and needs correction before distribution.
+
+Lossless archives of 26,941 regenerable objects recover 3,895,319,084 bytes
+while preserving 5,842 recorded final-artifact hashes. Each file is independently
+decompressed and SHA256-checked before removal, with private restoration
+receipts retained. The previous r55 Alpine build is preserved by rename and
+1,394 final-file hash checks. Setup attempts stop before compilation on missing
+shared objects/upstream/channel metadata; each terminal attempt is retained,
+and the corrected build attempt uses the identical initial recipe commit. An
+audit harness sparse-file lookup is corrected to compare published Git objects. Module verification initially stops on ENOSPC; after verified small
+batch archiving, only the remaining checks resume. One exactly reproducible
+old corrupt-APK control is retired while retaining its original signed package
+and test evidence. No recovery-disk write or root-index change occurs.
+
+Read-only phone postflight retains the original r50 boot/hash, conservative
+CPU policy, zero taint, running startup/Sway/sensor proxy, disabled QUP3 and
+no NFC modules. The retained eMMC file's size is unchanged; its cross-boot
+content check remains pending. The exact latest-boot UI question remains open.
+No package install, RAM entry, NFC GPIO/clock/bus/RF/firmware action, audio test
+or host Wi-Fi change occurs. Hardware, installed update/recovery and broader
+bringup qualification remain open. See [NFC work](nfc-bringup.md) and
+[package evidence](../evidence/2026-11-08-nfc-alpine-package.json).
+
+### Corrected CPU/CPR compressed-module package r57 (2026-11-08)
+
+Fixed the original r55 APK's 464 empty BusyBox dependency lists by requiring
+kmod and incrementing the package revision to r57. All 43 source patches and
+the input configuration are unchanged. Authenticated `abuild rootpkg` runs
+in the retained source-build tree, reusing the exact kernel/DTBs/configuration,
+embedded certificate and private mode-0600 signing key. This is packaging-only;
+the original kernel release and compiled build number are retained.
+
+All 464 signed module files and payloads match r55 byte for byte. All 25,294
+imported CRCs, signatures and corruption/wrong-family/ABI controls pass. The
+new graph verifies 385 direct/567 transitive edges and rejects the actual
+original bad r55 metadata. Dry-run modprobe checks all 464 packaged binary-index
+resolutions and dependency orders; the same audit passes all 468 NFC modules.
+No modules load or host configuration changes. APK signature/tamper and offline
+ARMv7 checks pass. An isolated workspace usermode r55-to-r57 replacement with
+hooks disabled produces 546 regular files matching the signed r57 payload.
+Actual phone update hooks, autoload, boot and recovery remain untested.
+
+All 1,394 retained r55 final-file hashes, 48 published source-file comparisons,
+CFI flags/link/config and original APK remain intact. Separate NFC artifacts
+and the protected root index are unchanged. The prepared r55 RAM registration
+image remains unchanged/unbooted; its exact native-UI gate is still pending.
+No device entry, install, GPIO/clock/bus/firmware action, audio test, host Wi-Fi
+change or recovery-disk write occurs. See
+[r57 manifest](../manifests/kernel-cpr-package-r57.json) and
+[correction evidence](../evidence/2026-11-08-cpr-package-dependencies.json).
+
+### Prepared first moduleless NFC RAM startup (2026-11-08)
+
+Built a 6,207,488-byte RAM-only image from the exact verified Alpine NFC r56
+APK kernel/DTB without changing their encoding. It contains no modules,
+firmware or CPU registration payloads. All ten qualified base initramfs
+entries retain their original BusyBox/init/USB/HTTP/180-second timer bytes.
+The conservative family's schedutil default replaces the earlier CPU trial's
+userspace command-line override; enforced signatures remain requested.
+
+The new read-only checker pins the release and exact 84-byte kernel-note
+fingerprint, signature flag, empty module list, zero taint, four CPUs, two
+bounded temperatures, absence of CPUfreq policy/CPR/block mounts, and one
+unbound PN547 client on enabled QUP3. Two tests execute 28 fixture modes,
+including 27 faults, without fixture changes or module/GPIO/I2C commands.
+Independent actual-image parsing verifies header addresses/checksum, all 14
+CPIO entries and module/firmware absence. The exact ARM BusyBox parses init,
+HTTP and the checker and executes compatible-string NUL conversion.
+Review catches procfs zero-size semantics and aliased block-mount gaps before
+publication. The final checker reads module-list contents and permits only
+expected RAM/pseudo filesystem types. Both new cases are accepted by the
+retained earlier unpublished checkers and rejected by the final version;
+none of those images is staged.
+
+The real pending-UI stage process and instrumented pending/wrong-boot cases
+stop before phone-client imports or subprocesses. There is no physical entry,
+transfer or BOOT state. Read-only postflight retains the same native r50 boot,
+original hash, conservative policy, zero taint and active UI services; the
+latest display/touch result remains pending. The previous CPU RAM image,
+CPU/NFC packages, kernel artifacts and protected root index are unchanged.
+No recovery-disk write, audio test or host Wi-Fi change occurs. These host
+checks qualify neither real startup/return nor runtime signatures, cold NFC
+ownership, NCI commands, tag/RF/userspace/PM or broader bringup. See
+[trial procedure](../diagnostics/nfc-startup/README.md) and
+[preparation evidence](../evidence/2026-11-08-nfc-startup-preparation.json).
+
+### NFC teardown lifetime/locking fixes and source-built r58 (2026-11-08)
+
+Cold module-lifecycle preparation exposes a pending-IRQ use-after-free window
+and `info_lock` recursion through NCI unregister/close. Two isolated source
+commits drain the IRQ before releasing NCI state and unregister without holding
+the mode mutex, then finalize cold mode and unlock before free. Firmware-work
+handling is unchanged and concurrent firmware download remains unqualified.
+Nine tests execute actual C in 16 callback modes; restoring either old defect
+alone fails its intended check. Raw patches replay exactly and strict style
+checks pass after restoring sparse-tree reference markers.
+
+The separate 16-patch r58 Alpine family source-builds completely in an isolated
+pmos home. Its distinct release/certificate preserves CFI and full compressed
+DWARF, with the same 19 known configuration capability differences. All 468
+CMS signatures, 25,562 imported CRCs, 577 dependency edges and 468 binary-index
+loader requests verify. The two changed ARM objects compile with W=1 without
+warnings and match the full-build object bytes; original command/object bytes
+and mtimes are restored. APK signatures and isolated usermode r56-to-r58
+replacement pass, including all 549 payload files and old module removal.
+The DTB and symbol ABI remain identical to r56, without transferring runtime
+acceptance across the distinct signing families.
+
+Prior build/source/package/key state, the prepared moduleless image and protected
+root index remain intact. Read-only postflight retains native r50's exact boot,
+original hash/policy, zero taint and active Sway/sensor proxy; its latest physical
+UI check is still pending. No device entry, candidate module load, firmware/RF
+operation, audio test, host Wi-Fi change or recovery-disk write occurs. A matching
+corrected-family startup/return and cold-module lifecycle remain open before
+controller/tag/RF/userspace/PM and broader bringup gates. See
+[build manifest](../manifests/kernel-nfc-teardown-build.json) and
+[fix/build evidence](../evidence/2026-11-08-nfc-teardown-source-package.json).
+
+## November 8: r58 startup prepared and native UI confirmed
+
+The owner confirms working display and touch on native r50 boot
+`28db1c68-3b08-4a53-8e5a-3397b8315813`; its original boot hash, zero taint,
+running systemd, Sway and sensor proxy are rechecked. The corrected r58
+NFC family now has a separate moduleless RAM image and checker, passing 30
+fixture cases including rejection of the older r56 release and marker.
+Kernel/DTB bytes match the signed r58 APK; qualified init/USB/HTTP/BusyBox
+and the independent 180-second return timer remain unchanged. The image
+is unstaged and unbooted at this checkpoint. See [r58 startup details](../diagnostics/nfc-startup/teardown-startup.md)
+and [preparation evidence](../evidence/2026-11-08-nfc-teardown-startup-preparation.json).
+
+Fresh byte comparisons also correct an earlier audit count: each r56/r58
+build has 21 changed source files matching its published commit. The old
+field reported ELF symbol-string-table bytes. Original reports and all
+linked artifact hashes are preserved; [the erratum](../evidence/2026-11-08-nfc-source-comparison-correction.json)
+adds no runtime or hardware qualification.
+
+## November 8: r58 moduleless startup, recovery and eMMC persistence
+
+The corrected r58 family passes one moduleless RAM startup and timed return to
+installed r50. Its original packed image first times out before BOOT; after
+terminal transfer recovery and an owner-confirmed native boot, isolated XZ
+preset-3 encoding preserves the exact runtime Image/ELF/notes/certificate/ABI.
+The new image reads back exactly, the actual startup checker passes, and its
+84-byte notes match the linked r58 build. Four CPUs, no modules and one unbound
+PN547 client at QUP3 `1-0028` are observed. The timer returns at 181.610626 s,
+with serial and 22 complete HTTP pairs. Original r50 hash, zero taint, 1.15 V
+PMIC target, policy and UI services are restored; owner confirms display/touch
+on boot `98ab64c6-01c6-4c1e-91a2-433fc3afc4cf`. See
+[startup evidence](../evidence/2026-11-08-nfc-moduleless-startup.json).
+
+The preceding intermediate native reboot also verifies the retained 512 MiB
+eMMC pattern with direct reads, full pattern and hash checks, and no ext4
+errors. Its exact synthetic files are archived/removed after the later RAM
+return. This is warm-reboot persistence, with power-loss/endurance qualification
+still open. See [storage evidence](../evidence/2026-11-08-emmc-cross-boot-persistence.json).
+
+Signed module runtime checks, NFC GPIO/clock ownership/teardown, controller/RF/PM
+and wider bringup remain open. Original build/package/image artifacts and the
+protected root index are unchanged. The USB transport fault remains unresolved;
+native systemd currently waits on time synchronization with no failed units.
+
+## November 8: signed NFC cold registration and cleanup
+
+A matching r58 RAM image rejects same-ELF unsigned and altered-CMS rfkill
+controls with key errors/status 129, then loads all five signed modules in
+dependency order. Four cold probe/removal cycles include three explicit
+unbind/rebind rounds and final ordinary reverse module unload. Twelve
+snapshots verify VEN/FIRM low, IRQ21 input/pull-down, pinmux ownership and its
+release, NFC/rfkill parentage and zero reference-clock votes. All NFC IRQ
+counters are zero; 48 temperature samples are 38–39°C. The final state has
+no modules, class/rfkill child, IRQ handler or pin owner. The independent timer
+returns at 181.622714 seconds to original r50 with zero taint, programmed
+1.15 V APC target, running systemd, synchronized time and UI services. Latest
+owner display/touch status is recorded separately in
+[the evidence](../evidence/2026-11-08-nfc-cold-lifecycle.json).
+
+The checker passes 43 host modes, detects three isolated weakened guards and
+preserves the qualified kernel/DTB/command line plus all fourteen original
+CPIO entries. See [procedure and limits](../diagnostics/nfc-startup/cold-lifecycle.md).
+NCI reset/init, tag/RF/userspace/PM, open-device or pending-IRQ teardown and
+firmware concurrency remain unqualified. The candidate is RAM-only; installed
+update/recovery, intermittent USB/time-sync faults and broader bringup remain open.
+
+## November 8: bounded controller startup prepared and host-verified
+
+A separate r58 RAM image is prepared for one NCI up/down pair. It retains the
+qualified kernel/DTB/command line, fourteen base CPIO entries and 180-second
+init timer, with the same five signed modules plus a static ARM get/up/down
+helper. The helper validates kernel sender, sequence, family, attributes, ACK
+and fresh powered state; failed/short/interrupted mutations are not resent.
+The shell requires reset/init/mapping response traces and identity fields,
+active/cold GPIO and clock votes, then cold module cleanup. No polling, RF
+discovery, vendor, secure-element or firmware request is exposed.
+
+Thirteen host tests cover 105 cases and detect five weakened guards. Host
+sanitizers and ARM emulation each pass 16,384 packet byte/length variants;
+all 79 helper cases match under ARM emulation. Independent image and exact
+ARM BusyBox checks pass. These are preparation/model results, with real NCI
+controller communication still unqualified. See [procedure](../diagnostics/nfc-startup/controller-startup.md)
+and [preparation evidence](../evidence/2026-11-08-nfc-controller-preparation.json).
+
+The image is unstaged/unbooted. Its actual entry refuses the pending physical
+UI result before importing the phone client. Native r50 boot
+`2e6126b9-498e-4d89-b23e-f08fe6ccc361` retains the original hash, zero taint,
+running synchronized services, low VEN/FIRM, released NFC pins and zero
+reference-clock votes. New native pre/postflight also checks those pin/clock
+conditions. Current exact-boot display/touch confirmation remains pending.
+
+## November 8: preserve receive through the closing NCI reset
+
+An expanded actual-C teardown test finds a gap in the prior r58 open model:
+real NCI unregister sends CORE_RESET, but the driver already released its IRQ.
+The response is lost and the request times out even though close returns zero.
+A new transport stop callback leaves receive available through unregister and
+drains it outside the mode mutex before state free. Successful IRQ registration
+is tracked so error unwind cannot release an unowned IRQ.
+
+Five tests / ten cases pass with address/undefined behavior sanitizers; the
+r58 open failure and five isolated defects are detected. Three fresh ARM
+objects compile with W=1 and CFI; strict checkpatch and all seventeen patches'
+exact replay pass. The first isolated tool run fails on read-only /dev/null;
+its logs are retained and the corrected run passes. Publish the source, patch,
+new profile and [evidence](../evidence/2026-11-08-nfc-open-teardown-source.json).
+No new linked kernel, package or image exists, and hardware teardown remains
+unqualified. Preserve earlier source/build/image evidence and the protected
+root index. Native r50 remains the installed family; the latest physical UI
+check is pending separately from the earlier moduleless return confirmation.
+
+## November 8: build the matching open-teardown NFC family
+
+Build r59 in a new pmos home from the unchanged seventeen-patch profile. The
+first attempt stops before compilation on missing cached upstream metadata;
+the second passes input config checks but cannot retrieve public indexes with
+network disabled. A full pinned checkout and normal builder network allow a
+third fresh-home attempt to complete. Retain all three controllers/logs/homes.
+
+The APK embeds the exact recipe commit; all 22 changed source files match the
+published Linux tip. Its actual normalized config passes the community checker
+and differs from r58 only in LOCALVERSION. The new certificate matches the
+whole kernel trust list. All 468 modules and 25,562 imported CRCs verify; the
+new I2C module rejects the old nxp_nci_probe CRC. All 577 transitive dependency
+edges and 468 loader dry-runs pass. APK signing/tamper and isolated r58-to-r59
+replacement verify 549 payload files, with hooks disabled. Recheck 294 earlier
+input hashes and the protected root index before documentation updates. Publish
+the [measured manifest](../manifests/kernel-nfc-open-teardown-build.json), recipe
+patch and [evidence](../evidence/2026-11-08-nfc-open-teardown-package.json).
+No phone trial or installation starts; the exact latest-native UI result
+remains pending and full bringup continues.
+
+## November 8: prepare matching r59 moduleless startup
+
+Recode the r59 decompressor in isolated scratch, including all thirty thin
+EFI archive members. Original link and assembler replay reproduce the source
+zImage; XZ preset-3 output independently decompresses to the exact runtime
+Image. Build the fourteen-entry moduleless RAM image, retaining eleven r58
+CPIO payloads/modes plus its init timer, serial/HTTP support, command line and
+DTB. Change only the family permit, note hash and read-only checker.
+
+Add RAM boot-ID and moduleless pin/GPIO/clock guards. Fifty fixture cases pass
+on host and exact ARM BusyBox, and three isolated weakened guards are detected.
+Independent header/digest/payload/CPIO, syntax and BSS bounds checks pass. The
+actual pending entry and instrumented pending/wrong-boot cases stop before
+phone-client import. A valid future entry requires a separate one-use native
+preflight before reboot; that directory is still absent. A separate read-only
+preparation baseline confirms the same r50 boot and NFC/PMIC/service state.
+Reverify 873 earlier input hashes and 53 original encoding inputs before
+documentation updates; retain earlier artifacts and the protected root index.
+Publish [preparation evidence](../evidence/2026-11-08-nfc-r59-startup-preparation.json).
+No physical trial or installation starts; full bringup continues.
+
+## November 9: identify battery telemetry validity and recovery defects
+
+Inventory the unchanged r50 native supplies, ADC bindings, firmware property
+names and remote-processor/class interfaces without changing policy or
+starting a radio. Confirm missing battery measurements and profile handoff,
+and verify the installed r4 UPower CLI/daemon plus original boot hashes. A
+follow-up resolves IIO drivers through canonical ancestor devices; initial
+class-path nulls did not mean unbound drivers. USB input setting and descriptor
+both read 500 mA; actual current/negotiation remain unqualified.
+
+Build pristine copies of the two pinned UPower guard/backport trees with the
+original tool rootfs mounted read-only. Add twelve validity probes, leaving
+production C untouched. Matched sixteen-case runs each show eleven failing
+contracts and five passing controls: nine false 0% critical/action states on
+1.91.5; eight plus a NaN fatal-diagnostic abort on 1.91.0. Infinity becomes
+100%; ignored supplies stay invisible after valid telemetry arrives. An
+unavailable coldplug read and real-zero-charge protection pass. The read
+error shim targets libudev, covering GUdev string and numeric paths; it is not
+a kernel fault injection.
+
+Retain the initial setup failures, missed numeric injection and earlier
+backport partial-metadata diagnostics separately. Actual public preparation
+replay matches both final tested fixtures; production C and recovery-disk
+sources remain unchanged. Preserve previous NFC/CPU artifacts and the root
+index. Publish the probes and [evidence](../evidence/2026-11-09-battery-telemetry-validity.json).
+A production validity/recovery correction and its native qualification remain
+open; no phone reboot or package/policy change occurs.
+
+## November 9: fix UPower telemetry validity and later-availability recovery
+
+Implement strict uncached numeric parsing and shared usable-charge validation
+in fresh current/backport source clones. Keep library read failure, empty text,
+malformed/non-finite values and out-of-range capacity distinct from valid zero.
+Capture charge fields once per refresh, retain prior properties/update time on
+unusable data, and retry initially ignored supplies through the existing removal
+and registration paths so sibling links remain consistent. Prefer real charge
+over approximate levels, preserve peripheral/MacBook behavior and avoid replacing
+zero energy with a stale average. Bring the backport denominator guard in line
+with current source.
+
+All 28 new validity cases pass per tree. Full regressions expose an approximate
+level precedence error, which is corrected; the old NaN test is updated to reject
+false-empty reporting. Retain the initial missing-USB-metadata fixture failure.
+A repeated Wacom mock event-send failure reproduces with unchanged pinned
+production C; paced identical records pass there and with the fix, keeping all
+final assertions. Host scheduling also exposes the fixed-per-loop simulated
+power assumption; use elapsed monotonic time while retaining charging/discharging
+assertions. Retain failed/misselected attempts separately. Final complete runs
+pass all 131 and 122 configured tests with normal zero exit status; no skips or
+expected failures are substituted. The public verifier rejects seven invalid
+report controls.
+
+Export reviewed mail patches and replay them at their exact bases to identical
+clean source trees. Preserve earlier CPU/NFC/battery artifacts, original diagnostic
+reproductions, the protected root index and the newest pending physical UI record.
+Publish [evidence](../evidence/2026-11-09-battery-telemetry-fix.json) and
+[review instructions](../submissions/upower/README.md). No native install, reboot,
+charging, radio or audio operation occurs. ARM packaging, deployment and full
+bringup remain unfinished.
+
+## November 9: build and verify the ARM UPower r5 candidate
+
+Prepare a fresh recipe checkout from r4, adding only the tested backport patch
+and pkgrel bump. All eight patches apply; seven after the inherited Nura timing
+patch have no fuzz or offsets. Publish recipe `4c5db910dd68205cc26303325186ccb39cb17521`.
+Retain two terminal setup failures caused by missing upstream remote/tracking
+metadata in the fresh clone; repair metadata without changing source HEAD/tree.
+The first ARM QEMU-only build succeeds and exports six signed APKs. Its default
+cleanup removes source, so enable retention and repeat with the same recipe,
+target/toolchain and warm cache. All six original APKs are byte-identical; the
+retained compiled source matches all 159 expected files. This is bounded repeat
+build evidence, not independent-environment reproducibility.
+
+The workspace build key is absent from the phone's existing trust store. Use
+the existing native-trusted key only inside a network-disabled signing container,
+keeping original package control/data gzip bytes identical and exporting no
+private key bytes. Native public-key checks accept all six candidates and reject
+modified signed recipe metadata. Offline simulation against a fresh read-only
+r50 database snapshot upgrades exactly the three installed UPower packages.
+The existing ARM core test passes under QEMU; five bodies run and two system-bus
+bodies return early. The recipe's inherited automatic-check policy is unchanged;
+Linux integration remains the separately validated host suite.
+
+Stage only three verified ELF files and their local library symlink in a phone
+temporary directory. Force eager symbol resolution and run unprivileged CLI
+version/enumeration/dump/battery plus updated-daemon help. All pass; installed
+binaries/database, original boot hash, boot ID, taint and running r4 daemon PID
+match before/after. Remove probe files after verifying their hashes again. CLI
+and shared-library bytes equal the original r4 APK; daemon help is loading
+coverage, with no new daemon service or native battery-logic qualification.
+
+Preserve earlier artifacts and the protected root index, publish the
+[candidate manifest](../manifests/upower-telemetry-r5.json) and
+[evidence](../evidence/2026-11-09-upower-r5-arm-candidate.json). Rollback/current
+config/database/boot backup, deployment, native daemon acceptance and full
+bringup remain unfinished. No reboot, charging, radio or audio operation occurs.
+
+## November 9: approved native UPower r5 deployment and boot readback
+
+Freeze the 1,820 earlier evidence hashes and collect the current r50 baseline.
+The broad initramfs firmware-directory export guard stops at regulatory.db and
+its signature. Verify both exact files against a signed public ISC wireless-regdb
+APK, then audit all six boot/ramdisk images: only those verified public regulatory
+files are allowed, native GPL kernel components match, and private-key markers
+are absent. No proprietary firmware export occurs.
+
+Preserve trusted r4 rollback and r5 candidate APKs plus the complete current
+UPower/config/state/database/world, boot tree, module tree and GPT metadata on
+both host and phone persistent eMMC. The fsynced archives match exactly
+(114,387,299 bytes), and 21 captured payload files match the original r4 APKs.
+In an isolated host root, execute r5 installation and r4 downgrade with scripts/
+hooks disabled; all captured payload/config bytes and package versions return.
+
+Initial automatic approval review rejects the live native transaction for lack
+of exact authorization. The owner explicitly approves the UPower r5 install
+before its only launch. Run one persistent monitored unit with current backup/
+package/boot checks, an owned runtime mask and a temporary sleep/shutdown
+inhibitor. Native APK installation retains normal scripts/hooks. Only the three
+UPower package versions change, with recipe `4c5db910dd68205cc26303325186ccb39cb17521`.
+The expected r5 executable hash runs and eight startup samples/CLI modes pass.
+No automatic rollback is needed.
+
+Normal mkinitfs/boot-deploy hooks regenerate initramfs and rewrite the existing
+r50 boot image while preserving 524,288 bytes before it. This write should have
+been called out explicitly before launch; the owner had approved normal hooks.
+Independent readback verifies all 99 boot paths/bytes, complete raw partition,
+both GPTs, all 478 module paths/bytes and all 243 initramfs payloads/modes match
+the backup. Its 19 module payloads match installed r50; overlay hook is absent
+and memory fit remains valid. No new kernel package or reboot occurs.
+
+After inhibitor release, seven samples over 31.59 seconds keep the same new
+daemon PID, no warning and finite unknown/absent battery state. Services stay
+active, Sway retains its PID and display power controls are auto. Remove owned
+mask/inhibitor, stop the completed unit and remove verified temporary transfer
+files; keep persistent rollback copies. Archive the new package database/world
+and [native evidence](../evidence/2026-11-09-upower-r5-native-install.json).
+Physical UI, native malformed telemetry/stale-data policy, measured battery/
+charging behavior, live package/root rollback and full bringup remain open.
+
+## November 9: r59 transfer timeout, r50/r5 return verified
+
+A fresh explicit display/touch answer passes for r50 boot
+`2e6126b9-498e-4d89-b23e-f08fe6ccc361` after UPower r5 installation. The
+older cold-trial UI ledger stays unchanged. A new entry directory checks that
+exact question, answer, software checkpoint and boot; six altered UI controls
+fail before phone-client import. Fresh native preflight verifies r50/r5,
+original boot hash, running services, 1.15 V programmed APC target, 40–41 C
+temperatures, released NFC pins and zero reference-clock votes.
+
+The unchanged 6,809,600-byte r59 image download times out after 524,288
+completed bytes. No complete readback, BOOT, RAM startup checker or NFC action
+occurs. Both transfer and stage terminate with status 1 and their PIDs are gone
+before recovery. Reset only the identified USB transport, verify lk2nd, and
+send one standard reboot to installed r50. Do not retry the RAM entry. The
+intermittent USB fault remains unresolved; lossless XZ encoding does not cure it.
+
+Native boot `c3ac8f04-888e-493c-bb5d-a1729a275f7d` returns with the original
+raw boot hash, zero taint, 1.15 V programmed target, low VEN/FIRM, released NFC
+pins and zero clock votes. UPower r5 starts automatically; all three package
+records, installed ELF hashes and running daemon hash match. Three samples
+keep absent/unknown battery state, finite unknown percentage 0, no warning and
+OnBattery false. This is not measured zero charge. Final systemd state is
+running with no jobs; Sway and sensor proxy are active, temperatures are 41 C,
+and initramfs/kernel/package database/world hashes are unchanged. Host routes,
+resolver and protected index match; no temporary USB network was started.
+
+A local return-helper filename collision initially stops at an assertion before
+probing the phone. A separate waiter state filename fixes it; the successful
+read-only postflight and the failed wrapper records are both retained. No
+additional reboot or device action follows from that correction.
+
+The new return has its own pending physical display/touch question. r59 startup,
+NCI communication/open teardown, RF/PM/firmware behavior and full bringup remain
+unqualified. See [trial evidence](../evidence/2026-11-09-nfc-r59-transfer-timeout.json).
+
+## November 9: trace the next preboot transfer failure
+
+Preserve all 2,001 prior inputs and inspect the installed lk2nd USB source:
+fastboot, HSUSB and its descriptor header exactly match installed commit
+`079eebe745de650df02e92fd9ca8d9fec5110c56`. The selected host kernel journal
+shows no disconnect or reported controller error during the latest stalled
+download; its first later reset is the recorded terminal-only recovery. This
+limited log does not establish electrical/controller health or a root cause.
+Kernel r59 never ran, and encoding-dependent observations do not establish a
+content-specific failure mechanism. No bootloader change is justified here.
+
+Add an integrated payload-free per-I/O frame journal to the synchronous host
+helper. It flushes a start before each command/status/data I/O and records a
+returned count or error with exact phase/offset/requested length, duration and
+errno. Failed requests retain an unknown byte count rather than inventing zero;
+positive short OUT counts remain visible and still abort. Identity probing and
+all acceptance/timeout/chunk/pacing/no-retry rules retain their existing path.
+Journal I/O adds host timing overhead; no physical transfer fix is claimed.
+
+All 29 targeted checks pass. Ten injected protocol failure boundaries include
+partial data delivery before error and partial readback. The real CLI retains
+confirmed progress, releases its USB claim, never retries and leaves no verified
+readback. Successful transfer still compares exact bytes. The previous helper
+fails the new metadata contract for data-write/status-read timeouts; two isolated
+mutants (unknown-count zero and missing flush) are rejected with no harness
+errors. Actual extracted lk2nd C functions remain covered in five completion
+modes; DMA/cache/IRQ behavior is not simulated by them.
+
+The phone is untouched this turn. Its newest UI question remains pending on
+native boot `c3ac8f04-888e-493c-bb5d-a1729a275f7d`. No new reboot, transfer,
+BOOT, flash, radio/audio operation, host Wi-Fi change or recovery-disk write
+occurs. r59 startup, reliable transport and full bringup remain open. See
+[trace evidence](../evidence/2026-11-09-ram-transfer-journal.json).
+
+## November 9: identify the modem gap and prepare an inactive MSM8926 description
+
+Read-only inventory on the unchanged r50/r5 boot finds only ADSP and WCNSS
+running. MSS at fc880000 is disabled and inherits the MSM8226 compatible;
+active ModemManager has no objects. The installed MSS module exists but is not
+loaded. rmtfs and several optional support tools are absent. Firmware names
+mba.b00/modem.mdt are present through the actual configured runtime search path,
+with original modem/persist read-only. No firmware/calibration bytes, identifiers,
+QMI/location requests or radio controls are exported or executed.
+
+Resolve the unit's private stock DTB supply phandles: MX L3, PLL L8, MSS S5,
+with S5 fixed at 1.15 V. A separate patch against exact r50 source selects
+MSM8926 resources, removes the inherited MSM8226-only BHS property and describes
+those supplies. Modem and new S5 both remain disabled; no kernel recipe, package
+or RAM image changes. The existing driver requests a minimum voltage with
+INT_MAX upper bound and has remoteproc auto_boot false; runtime ownership and
+filesystem/calibration handling still need qualification before activation.
+
+Baseline/candidate DTBs compile with the same three inherited warnings; the
+baseline matches the retained installed-r50 DTB hash. Stock-derived checks
+reject the old description, wrong same-type supply and unexpected S5 enablement.
+The first schema applicability assertion catches disabled nodes relaxing required
+properties. Preserve that failed attempt; separate enabled host copies then
+validate without MSS/RPM regulator diagnostics. Old missing supplies and stale
+BHS controls are rejected. The actual candidate remains disabled and unbooted.
+
+Final native checks preserve boot, taint, raw image, package database/world and
+UPower/ModemManager/Sway PIDs, with systemd running and no jobs. The newest
+physical UI answer remains pending. Modem startup/control, GNSS, SIM/RF and full
+bringup are unfinished. See [status](modem-bringup.md) and
+[evidence](../evidence/2026-11-09-modem-control-description.json).
+
+## November 9: native-family offline modem probe image prepared
+
+Extract only GPL kernel/map/config and a five-module dependency closure from
+the previously audited retained backup. Public helper replay reproduces all
+bytes. Verify the exact installed kernel's entire 1,324-byte certificate list,
+11,709 exports and all 197 imported CRCs across five signed modules. Per-module
+payload/signature/CRC controls reject. A fresh family replay derives Image,
+notes and certificate from the retained kernel/map/config without pre-derived
+files. The original native XZ encoding stays unchanged.
+
+Create a probe derivative of the inactive MSM8926 description: enable modem/S5,
+disable the BAM-DMUX child that probe otherwise creates. Full property comparison
+finds only those three changes. Bindings pass. Audit auto-boot, offline crash/
+shutdown, domain attach, IRQ setup and child creation in existing source. The
+RAM image contains no firmware or loader service and uses the original independent
+180-second init/USB/BusyBox bytes. Its guarded worker requests one offline
+load/remove cycle only, with no remoteproc-state write or firmware request.
+
+Host and exact ARM BusyBox pass five methods/44 subcases each; ten operation
+failures, eight dynamic failures, one-use refusal and two weakened guards are
+covered. The initial global shell-counter collision is caught by the full
+positive workflow and its frozen baseline remains rejected. Image parsing,
+header checksum, all 23 CPIO entries and three ARM script syntax checks pass.
+The final rebuild reproduces the 6,301,696-byte image exactly on this host.
+
+A read-only native pre-entry baseline confirms the same boot/hash/services,
+APC target 1.15 V, and S5 target1.15 V with mode0x40/enable0 using nine exact
+register preads. This is programmed state, not analogue voltage. No kernel/
+package/firmware/radio change or RAM entry occurs. Fresh pre/postflight and
+observer controllers plus the pending current-boot physical UI check remain
+required before use. See [preparation](../evidence/2026-11-09-modem-offline-probe-preparation.json).
+
+
+## November 9: offline modem entry and return controls prepared
+
+Prepare a one-use staging, serial/HTTP observation, single-BOOT and native-return
+controller set for the verified native-r50 offline probe image. Preserve the
+pending current-boot UI gate before phone-client import. Fourteen staging and
+fourteen BOOT cases pass with instrumented sources; six native phase cases,
+twelve recovery refusal cases and nine changed-register controls pass. No test
+opens a real USB device or sends a phone command. An uncertain BOOT reply blocks
+a second attempt. Recovery requires the known terminal pre-BOOT timeout and
+absent PIDs; no live transfer is killed/reset/retried.
+
+One real read-only preparation check confirms the same native boot, r50/r5
+hashes, taint0, CPU/NFC/MSS baseline, nine APC/S5 raw controls, Sway and three
+UPower samples. Host routes/resolver/protected index remain unchanged. The
+future postflight permits normal startup observation for up to 120 seconds;
+that return path remains unexercised. Exact ARM BusyBox `od -v` preserves all
+84 native kernel-note bytes for serial capture.
+
+Add a pure artifact return verifier and three passing test methods using actual
+mocked-worker output and synthetic handoff/native receipts. Bad operation order,
+state, identity, timer, IRQ, raw controls, UPower and host restoration are rejected.
+Physical display/touch is never inferred. The new structured reply repeats the
+already-recorded older post-UPower-install pass; the current native-return UI
+question remains pending. The image is unstaged/unbooted; no reboot, transfer,
+BOOT, module load, package or radio change occurs. Full bringup remains active.
+See [evidence](../evidence/2026-11-09-modem-probe-entry-preparation.json).
+
+
+## November 9: modem firmware layout checked and missing RMTFS memory described
+
+The prior turn is progress: entry/return controllers and their host guard checks
+were published at ee777d5; the one-use slot remains unconsumed. Revalidate all
+2,241 prior evidence hashes and the protected root index. The current native UI
+question remains pending, so no RAM entry occurs.
+
+Inspect firmware entirely on the phone and export numeric layout/digests only.
+The 27-header MDT has 21 bounded, nonoverlapping MPSS segments (three zero-fill),
+an 81,788,928-byte aligned span in the 81 MiB carveout, exact split payload sizes
+and packed 916+904-byte authenticated metadata. The 295,824-byte MBA fits its
+1 MiB carveout. Four synthetic-fixture methods/22 cases cover fixed/relocatable
+layout, all metadata sources and malformed/range/size/path refusals. No firmware
+is authenticated, loaded or started by these checks.
+
+Native has the RMTFS memory driver built in but no matching DT/device instance.
+Stock DTB/vendor source agree on 0x0fd80000+0x180000. Prepare a separate host
+description that partitions the existing exclusion without changing its union,
+leaves MSS disabled and changes no other existing property. The first manual
+patch hunk length is rejected and preserved; generated patch/compiled candidate
+and real binding checks pass, with four description controls plus a missing-client
+schema control. The candidate is neither packaged nor booted and does not alter
+the earlier prepared offline-probe image.
+
+Pin seven RMTFS source files to b30a3eb and verify their Git blob hashes. Audit
+storage shadow mode and the default unit's remoteproc start/stop ownership;
+read-only backing storage does not imply an inactive daemon. No RMTFS code is
+installed/executed. Rehash all six original private firmware/provisioning images
+and compare live partition digests: modem/FSG/FSC match, persist/modemst1/modemst2
+differ. Cause/time and current matching rollback coverage are unproven. Preserve
+old backups and require current verified snapshots/independent copies before
+startup. No provisioning/firmware payload is exported in this turn.
+
+Final read-only native acceptance retains the same boot, r50/r5/raw boot hash,
+Sway/UPower and other services, CPU/NFC/MSS baseline, taint0 and raw APC/S5
+controls. Host state/index and installed files remain unchanged. No reboot,
+USB transfer/reset, module load, firmware/radio/package change or recovery-disk
+write. Full bringup remains active. See [evidence](../evidence/2026-11-09-modem-firmware-layout.json).
+
+
+## November 9: current provisioning captured privately on phone and host
+
+The previous turn is progress: firmware layout and the separate unbooted RMTFS
+description were published at 8be6165. Revalidate 2,324 prior hashes and the
+protected index. Keep the current native physical UI gate pending; no RAM entry.
+
+Capture five fixed provisioning partitions into a fresh mode-700 phone rootfs
+directory, excluding modem firmware. Check labels/offsets/sizes, disabled MSS,
+absent storage daemons/writer descriptors and read-only/unmounted sources. Every
+source is opened read-only, and all five before/copy/after digests agree. Fsync
+and reread five images plus metadata. Transfer only those private provisioning
+snapshots and capture metadata to mode-600 files on encrypted workstation
+storage. Independent post-transfer phone snapshot/source reads and host rereads
+match; the capture PID is absent. Original card identity matches privately.
+
+The two persistent copies contain 43,515,904 bytes across persist/modemst1/
+modemst2/FSG/FSC. The phone copy shares the source eMMC; this establishes one
+off-device current copy, not two. Factory-era originals remain preserved. No
+provisioning bytes, per-partition digests, card identity or firmware payload are
+published. The private manifest and verifier bind those images without listing
+their individual digests in the public evidence map.
+
+Four methods/25 synthetic cases pass for exact bounded copying, no-clobber,
+changed/short/oversized/symlink/nondevice sources and eighteen bad snapshot
+metadata/map/hash/permission/controller cases. A host round-trip into disposable
+regular files verifies all five image payloads; temporary copies are removed.
+No physical provisioning restore or power-loss durability is tested.
+
+Final read-only native checks retain the same r50/r5 boot, files, raw boot hash,
+taint0, Sway/UPower and other services, CPU/NFC/MSS baseline, nine APC/S5 controls
+and unchanged host state/index. Phone writes are confined to seven new regular
+backup files on rootfs. No source partition write, flash, reboot, USB reset/RAM
+transfer, module load, firmware/radio/package change or recovery-disk write.
+Full bringup remains active. See [evidence](../evidence/2026-11-09-modem-provisioning-backup.json).
+
+
+## November 9: ARM RMTFS storage defects reproduced and candidate verified
+
+The previous turn is progress: current private provisioning snapshots published
+at a66f965. Reverify 2,362 prior hashes and the five raw private payloads through
+their pinned manifest/verifier. The current native UI gate stays pending.
+
+Pin RMTFS b30a3eb and QRTR 29e36ae inputs. Blob checks reject two source writes
+that normalized trailing bytes; restore exact fetched text before compilation.
+Retain failed incomplete-header, sanitizer/runtime and static-link attempts.
+Build the full daemon for host and ARM using read-only compiler/target inputs
+in a network/device/key-home-isolated sandbox. A signed exact-version public
+libucontext development archive resolves the static libudev link. No key bytes
+or firmware are exported and recovery storage stays read-only.
+
+Exercise actual upstream storage APIs with synthetic files and guarded syscalls.
+Final baseline fails 15/20 Clang sanitizer cases and 13/20 static ARM cases;
+three ARM cases segfault. Reproduce invalid/closed handles, signed/32-bit range
+errors, incomplete snapshots, failed-read leaks, suppressed errors, uninitialized
+growth and incorrect errno. A focused storage-only patch passes all twenty cases
+on each runner, including a positive backing-write control and zero backing
+writes in shadow mode. These are storage tests, not QMI/shared-memory/physical
+qualification. Exact patch replay and full host/static ARM rebuild pass; only
+an early invalid-option daemon path is executed.
+
+Record the retained target systemd/libudev provider's `-dirty` recipe metadata.
+The archive is hashed, but clean dependency source closure remains unresolved,
+so the full daemon is not promoted, uploaded, installed or started. Draft the
+storage correction for upstream review; no upstream message/MR is sent.
+
+Final read-only phone checks preserve the same r50/r5 boot/files/services,
+taint0, original raw boot, CPU/NFC/MSS baseline and all nine APC/S5 controls.
+Fresh provisioning source/phone-copy rereads and the host private verifier pass.
+Host routes/resolver/protected index remain unchanged. No reboot, RAM entry,
+source write, module load, firmware/radio/package change or recovery-disk write.
+Full bringup remains active. See [evidence](../evidence/2026-11-09-rmtfs-storage-candidate.json).
+
+## RMTFS packet-handler candidate
+
+The actual dispatcher/QMI/storage harness now passes 25/25 synthetic cases on
+host Clang ASan/UBSan/leak detection and static ARM/QEMU. The storage-patched
+baseline fails 11/25 on both runners, including four ARM segmentation faults.
+The handler patch corrects GET_DEV_ERROR handle validation, verbose CLOSE,
+wide sector multiplication, sync error reporting and initialization/formatting.
+Far reads and writes check actual 64-bit storage offsets. Transport and memory
+are mocked; guarded synthetic backing files remain unchanged.
+
+This does not close malformed QMI decoding, shared-memory span checks, large
+counts, lifecycle, dependency provenance or physical modem operation. The OPEN
+request encoder has an unresolved descriptor mismatch; tests construct its
+string TLV directly. All decoding and remaining encoding use the pinned codec.
+No phone commands or hardware changes occur; the latest UI gate remains pending.
+See [packet procedure](../diagnostics/modem-control/rmtfs-packets.md) and
+[evidence](../evidence/2026-11-09-rmtfs-handler-candidate.json).
+
+## QMI bounds and required-field candidate
+
+The corrected codec and OPEN C buffer pass 52 codec cases plus 32 actual
+RMTFS dispatcher cases on host Clang ASan/UBSan/leak detection and static
+ARM/QEMU. Baseline codec failures are 35/52 host and 24/52 ARM. Six malformed
+dispatcher cases fail on each: missing fields or incomplete arrays can close a
+live handle, allocate or transfer data. The candidate rejects those requests
+before effects. The 256-byte OPEN wire maximum is preserved with room for NUL;
+empty/ordinary/maximum OPEN encoding now works.
+
+This is finite synthetic qualification. Generator integration, shared-memory
+spans, huge counts, ownership/lifecycle, dependency provenance and physical
+modem operation remain open. No phone commands or hardware changes occur; the
+latest UI check remains pending. See [procedure](../diagnostics/modem-control/rmtfs-qmi.md),
+[unsent QRTR draft](../submissions/qrtr/README.md) and
+[evidence](../evidence/2026-11-09-rmtfs-qmi-candidate.json).
+
+## Pinned QMI generator regeneration
+
+The matching qmic kernel-output patch now preserves the OPEN terminator byte
+through regeneration and emits optional string validity markers. All 28 pinned
+qmic files match upstream Git blob hashes. Direct generation and the actual
+RMTFS Makefile target agree; RMTFS descriptor C bytes remain identical to
+upstream. Sixteen normal wire-byte/round-trip cases pass on host sanitizers and
+static ARM, including both current-generator 32-bit RMTFS count fields.
+
+This verifies source regeneration, not distribution packaging or full daemon
+qualification. Legacy 256-byte nested-string length encoding remains unresolved;
+RMTFS uses only a top-level path string. Shared-memory/lifecycle, dependency
+provenance and physical modem work remain open. No phone command or hardware
+change occurs; the current UI check remains pending. See
+[generator procedure](../diagnostics/modem-control/qmic-generation.md),
+[unsent draft](../submissions/qmic/README.md) and
+[evidence](../evidence/2026-11-09-qmic-generation.json).
+
+## Verified libudev provider and runtime link inputs
+
+A new ARM diagnostic build uses signed Alpine eudev 3.2.14-r6, whose source
+archive matches its clean recipe. Every persistent linker input matches a
+verified signed package member with a clean recipe commit. Five real libudev
+API cases pass against read-only synthetic sysfs; only early CLI rejection is
+executed for the full daemon. The old dirty-metadata library and builds remain
+unchanged. No phone operation occurs.
+
+The link audit also found dirty recipe metadata on the cross compiler's bundled
+runtime files; the final build selects clean target GCC runtime files instead.
+The compiler executable's own recipe identity remains unqualified. Distribution
+packaging, full startup, shared-memory spans, lifecycle and physical modem work
+remain open; the native UI gate stays pending. See
+[provider procedure](../diagnostics/modem-control/rmtfs-libudev.md) and
+[evidence](../evidence/2026-11-09-rmtfs-libudev-candidate.json).
+
+
+## 2026-11-10 — RMTFS shared-memory bounds and IOVEC preflight
+
+Added a common memory-span validator, 64-bit physical helper parameters, backend representability checks, and complete IOVEC preflight before storage/memory I/O. Valid empty-write flush behavior is preserved. Thirty-five actual-helper/handler cases and fifteen selected existing functional regressions pass under host ASan/UBSan and ARM/QEMU, using synthetic backing only. The complete 785,876-byte ARM static PIE builds with the same eleven authenticated runtime inputs and passes only early CLI execution. Public patch replay matches the candidate. Constructor paths are compiled, not exercised; full daemon lifecycle, physical modem acceptance, compiler recipe identity and packaging remain open. No phone action occurs. See [evidence](../evidence/2026-11-10-rmtfs-memory-candidate.json); full bringup remains active.
+
+
+## 2026-11-10 — RMTFS Linux memory discovery
+
+Fixed duplicate fd closes and incomplete discovery cleanup. Linux RFSA/UIO validate metadata before taking ownership; only a missing device permits fallback. DT parsing uses explicit cell counts and rejects absent, incomplete or ambiguous regions before `/dev/mem` opens. Forty-six discovery and thirty-five memory cases pass on each of host ASan/UBSan and ARM/QEMU. The rebuilt static ARM candidate preserves the eleven authenticated persistent link inputs. Actual device mapping, Android-specific discovery, remoteproc/service lifecycle and physical operation remain unqualified. No phone action occurs. See [evidence](../evidence/2026-11-10-rmtfs-discovery-candidate.json).
+
+
+## 2026-11-10 — RMTFS daemon lifecycle
+
+Serialized remoteproc state writes in one worker, balanced successful start with one stop across QRTR reconnects, and handled shutdown signals without racing the poll wait. Nineteen lifecycle cases and fifty selected regressions pass on both host sanitizers and ARM/QEMU. The complete ARM binary preserves eleven authenticated persistent runtime inputs. A read-only native sample confirms r50/r5, the expected boot hash and rails, active Sway and disabled MSS. Physical driver and modem qualification remain open. [Evidence](../evidence/2026-11-10-rmtfs-lifecycle-candidate.json)
+
+
+## 2026-11-10 — r59 alternate RAM encoding
+
+The r59 timeout followed 524,288 confirmed bytes inside the compressed kernel. Relinked an XZ4 candidate with the same decoded kernel, DTB and compressed initramfs. The new 16 KiB frame differs in 16,325 bytes. The exact ARM decompressor produces the same Image from the signed, XZ3 and XZ4 streams. Six image refusal checks and the offline entry checks pass. The one-use trial is prepared, with current display/touch confirmation and physical USB transfer still pending. [Evidence](../evidence/2026-11-10-nfc-r59-xz4-encoding.json)
+
+
+## 2026-11-10 — microSD IRQ attribution and GPIO37 bias candidate
+
+A native r50 direct read accounts for 8,192 sectors and 18 SDHCI completions, with zero power/CD interrupts and zero written sectors. Both idle samples are quiet. LG’s Madai gpiomux disables GPIO37 internal bias, while r50 shows a pull-up. A one-property DT candidate matches the vendor bias with active-low detection preserved. DT validation and five observer regression methods pass. Matched r50 RAM images are prepared for the control and candidate. Physical writeback and suspend comparison remain open. [Evidence](../evidence/2026-11-10-microsd-cd-bias.json)
+
+
+## 2026-11-10 — lk2nd Fastboot descriptor comparison
+
+Built paired temporary lk2nd images from the installed source. The candidate caps Fastboot requests at one 16 KiB HSUSB descriptor. Full ARM binary comparison finds only four changed limit-immediate bytes, with identical board table and configuration. Sixteen mocked download/upload framing cases pass. The physical comparison with the same r59 payload remains open. [Evidence](../evidence/2026-11-10-lk2nd-fastboot-single-td.json)
+
+
+## 2026-11-10 — PM8226 USB input actuator
+
+Verified the active native USB configuration and its programmed 500 mA SMBB selector on the charger’s SPMI slave. Added a verified `input_current_limit` actuator to the experimental charging-policy source. Zero requests suspend with a battery present, positive requests program and verify the selector before resuming, and the legacy property preserves its previous suspend behavior. The new and existing sanitizer cases and an ARM policy-enabled object build pass. USB event routing and physical current/suspend qualification remain open. [Evidence](../evidence/2026-11-10-smbb-usb-input-control.json)
+
+### PM8226 automatic USB gadget budget candidate
+
+The ChipIdea candidate keeps the PM8226 input at 100 mA until the host acknowledges a successful configuration status stage and then applies the requested budget up to 500 mA. It connects the generic-PHY peripheral path to the USB power supply with a managed device link. Both ARM configurations, the Madai DTB and the callback and policy suites pass. The code is unbooted. [Patch, scope and verification](../diagnostics/smbb-charging-policy/usb-gadget-budget.md)
+
+### Matched USB budget RAM images and fresh r50 UI check
+
+The 6,010,880-byte control and managed images share one moduleless ARM kernel and a 180-second initramfs. Explicitly disabling the original modular drivers fixes the first full build's oversized kernel. The image parser and linked ARM decompressor pass, alongside 24 reader and endpoint checks and nine trace fixtures. The fresh native r50 display and touch check and NFC preflight also pass. The images are prepared for physical validation. [Evidence](../evidence/2026-11-10-smbb-usb-budget-ram.json)
+
+### r59 XZ4 transfer on the installed bootloader
+
+After fresh r50 display and touch confirmation, the XZ4 data transfer completed 41 of the 16 KiB requests before timing out at 656 KiB. It passed the original 512 KiB failure offset. Terminal recovery returned to installed r50 and UPower r5. A resumed read-only postflight verified the original boot hash, installed files, services, idle NFC and 1.15 V APC target. The next transport comparison uses the prepared temporary lk2nd pair with the same r59 payload. [Physical evidence](../evidence/2026-11-10-nfc-r59-xz4-transfer-timeout.json)
+
+### Temporary lk2nd transport trial controller
+
+The stock Fastboot controller verifies MADAI 0.5, launches the pinned temporary lk2nd once, and checks a fresh USB generation before transferring the same r59 XZ3 payload in either arm. Recovery requires a terminal child and preserves separate download and readback counts. The offline comparator verifies matched receipts, port, speed and exact readback hashes. Twenty new tests and 18 existing transfer tests pass. The current r50 boot reports the original 500 mA programmed limit. The physical pair awaits stock Fastboot entry. [Trial procedure](../diagnostics/ram-transfer/lk2nd-single-td.md)
+
+### Passive RMTFS RAM image and r50 display and touch
+
+The owner confirmed display and touch on the installed r50 boot that followed the NFC timeout. The passive RMTFS image uses the exact installed r50 kernel and the verified RFSA DTB with MSS disabled. The signed QRTR core passes 119 imported-symbol checks. Two builds match byte for byte, retain the 180-second return timer and pass the local observer and worker fixtures. The stock Fastboot pair and physical RMTFS trial remain open. [Evidence](../evidence/2026-11-10-rmtfs-passive-ram.json)
+
+### Native r50 camera switching, reopen and USB coexistence
+
+The IMX132 and IMX179 alternate across four captures, then the rear sensor captures at full resolution. All five deliver contiguous RAW10 frames. The rear preset pattern clears during libcamera startup, and enabling it once capture starts yields valid bars. In total 88 patterned frames pass, and both sensors runtime-suspend after close. High-speed USB remains configured with the battery discharging. The postflight confirms the original boot and package hashes, idle sensors and no retained frame files. [Evidence](../evidence/2026-11-10-camera-r50-reopen.json)
+
+### PM8226 vibrator mapping and Sxmo profile
+
+Native testing finds a missing default event path and an ineffective implicit strength. The corrected profile works through Sxmo's environment loader as the graphical user. Exact PMIC reads show a 2.1 V programmed target at magnitude 39168 and bounded 150, 300 and 600 ms enable intervals. The source audit finds the wrong range predicate, a maximum-endpoint wrap and stale active drive bits. A separate driver candidate passes 768 sanitizer cases, independent regression controls and a W=1 ARM object build. The native kernel stays r50. The stock LP5521 entry also conflicts with the display on GPIO112. [Evidence](../evidence/2026-11-10-vibrator-r50-integration.json)
+
+
+### Signed vibrator RAM trial stops during transfer
+
+The corrected external module verifies against the reconstructed kernel's actual embedded trust certificate and all 25 imports. The guarded RAM image retains its original return timer; a static evdev helper and host success/overdrive fixtures check the planned pulses and active intensity changes. The physical transfer completes 85 data requests before a 30.18-second timeout at 1,392,640 bytes. No readback or Linux BOOT occurs. Terminal transport recovery returns to the original installed r50 boot image with zero taint, unchanged packages and an idle vibrator. The new Sway process inherits both haptics settings. The Wi-Fi gateway responds to ping but its DNS server times out; direct public DNS works. A temporary active-device fallback lets NTP and startup complete, then is removed with the original DNS and routes restored. No saved profile changes or service restarts occur. Fresh display/touch confirmation remains pending. [Evidence](../evidence/2026-11-10-vibrator-ram-transfer-timeout.json)
+
+
+### Sxmo notification completion and haptics
+
+Real inotify reproduces lost partial notifications in installed Sxmo 1.18.1. The corrected monitor dispatches after close-write or atomic move, rather than metadata events, and removes the premature touch. Seven strict native fixtures pass with desktop/hardware mocked. A backed-up local monitor repair and device-specific user hook now deliver normal, muted and re-enabled notifications through the real daemon and Dunst. Each makes one bus call; the two enabled cases produce roughly 300 ms at the measured 2.1 V target, while mute produces no enabled samples. Only the notification service restarts; Sway, original r50 boot, packages and module remain intact. Test notifications, history entries and the mute flag are removed. A third unsent upstream draft passes the pinned-source fixture and sequential patch replay. [Evidence](../evidence/2026-11-10-sxmo-notification-haptics.json)
+
+
+### Signed reproducible Sxmo r7 candidate and native payload probe
+
+The r7 recipe preserves the installed r6 hotspot changes and packages the Fx0 profile, completed-write notification fix and board hook. Shared device hooks load below user hooks and above generic defaults; seven real-loader cases pass. Two full ARM source builds produce 14 byte-identical native-trusted APKs, with repository and metadata tamper controls. Payload comparison finds only the intended profile/hook additions, loader/notification changes and four unchanged-source rebuilt helpers. Offline current-r50 resolution plans exactly eight Sxmo upgrades. A temporary native probe executes five exact APK payloads: the installed-loader control misses the board hook, while the packaged loader passes normal/muted/re-enabled notifications and measured 300 ms pulses. The original boot, installed files, database/world, real notification monitor and Sway remain intact. r7 deployment and override retirement remain pending. [Evidence](../evidence/2026-11-10-sxmo-r7-arm-candidate.json)
+
+
+### Sxmo r7 current backups and exact rollback preparation
+
+Current phone and host backups match, including all 331 installed Sxmo paths,
+the two overrides, real APK v3 database files, world, boot and matching modules.
+Sixteen APK signatures and the original r6 signed checksums pass. A fresh
+isolated chroot with the native architecture upgrades to r7 and restores r6,
+all captured paths/metadata, local corrections and exact database/world bytes;
+normal hooks and ARM execution are excluded from that rehearsal. The staged
+persistent controller passes the native preflight and eight-package simulation.
+Automatic approval review rejects the actual installation pending explicit
+Sxmo approval. No install unit starts; r6, r50, services and overrides remain
+intact. A stalled USB upload is recovered over existing pinned-identity Wi-Fi
+with exact-prefix/hash verification, without reboot or network changes. USB
+bulk reliability and the native installation/session gates remain open.
+[Evidence](../evidence/2026-11-10-sxmo-r7-deployment-preparation.json)
+
+
+### Native USB payload and physical-port comparison
+
+The original high-speed port `1-14` passes periodic 4 MiB raw uploads but stalls
+pseudorandom data on both crossed TCP ports, with transmit watchdog/errors and
+TCP retransmission. The identical entropy passes Wi-Fi SSH; USB download also
+passes. Pacing and a 4 KiB acknowledged window do not cure USB SSH upload.
+With the owner moving the same cable to `1-7` on the same controller and boot,
+periodic/entropy 4 MiB, ordinary SSH upload, 16 MiB entropy and the exact r59 XZ4
+image as unexecuted data all pass full hashes with zero sampled TX errors.
+Returning to `1-14` reproduces the entropy failure; the owner restores `1-7`.
+All owned processes/listeners and RAM data are cleaned up, with current r50/r6,
+boot, services and staged-but-unstarted Sxmo update intact. Physical Fastboot
+qualification and the underlying USB-path cause remain open.
+[Evidence](../evidence/2026-11-11-usb-native-bulk.json)
+
+### Linux 6.18.63 maintenance source and software currency audit
+
+Authenticated upstream tags bracket 1,989 stable commits. The published
+maintenance merge preserves the complete r50 overlay and resolves the IOMMU
+context-probe overlap by retaining its secured/configured guard while adding
+stable runtime-power/error handling for the legacy path. Five actual-block
+sanitizer cases pass; the old unpowered path and removed-guard controls fail.
+The preparer's receipt inventory now includes the plain unified header addition,
+with a regression that fails the older helper. All 18 r50 overlay files retain
+their original bytes.
+
+The full ARM build links with CFI. All 464 staged modules pass signatures,
+release and dependency checks against the actual embedded certificate; wrong
+certificate and altered payload/signature controls reject. Selected driver,
+binding and preparer tests total 31 passing cases. The ordinary DTB is identical
+to r50; its four-byte CPU-bin cell is selected explicitly in the binding fixture,
+whose later-CPR default remains eight bytes. The source is published at
+`29edb2b9893edd18c445a648081b12038a033d51`. No Alpine package or physical boot
+is claimed for this new build.
+
+Nine repository indexes pass independent native-key signature verification.
+Host simulations find 30 stable upgrades and 486 edge actions while retaining
+ten exact signed-control checksum holds. Equal wlroots versions have different
+signed control identities; payload equivalence is not determined. Local APK
+catalog availability is not used as cryptographic acceptance evidence. The
+official earlier systemd/old-kernel startup warning is marked fixed since
+262-r3; current edge runtime on Fx0 is still untested. The read-only phone
+postflight retains r50/r6, original boot/database/world, services and idle
+hardware. Sxmo r7 installation approval and the current physical UI check remain
+pending. [Evidence](../evidence/2026-11-11-kernel-maintenance-6.18.63.json)
+
+### Linux 6.18.63 normal Alpine source-package build
+
+A pinned pmaports recipe builds the published r50-baseline maintenance merge
+directly as 6.18.63-r0, without reapplying the previous NFC family's patches.
+The archive and all 91,269 compiled-tree source paths match Git. The fresh
+build home preserves previous kernels and private signing keys. Two setup
+stops precede compilation; supplying standard upstream metadata and the pinned
+systemd extra-repository directory aligns the cached buildroot channel.
+
+Alpine Clang/LLD 22.1.3 produces a signed APK and matching kernel/DTB/modules.
+The actual normalized config passes community rules, retaining nonpermissive
+CFI, schedutil and full compressed DWARF. All 464 module signatures and import
+CRCs, dependency graphs and linked trust/CFI checks pass with negative controls.
+The Fx0 DTB remains byte-identical to r50; the APK's altered signed recipe
+metadata rejects. Empty-database ARM resolution passes. This is source/package
+qualification only: no native install hooks, RAM boot, new kernel/module loading
+or phone configuration changes occur.
+[Evidence](../evidence/2026-11-11-kernel-maintenance-6.18.63-alpine.json)
+
+### Native Sxmo r7, dependent gesture hook and vibrator RAM completion
+
+Owner phone-update approval authorizes the eight-package Sxmo r7 transaction.
+A notification PATH assertion triggers an exact automatic r6 rollback. Pinned
+superd source and isolated native cases explain startup-environment precedence;
+a service-specific temporary PATH allows the corrected retry, followed by exact
+service-file restoration. Normal APK hooks flash byte-identical r50 boot images
+on installation, rollback and retry. Independent checks verify all 333 candidate
+paths, unchanged other 767 package identities/world, original boot and modules.
+
+A later boot exposes the user gesture wrapper's hardcoded retired profile path.
+Its source lookup is migrated with backups while retaining custom options;
+lisgd starts automatically on the next boot and the owner confirms display/touch.
+Real packaged normal/muted/re-enabled notification checks pass in fresh sessions.
+
+On working USB port 1-7, vibrator RAM image transfer/readback and BOOT succeed.
+The first run lacks modular evdev, the second has incomplete rate-limited logs,
+and the third captures the complete worker in RAM: 152/303/607 ms at code24,
+active 24 → 17 → 22, off holds, zero worker exit and both modules unloaded.
+The original 180-second return remains independent. Installed r50 keeps its
+original driver; broader power, tactile, combined-image and reliability gates
+remain open. [Evidence](../evidence/2026-11-11-sxmo-r7-and-vibrator-ram.json)
+
+### Stable 6.18.63 vibrator package and r59 NFC startup
+
+Three separate driver commits carry the RAM-qualified range, endpoint and
+active-bit fixes onto stable6.18.63. The driver is byte-identical to the tested
+r50 source and passes 768 ASan/UBSan cases plus independent regression controls.
+A normal Alpine6.18.63-r1 source build retains CFI and full compressed DWARF.
+All 91,269 compiled source paths, embedded trust, APK and 464 module signatures,
+import CRCs and dependencies verify. A read-only log-prefix assertion stops the
+first audit; correction resumes without repeating the build or passed debug check.
+
+The exact signed-APK kernel/DTB and in-tree evdev/vibrator modules pass the
+file-logged RAM worker with zero taint: 152/303/602 ms, active 24 → 17 → 22,
+final off and both modules unloaded. The first independent image check assumes
+a different timer implementation; the corrected check verifies the unchanged
+qualified baseline timer, including its actual post-mount placement.
+
+While the source build runs, the unchanged r59 moduleless NFC image completes
+transfer/readback and its first physical startup. Its one read-only checker
+passes identity, signature, topology, thermal, unbound-client, pin and clock
+guards, then returns by timer. r50/r7 integrity and owner display/touch pass.
+Controller/RF/open-teardown, full installed stable boot and wider acceptance
+remain open. An unanswered official input-maintainer ref query is explicitly
+stopped; current upstream submission-base readiness is not claimed.
+[Evidence](../evidence/2026-11-11-stable-vibrator-and-nfc-r59-startup.json)
+
+
+### Full native-OS RAM boot of the stable 6.18.63 package
+
+Prepare a native mkinitfs preview in a private mount namespace, with candidate
+modules and a capture-only boot-deploy shim. Preserve ordinary init/root
+discovery, then add an early static return helper and a hash-verified RAM module
+mount. No kernel APK installation or boot partition flash occurs in this phase.
+
+The first two attempts return early. Instrumented pstore proves foreground
+helper validation passes and BusyBox then fails to launch the background helper
+because `/dev/null` is absent. The actual native ARM BusyBox reproduces both the
+failure and successful minimal fix. The third image reaches the normal Sway
+session with zero taint, signature enforcement, all 478 matching module files,
+a surviving exact return helper and an active runtime timer. Original installed
+boot files, package database, world and kernel metadata match. The owner confirms
+display/touch during this candidate boot, with its UUID immediately rechecked.
+
+Enabled/muted/re-enabled packaged notifications pass at code24 with off/cleanup.
+Sway DSI output, sensors, temperatures, CPU policy and Wi-Fi are observed.
+NTP startup completes after an attempted temporary DNS fallback; its profile
+byte-identity assertion fails during Wi-Fi activation, so that property remains
+unproved. Later checks verify the fallback address is absent from active and
+saved DNS. A wrong PHY name in a read-only health verifier is corrected to
+`fd922a00.phy`. Persistent installation, update hooks, later CPU/CPR/NFC
+integration and wider acceptance remain open.
+[Evidence](../evidence/2026-11-11-native-kernel-6.18.63-ram.json)
+
+
+### Stable-kernel update backup and rollback preparation
+
+On the unchanged healthy r50/Sxmo r7 return, retain the trusted r50 APK and
+capture a fresh 2,595-path boot/modules/kernel/APK/world snapshot plus the full
+32 MiB boot partition. Phone and encrypted host copies match; five SELinux
+directory labels are captured separately. Native backup files are synced.
+
+A network-disabled host container upgrades to 6.18.63-r1 and downgrades to r50
+with hooks disabled, verifies all 545 candidate payloads and restores all
+original snapshot paths and package identities. An obsolete APK option stops
+the first attempt before payload writes; the corrected fresh attempt passes.
+The real native solver also selects only the kernel upgrade in a private mount
+namespace, leaving live database/world/raw boot unchanged. Its guard is corrected
+to honor boot-deploy's default `boot` partition for an empty setting.
+
+Independent raw-image inspection finds `/boot/boot.img` byte-identical at the
+512 KiB offset preserved by installed boot-deploy; the first conservative bound
+incorrectly assumed 1 MiB. New rollback guards refuse prefix/size/checksum/offset
+mismatch and write only the kernel tail. Eleven host tests pass, including short
+writes and corrupt readback. Active hook processes also prevent rollback writes. No physical partition
+write or native installation occurs. The newest r50 display/touch answer remains pending; older answers are
+not reused. [Evidence](../evidence/2026-11-11-native-kernel-update-preparation.json)
+
+
+### Native stable-kernel installation controller
+
+Implement and stage the hash-pinned native controller. The real phone passes
+its complete read-only preflight; an owner-required check rejects specifically
+at the still-pending exact-boot UI assertion. Original r50/Sxmo r7 boot, package
+and world hashes remain intact, with healthy services and zero taint.
+
+Four isolated fixtures run the actual controller: candidate verification,
+forced rollback after full candidate verification, pending owner and changed
+prefix. Three APK transactions run with native hooks disabled; the forced
+rollback restores all 2,595 captured paths and raw boot bytes in regular file
+fixtures. The first fixture stops on host/native SELinux label differences;
+correcting only that test binding completes all cases. Six parser tests add
+independent corruption and extra-archive rejection.
+
+A real read-only systemd probe verifies the dedicated cgroup and detects a
+new-session descendant after its parent's process group disappears. It waits
+for natural termination and the unit is collected. Normal kernel update hooks
+are not invoked. The planned signature-enforcement drop-in adds exactly the
+RAM-qualified parameter through the actual generator, without changing live
+configuration. Native installation and persistent reboot qualification await
+the newest return's display/touch confirmation; no older answer is reused.
+[Evidence](../evidence/2026-11-11-native-kernel-controller.json)
+
+
+### NFC source and normal package on stable Linux 6.18.63
+
+Integrate the six remaining r59 NFC commits onto stable 6.18.63 plus the
+qualified vibrator fixes. Stable already contains the exact failed-probe IRQ
+cleanup from Griffin Kroah-Hartman, so preserve its attribution without
+duplicating the patch. Final NFC/NCI source matches r59; conservative CPU/CPR
+wiring and the vibrator driver remain intact.
+
+Build the separate normal `6.18.63-r2` Alpine package with a fresh module
+certificate. All 91,269 compiled source paths match published Git, 468 module
+signatures/import CRCs/dependencies pass, CFI and full compressed DWARF remain,
+and the signed APK passes offline resolution plus altered-metadata rejection.
+Five schema/compiled-board tests and 12 sanitizer host tests pass; six commits
+pass strict checkpatch. The new NFC ABI differs from both older r58/r59
+families, which must not be mixed. A supplementary audit's initial assumption
+about weak KCFI symbols is corrected to check actual ARM callback type words;
+no compiled artifact changes.
+
+Publish the source and recipe branches. This phase performs no phone write or
+boot. The newest owner answer concerns the already-confirmed r1 RAM boot;
+the current r50 return's physical UI result remains pending. Native r1
+installation and stable NFC hardware qualification remain open.
+[Evidence](../evidence/2026-11-11-nfc-stable-6.18.63.json)
+
+
+### Combined CPU/CPR, NFC and vibrator source on stable Linux 6.18.63
+
+Carry the 29 remaining CPU/CPR commits onto the stable NFC/vibrator branch,
+preserving original authors and commit references. Correct the obsolete
+qualification-target comment, continuation alignment, branch braces and
+MAINTAINERS ordering. Forty-five current callback-model tests pass after the
+cleanup. The original historical fixture failure and its passing current
+superset are recorded explicitly.
+
+Prepare a distinct normal `6.18.63-r3` source package with both ordinary and
+CPR qualification DTBs. Seven binding documents and 42 compiled-board/schema
+tests pass, retaining NFC wiring and conservative ordinary CPU/domain
+semantics. The Alpine-native dtc fixture needs its explicit musl loader; only
+the two affected classes resume. A new release-pinned registration script
+passes the shell-model checks and rejects old build families before loading.
+
+Record the final diff's 15 reviewed style findings without claiming a clean
+maintainer submission series. A deep shared-repository object chain also
+stops the new recipe checkout before edits; flatten only that new checkout's
+alternate references and resume successfully. Existing checkouts stay intact.
+No phone write or boot occurs. Native r1 installation still awaits the current
+r50 return's physical UI result; combined stable hardware qualification and
+the broader bringup remain open.
+[Evidence](../evidence/2026-11-11-cpr-nfc-stable-6.18.63.json)
+
+
+### Owned stable CPR RAM entry and serial observation
+
+Prepare the complete r3 registration-trial controller with one atomic private
+directory reservation. Retain actual transfer/observer child handles, require
+exact readback and a live observer before BOOT, and never replay an uncertain
+reboot or BOOT acknowledgement. Before-BOOT recovery waits for all owned
+children and a synchronized bootloader identity reply. After BOOT, only the
+independent timer/native return is observed.
+
+Use challenged USB serial without changing host networking. Require the
+guarded registration proof, new candidate boot UUID, zero taint, original raw
+boot hash and the live kernel return-timer message at or after 180 seconds.
+Reject later panic/CFI faults and early or incomplete returns. Fourteen host
+tests exercise real child processes and pseudo-terminals plus gate, readback,
+acknowledgement, native recovery and replay failures.
+
+The exact native read-only probe passes on the unchanged r50 return, including
+five boot/package/world hashes, graphical/input services and the 1.15 V PMIC
+target. The actual entrypoint rejects the pending physical UI result before
+any private identity read, child launch, socket connection, USB open or trial
+directory. No phone entry, transfer, BOOT or package change occurs. After the
+approved r1 native update qualifies, this trial needs a fresh baseline and
+owner receipt. Hardware qualification and the full bringup remain open.
+[Evidence](../evidence/2026-11-11-stable-cpr-ram-controller.json)
+
+
+### Current input-tree vibrator review drafts
+
+Verify the primary input maintainer tree and official mirror agree on
+`8e16f8bbf1bd528975fd6f4081eaf00513c1d83e`, with a later successful primary
+recheck. The mirror's later connection failure is retained separately.
+All three vibrator bugs remain in this tree. Rebase the qualified fixes
+without changing its newer allocation API; locate each introducing commit
+and add a specific Fixes explanation. Read the current AGENTS/README coding
+assistant procedure and its complete required process documents. Preserve
+unsigned drafts and disclose AI assistance for human review.
+
+The base and all three prefixes pass ARM object builds with Clang 21.1.8,
+`W=1`, KCFI and full compressed DWARF5, without compiler diagnostics. Retain
+the sparse-checkout setup failures and two configuration-conversion notices.
+Verify 18,251 present tracked source paths against their Git blobs/modes,
+without inspecting runtime private keys. Each exported patch passes strict
+checkpatch with only the sign-off check disabled; each exported prefix replays
+to the expected complete Git tree using a separate index.
+
+All five actual-C fixtures match the earlier qualified fixtures byte for byte;
+reuse their 768 ASan/UBSan cases and independent regression-control results.
+Earlier signed Fx0 PM8226 RAM trials cover the same voltage functions, but
+this maintainer kernel is not fully linked or booted. PMI632 upper-byte
+encoding, other PMIC hardware and GCC remain outside this qualification.
+Export a cover letter, patch series, current recipient lookup and exact test
+receipts. No email or PR is sent.
+
+The phone remains on r50/Sxmo r7. The owner's latest reply confirms the earlier
+6.18.63 RAM boot; it does not answer the separate current-return UI check.
+No phone mutation or native update occurs. The prepared approved r1 update
+remains the next phone action after that exact current-boot result.
+[Evidence](../evidence/2026-11-11-vibrator-input-drafts.json)
+
+
+### NFC removal drafts against the actual maintainer fixes branch
+
+Read current NFC routing from MAINTAINERS: David Heidelberg's Codeberg tree,
+with the NXP driver itself orphaned. Verify its live default `for-next` tip
+is Linux 7.3-rc3 and its `for-linus` tip is
+`b61732f47316d45f27706db7812950145d3327b5`, dated September 23. Recheck both
+advertisements unchanged. Compare with the newer input tree as well: the
+removal problems remain, while allocation helpers changed. Preserve its
+existing protocol support, ENXIO handling, firmware copy and ID-table changes.
+
+Prepare two unsigned fixes on the advertised fixes branch: unregister without
+holding the mode mutex, then retain receive for the closing reset and drain
+it before state is freed. Track successful IRQ ownership. Locate both original
+introducing commits and include Fixes plus the Assisted-by tag required by
+this pinned tree. Keep clock/binding/board features separate, and do not export
+the older intermediate receive-before-unregister transition.
+
+Six host tests pass nine modeled cases and reject six independent controls
+under ASan/UBSan. The recursive-lock control reaches the actual close callback's
+mutex check; sixteen actual driver/NCI callback bodies stay intact. The source
+and models cover reset, close, pending receive, optional callbacks and failed
+IRQ ownership, without operating hardware or a live kernel endpoint.
+
+The base and both prefixes compile matching core/I2C/firmware cohorts: nine
+ARM objects with Clang 21.1.8, W=1, KCFI and full compressed DWARF5, without
+compiler diagnostics. Inspect the actual callback type words, verify 18,129
+present tracked source paths against Git, pass strict checkpatch with only
+sign-off checking disabled, and replay both exported prefix trees exactly.
+Retain the stopped broad shared clone, model-parser/unused-mock setup failures,
+individual-file overlay correction and configuration conversion notices.
+
+Export the review bundle and current recipient lookup. Full kernel/module and
+broader networking builds, GCC, real IRQ/NCI timing, concurrent firmware, RF/PM,
+and human review/certification remain open. No upstream message, phone mutation
+or kernel installation occurs. The approved r1 native update still awaits the
+separate current-r50 physical display/touch answer; full bringup remains active.
+[Evidence](../evidence/2026-11-11-nfc-remove-drafts.json)
+
+
+### Full NFC receiving-tree ARM kernel and module qualification
+
+Build the complete normal ARM kernel and modules for the two-fix receiving-tree
+candidate and its unmodified `b61732f47316` base. Use bounded 10 GiB RAM scratch,
+four jobs, a read-only inner source mount and resource guards; keep Disk B
+read-only. Verify all 95,942 inventoried source paths against Git, excluding
+93 private-named/PEM source paths. The exact normalized configuration remains
+unchanged, with KCFI and full compressed DWARF5 retained.
+
+Both builds link and stage all 457 modules successfully. Each verifies their
+explicit-certificate signatures against the actual embedded kernel certificate,
+complete dependency graph and 24,813 imported symbol CRCs. Real wrong-build
+certificate pairs are rejected. Only `nxp_nci_probe` changes exported CRC,
+from `0x7f5e64fb` to `0x49d5b923`; the candidate I2C module rejects the actual
+baseline map. Both full builds have identical 233 warning lines, with no added
+or removed warnings. Their undefined-symbol sets also match exactly.
+
+The first source extraction normalized symlink text and stopped before
+compilation; preserving the validated original text fixes it. The original
+supplementary ELF auditor then stops on two BPF type-only declarations. Source
+inspection shows the deliberate nonexistent functions, forced CFI type IDs and
+discarded addressability references. The corrected exact whitelist retains CFI
+and matches the baseline. Audit the saved candidate image/module archive without
+repeating its successful compilation. Preserve every stop and terminal process
+receipt. Runtime private keys stay in disposable RAM, with mode-only auditing.
+
+Publish the exact tested config and full-build evidence. The source branch is
+independently verified on the owner fork at
+`2eab8fa4857af3ca2e24f8f35b081cc9c79b0cea`. These are standalone host builds,
+not a distro package or a phone boot result. GCC, broader networking configs,
+NFC hardware/IRQ/firmware concurrency/RF/PM and human review remain open. The
+phone is freshly verified on the same r50 boot; its separate physical UI answer
+and the already-approved native r1 update remain pending. No phone mutation,
+upstream email, PR or audio test occurs.
+[Evidence](../evidence/2026-11-11-nfc-remove-full-build.json)
+
+
+### NFC reference-clock receiving-tree drafts and broad-build results
+
+Adapt the optional clock binding/driver as two unsigned review drafts on NFC
+`for-next` `fd73f4a6659897191fa0d40695fe370925dd3780`. Keep removal fixes and
+board support separate. Nine actual C cases and five independent runtime
+controls pass with ASan/UBSan and working leak detection. Binding document and
+five compiled-DTB tests pass against the full current binding schemas. Two
+strict style checks and exact prefix replay pass. No AI-added DCO is present.
+
+The source audit catches the sparse checkout before any object compilation.
+Use complete pinned Git archives in 4 GiB RAM instead; verify all 95,942 selected
+paths on both base and clock tip. Six actual ARM objects compile with no
+W=1 diagnostics, unchanged config, KCFI and full compressed DWARF5. Inspect 18
+actual callback type words. The binding-only prefix has identical compiler
+inputs and reuses the base build proof with separate schema validation.
+Publish source tip `8616767b2b9e01846b1a61af2055ab7965a2f245` on the owner fork.
+
+Full removal-series GCC and Clang allmodconfig attempts stop in unchanged
+upstream code. GCC shares lockdep/call-thunk errors and reaches extra baseline
+Coda errors; Clang shares ten Coda errors. Incomplete parallel builds do not
+prove full warning equivalence. Retain all failures; no warnings or config
+options are suppressed. Clock full links, allyesconfig and hardware remain open.
+
+The tmpfs user quota is reached despite apparent filesystem space. Preserve
+the interrupted receipts as interrupted, remove only this attempt's disposable
+outputs with hashes retained, and move full schema extraction into bounded RAM
+with small receipts on the workspace. The resulting schema run passes. Keep
+Disk B read-only. No phone mutation, upstream email/PR or audio test occurs;
+the approved native update still awaits the separate current-return UI answer.
+[Evidence](../evidence/2026-11-11-nfc-clock-drafts.json)
+
+
+### Clock full cohorts and current stable userspace artifacts
+
+Complete full normal ARM kernel/module builds on NFC for-next base `fd73f4a66598` and clock
+`8616767b2b9e` in bounded RAM, verifying each complete selected source inventory.
+All457 modules verify against each actual embedded certificate and dependency
+graph; imported CRC checks total 24,811 on base and24,817 on clock. The six new
+I2C imports use existing clock/error exports, so exported CRCs remain identical.
+Both builds have the same 233 warnings, with none added or removed. Real matching
+certificate pairs pass; both wrong-build pairs reject. No phone boot is implied.
+
+Compare payload hashes separately from signatures: 454 payloads match, while the
+two NFC modules and MSM differ. Source inspection and two seeded executions prove
+MSM header-order variation in C++-guarded generator output with identical C tokens.
+The original MSM payloads were not retained, so exact section attribution remains
+unproven and byte reproducibility is not claimed. Preserve that limitation.
+
+Refresh the host-only stable projection from the current r50/Sxmo r7 database.
+Four authenticated indexes still select30 upgrades, retaining ten exact holds
+and all eight Sxmo packages. All30 candidate APKs match authenticated control identities,
+RSA signatures and compressed payload hashes. Valid-gzip altered control and
+valid-tar altered payload tests reject. Stage21 original APKs from native/host
+caches and supported URLs, verifying exact installed identities and corruption
+controls. Nine originals remain absent; full targeted backup/rollback and native
+hooks remain unqualified. Inventory 2,678 old and 2,688 new files plus actual hooks.
+Fresh native readback finds the original database/world/repositories, r50 boot,
+systemd running and taint0. No native updates, reboot, upstream email/PR or audio
+test occurs. The approved kernel update still awaits current-return UI data.
+[Evidence](../evidence/2026-11-11-clock-full-and-stable-update.json)
+
+### November 13 UTC: fresh stable-update recovery and retained distro ownership
+
+Confirm the owner's display/touch answer for the current 6.18.63-r1 boot.
+Read back the unchanged database, world, repositories and boot bytes, with
+systemd running, taint zero and signature enforcement enabled. The previous
+qualification unit is absent and its known cgroup has no processes.
+
+Capture all 7,002 paths and 701 directory memberships again under both APK
+lock types. Verify archive payloads and all live metadata, including 254
+hardlink aliases and 1,480 SELinux labels. Verify all five private recovery
+files on the phone and host without reading runtime private keys. Retain the
+preceding backup and failed qualification receipts.
+
+Correct the exact controller's expectation for the three Nura release files
+retained by APK's replacement-priority rule. Derive ownership from the
+captured database and signed incoming controls; keep those files and their
+sidecars out of recovery writes. Check their original bytes, metadata,
+owner identity and replacement declarations. Twenty-one focused host tests
+pass. The fixed scope guards the complete capture and permits recovery of
+2,708 files and metadata on 133 directories.
+
+Authenticate four freshly fetched supported indexes with the existing native
+public trust keys. Current host simulation selects the same thirty versions
+and signed identities. Retain the host OpenSSL digest rejection and use the
+existing isolated Alpine OpenSSL for verification without changing policy.
+
+The new native private fixture restores and verifies the fresh capture,
+verifies its runtime against the live phone, accepts all thirty signed APKs
+and simulates exactly thirty upgrades. Require actual current-boot PID1
+success; unloaded-unit default fields are insufficient. The exact revised
+controller's success and two controlled failure cohorts are now running in
+`fx0-stable-userspace-qualification-02.service`, with the live OS read-only.
+No live package update, boot write, reboot or audio test occurs. Native
+controller qualification, live activation and full bringup remain open.
+[Evidence](../evidence/2026-11-13-stable-controller-recovery.json)
+
+### November 13 UTC: bound APK symlink times to the owned upgrade
+
+The second private exact-controller run commits thirty updates and completes
+normal hooks, then rejects Vim's `/usr/bin/ex` timestamp. Its scoped rollback
+verifies all 7,002 paths, 701 memberships, original 775 identities, hardlinks,
+labels and unit inventory. Harvest actual terminal status and the empty
+cgroup before resetting only this owned failed unit; preserve the failure.
+
+Read the exact APK 3.0.8 and 3.0.9 filesystem extractors. Both deliberately
+skip archive timestamps on symbolic links. Revision 3 retains exact signed
+regular-file mtimes and requires all nine incoming symlink creation times
+inside the actual owned APK command interval, including descendants. Signed
+targets, modes, owners and labels remain exact. Preserved configurations and
+retained distro files retain their exact captured metadata. All 26 focused
+host tests pass, including five new timestamp/target cases. The independent
+ownership parser also passes all 30 pinned archive controls.
+
+The third qualification reuses the fully recovered fixture only after
+verifying prior terminal receipts, namespace and signed caches. It still
+runs complete current-capture preflight checks. Actual success and both
+controlled failures are running in the private native unit; live service
+checks, installation and complete bringup remain open. No boot write, reboot
+or audio test occurs.
+[Evidence](../evidence/2026-11-13-stable-symlink-timestamps.json)
+
+### November 13 UTC: verified native stable userspace update
+
+Revision 3 completes native success, normal recovery and both injected failure
+cohorts with the exact frozen controller. All three recoveries restore and verify
+7,002 paths, 701 memberships and 775 original package identities. Retained signed
+executor coverage is explicitly synthetic. Preserve both earlier failed cohorts
+and their recovery receipts. Current-boot PID1 success and an empty cgroup prove
+actual qualification completion at 04:52:57 UTC.
+
+The separate actual-service preflight passes, then the live transaction completes
+at 05:16:34 UTC with normal signed APK hooks, thirty verified candidate identities,
+the other 745 identities unchanged, exact world and 545 unit timestamps. Namespace
+inspection confirms read-only boot, modules, kernel, trust keys, repositories,
+commit hooks, retained distro files, backups and staged sources. No boot write,
+reboot or audio test occurs. Independent postflight verifies the signed payloads,
+retained distro files, kernel/modules/initramfs, boot image/prefix and installed
+treescan timestamp behavior. Systemd is running, taint is zero and signature
+enforcement is enabled; display/gesture processes remain active without serious
+kernel warnings. Physical display/touch confirmation preceded the update on the
+same boot, so no new human UI observation is claimed.
+
+Fresh supported stable indexes fetched at 05:21 UTC authenticate with the existing
+public keys and reject an altered stream. A host-only simulation from the verified
+updated inventory proposes zero changes, retaining ten exact holds and eight Sxmo
+packages. The two owner-approved source commits, `ef4f560` and `e8afd85`, are
+published and independently verified on `integration/fx0-cpr-startup-evidence`.
+Their earlier evidence snapshots retain their original timestamps and limits.
+
+The current evidence records the actual native results. Abrupt power loss,
+stop-signal coverage, edge runtime, wider hardware, reliability and final upstream
+readiness remain open; the complete bringup goal stays active.
+[Live evidence](../evidence/2026-11-13-stable-userspace-live.json)

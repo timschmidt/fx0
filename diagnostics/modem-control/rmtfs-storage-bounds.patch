@@ -1,0 +1,217 @@
+diff --git a/storage.c b/storage.c
+--- a/storage.c
++++ b/storage.c
+@@ -2,6 +2,7 @@
+ #include <sys/types.h>
+ #include <errno.h>
+ #include <fcntl.h>
++#include <limits.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -54,6 +55,12 @@
+ 
+ static struct rmtfd rmtfds[MAX_CALLERS];
+ 
++static bool storage_handle_valid(const struct rmtfd *rmtfd)
++{
++	return rmtfd && rmtfd->partition &&
++		(rmtfd->fd >= 0 || rmtfd->shadow_buf);
++}
++
+ static int storage_populate_shadow_buf(struct rmtfd *rmtfd, const char *file);
+ 
+ int storage_init(const char *storage_root, bool read_only, bool use_partitions)
+@@ -191,11 +198,11 @@
+ {
+ 	struct rmtfd *rmtfd;
+ 
+-	if (caller_id >= MAX_CALLERS)
++	if (caller_id < 0 || caller_id >= MAX_CALLERS)
+ 		return NULL;
+ 
+ 	rmtfd = &rmtfds[caller_id];
+-	if (rmtfd->node != node)
++	if (!storage_handle_valid(rmtfd) || rmtfd->node != node)
+ 		return NULL;
+ 
+ 	return rmtfd;
+@@ -221,56 +228,79 @@
+ 
+ ssize_t storage_pread(const struct rmtfd *rmtfd, void *buf, size_t nbyte, off_t offset)
+ {
+-	ssize_t n;
++	ssize_t n = 0;
++
++	if (!storage_handle_valid(rmtfd)) {
++		errno = EBADF;
++		return -1;
++	}
++	if (offset < 0 || nbyte > SSIZE_MAX) {
++		errno = EINVAL;
++		return -1;
++	}
+ 
+ 	if (!storage_read_only) {
+ 		n = pread(rmtfd->fd, buf, nbyte, offset);
+-	} else {
+-		n = MIN((ssize_t)nbyte, (ssize_t)rmtfd->shadow_len - offset);
+-		if (n > 0)
+-			memcpy(buf, (char*)rmtfd->shadow_buf + offset, n);
+-		else
+-			n = 0;
+-	}
+-
+-	if (n < nbyte)
+-		memset((char*)buf + n, 0, nbyte - n);
++		if (n < 0)
++			return -1;
++	} else if ((uintmax_t)offset < rmtfd->shadow_len) {
++		n = MIN(nbyte, rmtfd->shadow_len - (size_t)offset);
++		memcpy(buf, (char *)rmtfd->shadow_buf + (size_t)offset, n);
++	}
++
++	if ((size_t)n < nbyte)
++		memset((char *)buf + n, 0, nbyte - n);
+ 
+ 	return nbyte;
+ }
+ 
+ ssize_t storage_pwrite(struct rmtfd *rmtfd, const void *buf, size_t nbyte, off_t offset)
+ {
+-	size_t new_len = offset + nbyte;
++	size_t new_len;
+ 	void *new_buf;
++
++	if (!storage_handle_valid(rmtfd)) {
++		errno = EBADF;
++		return -1;
++	}
++	if (offset < 0 || nbyte > SSIZE_MAX) {
++		errno = EINVAL;
++		return -1;
++	}
+ 
+ 	if (!storage_read_only)
+ 		return pwrite(rmtfd->fd, buf, nbyte, offset);
+ 
+-	if (new_len >= STORAGE_MAX_SIZE) {
+-		fprintf(stderr, "write to %zd bytes exceededs max size\n", new_len);
+-		errno = -EINVAL;
+-		return -1;
+-	}
++	if ((uintmax_t)offset >= STORAGE_MAX_SIZE ||
++	    nbyte >= STORAGE_MAX_SIZE - (size_t)offset) {
++		errno = EINVAL;
++		return -1;
++	}
++	new_len = (size_t)offset + nbyte;
+ 
+ 	if (new_len > rmtfd->shadow_len) {
+ 		new_buf = realloc(rmtfd->shadow_buf, new_len);
+ 		if (!new_buf) {
+-			errno = -ENOMEM;
++			errno = ENOMEM;
+ 			return -1;
+ 		}
+-
++		memset((char *)new_buf + rmtfd->shadow_len, 0,
++		       new_len - rmtfd->shadow_len);
+ 		rmtfd->shadow_buf = new_buf;
+ 		rmtfd->shadow_len = new_len;
+ 	}
+ 
+-	memcpy((char*)rmtfd->shadow_buf + offset, buf, nbyte);
++	memcpy((char *)rmtfd->shadow_buf + (size_t)offset, buf, nbyte);
+ 
+ 	return nbyte;
+ }
+ 
+ int storage_sync(struct rmtfd *rmtfd)
+ {
++	if (!storage_handle_valid(rmtfd)) {
++		errno = EBADF;
++		return -1;
++	}
+ 	if (storage_read_only)
+ 		return 0;
+ 	
+@@ -279,10 +309,12 @@
+ 
+ static int storage_populate_shadow_buf(struct rmtfd *rmtfd, const char *file)
+ {
+-	ssize_t len;
++	off_t len;
++	size_t done = 0;
+ 	ssize_t n;
+-	void *buf;
+-	int ret;
++	void *buf = NULL;
++	int ret = -1;
++	int saved_errno;
+ 	int fd;
+ 
+ 	fd = open(file, O_RDONLY);
+@@ -290,32 +322,40 @@
+ 		return -1;
+ 
+ 	len = lseek(fd, 0, SEEK_END);
+-	if (len < 0) {
+-		ret = -1;
+-		goto err_close_fd;
+-	}
+-
+-	lseek(fd, 0, SEEK_SET);
+-
+-	buf = calloc(1, len);
+-	if (!buf) {
+-		ret = -1;
+-		goto err_close_fd;
+-	}
+-
+-	n = read(fd, buf, len);
+-	if (n < 0) {
+-		ret = -1;
+-		goto err_close_fd;
++	if (len < 0)
++		goto out;
++	if ((uintmax_t)len > SIZE_MAX) {
++		errno = EFBIG;
++		goto out;
++	}
++	if (lseek(fd, 0, SEEK_SET) < 0)
++		goto out;
++
++	buf = calloc(1, len ? (size_t)len : 1);
++	if (!buf)
++		goto out;
++
++	while (done < (size_t)len) {
++		n = read(fd, (char *)buf + done,
++			 MIN((size_t)len - done, (size_t)SSIZE_MAX));
++		if (n < 0 && errno == EINTR)
++			continue;
++		if (n <= 0) {
++			if (!n)
++				errno = EIO;
++			goto out;
++		}
++		done += n;
+ 	}
+ 
+ 	rmtfd->shadow_buf = buf;
+-	rmtfd->shadow_len = n;
+-
++	rmtfd->shadow_len = done;
++	buf = NULL;
+ 	ret = 0;
+-
+-err_close_fd:
++out:
++	saved_errno = errno;
++	free(buf);
+ 	close(fd);
+-
++	errno = saved_errno;
+ 	return ret;
+ }

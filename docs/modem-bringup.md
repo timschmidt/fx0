@@ -1,0 +1,560 @@
+# Modem and GNSS bringup
+
+## November 14: maintained-source description checks
+
+The disabled MSM8926 modem/supply description and RMTFS reservation now pass
+their existing host verifiers on Linux 6.18.63 NFC source
+`68b0a4f369ed767b0c8061284d0017ed63f158ec`. All 9,954 required DT/schema/header
+files match their Git bodies, modes and links before and after the checks.
+The source checkout was sparse; a separate complete fixture supplies those
+inputs without changing the published source or earlier failed attempts.
+
+The stock-derived L3/L8/S5 mapping passes actual enabled-copy schema checks,
+wrong-supply and enabled-S5 controls, and rejection of the obsolete external
+BHS property. The combined RMTFS description preserves the reserved union and
+changes only the five expected properties relative to that modem description.
+Address, client, gap, overlap and missing-client controls are rejected. There
+are no new DTC warnings or selected schema diagnostics. MSS and S5 stay disabled.
+The maintained driver explicitly disables automatic firmware boot.
+
+This closes host description compatibility with the maintained source; it
+establishes no physical voltage, RFSA mapping, RMTFS daemon startup, modem
+firmware, RF or GNSS result. The candidate is unbooted and unpackaged. Existing
+r50 RAM images remain separate historical preparations. A maintained-kernel
+physical trial needs a matching image/module cohort and current return guards.
+No SIM prevents final cellular qualification only.
+[Maintained-source evidence](../evidence/2026-11-14-maintained-modem-rmtfs-description.json)
+
+Native r50 has no active modem. Its live `/soc/remoteproc@fc880000` node is
+disabled and inherits `qcom,msm8226-mss-pil`. Only WCNSS and ADSP remote
+processors run. ModemManager is active, but its already-running D-Bus object
+manager returns no modem objects. No QMI/WWAN device is exposed. This is an
+implementation gap, not evidence that the product lacks cellular or GNSS.
+
+Read-only inventory on boot `c3ac8f04-888e-493c-bb5d-a1729a275f7d` confirms
+kernel `6.18.59-fx0-dmp`, package r50, UPower r5, original raw boot hash and
+zero taint. The configuration includes modular Q6V5 MSS and RPMSG WWAN control;
+the installed MSS module exists but is not loaded. QRTR/SMD are loaded for the
+other remote processors. `mmcli` and `qrtr-lookup` are installed; `qmicli`, rmtfs,
+pd-mapper, tqftpserv and gpsd executables are absent. Their absence does not
+establish which ones this firmware will require. No radio state is changed.
+
+## Firmware lookup and reserved memory
+
+The firmware loader sets `/sys/module/firmware_class/parameters/path` to
+`/run/msm-firmware-loader/target`. The stock `mba.b00` and `modem.mdt` names
+resolve there to the original modem partition. ADSP and WCNSS names also resolve
+there. Missing files in `/lib/firmware` alone would give a misleading inventory.
+That initial check read names, symlinks and sizes only. A later on-phone
+inspection below verifies file digests and segment ranges. Successful loading
+and firmware authentication remain unqualified.
+
+The original modem filesystem is mounted read-only from `/dev/mmcblk0p1`;
+persist is mounted read-only from `/dev/mmcblk0p14`. No firmware, calibration,
+IMEI, SIM identity, subscriber data or location is exported. The live modem
+memory references resolve to `mba@d100000` (1 MiB) and `mpss@8000000` (81 MiB),
+both enabled reserved regions with `no-map`. Those descriptions do not prove
+that a particular firmware load is safe or correct.
+
+## Disabled MSM8926 description prepared on host
+
+The unit is MSM8926. The stock DTB links MSS to PM8226 S5, PLL to L8 and MX to
+L3. Their stock constraints are S5 1.15 V fixed, L8 1.8 V fixed and L3
+0.75–1.3375 V. These are described limits, not independently measured rails.
+
+The [candidate patch](../diagnostics/modem-control/fx0-msm8926-modem-description.patch)
+against the reconstructed r50 board description selects
+`qcom,msm8926-mss-pil`, supplies MX/PLL/MSS correctly, and removes the inherited
+MSM8226-only external BHS property. It adds S5 at the stock fixed constraint.
+Both the modem and new S5 node stay disabled. The RPM regulator driver visits
+available children; this candidate does not make the new S5 available.
+
+The shared 6.18.59 driver has a separate MSM8926 resource descriptor, including
+the active MSS supply and no external BHS. Its 1.05 V request is a minimum
+with `INT_MAX` upper bound, so the stock fixed 1.15 V constraint is compatible;
+it is not an instruction to lower this board's rail to 1.05 V. The source sets
+remoteproc `auto_boot` false. Userspace and lifecycle effects still require
+audit before any physical probe/start procedure.
+
+The patch applies without fuzz and both board descriptions compile with the
+same inherited warnings. A verifier resolves the stock and candidate supply
+phandles and checks the exact carveouts. It rejects the old description, a
+same-type wrong MSS supply and unexpected S5 enablement. Full processed kernel
+schemas validate MSS and RPM regulator descriptions using separate host copies
+with modem/S5 marked enabled. This is necessary because disabled nodes relax
+required-property checks. The old enabled copy exposes missing MX/PLL supplies;
+a retained MSM8226 BHS property is also rejected. The real candidate remains
+disabled and unbooted. See [verification](../diagnostics/modem-control/README.md)
+and [evidence](../evidence/2026-11-09-modem-control-description.json).
+
+## Next hardware requirements
+
+A new physical UI result for the current boot is still required before another
+RAM entry. Keep the
+original source/builds, installed r50 and its recovery path until a matching,
+bounded RAM procedure is prepared and verified.
+
+The read-only layout check below now passes for the installed files. Before
+starting MSS, finish bootloader, loader, module and remoteproc ownership
+qualification.
+Prepare current calibration/EFS backups and explicit remote-filesystem handling;
+starting firmware must not silently redirect or overwrite provisioning. A
+driver probe, firmware start and QMI service discovery are separate milestones.
+
+Then qualify modem startup/stop/recovery, control transport, ModemManager,
+radio state, SIM handling, data and supported calls/messages. The planning
+baseline has no SIM, so final cellular acceptance remains pending. GNSS needs
+its actual location service and outdoor acquisition/position/time evidence;
+absence of a generic GNSS class node is not a product-absence finding. Audio
+tests remain excluded. No modem, GNSS, radio, power-management, coexistence or
+full-hardware pass follows from this description work.
+
+## Offline-probe RAM image prepared
+
+A separate 6,301,696-byte image uses the exact installed r50 kernel encoding
+and five matching retained signed modules. All signatures verify against the
+entire certificate list extracted from that kernel; all 197 imported CRCs match
+its actual export tables or earlier signed dependencies. System.map resolves
+11,709 kernel exports, the linked notes, certificate bounds and decompressed
+footprint. Payload/signature/CRC corruption controls reject for each module.
+The public extraction helper and a fresh native-family replay reproduce the
+inputs and checks; a final image rebuild is byte-identical on this host.
+
+Relative to the inactive candidate, only three DT property values change:
+modem and S5 become available, while BAM-DMUX is explicitly disabled. Every
+other property byte/path is unchanged. This avoids the driver's otherwise
+created BAM child. Actual MSS/RPM bindings pass. Native source has auto_boot
+false; core registration only auto-boots when requested, and the offline crash/
+shutdown paths do not start firmware. This is a source audit, not a runtime pass.
+
+The image initially loads no modules. Its explicit worker verifies kernel notes,
+seventeen DT properties, five module hashes, enforced signatures, RAM-only mounts,
+no CPUfreq/CPR provider or firmware/helper paths and bounded temperatures. It
+performs one five-module load and reverse unload, requiring only the expected
+modem remoteproc, offline state, expected parent/firmware name, no startup log,
+no BAM child and bounded IRQ counts. It never writes remoteproc state, requests
+firmware, retries an operation or kills a pending one. The original independent
+180-second init timer, BusyBox and USB diagnostics stay byte-identical.
+
+Host and exact ARM BusyBox each pass five test methods/44 subcases, including
+ten failed-operation boundaries and eight dynamic failures. They detect two
+weakened guards. An early shell-counter collision is reproduced and fixed;
+positive tests require the full ten operations and cleanup. These are mocked
+sysfs/module operations, not physical driver, IRQ, power or radio qualification.
+Independent parsing checks all 23 CPIO entries, Android checksum/addresses,
+original kernel bytes, three ARM shell scripts and absence of firmware/services.
+
+Read-only native sampling on the same boot captures APC's 1.15 V target and S5
+at base 0x2000: type3/subtype8/revision2, range0/selector62 (1.15 V programmed
+target), mode0x40 and enable0. Bit7 is clear; this does not measure analogue
+voltage or prove every possible physical enable path is off. Future entry and
+return checks must freshly preserve those raw controls, together with r50/r5,
+services, boot hash and the newest physical UI result. The image is unstaged/
+unbooted. Entry/observer/native-return controllers are prepared and their host
+guards pass; the newest native UI gate remains pending and no trial has run. Firmware start/EFS/RF/GNSS and full
+bringup remain open. See [procedure](../diagnostics/modem-control/probe-ram.md)
+and [preparation evidence](../evidence/2026-11-09-modem-offline-probe-preparation.json).
+
+
+The prepared controllers require exact native preflight, data-only transfer/full
+readback, live identified observers and one recorded BOOT attempt. Return checks
+cover the original raw boot and r50/r5 files/services, nine exact APC/S5 controls,
+CPU/NFC/MSS state and host network/index restoration. One real read-only
+preparation sample passes on the unchanged boot. Host tests exercise refusal
+boundaries and artifact validation; no physical modem entry, return, reset,
+firmware start or radio action occurs. A pure artifact verifier leaves physical
+display/touch explicitly unconfirmed. The older post-install UI reply is already
+recorded for its earlier boot and does not satisfy the current gate. See
+[controller preparation evidence](../evidence/2026-11-09-modem-probe-entry-preparation.json).
+
+
+## Installed firmware layout and RMTFS prerequisite
+
+The on-phone inspector reads bounded ELF headers/program tables and computes
+file digests on the phone. Only numeric metadata and hashes return to the host.
+The 27-header modem MDT contains 21 loadable segments, including three pure
+zero-fill segments. The fixed-address, nonoverlapping load span is 81,788,928
+bytes inside the 84,934,656-byte MPSS carveout at `0x08000000`. All eighteen
+payload segment files have exactly their declared sizes. The authenticated
+metadata consists of the 916-byte header/table and a packed 904-byte hash region.
+MBA's raw `mba.b00` is 295,824 bytes, within its separate 1 MiB region at
+`0x0d100000`; its selected MDT fields agree. No payload, signature block, modem
+identifier or provisioning contents are exported. Layout validity does not
+establish MBA authentication or successful startup.
+
+The exact native configuration has `CONFIG_QCOM_RMTFS_MEM=y`, but the live tree,
+memory class and device nodes contain no RMTFS memory device. The unit's stock
+DTB and vendor source place its shared region at `0x0fd80000`, size `0x180000`.
+That interval lies inside the existing `reserved@fb00000` exclusion. A separate
+[host candidate](../diagnostics/modem-control/fx0-rmtfs-memory.patch) splits that
+4 MiB exclusion into a leading `0x280000` reserved interval and the stock-sized
+RMTFS region. Their union is identical, with no overlap/gap. SMEM and every other
+existing property stay byte-identical. Client 1 matches the audited userspace
+expectation. The candidate would expose the RMTFS memory device if booted; MSS
+stays disabled. It is outside the active kernel recipe and has not been packaged,
+included in the prepared modem probe image, or booted.
+
+The host verifier checks stock wiring, exact memory coverage and all property
+differences. Both DTBs compile with the same three inherited warnings. The real
+RMTFS binding passes; wrong base/client, reservation overlap/gap and missing
+client controls reject. The first hand-authored patch had a bad hunk length and
+was rejected before compilation. That attempt is preserved; the generated patch
+passes dry-run/apply with zero fuzz.
+
+Pinned [RMTFS source](https://github.com/linux-msm/rmtfs/tree/b30a3eb38f9af283f18dbd3c7755653efc52c094)
+is audited, not installed. Its `-r` storage mode keeps writes in a RAM shadow;
+it still exchanges QRTR messages and writes shared memory. `-P` selects EFS
+partition labels. `-s` owns remoteproc start/stop, and the upstream default unit
+includes it. A future trial must therefore control service/lifecycle ownership
+explicitly. Starting that unit requests firmware startup; package hooks must
+be inspected before any installation. No RMTFS service, memory device,
+`/dev/mem`, QMI channel or modem control is opened
+by this audit.
+
+## Provisioning backup comparison
+
+Read-only hashes of modem, persist, modemst1, modemst2, FSG and FSC are compared
+with independently rehashed original private recovery images. Modem firmware,
+FSG and FSC match. Persist and both modemst partitions differ. The audit does
+not establish when or why they changed, and does not diagnose corruption.
+Keep the original backups. That read-only audit exported no provisioning
+payload. The later private snapshot below now captures current provisioning
+state. Recheck its freshness before firmware start; an old factory image is
+not a current-state rollback image.
+
+Final native checks preserve the same boot, r50/r5 hashes, raw boot image,
+taint0, services, CPU/NFC baseline and all nine APC/S5 controls. Original firmware
+directory resolution and unchanged host routes/resolver/index are verified.
+There is no reboot, RAM transfer, driver registration, firmware start, RMTFS
+installation or radio change. The physical UI gate for the newest native boot
+remains pending. See [reproduction procedure](../diagnostics/modem-control/firmware-layout.md)
+and [evidence](../evidence/2026-11-09-modem-firmware-layout.json).
+
+
+## Current private provisioning snapshots
+
+A later one-use capture now preserves persist, modemst1, modemst2, FSG and FSC:
+43,515,904 bytes in five images. It verifies exact labels/offsets/sizes, disabled
+MSS, absent remote-storage writers and unmounted or read-only source filesystems.
+All five source digests agree before capture, during each bounded copy and on
+independent reads after host transfer. Every source device is opened read-only.
+No source partition is restored or written.
+
+Private mode-600 images and metadata are fsynced in
+`/var/lib/fx0-rollback/modem-provisioning-01` on phone rootfs p35 and in
+`local/modem-provisioning-backup-01/host-backup` on the encrypted workstation.
+The phone copy shares the source eMMC; the workstation is one off-device copy.
+Both persistent copies are rehashed, their manifests agree and the capture PID
+is absent. Original card identity is compared privately with the retained card
+record; no CID, provisioning bytes or per-partition digests are published.
+The original factory-era images remain unchanged.
+
+This writes seven new regular backup files on phone rootfs, not firmware or
+source partitions. It excludes the modem firmware partition. A host payload
+round-trip into five fresh regular files matches all bytes; disposable copies
+are removed afterward. This does not rehearse physical partition restoration
+or power-loss survival. Four synthetic test methods/25 cases pass for bounded
+copy, no-clobber, private paths and snapshot acceptance/refusal.
+
+Final r50/r5, original raw boot, services, CPU/NFC/MSS state, raw APC/S5 controls
+and host routes/resolver/index are preserved on the same native boot. No reboot,
+RAM entry, firmware start, package or radio change occurs. The newest physical
+UI gate remains pending. See [backup and restoration procedure](../diagnostics/modem-control/provisioning-backup.md)
+and [snapshot evidence](../evidence/2026-11-09-modem-provisioning-backup.json).
+
+
+## RMTFS storage candidate and diagnostic builds
+
+Actual pinned upstream storage code fails 15/20 host sanitizer cases and 13/20
+static ARM cases, including three ARM segmentation faults. The storage-only
+candidate checks live handles and signed/count bounds, completes initial reads,
+preserves errors, frees failed buffers and zeroes grown shadows. It passes 20/20
+on both runners with guarded synthetic files and a persistent-write control.
+No QMI packet, shared-memory device or real provisioning image is used by tests.
+
+Full host and static ARM daemons compile with exact patch replay. The ARM image
+has no interpreter/shared dependencies and its isolated invalid-option path
+exits before memory/socket access. This is not daemon startup qualification.
+The target's retained systemd/libudev provider has `-dirty` recipe metadata;
+its archive is hashed but clean source provenance is unresolved. Close that
+dependency before trial/promotion. Packet/sector arithmetic, shared-memory
+bounds, lifecycle and physical operation still require work. Nothing is uploaded
+or installed, and firmware remains stopped.
+
+Final read-only native checks preserve r50/r5, original boot hash, services,
+taint0, CPU/NFC/MSS and raw APC/S5 controls. Current provisioning source/phone
+snapshot rereads match the private host manifest. The current UI gate remains
+pending. See [RMTFS procedure](../diagnostics/modem-control/rmtfs-userspace.md),
+[draft](../submissions/rmtfs/README.md) and
+[evidence](../evidence/2026-11-09-rmtfs-storage-candidate.json).
+
+## RMTFS packet-handler candidate
+
+The actual dispatcher/QMI/storage harness now passes 25/25 synthetic cases on
+host Clang ASan/UBSan/leak detection and static ARM/QEMU. The storage-patched
+baseline fails 11/25 on both runners, including four ARM segmentation faults.
+The handler patch corrects GET_DEV_ERROR handle validation, verbose CLOSE,
+wide sector multiplication, sync error reporting and initialization/formatting.
+Far reads and writes check actual 64-bit storage offsets. Transport and memory
+are mocked; guarded synthetic backing files remain unchanged.
+
+This does not close malformed QMI decoding, shared-memory span checks, large
+counts, lifecycle, dependency provenance or physical modem operation. The OPEN
+request encoder has an unresolved descriptor mismatch; tests construct its
+string TLV directly. All decoding and remaining encoding use the pinned codec.
+No phone commands or hardware changes occur; the latest UI gate remains pending.
+See [packet procedure](../diagnostics/modem-control/rmtfs-packets.md) and
+[evidence](../evidence/2026-11-09-rmtfs-handler-candidate.json).
+
+## QMI bounds and required-field candidate
+
+The corrected codec and OPEN C buffer pass 52 codec cases plus 32 actual
+RMTFS dispatcher cases on host Clang ASan/UBSan/leak detection and static
+ARM/QEMU. Baseline codec failures are 35/52 host and 24/52 ARM. Six malformed
+dispatcher cases fail on each: missing fields or incomplete arrays can close a
+live handle, allocate or transfer data. The candidate rejects those requests
+before effects. The 256-byte OPEN wire maximum is preserved with room for NUL;
+empty/ordinary/maximum OPEN encoding now works.
+
+This is finite synthetic qualification. Generator integration, shared-memory
+spans, huge counts, ownership/lifecycle, dependency provenance and physical
+modem operation remain open. No phone commands or hardware changes occur; the
+latest UI check remains pending. See [procedure](../diagnostics/modem-control/rmtfs-qmi.md),
+[unsent QRTR draft](../submissions/qrtr/README.md) and
+[evidence](../evidence/2026-11-09-rmtfs-qmi-candidate.json).
+
+## Pinned QMI generator regeneration
+
+The matching qmic kernel-output patch now preserves the OPEN terminator byte
+through regeneration and emits optional string validity markers. All 28 pinned
+qmic files match upstream Git blob hashes. Direct generation and the actual
+RMTFS Makefile target agree; RMTFS descriptor C bytes remain identical to
+upstream. Sixteen normal wire-byte/round-trip cases pass on host sanitizers and
+static ARM, including both current-generator 32-bit RMTFS count fields.
+
+This verifies source regeneration, not distribution packaging or full daemon
+qualification. Legacy 256-byte nested-string length encoding remains unresolved;
+RMTFS uses only a top-level path string. Shared-memory/lifecycle, dependency
+provenance and physical modem work remain open. No phone command or hardware
+change occurs; the current UI check remains pending. See
+[generator procedure](../diagnostics/modem-control/qmic-generation.md),
+[unsent draft](../submissions/qmic/README.md) and
+[evidence](../evidence/2026-11-09-qmic-generation.json).
+
+## Verified libudev provider and runtime link inputs
+
+A new ARM diagnostic build uses signed Alpine eudev 3.2.14-r6, whose source
+archive matches its clean recipe. Every persistent linker input matches a
+verified signed package member with a clean recipe commit. Five real libudev
+API cases pass against read-only synthetic sysfs; only early CLI rejection is
+executed for the full daemon. The old dirty-metadata library and builds remain
+unchanged. No phone operation occurs.
+
+The link audit also found dirty recipe metadata on the cross compiler's bundled
+runtime files; the final build selects clean target GCC runtime files instead.
+The compiler executable's own recipe identity remains unqualified. Distribution
+packaging, full startup, shared-memory spans, lifecycle and physical modem work
+remain open; the native UI gate stays pending. See
+[provider procedure](../diagnostics/modem-control/rmtfs-libudev.md) and
+[evidence](../evidence/2026-11-09-rmtfs-libudev-candidate.json).
+
+
+## 2026-11-10 shared-memory candidate
+
+The [RMTFS span-validation candidate](../diagnostics/modem-control/rmtfs-shared-memory.md) checks mapped and fd-backed transfers through one validator, preserves 64-bit physical addresses on ARM, and checks all IOVEC spans before the first transfer. Thirty-five memory cases and fifteen selected functional regressions pass on both host sanitizers and static ARM/QEMU. The complete ARM candidate links the same eleven authenticated runtime inputs; only early CLI executes. Constructor lifecycle, physical mapping, modem operation and packaging remain open. No phone commands occur; the newest display/touch gate remains pending.
+
+
+## 2026-11-10 Linux shared-memory discovery
+
+The [RMTFS discovery candidate](../diagnostics/modem-control/rmtfs-discovery.md) releases partially acquired resources, stops on errors from present RFSA/UIO devices, and checks DT cell widths and the complete region before the legacy mapping fallback. Forty-six constructor and thirty-five memory cases pass on host sanitizers and ARM/QEMU. The offline fx0 DTB matches the test region. No daemon startup or phone action occurs; the latest display/touch gate and physical modem qualification remain open.
+
+
+## 2026-11-10 RMTFS daemon lifecycle
+
+The daemon now holds one remoteproc power reference across QRTR reconnects and serves requests while its serialized state worker completes. Nineteen lifecycle cases, thirty-five memory checks and fifteen selected protocol regressions pass on host sanitizers and ARM/QEMU. A fresh read-only sample confirms the installed r50/r5 baseline and disabled modem. The prepared offline probe is still awaiting the current physical display and touch result. [Lifecycle scope and evidence](../diagnostics/modem-control/rmtfs-lifecycle.md)
+
+## 2026-11-10 passive RMTFS RAM image
+
+The owner confirmed display and touch on the installed r50 boot after the NFC transfer timeout. A separate RAM image combines the exact native kernel, signed QRTR core and the verified RFSA reservation with MSS disabled. The worker checks local RMTFS publication and withdrawal with an empty read-only RAM storage directory. The image rebuilt byte for byte and remains unstaged. Live RFSA and firmware qualification remain open. [Trial and evidence](../diagnostics/modem-control/rmtfs-passive-ram.md)
+
+## November 14: distribution build-host generator and complete source replay
+
+The patched qmic generator now has two clean normal abuild runs for the x86_64
+build host, including its enabled output-contract checks, BSD license,
+signed APK and signed repository index. Both artifacts are byte-identical.
+The packaged program passes both output fixtures. First-fixture and last-fixture
+mismatches, generator failure and valid-format package corruption are rejected.
+All 28 source files and the existing 22-key fixture are verified independently.
+This qualifies a build-host prerequisite, with ARM deployment separate.
+
+Complete official RMTFS 1.3 and QRTR 1.2 archives match the stable Alpine
+checksums and all 18/40 Git files, modes and links. The seven QRTR library,
+header and license blobs used by the older tests are unchanged in the stable
+release. All seven existing source patches replay without fuzz. RMTFS's actual
+Makefile rule now uses the packaged generator and reproduces the exact daemon
+and library source bytes used by the earlier lifecycle, memory and protocol
+fixtures. The previously omitted upstream install inputs are restored in a new
+workspace; earlier tested subsets and failed attempts remain preserved.
+
+At that checkpoint, normal target packages remained open. Native daemon startup,
+RFSA mapping, firmware ownership and physical modem/GNSS qualification remain
+open after the package checks below. These host checks make no phone changes.
+
+## November 14: reproducible ARM QRTR and RMTFS packages
+
+Two normal signed abuild runs now pass for QRTR 1.2-r2 and RMTFS 1.3-r1.
+Each pair produces byte-identical APKs and repository indexes: four QRTR APKs
+and five RMTFS APKs. All 40/18 release-source paths match their qualified source
+cohorts, including RMTFS's actual qmic regeneration and exact generated-file
+contracts. The 14 QRTR and seven RMTFS raw ELF outputs also match between runs.
+Independent RSA, payload data hash, signed index, altered-signature and ARM
+hard-float ABI checks pass. Distribution service files, rules, BSD licenses and
+maintainer attribution are preserved.
+
+The build profile uses signed Clang/LLD 22.1.3, clean target GCC 15.2.0 runtime
+objects and binutils 2.45.1. All 104 original toolchain APKs have verified
+signatures and full matching source-commit metadata. Package bodies match at
+7,360 paths, with three build-account/configuration differences reconciled
+exactly to signed defaults. The earlier signed ARM cross-GCC packages declare
+dirty source metadata; that attempt remains retained and is excluded from this
+profile. Clang reports the standard GCC options `-fstack-clash-protection` and
+`-fno-plt` as unused on ARM; those options have no effect in this profile.
+
+The actual signed ARM QRTR library passes all 52 existing synthetic codec cases
+under QEMU. The signed RMTFS program loads its normal QRTR/libudev dependencies
+and passes two early CLI rejection cases without opening devices or sockets.
+The existing 19 lifecycle, 35 memory and 15 selected protocol source fixtures
+also pass under ARM/QEMU with this compiler cohort. Their input and compiled
+binary hashes are independently rechecked, along with all 2,896 package-owned
+paths in the final development sysroot. These checks use synthetic sysfs,
+remoteproc, memory, storage and transport; physical daemon startup, RFSA mapping
+and modem/GNSS hardware remain open.
+The standard service includes `-s` remoteproc management; the first passive
+physical trial requires its own reviewed service configuration.
+
+The recipe is local at `3b2f30decd987cbb6ad14259e64189ef2092dc1c` and remains
+unpublished. No phone operation occurs. See the
+[sanitized package evidence](../evidence/2026-11-14-rmtfs-distribution-packages.json)
+and the [new ARM regression evidence](../evidence/2026-11-14-rmtfs-clean-arm-regressions.json).
+
+## November 14: maintained r1 passive RAM trial prepared
+
+A new minimal image uses the exact accepted r1 kernel, its authenticated
+standalone QRTR module and the signed normal RMTFS/QRTR userspace payloads.
+The RFSA-only DT change preserves the reserved-memory union and leaves the
+modem disabled. Two image assemblies match; independent parsing, GNU cpio,
+runtime dependency checks and ARM/QEMU validate all 34 entries. The worker
+requires a live independently armed 180-second return helper and stays idle
+until one checked USB serial command. Twenty-three worker, protocol and
+single-BOOT-flow tests pass with synthetic state. A fresh read-only phone audit
+matches the accepted r1 boot, package/boot/module hashes and running services.
+
+The image is unbooted and awaits its own current operator availability/UI
+answer. Physical RFSA mapping, local publication/withdrawal and automatic return
+are not yet qualified. The reproducible kernel startup and complete modem/GNSS
+gates remain open. [Trial procedure and exact inputs](../diagnostics/modem-control/rmtfs-passive-r1.md)
+
+## November 14: clean bootstrap of distribution build roots
+
+Public host helpers now bootstrap fresh roots directly from authenticated
+`apk.static` and normal signed APK caches. They require no existing Alpine
+root or helper container image. The generator, QRTR and RMTFS then build with
+the same normal abuild recipes and read-only input/signing mounts. All 13
+signed APK/index artifacts match the independently qualified references byte
+for byte. Six root-integrity and credential-exclusion controls pass.
+
+The minimal native root initially reproduced qmic's uncompressed payload but
+not its compressed package bytes: the reference abuild had selected pigz.
+A separate fresh root now pins that signed compressor explicitly. The base
+and RMTFS cross roots retain their original compression profiles. All failed
+comparisons and dispatched inputs remain preserved. The source, lock, public
+verification keys and [rebuild commands](../diagnostics/modem-control/userspace-package-rebuild.md)
+are prepared for review with [sanitized evidence](../evidence/2026-11-14-modem-clean-bootstrap.json).
+They make no phone changes; physical modem/GNSS qualification remains open.
+
+## November 14: portable passive-trial control flow
+
+A generic [RAM-trial flow](../diagnostics/modem-control/passive-trial-flow.md)
+is prepared for public review with explicit single-use, known transfer-status
+and pre-BOOT reset checks. After the intent barrier, callback failures and
+interrupts still attempt observation and native verification without a BOOT,
+reset or reboot retry. Device adapters retain responsibility for current owner
+receipts, durable ownership, actual process reaping and independent return.
+
+All 14 callback tests pass from a clean review checkout and a three-file
+source-only export, with no ignored local tree or Git metadata needed by the
+export. The existing nine prepared controller source snapshots remain exact.
+The new module has not replaced that controller or dispatched a physical trial.
+Physical RFSA, USB console, automatic return and modem/GNSS remain open. See the
+[software-only portability evidence](../evidence/2026-11-14-passive-flow-portability.json).
+
+## November 14: durable passive-trial ownership and bounded child waits
+
+The [Linux host runtime](../diagnostics/modem-control/passive-runtime.md)
+now provides an exclusive persistent attempt claim, file/directory-fsynced state
+and bounded waits on actual owned subprocesses. A parent deadline remains
+separate from a USB I/O timeout and cannot by itself authorize a USB reset.
+
+A fresh private adapter revision snapshots the canonical flow/runtime. Twelve
+offline callback/fault tests cover durable BOOT intent, terminal transfer
+recovery, observer failure, wrong native modules and operator/image/baseline
+refusal. Its fixture journals contain 23 actual owned-child terminal receipts;
+the deliberately uncertain-transfer control permits neither BOOT nor recovery.
+All 25 public flow/runtime test methods pass from a clean review checkout and a
+source-only export without ignored local source imports. The physical responses
+are substituted fixtures, not a fresh device audit. Both real trial workspaces
+remain undispatched, and the original nine source snapshots remain exact.
+[Offline qualification evidence](../evidence/2026-11-14-passive-adapter-runtime.json)
+
+## November 14: public passive-r1 adapter and private input plan
+
+The [concrete adapter, observer and native probe](../diagnostics/modem-control/passive-adapter.md)
+now run from public source with explicit private inputs. The plan pins eight
+runtime sources and the prepared image, excludes credential bodies from its
+hash roster, and requires a fresh specific operator receipt before loading the
+private client. The prior private controllers remain frozen.
+
+All 56 targeted test methods pass in both a clean review checkout and a
+source-only export, without ignored local controller imports. Twelve additional
+offline binding/fault methods use the retained image and baseline with device
+responses substituted. A real static input check verifies the prepared image
+and plan without loading credentials or taking a device action. Three real
+workspaces remain undispatched without an operator receipt. Physical RFSA,
+USB console, automatic return and modem/GNSS qualification remain open.
+[Public adapter qualification evidence](../evidence/2026-11-14-public-passive-adapter.json)
+
+## November 14: public rebuild of the prepared passive-r1 image
+
+The [locked image workflow](../diagnostics/modem-control/passive-r1-image-rebuild.md)
+now rebuilds the return/observer helpers and RFSA DTB, selects exact material
+bytes from eight authenticated APK archives and assembles the complete image.
+Its public source requires explicit build roots and archives; ignored controller
+programs, stock dumps and the installed private initramfs are not inputs.
+
+Both a clean review checkout and a 26-file source-only export pass the full
+workflow. Each compiles six helper/harness jobs, runs four ARM/QEMU controls,
+reproduces both DTBs, produces two images byte-identical to the independently
+qualified original and passes 13 input/worker tests. Existing output directories
+are rejected without changing their contents. The first incomplete source-only
+roster and namespace-denied helper attempt remain preserved.
+
+This is the prepared accepted-r1 diagnostic, not a new historical kernel build
+or physical acceptance. All three real trial workspaces remain undispatched
+without operator receipts, and the earlier source snapshots stay exact.
+[Public image rebuild evidence](../evidence/2026-11-14-passive-r1-public-image-rebuild.json)
+
+## November 14: passive-r1 child ownership and receipt gates
+
+A [fresh passive entry](../diagnostics/modem-control/passive-owned-adapter.md)
+keeps the existing image and borrows the exact qualified child ownership
+methods. Native-specific callbacks do not enter its inheritance chain. It keeps
+passive preflight, one-shot serial worker and 400-second observation behavior,
+while holding the port lock through bounded cleanup and rejecting status0 after
+an observer deadline. Complete matching worker/native-return receipts are
+required; absent USB generations cannot compare equal.
+
+Both a clean review checkout and a 19-file source-only export pass 29 adapter
+and nine serial test methods. Private plan04's static check loads no private
+client and takes no device action. All earlier source rosters, the native-r2
+plan and both image profiles stay unchanged. No passive trial was dispatched.
+[Owned passive entry evidence](../evidence/2026-11-14-passive-owned-runtime.json)

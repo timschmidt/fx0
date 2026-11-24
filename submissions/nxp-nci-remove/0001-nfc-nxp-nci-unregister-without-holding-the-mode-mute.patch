@@ -1,0 +1,45 @@
+From 22d32fc708be6b7d045e9fbc5114e3dc5a44a2a3 Mon Sep 17 00:00:00 2001
+From: Timothy Schmidt <timschmidt@gmail.com>
+Date: Sun, 8 Nov 2026 20:17:01 -0500
+Subject: [RFC PATCH net 1/2] nfc: nxp-nci: unregister without holding the mode
+ mutex
+
+Removing an open controller calls nci_unregister_device(), which closes
+the NCI device and invokes nxp_nci_close(). That callback takes info_lock,
+but nxp_nci_remove() already holds the same mutex across unregister. The
+recursive acquisition prevents removal from completing.
+
+Unregister without info_lock held, then set the transport and driver mode
+to cold under the mutex. Release the mutex before freeing the NCI device.
+Keep the existing firmware-work shutdown sequence unchanged.
+
+Fixes: dece45855a8b ("NFC: nxp-nci: Add support for NXP NCI chips")
+Assisted-by: LLM
+---
+ drivers/nfc/nxp-nci/core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/nfc/nxp-nci/core.c b/drivers/nfc/nxp-nci/core.c
+index 448e5a4e7338..8e6b6ece5db2 100644
+--- a/drivers/nfc/nxp-nci/core.c
++++ b/drivers/nfc/nxp-nci/core.c
+@@ -186,15 +186,15 @@ void nxp_nci_remove(struct nci_dev *ndev)
+ 		nxp_nci_fw_work_complete(info, -ESHUTDOWN);
+ 	cancel_work_sync(&info->fw_info.work);
+ 
+-	mutex_lock(&info->info_lock);
++	nci_unregister_device(ndev);
+ 
++	mutex_lock(&info->info_lock);
+ 	if (info->phy_ops->set_mode)
+ 		info->phy_ops->set_mode(info->phy_id, NXP_NCI_MODE_COLD);
++	info->mode = NXP_NCI_MODE_COLD;
++	mutex_unlock(&info->info_lock);
+ 
+-	nci_unregister_device(ndev);
+ 	nci_free_device(ndev);
+-
+-	mutex_unlock(&info->info_lock);
+ }
+ EXPORT_SYMBOL(nxp_nci_remove);
+ 

@@ -203,3 +203,117 @@ passes five boundary/selection tests; no fuse word or unverified offset was
 read. Voltage/corner plans and APC/CPR control must be validated before any
 higher OPP is enabled. See [implementation gates](msm8226-cpu-performance.md)
 and [audit evidence](../evidence/2026-11-06-cpu-speedbin-audit.json).
+
+## November 14: reproducible-kernel startup diagnostics
+
+The first temporary 6.18.63-r2 reproducible-kernel trial returned before a
+candidate desktop/SSH checkpoint. Its retained console stops after a display
+IOMMU context fault at 6.164901 seconds. The reset cause is not proven. The
+installed r1 return passed its byte/service checks and the owner's display and
+touch confirmation; r2 remains physically unqualified. An unchanged r2 repeat
+is prepared and still awaits its own operator availability response.
+
+A separate diagnostic source adds 15 log sites across platform DMA setup,
+legacy ARM attachment, MDP5 handoff and Qualcomm IOMMU context programming.
+The reviewed change preserves existing statement order and adds no MDP/IOMMU
+register operations. Two complete normal signed package builds now agree:
+564 outputs, all 91,269 source paths, the APK and repository index. All 464
+signed modules, 25,309 import CRCs, dependency graphs, linked CFI/public trust,
+compressed DWARF5 and actual community configuration pass. All 63 DTBs remain
+byte-identical to r2; only the input release name changes. Six compiled ordinary
+board checks include three active schema rejection controls, and all 15 log
+messages are present in the full linked outputs.
+
+The distinct release is `6.18.63-fx0-handoff-trace-alpine`, package revision r5.
+Source `de5568bfc81f221984b8e82519af9a15b00b5b6f` and recipe
+`5126c3ea32047109b87bafbfa5e9588b7710902b` remain local. The complete package is
+host-qualified; no new RAM image is assembled, staged or booted, and nothing
+is installed. Logging changes timing, so a successful trace boot alone would
+not explain the original failure. The unchanged r2 repeat remains the first
+physical diagnostic step. See the
+[host package evidence](../evidence/2026-11-14-display-handoff-standard-package.json).
+
+## November 14: R5 private RAM image prepared, not dispatched
+
+The qualified handoff-trace package now has two identical private RAM images,
+17,272,832 bytes each. Its separate return helper uses the R5 release/token and
+420-second absolute BOOTTIME deadline, with a 360-second normal systemd return.
+The ordinary init remains intact. The release change requires 60 module-path
+renames, all 19 early module replacements and all 14 matching metadata files;
+183 unrelated original records remain byte exact.
+
+Independent Android/newc/GNU cpio checks, four actual ARM image controls and
+systemd unit verification pass. Eight transformation/overlay test methods pass
+in both a clean review checkout and an 11-file source-only export. Their mounts,
+native state and reboot are fixtures. Private images, initramfs, command line
+and raw logs remain excluded from source review.
+
+The unchanged r2 repeat remains the first physical diagnostic step. R5's
+private preparation plan disables dispatch and requires a new accepted baseline
+after that repeat, its own operator availability and a reviewed controller.
+No image was staged or booted. The reset cause and physical return remain
+unproven; tracing can change timing.
+[Trial sources and limits](../diagnostics/kernel-maintenance/display-handoff-trial/README.md)
+and [host preparation evidence](../evidence/2026-11-14-display-handoff-private-ram-preparation.json).
+
+## November 14: durable unchanged-r2 repeat controller
+
+A new [native repeat adapter](../diagnostics/kernel-maintenance/native-trial.md)
+keeps the exact original r2 image while reusing the qualified durable attempt
+journal, shared port lock, bounded owned-child waits and single-BOOT flow. Its
+native observer has separate candidate-health and installed-return evidence.
+An expired parent deadline rejects candidate acceptance even when the actual
+child exits zero; native verification is still attempted after intent.
+
+All 29 plan, concrete callback/fault and observer tests pass in both a clean
+review checkout and a 17-file source-only export. Disposable host children are
+real, while all device responses are substituted. A real static check of the
+retained image and new private plan05 loads no credential client and performs
+no device action. The initial test export and superseded pre-deadline plan03
+source bytes remain preserved.
+
+Controller02, the failed trial, the unchanged image and all passive source
+snapshots remain exact. No operator receipt or real attempt claim was created.
+The physical repeat still needs its specific fresh availability response and
+full native/staged preflight. R2 startup/display/return and the complete bringup
+remain unqualified; R5 stays a later diagnostic with dispatch disabled.
+[Offline runtime evidence](../evidence/2026-11-14-native-r2-repeat-runtime.json)
+
+## November 14: owned-child cleanup across journal failures
+
+A regression with real disposable children reproduced a persistence-failure gap
+for transfer, observer and pre-BOOT normal-return roles: the exception could
+leave the just-created child live. The native adapter now retains the handle
+before log close or journal writes, terminates/reaps it on failed spawn and
+attempts final cleanup for every owned role. The shared port lock remains held
+through cleanup, original deadline receipts remain intact, and a cleanup error
+cannot emit terminal success. No new device recovery command is introduced.
+
+All 37 native plan, concrete callback/fault, observer and ownership test methods
+pass in both a clean review checkout and an 18-file source-only export. A static
+check of private plan06 verifies the unchanged r2 image without a client load
+or device action. Prior source snapshots and plans remain retained.
+The specific operator response and fresh native/staged preflight remain pending;
+no real attempt was claimed or dispatched.
+[Owned-child qualification evidence](../evidence/2026-11-14-native-child-ownership.json)
+
+## November 14: bounded private console capture prepared
+
+A [read-only capture workflow](../diagnostics/kernel-maintenance/native-console.md)
+now binds selected pstore records to independently accepted native boot/notes,
+opens fixed paths without symlink following, bounds per-file/total bytes and
+checks double-read stability. Raw data stays in private capture files. Before
+capture requires the specific current operator gate; after capture requires the
+claimed trial's verified native return. Neither phase executes the RAM trial.
+
+Nineteen tests pass in both a clean review checkout and a 17-file source-only
+export. The real plan/source-lock static check performs no client load or device
+action. The catalog matches all15 linked R5 formats from four verified source
+files. Offline replay recognizes the retained first-r2 tail's fault message at
+6.164901s while leaving fresh-boot attribution and reset cause unproven.
+
+Comparison uses complete stable record hashes and distinguishes unchanged, new,
+changed, missing and inconclusive data. Summaries contain known signals rather
+than arbitrary raw lines. No new console capture, stage or boot occurred.
+The native runtime plan, images and prior source snapshots remain unchanged.
+[Console workflow qualification evidence](../evidence/2026-11-14-native-console-capture.json)

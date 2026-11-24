@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "recorded_UTC": "2026-11-09T04:42:03.291397+00:00",
+  "status": "Complete matching Alpine r59 source build and host kernel/module/package verification pass; no physical startup, teardown or installed acceptance",
+  "source_profile": "manifests/kernel-nfc-open-teardown.json",
+  "source_profile_sha256": "48c08068963297cbe123fdf94df23ebee8378dfabad60dae7669b701e0c34dda",
+  "source_profile_creation_status_is_historical": "Measured build results below supersede the source checkpoint unbuilt status; original exporter input retained unchanged",
+  "source": {
+    "repository": "https://github.com/timschmidt/fx0-linux",
+    "branch": "integration/fx0-nfc-open-teardown",
+    "commit": "7bbe33bd97b6f57a05de33ce8dcceba6942352a3",
+    "tree": "1ea5f26b6eba7094f261b1db53a554358209db96",
+    "total_recipe_patches": 17,
+    "actual_source_files_compared_to_Git": 22
+  },
+  "recipe": {
+    "verified_UTC": "2026-11-09T04:40:41.880113+00:00",
+    "repository": "https://github.com/timschmidt/fx0-pmaports",
+    "branch": "integration/fx0-nfc-open-teardown-package",
+    "commit": "056ba2e6b2328d656d229dfe1785d4842fae0a39",
+    "remote_ref_independently_verified": true,
+    "checkout_clean": true,
+    "published_payload": "r59 standalone recipe/configuration/17 raw source patches/provenance; new matching open-teardown family",
+    "binary_firmware_private_key_or_device_log_export": false,
+    "owner_authorization": "Pushing to github is approved for all fx0 development."
+  },
+  "recipe_patch": "patches/pmaports/fx0-nfc-open-teardown-packaging.patch",
+  "recipe_patch_sha256": "d860553aad46c0834c91ad4836bd50d81434449450d64319677a5699427db2ee",
+  "source_checksums_verified": 19,
+  "release": "6.18.59-fx0-nfc-open-teardown-alpine",
+  "package": {
+    "name": "linux-postmarketos-qcom-msm8226-6.18.59-r59.apk",
+    "bytes": 18704154,
+    "sha256": "18ac269ccbda7f58591b2f354b668e42ee52ffb76c0c9d3d4d34933869fee611",
+    "recipe_commit": "056ba2e6b2328d656d229dfe1785d4842fae0a39",
+    "source_build": true
+  },
+  "package_path": "local/nfc-open-teardown-package/export-attempt03/linux-postmarketos-qcom-msm8226-6.18.59-r59.apk",
+  "configuration": {
+    "input": "configs/linux-6.18.59-fx0-nfc-open-teardown-alpine.armv7",
+    "input_sha256": "9ed18c6d782e3c079cbd9666a4ec96fcb32ac2ebbdeaf90299a6a9be49f7f1e1",
+    "actual_config_sha256": "956f96f01836bb7815a6f3bdb5daf45be537648540a31079f5c6c4fbb62db5f0",
+    "normalized_r58_r59_bytes_identical_except_LOCALVERSION": true,
+    "community_checker": "pass, actual normalized build configuration",
+    "CFI_nonpermissive_signing_full_DWARF5_zlib_and_schedutil_retained": true
+  },
+  "kernel": {
+    "zImage_sha256": "dfeef067604b68f43c6424942496111fc6d217e8d7dcb37c3bde9f448477163d",
+    "Image_sha256": "8a7cadb571406306d4fb90de0b7dc2316d0b0160804c38fd879c658de48e2892",
+    "ELF_sha256": "be46ab5055c74afe83dc881f1c2ff8cfdd6ea6d0c71071bc2b42403ae9cfbb0c",
+    "GNU_build_id": "348c9f6829285a5b229ed4a387aacc377be46691",
+    "DTB_sha256": "246b6e2ad17f51970486ebdda3461460c7f67c5bfba0f27c21a0822c1d355483",
+    "certificate_sha256": "acbf95c57fe259d115b67ee689ebc1610434d38892fa96e2776431d1e9a8399a",
+    "certificate_bytes": 1324,
+    "exact_whole_kernel_trust_list_verified": true,
+    "certificate_distinct_from_r58_r56_and_reconstructed_r50": true,
+    "private_key_mode_stat_only": "0600",
+    "undefined_symbols_match_baseline": true,
+    "kernel_and_BSS_below_forced_ramdisk": true,
+    "kernel_text_to_end_span_including_BSS": 21499728,
+    "debug_information": "DWARF5 retained; full zlib debug sections decompressed and length/hash checked"
+  },
+  "host_checks": {
+    "signed_modules_verified": 468,
+    "imported_CRC_checks": 25562,
+    "dependency_direct_edges": 391,
+    "dependency_transitive_edges": 577,
+    "binary_loader_requests": 468,
+    "private_ops_ABI_change": {
+      "export": "nxp_nci_probe",
+      "r58_CRC": "0x487c4a66",
+      "r59_CRC": "0xb0b785be",
+      "new_I2C_rejects_r58_export_map": true
+    },
+    "Module_symvers_delta": {
+      "nxp_nci_probe": {
+        "r58": "0x487c4a66",
+        "r59": "0xb0b785be"
+      }
+    },
+    "payload_signature_and_import_ABI_corruption_controls": "rejected",
+    "wrong_build_certificate_controls": [
+      {
+        "certificate_sha256": "80e62e8a6f99428a0ad50ec11450f98db40640886cae5cf433857196c933e831",
+        "NFC_module_rejected": true
+      },
+      {
+        "certificate_sha256": "846fdf13b2cbfe48b6f71b57d54e1b44b337f284e4aa274c4a46c3f982e2c3ba",
+        "NFC_module_rejected": true
+      },
+      {
+        "certificate_sha256": "edc7d3cd556be62ff28bae1e201652d5c39166c34a9172a53a7390dc38972260",
+        "NFC_module_rejected": true
+      }
+    ],
+    "APK_signature_verified": true,
+    "modified_signed_recipe_metadata_rejected": true,
+    "offline_ARM_package_resolution": "pass",
+    "isolated_usermode_r58_to_r59_replacement": "pass; scripts/hooks disabled",
+    "isolated_usermode_payload_files": 549,
+    "previous_source_actual_C_sanitizer_tests": "5 tests / 10 modeled cases, r58 baseline and five isolated defects detected; unchanged inputs in evidence/2026-11-08-nfc-open-teardown-source.json",
+    "previous_source_ARM_W1": "3 forensic objects pass; full new package build does not repeat the W=1 check"
+  },
+  "build_attempts": [
+    {
+      "attempt": 1,
+      "result": "terminal prebuild failure: missing cached upstream/main remote metadata; no source build",
+      "artifacts": "original controller/log/HOME retained"
+    },
+    {
+      "attempt": 2,
+      "result": "terminal prebuild failure: public index retrieval unavailable with network disabled; sparse checkout omitted device metadata used by status reporter",
+      "artifacts": "original controller/log/HOME retained"
+    },
+    {
+      "attempt": 3,
+      "result": "pass",
+      "isolation": "New pmos HOME, cached tools/chroots; normal network for public dependency indexes; original NFC/CPU source builds hidden and untouched"
+    }
+  ],
+  "constraints": [
+    "New private operations ABI and distinct release/certificate; do not mix modules with r58 or other families",
+    "Original source profile/configuration, builds/APKs, RAM images and physical r58 evidence retained unchanged",
+    "Host build/signature/ABI/loader/usermode results do not qualify physical IRQ/NCI timing, signature enforcement, boot or recovery",
+    "No firmware download, concurrent firmware teardown, RF/tag/userspace or PM qualification",
+    "No phone entry or installation; latest exact-native physical display/touch answer still pending",
+    "No private keys/binaries/firmware published, recovery-disk writes, audio tests or host built-in Wi-Fi changes"
+  ],
+  "evidence": "evidence/2026-11-08-nfc-open-teardown-package.json"
+}

@@ -1,0 +1,420 @@
+{
+  "recorded_UTC": "2026-11-11T21:22:15.477359+00:00",
+  "subject": "Actual phone-kernel private ARM upgrade, normal hooks, trigger and captured-state recovery",
+  "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+  "kernel": "6.18.59-fx0-dmp",
+  "boundary": {
+    "isolation": {
+      "unit": {
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "Result": "success",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0"
+      },
+      "worker_result": {
+        "status": "passed",
+        "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+        "readonly_mounts": {
+          "/": true,
+          "/etc": true,
+          "/usr": true,
+          "/proc/sys": true,
+          "/sys/fs/cgroup": true
+        },
+        "owned_backup_subtree_writable": true,
+        "owned_write_probe_removed": true,
+        "physical_boot_device_absent": true,
+        "top_level_block_devices": [],
+        "isolated_network_interfaces": [
+          "lo"
+        ],
+        "network_namespace_differs_from_PID1": true,
+        "NoNewPrivileges": true,
+        "package_transaction_executed": false,
+        "live_OS_files_written": false
+      },
+      "current_boot_success_journal": true,
+      "journal_success_realtime_microseconds": "1794429836518770",
+      "recorded_UTC": "2026-11-11T20:44:30.873949+00:00",
+      "passed": true,
+      "unloaded_unit_default_exit_fields_not_used_as_exit_proof": true
+    },
+    "isolation_properties": [
+      "Type=exec",
+      "RuntimeMaxSec=30",
+      "KillMode=control-group",
+      "MemoryMax=64M",
+      "MemorySwapMax=0",
+      "CPUQuota=50%",
+      "Nice=10",
+      "IOWeight=10",
+      "UMask=0077",
+      "PrivateDevices=yes",
+      "PrivateNetwork=yes",
+      "PrivateTmp=yes",
+      "ProtectSystem=strict",
+      "ProtectHome=yes",
+      "ProtectKernelTunables=yes",
+      "ProtectKernelModules=yes",
+      "ProtectControlGroups=yes",
+      "NoNewPrivileges=yes",
+      "ReadWritePaths=/var/lib/fx0-rollback/stable-native-hooks-01"
+    ],
+    "permission_execution_probe": {
+      "unit": {
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "Result": "success",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0"
+      },
+      "worker_result": {
+        "status": "passed",
+        "actual_ARM_kernel": "6.18.59-fx0-dmp",
+        "live_OS_files_written": false,
+        "package_transaction_executed": false,
+        "ownership_and_setuid_mode_roundtrip": true,
+        "SELinux_and_user_xattrs_roundtrip": true,
+        "actual_native_chroot_shell_APK_and_strace": true,
+        "native_APK_version": "3.0.8-r0",
+        "native_hook_version_comparisons": [
+          {
+            "installed": "10.3_p1-r1",
+            "threshold": "10.0_p1-r2",
+            "comparison": ">"
+          },
+          {
+            "installed": "1.23.4-r0",
+            "threshold": "1.21.2-r1",
+            "comparison": ">"
+          }
+        ],
+        "all_owned_children_reaped": true,
+        "actual_cgroup_ownership_verified": true,
+        "private_fixture_removed": true
+      },
+      "current_boot_success_journal": true,
+      "journal_success_realtime_microseconds": "1794430631008335",
+      "recorded_UTC": "2026-11-11T20:57:57.700440+00:00",
+      "passed": true,
+      "unloaded_unit_default_exit_fields_not_used_as_exit_proof": true
+    },
+    "probe_properties": [
+      "Type=exec",
+      "KillMode=control-group",
+      "MemorySwapMax=0",
+      "CPUQuota=50%",
+      "Nice=10",
+      "IOWeight=10",
+      "UMask=0077",
+      "PrivateDevices=yes",
+      "PrivateNetwork=yes",
+      "PrivateTmp=yes",
+      "ProtectSystem=strict",
+      "ProtectHome=yes",
+      "ProtectKernelTunables=yes",
+      "ProtectKernelModules=yes",
+      "ProtectControlGroups=yes",
+      "NoNewPrivileges=yes",
+      "ReadWritePaths=/var/lib/fx0-rollback/stable-native-hooks-01",
+      "RuntimeMaxSec=90",
+      "MemoryMax=128M"
+    ]
+  },
+  "baseline": {
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "complete_baseline_paths_reverified": 5784,
+    "all_metadata_xattrs_hardlinks_and_absence_reverified": true,
+    "original_raw_boot_unchanged": true,
+    "packet_sha256": "90e3e02a7dc1cc875147bf2f4bb9001725451cd7d30e8e635bf90bc240cd93bc",
+    "staged_packet_members": 42,
+    "extracted_file_hashes_verified": true,
+    "owned_staging_removed": true,
+    "native_input_directory": "/var/lib/fx0-rollback/stable-native-hooks-01/inputs-01",
+    "native_worker": "/var/lib/fx0-rollback/stable-native-hooks-01/native-run-01/worker.py",
+    "native_transaction_launched": false,
+    "recorded_UTC": "2026-11-11T20:53:55.076546+00:00",
+    "owned_upload_child_returncode": 0,
+    "owned_upload_child_reaped": true
+  },
+  "interpreter_and_trigger_verification": {
+    "recorded_UTC": "2026-11-11T20:47:10.191575+00:00",
+    "binaries": [
+      {
+        "package": "busybox",
+        "version": "1.37.0-r31",
+        "package_sha256": "032c499bfa5ea22944fc8ffce2aa5d0603f1f8810f91b73c453d053692fe2f32",
+        "native_path": "/usr/bin/busybox",
+        "native_ELF_sha256": "df4dd71f89214032872e60328f3af03faf35e344f6fa5493656d8775d35e930c",
+        "exact_signed_payload_match": true,
+        "needed": [
+          "libc.musl-armv7.so.1"
+        ],
+        "interpreter": "/lib/ld-musl-armhf.so.1",
+        "all_dependencies_in_verified_runtime": true
+      },
+      {
+        "package": "busybox-extras",
+        "version": "1.37.0-r31",
+        "package_sha256": "6ca5c2ba1e828c402fa5f0154773e368a8e34b452c979e74d12547a848a0ab71",
+        "native_path": "/usr/bin/busybox-extras",
+        "native_ELF_sha256": "44b97c8f93afc998068bae3c800bbcb27c3c79561c325d59dfdcd9389f3be512",
+        "exact_signed_payload_match": true,
+        "needed": [
+          "libc.musl-armv7.so.1"
+        ],
+        "interpreter": "/lib/ld-musl-armhf.so.1",
+        "all_dependencies_in_verified_runtime": true
+      }
+    ],
+    "original_installed_trigger_matches_signed_package": true,
+    "trigger_sha256": "c7840b111dd82669de2074ea3c7e345c063928db2bbff650a81289777b3ff98f",
+    "native_file_writes": false,
+    "private_keys_read": false
+  },
+  "interpreter_package_verification": {
+    "recorded_UTC": "2026-11-11T20:42:06.767288+00:00",
+    "verified_packages": 2,
+    "packages": [
+      {
+        "package": "busybox",
+        "version": "1.37.0-r31",
+        "sha256": "032c499bfa5ea22944fc8ffce2aa5d0603f1f8810f91b73c453d053692fe2f32",
+        "bytes": 504882,
+        "index_control_checksum": "Q1WZfENOtw/Y2PBeN44Dd+oP2WaQ4=",
+        "exact_current_installed_control_match": true,
+        "signer": "alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+        "signer_public_key_sha256": "ebe717d228555aa58133c202314a451f81e71f174781fd7ff8d8970d6cfa60da",
+        "independent_RSA_verified": true,
+        "compressed_payload_SHA256_verified": true,
+        "payload_present": true,
+        "APK_verify_returncode": 0
+      },
+      {
+        "package": "busybox-extras",
+        "version": "1.37.0-r31",
+        "sha256": "6ca5c2ba1e828c402fa5f0154773e368a8e34b452c979e74d12547a848a0ab71",
+        "bytes": 62941,
+        "index_control_checksum": "Q1ZimivEuaQ1NpACBdm3OBGL8n7fA=",
+        "exact_current_installed_control_match": true,
+        "signer": "alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+        "signer_public_key_sha256": "ebe717d228555aa58133c202314a451f81e71f174781fd7ff8d8970d6cfa60da",
+        "independent_RSA_verified": true,
+        "compressed_payload_SHA256_verified": true,
+        "payload_present": true,
+        "APK_verify_returncode": 0
+      }
+    ],
+    "negative_controls": [
+      {
+        "kind": "valid_gzip_altered_control",
+        "independent_RSA_rejected": true,
+        "APK_rejected": true,
+        "authenticated_index_checksum_mismatch": true
+      },
+      {
+        "kind": "valid_tar_gzip_altered_payload_body",
+        "authenticated_datahash_rejected": true,
+        "APK_rejected": true,
+        "signature_and_control_unchanged": true
+      }
+    ],
+    "archive_bytes": 567823,
+    "public_trust_keys_only": true,
+    "private_keys_read_or_used": false,
+    "packages_installed_or_executed": false,
+    "phone_mutations": false,
+    "rollback_and_native_hooks_qualified": false
+  },
+  "transaction": {
+    "native_boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "unit": {
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "Result": "success",
+      "ExecMainCode": "0",
+      "ExecMainStatus": "0",
+      "MemoryCurrent": "[not set]",
+      "CPUUsageNSec": "[not set]"
+    },
+    "worker_result": {
+      "started_UTC": "2026-11-11T21:00:03.756517+00:00",
+      "status": "passed",
+      "live_root_restored": false,
+      "native_package_installation": false,
+      "actual_ARM_kernel": true,
+      "QEMU_used": false,
+      "private_fixture_removed": true,
+      "APK_returncode": 0,
+      "owned_APK_tracer_reaped": true,
+      "normal_native_hooks_executed": true,
+      "normal_native_BusyBox_trigger_executed": true,
+      "selected_packages_upgraded": 30,
+      "original_package_count": 775,
+      "upgraded_ARM_APK_version": "3.0.9-r0",
+      "actual_kernel": "6.18.59-fx0-dmp",
+      "captured_paths_verified": 5784,
+      "SELinux_labels_verified": 939,
+      "hardlink_aliases_verified": 254,
+      "original_775_packages_recovered": true,
+      "recovered_ARM_APK_version": "3.0.8-r0",
+      "live_DB_world_unchanged": true,
+      "hooks_terminal_before_restore": true,
+      "live_OS_transaction_qualified": false,
+      "finished_UTC": "2026-11-11T21:10:39.135527+00:00"
+    },
+    "current_boot_success_journal": true,
+    "journal_success_realtime_microseconds": "1794431440025231",
+    "observed_UTC": "2026-11-11T21:10:40.851832+00:00",
+    "passed": true,
+    "unloaded_unit_default_exit_fields_not_used_as_exit_proof": true
+  },
+  "transaction_unit_properties": [
+    "Type=exec",
+    "KillMode=control-group",
+    "MemorySwapMax=0",
+    "CPUQuota=50%",
+    "Nice=10",
+    "IOWeight=10",
+    "UMask=0077",
+    "PrivateDevices=yes",
+    "PrivateNetwork=yes",
+    "PrivateTmp=yes",
+    "ProtectSystem=strict",
+    "ProtectHome=yes",
+    "ProtectKernelTunables=yes",
+    "ProtectKernelModules=yes",
+    "ProtectControlGroups=yes",
+    "NoNewPrivileges=yes",
+    "ReadWritePaths=/var/lib/fx0-rollback/stable-native-hooks-01",
+    "RuntimeMaxSec=1500",
+    "MemoryMax=400M",
+    "TimeoutStopSec=30"
+  ],
+  "actual_native_execve_verification": {
+    "recorded_UTC": "2026-11-11T21:16:26.262513+00:00",
+    "scope": "Actual native ARM execve trace from the private chroot; no mocked interpreters or hooks",
+    "hooks": [
+      {
+        "path": "lib/apk/exec/openssh-server-10.3_p1-r2.post-upgrade",
+        "argv": [
+          "lib/apk/exec/openssh-server-10.3_p1-r2.post-upgrade",
+          "10.3_p1-r2",
+          "10.3_p1-r1"
+        ],
+        "actual_execve_returncode": 0,
+        "process_exit_status": 0
+      },
+      {
+        "path": "lib/apk/exec/libheif-1.23.7-r0.post-upgrade",
+        "argv": [
+          "lib/apk/exec/libheif-1.23.7-r0.post-upgrade",
+          "1.23.7-r0",
+          "1.23.4-r0"
+        ],
+        "actual_execve_returncode": 0,
+        "process_exit_status": 0
+      },
+      {
+        "path": "lib/apk/exec/busybox-1.37.0-r31.trigger",
+        "argv": [
+          "lib/apk/exec/busybox-1.37.0-r31.trigger",
+          "/sbin",
+          "/usr/sbin",
+          "/usr/bin"
+        ],
+        "actual_execve_returncode": 0,
+        "process_exit_status": 0
+      }
+    ],
+    "actual_successful_execs": 9,
+    "owned_processes_with_zero_exit": 8,
+    "all_observed_native_children_exited_zero": true,
+    "actual_old_and_new_hook_versions_verified": true,
+    "actual_trigger_directories": [
+      "/sbin",
+      "/usr/sbin",
+      "/usr/bin"
+    ],
+    "both_BusyBox_installers_executed": true,
+    "no_service_restart_command_executed": true,
+    "actual_cgroup_empty_of_descendants_before_restore": true,
+    "current_boot_unit_success_verified": true,
+    "raw_trace_sha256": "731c698546d0f0e295b7b033872a60903c2ed8f33098389aafe2e0de6c407194",
+    "raw_trace_kept_private": true,
+    "live_OS_service_continuity_qualified": false
+  },
+  "postflight": {
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "kernel": "6.18.59-fx0-dmp",
+    "files_sha256": {
+      "/lib/apk/db/installed": "b8eb4615488e60b653c66f90b4824588f31a9aeb1936e5449614b3bc989ebdd1",
+      "/etc/apk/world": "dc379037d4b3defa2a96dc16170d2eacf9ae74e214d867ab482c945d23f0b023",
+      "/etc/apk/repositories": "37534543d9a1defca831a5b104f2e871f363555df8b817ec8a54b59d1138562a",
+      "/dev/mmcblk0p15": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921"
+    },
+    "systemd": "running",
+    "taint": 0,
+    "sway_running": true,
+    "gesture_daemon_running": true,
+    "MemAvailable_bytes": 812163072,
+    "backup_filesystem_free_bytes": 7543574528,
+    "SELinux_enforcement": "interface absent",
+    "physical_display_touch_for_current_return": "pending",
+    "native_package_or_boot_change": false,
+    "recorded_UTC": "2026-11-11T21:13:32.293822+00:00"
+  },
+  "next_backup_requirements": {
+    "recorded_UTC": "2026-11-11T21:19:15.402612+00:00",
+    "scope": "Required additions before a fresh post-r1 live-transaction baseline; does not retroactively extend the frozen 5784-path capture",
+    "additional_path": "/usr/lib/apk/exec",
+    "observed_live_directory": {
+      "native_path": "/usr/lib/apk/exec",
+      "kind": "directory",
+      "mode": 493,
+      "uid": 0,
+      "gid": 0,
+      "mtime_ns": 1793259729000000000,
+      "entry_names": [],
+      "xattrs": {
+        "security.selinux": "756e636f6e66696e65645f753a6f626a6563745f723a756e6c6162656c65645f743a733000"
+      },
+      "file_contents_read": false,
+      "native_file_writes": false,
+      "recorded_UTC": "2026-11-11T21:16:31.245495+00:00",
+      "future_backup_scope_addition_required": true
+    },
+    "capture_directory_metadata_and_complete_membership": true,
+    "require_no_active_APK_or_owned_hooks_during_capture": true,
+    "reverify_complete_prior_boot_modules_DB_world_selected_files_configs_sidecars_public_keys_and_BusyBox_scope": true,
+    "fresh_post_r1_baseline_required": true,
+    "whole_private_tree_generated_state_inventory_qualified": false,
+    "optional_membership_sample": "Guard declined because private fixture was already removed; no sample or absence proof claimed",
+    "normal_hook_failure_rollback_qualified": false,
+    "live_OS_transaction_or_service_continuity_qualified": false,
+    "power_loss_or_mid_write_crash_qualified": false
+  },
+  "original_runtime_closure_manifest": "manifests/stable-native-apk.json",
+  "scope": "Real ARM kernel and unmodified normal package hooks inside a private chroot; not a live-OS package transaction",
+  "normal_native_hooks_and_trigger_verified_in_private_chroot": true,
+  "hooks_reaped_before_restore": true,
+  "captured_state_recovery_qualified": true,
+  "full_generated_state_inventory_qualified": false,
+  "normal_hook_failure_rollback_qualified": false,
+  "live_OS_transaction_or_service_continuity_qualified": false,
+  "power_loss_or_mid_write_crash_qualified": false,
+  "native_package_or_boot_changes": false,
+  "native_backup_files_added": true,
+  "runtime_private_keys_read_hashed_or_exported": false,
+  "raw_traces_logs_and_backup_data_kept_private": true,
+  "all_owned_native_units_terminal": true,
+  "current_return_physical_UI_pending": true,
+  "fresh_post_r1_baseline_and_APK_exec_directory_capture_required": true,
+  "audio_testing": false,
+  "upstream_messages_sent": 0,
+  "full_bringup": "active"
+}

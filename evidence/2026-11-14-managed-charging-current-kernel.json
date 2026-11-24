@@ -1,0 +1,111 @@
+{
+  "recorded_UTC": "2026-11-14T18:43:23.326886+00:00",
+  "state": "Managed charging foundation port qualified on host; not a combined physical acceptance",
+  "kernel_commit": "83564de797ccf907c45a4b711ebd21e8b18b2d5b",
+  "kernel_base": "e0e89468dcfc99500bcae40ce58bfa43fe570c15",
+  "paired_firmware_commit": "2ce757408f364ec6f1197b1d5d0be4128a309b1e",
+  "vendor_source": "03aba4427a7666d57b5ae06d375e259ea337f351",
+  "manifest": "manifests/managed-charging-6.18.63.json",
+  "preserved_commits_rebased": 7,
+  "driver_policy_header_and_two_bindings_match_authenticated_prototype": true,
+  "three_paired_firmware_sources_match_authenticated_checkpoint": true,
+  "current_board_changes_outside_the_eight_line_policy_opt_in_preserved": true,
+  "source_series_replays_onto_voltage_prerequisite_and_matches_tested_outputs": true,
+  "host_fixture_contexts": [
+    "isolated source checkouts",
+    "30-file source-only export"
+  ],
+  "cases_per_context": {
+    "stock_NTC_points": 83,
+    "LG_conversion_transitions": 21496,
+    "policy_callbacks_fault_stale_PM_handoff": 2604,
+    "legacy_control_callbacks": 6242,
+    "firmware_profile_FDT_rollback": 41,
+    "firmware_gate_FDT_SPMI_rollback": 307,
+    "SPMI_transfer_delay_error_core0": 1024,
+    "SPMI_transfer_delay_error_core1": 1024,
+    "battery_selector_FDT_atomic_failure": 128,
+    "vendor_OCV_entries": 155,
+    "actual_child_probe_PM_devres_order_model": 27
+  },
+  "lifetime_negative_controls_rejected_each_context": [
+    "missing-cleanup-action",
+    "lost-resume-votes",
+    "unknown-profile-accepted"
+  ],
+  "lifetime_scope": "Actual child-probe/stop/PM callback bodies with modeled IIO/devres/link APIs. Does not execute real Linux device-core internals, supplier removal, system suspend or hardware. Parent handoff helper cases are separate from the child probe model.",
+  "ASan_UBSan_enabled": true,
+  "ignored_local_program_tree_required_by_export": false,
+  "ARM": {
+    "fresh_actual_Kconfig_profiles": [
+      "managed",
+      "legacy"
+    ],
+    "driver_object_W1_warning_count": 0,
+    "both_profiles_returncode": 0,
+    "both_objects_ELF32_ARM": true,
+    "policy_probe_symbol_present_only_when_enabled": true,
+    "objects": {
+      "managed": {
+        "policy_enabled_by_actual_Kconfig": true,
+        "object_SHA256": "4e433b29999f351d501bf87fdd313852d19a506566500e1547c034366325e1e6",
+        "object_bytes": 159144,
+        "ELF32_ARM": true,
+        "config_SHA256": "6ec8505a5c8030cef6a2672d1c9da5ca1d4556a3238d6a4d4fca425d27222834"
+      },
+      "legacy": {
+        "policy_enabled_by_actual_Kconfig": false,
+        "object_SHA256": "1b27a535f4fd71e2bdcc1ef75b7380d864ffc2b897b3de9b01d345fef6e2407c",
+        "object_bytes": 136748,
+        "ELF32_ARM": true,
+        "config_SHA256": "3701682220ea6f49f8b458ca60f11a8f21c3b77d525e310a97a2abb9879b76c2"
+      }
+    },
+    "retained_previously_audited_toolchain_mounted_read_only": true,
+    "fresh_full_toolchain_payload_reaudit": false,
+    "source_mounted_read_only": true,
+    "original_config_symbol_versions_and_charger_object_unchanged": true,
+    "container_network_enabled": false
+  },
+  "DTB": {
+    "build_returncode": 0,
+    "SHA256": "09bd0cd1486ac84fcd1244bcc94598bb7996fd41ca7ac5bd920ceae113558e02",
+    "bytes": 40971,
+    "W1_warning_count": 3,
+    "warning_definitions_in_msm8226_dtsi_match_base_bytes": true,
+    "warning_categories": [
+      "two eFuse duplicate unit-address warnings",
+      "single-child display graph address warning"
+    ],
+    "complete_board_warning_free_claimed": false
+  },
+  "firmware_hooks_on_current_DTB": {
+    "both_orders_pass": true,
+    "critical_profile_inhibition_and_monitored_battery_properties_match": true,
+    "runtime_markers_not_authored_in_static_board_DTB": true,
+    "pack_selection_and_PMIC_IO_simulated": true,
+    "physical_firmware_execution_claimed": false
+  },
+  "schema": {
+    "version": "2026.9",
+    "two_binding_documents_pass": true,
+    "static_and_both_runtime_trees_pass_selected_charger_policy_battery_schemas": true,
+    "unknown_profile_and_wrong_channel_names_diagnosed": true,
+    "validation_exit_status_alone_not_used_as_acceptance": true,
+    "whole_board_schema_validation_claimed": false
+  },
+  "excluded_attempts": [
+    "First ARM preparation stops at read-only compiler temporary directory; fresh corrected attempt passes.",
+    "First 28-file export lacks spmi.h and spmi_v2.h; fresh 30-file export passes."
+  ],
+  "phone_access": false,
+  "private_keys_read_hashed_or_copied": false,
+  "new_signed_kernel_or_firmware_image_built_staged_or_booted": false,
+  "installed_firmware_package_policy_clock_or_boot_changed": false,
+  "root_index_and_both_trial_plans_and_console_source_lock_unchanged": true,
+  "e7c_foundation_physical_acceptance_or_unchanged_repeat_gate_satisfied": false,
+  "source_or_new_evidence_published": false,
+  "maintainer_messages_sent": false,
+  "hardware_protection_charging_current_SOC_accuracy_thermal_or_reliability_qualified": false,
+  "full_goal_complete": false
+}

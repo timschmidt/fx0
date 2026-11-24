@@ -1,0 +1,346 @@
+{
+  "date": "2026-11-08",
+  "checked_UTC": "2026-11-08T16:24:25.613470+00:00",
+  "status": "normalized r54 Alpine source build, actual community configuration, signed APK, exact binaries/trust list and all 464 module signatures pass; uninstalled and unbooted",
+  "source": {
+    "recipe_commit": "4f17b6905c75da8a35f220b1f80724d2d07e997b",
+    "baseline_pmaports_commit": "b9491f835c903bff38cd2c29f24d1f88d45e8735",
+    "source_base_commit": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+    "image_id": "3ea06e4cb95e726ea6c6cc4377570ac4c4050d78710004cbd631ca809daf7e8e",
+    "scope": "source build only; no deployment",
+    "workspace_only_build_storage": true,
+    "source_manifest_sha256": "82510913fa74c0e0db1753b0b29605e8911e6038f789ef072953dfa54d8fefed",
+    "exporter_sha256": "ca2a1ed58b74648ad8ea1ab200d75308f4fe0a19610080d8ae8a5b94762fff00",
+    "tests_sha256": "2fecff03d28f172bd275b341392c94f5bed82ef112b8fbfae61cd06141e4f3a9",
+    "config_sha256": "0d854c32f419049108cc23b02c50f95a421b28de04bdd3415aaf44c76698dd9c",
+    "template_sha256": "68f4f53292d6e05f78cc46b97db62f4dc2163678647e8eafb61b52082ed29cdc",
+    "pmbootstrap_commit": "46ee403e4680002ce42dc2645adf9b08557270e9",
+    "pmaports_stable_reference": "2a8621d64d91647f7362eac59e7cdc091ff2bba8",
+    "reused_buildroots_and_dependency_caches": true,
+    "previous_source_tree_cleaned_before_rebuild": true,
+    "explicit_abuild_cleanup_disabled_for_inspection": true
+  },
+  "recipe_diff": "patches/pmaports/fx0-cpu-runtime-packaging.diff",
+  "recipe_diff_sha256": "e5111ff530148fd356314962964c229a0a14f0ac248a481e881cbd0cab55e621",
+  "checks": {
+    "official_community_kconfig_check": "pass on host and in isolated Alpine container; four preference-only messages retained",
+    "exporter_integrity_tests": {
+      "run": 7,
+      "failures": 0,
+      "errors": 0
+    },
+    "actual_abuild_prepared_source": {
+      "package_prepared_changed_files": 48,
+      "all_match_frozen_host_candidate": true,
+      "source_base": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+      "observed_after_abuild_prepare": true
+    },
+    "toolchain_configuration": {
+      "checked_UTC": "2026-11-08T15:59:44.753361+00:00",
+      "differences": {
+        "CONFIG_ARCH_USES_CFI_GENERIC_LLVM_PASS": {
+          "host": "y",
+          "Alpine": null
+        },
+        "CONFIG_AS_VERSION": {
+          "host": "210108",
+          "Alpine": "220103"
+        },
+        "CONFIG_CC_OPT_INLINE_MEMSET": {
+          "host": null,
+          "Alpine": "\"-mllvm -max-store-memset=4294967294\""
+        },
+        "CONFIG_CC_VERSION_TEXT": {
+          "host": "\"clang version 21.1.8 (Fedora 21.1.8-6.fc43)\"",
+          "Alpine": "\"Alpine clang version 22.1.3\""
+        },
+        "CONFIG_CLANG_VERSION": {
+          "host": "210108",
+          "Alpine": "220103"
+        },
+        "CONFIG_DEBUG_INFO_COMPRESSED_ZSTD": {
+          "host": null,
+          "Alpine": "n"
+        },
+        "CONFIG_DRM_MSM_VALIDATE_XML": {
+          "host": "n",
+          "Alpine": null
+        },
+        "CONFIG_HAVE_LD_DEAD_CODE_DATA_ELIMINATION": {
+          "host": null,
+          "Alpine": "y"
+        },
+        "CONFIG_LD_CAN_USE_KEEP_IN_OVERLAY": {
+          "host": null,
+          "Alpine": "y"
+        },
+        "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION": {
+          "host": null,
+          "Alpine": "n"
+        },
+        "CONFIG_LLD_VERSION": {
+          "host": "180108",
+          "Alpine": "220103"
+        },
+        "CONFIG_RUSTC_HAS_COERCE_POINTEE": {
+          "host": "y",
+          "Alpine": null
+        },
+        "CONFIG_RUSTC_HAS_FILE_AS_C_STR": {
+          "host": "y",
+          "Alpine": null
+        },
+        "CONFIG_RUSTC_HAS_FILE_WITH_NUL": {
+          "host": "y",
+          "Alpine": null
+        },
+        "CONFIG_RUSTC_HAS_SPAN_FILE": {
+          "host": "y",
+          "Alpine": null
+        },
+        "CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS": {
+          "host": "y",
+          "Alpine": null
+        },
+        "CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES": {
+          "host": "y",
+          "Alpine": null
+        },
+        "CONFIG_RUSTC_LLVM_VERSION": {
+          "host": "220108",
+          "Alpine": "0"
+        },
+        "CONFIG_RUSTC_VERSION": {
+          "host": "109801",
+          "Alpine": "0"
+        }
+      },
+      "CFI_retained": true,
+      "LTO_setting_unchanged": true,
+      "CPUFREQ_DT_still_module": true,
+      "CPR_MSM8926_enabled": true,
+      "new_config_questions": "LD_DEAD_CODE_DATA_ELIMINATION stays disabled; DEBUG_INFO_COMPRESSED_NONE remains selected; noninteractive oldconfig emits two EOF diagnostics, then compilation proceeds",
+      "recipe_improvement": "explicit olddefconfig in prepare should normalize compiler-dependent capabilities before build"
+    },
+    "normalized_r54_prepared_source": {
+      "checked_UTC": "2026-11-08T16:16:50.097238+00:00",
+      "recipe_commit": "4f17b6905c75da8a35f220b1f80724d2d07e997b",
+      "source_base": "4b800b920c7db82e8012a580a17cc2d8ff9d5e66",
+      "package_prepared_changed_files": 48,
+      "all_match_frozen_host_candidate": true,
+      "explicit_olddefconfig_in_copied_recipe": true,
+      "source_config_sha256": "d0657b93cda9bfcbe28a62a2f1e9b8e3c875f551edc93ab505a19a745e5a83e5"
+    },
+    "final_postbuild": {
+      "all_48_source_files_still_match": true,
+      "both_package_DTBs_match_host_DTBs": true,
+      "module_private_key_mode": "0o600",
+      "ELF_build_id": "4b90dbeca04644c3aad3a967b1112cabe8362ef3"
+    },
+    "current_config_normalization": {
+      "previous_log_prefix_retained": true,
+      "fresh_section_offset": 537702,
+      "observed_new_section_bytes": 512221,
+      "oldconfig_EOF_diagnostics_in_current_attempt": 0
+    },
+    "actual_Alpine_config_community_check": "pass; four preference-only filesystem/gadget messages",
+    "modules": {
+      "release": "6.18.59-fx0-cpr-runtime",
+      "certificate_sha256": "cc84bd2d09de5c773c823168a5269df46fff5095640be95dbf6dbbe84b8ba5be",
+      "signature_verification": "explicit certificate; CMS embedded certificates ignored",
+      "chain_validation": "disabled for the local self-signed development certificate",
+      "verified_modules": 464,
+      "negative_controls": [
+        "modified payload rejected",
+        "modified CMS signature rejected"
+      ]
+    },
+    "signature_and_workspace_simulation": {
+      "APK_signature_verified": true,
+      "modified_signed_recipe_metadata_rejected": true,
+      "modified_metadata_returncode": 1,
+      "modified_metadata_message": "BAD signature",
+      "normal_apk_add_simulate": {
+        "returncode": 0,
+        "stdout": "(1/1) Installing linux-postmarketos-qcom-msm8226 (6.18.59-r54)\nOK: 22.1 MiB in 1 packages\n",
+        "stderr": "",
+        "scope": "fresh initialized workspace usermode package database; not an installed-phone upgrade or root-mode test"
+      },
+      "different_host_build_module_certificate_rejected": true
+    }
+  },
+  "build_controller": "local/kernel-runtime-package/controller.json",
+  "build_log": "local/kernel-runtime-package/pmb/work/log.txt",
+  "references": [
+    "https://docs.nura.eco/pmbootstrap/main/usage.html#pmbootstrap-kconfig-check",
+    "https://docs.nura.eco/pmaports/main/kconfig-fragments.html"
+  ],
+  "constraints": {
+    "phone_changed": false,
+    "source_recovery_disk_written": false,
+    "audio_tested": false,
+    "host_builtin_WiFi_changed": false,
+    "CFI_retained": true,
+    "candidate_CPUfreq_driver_is_module": true
+  },
+  "remaining": [
+    "independent RAM qualification of the Alpine kernel; current L2 RAM evidence applies to Fedora-Clang artifact only",
+    "separate moduleless CPR startup, controlled OPP/governor/feedback/analog/thermal/suspend trials",
+    "installed update/recovery, stable/edge and all wider bringup/hardware gates"
+  ],
+  "exporter_followup": {
+    "checked_UTC": "2026-11-08T16:05:02.209946+00:00",
+    "initial_exporter_archive": "local/kernel-runtime-package/exporter-before-olddefconfig.py",
+    "initial_exporter_archive_sha256": "1028a6a5f498e5b7aa4142987d69a2dc649c8f48e10e1c3d94d01366743dd8fd",
+    "initial_tests_archive": "local/kernel-runtime-package/tests-before-olddefconfig.py",
+    "initial_tests_archive_sha256": "f93a4ceba3913dfc7a42e20c1e828e0d9aa80b23d1085a72d3a7120b2ef6b4aa",
+    "current_exporter_sha256": "ca2a1ed58b74648ad8ea1ab200d75308f4fe0a19610080d8ae8a5b94762fff00",
+    "current_tests_sha256": "2fecff03d28f172bd275b341392c94f5bed82ef112b8fbfae61cd06141e4f3a9",
+    "current_integrity_tests": {
+      "run": 7,
+      "failures": 0,
+      "errors": 0
+    },
+    "normalized_recipe_path": "local/kernel-runtime-package/recipe-normalized",
+    "normalized_recipe_pkgrel": 54,
+    "active_r53_recipe_unchanged": true,
+    "patches_and_configuration_unchanged": true
+  },
+  "initial_r53_attempt": {
+    "checked_UTC": "2026-11-08T16:14:27.780415+00:00",
+    "terminal_build": {
+      "started_UTC": "2026-11-08T15:56:39.926996+00:00",
+      "operation": "Alpine pmbootstrap full kernel source build; no device operation",
+      "podman_PID": 1409257,
+      "returncode": 0,
+      "finished_UTC": "2026-11-08T16:12:19.071706+00:00"
+    },
+    "package": {
+      "name": "linux-postmarketos-qcom-msm8226-6.18.59-r53.apk",
+      "bytes": 18478876,
+      "sha256": "6e65c185a87f6ea44ed40de2365d0b6e500830a42742af6d15de13541e1c1652",
+      "recipe_commit": "e59da87d99afc76fe177d44752913831f013dcbe",
+      "source_build": true
+    },
+    "APK_signature_verified_with_exported_public_key": true,
+    "embedded_recipe_commit_matches": true,
+    "packaged_release": "6.18.59-fx0-cpr-runtime",
+    "packaged_module_count": 464,
+    "boot_artifacts_sha256": {
+      "boot/vmlinuz": "d769326c9a8e37c195d969084e3a36b176651d8108f883cd5248d98cf36605ec",
+      "boot/dtbs/qcom-msm8926-lg-madai.dtb": "c251a13f8a92ff86c024e8ccd3114760aec4c4febb78ef67e16c3b03ba94613f",
+      "boot/dtbs/qcom-msm8926-lg-madai-cpr.dtb": "589d17908c2bd9584b0f3f51bc4c19ced467b60791e3fd13bc4ee3fbcd9e0284"
+    },
+    "limitations": "abuild cleaned srcdir because the Alpine default CLEANUP is inherited from default.conf while pmbootstrap only edits an uncommented /etc/abuild.conf assignment; first vmlinux/certificate audit unavailable. Updated fixture explicitly disables cleanup for next source build. No signature-trust or boot qualification inferred from missing files."
+  },
+  "fixture_cleanup_fix": "Explicit CLEANUP and ERROR_CLEANUP overrides preserve final source and vmlinux. pmbootstrap initialization only substitutes active assignments, while Alpine 3.24 leaves commented defaults in /etc/abuild.conf.",
+  "full_build": {
+    "started_UTC": "2026-11-08T16:15:28.744545+00:00",
+    "operation": "normalized Alpine pmbootstrap full kernel source build; no device operation",
+    "podman_PID": 1502964,
+    "returncode": 0,
+    "finished_UTC": "2026-11-08T16:17:58.356235+00:00"
+  },
+  "artifacts": {
+    "package": {
+      "name": "linux-postmarketos-qcom-msm8226-6.18.59-r54.apk",
+      "bytes": 18475505,
+      "sha256": "dde3bb2bcc611aafe1f77f13464830478d87c18c7cf4ba3e76026811ba2f0551",
+      "recipe_commit": "4f17b6905c75da8a35f220b1f80724d2d07e997b",
+      "source_build": true
+    },
+    "release": "6.18.59-fx0-cpr-runtime",
+    "ELF": "ARM ELF32 little-endian",
+    "kernel_sha256": "05b2bd204e4f542bba9d90c19bf46247ea4f76260283cfbf11efbbf00d03ab69",
+    "DTBs_sha256": {
+      "qcom-msm8926-lg-madai": "c251a13f8a92ff86c024e8ccd3114760aec4c4febb78ef67e16c3b03ba94613f",
+      "qcom-msm8926-lg-madai-cpr": "589d17908c2bd9584b0f3f51bc4c19ced467b60791e3fd13bc4ee3fbcd9e0284"
+    },
+    "certificate_sha256": "cc84bd2d09de5c773c823168a5269df46fff5095640be95dbf6dbbe84b8ba5be",
+    "certificate_bytes": 1324,
+    "certificate_exactly_matches_kernel_trust_list": true,
+    "undefined_symbols": [
+      "U __bpf_callback_fn",
+      "U __bpf_prog_runX",
+      "w efi_attr_config_table",
+      "w efi_attr_fw_vendor",
+      "w efi_attr_runtime"
+    ],
+    "introduced_undefined_symbols": [],
+    "module_directory": "r54-inspection/lib/modules/6.18.59-fx0-cpr-runtime",
+    "compiled_kernel_and_both_DTBs_match_package": true,
+    "embedded_recipe_commit_matches": true,
+    "physical_RAM_boot_of_this_Alpine_artifact": false
+  },
+  "phone_postflight": {
+    "checked_UTC": "2026-11-08T16:23:40.715246+00:00",
+    "release": "6.18.59-fx0-dmp",
+    "boot_id": "41bb3f1b-6df3-4a9e-91da-a1af0bd52c60",
+    "taint": 0,
+    "startup": "running",
+    "failed_services": [],
+    "Sway_process_count": 1,
+    "sensor_proxy": "active",
+    "available_frequencies_kHz": "300000 384000 600000 787200",
+    "governor": "schedutil",
+    "installed_kernel_package_query": "linux-postmarketos-qcom-msm8226-6.18.59-r50 armv7 {linux-postmarketos-qcom-msm8226} (GPL-2.0-only) [installed]",
+    "boot_partition_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "candidate_installed": false,
+    "physical_display_touch_check_after_L2_RAM_trial": "pending separate owner response"
+  },
+  "publication": {
+    "status": "published after explicit owner authorization; remote ref independently verified",
+    "destination": "https://github.com/timschmidt/fx0-pmaports",
+    "branch": "integration/fx0-cpu-runtime-package",
+    "HEAD": "4f17b6905c75da8a35f220b1f80724d2d07e997b",
+    "parent_candidate": "e59da87d99afc76fe177d44752913831f013dcbe",
+    "base": "b9491f835c903bff38cd2c29f24d1f88d45e8735",
+    "review_diff": "patches/pmaports/fx0-cpu-runtime-packaging.diff",
+    "payload": "public Linux source patches, kernel configuration, recipe and source provenance; no private signing keys, firmware, calibration or device logs",
+    "previous_attempt": {
+      "status": "automatic approval review rejected the push before execution; awaiting explicit owner approval",
+      "reason": "external commit export and destination ownership were not explicitly authorized by trusted user content",
+      "executed": false
+    },
+    "checked_UTC": "2026-11-08T18:09:10Z",
+    "owner_authorization": "Pushing to github is approved for all fx0 development.",
+    "authorization_scope": "GitHub pushes for all fx0 development; persists across turns",
+    "push_returncode": 0,
+    "remote_ref_verified": true,
+    "remote_HEAD": "4f17b6905c75da8a35f220b1f80724d2d07e997b",
+    "branch_URL": "https://github.com/timschmidt/fx0-pmaports/tree/integration/fx0-cpu-runtime-package"
+  },
+  "private_evidence_sha256": {
+    "local/kernel-runtime-package/controller.json": "0ff70fd054ed1320978ec475269378e85db8fe4bd6fed1f5d17a158712c61d51",
+    "local/kernel-runtime-package/container.log": "bc665ec9421d45462fef46b3cd6a181c43b59fb85a634e511528ed3a041ff85c",
+    "local/kernel-runtime-package/build-container.sh": "3b6aeb59e0151792f70d5e4db1cd913ea655ea0d5570bfe5890e089ac7cbe068",
+    "local/kernel-runtime-package/build-inputs.json": "d6c97a0db572c174f464d0bbb79dee52bf59c1e8ede72dac44cdc044d11790df",
+    "local/kernel-runtime-package/attempt-r53/summary.json": "0dbb0b7727d52b758f37ebf2c7a6a1d87eecd8b2355d0d163429dc120d57f14b",
+    "local/kernel-runtime-package/attempt-r53/controller.json": "27012a767fdcc0abb8fadf3012264b83a281a82812c4553764c1c4c4419b141d",
+    "local/kernel-runtime-package/attempt-r53/pmbootstrap.log": "3dbeec0068f5d3c26dd188d9fb048ae322c37ee418ba31fd9027c2a98fd44486",
+    "local/kernel-runtime-package/attempt-r53/package.json": "87d08e3f0df340a0242e668963bc6c3f74e6ad21f4ebaddc7860cc7665a9bfde",
+    "local/kernel-runtime-package/attempt-r53/build-inputs.json": "60c6a9af196e41ee6ad44e26456e6f8cad6100c1d01026077e9fc7e07b6da1d1",
+    "local/kernel-runtime-package/r54-artifact-inspection.json": "d2c9d6af58b412d80ad20471516844fcf0474abc43d0aa5d0024346b3610f7b8",
+    "local/kernel-runtime-package/r54-module-verification.json": "857c7d514153010301989df87acb76277634aab1955a8eb69a67d6eefde0538a",
+    "local/kernel-runtime-package/r54-postbuild-checks.json": "80492fa8734f968f1fd0ae19a3e3c0b1d0a2e51e63c5c8daefdb52e6e14fb62b",
+    "local/kernel-runtime-package/r54-signature-and-simulation-checks.json": "cfd840c6f4d8e35d0e1e77c359af3968012befd7bf7e9831e36a5ea9976840d0",
+    "local/kernel-runtime-package/r54-config-normalization-check.json": "c885eb28afb9c31d42d72235b9dd0bb473fa18dc9111cef1cc375bdf65a6e770",
+    "local/kernel-runtime-package/r54-prepared-source-verification.json": "edf521684e28240bcf5297f5c4feae80b7d76d50eacdc856f659e44aa62ddf9f",
+    "local/kernel-runtime-package/phone-postflight.json": "3836cd72bd7be778a78048ce3b6fa54fee0001c4a05ed1653576216cfcb6ffef",
+    "local/kernel-runtime-package/phone-postflight.txt": "ece472066fa9d119d9ff000dc96c84ad6bb65fc457267bcc8a941c7e34b85669",
+    "local/kernel-runtime-package/phone-installed-kernel-package.txt": "724b675d1933bed71da75c38d8cd4011eb1cfa02263d48261fba270b758636cd",
+    "local/kernel-runtime-package/export/package.json": "0bc6f9b944bb6d67869dbb0be970b62d2ffa111baabd011a05af9ff956b090cd",
+    "local/kernel-runtime-package/inspect-package.py": "1d8717e604525c6115a549438b5207c9690a77d41609e1787ed35c03ab4d962f",
+    "local/kernel-runtime-package/exporter-before-olddefconfig.py": "1028a6a5f498e5b7aa4142987d69a2dc649c8f48e10e1c3d94d01366743dd8fd",
+    "local/kernel-runtime-package/tests-before-olddefconfig.py": "f93a4ceba3913dfc7a42e20c1e828e0d9aa80b23d1085a72d3a7120b2ef6b4aa"
+  },
+  "public_inputs_sha256": {
+    "scripts/prepare_kernel_package.py": "ca2a1ed58b74648ad8ea1ab200d75308f4fe0a19610080d8ae8a5b94762fff00",
+    "tests/test_kernel_package.py": "2fecff03d28f172bd275b341392c94f5bed82ef112b8fbfae61cd06141e4f3a9",
+    "configs/linux-6.18.59-fx0-cpr-runtime.armv7": "0d854c32f419049108cc23b02c50f95a421b28de04bdd3415aaf44c76698dd9c",
+    "configs/linux-postmarketos-qcom-msm8226.APKBUILD.in": "68f4f53292d6e05f78cc46b97db62f4dc2163678647e8eafb61b52082ed29cdc",
+    "patches/pmaports/fx0-cpu-runtime-packaging.diff": "e5111ff530148fd356314962964c229a0a14f0ac248a481e881cbd0cab55e621",
+    "manifests/kernel-runtime.json": "82510913fa74c0e0db1753b0b29605e8911e6038f789ef072953dfa54d8fefed",
+    "scripts/verify_kernel_modules.py": "8ec7fb98373bb51128a3cedfbf489054de41606c565e9fac3e1a332df8f740ac"
+  }
+}

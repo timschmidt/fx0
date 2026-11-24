@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "profile": "accepted-r1-passive-rmtfs-01",
+  "materials": {
+    "baseline.dtb": {
+      "SHA256": "1658cb8cee4e8800c6163f76b5153f2a50eeae8bfbfcfbe2dd818ff3d3a87eda",
+      "bytes": 40810
+    },
+    "busybox": {
+      "SHA256": "2b6c948da829c4eb46084f947316d7439607fff47eb8687c45330adb273c4540",
+      "bytes": 886344
+    },
+    "kernel.zImage": {
+      "SHA256": "286de8813a9f9027f6994281a8b484591391f8438337335043efbda0a6fd38ea",
+      "bytes": 5509632
+    },
+    "ld-musl-armhf.so.1": {
+      "SHA256": "2acf3c82bc97b496c40e1d5007d4258570c8df0edc45793d6651a352fb778990",
+      "bytes": 538332
+    },
+    "libqrtr.so.1.2": {
+      "SHA256": "90a0d76214d9f59b589777b46930b6abd63324a78629987f0634f4a525a0df64",
+      "bytes": 12976
+    },
+    "libudev.so.1.6.3": {
+      "SHA256": "79995163967b550fcb727a4f22e2a120bde096dc56f943652c87fef9d9e0ff40",
+      "bytes": 38232
+    },
+    "native-return": {
+      "SHA256": "e8072375c93a1fe8b670d63f904fdadfc9b1c3c517d115ac7e4bf5bc9f66c869",
+      "bytes": 170468
+    },
+    "passive.dtb": {
+      "SHA256": "674788b21487182bfca96a9d3d280b538e5717fd92d002843fe382216e573385",
+      "bytes": 40925
+    },
+    "qrtr-local-rmtfs": {
+      "SHA256": "3c360d0edbf4ca637be4d78a4f2ede4c3bfb9a869fbee5f333dc98f4682ac0cb",
+      "bytes": 162700
+    },
+    "qrtr.COPYING": {
+      "SHA256": "e04f492e71bc5cfe131942eb127c7906d2627831ab910bb894402b476b5d7488",
+      "bytes": 1534
+    },
+    "qrtr.ko": {
+      "SHA256": "23d7ab15e5b506b07a40f0733e1a8afd1795529186adbda30a8075fae3029259",
+      "bytes": 58689
+    },
+    "rmtfs": {
+      "SHA256": "99f31e9c182168407e18c6b12901bd6b57c737b7e34cb7d9426e120a74be423b",
+      "bytes": 27236
+    },
+    "rmtfs.COPYING": {
+      "SHA256": "1e1e2972bd05841b6a009bd6f7aef9d847f9a2b721d1a308340e642faa2482cd",
+      "bytes": 1496
+    }
+  },
+  "source_files_SHA256": {
+    "diagnostics/modem-control/rmtfs-passive-r1.sh": "2a9c10f5716182969e399575613740202f71a97de0193b4a5da6d484c8d3b451",
+    "diagnostics/modem-control/rmtfs-passive-r1-init-v2.sh": "85585388f27819972414dbf3c6320c4bc078683a5fb8733b7abbaf7d486921f3",
+    "scripts/make_diagnostic_image.py": "cd9c976a758d2f4b0282afe88a4c6038750e1fc11f08fdb289737e9f1cc9613f",
+    "diagnostics/modem-control/verify-rmtfs-description.py": "7bd1d65716a223299adacac1c29c2c2d3c8040fc22432ea612fd433cae459d7b",
+    "diagnostics/modem-control/verify-description.py": "df31da47ab02c5bfd525c098a6835a946e10a831ea3dc4659b592a5800131faf"
+  },
+  "image_SHA256": "428779913614a376bd40844bf80b10d004de0571d721b1bb29b85b68f31d4f53",
+  "image_bytes": 6785024,
+  "CPIO_SHA256": "da4eaabccf5d0dbf2ca14235cd4a0806eb5f80688eb18bfae7084c309bccb873",
+  "ramdisk_SHA256": "60d1f51fd032dccf633bfb8b02f6c67fcdb261601a10436b71a7de15590de484",
+  "kernel_notes_SHA256": "05292e44d9f13de78b5ebf602b0b3f9ff22b7820d765f6e796cf3473beee4377"
+}

@@ -1,0 +1,125 @@
+{
+  "recorded_UTC": "2026-11-14T16:01:05.485523+00:00",
+  "state": "PASS public-source offline qualification; physical trial undispatched",
+  "source_files_SHA256": {
+    "diagnostics/modem-control/passive_adapter.py": "ce40e5bbaacfffcc4db17396d9404d75b9e266f9d5277f565d7cccf230f96cb3",
+    "diagnostics/modem-control/passive_observer.py": "92d6b3fa38e6e49aa269501515482fcec70d0597437c124585fe21376b91d365",
+    "diagnostics/modem-control/passive_native_probe.py": "56fd575e52c6b5bd059cb0e1667053896e1e504cab389bf491d7df7f8e3e5488",
+    "diagnostics/modem-control/passive_serial.py": "10b25ff8149a448beca26e42b32ba5d15c1602c73089e422dfacc89253639660",
+    "diagnostics/modem-control/passive-adapter.md": "f7ab04eef64efeab2a76be5da2b7bb6f0b8ceadef3484499ff4f5040f9789541",
+    "tests/test_passive_adapter_plan.py": "c58b9a38165d06b6247a6b927be7156a3896bba52121ff7c7311579bd4615e72",
+    "tests/test_passive_adapter_bindings.py": "12668b93deb99241f5e54177207317203b8457f58fbd5db809cb744b214c1bd5",
+    "tests/test_passive_adapter_faults.py": "0de15a3efb0978fdcd52c1bcd3ac58e3aee33507f359b7d52b03e456ff95f44c",
+    "tests/passive_adapter_fixture.py": "202c317f46c9b3ff3c28421a92337da722b7cbdafece877472cfd80520852d25",
+    "tests/fixtures/passive_adapter_child.py": "2c4bf52782824827c35409e5bf9960f37a243c150dbf74ba932dca63b115b861",
+    "tests/test_passive_probe_observer.py": "b42572d1df3bff86da0b4794822fead40a28925df202ad0c74c5ef82fd90304d",
+    "tests/test_rmtfs_passive_serial.py": "d71fa9640be3efc3040acaf125c102bc027f0463be0f53f953b40ee2a5b6c83d",
+    "diagnostics/modem-control/passive_trial.py": "24e5cd675f40f787298dbbf1ea0a21f46a2d39033512075b40e31bfb67e487f8",
+    "diagnostics/modem-control/passive-trial-flow.md": "f44c8f9c285ceb0f4f3203772b68dcff0440ae4ee5c4ef34e84bb16c28a873cd",
+    "diagnostics/modem-control/passive_runtime.py": "31629e68235fbb689c9e3ecb15bb7f230b790d9923af31c4ee6236219d2d0e08",
+    "diagnostics/modem-control/passive-runtime.md": "476a25a0082e856a84a4e7f5e2bb829c957f69e6909569015fdf0de6cf1e2b30",
+    "tests/test_passive_trial_flow.py": "6875a4a54035bdac953ced7fae4e82a77fd00322d8b69a26fe9a07d90a5d1c6b",
+    "tests/test_passive_runtime.py": "2024f87811950543e44e3f69f76105f45a5eca9ff2d768a4f88fc1b4fa1bd945",
+    "scripts/boot_fx0_ram.py": "fea54ce86d19f1a51665446095e9ae3dce60b34a0f38bfc70f7764f5611409b6",
+    "scripts/transfer_fx0_ram.py": "f402151d94422c895632276ec996b2a47f29dfa6269ddd4c7739b64fc1b5299c"
+  },
+  "portable_test_contexts": [
+    {
+      "name": "clean-review-checkout",
+      "steps": [
+        {
+          "pattern": "test_passive_*.py",
+          "actual_returncode": 0,
+          "test_methods": 47
+        },
+        {
+          "pattern": "test_rmtfs_passive_serial.py",
+          "actual_returncode": 0,
+          "test_methods": 9
+        }
+      ],
+      "passed_methods": 56,
+      "skipped": 0,
+      "ignored_local_source_tree_present": false
+    },
+    {
+      "name": "source-only-export",
+      "steps": [
+        {
+          "pattern": "test_passive_*.py",
+          "actual_returncode": 0,
+          "test_methods": 47
+        },
+        {
+          "pattern": "test_rmtfs_passive_serial.py",
+          "actual_returncode": 0,
+          "test_methods": 9
+        }
+      ],
+      "passed_methods": 56,
+      "skipped": 0,
+      "ignored_local_source_tree_present": false
+    }
+  ],
+  "retained_image_factory_qualification": {
+    "binding_methods_passed": 8,
+    "fault_methods_passed": 4,
+    "actual_terminal_tool_observations": [
+      {
+        "handle": 40499,
+        "returncode": 0,
+        "test_methods": 8
+      },
+      {
+        "handle": 75275,
+        "returncode": 0,
+        "test_methods": 4
+      }
+    ],
+    "actual_prepared_image_and_retained_metadata_read": true,
+    "hardware_responses": "substituted offline fixtures; forbidden-by-default device providers",
+    "owned_disposable_host_children": true
+  },
+  "public_fixture_profile": "synthetic image/profile and metadata, canonical public source; no ignored controller imports",
+  "prepared_image": {
+    "SHA256": "428779913614a376bd40844bf80b10d004de0571d721b1bb29b85b68f31d4f53",
+    "bytes": 6785024
+  },
+  "actual_static_input_check": {
+    "exit_code": 0,
+    "plan_SHA256": "b13d4cb92b6da7a4a25d5bdebb18031ccfbb38a7052f669897ebf3c8964f6dee",
+    "inputs_verified": true,
+    "credential_client_loaded": false,
+    "device_actions": false
+  },
+  "private_client_or_device_record_bodies_read_hashed_or_copied": false,
+  "original_source_rosters_exact": {
+    "1": 9,
+    "2": 12
+  },
+  "prepared_real_workspaces": 3,
+  "all_prepared_workspaces_without_operator_receipt_claim_or_dispatch": true,
+  "root_index_unchanged": true,
+  "phone_access": false,
+  "physical_trial_dispatched": false,
+  "publication": false,
+  "reviewed_interfaces": [
+    "Exact SHA-bound private plan with mandatory public source roster",
+    "Fresh specific operator gate before credential-client load",
+    "Credential-bearing exception messages suppressed",
+    "Shared USB port lock and persistent attempt claim",
+    "Bounded owned child waits; no reset based on parent deadline",
+    "Observer failure cannot qualify partial worker output",
+    "Native byte/service verification separate from owner display/touch confirmation"
+  ],
+  "preserved_failed_test_export": {
+    "cause": "Missing datetime/json imports in one exported binding test",
+    "first_run_exit_code": 1,
+    "fix": "test imports only; runtime sources unchanged"
+  },
+  "limitations": [
+    "No fresh device audit or physical RFSA/local publication/automatic return test occurred.",
+    "Synthetic-profile unit tests do not validate an arbitrary image; production CLI remains fixed to the prepared r1 image.",
+    "Storage power loss, physical USB recovery and modem/GNSS acceptance remain open."
+  ]
+}

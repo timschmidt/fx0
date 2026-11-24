@@ -1,0 +1,328 @@
+{
+  "recorded_UTC": "2026-11-12T04:54:44.330334+00:00",
+  "subject": "Fresh persistent-r1 userspace backup and native private treescan transaction/recovery qualification",
+  "installed_kernel": "6.18.63-fx0-vibrator-alpine",
+  "installed_kernel_package": "6.18.63-r1",
+  "Sxmo": "1.18.1-r7",
+  "UPower": "r5",
+  "installed_treescan": "0.1-r0",
+  "coherent_fresh_capture": {
+    "boot_id": "991042aa-9e97-4848-b54c-ad391c06bae0",
+    "kernel": "6.18.63-fx0-vibrator-alpine",
+    "current_r1_capture": true,
+    "manifest_sha256": "17eebbe77e2a19896035b3791d4253cebdc2f659c7c9509e2e9dd660b3d96a06",
+    "manifest_bytes": 2935274,
+    "archive_sha256": "7911243764046e8e8af693932a49ec41a99845fdd80bf4ffcb9e884413a4b3fb",
+    "archive_bytes": 166046845,
+    "empty_delta_sha256": "d2e3b16b83158276b8f6e8efe0b80babc77fbf0a44d711c220b764675c69e9d3",
+    "raw_boot_sha256": "44dfbb6c64148071d2983dd053d7c04b02f21f9200dc917ee70455f3b40a65c2",
+    "combined_paths": 7002,
+    "prior_scope_paths_retained": 6351,
+    "directory_memberships": 701,
+    "hardlink_aliases": 254,
+    "SELinux_label_paths": 1480,
+    "actual_lock_types_verified_before_after": [
+      "FLOCK",
+      "POSIX"
+    ],
+    "lock_file_hashed_through_held_descriptor": true,
+    "all_archived_file_payloads_verified": true,
+    "all_live_rows_and_namespace_reverified": true,
+    "native_package_or_boot_changes": false
+  },
+  "private_copies": {
+    "host_and_phone_verified": true,
+    "files": 5,
+    "payloads_not_published": true,
+    "runtime_private_keys_excluded": true
+  },
+  "actual_native_private_rehearsal": {
+    "status": "failed",
+    "started_UTC": "2026-11-12T04:26:57.645867+00:00",
+    "actual_ARM_kernel": true,
+    "QEMU_used": false,
+    "live_OS_transaction": false,
+    "private_fixture_removed": false,
+    "audio_testing": false,
+    "initial_paths_verified": 7002,
+    "initial_memberships_verified": 701,
+    "current_native_runtime_paths_verified": 17,
+    "commands": {
+      "version": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-forward": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "verify-rollback": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "index-load": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "precommit-old": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "simulate": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "upgrade": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "precommit-new": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "time64-0": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "time64-1": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "time64-2": {
+        "returncode": 0,
+        "descendants_reaped": true
+      },
+      "missing-directory": {
+        "returncode": 1,
+        "descendants_reaped": true
+      },
+      "downgrade": {
+        "returncode": 0,
+        "descendants_reaped": true
+      }
+    },
+    "original_inventory": {
+      "paths": 545,
+      "mtime_mismatches": 545,
+      "sha256": "45747b35786b5a3236cbde90d37c5e504575328e4ea43557753030af81f40672"
+    },
+    "upgrade_precommit_inventory": {
+      "paths": 545,
+      "mtime_mismatches": 545,
+      "sha256": "aa987bc257e6f239c8a84bc8bd54fa811feb8894d0761a90161e78a2630a84ea"
+    },
+    "refreshed_inventory": {
+      "paths": 545,
+      "mtime_mismatches": 0,
+      "sha256": "96fdde62c61c2458816d6e6381da1d4b679268e70d2f6c349ffbbb5262976573"
+    },
+    "packaged_time64_checks": {
+      "paths": 9,
+      "repeats": 3,
+      "missing_directory_rejected": true
+    },
+    "downgrade_precommit_inventory": {
+      "paths": 545,
+      "mtime_mismatches": 0,
+      "sha256": "96fdde62c61c2458816d6e6381da1d4b679268e70d2f6c349ffbbb5262976573"
+    },
+    "normal_downgrade_world_changed": true,
+    "normal_downgrade_all_package_identities_recovered": true,
+    "normal_downgrade_inventory_bytes_equal_baseline": false,
+    "error": "AssertionError: {'missing': [], 'unexpected': ['/.fixture-cache/treescan-0.1-r0.2456d7e3.apk']}",
+    "finished_UTC": "2026-11-12T04:38:08.860417+00:00"
+  },
+  "first_final_namespace_guard": {
+    "passed": false,
+    "fixture_preserved": true,
+    "unexpected_cache_copy_authenticated": true,
+    "original_failure_not_relabelled": true
+  },
+  "retained_fixture_recovery_verification": {
+    "status": "passed",
+    "started_UTC": "2026-11-12T04:50:12.124398+00:00",
+    "prior_failed_attempt_preserved": true,
+    "live_OS_transaction": false,
+    "package_transactions_replayed": false,
+    "private_fixture_removed": true,
+    "generated_APK_log_verified": true,
+    "generated_APK_log_sha256": "b9f8efde5b9c60b84c56bc317e0751f1e4316965893eed526f5a2c1f78fca265",
+    "recovered_paths": 7002,
+    "recovered_memberships": 701,
+    "hardlink_aliases": 254,
+    "SELinux_label_paths": 1480,
+    "original_775_package_identities_recovered": true,
+    "namespace_recovered_exactly": true,
+    "complete_namespace_derived_from_authenticated_inputs": true,
+    "all_owned_hooks_reaped_before_cleanup": true,
+    "validated_owned_cache_file": "/.fixture-cache/treescan-0.1-r0.2456d7e3.apk",
+    "validated_cache_sha256": "4a43c233172270107b04f8438b24cb880c38ca006f8bd8ccf49989bbcd56e2fb",
+    "cache_regular_file_uid_gid_mode_size_nlink_inode_verified": true,
+    "only_authenticated_owned_cache_copy_removed": true,
+    "live_DB_world_boot_image_unchanged": true,
+    "live_OS_transaction_qualified": false,
+    "finished_UTC": "2026-11-12T04:51:59.053868+00:00"
+  },
+  "recovery_verifier_first_attempt": {
+    "unit": {
+      "ActiveState": "failed",
+      "MainPID": "0",
+      "ControlGroup": ""
+    },
+    "no_remaining_cgroup_processes": true,
+    "status": {
+      "status": "failed",
+      "started_UTC": "2026-11-12T04:41:40.283196+00:00",
+      "prior_failed_attempt_preserved": true,
+      "live_OS_transaction": false,
+      "package_transactions_replayed": false,
+      "private_fixture_removed": false,
+      "error": "AssertionError: /usr/lib/modules/6.18.59-fx0-dmp/kernel",
+      "finished_UTC": "2026-11-12T04:42:12.904929+00:00"
+    },
+    "status_sha256": "9337b973482ac686050a2d352bba17dad96f5559d5bb5af25c809a7059a2647e",
+    "expected_row": {
+      "kind": "absent"
+    },
+    "fixture_path_absent": true,
+    "fixture_parent_absent": true,
+    "journal": "Starting [systemd-run] /usr/bin/python3 -B /var/lib/fx0-rollback/post-r1-treescan-recovery-check-01/worker.py...\nStarted [systemd-run] /usr/bin/python3 -B /var/lib/fx0-rollback/post-r1-treescan-recovery-check-01/worker.py.\nTraceback (most recent call last):\n  File \"/var/lib/fx0-rollback/post-r1-treescan-recovery-check-01/worker.py\", line 80, in <module>\n    path = target(name)\n  File \"/var/lib/fx0-rollback/post-r1-treescan-recovery-check-01/worker.py\", line 51, in target\n    assert not path.is_symlink() and path.is_dir(), name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: /usr/lib/modules/6.18.59-fx0-dmp/kernel\nfx0-post-r1-treescan-recovery-check-01.service: Main process exited, code=exited, status=1/FAILURE\nfx0-post-r1-treescan-recovery-check-01.service: Failed with result 'exit-code'.\nfx0-post-r1-treescan-recovery-check-01.service: Consumed 17.719s CPU time over 35.416s wall clock time, 41.8M memory peak.\n"
+  },
+  "recovery_verifier_namespace_attempt": {
+    "unit": {
+      "ActiveState": "failed",
+      "MainPID": "0",
+      "ControlGroup": ""
+    },
+    "no_remaining_cgroup_processes": true,
+    "status": {
+      "status": "failed",
+      "started_UTC": "2026-11-12T04:45:11.452677+00:00",
+      "prior_failed_attempt_preserved": true,
+      "live_OS_transaction": false,
+      "package_transactions_replayed": false,
+      "private_fixture_removed": false,
+      "error": "AssertionError: Unexpected private namespace; preserve fixture",
+      "finished_UTC": "2026-11-12T04:46:39.966715+00:00"
+    },
+    "status_sha256": "387222dbb71dc11fa7cca2382b4779f634f9701ddbd32bcbf9dc1c8773483830",
+    "expected_count": 6335,
+    "actual_count": 6338,
+    "missing": [],
+    "unexpected": [
+      "/.fixture-cache/treescan-0.1-r0.2456d7e3.apk",
+      "/var/log",
+      "/var/log/apk.log"
+    ]
+  },
+  "recovery_verifier_target_regression": {
+    "actual_checker_source_sha256": "eb3323b97e43ec0acb9933fdd5e8dc2170e4ce890837e3f9d4018fe315544b2e",
+    "expected_absent_parents_allowed": true,
+    "dangling_symlink_ancestor_rejected": true,
+    "non_directory_ancestor_rejected": true,
+    "fixture_removed": true
+  },
+  "final_actual_unit_and_cgroup_verification": {
+    "terminal_unit": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "MainPID": "0",
+      "Result": "success",
+      "ControlGroup": ""
+    },
+    "no_remaining_cgroup_processes": true,
+    "known_unit_cgroup_directly_checked": true,
+    "completion_requires_actual_PID1_journal": true,
+    "fixture_absent": true,
+    "original_failed_status_preserved": true,
+    "all_staged_sources_still_exact": true,
+    "recorded_UTC": "2026-11-12T04:52:43.410534+00:00"
+  },
+  "forward_upgrade_preserved_world": true,
+  "other_774_package_identities_unchanged": true,
+  "actual_current_boot_PID1_completion_verified": true,
+  "outside_unit_fresh_baseline_verification": {
+    "recorded_UTC": "2026-11-12T04:54:00.011018+00:00",
+    "boot_id": "991042aa-9e97-4848-b54c-ad391c06bae0",
+    "kernel": "6.18.63-fx0-vibrator-alpine",
+    "paths": 7002,
+    "memberships": 701,
+    "exact_rows_and_namespace": true,
+    "hardlink_aliases": 254,
+    "SELinux_label_paths": 1480,
+    "lock_types_before": [
+      "FLOCK",
+      "POSIX"
+    ],
+    "lock_types_after": [
+      "FLOCK",
+      "POSIX"
+    ],
+    "lock_inode_never_reopened": true,
+    "database_world_repositories_raw_boot_image_unchanged": true,
+    "native_package_or_boot_changes": false,
+    "native_verifier_sha256": "007b4d1350590d97b4a06b3938f2662a829bb8aeed305f7f88351259bbdd331d"
+  },
+  "persistent_kernel_and_services_postflight": {
+    "recorded_UTC": "2026-11-12T04:53:34.940742+00:00",
+    "boot_id": "991042aa-9e97-4848-b54c-ad391c06bae0",
+    "kernel": "6.18.63-fx0-vibrator-alpine",
+    "package_version": "6.18.63-r1",
+    "taint": 0,
+    "kernel_notes_sha256": "05292e44d9f13de78b5ebf602b0b3f9ff22b7820d765f6e796cf3473beee4377",
+    "signature_enforcement": "Y",
+    "persistent_signature_cmdline": true,
+    "native_trial_marker": false,
+    "return_timer": false,
+    "modules_on_persistent_storage": true,
+    "candidate_payload_files_verified": 545,
+    "candidate_module_files_verified": 464,
+    "initramfs_payload_entries_verified": 243,
+    "other_package_identities_unchanged": 774,
+    "installed_world_exact": true,
+    "boot_image_sha256": "ee851c81968b86a80b47eb2e5c2f07d9d4298cffa17c9347e437036c128e2c64",
+    "raw_boot_sha256": "44dfbb6c64148071d2983dd053d7c04b02f21f9200dc917ee70455f3b40a65c2",
+    "bootloader_prefix_preserved": true,
+    "original_r50_backups_still_verified": true,
+    "systemd": "running",
+    "Sway_PID": 1488,
+    "gesture_PID": 2432,
+    "gesture_touchscreen_open": true,
+    "display_PM_auto": {
+      "fd900000.display-subsystem": "auto",
+      "fd928000.iommu": "auto",
+      "fd922800.dsi": "auto",
+      "fd922a00.phy": "auto"
+    },
+    "CPUs_online": "0-3",
+    "temperatures_mC": {
+      "thermal_zone1": 45000,
+      "thermal_zone0": 43000
+    },
+    "PMIC_registers": {
+      "0xc041": "c041: 00\n",
+      "0xc046": "c046: 00\n",
+      "0x1740": "1740: 01\n",
+      "0x1741": "1741: 73\n"
+    },
+    "serious_kernel_warnings": [],
+    "audio_testing": false,
+    "read_only": true,
+    "actual_public_verifier_sha256": "8cb75fc40bb56036b0bcc4091ad9f82ad37b3ddb18d409faffc88acabceedb62",
+    "owner_display_touch_already_confirmed_for_this_boot": true,
+    "no_repeated_UI_question": true
+  },
+  "no_live_package_or_boot_changes": true,
+  "treescan_candidate_installed": false,
+  "stable_30_package_update_installed": false,
+  "live_activation_requires_separate_qualified_controller": true,
+  "generic_file_rollback_live_root_refusal_retained": true,
+  "old_r50_update_plans_stale": true,
+  "all_started_processes_terminal": true,
+  "no_repeated_same_boot_UI_request": true,
+  "audio_testing": false,
+  "DiskB_read_only": true,
+  "runtime_private_keys_read_hashed_or_exported": false,
+  "upstream_messages_sent": 0,
+  "full_bringup": "active"
+}

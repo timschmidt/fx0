@@ -1,0 +1,12 @@
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+--- a/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts
+@@ -203,7 +203,7 @@
+ 		pins = "gpio37";
+ 		function = "gpio";
+ 		drive-strength = <2>;
+-		bias-pull-up;
++		bias-disable;
+ 	};
+ 
+ 	wcnss_pin_a: wcnss-pin-active-state {

@@ -1,0 +1,53 @@
+{
+  "recorded_UTC": "2026-11-11T21:16:26.262513+00:00",
+  "scope": "Actual native ARM execve trace from the private chroot; no mocked interpreters or hooks",
+  "hooks": [
+    {
+      "path": "lib/apk/exec/openssh-server-10.3_p1-r2.post-upgrade",
+      "argv": [
+        "lib/apk/exec/openssh-server-10.3_p1-r2.post-upgrade",
+        "10.3_p1-r2",
+        "10.3_p1-r1"
+      ],
+      "actual_execve_returncode": 0,
+      "process_exit_status": 0
+    },
+    {
+      "path": "lib/apk/exec/libheif-1.23.7-r0.post-upgrade",
+      "argv": [
+        "lib/apk/exec/libheif-1.23.7-r0.post-upgrade",
+        "1.23.7-r0",
+        "1.23.4-r0"
+      ],
+      "actual_execve_returncode": 0,
+      "process_exit_status": 0
+    },
+    {
+      "path": "lib/apk/exec/busybox-1.37.0-r31.trigger",
+      "argv": [
+        "lib/apk/exec/busybox-1.37.0-r31.trigger",
+        "/sbin",
+        "/usr/sbin",
+        "/usr/bin"
+      ],
+      "actual_execve_returncode": 0,
+      "process_exit_status": 0
+    }
+  ],
+  "actual_successful_execs": 9,
+  "owned_processes_with_zero_exit": 8,
+  "all_observed_native_children_exited_zero": true,
+  "actual_old_and_new_hook_versions_verified": true,
+  "actual_trigger_directories": [
+    "/sbin",
+    "/usr/sbin",
+    "/usr/bin"
+  ],
+  "both_BusyBox_installers_executed": true,
+  "no_service_restart_command_executed": true,
+  "actual_cgroup_empty_of_descendants_before_restore": true,
+  "current_boot_unit_success_verified": true,
+  "raw_trace_sha256": "731c698546d0f0e295b7b033872a60903c2ed8f33098389aafe2e0de6c407194",
+  "raw_trace_kept_private": true,
+  "live_OS_service_continuity_qualified": false
+}

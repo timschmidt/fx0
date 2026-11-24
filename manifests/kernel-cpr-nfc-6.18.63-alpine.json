@@ -1,0 +1,1035 @@
+{
+  "recorded_UTC": "2026-11-11T13:52:28.461949+00:00",
+  "purpose": "Combined stable Linux 6.18.63 CPU/CPR, NFC and vibrator integration; normal Alpine r3 build, host audits and unstaged registration image",
+  "source": {
+    "source_base": "1ffffb2b0f3b323c1c619d01ae69655a28b5858d",
+    "branch": "integration/fx0-6.18.63-cpr",
+    "source_commit": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "source_tree": "28f14f39f768f31a594461e6964bcc6122cf669a",
+    "original_CPR_base": "789d5197844d5268197a17a94605316eedae9fdb",
+    "original_CPR_tip": "b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8",
+    "original_carried_stage": {
+      "recorded_UTC": "2026-11-11T13:24:00.357857+00:00",
+      "source_base": "1ffffb2b0f3b323c1c619d01ae69655a28b5858d",
+      "original_CPR_base": "789d5197844d5268197a17a94605316eedae9fdb",
+      "original_CPR_tip": "b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8",
+      "branch": "integration/fx0-6.18.63-cpr",
+      "source_commit": "1aa67514f880ebc68940edcb899409bf89017d87",
+      "source_tree": "a9823d092ec9dce8011179619c2e69ab1d10c69a",
+      "cherry_picks": [
+        {
+          "original_commit": "11275b541e4c2844645d0eb238c9cbc23ff49923",
+          "stable_commit": "15410741811ecb773007ab7833474531462658a8",
+          "subject": "pmdomain: qcom: cpr: decode MSM8926 calibration metadata",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "c24c35f69fc4becd77ebd0b43d40489a9c160ace",
+          "stable_commit": "5730f1bf84e209d56f915052e4d9b098e083f579",
+          "subject": "dt-bindings: regulator: describe the PM8226 SAW fixed range",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "03fdca136034f3f62162b26e061e05d41f68a33d",
+          "stable_commit": "784fdcc90c31a5cf066fe50c9715c29b1a864b93",
+          "subject": "regulator: qcom-spmi: add the fixed-range PM8226 SAW provider",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "84adf38f7463e6a58543008749afe41b5bb4d7f5",
+          "stable_commit": "13223431b42b86ef25b1f9b750f6306fb6b17c3c",
+          "subject": "dt-bindings: soc: qcom: describe the MSM8226 L2 master owner",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "846f609040cfdc2dba49020eb4d048458e8dbe59",
+          "stable_commit": "64c4a6c689a846994710b8101704649102e14ab1",
+          "subject": "soc: qcom: spm: register the MSM8226 L2 master owner",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "0813d9bdbd2e78bd47bc713605f6dec9d0c56655",
+          "stable_commit": "f122681c03047f0f76bc1db566d37ed7861ac15c",
+          "subject": "ARM: dts: qcom: madai: connect the L2 master and APC provider",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "92d8237aa93e26cf32ea0f94c2edc86c219d3d0f",
+          "stable_commit": "37247370dd011d071c848a9c32d54b60a85d3a30",
+          "subject": "dt-bindings: regulator: require the PM8226 APC supply to stay on",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "a193ee6f505ccf545ad78e4803fe6c26c6b6cfe2",
+          "stable_commit": "fd9440e7cc772fcb4a235903d9261c414427fe7f",
+          "subject": "regulator: qcom-spmi: retain the always-on SAW APC supply",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "a029a72552c0a8c732c7635327857343979c0b32",
+          "stable_commit": "bad14fa4a9924b11f2d126175366cc44932e8b43",
+          "subject": "pmdomain: qcom: cpr: plan MSM8926 APC and MX voltages",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "c599aefe00366d3eb95225f24c46b8860947d414",
+          "stable_commit": "c46c618b48352b2cae230b3f7fb5eeecb304b561",
+          "subject": "pmdomain: qcom: cpr: activate the MX floor before APC changes",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "816d35ff8fc630320c706a82327bc66253fb9f88",
+          "stable_commit": "ee0d63c4ed06ca6342b47108e93244a0d4fe134b",
+          "subject": "pmdomain: qcom: cpr: retry incomplete domain attachment",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "1fccd13822d1b851f711cb66aede1416ba395cf5",
+          "stable_commit": "31e8772099fb47c0227a3d5858432b185543c676",
+          "subject": "pmdomain: qcom: cpr: map MSM8926 rates to calibrated corners",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "02d2367460be2ce84b24dfba9bf71590e632684f",
+          "stable_commit": "c0355e30bbf2da3b011de3c21c92e3de3a953656",
+          "subject": "pmdomain: qcom: cpr: acquire MSM8926 calibration atomically",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "8994edc4732edfec2c8e84902fce460bb16a660c",
+          "stable_commit": "fb88c61c59d40237eb1eaa8ead26405100580ece",
+          "subject": "dt-bindings: power: qcom: describe the MSM8926 CPR domain",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "e41aec2547c0b01b67847134abec4bacea36100a",
+          "stable_commit": "9a517e9ae5a73390dc3b1cacf2af8e46866b169e",
+          "subject": "pmdomain: qcom: cpr: add the MSM8926 calibrated CPU domain",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "0c3e6bf4ea07841f73e18bbf90f49cd27b3435cb",
+          "stable_commit": "5d5301723566e2e679abede27e9c71782d90e7a3",
+          "subject": "regulator: qcom-spmi: restore uncertain SAW voltage writes",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "856e094d8e5c02889ab159f57e3793bad18c14f8",
+          "stable_commit": "1fe88cc27626940f649f06d6f04d3b51b95e6c26",
+          "subject": "soc: qcom: smd-rpm: correlate replies with pending requests",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "2a8130e74de8d74607729231d8d2249271d5d18d",
+          "stable_commit": "e357bc35a392f9ed94fe518cb27bcacf96e646fc",
+          "subject": "pmdomain: qcom: cpr: confirm MX vote restoration after errors",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "a852c5ceb7b7f623c5e94a664c0106a1f92335e7",
+          "stable_commit": "399d51453d5a6560f326cc0a627b7baa8c82a086",
+          "subject": "pmdomain: qcom: cpr: restore feedback after recovered voltage errors",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "a72edae2351c247e1578229d2a77512acddcc0d2",
+          "stable_commit": "d5889e6914101a1b8fed6bc435d26c2e0a17a23c",
+          "subject": "dt-bindings: opp: describe calibrated MSM8926 CPU eligibility",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "8a5bc73ffd9e4d47b4cf77dbc756257da7db5701",
+          "stable_commit": "ebe6be84cf97d9fdbe2160488e0b21b278f37dde",
+          "subject": "cpufreq: qcom-nvmem: attach MSM8926 CPUs to calibrated CPR",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "c171e74c753dfadc4de3b3271a7653fde62190e0",
+          "stable_commit": "59860c83fca44b8165139d7182f5d29c74a9be02",
+          "subject": "ARM: dts: qcom: add a separate Madai CPR qualification target",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "8e33a6edfd2d6ed5955176860a17a1516d212b48",
+          "stable_commit": "47fcd130ffe3d4d8361e20c516a766af8730dc51",
+          "subject": "pmdomain: qcom: cpr: normalize the MSM8926 startup clock",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "b2506c2bea8a13719004be0a19cd57b00e92f1c6",
+          "stable_commit": "5cb324524110e0678e5532ab2d9378f144df8882",
+          "subject": "clk: qcom: verify MSM8226 CPU PLL and mux programming",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "57e61d7961e7367d24b65b7969bdfe6f652b85bc",
+          "stable_commit": "07bcf4680431e1ad89921b308d6821beffb3b09e",
+          "subject": "pmdomain: qcom: cpr: guard APC changes with fresh parent rates",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "def9620bc91efe46b441ff399c60f6c4c45a1be2",
+          "stable_commit": "12ee21473c55f41af2207c9148291d12130bb539",
+          "subject": "pmdomain: qcom: cpr: identify MSM8926 probe failure stages",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "a9c68b1b25b6faaed9d1facf22b8a2e08712255b",
+          "stable_commit": "fb3a6f8dc52eb50cacbcd5395e4f795d14a9d39f",
+          "subject": "pmdomain: qcom: cpr: establish XO with the MSM8926 controller stopped",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "86a9e78ce4b645f6df46d97d165c18875042595f",
+          "stable_commit": "b17b65acd02189d85d6cb54efe51af32860111bb",
+          "subject": "pmdomain: qcom: cpr: verify disabled controls for the XO handoff",
+          "author_preserved": true
+        },
+        {
+          "original_commit": "b721ebaecd7dc60bbdb1f10c1eb08577f77e0cb8",
+          "stable_commit": "1aa67514f880ebc68940edcb899409bf89017d87",
+          "subject": "pmdomain: qcom: cpr: distinguish planned corners from APC targets",
+          "author_preserved": true
+        }
+      ],
+      "identical_to_original_CPR_files_sha256": {
+        "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml": "060f4f058680afff9429ad25331e15797fdc009e73e6fb61b5e43e366b0d3a63",
+        "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml": "155a952f9a6c233b589da25852fdaa8019eba713e190409391637ac8fa03dc28",
+        "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml": "97ee6589da29592af33aba6c531e4e87187aa3fa0298c71d33f78c5e7af32f61",
+        "Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml": "123cc228fa0a718a38e509c10518f5513c3704fe352129c4633739a23d0fa10c",
+        "Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml": "ff596a7d082d24acceade1bad26fb6c2e6e2cc4788e1a5bb4094211dc41aeef5",
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts": "52eb39bf4a19cce8251297dc189a15917df371c2a41af91e2b8a547f3220cae7",
+        "drivers/clk/qcom/a53-pll.c": "84a91c06729b2c5190f1dc47b53ae564f1399adfd699ea518cf800dd3b0dc256",
+        "drivers/clk/qcom/apcs-msm8916.c": "4fd79329d44473d5335c0510bc357f37ce5de6ce97d99e8cd464224a32c2036c",
+        "drivers/clk/qcom/clk-pll.c": "bfbaf9e47a56e0e37a670a26bdeda82a3072b8966fc644cb25b96eacacddafda",
+        "drivers/clk/qcom/clk-pll.h": "2a7fdfbe8e1569e402a2064e43990751212e0f6bab127b6bebb0460f026a5240",
+        "drivers/clk/qcom/clk-regmap-mux-div.c": "3395adb60d400564bd432404003efbe42db92f28b55c31e66fd0b632a24b4a92",
+        "drivers/clk/qcom/clk-regmap-mux-div.h": "330cab12a04f019c3bba132a6d37d34a4264e2c6cf9a84b75e1b5cc0d3b10bd8",
+        "drivers/clk/qcom/gcc-msm8974.c": "4b0de15d4c41226ce92462d1800efd25156b60e2b8335e6cc8bc727e95e678b1",
+        "drivers/cpufreq/cpufreq-dt-platdev.c": "d71050ae44d69720ac21a3a0d53c4e57f5071b56d604e59ab1ed885c415b5a4a",
+        "drivers/cpufreq/qcom-cpufreq-nvmem.c": "2f61370f6c4f6a8410830a523483b1395ecfb5e98be6c0f293f52364a5e173b8",
+        "drivers/pmdomain/qcom/Kconfig": "0bd37273aed1805ad6971d6682632c32fdbefb84ce25046bf30e2214b45cac19",
+        "drivers/pmdomain/qcom/cpr-msm8926-corner.h": "b72a60b781fd3b589f55aef7de4f5c3c178b4f5588a24c581d396a63cbf76a81",
+        "drivers/pmdomain/qcom/cpr-msm8926-fuses.h": "9af6b33fbf392237a9fa5b307a7487d73d4593301324af328169e4aeeb850f0e",
+        "drivers/pmdomain/qcom/cpr-msm8926-voltage.h": "6ddb8af84ae4e31b8287e83d80ff961fb35019164e17a26635a92265015165d2",
+        "drivers/pmdomain/qcom/cpr-msm8926.h": "dde85c29a2ecff778775a937cffd5d38fc6c82efbe4716b562ffa449d89774bc",
+        "drivers/pmdomain/qcom/cpr-voltage.h": "6d7e30127931256752b48a8fd5e9db243e1625696e7de5e83b9afd352cc8057b",
+        "drivers/pmdomain/qcom/cpr.c": "be0efafe69dbf54b31cee8c192bbded2f23aaddd10fb70ec8b93b09b889f26af",
+        "drivers/regulator/qcom-spmi-saw-fts2.h": "c9a6e1d5be97d0738c67720ec8e1a80733cb08fe6b123a201f2fa4d2fddc2c68",
+        "drivers/regulator/qcom_spmi-regulator.c": "3bee5456222e9b4b319e15bfb73fe9e11f94406cb5e35e4d2751f3cc4f4b5beb",
+        "drivers/soc/qcom/Kconfig": "d7e8e9523bccd2bca28cd628984b155c8d580018bdcf4085f8d1ad9b7d4cd2bb",
+        "drivers/soc/qcom/smd-rpm.c": "9f52f22193bfa16404407ed375b9b1dc384c07b97b99dee326c7d9a59be6581f",
+        "drivers/soc/qcom/spm-msm8226-l2.h": "5cc4d9161aaf621ee236bc475e8265069e91b8ebc6dd0070f21a0e7a4659625d",
+        "drivers/soc/qcom/spm.c": "6bec54b0b0c9ca8c087798941341d6fed88af04d9a2db0491bce91d0704e413b",
+        "include/dt-bindings/opp/qcom,msm8926.h": "89c62bbea61fddd0e9eaffa78faa5278c92aafc72bcbc504526260fdd7fdb6f6",
+        "include/linux/soc/qcom/cpr.h": "58979e9a9579abedb8d905f98e71fcadcdbf2689042533f9231873699852dbd3"
+      },
+      "preserved_vibrator_and_NFC_files_sha256": {
+        "drivers/input/misc/pm8xxx-vibrator.c": "af56eec8b1864e318cc84f269599eb98c95924d242055722a08ea565d98eee06",
+        "drivers/nfc/nxp-nci/core.c": "d7605b1dd057936a4c8b761ef59794f4f00a8e0cb35a6345e7a155f1739b4946",
+        "drivers/nfc/nxp-nci/i2c.c": "8bfca5bd71bbc446d41f4c093c01f6df8566976f7c9151d0251d70e1b701804e",
+        "drivers/nfc/nxp-nci/nxp-nci.h": "a7dd5a6f92321c2a2a057955a349fe78d3d65e08933db5a469433d7dac4d5e7f",
+        "net/nfc/nci/core.c": "a2a591c0492419601960efa4c996e971daee9629ce771de9c2f24892a8a98ae2",
+        "net/nfc/nci/rsp.c": "f46b3f78238f81329184c9fb1fec26c1473bd4ba0d53b0b974ae8b2635f83718",
+        "Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml": "88ee1c78274634957bf103f1d3c8cafd87e9bab73e54b4dbdd6dffb0dd771728"
+      },
+      "changed_paths": [
+        "Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml",
+        "Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml",
+        "Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml",
+        "Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml",
+        "Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml",
+        "MAINTAINERS",
+        "arch/arm/boot/dts/qcom/Makefile",
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai-cpr.dts",
+        "arch/arm/boot/dts/qcom/qcom-msm8926-lg-madai.dts",
+        "drivers/clk/qcom/a53-pll.c",
+        "drivers/clk/qcom/apcs-msm8916.c",
+        "drivers/clk/qcom/clk-pll.c",
+        "drivers/clk/qcom/clk-pll.h",
+        "drivers/clk/qcom/clk-regmap-mux-div.c",
+        "drivers/clk/qcom/clk-regmap-mux-div.h",
+        "drivers/clk/qcom/gcc-msm8974.c",
+        "drivers/cpufreq/cpufreq-dt-platdev.c",
+        "drivers/cpufreq/qcom-cpufreq-nvmem.c",
+        "drivers/pmdomain/qcom/Kconfig",
+        "drivers/pmdomain/qcom/cpr-msm8926-corner.h",
+        "drivers/pmdomain/qcom/cpr-msm8926-fuses.h",
+        "drivers/pmdomain/qcom/cpr-msm8926-voltage.h",
+        "drivers/pmdomain/qcom/cpr-msm8926.h",
+        "drivers/pmdomain/qcom/cpr-voltage.h",
+        "drivers/pmdomain/qcom/cpr.c",
+        "drivers/regulator/qcom-spmi-saw-fts2.h",
+        "drivers/regulator/qcom_spmi-regulator.c",
+        "drivers/soc/qcom/Kconfig",
+        "drivers/soc/qcom/smd-rpm.c",
+        "drivers/soc/qcom/spm-msm8226-l2.h",
+        "drivers/soc/qcom/spm.c",
+        "include/dt-bindings/opp/qcom,msm8926.h",
+        "include/linux/soc/qcom/cpr.h"
+      ],
+      "qualification_DTB": "qcom-msm8926-lg-madai-cpr.dtb",
+      "ordinary_DTB_has_no_CPR_domain_activation": true,
+      "source_checkout_clean": true,
+      "phone_changes": false
+    },
+    "final_integration": {
+      "recorded_UTC": "2026-11-11T13:29:12.414858+00:00",
+      "source_commit": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+      "source_tree": "28f14f39f768f31a594461e6964bcc6122cf669a",
+      "CPR_cherry_pick_commit_count": 29,
+      "additional_comment_only_commit": "41f636c9f1475c35bac1f267f5685c755c80e8a4",
+      "qualification_DTS_change_from_original": "Only obsolete reconstruction comment; inherits the integrated ordinary board target",
+      "NFC_and_vibrator_source_preserved": true,
+      "phone_changes": false,
+      "additional_style_commit": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+      "style_changed_paths": [
+        "MAINTAINERS",
+        "drivers/pmdomain/qcom/cpr-msm8926-corner.h",
+        "drivers/pmdomain/qcom/cpr-msm8926-voltage.h",
+        "drivers/pmdomain/qcom/cpr-msm8926.h",
+        "drivers/pmdomain/qcom/cpr.c",
+        "drivers/regulator/qcom-spmi-saw-fts2.h",
+        "drivers/regulator/qcom_spmi-regulator.c"
+      ],
+      "style_scope": "Whitespace, consistent if/else braces and MAINTAINERS order; behavior preserved",
+      "CPR_C_and_headers_byte_identical_before_style_cleanup": true
+    }
+  },
+  "source_publication": {
+    "recorded_UTC": "2026-11-11T13:30:28.501726+00:00",
+    "repository": "https://github.com/timschmidt/fx0-linux.git",
+    "branch": "integration/fx0-6.18.63-cpr",
+    "commit": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "remote_ref_verified": true,
+    "original_author_commits": 29,
+    "additional_comment_and_style_commits": 2,
+    "CPU_CPR_C_and_headers_match_previous_source_before_style_cleanup": true,
+    "NFC_and_vibrator_source_preserved": true,
+    "host_tests": 45,
+    "historical_fixture_scope_recorded": true,
+    "strict_checkpatch_clean": false,
+    "reviewed_style_diagnostics": 15,
+    "final_diff_checkpatch_errors": 0,
+    "final_submission_series_qualified": false,
+    "private_identifier_scan_passed": true,
+    "root_index_unchanged": true,
+    "phone_changes": false,
+    "physical_boot": false
+  },
+  "recipe_publication": {
+    "recorded_UTC": "2026-11-11T13:52:03.269261+00:00",
+    "repository": "https://github.com/timschmidt/fx0-pmaports.git",
+    "branch": "integration/fx0-cpr-nfc-6.18.63-package",
+    "commit": "43634e120d23298ce7e08db18ff9f86c6e54167f",
+    "remote_ref_verified": true,
+    "source_package_built": true,
+    "Alpine_toolchain": "22.1.3",
+    "verified_modules": 468,
+    "compiled_source_files_and_symlinks_matched": 91278,
+    "root_index_unchanged": true,
+    "native_installation": false,
+    "physical_boot": false,
+    "strict_checkpatch_clean": false,
+    "reviewed_style_diagnostics": 15,
+    "registration_image_prepared_only": true
+  },
+  "build_inputs": {
+    "recorded_UTC": "2026-11-11T13:33:41.287853+00:00",
+    "recipe_commit": "43634e120d23298ce7e08db18ff9f86c6e54167f",
+    "recipe_base_commit": "7f382d74a0d3d002d7781701b05c320ba6a19cdb",
+    "recipe_branch": "integration/fx0-cpr-nfc-6.18.63-package",
+    "source_commit": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "release": "6.18.63-fx0-cpr-nfc-alpine",
+    "version": "6.18.63-r3",
+    "source_archive_sha512": "5aae436aba8d62c18d05d69d8ce24d537ed333bdec276e5412f4f80a0e7c655930c39a0f17e2d5bfa3b4c26735c2e6eee8e5d246f3865ec259c0e13be06c8a85",
+    "source_blob_count": 91278,
+    "cached_tool_image": "6213355c8ea96806ce237d1ca509cfda6b5db33acff2d9addb80501baa6f2301",
+    "isolated_pmos_HOME": true,
+    "reused_cached_buildroots": true,
+    "prior_build_HOMEs_untouched": true,
+    "native_installation": false,
+    "space_available_before_build": 29005320192
+  },
+  "package": {
+    "name": "linux-postmarketos-qcom-msm8226-6.18.63-r3.apk",
+    "bytes": 18746440,
+    "sha256": "99fc966f1675894af0de77dfcd0fc27a2100bad1b7d30f125d9f3d4247da0b68",
+    "recipe_commit": "43634e120d23298ce7e08db18ff9f86c6e54167f",
+    "source_build": true
+  },
+  "audit_controller": {
+    "started_UTC": "2026-11-11T13:49:43.315202+00:00",
+    "state": "complete",
+    "steps": {
+      "verify-config-debug": 0,
+      "collect-artifacts": 0,
+      "inspect-package": 0,
+      "verify-linked": 0,
+      "verify-modules": 0,
+      "verify-dependencies": 0,
+      "verify-apk": 0
+    },
+    "current_step": "verify-apk",
+    "finished_UTC": "2026-11-11T13:50:20.854446+00:00"
+  },
+  "source_archive_verification": {
+    "recorded_UTC": "2026-11-11T13:31:56.364740+00:00",
+    "source_commit": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "archive_sha512": "5aae436aba8d62c18d05d69d8ce24d537ed333bdec276e5412f4f80a0e7c655930c39a0f17e2d5bfa3b4c26735c2e6eee8e5d246f3865ec259c0e13be06c8a85",
+    "blob_count": 91278,
+    "every_archive_file_and_symlink_matches_published_Git_tree": true,
+    "file_executable_modes_match": true,
+    "unexpected_or_duplicate_paths": false,
+    "source_checkout_clean": true,
+    "native_installation": false
+  },
+  "compiled_source_verification": {
+    "recorded_UTC": "2026-11-11T13:49:59.608201+00:00",
+    "source_commit": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "all_tracked_source_paths_match_published_Git_tree": true,
+    "source_files_and_symlinks_compared": 91278,
+    "no_build_generated_files_treated_as_Git_source": true,
+    "native_installation": false
+  },
+  "actual_configuration": {
+    "actual_community_check_passed": true,
+    "configuration_sha256": "9ee9bb812f1ff3233dd25adb002d7bbf96b74167ec4b308bda0567d4caac2a1f",
+    "configuration_modified_by_audit": false,
+    "CFI_nonpermissive": true,
+    "full_compressed_DWARF": true,
+    "schedutil_retained": true,
+    "experimental_CPR_enabled": true,
+    "separate_qualification_DTB": true,
+    "NFC_NCI_NXP_I2C_modules_enabled": true
+  },
+  "configuration_normalization": {
+    "recorded_UTC": "2026-11-11T13:49:43.351036+00:00",
+    "input_to_actual_option_differences": 19,
+    "differences": {
+      "CONFIG_CLANG_VERSION": {
+        "input": "210108",
+        "actual": "220103"
+      },
+      "CONFIG_RUSTC_HAS_SPAN_FILE": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_RUSTC_VERSION": {
+        "input": "109801",
+        "actual": "0"
+      },
+      "CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_DRM_MSM_VALIDATE_XML": {
+        "input": "n",
+        "actual": null
+      },
+      "CONFIG_ARCH_USES_CFI_GENERIC_LLVM_PASS": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_DEBUG_INFO_COMPRESSED_ZSTD": {
+        "input": null,
+        "actual": "n"
+      },
+      "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION": {
+        "input": null,
+        "actual": "n"
+      },
+      "CONFIG_LLD_VERSION": {
+        "input": "180108",
+        "actual": "220103"
+      },
+      "CONFIG_RUSTC_HAS_FILE_WITH_NUL": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_LD_CAN_USE_KEEP_IN_OVERLAY": {
+        "input": null,
+        "actual": "y"
+      },
+      "CONFIG_CC_VERSION_TEXT": {
+        "input": "\"clang version 21.1.8 (Fedora 21.1.8-6.fc43)\"",
+        "actual": "\"Alpine clang version 22.1.3\""
+      },
+      "CONFIG_RUSTC_HAS_FILE_AS_C_STR": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_HAVE_LD_DEAD_CODE_DATA_ELIMINATION": {
+        "input": null,
+        "actual": "y"
+      },
+      "CONFIG_RUSTC_LLVM_VERSION": {
+        "input": "220108",
+        "actual": "0"
+      },
+      "CONFIG_RUSTC_HAS_COERCE_POINTEE": {
+        "input": "y",
+        "actual": null
+      },
+      "CONFIG_CC_OPT_INLINE_MEMSET": {
+        "input": null,
+        "actual": "\"-mllvm -max-store-memset=4294967294\""
+      },
+      "CONFIG_AS_VERSION": {
+        "input": "210108",
+        "actual": "220103"
+      }
+    },
+    "compiler_capability_and_disabled_option_changes_only": true
+  },
+  "full_debug_information": {
+    "recorded_UTC": "2026-11-11T13:49:43.935695+00:00",
+    "full_DWARF5": true,
+    "reduced_debug_disabled": true,
+    "compressed_debug_sections": {
+      ".debug_aranges": {
+        "compression": "zlib",
+        "compressed_bytes": 784,
+        "uncompressed_bytes": 2088
+      },
+      ".debug_info": {
+        "compression": "zlib",
+        "compressed_bytes": 67777846,
+        "uncompressed_bytes": 106800884,
+        "first_DWARF_unit_version": 5
+      },
+      ".debug_abbrev": {
+        "compression": "zlib",
+        "compressed_bytes": 932709,
+        "uncompressed_bytes": 3151083
+      },
+      ".debug_line": {
+        "compression": "zlib",
+        "compressed_bytes": 6151631,
+        "uncompressed_bytes": 14194223
+      },
+      ".debug_frame": {
+        "compression": "zlib",
+        "compressed_bytes": 392570,
+        "uncompressed_bytes": 1720716
+      },
+      ".debug_str": {
+        "compression": "zlib",
+        "compressed_bytes": 1656665,
+        "uncompressed_bytes": 3966045
+      },
+      ".debug_addr": {
+        "compression": "zlib",
+        "compressed_bytes": 800971,
+        "uncompressed_bytes": 1870056
+      },
+      ".debug_line_str": {
+        "compression": "zlib",
+        "compressed_bytes": 27742,
+        "uncompressed_bytes": 71348
+      },
+      ".debug_loclists": {
+        "compression": "zlib",
+        "compressed_bytes": 6092441,
+        "uncompressed_bytes": 12974386
+      },
+      ".debug_rnglists": {
+        "compression": "zlib",
+        "compressed_bytes": 1001349,
+        "uncompressed_bytes": 1759874
+      },
+      ".debug_str_offsets": {
+        "compression": "zlib",
+        "compressed_bytes": 7158211,
+        "uncompressed_bytes": 24434964
+      }
+    },
+    "compressed_sections_decompress_and_match_declared_sizes": true,
+    "native_installation": false
+  },
+  "linked_kernel": {
+    "verified_UTC": "2026-11-11T13:50:11.381804+00:00",
+    "release": "6.18.63-fx0-cpr-nfc-alpine",
+    "ELF": "ARM32 little-endian",
+    "GNU_build_id": "f02ec3da6042276b5e679016ca24039e565153ac",
+    "CFI_type_ids_handler_and_object_flags_verified": true,
+    "undefined_symbols_equal_r50": [
+      "         U __bpf_callback_fn",
+      "         U __bpf_prog_runX",
+      "         w efi_attr_config_table",
+      "         w efi_attr_fw_vendor",
+      "         w efi_attr_runtime"
+    ],
+    "embedded_runtime_trust_list_exact_generated_certificate": true,
+    "certificate_sha256": "4bee8da2c53bee3d50f65875614036a96c3be1b23aedcd896336dde1147ae748",
+    "all_468_module_verifier_certificate_matches_runtime_trust": true,
+    "wrong_build_certificate_rejected": true,
+    "new_module_private_key": "Generated and used by Kbuild; audit checks mode only, never inspects or exports contents",
+    "private_key_mode": "0600",
+    "uncompressed_kernel_footprint_bytes": 21499600,
+    "footprint_plus_load_offset_below_0x02000000": true,
+    "zImage_header_magic_verified": true,
+    "separate_ordinary_and_CPR_qualification_DTBs": true,
+    "physical_boot": false,
+    "native_installation": false
+  },
+  "package_inspection": {
+    "package": {
+      "name": "linux-postmarketos-qcom-msm8226-6.18.63-r3.apk",
+      "bytes": 18746440,
+      "sha256": "99fc966f1675894af0de77dfcd0fc27a2100bad1b7d30f125d9f3d4247da0b68",
+      "recipe_commit": "43634e120d23298ce7e08db18ff9f86c6e54167f",
+      "source_build": true
+    },
+    "release": "6.18.63-fx0-cpr-nfc-alpine",
+    "ELF": "ARM ELF32 little-endian",
+    "kernel_sha256": "799bd981b46acd417041de4391e09ca07b3180308b0ca25362ea07e574106b04",
+    "DTBs_sha256": {
+      "qcom-msm8926-lg-madai": "53fcc84f209fdb5534696b3ddb254e0a293f86532f9c7c5a0451b7b9be2e683d",
+      "qcom-msm8926-lg-madai-cpr": "0659e7bd3077f4c2895dcd4bee071b2f7c154a8933d211741a6313c54e6d04fe"
+    },
+    "certificate_sha256": "4bee8da2c53bee3d50f65875614036a96c3be1b23aedcd896336dde1147ae748",
+    "certificate_bytes": 1324,
+    "certificate_exactly_matches_kernel_trust_list": true,
+    "undefined_symbols": [
+      "U __bpf_callback_fn",
+      "U __bpf_prog_runX",
+      "w efi_attr_config_table",
+      "w efi_attr_fw_vendor",
+      "w efi_attr_runtime"
+    ],
+    "introduced_undefined_symbols": [],
+    "module_directory": "r3-inspection/lib/modules/6.18.63-fx0-cpr-nfc-alpine",
+    "compiled_kernel_and_DTB_match_package": true,
+    "embedded_recipe_commit_matches": true,
+    "physical_RAM_boot_of_this_Alpine_artifact": false
+  },
+  "module_summary": {
+    "count": 468,
+    "certificate_sha256": "4bee8da2c53bee3d50f65875614036a96c3be1b23aedcd896336dde1147ae748",
+    "imported_CRCs_checked": 25577,
+    "all_imports_match_current_kernel": true,
+    "negative_ABI_controls": [
+      "modified import CRC rejected",
+      "wrong export ABI map rejected"
+    ],
+    "dependencies": {
+      "verified_modules": 468,
+      "declared_dependency_edges": 391,
+      "transitive_dependency_edges": 577,
+      "all_modules_dep_entries_match_module_metadata": true,
+      "modules_dep_sha256": "08797435e9d731b5cd879b42564d6c0509c7acbf1492899e3abcb5e18f05b50a",
+      "scope": "Dependency metadata only; signatures, ABI, runtime loading and install hooks separate"
+    }
+  },
+  "host_checks": {
+    "checked_UTC": "2026-11-11T13:29:18.635054+00:00",
+    "source": "worktrees/linux-fx0-cpr-6.18.63",
+    "modules": [
+      "test_cpr_domain_state",
+      "test_cpr_mx_recovery",
+      "test_cpr_voltage",
+      "test_cpu_voltage_recovery",
+      "test_msm8926_calibration",
+      "test_msm8926_corner",
+      "test_msm8926_cpufreq",
+      "test_msm8926_fuses",
+      "test_msm8926_voltage_plan",
+      "test_saw_fts2",
+      "test_smd_rpm_ack",
+      "test_spm_l2_master",
+      "test_cpr_runtime_clock",
+      "test_msm8226_clock_policy",
+      "test_cpr_probe_diagnostics",
+      "test_cpr_reference_disabled",
+      "test_cpr_voltage_observation",
+      "test_cpufreq_controlled_start",
+      "test_cpu_rate_selection"
+    ],
+    "additional_actual_attachment_case": "test_cpr_startup_clock.StartupClockTests.test_actual_attachment_orders_handoff_before_corner_lookup",
+    "tests": 45,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failed_tests": [],
+    "files_sha256": {
+      "tests/test_cpr_domain_state.py": "8f9881ae49d7c66f106f2ab0043d05ccfd018c56321f221e0faafd82ee2c6bd5",
+      "tests/test_cpr_mx_recovery.py": "6b60a9f77d9706e80ee8334b8880886695305ddb672ec9284312fa68ca53dd46",
+      "tests/test_cpr_voltage.py": "86a70170aef27fed0194246790e62c9a4ce01ee197a781fb81f73fb0e5e4b180",
+      "tests/test_cpu_voltage_recovery.py": "023bd396b790df0f9c6359acc3ad69d4067582b8b7ed36f5417070a183eb2fd5",
+      "tests/test_msm8926_calibration.py": "aaedb1ecf9c19a32ab7c0fe8cd48a2dbf0a37d247d0941d4fb2017fede9d66d3",
+      "tests/test_msm8926_corner.py": "aaa8ac8a12410511d483e756b1c40e7530ccfd30c928ef930c6d39f95aec3e67",
+      "tests/test_msm8926_cpufreq.py": "7cfae5d3d6deee3aa6c6f1a313cafac855749b766db9f95579030f588754b73c",
+      "tests/test_msm8926_fuses.py": "415b462de4b2011788c7580b86c6d3b8246ee7ce84a26b9a7a0e5ed831d884e5",
+      "tests/test_msm8926_voltage_plan.py": "587a31e2245c79f68c24a7c581edf5859b36e1a91444da0c536cd5ead6693fb1",
+      "tests/test_saw_fts2.py": "8bc9cfba1f6935f63be3aac08edd16d2377f4639715b38f2b6ce471ffa712971",
+      "tests/test_smd_rpm_ack.py": "acef3ddcdb9414bba0e113b0133a86bdb1585828605f9b81257735cbb8fdd5d1",
+      "tests/test_spm_l2_master.py": "269afe9c8786c38b577d328373261008d1aa56a421420c99ff9adc973b28b0ef",
+      "tests/test_cpr_runtime_clock.py": "db815112f71d3e05ca2b1fc5cca7ef4aff31c1d774df17e8a760b6774da999e7",
+      "tests/test_msm8226_clock_policy.py": "56a46e2fcf5709445b7ffe6ac15cab3d5a1edc9e82ce1c17de24c02bf1ae7fc7",
+      "tests/test_cpr_probe_diagnostics.py": "1b4a4e13aeb2826e6698f273dee6b55c479bb0e6618618861f148fa017a7f9dd",
+      "tests/test_cpr_reference_disabled.py": "142a1c94035db691454dac4ac070dd6d2a44402f8ae1832b0a73d37474564d52",
+      "tests/test_cpr_voltage_observation.py": "86b5675fd5ea79991ee97b1bc752eb0efb3e2429bf3d01836d7d5262cedb9a17",
+      "tests/test_cpufreq_controlled_start.py": "b5d56b758162badf9813a7f2bf02de2c09bcefcee9345eb1e8366422c55f51c9",
+      "tests/test_cpu_rate_selection.py": "6a8ac6d949c67ba1d6a33b6b25d5466dcde9e77cd4d7da8f45464522568741cf",
+      "tests/test_cpr_startup_clock.py": "d6a2887fdbb30b12d8b186162589a23c6f45a46bd98b954da8ac41b98a29987c"
+    },
+    "actual_C_callbacks_in_host_models": true,
+    "MMIO_parent_callbacks_and_regulator_hardware_modeled": true,
+    "hardware_qualified": false
+  },
+  "historical_fixture_scope": {
+    "checked_UTC": "2026-11-11T13:26:18.894114+00:00",
+    "tests": 45,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "original_invocation_tests": 46,
+    "original_invocation_failures": 1,
+    "original_receipt": "local/kernel-cpr-6.18.63-01/host-checks.json",
+    "historical_fixture": "test_msm8926_domain.DomainTests.test_actual_driver_init_and_corners",
+    "historical_fixture_scope": "Pre-aux/pll C model lacks the later struct members and clock stub; unchanged historical model is retained",
+    "current_superset_test": "test_cpr_reference_disabled.DisabledReferenceTests.test_probe_handoff_and_failure_publication",
+    "current_superset_executes_same_original_DOMAIN_MAIN_plus_disabled_control_and_failure_cases": true,
+    "failed_legacy_fixture_does_not_execute_compiled_driver": true,
+    "current_actual_C_superset_passed_in_original_invocation": true,
+    "passed_tests_not_repeated": true,
+    "fixture_source_sha256": "142a1c94035db691454dac4ac070dd6d2a44402f8ae1832b0a73d37474564d52",
+    "source_commit": "41f636c9f1475c35bac1f267f5685c755c80e8a4",
+    "hardware_qualified": false
+  },
+  "style_review": {
+    "reviewed_UTC": "2026-11-11T13:29:53.600193+00:00",
+    "source_commit": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "final_combined_diff_returncode": 1,
+    "unfiltered_errors": 0,
+    "unfiltered_warnings": 5,
+    "unfiltered_checks": 10,
+    "diagnostics": {
+      "combined_binding_and_driver_diff": 3,
+      "new_file_maintainer_review": 1,
+      "voltage_unit_identifiers": 9,
+      "atomic_CPU0_IPI_settling_delay": 1,
+      "per_instance_mutable_regulator_ops": 1
+    },
+    "no_alignment_brace_or_MAINTAINERS_order_findings_remain": true,
+    "reviewed_findings": {
+      "combined_binding_and_driver_diff": "Integration checkpoint spans binding and driver commits. Final submission series must keep them separate; no submission-readiness claim.",
+      "new_file_maintainer_review": "Review added helper/header ownership; CPR helper and public headers explicitly covered by MAINTAINERS additions; subsystem ownership retained.",
+      "per_instance_mutable_regulator_ops": "Probe copies the descriptor operations and changes callbacks according to the actual fixed-range provider. A shared const table cannot represent that per-instance copy.",
+      "voltage_unit_identifiers": "Retain uV suffixes used by the existing regulator and CPR interfaces.",
+      "atomic_CPU0_IPI_settling_delay": "The setter runs synchronously in the CPU0 IPI context and must not sleep; source comment states that constraint."
+    },
+    "historical_per_commit_checks": "Original descriptions/cherry-pick trailers and intermediate layouts are retained. Initial full-message findings remain in checkpatch.json; they do not pass strict style.",
+    "strict_checkpatch_clean": false,
+    "final_submission_series_qualified": false
+  },
+  "binding_documents": {
+    "checked_UTC": "2026-11-11T13:37:47.921685+00:00",
+    "binding_documents": [
+      "opp/opp-v2-kryo-cpu.yaml",
+      "opp/opp-v2-qcom-level.yaml",
+      "power/avs/qcom,cpr.yaml",
+      "regulator/qcom,spmi-regulator.yaml",
+      "soc/qcom/qcom,saw2.yaml",
+      "nvmem/qcom,qfprom.yaml",
+      "net/nfc/nxp,nci.yaml"
+    ],
+    "all_documents_validate": true,
+    "full_source_schema_compiled": true,
+    "processed_schema_sha256": "6afed322d68811dd3cb5715a4f81ed87452ed4351bf1fd3aea54620d6100d19b",
+    "source_commit": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826"
+  },
+  "binding_checks": {
+    "checked_UTC": "2026-11-11T13:40:35.169470+00:00",
+    "source_commit": "790c9c5407e17ad1d2395c2ec4bdfcfc8dc82826",
+    "modules": [
+      "test_cpr_runtime_binding",
+      "test_saw_fts2_binding",
+      "test_spm_l2_binding",
+      "test_qfprom_raw_binding",
+      "test_nxp_nci_binding"
+    ],
+    "tests": 42,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "actual_compiled_DTBs": true,
+    "hardware_qualification": false,
+    "initial_passed_tests": 25,
+    "resumed_tests": 17,
+    "initial_setup_errors": 2,
+    "setup_error_reason": "Alpine native dtc requests /lib/ld-musl-x86_64.so.1, absent on the Fedora host. Explicit loader/library-path wrapper runs the same compiled binary.",
+    "native_dtc_wrapper": "local/kernel-cpr-6.18.63-01/dtc-native.sh",
+    "already_passed_tests_not_repeated": true,
+    "NFC_wiring_and_schema_pass_on_both_DTBs": true,
+    "full_raw_CPU_row_present_in_both_DTBs": true,
+    "DTBs_sha256": {
+      "qcom-msm8926-lg-madai.dtb": "53fcc84f209fdb5534696b3ddb254e0a293f86532f9c7c5a0451b7b9be2e683d",
+      "qcom-msm8926-lg-madai-cpr.dtb": "0659e7bd3077f4c2895dcd4bee071b2f7c154a8933d211741a6313c54e6d04fe"
+    },
+    "CPU_rate_and_CPR_domain_relationships_covered_by_runtime_binding_tests": true,
+    "ordinary_CPU_four_OPPs_and_no_CPR_consumer_preserved": true
+  },
+  "APK_signature_and_simulation": {
+    "verified_UTC": "2026-11-11T13:50:20.842026+00:00",
+    "package": {
+      "name": "linux-postmarketos-qcom-msm8226-6.18.63-r3.apk",
+      "bytes": 18746440,
+      "sha256": "99fc966f1675894af0de77dfcd0fc27a2100bad1b7d30f125d9f3d4247da0b68",
+      "recipe_commit": "43634e120d23298ce7e08db18ff9f86c6e54167f",
+      "source_build": true
+    },
+    "APK_signature_verified": true,
+    "modified_signed_recipe_metadata_rejected": true,
+    "modified_metadata_message": "BAD signature; original signature retained and modified control stream recompressed with valid gzip CRC",
+    "no_private_keys_or_firmware_in_APK": true,
+    "normal_offline_ARMv7_simulation": {
+      "returncode": 0,
+      "stdout": "(1/1) Installing linux-postmarketos-qcom-msm8226 (6.18.63-r3)\nOK: 23.0 MiB in 1 packages\n",
+      "stderr": "",
+      "scope": "empty initialized usermode database; package resolution only; no installation or update hooks"
+    },
+    "actual_device_install": false
+  },
+  "registration_script": "diagnostics/cpu-cpr-runtime/register-stable.sh",
+  "registration_host_checks": {
+    "checked_UTC": "2026-11-11T13:38:13.803441+00:00",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed_tests": [
+      "test_bootstrap_drift_after_registration_rejected (test_cpr_alpine_registration.AlpineRegistrationTests.test_bootstrap_drift_after_registration_rejected)",
+      "test_load_failure_and_post_registration_rejection (test_cpr_alpine_registration.AlpineRegistrationTests.test_load_failure_and_post_registration_rejection)",
+      "test_registration_and_preflight_failures (test_cpr_alpine_registration.AlpineRegistrationTests.test_registration_and_preflight_failures)",
+      "test_load_failure_and_post_registration_rejection (test_cpr_ram_registration.RamRegistrationTests.test_load_failure_and_post_registration_rejection)",
+      "test_registration_and_preflight_failures (test_cpr_ram_registration.RamRegistrationTests.test_registration_and_preflight_failures)",
+      "test_bootstrap_drift_after_registration_rejected (test_cpr_stable_registration.StableRegistrationTests.test_bootstrap_drift_after_registration_rejected)",
+      "test_load_failure_and_post_registration_rejection (test_cpr_stable_registration.StableRegistrationTests.test_load_failure_and_post_registration_rejection)",
+      "test_previous_stable_and_Alpine_CPR_families_rejected_before_load (test_cpr_stable_registration.StableRegistrationTests.test_previous_stable_and_Alpine_CPR_families_rejected_before_load)",
+      "test_registration_and_preflight_failures (test_cpr_stable_registration.StableRegistrationTests.test_registration_and_preflight_failures)"
+    ],
+    "stable_script_tests": 4,
+    "stable_script_modeled_cases": 39,
+    "retained_Alpine_script_tests": 3,
+    "retained_Alpine_script_modeled_cases": 36,
+    "additional_existing_RAM_script_tests": 2,
+    "actual_shell_with_instrumented_files_and_module_loads": true,
+    "old_r55_and_stable_r1_r2_rejected_before_any_load": true,
+    "new_script_changes_only_pinned_family_marker_and_status_labels": true,
+    "explicit_frequency_or_voltage_requests_added": false,
+    "hardware_qualified": false,
+    "files_sha256": {
+      "diagnostics/cpu-cpr-runtime/register-stable.sh": "294afc69c1f1394a60cf3f910fc94e3529e7728c5da8ad2f935607dcc5436527",
+      "diagnostics/cpu-cpr-runtime/register-alpine.sh": "314873d48c05cb04869e24fcfea9ecf083df0341b68a0074342c0f7260a17a1d",
+      "tests/test_cpr_stable_registration.py": "56f1315f2b77111e3404f5bd40241f3b6f4d9163a259051d8356c05d583871a8",
+      "tests/test_cpr_alpine_registration.py": "cb1f14c9113cd1ae8833eaab4266c2211c8205b81fc61c682fa4d1e02b4a0100",
+      "tests/test_cpr_ram_registration.py": "d6c25b4c7ed238a839c3aab411d1302089566db71c6f49b9176e2defcfe327e2"
+    }
+  },
+  "registration_preparation": {
+    "prepared_UTC": "2026-11-11T13:51:29.214678+00:00",
+    "image_path": "local/kernel-cpr-6.18.63-01/fx0-stable-cpr-registration-ram.img",
+    "image_sha256": "ef74c1beec542aa6eaaf7f30c98e15b4c3fb3db1de5853359251ef569643aa85",
+    "image_bytes": 6244352,
+    "kernel_release": "6.18.63-fx0-cpr-nfc-alpine",
+    "kernel_sha256": "799bd981b46acd417041de4391e09ca07b3180308b0ca25362ea07e574106b04",
+    "DTB_sha256": "0659e7bd3077f4c2895dcd4bee071b2f7c154a8933d211741a6313c54e6d04fe",
+    "certificate_sha256": "4bee8da2c53bee3d50f65875614036a96c3be1b23aedcd896336dde1147ae748",
+    "source_package": {
+      "name": "linux-postmarketos-qcom-msm8226-6.18.63-r3.apk",
+      "bytes": 18746440,
+      "sha256": "99fc966f1675894af0de77dfcd0fc27a2100bad1b7d30f125d9f3d4247da0b68",
+      "recipe_commit": "43634e120d23298ce7e08db18ff9f86c6e54167f",
+      "source_build": true
+    },
+    "exact_packaged_kernel_DTB_and_module_bytes": true,
+    "kernel_encoding_workaround_applied": false,
+    "selected_modules": {
+      "cpufreq_userspace.ko": {
+        "sha256": "ed44b79a015893abe0cfe7204fb265e581d9b4dad3c0ffdf4b3e42a267f6c868",
+        "bytes": 10481,
+        "packaged_compressed_sha256": "096a0abbbba29e9f12c4f04d4b03a0ad1e0cebd6c9c40743d8794e09825e824f",
+        "signed_payload_sha256": "73b29b58d839efe38145922091847ab5948959f003fcb759af7c24dd3ffb1fe1",
+        "release": "6.18.63-fx0-cpr-nfc-alpine",
+        "certificate_sha256": "4bee8da2c53bee3d50f65875614036a96c3be1b23aedcd896336dde1147ae748",
+        "explicit_CMS_verified": true,
+        "dependencies": []
+      },
+      "cpufreq-dt.ko": {
+        "sha256": "c1b9f4c6ee68e077f919c01445656b4ea4c239d6997d8ade06f1e7d54b2b60d0",
+        "bytes": 15533,
+        "packaged_compressed_sha256": "fd8fe92feac4b07a8e26c3987f445256567b6306ff1571e0f757e14f6a8a91c8",
+        "signed_payload_sha256": "f987668efe38efebb6556e5dff4fd08b69cb3f74ac208ce723bc6f5aeb37549f",
+        "release": "6.18.63-fx0-cpr-nfc-alpine",
+        "certificate_sha256": "4bee8da2c53bee3d50f65875614036a96c3be1b23aedcd896336dde1147ae748",
+        "explicit_CMS_verified": true,
+        "dependencies": []
+      }
+    },
+    "changed_initramfs_entries": [
+      "bin/cpr-register",
+      "etc/fx0-cpr-modules.sha256",
+      "etc/fx0-cpr-trial",
+      "modules/cpufreq-dt.ko",
+      "modules/cpufreq_userspace.ko"
+    ],
+    "all_other_initramfs_modes_and_bytes_unchanged": true,
+    "init_BusyBox_HTTP_timer_and_cmdline_unchanged": true,
+    "return_after_seconds": 180,
+    "initially_moduleless": true,
+    "default_governor": "userspace",
+    "module_signature_enforcement": true,
+    "explicit_frequency_or_voltage_requests": [],
+    "kernel_footprint_plus_offset_below_forced_ramdisk": true,
+    "header_digest_addresses_and_ramdisk_readback_verified": true,
+    "ARM_BusyBox_syntax_passed": true,
+    "physical_entry_controller_prepared": false,
+    "fresh_native_boot_and_exact_UI_confirmation_required_before_any_stage": true,
+    "phone_staged": false,
+    "physical_boot": false,
+    "native_installation": false,
+    "hardware_qualification": false
+  },
+  "recipe_checkout_setup_stop": {
+    "operation": "new isolated recipe clone/checkout",
+    "reason": "Git alternate object-store nesting limit reached before recipe edits or build",
+    "new_checkout": "worktrees/pmaports-fx0-cpr-6.18.63",
+    "object_stores": [
+      "worktrees/pmaports-fx0-cpr-6.18.63/.git/objects",
+      "worktrees/pmaports-fx0-nfc-6.18.63/.git/objects",
+      "worktrees/pmaports-fx0-vibrator-6.18.63/.git/objects",
+      "worktrees/pmaports-fx0-maintenance-6.18.63/.git/objects",
+      "worktrees/pmaports-fx0-nfc-open-teardown/.git/objects",
+      "worktrees/pmaports-fx0-nfc-teardown/.git/objects",
+      "worktrees/pmaports-fx0-nfc/.git/objects",
+      "worktrees/pmaports-fx0-runtime/.git/objects"
+    ],
+    "existing_object_stores_modified": false,
+    "phone_changes": false
+  },
+  "recipe_checkout_setup_resolution": {
+    "new_checkout": "worktrees/pmaports-fx0-cpr-6.18.63",
+    "original_alternates_sha256": "0c6a6b2bfedeab6b83663d6e42e16f9b8a407cb4af80367d6eebde9237eb542f",
+    "flattened_alternates_sha256": "c9ca6a93f2a9aba13b32f8b80b04ad25102dfefeb415a9e3e20d4d604afc9865",
+    "deepest_object_store_listed_first": true,
+    "object_stores": [
+      "worktrees/pmaports-fx0-runtime/.git/objects",
+      "worktrees/pmaports-fx0-nfc/.git/objects",
+      "worktrees/pmaports-fx0-nfc-teardown/.git/objects",
+      "worktrees/pmaports-fx0-nfc-open-teardown/.git/objects",
+      "worktrees/pmaports-fx0-maintenance-6.18.63/.git/objects",
+      "worktrees/pmaports-fx0-vibrator-6.18.63/.git/objects",
+      "worktrees/pmaports-fx0-nfc-6.18.63/.git/objects"
+    ],
+    "existing_object_stores_modified": false
+  },
+  "latest_known_native": {
+    "boot_id": "747e87fe-198f-49f8-997a-8e198315968d",
+    "kernel": "6.18.59-fx0-dmp",
+    "taint": 0,
+    "systemd": "running",
+    "systemd_exit": 0,
+    "checked_UTC": "2026-11-11T13:46:53.192740+00:00",
+    "pinned_SSH_read_only": true,
+    "current_boot_owner_display_touch": "pending",
+    "previous_candidate_UI_not_reused": true,
+    "phone_changes_this_phase": false
+  },
+  "current_installed_kernel": "r50",
+  "current_installed_Sxmo": "1.18.1-r7",
+  "phone_changes_this_phase": false,
+  "physical_boot_of_this_package": false,
+  "hardware_CPR_NFC_qualification": false,
+  "native_update_hooks_exercised": false,
+  "current_maintainer_submission_base_qualified": false,
+  "audio_testing_excluded": true,
+  "remaining": [
+    "Exact-current-r50-return display/touch confirmation before prepared r1 native installation",
+    "Persistent stable kernel boot and native update-hook qualification",
+    "Combined stable CPR startup/registration, all eligible OPPs, load, thermal, physical rails, suspend and reliability",
+    "Stable NFC cold lifecycle, NCI open/close, RF and firmware concurrency",
+    "Remaining whole-system/hardware bringup and current maintainer-tree final submission preparation"
+  ],
+  "critical_driver_CFI": {
+    "verified_UTC": "2026-11-11T13:50:59.409843+00:00",
+    "critical_driver_objects": {
+      "drivers/pmdomain/qcom/cpr.o": {
+        "object_sha256": "951ecadd8a1207918d30c987f7605278b7bdaa0a14de9dff0c6017a9bdc1b53b",
+        "command_sha256": "10b7b05b4b1cc08475d3ca7a972562c180ad9febe9a16370178dc40df45acd4d",
+        "KCFI_compilation_flag_retained": true
+      },
+      "drivers/clk/qcom/clk-pll.o": {
+        "object_sha256": "12e0c88b08dd92ae90f6548f4c5059ebfe565bd02f85e1943c9dff8f77141dd3",
+        "command_sha256": "cb6d84f18824faae760ad023fa67d61664a8fe2580a0437e485d7099d72f10d5",
+        "KCFI_compilation_flag_retained": true
+      },
+      "drivers/clk/qcom/clk-regmap-mux-div.o": {
+        "object_sha256": "539b82f18b4cdf6d9fefcdfe3114e7ba71fc54ae9f2c4d642b20457e8ebd32d2",
+        "command_sha256": "eedeb06f7c35507a7f851521ff5a2bcf8fb976ca1f475dfa279f727c9850ae03",
+        "KCFI_compilation_flag_retained": true
+      },
+      "drivers/clk/qcom/gcc-msm8974.o": {
+        "object_sha256": "a7b4f022b0be2ca045f8a69dce2da44bd85a14551a41f65e83d766dcce18b2f4",
+        "command_sha256": "49b2c38fcd730539aa42fb900e54065ef0cbbec34abb3b3884dad18eec25a7e7",
+        "KCFI_compilation_flag_retained": true
+      },
+      "drivers/clk/qcom/apcs-msm8916.o": {
+        "object_sha256": "9edec454d6b2ccf9e85ae59df4be7a3fbb95b9b6c238f3f9d80ba2d407158496",
+        "command_sha256": "7240a93b5041fffeeed8f3919825338b732060175125edcc7c463cbd894b529c",
+        "KCFI_compilation_flag_retained": true
+      },
+      "drivers/clk/qcom/a53-pll.o": {
+        "object_sha256": "7cce8aeb98074ad7589a7d3ff9662d273c0f2b35d37eb0324218bbd8ba43ccc8",
+        "command_sha256": "187cbeddc60691ff5e807c41d2d54b3beb8bab57452167a151a741ea820e53b4",
+        "KCFI_compilation_flag_retained": true
+      },
+      "drivers/cpufreq/qcom-cpufreq-nvmem.o": {
+        "object_sha256": "c5429787621d28afa62bc1f5fcaa66db8909d74dedc7f20d6833bfa8147f32e2",
+        "command_sha256": "c6dc2a0d8124c7e0d720d38f01f83a9f59f06e4bf9bb6a8f6228bcc0ec9035d1",
+        "KCFI_compilation_flag_retained": true
+      },
+      "drivers/cpufreq/cpufreq-dt-platdev.o": {
+        "object_sha256": "e28075e6113de38bc365607638940d05828c53309094574bc2132d165a72c613",
+        "command_sha256": "429d8de4eea25420f386aa026404a2730a1fca748a6e141c3665b2058ad11f79",
+        "KCFI_compilation_flag_retained": true
+      },
+      "drivers/regulator/qcom_spmi-regulator.o": {
+        "object_sha256": "a04f89be5d8b093ff1b81c8f5a263f38b98cd3cd87ea412d9091d8edae97c751",
+        "command_sha256": "11655567dbe959b6ded84049f08f8c6cc2553862e5a61b314a4aaf72b073289c",
+        "KCFI_compilation_flag_retained": true
+      },
+      "drivers/soc/qcom/smd-rpm.o": {
+        "object_sha256": "ec17481159e8d8886afd7aef72a72c0942264dc0986695cb132d4ae1da7efc6b",
+        "command_sha256": "85776f9fd78841f10e306cf1f3a1a1e3c5b150b5378ecb61501fadfe66e5aae5",
+        "KCFI_compilation_flag_retained": true
+      },
+      "drivers/soc/qcom/spm.o": {
+        "object_sha256": "3b881f181e355c397b5e221f12c930258035e152d8b1a7c7b1bd051f5f909356",
+        "command_sha256": "f27b7ed5e9680c65078a0482d7c2b184959a4ed1af76a0a2177240a421844ac3",
+        "KCFI_compilation_flag_retained": true
+      }
+    },
+    "linked_driver_functions_present": [
+      "cpr_set_performance_state",
+      "qcom_cpr_msm8926_get_supported_hw",
+      "spmi_saw_fts2_set_vdd",
+      "qcom_cpufreq_probe"
+    ],
+    "nonpermissive_CFI_community_check_passed": true,
+    "hardware_qualification": false
+  },
+  "registration_image_setup_stop": {
+    "recorded_UTC": "2026-11-11T13:51:29.066493+00:00",
+    "reason": "BusyBox dispatches according to argv[0]; the audit filename registration-busybox.arm was interpreted as an applet name",
+    "correction": "Pass qemu-arm-static -0 busybox, retaining the exact binary bytes",
+    "ARM_binary_modified": false,
+    "image_created_before_stop": false,
+    "phone_changes": false
+  }
+}

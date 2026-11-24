@@ -1,5 +1,9 @@
 # Battery voltage units and consumer precision
 
+The [6.18.63 integration checkpoint](current-integration.md) carries this
+prerequisite onto the reproducible kernel base, adds compiled channel-metadata
+checks and separates the remaining BMS, firmware, charging and physical gates.
+
 The new VBAT_SNS and BAT_THERM processed interfaces use standard IIO millivolts.
 Absolute calibration internally produces microvolts, so the callback returns
 `IIO_VAL_FRACTIONAL` with denominator 1000. Ratiometric calibration already

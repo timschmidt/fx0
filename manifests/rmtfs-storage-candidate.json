@@ -1,0 +1,173 @@
+{
+  "recorded_UTC": "2026-11-09T11:25:17.902347+00:00",
+  "status": "Progress: storage-only candidate passes host/ARM tests; full ARM daemon builds but is unpromoted",
+  "RMTFS_commit": "b30a3eb38f9af283f18dbd3c7755653efc52c094",
+  "QRTR_commit": "29e36ae164389580a0f8ea7a7fdb728140ae978d",
+  "patch": "diagnostics/modem-control/rmtfs-storage-bounds.patch",
+  "patch_sha256": "1b9a0694b411a37640b3e3730ea25eedbcc5abf3df416df773da6cfde50642a2",
+  "baseline_failed_cases": {
+    "host-ClangASan": [
+      "closed",
+      "negative-caller",
+      "negative-read",
+      "negative-write",
+      "growth-hole",
+      "short-read",
+      "interrupted-read",
+      "early-eof",
+      "read-io-error",
+      "limit-errno",
+      "large-read-count",
+      "large-write-count",
+      "far-write",
+      "invalid-handle",
+      "pread-io-error"
+    ],
+    "ARM": [
+      "closed",
+      "negative-read",
+      "negative-write",
+      "growth-hole",
+      "short-read",
+      "early-eof",
+      "limit-errno",
+      "large-read-count",
+      "large-write-count",
+      "far-read",
+      "far-write",
+      "invalid-handle",
+      "pread-io-error"
+    ]
+  },
+  "candidate_storage_tests": {
+    "host-ClangASan": {
+      "passed": 20,
+      "failed": 0
+    },
+    "ARM": {
+      "passed": 20,
+      "failed": 0
+    }
+  },
+  "test_scope": "Actual storage.c and synthetic files only, with guarded backing syscalls; no QMI or physical execution",
+  "full_daemon_builds": [
+    {
+      "name": "host",
+      "returncode": 0,
+      "binary_bytes": 139856,
+      "binary_sha256": "9fd63855a4fb4b76e008ab770dac300a26cdfe5b788963d851f725c0a7d8953e"
+    },
+    {
+      "name": "ARM",
+      "returncode": 0,
+      "binary_bytes": 6303972,
+      "binary_sha256": "20e49ba5fe98cffcdc4fa9200388569cccfde5839bce06322b43060cbca03993"
+    }
+  ],
+  "ARM_static_PIE_ELF32_and_early_CLI_rejection_passed": true,
+  "only_storage_c_changed_and_exact_patch_replay_passed": true,
+  "target_package_metadata": {
+    "gcc": {
+      "V": "15.2.0-r5",
+      "c": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae"
+    },
+    "libgcc": {
+      "V": "15.2.0-r5",
+      "c": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae"
+    },
+    "libucontext": {
+      "V": "1.5.1-r0",
+      "c": "a141eb73d03406651da092ec035ebb2fe89abe9b"
+    },
+    "musl": {
+      "V": "1.2.6-r3",
+      "c": "8f79d39391b46d6dbf1800fb68b8212a21d5ee2e"
+    },
+    "musl-dev": {
+      "V": "1.2.6-r3",
+      "c": "8f79d39391b46d6dbf1800fb68b8212a21d5ee2e"
+    },
+    "systemd-dev": {
+      "V": "261-r0",
+      "c": "-dirty"
+    },
+    "systemd-udevd": {
+      "V": "261-r0",
+      "c": "-dirty"
+    }
+  },
+  "libucontext_dependency": {
+    "package": "libucontext-dev-1.5.1-r0.apk",
+    "package_sha256": "7c419c9cb5822f3c597139f590a7df8db3a10346a2882eb1d8ba0b72f5e7140d",
+    "version": "1.5.1-r0",
+    "arch": "armv7",
+    "commit": "a141eb73d03406651da092ec035ebb2fe89abe9b",
+    "archives_sha256": {
+      "usr/lib/libucontext.a": "bba7b2be99565ee5131dbd4e68b6d8dfdc7573c198f3c5f2b424a5d140dfacc1",
+      "usr/lib/libucontext_posix.a": "59bd6700324e3c0062e72ac3c1dbe9990b5887d9033fc38ed96651a2bc6a5a98"
+    },
+    "payload_scope": "Public ISC library development archive only; no firmware or signing private key"
+  },
+  "full_daemon_dependency_source_closure_qualified": false,
+  "daemon_uploaded_installed_or_started": false,
+  "native_final": {
+    "verified_UTC": "2026-11-09T11:20:47.153542+00:00",
+    "boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "kernel": "6.18.59-fx0-dmp",
+    "kernel_taint": 0,
+    "packages": {
+      "linux-postmarketos-qcom-msm8226": {
+        "version": "6.18.59-r50",
+        "commit": null
+      },
+      "upower": {
+        "version": "99991.91.0-r5",
+        "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+      },
+      "upower-lang": {
+        "version": "99991.91.0-r5",
+        "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+      },
+      "upower-systemd": {
+        "version": "99991.91.0-r5",
+        "commit": "4c5db910dd68205cc26303325186ccb39cb17521"
+      }
+    },
+    "raw_boot_sha256": "3790f14d537107221529b21d07a98c62fbf1603a81f3cdd77c76140581135921",
+    "registers": {
+      "0x1740": 1,
+      "0x1741": 115,
+      "0x2001": 2,
+      "0x2004": 3,
+      "0x2005": 8,
+      "0x2040": 0,
+      "0x2041": 62,
+      "0x2045": 64,
+      "0x2046": 0
+    },
+    "systemd": "running",
+    "pending_jobs": [],
+    "failed_units": [],
+    "native_MSS_disabled_and_unloaded": true
+  },
+  "private_provisioning_freshness": {
+    "verified_UTC": "2026-11-09T11:20:45.745465+00:00",
+    "current_sources_and_phone_snapshots_match": 5,
+    "read_only": true,
+    "payload_exported": false
+  },
+  "latest_native_UI_unchanged": {
+    "native_boot_id": "c3ac8f04-888e-493c-bb5d-a1729a275f7d",
+    "status": "pending on this newest native return",
+    "question": "The r59 transfer timed out before BOOT, and the phone has returned to installed r50 with UPower r5 active, the original boot hash, and Sway and the sensor proxy running. Do display and touch work normally on this newest boot?",
+    "recorded_UTC": "2026-11-09T08:14:37.367617+00:00"
+  },
+  "limits": [
+    "Full daemon local build only; retained libudev archive has -dirty provider recipe metadata and source closure is not established",
+    "No daemon upload/install/start; QMI packet dispatch and sector arithmetic, shared-memory bounds, lifecycle and physical RMTFS/MSS remain unqualified",
+    "Current native display/touch gate pending before any RAM entry; existing modem stage/controllers remain unconsumed",
+    "Current private provisioning snapshots still match; recheck before use; physical restore/power-loss qualification remains separate",
+    "Firmware startup/stop/fault ownership, RF/SIM/GNSS and full battery/CPU/peripheral/reliability/current-stable-edge/upstream bringup remain unfinished"
+  ],
+  "evidence": "evidence/2026-11-09-rmtfs-storage-candidate.json"
+}
